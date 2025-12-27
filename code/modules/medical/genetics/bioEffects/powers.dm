@@ -320,55 +320,20 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Take a big leap forward."
 	icon_state = "jumpy"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (ismob(owner.loc))
 			boutput(usr, SPAN_ALERT("You can't jump right now!"))
-			return 1
-
-		var/jump_tiles = 10 * linked_power.power
-		var/pixel_move = 8 * linked_power.power
-		var/sleep_time = 1 / linked_power.power
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (istype(owner.loc,/turf/))
-			var/turf/T = owner.loc
-			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
-				var/push_off = FALSE
-				for(var/atom/A in oview(1, T))
-					if (A.stops_space_move)
-						push_off = TRUE
-						break
-				if(!push_off)
-					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-					return TRUE
-			usr.visible_message(SPAN_ALERT("<b>[owner]</b> takes a huge leap!"))
-			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-			var/prevLayer = owner.layer
-			owner.layer = EFFECTS_LAYER_BASE
+			do_jump(misfire)
 
-			animate(owner,
-				pixel_y = pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_OUT | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
-			animate(
-				pixel_y = -pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_IN | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE)
-
-			SPAWN(0)
-				for(var/i=0, i < jump_tiles, i++)
-					step(owner, owner.dir)
-					sleep(sleep_time)
-
-				owner.layer = prevLayer
-
-		if (istype(owner.loc,/obj/))
+		else if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
 			owner.changeStatus("unconscious", 5 SECONDS)
@@ -377,67 +342,49 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
 
-		return
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire()
-		if (..())
-			return 1
+	proc/do_jump(misfire)
+		var/jump_tiles = 10 * src.linked_power.power
+		var/pixel_move = 8 * src.linked_power.power
+		var/sleep_time = 1 / src.linked_power.power
+		var/turf/T = src.owner.loc
+		if (istype(T, /turf/space) || T.throw_unlimited || src.owner.no_gravity)
+			var/push_off = FALSE
+			for(var/atom/A in oview(1, T))
+				if (A.stops_space_move)
+					push_off = TRUE
+					break
+			if(!push_off)
+				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (ismob(owner.loc))
-			boutput(usr, SPAN_ALERT("You can't jump right now!"))
-			return 1
+		usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> takes a huge leap!"))
+		playsound(src.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		var/prevLayer = src.owner.layer
+		src.owner.layer = EFFECTS_LAYER_BASE
+		if(misfire)
+			playsound(src.owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
+			usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> leaps far too high and comes crashing down hard!"))
+			src.owner.changeStatus("knockdown", 10 SECONDS)
+			src.owner.changeStatus("stunned", 5 SECONDS)
+		animate(src.owner,
+			pixel_y = pixel_move * jump_tiles / 2,
+			time = sleep_time * jump_tiles / 2,
+			easing = EASE_OUT | CIRCULAR_EASING,
+			flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+		animate(
+			pixel_y = -pixel_move * jump_tiles / 2,
+			time = sleep_time * jump_tiles / 2,
+			easing = EASE_IN | CIRCULAR_EASING,
+			flags = ANIMATION_RELATIVE)
 
-		var/jump_tiles = 10 * linked_power.power
-		var/pixel_move = 8 * linked_power.power
-		var/sleep_time = 0.5 / linked_power.power
+		SPAWN(0)
+			for(var/i=0, i < jump_tiles, i++)
+				step(src.owner, src.owner.dir)
+				sleep(sleep_time)
 
-		if (istype(owner.loc,/turf/))
-			var/turf/T = owner.loc
-			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
-				var/push_off = FALSE
-				for(var/atom/A in oview(1, T))
-					if (A.stops_space_move)
-						push_off = TRUE
-						break
-				if(!push_off)
-					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-					return TRUE
-			usr.visible_message(SPAN_ALERT("<b>[owner]</b> leaps far too high and comes crashing down hard!"))
-			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
-			var/prevLayer = owner.layer
-			owner.layer = EFFECTS_LAYER_BASE
-			owner.changeStatus("knockdown", 10 SECONDS)
-			owner.changeStatus("stunned", 5 SECONDS)
-
-			animate(owner,
-				pixel_y = pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_OUT | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
-			animate(
-				pixel_y = -pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_IN | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE)
-
-			SPAWN(0)
-				for(var/i=0, i < jump_tiles, i++)
-					step(owner, owner.dir)
-					sleep(sleep_time)
-
-				owner.layer = prevLayer
-
-		if (istype(owner.loc,/obj/))
-			var/obj/container = owner.loc
-			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("knockdown", 10 SECONDS)
-			owner.changeStatus("stunned", 5 SECONDS)
-			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
-			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
-			animate_storage_thump(container)
-
-		return TRUE
+			src.owner.layer = prevLayer
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
