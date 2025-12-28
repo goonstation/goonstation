@@ -58,8 +58,12 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 	for(var/atom/movable/AM in REGION_TILES(src.dimension_component.region))
 		if(istypes(AM, ignored_types) || IS_OVERLAY_OR_EFFECT(AM))
 			continue
+		var/target_turf = get_offset_target_turf(my_turf, AM.x - exit_chute_turf.x, AM.y - exit_chute_turf.y)
 		//Place nearby the host chute relative to where it was to the exit chute inside
-		AM.set_loc(get_offset_target_turf(my_turf, AM.x - exit_chute_turf.x, AM.y - exit_chute_turf.y))
+		AM.set_loc(my_turf)
+		AM.anchored = FALSE
+		AM.throw_at(target_turf, 30, 1, throw_type = THROW_NO_CLIP)
+		AM.anchored = initial(AM.anchored)
 	src.visible_message(SPAN_ALERT("<b>[src]'s pocket dimension collapses!</b>"))
 	. = ..()
 
