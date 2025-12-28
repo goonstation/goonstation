@@ -326,6 +326,18 @@ TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
 #undef MAX_CONTAINER_LIGHT_TIME
 #undef CABINET_CAPACITY
 #undef HANDHELD_CAPACITY
+
+ABSTRACT_TYPE(/obj/item/mechanics/trigger)
+/obj/item/mechanics/trigger
+	name = "The Abstract Concept of a MechComp Device Trigger"
+	desc = "This mechcomp component should not exist!"
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/datum/component/mechanics_holder/holder = src.GetComponent(/datum/component/mechanics_holder)
+		var/datum/component/mechanics_holder/copied_holder = copied_mechcomp.GetComponent(/datum/component/mechanics_holder)
+		holder.defaultSignal = copied_holder.defaultSignal
+
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
 	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
@@ -336,6 +348,7 @@ TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
 	anchored= ANCHORED
 	level=1
 	w_class = W_CLASS_BULKY
+	mechanically_copyable = FALSE // Anticipatory adjustment for a possible unit test.
 
 	New()
 		..()
@@ -584,7 +597,7 @@ TYPEINFO(/obj/item/mechanics)
 			return TRUE
 		if(W.type == src.type)
 			copy_identical_mechcomp(W, user)
-
+			return TRUE // Prevents chat spam with "X HAS BEEN HIT BY Y WITH Z!" messages.
 		return ..()
 
 	pixelaction(atom/target, params, mob/user)
@@ -1009,8 +1022,9 @@ TYPEINFO(/obj/item/mechanics)
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = FALSE
+	// This probably doesn't actually do anything. Devices with `COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL`
+	// have their 'defaultSignal' (Send Signal) handled by the holder.
 	var/sendstr = "1"
-
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggle))
@@ -1033,13 +1047,16 @@ TYPEINFO(/obj/item/mechanics)
 		else
 			secure()
 
-	// NOTE TO SELF: REMOVE BEFORE PR-ing THIS
-	// Change once you've figured out how to cleanly change trigger component send-signals.
 	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
 		. = ..()
 		var/obj/item/mechanics/triplaser/copied_laser = copied_mechcomp
 		src.range = copied_laser.range
 		src.sendstr = copied_laser.sendstr
+
+		// This three line subsection is an alternative to refactoring trip lasers into the `mechanics/trigger` subtype:
+		var/datum/component/mechanics_holder/holder = src.GetComponent(/datum/component/mechanics_holder)
+		var/datum/component/mechanics_holder/copied_holder = copied_mechcomp.GetComponent(/datum/component/mechanics_holder)
+		holder.defaultSignal = copied_holder.defaultSignal
 
 	loosen()
 		active = FALSE
@@ -3188,16 +3205,10 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 		var/output = changesig ? null : "[AM.name]"
 		SEND_SIGNAL(src, transmission_style, output)
 
-	// NOTE TO SELF: REMOVE BEFORE PR-ing THIS
-	// Change once you've figured out how to cleanly change trigger component send-signals.
-
 	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
 		. = ..()
 		var/obj/item/mechanics/trigger/pressureSensor/copied_sensor = copied_mechcomp
 		src.changesig = copied_sensor.changesig
-		var/datum/component/mechanics_holder/holder = src.GetComponent(/datum/component/mechanics_holder)
-		var/datum/component/mechanics_holder/copied_holder = copied_sensor.GetComponent(/datum/component)
-		holder.defaultSignal = copied_sensor.GetComponent()
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_pressure"
@@ -3444,6 +3455,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			if(isturf(target))
 				user.drop_item()
 				src.set_loc(target)
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/trigger/buttonPanel/copied_panel = copied_mechcomp
+		src.active_buttons = copied_panel.active_buttons
 
 	update_icon()
 		icon_state = icon_up
