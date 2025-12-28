@@ -327,17 +327,6 @@ TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
 #undef CABINET_CAPACITY
 #undef HANDHELD_CAPACITY
 
-ABSTRACT_TYPE(/obj/item/mechanics/trigger)
-/obj/item/mechanics/trigger
-	name = "The Abstract Concept of a MechComp Device Trigger"
-	desc = "This mechcomp component should not exist!"
-
-	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
-		. = ..()
-		var/datum/component/mechanics_holder/holder = src.GetComponent(/datum/component/mechanics_holder)
-		var/datum/component/mechanics_holder/copied_holder = copied_mechcomp.GetComponent(/datum/component/mechanics_holder)
-		holder.defaultSignal = copied_holder.defaultSignal
-
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
 	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
@@ -475,6 +464,11 @@ TYPEINFO(/obj/item/mechanics)
 			if(!copied_mechcomp.mechanically_copyable)
 				boutput(attacker, SPAN_ALERT("The [src] in hand can't be copied!"))
 				return FALSE
+
+			var/datum/component/mechanics_holder/holder = src.GetComponent(/datum/component/mechanics_holder)
+			if("Set Send-Signal" in holder.configs) // <-- I assume copying the define for this string from 'mechComp_signals.dm' would be worse.
+				var/datum/component/mechanics_holder/copied_holder = copied_mechcomp.GetComponent(/datum/component/mechanics_holder)
+				holder.defaultSignal = copied_holder.defaultSignal
 
 			src.tooltip_rebuild = TRUE
 			boutput(attacker, SPAN_ALERT("You've copied the settings of the in-hand [src] to the [copied_mechcomp]."))
@@ -1059,11 +1053,6 @@ TYPEINFO(/obj/item/mechanics)
 		var/obj/item/mechanics/triplaser/copied_laser = copied_mechcomp
 		src.range = copied_laser.range
 		src.sendstr = copied_laser.sendstr
-
-		// This three line subsection is an alternative to refactoring trip lasers into the `mechanics/trigger` subtype:
-		var/datum/component/mechanics_holder/holder = src.GetComponent(/datum/component/mechanics_holder)
-		var/datum/component/mechanics_holder/copied_holder = copied_mechcomp.GetComponent(/datum/component/mechanics_holder)
-		holder.defaultSignal = copied_holder.defaultSignal
 
 	loosen()
 		active = FALSE
@@ -2212,7 +2201,6 @@ TYPEINFO(/obj/item/mechanics)
 	name = "File Component"
 	desc = ""
 	icon_state = "comp_file"
-	mechanically_copyable = FALSE
 	var/datum/computer/file/stored_file
 
 	get_desc()
