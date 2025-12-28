@@ -110,7 +110,7 @@ export const MineralMagnet = () => {
   const [viewEncounters, setViewEncounters] = useState(false);
 
   return (
-    <Window width={300} height={240}>
+    <Window width={300} height={248}>
       <Window.Content>
         <Section title="Magnet Status">
           <Box>
@@ -153,41 +153,41 @@ export const MineralMagnet = () => {
             </Button>
           }
         >
-          {(!!magnetActive || (onCooldown && !magnetCooldownOverride)) && (
-            <Dimmer fontSize={1.75} pb={2} style={{ zIndex: 98 }}>
-              {magnetActive ? 'Magnet Active' : 'On Cooldown'}
-            </Dimmer>
-          )}
-          <Button
-            textAlign="center"
-            color={onCooldown && magnetCooldownOverride && 'average'}
-            icon="magnet"
-            onClick={() => act('activatemagnet')}
-            fluid
-          >
-            Activate Magnet
-          </Button>
-          <Button
-            textAlign="center"
-            color={onCooldown && magnetCooldownOverride && 'average'}
-            icon="search"
-            disabled={!miningEncounters.length}
-            onClick={() => setViewEncounters(true)}
-            fluid
-          >
-            Activate telescope location
-          </Button>
+          <Box position="relative" p={0.5} mb={0.5}>
+            {(!!magnetActive || (onCooldown && !magnetCooldownOverride)) && (
+              <Dimmer fontSize={1.75}>
+                {magnetActive ? 'Magnet Active' : 'On Cooldown'}
+              </Dimmer>
+            )}
+            <Button
+              textAlign="center"
+              color={onCooldown && magnetCooldownOverride && 'average'}
+              icon="magnet"
+              onClick={() => act('activatemagnet')}
+              fluid
+            >
+              Activate Magnet
+            </Button>
+            <Button
+              textAlign="center"
+              color={onCooldown && magnetCooldownOverride && 'average'}
+              icon="search"
+              disabled={!miningEncounters.length}
+              onClick={() => setViewEncounters(true)}
+              fluid
+            >
+              Activate telescope location
+            </Button>
+          </Box>
           <Button.Checkbox
             checked={magnetCooldownOverride}
             onClick={() => act('overridecooldown')}
-            style={{ zIndex: 99 }} // appear over dimmer
           >
             Override Cooldown
           </Button.Checkbox>
           <Button.Checkbox
             checked={magnetAutomaticMode}
             onClick={() => act('automode')}
-            style={{ zIndex: 99 }} // appear over dimmer
           >
             Automatic Mode
           </Button.Checkbox>
