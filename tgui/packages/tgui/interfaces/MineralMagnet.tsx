@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 import {
   Box,
@@ -22,7 +23,6 @@ import { useBackend } from '../backend';
 import { Modal } from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
 
 const getMagnetCondition = (condition: number) => {
   if (condition >= 95) {
