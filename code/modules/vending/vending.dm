@@ -632,7 +632,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if("rename")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				var/newname = params["name"]
+				var/newname = trimtext(params["name"])
 				var/len = length(newname)
 				if(P.unlocked && len > 0 && len <= 128)
 					P.name = newname
