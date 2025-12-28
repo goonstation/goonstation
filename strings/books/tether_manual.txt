@@ -37,12 +37,28 @@
 <p><i>Did you know..? Lack of proper wire maintenance is the leading cause of tether malfunctions!</i></p>
 
 <h3>INDICATOR LIGHTS</h3>
-<p><i>The Gravi-Tonne™ Tether uses multiple indicators for quick visual checks of system operation.</i></p>
+<p>The Gravi-Tonne™ Tether uses multiple indicators for quick visual checks of system operation.</p>
 <ul>
-	<li>Battery Charge Indicator: top-right light group</li>
+	<li>Internal Cell Charge Indicator: top-right four-light panel</li>
+		<ul><li>Color indicates charge percentage
+		<ul>
+			<li>blue - full</li>
+			<li>green - mostly full</li>
+			<li>yellow - under half</li>
+			<li>red - critical</li>
+			<li>blinking - missing battery</li>
+		</ul></li><li>The blinking light pattern indicates charge status
+		<ul>
+		<li>left-to-right - charging</li>
+		<li>right-to-left - using</li>
+		</ul>
+		</li></ul>
+
 	<li>Lock Indicator: Main screen is yellow if locked</li>
-	<li>Intensity Indicator: Lights on the left edge </li>
+	<li>Intensity Indicator: Lights on the left outer edge indicate tether gforce intensity.</li>
 </ul>
+
+<p><i>Did you know..? The Gravi-Tonne™ Tether System will last for months with proper care!</i><p>
 
 <h3>STATUS INDICATOR</h3>
 <p>The status indicators are located in the top-left area of the main front panel. The color and pattern indicate system status:</p>
@@ -52,7 +68,7 @@
 	<li><b>Red / Blinking</b>: malfunction.</li>
 	<li><b>Blue / Bouncing</b>: processing.</li>
 </ul>
-<p><i>Did you know..?</i> Schedule an appointment with an Officially Licensed Gravi-Tonne™ Tether Gravitician® today!</p>
+<p><i>Did you know..? <b>Schedule an appointment with an Officially Licensed Gravi-Tonne™ Tether Gravitician® today!</b></i></p>
 <hr>
 <p><i>The Terra Nivium Gravi-Tonne™ Tether, keeps you and your crops planted!<br>
 Reproduction of training and operating materials strictly prohibited by law.</i></p>
