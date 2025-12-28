@@ -20,7 +20,7 @@
 	/// current weight held in the storage
 	var/cur_weight = 0
 
-/datum/storage/no_hud/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass,
+/datum/storage/no_hud/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, enforce_wclass, max_wclass,
 		slots, sneaky, stealthy_storage, opens_if_worn, list/params)
 	..()
 	src.use_inventory_counter = params["use_inventory_counter"] || initial(src.use_inventory_counter)

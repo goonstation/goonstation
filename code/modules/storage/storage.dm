@@ -6,12 +6,12 @@
 
 /// add storage to an atom
 /atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), list/prevent_holding = list(),
-		check_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, stealthy_storage = FALSE, opens_if_worn = FALSE, list/params = list())
+		check_wclass = FALSE, enforce_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, stealthy_storage = FALSE, opens_if_worn = FALSE, list/params = list())
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
 	src.remove_storage()
-	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn, params)
+	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, enforce_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn, params)
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
@@ -34,6 +34,8 @@
 	var/list/prevent_holding = null
 	/// If set, if can_hold is used, an item not in can_hold or can_hold_exact can fit in the storage if its weight is low enough
 	var/check_wclass = FALSE
+	/// If set, if can_hold is used, max_wclass will still be used
+	var/enforce_wclass = FALSE
 	/// Storage hud attached to the storage
 	var/datum/hud/storage/hud = null
 	/// Don't print a visible message on use
@@ -55,7 +57,7 @@
 	/// All items stored
 	var/list/stored_items = null
 
-/datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
+/datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, enforce_wclass, max_wclass, \
 		slots, sneaky, stealthy_storage, opens_if_worn, list/params)
 	..()
 	src.stored_items = list()
@@ -66,6 +68,7 @@
 	src.can_hold_exact = can_hold_exact
 	src.prevent_holding = prevent_holding
 	src.check_wclass = check_wclass
+	src.enforce_wclass = enforce_wclass
 	src.max_wclass = max_wclass
 	src.slots = slots
 	src.sneaky = sneaky
@@ -323,8 +326,12 @@
 
 	var/fullness = src.get_fullness(W)
 
+	// We check for the storage size if enforce_wclass is true or if can_hold is not defined
+	if ((!length(src.can_hold) || src.enforce_wclass) && (W.w_class > src.max_wclass))
+		return STORAGE_WONT_FIT
+
 	// if can_hold is defined, check against that
-	if (length(src.can_hold) && (fullness != STORAGE_IS_FULL))
+	else if (length(src.can_hold) && (fullness != STORAGE_IS_FULL))
 		// early skip if weight class is allowed
 		if (src.check_wclass && W.w_class <= src.max_wclass)
 			return STORAGE_CAN_HOLD
@@ -335,9 +342,6 @@
 			if (ispath(type) && W.type == type)
 				return STORAGE_CAN_HOLD
 		return STORAGE_CANT_HOLD
-
-	else if (W.w_class > src.max_wclass)
-		return STORAGE_WONT_FIT
 
 	return fullness
 

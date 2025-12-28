@@ -13,6 +13,7 @@
 	var/list/can_hold_exact = null
 	var/list/prevent_holding = null
 	var/check_wclass = 0
+	var/enforce_wclass = FALSE
 	var/datum/hud/storage/hud
 	var/sneaky = 0
 	var/stealthy_storage = FALSE
@@ -32,7 +33,7 @@
 	health = 10
 
 	New()
-		src.create_storage(/datum/storage, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn)
+		src.create_storage(/datum/storage, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, enforce_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn)
 		src.make_my_stuff()
 		..()
 

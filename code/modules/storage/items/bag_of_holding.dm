@@ -64,7 +64,7 @@
 	var/visible_slots = 3
 
 /datum/storage/artifact_bag_of_holding/wizard/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding,
-		check_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn, list/params)
+		check_wclass, enforce_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn, list/params)
 	..()
 	src.visible_slots = params["visible_slots"] || initial(src.visible_slots)
 
