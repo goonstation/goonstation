@@ -22,8 +22,9 @@ import { useBackend } from '../backend';
 import { Modal } from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
 
-const getMagnetCondition = (condition) => {
+const getMagnetCondition = (condition: number) => {
   if (condition >= 95) {
     return (
       <Box inline color="good">
@@ -63,16 +64,30 @@ const getMagnetCondition = (condition) => {
   }
 };
 
+interface LinkedMagnet {
+  name: string;
+  x: number;
+  y: number;
+  z: number;
+  ref: string;
+  angle: number;
+}
+
+interface MiningEncounter {
+  name: string;
+  id: string;
+}
+
 interface MineralMagnetData {
-  isLinked;
-  linkedMagnets;
-  magnetActive;
-  magnetAutomaticMode;
-  magnetCooldownOverride;
-  magnetHealth;
-  magnetLastUsed;
-  miningEncounters;
-  time;
+  isLinked: BooleanLike;
+  linkedMagnets?: LinkedMagnet[] | null;
+  magnetActive?: BooleanLike;
+  magnetAutomaticMode?: BooleanLike;
+  magnetCooldownOverride?: BooleanLike;
+  magnetHealth?: number;
+  magnetLastUsed?: number;
+  miningEncounters?: MiningEncounter[] | null;
+  time?: number;
 }
 
 export const MineralMagnet = () => {
@@ -83,10 +98,10 @@ export const MineralMagnet = () => {
     magnetActive,
     magnetAutomaticMode,
     magnetCooldownOverride,
-    magnetHealth,
-    magnetLastUsed,
-    time,
   } = data;
+  const magnetHealth = data.magnetHealth ?? 0;
+  const magnetLastUsed = data.magnetLastUsed ?? 0;
+  const time = data.time ?? 0;
   const linkedMagnets = data.linkedMagnets || [];
   const miningEncounters = data.miningEncounters || [];
 
