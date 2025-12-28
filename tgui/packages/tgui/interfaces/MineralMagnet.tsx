@@ -180,14 +180,14 @@ export const MineralMagnet = () => {
           <Button.Checkbox
             checked={magnetCooldownOverride}
             onClick={() => act('overridecooldown')}
-            style={{ zIndex: '1' }}
+            style={{ zIndex: 101 }} // appear over dimmer
           >
             Override Cooldown
           </Button.Checkbox>
           <Button.Checkbox
             checked={magnetAutomaticMode}
             onClick={() => act('automode')}
-            style={{ zIndex: '1' }}
+            style={{ zIndex: 101 }} // appear over dimmer
           >
             Automatic Mode
           </Button.Checkbox>
