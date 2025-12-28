@@ -4,6 +4,8 @@
 (p)25403
 (e)⚖📦|C-Balance, A-Game-Objects
 (+)Mousetrap rollers respect the size of the assembly used to build them.
+(u)JORJ949
+(+)Changeling abomination forms can now instantly smash tables.
 (t)sat dec 27 25
 (u)JORJ949
 (p)25363
