@@ -428,12 +428,19 @@ TYPEINFO(/obj/item/mechanics)
 	/// Indicates if the component can have its setting's copied to another of the same type.
 	var/mechanically_copyable = TRUE
 
+	HELP_MESSAGE_OVERRIDE({""}) // Empty, handled by `get_help_message()` proc.
+
 	New()
 		particle_list = new/list()
 		AddComponent(/datum/component/mechanics_holder)
 		processing_mechanics |= src
 		return ..()
 
+	get_help_message()
+		. = ..()
+		if(src.mechanically_copyable)
+			. += "You can copy this component's settings to another of the same type by hitting \
+			the component you want changed with the component you want copied."
 
 	disposing()
 		processing_mechanics.Remove(src)
