@@ -107,17 +107,18 @@
 /obj/item/device/radio/headset/command/nt
 	name = "\improper NanoTrasen headset"
 	desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
+	icon_tooltip = "NanoTrasen Ancillary"
+	icon_override = "nt"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY,
 		)
-	icon_override = "nt"
-	icon_tooltip = "NanoTrasen Special Operative"
 
 /obj/item/device/radio/headset/command/nt/commander
-	name = "\improper NT Commander's headset"
+	name = "\improper NanoTrasen Commander headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+	icon_tooltip = "NanoTrasen Commander"
+	icon_override = "ntboss"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
@@ -127,14 +128,29 @@
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
-	icon_override = "ntboss"
-	icon_tooltip = "Nanotrasen Commander"
 
 /obj/item/device/radio/headset/command/nt/consultant
+	name = "\improper NanoTrasen Consultant headset"
 	icon_tooltip = "NanoTrasen Security Consultant"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		)
+
+/obj/item/device/radio/headset/command/nt/special_operative
+	name = "\improper NanoTrasen Operative headset"
+	icon_tooltip = "NanoTrasen Special Operative"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		)
 
 /obj/item/device/radio/headset/command/nt/engineer
-	icon_tooltip = "Nanotrasen Emergency Repair Technician"
+	name = "\improper NanoTrasen Engineer headset"
+	icon_tooltip = "NanoTrasen Emergency Repair Technician"
+	icon_override = "nt_eng"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
@@ -142,7 +158,9 @@
 		)
 
 /obj/item/device/radio/headset/command/nt/medic
-	icon_tooltip = "Nanotrasen Emergency Medic"
+	name = "\improper NanoTrasen Medic headset"
+	icon_tooltip = "NanoTrasen Emergency Medic"
+	icon_override = "nt_med"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,

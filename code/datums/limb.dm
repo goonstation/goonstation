@@ -487,6 +487,14 @@
 		cooldown = 1 SECONDS
 		reload_time = 15 SECONDS
 
+	taser
+		proj = new/datum/projectile/energy_bolt
+		shots = 1
+		current_shots = 1
+		cooldown = 3 SECONDS
+		reload_time = 3 SECONDS
+
+
 
 /datum/limb/gun/spawner
 	proj = new/datum/projectile/special/spawner

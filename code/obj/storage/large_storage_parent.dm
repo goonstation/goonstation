@@ -1039,6 +1039,7 @@ TYPEINFO_NEW(/obj/storage/secure)
 	locked = 1
 	icon_closed = "secure"
 	icon_opened = "secure-open"
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/icon_greenlight = "greenlight"
 	var/icon_redlight = "redlight"
 	var/icon_sparks = "sparks"
