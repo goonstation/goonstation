@@ -22,6 +22,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	p_class = 2.5
 	layer = STORAGE_LAYER
+	material_amt = 0.2 // All storage containers are worth two sheets by default. (The default for atoms is ten!)
 	var/intact_frame = 1 //Variable to create crates and fridges which cannot be closed anymore.
 	var/secure = 0
 	var/personal = 0
@@ -1019,6 +1020,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		owner.visible_message(SPAN_NOTICE("[owner] takes apart [the_storage]."))
 		the_storage.dump_contents(owner)
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
+		if(the_storage.material_amt)
+			I.amount = floor(the_storage.material_amt / 0.1) // <-- Sheets normally cost 0.1; I don't believe it's defined anywhere.
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)
 		else
