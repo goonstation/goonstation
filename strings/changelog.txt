@@ -5,6 +5,7 @@
 (e)⚖📦|C-Balance, A-Game-Objects
 (+)Mousetrap rollers respect the size of the assembly used to build them.
 (u)JORJ949
+(*)Changeling, Arcfiend and Vampire mode antagonist counts have been reduced from 1/12 to 1/15.
 (+)Changeling abomination forms can now instantly smash tables.
 (t)sat dec 27 25
 (u)JORJ949
