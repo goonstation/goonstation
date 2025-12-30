@@ -21,8 +21,9 @@ TYPEINFO(/obj/item/device/radio/electropack)
 	item_state = "electropack"
 	cant_self_remove = TRUE
 
-	var/baseline_arc_power = 2500 //! the amount of Wattage the electropack does provide baseline
-	var/required_arc_power = 5000 //! The total of power needed to cause an electric arc with the assembly
+	var/baseline_arc_power = -2000 //! the amount of Wattage the electropack does provides or drains baseline
+	var/required_arc_power = 1500 //! The total of power needed to cause an electric arc with the assembly. This will make a elecflash power of 2.
+	var/maximum_arc_power = 15000 //! the power the electropack will drain for a max-capacity arc flash. This will make a elecflash power of 6.
 	var/code = 2
 	var/on = FALSE
 
@@ -67,6 +68,8 @@ TYPEINFO(/obj/item/device/radio/electropack)
 			electropack_power += manipulated_cell.charge
 		// Now we check if we have enough power for an arc flash
 		if(electropack_power >= src.required_arc_power)
+			//if that's the case, we cap the power on the maximum of the electropack
+			electropack_power = min(src.maximum_arc_power, electropack_power)
 			var/turf/current_turf = get_turf(src)
 			var/atom/target = null
 			var/list/target_group = list()
@@ -81,7 +84,7 @@ TYPEINFO(/obj/item/device/radio/electropack)
 			// once we have a target group, we pick a target and arcflash them
 			target = pick(target_group)
 			if(manipulated_cell)
-				manipulated_cell.use(electropack_power)
+				manipulated_cell.use(src.maximum_arc_power)
 			arcFlash(parent_assembly, target, electropack_power)
 		else
 			elecflash(get_turf(src),0, power=4, exclude_center = 0)
