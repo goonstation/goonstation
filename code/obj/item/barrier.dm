@@ -121,9 +121,9 @@ TYPEINFO(/obj/item/barrier)
 	name = "Scale Shield"
 	desc = "A crude and unwieldy shield made from a eldritch scale. It appears to be able to both reflect and amplify projectiles."
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "barrier_0"
+	icon_state = "void_barrier"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "barrier0"
+	item_state = "void_barrier"
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 2
 	throwforce = 6

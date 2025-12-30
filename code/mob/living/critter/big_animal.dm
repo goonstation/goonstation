@@ -100,6 +100,11 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/ranged
 	is_npc = TRUE
+	butcherable = BUTCHER_ALLOWED
+	meat_type = null
+	skinresult = /obj/item/void_shield
+	max_skins = 1
+
 	add_abilities = list(/datum/targetable/critter/slam,
 		/datum/targetable/wraithAbility/command/cultist,
 		/datum/targetable/critter/psyblast,
