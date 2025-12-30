@@ -690,8 +690,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 						src.attempt_transceive()
 					if("receive")
 						var/sigindex = signal.data["data"]
-						if(isnum_safe(sigindex))
-							src.attempt_transceive(sigindex)
+						src.attempt_transceive(text2num_safe(sigindex))
 
 
 	proc/post_signal(datum/signal/signal, var/newfreq)
