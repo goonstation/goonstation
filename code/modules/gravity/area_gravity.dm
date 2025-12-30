@@ -1,47 +1,29 @@
 /// Minimum gravity for the area.
+/// Used
 /area/var/gforce_minimum = 1
-/// Gravity supplied by registered tethers.
+/// Total G-Force added by Gravity Tethers.
 /area/var/gforce_tether = 0
+/// G-Force added by z-level gravity
+/area/var/gforce_zlevel = 0
+
+/// Updating an area's gforce minimum; e.g. docked traders and shuttles
+/area/proc/set_gforce_minimum(new_gforce)
+	if (src.gforce_minimum == new_gforce)
+		return
+	src.gforce_minimum = new_gforce
+	if (!src.z) // null areas :s
+		return
+	var/total_gforce = max(new_gforce, global.zlevels[src.z].gforce + src.gforce_tether)
+	for (var/turf/T in src)
+		T.gforce_current = round(max(0, total_gforce + T.gforce_inherent), 0.01)
+
+// static area minimums
+// NOTE: initialize_gravity() zeros out any tether-linked gravity areas on init
 
 /area/space/gforce_minimum = 0
 /area/noGenerate/gforce_minimum = 0
 /area/allowGenerate/gforce_minimum = 0
 /area/abandonedship/gforce_minimum = 0
 /area/abandonedmedicalship/gforce_minimum = 0
-/area/abandonedmedicalship/robot_trader/gforce_minimum = 1 // for D.O.C., who is on the ISS and not the abandoned medical ship
+/area/abandonedmedicalship/robot_trader/gforce_minimum = 1 // TODO: Move D.O.C. area to an ISS subtype
 /area/fermid_hive/gforce_minimum = 0
-
-/// List of gravity tethers tracking this region
-/area/var/list/obj/machinery/gravity_tether/registered_tethers = list()
-
-/// Reset all turf gravity based on cached area gravity values
-/area/proc/reset_all_turf_gravity()
-	src.set_turf_gravity(src.gforce_tether)
-
-/// Recalculate the tether gforces on an area
-/area/proc/recalc_tether_gforce()
-	var/new_gforce = 0
-	for (var/obj/machinery/gravity_tether/tether in src.registered_tethers)
-		if (tether.has_no_power())
-			continue
-		new_gforce += tether.intensity
-	if (src.gforce_tether != new_gforce)
-		src.gforce_tether = new_gforce
-		src.set_turf_gravity(src.gforce_tether)
-
-/area/proc/set_turf_gravity(gforce)
-	for (var/turf/T in src)
-		T.calculate_effective_gforce(src.gforce_minimum, gforce)
-
-/area/proc/register_tether(obj/machinery/gravity_tether/tether)
-	src.registered_tethers |= tether
-	src.recalc_tether_gforce()
-
-/area/proc/unregister_tether(obj/machinery/gravity_tether/tether)
-	src.registered_tethers -= tether
-	src.recalc_tether_gforce()
-
-/area/proc/set_gforce_minimum(new_gforce)
-	if (src.gforce_minimum != new_gforce)
-		src.gforce_minimum = new_gforce
-		src.reset_all_turf_gravity()

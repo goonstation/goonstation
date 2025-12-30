@@ -98,7 +98,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 				thr.target && thing.throwing && isturf(T) && \
 					(
 						thr.momentum > 0 || \
-						T?.effective_gforce == 0 || \
+						T?.gforce_current == 0 || \
 						thing.throw_unlimited
 					)
 				))
@@ -147,7 +147,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			var/hit_thing = ( thr.throw_type & THROW_NO_CLIP ) ? null : thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
-			thr.momentum -= T.effective_gforce
+			thr.momentum -= T.gforce_current
 			if(!thing.throwing || hit_thing)
 				end_throwing = TRUE
 				break

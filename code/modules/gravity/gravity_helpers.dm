@@ -21,14 +21,19 @@ var/global/list/z_level_station_outside_area_types = list(
 	/area/shuttle/merchant_shuttle/right_station,
 )
 
-/// Remove gravity for areas with tethers at roundstart
-proc/initialize_area_gravity()
-	var/list/area/areas_to_zero = list()
-
-	// Areas with gravity tethers at roundstart rely on them
+/// Set a minimum gforce across an entire Z-Level e.g. terrainify and oceanify
+proc/set_zlevel_gforce(z_level, new_gforce, update_tethers=FALSE)
+	global.zlevels[z_level].gforce = new_gforce
 	for (var/area/A in world)
-		if (length(A.registered_tethers) > 0)
-			areas_to_zero |= A
+		if (A.z != z_level)
+			continue
+		var/total_gforce = max(A.gforce_minimum, new_gforce + A.gforce_tether)
+		for (var/turf/T in A)
+			T.gforce_current = round(max(0, total_gforce + T.gforce_inherent), 0.01)
+
+/// Round-start initialization of areas that should have zero minimum gravity
+proc/configure_zero_g_areas()
+	var/list/area/areas_to_zero = list()
 
 	// Areas on station Z but not conncected to a tether
 	for (var/area_typepath in global.z_level_station_outside_area_types)
@@ -36,10 +41,12 @@ proc/initialize_area_gravity()
 
 	// multi-area tether excluded areas (i.e. listening post comm dish)
 	for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
-		if (istype(tether, /obj/machinery/gravity_tether/multi_area))
-			var/obj/machinery/gravity_tether/multi_area/multi_tether = tether
-			for (var/area_typepath in multi_tether.base_area_exceptions)
-				areas_to_zero |= get_areas(area_typepath)
+		if (istype(tether, /obj/machinery/gravity_tether))
+			areas_to_zero |= tether.target_area_refs
+			if (istype(tether, /obj/machinery/gravity_tether/multi_area))
+				var/obj/machinery/gravity_tether/multi_area/multi_tether = tether
+				for (var/area_typepath in multi_tether.base_area_exceptions)
+					areas_to_zero |= get_areas(area_typepath)
 
 	// escape shuttle station area
 	areas_to_zero |= get_area(global.map_settings.escape_station)
@@ -55,82 +62,85 @@ proc/initialize_area_gravity()
 		shuttle_type_cache += shuttle_comp.type
 
 	for (var/area/A in areas_to_zero)
-		A.gforce_minimum = 0 // set directly to avoid wasted gravity recalc
-		A.set_turf_gravity(A.gforce_tether) // now force updates
-
-/// Set a minimum gforce across an entire Z-Level
-proc/set_zlevel_gforce(z_level, gforce, update_tethers=FALSE)
-	global.zlevels[z_level].gforce = gforce
-	if (update_tethers)
-		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE)
-		for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
-			if (tether.z == z_level && !tether.has_no_power())
-				var/new_gravity = 0
-				if (gforce > 1)
-					new_gravity = 0
-				else // boost to 1G
-					new_gravity = clamp(1 - gforce, 0, 1)
-
-				SPAWN(rand(3,7) SECONDS)
-					tether.begin_gravity_change(new_gravity)
-	for (var/turf/T in world)
-		if (T.z == z_level)
-			T.reset_effective_gforce()
-
-
-/datum/infooverlay/gravity_area
-	name = "gravity area"
-	help = {"Colors group mob gravity thresholds. Number is area gforce, parenthesis is tether force."}
-
-	GetInfo(turf/theTurf, image/debugoverlay/img)
-		var/area/A = get_area(theTurf)
-
-		img.app.overlays = list(src.makeText("[A.gforce_minimum] ([A.gforce_tether])", RESET_ALPHA | RESET_COLOR))
-		switch(A.gforce_minimum + A.gforce_tether)
-			if (-INFINITY to 0)
-				img.app.color = "#0000ff"
-			if (1)
-				img.app.color = "#00ff00"
-			if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
-				img.app.color = "#0fffff"
-			if (GRAVITY_MOB_REGULAR_THRESHOLD to GRAVITY_MOB_HIGH_THRESHOLD)
-				img.app.color = "#009900"
-			if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
-				img.app.color = "#ffff00"
-			if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
-				img.app.color = "#ff0000"
+		A.set_gforce_minimum(0)
 
 /datum/infooverlay/gravity_turf
-	name = "gravity turf"
-	help = {"Colors group mob gravity thresholds. Number is the current G-force."}
+	name = "gravity-turf"
+	help = {"Colors group mob gravity thresholds. Current (inherent)."}
+	var/list/area/processed_areas
 
 	GetInfo(turf/theTurf, image/debugoverlay/img)
-		img.app.overlays = list(src.makeText("[theTurf.effective_gforce]", RESET_ALPHA | RESET_COLOR))
-		switch(theTurf.effective_gforce)
+		img.app.overlays = list(src.makeText("[theTurf.gforce_current] ([theTurf.gforce_inherent])", RESET_ALPHA | RESET_COLOR))
+		switch (theTurf.gforce_current)
 			if (-INFINITY to 0)
 				img.app.color = "#0000ff"
 			if (1)
 				img.app.color = "#00ff00"
 			if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
-				img.app.color = "#0fffff"
+				img.app.color = "#00aaaa"
 			if (GRAVITY_MOB_REGULAR_THRESHOLD to GRAVITY_MOB_HIGH_THRESHOLD)
 				img.app.color = "#009900"
 			if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
-				img.app.color = "#ffff00"
+				img.app.color = "#cc9900"
 			if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
 				img.app.color = "#ff0000"
 
-// TODO: this should work like gangtag overlay since it's by area
-/datum/infooverlay/gravity_tethers
-	name = "gravity tethers"
-	help = "show what tethers are affecting areas"
+/datum/infooverlay/gravity_area
+	name = "gravity-area"
+	help = {"Colors tiles based on area gravity only.<br>
+	Minimum G-Force + Tether G-Force + Z-level G-Force = Total G-Force"}
+	var/list/area/processed_areas
 
 	GetInfo(turf/theTurf, image/debugoverlay/img)
 		var/area/A = get_area(theTurf)
-		img.app.desc = "Area: [A.name] ([length(A.registered_tethers)] Tethers)"
+		switch (A.gforce_minimum + A.gforce_tether + A.gforce_zlevel)
+			if (-INFINITY to 0)
+				img.app.color = "#0000ff"
+			if (1)
+				img.app.color = "#00ff00"
+			if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
+				img.app.color = "#00aaaa"
+			if (GRAVITY_MOB_REGULAR_THRESHOLD to GRAVITY_MOB_HIGH_THRESHOLD)
+				img.app.color = "#009900"
+			if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
+				img.app.color = "#cc9900"
+			if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
+				img.app.color = "#ff0000"
 
-		var/color_line = ""
-		for (var/obj/machinery/gravity_tether/tether in A.registered_tethers)
-			img.app.desc += "<br>[tether.name] @ ([tether.x], [tether.y], [tether.z])"
-			color_line += "[tether.x][tether.y][tether.z]"
-		img.app.color = debug_color_of(color_line)
+		if (A in processed_areas)
+			return
+
+		img.app.overlays = list(
+			src.makeText("<span style='font-size:6pt'>[A.gforce_minimum]+[A.gforce_tether]+[A.gforce_zlevel]<br>=[A.gforce_minimum + A.gforce_tether + A.gforce_zlevel]</span>")
+		)
+
+/datum/infooverlay/grip_view
+	name = "grip-view"
+	help = "View grip values. Green: grippable; Yellow: not grippable"
+
+	GetInfo(turf/theTurf, image/debugoverlay/img)
+		img.app.overlays = list(src.makeText("[theTurf.grip_atom_count]", RESET_ALPHA | RESET_COLOR))
+		if (theTurf.grip_atom_count == 0)
+			img.app.color = "#990"
+			return ..()
+		img.app.color = "#0c0"
+		return ..()
+
+/datum/infooverlay/grip_debug
+	name = "grip-debug"
+	help = "Rechecks grip values vs. cache. Red: cache mismatch; Green: grippable; Yellow: not grippable; Actual (cached)"
+
+	GetInfo(turf/theTurf, image/debugoverlay/img)
+		var/actual_count = theTurf.calculate_grippy_objects()
+
+		if (theTurf.grip_atom_count != actual_count)
+			img.app.overlays = list(src.makeText("[actual_count] ([theTurf.grip_atom_count])", RESET_ALPHA | RESET_COLOR))
+			img.app.color = "#f00"
+			return ..()
+		img.app.overlays = list(src.makeText("[actual_count]", RESET_ALPHA | RESET_COLOR))
+		if (actual_count == 0)
+			img.app.color = "#990"
+			return ..()
+		img.app.color = "#0c0"
+		return ..()
+

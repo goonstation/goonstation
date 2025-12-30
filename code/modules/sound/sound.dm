@@ -782,6 +782,12 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/ambience_computer = list(sound('sound/ambience/station/Machinery_Computers1.ogg'),sound('sound/ambience/station/Machinery_Computers2.ogg'),sound('sound/ambience/station/Machinery_Computers3.ogg'))
 /var/global/list/ambience_atmospherics = list(sound('sound/ambience/loop/Wind_Low.ogg'))
 /var/global/list/ambience_engine = list(sound('sound/ambience/loop/Wind_Low.ogg'))
+/var/global/list/ambience_gravity = list(
+		sound('sound/ambience/station/underwater/sub_ambi2.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi3.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi4.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi6.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi8.ogg'))
 
 /var/global/list/ghostly_sounds = list('sound/effects/ghostambi1.ogg', 'sound/effects/ghostambi2.ogg', 'sound/effects/ghostbreath.ogg', 'sound/effects/ghostlaugh.ogg', 'sound/effects/ghostvoice.ogg')
 

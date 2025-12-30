@@ -198,7 +198,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
 		step_lots = TRUE
-		M.reset_gravity(force_update=TRUE)
+		M.update_traction(src.loc)
 		playsound(M.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 		RegisterSignal(M, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_move))
 		return TRUE
@@ -209,13 +209,13 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
 		step_lots = FALSE
-		M.reset_gravity(force_update=TRUE)
+		M.update_traction(src.loc)
 		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
 
 	unequipped(mob/user)
 		. = ..()
-		user.reset_gravity(force_update=TRUE)
+		user.update_traction(src.loc)
 		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)

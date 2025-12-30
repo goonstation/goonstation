@@ -545,6 +545,7 @@ proc/generate_space_color()
 			if (isitem(M))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
+	M.update_traction(src)
 
 #ifdef NON_EUCLIDEAN
 	if(warptarget)

@@ -24,8 +24,7 @@
 		if (src.magboots.activate(user))
 			APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/robot_mag_upgrade, src)
 			user.anchored = ANCHORED
-			user.reset_gravity()
-			user.update_traction()
+			user.update_traction(user.loc)
 			..()
 		else
 			src.activated = 0
@@ -34,6 +33,5 @@
 	src.magboots.deactivate(user)
 	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/robot_mag_upgrade, src)
 	user.anchored = UNANCHORED
-	user.reset_gravity()
-	user.update_traction()
+	user.update_traction(user.loc)
 	..()

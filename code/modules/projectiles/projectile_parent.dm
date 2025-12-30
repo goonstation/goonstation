@@ -458,7 +458,7 @@
 				kinetic_particles = FALSE
 				break
 		if (istype(curr_turf) && kinetic_particles)
-			grav_mult = curr_turf.effective_gforce
+			grav_mult = curr_turf.gforce_current
 
 		//delta wx, how far in pixels(?) the projectile should move this step
 		var/dwx

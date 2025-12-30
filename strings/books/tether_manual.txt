@@ -1,9 +1,8 @@
 <h1>Gravi-Tonne™ Tether Operator's Manual</h1>
-<p><i>Draft Edition</i></p>
-<p><i>The Terra Nivium Gravi-Tonne™ Wide-area Gravity Tether binds connected surfaces to a desired level of gravity. This manual will show you how to operate the Gravi-Tonne™ tether and interpret its displays.</i></p>
+<p><i>The Terra Nivium Gravi-Tonne™ Wide-area Gravity Tether brings gravity to you! This manual will show you how to operate and maintain the Gravi-Tonne™ Tether safely.</i></p>
 <hr>
 <h3>CHANGING GRAVITY</h3>
-<p>To change gravity, please follow these easy steps:
+<p>To change gravity, follow these easy steps:
 <ol>
 	<li>Unlock the machine with an <b>authorized ID</b>.</li>
 	<li>Enter the desired gravity intensity <b>by hand</b>.</li>
@@ -12,11 +11,12 @@
 </ol>
 <p><i>Did you know..? 1G is equal to Earth's gravity!</i></p>
 
-<h3>MAINTENANCE PANEL</h3>
+<h3>STARTING MAINTENANCE</h3>
 <p>The Gravi-Tonne™ Tether has a front access door that holds the internal power capacitor. The tamper-resist security grate is withdrawn when the system is unlocked.</p>
+<p>In case of emergency, the tamper-resist grate can be cut through with a rotary saw. Verify internal wiring is not damaged after removing the tamper-resist grate.</p>
 
-<h3>INTERNAL CELL REPLACEMENT</h3>
-<p>To replace the internal capacitor:</p>
+<h4>INTERNAL CELL REPLACEMENT</h4>
+<p>To replace the internal capacitor, follow these easy steps:</p>
 <ol>
 	<li>Unlock the machine with an <b>authorized ID</b>.</li>
 	<li>Carefully open the maintenance panel by <b>prying</b> it open.</li>
@@ -25,8 +25,8 @@
 </ol>
 <p><i>Did you know..? Unstable batteries will damage or destroy your Gravi-Tonne™ Tether.</i></p>
 
-<h3>SYSTEM REPAIR</h3>
-<p>To perform a full repair and reset of the Gravi-Tonne™ Tether, please follow these easy steps:
+<h4>SYSTEM REPAIR/RESET</h4>
+<p>To perform a full repair and reset of the Gravi-Tonne™ Tether, follow these easy steps:
 <ol>
 <li>Remove the internal capacitor cell as described above.</li>
 <li>Once grounded, carefully remove damaged wiring by <b>cutting</b> them out.</li>
@@ -37,38 +37,50 @@
 <p><i>Did you know..? Lack of proper wire maintenance is the leading cause of tether malfunctions!</i></p>
 
 <h3>INDICATOR LIGHTS</h3>
-<p>The Gravi-Tonne™ Tether uses multiple indicators for quick visual checks of system operation.</p>
+<p>The Gravi-Tonne™ Tether uses multiple visual indicators for quick verification of system operation.</p>
 <ul>
-	<li>Internal Cell Charge Indicator: top-right four-light panel</li>
-		<ul><li>Color indicates charge percentage
-		<ul>
-			<li>blue - full</li>
-			<li>green - mostly full</li>
-			<li>yellow - under half</li>
-			<li>red - critical</li>
-			<li>blinking - missing battery</li>
-		</ul></li><li>The blinking light pattern indicates charge status
-		<ul>
-		<li>left-to-right - charging</li>
-		<li>right-to-left - using</li>
-		</ul>
-		</li></ul>
-
-	<li>Lock Indicator: Main screen is yellow if locked</li>
-	<li>Intensity Indicator: Lights on the left outer edge indicate tether gforce intensity.</li>
+	<li><b>Charge</b>: Top-right LEDs<ul>
+		<li><b>Blue</b>: Full</li>
+		<li><b>Green</b>: Mostly Full</li>
+		<li><b>Yellow</b>: Under Half</li>
+		<li><b>Red</b>: Critical</li>
+		<li><b>Flashing</b>: Missing Battery</li>
+	</ul></li>
+	<li><b>Status</b>: Top-left LEDs<ul>
+		<li><b>Green / Steady</b>: Online, Active</li>
+		<li><b>Yellow / Blinking</b>: Online, Idle</li>
+		<li><b>Red / Random</b>: Error/Fault</li>
+		<li><b>Blue / Bouncing</b>: Processing</li>
+	</ul></li>
+	<li><b>Intensity</b>: Outer Left Edge<ul>
+		<li><b>Red</b>: Extreme Gravity</li>
+		<li><b>Yellow</b>: High Gravity</li>
+		<li><b>Green</b>: Earth-like Gravity</li>
+		<li><b>Blue Steady</b>: Microgravity</li>
+		<li><b>Blue Flashing</b>: Zero-G
+	</ul></li>
+	<li><b>Detector</b>: Above Maintenance Door<ul>
+		<li><b>Blank</b>: No Power</li>
+		<li><b>Green</b>: Nominal Readings</li>
+		<li><b>Yellow</b>: Low / No Gravity</li>
+		<li><b>Red</b>: Active Gravity Crisis</li>
+	</ul></li>
+	<li><b>Input</b>: Middle-right Screen<ul>
+		<li><b>Green</b>: Unlocked</li>
+		<li><b>Yellow</b>: Locked</li>
+		<li><b>Red</b>: Error</li>
+		<li><b>Blue</b>: Calibrating for next use</li>
+	</ul></li>
+	<li><b>Dials</b>: Right outer edge<ul>
+		<li><b>Clockwise</b>: Increasing Intensity</li>
+		<li><b>Anti-Clockwise</b>: Decreasing Intensity<li>
+		<li><b>Slight Variance</b>: Nominal Operation</li>
+	</ul></li>
 </ul>
+<p><i>Did you know..? Also available is the Terra Nivium Gravi-Tonne™ Tether Mini, for localized gravity!</i><p>
 
-<p><i>Did you know..? The Gravi-Tonne™ Tether System will last for months with proper care!</i><p>
-
-<h3>STATUS INDICATOR</h3>
-<p>The status indicators are located in the top-left area of the main front panel. The color and pattern indicate system status:</p>
-<ul>
-	<li><b>Green / Steady</b>: providing gravity.</li>
-	<li><b>Yellow / Alternating</b>: online, but inactive.</li>
-	<li><b>Red / Blinking</b>: malfunction.</li>
-	<li><b>Blue / Bouncing</b>: processing.</li>
-</ul>
-<p><i>Did you know..? <b>Schedule an appointment with an Officially Licensed Gravi-Tonne™ Tether Gravitician® today!</b></i></p>
+<hr>
+<b>Schedule an appointment with an Officially Licensed Gravi-Tonne™ Tether Gravitician® today!</b>
 <hr>
 <p><i>The Terra Nivium Gravi-Tonne™ Tether, keeps you and your crops planted!<br>
 Reproduction of training and operating materials strictly prohibited by law.</i></p>

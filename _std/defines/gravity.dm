@@ -1,12 +1,11 @@
-
-/// Minimum gravity to grant partial traction
+/// Minimum g-force to grant partial traction
 #define TRACTION_GFORCE_PARTIAL 0.2
-/// Minimum gravity to grant full traction
+/// Minimum g-force to grant full traction
 #define TRACTION_GFORCE_FULL 0.8
 
 /// AM has no traction
 #define TRACTION_NONE 0
-/// AM has partial friction - mob force-moved until
+/// AM has partial friction - mob force-moved until it settles
 #define TRACTION_PARTIAL 1
 /// AM has full traction - mob not forced moved
 #define TRACTION_FULL 2
@@ -32,6 +31,8 @@
 #define GRAVITY_DESC_NORMAL "You feel like you're on Earth."
 #define GRAVITY_DESC_HIGH "You feel heavier than usual."
 #define GRAVITY_DESC_EXTREME "You feel extremely heavy."
+
+
 // gravity tethers
 
 // balance defines
@@ -47,6 +48,12 @@
 #define TETHER_CHARGE_DRAINING 1
 #define TETHER_CHARGE_CHARGING 2
 
+// battery charge thresholds
+#define TETHER_BATTERY_CHARGE_LOW 0
+#define TETHER_BATTERY_CHARGE_MEDIUM 30
+#define TETHER_BATTERY_CHARGE_HIGH 60
+#define TETHER_BATTERY_CHARGE_FULL 95
+
 // maintenance panel door states
 #define TETHER_DOOR_OPEN 1
 #define TETHER_DOOR_CLOSED 2
@@ -60,3 +67,7 @@
 
 #define TETHER_INTENSITY_MAX_DEFAULT 1.5
 #define TETHER_INTENSITY_MAX_EMAG 4
+
+#define TETHER_PROCESSING_STABLE 0
+#define TETHER_PROCESSING_PENDING 1
+#define TETHER_PROCESSING_COOLDOWN 2

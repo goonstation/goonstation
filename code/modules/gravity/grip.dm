@@ -1,16 +1,17 @@
 /// Total number of atoms providing grip on this turf
 ///
 /// This is used  to determine if the turf can provide grip.
-
 /turf/var/grip_atom_count = 0
+
+// walls always grippable
 /turf/simulated/wall/grip_atom_count = 1
 /turf/unsimulated/wall/grip_atom_count = 1
-// walls always grippable
 
-//TODO: Remove compatibilty patch
+//TODO: Remove compatibilty patch after secret update
 /atom/var/stops_space_move = FALSE
 /turf/simulated/floor/stops_space_move = TRUE
 /turf/simulated/wall/stops_space_move = TRUE
+/obj/lattice/stops_space_move = TRUE
 
 /// Get a live count of the number of grippable objects
 /turf/proc/calculate_grippy_objects()
@@ -32,20 +33,11 @@
 		return TRUE
 	if (my_turf.grip_atom_count > 0)
 		return TRUE
-	for (var/turf/neighboring_turf in getneighbours(my_turf))
-		if (neighboring_turf.grip_atom_count > 0)
+	for (var/dir in alldirs)
+		var/turf/neighbor = get_turf(get_step(src, dir))
+		if (neighbor?.grip_atom_count > 0)
 			return TRUE
 	return FALSE
-
-/mob/living/carbon/human/has_grip()
-	if (is_incapacitated(src) || !src.has_any_hands())
-		return FALSE
-	. = ..()
-
-/mob/living/silicon/robot/has_grip()
-	if (is_incapacitated(src) || (!src.part_arm_r && !src.part_arm_l))
-		return FALSE
-	. = ..()
 
 /datum/infooverlay/grip_info
 	name = "grip-info"
