@@ -417,7 +417,7 @@
 	controlpc_hv
 		linkText = "(Move the lever up to increase the voltage.)"
 		nodeText = {"The water outside stirs with rage, like watching the world's largest kettle. With a pained wave of energy from the creature the emitters go dark, and the creature rapidly ascends. <br>
-		The black scales from the process itch with vengeful life."}
+		A black scale falling from the process itches with vengeful life."}
 		links = list()
 
 		canShow(var/client/C)
