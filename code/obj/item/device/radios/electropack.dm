@@ -45,7 +45,7 @@ TYPEINFO(/obj/item/device/radio/electropack)
 	var/electropack_assembly_contraband_level = 4
 	// we update the contraband now to reflect the newly added tank
 	APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_GUNS, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), electropack_assembly_contraband_level))
-	SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	// trigger/electropack-Assembly + cell -> trigger/electropack/cell assembly
 	parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/cell), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
 
