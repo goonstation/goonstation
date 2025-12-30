@@ -20625,26 +20625,25 @@
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/inner/central)
 "bnp" = (
-/obj/table/auto,
-/obj/item/hand_labeler,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/shipcomponent/mainweapon/phaser,
-/obj/item/shipcomponent/mainweapon/taser,
-/obj/item/crowbar,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
 /area/station/hangar/sec)
 "bnq" = (
-/obj/table/auto,
 /obj/random_item_spawner/tools,
+/obj/item/storage/toolbox/mechanical,
+/obj/table/auto,
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
 /area/station/hangar/sec)
 "bnr" = (
 /obj/machinery/light/small,
-/obj/reagent_dispensers/fueltank,
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/phaser,
+/obj/item/hand_labeler,
+/obj/item/crowbar,
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
@@ -20663,6 +20662,23 @@
 "bnt" = (
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
+	},
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /turf/simulated/floor/caution/north{
 	dir = 1
@@ -54835,7 +54851,7 @@
 "fRJ" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /obj/disposalpipe/segment/mail/vertical,
-/turf/space,
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "fSi" = (
 /obj/machinery/optable,
@@ -70638,6 +70654,26 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"tTw" = (
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/security/checkpoint/podbay)
 "tTK" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -104926,7 +104962,7 @@ mzz
 bLp
 rbn
 fjS
-bQe
+tTw
 xyL
 bQe
 bQe
@@ -130277,7 +130313,7 @@ bit
 bkp
 bko
 bkp
-bnu
+bnv
 boW
 bqH
 bsu
@@ -130579,7 +130615,7 @@ biu
 bkp
 bkq
 blS
-bnv
+bnu
 boX
 bqI
 bsv

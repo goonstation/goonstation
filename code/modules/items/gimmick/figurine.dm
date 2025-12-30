@@ -1113,6 +1113,30 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper The Mucus Man"
 		icon_state = "themucusman"
 		ckey = "ithebinman"
+	snugglycactus
+		name = "\improper Ribbert McFrogg"
+		icon_state = "ribbertmcfrogg"
+		ckey = "snugglycactus"
+	b0opy
+		name = "\improper Dementia Dan"
+		icon_state = "dementiadan"
+		ckey = "b0opy"
+	haikuart
+		name = "\improper Rocky Roach"
+		icon_state = "rockyroach"
+		ckey = "haikuart"
+	warsometimeschanges
+		name = "\improper Alice Dawn"
+		icon_state = "alicedawn"
+		ckey = "warsometimeschanges"
+	annmageddon
+		name = "\improper Charlotte Chirtte"
+		icon_state = "charlottechirtte"
+		ckey = "annmageddon"
+	literallily
+		name = "\improper Amanita Clearwater"
+		icon_state = "amanitaclearwater"
+		ckey = "literallily"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

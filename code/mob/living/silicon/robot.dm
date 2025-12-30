@@ -179,8 +179,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					if(P.robot_movement_modifier)
 						APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
 
-		if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
-			src.flags ^= TABLEPASS
+		src.recalculate_tablepass()
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
@@ -2791,6 +2790,9 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.i_arm_r = null
 				src.i_hand_r = null
 
+		if (part == "r_leg" || part == "l_leg" || update_all)
+			src.recalculate_tablepass()
+
 		if (C)
 			if (C.legs_mod && (src.part_leg_r || src.part_leg_l) && (!src.part_leg_r || src.part_leg_r.slot != "leg_both") && (!src.part_leg_l || src.part_leg_l.slot != "leg_both"))
 				src.i_leg_decor = image('icons/mob/robots_decor.dmi', "legs-" + C.legs_mod, layer=MOB_BODYDETAIL_LAYER2)
@@ -3355,6 +3357,11 @@ TYPEINFO(/mob/living/silicon/robot)
 	src.hud.update_tools()
 	src.hud.update_equipment()
 
+/mob/living/silicon/robot/proc/recalculate_tablepass()
+	if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
+		src.flags |= TABLEPASS
+	else
+		src.flags &= ~TABLEPASS
 ///////////////////////////////////////////////////
 // Specific instances of robots can go down here //
 ///////////////////////////////////////////////////
