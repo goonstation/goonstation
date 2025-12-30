@@ -332,21 +332,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"aby" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/mesh/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/small_backup2)
 "abz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1315,30 +1300,6 @@
 	},
 /turf/simulated/floor/airless/black,
 /area/station/turret_protected/AIbaseoutside)
-"aeI" = (
-/obj/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/mesh/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/small_backup2)
-"aeJ" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/mesh/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/small_backup2)
 "aeK" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -1852,22 +1813,6 @@
 	dir = 5
 	},
 /area/station/turret_protected/ai_upload)
-"agt" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mesh/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/small_backup2)
 "agu" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -2434,18 +2379,6 @@
 "aiq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload_foyer)
-"ait" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mesh/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/small_backup2)
 "aiu" = (
 /obj/table/auto,
 /turf/simulated/floor/airless/plating/damaged3,
@@ -3909,15 +3842,6 @@
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
-"and" = (
-/obj/machinery/mass_driver{
-	drive_range = 5;
-	id = "chapel_dock_down";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "ane" = (
 /obj/machinery/gibber/output_east,
 /turf/simulated/floor/specialroom/freezer,
@@ -5578,19 +5502,6 @@
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
-"asz" = (
-/obj/machinery/mass_driver{
-	drive_range = 5;
-	id = "chapel_dock_down";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "chapel_dock_down";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "asB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6726,20 +6637,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"avP" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 7;
-	id = "chapel_dock_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "chapel_dock_up";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "avR" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/drinks/fueltank,
@@ -7042,16 +6939,6 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"awW" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 7;
-	id = "chapel_dock_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "awX" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating/scorched,
@@ -7833,15 +7720,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
-"ayS" = (
-/obj/machinery/mass_driver{
-	drive_range = 7;
-	id = "garden_down";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "ayT" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -8177,16 +8055,6 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"azS" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 5;
-	id = "garden_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "azT" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/small{
@@ -10598,19 +10466,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
-"aGO" = (
-/obj/machinery/mass_driver{
-	drive_range = 7;
-	id = "garden_down";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "garden_down";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/garden)
 "aGQ" = (
 /obj/shrub,
 /obj/cable{
@@ -12424,20 +12279,6 @@
 	},
 /obj/landmark/kudzu,
 /turf/simulated/floor/grass/random,
-/area/station/crew_quarters/garden)
-"aMD" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 5;
-	id = "garden_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "garden_up";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
 /area/station/crew_quarters/garden)
 "aMI" = (
 /obj/stool/bed,
@@ -14438,15 +14279,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbooth)
-"aSB" = (
-/obj/machinery/mass_driver{
-	drive_range = 5;
-	id = "owlery_down";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aSD" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15629,19 +15461,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
-"aWo" = (
-/obj/machinery/mass_driver{
-	drive_range = 5;
-	id = "owlery_down";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "owlery_down";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aWp" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -17113,20 +16932,6 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
-"baO" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 5;
-	id = "owlery_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "owlery_up";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "baQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -17204,16 +17009,6 @@
 /obj/decal/cleanable/cobweb2,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
-"bbh" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 5;
-	id = "owlery_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "bbi" = (
 /obj/cable{
@@ -20626,31 +20421,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/inner/central)
-"bnp" = (
-/obj/table/auto,
-/obj/item/hand_labeler,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/shipcomponent/mainweapon/phaser,
-/obj/item/shipcomponent/mainweapon/taser,
-/obj/item/crowbar,
-/turf/simulated/floor/caution/north{
-	dir = 1
-	},
-/area/station/hangar/sec)
-"bnq" = (
-/obj/table/auto,
-/obj/random_item_spawner/tools,
-/turf/simulated/floor/caution/north{
-	dir = 1
-	},
-/area/station/hangar/sec)
-"bnr" = (
-/obj/machinery/light/small,
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/caution/north{
-	dir = 1
-	},
-/area/station/hangar/sec)
 "bns" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20659,14 +20429,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/stairs{
-	dir = 1
-	},
-/area/station/hangar/sec)
-"bnt" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/turf/simulated/floor/caution/north{
 	dir = 1
 	},
 /area/station/hangar/sec)
@@ -22760,31 +22522,6 @@
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
-"bub" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 5;
-	id = "security_in";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/routing/depot)
-"buc" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 4;
-	id = "security_in";
-	name = "cargo driver";
-	bonus_range = 4
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "security_in";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/routing/depot)
 "bud" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor{
 	dir = 1
@@ -23539,6 +23276,20 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
+"bwt" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 5;
+	id = "owlery_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "owlery_up";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "bwu" = (
 /obj/machinery/light,
 /obj/cable{
@@ -25615,15 +25366,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
-"bCZ" = (
-/obj/machinery/mass_driver{
-	drive_range = 8;
-	id = "router_down";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/routing/depot)
 "bDa" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating/scorched,
@@ -26230,19 +25972,6 @@
 /obj/decal/poster/wallsign/hazard_caution,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/routing/depot)
-"bEW" = (
-/obj/machinery/mass_driver{
-	drive_range = 8;
-	id = "router_down";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "router_down";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bEX" = (
 /turf/simulated/floor/stairs{
@@ -28823,21 +28552,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating/scorched,
 /area/station/routing/depot)
-"bMk" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 8;
-	id = "router_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "router_up";
-	name = "Cargo Door"
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/plating,
-/area/station/routing/depot)
 "bMm" = (
 /obj/machinery/launcher_loader/south,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -29324,17 +29038,6 @@
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating/damaged2,
-/area/station/routing/depot)
-"bNP" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 8;
-	id = "router_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bNW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -30288,10 +29991,6 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/inner/central)
-"bQX" = (
-/obj/sea_plant/anemone/lit,
-/turf/simulated/floor/sand,
-/area/station/hallway/primary/east)
 "bQY" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -30567,10 +30266,6 @@
 /obj/machinery/disposal_pipedispenser/mobile,
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
-"bRM" = (
-/obj/machinery/light/small/floor/blueish,
-/turf/simulated/floor/sand,
-/area/station/hallway/primary/east)
 "bRN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -31429,10 +31124,6 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/hallway/primary/west)
-"bUm" = (
-/obj/sea_plant/kelp,
-/turf/simulated/floor/sand,
-/area/station/hallway/primary/east)
 "bUn" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 1
@@ -31945,10 +31636,6 @@
 	icon_state = "fred2"
 	},
 /area/station/security/main)
-"bVS" = (
-/obj/sea_plant/seaweed,
-/turf/simulated/floor/sand,
-/area/station/hallway/primary/east)
 "bVT" = (
 /obj/table/wood/round/auto,
 /obj/item/kitchen/food_box/donut_box{
@@ -32055,12 +31742,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"bWj" = (
-/obj/fluid_spawner{
-	amount = 2000
-	},
-/turf/simulated/floor/sand,
-/area/station/hallway/primary/east)
 "bWk" = (
 /obj/machinery/teleport/portal_ring,
 /obj/decal/stripe_delivery,
@@ -32369,12 +32050,6 @@
 	icon_state = "fred1"
 	},
 /area/station/security/main)
-"bXn" = (
-/mob/living/critter/aquatic/fish/clown{
-	name = "Bessie"
-	},
-/turf/simulated/floor/sand,
-/area/station/hallway/primary/east)
 "bXo" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
@@ -33453,12 +33128,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
-"cbx" = (
-/mob/living/critter/aquatic/fish/clown{
-	name = "Ruffles"
-	},
-/turf/simulated/floor/sand,
-/area/station/hallway/primary/east)
 "cby" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 1
@@ -34978,15 +34647,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
-"cgX" = (
-/obj/machinery/mass_driver{
-	drive_range = 11;
-	id = "disposals_down";
-	name = "cargo driver";
-	bonus_range = 11
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "cgY" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -35216,19 +34876,6 @@
 "chS" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/disposal)
-"chT" = (
-/obj/machinery/mass_driver{
-	drive_range = 10;
-	id = "disposals_down";
-	name = "cargo driver";
-	bonus_range = 10
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "disposals_down";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "chU" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -37726,16 +37373,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/janitor/office)
-"cpt" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 8;
-	id = "market_up";
-	name = "cargo driver";
-	bonus_range = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "cpv" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -39657,20 +39294,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/disposal)
-"cvn" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 9;
-	id = "disposals_up";
-	name = "cargo driver";
-	bonus_range = 9
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "disposals_up";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "cvp" = (
 /obj/machinery/launcher_loader/south,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -40242,16 +39865,6 @@
 	dir = 1
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/disposal)
-"cwX" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 10;
-	id = "disposals_up";
-	name = "cargo driver";
-	bonus_range = 10
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "cwZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -41177,15 +40790,6 @@
 	icon_state = "fred4"
 	},
 /area/station/crew_quarters/market)
-"czO" = (
-/obj/machinery/mass_driver{
-	drive_range = 8;
-	id = "market_down";
-	name = "cargo driver";
-	bonus_range = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "czP" = (
 /obj/machinery/light{
 	dir = 8;
@@ -41691,19 +41295,6 @@
 /obj/machinery/launcher_loader/north,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "market_up";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
-"cBt" = (
-/obj/machinery/mass_driver{
-	drive_range = 8;
-	id = "market_down";
-	name = "cargo driver";
-	bonus_range = 4
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "market_down";
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/plating,
@@ -43567,20 +43158,6 @@
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/market)
-"cHv" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 8;
-	id = "market_up";
-	name = "cargo driver";
-	bonus_range = 4
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "market_up";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/market)
 "cHx" = (
 /obj/machinery/launcher_loader/south,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -43988,15 +43565,6 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north,
 /area/station/medical/head)
-"cJk" = (
-/obj/machinery/mass_driver{
-	drive_range = 8;
-	id = "cargo_down";
-	name = "cargo driver";
-	bonus_range = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "cJm" = (
 /obj/machinery/door/airlock/pyro/glass{
 	id = "medbay_entrance";
@@ -44941,19 +44509,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
-"cMS" = (
-/obj/machinery/mass_driver{
-	drive_range = 8;
-	id = "cargo_down";
-	name = "cargo driver";
-	bonus_range = 4
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "cargo_down";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "cMT" = (
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
@@ -46148,35 +45703,11 @@
 /obj/structure/girder,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/south)
-"cRA" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 8;
-	id = "cargo_up";
-	name = "cargo driver";
-	bonus_range = 4
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "cargo_up";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "cRB" = (
 /obj/machinery/launcher_loader/south,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "cargo_down";
 	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
-"cRC" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 8;
-	id = "cargo_up";
-	name = "cargo driver";
-	bonus_range = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -46493,18 +46024,6 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/southeast)
-"cSM" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "cSO" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -46563,23 +46082,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
-"cSY" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
-"cSZ" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/light_switch/north,
-/obj/railing/orange/reinforced,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "cTa" = (
 /obj/item/stamp,
 /turf/simulated/floor/plating/damaged1,
@@ -48595,22 +48097,6 @@
 "dau" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/magnet)
-"dav" = (
-/obj/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/mesh/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "daw" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -48846,16 +48332,6 @@
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
-"dbq" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mesh/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "dbr" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -50112,6 +49588,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"dgw" = (
+/obj/sea_plant/anemone/lit,
+/turf/simulated/floor/sand,
+/area/station/hallway/primary/east)
 "dgy" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -51954,6 +51434,10 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"dsC" = (
+/obj/sea_plant/seaweed,
+/turf/simulated/floor/sand,
+/area/station/hallway/primary/east)
 "dsQ" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -52969,6 +52453,19 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"eoW" = (
+/obj/machinery/mass_driver{
+	drive_range = 8;
+	id = "cargo_down";
+	name = "cargo driver";
+	bonus_range = 4
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "cargo_down";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "erl" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -53127,6 +52624,17 @@
 /obj/item/plant/herb/cannabis,
 /turf/simulated/floor/black,
 /area/station/security/evidence)
+"eBS" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 8;
+	id = "router_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "eBW" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -53803,16 +53311,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"fjp" = (
-/obj/mesh/catwalk{
-	dir = 6
-	},
-/obj/item/device/radio/intercom/mining,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "fjy" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
@@ -53920,6 +53418,16 @@
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/entry)
+"fnO" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 7;
+	id = "chapel_dock_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "fnP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6;
@@ -54096,6 +53604,16 @@
 	dir = 1
 	},
 /area/research_outpost)
+"fwA" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "fxZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54401,6 +53919,16 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
+"fNd" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 5;
+	id = "owlery_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "fNk" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -54494,7 +54022,7 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"fRW" = (
+"fRJ" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/shuttlebay,
@@ -55059,6 +54587,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"guD" = (
+/obj/machinery/mass_driver{
+	drive_range = 11;
+	id = "disposals_down";
+	name = "cargo driver";
+	bonus_range = 11
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "guU" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/supernorn,
@@ -55740,6 +55277,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/core)
+"hbe" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "hbJ" = (
 /obj/stool/chair/office,
 /obj/landmark/start/job/roboticist,
@@ -55817,6 +55364,19 @@
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
+"heO" = (
+/obj/machinery/mass_driver{
+	drive_range = 8;
+	id = "router_down";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "router_down";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "heQ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -55889,6 +55449,22 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge/customs)
+"hhF" = (
+/obj/cable,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "W APC";
+	pixel_x = -24
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "hik" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -57137,6 +56713,16 @@
 	dir = 4
 	},
 /area/station/solar/north)
+"ifb" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/light_switch/north,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "ifh" = (
 /obj/machinery/atmospherics/unary/portables_connector,
 /obj/item/storage/wall/emergency{
@@ -57843,6 +57429,12 @@
 	icon_state = "corner_east"
 	},
 /area/station/mining/staff_room)
+"iMv" = (
+/mob/living/critter/aquatic/fish/clown{
+	name = "Bessie"
+	},
+/turf/simulated/floor/sand,
+/area/station/hallway/primary/east)
 "iMz" = (
 /obj/table/wood/auto,
 /obj/mapping_helper/firedoor_spawn,
@@ -58015,6 +57607,10 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
+"iTX" = (
+/obj/machinery/light/small/floor/blueish,
+/turf/simulated/floor/sand,
+/area/station/hallway/primary/east)
 "iUL" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -58053,6 +57649,19 @@
 /obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
+"iXi" = (
+/obj/machinery/mass_driver{
+	drive_range = 5;
+	id = "chapel_dock_down";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "chapel_dock_down";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "iXJ" = (
 /obj/shrub,
 /obj/machinery/firealarm/directional/north,
@@ -58207,6 +57816,20 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
+"jdn" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 5;
+	id = "garden_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "garden_up";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/garden)
 "jdx" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass{
@@ -59698,15 +59321,6 @@
 /obj/machinery/light/traffic_light/trader_right/delay4,
 /turf/space,
 /area/space)
-"kiS" = (
-/obj/mesh/catwalk{
-	dir = 6
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "kiT" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -60407,6 +60021,20 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"kQB" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 9;
+	id = "disposals_up";
+	name = "cargo driver";
+	bonus_range = 9
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "disposals_up";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "kQX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -61098,6 +60726,23 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"ltJ" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
+"lud" = (
+/obj/machinery/light/small,
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/phaser,
+/obj/item/hand_labeler,
+/obj/item/crowbar,
+/turf/simulated/floor/caution/north{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "lur" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/television/small{
@@ -62222,6 +61867,16 @@
 	dir = 4
 	},
 /area/space)
+"mte" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 10;
+	id = "disposals_up";
+	name = "cargo driver";
+	bonus_range = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "mts" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/atmospherics/binary/valve/notify_admins{
@@ -62303,6 +61958,18 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"mxs" = (
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/small_backup2)
 "mxt" = (
 /obj/disposalpipe/segment,
 /obj/cable/orange{
@@ -62527,6 +62194,15 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"mFO" = (
+/obj/machinery/mass_driver{
+	drive_range = 7;
+	id = "garden_down";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "mGa" = (
 /obj/machinery/conveyor/SN{
 	id = "chapel"
@@ -62714,6 +62390,12 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"mMZ" = (
+/mob/living/critter/aquatic/fish/clown{
+	name = "Ruffles"
+	},
+/turf/simulated/floor/sand,
+/area/station/hallway/primary/east)
 "mNd" = (
 /obj/machinery/firealarm/directional/west,
 /obj/submachine/ATM{
@@ -62723,6 +62405,18 @@
 	dir = 9
 	},
 /area/station/crew_quarters/market)
+"mNA" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/small_backup2)
 "mNS" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/horizontal,
@@ -63007,6 +62701,18 @@
 "mZD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/toilets)
+"nar" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "nat" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -63366,16 +63072,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/hop)
-"nrh" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/mesh/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/station/mining/magnet)
 "nsk" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating/scorched,
@@ -63514,6 +63210,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"nxO" = (
+/obj/machinery/mass_driver{
+	drive_range = 8;
+	id = "market_down";
+	name = "cargo driver";
+	bonus_range = 4
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "market_down";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "nye" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
@@ -63668,6 +63377,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"nFn" = (
+/obj/machinery/mass_driver{
+	drive_range = 8;
+	id = "cargo_down";
+	name = "cargo driver";
+	bonus_range = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "nFt" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -65559,6 +65277,12 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"pvY" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/caution/north{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "pwM" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -66208,6 +65932,29 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
+"pXf" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 5;
+	id = "garden_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
+"pXx" = (
+/obj/machinery/mass_driver{
+	drive_range = 7;
+	id = "garden_down";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "garden_down";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/garden)
 "pXP" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -66293,6 +66040,15 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"qaI" = (
+/obj/machinery/mass_driver{
+	drive_range = 8;
+	id = "market_down";
+	name = "cargo driver";
+	bonus_range = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "qaU" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -66462,6 +66218,21 @@
 	dir = 6
 	},
 /area/station/hydroponics/bay)
+"qkG" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/small_backup2)
 "qkQ" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
@@ -66733,6 +66504,21 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"qxG" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 4;
+	id = "security_in";
+	name = "cargo driver";
+	bonus_range = 4
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "security_in";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "qyf" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -66787,6 +66573,20 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
+"qzu" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 8;
+	id = "market_up";
+	name = "cargo driver";
+	bonus_range = 4
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "market_up";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/market)
 "qzA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -67143,6 +66943,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
+"qNy" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 8;
+	id = "cargo_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "qNE" = (
 /obj/table/reinforced/auto,
 /obj/decal/stripe_delivery,
@@ -68222,6 +68032,19 @@
 	dir = 6
 	},
 /area/station/security/main)
+"rMO" = (
+/obj/machinery/mass_driver{
+	drive_range = 10;
+	id = "disposals_down";
+	name = "cargo driver";
+	bonus_range = 10
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "disposals_down";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "rMQ" = (
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/yellow/side{
@@ -68285,6 +68108,19 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
+"rOJ" = (
+/obj/machinery/mass_driver{
+	drive_range = 5;
+	id = "owlery_down";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "owlery_down";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "rPV" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
@@ -68620,6 +68456,12 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
+"sex" = (
+/obj/fluid_spawner{
+	amount = 2000
+	},
+/turf/simulated/floor/sand,
+/area/station/hallway/primary/east)
 "sfr" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -69041,6 +68883,21 @@
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/black,
 /area/station/ranch)
+"sxa" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 8;
+	id = "router_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "router_up";
+	name = "Cargo Door"
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "sxK" = (
 /obj/disposalpipe/segment,
 /obj/mesh/catwalk,
@@ -69553,6 +69410,31 @@
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_west)
+"sTl" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/simulated/floor/caution/north{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "sTC" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -69787,6 +69669,14 @@
 /obj/mapping_helper/access/engineering_mechanic,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"tgC" = (
+/obj/random_item_spawner/tools,
+/obj/item/storage/toolbox/mechanical,
+/obj/table/auto,
+/turf/simulated/floor/caution/north{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "thb" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/item/storage/wall/emergency{
@@ -70647,6 +70537,26 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"tTw" = (
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/security/checkpoint/podbay)
 "tTK" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -71191,6 +71101,18 @@
 	dir = 9
 	},
 /area/station/catwalk/south)
+"uBt" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/small_backup2)
 "uBy" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
@@ -71766,6 +71688,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"vdG" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 8;
+	id = "market_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "vdM" = (
 /obj/shrub{
 	dir = 6
@@ -71950,6 +71882,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/ne)
+"vpC" = (
+/obj/sea_plant/kelp,
+/turf/simulated/floor/sand,
+/area/station/hallway/primary/east)
 "vqu" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -72322,6 +72258,20 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
+"vFb" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 7;
+	id = "chapel_dock_up";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "chapel_dock_up";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "vFQ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -72572,6 +72522,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"vVO" = (
+/obj/machinery/mass_driver{
+	drive_range = 5;
+	id = "owlery_down";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "vVV" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -72700,6 +72659,20 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
+"wbl" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 8;
+	id = "cargo_up";
+	name = "cargo driver";
+	bonus_range = 4
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "cargo_up";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "wcb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -73228,6 +73201,22 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
+"wHm" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/small_backup2)
 "wHp" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -73353,6 +73342,16 @@
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"wQG" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 5;
+	id = "security_in";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "wQX" = (
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
@@ -73568,6 +73567,15 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"wZN" = (
+/obj/machinery/mass_driver{
+	drive_range = 5;
+	id = "chapel_dock_down";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "wZT" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -73695,6 +73703,16 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
+"xfp" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/item/device/radio/intercom/mining,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "xfw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
@@ -74479,6 +74497,15 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
+"xPS" = (
+/obj/machinery/mass_driver{
+	drive_range = 8;
+	id = "router_down";
+	name = "cargo driver";
+	bonus_range = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "xPX" = (
 /obj/health_scanner/floor{
 	dir = 8;
@@ -74897,6 +74924,15 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"yhI" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "yhO" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -105056,7 +105092,7 @@ mzz
 bLp
 rbn
 fjS
-bQe
+tTw
 xyL
 bQe
 bQe
@@ -124431,7 +124467,7 @@ cRr
 cSU
 kXd
 cIs
-cSM
+nar
 qQb
 rqa
 cXa
@@ -124733,7 +124769,7 @@ cRs
 cSV
 cUB
 tWC
-cSY
+ltJ
 qQb
 cfi
 vUy
@@ -124985,8 +125021,8 @@ bEU
 bGN
 bIE
 bKu
-bMk
-bNP
+sxa
+eBS
 bPt
 lAr
 lAr
@@ -125035,7 +125071,7 @@ cRt
 cSW
 cUC
 cIs
-cSZ
+ifb
 cUn
 gxb
 cXe
@@ -125584,8 +125620,8 @@ gtl
 gtl
 gtl
 bBc
-bCZ
-bEW
+xPS
+heO
 bGN
 bIG
 bKu
@@ -126144,8 +126180,8 @@ ssN
 wXK
 asU
 cVQ
-avP
-awW
+vFb
+fnO
 cKd
 ssN
 lzj
@@ -126154,8 +126190,8 @@ rpd
 aIt
 non
 aJQ
-aMD
-azS
+jdn
+pXf
 cKd
 ssN
 ssN
@@ -126166,8 +126202,8 @@ ssN
 jkQ
 clX
 aZX
-baO
-bbh
+bwt
+fNd
 cKd
 ssN
 ssN
@@ -126224,16 +126260,16 @@ cpl
 cgr
 cgr
 cgr
-cvn
-cwX
+kQB
+mte
 cyq
 oap
 cBr
 cCF
 cEi
 cCF
-cHv
-cpt
+qzu
+vdG
 cpB
 rqa
 rqa
@@ -126241,8 +126277,8 @@ rqa
 cMQ
 cOk
 cOk
-cRA
-cRC
+wbl
+qNy
 cpB
 rqa
 qUY
@@ -126744,8 +126780,8 @@ sCT
 sCT
 sCT
 cNg
-and
-asz
+wZN
+iXi
 asU
 cVQ
 qVR
@@ -126753,8 +126789,8 @@ sCT
 sCT
 sCT
 cNg
-ayS
-aGO
+mFO
+pXx
 aIt
 non
 vhv
@@ -126766,8 +126802,8 @@ sCT
 sCT
 sCT
 cNg
-aSB
-aWo
+vVO
+rOJ
 aYJ
 aZY
 qyf
@@ -126787,7 +126823,7 @@ fEF
 jWi
 duA
 blK
-bub
+wQG
 bvL
 duA
 blK
@@ -126818,8 +126854,8 @@ aaa
 cfy
 mnM
 cgu
-cgX
-chT
+guD
+rMO
 ciX
 cgr
 clT
@@ -126831,8 +126867,8 @@ cub
 cvp
 mnM
 cys
-czO
-cBt
+qaI
+nxO
 rhS
 cEk
 cCF
@@ -126841,8 +126877,8 @@ gxb
 gxb
 gxb
 hyI
-cJk
-cMS
+nFn
+eoW
 cOk
 cOk
 cRB
@@ -127089,7 +127125,7 @@ bnk
 boN
 blK
 bgK
-buc
+qxG
 bvM
 bxP
 blI
@@ -128893,11 +128929,11 @@ qKM
 aaa
 bgM
 bhD
-fRW
+fRJ
 bja
 bkk
 blQ
-bnp
+pvY
 boU
 ieF
 bsq
@@ -129199,7 +129235,7 @@ bit
 bjb
 bkl
 bkm
-bnq
+tgC
 boU
 mUF
 bsr
@@ -129501,7 +129537,7 @@ bit
 bjb
 bkm
 bkm
-bnr
+lud
 boU
 bqE
 vwH
@@ -130105,7 +130141,7 @@ bit
 bkp
 bkp
 bkp
-bnt
+sTl
 boU
 bvZ
 bBH
@@ -130407,7 +130443,7 @@ bit
 bkp
 bko
 bkp
-bnu
+bnv
 boW
 bqH
 bsu
@@ -130709,7 +130745,7 @@ biu
 bkp
 bkq
 blS
-bnv
+bnu
 boX
 bqI
 bsv
@@ -135304,11 +135340,11 @@ cTk
 ttT
 cVV
 lYD
-dbq
-dbq
-dav
-dbq
-nrh
+fwA
+fwA
+hhF
+fwA
+hbe
 rSO
 ohQ
 ohQ
@@ -135488,13 +135524,13 @@ hwh
 vMH
 vMH
 evs
-aeI
-aby
-agt
-ait
-ait
-ait
-ait
+mxs
+qkG
+wHm
+uBt
+uBt
+uBt
+uBt
 iqW
 iqW
 iqW
@@ -135790,7 +135826,7 @@ aaF
 wwk
 oic
 oic
-aeJ
+mNA
 wiN
 oic
 oic
@@ -135854,9 +135890,9 @@ bmg
 bmg
 bmg
 bJb
-bQX
-bVS
-cbx
+dgw
+dsC
+mMZ
 bJb
 bmg
 bmg
@@ -136156,9 +136192,9 @@ bmg
 bBA
 bmg
 bJb
-bRM
-bWj
-bRM
+iTX
+sex
+iTX
 bJb
 cdO
 bPL
@@ -136458,9 +136494,9 @@ bzU
 bzU
 bDt
 bJb
-bUm
-bXn
-bUm
+vpC
+iMv
+vpC
 bJb
 bmg
 bmg
@@ -136815,7 +136851,7 @@ dqF
 jio
 jio
 dau
-fjp
+xfp
 dau
 dbs
 dbs
@@ -137117,7 +137153,7 @@ dqF
 dqF
 dqF
 jio
-kiS
+yhI
 abs
 aaa
 aaa

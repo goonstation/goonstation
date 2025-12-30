@@ -46888,6 +46888,10 @@
 	},
 /obj/table/auto,
 /obj/machinery/light_switch/east,
+/obj/item/device/detective_scanner{
+	pixel_x = 10;
+	pixel_y = 9
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "wUd" = (

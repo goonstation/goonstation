@@ -7,10 +7,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
 	amount = 1
 	heal_amt = 0
+	var/tasty = 0
 
 	heal(var/mob/M)
 		..()
-		boutput(M, SPAN_ALERT("It's just not good enough on its own..."))
+		if(!tasty)
+			boutput(M, SPAN_ALERT("It's just not good enough on its own..."))
 
 	afterattack(atom/target, mob/user, flag)
 		if (!src.reagents || !src.reagents?.total_volume || QDELETED(src)) return //how
