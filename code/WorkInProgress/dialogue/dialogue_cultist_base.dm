@@ -371,7 +371,7 @@
 		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
 		for(var/mob/living/carbon/human/H in (range(5)))
 			if(H.mind)
-				user.unlock_medal("Waking Dream", TRUE)
+				user.unlock_medal("Waking Nightmare", TRUE)
 		qdel(src)
 
 /datum/dialogueMaster/controlpc
