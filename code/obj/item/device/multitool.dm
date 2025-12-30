@@ -19,8 +19,8 @@ TYPEINFO(/obj/item/device/multitool)
 	m_amt = 50
 	g_amt = 20
 	custom_suicide = TRUE
-	var/spark_power = 5000 //! The amount of power needed to cause an upgraded spark in a cell-assembly
-	var/max_spark_power_usage = 20000 //! The amount of power consumed at maximum power.
+	var/spark_power = 2000 //! The amount of power needed to cause an upgraded spark in a cell-assembly
+	var/max_spark_power_usage = 8000 //! The amount of power consumed at maximum power.
 
 	New()
 		..()
