@@ -125,17 +125,16 @@ TYPEINFO(/obj/item/barrier)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "void_barrier"
 	c_flags = EQUIPPED_WHILE_HELD
-	force = 2
+	force = 8
 	throwforce = 6
 	w_class = W_CLASS_BULKY
 	stamina_damage = 50
 	stamina_cost = 35
 	stamina_crit_chance = 0
-	hitsound = 0
+	hitsound = 'sound/effects/exlow.ogg'
 
 	can_disarm = 0
 	two_handed = 1
-	special = /datum/item_special/barrier/void
 
 	setupProperties()
 		..()
@@ -147,6 +146,9 @@ TYPEINFO(/obj/item/barrier)
 		setProperty("disorient_resist_ear", 35) //idk how lol ok
 		setProperty("deflection", 25)
 		c_flags |= BLOCK_TOOLTIP
+
+		src.setItemSpecial(/datum/item_special/barrier/void)
+		BLOCK_SETUP(BLOCK_ALL)
 
 /obj/item/syndicate_barrier
 	name = "Aegis Riot Barrier"
@@ -173,5 +175,5 @@ TYPEINFO(/obj/item/barrier)
 		setProperty("disorient_resist_eye", 65)
 		setProperty("disorient_resist_ear", 50)
 
-		src.setItemSpecial(/datum/item_special/barrier)
+		src.setItemSpecial(/datum/item_special/barrier/syndie)
 		BLOCK_SETUP(BLOCK_ALL)

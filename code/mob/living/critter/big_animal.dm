@@ -101,7 +101,7 @@
 	ai_type = /datum/aiHolder/ranged
 	is_npc = TRUE
 	butcherable = BUTCHER_ALLOWED
-	meat_type = null
+	meat_type = /obj/item/reagent_containers/food/snacks/ectoplasm
 	skinresult = /obj/item/void_shield
 	max_skins = 1
 
