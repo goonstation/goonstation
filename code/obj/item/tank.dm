@@ -369,7 +369,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 		parent_assembly.target_item_prefix = "plasma"
 		// we update the contraband now to reflect the newly added tank
 		APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_GUNS, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), singletank_bomb_contraband_level))
-		SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+		SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 
 	/// ----------------------------------------------
 
