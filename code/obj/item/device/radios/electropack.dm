@@ -70,13 +70,13 @@ TYPEINFO(/obj/item/device/radio/electropack)
 			var/turf/current_turf = get_turf(src)
 			var/atom/target = null
 			var/list/target_group = list()
-			for(var/mob/iterated_mob in viewers(6, current_turf))
+			for(var/mob/iterated_mob in viewers(4, current_turf))
 				//We discard any intangible mob
 				if(!isintangible(iterated_mob))
 					target_group += iterated_mob
 			if(!length(target_group))
 				//if we don't find any mob in range, we pick a random turf instead
-				for(var/turf/iterated_turf in range(6, current_turf))
+				for(var/turf/iterated_turf in range(4, current_turf))
 					target_group += iterated_turf
 			// once we have a target group, we pick a target and arcflash them
 			target = pick(target_group)
