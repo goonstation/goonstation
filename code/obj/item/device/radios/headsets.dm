@@ -107,17 +107,18 @@
 /obj/item/device/radio/headset/command/nt
 	name = "\improper NanoTrasen headset"
 	desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
+	icon_tooltip = "NanoTrasen Ancillary"
+	icon_override = "nt"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY,
 		)
-	icon_override = "nt"
-	icon_tooltip = "NanoTrasen Special Operative"
 
 /obj/item/device/radio/headset/command/nt/commander
-	name = "\improper NT Commander's headset"
+	name = "\improper NanoTrasen Commander headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+	icon_tooltip = "NanoTrasen Commander"
+	icon_override = "ntboss"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
@@ -127,14 +128,29 @@
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
-	icon_override = "ntboss"
-	icon_tooltip = "Nanotrasen Commander"
 
 /obj/item/device/radio/headset/command/nt/consultant
+	name = "\improper NanoTrasen Consultant headset"
 	icon_tooltip = "NanoTrasen Security Consultant"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		)
+
+/obj/item/device/radio/headset/command/nt/special_operative
+	name = "\improper NanoTrasen Operative headset"
+	icon_tooltip = "NanoTrasen Special Operative"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		)
 
 /obj/item/device/radio/headset/command/nt/engineer
-	icon_tooltip = "Nanotrasen Emergency Repair Technician"
+	name = "\improper NanoTrasen Engineer headset"
+	icon_tooltip = "NanoTrasen Emergency Repair Technician"
+	icon_override = "nt_eng"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
@@ -142,7 +158,9 @@
 		)
 
 /obj/item/device/radio/headset/command/nt/medic
-	icon_tooltip = "Nanotrasen Emergency Medic"
+	name = "\improper NanoTrasen Medic headset"
+	icon_tooltip = "NanoTrasen Emergency Medic"
+	icon_override = "nt_med"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
@@ -553,66 +571,3 @@ Secure Frequency:
 			var/new_frequency = sanitize_frequency(text2num_safe("[secure_frequencies["h"]]") + text2num_safe(href_list["sfreq"]))
 			set_secure_frequency("h", new_frequency)
 	return ..(href, href_list)
-
-TYPEINFO(/obj/item/device/radio_upgrade)
-	mats = 12
-
-/obj/item/device/radio_upgrade //traitor radio upgrader
-	name = "wiretap radio upgrade"
-	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "syndie_upgr"
-	w_class = W_CLASS_TINY
-	is_syndicate = 1
-	var/secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY,
-		"e" = R_FREQ_ENGINEERING,
-		"r" = R_FREQ_RESEARCH,
-		"m" = R_FREQ_MEDICAL,
-		"c" = R_FREQ_CIVILIAN,
-		"z" = R_FREQ_SYNDICATE,
-		)
-	var/secure_classes = list()
-
-	conspirator
-		name = "private radio channel upgrade"
-		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
-		secure_frequencies = null
-		secure_classes = null
-
-		New()
-			..()
-			var/datum/game_mode/conspiracy/C = new /datum/game_mode/conspiracy
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
-				C = ticker.mode
-			src.secure_frequencies = list("z" = C.agent_radiofreq)
-			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
-
-	gang
-		name = "private radio channel upgrade"
-		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
-		secure_frequencies = null
-		secure_classes = null
-
-		New(turf/newLoc, var/frequency)
-			..()
-			if (!frequency)
-				return
-
-			src.secure_frequencies = list("z" = frequency)
-			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
-
-	// Crimers gotta crime
-	syndicatechannel
-		name = "syndicate radio channel upgrade"
-		desc = "A device capable of upgrading a headset to allow access over the syndicate radio channel"
-		icon_state = "syndie_radio_channel_upgrade"
-		secure_frequencies = list("z" = R_FREQ_SYNDICATE)
-
-	// For the super crimers (admin shenanigans)
-	nanotrasen
-		name = "nanotrasen radio channel upgrade"
-		desc = "A device capable of upgrading a headset to allow access over the Nanotrasen radio channel"
-		icon_state = "nt_radio_channel_upgrade"
-		secure_frequencies = list("n" = R_FREQ_NANOTRASEN)

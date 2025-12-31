@@ -202,7 +202,7 @@ TYPEINFO(/mob)
 
 	var/last_cubed = 0
 
-	var/datum/movement_controller/override_movement_controller = null
+	var/list/movement_controller_list = list()
 
 	var/dir_locked = FALSE
 
@@ -1234,10 +1234,10 @@ TYPEINFO(/mob)
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey && !src.mind?.get_player()?.dnr)
+	if(src.ckey && !src.mind?.get_player()?.dnr && !src.mind?.get_player()?.joined_observer)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	// stop piloting pods or whatever
-	src.override_movement_controller = null
+	src.movement_controller_list = list()
 	// stop pulling shit!!
 	src.remove_pulling()
 
@@ -3367,7 +3367,7 @@ TYPEINFO(/mob)
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as null|anything in items
+		var/atom/A = tgui_input_list(src, "What do you want to pick up?", "", items, start_with_search = TRUE)
 		if (A)
 			src.client?.Click(A, get_turf(A))
 
@@ -3515,3 +3515,22 @@ TYPEINFO(/mob)
 /// total value of the cache. The cache will be reset during the tick regardless of whether or not the mob has active addictions.
 /mob/proc/try_affect_all_addictions(var/value)
 	return FALSE
+
+/mob/proc/add_movement_controller(datum/movement_controller/movement_controller)
+	src.movement_controller_list.Add(movement_controller)
+
+/mob/proc/remove_movement_controller(datum/movement_controller/movement_controller = null)
+	if (!movement_controller)
+		src.movement_controller_list = list()
+		return
+
+	src.movement_controller_list.Remove(movement_controller)
+
+/mob/proc/get_active_movement_controller()
+	if (!length(src.movement_controller_list))
+		return null
+	return src.movement_controller_list[length(src.movement_controller_list)]
+
+
+
+

@@ -109,7 +109,7 @@ var/datum/job_controller/job_controls
 			return
 		if (job.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			return
-		if (job.requires_whitelist && !NT.Find(ckey(player.mind.key)))
+		if (job.requires_whitelist && !player.client.can_play_whitelisted_roles())
 			return
 		if (job.requires_supervisor_job && countJob(job.requires_supervisor_job) <= 0)
 			return

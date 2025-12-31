@@ -380,6 +380,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	UnregisterFromParent()
 		UnregisterSignal(src.parent, COMSIG_ITEM_PICKUP)
 		UnregisterSignal(src.parent, COMSIG_ITEM_DROPPED)
+		src.viewer_client.images -= src.current_image
 
 	proc/on_pickup_drop()
 		SPAWN(0)
@@ -541,7 +542,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		get_name()
 			return pick("pig", "DAT FUKKEN PIG")
 	spider
-		fake_icon_state = "big_spide"
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "spider"
 		get_name()
 			return pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 	slime
