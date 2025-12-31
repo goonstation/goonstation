@@ -133,11 +133,9 @@ TYPEINFO(/obj/item/barrier)
 	stamina_cost = 35
 	stamina_crit_chance = 0
 	hitsound = 'sound/effects/exlow.ogg'
-	cflags = ONBACK
 
 	can_disarm = 0
 	two_handed = 1
-	on_back = 1
 
 	setupProperties()
 		..()
@@ -148,7 +146,7 @@ TYPEINFO(/obj/item/barrier)
 		setProperty("disorient_resist_eye", 45)
 		setProperty("disorient_resist_ear", 35) //idk how lol ok
 		setProperty("deflection", 25)
-		c_flags |= BLOCK_TOOLTIP
+		c_flags |= BLOCK_TOOLTIP && ONBACK
 
 		src.setItemSpecial(/datum/item_special/barrier/void)
 		BLOCK_SETUP(BLOCK_ALL)
