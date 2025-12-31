@@ -39,7 +39,8 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 					src.image = null
 					src.icon_from_thing = get_one_match(input("Type path", "Type path", "[src.spawnpath]"), /atom)
 			src.alphainput = tgui_input_number(usr, "Enter an alpha level.", "Alpha", 255, 255, 0)
-
+			if (src.image)
+				logTheThing(LOG_ADMIN, usr, "uploaded an image [src.image] to use with Fly Object Overhead buildmode")
 			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list("Leave zlevel", "Explode", "Fade away", "Run away"))
 		if (ctrl)
 			src.audio_choice = tgui_input_list(usr, "Loop sound globally or play once on arrival?", "Choose", list("Global loop", "Once", "Clear"))
@@ -47,7 +48,8 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				src.audio = null
 			else
 				src.audio = input(usr, "Upload a file:", "File Uploader - Long files WILL lag people out, sounds will loop.", null) as null|sound
-
+			if (src.audio)
+				logTheThing(LOG_ADMIN, usr, "uploaded a sound [src.audio] to use with Fly Object Overhead buildmode")
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
 			src.dir_input = tgui_input_list(usr, "Pick starting direction", "Direction", list(NORTH, SOUTH, EAST, WEST, "Random"))
@@ -73,6 +75,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
 			src.target_loc = get_turf(object)
+			logTheThing(LOG_ADMIN, usr, "uploaded ")
 			aim_pilot()
 
 	proc/aim_pilot() // Spawn pilot at edge of zlevel then redirect to target
