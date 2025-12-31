@@ -2030,6 +2030,11 @@
 	},
 /turf/space/fluid/acid,
 /area/space)
+"aWF" = (
+/obj/linen_bin/bedsheet,
+/obj/item/instrument/vuvuzela,
+/turf/simulated/floor/black/grime,
+/area/station/storage/warehouse)
 "aWJ" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -5738,7 +5743,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "cFj" = (
-/obj/machinery/vending/standard,
+/obj/fireworksbox,
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
 "cFl" = (
@@ -11624,15 +11629,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "fnC" = (
-/obj/storage/crate{
-	desc = "Whoa! What will they think of next?";
-	name = "Boxes in a Box"
-	},
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
 /obj/machinery/light,
+/obj/tug_cart{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/storage{
 	name = "Cargo Auxiliary Endpoint"
@@ -11945,12 +11945,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "ftR" = (
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/storage/crate,
+/obj/vehicle/tug,
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
 	},
@@ -14476,7 +14471,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "gwW" = (
-/obj/fireworksbox,
+/obj/machinery/vending/standard,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "gxc" = (
@@ -32203,11 +32198,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "nRc" = (
-/obj/storage/closet/office,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "nRm" = (
@@ -32921,7 +32916,7 @@
 /turf/simulated/floor/engine/caution/north,
 /area/station/bridge/reception)
 "ols" = (
-/obj/stool/chair{
+/obj/tug_cart{
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -36809,7 +36804,9 @@
 	},
 /area/station/medical/medbay/treatment2)
 "pYn" = (
-/obj/machinery/portable_reclaimer,
+/obj/vehicle/forklift{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
 "pYq" = (
@@ -38844,7 +38841,14 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "qZo" = (
-/obj/storage/crate/robotparts,
+/obj/storage/crate{
+	desc = "Whoa! What will they think of next?";
+	name = "Boxes in a Box"
+	},
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "qZF" = (
@@ -43672,15 +43676,11 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/east)
 "tly" = (
-/obj/storage/crate,
-/obj/item/wirecutters,
-/obj/item/device/flash,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
 /obj/machinery/light,
 /obj/machinery/camera/directional/west{
 	pixel_y = -10
 	},
+/obj/storage/closet/office,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "tlH" = (
@@ -52139,9 +52139,12 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southeast)
 "xhg" = (
-/obj/linen_bin/bedsheet,
-/obj/item/instrument/vuvuzela,
 /obj/machinery/light_switch/north,
+/obj/storage/crate,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/device/flash,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/wirecutters,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "xhh" = (
@@ -52374,10 +52377,11 @@
 /area/station/quartermaster/refinery)
 "xmC" = (
 /obj/storage/crate,
-/obj/item/device/light/glowstick,
-/obj/item/clothing/under/gimmick/chav,
-/obj/item/clothing/head/chav,
-/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "xmL" = (
@@ -104798,7 +104802,7 @@ vEo
 gok
 gJe
 fLy
-gwW
+oxB
 nes
 nes
 nes
@@ -105403,7 +105407,7 @@ hkH
 rZb
 aOb
 xQI
-nes
+aWF
 nes
 cFj
 nes
@@ -105708,7 +105712,7 @@ gdj
 wqY
 pCd
 vlO
-oxB
+gwW
 wwm
 eNz
 mlm
