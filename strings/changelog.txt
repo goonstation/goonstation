@@ -1,5 +1,9 @@
 
 (t)wed dec 31 25
+(u)cringe, the good looking sprites from Flaborized
+(p)23946
+(e)🆕🎨📄🔬|C-Feature, C-Sprites, A-UI, A-Science
+(*)Adds neat fluid pipes, now in the HPD.
 (u)QuiteLiterallyAnything
 (p)25426
 (e)🗺|A-Mapping
