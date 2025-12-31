@@ -32376,6 +32376,11 @@
 "fJg" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/barber_shop)
+"fJA" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/carousel/north,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "fJB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33107,6 +33112,16 @@
 /obj/machinery/computer/telescope,
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"gtJ" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/carousel/south,
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/crew_quarters/market)
 "guc" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -34140,11 +34155,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
-"hHe" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/arrivalnotifier/carousel/west,
-/turf/simulated/floor,
-/area/station/crew_quarters/cafeteria)
 "hHG" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -36101,6 +36111,14 @@
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"kbU" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/machinery/arrivalnotifier/carousel/east,
+/turf/simulated/floor,
+/area/station/maintenance/inner/central)
 "kdg" = (
 /obj/table/reinforced/bar/auto,
 /obj/decal/tile_edge/line/black{
@@ -36368,14 +36386,6 @@
 /obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/green,
 /area/station/storage/tools)
-"kup" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/machinery/arrivalnotifier/carousel/east,
-/turf/simulated/floor,
-/area/station/maintenance/inner/central)
 "kuQ" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
@@ -39153,6 +39163,11 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"nwx" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/carousel/west,
+/turf/simulated/floor,
+/area/station/crew_quarters/cafeteria)
 "nxg" = (
 /obj/table/auto,
 /obj/item/device/light/flashlight,
@@ -41933,16 +41948,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/oshan_arrivals)
-"qKx" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/stripe_delivery,
-/obj/machinery/arrivalnotifier/carousel/south,
-/turf/simulated/floor/green/side{
-	dir = 1
-	},
-/area/station/crew_quarters/market)
 "qLc" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
 /turf/simulated/floor/wood,
@@ -43141,6 +43146,27 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"soV" = (
+/obj/item/clothing/gloves/latex{
+	pixel_x = 0;
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/table/auto,
+/obj/machinery/light_switch/east,
+/obj/item/device/detective_scanner{
+	pixel_x = 10;
+	pixel_y = 9
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "spx" = (
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
@@ -45097,11 +45123,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
-"uES" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/arrivalnotifier/carousel/north,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "uEW" = (
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -46877,23 +46898,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/hangar/engine)
-"wTV" = (
-/obj/item/clothing/gloves/latex{
-	pixel_x = 0;
-	pixel_y = -2
-	},
-/obj/item/clothing/mask/surgical{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/device/analyzer/healthanalyzer{
-	pixel_x = -2;
-	pixel_y = 7
-	},
-/obj/table/auto,
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "wUd" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/oxygen,
@@ -83924,7 +83928,7 @@ biB
 vNX
 biB
 dmM
-hHe
+nwx
 fJg
 ujb
 xNc
@@ -88719,7 +88723,7 @@ ncq
 ayA
 fdg
 szI
-uES
+fJA
 aBG
 kdw
 clz
@@ -95042,7 +95046,7 @@ chD
 chD
 chD
 ahm
-wTV
+soV
 cGU
 ajJ
 akM
@@ -100255,7 +100259,7 @@ sAW
 bxf
 clI
 byh
-qKx
+gtJ
 byS
 bIm
 bJj
@@ -103536,7 +103540,7 @@ aHH
 aHH
 vDo
 chd
-kup
+kbU
 gCT
 gCT
 sBM

@@ -20624,31 +20624,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/inner/central)
-"bnp" = (
-/obj/table/auto,
-/obj/item/hand_labeler,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/shipcomponent/mainweapon/phaser,
-/obj/item/shipcomponent/mainweapon/taser,
-/obj/item/crowbar,
-/turf/simulated/floor/caution/north{
-	dir = 1
-	},
-/area/station/hangar/sec)
-"bnq" = (
-/obj/table/auto,
-/obj/random_item_spawner/tools,
-/turf/simulated/floor/caution/north{
-	dir = 1
-	},
-/area/station/hangar/sec)
-"bnr" = (
-/obj/machinery/light/small,
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/caution/north{
-	dir = 1
-	},
-/area/station/hangar/sec)
 "bns" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20657,14 +20632,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/stairs{
-	dir = 1
-	},
-/area/station/hangar/sec)
-"bnt" = (
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/turf/simulated/floor/caution/north{
 	dir = 1
 	},
 /area/station/hangar/sec)
@@ -22795,11 +22762,6 @@
 	name = "Cargo Door"
 	},
 /turf/simulated/floor/plating,
-/area/station/routing/security)
-"bug" = (
-/obj/disposalpipe/segment/transport,
-/obj/machinery/arrivalnotifier/security,
-/turf/simulated/floor/caution/west,
 /area/station/routing/security)
 "buh" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -32239,10 +32201,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/routing/engine)
-"bVx" = (
-/obj/machinery/arrivalnotifier/engine,
-/turf/simulated/floor/caution/east,
 /area/station/routing/engine)
 "bVz" = (
 /obj/machinery/launcher_loader/west,
@@ -48388,12 +48346,6 @@
 "cYk" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/qm)
-"cYn" = (
-/obj/machinery/cargo_router{
-	destinations = list("Arrivals"=4,"Medsci"=4,"Catering"=4,"Security"=4,"Disposals"=4,"Engine"=4,"Escape"=4,"Export"=4)
-	},
-/turf/simulated/floor/plating,
-/area/station/hangar/qm)
 "cYq" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
@@ -49425,13 +49377,6 @@
 /area/station/hangar/qm)
 "dca" = (
 /turf/simulated/floor/caution/northsouth,
-/area/station/hangar/qm)
-"dcb" = (
-/obj/machinery/mass_driver{
-	id = "qm_dock_out"
-	},
-/obj/machinery/arrivalnotifier/export,
-/turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "dcc" = (
 /obj/table/auto,
@@ -52657,6 +52602,12 @@
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"dFm" = (
+/obj/disposalpipe/segment,
+/obj/machinery/firealarm/directional/north,
+/obj/machinery/arrivalnotifier/undeliverable,
+/turf/simulated/floor/plating/scorched,
+/area/station/maintenance/northeast)
 "dGI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -53437,6 +53388,11 @@
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering)
+"eyN" = (
+/obj/disposalpipe/segment/transport,
+/obj/machinery/arrivalnotifier/security,
+/turf/simulated/floor/caution/west,
+/area/station/routing/security)
 "eza" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -53577,6 +53533,16 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
+"eHE" = (
+/obj/machinery/light/small,
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/phaser,
+/obj/item/hand_labeler,
+/obj/item/crowbar,
+/turf/simulated/floor/caution/north{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "eID" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/damaged1,
@@ -56436,6 +56402,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"huF" = (
+/obj/machinery/arrivalnotifier/engine,
+/turf/simulated/floor/caution/east,
+/area/station/routing/engine)
 "hvP" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -56557,6 +56527,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/catwalk/south)
+"hBu" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/caution/north{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "hBA" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/firealarm/directional/north,
@@ -58780,12 +58756,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_east)
-"joL" = (
-/obj/disposalpipe/segment,
-/obj/machinery/firealarm/directional/north,
-/obj/machinery/arrivalnotifier/undeliverable,
-/turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
 "joW" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -60688,6 +60658,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"kUn" = (
+/obj/machinery/mass_driver{
+	id = "qm_dock_out"
+	},
+/obj/machinery/arrivalnotifier/export,
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 "kUz" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -61260,6 +61237,14 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
+"ltm" = (
+/obj/random_item_spawner/tools,
+/obj/item/storage/toolbox/mechanical,
+/obj/table/auto,
+/turf/simulated/floor/caution/north{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "ltv" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -64681,6 +64666,31 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/research_outpost)
+"oxd" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/simulated/floor/caution/north{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "oxe" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/outer/ne)
@@ -65635,6 +65645,12 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"ptk" = (
+/obj/machinery/cargo_router{
+	destinations = list("Arrivals"=4,"Medsci"=4,"Catering"=4,"Security"=4,"Disposals"=4,"Engine"=4,"Escape"=4,"Export"=4)
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 "puo" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -65888,18 +65904,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/bridge)
-"pEb" = (
-/obj/machinery/conveyor/NS{
-	move_lag = 30;
-	name = "cargo belt - south";
-	operating = 1
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/arrivalnotifier/disposals,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "pFl" = (
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/stairs{
@@ -69842,6 +69846,18 @@
 /obj/mapping_helper/access/engineering_mechanic,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"tgU" = (
+/obj/machinery/conveyor/NS{
+	move_lag = 30;
+	name = "cargo belt - south";
+	operating = 1
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/arrivalnotifier/disposals,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "thb" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/item/storage/wall/emergency{
@@ -70667,6 +70683,26 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"tTw" = (
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/security/checkpoint/podbay)
 "tTK" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -104955,7 +104991,7 @@ mzz
 bLp
 rbn
 fjS
-bQe
+tTw
 xyL
 bQe
 bQe
@@ -119454,7 +119490,7 @@ bPj
 bQG
 bSo
 bSl
-bVx
+huF
 bXa
 bPm
 bPm
@@ -121915,7 +121951,7 @@ hmX
 jxC
 ppt
 qhL
-cYn
+ptk
 yiC
 eYA
 yiC
@@ -123127,7 +123163,7 @@ cYq
 jOz
 dan
 dbn
-dcb
+kUn
 ddn
 aaa
 aaa
@@ -124302,7 +124338,7 @@ cft
 okO
 okO
 qxl
-pEb
+tgU
 pNP
 jdW
 xpe
@@ -124858,7 +124894,7 @@ aYB
 aYG
 cnI
 bal
-joL
+dFm
 bbp
 bbF
 bcE
@@ -128498,7 +128534,7 @@ blP
 boS
 bqB
 bsp
-bug
+eyN
 eda
 bxU
 lcA
@@ -128796,7 +128832,7 @@ fRJ
 bja
 bkk
 blQ
-bnp
+hBu
 boU
 ieF
 bsq
@@ -129098,7 +129134,7 @@ bit
 bjb
 bkl
 bkm
-bnq
+ltm
 boU
 mUF
 bsr
@@ -129400,7 +129436,7 @@ bit
 bjb
 bkm
 bkm
-bnr
+eHE
 boU
 bqE
 vwH
@@ -130004,7 +130040,7 @@ bit
 bkp
 bkp
 bkp
-bnt
+oxd
 boU
 bvZ
 bBH
@@ -130306,7 +130342,7 @@ bit
 bkp
 bko
 bkp
-bnu
+bnv
 boW
 bqH
 bsu
@@ -130608,7 +130644,7 @@ biu
 bkp
 bkq
 blS
-bnv
+bnu
 boX
 bqI
 bsv
