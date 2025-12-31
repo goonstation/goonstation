@@ -35148,15 +35148,7 @@
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
 	},
-/obj/storage/crate,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = -2;
-	pixel_x = 5
-	},
-/obj/item/device/multitool{
-	pixel_y = 1;
-	pixel_x = -9
-	},
+/obj/rack,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -40103,6 +40095,15 @@
 	},
 /obj/blind_switch/area/east{
 	pixel_y = 4
+	},
+/obj/storage/crate,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2;
+	pixel_x = 5
+	},
+/obj/item/device/multitool{
+	pixel_y = 1;
+	pixel_x = -9
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -89890,7 +89891,7 @@ phK
 jmm
 cMd
 phK
-bJJ
+phK
 bJJ
 bJJ
 bXo
