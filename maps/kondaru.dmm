@@ -28856,14 +28856,6 @@
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/orange/side,
 /area/station/storage/hydroponics)
-"dHy" = (
-/obj/machinery/conveyor/EW{
-	id = "garbage";
-	operating = 1
-	},
-/obj/machinery/arrivalnotifier/disposal,
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/disposal)
 "dHJ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -42630,6 +42622,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
+"mRr" = (
+/obj/machinery/arrivalnotifier/disposal,
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "mRv" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -94264,7 +94260,7 @@ axJ
 azF
 axJ
 azF
-dHy
+xMb
 axJ
 mGJ
 aLA
@@ -94561,7 +94557,7 @@ azH
 azF
 pSQ
 aEU
-aAF
+mRr
 aET
 nML
 aHe
