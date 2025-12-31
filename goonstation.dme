@@ -2636,6 +2636,7 @@
 #include "code\obj\item\device\radios\headsets.dm"
 #include "code\obj\item\device\radios\intercoms.dm"
 #include "code\obj\item\device\radios\loudspeaker.dm"
+#include "code\obj\item\device\radios\radio_upgrades.dm"
 #include "code\obj\item\device\radios\signaller.dm"
 #include "code\obj\item\gun\ammo.dm"
 #include "code\obj\item\gun\energy.dm"
