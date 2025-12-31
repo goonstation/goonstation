@@ -1569,7 +1569,7 @@ var/list/fun_images = list()
 		"}
 		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516)
+		if (src.byond_version >= 516 && global.tgui_process)
 			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
 		else
 			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
