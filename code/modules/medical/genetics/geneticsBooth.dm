@@ -153,8 +153,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 			return
-		if(issilicon(user))
-			src.show_admin_panel(user)
+		if(issilicon(user)) // Silicons can't open it with an ID, but they don't often use the gene booth.
+			src.show_admin_panel(user) // ^ Always opening it for them shouldn't be too bad then.
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if(src.eject_strength != THROW_THROUGH_WALL)
@@ -176,6 +176,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	proc/show_context_options(var/mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
+	/// Displays the booth's gene selection locking and price adjustment UI.
 	proc/show_admin_panel(mob/user, obj/item/card/id)
 		if(status & (NOPOWER | BROKEN))
 			return
