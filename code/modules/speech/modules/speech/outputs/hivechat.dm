@@ -61,9 +61,9 @@
 			src.role = " (MASTER)"
 
 	message.maptext_css_values["color"] = "#e2a059"
-	message.maptext_css_values["font-size"] = "5px"
+	message.maptext_css_values["font-size"] = "6px"
 	message.maptext_variables["maptext_x"] += prob(50) ? 28 : -28
-	message.maptext_variables["maptext_y"] -= rand(24, 32)
+	message.maptext_variables["maptext_y"] -= rand(12, 24)
 
 	if (isabomination(changeling_ability_holder.owner) && istype(message.speaker, /mob/dead/target_observer/hivemind_observer))
 		message.speaker.say(message.content, message_params = list("output_module_override" = SPEECH_OUTPUT_SPOKEN_HIVEMIND))
@@ -102,9 +102,9 @@
 		mind_ref = "\ref[mob_speaker.mind]"
 
 	message.maptext_css_values["color"] = "#e2a059"
-	message.maptext_css_values["font-size"] = "5px"
+	message.maptext_css_values["font-size"] = "6px"
 	message.maptext_variables["maptext_x"] += prob(50) ? 28 : -28
-	message.maptext_variables["maptext_y"] -= rand(24, 32)
+	message.maptext_variables["maptext_y"] -= rand(12, 24)
 
 	message.format_speaker_prefix = {"\
 		<span class='game hivesay'>\
