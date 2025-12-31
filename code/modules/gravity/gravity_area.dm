@@ -27,3 +27,33 @@
 /area/abandonedmedicalship/gforce_minimum = 0
 /area/abandonedmedicalship/robot_trader/gforce_minimum = 1 // TODO: Move D.O.C. area to an ISS subtype
 /area/fermid_hive/gforce_minimum = 0
+
+/datum/infooverlay/gravity_area
+	name = "gravity-area"
+	help = {"Colors tiles based on area gravity only.<br>
+	Minimum G-Force + Tether G-Force + Z-level G-Force = Total G-Force"}
+	var/list/area/processed_areas
+
+	GetInfo(turf/theTurf, image/debugoverlay/img)
+		var/area/A = get_area(theTurf)
+		switch (A.gforce_minimum + A.gforce_tether + A.gforce_zlevel)
+			if (-INFINITY to 0)
+				img.app.color = "#0000ff"
+			if (1)
+				img.app.color = "#00ff00"
+			if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
+				img.app.color = "#00aaaa"
+			if (GRAVITY_MOB_REGULAR_THRESHOLD to GRAVITY_MOB_HIGH_THRESHOLD)
+				img.app.color = "#009900"
+			if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
+				img.app.color = "#cc9900"
+			if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
+				img.app.color = "#ff0000"
+
+		if (A in processed_areas)
+			return
+
+		img.app.overlays = list(
+			src.makeText("<span style='font-size:6pt'>[A.gforce_minimum]+[A.gforce_tether]+[A.gforce_zlevel]<br>=[A.gforce_minimum + A.gforce_tether + A.gforce_zlevel]</span>")
+		)
+

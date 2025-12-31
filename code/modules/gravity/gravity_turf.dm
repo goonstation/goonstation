@@ -40,3 +40,24 @@
 	if (!istype(A))
 		return
 	src.gforce_current = round(max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent), 0.01)
+
+/datum/infooverlay/gravity_turf
+	name = "gravity-turf"
+	help = {"Colors group mob gravity thresholds. Current (inherent)."}
+	var/list/area/processed_areas
+
+	GetInfo(turf/theTurf, image/debugoverlay/img)
+		img.app.overlays = list(src.makeText("[theTurf.gforce_current] ([theTurf.gforce_inherent])", RESET_ALPHA | RESET_COLOR))
+		switch (theTurf.gforce_current)
+			if (-INFINITY to 0)
+				img.app.color = "#0000ff"
+			if (1)
+				img.app.color = "#00ff00"
+			if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
+				img.app.color = "#00aaaa"
+			if (GRAVITY_MOB_REGULAR_THRESHOLD to GRAVITY_MOB_HIGH_THRESHOLD)
+				img.app.color = "#009900"
+			if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
+				img.app.color = "#cc9900"
+			if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
+				img.app.color = "#ff0000"

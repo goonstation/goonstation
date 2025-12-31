@@ -9,36 +9,32 @@
 /atom/movable/var/has_float_anim = FALSE
 
 /// Reset gforce based on turf gravity
-/atom/movable/proc/reset_gravity(force_update=FALSE)
+/atom/movable/proc/reset_gravity()
 	var/turf/T = get_turf(src)
 	if (istype(T))
-		src.set_gravity(T, force_update)
+		src.set_gravity(T)
 
 /// set the gforce applied to the AM
 ///
 /// returns TRUE if no change
-/atom/movable/proc/set_gravity(turf/T, force_update=FALSE)
-	. = TRUE
+/atom/movable/proc/set_gravity(turf/T)
 	return_if_overlay_or_effect(src)
 	if ((src.event_handler_flags & IMMUNE_TRENCH_WARP) || HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
-		return .
+		return TRUE
 	if (!istype(T))
-		return .
+		return TRUE
 	var/new_gforce = T.gforce_current
 	if (src.no_gravity)
 		new_gforce = 0
-	if (src.gforce == new_gforce && !force_update)
-		return .
+	if (src.gforce == new_gforce)
+		return TRUE
 	src.gforce = new_gforce
-
-
-/atom/movable/proc/update_float_anim()
-
+	return FALSE
 
 // gravity interactions
 
 // fluid icons change in low-g
-/obj/fluid/set_gravity(turf/T, force_update=FALSE)
+/obj/fluid/set_gravity(turf/T)
 	. = ..()
 	if (.)
 		return TRUE
@@ -47,18 +43,18 @@
 // some things float in zero-G
 
 /mob/living/carbon/human/floats_in_zero_g = TRUE
-/mob/living/carbon/human/set_gravity(turf/T, force_update)
+/mob/living/carbon/human/set_gravity(turf/T)
 	. = ..()
 	if (!.)
 		src.hud?.update_gravity_indicator()
 /mob/living/critter/floats_in_zero_g = TRUE
-/mob/living/critter/set_gravity(turf/T, force_update)
+/mob/living/critter/set_gravity(turf/T)
 	. = ..()
 	if (!.)
 		src.hud?.update_gravity_indicator()
 
 /mob/living/silicon/robot/floats_in_zero_g = TRUE
-/mob/living/silicon/robot/set_gravity(turf/T, force_update)
+/mob/living/silicon/robot/set_gravity(turf/T)
 	. = ..()
 	if (!.)
 		src.hud?.update_gravity_indicator()
