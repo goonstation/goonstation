@@ -58,7 +58,9 @@
 
 	message.format_verb_prefix = {"\
 		</span> \
+		<span class='radio [default_frequency_class(display_frequency)]'>\
 		<b>\[[format_frequency(display_frequency)]\]</b> \
+		</span>\
 		<span class='message'>\
 	"}
 

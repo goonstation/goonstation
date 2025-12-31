@@ -326,7 +326,8 @@
 			var/obj/item/item1 = pick(juggled_items)
 			juggled_items -= item1
 			var/obj/item/item2 = pick(juggled_items)
-			item2.Attackby(item1, src, silent = TRUE)
+			if(!istype(item2, /obj/item/paper))
+				item2.Attackby(item1, src, silent = TRUE)
 
 	//Attaching a limb that didn't originally belong to you can do stuff
 	if(!isdead(src) && prob(2) && src.limbs)
