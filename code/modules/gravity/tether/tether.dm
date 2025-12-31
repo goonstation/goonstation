@@ -93,7 +93,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.ma_tamper = mutable_appearance(src.icon, "tamper-secure")
 	src.ma_bat = mutable_appearance(src.icon, "battery-full")
 	src.ma_bat_charge = mutable_appearance(src.icon, "power-charging")
-
 	src.ma_status = mutable_appearance(src.icon, "status-working")
 	src.ma_graph = mutable_appearance(src.icon, "graph-good")
 	src.ma_screen = mutable_appearance(src.icon, "screen-locked")

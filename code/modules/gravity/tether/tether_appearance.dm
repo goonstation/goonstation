@@ -101,6 +101,7 @@
 		src.ma_status.icon_state = "status-idle"
 
 /obj/machinery/gravity_tether/proc/update_ma_bat()
+	// TODO: Why the fuck can't we filter this?
 	var/list/ma_overlays = src.ma_bat.overlays
 	ma_overlays.Cut()
 	if (!src.cell)

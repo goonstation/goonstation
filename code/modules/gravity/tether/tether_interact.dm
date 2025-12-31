@@ -46,13 +46,13 @@
 		return
 
 	if (src.emagged)
-		var/choice = tgui_alert(user, "Really have [src] announce [new_intensity]G?", "Tether Confirmation", list("Yes", "No"))
+		var/choice = tgui_alert(user, "Really let \the [src] announce [new_intensity]G?", "Tether Confirmation", list("Yes", "No"))
 		if (isnull(choice))
 			return
 		if (choice == "No")
 			src.do_announcement = FALSE
-	else // phrased to look the same as the emag message
-		if (tgui_alert(user, "Really have [src] [new_intensity-src.gforce_intensity> 0 ? "increase" : "decrease" ] to [new_intensity]G?", "Tether Confirmation", list("Yes", "No")) != "Yes")
+	else // phrased to be easily mistakeable for the emag text
+		if (tgui_alert(user, "Really set \the [src] [new_intensity-src.gforce_intensity> 0 ? "upwards" : "downwards" ] to [new_intensity]G?", "Tether Confirmation", list("Yes", "No")) != "Yes")
 			return
 
 	if (in_interact_range(src, user))
