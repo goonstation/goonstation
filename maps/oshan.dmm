@@ -23319,12 +23319,6 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
-"bOr" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/orange,
-/obj/item/clothing/glasses/vr/arcade,
-/turf/simulated/floor/scorched2,
-/area/station/security/brig)
 "bOs" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -29971,6 +29965,7 @@
 	pixel_y = -9;
 	pixel_x = 6
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -30839,6 +30834,9 @@
 /obj/machinery/light_switch/east{
 	pixel_y = -4
 	},
+/obj/machinery/computer/announcement/station/security/department{
+	dir = 8
+	},
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -30864,18 +30862,7 @@
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "ewR" = (
-/obj/rack,
-/obj/item/assembly/flash_cell{
-	pixel_y = 5;
-	pixel_x = -8
-	},
-/obj/item/storage/box/evidence{
-	pixel_y = -3;
-	pixel_x = 9
-	},
-/obj/item/storage/box/evidence{
-	pixel_x = -5
-	},
+/obj/machinery/photocopier,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -32158,7 +32145,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
+/area/station/security/evidence)
 "fOP" = (
 /obj/item/raw_material/uqill,
 /obj/item/raw_material/cobryl,
@@ -32176,14 +32163,6 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
-"fPH" = (
-/obj/window_blinds/cog2/left{
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/cable,
-/turf/simulated/floor/plating/random,
-/area/station/security/evidence)
 "fQm" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -33039,6 +33018,27 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"gIb" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/rack,
+/obj/item/storage/box/evidence{
+	pixel_x = -5
+	},
+/obj/item/storage/box/evidence{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/obj/item/assembly/flash_cell{
+	pixel_y = 5;
+	pixel_x = -8
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/evidence)
 "gIO" = (
 /obj/disposalpipe/segment/bent{
 	dir = 1
@@ -33439,21 +33439,16 @@
 /area/station/security/evidence)
 "gYK" = (
 /obj/rack,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = -2;
-	pixel_x = 5
-	},
-/obj/item/device/multitool{
-	pixel_y = 1;
-	pixel_x = -9
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 10
+	},
 /turf/simulated/floor/redblack{
-	dir = 5
+	dir = 1
 	},
 /area/station/security/evidence)
 "haa" = (
@@ -34257,6 +34252,23 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
+"igO" = (
+/obj/rack,
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
+	},
+/obj/item/storage/box/evidence{
+	pixel_y = 0;
+	pixel_x = -6
+	},
+/obj/item/storage/box/evidence{
+	pixel_y = 0;
+	pixel_x = 9
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/security/evidence)
 "ihZ" = (
 /obj/storage/cart/mechcart,
 /obj/item/rods/steel{
@@ -35128,14 +35140,6 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "jeT" = (
-/obj/rack,
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = 10
-	},
-/obj/item/seed/cannabis{
-	pixel_x = -1;
-	pixel_y = 1
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
 	icon_state = "pipe-c";
@@ -35143,6 +35147,15 @@
 	},
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
+	},
+/obj/storage/crate,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2;
+	pixel_x = 5
+	},
+/obj/item/device/multitool{
+	pixel_y = 1;
+	pixel_x = -9
 	},
 /turf/simulated/floor/redblack{
 	dir = 9
@@ -37504,6 +37517,16 @@
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"lNF" = (
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/random,
+/area/station/security/evidence)
 "lNY" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/disposalpipe/segment/mail,
@@ -38287,19 +38310,15 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "mHy" = (
-/obj/storage/cart/forensic/security,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/redblack{
-	dir = 1
+/obj/cable{
+	icon_state = "1-2"
 	},
+/turf/simulated/floor/black,
 /area/station/security/evidence)
 "mHz" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -39167,17 +39186,16 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/rack,
-/obj/item/storage/box/evidence{
-	pixel_y = 0;
-	pixel_x = -6
-	},
-/obj/item/storage/box/evidence{
-	pixel_y = 0;
-	pixel_x = 9
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4;
+	name = "Security Records"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -39229,11 +39247,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "nEp" = (
-/obj/machinery/computer3/generic/secure_data,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
+/obj/storage/cart/forensic/security,
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "nEC" = (
@@ -39388,6 +39402,12 @@
 /obj/lattice/flock,
 /turf/space/fluid,
 /area/space)
+"nLz" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/glasses/vr/arcade,
+/turf/simulated/floor,
+/area/station/security/brig)
 "nLF" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/plating/random,
@@ -39777,9 +39797,7 @@
 /turf/space/fluid,
 /area/space)
 "okT" = (
-/obj/machinery/computer/announcement/station/security/department{
-	dir = 8
-	},
+/obj/machinery/vending/coffee,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "ole" = (
@@ -40328,6 +40346,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"oNw" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "oNJ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -40995,12 +41017,13 @@
 /turf/simulated/floor/grass,
 /area/spacehabitat/owlery)
 "pGQ" = (
-/obj/machinery/photocopier,
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
+/obj/rack,
+/obj/item/seed/cannabis{
+	pixel_x = -1;
+	pixel_y = 1
 	},
 /turf/simulated/floor/redblack{
-	dir = 5
+	dir = 4
 	},
 /area/station/security/evidence)
 "pHw" = (
@@ -41376,9 +41399,6 @@
 "qdG" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/redblack,
@@ -42534,12 +42554,9 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
 	icon_state = "1-4"
 	},
-/obj/window_blinds/cog2/middle{
+/obj/window_blinds/cog2/left{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -43350,7 +43367,6 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator/upper)
 "svg" = (
-/obj/machinery/firealarm/directional/west,
 /obj/table/auto,
 /obj/machinery/light/lamp/black{
 	pixel_y = -10;
@@ -43907,11 +43923,14 @@
 /area/station/crew_quarters/hop)
 "sYi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/window_blinds/cog2/right{
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/middle{
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/evidence)
@@ -45490,9 +45509,7 @@
 	name = "crematorium pipe"
 	},
 /obj/landmark/start/job/security_assistant,
-/turf/simulated/floor/redblack/corner{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/station/security/evidence)
 "uUN" = (
 /obj/disposalpipe/segment{
@@ -88357,11 +88374,11 @@ bJJ
 bJJ
 bJJ
 bNm
-bJJ
 phK
+lNF
 sYi
 rqo
-fPH
+phK
 phK
 phK
 phK
@@ -88961,7 +88978,7 @@ bJJ
 bKG
 bMa
 bNo
-bJJ
+phK
 gYK
 uTY
 gYB
@@ -89263,8 +89280,8 @@ bJJ
 xem
 bJJ
 bJJ
-bJJ
 phK
+gIb
 mHy
 sxv
 kEO
@@ -89565,8 +89582,8 @@ bJJ
 bKI
 bMb
 bNp
-bOr
 phK
+igO
 pGQ
 oDl
 cMe
@@ -89866,8 +89883,8 @@ bII
 bJJ
 bKJ
 bMc
-bKG
-bKG
+nLz
+phK
 phK
 phK
 jmm
@@ -96515,7 +96532,7 @@ lFe
 bPH
 bQQ
 aCG
-kNT
+oNw
 eKU
 hcx
 hcx
@@ -96819,7 +96836,7 @@ lFe
 aCG
 okT
 hHC
-bMo
+kNT
 bMo
 uCe
 rYv
