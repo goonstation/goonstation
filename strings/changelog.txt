@@ -1,4 +1,21 @@
 
+(t)wed dec 31 25
+(u)cringe, the good looking sprites from Flaborized
+(p)23946
+(e)🆕🎨📄🔬|C-Feature, C-Sprites, A-UI, A-Science
+(*)Adds neat fluid pipes, now in the HPD.
+(u)QuiteLiterallyAnything
+(p)25426
+(e)🗺|A-Mapping
+(+)Added a cargo tug and forklift to Nadir.
+(u)glowbold
+(p)25324
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Changeling hivemind members now show floating maptext to the host
+(u)glowbold
+(p)25392
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(*)Barcoded deliveries through the belt hell system will notify the relevant departments.
 (t)mon dec 29 25
 (u)QuiteLiterallyAnything
 (p)25427
