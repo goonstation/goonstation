@@ -137,8 +137,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 	get_help_message(dist, mob/user)
 		. = ..()
-		if(length(src.offered_genes))
-			. += "You can swipe a sufficiently <b>high-level ID</b> through it to adjust its contents and pricing."
+		if(length(src.offered_genes) && !issilicon(user))
+			. += "You could swipe a sufficiently <b>high-level ID</b> through it to adjust its contents and pricing."
 
 	attack_hand(var/mob/user)
 		if (occupant)
@@ -152,6 +152,9 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			src.show_context_options(user)
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
+			return
+		if(issilicon(user))
+			src.show_admin_panel(user)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if(src.eject_strength != THROW_THROUGH_WALL)
@@ -174,11 +177,11 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
 	proc/show_admin_panel(mob/user, obj/item/card/id)
-		if (status & (NOPOWER | BROKEN))
+		if(status & (NOPOWER | BROKEN))
 			return
 		if(!user)
 			return
-		if(istype(id) && !src.allowed(user))
+		if(istype(id) && !src.allowed(user) && !issilicon(user))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, 0)
 			return
 
