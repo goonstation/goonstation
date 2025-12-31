@@ -7,9 +7,11 @@ proc/BeginSpacePush(var/atom/movable/A)
 			A.temp_flags |= SPACE_PUSHING
 
 proc/EndSpacePush(var/atom/movable/A)
-	if(ismob(A))
-		var/mob/M = A
-		M.inertia_dir = 0
+	if(ismovable(A)) // we can get sent nulls
+		A.inertia_value = 0
+		if(ismob(A))
+			var/mob/M = A
+			M.inertia_dir = 0
 	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
 	if(controller)
 		controller.space_controller.push_list -= A

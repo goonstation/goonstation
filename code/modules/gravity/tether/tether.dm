@@ -248,10 +248,12 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /// Directly changes the tether intensity and updates all relevant areas
 /obj/machinery/gravity_tether/proc/change_intensity(new_gforce)
-	var/gforce_diff = round(new_gforce - src.gforce_intensity, 0.01)
+	if (new_gforce < 0.01) // floating point imprecision
+		new_gforce = 0
+	var/gforce_diff = new_gforce - src.gforce_intensity
 	if (gforce_diff == 0)
 		return
-	src.gforce_intensity = new_gforce
+	src.gforce_intensity = round(new_gforce, 0.01)
 
 	src.update_ma_status()
 	src.update_ma_graviton()

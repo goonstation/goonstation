@@ -76,6 +76,9 @@
 
 		. = ..()
 		START_TRACKING
+		// pods control own drift
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 
 
 	remove_air(amount as num)

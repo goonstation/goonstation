@@ -224,17 +224,12 @@
 	var/obj/item/card/id/id_card = get_id_card(I)
 	if (istype(id_card) && length(src.req_access))
 		if (src.allowed(user))
-			if (!src.emagged)
-				src.locked = !src.locked
-				if (!src.locked)
-					logTheThing(LOG_STATION, user, "unlocked gravity tether at [log_loc(src)].")
-				src.update_ma_tamper()
-				src.update_ma_screen()
-				src.UpdateIcon()
+			src.locked = !src.locked
+			src.update_ma_tamper()
+			src.update_ma_screen()
+			src.UpdateIcon()
 		else
 			boutput(user, SPAN_NOTICE("[get_access_desc(src.req_access[1])] access required to [src.locked ? "un" : ""]lock."))
-
-
 	. = ..()
 
 

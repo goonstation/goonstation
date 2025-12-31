@@ -193,7 +193,7 @@
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 				var/spacemove = 0
-				if (!src.traction && !src.has_grip())
+				if (src.traction == TRACTION_NONE && !src.has_grip())
 					spacemove = 1
 				if (spacemove)
 					if (istype(src.back, /obj/item/tank/jetpack))
@@ -260,6 +260,7 @@
 						src.force_laydown_standup()
 
 					if (do_step)
+						src.inertia_value = 1
 						step(src, move_dir)
 						if (src.loc != old_loc)
 							OnMove()

@@ -33,6 +33,7 @@
 
 // gravity interactions
 
+// TODO: Fix change in G, fluid controller probs
 // fluid icons change in low-g
 /obj/fluid/set_gravity(turf/T)
 	. = ..()

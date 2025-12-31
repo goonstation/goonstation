@@ -1,6 +1,6 @@
 /// Does this atom have traction against the ground?
 /atom/movable/var/traction = TRACTION_FULL
-/// The floating scalar component of inertia for the atom.
+/// The float scalar component of inertia for the atom.
 ///
 /// Things will drop out of the force-push loop if this is zero
 /atom/movable/var/inertia_value = 0
@@ -11,9 +11,12 @@
 	src.traction = src.calculate_traction(T)
 
 	if (src.traction == TRACTION_FULL || src.has_grip())
-		src.inertia_value = 0
+		if (src.temp_flags & SPACE_PUSHING)
+			EndSpacePush(src)
+		else if (src.inertia_value != 0)
+			src.inertia_value = 0
 	else
-		if(src.last_move != null)
+		if(!(src.temp_flags & SPACE_PUSHING) && src.inertia_value > 0  && src.last_move != null)
 			BeginSpacePush(src)
 
 	if (!src.floats_in_zero_g)
@@ -25,22 +28,20 @@
 			src.has_float_anim = FALSE
 	else
 		if (src.traction != TRACTION_FULL && src.gforce < 1)
-			animate(src, flags=ANIMATION_END_NOW, tag="grav_drift")
+			animate(src, flags=ANIMATION_END_NOW, tag="grav_drift") // reset animations so they don't stack
 			src.has_float_anim = TRUE
 			animate_drift(src, -1, GRAVITY_LIVING_ZERO_G_ANIM_TIME)
 
 	return FALSE
 
 /mob/update_traction(turf/T)
-	if (src.traction == TRACTION_FULL)
-		src.inertia_dir = 0
 	. = ..()
+	if (src.traction == TRACTION_FULL && src.inertia_dir != 0)
+		src.inertia_dir = 0
 
 /// Check if an atom has traction with the ground due to gravity
 /atom/movable/proc/calculate_traction(turf/T=null)
-	if (!isturf(src.loc))
-		return TRACTION_FULL
-	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
+	if (!isturf(src.loc) || HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
 		return TRACTION_FULL
 
 	if (!istype(T))
@@ -52,7 +53,9 @@
 	if (src.no_gravity)
 		return TRACTION_NONE
 
-	if (src.anchored)
+	if (src.anchored == ANCHORED_ALWAYS)
+		return TRACTION_FULL
+	else if (src.anchored == ANCHORED)
 		if (isfloor(src.loc) || iswall(src.loc))
 			return TRACTION_FULL
 
@@ -72,19 +75,8 @@
 				return TRACTION_PARTIAL
 			return TRACTION_NONE
 
-
-/obj/item/sticker/calculate_traction(turf/T)
-	if (src.attached) // they're sticky
-		return TRACTION_FULL
-	return ..()
-
-// TODO: integrate pod drift/RCS behavior
-/obj/machinery/vehicle/calculate_traction(turf/T)
-	return TRACTION_FULL
-
 /mob/calculate_traction(turf/T)
-	// admin noclip
-	if (src.client?.flying || HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP))
+	if (src.client?.flying || HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP) || HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
 		return TRACTION_FULL
 	if (src.is_spacefaring())
 		return TRACTION_FULL
@@ -94,10 +86,6 @@
 	if (src.flying)
 		return TRACTION_FULL
 	. = ..()
-
-// intangibles always have traction, they spookey
-/mob/living/intangible/calculate_traction(turf/T)
-	return TRACTION_FULL
 
 // active hivebots hover
 /mob/living/silicon/hivebot/eyebot/calculate_traction(turf/T)

@@ -45,7 +45,7 @@ proc/update_station_gforce(diff)
 	src.target_area_refs = target_areas - skipped_areas
 
 	if (global.map_setting == "DONUT3") // donut3 has an indoor escape area
-		src.target_area_refs += /area/shuttle/escape/station
+		src.target_area_refs += get_area_by_type(/area/shuttle/escape/station)
 
 	. = ..()
 	src.ma_cell.pixel_x = 10

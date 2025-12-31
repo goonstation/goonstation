@@ -2,18 +2,25 @@
 /datum/lifeprocess/gravity/process(datum/gas_mixture/environment)
 	. = ..()
 	var/turf/T = get_turf(src.owner)
-	if (!T)
-		return
 
 	if (src.owner.gforce != T.gforce_current)
 		src.owner.set_gravity(T)
+
 		src.do_toggles(src.owner.gforce, T.gforce_current)
-		src.owner.gforce = T.gforce_current
+		src.owner.set_gravity(T.gforce_current)
+		src.owner.update_traction(T)
+
+	if (HAS_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE))
+		return
+
+	if (T != src.owner.loc)
+		if (HAS_ATOM_PROPERTY(src.owner.loc, PROP_ATOM_GRAVITY_IMMUNE_INSIDE))
+			return
 
 	var/mult = get_multiplier()
 
 	switch(src.owner.gforce)
-		if (1) // most common
+		if (1) // quick no-op for most common gravity
 			;
 		if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
 			// lower the gravity, higher the probability, ~1 to ~10%
@@ -24,7 +31,7 @@
 							human_owner.nauseate(1)
 					if (2) // stamina sap
 						if (isalive(human_owner))
-							boutput(human_owner, SPAN_NOTICE("You [pick("struggle", "exert")] to keep yourself [pick("oriented", "angled properly", "from spinning")] in low-gravity."))
+							boutput(human_owner, SPAN_NOTICE("You [pick("struggle", "take effort", "manage to")] to keep yourself [pick("oriented", "angled properly", "right-way-up")] in low-gravity."))
 							human_owner.remove_stamina(50)
 		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
 			// ~19.2+% minimum
@@ -72,7 +79,7 @@
 	// remove old fx
 	switch(old_gforce)
 		if (1)
-			; // quick no-op for most common gravity
+			;
 		if (-INFINITY to 0)
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
@@ -82,7 +89,7 @@
 	// add new effects
 	switch(new_gforce)
 		if (1)
-			; // quick no-op for most common gravity
+			;
 		if (-INFINITY to 0)
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
