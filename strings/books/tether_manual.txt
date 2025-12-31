@@ -9,7 +9,7 @@
 	<li>Relax while the Gravi-Tonne™ Tether <b>processes</b> the change.</li>
 	<li>Be sure to re-secure the tether after use!</b>.</li>
 </ol>
-<p><i>Did you know..? 1G is equal to Earth's gravity!</i></p>
+<p><i>Did you know..? 1 G-Force is equal to Earth's gravity!</i></p>
 
 <h3>STARTING MAINTENANCE</h3>
 <p>The Gravi-Tonne™ Tether has a front access door that holds the internal power capacitor. The tamper-resist security grate is withdrawn when the system is unlocked.</p>
@@ -73,7 +73,7 @@
 	</ul></li>
 	<li><b>Dials</b>: Right outer edge<ul>
 		<li><b>Clockwise</b>: Increasing Intensity</li>
-		<li><b>Anti-Clockwise</b>: Decreasing Intensity<li>
+		<li><b>Anti-Clockwise</b>: Decreasing Intensity</li>
 		<li><b>Slight Variance</b>: Nominal Operation</li>
 	</ul></li>
 </ul>
