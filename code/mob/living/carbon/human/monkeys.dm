@@ -662,7 +662,7 @@ TYPEINFO(/mob/living/carbon/human/npc/monkey)
 
 	New()
 		..()
-		SPAWN(1 SECOND)
+		SPAWN(0.5 SECONDS)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, SLOT_SHOES)
 			src.equip_new_if_possible(head, SLOT_HEAD)
@@ -683,6 +683,18 @@ TYPEINFO(/mob/living/carbon/human/npc/monkey)
 
 	ai_is_valid_target(mob/M)
 		return isalive(M)
+
+/mob/living/carbon/human/npc/monkey/angry/barrel
+
+	New()
+		..()
+		src.equip_new_if_possible(/obj/item/clothing/head/holohat, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/clothing/under/holojumpsuit, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/holosuit, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/mask/holomask, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/holoshoes, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/ears/holoears, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/clothing/gloves/hologloves, SLOT_GLOVES)
 
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea

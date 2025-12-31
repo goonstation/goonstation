@@ -32,6 +32,8 @@ ABSTRACT_TYPE(/obj/item/clothing)
 
 	var/material_piece = /obj/item/material_piece/cloth/cottonfabric
 
+	var/holographic = FALSE // ouuougugh. for monkey barrel monkes
+
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
