@@ -123,6 +123,7 @@ TYPEINFO(/obj/item/barrier)
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "void_barrier"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "void_barrier"
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 8
@@ -132,9 +133,11 @@ TYPEINFO(/obj/item/barrier)
 	stamina_cost = 35
 	stamina_crit_chance = 0
 	hitsound = 'sound/effects/exlow.ogg'
+	cflags = ONBACK
 
 	can_disarm = 0
 	two_handed = 1
+	on_back = 1
 
 	setupProperties()
 		..()
