@@ -1167,6 +1167,7 @@
 			if (stamina) stamina.icon = new_file
 			if (stamina_back) stamina_back.icon = new_file
 			if (bodytemp) bodytemp.icon = new_file
+			if (gravity) gravity.icon = new_file
 			if (oxygen) oxygen.icon = new_file
 			if (fire) fire.icon = new_file
 			if (toxin) toxin.icon = new_file
