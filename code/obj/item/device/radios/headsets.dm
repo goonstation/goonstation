@@ -44,6 +44,16 @@
 			src.remove_radio_upgrade()
 		..()
 
+	emp_act()
+		. = ..()
+		src.visible_message(SPAN_ALERT("[src] sparks and goes silent!")) // Alert the wearer that their headset is busted
+
+		// After a certain amount of time, toggle speaker back on
+		SPAWN(90 SECONDS)
+			if (!src.speaker_enabled)
+				src.visible_message(SPAN_NOTICE("[src]'s speaker automatically toggles back on!"))
+				src.toggle_speaker(initial_speaker_enabled)
+
 	proc/install_radio_upgrade(var/obj/item/device/radio_upgrade/R)
 		if (wiretap)
 			return
