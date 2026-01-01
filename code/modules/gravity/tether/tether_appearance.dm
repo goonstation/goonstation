@@ -202,5 +202,7 @@
 			src.ma_intensity.icon_state = "intensity-2"
 		if (1 to 1.5)
 			src.ma_intensity.icon_state = "intensity-3"
-		if (1.5 to INFINITY)
+		if (1.5 to 2)
 			src.ma_intensity.icon_state = "intensity-4"
+		if (2 to INFINITY)
+			src.ma_intensity.icon_state = "intensity-5"
