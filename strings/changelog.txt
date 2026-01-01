@@ -1,5 +1,5 @@
 
-(t)thu jan 1 26
+(t)thu jan 01 26
 (u)Sord
 (*)New random event: EMP Storm. Spawns electrical anomalies similar to the radiation storm anomalies that EMP anything in range.
 (t)wed dec 31 25
