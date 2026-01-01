@@ -182,7 +182,7 @@
 				return
 
 		if (istype(W, /obj/item/tank/plasma))
-			if(src.fueltank)
+			if(src.fueltank || !src.atmostank)
 				src.open_parts_panel(user)
 			else
 				logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
