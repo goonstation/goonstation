@@ -127,7 +127,7 @@
 	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
-			if (src.can_kudzu_walk(A))
+			if (src.can_kudzu_walk(A) || istype(A, /obj/icecube/kudzu))
 				return 1
 			return 0
 		return 1
