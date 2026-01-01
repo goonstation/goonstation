@@ -7,6 +7,8 @@
 // CALL YOUR PARENTS
 
 #define RELAYMOVE_DELAY 1 SECOND
+/// The percentage of a storage object's health below which it will only return one sheet on deconstruction.
+#define STORAGE_UNSALVAGEABLE_THRESHOLD 0.75
 
 ABSTRACT_TYPE(/obj/storage)
 ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
@@ -1021,7 +1023,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		the_storage.dump_contents(owner)
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if(the_storage.material_amt)
-			I.amount = floor(the_storage.material_amt / 0.1) // <-- Sheets normally cost 0.1; I don't believe it's defined anywhere.
+			if(the_storage._health > (the_storage._max_health * STORAGE_UNSALVAGEABLE_THRESHOLD))
+				I.amount = floor(the_storage.material_amt / 0.1) // <-- Sheets normally cost 0.1; I don't believe it's defined anywhere.
+			else
+				boutput(owner, SPAN_ALERT("Some of [the_storage]'s material was unsalvageable."))
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)
 		else
@@ -1163,3 +1168,4 @@ TYPEINFO_NEW(/obj/storage/secure)
 			return 1
 
 #undef RELAYMOVE_DELAY
+#undef STORAGE_UNSALVAGEABLE_THRESHOLD
