@@ -19,7 +19,7 @@
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
-		if(iskudzuman(H))
+		if(iskudzuman(H) && !isdead(H)) //antag status is removed on death but they should remain a kudzuman so they aren't cloneable
 			H.set_mutantrace(H.default_mutantrace)
 
 	add_to_image_groups()
