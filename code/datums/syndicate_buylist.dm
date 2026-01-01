@@ -594,7 +594,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/clown_announcement_computer
 	name = "Portable Clown Announcement Computer"
 	items = list(/obj/machinery/computer/announcement/clown/foldable)
-	cost = 6
+	cost = 5
 	vr_allowed = FALSE
 	desc = "A heavily illegal and portable version of the NanoTrasen announcement computer modified to be as annoying as possible. Not lined with explosives."
 	job = list("Clown")
