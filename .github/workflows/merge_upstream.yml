@@ -46,7 +46,11 @@ jobs:
           git config user.email github-actions@github.com
           git remote add upstream "https://github.com/${{ github.repository }}.git"
           git fetch upstream master
-          git merge upstream/master && git push origin
+          git merge upstream/master
+          tgui/bin/tgui
+          git add .
+          git commit -m "TGUI bundle"
+          git push origin
 
       - name: Notify Failure
         if: failure()
