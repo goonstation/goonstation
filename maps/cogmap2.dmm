@@ -14706,7 +14706,6 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "aTq" = (
-/obj/machinery/light_switch/north,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -65353,6 +65352,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/surgery/storage)
+"pdK" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "peI" = (
 /obj/shrub,
 /obj/machinery/firealarm/directional/north,
@@ -101935,7 +101938,7 @@ aOo
 aPB
 aQZ
 aWh
-tTd
+pdK
 aUM
 aWh
 aZm
