@@ -2,11 +2,6 @@ name: merge_upstream
 on:
   issue_comment:
     types: [created]
-  # workflow_dispatch:
-  #   inputs:
-  #     pr_url:
-  #       description: "PR URL"
-  #       required: true
 
 jobs:
   merge-upstream:
