@@ -49,7 +49,7 @@ jobs:
           git merge upstream/master
           tgui/bin/tgui
           git add .
-          git commit -m "TGUI bundle"
+          git diff-index --quiet HEAD || git commit -m "TGUI bundle"
           git push origin
 
       - name: Notify Failure
