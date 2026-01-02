@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: PR Data
         run: |
-          curl -H "Authorization: token ${{ github.token }}" ${{ github.event.pr_url }} > pr.json
+          curl -H "Authorization: token ${{ github.token }}" ${{ github.event.inputs.pr_url }} > pr.json
           echo "PR_REPO=`jq -r '.head.repo.full_name' < pr.json`" >> $GITHUB_ENV
           echo "PR_BRANCH=`jq -r '.head.ref' < pr.json`" >> $GITHUB_ENV
 
