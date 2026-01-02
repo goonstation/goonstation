@@ -1,4 +1,9 @@
 
+(t)fri jan 02 26
+(u)QuiteLiterallyAnything
+(p)25455
+(e)🔨|A-Player-Actions
+(+)Handspiders can now snap.
 (t)thu jan 01 26
 (u)Sord
 (*)New random event: EMP Storm. Spawns electrical anomalies similar to the radiation storm anomalies that EMP anything in range.
