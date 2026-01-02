@@ -1,4 +1,7 @@
 
+(t)thu jan 01 26
+(u)Sord
+(*)New random event: EMP Storm. Spawns electrical anomalies similar to the radiation storm anomalies that EMP anything in range.
 (t)wed dec 31 25
 (u)cringe, the good looking sprites from Flaborized
 (p)23946
