@@ -17,7 +17,9 @@
 	if ((src.event_handler_flags & IMMUNE_TRENCH_WARP) || HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
 		return TRUE
 	if (!istype(T))
-		return TRUE
+		T = get_turf(src)
+		if (!istype(T))
+			return TRUE
 	var/new_gforce = T.gforce_current
 	if (src.no_gravity)
 		new_gforce = 0

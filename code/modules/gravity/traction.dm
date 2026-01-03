@@ -44,14 +44,14 @@
 	if (!T)
 		return TRACTION_FULL
 
-	if (src.no_gravity)
-		return TRACTION_NONE
-
 	if (src.anchored == ANCHORED_ALWAYS)
 		return TRACTION_FULL
 	else if (src.anchored == ANCHORED)
 		if (isfloor(src.loc) || iswall(src.loc))
 			return TRACTION_FULL
+
+	if (src.no_gravity)
+		return TRACTION_NONE
 
 	switch (src.gforce)
 		if (GFORCE_TRACTION_FULL to INFINITY)
