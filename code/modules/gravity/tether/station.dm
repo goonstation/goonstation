@@ -1,6 +1,6 @@
 /// Combined value of all station gravity tether gforces
 ///
-/// Needed so airbridge controllers can setgravity on their controlled turfs
+/// Needed so airbridge controllers can set gravity on their controlled turfs
 var/global/station_tether_gforce = 0
 
 TYPEINFO(/obj/machinery/gravity_tether)
@@ -21,6 +21,13 @@ TYPEINFO(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/station/New()
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
+	. = ..()
+	src.ma_cell.pixel_x = 10
+	src.ma_cell.pixel_y = 5
+	src.light.attach(src, 1, 0.5) // light has height
+	src.update_light()
+
+/obj/machinery/gravity_tether/station/initialize()
 	var/list/station_area_names = get_accessible_station_areas()
 	var/list/area_types_to_skip = global.z_level_station_outside_area_types
 	area_types_to_skip |= global.map_settings.station_tether_ignore_area_types
@@ -38,12 +45,7 @@ TYPEINFO(/obj/machinery/gravity_tether)
 
 	if (global.map_setting == "DONUT3") // donut3 has an indoor escape area
 		src.target_area_refs += get_area_by_type(/area/shuttle/escape/station)
-
 	. = ..()
-	src.ma_cell.pixel_x = 10
-	src.ma_cell.pixel_y = 5
-	src.light.attach(src, 1, 0.5) // light has height
-	src.update_light()
 
 /obj/machinery/gravity_tether/station/get_desc(dist, mob/user)
 	. = ..()
@@ -90,10 +92,9 @@ TYPEINFO(/obj/machinery/gravity_tether)
 			shake_camera(M, 5, 32, 0.2)
 
 /obj/machinery/gravity_tether/station/change_intensity(new_intensity)
-
+	var/diff = new_intensity - src.gforce_intensity
 	if (..())
 		return TRUE
-	var/diff = new_intensity - src.gforce_intensity
 	if (diff == 0)
 		return
 	global.station_tether_gforce += diff

@@ -16,6 +16,12 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 
 /obj/machinery/gravity_tether/multi_area/New()
 	src.desc = " This one controls a decently sized area."
+	. = ..()
+	src.light.attach(src, 0.5, 1)
+	src.light.set_brightness(0.7)
+	src.light.set_color(255, 255, 255)
+
+/obj/machinery/gravity_tether/multi_area/initialize()
 	for (var/area/A in get_areas(src.base_area_typepath))
 		var/valid = TRUE
 		for (var/area_typepath in src.base_area_exceptions)
@@ -29,9 +35,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 		if (istype(area_to_add))
 			src.target_area_refs += area_to_add
 	. = ..()
-	src.light.attach(src, 0.5, 1)
-	src.light.set_brightness(0.7)
-	src.light.set_color(255, 255, 255)
 
 /obj/machinery/gravity_tether/proc/shake_affected()
 	for (var/area/A in src.target_area_refs)
