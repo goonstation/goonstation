@@ -259,7 +259,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		new_gforce = 0
 	var/gforce_diff = new_gforce - src.gforce_intensity
 	if (gforce_diff == 0)
-		return
+		return TRUE
 	src.gforce_intensity = round(new_gforce, 0.01)
 
 	SPAWN (0)
