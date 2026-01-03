@@ -141,7 +141,7 @@ TYPEINFO(/obj/item/barrier)
 		..()
 		setProperty("meleeprot_all", 11)
 		setProperty("rangedprot", 3)
-		setProperty("movespeed", 0.6)
+		setProperty("movespeed", 0.8)
 		setProperty("disorient_resist", 75)
 		setProperty("disorient_resist_eye", 45)
 		setProperty("disorient_resist_ear", 35) //idk how lol ok
