@@ -88,7 +88,7 @@ var/global/list/players = list()
 
 	///Attempt to guarantee a player ID is loaded from the API, should only be relevant for offline players since auth handles it otherwise
 	proc/fetch_player_id()
-		if (!src.id)
+		if (src.id)
 			return
 		//helo yes this is mild API abuse but there isn't a dedicated "get player ID" route so I'm piggybacking on the comp ID one for now
 		var/datum/apiModel/PlayerCompIdsResource/playerCompIds
