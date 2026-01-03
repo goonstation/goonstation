@@ -8,6 +8,7 @@
 	var/mob/living/user = source.loc
 	if (istype(user) && I.no_gravity)
 		user.no_gravity = 1
+		user.set_gravity(get_turf(user))
 
 /datum/component/loctargeting/no_gravity/on_removed(atom/movable/source, atom/old_loc)
 	. = ..()
@@ -17,3 +18,4 @@
 		for (var/atom/movable/A as anything in user)
 			if (A.no_gravity)
 				user.no_gravity = 1 //keep on if we are still holdin stuff
+		user.set_gravity(get_turf(user))
