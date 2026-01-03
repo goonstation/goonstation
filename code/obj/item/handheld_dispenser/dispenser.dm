@@ -203,14 +203,6 @@ TYPEINFO(/obj/item/places_pipes)
 
 /obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
 	var/mob/living/silicon/S
-	if (issilicon(user))
-		S = user
-		if (!(S.cell && (S.cell.charge >= silicon_cost_multiplier)))
-			boutput(user, SPAN_ALERT("Not enough charge to destroy that!"))
-			return
-	else if(!src.resources)
-		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
-		return
 	user.visible_message(SPAN_NOTICE("[user] destroys [target]."))
 	logTheThing(LOG_STATION, user, "destroys a [target] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	if(istype(target, /obj/machinery/atmospherics/binary/valve))
@@ -218,9 +210,9 @@ TYPEINFO(/obj/item/places_pipes)
 		if(O.high_risk)
 			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
 	if (S?.cell)
-		S.cell.use(silicon_cost_multiplier)
+		S.cell.give(src.silicon_cost_multiplier)
 	else
-		resources -= 1
+		resources += (src.resources < src.max_resources) ? 1 : 0
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = TRUE
