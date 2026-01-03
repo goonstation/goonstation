@@ -9,12 +9,15 @@
 	anchored = ANCHORED_ALWAYS
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+	has_processing_loop = TRUE
+	density = FALSE
 	HELP_MESSAGE_OVERRIDE("Maybe someone else knows something about this...")
 
 	var/fault_typepath = /datum/grav_fault //! Picks from any concrete subtype of given datum
 	var/lifespan = 30 SECONDS
 
-	var/obj/effects/grav_pulse/effect = null
+	var/obj/effect/grav_pulse/lense = null
+	var/obj/effect/gravanom_pulse/effect = null
 	var/datum/grav_fault/fault = null
 
 	New(loc, lifespan_override=null, triggered_by_event=null)
@@ -24,8 +27,10 @@
 		if (!src.fault)
 			qdel(src)
 			return
-		src.effect = new /obj/effects/grav_pulse(src)
+		src.effect = new /obj/effect/gravanom_pulse(src)
+		src.lense = new /obj/effect/grav_pulse(src)
 		src.vis_contents += src.effect
+		src.vis_contents += src.lense
 
 		..()
 
@@ -37,7 +42,7 @@
 				shake_camera(C.mob, 6, 8)
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-		playsound(src.loc, 'sound/ambience/loop/Static_Horror_Loop.ogg', 50, FALSE)
+		src.lense.pulse()
 
 		SPAWN (lifespan)
 			if (QDELETED(src))
@@ -51,16 +56,29 @@
 						playsound(src.loc, "sparks", 60, 1)
 					qdel(src)
 					return
-			playsound(src.loc, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 50, FALSE)
+			playsound(src.loc, 'sound/weapons/conc_grenade.ogg', 60, TRUE)
+			src.lense.pulse()
 			src.fault.effect(T)
 			qdel(src)
 
+	process()
+		. = ..()
+		playsound(src.loc, 'sound/ambience/loop/Static_Horror_Loop.ogg', 50, FALSE)
+
 	disposing()
 		src.vis_contents -= src.effect
+		src.vis_contents -= src.lense
 		src.effect = null
+		src.lense = null
 		qdel(src.fault)
 		src.fault = null
 		. = ..()
+
+	Crossed(atom/movable/AM)
+		. = ..()
+
+		if (!AM.anchored)
+			AM.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 30, 3)
 
 /obj/anomaly/gravitational/get_help_message(dist, mob/user)
 	. = ..()
@@ -88,7 +106,7 @@
 
 //TODO: Fishing Spot
 
-/obj/effects/grav_pulse
+/obj/effect/gravanom_pulse
 	plane = PLANE_DISTORTION
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 	particles = new /particles/gravitational/anomaly
