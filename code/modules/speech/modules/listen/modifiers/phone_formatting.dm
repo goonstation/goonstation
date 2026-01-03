@@ -12,6 +12,14 @@
 	if (!istype(handset))
 		return
 
+	// Create a text reference to the speaker's mind, if they have one.
+	var/mind_ref = ""
+	if (ismob(message.original_speaker))
+		var/mob/mob_speaker = message.original_speaker
+		if (mob_speaker.equipped() != handset)
+			return NO_MESSAGE // don't forward text when held in offhand
+		mind_ref = "\ref[mob_speaker.mind]"
+
 	message.flags |= SAYFLAG_NO_MAPTEXT
 	message.flags &= ~(SAYFLAG_WHISPER | SAYFLAG_NO_SAY_VERB)
 	message.heard_range = 0
@@ -19,12 +27,6 @@
 	message.atom_listeners_override = null
 	message.atom_listeners_to_be_excluded = null
 	FORMAT_MESSAGE_FOR_RELAY(message, SAY_RELAY_PHONE)
-
-	// Create a text reference to the speaker's mind, if they have one.
-	var/mind_ref = ""
-	if (ismob(message.original_speaker))
-		var/mob/mob_speaker = message.original_speaker
-		mind_ref = "\ref[mob_speaker.mind]"
 
 	message.speaker_to_display ||= message.get_speaker_name(TRUE)
 
