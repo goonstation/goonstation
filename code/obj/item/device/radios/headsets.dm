@@ -29,6 +29,7 @@
 				return
 
 			src.install_radio_upgrade(R)
+			logTheThing(LOG_STATION, user, "installs [O]([O.type]) into their [src]([src.type])")
 			boutput(user, SPAN_NOTICE("You install [R] into [src]."))
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(R)
