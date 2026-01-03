@@ -165,6 +165,13 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		qdel(src)
 		return
 
+	/// Simplified proc for adding a cup to an espresso machine without worrying about a user.
+	proc/add_cup_no_user(var/obj/item/reagent_containers/food/drinks/espressocup/cup)
+		src.cupsinside += 1
+		cup.set_loc(src)
+		src.update()
+		tgui_process.update_uis(src)
+
 	proc/update()
 		if (src.cupsinside == 1)
 			src.image_cup = image(src.icon, icon_state = "cupoverlay")

@@ -1,9 +1,9 @@
-/obj/mapping_helper/glassware
+/obj/mapping_helper/glassware_spawn
 	name = "glassware spawn"
-	desc = "Helper for putting glassware in dispensers at round start (also works for espresso machines)."
+	desc = "Helper for putting glassware in a dispenser at round start (also works for espresso machines)."
 	icon_state = "glassware_spawn"
 
-	/// The type of glassware this component will spawn and attempt to put in the dispenser it's on.
+	/// The type of glassware this helper will spawn and attempt to put in the dispenser it's on.
 	var/glassware_type
 
 	setup()
@@ -16,15 +16,13 @@
 				glassware_type = /obj/item/reagent_containers/glass/beaker/large
 
 			var/obj/item/reagent_containers/container = new glassware_type(src.loc)
-			dispenser.beaker = container
-			container.set_loc(dispenser)
-			APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, dispenser)
-			dispenser.UpdateIcon()
+			dispenser.add_beaker_no_user(container)
 			return
 
 		for(var/obj/machinery/espresso_machine/espressoer in src.loc)
 			var/obj/item/reagent_containers/container = new /obj/item/reagent_containers/food/drinks/espressocup(src.loc)
-			espressoer.cupsinside += 1
-			container.set_loc(espressoer)
-			espressoer.update()
+			espressoer.add_cup_no_user(container)
 			return
+
+		CRASH("A glassware helper couldn't properly spawn glassware. \
+		Perhaps there wasn't a valid dispenser on its turf?")

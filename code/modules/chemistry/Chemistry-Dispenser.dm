@@ -251,6 +251,14 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
+	/// Simplified proc for adding a beaker to a dispenser without worrying about a user.
+	proc/add_beaker_no_user(var/obj/item/reagent_containers/container)
+		src.beaker = container
+		container.set_loc(src)
+		APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, src)
+		container.reagents?.handle_reactions()
+		src.UpdateIcon()
+
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
 		if (damage_amount > 0 && src.health < 300)

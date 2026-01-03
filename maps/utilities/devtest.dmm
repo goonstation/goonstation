@@ -436,7 +436,7 @@
 /area/station/devzone)
 "hX" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "ia" = (
@@ -734,7 +734,7 @@
 "nB" = (
 /obj/machinery/espresso_machine,
 /obj/table/wood/round/auto,
-/obj/mapping_helper/glassware,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "nF" = (
@@ -876,7 +876,7 @@
 /area/station/devzone)
 "pi" = (
 /obj/machinery/chem_dispenser/alcohol/ultra,
-/obj/mapping_helper/glassware,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "pE" = (
@@ -2240,7 +2240,7 @@
 /area/station/devzone)
 "NU" = (
 /obj/machinery/chem_dispenser/soda,
-/obj/mapping_helper/glassware,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "Om" = (
