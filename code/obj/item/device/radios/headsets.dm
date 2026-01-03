@@ -18,6 +18,7 @@
 	wear_layer = MOB_EARS_LAYER
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
+	microphone_listen_input = LISTEN_INPUT_OUTLOUD_RANGE_0
 	var/obj/item/device/radio_upgrade/wiretap = null
 	hardened = 0
 
