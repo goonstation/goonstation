@@ -1,4 +1,10 @@
 
+(t)sat jan 03 26
+(u)CalliopeSoups
+(p)25456
+(e)🎨|C-Sprites
+(+)Trickster wraith's mass whisper is now base kit
+(+)Wraith's blood writing now has no cooldown
 (t)fri jan 02 26
 (u)JORJ949
 (p)25436
