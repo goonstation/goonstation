@@ -12,6 +12,7 @@ TYPEINFO(/obj/item/phone_handset)
 	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
 	w_class = W_CLASS_TINY
 	say_language = LANGUAGE_ENGLISH
+	HELP_MESSAGE_OVERRIDE("Only picks up sound in your <b>active hand</b>.")
 
 	var/obj/machinery/phone/parent = null
 	var/icon/handset_icon = null
