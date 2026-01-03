@@ -212,7 +212,7 @@ TYPEINFO(/obj/item/places_pipes)
 	if (S?.cell)
 		S.cell.give(src.silicon_cost_multiplier)
 	else
-		resources += (src.resources < src.max_resources) ? 1 : 0
+		resources += (src.resources + 1 <= src.max_resources) ? 1 : 0
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = TRUE
