@@ -419,7 +419,7 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
-	shipping_destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
+	shipping_destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","QM")
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
