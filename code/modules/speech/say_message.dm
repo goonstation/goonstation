@@ -82,6 +82,8 @@
 	var/relay_flags = null
 	/// If FALSE, this message will not be permitted to be retransmitted, regardless of the flags present in `relay_flags`.
 	var/can_relay = TRUE
+	/// The browser output group of this message. Messages in the same group will be bundled as if their contents were identical.
+	var/group = ""
 
 	// Maptext Variables:
 	/// The CSS values for the maptext, stored as an associative list, i.e: "font-weight" = "bold".
@@ -446,6 +448,7 @@
 	copy.atom_listeners_to_be_excluded = src.atom_listeners_to_be_excluded?.Copy()
 	copy.relay_flags = src.relay_flags
 	copy.can_relay = src.can_relay
+	copy.group = src.group
 
 	// Maptext Variables:
 	copy.maptext_css_values = src.maptext_css_values?.Copy()
