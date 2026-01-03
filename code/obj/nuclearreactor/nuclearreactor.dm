@@ -26,6 +26,7 @@
 	pixel_point = TRUE
 	machine_registry_idx = MACHINES_FISSION
 	processing_tier = PROCESSING_QUARTER
+	provides_grip = TRUE
 	/// 2D grid of reactor components, or null where there are no components. Size is REACTOR_GRID_WIDTH x REACTOR_GRID_HEIGHT
 	var/list/obj/item/reactor_component/component_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
 	/// 2D grid of lists of neutrons in each grid slot of the component grid. Lists can be empty.

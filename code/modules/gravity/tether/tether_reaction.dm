@@ -106,7 +106,7 @@
 					if (src.cell)
 						logTheThing(LOG_STATION, src, "shorts out via overload, causing a cell failure at [log_loc(src)].")
 						src.cell_rig_effect()
-			src.random_fault(src.calculate_fault_chance())
+			src.random_fault(src.calculate_fault_chance(6))
 		else
 			src.visible_message(SPAN_ALERT("The pylon on [src] briefly shorts."), SPAN_ALERT("You hear a spark."))
 			src.random_fault()

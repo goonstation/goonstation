@@ -79,6 +79,7 @@
 
 	anchored = ANCHORED_ALWAYS
 	density = 1
+	provides_grip = TRUE
 
 	var/datum/pump_ui/ui
 

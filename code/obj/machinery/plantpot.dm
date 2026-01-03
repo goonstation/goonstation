@@ -31,6 +31,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	power_usage = 25
+	provides_grip = TRUE
 	var/datum/plant/current = null // What is currently growing in the plant pot
 	var/datum/plantgenes/plantgenes = null // Set this up in New
 	var/tickcount = 0  // Automatic. Tracks how many ticks have elapsed, for CPU efficiency things.
