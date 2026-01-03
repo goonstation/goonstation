@@ -436,7 +436,7 @@
 /area/station/devzone)
 "hX" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "ia" = (
@@ -734,7 +734,7 @@
 "nB" = (
 /obj/machinery/espresso_machine,
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/drinks/espressocup,
+/obj/mapping_helper/glassware,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "nF" = (
@@ -876,7 +876,7 @@
 /area/station/devzone)
 "pi" = (
 /obj/machinery/chem_dispenser/alcohol/ultra,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "pE" = (
@@ -2240,7 +2240,7 @@
 /area/station/devzone)
 "NU" = (
 /obj/machinery/chem_dispenser/soda,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "Om" = (
