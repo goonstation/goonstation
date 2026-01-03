@@ -523,7 +523,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 
 			pageboy
 				name = "Pageboy"
-				id = "pageboy"Bangs:
+				id = "pageboy"
 				gender = MASCULINE | FEMININE
 
 			pageboy_fade
@@ -937,7 +937,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				gender = FEMININE
 
 			ringlets_fade
-				name: "Ringlets: Faded"
+				name = "Ringlets: Faded"
 				id = "ringlet_fade"
 				random_allowed = FALSE
 		hairup
