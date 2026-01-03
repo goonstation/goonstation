@@ -1,5 +1,9 @@
 
 (t)fri jan 02 26
+(u)JORJ949
+(p)25436
+(e)🆕🎨🧑‍✈️|C-Feature, C-Sprites, A-Command
+(*)The HoP can now print radio upgrades for each on station channel at their fabricator. Command and Security upgrades are locked to hacking it (to discourage hops from immediately making themselves a sec radio).
 (u)QuiteLiterallyAnything
 (p)25455
 (e)🔨|A-Player-Actions
