@@ -1388,10 +1388,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "void-barrier"
 
-	bullet_act(var/obj/projectile/P)
+	bullet_act(var/datum/projectile/P)
 		P.power = P.power * 2
-		if(P.stun)
-			P.stun = P.stun * 2 // a good 2/3rds of projectiles are stun in a normal round anyway
 		..()
 
 /datum/item_special/flame
