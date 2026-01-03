@@ -901,9 +901,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				boutput(C, SPAN_ALERT("The air grows light and thin. Something feels terribly wrong."))
 				shake_camera(C.mob, 5, 16)
 			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)
-
-		if (src.z == Z_LEVEL_STATION)
-			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE)
+			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 
 		processing_items |= src
 

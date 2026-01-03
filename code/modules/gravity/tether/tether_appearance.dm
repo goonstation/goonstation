@@ -31,7 +31,7 @@
 		ma_overlays += src.ma_door
 
 	src.update_light()
-	src.overlays = MA.overlays
+	src.UpdateOverlays(MA, "ma", TRUE)
 
 /obj/machinery/gravity_tether/proc/update_light()
 	if (src.has_no_power())
@@ -101,7 +101,6 @@
 		src.ma_status.icon_state = "status-idle"
 
 /obj/machinery/gravity_tether/proc/update_ma_bat()
-	// TODO: Why the fuck can't we filter this?
 	var/list/ma_overlays = src.ma_bat.overlays
 	ma_overlays.Cut()
 	if (!src.cell)

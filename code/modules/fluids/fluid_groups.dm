@@ -575,7 +575,7 @@
 						if (T && T.active_liquid && T.active_liquid.group == F.group)
 							dirs |= dir
 
-					fluid_ma.icon_state = "[num2text(dirs)][F.gforce < TRACTION_GFORCE_PARTIAL ? "ng" : ""]"
+					fluid_ma.icon_state = "[num2text(dirs)][F.gforce < GFORCE_TRACTION_PARTIAL ? "ng" : ""]"
 
 					if (F.overlay_refs && length(F.overlay_refs))
 						if (F)

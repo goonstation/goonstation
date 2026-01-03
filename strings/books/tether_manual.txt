@@ -1,43 +1,40 @@
-<h1>Gravi-Tonne™ Tether Operator's Manual</h1>
-<p><i>The Terra Nivium Gravi-Tonne™ Wide-area Gravity Tether brings gravity to you! This manual will show you how to operate and maintain the Gravi-Tonne™ Tether safely.</i></p>
+<h1>Gravi-Tonne® Tether Operator's Manual</h1>
+<p><i>The Terra Nivium Gravi-Tonne® Wide-area Gravity Tether brings gravity to you! This manual will show you how to operate and maintain the Gravi-Tonne® Tether safely.</i></p>
 <hr>
 <h3>CHANGING GRAVITY</h3>
 <p>To change gravity, follow these easy steps:
 <ol>
 	<li>Unlock the machine with an <b>authorized ID</b>.</li>
 	<li>Enter the desired gravity intensity <b>by hand</b>.</li>
-	<li>Relax while the Gravi-Tonne™ Tether <b>processes</b> the change.</li>
+	<li>Relax while the Gravi-Tonne® Tether <b>processes</b> the change.</li>
 	<li>Be sure to re-secure the tether after use!</b>.</li>
 </ol>
 <p><i>Did you know..? 1 G-Force is equal to Earth's gravity!</i></p>
-
+<hr>
 <h3>STARTING MAINTENANCE</h3>
-<p>The Gravi-Tonne™ Tether has a front access door that holds the internal power capacitor. The tamper-resist security grate is withdrawn when the system is unlocked.</p>
+<p>The Gravi-Tonne® Tether has a front access door that holds the internal power capacitor. The tamper-resist security grate is withdrawn when the system is unlocked.</p>
 <p>In case of emergency, the tamper-resist grate can be cut through with a rotary saw. Verify internal wiring is not damaged after removing the tamper-resist grate.</p>
-
 <h4>INTERNAL CELL REPLACEMENT</h4>
 <p>To replace the internal capacitor, follow these easy steps:</p>
 <ol>
 	<li>Unlock the machine with an <b>authorized ID</b>.</li>
 	<li>Carefully open the maintenance panel by <b>prying</b> it open.</li>
 	<li>Loosen the internal capacitor cell's bolts with a <b>wrench</b></li>
-	<li>Only replace with official TerraNivium Gravi-Tonne™ Gravi-Cells™</li>
+	<li>Only replace with official TerraNivium Gravi-Tonne® Gravi-Cells™</li>
 </ol>
-<p><i>Did you know..? Unstable batteries will damage or destroy your Gravi-Tonne™ Tether.</i></p>
-
+<p><i>Did you know..? Unstable batteries will damage or destroy your Gravi-Tonne® Tether.</i></p>
 <h4>SYSTEM REPAIR/RESET</h4>
-<p>To perform a full repair and reset of the Gravi-Tonne™ Tether, follow these easy steps:
+<p>To perform a full repair and reset of the Gravi-Tonne® Tether, follow these easy steps:
 <ol>
 <li>Remove the internal capacitor cell as described above.</li>
 <li>Once grounded, carefully remove damaged wiring by <b>cutting</b> them out.</li>
 <li>Replace the removed wiring with fresh <b>cables</b>.</li>
 <li>After the system restarts, set the desired gravity intensity.</li>
 </ol>
-
 <p><i>Did you know..? Lack of proper wire maintenance is the leading cause of tether malfunctions!</i></p>
-
+<hr>
 <h3>INDICATOR LIGHTS</h3>
-<p>The Gravi-Tonne™ Tether uses multiple visual indicators for quick verification of system operation.</p>
+<p>The Gravi-Tonne® Tether uses multiple visual indicators for quick verification of system operation.</p>
 <ul>
 	<li><b>Charge</b>: Top-right LEDs<ul>
 		<li><b>Blue</b>: Full</li>
@@ -77,10 +74,9 @@
 		<li><b>Slight Variance</b>: Nominal Operation</li>
 	</ul></li>
 </ul>
-<p><i>Did you know..? Also available is the Terra Nivium Gravi-Tonne™ Tether Mini, for localized gravity!</i><p>
-
+<p><i>Did you know..? The Terra Nivium Gravi-Tonne® Tether Mini™ is available for local gravity needs!</i><p>
 <hr>
-<b>Schedule an appointment with an Officially Licensed Gravi-Tonne™ Tether Gravitician® today!</b>
+<b>Schedule an appointment with an Officially Licensed Gravi-Tonne® Tether Gravitician™ today!</b>
 <hr>
-<p><i>The Terra Nivium Gravi-Tonne™ Tether, keeps you and your crops planted!<br>
-Reproduction of training and operating materials strictly prohibited by law.</i></p>
+<p><i>"Gravi-Tonne" is a Registered Trademark of Terra Nivium, Ltd. 2046-2051 </i></p>
+<p><i>Reproduction of training and operating materials strictly prohibited by law.</i></p>

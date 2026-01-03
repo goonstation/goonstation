@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	mechanics_type_override = /obj/machinery/gravity_tether/current_area
 	// TODO: Power balancing
 	passive_wattage_per_g = 10 WATTS
+	object_flags = NO_GHOSTCRITTER // not reprogrammable
 
 	/// Base area typepath. Target should probably all share the same base area.
 	var/base_area_typepath = null
@@ -63,6 +64,22 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 		/area/listeningpost/landing_bay,
 	)
 
+	// syndicate access has no name, so intercept that logic branch
+	attackby(obj/item/I, mob/user)
+		if (src.has_no_power())
+			return ..()
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if (istype(id_card))
+			user.lastattacked = get_weakref(src)
+			if (src.allowed(user))
+				src.locked = !src.locked
+				src.update_ma_tamper()
+				src.update_ma_screen()
+				src.UpdateIcon()
+			else
+				src.say("Syndicate access required to [src.locked ? "un" : ""]lock.", message_params=list("group"="\ref[src]_acc"))
+			return
+		return ..()
 
 // per-map
 

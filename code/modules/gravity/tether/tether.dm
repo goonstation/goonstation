@@ -1,8 +1,3 @@
-/// Time between the player confirming the change and the change starting
-#define TETHER_BEGIN_DELAY (30 SECONDS)
-/// Time after the change is complete before another change can be entered
-#define TETHER_CHANGE_COOLDOWN (30 SECONDS)
-
 ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether
 	name = "gravity tether"
@@ -11,11 +6,11 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	icon_state = "base"
 	density = TRUE
 	anchored = ANCHORED_ALWAYS
-	layer = EFFECTS_LAYER_BASE // covers people who walk behind it
+	layer = EFFECTS_LAYER_BASE - 1 // covers people who walk behind it but not over other effects
 	status = REQ_PHYSICAL_ACCESS
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
-	speech_verb_say = list("bleeps", "bloops", "drones", "beeps", "boops", "emits")
+	speech_verb_say = "drones"
 	voice_sound_override = 'sound/misc/talk/bottalk_3.ogg'
 
 	HELP_MESSAGE_OVERRIDE(null)
@@ -69,6 +64,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/New()
 	. = ..()
 	START_TRACKING_CAT(TR_CAT_GRAVITY_TETHERS)
+	src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GRAVITY_EVENT, /obj/machinery/gravity_tether/proc/on_gravity_event)
+	src.AddComponent(/datum/component/bullet_holes, 20, 10)
 	src.cell = new cell_type_path(src)
 	src.light = new/datum/light/point
 	if (src.cell)
@@ -108,6 +105,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	STOP_TRACKING_CAT(TR_CAT_GRAVITY_TETHERS)
 	src.change_intensity(0)
 	src.target_area_refs.len = 0
+	src.UnregisterSignal(src, COMSIG_GRAVITY_EVENT)
 	. = ..()
 
 /obj/machinery/gravity_tether/build_deconstruction_buttons(mob/user)
@@ -141,7 +139,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			. += "Unlock using <b>[keymap ? keymap.action_to_keybind(KEY_BOLT) : "SHIFT"]</b>+<b>Click</b>."
 		else
 			. += "Unlock with an appropriate <b>ID Card</b>."
-		if (istrainedsyndie(x) || isspythief(x))
+		if (istrainedsyndie(x))
 			. += "<br>Break the access lock with an <b>Electromagnetic Card</b>."
 	else if (length(src.req_access))
 		if (isAI(user) || isrobot(user))
@@ -214,12 +212,11 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		src.begin_gravity_change(new_intensity)
 	else
 		src.say("Not enough power to complete change.")
-		playsound(src, 'sound/machines/pod_alarm.ogg', 40, TRUE)
-
+		playsound(src, 'sound/machines/weaponoverload.ogg', 40, TRUE)
 
 /// Actually start the gravity shift wind-up
 /obj/machinery/gravity_tether/proc/begin_gravity_change(new_intensity)
-	playsound(src.loc, 'sound/machines/shieldgen_startup.ogg', 50, 1)
+	playsound(src.loc, 'sound/effects/mantamoving.ogg', 50, 1)
 	src.processing_state = TETHER_PROCESSING_PENDING
 	src.change_begin_time = TIME + TETHER_BEGIN_DELAY
 	src.target_intensity = new_intensity
@@ -232,7 +229,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /// Called when the tether reaches its target intensity
 /obj/machinery/gravity_tether/proc/finish_gravity_change()
-	playsound(src.loc, 'sound/machines/shieldgen_shutoff.ogg', 50, 1)
+	if (src.gforce_intensity > 0)
+		playsound(src.loc, 'sound/machines/shieldgen_startup.ogg', 50, 1)
+	else
+		playsound(src.loc, 'sound/machines/shieldgen_shutoff.ogg', 50, 1)
 	src.change_begin_time = null
 	src.processing_state = TETHER_PROCESSING_COOLDOWN
 	src.cooldown_end_time = TIME + TETHER_CHANGE_COOLDOWN
@@ -269,5 +269,93 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 				T.gforce_current = round(max(0, total_gforce + T.gforce_inherent), 0.01)
 			LAGCHECK(LAG_LOW)
 
-#undef TETHER_BEGIN_DELAY
-#undef TETHER_CHANGE_COOLDOWN
+/// Spawns a gravitational anomaly in a turf it controls, based on the state of the machine and given starting probability
+///
+/// Will automatically target a random area/turf this tether controls
+/obj/machinery/gravity_tether/proc/random_fault(major_prob=0)
+	if (src.has_no_power())
+		return
+	if (!length(src.target_area_refs))
+		return
+	var/area/target_area = pick(src.target_area_refs)
+	if (!istype(target_area))
+		return
+
+	var/list/turfs = get_area_turfs(target_area, TRUE)
+	if (!length(turfs))
+		turfs = get_area_turfs(target_area, FALSE)
+		if (!length(turfs))
+			return
+
+	if (prob(major_prob))
+		if (prob(5))
+			new /obj/anomaly/gravitational/extreme(pick(turfs))
+			return
+		if (prob(1))
+			src.randomize_gravity()
+			return
+		new /obj/anomaly/gravitational/major(pick(turfs))
+		return
+	if (prob(20))
+		src.gravity_drift()
+		return
+	new /obj/anomaly/gravitational/minor(pick(turfs))
+
+/// Generate oods of a fault occuring based on tether state
+/obj/machinery/gravity_tether/proc/calculate_fault_chance(start_value=0)
+	. = start_value
+	if (src.gforce_intensity != 1) // non-standard intensities may introduce problems. scales with intensity
+		. += src.gforce_intensity * 2
+	switch (src.wire_state) // keep your machine taken care of
+		if(TETHER_WIRES_INTACT)
+			. += 0
+		if(TETHER_WIRES_BURNED)
+			. += 15
+		if(TETHER_WIRES_CUT)
+			. += 30
+	. = round(clamp(., 0, 100))
+
+/// quietly and unilaterally drift the machine up or down by 0.1G
+/obj/machinery/gravity_tether/proc/gravity_drift()
+	src.processing_state = TETHER_PROCESSING_COOLDOWN
+	src.cooldown_end_time = TIME + TETHER_CHANGE_COOLDOWN
+	src.change_intensity(src.gforce_intensity + (prob(50) ? 0.1 : -0.1))
+
+/// Randomizes gravity. Respects tether cooldown cycle
+/obj/machinery/gravity_tether/proc/randomize_gravity()
+	var/chosen_gforce = randfloat(0, src.maximum_intensity)
+	if (chosen_gforce == src.gforce_intensity)
+		return
+	src.attempt_gravity_change(chosen_gforce)
+
+/// Handles gravity event signals. event type is `GRAVITY_EVENT_*`. Value is only used with GRAVITY_EVENT_CHANGE.
+/// event_type - `GRAVITY_EVENT_*`
+/// z_level - z-level for this event. -1 means all z-levels
+/// value - only used for changing tether gravity
+/obj/machinery/gravity_tether/proc/on_gravity_event(_, event_type, z_level, value=null)
+	if (z_level != -1 && z_level != src.z)
+		return
+	if (src.has_no_power())
+		return
+	switch (event_type)
+		if (GRAVITY_EVENT_DISRUPT)
+			if (src.is_broken())
+				return
+			src.disturbed_end_time = TIME + TETHER_DISTURBANCE_TIMER
+			src.update_ma_graph()
+			src.UpdateIcon()
+			// additional events extend the timer, but sfx are on cooldown in case of spam
+			if (!ON_COOLDOWN(src, "gravity_disturbance_sfx", TETHER_DISTURBANCE_TIMER))
+				playsound(src, 'sound/effects/ship_alert_major.ogg', 50, 1)
+				src.say("Severe gravity disturbance detected.")
+		if (GRAVITY_EVENT_CHANGE)
+			if (!isnum(value) || value < 0)
+				return
+			if (src.is_broken())
+				return
+			src.disturbed_end_time = TIME + TETHER_DISTURBANCE_TIMER
+			src.update_ma_graph()
+			src.UpdateIcon()
+			src.say("Auto-compensating for local gforce change.")
+			playsound(src, 'sound/effects/manta_alarm.ogg', 50, 1)
+			src.attempt_gravity_change(value)

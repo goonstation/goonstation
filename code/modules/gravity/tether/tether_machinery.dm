@@ -40,8 +40,9 @@
 
 	src.handle_power_cycle()
 
-	if (src.processing_state == TETHER_PROCESSING_PENDING && src.has_no_power())
-		src.finish_gravity_change()
+	if (src.has_no_power())
+		if (src.processing_state == TETHER_PROCESSING_PENDING)
+			src.finish_gravity_change()
 		return
 
 	if (src.status & BROKEN)
@@ -52,6 +53,8 @@
 
 	if (src.disturbed_end_time && TIME > src.disturbed_end_time)
 		src.disturbed_end_time = null
+		src.update_ma_graph()
+		src.UpdateIcon()
 
 	if (src.processing_state == TETHER_PROCESSING_PENDING)
 		if (TIME > src.change_begin_time)
@@ -70,7 +73,7 @@
 			src.update_ma_dials()
 
 			src.UpdateIcon()
-	else if (prob(3))
+	else if (prob(src.gforce_intensity))
 		playsound(src.loc, pick(global.ambience_gravity), 50, 1, pitch=(0.5 + (src.gforce_intensity/2)))
 
 /// The gravity tether prioritizes its own internal capacitor

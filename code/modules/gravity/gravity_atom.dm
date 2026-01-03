@@ -1,12 +1,7 @@
-/// How long the Zero-G floating animation takes for mobs and mob-like things (ms)
-#define GRAVITY_LIVING_ZERO_G_ANIM_TIME 25
-
 /// The last gforce value applied to this AM
 /atom/movable/var/gforce = 1
-/// Atom will apply float animation in zero-G
+/// Atom will apply float animation in zero-G. Don't put this on lots of objects.
 /atom/movable/var/floats_in_zero_g = FALSE
-/// Is this atom currently running a floating animation
-/atom/movable/var/has_float_anim = FALSE
 
 /// Reset gforce based on turf gravity
 /atom/movable/proc/reset_gravity()
@@ -33,36 +28,78 @@
 
 // gravity interactions
 
-// TODO: Fix change in G, fluid controller probs
 // fluid icons change in low-g
-/obj/fluid/set_gravity(turf/T)
+/obj/fluid/New(atom/location)
 	. = ..()
-	if (.)
-		return TRUE
-	src.UpdateIcon()
+	SubscribeGravity(src)
+/obj/fulid/disposing()
+	. = ..()
+	UnsubscribeGravity(src)
+
 
 // some things float in zero-G
 
 /mob/living/carbon/human/floats_in_zero_g = TRUE
 /mob/living/carbon/human/set_gravity(turf/T)
 	. = ..()
-	if (!.)
-		src.hud?.update_gravity_indicator()
+	if (.)
+		return TRUE
+	src.hud?.update_gravity_indicator()
+
 /mob/living/critter/floats_in_zero_g = TRUE
 /mob/living/critter/set_gravity(turf/T)
 	. = ..()
-	if (!.)
-		src.hud?.update_gravity_indicator()
+	if (.)
+		return TRUE
+	src.hud?.update_gravity_indicator()
 
 /mob/living/silicon/robot/floats_in_zero_g = TRUE
 /mob/living/silicon/robot/set_gravity(turf/T)
 	. = ..()
-	if (!.)
-		src.hud?.update_gravity_indicator()
+	if (.)
+		return TRUE
+	src.hud?.update_gravity_indicator()
 
 /mob/living/silicon/ai/floats_in_zero_g = TRUE
-/obj/fake_attacker/floats_in_zero_g = TRUE
-/obj/critter/floats_in_zero_g = TRUE
 
-// TODO: Using animate() for potentially thousands of items isn't performant enough at this time
-// /obj/item/floats_in_zero_g = TRUE
+/obj/New()
+	. = ..()
+	if (src.floats_in_zero_g)
+		SubscribeGravity(src)
+
+/obj/disposing()
+	if (src.floats_in_zero_g)
+		UnsubscribeGravity(src)
+	. = ..()
+
+// simplified checks for OBJs
+/obj/set_gravity(turf/T)
+	. = ..()
+	if (.)
+		return TRUE
+	if (src.floats_in_zero_g)
+		if (src.gforce <= 0)
+			StartDriftFloat(src)
+		else
+			StopDriftFloat(src)
+
+// These should act like mobs
+/obj/critter/floats_in_zero_g = TRUE
+/obj/fake_attacker/floats_in_zero_g = TRUE
+
+// Cross-triggered things that work in zero-G need to indicate they're still dangerous
+/obj/item/beartrap/floats_in_zero_g = TRUE
+/obj/item/mine/floats_in_zero_g = TRUE
+
+// Fluids have different icon-states for zero-g
+/obj/fluid/set_gravity(turf/T)
+	. = ..()
+	if (.)
+		return TRUE
+	src.UpdateIcon()
+
+/obj/fluid/set_gravity(turf/T)
+	. = ..()
+	if (.)
+		return TRUE
+	src.UpdateIcon()

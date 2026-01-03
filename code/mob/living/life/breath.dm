@@ -83,7 +83,7 @@
 				var/depth_to_breathe_from = length(depth_levels)
 				if (owner.lying)
 					depth_to_breathe_from = depth_levels.len-1
-				if (T.gforce_current <= TRACTION_GFORCE_PARTIAL)
+				if (T.gforce_current <= GFORCE_TRACTION_PARTIAL)
 					depth_to_breathe_from = depth_levels.len-1
 					if (owner.lying) // you can try to crawl under zero-g liquids :)
 						depth_to_breathe_from = depth_levels.len

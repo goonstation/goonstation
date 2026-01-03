@@ -24,12 +24,19 @@ var/global/list/z_level_station_outside_area_types = list(
 /// Set a minimum gforce across an entire Z-Level e.g. terrainify and oceanify
 proc/set_zlevel_gforce(z_level, new_gforce, update_tethers=FALSE)
 	global.zlevels[z_level].gforce = new_gforce
+	if (update_tethers)
+		if (new_gforce == 0)
+			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_CHANGE, z_level, 1) // were going to space vegas, babey
+		else if (new_gforce >= 1)
+			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_CHANGE, z_level, 0) // shut off on terrestiral gravity
+
 	for (var/area/A in world)
 		if (A.z != z_level)
 			continue
 		var/total_gforce = max(A.gforce_minimum, new_gforce + A.gforce_tether)
 		for (var/turf/T in A)
 			T.gforce_current = round(max(0, total_gforce + T.gforce_inherent), 0.01)
+		LAGCHECK(LAG_LOW)
 
 /// Round-start initialization of areas that should have zero minimum gravity
 proc/configure_zero_g_areas()

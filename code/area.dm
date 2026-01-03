@@ -4312,10 +4312,10 @@ ABSTRACT_TYPE(/area/mining)
 	ambient_light = "#FFFFE6"
 
 	gravity_traction_partial
-		gforce_minimum = TRACTION_GFORCE_PARTIAL
+		gforce_minimum = GFORCE_TRACTION_PARTIAL
 
 	gravity_traction_full
-		gforce_minimum = TRACTION_GFORCE_FULL
+		gforce_minimum = GFORCE_TRACTION_FULL
 
 	gravity_gforce_none
 		gforce_minimum = 0

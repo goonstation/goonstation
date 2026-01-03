@@ -10,6 +10,9 @@
 
 // slowly breaks down
 /obj/machinery/gravity_tether/bullet_act(obj/projectile/P)
+	. = ..()
+	if (P.power < 10)
+		return .
 	if (HAS_ANY_FLAGS(P.proj_data.damage_type, D_KINETIC | D_PIERCING | D_SLASHING))
 		if (prob(src.calculate_fault_chance(P.power * P.proj_data.ks_ratio/2)))
 			if (src.door_state == TETHER_DOOR_WELDED || src.door_state == TETHER_DOOR_CLOSED)

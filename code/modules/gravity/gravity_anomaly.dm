@@ -1,88 +1,44 @@
-/// Spawns a gravitational anomaly in a turf it controls, based on the given probability.
-///
-/// Will automatically target a random area this tether controls unless given an area refere
-/obj/machinery/gravity_tether/proc/random_fault(major_prob=0)
-	if (src.has_no_power())
-		return
-	if (!length(src.target_area_refs))
-		return
-	var/area/target_area = pick(src.target_area_refs)
-	if (!istype(target_area))
-		return
-
-	var/list/turfs = get_area_turfs(target_area, TRUE)
-	if (!length(turfs))
-		turfs = get_area_turfs(target_area, FALSE)
-		if (!length(turfs))
-			return
-
-	if (prob(major_prob))
-		if (prob(5))
-			new /obj/anomaly/gravitational/extreme(pick(turfs))
-			return
-		if (prob(20))
-			src.randomize_gravity()
-			return
-		new /obj/anomaly/gravitational/major(pick(turfs))
-		return
-	if (prob(20))
-		src.gravity_drift()
-		return
-	new /obj/anomaly/gravitational/minor(pick(turfs))
-
-/// Generate oods of a fault occuring based on tether state
-/obj/machinery/gravity_tether/proc/calculate_fault_chance(start_value=0)
-	. = start_value
-	if (src.gforce_intensity != 1) // non-standard intensities may introduce problems. scales with intensity
-		. += src.gforce_intensity * 2
-	switch (src.wire_state) // keep your machine taken care of
-		if(TETHER_WIRES_INTACT)
-			. += 0
-		if(TETHER_WIRES_BURNED)
-			. += 15
-		if(TETHER_WIRES_CUT)
-			. += 30
-	. = round(clamp(., 0, 100))
-
-/obj/machinery/gravity_tether/proc/gravity_drift()
-	src.change_intensity(src.gforce_intensity + prob(50) ? 0.01: -0.01)
-
-/obj/machinery/gravity_tether/proc/randomize_gravity()
-	var/chosen_gforce = randfloat(0, src.maximum_intensity)
-	if (chosen_gforce == src.gforce_intensity)
-		return
-	src.attempt_gravity_change(chosen_gforce)
-
-/// Spawns gravity fault effects
+/// Gravitatonal Anomaly, potentially creates a white/black hole or several other gravity effects based on typepath
 /obj/anomaly/gravitational
-	name = "baby gravitational anomaly"
-	desc = "Aww. It's so cute!"
-	icon = 'icons/effects/64x64.dmi'
-	icon_state="smoke-unused"
-	bound_width = 32
-	bound_height = 32
-	pixel_x = -16
-	pixel_y = -16
-	alpha = 50
+	name = "gravitational anomaly"
+	desc = "Huh. That's weird."
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "32x32circle"
+	color = "#aa0099"
+	plane = PLANE_NOSHADOW_BELOW
 	anchored = ANCHORED_ALWAYS
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-	plane = PLANE_NOSHADOW_BELOW
+	HELP_MESSAGE_OVERRIDE("Maybe someone else knows something about this...")
 
-	var/fault_type = /datum/grav_fault //! Picks from any concrete subtype of given datum
+	var/fault_typepath = /datum/grav_fault //! Picks from any concrete subtype of given datum
 	var/lifespan = 30 SECONDS
 
+	var/obj/effects/grav_pulse/effect = null
+	var/datum/grav_fault/fault = null
+
 	New(loc, lifespan_override=null, triggered_by_event=null)
+		var/turf/T = get_turf(src)
+		var/fault_path = pick(concrete_typesof(src.fault_typepath))
+		src.fault = new fault_path
+		if (!src.fault)
+			qdel(src)
+			return
+		src.effect = new /obj/effects/grav_pulse(src)
+		src.vis_contents += src.effect
+
 		..()
-		if (!isnum(lifespan_override))
+
+		if (isnum(lifespan_override))
 			src.lifespan = lifespan_override
 		if (triggered_by_event)
-			var/turf/T = get_turf(src)
 			for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 19))
-				boutput(C, SPAN_ALERT("The air grows hazy. Something feels slightly wrong."))
+				boutput(C, SPAN_ALERT("The air grows hazy. Something feels slightly off."))
 				shake_camera(C.mob, 6, 8)
+		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+		playsound(src.loc, 'sound/ambience/loop/Static_Horror_Loop.ogg', 50, FALSE)
 
-		animate(src, lifespan - 2 SECONDS, alpha=255, transform=matrix(2, 0, 0, 2, 0 ,0))
 		SPAWN (lifespan)
 			if (QDELETED(src))
 				return
@@ -95,27 +51,74 @@
 						playsound(src.loc, "sparks", 60, 1)
 					qdel(src)
 					return
-			var/turf/T = get_turf(src)
-			var/fault_path = pick(concrete_typesof(src.fault_type))
-			var/datum/grav_fault/fault = new fault_path
-			fault?.effect(T)
+			playsound(src.loc, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 50, FALSE)
+			src.fault.effect(T)
 			qdel(src)
 
+	disposing()
+		src.vis_contents -= src.effect
+		src.effect = null
+		qdel(src.fault)
+		src.fault = null
+		. = ..()
+
+/obj/anomaly/gravitational/get_help_message(dist, mob/user)
+	. = ..()
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.traitHolder.hasTraitInList(list("training_engineer", "training_scientist")))
+			return "Mitigate \the [src] with a <b>Spatial Interdictor</b>."
+
 /obj/anomaly/gravitational/minor
-	fault_type = /datum/grav_fault/minor
+	name = "baby gravitational anomaly"
+	desc = "Aww. It's so cute!"
+	fault_typepath = /datum/grav_fault/minor
 
 /obj/anomaly/gravitational/major
+	name = "concerning gravitational anomaly"
+	desc = "That doesn't seem good."
 	lifespan = 45 SECONDS
-	fault_type = /datum/grav_fault/major
+	fault_typepath = /datum/grav_fault/major
 
 /obj/anomaly/gravitational/extreme
+	name = "angry gravitational anomaly"
+	desc = "It's bad. Not good. Terrible. <b>Angry</b>."
 	lifespan = 60 SECONDS
-	fault_type = /datum/grav_fault/extreme
+	fault_typepath = /datum/grav_fault/extreme
+
+//TODO: Fishing Spot
+
+/obj/effects/grav_pulse
+	plane = PLANE_DISTORTION
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+	particles = new /particles/gravitational/anomaly
+
+
+/particles/gravitational/anomaly
+	color = generator("num", 1, 5)
+	gradient = list(0, "#f00", 1, "#900", 2, "#990", 3, "#ff0", 4, "#0f0", 5, "#090", "loop")
+
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "mistcloud1"
+	transform = list(1, 0, 0, 0,
+	                 0, 1, 0, 0,
+					 0, 0, 0, 1,
+					 0, 0, 0, 1)
+
+	spawning = 0.1
+	count = 4
+	lifespan = 5000
+	spin = generator("num", -2, 2)
+	grow = generator("num", 0.2, 0.5)
+	fadein = 8
+	position = generator("circle", 50, 100, UNIFORM_RAND)
+	gravity = list(0, 0, 0.05)
+	velocity = list(0, 0, 0.5)
+	friction = 0.2
 
 ABSTRACT_TYPE(/datum/grav_fault)
 /// A fault effect for gravitational anomalies
 /datum/grav_fault
-
 	/// Tether fault effect, typically all you need to define
 	proc/effect(turf/origin)
 
@@ -124,6 +127,7 @@ ABSTRACT_TYPE(/datum/grav_fault/minor)
 
 // taken from artifact gravity well
 /datum/grav_fault/minor/push_objects/effect(turf/origin)
+	. = ..()
 	var/push = prob(50)
 
 	var/obj/effect/grav_pulse/lense = new(origin)
@@ -282,6 +286,7 @@ ABSTRACT_TYPE(/datum/grav_fault/major)
 			boutput(M, SPAN_ALERT("A gravitational anomaly pulls the items out of your hands!"))
 
 /datum/grav_fault/major/trip/effect(turf/origin)
+	. = ..()
 	logTheThing(LOG_STATION, src, "caused everyone to trip near [log_loc(origin)]")
 	for (var/mob/living/M in hearers(6, origin))
 		if (M.anchored)
@@ -293,14 +298,17 @@ ABSTRACT_TYPE(/datum/grav_fault/major)
 ABSTRACT_TYPE(/datum/grav_fault/extreme)
 /datum/grav_fault/extreme
 
+#ifndef RP_MODE
 /// Spawns a black hole spawner.
 /datum/grav_fault/extreme/black_hole/effect(turf/origin)
 	. = ..()
-	var/obj/anomaly/bhole_spawner/bhole = new(origin) // It's spawners all the way down
-	bhole.feedings = 6 // not random event, so make these less hungry.
-	logTheThing(LOG_STATION, src, "spawned a black hole spawner at [log_loc(origin)].")
-	message_admins("Black Hole anomaly spawning in [log_loc(origin)]")
-	message_ghosts("<b>A black hole</b> is spawning at [log_loc(origin, ghostjump=TRUE)].")
+	SPAWN(0) // otherwise bhole_spawner eats the anomaly prematurely
+		var/obj/anomaly/bhole_spawner/bhole = new(origin) // It's spawners all the way down
+		bhole.feedings = 6 // not random event, so make these less hungry.
+		logTheThing(LOG_STATION, src, "spawned a black hole spawner at [log_loc(origin)].")
+		message_admins("Black Hole anomaly spawning in [log_loc(origin)]")
+		message_ghosts("<b>A black hole</b> is spawning at [log_loc(origin, ghostjump=TRUE)].")
+#endif
 
 /// Wow! Free white hole!
 /datum/grav_fault/extreme/white_hole/effect(turf/origin)
@@ -317,7 +325,7 @@ ABSTRACT_TYPE(/datum/grav_fault/extreme)
 	logTheThing(LOG_STATION, src, "tried ripping arms off near [log_loc(origin)].")
 	var/lost_limb = FALSE
 	for (var/mob/living/M in hearers(6, origin))
-		if (M.lying || prob(30))
+		if (M.lying)
 			continue
 		if (isrobot(M))
 			var/mob/living/silicon/robot/R = M
@@ -338,18 +346,14 @@ ABSTRACT_TYPE(/datum/grav_fault/extreme)
 		else if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (prob(50))
-				if (H.limbs.l_arm)
-					H.sever_limb(H.limbs.l_arm)
+				if(H.sever_limb("l_arm"))
 					lost_limb = TRUE
-				else if (H.limbs.r_arm)
-					H.sever_limb(H.limbs.r_arm)
+				else if(H.sever_limb("r_arm"))
 					lost_limb = TRUE
 			else
-				if (H.limbs.r_arm)
-					H.sever_limb(H.limbs.r_arm)
+				if(H.sever_limb("r_arm"))
 					lost_limb = TRUE
-				else if (H.limbs.l_arm)
-					H.sever_limb(H.limbs.l_arm)
+				else if(H.sever_limb("l_arm"))
 					lost_limb = TRUE
 		if (lost_limb)
 			boutput(M, SPAN_COMBAT("Your arm is ripped right off by the gravitational anomaly!"))

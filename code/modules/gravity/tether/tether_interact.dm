@@ -1,5 +1,10 @@
+/// How much cable coil it takes to repair the tether wiring
+#define TETHER_WIRE_REPAIR_CABLE_COST 5
+/// How many rods to repair the tether tamper grate
+#define TETHER_TAMPER_REPAIR_ROD_COST 5
+
 /obj/machinery/gravity_tether/receive_silicon_hotkey(mob/user)
-	if (..() || !src.allowed(user) || !length(src.req_access))
+	if (..() || !src.allowed(user) || !length(src.req_access) || !in_interact_range(src, user))
 		return
 	if (user.client.check_key(KEY_BOLT))
 		. = 1
@@ -7,8 +12,6 @@
 			boutput(user, SPAN_NOTICE("Unable to interface with [src]!"))
 			return
 		src.locked = !src.locked
-		if (!src.locked)
-			logTheThing(LOG_STATION, user, "unlocked gravity tether at [log_loc(src)].")
 		src.update_ma_screen()
 		src.update_ma_tamper()
 		src.UpdateIcon()
@@ -26,7 +29,11 @@
 	user.lastattacked = get_weakref(src)
 
 	if (src.locked && !src.emagged)
-		src.say("[get_access_desc(src.req_access[1])] access required.")
+		// Can't call parent for interaction checks and no acess desc for syndicate IDs on purpose.
+		if (istype(src, /obj/machinery/gravity_tether/multi_area/listening_post))
+			src.say("Syndicate access required.", message_params=list("group"="\ref[src]_acc"))
+			return
+		src.say("[get_access_desc(src.req_access[1])] access required.", message_params=list("group"="\ref[src]_acc"))
 		return
 	if (src.processing_state == TETHER_PROCESSING_PENDING)
 		src.say("Processing shift, [time_to_text(src.change_begin_time-TIME)] remaining.")
@@ -126,6 +133,9 @@
 
 		// tamper repair grate
 		if (istype(I, /obj/item/rods) && src.locked && !src.tamper_intact)
+			if (I.amount < TETHER_TAMPER_REPAIR_ROD_COST)
+				boutput(user, SPAN_NOTICE("You need [TETHER_TAMPER_REPAIR_ROD_COST] rods to restore the tamper-grate on [src]."))
+				return
 			var/duration = 5 SECONDS / (is_handy ? 2 : 1)
 			user.visible_message(
 				SPAN_NOTICE("[user] begins repairing [src]'s tamper-resist security grate."),
@@ -229,7 +239,8 @@
 			src.update_ma_screen()
 			src.UpdateIcon()
 		else
-			boutput(user, SPAN_NOTICE("[get_access_desc(src.req_access[1])] access required to [src.locked ? "un" : ""]lock."))
+			src.say("[get_access_desc(src.req_access[1])] access required to [src.locked ? "un" : ""]lock.", message_params=list("group"="\ref[src]_acc"))
+		return
 	. = ..()
 
 
@@ -390,3 +401,6 @@
 		. = list(stop,start)
 	else
 		. = list(start,stop)
+
+#undef TETHER_WIRE_REPAIR_CABLE_COST
+#undef TETHER_TAMPER_REPAIR_ROD_COST

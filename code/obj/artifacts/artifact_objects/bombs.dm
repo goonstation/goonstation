@@ -200,8 +200,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	effect_activate(obj/O)
 		. = ..()
-		if (O.z == Z_LEVEL_STATION)
-			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE)
+		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, O.z)
 
 	deploy_payload(var/obj/O)
 		if (..())

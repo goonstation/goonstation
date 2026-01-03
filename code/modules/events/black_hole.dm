@@ -49,8 +49,7 @@
 				feedings_required = rand(12,24)
 				lifespan = lifespan * 1.2
 				break
-		if (src.z == Z_LEVEL_STATION)
-			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_DISTURBANCE)
+
 
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
@@ -60,6 +59,7 @@
 			boutput(C, SPAN_ALERT("The air grows heavy and thick. Something feels terribly wrong."))
 			shake_camera(C.mob, 5, 16)
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,0.5)
+		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 
 		sleep(lifespan / 2)
 		if (!stable)

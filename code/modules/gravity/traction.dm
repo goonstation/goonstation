@@ -19,25 +19,19 @@
 		if(!(src.temp_flags & SPACE_PUSHING) && src.inertia_value > 0  && src.last_move != null)
 			BeginSpacePush(src)
 
-	if (!src.floats_in_zero_g)
-		return
-
-	if (src.has_float_anim)
-		if (src.traction == TRACTION_FULL || src.gforce >= 1)
-			animate(src, flags=ANIMATION_END_NOW, tag="grav_drift")
-			src.has_float_anim = FALSE
-	else
-		if (src.traction != TRACTION_FULL && src.gforce < 1)
-			animate(src, flags=ANIMATION_END_NOW, tag="grav_drift") // reset animations so they don't stack
-			src.has_float_anim = TRUE
-			animate_drift(src, -1, GRAVITY_LIVING_ZERO_G_ANIM_TIME)
-
-	return FALSE
-
 /mob/update_traction(turf/T)
 	. = ..()
 	if (src.traction == TRACTION_FULL && src.inertia_dir != 0)
 		src.inertia_dir = 0
+
+/mob/living/update_traction(turf/T)
+	. = ..()
+	if (src.floats_in_zero_g)
+		if ((src.temp_flags & DRIFT_ANIMATION) && (src.gforce >= 1 || src.traction == TRACTION_FULL || (src.traction == TRACTION_PARTIAL && src.inertia_value <= 0)))
+			StopDriftFloat(src)
+			return
+		if ((src.temp_flags & ~DRIFT_ANIMATION) && (src.gforce < 1 && (src.traction == TRACTION_NONE || (src.traction == TRACTION_PARTIAL && src.inertia_value > 0))))
+			StartDriftFloat(src)
 
 /// Check if an atom has traction with the ground due to gravity
 /atom/movable/proc/calculate_traction(turf/T=null)
@@ -60,15 +54,15 @@
 			return TRACTION_FULL
 
 	switch (src.gforce)
-		if (TRACTION_GFORCE_FULL to INFINITY)
+		if (GFORCE_TRACTION_FULL to INFINITY)
 			if (T.wet >= 2) // lube / superlube
 				return TRACTION_PARTIAL
 			return TRACTION_FULL
-		if (TRACTION_GFORCE_PARTIAL to TRACTION_GFORCE_FULL)
+		if (GFORCE_TRACTION_PARTIAL to GFORCE_TRACTION_FULL)
 			if (T.wet <= -1) // slime/glue
 				return TRACTION_FULL
 			return TRACTION_PARTIAL
-		if (-INFINITY to TRACTION_GFORCE_PARTIAL)
+		if (-INFINITY to GFORCE_TRACTION_PARTIAL)
 			if (T.wet <= -1) // slime
 				if (T.wet <= -2) // glue
 					return TRACTION_FULL

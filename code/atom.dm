@@ -549,6 +549,10 @@ TYPEINFO(/atom/movable)
 /atom/movable/disposing()
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
+	if (temp_flags & DRIFT_ANIMATION)
+		StopDriftFloat(src)
+	if (temp_flags & GRAVITY_SUBSCRIBER)
+		UnsubscribeGravity(src)
 
 	src.attached_objs?.Cut()
 	src.attached_objs = null

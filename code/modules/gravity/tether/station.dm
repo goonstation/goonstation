@@ -1,17 +1,10 @@
-#define TETHER_DISTURBANCE_TIMER (60 SECONDS)
-
 /// Combined value of all station gravity tether gforces
+///
+/// Needed so airbridge controllers can setgravity on their controlled turfs
 var/global/station_tether_gforce = 0
 
-/// Update the station and airbridge turf g-forces
-proc/update_station_gforce(diff)
-	if (diff == 0)
-		return
-	global.station_tether_gforce += diff
-	for_by_tcl(airbridge, /obj/airbridge_controller)
-		for (var/turf/T in airbridge.maintaining_turfs)
-			T.update_gforce_inherent(global.station_tether_gforce)
-
+TYPEINFO(/obj/machinery/gravity_tether)
+	mats = null
 /obj/machinery/gravity_tether/station
 	name = "\improper Gravi-Tonne wide-area gravity tether"
 	icon = 'icons/obj/machines/tether_64x64.dmi'
@@ -27,7 +20,6 @@ proc/update_station_gforce(diff)
 	locked = TRUE
 
 /obj/machinery/gravity_tether/station/New()
-	src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GRAVITY_DISTURBANCE, /obj/machinery/gravity_tether/station/proc/on_gravity_disturbance)
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
 	var/list/station_area_names = get_accessible_station_areas()
 	var/list/area_types_to_skip = global.z_level_station_outside_area_types
@@ -52,10 +44,6 @@ proc/update_station_gforce(diff)
 	src.ma_cell.pixel_y = 5
 	src.light.attach(src, 1, 0.5) // light has height
 	src.update_light()
-
-/obj/machinery/gravity_tether/station/disposing()
-	src.UnregisterSignal(src, COMSIG_GRAVITY_DISTURBANCE)
-	. = ..()
 
 /obj/machinery/gravity_tether/station/get_desc(dist, mob/user)
 	. = ..()
@@ -102,10 +90,16 @@ proc/update_station_gforce(diff)
 			shake_camera(M, 5, 32, 0.2)
 
 /obj/machinery/gravity_tether/station/change_intensity(new_intensity)
-	var/diff = new_intensity - src.gforce_intensity
+
 	if (..())
 		return TRUE
-	global.update_station_gforce(diff)
+	var/diff = new_intensity - src.gforce_intensity
+	if (diff == 0)
+		return
+	global.station_tether_gforce += diff
+	for_by_tcl(airbridge, /obj/airbridge_controller)
+		for (var/turf/T in airbridge.maintaining_turfs)
+			T.update_gforce_inherent(global.station_tether_gforce)
 
 /obj/machinery/gravity_tether/station/cell_rig_effect()
 	. = ..()
@@ -125,16 +119,6 @@ proc/update_station_gforce(diff)
 	else
 		return ..()
 
-/obj/machinery/gravity_tether/station/proc/on_gravity_disturbance(_)
-	if (src.is_disabled())
-		return
-	if (!ON_COOLDOWN(src, "gravity_disturbance", TETHER_DISTURBANCE_TIMER))
-		src.disturbed_end_time = TIME + TETHER_DISTURBANCE_TIMER
-		playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
-		src.visible_message(SPAN_ALERT("A severe gravity disturbance alarm rings out from \the [src]"), "A severe warning alarm rings out!")
-		src.update_ma_graph()
-		src.UpdateIcon()
-
 // from /particles/rack_spark
 /particles/station_tether_spark
 	icon = 'icons/effects/lines.dmi'
@@ -151,5 +135,3 @@ proc/update_station_gforce(diff)
 	rotation = generator("num", 0, 360, UNIFORM_RAND)
 	grow = list(0.01, 0)
 	fadein = 0
-
-#undef TETHER_DISTURBANCE_TIMER
