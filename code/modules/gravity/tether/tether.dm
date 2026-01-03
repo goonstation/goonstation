@@ -95,6 +95,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.ma_screen = mutable_appearance(src.icon, "screen-locked")
 	src.ma_intensity = mutable_appearance(src.icon, "level-2")
 	src.ma_dials = mutable_appearance(src.icon, "dials-regular")
+	src.update_ma_screen()
+	src.update_ma_status()
+	src.UpdateIcon()
 
 /obj/machinery/gravity_tether/initialize()
 	. = ..()
@@ -149,6 +152,11 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			. += "Lock with an appropriate <b>ID Card</b>."
 	else
 		. += "Has no access lock."
+	if (user.traitHolder?.hasTrait("training_engineer"))
+		if (length(src.req_access) == 0)
+			. += "<br>Add an access lock with an <b>Access Lite</b>."
+		else
+			. += "<br>The access lock can be modified with an <b>Access Pro</b>."
 	if (isarcfiend(user))
 		. += "<br>Can overload with <b>Discharge</b>."
 
@@ -254,13 +262,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return
 	src.gforce_intensity = round(new_gforce, 0.01)
 
-	src.update_ma_status()
-	src.update_ma_graviton()
-	src.update_ma_dials()
-	src.update_ma_graph()
-	src.update_ma_intensity()
-	src.UpdateIcon()
-
 	SPAWN (0)
 		for (var/area/A in src.target_area_refs)
 			A.gforce_tether += gforce_diff
@@ -268,6 +269,15 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			for (var/turf/T in A)
 				T.gforce_current = round(max(0, total_gforce + T.gforce_inherent), 0.01)
 			LAGCHECK(LAG_LOW)
+		src.after_change_intensity()
+
+/obj/machinery/gravity_tether/proc/after_change_intensity()
+	src.update_ma_status()
+	src.update_ma_graviton()
+	src.update_ma_dials()
+	src.update_ma_graph()
+	src.update_ma_intensity()
+	src.UpdateIcon()
 
 /// Spawns a gravitational anomaly in a turf it controls, based on the state of the machine and given starting probability
 ///

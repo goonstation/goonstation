@@ -1,4 +1,5 @@
-<h1>Gravi-Tonne® Tether Operator's Manual</h1>
+<h1>Gravi-Tonne® Tether</h1
+<h3>OPERATOR'S MANUAL</h3>
 <p><i>The Terra Nivium Gravi-Tonne® Wide-area Gravity Tether brings gravity to you! This manual will show you how to operate and maintain the Gravi-Tonne® Tether safely.</i></p>
 <hr>
 <h3>CHANGING GRAVITY</h3>

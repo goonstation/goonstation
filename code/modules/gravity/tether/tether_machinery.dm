@@ -35,6 +35,7 @@
 		if (src.processing_state == TETHER_PROCESSING_PENDING)
 			src.finish_gravity_change()
 		if (src.gforce_intensity != 0)
+			src.say("Contact with stable ground lost.")
 			src.change_intensity(0)
 		return
 

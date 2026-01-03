@@ -18,12 +18,13 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 	src.desc += " This one covers a small area."
 	. = ..()
 	src.light.attach(src, 0.5, 1)
-	src.update_ma_status()
-	src.UpdateIcon()
 
 /obj/machinery/gravity_tether/current_area/attempt_gravity_change(new_gforce)
 	var/area/A = get_area(src)
-	if (!A || !A.area_apc)
+	if (!A)
+		return FALSE
+	if (!A.area_apc)
+		src.say("No area APC detected.")
 		return FALSE
 	// lockdown on attempting gravity change
 	if (src.gforce_intensity == 0 && new_gforce > 0)
@@ -39,10 +40,8 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 		if (M.client)
 			shake_camera(M, 5, 32, 0.2)
 
-/obj/machinery/gravity_tether/current_area/change_intensity(new_intensity)
+/obj/machinery/gravity_tether/current_area/after_change_intensity()
 	. = ..()
-	if (.)
-		return .
 	var/area/A = get_area(src)
 	if (src.gforce_intensity > 0)
 		src.activate(A)
@@ -52,6 +51,9 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 /obj/machinery/gravity_tether/current_area/proc/activate(area/A)
 	src.anchored = ANCHORED_ALWAYS
 	src.target_area_refs = list(A)
+	if (src.pulled_by)
+		src.pulled_by.remove_pulling()
 
 /obj/machinery/gravity_tether/current_area/proc/deactivate(area/A)
+	src.anchored = UNANCHORED
 	src.target_area_refs = list()
