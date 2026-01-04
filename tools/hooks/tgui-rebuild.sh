@@ -14,6 +14,7 @@ fi
 
 cd "$REPO_ROOT"
 
+' "$UNRESOLVED" | grep -vE '^browserassets/src/tgui/.*\.(bundle|chunk)\.' || true)
 # Skip if there are unresolved conflicts outside of tgui bundles.
 UNRESOLVED=$(git diff --name-only --diff-filter=U || true)
 if [ -n "$UNRESOLVED" ]; then
@@ -25,17 +26,30 @@ if [ -n "$UNRESOLVED" ]; then
   fi
 fi
 
-# Only rebuild when tgui sources or bundles changed in the merge/rewrite.
-BASE_REF=""
-if BASE_CANDIDATE=$(git rev-parse --verify HEAD@{1} 2>/dev/null); then
-  BASE_REF="$BASE_CANDIDATE"
-fi
-
-if [ -n "$BASE_REF" ]; then
-  CHANGED_PATHS=$(git diff --name-only "$BASE_REF" HEAD -- tgui browserassets/src/tgui || true)
-else
-  CHANGED_PATHS=$(git diff --name-only HEAD -- tgui browserassets/src/tgui || true)
-fi
+# Decide which diff scope to look at based on the invoking hook.
+CHANGED_PATHS=""
+case "$HOOK_NAME" in
+  pre-commit)
+    if [ ! -f .git/MERGE_HEAD ]; then
+      exit 0
+    fi
+    CHANGED_PATHS=$(git diff --cached --name-only -- tgui browserassets/src/tgui || true)
+    ;;
+  post-merge|post-rewrite)
+    BASE_REF=""
+    if BASE_CANDIDATE=$(git rev-parse --verify HEAD@{1} 2>/dev/null); then
+      BASE_REF="$BASE_CANDIDATE"
+    fi
+    if [ -n "$BASE_REF" ]; then
+      CHANGED_PATHS=$(git diff --name-only "$BASE_REF" HEAD -- tgui browserassets/src/tgui || true)
+    else
+      CHANGED_PATHS=$(git diff --name-only HEAD -- tgui browserassets/src/tgui || true)
+    fi
+    ;;
+  *)
+    CHANGED_PATHS=$(git diff --name-only HEAD -- tgui browserassets/src/tgui || true)
+    ;;
+esac
 
 if [ -z "$CHANGED_PATHS" ]; then
   exit 0

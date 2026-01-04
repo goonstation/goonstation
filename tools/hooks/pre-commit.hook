@@ -1,2 +1,3 @@
 #!/bin/sh
+sh tools/hooks/tgui-rebuild.sh pre-commit "$@"
 exec tools/bootstrap/python -m mapmerge2.precommit
