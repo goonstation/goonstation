@@ -35,8 +35,12 @@ ABSTRACT_TYPE(/datum/component/bot_command)
 		for (var/obj/machinery/bot/secbot/secbot as anything in src.bots)
 			if (QDELETED(secbot))
 				continue
-			if (iscarbon(target) && target != secbot.target)
-				secbot.EngageTarget(target, FALSE, FALSE, TRUE)
+			if (secbot == target)
+				secbot.toggle_power()
+				src.bots -= secbot
+			else
+				if (iscarbon(target) && target != secbot.target)
+					secbot.EngageTarget(target, FALSE, FALSE, TRUE)
 
 /datum/component/bot_command/janitor
 	botpath = /obj/machinery/bot/cleanbot
