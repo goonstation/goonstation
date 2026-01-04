@@ -626,7 +626,7 @@ Equip items from body traits.
 				implant.scanned_here = locate(/area/centcom/reconstitutioncenter) || null
 				R.fields["imp"] = implant
 				R.fields["mind"] = src.mind
-				R.fields["scantime"] = TIME + 60 MINUTES // scan decay buffer
+				R.fields["scantime"] = TIME + 30 MINUTES // scan decay buffer
 				D.root.add_file(R)
 
 				D.name_suffix("([src.real_name])")
