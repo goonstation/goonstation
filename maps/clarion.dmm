@@ -8393,12 +8393,13 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "buW" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/decal/tile_edge/line/purple{
 	dir = 4;
 	icon_state = "line1"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
@@ -8525,6 +8526,10 @@
 	icon_state = "line2"
 	},
 /obj/item/device/radio/beacon,
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/hangar/science)
 "bwg" = (
@@ -11071,6 +11076,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"czY" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "cAz" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -12588,6 +12600,7 @@
 /area/station/turret_protected/armory_outside)
 "dMm" = (
 /obj/machinery/light,
+/obj/machinery/vehicle/miniputt,
 /turf/simulated/floor/engine,
 /area/station/hangar/science)
 "dMJ" = (
@@ -14854,11 +14867,6 @@
 	},
 /area/station/hydroponics/bay)
 "ftU" = (
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/vehicle/miniputt,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
@@ -17817,6 +17825,10 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/bridge/customs)
+"hAc" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/chapel/funeral_parlor)
 "hAr" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -18814,6 +18826,7 @@
 	name = "Research Hangar Door Control";
 	pixel_y = 28
 	},
+/obj/machinery/vehicle/miniputt,
 /turf/simulated/floor/engine,
 /area/station/hangar/science)
 "iiQ" = (
@@ -23578,7 +23591,7 @@
 	},
 /area/station/bridge/execrestroom)
 "lyx" = (
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "lyy" = (
@@ -24310,6 +24323,10 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/cafeteria)
+"lXX" = (
+/obj/landmark/antagonist/blob,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "lYR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27260,10 +27277,7 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/escape)
 "och" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/vehicle/miniputt,
+/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/engine{
 	dir = 8;
 	icon_state = "engine_caution_corners"
@@ -27756,6 +27770,7 @@
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "otT" = (
@@ -30259,6 +30274,13 @@
 /obj/item/handcuffs,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
+"qnE" = (
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/engine,
+/area/station/hangar/science)
 "qoe" = (
 /obj/decal/tile_edge/stripe{
 	dir = 8
@@ -32699,7 +32721,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/landmark/antagonist/blob,
+/obj/machinery/plantpot,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ser" = (
@@ -36780,13 +36802,6 @@
 "uRw" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/left_station/destiny)
-"uRD" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "uRH" = (
 /turf/simulated/floor/engine/caution/north,
 /area/station/hangar/main)
@@ -37192,6 +37207,10 @@
 /obj/machinery/vending/standard,
 /turf/simulated/floor,
 /area/station/medical/robotics)
+"vgu" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "vgE" = (
 /obj/linen_bin/towel,
 /obj/table/glass/reinforced/auto,
@@ -37346,6 +37365,14 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/garden/aviary)
+"vnU" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_west"
+	},
+/area/station/hangar/science)
 "vok" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -70421,7 +70448,7 @@ xCU
 leY
 apU
 apU
-arC
+aqW
 mhB
 wFN
 aue
@@ -71023,7 +71050,7 @@ xCU
 leY
 apU
 apU
-aqW
+hAc
 arC
 asr
 asS
@@ -71325,7 +71352,7 @@ leY
 abt
 abt
 apU
-asS
+arC
 arD
 arC
 asS
@@ -76197,7 +76224,7 @@ vSf
 boz
 sAp
 boz
-uRD
+boN
 vSf
 bsj
 rEu
@@ -76499,7 +76526,7 @@ boN
 boz
 ndg
 boz
-boN
+czY
 boN
 bsj
 cgF
@@ -81580,7 +81607,7 @@ vpg
 aem
 acc
 sen
-aem
+lXX
 aem
 aqp
 tOd
@@ -81880,10 +81907,10 @@ iFG
 upO
 acc
 aem
-acc
+aem
+keU
 hIw
-aem
-aem
+bpb
 aqp
 fJV
 aZh
@@ -82181,10 +82208,10 @@ rgl
 qer
 mFn
 acc
+vgu
 aem
 acc
 xPV
-aem
 acc
 aqp
 aqp
@@ -82484,9 +82511,9 @@ qer
 tZH
 acc
 aem
+aem
 keU
 aem
-bpb
 acc
 tAk
 btH
@@ -82788,7 +82815,7 @@ uuf
 uuf
 uuf
 aem
-bpb
+aem
 axB
 eMT
 axE
@@ -84599,7 +84626,7 @@ uuf
 tvn
 uuf
 uuf
-svZ
+aem
 hsp
 vcn
 aaB
@@ -85203,7 +85230,7 @@ aml
 tGH
 bzl
 aem
-aem
+svZ
 kKA
 acc
 aem
@@ -90706,7 +90733,7 @@ brL
 bsB
 nZs
 och
-bwg
+vnU
 bwg
 vKF
 bzA
@@ -91008,7 +91035,7 @@ brM
 bsB
 uLM
 ftU
-bxt
+qnE
 bxt
 bxt
 udY

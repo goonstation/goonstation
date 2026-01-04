@@ -3714,8 +3714,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "axG" = (
-/obj/item/crowbar,
-/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "axN" = (
@@ -4604,14 +4603,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/north)
-"aCw" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/computer/power_monitor,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/grime,
-/area/station/engine/substation/north)
 "aCx" = (
 /obj/machinery/power/smes{
 	charge = 5e+006;
@@ -5069,14 +5060,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/station/engine/substation/north)
-"aDY" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/grime,
+/turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "aDZ" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -5261,6 +5248,7 @@
 /area/station/maintenance/inner/central)
 "aEU" = (
 /obj/machinery/light/small/sticky,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/grime,
 /area/station/engine/substation/north)
 "aEX" = (
@@ -5463,11 +5451,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"aGe" = (
-/obj/decal/cleanable/dirt,
-/obj/random_item_spawner/junk/lots,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aGg" = (
 /obj/machinery/disposal{
 	name = "Test Chamber Chute"
@@ -19049,14 +19032,13 @@
 /turf/space,
 /area/space)
 "eEh" = (
+/obj/machinery/computer/power_monitor,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/substation/north)
@@ -20269,6 +20251,16 @@
 	},
 /turf/simulated/floor,
 /area/station/science/hall)
+"fow" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/sticky/frostedred,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "fox" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -24273,6 +24265,10 @@
 	dir = 8
 	},
 /area/station/science/artifact)
+"hPp" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "hPB" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail{
@@ -27779,16 +27775,6 @@
 /obj/item/raw_material/shard/glass,
 /turf/space,
 /area/space)
-"jXo" = (
-/obj/machinery/door/airlock/pyro/engineering/alt{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/engineering_control,
-/turf/simulated/floor,
-/area/station/engine/substation/north)
 "jXv" = (
 /obj/lattice{
 	dir = 4;
@@ -29222,6 +29208,13 @@
 /obj/random_item_spawner/tools/few,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"kND" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "kNK" = (
 /obj/landmark/gps_waypoint,
 /obj/decal/stage_edge{
@@ -47423,6 +47416,10 @@
 /obj/machinery/light/traffic_light/mining_station/delay5,
 /turf/space,
 /area/space)
+"vhU" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "vhX" = (
 /obj/machinery/light/incandescent,
 /obj/stool/chair{
@@ -49477,10 +49474,10 @@
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
 "woD" = (
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "0-8"
 	},
-/obj/machinery/light_switch/east,
 /turf/simulated/floor/grime,
 /area/station/engine/substation/north)
 "woL" = (
@@ -50426,6 +50423,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"wVf" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_control,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/substation/north)
 "wVi" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/trunk/produce{
@@ -50666,6 +50673,10 @@
 /obj/structure/girder,
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
+"xbW" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "xce" = (
 /obj/item/bell/hop{
 	anchored = 1;
@@ -70203,7 +70214,7 @@ dRt
 bAB
 mUQ
 bGd
-bis
+xbW
 vse
 rBR
 bun
@@ -80095,11 +80106,11 @@ awu
 pvL
 cyx
 elW
-aVB
-elW
 elW
 aVB
 elW
+elW
+aVB
 mYF
 bgm
 eAg
@@ -80397,11 +80408,11 @@ axd
 tJE
 ayR
 bgm
-mmb
 azU
-aFq
 mmb
 aFq
+azU
+kND
 azU
 xbF
 swi
@@ -80699,11 +80710,11 @@ mQS
 nso
 ayR
 azU
-mmb
-aDd
-bgm
-mmb
 azU
+mmb
+bgm
+azU
+mmb
 aES
 aYB
 eAg
@@ -81001,11 +81012,11 @@ axi
 tJE
 ayR
 iHU
+azU
 mmb
 aBM
 aBP
-jXo
-aBP
+wVf
 aBP
 aBP
 aBP
@@ -81303,9 +81314,9 @@ axi
 tJE
 ayT
 azU
+aFq
 mmb
 aBP
-aCw
 eEh
 aDX
 aCx
@@ -81605,9 +81616,9 @@ axX
 axT
 ayT
 aFq
+azU
 mmb
 aBP
-aDY
 woD
 mFz
 aEU
@@ -81906,9 +81917,9 @@ usz
 axi
 tJE
 ayR
-aFq
+aDd
+azU
 mmb
-aBP
 aBP
 aBP
 aBP
@@ -82208,10 +82219,10 @@ jsv
 axi
 nso
 ayR
+aCy
 knG
 kQX
 aBQ
-aCy
 aCy
 aCy
 aCy
@@ -82511,8 +82522,8 @@ axh
 wwe
 ayR
 azU
+azU
 mmb
-aBQ
 aBQ
 aBQ
 aBQ
@@ -82812,9 +82823,9 @@ bvD
 ayV
 uLs
 ayR
-bgm
-mmb
+hPp
 azU
+mmb
 azU
 azU
 azU
@@ -83115,8 +83126,8 @@ axi
 tJE
 ayR
 azX
-azQ
-elW
+azU
+fow
 elW
 elW
 elW
@@ -91942,7 +91953,7 @@ btZ
 bwk
 bwk
 btZ
-beO
+qVe
 mYs
 dvU
 bzz
@@ -95509,7 +95520,7 @@ aDG
 aIx
 aJf
 aDG
-aGa
+vhU
 rHt
 aJf
 aIx
@@ -95811,7 +95822,7 @@ aDG
 aIx
 aJg
 aDG
-aGe
+aJf
 itZ
 jpx
 kjv

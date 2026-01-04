@@ -5789,12 +5789,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bpi" = (
-/obj/item/cable_coil,
-/obj/item/device/igniter,
-/obj/item/storage/wall/fire{
-	dir = 1;
-	pixel_y = 32
-	},
+/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bpm" = (
@@ -15916,6 +15911,10 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"hZF" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "hZI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -21258,6 +21257,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"lTy" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "lTR" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 10
@@ -23425,10 +23428,6 @@
 	dir = 9
 	},
 /area/station/science/artifact)
-"nxh" = (
-/obj/storage/closet/emergency,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "nxF" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -28514,6 +28513,8 @@
 /area/station/science/chemistry)
 "qFv" = (
 /obj/machinery/light/small/sticky/frostedred,
+/obj/item/device/igniter,
+/obj/item/cable_coil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "qFw" = (
@@ -29066,6 +29067,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"qVg" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "qVk" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -29343,6 +29348,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"rcH" = (
+/obj/item/storage/wall/fire{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "rcM" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating/random,
@@ -34605,6 +34617,7 @@
 /obj/machinery/light/small/broken{
 	dir = 1
 	},
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "unp" = (
@@ -82795,7 +82808,7 @@ aqj
 aqj
 aqj
 aqj
-arr
+lTy
 pvM
 wuu
 sJY
@@ -84339,7 +84352,7 @@ mfY
 mfY
 sjH
 sjH
-tip
+rcH
 tip
 iqk
 upu
@@ -84941,7 +84954,7 @@ qqx
 hEo
 tme
 mfY
-nxh
+tip
 tip
 tip
 oXd
@@ -87571,7 +87584,7 @@ afC
 vdi
 afC
 afC
-ahc
+qVg
 atP
 afC
 auB
@@ -89137,7 +89150,7 @@ btE
 jkA
 jkA
 aqj
-tPm
+hZF
 fvo
 wuu
 hQH

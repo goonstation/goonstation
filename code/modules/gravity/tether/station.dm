@@ -14,7 +14,10 @@ TYPEINFO(/obj/machinery/gravity_tether)
 	// oversize sprite, so move the speak textbox
 	maptext_manager_x = 16
 	maptext_manager_y = 16
-	req_access = list(access_engineering_chief)
+	minimum_intensity = 0.1
+	target_intensity = 0.2
+	maximum_intensity = 0.4
+	req_access = list(access_engineering)
 	active_wattage_per_g = 1 MEGA WATT
 	passive_wattage_per_g = 10 KILO WATTS
 	locked = TRUE
@@ -81,7 +84,13 @@ TYPEINFO(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/station/begin_gravity_change(new_intensity)
 	. = ..()
 	if (src.do_announcement && !global.check_for_radio_jammers(src)) // TODO: Make this a real packet to the announcement computer
-		command_alert("The [station_or_ship()]-wide gravity tether will begin shifting to [new_intensity]G in [time_to_text(src.change_begin_time-TIME)].", "Gravity Change Warning", alert_origin = ALERT_STATION)
+		command_announcement( \
+			"A [station_or_ship()]-wide gravity tether will begin shifting from [src.gforce_intensity]G to [new_intensity]G in [time_to_text(src.change_begin_time-TIME)].", \
+			"Gravity Change Warning", \
+			sound_to_play='sound/machines/cruiser_warp.ogg',\
+			volume=40, \
+			alert_origin = ALERT_STATION
+		)
 	else // reset for next person
 		src.do_announcement = TRUE
 

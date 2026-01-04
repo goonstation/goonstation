@@ -128,7 +128,7 @@
 	boutput(user, SPAN_ALERT("You slide [E] across [src]'s ID reader, breaking the g-force limiter."))
 	src.locked = FALSE
 	src.emagged = TRUE
-	src.maximum_intensity = TETHER_INTENSITY_MAX_EMAG // wireless 4G
+	// src.maximum_intensity = TETHER_INTENSITY_MAX_EMAG // wireless 4G // TODO: Rebalance
 	if (src.wire_state == TETHER_WIRES_INTACT)
 		src.wire_state = TETHER_WIRES_BURNED
 		src.update_ma_wires()

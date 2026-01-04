@@ -3450,16 +3450,15 @@
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/northwest)
 "ani" = (
-/obj/machinery/space_heater,
+/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "anj" = (
-/obj/machinery/recharge_station,
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/northwest)
 "ank" = (
 /obj/item/device/light/glowstick,
-/obj/item/clothing/suit/cardboard_box,
+/obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "anl" = (
@@ -33753,6 +33752,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"gSZ" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "gTc" = (
 /obj/machinery/vending/monkey/kitchen,
 /obj/machinery/power/apc/autoname_north{
@@ -39771,6 +39774,10 @@
 	dir = 10
 	},
 /area/station/engine/gravity)
+"kWI" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "kWQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -41396,6 +41403,10 @@
 	dir = 1
 	},
 /area/station/storage/hydroponics)
+"lZR" = (
+/obj/item/clothing/suit/cardboard_box,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "maH" = (
 /obj/item/device/radio/intercom/security,
 /obj/filing_cabinet,
@@ -49964,6 +49975,11 @@
 	},
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/radio/news_office)
+"seI" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "seW" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/green/side{
@@ -59143,6 +59159,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/inner/east)
+"yjF" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "yjN" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -92002,7 +92022,7 @@ aMt
 bug
 eWB
 bvo
-gOK
+gSZ
 byL
 bzP
 bws
@@ -92304,7 +92324,7 @@ aMt
 buh
 bvo
 bvo
-bxG
+bAQ
 byM
 bzQ
 qZZ
@@ -94963,7 +94983,7 @@ sBk
 sBk
 sBk
 aeK
-aeK
+kWI
 aof
 inc
 ait
@@ -96169,8 +96189,8 @@ ahn
 afI
 ajm
 liJ
-afI
 liJ
+lZR
 ait
 ait
 ait
@@ -123645,8 +123665,8 @@ aaa
 aaa
 aaa
 adL
-afa
-auA
+seI
+aCu
 auA
 aha
 aij
@@ -123947,7 +123967,7 @@ aaa
 aaa
 aaa
 adL
-aCu
+auA
 mDU
 afa
 aha
@@ -125240,7 +125260,7 @@ euW
 lSk
 soO
 bHl
-bDX
+yjF
 bfO
 rAg
 bnq

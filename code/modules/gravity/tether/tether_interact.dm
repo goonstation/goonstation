@@ -42,25 +42,25 @@
 		src.say("Recalibrating, [time_to_text(src.cooldown_end_time-TIME)] remaining.")
 		return
 
-	var/new_intensity = tgui_input_number(user, "Running at [src.gforce_intensity]G. Change intensity?", "Gravity Tether", src.gforce_intensity, src.maximum_intensity, round_input=FALSE)
+	var/new_intensity = tgui_input_number(user, "Running at [src.gforce_intensity]G. Change intensity?", "Gravity Tether", src.gforce_intensity, src.maximum_intensity, src.minimum_intensity, round_input=FALSE)
 	if (isnull(new_intensity))
 		return
 	new_intensity = round(new_intensity, 0.01)
-	if (src.status & BROKEN)
-		new_intensity += round((prob(50) ? 1 : -1) * randfloat(0.2, 0.4), 0.01)
+	// if (src.status & BROKEN) // TODO: Rebalance
+	// 	new_intensity += round((prob(50) ? 1 : -1) * randfloat(0.2, 0.4), 0.01)
 	if (new_intensity == src.gforce_intensity)
 		boutput(user, SPAN_NOTICE("Tether already set to [new_intensity]G!"))
 		return
 
-	if (src.emagged)
-		var/choice = tgui_alert(user, "Really let \the [src] announce [new_intensity]G?", "Tether Confirmation", list("Yes", "No"))
-		if (isnull(choice))
-			return
-		if (choice == "No")
-			src.do_announcement = FALSE
-	else // phrased to be easily mistakeable for the emag text
-		if (tgui_alert(user, "Really set \the [src] [new_intensity-src.gforce_intensity> 0 ? "upwards" : "downwards" ] to [new_intensity]G?", "Tether Confirmation", list("Yes", "No")) != "Yes")
-			return
+	// if (src.emagged) // TODO: Rebalance
+	// 	var/choice = tgui_alert(user, "Really let \the [src] announce [new_intensity]G?", "Tether Confirmation", list("Yes", "No"))
+	// 	if (isnull(choice))
+	// 		return
+	// 	if (choice == "No")
+	// 		src.do_announcement = FALSE
+	// else // phrased to be easily mistakeable for the emag text
+	// 	if (tgui_alert(user, "Really set \the [src] [new_intensity-src.gforce_intensity> 0 ? "upwards" : "downwards" ] to [new_intensity]G?", "Tether Confirmation", list("Yes", "No")) != "Yes")
+	// 		return
 
 	if (in_interact_range(src, user))
 		src.attempt_gravity_change(new_intensity)
