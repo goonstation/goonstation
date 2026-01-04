@@ -424,7 +424,11 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		if (!src)
 			return
 
-		src.on = !src.on
+		if (force_on == 1)
+			src.on = 1
+		else
+			src.on = !src.on
+
 		if (src.on)
 			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 			if (src.pulled_by)
