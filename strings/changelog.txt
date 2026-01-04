@@ -1,6 +1,10 @@
 
 (t)sat jan 03 26
 (u)glowbold
+(p)25473
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampires using Illusory Shroud will have their voices show as "Unknown"
+(u)glowbold
 (p)25470
 (e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
 (*)Open-mic headsets can only pick up sound from the tile it's on.
