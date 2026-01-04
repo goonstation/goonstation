@@ -1,5 +1,9 @@
 
 (t)sun jan 04 26
+(u)QuiteLiterallyAnything
+(p)25452
+(e)💅📦|C-QoL, A-Game-Objects
+(+)ABCUs can now be placed in pod cargo holds.
 (u)Kanthes
 (p)25407
 (e)🪲🔬|C-Bug, A-Science
