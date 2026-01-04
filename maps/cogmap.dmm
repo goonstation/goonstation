@@ -10246,6 +10246,7 @@
 	icon_state = "1-4"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/arrivalnotifier/cafeteria,
 /turf/simulated/floor,
 /area/station/routing/catering)
 "aNa" = (
@@ -17210,6 +17211,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/machinery/arrivalnotifier/eva,
 /turf/simulated/floor,
 /area/station/routing/eva)
 "bjR" = (
@@ -25246,6 +25248,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/machinery/arrivalnotifier/airbridge,
 /turf/simulated/floor,
 /area/station/routing/airbridge)
 "bSY" = (
@@ -38789,6 +38792,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/west,
+/obj/machinery/arrivalnotifier/security,
 /turf/simulated/floor,
 /area/station/routing/security)
 "fkW" = (
@@ -42225,6 +42229,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/arrivalnotifier/engine,
 /turf/simulated/floor,
 /area/station/routing/engine)
 "hJn" = (
@@ -43050,6 +43055,15 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"ink" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/arrivalnotifier/catering,
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "inz" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -49050,6 +49064,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
+/obj/machinery/arrivalnotifier/medsci,
 /turf/simulated/floor,
 /area/station/routing/medsci)
 "mSG" = (
@@ -53116,6 +53131,15 @@
 	},
 /turf/space,
 /area/space)
+"pKG" = (
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/machinery/arrivalnotifier/disposals,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "pLh" = (
 /mob/living/critter/small_animal/cockroach,
 /obj/cable{
@@ -54919,6 +54943,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
+"raA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/arrivalnotifier/qm,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "rbE" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -56460,6 +56491,7 @@
 /obj/decal/cleanable/oil/streak,
 /obj/decal/cleanable/generic,
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/undeliverable,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "skX" = (
@@ -62592,6 +62624,14 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
+"wzW" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/arrivalnotifier/medsci,
+/turf/space,
+/area/space)
 "wAC" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -99383,7 +99423,7 @@ adC
 adC
 aam
 aaw
-acW
+wzW
 mFj
 qPD
 djG
@@ -117255,7 +117295,7 @@ bfs
 wxt
 bfs
 bfs
-dWz
+pKG
 bdK
 fBe
 aYQ
@@ -121208,7 +121248,7 @@ gZl
 emF
 kLE
 vIv
-bFp
+raA
 bMz
 bGV
 bGV
@@ -121433,7 +121473,7 @@ aag
 epb
 uKK
 uKK
-agC
+ink
 ahk
 wRT
 ajg
