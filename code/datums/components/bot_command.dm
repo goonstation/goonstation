@@ -38,9 +38,8 @@ ABSTRACT_TYPE(/datum/component/bot_command)
 			if (secbot == target)
 				secbot.toggle_power()
 				src.bots -= secbot
-			else
-				if (iscarbon(target) && target != secbot.target)
-					secbot.EngageTarget(target, FALSE, FALSE, TRUE)
+			else if (iscarbon(target) && target != secbot.target)
+				secbot.EngageTarget(target, FALSE, FALSE, TRUE)
 
 /datum/component/bot_command/janitor
 	botpath = /obj/machinery/bot/cleanbot
