@@ -3389,7 +3389,7 @@ TYPEINFO(/mob)
 /mob/MouseEntered(location, control, params)
 	var/mob/M = usr
 	M.atom_hovered_over = src
-	if(M.client.check_key(KEY_EXAMINE))
+	if(M.client.check_key(KEY_EXAMINE) && (GET_DIST(src, M) <= MAX_NAMETAG_RANGE))
 		var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
 		hover_tag?.show_images(M.client, FALSE, TRUE)
 
