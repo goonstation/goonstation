@@ -1,5 +1,11 @@
 
 (t)sat jan 03 26
+(u)glowbold
+(p)25470
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(*)Open-mic headsets can only pick up sound from the tile it's on.
+(+)Phone handset and mounted defibrillator cables reach roughly two tiles.
+(+)Phone handsets, microphones, and megaphones only pick up speech in your active hand.
 (u)CalliopeSoups
 (p)25456
 (e)🎨|C-Sprites
