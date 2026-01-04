@@ -220,7 +220,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	// Start cloning someone (transferring mind + DNA into new body),
 	// starting a new clone cycle if needed
 	// Returns 1 (stated) or 0 (failed to start for some reason)
-	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits, var/datum/cloner_defect_holder/defects)
+	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits, var/datum/cloner_defect_holder/defects, scantime=TIME)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
@@ -289,6 +289,20 @@ TYPEINFO(/obj/machinery/clonepod)
 
 			if (traits.hasTrait("defect_prone"))
 				defects.add_random_cloner_defect()
+
+			var/time_since_scan = TIME-scantime
+			if (time_since_scan >= (15 MINUTES))
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
+			if (time_since_scan >= (30 MINUTES))
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
+			if (time_since_scan >= (45 MINUTES))
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
+			if (time_since_scan >= (60 MINUTES))
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
+			if (time_since_scan >= (75 MINUTES))
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
+			if (time_since_scan >= (90 MINUTES))
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
 
 		src.mess = FALSE
 		var/is_puritan = FALSE
