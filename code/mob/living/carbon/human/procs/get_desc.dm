@@ -5,7 +5,7 @@
 	var/examine_stopper = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) || 0
 	var/dist = GET_DIST(usr.client.eye, src)
 	var/name_to_use = src.name
-	if (!ignore_checks && dist > MAX_NAMETAG_RANGE)
+	if (!ignore_checks && dist > MAX_NAMETAG_RANGE && !HAS_ATOM_PROPERTY(usr, PROP_MOB_EXAMINE_ALL_NAMES))
 		name_to_use = "Someone"
 	if (!ignore_checks && examine_stopper && dist > 3 - 2 * examine_stopper)
 		return "<br>[SPAN_ALERT("You can't seem to make yourself look at [examine_stopper >= 3 ? "this person" : name_to_use] long enough to observe anything!")]"
@@ -19,12 +19,14 @@
 	. = list()
 	. += ..()
 
-	if (!ignore_checks && dist > MAX_NAMETAG_RANGE)
+	var/in_range = ignore_checks || HAS_ATOM_PROPERTY(usr, PROP_MOB_EXAMINE_ALL_NAMES) || dist <= MAX_NAMETAG_RANGE
+
+	if (!in_range)
 		. += "<br>[SPAN_ALERT("They're <B>too far away</B> to recognize!")]"
 	else if (isalive(usr))
 		. += "<br>[SPAN_NOTICE("You look closely at <B>[src.name] ([src.get_pronouns()])</B>.")]"
 
-	if(dist <= MAX_NAMETAG_RANGE && src.face_visible() && src.bioHolder?.mobAppearance.flavor_text)
+	if(in_range && src.face_visible() && src.bioHolder?.mobAppearance.flavor_text)
 		var/disguisered = FALSE
 		for (var/obj/item/device/disguiser/D in src)
 			disguisered |= D.active
@@ -83,7 +85,7 @@
 			. += "<br><span class='[src.glasses.blood_DNA ? "alert" : "notice"]'>[name_to_use] has [bicon(src.glasses)] \an [src.glasses.name] on [t_his] face.</span>"
 
 	if (src.l_hand)
-		if (!ignore_checks && dist > MAX_NAMETAG_RANGE)
+		if (!in_range)
 			. += "<br><span class='[src.l_hand.blood_DNA ? "alert" : "notice"]'>[name_to_use] has something in [t_his] left hand.</span>"
 		else if (istype(src.l_hand, /obj/item/clothing/))
 			. += "<br><span class='[src.l_hand.blood_DNA ? "alert" : "notice"]'>[name_to_use] has [bicon(src.l_hand)] \an [src.l_hand.name] in [t_his] left hand.</span>"
@@ -91,7 +93,7 @@
 			. += "<br><span class='[src.l_hand.blood_DNA ? "alert" : "notice"]'>[name_to_use] has [bicon(src.l_hand)] [src.l_hand.blood_DNA ? "a bloody [src.l_hand.name]" : "\an [src.l_hand.name]"] in [t_his] left hand.</span>"
 
 	if (src.r_hand)
-		if (!ignore_checks && dist > MAX_NAMETAG_RANGE)
+		if (!in_range)
 			. += "<br><span class='[src.r_hand.blood_DNA ? "alert" : "notice"]'>[name_to_use] has something in [t_his] right hand.</span>"
 		else if (istype(src.r_hand, /obj/item/clothing/))
 			. += "<br><span class='[src.r_hand.blood_DNA ? "alert" : "notice"]'>[name_to_use] has [bicon(src.r_hand)] \an [src.r_hand.name] in [t_his] right hand.</span>"
@@ -116,7 +118,7 @@
 		. += "<br><span class='[src.back.blood_DNA ? "alert" : "notice"]'>[name_to_use] has [bicon(src.back)] [src.back.blood_DNA ? "a bloody [src.back.name]" : "\an [src.back.name]"] on [t_his] back.</span>"
 
 	if (src.wear_id)
-		if (!ignore_checks && dist > MAX_NAMETAG_RANGE)
+		if (!in_range)
 			. += "<br>[SPAN_NOTICE("[name_to_use] is wearing an ID card.")]"
 		else if (istype(src.wear_id, /obj/item/card/id))
 			if (src.wear_id:registered != src.real_name && in_interact_range(src, usr) && prob(10))

@@ -768,7 +768,7 @@ TYPEINFO(/atom/movable)
 		return list(special_description)
 
 	var/name_to_use = src.name
-	if (isliving(src) && !isobserver(user) && !isintangible(user) && dist > MAX_NAMETAG_RANGE)
+	if (isliving(src) && !isobserver(user) && !isintangible(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_EXAMINE_ALL_NAMES) && dist > MAX_NAMETAG_RANGE)
 		. = list("This is someone.")
 	else
 		. = list("This is \an [name_to_use].")
