@@ -171,6 +171,11 @@ function task-validate-build {
 function task-install-git-hooks () {
   Set-Location $global:rootdir
   $bootstrap = Join-Path $global:rootdir "tools/bootstrap/python"
+  $legacyDrivers = & git config --get-all merge.tgui-merge-bundle.driver 2>$null
+  if ($LASTEXITCODE -eq 0 -and $legacyDrivers) {
+    & git config --unset-all merge.tgui-merge-bundle.driver | Out-Null
+    Write-Output "tgui: removed legacy merge.tgui-merge-bundle driver"
+  }
   if (-not (Test-Path $bootstrap -PathType Leaf)) {
     Write-Error "tgui: bootstrap Python launcher not found at $bootstrap"
     exit 1

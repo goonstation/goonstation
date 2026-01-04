@@ -176,6 +176,10 @@ task-validate-build() {
 ## Installs merge drivers and git hooks
 task-install-git-hooks() {
   cd "${root_dir}"
+  if git config --get-all merge.tgui-merge-bundle.driver >/dev/null 2>&1; then
+    git config --unset-all merge.tgui-merge-bundle.driver || true
+    echo "tgui: removed legacy merge.tgui-merge-bundle driver"
+  fi
   local installer="${root_dir}/tools/bootstrap/python"
   if [ ! -x "${installer}" ]; then
     echo "tgui: bootstrap Python launcher not found at ${installer}" >&2
