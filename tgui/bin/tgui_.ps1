@@ -181,7 +181,7 @@ function task-install-git-hooks () {
     exit 1
   }
   & $bootstrap -m hooks.install
-  Write-Output "tgui: Git hooks (post-merge rebuild) have been installed"
+  Write-Output "tgui: Git hooks have been installed"
 }
 
 ## Main

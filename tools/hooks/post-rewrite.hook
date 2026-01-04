@@ -1,2 +1,2 @@
 #!/bin/sh
-sh "$(dirname "$0")/tgui-rebuild.sh" post-rewrite "$@"
+exec tools/bootstrap/python -m hooks.tgui_hook post-rewrite "$@"

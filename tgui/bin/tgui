@@ -186,7 +186,7 @@ task-install-git-hooks() {
     exit 1
   fi
   "${installer}" -m hooks.install
-  echo "tgui: Git hooks (post-merge rebuild) have been installed"
+  echo "tgui: Git hooks have been installed"
   exit 0
 }
 
