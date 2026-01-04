@@ -322,16 +322,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["power"]) && (!src.locked || src.allowed(usr)))
-			src.on = !src.on
-			if (src.on)
-				add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
-				if (src.pulled_by)
-					src.pulled_by.remove_pulling()
-			else
-				remove_simple_light("secbot")
-			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
-			src.updateUsrDialog()
-			logTheThing(LOG_STATION, usr, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
+			src.toggle_power(0)
 
 		switch(href_list["operation"])
 			if ("idcheck")
@@ -388,7 +379,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		if (src.on && src.emagged)
 			boutput(user, SPAN_ALERT("[src] refuses your authority!"))
 			return
-		src.on = !src.on
+		src.toggle_power(0)
 		if (src.on && src.pulled_by)
 			src.pulled_by.remove_pulling()
 		src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
@@ -406,7 +397,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 
 
 			src.emagged++
-			src.on = 1
+			src.toggle_power(1)
 			if (src.pulled_by)
 				src.pulled_by.remove_pulling()
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
@@ -429,6 +420,23 @@ TYPEINFO(/obj/machinery/bot/secbot)
 			return 1
 		return 0
 
+	proc/toggle_power(var/force_on = 0)
+		if (!src)
+			return
+
+		src.on = !src.on
+		if (src.on)
+			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
+		else
+			remove_simple_light("secbot")
+		src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
+		src.updateUsrDialog()
+		logTheThing(LOG_STATION, usr, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
+
+		return
+
 	demag(var/mob/user)
 		if (!src.emagged)
 			return 0
@@ -448,7 +456,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		if(!src.emagged && prob(75))
 			src.emagged = 1
 			src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-			src.on = 1
+			src.toggle_power(1)
 			if (src.pulled_by)
 				src.pulled_by.remove_pulling()
 		else
