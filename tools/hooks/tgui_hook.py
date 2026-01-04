@@ -4,109 +4,110 @@
 from __future__ import annotations
 
 import os
-import re
 import subprocess
 import sys
-from pathlib import Path
 
-BUNDLE_PATTERN = re.compile(r"^browserassets/src/tgui/.*\.(?:bundle|chunk)\.")
-HOOK_NAMES_WITH_BASE = {"post-merge", "post-rewrite"}
+import pygit2
+
+INTERESTING_PREFIXES = ("tgui/", "browserassets/src/tgui/")
+INDEX_MASK = pygit2.GIT_STATUS_INDEX_NEW | pygit2.GIT_STATUS_INDEX_MODIFIED | pygit2.GIT_STATUS_INDEX_DELETED
+WORKDIR_MASK = pygit2.GIT_STATUS_WT_NEW | pygit2.GIT_STATUS_WT_MODIFIED | pygit2.GIT_STATUS_WT_DELETED | pygit2.GIT_STATUS_WT_RENAMED
 
 
 def main(argv: list[str]) -> int:
-    hook_name = argv[1] if len(argv) > 1 else "hook"
+    hook = argv[1] if len(argv) > 1 else "hook"
 
-    repo_root = _git_output(["rev-parse", "--show-toplevel"])
-    if not repo_root:
+    repo = _open_repo()
+    if not repo:
         return 0
 
-    os.chdir(repo_root)
+    os.chdir(repo.workdir)
 
-    unresolved = _git_list(["diff", "--name-only", "--diff-filter=U"])
-    non_bundle_conflicts = [path for path in unresolved if not BUNDLE_PATTERN.match(path)]
-    if non_bundle_conflicts:
-        print(
-            f"tgui hook ({hook_name}): unresolved non-bundle conflicts; skipping rebuild",
-            file=sys.stderr,
-        )
+    if _has_blocking_conflicts(repo):
+        print(f"tgui hook ({hook}): unresolved non-bundle conflicts; skipping", file=sys.stderr)
         return 0
 
-    changed = _determine_changes(hook_name)
+    changed = _changed_paths(repo, hook)
     if not changed:
         return 0
 
-    runner = _tgui_runner()
+    runner = ["tgui\\bin\\tgui.bat"] if os.name == "nt" else ["tgui/bin/tgui"]
+    print(f"tgui hook ({hook}): rebuilding tgui bundles", flush=True)
 
-    print(f"tgui hook ({hook_name}): rebuilding tgui bundles", flush=True)
     try:
         subprocess.run(runner + ["--build"], check=True)
     except subprocess.CalledProcessError as exc:
-        print(
-            f"tgui hook ({hook_name}): build failed ({exc.returncode}); run tgui/bin/tgui --build manually",
-            file=sys.stderr,
-        )
+        print(f"tgui hook ({hook}): build failed ({exc.returncode})", file=sys.stderr)
         return exc.returncode or 1
 
-    try:
-        subprocess.run(["git", "add", "browserassets/src/tgui"], check=True)
-    except subprocess.CalledProcessError as exc:
-        print(
-            f"tgui hook ({hook_name}): unable to stage bundle output ({exc.returncode})",
-            file=sys.stderr,
-        )
-        return exc.returncode or 1
-
-    print(
-        f"tgui hook ({hook_name}): rebuild complete; browserassets/src/tgui staged",
-        flush=True,
-    )
+    subprocess.run(["git", "add", "browserassets/src/tgui"], check=True)
+    print(f"tgui hook ({hook}): rebuild complete; bundle staged", flush=True)
     return 0
 
 
-def _determine_changes(hook_name: str) -> list[str]:
-    if hook_name == "pre-commit":
-        if not Path(".git/MERGE_HEAD").exists():
-            return []
-        return _git_list([
-            "diff",
-            "--cached",
-            "--name-only",
-            "--",
-            "tgui",
-            "browserassets/src/tgui",
-        ])
-
-    diff_args: list[str]
-    if hook_name in HOOK_NAMES_WITH_BASE:
-        base_ref = _git_output(["rev-parse", "--verify", "HEAD@{1}"])
-        if base_ref:
-            diff_args = ["diff", "--name-only", base_ref, "HEAD", "--", "tgui", "browserassets/src/tgui"]
-        else:
-            diff_args = ["diff", "--name-only", "HEAD", "--", "tgui", "browserassets/src/tgui"]
-    else:
-        diff_args = ["diff", "--name-only", "HEAD", "--", "tgui", "browserassets/src/tgui"]
-
-    return _git_list(diff_args)
-
-
-def _git_output(args: list[str]) -> str | None:
-    result = subprocess.run(["git", *args], capture_output=True, text=True)
-    if result.returncode != 0:
+def _open_repo() -> pygit2.Repository | None:
+    try:
+        repo_path = pygit2.discover_repository(os.getcwd())
+    except KeyError:
         return None
-    return result.stdout.strip()
+    return pygit2.Repository(repo_path)
 
 
-def _git_list(args: list[str]) -> list[str]:
-    result = subprocess.run(["git", *args], capture_output=True, text=True)
-    if result.returncode != 0:
-        return []
-    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+def _has_blocking_conflicts(repo: pygit2.Repository) -> bool:
+    conflicts = repo.index.conflicts
+    if not conflicts:
+        return False
+    for base, ours, theirs in conflicts:
+        for entry in (base, ours, theirs):
+            if entry and not entry.path.startswith("browserassets/src/tgui/"):
+                return True
+    return False
 
 
-def _tgui_runner() -> list[str]:
-    if os.name == "nt":
-        return ["tgui\\bin\\tgui.bat"]
-    return ["tgui/bin/tgui"]
+def _changed_paths(repo: pygit2.Repository, hook: str) -> set[str]:
+    if hook == "pre-commit":
+        if not _has_merge_head(repo):
+            return set()
+        return _status_paths(repo, include_workdir=False)
+
+    if hook == "post-merge":
+        return _merge_commit_paths(repo)
+
+    if hook == "post-rewrite":
+        return _status_paths(repo, include_workdir=True)
+
+    return _status_paths(repo, include_workdir=True)
+
+
+def _status_paths(repo: pygit2.Repository, *, include_workdir: bool) -> set[str]:
+    mask = INDEX_MASK | (WORKDIR_MASK if include_workdir else 0)
+    return {path for path, status in repo.status().items() if status & mask and _interesting(path)}
+
+
+def _merge_commit_paths(repo: pygit2.Repository) -> set[str]:
+    try:
+        commit = repo.head.peel(pygit2.Commit)
+    except (KeyError, ValueError):
+        return set()
+
+    changed: set[str] = set()
+    for parent in commit.parents or ():
+        for patch in repo.diff(parent, commit):
+            changed.update(filter(_interesting, (patch.delta.old_file.path, patch.delta.new_file.path)))
+    return changed
+
+
+def _interesting(path: str | None) -> bool:
+    return bool(path and path.startswith(INTERESTING_PREFIXES))
+
+
+def _has_merge_head(repo: pygit2.Repository) -> bool:
+    try:
+        repo.lookup_reference("MERGE_HEAD")
+        return True
+    except KeyError:
+        return False
+
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
