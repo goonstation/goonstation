@@ -8,83 +8,39 @@
 	throwforce = 50
 	p_class = 3
 	is_syndicate = 1
-	var/number_of_monkeys = 6
-	var/list/hats
-	var/list/unders
-	var/list/suits
-	var/list/masks
-	var/list/shoes
-	var/list/ears
-	var/list/gloves
+	density = 1
+	open_inv_anywhere = TRUE
+	var/mob/living/carbon/human/npc/monkey/angry/dummy
+	var/monkeys_to_spawn = 5
 
 	New()
 		..()
 		var/obj/item/barrel_signaller/M = new /obj/item/barrel_signaller(src.loc)
 		new /obj/item/clothing/suit/monkey(src.loc)
+		src.dummy = new/mob/living/carbon/human/npc/monkey/angry
 		SPAWN(0)
+			src.dummy.loc = src
+			src.contents += src.dummy
 			M.my_barrel = src
 
 	update_icon()
 
 		return
 
-	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/clothing))
-			user.drop_item(I)
-			src.contents += I
-			I.set_loc(src)
-
-	verb/Eject_Clothes()
+	verb/Holographic_Clothing()
 		set src in oview(1)
 		set category = "Local"
-		src.drop_contents()
+		if (ishuman(usr) && src.dummy)
+			var/mob/living/carbon/human/user = usr
+			src.dummy.show_inv(user)
 
 	proc/monkey_go()
 		var/turf/targetTurf = get_turf(src)
 		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
 		poof.setup(targetTurf)
-
-		for (var/obj/item/clothing/item in src.contents) // TELL me if there's a better way to do this without putting a dummy mob in the barrel
-			if (istype(item, /obj/item/clothing/head))
-				src.hats += item
-				continue
-			if (istype(item, /obj/item/clothing/under))
-				src.unders += item
-				continue
-			if (istype(item, /obj/item/clothing/suit))
-				src.suits += item
-				continue
-			if (istype(item, /obj/item/clothing/mask))
-				src.masks += item
-				continue
-			if (istype(item, /obj/item/clothing/shoes))
-				src.shoes += item
-				continue
-			if (istype(item, /obj/item/clothing/ears))
-				src.ears += item
-				continue
-			if (istype(item, /obj/item/clothing/gloves))
-				src.gloves += item
-		// might have to create the clothing after changing its icons (ughghghghgh)
-		for (var/i = src.number_of_monkeys,i>=0,i--)
+		for (var/i = src.monkeys_to_spawn,i>=0,i--)
 			var/mob/living/carbon/human/npc/monkey/angry/barrel/monke = new /mob/living/carbon/human/npc/monkey/angry/barrel (targetTurf)
-			sleep(0.2 SECONDS)
-			for (var/slot in all_slots)
-				var/obj/item/clothing/holo = monke.get_slot(slot)
-				if (!holo)
-					continue
-				if (!holo.holographic)
-					continue
-				var/obj/item/clothing/transmog
-				switch (slot)
-					if (SLOT_HEAD)
-						transmog = pick(src.hats)
-					if (SLOT_W_UNIFORM)
-						transmog = pick(src.unders)
-				if (transmog)
-					holo.wear_image_icon = transmog.wear_image_icon
-					holo.wear_state = transmog.wear_state
-
+			monke.copy_clothes(src.dummy)
 		src.drop_contents()
 		qdel(src)
 
@@ -114,52 +70,86 @@
 				my_barrel.monkey_go()
 				qdel(src)
 
-/obj/item/clothing/head/holohat
+/obj/item/clothing/head/holohat // not the best way to do this maybe?
 	name = "Holographic Hat"
 	desc = "At what point is it just cheaper to give them real clothes..?"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
-	wear_state = "bald"
-	holographic = TRUE // ooohh my god
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(src.loc)
+		qdel(src)
 
 /obj/item/clothing/under/holojumpsuit
 	name = "Holographic Jumpsuit"
 	desc = "At what point is it just cheaper to give them real clothes..?"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
-	wear_state = "bald"
-	holographic = TRUE // I'm doing this cause I don't think I can just insert a holo type to check for after clothing but before the clothing type
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(src.loc)
+		qdel(src)
 
 /obj/item/clothing/suit/holosuit
 	name = "Holographic Suit"
 	desc = "At what point is it just cheaper to give them real clothes..?"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
-	wear_state = "bald"
-	holographic = TRUE
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(src.loc)
+		qdel(src)
 
 /obj/item/clothing/mask/holomask
 	name = "Holographic Mask"
 	desc = "At what point is it just cheaper to give them real clothes..?"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
-	wear_state = "bald"
-	holographic = TRUE
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(src.loc)
+		qdel(src)
 
 /obj/item/clothing/shoes/holoshoes
 	name = "Holographic Shoes"
 	desc = "At what point is it just cheaper to give them real clothes..?"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
-	wear_state = "bald"
-	holographic = TRUE
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(src.loc)
+		qdel(src)
 
 /obj/item/clothing/ears/holoears
 	name = "Holographic Earpiece"
 	desc = "At what point is it just cheaper to give them real clothes..?"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
-	wear_state = "bald"
-	holographic = TRUE
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(src.loc)
+		qdel(src)
 
 /obj/item/clothing/gloves/hologloves
 	name = "Holographic Gloves"
 	desc = "At what point is it just cheaper to give them real clothes..?"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
-	wear_state = "bald"
-	holographic = TRUE
+	icon_state = "bald"
 
+	unequipped(mob/user)
+		. = ..()
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(src.loc)
+		qdel(src)
