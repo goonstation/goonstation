@@ -1,4 +1,9 @@
 
+(t)sun jan 04 26
+(u)Kanthes
+(p)25407
+(e)🪲🔬|C-Bug, A-Science
+(+)Prevents the Food Processor from giving people ghost-limbs that couldn't interact with anything.
 (t)sat jan 03 26
 (u)glowbold
 (p)25473
