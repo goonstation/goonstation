@@ -1,5 +1,25 @@
 
+(t)sat jan 03 26
+(u)glowbold
+(p)25473
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampires using Illusory Shroud will have their voices show as "Unknown"
+(u)glowbold
+(p)25470
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(*)Open-mic headsets can only pick up sound from the tile it's on.
+(+)Phone handset and mounted defibrillator cables reach roughly two tiles.
+(+)Phone handsets, microphones, and megaphones only pick up speech in your active hand.
+(u)CalliopeSoups
+(p)25456
+(e)🎨|C-Sprites
+(+)Trickster wraith's mass whisper is now base kit
+(+)Wraith's blood writing now has no cooldown
 (t)fri jan 02 26
+(u)JORJ949
+(p)25436
+(e)🆕🎨🧑‍✈️|C-Feature, C-Sprites, A-Command
+(*)The HoP can now print radio upgrades for each on station channel at their fabricator. Command and Security upgrades are locked to hacking it (to discourage hops from immediately making themselves a sec radio).
 (u)QuiteLiterallyAnything
 (p)25455
 (e)🔨|A-Player-Actions

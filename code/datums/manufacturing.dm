@@ -3479,6 +3479,40 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 60 SECONDS
 	category = "Resource"
 
+ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
+/datum/manufacture/radio_upgrade
+	name = "Station Radio Upgrade (ABSTRACT-YOUSHOULDNTSEEME)"
+	item_requirements = list("conductive" = 9,
+							 "crystal" = 15)
+	item_outputs = list(/obj/item/device/radio_upgrade/station/civilian)
+	create = 1
+	time = 20 SECONDS
+	category = "Tool"
+
+/datum/manufacture/radio_upgrade/command
+	name = "Command Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/command)
+
+/datum/manufacture/radio_upgrade/security
+	name = "Security Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/security)
+
+/datum/manufacture/radio_upgrade/engineering
+	name = "Engineering Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/engineering)
+
+/datum/manufacture/radio_upgrade/research
+	name = "Research Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/research)
+
+/datum/manufacture/radio_upgrade/medical
+	name = "Medical Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/medical)
+
+/datum/manufacture/radio_upgrade/civilian
+	name = "Civilian Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/civilian)
+
 /******************** QM CRATES *******************/
 
 /datum/manufacture/crate

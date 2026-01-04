@@ -60,3 +60,47 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 		desc = "A device capable of upgrading a headset to allow access over the Nanotrasen radio channel"
 		icon_state = "nanotrasen"
 		secure_frequencies = list("n" = R_FREQ_NANOTRASEN)
+
+ABSTRACT_TYPE(/obj/item/device/radio_upgrade/station)
+/obj/item/device/radio_upgrade/station
+	name = "youshouldntseeme radio upgrade"
+	desc = "The abstract version of the station radio upgrade, you shouldn't be seeing this."
+	icon_state = "civilian"
+	is_syndicate = FALSE
+	secure_frequencies = list()
+
+/obj/item/device/radio_upgrade/station/command
+	name = "command radio upgrade"
+	desc = "A device capable of upgrading a headset to allow access over the Command radio channel. Can be installed in a radio headset."
+	icon_state = "command"
+	secure_frequencies = list("h" = R_FREQ_COMMAND)
+
+/obj/item/device/radio_upgrade/station/security
+	name = "security radio upgrade"
+	desc = "A device capable of upgrading a headset to allow access over the Security radio channel. Can be installed in a radio headset."
+	icon_state = "security"
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
+
+/obj/item/device/radio_upgrade/station/engineering
+	name = "engineering radio upgrade"
+	desc = "A device capable of upgrading a headset to allow access over the Engineering radio channel. Can be installed in a radio headset."
+	icon_state = "engineering"
+	secure_frequencies = list("e" = R_FREQ_ENGINEERING)
+
+/obj/item/device/radio_upgrade/station/research
+	name = "research radio upgrade"
+	desc = "A device capable of upgrading a headset to allow access over the Research radio channel. Can be installed in a radio headset."
+	icon_state = "research"
+	secure_frequencies = list("r" = R_FREQ_RESEARCH)
+
+/obj/item/device/radio_upgrade/station/medical
+	name = "medical radio upgrade"
+	desc = "A device capable of upgrading a headset to allow access over the Medical radio channel. Can be installed in a radio headset."
+	icon_state = "medical"
+	secure_frequencies = list("m" = R_FREQ_MEDICAL)
+
+/obj/item/device/radio_upgrade/station/civilian
+	name = "civilian radio upgrade"
+	desc = "A device capable of upgrading a headset to allow access over the Civilian radio channel. Can be installed in a radio headset."
+	icon_state = "civilian"
+	secure_frequencies = list("c" = R_FREQ_CIVILIAN)

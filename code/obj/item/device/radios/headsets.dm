@@ -18,6 +18,7 @@
 	wear_layer = MOB_EARS_LAYER
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
+	microphone_listen_input = LISTEN_INPUT_OUTLOUD_RANGE_0
 	var/obj/item/device/radio_upgrade/wiretap = null
 	hardened = 0
 
@@ -29,6 +30,7 @@
 				return
 
 			src.install_radio_upgrade(R)
+			logTheThing(LOG_STATION, user, "installs [O]([O.type]) into their [src]([src.type])")
 			boutput(user, SPAN_NOTICE("You install [R] into [src]."))
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(R)
