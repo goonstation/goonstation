@@ -1,0 +1,2 @@
+#!/bin/sh
+sh "$(dirname "$0")/tgui-rebuild.sh" post-merge "$@"

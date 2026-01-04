@@ -20,11 +20,11 @@ jobs:
           ref: ${{ env.PR_BRANCH }}
           fetch-depth: 0
 
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 16
-      #     cache: "yarn"
-      #     cache-dependency-path: ./tgui/yarn.lock
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: tgui/yarn.lock
 
       - uses: actions/setup-python@v5
         with:
@@ -33,15 +33,18 @@ jobs:
 
       - name: Perform Merge
         run: |
+          set -euo pipefail
           bash tools/hooks/install.sh
           bash tools/ci/install_build_tools.sh
-          # bash tgui/bin/tgui --install-git-hooks
-          # chmod +x tools/hooks/*.merge tgui/bin/tgui
           git config user.name github-actions
           git config user.email github-actions@github.com
           git remote add upstream "https://github.com/${{ github.repository }}.git"
           git fetch upstream master
-          git merge upstream/master && git push origin
+          git merge upstream/master
+          if ! git diff --cached --quiet; then
+            git commit --amend --no-edit
+          fi
+          git push origin HEAD
 
       - name: Notify Failure
         if: failure()

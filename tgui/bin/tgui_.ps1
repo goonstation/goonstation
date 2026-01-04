@@ -169,9 +169,14 @@ function task-validate-build {
 
 ## Installs merge drivers and git hooks
 function task-install-git-hooks () {
-    Set-Location $global:basedir
-    git config --replace-all merge.tgui-merge-bundle.driver "tgui/bin/tgui --merge=bundle %P %O %A %B %L"
-    Write-Output "tgui: Merge drivers have been successfully installed!"
+  Set-Location $global:rootdir
+  $bootstrap = Join-Path $global:rootdir "tools/bootstrap/python"
+  if (-not (Test-Path $bootstrap -PathType Leaf)) {
+    Write-Error "tgui: bootstrap Python launcher not found at $bootstrap"
+    exit 1
+  }
+  & $bootstrap -m hooks.install
+  Write-Output "tgui: Git hooks (post-merge rebuild) have been installed"
 }
 
 ## Main
