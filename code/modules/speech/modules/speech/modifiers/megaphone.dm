@@ -9,8 +9,7 @@
 
 	var/mob/mob_speaker = message.message_origin
 	var/obj/item/megaphone/megaphone = mob_speaker.equipped()
-
-	if (!megaphone)
+	if (!istype(megaphone))
 		return
 
 	message.maptext_css_values["font-family"] = ((megaphone.maptext_size >= 12) ? "'PxPlus IBM VGA9'" : "'Small Fonts'")
