@@ -12,6 +12,17 @@
 	if (!istype(handset))
 		return
 
+
+	// if held, it must be in active hand to be heard through
+	if (ismob(handset.loc))
+		var/mob/mob_speaker = message.original_speaker
+		if(mob_speaker.equipped() != handset)
+			return NO_MESSAGE
+
+
+	// Create a text reference to the speaker's mind, if they have one.
+
+
 	message.flags |= SAYFLAG_NO_MAPTEXT
 	message.flags &= ~(SAYFLAG_WHISPER | SAYFLAG_NO_SAY_VERB)
 	message.heard_range = 0
@@ -20,7 +31,6 @@
 	message.atom_listeners_to_be_excluded = null
 	FORMAT_MESSAGE_FOR_RELAY(message, SAY_RELAY_PHONE)
 
-	// Create a text reference to the speaker's mind, if they have one.
 	var/mind_ref = ""
 	if (ismob(message.original_speaker))
 		var/mob/mob_speaker = message.original_speaker

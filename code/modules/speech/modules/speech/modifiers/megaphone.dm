@@ -8,7 +8,7 @@
 		return
 
 	var/mob/mob_speaker = message.message_origin
-	var/obj/item/megaphone/megaphone = mob_speaker.find_type_in_hand(/obj/item/megaphone)
+	var/obj/item/megaphone/megaphone = mob_speaker.equipped()
 
 	if (!megaphone)
 		return
