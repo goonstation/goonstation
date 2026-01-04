@@ -35,9 +35,11 @@ def main(argv: list[str]) -> int:
     if not changed:
         return 0
 
+    runner = _tgui_runner()
+
     print(f"tgui hook ({hook_name}): rebuilding tgui bundles", flush=True)
     try:
-        subprocess.run(["tgui/bin/tgui"] + ["--build"], check=True)
+        subprocess.run(runner + ["--build"], check=True)
     except subprocess.CalledProcessError as exc:
         print(
             f"tgui hook ({hook_name}): build failed ({exc.returncode}); run tgui/bin/tgui --build manually",
@@ -99,6 +101,12 @@ def _git_list(args: list[str]) -> list[str]:
     if result.returncode != 0:
         return []
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
+
+def _tgui_runner() -> list[str]:
+    if os.name == "nt":
+        return ["tgui\\bin\\tgui.bat"]
+    return ["tgui/bin/tgui"]
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
