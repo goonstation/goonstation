@@ -242,6 +242,12 @@ if ($Args.Length -gt 0) {
     exit 0
   }
 
+  if ($Args[0] -eq "--build") {
+    task-install
+    task-rspack --mode=production
+    exit 0
+  }
+
   ## Hook install
   if ($Args[0] -eq "--install-git-hooks") {
     task-install-git-hooks
