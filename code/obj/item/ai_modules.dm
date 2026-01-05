@@ -121,6 +121,10 @@ TYPEINFO(/obj/item/aiModule)
 	proc/can_weld(slotNum, obj/machinery/lawrack/rack, mob/user)
 		return TRUE
 
+	///Overridable behaviour when inserted into a law rack
+	proc/on_inserted(slotNum, obj/machinery/lawrack/rack, mob/user)
+		return
+
 	///Overridable behaviour when removed from a law rack
 	proc/on_removed(slotNum, obj/machinery/lawrack/rack, mob/user)
 		return

@@ -1000,7 +1000,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "monkey"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
-	wear_layer = MOB_LAYER_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
 /obj/item/clothing/mask/niccage

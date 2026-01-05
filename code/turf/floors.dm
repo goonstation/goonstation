@@ -1658,8 +1658,9 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /obj/effect/snow_step
 	icon = 'icons/obj/decals/blood/blood.dmi'
+	anchored = ANCHORED_ALWAYS
 	layer = DECAL_LAYER
-	plane = PLANE_FLOOR
+	plane = PLANE_NOSHADOW_BELOW
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | TILE_BOUND
 	color = "#91b8d0"
 
