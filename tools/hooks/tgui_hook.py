@@ -202,9 +202,19 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
     parents = [parent.oid for parent in commit.parents]
 
     try:
-        new_oid = repo.create_commit(ref_name, commit.author, committer, commit.message, tree_id, parents)
+        new_oid = repo.create_commit(None, commit.author, committer, commit.message, tree_id, parents)
     except (ValueError, pygit2.GitError) as exc:
         print(f"tgui hook (post-merge): create_commit failed ({exc})", file=sys.stderr)
+        return 1
+
+    try:
+        if ref_name == "HEAD":
+            repo.set_head_detached(new_oid)
+        else:
+            reference = repo.references[ref_name]
+            reference.set_target(new_oid, "tgui hook: amend merge", commit.oid)
+    except (KeyError, pygit2.GitError) as exc:
+        print(f"tgui hook (post-merge): update reference failed ({exc})", file=sys.stderr)
         return 1
 
     repo.index.read()
