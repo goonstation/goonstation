@@ -126,6 +126,8 @@
 
 					F.reagents.set_reagent_temp(F.reagents.total_temperature + change , 1)
 				*/
+				LAGCHECK(LAG_MED)
+				if (QDELETED(FG)) continue
 				//evaporate stuff
 				if (FG.amt_per_tile <= FG.required_to_spread && !FG.updating)
 					avg_viscosity = FG.avg_viscosity
