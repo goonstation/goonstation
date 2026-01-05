@@ -1,18 +1,19 @@
-@call "%~dp0\..\bootstrap\python" -m hooks.install %*
 @echo off
-set /p choice=Do you want to install TGUI hooks (requires Node.js)? (Y/N):
+setlocal
 
-if /i "%choice%"=="Y" (
-    @echo off
-	rem Copyright (c) 2020 Aleksej Komarov
-	rem SPDX-License-Identifier: MIT
-	call powershell.exe -NoLogo -ExecutionPolicy Bypass -File "%~dp0\..\..\tgui\bin\tgui_.ps1" --install-git-hooks %*
-	rem Pause if launched in a separate shell unless initiated from powershell
-	echo %PSModulePath% | findstr %USERPROFILE% >NUL
-	if %errorlevel% equ 0 (
-		pause
-		exit 0
-		)
-	echo %cmdcmdline% | find /i "/c"
+set /p tguiChoice=Do you want to install TGUI hooks (requires Node.js)? (Y/N):
+if /i "%tguiChoice%"=="Y" (
+	set "TG_INCLUDE_TGUI_HOOKS=1"
+) else (
+	set "TG_INCLUDE_TGUI_HOOKS=0"
 )
+
+set "TG_INCLUDE_BASE_HOOKS=1"
+set /p baseChoice=Do you want to install map merge and icon merge hooks? (Y/N):
+if /i not "%baseChoice%"=="Y" (
+	set "TG_INCLUDE_BASE_HOOKS=0"
+)
+
+call "%~dp0\..\bootstrap\python" -m hooks.install %*
+
 pause

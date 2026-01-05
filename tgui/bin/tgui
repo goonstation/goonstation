@@ -185,7 +185,17 @@ task-install-git-hooks() {
     echo "tgui: bootstrap Python launcher not found at ${installer}" >&2
     exit 1
   fi
-  "${installer}" -m hooks.install
+
+  local base_choice
+  local include_base=0
+  printf "Do you want to install map merge and icon merge hooks? (Y/N): "
+  read -r base_choice
+  if [[ ${base_choice} =~ ^[Yy]$ ]]; then
+    include_base=1
+  fi
+
+  TG_INCLUDE_TGUI_HOOKS=1 TG_INCLUDE_BASE_HOOKS=${include_base} "${installer}" -m hooks.install
+
   echo "tgui: Git hooks have been installed"
   exit 0
 }

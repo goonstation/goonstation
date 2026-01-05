@@ -1,7 +1,14 @@
 #!/bin/sh
-tools/bootstrap/python -m hooks.tgui_hook pre-commit "$@"
-status=$?
-if [ $status -ne 0 ]; then
-	exit $status
+if [ -z "$TG_SKIP_TGUI_HOOK" ]; then
+	tools/bootstrap/python -m hooks.tgui_hook pre-commit "$@"
+	status=$?
+	if [ $status -ne 0 ]; then
+		exit $status
+	fi
 fi
-exec tools/bootstrap/python -m mapmerge2.precommit
+
+if [ -z "$TG_SKIP_MAP_MERGE" ]; then
+	exec tools/bootstrap/python -m mapmerge2.precommit
+fi
+
+exit 0

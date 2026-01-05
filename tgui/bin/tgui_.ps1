@@ -180,7 +180,23 @@ function task-install-git-hooks () {
     Write-Error "tgui: bootstrap Python launcher not found at $bootstrap"
     exit 1
   }
+  $includeBase = Read-Host "Do you want to install map merge and icon merge hooks? Y/N)"
+  $env:TG_INCLUDE_TGUI_HOOKS = "1"
+  if ($includeBase -match '^[Yy]$') {
+    $env:TG_INCLUDE_BASE_HOOKS = "1"
+  } else {
+    $env:TG_INCLUDE_BASE_HOOKS = "0"
+  }
+
   & $bootstrap -m hooks.install
+  $hookResult = $LASTEXITCODE
+
+  Remove-Item Env:TG_INCLUDE_TGUI_HOOKS -ErrorAction SilentlyContinue
+  Remove-Item Env:TG_INCLUDE_BASE_HOOKS -ErrorAction SilentlyContinue
+
+  if ($hookResult -ne 0) {
+    exit $hookResult
+  }
   Write-Output "tgui: Git hooks have been installed"
 }
 
