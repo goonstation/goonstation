@@ -48,7 +48,7 @@ def uninstall(target=None, keep=()):
             os.unlink(fname)
 
     # Remove merge driver configuration
-    for entry in repo.config:
+    for entry in list(repo.config):
         match = re.match(r'^merge\.([^.]+)\.driver$', entry.name)
         if match and f"{match.group(1)}.merge" not in keep:
             print('Removing merge driver:', match.group(1))
@@ -61,8 +61,8 @@ TGUI_ONLY_HOOKS = {'post-merge', 'post-rewrite'}
 TGUI_ATTRIBUTE_BEGIN = '# BEGIN tgui hooks (managed)'
 TGUI_ATTRIBUTE_END = '# END tgui hooks (managed)'
 TGUI_ATTRIBUTE_BODY = (
-    '*.bundle.* -binary merge=ours',
-    '*.chunk.* -binary merge=ours',
+    'browserassets/src/tgui/*.bundle.* -binary merge=tgui',
+    'browserassets/src/tgui/*.chunk.* -binary merge=tgui',
 )
 
 
@@ -183,7 +183,11 @@ def install(target=None, *, include_tgui=True, include_base=True):
         _, fname = os.path.split(full_path)
         name, _ = os.path.splitext(fname)
 
-        if not include_base:
+        if name == 'tgui':
+            if not include_tgui:
+                print('Skipping merge driver (tgui disabled):', name)
+                continue
+        elif not include_base:
             print('Skipping merge driver (base disabled):', name)
             continue
 
