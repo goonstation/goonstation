@@ -217,6 +217,17 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
         print(f"tgui hook (post-merge): update reference failed ({exc})", file=sys.stderr)
         return 1
 
+    try:
+        repo.reset(repo[new_oid], pygit2.GIT_RESET_MIXED)
+    except pygit2.GitError as exc:
+        print(f"tgui hook (post-merge): reset failed ({exc})", file=sys.stderr)
+        return 1
+
+    try:
+        repo.state_cleanup()
+    except pygit2.GitError:
+        pass
+
     repo.index.read()
     return 0
 
