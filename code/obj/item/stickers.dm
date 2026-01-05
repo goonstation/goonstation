@@ -76,8 +76,7 @@
 
 		src.attached = A
 		src.active = TRUE
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, "attached")
-		src.set_loc(A)
+				src.set_loc(A)
 		if (!silent)
 			playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
 		add_fingerprint(user)
@@ -243,7 +242,6 @@
 		src.pixel_y = initial(src.pixel_y)
 		src.attached = null
 		src.active = FALSE
-		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, "attached")
 
 	fall_off()
 		src.remove_from_attached()
