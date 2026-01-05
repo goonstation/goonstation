@@ -1,10 +1,11 @@
 /// Gravitatonal Anomaly, potentially creates a white/black hole or several other gravity effects based on typepath
 /obj/anomaly/gravitational
 	name = "gravitational anomaly"
-	desc = "Huh. That's weird."
+	desc = "Looking at this hurts your bones. Better not get too close."
 	icon = 'icons/effects/particles.dmi'
-	icon_state = "32x32circle"
+	icon_state = "8x8ring"
 	color = "#aa0099"
+	alpha = 100
 	plane = PLANE_NOSHADOW_BELOW
 	anchored = ANCHORED_ALWAYS
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
@@ -14,13 +15,14 @@
 	HELP_MESSAGE_OVERRIDE("Maybe someone else knows something about this...")
 
 	var/fault_typepath = /datum/grav_fault //! Picks from any concrete subtype of given datum
-	var/lifespan = 30 SECONDS
+	var/lifespan = 10 SECONDS
 
 	var/obj/effect/grav_pulse/lense = null
 	var/obj/effect/gravanom_pulse/effect = null
 	var/datum/grav_fault/fault = null
 
 	New(loc, lifespan_override=null, triggered_by_event=null)
+		..()
 		var/turf/T = get_turf(src)
 		var/fault_path = pick(concrete_typesof(src.fault_typepath))
 		src.fault = new fault_path
@@ -31,8 +33,11 @@
 		src.lense = new /obj/effect/grav_pulse(src)
 		src.vis_contents += src.effect
 		src.vis_contents += src.lense
+		animate(src, alpha = 0, time = rand(3,8), loop = -1, easing = LINEAR_EASING)
+		animate(alpha = 100, time = rand(3,8), loop = -1, easing = LINEAR_EASING)
 
-		..()
+		if(!particleMaster.CheckSystemExists(/datum/particleSystem/grav_warning, src))
+			particleMaster.SpawnSystem(new /datum/particleSystem/grav_warning(src))
 
 		if (isnum(lifespan_override))
 			src.lifespan = lifespan_override
@@ -63,7 +68,7 @@
 
 	process()
 		. = ..()
-		playsound(src.loc, 'sound/ambience/loop/Static_Horror_Loop.ogg', 50, FALSE)
+		playsound(src.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, FALSE, pitch=0.5)
 
 	disposing()
 		src.vis_contents -= src.effect
@@ -88,20 +93,21 @@
 			return "Mitigate \the [src] with a <b>Spatial Interdictor</b>."
 
 /obj/anomaly/gravitational/minor
-	name = "baby gravitational anomaly"
-	desc = "Aww. It's so cute!"
+	name = "small gravitational anomaly"
+	desc = "Looking at this hurts your bones. Better not get too close."
+	lifespan = 10 SECONDS
 	fault_typepath = /datum/grav_fault/minor
 
 /obj/anomaly/gravitational/major
 	name = "concerning gravitational anomaly"
-	desc = "That doesn't seem good."
-	lifespan = 45 SECONDS
+	desc = "Looking at this hurts your bones. You feel like you already should have been running."
+	lifespan = 20 SECONDS
 	fault_typepath = /datum/grav_fault/major
 
 /obj/anomaly/gravitational/extreme
 	name = "angry gravitational anomaly"
-	desc = "It's bad. Not good. Terrible. <b>Angry</b>."
-	lifespan = 60 SECONDS
+	desc = "Looking at this hurts your bones. It's bad. Not good. Terrible. <b>Angry</b>."
+	lifespan = 30 SECONDS
 	fault_typepath = /datum/grav_fault/extreme
 
 //TODO: Fishing Spot
@@ -111,10 +117,41 @@
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 	particles = new /particles/gravitational/anomaly
 
+/datum/particleSystem/grav_warning
+	New(var/atom/location = null)
+		..(location, "grav_warning", 5)
+
+	Run()
+		if (..())
+			for(var/i=0, i<4, i++)
+				sleep(0.2 SECONDS)
+				SpawnParticle()
+			state = 1
+
+/datum/particleType/grav_warning
+	name = "grav_warning"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "32x32ring"
+
+	MatrixInit()
+		first = matrix()
+
+	Apply(var/obj/particle/par)
+		if(..())
+			par.color = "#aa0099"
+			par.alpha = 255
+
+			first.Scale(0.1,0.1)
+			par.transform = first
+
+			first.Scale(80)
+			animate(par, transform = first, time = 5, alpha = 5)
+			first.Reset()
+
 
 /particles/gravitational/anomaly
 	color = generator("num", 1, 5)
-	gradient = list(0, "#f00", 1, "#900", 2, "#990", 3, "#ff0", 4, "#0f0", 5, "#090", "loop")
+	gradient = list(0, "#900", 1, "#600", 2, "#990", 3, "#660", 4, "#090", 5, "#060", "loop")
 
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "mistcloud1"
