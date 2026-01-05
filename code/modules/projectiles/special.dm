@@ -1195,6 +1195,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
 	has_impact_particles = FALSE
+	affected_by_gravity = TRUE
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -1223,6 +1224,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	implanted= null
 	casing = null
 	impact_image_state = null
+	affected_by_gravity = TRUE
 	var/typetospawn = null
 	var/hit_sound = null
 	///Do we get our icon from typetospawn?

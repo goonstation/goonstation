@@ -51,6 +51,8 @@ toxic - poisons
 
 	has_impact_particles = TRUE
 
+	affected_by_gravity = TRUE
+
 	/// can it ricochet off a wall?
 	var/ricochets = FALSE
 

@@ -449,16 +449,7 @@
 			die()
 			return
 
-		var/turf/curr_turf = loc
-		var/grav_mult = 1
-		var/kinetic_particles = TRUE
-		var/energy_particle_types = list(D_ENERGY, D_BURNING, D_RADIOACTIVE, D_TOXIC)
-		for (var/type in energy_particle_types)
-			if (src.proj_data.damage_type == type)
-				kinetic_particles = FALSE
-				break
-		if (istype(curr_turf) && kinetic_particles)
-			grav_mult = curr_turf.gforce_current
+		var/turf/curr_turf = get_turf(src)
 
 		//delta wx, how far in pixels(?) the projectile should move this step
 		var/dwx
@@ -467,12 +458,18 @@
 			dwx = src.internal_speed * src.xo
 			dwy = src.internal_speed * src.yo
 			curr_t++
-			src.travelled += src.internal_speed * grav_mult
+			if (src.proj_data.affected_by_gravity)
+				src.travelled += src.internal_speed * curr_turf?.gforce_current
+			else
+				src.travelled += src.internal_speed
 		else
 			dwx = src.proj_data.projectile_speed * src.xo
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
-			src.travelled += src.proj_data.projectile_speed * grav_mult
+			if (src.proj_data.affected_by_gravity)
+				src.travelled += src.proj_data.projectile_speed * curr_turf?.gforce_current
+			else
+				src.travelled += src.proj_data.projectile_speed
 
 		// The bullet would be expired/decayed.
 		if (src.travelled >= src.max_range * 32)
@@ -704,6 +701,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/implanted                // Path of "bullet" left behind in the mob on successful hit
 	var/disruption = 0           // planned thing to deal with pod electronics / etc
 	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
+	var/affected_by_gravity = FALSE	 // If a projectile should go shorter or further based on turf G-forces
 
 	var/datum/material/material = null
 
