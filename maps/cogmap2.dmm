@@ -20676,7 +20676,6 @@
 "bnA" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/light_switch/west,
-/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -21193,7 +21192,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -21232,6 +21230,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "bpi" = (
@@ -21710,13 +21709,6 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor,
-/area/station/security/main)
-"bqN" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/security/main)
 "bqQ" = (
@@ -22292,13 +22284,14 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/disposalpipe/segment/mail/bent/west,
+/obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor,
 /area/station/security/main)
 "bsF" = (
 /obj/stool/chair/comfy{
 	dir = 8
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bsH" = (
@@ -22851,6 +22844,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor,
 /area/station/security/main)
 "buu" = (
@@ -22858,6 +22852,7 @@
 /obj/window_blinds/cog2{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "buv" = (
@@ -22871,9 +22866,11 @@
 /obj/item/reagent_containers/food/drinks/mug/HoS{
 	pixel_y = 12
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "buw" = (
+/obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
@@ -61448,10 +61445,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
-"lEZ" = (
-/obj/disposalpipe/segment/mail/bent/east,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/evidence)
 "lFr" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -62362,7 +62355,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/black,
 /area/station/security/evidence)
 "mtx" = (
@@ -66250,6 +66243,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	id = "quarters_hos"
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/security/hos)
 "pSU" = (
@@ -68566,6 +68560,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/random_item_spawner/desk_stuff,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -132762,9 +132757,9 @@ bix
 fey
 fey
 fey
-lEZ
+fey
 bpd
-bqN
+bwc
 bsC
 bus
 bwc
@@ -133064,7 +133059,7 @@ bix
 fey
 bkx
 ihp
-iIW
+fey
 bpe
 vie
 pZn
@@ -133366,7 +133361,7 @@ bix
 fey
 bky
 blX
-iIW
+fey
 kYf
 bqU
 bqU
