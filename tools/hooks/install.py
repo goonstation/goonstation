@@ -61,8 +61,8 @@ TGUI_ONLY_HOOKS = {'post-merge', 'post-rewrite'}
 TGUI_ATTRIBUTE_BEGIN = '# BEGIN tgui hooks (managed)'
 TGUI_ATTRIBUTE_END = '# END tgui hooks (managed)'
 TGUI_ATTRIBUTE_BODY = (
-    'browserassets/src/tgui/*.bundle.* merge=ours',
-    'browserassets/src/tgui/*.chunk.* merge=ours',
+    '*.bundle.* merge=ours',
+    '*.chunk.* merge=ours',
 )
 
 
