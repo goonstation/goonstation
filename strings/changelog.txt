@@ -3,7 +3,7 @@
 (u)JORJ949
 (p)25445
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
-(*)Syndicate clowns can now find a highly illegal, portable, non-explosive version of the clown announcement computer in their uplinks for 6TC.
+(*)Syndicate clowns can now find a highly illegal, portable, non-explosive version of the clown announcement computer in their uplinks for 5TC.
 (u)QuiteLiterallyAnything
 (p)25452
 (e)💅📦|C-QoL, A-Game-Objects
