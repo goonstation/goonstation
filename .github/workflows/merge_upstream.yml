@@ -26,11 +26,6 @@ jobs:
           cache: yarn
           cache-dependency-path: tgui/yarn.lock
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-          cache: "pip"
-
       - name: Perform Merge
         run: |
           set -euo pipefail
@@ -41,9 +36,6 @@ jobs:
           git remote add upstream "https://github.com/${{ github.repository }}.git"
           git fetch upstream master
           git merge upstream/master
-          if ! git diff --cached --quiet; then
-            git commit --amend --no-edit
-          fi
           git push origin HEAD
 
       - name: Notify Failure
