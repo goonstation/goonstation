@@ -193,6 +193,11 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
 
     index = repo.index
     try:
+        index.read()
+    except (OSError, pygit2.GitError) as exc:
+        print(f"tgui hook (post-merge): index read failed ({exc})", file=sys.stderr)
+        return 1
+    try:
         tree_id = index.write_tree()
     except (OSError, pygit2.GitError) as exc:
         print(f"tgui hook (post-merge): write_tree failed ({exc})", file=sys.stderr)
