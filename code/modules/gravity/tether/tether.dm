@@ -32,7 +32,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	///  Use `proc/change_intensity(new_intensity)` to change values.
 	var/gforce_intensity = 0
 	var/target_intensity = 1 //! Current intensity setting (used when changing intensities)
-	var/minimum_intensity = 0
 	var/maximum_intensity = TETHER_INTENSITY_MAX_DEFAULT //! Maxmimum intensity of this tether (emag changes this)
 
 	var/last_charge_amount = 0 //! Last cell charge level, used for tracking charging/draining battery status
@@ -256,10 +255,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /// Directly changes the tether intensity and updates all relevant areas
 /obj/machinery/gravity_tether/proc/change_intensity(new_gforce)
-	if (new_gforce < src.minimum_intensity) // floating point imprecision
-		new_gforce = src.minimum_intensity
-	else if (new_gforce > src.maximum_intensity)
-		new_gforce = src.maximum_intensity
+	if (new_gforce < 0.01) // floating point imprecision
+		new_gforce = 0
 	var/gforce_diff = new_gforce - src.gforce_intensity
 	if (gforce_diff == 0)
 		return TRUE
@@ -336,7 +333,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /// Randomizes gravity. Respects tether cooldown cycle
 /obj/machinery/gravity_tether/proc/randomize_gravity()
-	var/chosen_gforce = randfloat(src.minimum_intensity, src.maximum_intensity)
+	var/chosen_gforce = randfloat(0, src.maximum_intensity)
 	if (chosen_gforce == src.gforce_intensity)
 		return
 	src.attempt_gravity_change(chosen_gforce)

@@ -753,7 +753,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "ajf" = (
-/obj/machinery/gravity_tether/station,
+/obj/railing/orange,
+/obj/decal/cleanable/dirt/jen,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "ajk" = (
@@ -1134,12 +1138,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"aoT" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/machinery/portable_atmospherics/pump,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "apd" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/netural{
@@ -2774,6 +2772,13 @@
 	dir = 8
 	},
 /area/station/hangar/main)
+"aNL" = (
+/obj/railing/orange,
+/obj/decal/cleanable/dirt/jen,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "aNT" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -18697,14 +18702,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
-"fLx" = (
-/obj/railing/orange{
-	dir = 4
-	},
-/obj/decal/cleanable/rust/jen,
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/nw)
 "fLP" = (
 /obj/decal/poster/wallsign/biohazard,
 /turf/simulated/wall/auto/jen/blue,
@@ -25507,7 +25504,9 @@
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "hUy" = (
-/obj/machinery/gravity_tether/station,
+/obj/machinery/portable_atmospherics/pump,
+/obj/decal/stripe_caution,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "hUX" = (
@@ -29453,13 +29452,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
-"jgF" = (
-/obj/decal/cleanable/rust/jen,
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/junk/maybe_few,
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/green,
-/area/station/medical/cdc)
 "jgV" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -37037,11 +37029,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
-"lzC" = (
-/obj/decal/cleanable/rust/jen,
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/nw)
 "lzD" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -46756,7 +46743,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/pathology,
-/obj/mapping_helper/access/research,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "ozp" = (
@@ -63007,11 +62993,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
-"tzQ" = (
-/obj/decal/cleanable/rust/jen,
-/obj/machinery/gravity_tether/station,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/nw)
 "tAo" = (
 /obj/cable,
 /obj/cable{
@@ -69298,9 +69279,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"vse" = (
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "vsf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -70274,7 +70252,9 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
 "vHK" = (
-/obj/machinery/gravity_tether/station,
+/obj/machinery/light/small/sticky/greenish{
+	dir = 1
+	},
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "vHV" = (
@@ -76680,6 +76660,9 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "xyT" = (
+/obj/decal/cleanable/rust/jen,
+/obj/table/reinforced/auto,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "xyW" = (
@@ -105311,8 +105294,8 @@ cHd
 dCz
 abY
 lJM
-vse
-aoT
+pnF
+pnF
 ewD
 pnF
 ieL
@@ -111683,7 +111666,7 @@ gwJ
 hBH
 rdj
 pEb
-jgF
+xjM
 hHu
 bgh
 uiV
@@ -116134,7 +116117,7 @@ kDb
 pLy
 ijL
 cdv
-lzC
+gba
 teM
 ayc
 utg
@@ -116435,7 +116418,7 @@ nbd
 hdc
 pLy
 suy
-tzQ
+fDp
 gba
 suy
 hst
@@ -116737,7 +116720,7 @@ nbd
 hsO
 pLy
 suy
-gba
+fDp
 xbB
 suy
 vti
@@ -117040,7 +117023,7 @@ gba
 pLy
 suy
 gJK
-fLx
+gJK
 suy
 bqI
 jeS
@@ -128467,7 +128450,7 @@ rdj
 rdj
 rdj
 aUm
-ofw
+aNL
 aRI
 fMy
 iYu

@@ -4826,7 +4826,15 @@
 	},
 /area/station/chapel/sanctuary)
 "aqA" = (
-/obj/machinery/gravity_tether/station,
+/obj/storage/secure/closet/courtroom,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
+"aqB" = (
+/obj/storage/closet/law,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aqG" = (
@@ -5027,15 +5035,6 @@
 	icon_state = "carpetE"
 	},
 /area/station/security/detectives_office)
-"arj" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/crew_quarters/locker)
 "ark" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/wood{
@@ -5618,7 +5617,6 @@
 /area/station/maintenance/northeast)
 "asP" = (
 /obj/machinery/light/small,
-/obj/storage/closet/law,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "asQ" = (
@@ -15332,9 +15330,6 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -15342,8 +15337,8 @@
 "aVM" = (
 /obj/machinery/disposal,
 /obj/machinery/light_switch/east,
+/obj/disposalpipe/trunk/south,
 /obj/landmark/pest,
-/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -49487,8 +49482,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dfZ" = (
+/obj/storage/closet/fire,
 /obj/decal/cleanable/cobweb,
-/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "dga" = (
@@ -49586,6 +49581,10 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
+"dgr" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "dgs" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
@@ -56931,13 +56930,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "inU" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/landmark/halloween,
-/obj/disposalpipe/junction{
-	dir = 8
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "iou" = (
@@ -59629,7 +59628,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
-/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/locker)
 "kwQ" = (
@@ -61537,15 +61535,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
-"mbC" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "mbH" = (
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/cloner)
@@ -61823,7 +61812,6 @@
 /area/station/hydroponics/lobby)
 "moS" = (
 /obj/machinery/firealarm/directional/north,
-/obj/storage/secure/closet/courtroom,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "moX" = (
@@ -67206,10 +67194,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/southwest)
-"qUe" = (
-/obj/machinery/gravity_tether/station,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/central)
 "qUH" = (
 /obj/machinery/vending/medical_public,
 /obj/disposalpipe/segment/transport,
@@ -70963,14 +70947,6 @@
 /obj/machinery/light/traffic_light/mining_station/delay3,
 /turf/space,
 /area/space)
-"uql" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/gravity_tether/station,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "uqA" = (
 /obj/machinery/light,
 /turf/simulated/floor/purple/side,
@@ -108529,7 +108505,7 @@ cVp
 nJi
 dfD
 uBy
-cuW
+dgr
 cLH
 dgs
 aFb
@@ -124720,7 +124696,7 @@ cia
 cia
 wqx
 cia
-juj
+aqB
 chV
 asP
 alM
@@ -128065,9 +128041,9 @@ aQz
 aRQ
 aRS
 rDN
-arj
+aRS
 kwv
-crk
+chV
 inU
 ckt
 chV
@@ -128369,8 +128345,8 @@ aRS
 aRS
 aVL
 aSZ
-uql
-mbC
+juj
+aYL
 ckt
 cha
 cha
@@ -128670,9 +128646,9 @@ aRS
 aSY
 qci
 aVM
-aSZ
-chV
-mbC
+aWZ
+crk
+ttC
 oEg
 cha
 aaF
@@ -128715,7 +128691,7 @@ bkw
 bkw
 bkw
 bkw
-qUe
+bhI
 biz
 bgK
 aaF
