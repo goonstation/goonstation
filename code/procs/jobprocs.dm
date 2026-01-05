@@ -591,64 +591,53 @@ Equip items from body traits.
 		if (!good_air.using_internal())//set tank ON
 			good_air.toggle_valve()
 
-///Equips special items that require special setup, such as Badges and Cloning Disks
-/mob/living/carbon/human/proc/equip_job_special_items(var/datum/job/JOB)
-	var/list/items_to_equip = list()
-	if(JOB.receives_disk)
-		var/obj/item/disk/data/floppy/D
-		if(ispath(JOB.receives_disk))
-			D = new JOB.receives_disk(src)
-		else
-			D = new /obj/item/disk/data/floppy(src)
-		var/datum/computer/file/clone/R = new
-		R.fields["ckey"] = ckey(src.key)
-		R.fields["name"] = src.real_name
-		R.fields["id"] = copytext("\ref[src.mind]", 4, 12)
-
-		var/datum/bioHolder/B = new/datum/bioHolder(null)
-		B.CopyOther(src.bioHolder)
-
-		R.fields["holder"] = B
-
-		R.fields["abilities"] = null
-		if (src.abilityHolder)
-			var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
-			R.fields["abilities"] = A
-
-		R.fields["defects"] = src.cloner_defects.copy()
-
-		SPAWN(0)
-			if(!isnull(src.traitHolder))
-				R.fields["traits"] = src.traitHolder.copy()
-		var/obj/item/implant/cloner/implant = new(src)
-		implant.scanned_here = locate(/area/centcom/reconstitutioncenter) || null
-		R.fields["imp"] = implant
-		R.fields["mind"] = src.mind
-		D.root.add_file(R)
-
-		D.name_suffix("([src.real_name])")
-		D.UpdateName()
-		items_to_equip |= D
-
-	if(JOB.badge)
-		var/obj/item/clothing/suit/security_badge/badge = new JOB.badge(src)
-		if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
-			items_to_equip |= badge
-		badge.badge_owner_name = src.real_name
-		badge.badge_owner_job = src.job
-
-	for (var/obj/item/I in items_to_equip)
-		if (src.back?.storage && src.equip_if_possible(I, SLOT_IN_BACKPACK)) continue
-		else if (src.belt?.storage && src.equip_if_possible(I, SLOT_IN_BELT)) continue
-		else if (!src.l_store && src.equip_if_possible(I, SLOT_L_STORE)) continue
-		else if (!src.r_store && src.equip_if_possible(I, SLOT_R_STORE)) continue
-		else if (!src.l_hand && src.equip_if_possible(I, SLOT_L_HAND)) continue
-		else if (!src.r_hand && src.equip_if_possible(I, SLOT_R_HAND)) continue
-		else I.set_loc(get_turf(src))
-
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
-	src.equip_job_special_items(JOB)
+	if (JOB.slot_back)
+		if (src.back?.storage)
+			if(JOB.receives_disk)
+				var/obj/item/disk/data/floppy/D
+				if(ispath(JOB.receives_disk))
+					D = new JOB.receives_disk(src)
+				else
+					D = new /obj/item/disk/data/floppy(src)
+				src.equip_if_possible(D, SLOT_IN_BACKPACK)
+				var/datum/computer/file/clone/R = new
+				R.fields["ckey"] = ckey(src.key)
+				R.fields["name"] = src.real_name
+				R.fields["id"] = copytext("\ref[src.mind]", 4, 12)
+
+				var/datum/bioHolder/B = new/datum/bioHolder(null)
+				B.CopyOther(src.bioHolder)
+
+				R.fields["holder"] = B
+
+				R.fields["abilities"] = null
+				if (src.abilityHolder)
+					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
+					R.fields["abilities"] = A
+
+				R.fields["defects"] = src.cloner_defects.copy()
+
+				SPAWN(0)
+					if(!isnull(src.traitHolder))
+						R.fields["traits"] = src.traitHolder.copy()
+				var/obj/item/implant/cloner/implant = new(src)
+				implant.scanned_here = locate(/area/centcom/reconstitutioncenter) || null
+				R.fields["imp"] = implant
+				R.fields["mind"] = src.mind
+				D.root.add_file(R)
+
+				D.name_suffix("([src.real_name])")
+				D.UpdateName()
+
+			if(JOB.badge)
+				var/obj/item/clothing/suit/security_badge/badge = new JOB.badge(src)
+				if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
+					src.equip_if_possible(badge, SLOT_IN_BACKPACK)
+				badge.badge_owner_name = src.real_name
+				badge.badge_owner_job = src.job
+
 	if (src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/tank/extra_air
 		if (src.traitHolder.hasTrait("plasmalungs"))
@@ -852,7 +841,6 @@ Equip items from body traits.
 		return
 
 	equip_job_items(JOB, src)
-	src.equip_job_special_items(JOB)
 
 	if (ishuman(src) && JOB.spawn_id)
 		src.spawnId(JOB)
