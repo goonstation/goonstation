@@ -78,9 +78,8 @@
 
 	unequipped(mob/user)
 		. = ..()
-		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
-		poof.setup(src.loc)
-		qdel(src)
+		SPAWN(1 SECONDS)
+			qdel(src)
 
 /obj/item/clothing/under/holojumpsuit
 	name = "Holographic Jumpsuit"
@@ -90,9 +89,8 @@
 
 	unequipped(mob/user)
 		. = ..()
-		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
-		poof.setup(src.loc)
-		qdel(src)
+		SPAWN(1 SECONDS)
+			qdel(src)
 
 /obj/item/clothing/suit/holosuit
 	name = "Holographic Suit"
@@ -102,9 +100,8 @@
 
 	unequipped(mob/user)
 		. = ..()
-		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
-		poof.setup(src.loc)
-		qdel(src)
+		SPAWN(1 SECONDS)
+			qdel(src)
 
 /obj/item/clothing/mask/holomask
 	name = "Holographic Mask"
@@ -114,9 +111,8 @@
 
 	unequipped(mob/user)
 		. = ..()
-		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
-		poof.setup(src.loc)
-		qdel(src)
+		SPAWN(1 SECONDS)
+			qdel(src)
 
 /obj/item/clothing/shoes/holoshoes
 	name = "Holographic Shoes"
@@ -126,9 +122,8 @@
 
 	unequipped(mob/user)
 		. = ..()
-		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
-		poof.setup(src.loc)
-		qdel(src)
+		SPAWN(1 SECONDS)
+			qdel(src)
 
 /obj/item/clothing/ears/holoears
 	name = "Holographic Earpiece"
@@ -138,9 +133,8 @@
 
 	unequipped(mob/user)
 		. = ..()
-		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
-		poof.setup(src.loc)
-		qdel(src)
+		SPAWN(1 SECONDS)
+			qdel(src)
 
 /obj/item/clothing/gloves/hologloves
 	name = "Holographic Gloves"
@@ -150,6 +144,5 @@
 
 	unequipped(mob/user)
 		. = ..()
-		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
-		poof.setup(src.loc)
-		qdel(src)
+		SPAWN(1 SECONDS)
+			qdel(src)
