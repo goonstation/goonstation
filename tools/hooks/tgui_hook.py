@@ -218,7 +218,8 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
         return 1
 
     try:
-        repo.reset(repo[new_oid], pygit2.GIT_RESET_MIXED)
+        repo.checkout_tree(repo.get(new_oid), strategy=pygit2.GIT_CHECKOUT_FORCE)
+        repo.reset(repo.get(new_oid), pygit2.GIT_RESET_MIXED)
     except pygit2.GitError as exc:
         print(f"tgui hook (post-merge): reset failed ({exc})", file=sys.stderr)
         return 1
