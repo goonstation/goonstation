@@ -90,7 +90,9 @@ def install(target=None, *, include_tgui=True, include_base=True):
 
             descriptor = ' + '.join(enabled_parts) if enabled_parts else 'disabled'
             print(f'Installing hook: pre-commit ({descriptor})')
-            command = ' '.join(env_prefix + [base_command]).strip()
+            command = base_command
+            if env_prefix:
+                command = f"env {' '.join(env_prefix)} {base_command}"
         else:
             if not include_tgui and is_tgui_only_hook:
                 print('Skipping hook (tgui disabled):', name)
