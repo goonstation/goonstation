@@ -54,9 +54,7 @@ def uninstall(target=None, keep=()):
             print('Removing merge driver:', match.group(1))
             del repo.config[entry.name]
 
-
 TGUI_ONLY_HOOKS = {'post-merge', 'post-rewrite'}
-
 
 def install(target=None, *, include_tgui=True, include_base=True):
     repo, hooks_dir = _find_stuff(target)
@@ -80,13 +78,15 @@ def install(target=None, *, include_tgui=True, include_base=True):
             enabled_parts = []
             if include_tgui:
                 enabled_parts.append('tgui')
+                env_prefix.append('TGUI_HOOK=1')
             else:
-                env_prefix.append('TG_SKIP_TGUI_HOOK=1')
+                env_prefix.append('TGUI_HOOK=0')
 
             if include_base:
                 enabled_parts.append('mapmerge')
+                env_prefix.append('MAPMERGE_HOOK=1')
             else:
-                env_prefix.append('TG_SKIP_MAP_MERGE=1')
+                env_prefix.append('MAPMERGE_HOOK=0')
 
             descriptor = ' + '.join(enabled_parts) if enabled_parts else 'disabled'
             print(f'Installing hook: pre-commit ({descriptor})')

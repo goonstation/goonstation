@@ -10,6 +10,7 @@ import sys
 import pygit2
 
 INTERESTING_PREFIXES = ("tgui/", "browserassets/src/tgui/")
+BUNDLE_ROOT = "browserassets/src/tgui/"
 INDEX_MASK = pygit2.GIT_STATUS_INDEX_NEW | pygit2.GIT_STATUS_INDEX_MODIFIED | pygit2.GIT_STATUS_INDEX_DELETED
 WORKDIR_MASK = pygit2.GIT_STATUS_WT_NEW | pygit2.GIT_STATUS_WT_MODIFIED | pygit2.GIT_STATUS_WT_DELETED | pygit2.GIT_STATUS_WT_RENAMED
 
@@ -26,6 +27,10 @@ def main(argv: list[str]) -> int:
     if _has_blocking_conflicts(repo):
         print(f"tgui hook ({hook}): unresolved non-bundle conflicts; skipping", file=sys.stderr)
         return 0
+
+    auto_resolved = _resolve_bundle_conflicts(repo)
+    if auto_resolved:
+        print(f"tgui hook ({hook}): reset bundle conflicts to ours", flush=True)
 
     changed = _changed_paths(repo, hook)
     if not changed:
@@ -62,6 +67,32 @@ def _has_blocking_conflicts(repo: pygit2.Repository) -> bool:
             if entry and not entry.path.startswith("browserassets/src/tgui/"):
                 return True
     return False
+
+
+def _resolve_bundle_conflicts(repo: pygit2.Repository) -> bool:
+    conflicts = repo.index.conflicts
+    if not conflicts:
+        return False
+
+    targets: set[str] = set()
+    for base, ours, theirs in conflicts:
+        for entry in (ours, theirs, base):
+            if entry and entry.path and entry.path.startswith(BUNDLE_ROOT):
+                targets.add(entry.path)
+                break
+
+    if not targets:
+        return False
+
+    success = True
+    for path in sorted(targets):
+        result = subprocess.run(["git", "checkout", "--ours", path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if result.returncode != 0:
+            print(f"tgui hook: failed to reset {path} to ours (exit {result.returncode})", file=sys.stderr)
+            success = False
+
+    repo.index.read()
+    return success
 
 
 def _changed_paths(repo: pygit2.Repository, hook: str) -> set[str]:
