@@ -212,7 +212,7 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
             repo.set_head_detached(new_oid)
         else:
             reference = repo.references[ref_name]
-            reference.set_target(new_oid, "tgui hook: amend merge", commit.oid)
+            reference.set_target(new_oid)
     except (KeyError, pygit2.GitError) as exc:
         print(f"tgui hook (post-merge): update reference failed ({exc})", file=sys.stderr)
         return 1
