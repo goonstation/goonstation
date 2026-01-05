@@ -61,7 +61,7 @@
 	if (src.gforce_intensity > 0)
 		new_b += 0.2
 
-	if (src.is_broken())
+	if (src.glitching_out)
 		new_r += 0.2
 		new_b += 0.1
 
@@ -71,7 +71,7 @@
 /obj/machinery/gravity_tether/proc/update_ma_screen()
 	if (src.processing_state != TETHER_PROCESSING_STABLE)
 		src.ma_screen.icon_state = "screen-cooldown"
-	else if (src.status & BROKEN)
+	else if (src.glitching_out)
 		src.ma_screen.icon_state = "screen-crash"
 	else if (src.locked)
 		src.ma_screen.icon_state = "screen-locked"
@@ -93,7 +93,7 @@
 /obj/machinery/gravity_tether/proc/update_ma_status()
 	if (src.processing_state == TETHER_PROCESSING_PENDING)
 		src.ma_status.icon_state = "status-processing"
-	else if (src.status & BROKEN)
+	else if (src.glitching_out)
 		src.ma_status.icon_state = "status-broken"
 	else if (src.gforce_intensity > 0)
 		src.ma_status.icon_state = "status-working"
@@ -128,7 +128,7 @@
 /obj/machinery/gravity_tether/proc/update_ma_graviton()
 	if (src.has_no_power() || src.gforce_intensity <= 0.01)
 		src.ma_graviton.icon_state = "graviton-idle"
-	else if (src.status & BROKEN)
+	else if (src.glitching_out)
 		src.ma_graviton.icon_state = "graviton-wonky"
 	else
 		src.ma_graviton.icon_state = "graviton-nominal"
@@ -162,7 +162,7 @@
 			src.ma_tamper.icon_state = "tamper-cut"
 
 /obj/machinery/gravity_tether/proc/update_ma_graph()
-	if (!(src.status & BROKEN))
+	if (!(src.glitching_out))
 		if (src.disturbed_end_time)
 			src.ma_graph.icon_state = "graph-bad"
 		else

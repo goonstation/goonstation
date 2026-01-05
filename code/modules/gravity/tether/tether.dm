@@ -40,6 +40,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	var/door_state = TETHER_DOOR_CLOSED //! State of the maintenance panel door
 	var/processing_state = TETHER_PROCESSING_STABLE //! Is this tether currently doing a gravity change
 	var/wire_state = TETHER_WIRES_INTACT //! State of the set of wires behind the cell
+	var/glitching_out = FALSE //! Whether we're Freaking Out and/or Causing Problems
 
 	var/change_begin_time = null //! When to start the gravity change
 	var/cooldown_end_time = null //! When to end post-change cooldown
@@ -127,7 +128,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			. += " It is changing intensity."
 		else if (src.processing_state == TETHER_PROCESSING_COOLDOWN)
 			.+= " It is cooling down from a change."
-		else if (src.status & BROKEN)
+		else if (src.glitching_out)
 			. += " It doesn't seem to be working right."
 		else if (src.gforce_intensity == 0)
 			. += " It is online, but not active."
@@ -349,7 +350,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return
 	switch (event_type)
 		if (GRAVITY_EVENT_DISRUPT)
-			if (src.is_broken())
+			if (src.glitching_out)
 				return
 			src.disturbed_end_time = TIME + TETHER_DISTURBANCE_TIMER
 			src.update_ma_graph()
@@ -361,7 +362,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		if (GRAVITY_EVENT_CHANGE)
 			if (!isnum(value) || value < 0)
 				return
-			if (src.is_broken())
+			if (src.glitching_out)
 				return
 			src.disturbed_end_time = TIME + TETHER_DISTURBANCE_TIMER
 			src.update_ma_graph()

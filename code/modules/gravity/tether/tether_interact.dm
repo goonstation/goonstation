@@ -46,7 +46,7 @@
 	if (isnull(new_intensity))
 		return
 	new_intensity = round(new_intensity, 0.01)
-	if (src.status & BROKEN)
+	if (src.glitching_out)
 		new_intensity += round((prob(50) ? 1 : -1) * randfloat(0.2, 0.4), 0.01)
 	if (new_intensity == src.gforce_intensity)
 		boutput(user, SPAN_NOTICE("Tether already set to [new_intensity]G!"))
@@ -325,6 +325,7 @@
 
 	src.wire_state = TETHER_WIRES_INTACT
 	src.status &= ~BROKEN
+	src.glitching_out = FALSE
 	src.power_change()
 
 	src.update_ma_wires()

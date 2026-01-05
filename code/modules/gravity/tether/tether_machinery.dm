@@ -5,8 +5,8 @@
 	if (src.wire_state == TETHER_WIRES_INTACT)
 		src.wire_state = TETHER_WIRES_BURNED
 		src.update_ma_wires()
-		src.UpdateIcon()
 	src.random_fault(src.calculate_fault_chance(50))
+	src.glitching_out = TRUE
 
 	src.UpdateParticles(new/particles/rack_smoke, "broken_smoke")
 	if (istype(src,  /obj/machinery/gravity_tether/station))
@@ -46,7 +46,7 @@
 			src.finish_gravity_change()
 		return
 
-	if (src.status & BROKEN)
+	if (src.glitching_out)
 		var/malf_chance = src.calculate_fault_chance()
 		if (prob(malf_chance) && !ON_COOLDOWN(src, "passive_malfunction", rand(50, 70) SECONDS))
 			// fault severity chance increases as fault chance goes up
