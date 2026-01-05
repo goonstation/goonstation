@@ -222,19 +222,9 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
         print(f"tgui hook (post-merge): update reference failed ({exc})", file=sys.stderr)
         return 1
 
-    new_commit = repo.get(new_oid)
-    try:
-        repo.checkout_tree(new_commit, strategy=pygit2.GIT_CHECKOUT_FORCE)
-    except pygit2.GitError as exc:
-        print(f"tgui hook (post-merge): checkout failed ({exc})", file=sys.stderr)
-        return 1
-
-    try:
-        repo.index.read_tree(new_commit.tree)
-        repo.index.write()
-    except pygit2.GitError as exc:
-        print(f"tgui hook (post-merge): index sync failed ({exc})", file=sys.stderr)
-        return 1
+    cleanup_status = _cleanup_bundle_paths()
+    if cleanup_status != 0:
+        return cleanup_status
 
     try:
         repo.state_cleanup()
@@ -243,6 +233,24 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
     repo.index.read()
 
     return 0
+
+
+def _cleanup_bundle_paths() -> int:
+    commands = (
+        (["git", "checkout", "--", BUNDLE_ROOT], "checkout"),
+        (["git", "reset", "HEAD", "--", BUNDLE_ROOT], "reset"),
+    )
+    status = 0
+    for cmd, label in commands:
+        try:
+            result = subprocess.run(cmd, check=False)
+        except OSError as exc:
+            print(f"tgui hook (post-merge): {label} command failed ({exc})", file=sys.stderr)
+            return 1
+        if result.returncode != 0:
+            print(f"tgui hook (post-merge): git {label} exited {result.returncode}", file=sys.stderr)
+            status = result.returncode
+    return status
 
 
 def _head_reference_name(repo: pygit2.Repository) -> str | None:
