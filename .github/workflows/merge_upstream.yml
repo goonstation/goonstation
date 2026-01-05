@@ -27,6 +27,9 @@ jobs:
           cache-dependency-path: tgui/yarn.lock
 
       - name: Perform Merge
+        env:
+          TG_INCLUDE_TGUI_HOOKS: "1"
+          TG_INCLUDE_BASE_HOOKS: "1"
         run: |
           set -euo pipefail
           bash tools/hooks/install.sh
