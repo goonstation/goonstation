@@ -54,7 +54,76 @@ def uninstall(target=None, keep=()):
             print('Removing merge driver:', match.group(1))
             del repo.config[entry.name]
 
+    return repo
+
+
 TGUI_ONLY_HOOKS = {'post-merge', 'post-rewrite'}
+TGUI_ATTRIBUTE_BEGIN = '# BEGIN tgui hooks (managed)'
+TGUI_ATTRIBUTE_END = '# END tgui hooks (managed)'
+TGUI_ATTRIBUTE_BODY = (
+    'browserassets/src/tgui/*.bundle.* merge=ours',
+    'browserassets/src/tgui/*.chunk.* merge=ours',
+)
+
+
+def update_info_attributes(repo, enable):
+    info_dir = os.path.join(repo.path, 'info')
+    attr_path = os.path.join(info_dir, 'attributes')
+
+    original = ''
+    if os.path.exists(attr_path):
+        with open(attr_path, 'r', encoding='utf-8') as handle:
+            original = handle.read()
+
+    filtered = []
+    block_present = False
+    skipping = False
+    for line in original.splitlines():
+        if line == TGUI_ATTRIBUTE_BEGIN:
+            block_present = True
+            skipping = True
+            continue
+        if skipping:
+            if line == TGUI_ATTRIBUTE_END:
+                skipping = False
+            continue
+        filtered.append(line)
+
+    while filtered and not filtered[-1].strip():
+        filtered.pop()
+
+    message = None
+    if enable:
+        if filtered and filtered[-1].strip():
+            filtered.append('')
+        filtered.extend((TGUI_ATTRIBUTE_BEGIN, *TGUI_ATTRIBUTE_BODY, TGUI_ATTRIBUTE_END))
+        message = (
+            'tgui merge hook: enabled local bundle auto-resolve during merges',
+            '      (safe to disable locally; rebuild always regenerates bundles)'
+        )
+    elif block_present:
+        message = (
+            'tgui merge hook: removed local bundle auto-resolve overrides',
+            '      (hooks uninstalled or tgui component disabled)'
+        )
+
+    changed = False
+    if filtered:
+        new_text = '\n'.join(filtered) + '\n'
+        if new_text != original:
+            os.makedirs(info_dir, exist_ok=True)
+            with open(attr_path, 'w', encoding='utf-8', newline='\n') as handle:
+                handle.write(new_text)
+            changed = True
+    elif original:
+        if os.path.exists(attr_path):
+            os.remove(attr_path)
+        changed = True
+
+    if message and (enable or block_present or changed):
+        for line in message:
+            print(line)
+
 
 def install(target=None, *, include_tgui=True, include_base=True):
     repo, hooks_dir = _find_stuff(target)
@@ -128,7 +197,9 @@ def install(target=None, *, include_tgui=True, include_base=True):
         relative_path = shlex.quote(os.path.relpath(full_path, repo.workdir).replace('\\', '/'))
         repo.config[f"merge.{name}.driver"] = f'{relative_path} %P %O %A %B %L'
 
-    uninstall(target, keep=keep)
+    repo = uninstall(target, keep=keep)
+    if repo is not None:
+        update_info_attributes(repo, enable=include_tgui)
 
 
 def main(argv):
@@ -137,7 +208,10 @@ def main(argv):
     args = list(argv[1:])
 
     if '--uninstall' in args:
-        return uninstall()
+        repo = uninstall()
+        if repo is not None:
+            update_info_attributes(repo, enable=False)
+        return 0
 
     target = None
     if args:
