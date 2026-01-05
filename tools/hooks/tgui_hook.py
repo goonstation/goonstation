@@ -13,6 +13,7 @@ INTERESTING_PREFIXES = ("tgui/", "browserassets/src/tgui/")
 BUNDLE_ROOT = "browserassets/src/tgui/"
 INDEX_MASK = pygit2.GIT_STATUS_INDEX_NEW | pygit2.GIT_STATUS_INDEX_MODIFIED | pygit2.GIT_STATUS_INDEX_DELETED
 WORKDIR_MASK = pygit2.GIT_STATUS_WT_NEW | pygit2.GIT_STATUS_WT_MODIFIED | pygit2.GIT_STATUS_WT_DELETED | pygit2.GIT_STATUS_WT_RENAMED
+SKIP_AMEND_ENV = "TGUI_SKIP_MERGE_AMEND"
 
 
 def main(argv: list[str]) -> int:
@@ -47,6 +48,11 @@ def main(argv: list[str]) -> int:
 
     subprocess.run(["git", "add", "browserassets/src/tgui"], check=True)
     print(f"tgui hook ({hook}): rebuild complete; bundle staged", flush=True)
+
+    amend_status = _maybe_amend_merge(repo, hook)
+    if amend_status:
+        return amend_status
+
     return 0
 
 
@@ -138,6 +144,46 @@ def _has_merge_head(repo: pygit2.Repository) -> bool:
         return True
     except KeyError:
         return False
+
+
+def _maybe_amend_merge(repo: pygit2.Repository, hook: str) -> int:
+    if hook != "post-merge":
+        return 0
+
+    if _env_truthy(SKIP_AMEND_ENV):
+        return 0
+
+    commit = _current_commit(repo)
+    if not commit or len(commit.parents) <= 1:
+        return 0
+
+    if _staged_diff_is_empty():
+        return 0
+
+    print("tgui hook (post-merge): amending merge commit to include rebuilt bundles", flush=True)
+    result = subprocess.run(["git", "commit", "--amend", "--no-edit"], check=False)
+    if result.returncode != 0:
+        print("tgui hook (post-merge): git commit --amend failed", file=sys.stderr)
+    return result.returncode
+
+
+def _env_truthy(var: str) -> bool:
+    value = os.environ.get(var)
+    if value is None:
+        return False
+    return value.strip().lower() not in {"", "0", "false", "no"}
+
+
+def _current_commit(repo: pygit2.Repository) -> pygit2.Commit | None:
+    try:
+        return repo.head.peel(pygit2.Commit)
+    except (KeyError, ValueError):
+        return None
+
+
+def _staged_diff_is_empty() -> bool:
+    result = subprocess.run(["git", "diff", "--cached", "--quiet"], check=False)
+    return result.returncode == 0
 
 
 if __name__ == "__main__":
