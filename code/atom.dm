@@ -559,6 +559,10 @@ TYPEINFO(/atom/movable)
 
 	src.vis_locs = null // cleans up vis_contents of visual holders of this too
 
+	if (src.provides_grip)
+		for(var/turf/covered_turf as anything in src.locs)
+			covered_turf.grip_atom_count -= 1
+
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
 	. = ..()
@@ -667,7 +671,7 @@ TYPEINFO(/atom/movable)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
 		if (src.provides_grip)
-			for(var/turf/covered_turf as anything in old_locs)
+			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.grip_atom_count += 1
 
 	last_turf = isturf(src.loc) ? src.loc : null
@@ -1057,7 +1061,7 @@ TYPEINFO(/atom/movable)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
 		if (src.provides_grip)
-			for(var/turf/covered_turf as anything in oldlocs)
+			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.grip_atom_count += 1
 		for(var/atom/A in newloc)
 			if(A != src)
