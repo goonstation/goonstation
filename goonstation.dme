@@ -2080,6 +2080,7 @@
 #include "code\modules\speech\modules\speech\modifiers\plushie.dm"
 #include "code\modules\speech\modules\speech\modifiers\radio.dm"
 #include "code\modules\speech\modules\speech\modifiers\revenant.dm"
+#include "code\modules\speech\modules\speech\modifiers\shrouded.dm"
 #include "code\modules\speech\modules\speech\modifiers\test_dummy.dm"
 #include "code\modules\speech\modules\speech\modifiers\translator.dm"
 #include "code\modules\speech\modules\speech\modifiers\vending_machine.dm"

@@ -1,4 +1,33 @@
 
+(t)sun jan 04 26
+(u)JORJ949
+(p)25445
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Syndicate clowns can now find a highly illegal, portable, non-explosive version of the clown announcement computer in their uplinks for 5TC.
+(u)QuiteLiterallyAnything
+(p)25452
+(e)💅📦|C-QoL, A-Game-Objects
+(+)ABCUs can now be placed in pod cargo holds.
+(u)Kanthes
+(p)25407
+(e)🪲🔬|C-Bug, A-Science
+(+)Prevents the Food Processor from giving people ghost-limbs that couldn't interact with anything.
+(t)sat jan 03 26
+(u)glowbold
+(p)25473
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampires using Illusory Shroud will have their voices show as "Unknown"
+(u)glowbold
+(p)25470
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(*)Open-mic headsets can only pick up sound from the tile it's on.
+(+)Phone handset and mounted defibrillator cables reach roughly two tiles.
+(+)Phone handsets, microphones, and megaphones only pick up speech in your active hand.
+(u)CalliopeSoups
+(p)25456
+(e)🎨|C-Sprites
+(+)Trickster wraith's mass whisper is now base kit
+(+)Wraith's blood writing now has no cooldown
 (t)fri jan 02 26
 (u)JORJ949
 (p)25436
