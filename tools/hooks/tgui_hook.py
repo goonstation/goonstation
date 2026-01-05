@@ -161,10 +161,10 @@ def _maybe_amend_merge(repo: pygit2.Repository, hook: str) -> int:
         return 0
 
     print("tgui hook (post-merge): amending merge commit to include rebuilt bundles", flush=True)
-    result = subprocess.run(["git", "commit", "--amend", "--no-edit"], check=False)
-    if result.returncode != 0:
-        print("tgui hook (post-merge): git commit --amend failed", file=sys.stderr)
-    return result.returncode
+    result = _rewrite_merge_commit(repo, commit)
+    if result != 0:
+        print("tgui hook (post-merge): failed to amend merge commit", file=sys.stderr)
+    return result
 
 
 def _env_truthy(var: str) -> bool:
@@ -184,6 +184,47 @@ def _current_commit(repo: pygit2.Repository) -> pygit2.Commit | None:
 def _staged_diff_is_empty() -> bool:
     result = subprocess.run(["git", "diff", "--cached", "--quiet"], check=False)
     return result.returncode == 0
+
+
+def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int:
+    ref_name = _head_reference_name(repo)
+    if not ref_name:
+        return 1
+
+    index = repo.index
+    try:
+        tree_id = index.write_tree()
+    except (OSError, pygit2.GitError) as exc:
+        print(f"tgui hook (post-merge): write_tree failed ({exc})", file=sys.stderr)
+        return 1
+
+    committer = _default_committer(repo, commit)
+    parents = [parent.oid for parent in commit.parents]
+
+    try:
+        new_oid = repo.create_commit(ref_name, commit.author, committer, commit.message, tree_id, parents)
+    except (ValueError, pygit2.GitError) as exc:
+        print(f"tgui hook (post-merge): create_commit failed ({exc})", file=sys.stderr)
+        return 1
+
+    repo.index.read()
+    return 0
+
+
+def _head_reference_name(repo: pygit2.Repository) -> str | None:
+    if repo.head_is_detached:
+        return "HEAD"
+    try:
+        return repo.head.name
+    except (AttributeError, ValueError):
+        return None
+
+
+def _default_committer(repo: pygit2.Repository, commit: pygit2.Commit) -> pygit2.Signature:
+    try:
+        return repo.default_signature
+    except (KeyError, ValueError):
+        return commit.committer
 
 
 if __name__ == "__main__":
