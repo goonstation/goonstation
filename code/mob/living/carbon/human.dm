@@ -1976,7 +1976,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (length(L))
 		for (var/obj/O in L)
 			O.emp_act()
-	src.changeStatus("implants_disabled", 20 SECONDS)
+	src.changeStatus("implants_disabled", 30 SECONDS)
 	boutput(src, SPAN_ALERT("<B>BZZZT</B>"))
 
 /mob/living/carbon/human/verb/consume(mob/M as mob in oview(0))

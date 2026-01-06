@@ -1515,7 +1515,7 @@ TYPEINFO(/mob/living)
 
 	src.setStatus("defibbed", sqrt(shock_damage) SECONDS)
 	if (length(src.implant) && shock_damage >= 5)
-		src.changeStatus("implants_disabled", clamp(sqrt(shock_damage), 10, 30) SECONDS)
+		src.changeStatus("implants_disabled", clamp(shock_damage, 15, 60) SECONDS)
 
 	switch(shock_damage)
 		if (0 to 25)
