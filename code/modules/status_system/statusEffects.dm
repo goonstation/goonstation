@@ -3873,6 +3873,9 @@
 	desc = "Your implants are painfully overloaded!"
 	maxDuration = 60 SECONDS
 	icon_state = "implants_disabled"
+	unique = TRUE
+
+	var/list/disabled_implants = list()
 
 	preCheck(mob/living/M)
 		return ..() && istype(M) && length(M.implant)
@@ -3884,12 +3887,20 @@
 			var/mob/living/living_owner = src.owner
 			for (var/obj/item/implant/implant as anything in living_owner.implant)
 				implant.deactivate()
+				src.disabled_implants |= implant
+
+	onChange(optional)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				if (implant.online)
+					implant.deactivate()
+					src.disabled_implants |= implant
 
 	onRemove()
 		..()
 		src.owner.UpdateParticles(null, src.id)
-		if (isliving(src.owner))
-			var/mob/living/living_owner = src.owner
-			for (var/obj/item/implant/implant as anything in living_owner.implant)
+		for (var/obj/item/implant/implant as anything in src.disabled_implants)
+			if (!QDELETED(implant))
 				implant.activate()
 
