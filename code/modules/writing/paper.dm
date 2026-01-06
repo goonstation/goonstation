@@ -614,7 +614,9 @@
 
 /obj/item/paper_bin/mouse_drop(mob/user as mob)
 	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
-		if (!user.put_in_hand(src))
+		if(src.loc == user)
+			user.drop_item(src) // Drop because `put_in_hand(src)` will keep an invisible paper bin in offhand otherwise. I have no idea why.
+		if(!user.put_in_hand(src))
 			return ..()
 
 /obj/item/paper_bin/attack_hand(mob/user)
