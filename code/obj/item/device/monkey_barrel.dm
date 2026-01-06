@@ -9,19 +9,18 @@
 	p_class = 3
 	is_syndicate = 1
 	density = 1
-	open_inv_anywhere = TRUE
-	var/mob/living/carbon/human/npc/monkey/angry/dummy
+	open_inv_within = TRUE
+	var/mob/living/carbon/human/npc/monkey/angry/template_monkey // spawns first, copies clothing icons to spawned monkeys
 	var/monkeys_to_spawn = 5
 
 	New()
 		..()
 		var/obj/item/barrel_signaller/M = new /obj/item/barrel_signaller(src.loc)
 		new /obj/item/clothing/suit/monkey(src.loc)
-		src.dummy = new/mob/living/carbon/human/npc/monkey/angry
-		SPAWN(0)
-			src.dummy.loc = src
-			src.contents += src.dummy
-			M.my_barrel = src
+		src.template_monkey = new/mob/living/carbon/human/npc/monkey/angry(src)
+		src.contents += src.template_monkey
+		src.template_monkey.real_name = "Holo-Clothes Template"
+		M.my_barrel = src
 
 	update_icon()
 
@@ -30,24 +29,27 @@
 	verb/Holographic_Clothing()
 		set src in oview(1)
 		set category = "Local"
-		if (ishuman(usr) && src.dummy)
+		if (ishuman(usr) && src.template_monkey)
 			var/mob/living/carbon/human/user = usr
-			src.dummy.show_inv(user)
+			src.template_monkey.show_inv(user)
 
 	proc/monkey_go()
 		var/turf/targetTurf = get_turf(src)
 		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
 		poof.setup(targetTurf)
-		for (var/i = src.monkeys_to_spawn,i>=0,i--)
-			var/mob/living/carbon/human/npc/monkey/angry/barrel/monke = new /mob/living/carbon/human/npc/monkey/angry/barrel (targetTurf)
-			monke.copy_clothes(src.dummy)
-		src.drop_contents()
-		qdel(src)
+		for (var/i in 1 to src.monkeys_to_spawn)
+			var/mob/living/carbon/human/npc/monkey/angry/barrel/monke = new (targetTurf)
+			monke.copy_clothes(src.template_monkey)
 
-	proc/drop_contents()
-		for (var/atom/movable/thing in src.contents)
+		for (var/atom/movable/thing in src.contents)// remove anything inside when deleting
+			if (src.template_monkey == thing)
+				var/mob/living/carbon/human/monke = thing
+				monke.unequip_all(FALSE, src.loc) // get your clothes back!
+				qdel(thing)
+				continue
 			src.contents -= thing
 			thing.set_loc(get_turf(src))
+		qdel(src)
 
 /obj/item/barrel_signaller
 	name = "mysterious signaller"
