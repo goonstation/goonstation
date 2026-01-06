@@ -162,7 +162,7 @@
 	src.update_z_level_parallax_layers(null, null, src.outermost_movable.z)
 
 /datum/parallax_controller/proc/unregister_signals(client/C, mob/M)
-	if (!M.GetComponent(/datum/component/complexsignal/outermost_movable))
+	if (!M?.GetComponent(/datum/component/complexsignal/outermost_movable))
 		return
 
 	src.UnregisterSignal(M, XSIG_MOVABLE_TURF_CHANGED)

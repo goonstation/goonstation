@@ -69,7 +69,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	proc/assembly_overlay_addition(var/manipulated_coil, var/obj/item/assembly/parent_assembly, overlay_offset)
 		if(parent_assembly.special_construction_identifier == "canbomb")
-			parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "cable_coil_canbomb")
+			var/image/temp_image = image('icons/obj/items/assemblies.dmi', parent_assembly, "cable_coil_canbomb")
+			parent_assembly.overlays += temp_image
 
 
 	proc/assembly_check(var/manipulated_coil, var/obj/item/second_part, var/mob/user)
@@ -101,6 +102,25 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, SPAN_NOTICE("You finish coiling cable."))
+
+	attack_hand(mob/user)
+		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+			var/splitnum = round(input("How many cables do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
+				return
+			splitnum = round(clamp(splitnum, 0, src.amount))
+			if(amount == 0)
+				return
+			var/obj/item/cable_coil/new_stack = split_stack(splitnum)
+			if (!istype(new_stack))
+				boutput(user, SPAN_ALERT("Invalid entry, try again."))
+				return
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+			boutput(user, SPAN_NOTICE("You take [splitnum] cables from the stack, leaving [src.amount] cables behind."))
+			tgui_process.update_uis(src)
+		else
+			..(user)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -274,21 +294,11 @@ obj/item/cable_coil/dropped(mob/user)
 	if (conductor)
 		. += "Its conductive layer is made out of [conductor]."
 
-/obj/item/cable_coil/attackby(obj/item/W, mob/user)
-	if (issnippingtool(W) && src.amount > 1)
-		var/cut_amount = round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num)
-		if (!in_interact_range(src, user))
-			boutput(user, "You're too far away from the cable that you're trying to cut from!")
-			return
-		var/obj/item/cable_coil/cable = src.split_stack(cut_amount)
-		if (istype(cable))
-			user.put_in_hand_or_drop(cable) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
-			boutput(user, "You cut a piece off the [base_name].")
-		return
-
+obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (check_valid_stack(W))
 		stack_item(W)
 		if(!user.is_in_hands(src))
+			user.u_equip(src)
 			user.put_in_hand(src)
 		boutput(user, "You join the cable coils together.")
 

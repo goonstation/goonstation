@@ -1,3 +1,6 @@
+///Assoc list of ckeys to player datums
+var/global/list/players = list()
+
 /// for client variables and stuff that has to persist between connections
 /datum/player
 	/// the ID of the player as provided by the Goonhub API
@@ -60,6 +63,8 @@
 	var/antag_tokens = null
 	/// Newbee Tutorial
 	var/datum/tutorial_base/regional/newbee/tutorial = null
+	/// A list of procs to call on the client on next login, used for when you need to guarantee clearing a clientside effect (ie textmode)
+	var/list/login_queue = null
 
 	/// starts setup, adds by_type list entry for this datum
 	New(key)
@@ -67,6 +72,7 @@
 		START_TRACKING
 		src.key = key
 		src.ckey = ckey(key)
+		global.players[src.ckey] = src
 		src.tag = "player-[src.ckey]"
 		src.last_death_time = world.timeofday
 		src.cloudSaves = new /datum/cloudSaves(src)
@@ -74,21 +80,43 @@
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
 		STOP_TRACKING
+		global.players -= src.ckey
 		if (src.client)
 			src.client.player = null
 			src.client = null
 		..()
 
+	///Attempt to guarantee a player ID is loaded from the API, should only be relevant for offline players since auth handles it otherwise
+	proc/fetch_player_id()
+		if (src.id)
+			return
+		//helo yes this is mild API abuse but there isn't a dedicated "get player ID" route so I'm piggybacking on the comp ID one for now
+		var/datum/apiModel/PlayerCompIdsResource/playerCompIds
+		try
+			var/datum/apiRoute/players/compids/get/getPlayerCompIds = new
+			getPlayerCompIds.queryParams = list("ckey" = src.ckey)
+			playerCompIds = apiHandler.queryAPI(getPlayerCompIds)
+
+		catch
+			CRASH("Failed to fetch player ID for ckey [src.ckey]")
+		src.id = playerCompIds.latest_connection.player_id
+
 	/// stuff that should only be done when the client is known to be valid
 	proc/on_client_authenticated()
-		if (src.ckey in mentors) src.mentor = TRUE
-		if (!src.cached_round_stats) src.cache_round_stats()
-		SPAWN(0) src.cloudSaves.fetch()
+		if (src.ckey in mentors)
+			src.mentor = TRUE
+		if (!src.cached_round_stats)
+			src.cache_round_stats()
+		for (var/proc_name in src.login_queue)
+			call(src.client, proc_name)()
+		src.login_queue = null
+		SPAWN(0)
+			src.cloudSaves.fetch()
 
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()
 		if (!roundId || !src.client) return
-		var/datum/apiModel/Tracked/PlayerResource/playerResponse
+		var/datum/apiModel/Tracked/Player/playerResponse
 		try
 			var/datum/apiRoute/players/login/playerLogin = new
 			playerLogin.buildBody(
@@ -334,8 +362,10 @@
 
 		var/datum/apiRoute/players/medals/get/getMedals = new
 		var/list/filters = list()
-		if (src.id) filters["player_id"] = src.id
-		else filters["ckey"] = src.ckey
+		if (src.id)
+			filters["player_id"] = src.id
+		else
+			filters["ckey"] = src.ckey
 		getMedals.queryParams = list(
 			"filters" = filters,
 			"sort_by" = "medal_title",
@@ -357,15 +387,17 @@
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
 	RETURN_TYPE(/datum/player)
-	var/datum/player/player = locate("player-[ckey(key)]")
-	return player
+	return global.players[ckey(key)]
 
-/// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections)
-/proc/make_player(key)
+/// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections).
+/// optional client arg for if you want to associate a client for 'real' players (vs fake clientless players for discord commands).
+/proc/make_player(key, client = null)
 	RETURN_TYPE(/datum/player)
-	var/datum/player/player = find_player(key) // just double check so that we don't get any dupes
+	var/datum/player/player = find_player(key)
 	if (!player)
 		player = new(key)
+	if (!isnull(client))
+		player.client = client
 	return player
 
 /proc/record_player_playtime()

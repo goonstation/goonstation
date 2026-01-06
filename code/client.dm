@@ -226,8 +226,7 @@
 	global.pre_auth_clients += src
 
 	src.sync_dark_mode()
-	src.player = make_player(src.key)
-	src.player.client = src
+	src.player = make_player(src.key, client=src)
 
 	src.loadResources()
 	src.initSizeHelpers()
@@ -253,7 +252,7 @@
 	src.send_lobby_text()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
-	src.player = make_player(src.key)
+	src.player = make_player(src.key, client=src)
 	src.player.id = src.client_auth_intent.player_id || src.player.id
 	if (!src.client_auth_intent.can_skip_player_login) src.player.record_login()
 	src.player.on_client_authenticated()
@@ -335,7 +334,7 @@
 			Z_LOG_DEBUG("Client/New", "[src.ckey] - new player crap")
 
 			if (!loaded_savefile)
-				#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+				#ifdef LIVE_SERVER
 				preferences.ShowChoices(src.mob)
 				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
 				boutput(src, SPAN_ALERT("Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!"))
@@ -386,7 +385,7 @@
 
 		#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
 		src.verbs += /client/proc/cmd_rp_rules
-		if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
+		if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs") && global.tgui_process)
 			src.cmd_rp_rules()
 		#endif
 		// End stuff reliant on cloudsaves
@@ -646,6 +645,9 @@
 
 /client/proc/can_see_mentor_pms()
 	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms
+
+/client/proc/can_play_whitelisted_roles()
+	return NT.Find(src.ckey) || (IS_IT_FRIDAY && src.is_mentor()) || isadmin(src)
 
 var/global/curr_year = null
 var/global/curr_month = null
@@ -1557,3 +1559,6 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 /// Flashes the window in the Windows titlebar
 /client/proc/flash_window(times = -1)
 	winset(src, "mainwindow", "flash=[times]")
+
+/client/proc/set_text_mode(value = FALSE)
+	winset(src, "mapwindow.map", "text-mode=[value ? "true" : "false"]")

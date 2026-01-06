@@ -16,6 +16,8 @@
 	var/tgui_title
 	/// The theme that the tgui window should use. For a list of all themes, see `tgui/packages/tgui/styles/themes`.
 	var/tgui_theme
+	/// The interface that the tgui window should use.
+	var/tgui_interface = "Minimap"
 
 /atom/movable/minimap_ui_handler/New(parent, control_id = "minimap_ui_\ref[src]", obj/minimap, tgui_title, tgui_theme)
 	. = ..()
@@ -31,10 +33,7 @@
 	src.handler = new
 	src.handler.plane = PLANE_BLACKNESS
 	src.handler.mouse_opacity = 0
-	src.handler.set_position(src.minimap_id,1,1)
-
 	src.minimap = minimap
-	src.minimap.screen_loc = "[src.minimap_id]:1,1"
 	src.handler.vis_contents += src.minimap
 
 /atom/movable/minimap_ui_handler/disposing()
@@ -51,8 +50,12 @@
 /atom/movable/minimap_ui_handler/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "Minimap")
+		ui = new(user, src, src.tgui_interface)
 		ui.open()
+		RegisterSignal(ui.window, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(set_screen_loc))
+		//possible fix for scaling issue
+		src.handler.screen_loc = null
+		src.minimap.screen_loc = null
 
 /atom/movable/minimap_ui_handler/ui_static_data(mob/user)
 	. = list(
@@ -67,6 +70,12 @@
 /atom/movable/minimap_ui_handler/ui_close(mob/user)
 	src.remove_client(user?.client)
 	. = ..()
+
+// set the map and click handler positions only after window is ready to avoid the byondui scaling race condition bug
+/atom/movable/minimap_ui_handler/proc/set_screen_loc(datum/tgui_window/window, client/C)
+	src.handler.set_position(src.minimap_id,1,1)
+	src.minimap.screen_loc = "[src.minimap_id]:1,1"
+	UnregisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE)
 
 /// Adds a subscribed client.
 /atom/movable/minimap_ui_handler/proc/add_client(client/viewer)
@@ -88,6 +97,7 @@
 
 
 /atom/movable/minimap_ui_handler/minimap_controller
+	tgui_interface = "MinimapController"
 	/// The minimap controller object, containing data on selected coordinates and the controlled minimap.
 	var/obj/minimap_controller/minimap_controller
 	/// An associative list of data for each minimap marker, so that the UI may read it.
@@ -98,12 +108,6 @@
 /atom/movable/minimap_ui_handler/minimap_controller/New(parent, control_id = "minimap_ui_\ref[src]", obj/minimap_controller/minimap_controller, tgui_title, tgui_theme)
 	. = ..()
 	src.minimap_controller = minimap_controller
-
-/atom/movable/minimap_ui_handler/minimap_controller/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "MinimapController")
-		ui.open()
 
 /atom/movable/minimap_ui_handler/minimap_controller/ui_static_data(mob/user)
 	. = ..()
@@ -229,20 +233,10 @@
 	return TRUE
 
 /atom/movable/minimap_ui_handler/minimap_controller/general_alert
-
-/atom/movable/minimap_ui_handler/minimap_controller/general_alert/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "GeneralAlert")
-		ui.open()
+	tgui_interface = "GeneralAlert"
 
 /atom/movable/minimap_ui_handler/minimap_controller/camera_viewer
-
-/atom/movable/minimap_ui_handler/minimap_controller/camera_viewer/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "CameraViewer")
-		ui.open()
+	tgui_interface = "CameraViewer"
 
 /atom/movable/minimap_ui_handler/minimap_controller/camera_viewer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

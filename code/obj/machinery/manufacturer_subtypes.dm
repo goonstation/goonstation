@@ -77,6 +77,7 @@
 		/datum/manufacture/harmonica,
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
+		/datum/manufacture/bullet_9mm_frangible,
 		/datum/manufacture/bullet_smoke,
 		/datum/manufacture/stapler,
 		/datum/manufacture/bagpipe,
@@ -217,6 +218,7 @@
 		/datum/manufacture/glasses,
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
+		/datum/manufacture/wheelchair,
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
@@ -267,9 +269,10 @@
 		/datum/manufacture/flashlight,
 		/datum/manufacture/lantern,
 		/datum/manufacture/gps,
-		/datum/manufacture/crowbar,
+		/datum/manufacture/crowbar/purple,
+		/datum/manufacture/wrench/purple,
+		/datum/manufacture/welder/purple,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
@@ -278,6 +281,8 @@
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
+		/datum/manufacture/places_pipes/science,
+		/datum/manufacture/RCDammo,
 		/datum/manufacture/condenser,
 		/datum/manufacture/fractionalcondenser,
 		/datum/manufacture/dropper_funnel,
@@ -458,10 +463,12 @@
 		/datum/manufacture/backpack_red,
 		/datum/manufacture/backpack_green,
 		/datum/manufacture/backpack_blue,
+		/datum/manufacture/backpack_brown,
 		/datum/manufacture/satchel,
 		/datum/manufacture/satchel_red,
 		/datum/manufacture/satchel_green,
 		/datum/manufacture/satchel_blue,
+		/datum/manufacture/satchel_brown,
 		/datum/manufacture/handkerchief)
 
 	hidden = list(/datum/manufacture/breathmask,
@@ -506,8 +513,17 @@
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
-	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter)
-	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
+	available = list(/datum/manufacture/id_card,
+		/datum/manufacture/implant_access,
+		/datum/manufacture/implanter,
+		/datum/manufacture/radio_upgrade/engineering,
+		/datum/manufacture/radio_upgrade/research,
+		/datum/manufacture/radio_upgrade/medical,
+		/datum/manufacture/radio_upgrade/civilian)
+	hidden = list(/datum/manufacture/id_card_gold,
+		/datum/manufacture/implant_access_infinite,
+		/datum/manufacture/radio_upgrade/command,
+		/datum/manufacture/radio_upgrade/security)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 //and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
@@ -524,6 +540,10 @@
 	available = list(/datum/manufacture/id_card,
 		/datum/manufacture/implant_access,
 		/datum/manufacture/implanter,
+		/datum/manufacture/radio_upgrade/engineering,
+		/datum/manufacture/radio_upgrade/research,
+		/datum/manufacture/radio_upgrade/medical,
+		/datum/manufacture/radio_upgrade/civilian,
 		/datum/manufacture/shoes,
 		/datum/manufacture/shoes_brown,
 		/datum/manufacture/shoes_white,
@@ -566,6 +586,8 @@
 
 	hidden = list(/datum/manufacture/id_card_gold,
 		/datum/manufacture/implant_access_infinite,
+		/datum/manufacture/radio_upgrade/command,
+		/datum/manufacture/radio_upgrade/security,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/tricolor,
@@ -579,14 +601,24 @@
 	free_resources = list(/obj/item/material_piece/steel = 1,
 		/obj/item/material_piece/organic/wood = 1)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/crate,
-		/datum/manufacture/packingcrate,
-		/datum/manufacture/wooden,
-		/datum/manufacture/medical,
-		/datum/manufacture/biohazard,
-		/datum/manufacture/freezer)
+	available = list(
+		/datum/manufacture/crate,
+		/datum/manufacture/crate/wooden,
+		/datum/manufacture/crate/wooden/packing,
+		/datum/manufacture/crate/medical,
+		/datum/manufacture/crate/biohazard,
+		/datum/manufacture/crate/freezer,
+		/datum/manufacture/crate/secure,
+		/datum/manufacture/crate/secure/secure_transfer,
+		/datum/manufacture/crate/secure/confiscated_items,
+		/datum/manufacture/crate/secure/armory,
+		/datum/manufacture/crate/secure/hazard,
+		/datum/manufacture/crate/secure/engineering,
+		/datum/manufacture/crate/secure/medical,
+		/datum/manufacture/crate/secure/hydroponics,
+		)
 
-	hidden = list(/datum/manufacture/classcrate)
+	hidden = list(/datum/manufacture/crate/class, /datum/manufacture/crate/secure/syndicate)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"
@@ -653,6 +685,7 @@
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
 		/datum/manufacture/RCD,
+		/datum/manufacture/places_pipes,
 		/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,

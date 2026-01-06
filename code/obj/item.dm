@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/wear_state = null
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
+	var/image/worn_material_texture_image = null
 	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -1860,6 +1861,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
 	return
 
+///This will be called when the item is build into a /obj/item/assembly on examine()
+/obj/item/proc/assembly_get_part_examine_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	return
+
 ///This will be called when the item is build into a /obj/item/assembly on get_admin_log_message(). Use this for additional information for logging.
 /obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
 	return
@@ -1869,3 +1874,16 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/should_suppress_attack(var/object, mob/user, params)
 	return flags & SUPPRESSATTACK
 
+/obj/item/proc/getTexturedWornImage(var/texture, var/blendMode = BLEND_MULTIPLY)
+	if (!src.wear_image || !texture)
+		return null
+	var/icon/mask = GetTexturedIcon(icon(src.wear_image.icon, src.wear_image.icon_state), texture)
+	var/image/finished = image(mask,"")
+	finished.blend_mode = blendMode
+	return finished
+
+/obj/item/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
+	..()
+	if(key != "material")
+		return
+	src.worn_material_texture_image = src.getTexturedWornImage(texture, blendMode)

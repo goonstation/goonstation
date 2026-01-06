@@ -19,12 +19,11 @@
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
 	icon_state = "space"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	see_face = FALSE
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
-	seal_hair = 1
 
 	setupProperties()
 		..()
@@ -46,13 +45,12 @@
 		icon_state = "space-fish"
 		desc = "You're about 90% sure this isn't just a regular fishbowl."
 		item_state = "s_helmet"
-		seal_hair = 0
+		c_flags = parent_type::c_flags & ~COVERSHAIR
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
@@ -66,6 +64,10 @@
 		if(ismob(src.loc))
 			light_dir.light_target = src.loc
 		light_dir.update(0)
+
+	setupProperties()
+		..()
+		setProperty("mining_alerts")
 
 	attack_self(mob/user)
 		src.flashlight_toggle(user, activated_inhand = TRUE)
@@ -271,12 +273,10 @@
 /obj/item/clothing/head/helmet/space/light // Similar stats to normal space helmets, but way less armor or slowdown
 	name = "light space helmet"
 	desc = "A lightweight space helmet."
-	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	icon_state = "spacelight-civ"
 	see_face = FALSE
 	item_state = "s_helmet"
 	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
-	seal_hair = 1
 	acid_survival_time = 5 MINUTES
 
 	setupProperties()
@@ -296,6 +296,18 @@
 		desc = "A lightweight engineering space helmet. It's lacking any major padding or reinforcement."
 		icon_state = "spacelight-e"
 		see_face = TRUE
+
+	chiefengineer
+		name = "chief engineer's light space helmet"
+		desc = "A lightweight engineering space helmet that has been modified to protect the wearer from environmental hazards."
+		icon_state = "spacelight-ce"
+		see_face = TRUE
+
+		setupProperties()
+			..()
+			setProperty("heatprot", 15)
+			setProperty("radprot", 15)
+			setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
@@ -339,8 +351,7 @@
 			name = "commander's cap"
 			icon_state = "syndie_commander"
 			desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
-			seal_hair = 0
-			see_face = TRUE
+			c_flags = parent_type::c_flags & ~COVERSHAIR
 
 		infiltrator
 			icon_state = "syndie_specialist-infiltrator"
@@ -622,8 +633,7 @@ obj/item/clothing/head/helmet/hardhat/security/hos
 	name = "elite helmet"
 	icon_state = "helmet-sec-elite"
 	desc = "Better protection from getting your head bashed in."
-	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	seal_hair = 1
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	item_state = "helmet-sec-elite"
 
 	setupProperties()
@@ -940,6 +950,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
 		setProperty("space_movespeed", 0.2)
+		setProperty("mining_alerts")
 
 	attack_self(var/mob/user)
 		if(src.has_visor)
@@ -1103,7 +1114,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	item_state = "buckethat"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	block_vision = 1
-	seal_hair = 1
+	c_flags = parent_type::c_flags | COVERSHAIR
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
@@ -1147,10 +1158,9 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 /obj/item/clothing/head/helmet/firefighter
 	name = "firefighter helm"
 	desc = "For fighting fires."
-	c_flags = COVERSEYES | BLOCKCHOKE
+	c_flags = COVERSEYES | BLOCKCHOKE | COVERSHAIR
 	icon_state = "firefighter"
 	item_state = "firefighter"
-	seal_hair = 1
 
 	setupProperties()
 		..()

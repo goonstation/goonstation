@@ -1,7 +1,7 @@
 var/list/admin_verbs = list(
 
 
-	1 = list(
+	list(
 		// LEVEL_BABBY, goat fart, ayn rand's armpit
 		/client/proc/cmd_admin_say,
 		/client/proc/cmd_admin_gib_self,
@@ -9,7 +9,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	2 = list(
+	list(
 		// LEVEL_MOD, moderator
 		/client/proc/admin_changes,
 		/client/proc/admin_play,
@@ -78,7 +78,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	3 = list(
+	list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
 		/datum/admins/proc/pixelexplosion,
@@ -211,7 +211,7 @@ var/list/admin_verbs = list(
 		/client/proc/deelectrify_all_airlocks
 		),
 
-	4 = list(
+	list(
 		// LEVEL_IA, admin
 		/*
 		/client/proc/noclip,
@@ -228,7 +228,7 @@ var/list/admin_verbs = list(
 		*/
 		),
 
-	5 = list(
+	list(
 		// LEVEL_PA, primary administrator
 		/datum/admins/proc/togglesuicide,
 		/datum/admins/proc/pixelexplosion,
@@ -270,7 +270,6 @@ var/list/admin_verbs = list(
 		/client/proc/edit_module,
 		// /client/proc/modify_organs,
 		/client/proc/toggle_atom_verbs,
-		/client/proc/toggle_camera_network_reciprocity,
 		///client/proc/generate_poster,
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
@@ -325,7 +324,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	6 = list(
+	list(
 		// LEVEL_ADMIN, Administrator
 		/datum/admins/proc/togglesoundwaiting,
 		/client/proc/debug_variables,
@@ -387,6 +386,9 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,
 		/client/proc/cmd_paraviewer,
+		/client/proc/cmd_ambient_viewer,
+		/client/proc/cmd_animviewer,
+
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
@@ -437,10 +439,12 @@ var/list/admin_verbs = list(
 		/client/proc/test_spacebee_command,
 		/client/proc/delete_landmarks,
 		/client/proc/admin_minimap,
+		/client/proc/transfer_abcu_blueprints,
 		),
 
-	7 = list(
+	list(
 		// LEVEL_CODER, coder
+		/client/proc/open_colorblind_test,
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/debug_global_variable,
@@ -462,7 +466,6 @@ var/list/admin_verbs = list(
 		/client/proc/debug_reagents_cache,
 		///client/proc/debug_check_possible_reactions,
 		/client/proc/set_admin_level,
-		/client/proc/show_camera_paths,
 		///client/proc/dbg_itemspecial,
 		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
@@ -480,8 +483,6 @@ var/list/admin_verbs = list(
 		/client/proc/clear_string_cache,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
-		/client/proc/rebuild_flow_networks,
-		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
 		/client/proc/toggle_server_rebuild,
 		/client/proc/cmd_modify_respawn_variables,
@@ -515,7 +516,7 @@ var/list/admin_verbs = list(
 #endif
 		),
 
-	8 = list(
+	list(
 		// LEVEL_HOST, host
 		/datum/admins/proc/toggle_soundpref_override
 		),
@@ -1494,7 +1495,7 @@ var/list/fun_images = list()
 		if(!istype(L) || isdead(L))
 			continue
 		var/obj/Pet = new pet_path(get_turf(L))
-		Pet.name = "[L]'s pet [Pet.name]"
+		Pet.name = "[L]’s pet [Pet.name]"
 
 		//Pets should probably not attack their owner
 		if (istype(Pet, /obj/critter))
@@ -1568,7 +1569,7 @@ var/list/fun_images = list()
 		"}
 		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516)
+		if (src.byond_version >= 516 && global.tgui_process)
 			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
 		else
 			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
@@ -2154,6 +2155,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.addreagents(A)
 		if("Check Reagents")
 			C.cmd_admin_check_reagents(A)
+		if ("Adjust Addictions")
+			C.cmd_change_addiction(A)
 		if("View Variables")
 			C.debug_variables(A)
 		if("View Fingerprints")
@@ -2588,3 +2591,22 @@ proc/alert_all_ghosts(atom/target, message)
 	for (var/turf/landmark in global.landmarks[choice])
 		boutput(src, "Deleting landmark at [log_loc(landmark)]")
 	global.landmarks[choice] = list()
+
+/client/proc/transfer_abcu_blueprints()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Transfer ABCU blueprints"
+	set desc = "Transfer "
+	ADMIN_ONLY
+	var/ckey_from = input(src, "Ckey to transfer from") as text
+	var/ckey_to = input(src, "Ckey to transfer to") as text
+	ckey_from = ckey(ckey_from)
+	ckey_to = ckey(ckey_to)
+	if (!length(ckey_from) || !length(ckey_to))
+		return
+	var/list/bplist = flist("data/blueprints/[ckey_from]/")
+	if (!length(bplist))
+		boutput(src, SPAN_ALERT("No blueprints found for ckey [ckey_from]"))
+		return
+	for (var/filename in bplist)
+		boutput(src, "Copying blueprint [filename] from [ckey_from] to [ckey_to]...")
+		fcopy("data/blueprints/[ckey_from]/[filename]", "data/blueprints/[ckey_to]/[filename]")

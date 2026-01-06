@@ -706,6 +706,16 @@
 		max_temperature = T0C + 100
 		mix_phrase = "The powder dissolves, turning the solution milky."
 
+	barbecue_sauce
+		name = "Barbecue Sauce"
+		id = "barbecue_sauce"
+		required_reagents = list("capsaicin" = 1, "lemonade" = 1, "pepper" = 1, "ketchup" = 1, "grease" = 1, "mustard" = 1)
+		result = "barbecue_sauce"
+		result_amount = 7
+		instant = 0
+		min_temperature = T0C + 50
+		mix_phrase = "The flavor ions attempt to pass through the transitory BBQ stage, but fail. Seems your sauce might be missing something that could make it even more delicious!"
+
 	powder_milk
 		name = "Milk powder"
 		id = "milk_powder"
@@ -5492,3 +5502,12 @@
 		mix_phrase = "The mixture emits a sudden whine of static and forms into swirling, many faceted shapes that hurt to look at."
 		result_amount = 2
 		mix_sound = 'sound/effects/radio_sweep1.ogg'
+
+	explodingheadjuice
+		name = "Juice That Makes Your Head Explode"
+		id = "explodingheadjuice"
+		result = "explodingheadjuice"
+		required_reagents = list("blackpowder" = 1, "hard_punch" = 1, "juice_raspberry" = 1, "prions" = 1, "sonicpowder" = 1)
+		mix_phrase = "The mixture coalesces into a dark red liquid."
+		result_amount = 5
+

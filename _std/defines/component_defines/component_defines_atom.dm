@@ -171,10 +171,15 @@
 	#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
 	/// When the item in hand is twirl emoted and spun in hand. (user, item)
 	#define COMSIG_ITEM_TWIRLED "itm_twirled"
+	/// After an item has been placed into another item (backpack, satchel, toolbox, etc)
+	#define COMSIG_ITEM_STORED "itm_stored"
 	/// When an item reacting to being seen in a storage or dumped out of it (e.g. mousetraps)
 	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
 	/// Send out to every item directly in and on the person on no-suicide-death
 	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
+	/// After an item is altered by being removed and replaced with another item, sent shortly before being removed. The original is not always
+	/// deleted but instead treated as if it were a part of the new item, see assemblies. (item or list of items produced by conversion, user)
+	#define COMSIG_ITEM_CONVERTED "itm_converted"
 
 	// ---- bomb assembly signals ----
 
@@ -211,6 +216,10 @@
 	#define COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME "assembly_set_trigger_time"
 	/// Will be send to the assembly if one of its components gets disposed
 	#define COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL "assembly_on_part_disposal"
+	/// Will be send to the attacking_component of the assembly when it is about to be used. If it returns TRUE, the attack proc will prevent the attack entirely
+	#define COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE "assembly_on_attack_override"
+	/// Will be send to the attacking_component of the assembly when it is being used. If it returns TRUE, the attack proc will not call the attack parent of the assembly
+	#define COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE "assembly_do_attack_override"
 
 	// ---- implant signals ----
 

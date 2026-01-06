@@ -148,6 +148,8 @@
 	icon_state = "trench-0"
 	pass_unstable = TRUE
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_TRENCH
+	// Trench prying is rather buggy and unsupported by their current code.
+	pryable = FALSE
 
 	var/old_type
 
@@ -300,13 +302,8 @@
 			return // station areas do not get ambient effects
 		if(global.station_repair.ambient_light)
 			src.AddOverlays(global.station_repair.ambient_light, "ambient")
-		if(global.station_repair.ambient_obj)
-			src.vis_contents |= global.station_repair.ambient_obj
-		if(global.station_repair.weather_img)
-			if(islist(global.station_repair.weather_img))
-				src.AddOverlays(pick(global.station_repair.weather_img), "weather")
-			else
-				src.AddOverlays(global.station_repair.weather_img, "weather")
+		if(global.station_repair.weather_imgs)
+			src.AddOverlays(pick(global.station_repair.weather_imgs), "weather")
 		if(global.station_repair.weather_effect)
 			var/obj/effects/E = locate(global.station_repair.weather_effect) in src
 			if(!E)

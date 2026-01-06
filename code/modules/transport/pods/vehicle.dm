@@ -232,11 +232,13 @@
 		part.deactivate(give_message)
 		part.ship_uninstall()
 		part.ship = null
-		part.set_loc(get_turf(src))
-		if(user)
-			user.put_in_hand_or_drop(part)
 		src.installed_parts[slot] = null
-		return part
+
+		if (!QDELETED(part))
+			part.set_loc(get_turf(src))
+			if(user)
+				user.put_in_hand_or_drop(part)
+			return part
 
 	/// Don't know which slot a part is in? Use this.
 	proc/find_part_slot(var/obj/item/shipcomponent/part)
@@ -750,9 +752,7 @@
 		if (movement_controller)
 			movement_controller.dispose()
 
-		myhud.detach_all_clients()
-		myhud.master = null
-		myhud = null
+		QDEL_NULL(src.myhud)
 
 		if (pilot)
 			pilot = null
@@ -945,7 +945,7 @@
 	if (ejectee.client)
 		ejectee.detach_hud(myhud)
 
-	ejectee.override_movement_controller = null
+	ejectee.remove_movement_controller(src.movement_controller)
 
 	src.passengers--
 
@@ -1060,7 +1060,7 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
-	M.override_movement_controller = src.movement_controller
+	M.add_movement_controller(src.movement_controller)
 	M.reset_keymap()
 	M.recheck_keys()
 	if(!src.pilot && (!ismobcritter(boarder) || (isadmin(boarder) && !M.client.player_mode)))

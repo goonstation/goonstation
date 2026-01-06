@@ -222,6 +222,7 @@ To remove:
 #define PROP_MOB_THERMALVISION(x) x("thermalvision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
 #define PROP_MOB_THERMALVISION_MK2(x) x("thermalvisionmk2", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT) // regular thermal sight + see mobs through walls
 #define PROP_MOB_SPECTRO(x) x("spectrovision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_MOB_PHYTOVISION(x) x("phytovision", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
 #define PROP_MOB_EXAMINE_ALL_NAMES(x) x("examine_all", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_EXAMINE_HEALTH(x) x("healthvison", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_EXAMINE_HEALTH_SYNDICATE(x) x("healthvison_syndicate", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) // doesn't work without PROP_MOB_EXAMINE_HEALTH; TODO rename this to further reduce confusion
@@ -297,6 +298,7 @@ To remove:
 #define PROP_MOB_NO_BLOOD_REGEN(x) x("no_blood_regen", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_SPACE_DAMAGE_IMMUNE(x) x("space_damage_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_NOEXAMINE(x) x("no_examine", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_MINING_ALERTS(x) x("mining_alerts", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 #define PROP_HUMAN_DROP_BRAIN_ON_GIB(x) x("drop_brain_on_gib", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
@@ -322,7 +324,7 @@ To remove:
 #define PROP_ATOM_TELEPORT_JAMMER(x) x("teleport_jammer", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM, PROP_UPDATE_TELEBLOCK_CAT)
 #define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
-#define PROP_ATOM_FLOTSAM(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_FLOTSAM(x) x("flotsam", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 /// Thing will redirect clicks to a fluid on its tile when clicked by a relevant item (beaker mop etc)
 #define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 ///for tracking if a borg/cyborg frame was a roundstart one, for stats purposes
@@ -355,6 +357,9 @@ To remove:
 
 // sliiiiiiiightly faster if you don't care about the value
 #define HAS_ATOM_PROPERTY(target, property) (target.atom_properties?[GET_PROP_NAME(property)] ? TRUE : FALSE)
+
+// use this to check if an atom got a property from a specific source
+#define HAS_ATOM_PROPERTY_FROM_SOURCE(target, property, source) (target.atom_properties?[GET_PROP_NAME(property)] ? (source in target.atom_properties[GET_PROP_NAME(property)][ATOM_PROPERTY_SOURCES_LIST]) : FALSE)
 
 
 #define APPLY_ATOM_PROPERTY_MAX(target, property, do_update, update_macro, source, value) \

@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		if (M.amount < 1)
 			user.drop_item()
 			qdel(M)
-
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitem, user)
 		qdel(src)
 
 	proc/can_reinforce(var/obj/item/sheet/M, var/mob/user, var/need_reinforced)
@@ -302,7 +302,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		if (M.amount < 1)
 			user.drop_item()
 			qdel(M)
-
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitem, user)
 		qdel(src)
 
 /obj/item/parts/robot_parts/head/standard
@@ -506,6 +506,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 				boutput(user, SPAN_NOTICE("You remove the internal support structures of the [src]. It's structural integrity is ruined, but you could squeeze into it now."))
 				user.u_equip(src)
 				user.put_in_hand_or_drop(R)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, R, user)
 				qdel(src)
 		else
 			..()
@@ -835,23 +836,23 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 			var/obj/item/skull/Skull = W
 			var/obj/machinery/bot/skullbot/B
 
-			if (Skull.icon_state == "skull_crystal" || istype(Skull, /obj/item/skull/crystal))
-				B = new /obj/machinery/bot/skullbot/crystal(get_turf(user))
+			if (Skull.icon_state == "skull_omnitraitor" || istype(Skull, /obj/item/skull/omnitraitor))
+				B = new /obj/machinery/bot/skullbot/omnitraitor(get_turf(user))
 
-			else if (Skull.icon_state == "skullP" || istype(Skull, /obj/item/skull/strange))
-				B = new /obj/machinery/bot/skullbot/strange(get_turf(user))
+			else if (Skull.icon_state == "skull_hunter" || istype(Skull, /obj/item/skull/hunter))
+				B = new /obj/machinery/bot/skullbot/hunter(get_turf(user))
 
-			else if (Skull.icon_state == "skull_strange" || istype(Skull, /obj/item/skull/peculiar))
-				B = new /obj/machinery/bot/skullbot/peculiar(get_turf(user))
+			else if (Skull.icon_state == "skull_wizard" || istype(Skull, /obj/item/skull/wizard))
+				B = new /obj/machinery/bot/skullbot/wizard(get_turf(user))
 
-			else if (Skull.icon_state == "skullA" || istype(Skull, /obj/item/skull/odd))
-				B = new /obj/machinery/bot/skullbot/odd(get_turf(user))
+			else if (Skull.icon_state == "skull_changeling" || istype(Skull, /obj/item/skull/changeling))
+				B = new /obj/machinery/bot/skullbot/changeling(get_turf(user))
 
-			else if (Skull.icon_state == "skull_noface" || istype(Skull, /obj/item/skull/noface))
-				B = new /obj/machinery/bot/skullbot/faceless(get_turf(user))
+			else if (Skull.icon_state == "skull_cluwne" || istype(Skull, /obj/item/skull/cluwne))
+				B = new /obj/machinery/bot/skullbot/cluwne(get_turf(user))
 
-			else if (Skull.icon_state == "skull_gold" || istype(Skull, /obj/item/skull/gold))
-				B = new /obj/machinery/bot/skullbot/gold(get_turf(user))
+			else if (Skull.icon_state == "skull_macho" || istype(Skull, /obj/item/skull/macho))
+				B = new /obj/machinery/bot/skullbot/macho(get_turf(user))
 
 			else
 				B = new /obj/machinery/bot/skullbot(get_turf(user))
@@ -1338,7 +1339,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		return
 
 /obj/item/parts/robot_parts/robot_frame/syndicate
+	tooltip_flags = REBUILD_USER
 	syndicate = TRUE
+	SYNDICATE_STEALTH_DESCRIPTION("The law connection light is blinking a sinister syndicate red.", null)
 
 // UPGRADES
 // Cyborg
@@ -1435,7 +1438,7 @@ proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
 		desc = "A massive clamping arm from an ancient lifter construct."
 		icon_state = "r_arm-ancient3"
 		appearanceString = "ancient3"
-		max_health = 300
+		max_health = 350
 		weight = 0.5
 		handlistPart = "armR-heavy"
 		add_to_tools = TRUE

@@ -135,24 +135,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			src.onSlice(user)
 			//the hacky place_on zone of sadness
-			var/obj/surgery_tray/tray = locate() in src.loc
-			if (!tray || !(src in tray.attached_objs))
-				tray = null
 			var/obj/item/plate/plate = src.loc
 			if (istype(plate))
 				plate.remove_contents(src)
 			else
 				plate = null
+			var/list/new_items = list()
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
 					var/obj/item/reagent_containers/food/slice = slice_result
 					src.process_sliced_products(slice, amount_to_transfer)
-				//try to put it on the plate/tray if we're on one
-				if (tray && tray.place_on(slice_result))
-					tray.attach(slice_result)
-				else if (plate)
+				new_items.Add(slice_result)
+				//try to put it on the plate if we're on one
+				if (plate)
 					plate.add_contents(slice_result)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_items, user)
 			qdel (src)
 		else
 			..()
@@ -194,6 +192,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	edible = 1
 	rand_pos = 1
 	var/has_cigs = 0
+	var/crunchy = FALSE
 
 	var/use_bite_mask = TRUE
 	var/current_mask = 5
@@ -424,7 +423,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				else
 					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
 		src.heal(consumer)
-		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+		if(src.crunchy)
+			playsound(consumer.loc,'sound/items/eatfoodshort.ogg', rand(10,50), 1)
+		else
+			playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
 		if (src.festivity && !ethereal_eater && !inafterlife(consumer))
 			modify_christmas_cheer(src.festivity)
@@ -1226,7 +1228,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				var/x_offset = 0
 				var/y_offset = 0
 
-				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
+				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella) || istype(in_glass, /obj/item/cocktail_stuff/eyestalk))
 					x_offset = src.umbrella_x_offset
 					y_offset = src.umbrella_y_offset
 				else
@@ -1943,55 +1945,55 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/strange
+/obj/item/reagent_containers/food/drinks/skull_chalice/hunter
 	name = "strange skull chalice"
 	desc = "This is one ugly drinking vessel."
-	icon_state = "skullchaliceP"
+	icon_state = "skullchalice_hunter"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/odd
+/obj/item/reagent_containers/food/drinks/skull_chalice/changeling
 	name = "odd skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. This one's got fewer holes and more room. Convenient!"
-	icon_state = "skullchaliceA"
+	icon_state = "skullchalice_changeling"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_volume = 60
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/peculiar
+/obj/item/reagent_containers/food/drinks/skull_chalice/wizard
 	name = "peculiar skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. The magic keeps the contents from spilling out."
-	icon_state = "skullchalice_strange"
+	icon_state = "skullchalice_wizard"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/menacing
+/obj/item/reagent_containers/food/drinks/skull_chalice/vampire
 	name = "menacing skull chalice"
 	desc = "In Space Soviet Russia, chalice drink out of YOU!"
-	icon_state = "skullchalice_menacing"
+	icon_state = "skullchalice_vampire"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_reagents = list("blood" = 50)
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/crystal
+/obj/item/reagent_containers/food/drinks/skull_chalice/omnitraitor
 	name = "skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. You have an odd urge to serve champagne in this."
-	icon_state = "skullchalice_crystal"
-	item_state = "skullchalice_crystal"
+	icon_state = "skullchalice_omnitraitor"
+	item_state = "skullchalice_omnitraitor"
 	can_recycle = FALSE
 	initial_volume = 60
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/gold
+/obj/item/reagent_containers/food/drinks/skull_chalice/macho
 	name = "golden skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. Smells a bit like processed meat snacks."
-	icon_state = "skullchalice_gold"
-	item_state = "skullchalice_gold"
+	icon_state = "skullchalice_macho"
+	item_state = "skullchalice_macho"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/noface
+/obj/item/reagent_containers/food/drinks/skull_chalice/cluwne
 	name = "faceless skull chalice"
 	desc = "A thing which you can drink fluids out of. Maybe. Possibly. Hypothetically."
-	icon_state = "skullchalice_noface"
+	icon_state = "skullchalice_cluwne"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_volume = 5
@@ -2040,6 +2042,13 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 /obj/item/reagent_containers/food/drinks/mug/HoS/blue
 	icon_state = "HoSMugBlue"
 	item_state = "mug"
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged
+	icon_state = "HoSMugBlueTwo"
+	emagged = TRUE
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea
+	initial_reagents = list("mint_tea" = 50)
 
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()

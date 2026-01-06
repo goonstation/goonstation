@@ -60,7 +60,7 @@
 
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_mob(M)
 
-		M.override_movement_controller = ship.movement_controller
+		M.add_movement_controller(ship.movement_controller)
 
 		if(ship.show_tracking)
 			ship.apply_arrows(M)
@@ -111,7 +111,7 @@
 				occupant.attach_hud(hud)
 			src.stored_huds.len = 0
 
-		src.occupant.override_movement_controller = null
+		src.occupant.remove_movement_controller(src.ship.movement_controller)
 		src.occupant.changeStatus("knockdown",20)
 		src.occupant = null
 		src.active = 0

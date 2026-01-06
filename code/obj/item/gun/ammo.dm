@@ -610,7 +610,7 @@
 	sname = "9mm frangible"
 	name = "9mm frangible magazine"
 	desc = "Some 9mm incapacitating bullets, made of plastic with rubber tips. Despite being sublethal, they can still do damage."
-	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	icon_state = "pistol_clip"	//9mm_clip that exists already. Available from hacked manufacturers, 'cause these bullets are not good.
 	amount_left = 18
 	max_amount = 18
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
@@ -624,7 +624,7 @@
 	sname = "9x19mm Soft Point"
 	name = "9mm Soft Point magazine"
 	desc = "A magazine full of 9x19mm ammunition. This particular load has the lead core exposed at the tip for increased expansion."
-	icon_state = "pistol_magazine"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	icon_state = "pistol_magazine"
 	amount_left = 12
 	max_amount = 12
 	ammo_type = new/datum/projectile/bullet/nine_mm_surplus
@@ -719,6 +719,16 @@
 	ammo_type = new/datum/projectile/bullet/revolver_38/AP
 	icon_dynamic = 1
 	icon_short = "38A"
+	icon_empty = "speedloader_empty"
+
+/obj/item/ammo/bullets/a38/ricochet
+	sname = ".38 Spc Ricochet"
+	name = ".38 Ricochet speedloader"
+	desc = "A speedloader of .38 special ricocheting revolver bullets."
+	icon_state = "38R-7"
+	ammo_type = new/datum/projectile/bullet/revolver_38/ricochet
+	icon_dynamic = 1
+	icon_short = "38R"
 	icon_empty = "speedloader_empty"
 
 /obj/item/ammo/bullets/a38/stun
@@ -1535,10 +1545,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "speedloader_empty"
 
 //////////////////////////////////// Power cells for eguns //////////////////////////
+TYPEINFO(/obj/item/ammo/power_cell)
+	/// Charge overlay `icon_state`s. Must be ordered ascending. Not used after `New()`, edit `charge_overlays` for live changes.
+	var/charge_overlay_states = list("cell_1/5", "cell_2/5", "cell_3/5", "cell_4/5", "cell_5/5")
 
 /obj/item/ammo/power_cell
 	name = "Power Cell"
-	desc = "A power cell that holds a max of 100PU"
+	desc = null // updated in `New()`
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 10000
@@ -1548,15 +1561,21 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	var/recharge_rate = 0
 	var/recharge_delay = 0
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
-	var/unusualCell = 0
+	var/unusualCell = FALSE
 	var/rechargable = TRUE
 	var/component_type = /datum/component/power_cell
+	/// Charge overlay images. Populated in `New()`. Would ideally be static or in typeinfo, but both approaches have issues.
+	var/charge_overlays = null
 
 	New()
 		..()
 		AddComponent(src.component_type, max_charge, charge, recharge_rate, recharge_delay, rechargable)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
+
+		src.charge_overlays = list()
+		for (var/state in src.get_typeinfo().charge_overlay_states)
+			src.charge_overlays += image(src.icon, state)
 		UpdateIcon()
 
 	disposing()
@@ -1568,25 +1587,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		return
 
 	update_icon()
-		if (src.artifact || src.unusualCell) return
-		overlays = null
+		if (src.artifact || src.unusualCell)
+			return
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
-			ratio = round(ratio, 20)
+			// ratio [0-1] of charge remaining
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			// convert ratio to index of correct state
+			var/state_idx = round(ratio * length(src.charge_overlays), 1)
+			if (state_idx > 0)
+				UpdateOverlays(src.charge_overlays[state_idx], "charge_overlay", retain_cache=TRUE)
+			else
+				ClearSpecificOverlays(TRUE, "charge_overlay")
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
-			switch(ratio)
-				if(20)
-					overlays += "cell_1/5"
-				if(40)
-					overlays += "cell_2/5"
-				if(60)
-					overlays += "cell_3/5"
-				if(80)
-					overlays += "cell_4/5"
-				if(100)
-					overlays += "cell_5/5"
-			return
 
 	examine()
 		if (src.artifact)
@@ -1814,6 +1827,9 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	var/target_type = null
 	var/internal = FALSE
 
+TYPEINFO(/obj/item/ammo/power_cell/lasergat)
+	charge_overlay_states = list("burst_laspistol-33", "burst_laspistol-66", "burst_laspistol-100")
+
 /obj/item/ammo/power_cell/lasergat
 	name = "Mod. 93R Repeating Laser Cell"
 	desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm."
@@ -1821,23 +1837,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	max_charge = 180
 	icon_state = "burst_laspistol"
 	rechargable = FALSE
+
 	New()
 		..()
 		desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm. It has [src.max_charge]PU."
-
-	update_icon()
-		var/list/ret = list()
-		overlays = null
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
-			ratio = round(ratio, 33)
-			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
-			switch(ratio)
-				if(33)
-					overlays += "burst_laspistol-33"
-				if(66)
-					overlays += "burst_laspistol-66"
-				if(99)
-					overlays += "burst_laspistol-100"
-			return
-

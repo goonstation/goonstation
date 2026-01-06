@@ -120,7 +120,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 			break
 
 /obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)
-	frame.circuit.records = src.records
 	if (src.allow_dead_scanning)
 		new /obj/item/cloner_upgrade (src.loc)
 		src.allow_dead_scanning = 0
@@ -135,6 +134,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	else
 		logTheThing(LOG_STATION, usr, "disassembles [src] [log_loc(src)]")
 
+/obj/machinery/computer/cloning/save_board_data(obj/item/circuitboard/circuitboard)
+	. = ..()
+	circuitboard.saved_data = src.records
+
+/obj/machinery/computer/cloning/load_board_data(obj/item/circuitboard/circuitboard)
+	if(..())
+		return
+	src.records = circuitboard.saved_data
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/currency/spacecash))
@@ -405,7 +412,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, clone_file["name"], clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
+			if (pod1.growclone(selected, null, clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
@@ -418,7 +425,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, clone_file["name"], clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
+	else if (pod1.growclone(selected, null, clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
 		show_message("Cloning cycle activated.", "success")
 		. = TRUE
 		JOB_XP(usr, "Medical Doctor", 15)

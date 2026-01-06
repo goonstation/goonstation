@@ -85,6 +85,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/dna_mutagen_banned = TRUE
 	/// Should a genetics terminal be able to remove this mutantrace?
 	var/genetics_removable = TRUE
+	/// Should this mutantrace be kept upon cloning?
+	var/persists_on_clone = TRUE
 	/// Should they be able to walk on shards barefoot
 	var/can_walk_on_shards = FALSE
 	var/icon_state = "blank_c"
@@ -310,7 +312,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.blood_color_changed = TRUE
 
 		src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
-		if (!src.dna_mutagen_banned)
+		if (src.persists_on_clone)
 			AH.original_mutant_race = src
 		if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
 			MakeMutantDimorphic(M)
@@ -474,11 +476,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.mob_leg_offset = src.leg_offset
 		AH.mob_arm_offset = src.arm_offset
 
-		if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
-			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
-			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
-
 		AH.s_tone_original = AH.s_tone
 		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
 			AH.s_tone = AH.customizations["hair_bottom"].color
@@ -488,9 +485,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			AH.s_tone = AH.customizations["hair_top"].color
 		else
 			AH.s_tone = AH.s_tone_original
+		if ((src.mutant_appearance_flags & FIX_COLORS) && src.mutant_appearance_flags & (SKINTONE_USES_PREF_COLOR_1 | SKINTONE_USES_PREF_COLOR_2 | SKINTONE_USES_PREF_COLOR_3))
+			AH.s_tone = fix_colors(AH.s_tone)
 
 		AH.mutant_race = src
-		if (!src.dna_mutagen_banned)
+		if (src.persists_on_clone)
 			AH.original_mutant_race = src
 		AH.body_icon = src.mutant_folder
 		AH.body_icon_state = src.icon_state
@@ -926,6 +925,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	movement_modifier = /datum/movement_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
+	persists_on_clone = FALSE
 	var/strain = 0
 
 	//this is terrible, but I do anyway.
@@ -1073,6 +1073,7 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 	special_head = HEAD_VAMPTHRALL
 	jerk = TRUE
 	genetics_removable = FALSE
+	persists_on_clone = FALSE
 
 	on_attach(var/mob/living/carbon/human/M)
 		..()
@@ -1280,6 +1281,7 @@ TYPEINFO(/datum/mutantrace/abomination)
 	anchor_to_floor = 1
 	movement_modifier = /datum/movement_modifier/abomination
 	self_click_fluff = "disgusting writhing appendages"
+	persists_on_clone = FALSE
 
 	var/last_drain = 0
 	var/drains_dna_on_life = 1
@@ -1936,6 +1938,14 @@ TYPEINFO(/datum/mutantrace/cat/bingus)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/left
 
+
+/obj/effect/rt/frog_distorts
+	icon = 'icons/mob/shelterfrog.dmi'
+/obj/effect/rt/frog_distorts/uniform // frogs are wide
+	icon_state = "suit_distort"
+/obj/effect/rt/frog_distorts/shoes // frogs have long feet
+	icon_state = "shoes_distort"
+
 TYPEINFO(/datum/mutantrace/amphibian)
 	icon = 'icons/mob/amphibian.dmi'
 /datum/mutantrace/amphibian
@@ -1949,9 +1959,6 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	voice_name = "amphibian"
 	jerk = FALSE
 	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
-	head_offset = 0
-	hand_offset = -3
-	body_offset = -3
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
 	mutant_folder = 'icons/mob/amphibian.dmi'
@@ -1980,6 +1987,10 @@ TYPEINFO(/datum/mutantrace/amphibian)
 
 	ghost_icon_state = "ghost-amphibian"
 
+	var/clothes_filters_active = TRUE // see cow for explanation
+	var/obj/effect/rt/frog_distorts/uniform/distort_uniform = new
+	var/obj/effect/rt/frog_distorts/shoes/distort_shoes = new
+
 	say_verb()
 		return "croaks"
 
@@ -1989,14 +2000,16 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			M.bioHolder.AddEffect("mattereater")
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
-			M.bioHolder.AddEffect("accent_chav")
+			M.bioHolder.AddEffect("accent_frog")
+			src.mob.vis_contents += list(src.distort_uniform,src.distort_shoes)
 
 	disposing()
 		if(ishuman(src.mob))
 			src.mob.bioHolder.RemoveEffect("mattereater")
 			src.mob.bioHolder.RemoveEffect("jumpy")
 			src.mob.bioHolder.RemoveEffect("vowelitis")
-			src.mob.bioHolder.RemoveEffect("accent_chav")
+			src.mob.bioHolder.RemoveEffect("accent_frog")
+			src.mob.vis_contents -= list(src.distort_uniform,src.distort_shoes)
 		..()
 
 	emote(act, voluntary)
@@ -2014,7 +2027,28 @@ TYPEINFO(/datum/mutantrace/amphibian)
 					message = "<B>[used_name]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return message
-			else ..()
+
+			if ("clothes")
+				src.clothes_filters_active = !src.clothes_filters_active
+				boutput(src.mob, src.clothes_filters_active ? "Amphibian-specific clothes filters activated." : "Disabled amphibian-specific clothes filters.")
+				src.mob.update_clothing()
+				message = "<B>[used_name]</B> adjusts [his_or_her(src.mob)] clothing."
+				return message
+			else
+				..()
+
+	apply_clothing_filters(var/obj/item/worn)
+		. = ..()
+		if (!src.clothes_filters_active) return
+		var/list/output = list()
+
+		if (istype(worn, /obj/item/clothing/suit))
+			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/under))
+			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/shoes))
+			output += filter(type="displace", render_source = src.distort_shoes.render_target, size = 127)
+		return output
 
 TYPEINFO(/datum/mutantrace/amphibian/shelter)
 	icon = 'icons/mob/shelterfrog.dmi'
@@ -2092,6 +2126,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/kudzu/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | TORSO_HAS_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS | BUILT_FROM_PIECES)
 	override_attack = 1
+	persists_on_clone = FALSE
 
 	mutant_abilityholder = /datum/abilityHolder/kudzu
 	mutant_abilities = list(

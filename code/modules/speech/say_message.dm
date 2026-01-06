@@ -82,6 +82,8 @@
 	var/relay_flags = null
 	/// If FALSE, this message will not be permitted to be retransmitted, regardless of the flags present in `relay_flags`.
 	var/can_relay = TRUE
+	/// The browser output group of this message. Messages in the same group will be bundled as if their contents were identical.
+	var/group = ""
 
 	// Maptext Variables:
 	/// The CSS values for the maptext, stored as an associative list, i.e: "font-weight" = "bold".
@@ -96,6 +98,8 @@
 	)
 	/// A list of colours for the maptext to oscillate through. Use the "start_colour" value to determine the colour to animate from to `maptext_css_values["color"]`.
 	var/list/maptext_animation_colours = null
+	/// A list of callback datums to be invoked, with the message itself as the first argument and the maptext image created by this message as the second argument.
+	var/list/datum/callback/maptext_callbacks = null
 	/// A prefix that should only be displayed on the maptext.
 	var/maptext_prefix = null
 	/// A suffix that should only be displayed on the maptext.
@@ -173,6 +177,8 @@
 			src.prefix = lowertext(trimtext(copytext(src.content, 1, cut_position)))
 			src.content = copytext(src.content, cut_position, MAX_MESSAGE_LEN)
 
+	src.content = trimtext(src.content)
+
 	// Determine whether this message has a singing prefix, and adjust the content accordingly.
 	if (copytext(src.content, 1, 2) == "%")
 		src.flags |= SAYFLAG_SINGING
@@ -182,9 +188,10 @@
 	// Ensure that a channel is assigned to this message.
 	src.output_module_channel ||= src.speaker.default_speech_output_channel
 
-	src.content = src.make_safe_for_chat(src.content)
 	if (ismob(src.speaker))
 		src.run_mob_and_client_checks()
+
+	src.content = src.make_safe_for_chat(src.content)
 
 /datum/say_message/disposing()
 	src.speaker = null
@@ -245,13 +252,13 @@
 
 /// Determines the say sound that this message should use, and plays it.
 /datum/say_message/proc/process_say_sound()
+	if (src.flags & SAYFLAG_ADMIN_MESSAGE)
+		return
+
 	if (world.time < src.message_origin.last_voice_sound + VOICE_SOUND_COOLDOWN)
 		return
 
-	if (src.say_sound == NO_SAY_SOUND)
-		return
-
-	if (!src.say_sound && !src.speaker.voice_type && !src.speaker.voice_sound_override)
+	if ((src.say_sound == NO_SAY_SOUND) || (!src.say_sound && !src.speaker.voice_type && !src.speaker.voice_sound_override))
 		return
 
 	src.say_sound ||= src.speaker.voice_sound_override
@@ -280,7 +287,7 @@
 
 /// Determines the speech bubble that this message should use, and displays it on the speaker.
 /datum/say_message/proc/process_speech_bubble()
-	if (!src.speaker.use_speech_bubble)
+	if ((src.flags & SAYFLAG_ADMIN_MESSAGE) || !src.speaker.use_speech_bubble)
 		return
 
 	var/speech_bubble_icon
@@ -441,11 +448,13 @@
 	copy.atom_listeners_to_be_excluded = src.atom_listeners_to_be_excluded?.Copy()
 	copy.relay_flags = src.relay_flags
 	copy.can_relay = src.can_relay
+	copy.group = src.group
 
 	// Maptext Variables:
 	copy.maptext_css_values = src.maptext_css_values?.Copy()
 	copy.maptext_variables = src.maptext_variables?.Copy()
 	copy.maptext_animation_colours = src.maptext_animation_colours?.Copy()
+	copy.maptext_callbacks = src.maptext_callbacks?.Copy()
 	copy.maptext_prefix = src.maptext_prefix
 	copy.maptext_suffix = src.maptext_suffix
 

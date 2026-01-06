@@ -271,8 +271,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.visible_message(SPAN_NOTICE("[user] cuts off the fingertips from [src]."))
 		if(src.loc == user)
 			user.u_equip(src)
+		var/newitem = new /obj/item/clothing/gloves/fingerless()
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newitem, user)
 		qdel(src)
-		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
+		user.put_in_hand_or_drop(newitem)
 	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
@@ -314,8 +316,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 /obj/item/clothing/gloves/crafted
 	name = "gloves"
-	icon_state = "latex"
-	item_state = "lgloves"
+	icon_state = "custom"
+	item_state = "custom_gloves"
 	desc = "Custom made gloves."
 	scramble_prints = 1
 
@@ -340,8 +342,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				src.setProperty("heatprot", thermal_insul * 2)
 
 	armored
-		icon_state = "black"
-		item_state = "swat_gl"
+		icon_state = "custom_armored"
+		item_state = "custom_armored"
 
 		onMaterialChanged()
 			..()

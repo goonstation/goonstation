@@ -46,6 +46,15 @@ TYPEINFO(/datum/component/hallucination/random_image_override)
 		ARG_INFO("visible_creation", DATA_INPUT_BOOL, "Should the displayed image appear in line of sight?", TRUE),
 	)
 
+TYPEINFO(/datum/component/hallucination/distant_explosion)
+	initialization_args = list(
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
+		ARG_INFO("explosion_prob", DATA_INPUT_NUM, "probability of a fake explosion per mob life tick", 15),
+		ARG_INFO("cooldown_time", DATA_INPUT_NUM, "minimum time between fake explosions in deciseconds", 7 SECONDS),
+		ARG_INFO("shake_duration", DATA_INPUT_NUM, "how long the screen shake lasts in deciseconds", 8),
+		ARG_INFO("shake_strength", DATA_INPUT_NUM, "how much screenshaking should occur", 24),
+		ARG_INFO("sound_volume", DATA_INPUT_NUM, "volume of the fake explosion sound", 70),
+	)
 
 //#########################################################
 //                HALLUCINATION COMPONENTS
@@ -310,6 +319,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.visible_creation = visible_creation
 
 	do_mob_tick(mob,mult)
+		if (!src.parent_mob.client)
+			return ..()
 		if(probmult(image_prob))
 			//pick a non dense turf in view
 			var/list/atom/potentials = list()
@@ -323,16 +334,13 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 					for(var/type in src.target_list)
 						if(istype(A, type))
 							potentials += A
-			if(!length(potentials)) return
+			if(!length(potentials))
+				return
 			var/atom/halluc_loc = pick(potentials)
-			var/image/halluc = new /image()
 			var/image/copyfrom = pick(src.image_list)
-			halluc.appearance = copyfrom.appearance
-			halluc.loc = halluc_loc
-			halluc.override = src.override
-			parent_mob.client?.images += halluc
+			var/datum/component/halluc_image/component = halluc_loc.AddComponent(/datum/component/halluc_image, parent_mob.client, copyfrom, src.override)
 			SPAWN(src.image_time SECONDS)
-				qdel(halluc)
+				component.RemoveComponent()
 		. = ..()
 
 	CheckDupeComponent(timeout, image_list, target_list, range, image_prob, image_time, override, visible_creation)
@@ -348,6 +356,48 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			return TRUE //no duplicate
 		else
 			return FALSE //create a new hallucination
+
+/datum/component/halluc_image
+	var/image/copyfrom
+	var/client/viewer_client
+	var/override = TRUE
+
+	var/image/current_image
+
+	Initialize(viewer_client, image/copyfrom, override = TRUE)
+		. = ..()
+		if(. == COMPONENT_INCOMPATIBLE)
+			return .
+		src.viewer_client = viewer_client
+		src.copyfrom = copyfrom
+		src.override = override
+
+	RegisterWithParent()
+		RegisterSignal(src.parent, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup_drop))
+		RegisterSignal(src.parent, COMSIG_ITEM_DROPPED, PROC_REF(on_pickup_drop))
+		src.make_image()
+
+	UnregisterFromParent()
+		UnregisterSignal(src.parent, COMSIG_ITEM_PICKUP)
+		UnregisterSignal(src.parent, COMSIG_ITEM_DROPPED)
+		src.viewer_client.images -= src.current_image
+
+	proc/on_pickup_drop()
+		SPAWN(0)
+			src.make_image()
+
+	proc/make_image()
+		qdel(src.current_image)
+		src.current_image = new /image()
+		src.current_image.appearance = copyfrom.appearance
+		src.current_image.loc = src.parent
+		var/atom/movable/AM_parent = src.parent
+		src.current_image.plane = AM_parent.plane
+		src.current_image.layer = AM_parent.layer
+		src.current_image.override = src.override
+		src.viewer_client.images += src.current_image
+
+
 
 //#########################################################
 //                     FAKE SINGULO
@@ -393,6 +443,45 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	CheckDupeComponent(timeout)
 		..()
 		return TRUE //only one of these please, just reset timeout
+
+//#########################################################
+//                    DISTANT EXPLOSION
+//#########################################################
+
+///Fake distant explosion and shake
+/datum/component/hallucination/distant_explosion
+	var/explosion_prob = 15
+	var/cooldown_time = 7 SECONDS
+	var/shake_duration = 8
+	var/shake_strength = 24
+	var/sound_volume = 70
+
+	var/boom_cooldown = 0 //! Stored timestamp after which we can trigger a new boom
+
+	Initialize(timeout, explosion_prob = 15, cooldown_time = 7 SECONDS, shake_duration = 8, shake_strength = 24, sound_volume = 70)
+		. = ..()
+		if(. == COMPONENT_INCOMPATIBLE)
+			return .
+		src.explosion_prob = explosion_prob
+		src.cooldown_time = cooldown_time
+		src.shake_duration = shake_duration
+		src.shake_strength = shake_strength
+		src.sound_volume = sound_volume
+
+		src.boom_cooldown = world.time
+
+	do_mob_tick(mob, mult)
+		. = ..()
+		if (world.time < boom_cooldown)
+			return
+		if(probmult(explosion_prob))
+			boom_cooldown = world.time + src.boom_cooldown
+			shake_camera(mob, src.shake_duration, src.shake_strength)
+			parent_mob.playsound_local(parent_mob.loc, explosions.distant_sound, src.sound_volume, 0)
+
+	CheckDupeComponent(timeout)
+		..()
+		return TRUE // do not stack these
 
 //#########################################################
 //                    SUPPORTING CAST
@@ -453,7 +542,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		get_name()
 			return pick("pig", "DAT FUKKEN PIG")
 	spider
-		fake_icon_state = "big_spide"
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "spider"
 		get_name()
 			return pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 	slime

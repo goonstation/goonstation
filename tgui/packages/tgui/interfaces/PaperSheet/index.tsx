@@ -250,7 +250,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
     return rm;
   });
 
-  const { data } = useBackend<PaperSheetEditData>();
+  const { act, data } = useBackend<PaperSheetEditData>();
   const { text, penColor, penFont, isCrayon, fieldCounter, editUsr } = data;
 
   const createPreview = (value, doFields = false) => {
@@ -326,7 +326,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
   };
 
   const finalUpdate = (newText: string) => {
-    const { act } = useBackend();
     const finalProcessing = createPreview(newText, true);
     act('save', finalProcessing);
     setTextAreaText('');
@@ -339,7 +338,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
       <Flex.Item>
         <Tabs fluid>
           <Tabs.Tab
-            key="marked_edit"
             textColor="black"
             backgroundColor={previewSelected === 'Edit' ? 'grey' : 'white'}
             selected={previewSelected === 'Edit'}
@@ -348,7 +346,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             Edit
           </Tabs.Tab>
           <Tabs.Tab
-            key="marked_preview"
             textColor="black"
             backgroundColor={previewSelected === 'Preview' ? 'grey' : 'white'}
             selected={previewSelected === 'Preview'}
@@ -360,7 +357,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             Preview
           </Tabs.Tab>
           <Tabs.Tab
-            key="marked_done"
             textColor="black"
             backgroundColor={
               previewSelected === 'confirm'
@@ -386,8 +382,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             {previewSelected === 'confirm' ? 'Confirm' : 'Save'}
           </Tabs.Tab>
           <Tabs.Tab
-            key="marked_help"
-            textColor={'black'}
+            textColor="black"
             backgroundColor="white"
             icon="question-circle-o"
             onMouseOver={() => setShowingHelpTip(true)}
@@ -404,7 +399,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             fluid
             textColor={textColor}
             fontFamily={fontFamily}
-            height={window.innerHeight - 60 + 'px'}
+            height="100%"
             backgroundColor={backgroundColor}
             onChange={onInputHandler}
             onKeyDown={onKeyDownHandler}

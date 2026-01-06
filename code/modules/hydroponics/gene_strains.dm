@@ -199,6 +199,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 				else if (!growing && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/seedless) && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/reagent_blacklist))
 					//we create a new seed now
 					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(current_plantgenes, current_planttype, carrying_plantpot.generation)
+					temporary_seed.dont_mutate = TRUE //QoL for using this commut for non-creepers, so you don't have to deal with any mutants.
 					// now we are able to plant the seed
 					checked_plantpot.HYPnewplant(temporary_seed)
 					spawn(0.5 SECONDS)
@@ -365,3 +366,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	name = "Inhibited Potential"
 	desc = "Produce harvested from this plant won't contain special dangerous chemicals"
 	var/list/reagents_to_remove = list("ghostchilijuice", "potassium", "lithium")
+
+/datum/plant_gene_strain/stable_alleles
+	name = "Immutable Alleles"
+	desc = "This plant's alleles are more stable, they will be passed down when harvested."

@@ -115,7 +115,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		SPAWN(0) //Delay PDA spawning until the client is in the borg, so it respects preferences
 			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
-			src.internal_pda.name = "[src]'s Internal PDA Unit"
+			src.internal_pda.name = "[src]’s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
@@ -179,8 +179,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					if(P.robot_movement_modifier)
 						APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
 
-		if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
-			src.flags ^= TABLEPASS
+		src.recalculate_tablepass()
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
@@ -284,8 +283,10 @@ TYPEINFO(/mob/living/silicon/robot)
 						chest.cell = src.cell
 						src.cell = null
 						chest.cell.set_loc(chest)
-
-			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			var/frame_type = /obj/item/parts/robot_parts/robot_frame
+			if(src.syndicate)
+				frame_type = /obj/item/parts/robot_parts/robot_frame/syndicate
+			var/obj/item/parts/robot_parts/robot_frame/frame =  new frame_type(T)
 			frame.setMaterial(src.frame_material)
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
@@ -598,6 +599,20 @@ TYPEINFO(/mob/living/silicon/robot)
 					maptext_out = "<I>flexes [his_or_her(src)] arms</I>"
 					m_type = 1
 
+			if ("raisehand")
+				if (!src.restrained())
+					var/obj/item/thing = src.equipped()
+					if (thing)
+						message = "<b>[used_name]</b> raises [thing]."
+						maptext_out = "<I>raises [thing]</I>"
+					else
+						message = "<b>[used_name]</b> raises [his_or_her(src)] distinct lack of hands."
+						maptext_out = "<I>raises [his_or_her(src)] lack of hands</I>"
+				else
+					message = "<b>[used_name]</b> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
+
 			if ("fart")
 				if (farting_allowed && src.emote_check(voluntary))
 					m_type = 2
@@ -778,7 +793,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.real_name = borgify_name("Cyborg")
 
 		src.UpdateName()
-		src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+		src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 		src.internal_pda.owner = "[src.name]"
 
 	Login()
@@ -790,7 +805,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (src.real_name == "Cyborg")
 			src.real_name = borgify_name(src.real_name)
 			src.UpdateName()
-			src.internal_pda?.name = "[src.name]'s Internal PDA Unit"
+			src.internal_pda?.name = "[src.name]’s Internal PDA Unit"
 			src.internal_pda?.owner = "[src]"
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
@@ -1990,6 +2005,8 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.internal_pda.alertgroups = RM.alertgroups
 
 			src.update_radio(RM.radio_type)
+		for(var/datum/objectProperty/equipment/prop in RM.properties)
+			prop.onEquipped(RM, src, RM.properties[prop])
 
 	proc/remove_module()
 		if(!istype(src.module))
@@ -1997,6 +2014,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		var/obj/item/robot_module/RM = src.module
 		RM.icon_state = initial(RM.icon_state)
 		src.show_text("Your module was removed!", "red")
+		for(var/datum/objectProperty/equipment/prop in RM.properties)
+			prop.onUnequipped(RM, src, RM.properties[prop])
 		uneq_all()
 		src.module = null
 		hud.module_removed()
@@ -2771,6 +2790,9 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.i_arm_r = null
 				src.i_hand_r = null
 
+		if (part == "r_leg" || part == "l_leg" || update_all)
+			src.recalculate_tablepass()
+
 		if (C)
 			if (C.legs_mod && (src.part_leg_r || src.part_leg_l) && (!src.part_leg_r || src.part_leg_r.slot != "leg_both") && (!src.part_leg_l || src.part_leg_l.slot != "leg_both"))
 				src.i_leg_decor = image('icons/mob/robots_decor.dmi', "legs-" + C.legs_mod, layer=MOB_BODYDETAIL_LAYER2)
@@ -3335,6 +3357,11 @@ TYPEINFO(/mob/living/silicon/robot)
 	src.hud.update_tools()
 	src.hud.update_equipment()
 
+/mob/living/silicon/robot/proc/recalculate_tablepass()
+	if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
+		src.flags |= TABLEPASS
+	else
+		src.flags &= ~TABLEPASS
 ///////////////////////////////////////////////////
 // Specific instances of robots can go down here //
 ///////////////////////////////////////////////////
@@ -3739,10 +3766,11 @@ TYPEINFO(/mob/living/silicon/robot)
 
 	do_killswitch()
 		. = ..()
-		// Pop the head compartment open and eject the brain
-		var/mob/living/silicon/robot/robot = src.owner
-		robot.eject_brain(fling = TRUE)
-		robot.update_appearance()
-		robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
+		if(.)
+			// Pop the head compartment open and eject the brain
+			var/mob/living/silicon/robot/robot = src.owner
+			robot.eject_brain(fling = TRUE)
+			robot.update_appearance()
+			robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 #undef can_step_sfx

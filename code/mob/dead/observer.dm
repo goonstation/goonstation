@@ -374,7 +374,7 @@ TYPEINFO(/mob/dead/observer)
 		if(istype(get_area(src), /area/afterlife))
 			qdel(src)
 
-		if(!mind?.get_player()?.dnr)
+		if(!(mind?.get_player()?.dnr || mind?.get_player()?.joined_observer))
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
@@ -477,7 +477,7 @@ TYPEINFO(/mob/dead/observer)
 			wigmat = wigmat.getMutable()
 			wigmat.setColor(src.bioHolder.mobAppearance.customizations["hair_bottom"].color)
 			O.wig.setMaterial(wigmat)
-			O.wig.name = "[O.name]'s hair"
+			O.wig.name = "[O.name]’s hair"
 			O.wig.icon = 'icons/mob/human_hair.dmi'
 			O.wig.icon_state = cust_one
 			O.wig.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
@@ -732,6 +732,11 @@ TYPEINFO(/mob/dead/observer)
 
 
 /mob/dead/observer/proc/insert_observer(var/atom/target)
+	var/mob/targetMob = target
+	if(istype(targetMob) && isadmin(targetMob) && !targetMob.client?.player_mode && !isadmin(src)) //Activate the alarm bells
+		logTheThing(LOG_DEBUG, src, "observes non-player mode admin [constructName(target)]") //They shouldn't be here unless forced manually
+		message_admins("[key_name(src)] starts observing non-player mode admin [key_name(target)]")
+		boutput(targetMob.client, SPAN_ALERT("<b>[key_name(src)] IS OBSERVING YOU!! If you didn't do this, kick them out!</b>"))
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	src.set_loc(newobs)
 	newobs.attach_hud(hud)

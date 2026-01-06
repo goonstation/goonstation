@@ -1571,10 +1571,13 @@ var/global/noir = 0
 
 			var/atom/A = locate(href_list["target"])
 
-			if (!A.reagents) // || !target.reagents.total_volume)
+			var/datum/reagents/reagents = A.reagents
+			if (istype(A, /obj/fluid_pipe))
+				var/obj/fluid_pipe/pipe = A
+				reagents = pipe.network.reagents
+			if (!reagents) // || !target.reagents.total_volume)
 				boutput(usr, SPAN_NOTICE("<b>[A] contains no reagents.</b>"))
 				return
-			var/datum/reagents/reagents = A.reagents
 
 			var/pick_id
 			var/pick
@@ -1605,17 +1608,17 @@ var/global/noir = 0
 			if (!amt || amt < 0)
 				return
 
-			if (A.reagents)
-				if (!A.reagents.remove_reagent(pick_id,amt))
+			if (reagents)
+				if (!reagents.remove_reagent(pick_id,amt))
 					boutput(usr, SPAN_ALERT("Failed to remove [amt] units of [pick_id] from [A.name]."))
 					return
 
 			boutput(usr, SPAN_SUCCESS("Removed [amt] units of [pick_id] from [A]."))
 
 			// Brought in line with adding reagents via the player panel (Convair880).
-			logTheThing(LOG_ADMIN, src, "removed [amt] units of [pick_id] from [A] at [log_loc(A)].")
+			logTheThing(LOG_ADMIN, usr, "removed [amt] units of [pick_id] from [A] at [log_loc(A)].")
 			if (ismob(A))
-				message_admins("[key_name(src)] removed [amt] units of [pick_id] from [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
+				message_admins("[key_name(usr)] removed [amt] units of [pick_id] from [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
 
 		if ("possessmob")
 			if( src.level >= LEVEL_PA )
@@ -2149,108 +2152,6 @@ var/global/noir = 0
 					onlineAdmins.Add(C)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Adminstrator to promote or demote.")
-
-		if ("object_list")
-			if (src.level >= LEVEL_SA)
-				if (config.allow_admin_spawning && (src.state == 2 || src.level >= LEVEL_SA))
-					var/atom/loc = usr.loc
-
-					var/type = href_list["type"]
-					var/dirty_paths
-					if (istext(type))
-						dirty_paths = list(type)
-					else if (islist(type))
-						dirty_paths = type
-
-					var/paths = list()
-					var/removed_paths = list()
-					for (var/dirty_path in dirty_paths)
-						var/path = text2path(dirty_path)
-						if (!path)
-							removed_paths += dirty_path
-						else if (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
-							removed_paths += dirty_path
-						else if (ispath(path, /mob) && src.level < LEVEL_SA)
-							removed_paths += dirty_path
-						else
-							paths += path
-						LAGCHECK(LAG_LOW)
-
-					if (!paths)
-						return
-					else if (length(paths) > 5)
-						tgui_alert(usr,"Select five or less object types only, you colossal ass!")
-						return
-					else if (length(removed_paths))
-						tgui_alert(usr,"Spawning of these objects is blocked:\n" + jointext(removed_paths, "\n"))
-						return
-
-					var/list/offset = splittext(href_list["offset"],",")
-					var/number = clamp(text2num(href_list["object_count"]), 1, 100)
-					var/X = length(offset) > 0 ? text2num(offset[1]) : 0
-					var/Y = length(offset) > 1 ? text2num(offset[2]) : 0
-					var/Z = length(offset) > 2 ? text2num(offset[3]) : 0
-					var/direction = text2num(href_list["one_direction"]) // forgive me
-
-					for (var/i = 1 to number)
-						switch (href_list["offset_type"])
-							if ("absolute")
-								for (var/path in paths)
-									var/atom/thing
-									if(ispath(path, /turf))
-										var/turf/T = locate(0 + X,0 + Y,0 + Z)
-										thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
-										thing.set_dir(direction ? direction : SOUTH)
-									else
-										new /dmm_suite/preloader(locate(X, Y, Z), list("dir" = direction ? direction : SOUTH))
-										thing = new path(locate(X, Y, Z))
-										if(isobj(thing))
-											var/obj/O = thing
-											O.initialize(TRUE)
-									LAGCHECK(LAG_LOW)
-
-							if ("relative")
-								if (loc)
-									for (var/path in paths)
-										var/atom/thing
-										if(ispath(path, /turf))
-											var/turf/T = locate(loc.x + X,loc.y + Y,loc.z + Z)
-											thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
-											thing.set_dir(direction ? direction : SOUTH)
-										else
-											new /dmm_suite/preloader(locate(loc.x + X,loc.y + Y,loc.z + Z), list("dir" = direction ? direction : SOUTH))
-											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-											if(isobj(thing))
-												var/obj/O = thing
-												O.initialize(TRUE)
-										LAGCHECK(LAG_LOW)
-								else
-									return
-
-						sleep(-1)
-
-					if (number == 1)
-						logTheThing(LOG_ADMIN, usr, "created a [english_list(paths)]")
-						logTheThing(LOG_DIARY, usr, "created a [english_list(paths)]", "admin")
-						for(var/path in paths)
-							if(ispath(path, /mob))
-								message_admins("[key_name(usr)] created a [english_list(paths, 1)]")
-								break
-							LAGCHECK(LAG_LOW)
-					else
-						logTheThing(LOG_ADMIN, usr, "created [number] [english_list(paths)]")
-						logTheThing(LOG_DIARY, usr, "created [number] [english_list(paths)]", "admin")
-						for(var/path in paths)
-							if(ispath(path, /mob))
-								message_admins("[key_name(usr)] created [number] [english_list(paths, 1)]")
-								break
-							LAGCHECK(LAG_LOW)
-					return
-				else
-					tgui_alert(usr,"Object spawning is currently disabled for anyone below the rank of Administrator.")
-					return
-			else
-				tgui_alert(usr,"You need to be at least an Adminstrator to spawn objects.")
 
 		if ("polymorph")
 			if (src.level >= LEVEL_SA) //gave SA+ restricted polymorph
@@ -3146,8 +3047,8 @@ var/global/noir = 0
 								M.client?.dir = setdir
 								LAGCHECK(LAG_LOW)
 							message_admins("[key_name(usr)] set station direction to [direction].")
-							logTheThing(LOG_ADMIN, src, "set station direction to [direction].")
-							logTheThing(LOG_DIARY, src, "set station direction to [direction]", "admin")
+							logTheThing(LOG_ADMIN, usr, "set station direction to [direction].")
+							logTheThing(LOG_DIARY, usr, "set station direction to [direction]", "admin")
 						else
 							tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 							return
@@ -3267,8 +3168,8 @@ var/global/noir = 0
 							if (!intensity)
 								return
 							var/time = input("Enter length of the shaking effect in seconds.", "length of shaking effect", 1) as num
-							logTheThing(LOG_ADMIN, src, "created a shake effect (intensity [intensity], length [time])")
-							logTheThing(LOG_DIARY, src, "created a shake effect (intensity [intensity], length [time])", "admin")
+							logTheThing(LOG_ADMIN, usr, "created a shake effect (intensity [intensity], length [time])")
+							logTheThing(LOG_DIARY, usr, "created a shake effect (intensity [intensity], length [time])", "admin")
 							message_admins("[key_name(usr)] has created a shake effect (intensity [intensity], length [time]).")
 							for (var/mob/M in mobs)
 								SPAWN(0)
@@ -3411,7 +3312,7 @@ var/global/noir = 0
 				return
 
 		if ("secretsdebug")
-			if (src.level >= LEVEL_CODER)
+			if (src.level >= LEVEL_ADMIN)
 				switch(href_list["type"])
 					if("budget")
 						src.owner:debug_variables(wagesystem)
@@ -4204,6 +4105,11 @@ var/global/noir = 0
 
 	return chosen
 
+/// Filter proc for admin_spawnable types
+/proc/filter_admin_spawnable(type)
+	var/typeinfo/datum/typeinfo = get_type_typeinfo(type)
+	return typeinfo.admin_spawnable
+
 /proc/get_matches(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
 	var/list/types
 	if(use_concrete_types)
@@ -4215,8 +4121,7 @@ var/global/noir = 0
 
 	for(var/path in types)
 		if(only_admin_spawnable)
-			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
-			if(!typeinfo.admin_spawnable)
+			if(!filter_admin_spawnable(path))
 				continue
 		if(findtext("[path]$", object))
 			matches += "[path]"
@@ -4405,24 +4310,24 @@ var/global/noir = 0
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
 	if(C.player?.cloudSaves.getData( "adminhelp_banner" ))
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player?.cloudSaves.getData( "adminhelp_banner" )])<br/>"
-		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from adminhelping.")
+		logTheThing(LOG_ADMIN, usr, "unmuted [constructTarget(C,"admin")] from adminhelping.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
-		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from adminhelping.")
+		logTheThing(LOG_ADMIN, usr, "muted [constructTarget(C,"admin")] from adminhelping.")
 
 	if(C.player?.cloudSaves.getData( "mentorhelp_banner" ))
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player?.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
-		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
+		logTheThing(LOG_ADMIN, usr, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
-		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from mentorhelping.")
+		logTheThing(LOG_ADMIN, usr, "muted [constructTarget(C,"admin")] from mentorhelping.")
 
 	if(C.player?.cloudSaves.getData( "prayer_banner" ))
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player?.cloudSaves.getData( "prayer_banner" )])<br/>"
-		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from praying.")
+		logTheThing(LOG_ADMIN, usr, "unmuted [constructTarget(C,"admin")] from praying.")
 	else
 		built += "<a href='byond://?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"
-		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from praying.")
+		logTheThing(LOG_ADMIN, usr, "muted [constructTarget(C,"admin")] from praying.")
 
 	usr.Browse(built, "window=chatban;size=500x100")
 
@@ -4625,8 +4530,8 @@ var/global/noir = 0
 	if (!forced && tgui_alert(src, "Respawn [M]?", "Confirmation", list("Yes", "No")) != "Yes")
 		return
 
-	logTheThing(LOG_ADMIN, src, "respawned [constructTarget(M,"admin")]")
-	logTheThing(LOG_DIARY, src, "respawned [constructTarget(M,"diary")].", "admin")
+	logTheThing(LOG_ADMIN, usr, "respawned [constructTarget(M,"admin")]")
+	logTheThing(LOG_DIARY, usr, "respawned [constructTarget(M,"diary")].", "admin")
 	message_admins("[key_name(src)] respawned [key_name(M)].")
 
 	var/mob/new_player/newM = new()
@@ -4650,13 +4555,17 @@ var/global/noir = 0
 	set desc = "Respawn yourself"
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	logTheThing(LOG_ADMIN, src, "respawned themselves.")
-	logTheThing(LOG_DIARY, src, "respawned themselves.", "admin")
+	logTheThing(LOG_ADMIN, usr, "respawned themselves.")
+	logTheThing(LOG_DIARY, usr, "respawned themselves.", "admin")
 	message_admins("[key_name(src)] respawned themselves.")
 
 	var/mob/new_player/M = new()
 
 	M.key = usr.client.key
+	M.adminspawned = 1
+	M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
+	M.client.player.claimed_rewards = list() // reset claimed medal rewards
+	M.mind.purchased_bank_item = null
 
 	usr.remove()
 

@@ -57,6 +57,8 @@ Contains:
 	var/override_help_message = null //! see override_name, just for help message
 	var/qdel_on_tear_apart = FALSE //! set this to TRUE for applier who needs multiple spawns to do their effect before eliminating itself (because for some reason smokebombs need it, ugh)
 	var/mob/last_armer = null //! for tracking/logging of who armed the assembly
+	var/obj/item/chargeable_component = null //! if one of the components of the assembly can be charged, it will be referenced here. Use this if you want the assembly to be reachargeable.
+	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 
@@ -67,6 +69,12 @@ Contains:
 	RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(on_wearer_death))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(get_trigger_state))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, PROC_REF(on_part_disposing))
+	RegisterSignal(src, COMSIG_CELL_CAN_CHARGE, PROC_REF(check_if_chargeable))
+	RegisterSignal(src, COMSIG_CELL_CHECK_CHARGE, PROC_REF(check_cell_charge))
+	RegisterSignal(src, COMSIG_CELL_CHARGE, PROC_REF(do_charge))
+	RegisterSignal(src, COMSIG_CELL_TRY_SWAP, PROC_REF(try_cell_swap))
+	RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(do_cell_swap))
+	RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(on_geiger_tick))
 	..()
 
 /obj/item/assembly/proc/set_up_new(var/mob/user, var/obj/item/new_trigger, var/obj/item/new_applier, var/obj/item/new_target)
@@ -80,13 +88,18 @@ Contains:
 	if(new_target)
 		to_set_up_items += new_target
 		src.target = new_target
+	var/contraband_carry_to_set = 0
+	var/contraband_gun_to_set = 0
 	for(var/obj/item/checked_item in to_set_up_items)
 		checked_item.set_loc(src)
 		checked_item.master = src
 		checked_item.layer = initial(checked_item.layer)
 		src.w_class = max(src.w_class, checked_item.w_class)
+		contraband_carry_to_set = max(contraband_carry_to_set, GET_ATOM_PROPERTY(checked_item,PROP_MOVABLE_VISIBLE_CONTRABAND))
+		contraband_gun_to_set = max(contraband_gun_to_set, GET_ATOM_PROPERTY(checked_item,PROP_MOVABLE_VISIBLE_GUNS))
 		if(user)
 			checked_item.add_fingerprint(user)
+	src.AddComponent(/datum/component/contraband, contraband_carry_to_set, contraband_gun_to_set)
 	//now, to set up the assembly, we have to send the signals in the correct order like a normal assembly would be created
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, user, TRUE)
@@ -137,6 +150,10 @@ Contains:
 	//we relay the signal to the trigger, in case of mousetraps
 	SEND_SIGNAL(src.trigger, COMSIG_MOVABLE_FLOOR_REVEALED, revealed_turf)
 
+/obj/item/assembly/proc/on_geiger_tick(var/affected_assembly, var/stage)
+	//we relay the signal to the trigger, in case of geiger counter
+	SEND_SIGNAL(src.trigger, COMSIG_MOB_GEIGER_TICK, stage)
+
 /obj/item/assembly/proc/on_storage_interaction(var/affected_assembly, var/mob/user)
 	//we relay the signal to the trigger, in case of mousetraps
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_STORAGE_INTERACTION, user)
@@ -185,11 +202,93 @@ Contains:
 	// we relay the dropping of the assembly to the trigger in case of a mouse trap
 	src.trigger.Crossed(crossing_atom)
 
+
+///------ Procs to cell-charge related events to the corresponding component ---------
+/// if we have a chargeable component, we just send the signal over and let it do its thing
+
+/obj/item/assembly/proc/check_cell_charge(var/affected_assembly, var/output_holder)
+	if(src.chargeable_component)
+		return SEND_SIGNAL(src.chargeable_component, COMSIG_CELL_CHECK_CHARGE, output_holder)
+
+/obj/item/assembly/proc/check_if_chargeable(var/affected_assembly)
+	if(src.chargeable_component)
+		return SEND_SIGNAL(src.chargeable_component, COMSIG_CELL_CAN_CHARGE)
+	else
+		return CELL_UNCHARGEABLE
+
+/obj/item/assembly/proc/do_charge(var/affected_assembly, var/charge_amount)
+	if(src.chargeable_component)
+		return SEND_SIGNAL(src.chargeable_component, COMSIG_CELL_CHARGE, charge_amount)
+	else
+		return CELL_UNCHARGEABLE
+
+/obj/item/assembly/proc/try_cell_swap(var/affected_assembly, var/obj/item/manipulated_cell, var/mob/user)
+	if(src.chargeable_component)
+		return SEND_SIGNAL(src.chargeable_component, COMSIG_CELL_TRY_SWAP, manipulated_cell, user)
+
+/obj/item/assembly/proc/do_cell_swap(var/affected_assembly, var/obj/item/manipulated_cell, var/mob/user)
+	if(src.chargeable_component)
+		return SEND_SIGNAL(src.chargeable_component, COMSIG_CELL_SWAP, manipulated_cell, user)
+
+///------ ------------------------------------------ ---------
+
+///------ Procs to handle attacking_component  ---------
+
+/obj/item/assembly/attack(var/mob/target, var/mob/user, var/def_zone, var/is_special = FALSE, var/params = null)
+	if(src.attacking_component && src.secured)
+		//if we have an attack-overriding component and this assembly is secured, we just relay the proc to the component
+		//if the attack-override-component doesn't return true
+		if(!SEND_SIGNAL(src.attacking_component, COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE, src, target, user, def_zone, is_special, params))
+			//we now do the attack override. Else, we return false
+			if(SEND_SIGNAL(src.attacking_component, COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE, src, target, user, def_zone, is_special, params))
+				// We need to handle some after_attack-stuff here.
+				user.lastattacked = get_weakref(target)
+				target.lastattacker = get_weakref(user)
+				target.lastattackertime = world.time
+				return
+		else
+			return
+	. = ..()
+
+///This Proc makes the targe the attacking_component, overriding most of the attack-related behaviour of the assembly
+///This won't attack attack specials so people can add their own to handle assembly-weapons
+/obj/item/assembly/proc/set_attacking_component(var/obj/item/target)
+	if(src.attacking_component)
+		//if there is already one, we remove it
+		src.remove_attacking_component()
+	//we check here for target, so it is able to use make_attacking_component(null) to just call remove_attacking_component() when needed
+	if(target)
+		src.attacking_component = target
+		src.force = target.force
+		src.throwforce = target.throwforce
+		src.stamina_damage = target.stamina_damage
+		src.stamina_cost = target.stamina_cost
+		src.click_delay = target.click_delay
+		if(target.flags & ATTACK_SELF_DELAY)
+			src.flags |= ATTACK_SELF_DELAY
+
+///This proc returns most attack-related behaviour back to what it was
+/obj/item/assembly/proc/remove_attacking_component()
+	src.attacking_component = null
+	src.force = initial(src.force)
+	src.throwforce = initial(src.throwforce)
+	src.stamina_damage = initial(src.stamina_damage)
+	src.stamina_cost = initial(src.stamina_cost)
+	src.flags &= ~ATTACK_SELF_DELAY
+	src.click_delay = initial(src.click_delay)
+
+///------ ------------------------------------------ ---------
+
 ///------ Proc to transfer impulses/events onto the main components ---------
 /obj/item/assembly/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled)
 	. = ..()
 	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
 		affected_item.temperature_expose(air, exposed_temperature, exposed_volume, cannot_be_cooled)
+
+/obj/item/assembly/emp_act()
+	..()
+	for(var/obj/item/affected_item in list(src.trigger, src.applier, src.target))
+		affected_item.emp_act()
 
 /obj/item/assembly/ex_act(severity)
 	..()
@@ -253,6 +352,11 @@ Contains:
 	UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)
+	UnregisterSignal(src, COMSIG_CELL_CAN_CHARGE)
+	UnregisterSignal(src, COMSIG_CELL_CHECK_CHARGE)
+	UnregisterSignal(src, COMSIG_CELL_CHARGE)
+	UnregisterSignal(src, COMSIG_CELL_TRY_SWAP)
+	UnregisterSignal(src, COMSIG_CELL_SWAP)
 	var/list/items_to_remove = list(src.trigger, src.applier, src.target) | src.additional_components
 	for(var/obj/item/item_to_delete in items_to_remove)
 		qdel(item_to_delete)
@@ -261,6 +365,8 @@ Contains:
 	src.target = null
 	src.additional_components = null
 	src.last_armer = null
+	src.chargeable_component = null
+	src.attacking_component = null
 	..()
 
 /obj/item/assembly/attack_self(mob/user)
@@ -333,10 +439,25 @@ Contains:
 		component_names = "[component_names]/[initial(src.target.name)]"
 	src.name = "[name_prefix(null, 1)][component_names]-[initial(src.name)][name_suffix(null, 1)]"
 
+/obj/item/assembly/examine(var/mob/user)
+	. = ..()
+	if(src.chargeable_component)
+		var/charge_list = list()
+		if (!(SEND_SIGNAL(src.chargeable_component, COMSIG_CELL_CHECK_CHARGE, charge_list) & CELL_RETURNED_LIST))
+			. += SPAN_ALERT("No power cell installed in [src.chargeable_component].")
+		else
+			. += "The power cell in [src.chargeable_component] has [charge_list["charge"]]/[charge_list["max_charge"]] PUs left!"
+	for (var/obj/item/checked_item in list(src.target, src.applier, src.trigger))
+		. += checked_item.assembly_get_part_examine_message(user, src)
+
 
 /obj/item/assembly/attackby(obj/item/used_object, mob/user)
 	if (isghostcritter(user))
 		boutput(user, SPAN_NOTICE("Some unseen force stops you from tampering with [src.name]."))
+		return
+	if (src.chargeable_component && SEND_SIGNAL(used_object, COMSIG_CELL_IS_CELL))
+		//if we have a chargeable component in the assembly and hit it with a cell, then try to swap the cells
+		SEND_SIGNAL(src.chargeable_component, COMSIG_CELL_TRY_SWAP, used_object, user)
 		return
 	if (iswrenchingtool(used_object) && !src.secured)
 		if (src.target)
@@ -397,7 +518,11 @@ Contains:
 	src.special_construction_identifier = null
 	src.target = null
 	src.target_item_prefix = null
+	src.chargeable_component = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
@@ -416,20 +541,36 @@ Contains:
 	if(ismob(src.loc))
 		var/mob/handling_user = src.loc
 		handling_user.u_equip(src)
+	var/list/items_removed = list()
 	for(var/obj/item/removed_item in items_to_remove)
 		SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, null)
 		removed_item.master = null
 		if(!removed_item.qdeled && !removed_item.disposed)
 			removed_item.set_loc(target_turf)
+			items_removed.Add(removed_item)
 		if(removed_item in src.additional_components)
 			src.additional_components -= removed_item
 	src.trigger = null
 	src.applier = null
 	src.target = null
+	src.remove_attacking_component()
+	src.chargeable_component = null
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, items_removed)
 	qdel(src)
 
 
 /// misc. Assembly-procs --------------------------------
+
+/// This proc returns a string that corresponds to the place the target item is in the assembly. This is used for finding the proper sprites.
+/obj/item/assembly/proc/get_category_string(var/obj/item/target)
+	if(src.trigger == target)
+		return "trigger"
+	if(src.applier == target)
+		return "applier"
+	if(src.target == target)
+		return "target"
+	if(target in src.additional_components)
+		return "comp"
 
 /obj/item/assembly/proc/add_target_item(var/atom/to_combine_atom, var/mob/user)
 	if(src.target)
@@ -449,6 +590,9 @@ Contains:
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	src.w_class = max(src.w_class, manipulated_item.w_class)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 	boutput(user, "You attach the [src.name] to the [manipulated_item.name].")
 	//Since we completed the assembly, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
@@ -496,6 +640,9 @@ Contains:
 			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, to_combine_atom)
 	//Last but not least, we update our icon, w_class and name
 	src.w_class = max(src.w_class, manipulated_item.w_class)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE
@@ -520,6 +667,7 @@ Contains:
 	manipulated_frame.add_fingerprint(user)
 	var/obj/item/mousetrap_roller/new_roller = new /obj/item/mousetrap_roller(get_turf(user), src, to_combine_atom)
 	new_roller.name = "roller/[src.name]" // Roller/mousetrap/igniter/plutonium 239-pipebomb-assembly, gotta love those names
+	new_roller.AddComponent(/datum/component/contraband, GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS))
 	user.put_in_hand_or_drop(new_roller)
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [new_roller.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
@@ -540,6 +688,7 @@ Contains:
 	src.add_fingerprint(user)
 	to_combine_atom.add_fingerprint(user)
 	var/obj/item/clothing/suit/armor/suicide_bomb/new_suicide_vest = new /obj/item/clothing/suit/armor/suicide_bomb(get_turf(user), src, to_combine_atom)
+	new_suicide_vest.AddComponent(/datum/component/contraband, GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS))
 	user.put_in_hand_or_drop(new_suicide_vest)
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [new_suicide_vest.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
@@ -773,6 +922,21 @@ Contains:
 /obj/item/assembly/timer_ignite_pipebomb/mini_syndicate
 	icon_state = "Pipe_Wired_Syndicate"
 	pipebomb_path = /obj/item/pipebomb/bomb/miniature_syndicate
+
+
+
+/////////////////////////////////////////////////// flash/cell assemblies ////////////////////////////////////
+
+/obj/item/assembly/flash_cell
+	secured = TRUE
+	var/new_cell_charge = 7500
+
+/obj/item/assembly/flash_cell/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/device/flash(src)
+	var/obj/item/cell/new_applier = new /obj/item/cell(src)
+	new_applier.charge = src.new_cell_charge
+	src.set_up_new(null, new_trigger, new_applier)
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
 

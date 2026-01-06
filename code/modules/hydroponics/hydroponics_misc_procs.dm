@@ -143,11 +143,9 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 	return completed_name
 
-
-
-
-
-proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
+/// allele_override: alleles are always passed if TRUE, randomised if FALSE. If null they're passed only if an appropriate gene strain is present,
+/// otherwise randomised.
+proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD, var/allele_override)
 	if(!PARENT || !CHILD)
 		return
 	// This is a proc used to copy genes from PARENT to CHILD. It's used in a whole bunch
@@ -160,6 +158,15 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 	CHILD.cropsize = PARENT.cropsize
 	CHILD.potency = PARENT.potency
 	CHILD.endurance = PARENT.endurance
+	// if applicable, also pass the alleles from parent to child.
+	if ((allele_override == null && HYPCheckCommut(PARENT,/datum/plant_gene_strain/stable_alleles)) || allele_override)
+		CHILD.d_species = PARENT.d_species
+		CHILD.d_growtime = PARENT.d_growtime
+		CHILD.d_harvtime = PARENT.d_harvtime
+		CHILD.d_harvests = PARENT.d_harvests
+		CHILD.d_cropsize = PARENT.d_cropsize
+		CHILD.d_potency = PARENT.d_potency
+		CHILD.d_endurance = PARENT.d_endurance
 	// using the same list as the parent as adding new items is what creates a new list
 	CHILD.commuts = PARENT.commuts
 	if(MUT) CHILD.mutation = new MUT.type(CHILD)
@@ -167,7 +174,10 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
 			checked_strain.on_passing(CHILD)
 
-proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create, charge_quantity = 1)
+/// allele_override: alleles are always passed if TRUE, randomised if FALSE. If null they're passed only if an appropriate gene strain is present,
+/// otherwise randomised.
+proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create,
+						 charge_quantity = 1, var/allele_override)
 	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
 	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
 	charge_quantity = max(charge_quantity, 1) // Assume whoever called this wants a seed regardless, don't deal with returning nulls.
@@ -199,7 +209,7 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 	child.name = "[seedname] seed"
 	if (charge_quantity > 1) child.name += " packet"
 	//What's missing is transfering genes and the generation
-	HYPpassplantgenes(parent_genes, child_genes)
+	HYPpassplantgenes(parent_genes, child_genes, allele_override)
 	child.generation = parent_generation
 	//Now the seed it created and we can release it upon the world
 	return child
@@ -222,7 +232,7 @@ proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_pla
 
 
 
-proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA)
+proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA,var/show_gene_strain=TRUE)
 	// This is the proc plant analyzers use to pop up their readout for the player.
 	// Should be mostly self-explanatory to read through.
 	//
@@ -307,7 +317,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		for (var/datum/plant_gene_strain/X in DNA.commuts)
 			gene_strains += "[X.name] [X.strain_type]"
 		if(gene_strains.len)
-			message += "[MUT ? "" : "<br>"]<font color='red'><b>Gene strains detected:</b> [gene_strains.Join(", ")]</font>"
+			message += "[MUT ? "" : "<br>"]<font color='red'><b>Gene strains detected[show_gene_strain ? ": " + gene_strains.Join(", ") : ", advanced analysis required."]</b></font>"
 
 	boutput(user, message)
 	return
@@ -451,3 +461,11 @@ proc/HYPstat_rounding(var/input_number)
 	// This proc will take a value and round up with a chance equal to the first two fractional numbers
 	// this means e.g. 4,24 in this proc will output a 5 with a 24% chance and a 4 with a 76% chance
 	return trunc(input_number) + (prob(fract(input_number) * 100) * sign(input_number))
+
+// Quick proc for phytoscopic glasses
+proc/HYPphytoscopic_scan(var/mob/user, var/atom/target, var/do_return = FALSE)
+	var/show_gene_strain = GET_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) >= PHYTOVISION_UPGRADED ? TRUE : FALSE
+	if (HAS_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION) || show_gene_strain)
+		if(do_return)
+			return scan_plant(target, user, FALSE, show_gene_strain)
+		boutput(user, scan_plant(target, user, FALSE, show_gene_strain))

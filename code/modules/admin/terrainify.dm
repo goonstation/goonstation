@@ -20,8 +20,8 @@ var/datum/station_zlevel_repair/station_repair = new
 /datum/station_zlevel_repair
 	var/datum/map_generator/station_generator
 	var/image/ambient_light
-	var/obj/ambient/ambient_obj
-	var/image/weather_img
+	/// pick()ed from randomly
+	var/list/image/weather_imgs
 	var/obj/effects/weather_effect
 	var/overlay_delay
 	var/datum/gas_mixture/default_air
@@ -49,13 +49,8 @@ var/datum/station_zlevel_repair/station_repair = new
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
 					T.AddOverlays(src.ambient_light, "ambient")
-				if(src.ambient_obj)
-					T.vis_contents |= src.ambient_obj
-				if(src.weather_img)
-					if(islist(src.weather_img))
-						T.AddOverlays(pick(src.weather_img), "weather")
-					else
-						T.AddOverlays(src.weather_img, "weather")
+				if(src.weather_imgs)
+					T.AddOverlays(pick(src.weather_imgs), "weather")
 				if(src.weather_effect)
 					var/obj/effects/E = locate(src.weather_effect) in T
 					if(!E)
@@ -243,6 +238,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/allow_underwater = FALSE
 	var/syndi_camo_color = null
 	var/ambient_color
+	var/day_night_cycle = 120 MINUTES
 	var/startTime
 	var/generates_solid_ground = TRUE
 
@@ -295,8 +291,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 		if(src.ambient_color)
 			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-				station_repair.ambient_obj.color = src.ambient_color
+				var/datum/daynight_controller/terrainify/terrainify_cycle = daynight_controllers[AMBIENT_LIGHT_SRC_TERRAINIFY]
+				if(istype(terrainify_cycle))
+					terrainify_cycle.initialize(src.ambient_color, "#000", src.day_night_cycle)
 			else
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = src.ambient_color
@@ -409,6 +406,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	proc/place_prefabs(prefabs_to_place, flags, params)
 		var/failsafe = 800
+		var/list/turf/turfs_to_ignore = station_repair.get_turfs_to_fix()
 		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
 			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
 			if (P)
@@ -423,6 +421,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 						count++
 						continue
 					if(istype(target.loc, /area/station))
+						count++
+						continue
+
+					//Make sure we don't overlap with important stuff
+					if(length(turfs_to_ignore & block(locate(target.x, target.y, Z_LEVEL_STATION), locate(target.x + P.prefabSizeX-1, target.y + P.prefabSizeY-1, Z_LEVEL_STATION))) == 0)
 						count++
 						continue
 
@@ -450,13 +453,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/turf/T as anything in turfs)
 			if(station_repair.ambient_light)
 				T.AddOverlays(station_repair.ambient_light, "ambient")
-			if(station_repair.ambient_obj)
-				T.vis_contents |= station_repair.ambient_obj
-			if(station_repair.weather_img)
-				if(islist(station_repair.weather_img))
-					T.AddOverlays(pick(station_repair.weather_img), "weather")
-				else
-					T.AddOverlays(station_repair.weather_img, "weather")
+			if(station_repair.weather_imgs)
+				T.AddOverlays(pick(station_repair.weather_imgs), "weather")
 			if(station_repair.weather_effect)
 				var/obj/effects/E = locate(station_repair.weather_effect) in T
 				if(!E)
@@ -556,6 +554,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Mining"=list("None","Normal","Rich"), "Bioluminescent Algae Coverage"=list("None", "Normal", "Heavy", "Extreme", "All"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Asteroid"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#222222"
+	day_night_cycle = 0
 
 	New()
 		..()
@@ -601,6 +600,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list()
 	additional_toggles = list()
 	ambient_color = "#222222"
+	day_night_cycle = 0
 	generates_solid_ground = FALSE
 
 	New()
@@ -891,9 +891,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 			snow = (snow == "No") ? null : snow
 			if(snow)
 				if(snow == "Yes")
-					station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
-					station_repair.weather_img.alpha = 200
-					station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
+					station_repair.weather_imgs = list(image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE))
+					station_repair.weather_imgs[1].alpha = 200
+					station_repair.weather_imgs[1].plane = PLANE_NOSHADOW_ABOVE
 				else
 					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
 
@@ -981,7 +981,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into a swamp"
 	additional_options = list("Rain"=list("No", "Yes", "Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
-	ambient_color = "#222222"
+	ambient_color = "#666"
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#6f7026", nuke_op_color_matrix[3])
@@ -995,13 +995,12 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.station_generator = new/datum/map_generator/jungle_generator
 
 			if(rain == "Yes")
-				//station_repair.weather_img = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
-				station_repair.weather_img = list()
+				station_repair.weather_imgs = list()
 				for(var/idx in 1 to 4)
-					station_repair.weather_img += image('icons/effects/64x64.dmi',"rain_[idx]", layer = EFFECTS_LAYER_BASE)
-					station_repair.weather_img[idx].alpha
-					station_repair.weather_img[idx].alpha = 200
-					station_repair.weather_img[idx].plane = PLANE_NOSHADOW_ABOVE
+					station_repair.weather_imgs += image('icons/effects/64x64.dmi',"rain_[idx]", layer = EFFECTS_LAYER_BASE)
+					station_repair.weather_imgs[idx].alpha
+					station_repair.weather_imgs[idx].alpha = 200
+					station_repair.weather_imgs[idx].plane = PLANE_NOSHADOW_ABOVE
 			else if(rain)
 				station_repair.weather_effect = /obj/effects/precipitation/rain/sideways/tile
 
@@ -1014,12 +1013,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 					if(istype(S,/turf/unsimulated/floor/auto/swamp))
 						S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
 						if(rain == "Yes")
-							S.AddOverlays(pick(station_repair.weather_img), "weather")
+							S.AddOverlays(pick(station_repair.weather_imgs), "weather")
 						else
 							new station_repair.weather_effect(S)
-						if(params["Ambient Light Obj"])
-							S.vis_contents |= station_repair.ambient_obj
-						else
+						if(!params["Ambient Light Obj"])
 							S.AddOverlays(station_repair.ambient_light, "ambient")
 
 			log_terrainify(user, "turned space into a swamp.")
@@ -1030,13 +1027,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into Mars.  A sprawl of stand, stone, and an unyielding wind."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=FALSE, "Duststorm"=TRUE, "Prefabs"=FALSE)
-	ambient_color = "#222222"
+	ambient_color = "#999"
 
 	convert_station_level(params, mob/user)
 		if(..())
 			if(params["Duststorm"])
 				station_repair.station_generator = new/datum/map_generator/mars_generator/duststorm
-				station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
+				station_repair.weather_imgs = list(image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE))
 			else
 				station_repair.station_generator = new/datum/map_generator/mars_generator
 			station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
@@ -1054,11 +1051,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			var/ambient_value
 			for (var/turf/S in space)
-				S.UpdateOverlays(station_repair.weather_img, "weather")
+				S.UpdateOverlays(pick(station_repair.weather_imgs), "weather")
 
-				if(params["Ambient Light Obj"])
-					S.vis_contents |= station_repair.ambient_obj
-				else
+				if(!params["Ambient Light Obj"])
 					ambient_value = lerp(20,80,S.x/300)
 					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
 					S.AddOverlays(station_repair.ambient_light, "ambient")
@@ -1076,11 +1071,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 				T.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
 				if(station_repair.allows_vehicles)
 					T.allows_vehicles = station_repair.allows_vehicles
-				T.UpdateOverlays(station_repair.weather_img, "weather")
+				T.UpdateOverlays(pick(station_repair.weather_imgs), "weather")
 
-				if(params["Ambient Light Obj"])
-					T.vis_contents |= station_repair.ambient_obj
-				else
+				if(!params["Ambient Light Obj"])
 					ambient_value = lerp(20,80,T.x/300)
 					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
 					T.AddOverlays(station_repair.ambient_light, "ambient")
@@ -1172,7 +1165,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into a colder snowy place"
 	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"), "Season"=list("None", "Winter"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
-	ambient_color = "#222222"
+	ambient_color = "#999"
 	parallax_render_source_group = /datum/parallax_render_source_group/planet/snow
 
 	New()
@@ -1203,7 +1196,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into a lush and wooden place"
 	additional_options = list("Mining"=list("None", "Normal", "Rich"), "Season"=list("None", "Autumn"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Spooky"=FALSE, "Re-Entry"=FALSE)
-	ambient_color = "#211"
+	ambient_color = "#988"
 	parallax_render_source_group = /datum/parallax_render_source_group/planet/forest
 
 	New()
@@ -1460,6 +1453,13 @@ client/proc/unterrainify()
 		var/list/turf/preconvert_turfs = station_repair.preconvert_turfs
 		station_repair = new
 		station_repair.preconvert_turfs = preconvert_turfs
+
+		var/datum/daynight_controller/terrainify/terrainify_cycle = daynight_controllers[AMBIENT_LIGHT_SRC_TERRAINIFY]
+		if(istype(terrainify_cycle))
+			terrainify_cycle.color1 = "#000"
+			terrainify_cycle.color2 = "#000"
+			terrainify_cycle.update_color( "#000" )
+			terrainify_cycle.active = FALSE
 
 		RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 		global.is_map_on_ground_terrain = FALSE

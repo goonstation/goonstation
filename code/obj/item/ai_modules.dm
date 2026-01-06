@@ -27,6 +27,16 @@ TYPEINFO(/obj/item/aiModule)
 	var/input_char_limit = 100
 
 	var/glitched = FALSE
+	/// Incorruptible. So far the only incorruptible type of law found has been bread. Political science researchers are still working on that.
+	var/glitch_immune = FALSE
+	/// The state it appears as in the law rack
+	var/rack_state = "aimod"
+	/// The highlight_color tinted overlay overlay at the side of the rack sprite
+	var/rack_overlay_state = "aimod_over"
+	/// Does this module get offset side to side a couple of pixels when inserted into the rack?
+	var/wonky = FALSE
+	/// Can this module be welded or screwed in?
+	var/can_be_secured = TRUE
 	var/is_emag_glitched = FALSE
 	var/lawText = "This law does not exist."
 	var/lawTextSafe = "This law does not exist." //holds backup of law text for glitching
@@ -91,7 +101,7 @@ TYPEINFO(/obj/item/aiModule)
 			return src.name
 
 	proc/make_glitchy(lawtext_replace, total_replace = TRUE)
-		if(src.glitched) //Don't wanna double glitch the same module
+		if(src.glitched || src.glitch_immune) //Don't wanna double glitch the same module
 			return FALSE
 		src.lawTextSafe = src.lawText
 		src.glitched = TRUE
@@ -100,6 +110,24 @@ TYPEINFO(/obj/item/aiModule)
 		else
 			src.lawText = list(src.lawText, lawtext_replace)
 		tooltip_rebuild = TRUE
+
+	/// Can this user remove this module from this law rack?
+	proc/can_remove(slotNum, obj/machinery/lawrack/rack, mob/user)
+		return TRUE //yes
+
+	proc/can_screw(slotNum, obj/machinery/lawrack/rack, mob/user)
+		return TRUE
+
+	proc/can_weld(slotNum, obj/machinery/lawrack/rack, mob/user)
+		return TRUE
+
+	///Overridable behaviour when inserted into a law rack
+	proc/on_inserted(slotNum, obj/machinery/lawrack/rack, mob/user)
+		return
+
+	///Overridable behaviour when removed from a law rack
+	proc/on_removed(slotNum, obj/machinery/lawrack/rack, mob/user)
+		return
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
@@ -488,6 +516,40 @@ ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 	icon_state = "holo_mod_e"
 	highlight_color = "#E7A545"
 	expansion = "circular"
+
+/obj/item/aiModule/bread
+	name = "a slice of bread"
+	highlight_color = "#D79E6B"
+	glitch_immune = TRUE //it's fucking bread
+	rack_state = null
+	rack_overlay_state = "aimod_bread"
+	wonky = TRUE
+	can_be_secured = FALSE
+	var/obj/item/reagent_containers/food/bread = null
+
+	on_removed(slotNum, obj/machinery/lawrack/rack, mob/user)
+		if (user)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(bread)
+		else
+			bread.set_loc(get_turf(src))
+		src.bread = null
+		qdel(src)
+
+	can_weld(slotNum, obj/machinery/lawrack/rack, mob/user)
+		boutput(user, SPAN_ALERT("You try to toast [src] but only manage to mildly scorch it."))
+		return FALSE
+
+	can_screw(slotNum, obj/machinery/lawrack/rack, mob/user)
+		boutput(user, SPAN_ALERT("You stick the screwdriver into [src]. It just sort of squishes pointlessly."))
+		return FALSE
+
+	can_remove(slotNum, obj/machinery/lawrack/rack, mob/user)
+		if (prob(80))
+			boutput(user, SPAN_ALERT("You [pick("really ", "really really ", "attempt", "cautiously attempt", "")]try to [pick("persuade", "yank", "tempt", "claw", "drag", "scoop", "slide")] [src] out of the law rack, but it's [pick("stuck fast", "jammed in", "wedged in just the wrong way", "caught on something expensive", "falling apart messily in your hands")]!"))
+			playsound(rack, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Slimy_Hit_3.ogg'), 50, 1)
+			return FALSE
+		return TRUE
 
 ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
 /obj/item/aiModule/ability_expansion

@@ -1097,6 +1097,46 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Catherine McFluffums"
 		icon_state = "catherinemcfluffums"
 		ckey = "outbackcatgirl"
+	superbongotime
+		name = "\improper Laylith Blackwing"
+		icon_state = "laylithblackwing"
+		ckey = "superbongotime"
+	raccoonpope
+		name = "\improper Cynthia Xeonyr"
+		icon_state = "cynthiaxeonyr"
+		ckey = "raccoonpope"
+	ovaiggy
+		name = "\improper Sachie Blunt"
+		icon_state = "sachieblunt"
+		ckey = "ovaiggy"
+	ithebinman
+		name = "\improper The Mucus Man"
+		icon_state = "themucusman"
+		ckey = "ithebinman"
+	snugglycactus
+		name = "\improper Ribbert McFrogg"
+		icon_state = "ribbertmcfrogg"
+		ckey = "snugglycactus"
+	b0opy
+		name = "\improper Dementia Dan"
+		icon_state = "dementiadan"
+		ckey = "b0opy"
+	haikuart
+		name = "\improper Rocky Roach"
+		icon_state = "rockyroach"
+		ckey = "haikuart"
+	warsometimeschanges
+		name = "\improper Alice Dawn"
+		icon_state = "alicedawn"
+		ckey = "warsometimeschanges"
+	annmagedon
+		name = "\improper Charlotte Chirtte"
+		icon_state = "charlottechirtte"
+		ckey = "annmagedon"
+	literallily
+		name = "\improper Amanita Clearwater"
+		icon_state = "amanitaclearwater"
+		ckey = "literallily"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

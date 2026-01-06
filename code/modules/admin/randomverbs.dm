@@ -6,27 +6,6 @@
 	else
 		world.Reboot()
 
-/client/proc/rebuild_flow_networks()
-	set name = "Rebuild Flow Networks"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	make_fluid_networks()
-
-/client/proc/print_flow_networks()
-	set name = "Print Flow Networks"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	DEBUG_MESSAGE("Dumping flow network refs")
-	for_by_tcl(network, /datum/flow_network)
-		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
-	for_by_tcl(network, /datum/flow_network)
-		DEBUG_MESSAGE("Printing flow network rooted at [showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)] (\ref[network])")
-		// Clear DFS flags
-		network.clear_DFS_flags()
-		DFS_LOUD(network.nodes[1])
-
 /client/proc/cmd_admin_drop_everything(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
@@ -1359,6 +1338,20 @@
 
 	src.check_reagents_internal(target)
 
+/client/proc/cmd_change_addiction(var/atom/target as null|mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 0
+	set name = "Adjust Addictions"
+	set desc = "Increase the addiction meter of all of someone's addictions by an amount."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (!ismob(target))
+		return
+	var/value = input("Value:", "Increase all active addiction meters by value", "0") as num
+	var/mob/mobtarget = target
+	mobtarget.try_affect_all_addictions(value)
+
 /client/proc/check_reagents_internal(var/atom/target as null|mob|obj|turf in world, refresh = 0)
 	if (!target)
 		return
@@ -1381,6 +1374,9 @@
 			var/obj/fluid/F = target
 			if (F.group && F.group.reagents)
 				reagents = F.group.reagents
+		if (istype(target, /obj/fluid_pipe))
+			var/obj/fluid_pipe/pipe = target
+			reagents = pipe.network.reagents
 		if (!reagents)
 			boutput(usr, SPAN_NOTICE("<b>[target] contains no reagents.</b>"))
 			return
@@ -1564,6 +1560,9 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/fluid = A
 		reagents = fluid.group?.reagents
+	else if (istype(A, /obj/fluid_pipe))
+		var/obj/fluid_pipe/pipe = A
+		reagents = pipe.network.reagents
 	else if(!A.reagents)
 		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
 		reagents = A.reagents
@@ -2611,8 +2610,7 @@ var/global/night_mode_enabled = 0
 	logTheThing(LOG_ADMIN, usr, "has toggled [constructTarget(C.mob,"admin")]'s text mode to [!is_text]")
 	logTheThing(LOG_DIARY, usr, "has toggled [constructTarget(C.mob,"diary")]'s text mode to [!is_text]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
-	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
-
+	C.set_text_mode(!is_text)
 
 /client/proc/retreat_to_office()
 	set name = "Retreat To Office"

@@ -7,7 +7,7 @@
 #define REACTOR_ON_FIRE_TEMP 1500
 #define REACTOR_MELTDOWN_TEMP 2000 //just so the components can melt before the catastrophic overload
 
-/obj/machinery/atmospherics/binary/nuclear_reactor
+/obj/machinery/nuclear_reactor
 	name = "Model NTBMK Nuclear Reactor"
 	desc = "A nuclear reactor vessel, with slots for fuel rods and other components. Hey wait, didn't one of these explode once?"
 	icon = 'icons/misc/nuclearreactor.dmi'
@@ -25,6 +25,7 @@
 	custom_suicide = TRUE
 	pixel_point = TRUE
 	machine_registry_idx = MACHINES_FISSION
+	processing_tier = PROCESSING_QUARTER
 	/// 2D grid of reactor components, or null where there are no components. Size is REACTOR_GRID_WIDTH x REACTOR_GRID_HEIGHT
 	var/list/obj/item/reactor_component/component_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
 	/// 2D grid of lists of neutrons in each grid slot of the component grid. Lists can be empty.
@@ -48,6 +49,8 @@
 	var/net_id = null
 	/// Flag indicating total meltdown has happened
 	var/melted = FALSE
+	var/obj/machinery/atmospherics/unary/node/input
+	var/obj/machinery/atmospherics/unary/node/output
 
 	/// INTERNAL: Used to detemine whether an icon update is needed for the component grid overlay
 	VAR_PRIVATE/_comp_grid_overlay_update = TRUE
@@ -85,6 +88,8 @@
 		src._light_turf = get_turf(src)
 		src._light_turf.add_medium_light("reactor_light", list(255,255,255,255))
 		_comp_grid_overlay_update = TRUE
+		src.input = new /obj/machinery/atmospherics/unary/node{dir = WEST}(get_step(get_steps(src, WEST, 2), SOUTH))
+		src.output = new /obj/machinery/atmospherics/unary/node{dir = EAST}(get_step(get_steps(src, EAST, 2), NORTH))
 		UpdateGasVolume()
 		UpdateIcon()
 
@@ -94,6 +99,8 @@
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
+		QDEL_NULL(src.input)
+		QDEL_NULL(src.output)
 
 	proc/MarkGridForUpdate()
 		src._comp_grid_overlay_update = TRUE
@@ -101,11 +108,11 @@
 	update_icon()
 		//status lights
 		//gas input/output
-		if(air1 && TOTAL_MOLES(air1) > 100)
+		if(src.input.air_contents && TOTAL_MOLES(src.input.air_contents) > 100)
 			src.AddOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
 			src.ClearSpecificOverlays("gas_input_lights")
-		if(air2 && TOTAL_MOLES(air2) > 100)
+		if(src.output.air_contents && TOTAL_MOLES(src.output.air_contents) > 100)
 			src.AddOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
 			src.ClearSpecificOverlays("gas_output_lights")
@@ -164,11 +171,11 @@
 
 		//pass through last tick's air. We do this here so that atmos analyser can read it in between process calls
 		var/coolant_thermal_e = THERMAL_ENERGY(src.air_contents)
-		src.air2.merge(src.air_contents)
+		src.output.air_contents.merge(src.air_contents)
 		//after merge, the original gas mixture is deleted, so create a new one
 		src.air_contents = new /datum/gas_mixture()
 
-		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
+		var/input_starting_pressure = MIXTURE_PRESSURE(src.input.air_contents)
 		var/tmpRads = 0
 
 		//PV=nRT
@@ -176,9 +183,9 @@
 		//but we need to express that in moles so,  1/n = RT/PV .. n = PV/RT
 		var/transfer_moles = 0
 		if(input_starting_pressure)
-			transfer_moles = (air1.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*air1.temperature)
-		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
-		air_contents.volume = air1.volume
+			transfer_moles = (src.input.air_contents.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature)
+		var/datum/gas_mixture/gas_input = src.input.air_contents.remove(transfer_moles)
+		src.air_contents.volume = src.input.air_contents.volume
 		gas_input?.volume = air_contents.volume
 		_last_total_coolant_e = gas_input ? THERMAL_ENERGY(gas_input) : 0
 		var/total_thermal_e = 0
@@ -266,8 +273,8 @@
 			boutput(world, "Reactor dE: [engineering_notation(total_thermal_e - src._last_total_thermal_e)]J Coolant dE:[engineering_notation(coolant_thermal_e - src._last_total_coolant_e)]J")
 		src._last_total_thermal_e = total_thermal_e
 
-		src.network1?.update = TRUE
-		src.network2?.update = TRUE
+		src.input.network?.update = TRUE
+		src.output.network?.update = TRUE
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[src.air_contents.volume]")
 		UpdateIcon()
 
@@ -299,7 +306,7 @@
 				if(src.component_grid[x][y])
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
-		src.air1.volume = total_gas_volume
+		src.input.air_contents.volume = total_gas_volume
 		src.air_contents.volume = total_gas_volume
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
@@ -439,27 +446,6 @@
 			. += null
 		else
 			. += src.component_grid[x][y+1]
-
-	//override the atmos/binary connection code, because it doesn't like big icons
-	initialize()
-		if(node1 && node2) return
-
-		var/node2_connect = dir
-		var/node1_connect = turn(dir, 180)
-
-		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(get_steps(src, node1_connect, 3), SOUTH, 1))
-			if(target.initialize_directions & node2_connect)
-				if(target != src)
-					node1 = target
-					break
-
-		for(var/obj/machinery/atmospherics/pipe/simple/target in get_steps(get_steps(src, node2_connect, 3), NORTH, 1))
-			if(target.initialize_directions & node1_connect)
-				if(target != src)
-					node2 = target
-					break
-
-		UpdateIcon()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -698,7 +684,7 @@
 		src.dir = dir
 		src.velocity = velocity
 
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal
+/obj/machinery/nuclear_reactor/prefilled/normal
 	New()
 		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("steel")
 		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel("steel")
@@ -731,7 +717,7 @@
 
 		..()
 
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random
+/obj/machinery/nuclear_reactor/prefilled/random
 	New()
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
@@ -746,7 +732,7 @@
 						src.component_grid[x][y] = new /obj/item/reactor_component/heat_exchanger/random_material
 		..()
 
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
+/obj/machinery/nuclear_reactor/prefilled/meltdown
 	New()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
 			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
@@ -756,7 +742,7 @@
 					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
 		..()
 
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/insane
+/obj/machinery/nuclear_reactor/prefilled/insane
 	New()
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
@@ -764,7 +750,7 @@
 				src.component_grid[x][y].melt()
 		..()
 
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/glowstick
+/obj/machinery/nuclear_reactor/prefilled/glowstick
 	New()
 		var/datum/material/glowstick_mat = getMaterial("glowstick")
 		glowstick_mat = glowstick_mat.getMutable()
@@ -809,8 +795,8 @@
 		generate_inverse_stats()
 
 	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
-		if(isintangible(hit) || isobserver(hit))
-			return TRUE //don't irradiate ghosts
+		if(isintangible(hit) || isobserver(hit) || IS_OVERLAY_OR_EFFECT(hit) || istype(hit, /atom/movable/hotspot))
+			return TRUE //don't irradiate ghosts, overlays, atmos fires etc.
 
 		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 10 : 5
 		var/density = (hit.material ? hit.material.getProperty("density") : 3) //3 is default density

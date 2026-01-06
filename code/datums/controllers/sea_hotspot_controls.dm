@@ -89,8 +89,17 @@
 			return
 
 		var/list/hotspots = list()
+
 		for (var/datum/sea_hotspot/S in hotspot_groups)
-			hotspots += {"<div class='hotspot' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
+
+			var/hotspot_color
+
+			if (S.can_drift == 1) // draws the hotspots on the trench map and changes color if it is pinned
+				hotspot_color = "hotspot"
+			else
+				hotspot_color = "pinned_hotspot"
+
+			hotspots += {"<div class='[hotspot_color]' style='bottom: [S.center.y * 2]px; left: [S.center.x * 2]px; width: [S.radius * 4 + 2]px; height: [S.radius * 4 + 2]px; margin-left: -[S.radius * 2]px; margin-bottom: -[S.radius * 2]px;'></div>"}
 
 		src.map_html = {"
 <!doctype html>
@@ -129,6 +138,10 @@
 			position: absolute;
 			background: rgba(255, 120, 120, 0.6);
 		}
+		.pinned_hotspot {
+			position: absolute;
+			background: rgba(0, 160, 255, 0.6);
+		}
 		.key {
 			text-align: center;
 			margin-top: 0.5em;
@@ -149,6 +162,7 @@
 		.station { background-color: [map_colors["station"]]; }
 		.other { background-color: [map_colors["other"]]; }
 		.vent { background-color: rgb(255, 120, 120); }
+		.pinnedvent { background-color: rgb(0, 160, 255); }
 	</style>
 </head>
 <body>
@@ -161,6 +175,7 @@
 			<span><span class='station'></span> NT Asset</span>
 			<span><span class='other'></span> Unknown</span>
 			[map_currently_underwater?"<span><span class='vent'></span> Hotspot</span>":""]
+			[map_currently_underwater?"<span><span class='pinnedvent'></span> Pinned Hotspot</span>":""]
 			</div>
 </body>
 </html>
@@ -251,6 +266,8 @@
 				S.drift_dir = vector_to_dir(center.x - T.x, center.y - T.y)
 
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
+
+				generate_map_html() //updates the map when hotspot gets stomped
 
 	proc/colorping_at_turf(var/turf/T)
 		for (var/datum/sea_hotspot/S in hotspot_groups)
@@ -555,10 +572,14 @@ TYPEINFO(/obj/item/heat_dowsing)
 				speak_count = 0
 				var/val = 0 //my friend valerie
 				var/true_center = 0
+				var/pinnable_spot = FALSE
 				for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(src.loc))
 					var/turf/center = H.center.turf()
 					if (src.loc == center)
 						true_center += 1
+
+					if (BOUNDS_DIST(src, H.center.turf()) == 0) //variable for determining whether to play a sound if turf is able to be pinned
+						pinnable_spot = TRUE
 
 					var/d = GET_DIST(src.loc,center)
 					if (d < dist_last)
@@ -584,7 +605,14 @@ TYPEINFO(/obj/item/heat_dowsing)
 					placed = 0
 
 					src.speech_bubble_icon_say = "[val]"
-					src.say("Estimated distance to centre: [val]", flags = SAYFLAG_NO_MAPTEXT)
+
+					if(pinnable_spot == TRUE)
+						src.say("Estimated distance to centre: [val], Location able to be pinned", flags = SAYFLAG_NO_MAPTEXT)
+					else
+						src.say("Estimated distance to centre: [val]", flags = SAYFLAG_NO_MAPTEXT)
+
+					if (pinnable_spot == TRUE && true_center == 0 ) //plays sound if turf is able to be pinned
+						playsound(src, 'sound/machines/found.ogg', 50, TRUE,0.1,0.7)
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)

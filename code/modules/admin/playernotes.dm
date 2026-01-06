@@ -78,7 +78,7 @@
 			if (!id && ("oldserver" in legacyData))
 				id = legacyData["oldserver"]
 
-			var/gameAdminCkey = playerNote.game_admin?.ckey
+			var/gameAdminCkey = playerNote.game_admin?.player?.ckey
 			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
 				gameAdminCkey = legacyData["game_admin_ckey"]
 

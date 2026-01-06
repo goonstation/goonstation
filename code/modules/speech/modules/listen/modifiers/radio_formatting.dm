@@ -34,8 +34,7 @@
 	var/text_colour = radio_speaker.device_color
 
 	if (display_frequency)
-		classes = radio_speaker.secure_classes[prefix] || radio_speaker.secure_classes[1]
-
+		classes = radio_speaker.secure_classes[prefix] || radio_speaker.secure_classes["all"] || default_frequency_class(display_frequency)
 		if (length(radio_speaker.secure_colors))
 			text_colour = radio_speaker.secure_colors[prefix] || radio_speaker.secure_colors?[1]
 
@@ -49,7 +48,7 @@
 
 	// Determine that speaker name that should be displayed.
 	if (ismob(message.speaker))
-		message.speaker_to_display = message.get_speaker_name(TRUE)
+		message.speaker_to_display ||= message.get_speaker_name(TRUE)
 
 	message.format_speaker_prefix = {"\
 		<span class='radio [classes]' [css_style]>\
@@ -59,7 +58,9 @@
 
 	message.format_verb_prefix = {"\
 		</span> \
+		<span class='radio [default_frequency_class(display_frequency)]'>\
 		<b>\[[format_frequency(display_frequency)]\]</b> \
+		</span>\
 		<span class='message'>\
 	"}
 

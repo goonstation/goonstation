@@ -283,7 +283,7 @@
 			playsound(ownerMob, 'sound/items/hypo.ogg', 80, FALSE)
 
 			var/mob/living/critter/robotic/crawler/crawler = new /mob/living/critter/robotic/crawler(get_turf(target))
-			crawler.name = "[target]'s crawling head"
+			crawler.name = "[target]’s crawling head"
 			crawler.desc = "A horrible crawling monstrosity, ravaged from the corpse of [target]."
 			crawler.revivalChance = 100
 

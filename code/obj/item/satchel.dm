@@ -50,6 +50,7 @@
 				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
 			tooltip_rebuild = TRUE
+			RANDOMIZE_PIXEL_OFFSET(W, 10)
 		else
 			boutput(user, SPAN_ALERT("[src] is full!"))
 
@@ -79,6 +80,8 @@
 				if (length(src.contents) > 1)
 					if (user.a_intent == INTENT_GRAB)
 						getItem = src.search_through(user)
+						if (!getItem) // prevents the satchel teleporting back to the hand if the search is cancelled
+							return
 
 					else
 						user.visible_message(SPAN_NOTICE("<b>[user]</b> rummages through \the [src]."),\
@@ -126,6 +129,9 @@
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
 		if (!chosenItem || !(satchel_contents[chosenItem] in src.contents))
 			return
+		if (!user.is_in_hands(src))
+			boutput(user, SPAN_ALERT("You could have sworn [src] was just in your hand a moment ago."))
+			return
 		return satchel_contents[chosenItem]
 
 
@@ -164,6 +170,8 @@
 				I.add_fingerprint(user)
 				if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					I.set_loc(src)
+					SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
+					RANDOMIZE_PIXEL_OFFSET(I, 10)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)
@@ -177,20 +185,51 @@
 		tooltip_rebuild = TRUE
 
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
-		if (!in_interact_range(src, usr)  || BOUNDS_DIST(over_object, usr) > 0 || !can_act(usr))
+		if (!in_interact_range(src, usr) || !can_act(usr))
 			return
-		if (istype(over_object,/obj/table))
+
+		if (istype(over_object,/obj/table) || istype(over_object, /obj/surgery_tray))
+			if (BOUNDS_DIST(over_object, usr) > 0)
+				boutput(usr, SPAN_ALERT("You need to be closer to [over_object] to do that."))
+				return
 			if (length(src.contents) < 1)
 				boutput(usr, SPAN_ALERT("There's nothing in [src]!"))
 			else
+				var/obj/table = over_object
 				usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
 				for (var/obj/item/thing in src.contents)
-					thing.set_loc(over_object.loc)
+					table.place_on(thing)
 				src.tooltip_rebuild = TRUE
 				src.UpdateIcon()
 				params["satchel_dumped"] = TRUE
 				return
+
+		if (istype(over_object, /obj/machinery/disposal))
+			disposals_dump(over_object, usr)
+			return
 		. = ..()
+
+	/// The user tries to place all of the satchel's contents into the given disposal chute.
+	proc/disposals_dump(var/obj/machinery/disposal/chute, mob/user)
+		if (BOUNDS_DIST(chute, user) > 0)
+			boutput(user, SPAN_ALERT("You need to be closer to [chute] to do that."))
+			return
+		if (!length(src.contents))
+			boutput(user, SPAN_ALERT("There's nothing in [src] to dump out!"))
+			return
+		if (!(src in user.equipped_list()))
+			if (!isrobot(user))
+				boutput(user, SPAN_ALERT("You need to be holding [src] to do that."))
+			return
+		for(var/obj/item/item in src.contents)
+			if (chute.fits_in(item))
+				item.set_loc(chute)
+		user.set_dir(get_dir(user, chute))
+		src.UpdateIcon()
+		src.tooltip_rebuild = TRUE
+		chute.play_item_insert_sound(src)
+		user.visible_message("<b>[user.name]</b> dumps out [src] into [chute].")
+		chute.update()
 
 	// Don't place the satchel onto the table if we've dumped out its contents with the same command.
 	should_place_on(obj/target, params)
@@ -277,6 +316,7 @@
 		icon_state = "hydrosatchel"
 		item_state = "hydrosatchel"
 		itemstring = "items of produce"
+		maxitems = 50
 
 		New()
 			..()
@@ -291,7 +331,9 @@
 			/obj/item/raw_material/cotton,
 			/obj/item/feather,
 			/obj/item/bananapeel)
-			exceptions = list(/obj/item/plant/tumbling_creeper) // tumbling creeper have size restrictions and should not be carried in large amount
+			exceptions = list(/obj/item/plant/tumbling_creeper, /obj/item/reagent_containers/food/snacks/ingredient/egg)
+			// tumbling creeper have size restrictions and should not be carried in large amount
+			// eggs are just a bit too powerful to fit in your pocket
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()

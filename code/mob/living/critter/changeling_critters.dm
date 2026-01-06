@@ -187,6 +187,7 @@ TYPEINFO(/mob/living/critter/changeling)
 			. += 7
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		var/message
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
@@ -195,7 +196,6 @@ TYPEINFO(/mob/living/critter/changeling)
 			if("flip")
 				if(src.emote_check(voluntary, 50))
 					var/list/mob/living/possible_targets = list()
-					var/message
 					//Check if we have any nearby mobs
 					for(var/mob/living/L in oview(1))
 						possible_targets += L
@@ -221,6 +221,10 @@ TYPEINFO(/mob/living/critter/changeling)
 						message = "<B>[src]</B> does a flip!"
 
 					return message
+			if ("snap","snapfingers","fingersnap","click","clickfingers")
+				message = "The <b>[src.name]</b> snaps [his_or_her(src)] fingers."
+				playsound(src.loc, src.sound_fingersnap, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+				return message
 		return null
 
 	specific_emote_type(var/act)
@@ -689,18 +693,19 @@ TYPEINFO(/mob/living/critter/changeling)
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
 	if(ishuman(M) && !isdead(M))
 		var/mob/living/carbon/human/H = M
-		random_brute_damage(H, 10)
-		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
-		playsound(src, 'sound/misc/headspiderability.ogg', 60)
-		src.set_loc(H)
-		H.setStatusMin("unconscious", 10 SECONDS)
 
 		var/datum/ailment_data/parasite/ailment_data = get_disease_from_path(/datum/ailment/parasite/headspider).setup_strain()
 		ailment_data.affected_mob = H
 		ailment_data.source = src
-		H.contract_disease(/datum/ailment/parasite/headspider, null, ailment_data, TRUE)
-
-		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		if(H.contract_disease(/datum/ailment/parasite/headspider, null, ailment_data, TRUE))
+			random_brute_damage(H, 10)
+			src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
+			playsound(src, 'sound/misc/headspiderability.ogg', 60)
+			src.set_loc(H)
+			H.setStatusMin("unconscious", 10 SECONDS)
+			logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		else //The only way we can fail is if they are immune to disease (ling/vamp/thrall/zombie/godmode) or they already have a headspider
+			boutput(src, SPAN_ALERT("[H]'s inhuman nature renders us unable to infect their form."))
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))

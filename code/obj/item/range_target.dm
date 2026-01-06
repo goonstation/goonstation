@@ -3,7 +3,7 @@
 /obj/range_target
 	name = "shooting range target"
 	desc = "A target to fire at in a shooting range."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "bopbag"
 	density = 1
 	anchored = ANCHORED

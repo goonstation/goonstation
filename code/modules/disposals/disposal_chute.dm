@@ -39,6 +39,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	var/repressure_speed = 0.1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	power_usage = 100
+	_health = LOCKER_HEALTH_AVERAGE // TODO: balance health
+	_max_health = LOCKER_HEALTH_AVERAGE
 
 	var/is_processing = 1 //optimization thingy. kind of dumb. mbc fault. only process chute when flushed or recharging.
 
@@ -113,7 +115,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		. = ..()
 
-	HELP_MESSAGE_OVERRIDE("Place held satches, boxes, and bags by clicking with the <b>Disarm</b>, <b>Grab</b>, or <b>Harm</b> intent.")
+	HELP_MESSAGE_OVERRIDE("Drag held boxes, bags, and satchels onto this to empty them out.")
 
 	get_help_message(dist, mob/user)
 		. = ..()
@@ -134,9 +136,31 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	proc/fits_in(atom/movable/AM)
 		return TRUE
 
+	proc/bash(obj/item/I, mob/user)
+		user.lastattacked = get_weakref(src)
+		var/damage
+		var/damage_text
+		if (I.force < 10)
+			damage = round(I.force * 0.6)
+			damage_text = " It's not very effective."
+		else
+			damage = I.force
+		user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src]! [damage_text]"))
+		attack_particle(user,src)
+		hit_twitch(src)
+		src.take_damage(clamp(damage, 1, 20), user, I, null)
+		playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+
+	proc/take_damage(amount, mob/user, obj/item/I, obj/projectile/P)
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			src.set_broken()
+
 	// attack by item places it in to disposal
-	attackby(var/obj/item/I, var/mob/user)
-		var/obj/item/storage/mechanics/mechitem = null
+	attackby(var/obj/item/I, var/mob/user, params)
 		if(status & BROKEN)
 			switch(src.repair_step)
 				if(DISPOSAL_REPAIR_STEP_SCREWDRIVER)
@@ -159,47 +183,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					else
 						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
 			return
+		// snowest of snowflake
+		if (islivingobject(user) && I.force > 0)
+			src.bash(I, user)
+			update()
+			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
-		if (istype(I,/obj/item/satchel/) && I.contents.len)
-			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if (!in_interact_range(src, user))
-				boutput(user, SPAN_ALERT("You need to be closer to the chute to do that."))
-				return
-			if (action == "Empty it into the Chute")
-				var/obj/item/satchel/S = I
-				for(var/obj/item/O in S.contents)
-					if (src.fits_in(O))
-						O.set_loc(src)
-				S.UpdateIcon()
-				S.tooltip_rebuild = TRUE
-				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				src.update()
-				return
-		if(istype(I, /obj/item/storage/mechanics))
-			mechitem = I
-		//first time they click with a storage, it gets dumped. second time container itself is added
-		if (length(I.storage?.get_contents()) && user.a_intent == INTENT_HELP && (!mechitem || mechitem.open)) //if they're not on help intent it'll default to placing it in while full.
-			if(istype(I, /obj/item/storage/secure))
-				var/obj/item/storage/secure/secS = I
-				if (!src.fits_in(secS))
-					return
-				if(secS.locked)
-					user.visible_message("[user.name] places \the [secS] into \the [src].",\
-						"You place \the [secS] into \the [src].")
-					user.drop_item()
-					secS.set_loc(src)
-					actions.interrupt(user, INTERRUPT_ACT)
-					src.update()
-					return
-			for(var/obj/item/O in I.storage.get_contents())
-				if (src.fits_in(O))
-					I.storage.transfer_stored_item(O, src, user = user)
-			user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
-			actions.interrupt(user, INTERRUPT_ACT)
-			src.update()
+		// Mousedropping storage items will dump the contents during MouseDrop_T instead
+		if (istype(I, /obj/item/storage/mechanics) || (islist(params) && params["dragged"]))
 			return
 
 		var/obj/item/magtractor/mag
@@ -218,11 +210,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					return
 				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
 		else
+			if (src._health < src._max_health && iswrenchingtool(I))
+				src.visible_message("[user] uses [I] to tighten the retaining screws on [src], repairing it.")
+				src._health = src._max_health // TODO: balance, actionbar
 			if (istype(mag))
 				actions.stopId(/datum/action/magPickerHold, user)
 			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
+			src.play_item_insert_sound(I, user)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
@@ -242,6 +238,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (istype(target, /obj/machinery/bot))
 			var/obj/machinery/bot/bot = target
 			bot.set_loc(src)
+			src.play_item_insert_sound(bot, user)
 			return
 		if (iscritter(target))
 			var/obj/critter/corpse = target
@@ -249,6 +246,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				corpse.set_loc(src)
 				user.visible_message("[user.name] places \the [corpse] into \the [src].")
 				actions.interrupt(user, INTERRUPT_ACT)
+				src.play_item_insert_sound(corpse)
 			return
 
 		if (isliving(target))
@@ -263,6 +261,33 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					return
 
 			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
+
+		if (!target.storage)
+			return
+		else if (!length(target.storage.get_contents()))
+			boutput(user, SPAN_ALERT("There's nothing in [target] to empty out!"))
+			return
+		else if (!istype(target, /obj/item/storage/mechanics) && user.is_in_hands(target))
+			if(istype(target, /obj/item/storage/secure))
+				var/obj/item/storage/secure/secS = target
+				if (!src.fits_in(secS))
+					return
+				if(secS.locked)
+					user.visible_message("[user.name] places \the [secS] into \the [src].",\
+						"You place \the [secS] into \the [src].")
+					user.drop_item()
+					secS.set_loc(src)
+					actions.interrupt(user, INTERRUPT_ACT)
+					src.play_item_insert_sound(target)
+					src.update()
+					return
+			for(var/obj/item/O in target.storage.get_contents())
+				if (src.fits_in(O))
+					target.storage.transfer_stored_item(O, src, user = user)
+			user.visible_message("<b>[user.name]</b> dumps out [target] into [src].")
+			actions.interrupt(user, INTERRUPT_ACT)
+			src.update()
+			return
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		if (!src.fits_in(MO))
@@ -286,11 +311,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			var/obj/item/I = MO
 			I.set_loc(src)
 			update()
+			src.play_item_insert_sound(I)
 			src.visible_message(SPAN_ALERT("\The [I] lands cleanly in \the [src]!"))
 
 		else if (istype(MO, /mob/living))
 			var/mob/living/H = MO
 			H.visible_message(SPAN_ALERT("<B>[H] falls into the disposal outlet!</B>"))
+			src.play_item_insert_sound(H)
 			logTheThing(LOG_COMBAT, H, "is thrown into a [src.name] at [log_loc(src)].")
 			H.set_loc(src)
 			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
@@ -598,6 +625,43 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	return_air(direct = FALSE)
 		if (!direct)
 			return src.loc?.return_air()
+
+	/// Plays the item insert sound with variations depending on item. If user is given, plays localised and with a lower volume, to imply sneakyness
+	proc/play_item_insert_sound(var/thing, var/mob/user = null)
+		var/pitch = 1
+		var/volume = 50
+		if (isitem(thing))
+			var/obj/item/itm = thing
+			switch(itm.w_class)
+				if (W_CLASS_TINY)
+					pitch = 1.4
+					volume = 25
+				if (W_CLASS_SMALL)
+					pitch = 1.1
+					volume = 40
+				if (W_CLASS_BULKY)
+					pitch = 0.8
+					volume = 100
+				if (W_CLASS_HUGE)
+					pitch = 0.5
+					volume = 300
+				if (W_CLASS_GIGANTIC)
+					pitch = 0.3
+					volume = 300
+				if (W_CLASS_BUBSIAN)
+					pitch = 0.1
+					volume = 400
+		else if (iscritter(thing) || ismobcritter(thing))
+			pitch = 0.7
+			volume = 100
+		else if (ismob(thing))
+			pitch = 0.4
+			volume = 300
+		if (user)
+			volume = min(volume * 0.5, 20)
+			user.playsound_local(src.loc, "chute_insert", volume, 1, 0, pitch)
+		else
+			playsound(src, "chute_insert", volume, 1, 0, pitch)
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
@@ -945,6 +1009,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				boutput(user, "You climb into the [chute].")
 
 			else if(target != user && !user.restrained())
+				chute.play_item_insert_sound(target)
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
 				if(istype(chute, /obj/machinery/disposal/brig))

@@ -1000,6 +1000,7 @@
 
 		src.case.set_loc(get_turf(src))
 		src.set_loc(src.case)
+		tgui_process.close_uis(src)
 		src.deployed = 0
 		return
 
