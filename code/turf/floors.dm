@@ -1448,7 +1448,8 @@ DEFINE_FLOORS(snowcalm,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_calm";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowcalm/border,
 	icon_state = "snow_calm_border")
@@ -1458,7 +1459,8 @@ DEFINE_FLOORS(snowrough,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_rough";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowrough/border,
 	icon_state = "snow_rough_border")
