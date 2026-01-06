@@ -1978,6 +1978,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (length(L))
 		for (var/obj/O in L)
 			O.emp_act()
+	src.changeStatus("implants_disabled", 30 SECONDS)
 	boutput(src, SPAN_ALERT("<B>BZZZT</B>"))
 
 /mob/living/carbon/human/verb/consume(mob/M as mob in oview(0))
@@ -3310,7 +3311,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
 		arrestState = ARREST_STATE_ARREST
 	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
-		if (locate(/obj/item/implant/counterrev) in src.implant)
+		var/obj/item/implant/counterrev/implant = locate() in src.implant
+		if (implant?.online)
 			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
 			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 				arrestState = ARREST_STATE_REVHEAD

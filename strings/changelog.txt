@@ -1,4 +1,27 @@
 
+(t)tue jan 06 26
+(u)TheGeneralJay
+(p)25483
+(e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
+(+)Securitrons can now be toggled off with a security whistle by pointing at them.
+(u)LeahTheTech
+(p)24582
+(e)🎨⚖🔨|C-Sprites, C-Balance, A-Player-Actions
+(*)Getting EMPed or hit with a powerful electric shock will now temporarily disable your implants.
+(+)Changes from testmerge: a little blue glowy icon on people with disabled implants, duration of disabled effect increased across the board, power gloves now always disable implants.
+(t)sun jan 04 26
+(u)JORJ949
+(p)25445
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Syndicate clowns can now find a highly illegal, portable, non-explosive version of the clown announcement computer in their uplinks for 5TC.
+(u)QuiteLiterallyAnything
+(p)25452
+(e)💅📦|C-QoL, A-Game-Objects
+(+)ABCUs can now be placed in pod cargo holds.
+(u)Kanthes
+(p)25407
+(e)🪲🔬|C-Bug, A-Science
+(+)Prevents the Food Processor from giving people ghost-limbs that couldn't interact with anything.
 (t)sat jan 03 26
 (u)glowbold
 (p)25473

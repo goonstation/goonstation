@@ -1413,6 +1413,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	icon_state = "snow1"
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 	New()
 		..()
@@ -1437,6 +1438,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 /turf/simulated/floor/snow/green
 	name = "snow-covered floor"
 	icon_state = "snowgreen"
+	can_dig = FALSE
 
 /turf/simulated/floor/snow/green/corner
 	name = "snow-covered floor"
@@ -1447,7 +1449,8 @@ DEFINE_FLOORS(snowcalm,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_calm";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowcalm/border,
 	icon_state = "snow_calm_border")
@@ -1457,7 +1460,8 @@ DEFINE_FLOORS(snowrough,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_rough";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowrough/border,
 	icon_state = "snow_rough_border")
