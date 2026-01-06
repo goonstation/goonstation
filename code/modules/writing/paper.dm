@@ -632,7 +632,7 @@
 					var/obj/item/paper/PA = P
 					PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
 			else
-				user.put_in_hand_or_drop(src)
+				return ..()
 	src.update()
 
 /obj/item/paper_bin/attack_self(mob/user as mob)
