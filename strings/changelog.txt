@@ -1,5 +1,9 @@
 
 (t)tue jan 06 26
+(u)TheGeneralJay
+(p)25483
+(e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
+(+)Securitrons can now be toggled off with a security whistle by pointing at them.
 (u)LeahTheTech
 (p)24582
 (e)🎨⚖🔨|C-Sprites, C-Balance, A-Player-Actions
