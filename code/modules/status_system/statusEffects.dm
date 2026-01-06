@@ -3888,6 +3888,10 @@
 			for (var/obj/item/implant/implant as anything in living_owner.implant)
 				implant.deactivate()
 				src.disabled_implants |= implant
+		if (ishuman(src.owner))
+			var/image/glow = image('icons/mob/human.dmi', "implants_disabled")
+			glow.plane = PLANE_SELFILLUM
+			src.owner.UpdateOverlays(glow, "implants_disabled")
 
 	onChange(optional)
 		if (isliving(src.owner))
@@ -3903,4 +3907,5 @@
 		for (var/obj/item/implant/implant as anything in src.disabled_implants)
 			if (!QDELETED(implant))
 				implant.activate()
+		src.owner.UpdateOverlays(null, "implants_disabled")
 
