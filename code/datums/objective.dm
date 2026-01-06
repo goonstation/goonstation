@@ -927,7 +927,10 @@ ABSTRACT_TYPE(/datum/objective/madness)
 
 	set_up()
 		target_feed_count = min(10, (ticker.minds.len - 1))
-		explanation_text = "Feed on at least [target_feed_count] crew members."
+		if(target_feed_count > 0)
+			explanation_text = "Feed on at least [target_feed_count] crew [(target_feed_count > 1) ? "members" : "member"]."
+		else
+			explanation_text = "Become the ultimate lone wolf."
 
 	check_completion()
 		if (feed_count >= target_feed_count)
