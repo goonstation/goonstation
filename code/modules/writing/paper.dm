@@ -637,7 +637,8 @@
 
 /obj/item/paper_bin/attack_self(mob/user as mob)
 	. = ..()
-	src.Attackhand(user)
+	if(src.amount_left > 0) // Dispenses paper when used in hand; something odd happens if there isn't any.
+		src.Attackhand(user)
 
 /obj/item/paper_bin/attackby(obj/item/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P, bin_type))
