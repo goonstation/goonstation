@@ -386,6 +386,8 @@ THROWING DARTS
 	on_life(var/mob/M, var/mult = 1)
 		if (!ishuman(src.owner))
 			return
+		if (!src.online)
+			return
 		var/mob/living/carbon/human/H = src.owner
 		if (!H.mini_health_hud)
 			H.mini_health_hud = 1
