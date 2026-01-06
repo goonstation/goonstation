@@ -7,7 +7,8 @@
 	// crappy hack because you can't do \his[src] etc
 	var/t_he = he_or_she(src)
 	// crappier hack for distant people; since people can have lowercase first names (cyborgs...), we can't flatly use capitalize
-	var/Noun = show_vague ? capitalize(t_he) : src.name
+
+	var/Noun_is = show_vague ? "[capitalize(t_he)] [is_or_are(src)]" : "[src.name] is"
 
 	. = list()
 	. += ..()
@@ -30,8 +31,7 @@
 	var/t_his = his_or_her(src)
 	var/t_him = him_or_her(src)
 	var/t_hes = hes_or_shes(src)
-
-	var/Noun_is = show_vague ? "[capitalize(t_he)] [is_or_are(src)]" : "[src.name] is"
+	var/Noun = show_vague ? capitalize(t_he) : src.name
 	var/Noun_has = show_vague ? "[capitalize(t_he)] [has_or_have(src)]" : "[src.name] has"
 	var/Noun_s = show_vague ? capitalize(t_his) : "[src.name]'s"
 	var/noun_s = show_vague ? t_his : "[src.name]'s" // lowercase, for middle of description
