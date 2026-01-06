@@ -1,14 +1,17 @@
 /datum/targetable/macho/macho_heal
 	name = "Macho Healing"
-	desc = "Sacrifice your health to heal someone else"
+	desc = "Sacrifice your health to heal someone you have <b>grabbed</b>."
 	icon_state = "speedregen"
 	cast(atom/target)
 		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
+			// This proc's actual target (if found). This should probably be `atom/target` typecasted to a
+			// mob, but as of writing this comment I'm just trying to fix something else rather than refactor.
+			var/mob/living/H
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))
 					holder.owner.verbs -= /mob/living/carbon/human/machoman/verb/macho_heal
-					var/mob/living/H = G.affecting
+					H = G.affecting
 					if (H.lying)
 						H.lying = 0
 						H.remove_stuns()
@@ -37,7 +40,7 @@
 						H.pixel_y += 2
 						sleep(0.3 SECONDS)
 					holder.owner.transforming = 0
-					holder.owner.bioHolder.AddEffect("fire_resist")
+					holder.owner.bioHolder.AddEffect("fire_resist") // This is added just for the outline???
 					holder.owner.transforming = 1
 					playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 50)
 					holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] closes [his_or_her(holder.owner)] eyes in silent macho prayer!</b>"))
@@ -61,3 +64,5 @@
 							H.pixel_y = 0
 							H.transforming = 0
 							H.full_heal()
+			if(!H) // If the proc doesn't assign a target.
+				boutput(holder.owner, SPAN_ALERT("You must have a target grabbed if you want to heal them!"))
