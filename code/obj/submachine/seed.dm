@@ -902,10 +902,9 @@ TYPEINFO(/obj/submachine/seed_vendor)
 					src.hacked = 1
 					src.name = "Feed Sabricator"
 					var/mob/living/carbon/human/criminal = user
-					if(src.hacked)
-						logTheThing(LOG_STATION, user, "hacks [src] at [log_loc(src)]")
-						if(istype(criminal))
-							criminal.apply_automated_arrest("Unauthorised hacking of a fabrication device.")
+					logTheThing(LOG_STATION, user, "hacks [src] at [log_loc(src)]")
+					if(istype(criminal))
+						criminal.apply_automated_arrest("Unauthorised hacking of a fabrication device.")
 				update_static_data(user)
 			if (WIRE_MALF)
 				if (src.malfunction) src.malfunction = 0
