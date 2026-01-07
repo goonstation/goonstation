@@ -78,7 +78,7 @@
 	comname = "Wavebender Spray Bottle"
 	comtype = /obj/item/spraybottle/cleaner/tsunami
 	amount = 1
-	price_boundary = list(PAY_DONTBUYIT)
+	price_boundary = list(PAY_DONTBUYIT,PAY_DONTBUYIT*2)
 	possible_names = list("This bottle was the byproduct of a ritual. We are willing to sell.",
 	"We have excess blood cleaning supplies. Inquiry onto the blood's origin will not be answered.")
 
