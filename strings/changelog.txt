@@ -1,6 +1,10 @@
 
 (t)tue jan 06 26
 (u)TheGeneralJay
+(p)25458
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Headsets now malfunction fully and cannot be turned on manually for a set duration after an EMP. They will automatically toggle back on after the duration is up.
+(u)TheGeneralJay
 (p)25483
 (e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
 (+)Securitrons can now be toggled off with a security whistle by pointing at them.
