@@ -1572,6 +1572,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		switch(wireIndex)
 			if(WIRE_EXTEND)
 				src.hacked = !src.hacked
+				var/mob/living/carbon/human/criminal = user
+				if(src.hacked)
+					logTheThing(LOG_STATION, user, "hacks [src] at [log_loc(src)]")
+					if(istype(criminal))
+						criminal.apply_automated_arrest("Unauthorised hacking of a fabrication device.")
 			if (WIRE_SHOCK)
 				src.time_left_electrified = 30
 			if (WIRE_MALF)
