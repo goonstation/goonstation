@@ -44,7 +44,7 @@ TYPEINFO(/obj/item/device/radio/electropack)
 /obj/item/device/radio/electropack/proc/assembly_setup(var/manipulated_electropack, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 	//dangerous assemblies should likely all fall under contraband level 4
 	var/electropack_assembly_contraband_level = 4
-	// we update the contraband now to reflect the newly added tank
+	// Since the electropack itself is not contraband, we need to update this here.
 	APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_CONTRABAND, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), electropack_assembly_contraband_level))
 	SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	// trigger/electropack-Assembly + cell -> trigger/electropack/cell assembly
