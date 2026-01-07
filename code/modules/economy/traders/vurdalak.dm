@@ -31,7 +31,10 @@
 	base_goods_sell = alist(
 		TRADER_RARITY_COMMON = list(),
 		TRADER_RARITY_UNCOMMON = list(),
-		TRADER_RARITY_RARE = list(/datum/commodity/trader/vurdalak/artifact)
+		TRADER_RARITY_RARE = list(
+			/datum/commodity/trader/vurdalak/artifact,
+			/datum/commodity/trader/vurdalak/tsunami
+		)
 	)
 
 	dialogue_greet = list("Well met. We have several items for sale, as well as several desired articles.",
@@ -70,6 +73,14 @@
 	price_boundary = list(PAY_DOCTORATE*2,PAY_DOCTORATE*5)
 	possible_names = list("We are selling artifacts of alien origin. We cannot verify their purpose.",
 	"We have a collection of alien artifacts you may be interested in.")
+
+/datum/commodity/trader/vurdalak/tsunami
+	comname = "Wavebender Spray Bottle"
+	comtype = /obj/item/spraybottle/cleaner/tsunami
+	amount = 1
+	price_boundary = list(PAY_DONTBUYIT)
+	possible_names = list("This bottle was the byproduct of a ritual. We are willing to sell.",
+	"We have excess blood cleaning supplies. Inquiry onto the blood's origin will not be answered.")
 
 // Vurdalak wants these things
 
