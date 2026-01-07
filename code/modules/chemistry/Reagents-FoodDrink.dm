@@ -5019,7 +5019,7 @@ datum
 					// zesty ranch enjoyers have natural immunity to the wonders / horrors of zesty ranch
 					// addiction makes you want more
 					if (AD)
-						if (!src.like and !immune)
+						if (!src.like && !immune)
 							boutput(M, SPAN_NOTICE("You're starting to really appreciate the flavor."))
 						src.like = TRUE
 
