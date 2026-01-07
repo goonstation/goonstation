@@ -162,6 +162,7 @@
 #include "code\datums\abilities\lizard.dm"
 #include "code\datums\abilities\revenant.dm"
 #include "code\datums\abilities\santa.dm"
+#include "code\datums\abilities\skeleton.dm"
 #include "code\datums\abilities\vampiric_thrall.dm"
 #include "code\datums\abilities\critter\arc.dm"
 #include "code\datums\abilities\critter\bite.dm"

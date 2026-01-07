@@ -1140,6 +1140,11 @@ TYPEINFO(/datum/mutantrace/skeleton)
 	self_click_fluff = list("ribcage", "funny bone", "femur", "scapula")
 	blood_id = "calcium"
 
+	mutant_abilityholder = /datum/abilityHolder/skeleton
+	mutant_abilities = list(
+		/datum/targetable/skeletonAbility/remove_head,
+	)
+
 	ghost_icon_state = "ghost-skeleton"
 
 	on_attach(var/mob/living/carbon/human/M)
