@@ -1270,7 +1270,7 @@
 		id = "cocktail_triplewater"
 		result = "cocktail_triplewater"
 		required_reagents = list("water" = 1, "water_holy" = 1, "tonic" = 1)
-		result_amount = 3
+		result_amount = 1
 		mix_phrase = "The diffrent water molecules seem to intertwine as the drink increases in density."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
