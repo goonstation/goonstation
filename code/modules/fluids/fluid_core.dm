@@ -552,7 +552,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 					dirs |= dir
 
 			var/turf/simulated/my_turf = get_turf(src)
-			icon_state = "[num2text(dirs)][my_turf?.gforce_current < GFORCE_TRACTION_PARTIAL ? "ng" : ""]"
+			icon_state = "[num2text(dirs)][my_turf?.get_gforce_current() < GFORCE_TRACTION_PARTIAL ? "ng" : ""]"
 
 			if (src.overlay_refs && length(src.overlay_refs))
 				src.clear_overlay()

@@ -30,13 +30,8 @@ proc/set_zlevel_gforce(z_level, new_gforce, update_tethers=FALSE)
 		else if (new_gforce >= 1)
 			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_CHANGE, z_level, 0) // shut off on terrestiral gravity
 
-	for (var/area/A in world)
-		if (A.z != z_level)
-			continue
-		var/total_gforce = max(A.gforce_minimum, new_gforce + A.gforce_tether)
-		for (var/turf/T in A)
-			T.gforce_current = round(max(0, total_gforce + T.gforce_inherent), 0.01)
-		LAGCHECK(LAG_LOW)
+	for (var/turf/T in block(locate(1, 1, z_level), locate(world.maxx, world.maxy, z_level)))
+		T.gforce_dirty = TRUE
 
 /// Round-start initialization of areas that should have zero minimum gravity
 proc/configure_zero_g_areas()

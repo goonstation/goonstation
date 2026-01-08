@@ -2,6 +2,9 @@
 /turf/var/gforce_current = 1
 /// gforce inherent to the turf tile, e.g. asteroids and airbridges
 /turf/var/gforce_inherent = 0
+/// do we need to recalculate the gforce on this turf before handing it out
+/turf/var/gforce_dirty = FALSE
+/turf/simulated/gforce_dirty = TRUE
 
 // no gravity in space
 /turf/space/gforce_current = 0
@@ -11,15 +14,27 @@
 /turf/space/fluid/gforce_current = 1
 /turf/space/fluid/gforce_inherent = 0
 
-/turf/proc/update_gforce_inherent(new_gforce)
-/turf/simulated/update_gforce_inherent(new_gforce)
-	if (new_gforce == src.gforce_inherent)
-		return
-	var/area/A = src.loc
-	if (!istype(A))
-		return
+/turf/proc/recalculate_gforce()
+/turf/simulated/recalculate_gforce()
+
+/turf/proc/change_gforce_inherent(gforce_diff)
+/turf/simulated/change_gforce_inherent(gforce_diff)
+	src.gforce_inherent += gforce_diff
+	src.gforce_dirty = TRUE
+
+/turf/proc/set_gforce_inherent(new_gforce)
+/turf/simulated/set_gforce_inherent(new_gforce)
 	src.gforce_inherent = new_gforce
-	src.gforce_current = round(max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent), 0.01)
+	src.gforce_dirty = TRUE
+
+/turf/proc/get_gforce_current()
+	if (src.gforce_dirty)
+		var/area/A = src.loc
+		if (!istype(A))
+			return
+		src.gforce_current = round(max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent), 0.01)
+		src.gforce_dirty = FALSE
+	return src.gforce_current
 
 // asteroids have enough G for some traction (for mining)
 /turf/simulated/wall/auto/asteroid/gforce_inherent = GFORCE_TRACTION_PARTIAL
@@ -29,17 +44,15 @@
 /turf/setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
 	. = ..()
 	if (contains_negative_matter(src))
-		src.update_gforce_inherent(-INFINITY) // *always* zero-G
+		src.set_gforce_inherent(-INFINITY) // *always* zero-G
 	else if (src.gforce_inherent != initial(src.gforce_inherent))
-		src.update_gforce_inherent(initial(src.gforce_inherent))
+		// This could be buggy but storing it feels wasteful
+		src.set_gforce_inherent(initial(src.gforce_inherent))
 
 // update gravity on simulated turf spawn
 /turf/simulated/New()
 	. = ..()
-	var/area/A = src.loc
-	if (!istype(A))
-		return
-	src.gforce_current = round(max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent), 0.01)
+	src.gforce_dirty = TRUE
 
 /datum/infooverlay/gravity_turf
 	name = "gravity-turf"
@@ -47,7 +60,7 @@
 	var/list/area/processed_areas
 
 	GetInfo(turf/theTurf, image/debugoverlay/img)
-		img.app.overlays = list(src.makeText("[theTurf.gforce_current] ([theTurf.gforce_inherent])", RESET_ALPHA | RESET_COLOR))
+		img.app.overlays = list(src.makeText("[theTurf.get_gforce_current()] ([theTurf.gforce_inherent])", RESET_ALPHA | RESET_COLOR))
 		switch (theTurf.gforce_current)
 			if (-INFINITY to 0)
 				img.app.color = "#0000ff"

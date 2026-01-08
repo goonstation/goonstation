@@ -265,10 +265,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 	SPAWN (0)
 		for (var/area/A in src.target_area_refs)
-			A.gforce_tether += gforce_diff
-			var/total_gforce = max(A.gforce_minimum, global.zlevels[A.z].gforce + A.gforce_tether)
-			for (var/turf/T in A)
-				T.gforce_current = round(max(0, total_gforce + T.gforce_inherent), 0.01)
+			A.change_gforce_tether(gforce_diff)
 			LAGCHECK(LAG_LOW)
 		src.after_change_intensity()
 

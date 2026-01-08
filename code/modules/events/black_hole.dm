@@ -50,7 +50,6 @@
 				lifespan = lifespan * 1.2
 				break
 
-
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
 

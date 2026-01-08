@@ -3,7 +3,7 @@
 	. = ..()
 	var/turf/T = get_turf(src.owner)
 
-	if (src.owner.gforce != T.gforce_current)
+	if (src.owner.gforce != T.get_gforce_current())
 		src.owner.set_gravity(T)
 
 		src.do_toggles(src.owner.gforce, T.gforce_current)
