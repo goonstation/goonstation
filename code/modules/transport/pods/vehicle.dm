@@ -2021,6 +2021,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 		body_type = "car"
 		icon_state = "car_whiteyellow"
 
+	mail
+		body_type = "van"
+		icon_state = "mailvan"
+
 	rusty
 		body_type = "car"
 		icon_state = "car_rusty"

@@ -1572,6 +1572,14 @@ TYPEINFO(/obj/vehicle/clowncar)
 		eject_rider()
 	..()
 	return
+////////////////////////////////////////////////// Mail Van /////////////////////////////////////
+
+/obj/vehicle/mailvan
+	name = "Mail Van"
+	desc = "A navy van used for delivering mail."
+	rider_visible = 0
+	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn, /obj/ability_button/stopthebus/mailvan)
+	icon_state = "mailvan"
 
 ////////////////////////////////////////////////// Admin bus /////////////////////////////////////
 
@@ -1669,6 +1677,9 @@ TYPEINFO(/obj/vehicle/adminbus)
 	clowncar
 		name = "Stop The Car"
 		mydelay = 2 SECONDS
+
+	mailvan
+		name = "Stop The Van"
 
 /obj/ability_button/drop_peel
 	name = "Drop a banana peel"

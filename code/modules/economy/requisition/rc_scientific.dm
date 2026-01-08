@@ -566,11 +566,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #define PROTOTYPIST_ENGINEER 3
 #define PROTOTYPIST_REV_ENG 4
 
-#define NUM_GOALS 3
+#define NUM_GOALS 4
 
 #define GOAL_PROTOTYPING 1
 #define GOAL_MANUFACTURE 2
 #define GOAL_REFINEMENT 3
+#define GOAL_CHEMICAL 4
 
 //Prototypist contract; payout in cash is notably lower than usual on purpose, since you get "paid in items"
 /datum/req_contract/scientific/prototypist
@@ -653,6 +654,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						goal_desc = "augmentation of cargo transporter functionality"
 						src.item_rewarders += new /datum/rc_itemreward/cargotele
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec/minprice,1)
+					if(GOAL_CHEMICAL)
+						goal_desc = "augmentation of cargo transporter functionality" //duplicate due to no current equivalent
+						src.item_rewarders += new /datum/rc_itemreward/cargotele
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec/minprice,1)
 
 			if(PROTOTYPIST_ENGINEER)
 				prototypist_desc = "Engineering firm"
@@ -688,6 +693,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						src.payout += rand(80,130) * 20
 						src.item_rewarders += new /datum/rc_itemreward/sonic_shower
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
+					if(GOAL_CHEMICAL)
+						goal_desc = "hyperengineered solution delivery device"
+						src.item_rewarders += new /datum/rc_itemreward/tsunami
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/miracle,2)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/scrap,1)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cigbutt,2)
 
 			if(PROTOTYPIST_REV_ENG)
 				prototypist_desc = "Artifact reverse-engineer"
@@ -720,6 +731,11 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						//special backpack capable of accepting a large power cell to recharge contents automatically
 						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/chamber,1)
 						src.item_rewarders += new /datum/rc_itemreward/recharge_bay
+					if(GOAL_CHEMICAL)
+						goal_desc = "production of a medical biomatter recombinator" //duplicate due to no current equivalent item
+						//when built and powered, slowly makes weak healing patches out of food you load in
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/martian,1)
+						src.item_rewarders += new /datum/rc_itemreward/medimulcher
 
 		src.flavor_desc = "[prototypist_desc] seeking supplies for [goal_desc]. [pick(desc_bonusflavor)]"
 
@@ -851,6 +867,22 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	commodity = /datum/commodity/ore/claretine
 	typepath_alt = /obj/item/material_piece/claretine
 	feemod = PAY_DOCTORATE
+
+/datum/rc_entry/stack/miracle
+	name = "miracle matter"
+	commodity = /obj/item/raw_material/miracle
+	mat_id = "miracle"
+	feemod = PAY_DOCTORATE
+
+/datum/rc_entry/stack/scrap
+	name = "trash scrap"
+	commodity = /obj/item/scrap
+	typepath_alt = /obj/item/raw_material/scrap_metal
+
+/datum/rc_entry/stack/cigbutt
+	name = "cigarette butts"
+	commodity = /obj/item/cigbutt
+	typepath_alt = /obj/item/clothing/mask/cigarette
 
 /datum/rc_entry/stack/claretine/minprice
 	feemod = 0
@@ -1046,6 +1078,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			F.w_class = W_CLASS_BULKY
 			yielder += F
 		return yielder
+
+/datum/rc_itemreward/tsunami
+	name = "tsunami spray bottle"
+
+	New()
+		..()
+		count = 1
+		var/theitem = new /obj/item/spraybottle/cleaner/tsunami
+		return theitem
 
 //artifact reverse engineer rewards
 
