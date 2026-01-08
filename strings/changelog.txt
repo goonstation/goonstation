@@ -1,5 +1,9 @@
 
 (t)thu jan 08 26
+(u)bork
+(p)25521
+(e)📄|A-UI
+(*)The Gene Booth and Genetek Scanner now properly display gene icons!
 (u)QuiteLiterallyAnything
 (p)25514
 (e)🗺|A-Mapping
