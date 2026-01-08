@@ -30,7 +30,7 @@
 	if (door_state != TETHER_DOOR_MISSING)
 		ma_overlays += src.ma_door
 
-	src.update_light()
+	// src.update_light()
 	src.UpdateOverlays(MA, "ma", TRUE)
 
 /obj/machinery/gravity_tether/proc/update_light()

@@ -14,9 +14,6 @@
 /turf/space/fluid/gforce_current = 1
 /turf/space/fluid/gforce_inherent = 0
 
-/turf/proc/recalculate_gforce()
-/turf/simulated/recalculate_gforce()
-
 /turf/proc/change_gforce_inherent(gforce_diff)
 /turf/simulated/change_gforce_inherent(gforce_diff)
 	src.gforce_inherent += gforce_diff
