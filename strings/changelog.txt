@@ -1,5 +1,9 @@
 
 (t)thu jan 08 26
+(u)CalliopeSoups
+(p)25485
+(e)🆕📦🎩|C-Feature, A-Game-Objects, A-Clothing
+(+)Add clothes to a template monkey in a barrel (by right clicking) to be copied, without stats, to every monkey in the barrel!
 (u)bork
 (p)25521
 (e)📄|A-UI
