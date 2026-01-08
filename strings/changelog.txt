@@ -1,4 +1,29 @@
 
+(t)wed jan 07 26
+(u)Lord_Earthfire
+(p)25437
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Electropacks can be used as appliers in assemblies. When triggered, they cause a small shock on the ground
+(+)Electropack assemblies have a contraband value of 4
+(+)Electropack-assemblies, when combined with cells, drain the battery to cause an arcflash. The power depends on the cell's charge
+(u)glowbold
+(p)25506
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Leaving a changeling hivemind voluntarily will set DNR.
+(t)tue jan 06 26
+(u)TheGeneralJay
+(p)25458
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Headsets now malfunction fully and cannot be turned on manually for a set duration after an EMP. They will automatically toggle back on after the duration is up.
+(u)TheGeneralJay
+(p)25483
+(e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
+(+)Securitrons can now be toggled off with a security whistle by pointing at them.
+(u)LeahTheTech
+(p)24582
+(e)🎨⚖🔨|C-Sprites, C-Balance, A-Player-Actions
+(*)Getting EMPed or hit with a powerful electric shock will now temporarily disable your implants.
+(+)Changes from testmerge: a little blue glowy icon on people with disabled implants, duration of disabled effect increased across the board, power gloves now always disable implants.
 (t)sun jan 04 26
 (u)JORJ949
 (p)25445

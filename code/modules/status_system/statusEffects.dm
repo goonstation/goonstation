@@ -3909,6 +3909,48 @@
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
 
+/datum/statusEffect/implants_disabled
+	id = "implants_disabled"
+	name = "Implants overloaded"
+	desc = "Your implants are painfully overloaded!"
+	maxDuration = 60 SECONDS
+	icon_state = "implants_disabled"
+	unique = TRUE
+
+	var/list/disabled_implants = list()
+
+	preCheck(mob/living/M)
+		return ..() && istype(M) && length(M.implant)
+
+	onAdd()
+		..()
+		src.owner.UpdateParticles(new /particles/rack_spark, src.id)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				implant.deactivate()
+				src.disabled_implants |= implant
+		if (ishuman(src.owner))
+			var/image/glow = image('icons/mob/human.dmi', "implants_disabled")
+			glow.plane = PLANE_SELFILLUM
+			src.owner.UpdateOverlays(glow, "implants_disabled")
+
+	onChange(optional)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				if (implant.online)
+					implant.deactivate()
+					src.disabled_implants |= implant
+
+	onRemove()
+		..()
+		src.owner.UpdateParticles(null, src.id)
+		for (var/obj/item/implant/implant as anything in src.disabled_implants)
+			if (!QDELETED(implant))
+				implant.activate()
+		src.owner.UpdateOverlays(null, "implants_disabled")
+
 /datum/statusEffect/therapy_zone
 	id = "therapy_zone"
 	name = "Therapeutic Atmosphere"

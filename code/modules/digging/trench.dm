@@ -148,6 +148,8 @@
 	icon_state = "trench-0"
 	pass_unstable = TRUE
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_TRENCH
+	// Trench prying is rather buggy and unsupported by their current code.
+	pryable = FALSE
 
 	var/old_type
 
