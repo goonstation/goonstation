@@ -768,7 +768,7 @@
 	lockedTries = 8
 	stability_loss = 15
 	degrade_to = "bad_eyesight"
-	icon_state  = "eye"
+	icon_state  = "eye_night"
 
 	OnAdd()
 		. = ..()
