@@ -1,5 +1,9 @@
 
 (t)thu jan 08 26
+(u)Mr. Moriarty
+(p)25446
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Photophosphide may now be mixed safely inside of stationary ChemiCompilers.
 (u)CalliopeSoups
 (p)25485
 (e)🆕📦🎩|C-Feature, A-Game-Objects, A-Clothing
