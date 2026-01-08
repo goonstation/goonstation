@@ -1,4 +1,20 @@
 
+(t)thu jan 08 26
+(u)QuiteLiterallyAnything
+(p)25514
+(e)🗺|A-Mapping
+(+)Added a MULEBot to Nadir.
+(t)wed jan 07 26
+(u)Lord_Earthfire
+(p)25437
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Electropacks can be used as appliers in assemblies. When triggered, they cause a small shock on the ground
+(+)Electropack assemblies have a contraband value of 4
+(+)Electropack-assemblies, when combined with cells, drain the battery to cause an arcflash. The power depends on the cell's charge
+(u)glowbold
+(p)25506
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Leaving a changeling hivemind voluntarily will set DNR.
 (t)tue jan 06 26
 (u)TheGeneralJay
 (p)25458
