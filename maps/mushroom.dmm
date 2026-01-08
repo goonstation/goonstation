@@ -6348,6 +6348,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/storage/secure/closet/medical{
+	name = "locker"
+	},
 /turf/simulated/floor/greenwhite/corner{
 	dir = 1
 	},
@@ -10374,6 +10377,10 @@
 "dXL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
+"dYk" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/greenwhite,
+/area/station/medical/medbay/cloner)
 "dYm" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -26190,6 +26197,10 @@
 /obj/machinery/firealarm/directional/north,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/extinguisher,
+/obj/item/storage/box/diskbox{
+	pixel_x = -8;
+	pixel_y = 13
+	},
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
@@ -95329,7 +95340,7 @@ pjO
 bqd
 qmn
 xRl
-hwc
+dYk
 eLZ
 wfD
 dRA

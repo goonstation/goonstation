@@ -741,6 +741,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/has_impact_particles = FALSE
 	/// Override var used for special projectiles, set to true if it should use energy impact particles
 	var/energy_particles_override = FALSE
+	/// Prevent this projectile from damaging the law rack (won't affect explosions caused by the projectile)
+	var/law_rack_safe = FALSE
 
 	var/static/effect_amount = 0
 

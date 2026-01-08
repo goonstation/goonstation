@@ -66,6 +66,7 @@ TYPEINFO(/obj/item/sword)
 
 	New()
 		..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 		if(src.bladecolor == "invalid")
 			src.bladecolor = pick(valid_colors)
 		var/r = 0
@@ -1223,6 +1224,7 @@ TYPEINFO(/obj/item/bat)
 
 /obj/item/swords/New()
 	src.AddComponent(/datum/component/bloodflick)
+	src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 	..()
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
@@ -1496,6 +1498,7 @@ TYPEINFO(/obj/item/swords/captain)
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+		src.RemoveComponentsOfType(/datum/component/log_item_pickup) //Its a silly sword that does minimal damage, no need.
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(ismob(target))
@@ -1543,6 +1546,7 @@ TYPEINFO(/obj/item/swords/captain)
 		sword_inside = K
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 
 	attack_hand(mob/living/carbon/human/user)
 		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
@@ -1715,6 +1719,10 @@ TYPEINFO(/obj/item/swords/captain)
 	ih_sheathed_state = "scabbard-clown1"
 	ih_sheath_state = "scabbard-clown0"
 	sword_path = /obj/item/swords/clown
+
+	New()
+		. = ..()
+		src.RemoveComponentsOfType(/datum/component/log_item_pickup)
 
 /*
  *							--- Non-electronic Swords ---

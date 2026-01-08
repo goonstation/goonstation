@@ -599,3 +599,119 @@
 						art.examine_hint = "[target] belongs to [scan.registered]."
 
 		return
+
+/obj/machinery/arrivalnotifier
+	name = "arrival notifier"
+	desc = "Notifies relevant departments of a package arrival."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "wirednav" // TODO: Replace; the other object this is tied to is unused currently
+	level = 1		// underfloor
+	layer = UNDERFLOOR_MACHINE
+	anchored = ANCHORED
+	plane = PLANE_NOSHADOW_BELOW
+
+	var/target_destination
+	var/frequency = FREQ_MAIL_CHUTE
+	var/disabled = FALSE
+	var/net_id = null
+	var/list/mailgroups = list()
+
+/obj/machinery/arrivalnotifier/New()
+	. = ..()
+	UnsubscribeProcess()
+
+	if (!src.net_id)
+		src.net_id = generate_net_id(src)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
+	var/turf/T = get_turf(src)
+	if(isturf(T))
+		hide(T.intact)
+
+/obj/machinery/arrivalnotifier/Crossed(atom/movable/AM)
+	. = ..()
+	if (!AM.delivery_destination || !src.target_destination || !length(src.mailgroups))
+		return
+	if (src.has_no_power())
+		return
+	if (AM.delivery_destination == src.target_destination && !ON_COOLDOWN(src, "delivery_notice", 30 SECONDS))
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src
+		signal.data["command"] = "text_message"
+		signal.data["sender_name"] = "DELIVERY-MAILBOT"
+		signal.data["group"] = src.mailgroups + list(MGA_MAIL)
+		signal.data["message"] = "Package arrived at [src.target_destination] router."
+		signal.data["sender"] = src.net_id
+		signal.data["address_1"] = "00000000"
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+/obj/machinery/arrivalnotifier/hide(intact)
+	invisibility = intact ? INVIS_ALWAYS : INVIS_NONE
+	UpdateIcon()
+
+/obj/machinery/arrivalnotifier/update_icon()
+	alpha = invisibility ? 128 : 255
+
+/obj/machinery/arrivalnotifier/airbridge
+	target_destination = "Airbridge"
+/obj/machinery/arrivalnotifier/arrivals
+	target_destination = "Arrivals"
+/obj/machinery/arrivalnotifier/catering
+	target_destination = "Catering"
+	mailgroups = list(MGD_KITCHEN, MGD_BOTANY)
+/obj/machinery/arrivalnotifier/cafeteria
+	target_destination = "Cafeteria"
+	mailgroups = list(MGD_KITCHEN)
+/obj/machinery/arrivalnotifier/disposal
+	target_destination = "Disposal"
+/obj/machinery/arrivalnotifier/disposals
+	target_destination = "Disposals"
+/obj/machinery/arrivalnotifier/eva
+	target_destination = "EVA"
+/obj/machinery/arrivalnotifier/engine
+	target_destination = "Engine"
+	mailgroups = list(MGO_ENGINEER)
+/obj/machinery/arrivalnotifier/engineering
+	target_destination = "Engineering"
+	mailgroups = list(MGO_ENGINEER)
+/obj/machinery/arrivalnotifier/escape
+	target_destination = "Escape"
+/obj/machinery/arrivalnotifier/export
+	target_destination = "Export"
+/obj/machinery/arrivalnotifier/medbay
+	target_destination = "Medbay"
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+/obj/machinery/arrivalnotifier/medsci
+	target_destination = "MedSci"
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE)
+/obj/machinery/arrivalnotifier/mining
+	target_destination = "Mining"
+	mailgroups = list(MGD_MINING)
+/obj/machinery/arrivalnotifier/podbay
+	target_destination = "Pod Bay"
+/obj/machinery/arrivalnotifier/qm
+	target_destination = "QM"
+	mailgroups = list(MGD_CARGO)
+/obj/machinery/arrivalnotifier/research
+	target_destination = "Research"
+	mailgroups = list(MGD_SCIENCE)
+/obj/machinery/arrivalnotifier/security
+	target_destination = "Security"
+	mailgroups = list(MGD_SECURITY)
+/obj/machinery/arrivalnotifier/undeliverable
+	target_destination = "Mail Sorting Room"
+	// mailgroups = list(MGD_CARGO)
+	 // TODO: should this notify on all packages instead?
+
+/obj/machinery/arrivalnotifier/carousel
+/obj/machinery/arrivalnotifier/carousel/north
+	target_destination = "Carousel North"
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+/obj/machinery/arrivalnotifier/carousel/south
+	target_destination = "Carousel South"
+	mailgroups = list(MGD_SECURITY)
+/obj/machinery/arrivalnotifier/carousel/east
+	target_destination = "Carousel East"
+	mailgroups = list(MGO_ENGINEER, MGD_SCIENCE)
+/obj/machinery/arrivalnotifier/carousel/west
+	target_destination = "Carousel West"
+	mailgroups = list(MGD_KITCHEN, MGD_BOTANY)

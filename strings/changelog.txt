@@ -1,4 +1,154 @@
 
+(t)wed jan 07 26
+(u)Lord_Earthfire
+(p)25437
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Electropacks can be used as appliers in assemblies. When triggered, they cause a small shock on the ground
+(+)Electropack assemblies have a contraband value of 4
+(+)Electropack-assemblies, when combined with cells, drain the battery to cause an arcflash. The power depends on the cell's charge
+(u)glowbold
+(p)25506
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Leaving a changeling hivemind voluntarily will set DNR.
+(t)tue jan 06 26
+(u)TheGeneralJay
+(p)25458
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Headsets now malfunction fully and cannot be turned on manually for a set duration after an EMP. They will automatically toggle back on after the duration is up.
+(u)TheGeneralJay
+(p)25483
+(e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
+(+)Securitrons can now be toggled off with a security whistle by pointing at them.
+(u)LeahTheTech
+(p)24582
+(e)🎨⚖🔨|C-Sprites, C-Balance, A-Player-Actions
+(*)Getting EMPed or hit with a powerful electric shock will now temporarily disable your implants.
+(+)Changes from testmerge: a little blue glowy icon on people with disabled implants, duration of disabled effect increased across the board, power gloves now always disable implants.
+(t)sun jan 04 26
+(u)JORJ949
+(p)25445
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Syndicate clowns can now find a highly illegal, portable, non-explosive version of the clown announcement computer in their uplinks for 5TC.
+(u)QuiteLiterallyAnything
+(p)25452
+(e)💅📦|C-QoL, A-Game-Objects
+(+)ABCUs can now be placed in pod cargo holds.
+(u)Kanthes
+(p)25407
+(e)🪲🔬|C-Bug, A-Science
+(+)Prevents the Food Processor from giving people ghost-limbs that couldn't interact with anything.
+(t)sat jan 03 26
+(u)glowbold
+(p)25473
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampires using Illusory Shroud will have their voices show as "Unknown"
+(u)glowbold
+(p)25470
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(*)Open-mic headsets can only pick up sound from the tile it's on.
+(+)Phone handset and mounted defibrillator cables reach roughly two tiles.
+(+)Phone handsets, microphones, and megaphones only pick up speech in your active hand.
+(u)CalliopeSoups
+(p)25456
+(e)🎨|C-Sprites
+(+)Trickster wraith's mass whisper is now base kit
+(+)Wraith's blood writing now has no cooldown
+(t)fri jan 02 26
+(u)JORJ949
+(p)25436
+(e)🆕🎨🧑‍✈️|C-Feature, C-Sprites, A-Command
+(*)The HoP can now print radio upgrades for each on station channel at their fabricator. Command and Security upgrades are locked to hacking it (to discourage hops from immediately making themselves a sec radio).
+(u)QuiteLiterallyAnything
+(p)25455
+(e)🔨|A-Player-Actions
+(+)Handspiders can now snap.
+(t)thu jan 01 26
+(u)Sord
+(*)New random event: EMP Storm. Spawns electrical anomalies similar to the radiation storm anomalies that EMP anything in range.
+(t)wed dec 31 25
+(u)cringe, the good looking sprites from Flaborized
+(p)23946
+(e)🆕🎨📄🔬|C-Feature, C-Sprites, A-UI, A-Science
+(*)Adds neat fluid pipes, now in the HPD.
+(u)QuiteLiterallyAnything
+(p)25426
+(e)🗺|A-Mapping
+(+)Added a cargo tug and forklift to Nadir.
+(u)glowbold
+(p)25324
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Changeling hivemind members now show floating maptext to the host
+(u)glowbold
+(p)25392
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(*)Barcoded deliveries through the belt hell system will notify the relevant departments.
+(t)mon dec 29 25
+(u)QuiteLiterallyAnything
+(p)25427
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Coffins are now made of wood (and deconstruct to it).
+(t)sun dec 28 25
+(u)Lord_Earthfire
+(p)25403
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Mousetrap rollers respect the size of the assembly used to build them.
+(u)JORJ949
+(*)Changeling, Arcfiend and Vampire mode antagonist counts have been reduced from 1/12 to 1/15.
+(+)Changeling abomination forms can now instantly smash tables.
+(t)sat dec 27 25
+(u)JORJ949
+(p)25363
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Radio frequencies before radio messages will now always be highlighted in that frequency's default colour.
+(t)fri dec 26 25
+(u)QuiteLiterallyAnything
+(p)25400
+(e)🗺|A-Mapping
+(+)Added missing pod tractor beams and tasers to the security pod bays in Cogmap 2.
+(t)thu dec 25 25
+(u)Emily
+(*)Added Barbecue Sauce
+(+)Barbecue Sauce Recipe: Capsaicin, Pepper, Ketchup, Grease/Soybean Oil, Mustard, Lemonade
+(+)Added some extra fish to the cargo meat/dairy crate
+(t)wed dec 24 25
+(u)Microoowaaave
+(p)25279
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added brown satchels/backpacks to uniform manufacturers.
+(t)tue dec 23 25
+(u)Ribbie
+(p)25383
+(e)|
+(+)Fixes juggling paper with multiple items.
+(u)Ribbie
+(p)25382
+(e)|
+(+)Fixes monkey suit costumes disappearing when someone gets aggressive grabbed while wearing them.
+(t)mon dec 22 25
+(u)JORJ949
+(p)25314
+(e)💅📦🧑‍✈️|C-QoL, A-Game-Objects, A-Command
+(*)NT Engineers and Medics now have unique headset icons with the colour of their relevant department.
+(u)Ribbie
+(p)25373
+(e)|
+(+)Fixes the broken floodlight sprite.
+(u)JORJ949
+(p)25343
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Emitters can no longer damage the AI law rack.
+(u)glowbold
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Dead vampires can be brought back just to the cusp of life via coffins.
+(+)RP vampires no longer come back to life with full thirst and hunger meters.
+(t)fri dec 19 25
+(u)bork
+(p)25342
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Lotto tickets now have their own sprite! Let's go gambling !!!
+(t)wed dec 17 25
+(u)Sord
+(+)Neon now has ghost drone rechargers on the main station.
 (t)tue dec 16 25
 (u)CelineTheYeen
 (p)25312
