@@ -263,11 +263,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return TRUE
 	src.gforce_intensity = round(new_gforce, 0.01)
 
-	SPAWN (0)
-		for (var/area/A in src.target_area_refs)
-			A.change_gforce_tether(gforce_diff)
-			LAGCHECK(LAG_LOW)
-		src.after_change_intensity()
+	for (var/area/A in src.target_area_refs)
+		A.change_gforce_tether(gforce_diff)
+	src.after_change_intensity()
 
 /obj/machinery/gravity_tether/proc/after_change_intensity()
 	src.update_ma_status()

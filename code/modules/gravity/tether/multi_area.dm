@@ -38,9 +38,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 
 /obj/machinery/gravity_tether/proc/shake_affected()
 	for (var/area/A in src.target_area_refs)
-		for (var/mob/M in A)
-			if (M.client)
-				shake_camera(M, 5, 32, 0.2)
+		for(var/datum/mind/mind as anything in A.population)
+			var/mob/mob = mind.current
+			if(mob)
+				shake_camera(mob, 5, 32, 0.2)
 
 // near-station
 

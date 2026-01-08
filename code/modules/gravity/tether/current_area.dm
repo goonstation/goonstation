@@ -36,9 +36,10 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 
 /obj/machinery/gravity_tether/current_area/shake_affected()
 	var/area/A = get_area(src)
-	for (var/mob/M in A)
-		if (M.client)
-			shake_camera(M, 5, 32, 0.2)
+	for(var/datum/mind/mind as anything in A.population)
+		var/mob/mob = mind.current
+		if(mob)
+			shake_camera(mob, 5, 32, 0.2)
 
 /obj/machinery/gravity_tether/current_area/after_change_intensity()
 	. = ..()
