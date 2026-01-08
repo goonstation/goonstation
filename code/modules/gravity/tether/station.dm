@@ -99,7 +99,7 @@ TYPEINFO(/obj/machinery/gravity_tether)
 		return
 	global.station_tether_gforce += diff
 	for_by_tcl(airbridge, /obj/airbridge_controller)
-		for (var/turf/T in airbridge.maintaining_turfs)
+		for (var/turf/T as anything in airbridge.maintaining_turfs)
 			T.change_gforce_inherent(diff)
 
 /obj/machinery/gravity_tether/station/cell_rig_effect()

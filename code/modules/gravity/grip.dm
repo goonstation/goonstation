@@ -18,8 +18,8 @@
 	. = 0
 	if (src.provides_grip)
 		. += 1
-	for (var/atom/A in src.contents)
-		if (A.provides_grip)
+	for (var/atom/movable/AM as anything in src.contents)
+		if (AM.provides_grip)
 			. += 1
 
 /// Actually sets the turf's grippy value

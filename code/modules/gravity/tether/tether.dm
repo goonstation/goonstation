@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if (!isfloor(src.loc))
 		src.visible_message(SPAN_ALERT("\The [src] can't activate if it isn't on solid ground!"))
 		return
-	if (!istype(src.loc, /turf/simulated))
+	if (!issimulatedturf(src.loc))
 		src.visible_message(SPAN_ALERT("\The [src] can't activate here!"))
 		return
 

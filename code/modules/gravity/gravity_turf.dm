@@ -43,10 +43,6 @@
 		// This could be buggy, but storing it feels wasteful. How much stuff gets *un*-negatived?
 		src.set_gforce_inherent(initial(src.gforce_inherent))
 
-// update gravity on simulated turf spawn
-/turf/simulated/New()
-	. = ..()
-
 /datum/infooverlay/gravity_turf
 	name = "gravity-turf"
 	help = {"Colors group mob gravity thresholds. Dirty cache marked with *."}
