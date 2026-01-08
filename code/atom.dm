@@ -48,6 +48,9 @@ TYPEINFO(/atom)
 	proc/RawClick(location,control,params)
 		return
 
+	/// Use this if you want people to be able to open the inventory of contained mobs
+	var/open_inv_within = FALSE
+
 	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
 	var/gas_impermeable = FALSE
 
