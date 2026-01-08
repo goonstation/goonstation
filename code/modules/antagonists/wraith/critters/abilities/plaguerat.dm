@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 
 		if (!isturf(P.loc))
 			boutput(P, SPAN_ALERT("You can't feed while in [istype(P.loc,/obj/dummy/disposalmover) ? "a disposal pipe" : "\the [P.loc]"]."))
-			return FALSE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		for (var/obj/decal/cleanable/C in T)
 			for (var/D in decal_list)
