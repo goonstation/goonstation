@@ -33,6 +33,7 @@
 	var/old_type
 	var/can_fill = TRUE
 	var/base_icon_state = "trench"
+	var/catwalk_type = /obj/mesh/catwalk/over_trench
 
 	unfiilable
 		can_fill = FALSE
@@ -190,6 +191,7 @@
 	var/old_type
 	var/can_fill = TRUE
 	var/base_icon_state = "trench"
+	var/catwalk_type = /obj/mesh/catwalk/over_trench
 
 	unfillable
 		can_fill = FALSE
@@ -358,7 +360,8 @@
 		if (locate(/obj/mesh/catwalk) in src.bridge_turf) // someone else built one
 			return
 		if (src.rod_stack.change_stack_amount(-TRENCH_ROD_CATWALK_CREATION))
-			var/obj/O = new /obj/mesh/catwalk/over_trench(src.bridge_turf)
+			var/turf/simulated/floor/auto/trench/T = src.bridge_turf
+			var/obj/O = new T.catwalk_type(src.bridge_turf)
 			if(src.rod_stack.material)
 				O.setMaterial(src.rod_stack.material)
 

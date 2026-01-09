@@ -547,11 +547,13 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 		src.loc.Attackby(user.equipped(), user)
 
 /obj/mesh/catwalk/over_trench
+	plane = PLANE_DEFAULT
+
+/obj/mesh/catwalk/over_trench/jen
 	name = "maintenance catwalk"
 	icon_state = "M0-0"
 	desc = "This looks marginally more safe than the ones outside, at least..."
 	icon_state_prefix = "M" // Short for "Maintenance"
-	plane = PLANE_DEFAULT
 
 /obj/mesh/catwalk/over_trench/attack_hand(mob/user)
 	if (user.a_intent != INTENT_HELP)
