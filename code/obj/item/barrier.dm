@@ -3,11 +3,11 @@ TYPEINFO(/obj/item/barrier)
 
 /obj/item/barrier
 	name = "barrier"
-	desc = "A personal barrier. Activate this item inhand to deploy it."
+	desc = "ABSTRACT BARRIER VERSION. REPORT TO 1300 IM CODER."
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "barrier_0"
+	icon_state = "barrier_1"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "barrier0"
+	item_state = "barrier1"
 	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
 	throwforce = 6
@@ -18,6 +18,7 @@ TYPEINFO(/obj/item/barrier)
 	var/stamina_cost_active = 25
 	stamina_crit_chance = 0
 	hitsound = 0
+	var/toggleable = 0
 
 	can_disarm = 0
 	two_handed = 0
@@ -34,18 +35,13 @@ TYPEINFO(/obj/item/barrier)
 		c_flags &= ~BLOCK_TOOLTIP
 
 	block_prop_setup(source, obj/item/grab/block/B)
-		if(src.status)
+		if(src.status || !toggleable)
 			B.setProperty("rangedprot", 0.5)
 			B.setProperty("exploprot", 10)
 			. = ..()
 
-	update_icon()
-		icon_state = status ? "barrier_1" : "barrier_0"
-		item_state = status ? "barrier1" : "barrier0"
-
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		src.toggle(user)
 		..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -55,6 +51,33 @@ TYPEINFO(/obj/item/barrier)
 	dropped(mob/M)
 		..()
 		destroy_deployed_barrier(M)
+
+	emp_act(mob/M)
+		. = ..()
+		destroy_deployed_barrier(M)
+
+	proc/destroy_deployed_barrier(var/mob/living/M)
+		src.E?.deactivate(M)
+		src.E = null
+
+/obj/item/barrier/collapsible
+	desc = "Abstract type for collapsible barriers. Report to imcoder."
+	icon_state = "barrier_0"
+	item_state = "barrier0"
+	toggleable = 1
+	update_icon()
+		icon_state = status ? "barrier_1" : "barrier_0"
+		item_state = status ? "barrier1" : "barrier0"
+
+	attack_self(mob/user as mob)
+		src.toggle(user)
+		..()
+
+	emp_act()
+		..()
+		if(src.status)
+			src.toggle(null, FALSE)
+			src.visible_message("[src] sparks briefly as it overloads!")
 
 	proc/toggle(mob/user, new_state = null)
 		if(!user && ismob(src.loc))
@@ -107,17 +130,9 @@ TYPEINFO(/obj/item/barrier)
 		else
 			user?.show_text("You need two free hands in order to activate the [src.name].", "red")
 
-	emp_act()
-		. = ..()
-		if(src.status)
-			src.toggle(null, FALSE)
-			src.visible_message("[src] sparks briefly as it overloads!")
+/obj/item/barrier/collapsible/security
 
-	proc/destroy_deployed_barrier(var/mob/living/M)
-		src.E?.deactivate(M)
-		src.E = null
-
-/obj/item/void_shield // Was going to do a barrier subtype but no "off" state needed
+/obj/item/barrier/void
 	name = "Scale Shield"
 	desc = "A crude and unwieldy shield made from a eldritch scale. It appears to be able to both reflect and amplify projectiles."
 	icon = 'icons/obj/items/weapons.dmi'
@@ -151,7 +166,7 @@ TYPEINFO(/obj/item/barrier)
 		src.setItemSpecial(/datum/item_special/barrier/void)
 		BLOCK_SETUP(BLOCK_ALL)
 
-/obj/item/syndicate_barrier
+/obj/item/barrier/syndicate
 	name = "Aegis Riot Barrier"
 	desc = "A personal barrier."
 	icon = 'icons/obj/items/weapons.dmi'
