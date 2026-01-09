@@ -145,7 +145,7 @@
 		for (var/atom/A in src.objects)
 			C.screen -= A
 
-	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltip_options = list(), desc = null, customType = null, mouse_opacity = 1)
+	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltip_options = list(), desc = null, customType = null, mouse_opacity = 1, blend_mode = BLEND_OVERLAY)
 		if(QDELETED(src))
 			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
 		var/atom/movable/screen/hud/S
@@ -168,6 +168,7 @@
 		S.show_tooltip = tooltip_options && length(tooltip_options)
 		S.tooltip_options = tooltip_options
 		S.mouse_opacity = mouse_opacity
+		S.blend_mode = blend_mode
 		src.objects += S
 
 		for (var/client/C in src.clients)
