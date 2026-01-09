@@ -1703,7 +1703,7 @@ var/list/removed_jobs = list(
 			customization.try_apply(character, src.custom_parts)
 
 		// apply special blood
-		if (src.blType == "Zesty Ranch")
+		if (src.blType == "Zesty Ranch" && character.blood_id != "bloodc")
 			character.blood_id = "zestyranch"
 
 	proc/sanitize_null_values()
