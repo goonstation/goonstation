@@ -1,5 +1,9 @@
 
 (t)thu jan 08 26
+(u)Emily
+(*)Tourists and Ambassadors can now choose their mutantrace.
+(+)Ambassadors now get paid a stipend, courtesy of Nanotrasen.
+(+)Sheltergrog no longer permanently makes you a frogperson when you OD.
 (u)glowbold
 (p)25476
 (e)⚖🔨|C-Balance, A-Player-Actions
