@@ -145,7 +145,7 @@
 		for (var/atom/A in src.objects)
 			C.screen -= A
 
-	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltip_options = list(), desc = null, customType = null, mouse_opacity = 1, blend_mode = BLEND_OVERLAY)
+	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltip_options = list(), desc = null, customType = null, mouse_opacity = 1, blend_mode = BLEND_DEFAULT)
 		if(QDELETED(src))
 			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
 		var/atom/movable/screen/hud/S
