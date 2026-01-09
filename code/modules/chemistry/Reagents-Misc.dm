@@ -3380,7 +3380,7 @@ datum
 			hunger_value = 0.1
 			viscosity = 0.4
 			depletion_rate = 0.4
-			addiction_prob = 40
+			addiction_prob = 20
 			addiction_min = 10
 			taste = list("zesty", "ranchy")
 			description = "An uncommon type of \"Zesty Ranch\" dressing. There is currently an ongoing debate between experts over whether this is infact a real, valid condiment."
