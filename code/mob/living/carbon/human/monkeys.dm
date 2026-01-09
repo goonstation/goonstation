@@ -662,7 +662,7 @@ TYPEINFO(/mob/living/carbon/human/npc/monkey)
 
 	New()
 		..()
-		SPAWN(1 SECOND)
+		SPAWN(0.5 SECONDS)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, SLOT_SHOES)
 			src.equip_new_if_possible(head, SLOT_HEAD)
@@ -683,6 +683,42 @@ TYPEINFO(/mob/living/carbon/human/npc/monkey)
 
 	ai_is_valid_target(mob/M)
 		return isalive(M)
+
+// one angry monke is used as the template, the rest are these spawned once monkey barrel is opened
+/mob/living/carbon/human/npc/monkey/angry/barrel
+
+	New()
+		..()
+		src.equip_new_if_possible(/obj/item/clothing/under/holojumpsuit, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/holosuit, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/mask/holomask, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/holoshoes, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/ears/holoears, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/clothing/gloves/hologloves, SLOT_GLOVES)
+
+	proc/copy_clothes(var/mob/living/carbon/human/npc/monkey/template)
+		var/list/basic_slots = list(SLOT_HEAD, SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_WEAR_MASK, SLOT_SHOES, SLOT_EARS, SLOT_GLOVES)
+		var/obj/item/clothing/holoclothes
+		var/obj/item/clothing/templateclothes
+
+		for (var/slot in basic_slots) // copy icons from the template monkey to this monkey's clothes
+			templateclothes = template.get_slot(slot)
+
+			// give the other monkeys random colour bandanas if player didn't remove the template's bandana
+			if (slot == SLOT_HEAD && istype(template.get_slot(SLOT_HEAD), /obj/item/clothing/head/bandana/))
+				src.equip_new_if_possible(/obj/item/clothing/head/bandana/random_color, SLOT_HEAD)
+			else
+				src.equip_new_if_possible(/obj/item/clothing/head/holohat, SLOT_HEAD)
+
+			if (templateclothes)
+				holoclothes = src.get_slot(slot)
+				holoclothes.icon = templateclothes.icon
+				holoclothes.wear_image_icon = templateclothes.wear_image_icon
+				holoclothes.icon_state = templateclothes.icon_state
+				holoclothes.UpdateIcon()
+			templateclothes = null
+			holoclothes = null
+
 
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea
