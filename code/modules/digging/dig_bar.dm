@@ -176,8 +176,10 @@
 		src.owner_mob.set_loc(src.target_turf)
 
 /datum/action/bar/climb_trench/down
+	id = "climb_trench_down"
 	entering = TRUE
 
 /datum/action/bar/climb_trench/up
+	id = "climb_trench_up"
 	entering = FALSE
 
