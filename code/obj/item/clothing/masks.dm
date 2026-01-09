@@ -896,6 +896,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	icon_state = "clown_nose"
 	item_state = "clown_nose"
 	see_face = TRUE
+	c_flags = null
 
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	var/volume = 50
