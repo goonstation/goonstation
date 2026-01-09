@@ -115,7 +115,10 @@
 				boutput(user, SPAN_ALERT("There's already a catwalk there!"))
 				return
 
-			actions.start(new /datum/action/bar/icon/bridge_trench(src, I), user)
+			var/datum/action/bar/icon/bridge_trench/build = new(src, I)
+			if (ishandy(user))
+				build.duration = build.duration / 2
+			actions.start(build, user)
 			return
 		. = ..()
 
@@ -269,7 +272,10 @@
 				boutput(user, SPAN_ALERT("There's already a catwalk there!"))
 				return
 
-			actions.start(new /datum/action/bar/icon/bridge_trench(src, I), user)
+			var/datum/action/bar/icon/bridge_trench/build = new(src, I)
+			if (ishandy(user))
+				build.duration = build.duration / 2
+			actions.start(build, user)
 			return
 		. = ..()
 
