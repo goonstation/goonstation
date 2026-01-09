@@ -770,7 +770,11 @@ TYPEINFO(/atom/movable)
 	if(special_description)
 		return list(special_description)
 
-	. = list("This is \an [src.name].")
+	var/name_to_use = src.name
+	if (isliving(src) && !isobserver(user) && !isintangible(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_EXAMINE_ALL_NAMES) && dist > MAX_NAMETAG_RANGE)
+		. = list("This is someone.")
+	else
+		. = list("This is \an [name_to_use].")
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
