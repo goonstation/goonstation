@@ -554,6 +554,20 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	plane = PLANE_DEFAULT
 
 /obj/mesh/catwalk/over_trench/attack_hand(mob/user)
+	if (user.a_intent != INTENT_HELP)
+		user.lastattacked = get_weakref(src)
+		var/damage = 1
+		var/message = "[user.in_trench ? user.punchMessage : user.kickMessage] [src]"
+
+		if (user.is_hulk())
+			damage = 10
+			message = "smashes [src] with incredible strength"
+
+		src.visible_message(SPAN_ALERT("<b>[user]</b> [message]"))
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
+
+		src.damage_blunt(damage)
+		return
 	if (user.in_trench && can_act(user))
 		actions.start(new /datum/action/bar/climb_trench/up(user, get_turf(src)), user)
 	. = ..()
