@@ -24,6 +24,9 @@
 /// Returns true if x is a reinforced wall
 #define isrwall(x) (istype(x,/turf/simulated/wall/r_wall)||istype(x,/turf/simulated/wall/auto/reinforced)||istype(x,/turf/unsimulated/wall/auto/reinforced)||istype(x,/turf/simulated/wall/false_wall/reinforced))
 
+/// Returns true if x is a trench
+#define istrench(x) (istype(x,/turf/simulated/floor/auto/trench)||istype(x,/turf/unsimulated/floor/auto/trench))
+
 #define wall_window_check(x) (isturf(x) && (istypes(x, list(/turf/simulated/wall/auto, /turf/unsimulated/wall/auto) || (locate(/obj/mapping_helper/wingrille_spawn) in x) || (locate(/obj/window) in x))))
 
 /**

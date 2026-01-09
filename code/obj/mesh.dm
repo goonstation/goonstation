@@ -546,6 +546,18 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	if(isturf(src.loc))
 		src.loc.Attackby(user.equipped(), user)
 
+/obj/mesh/catwalk/over_trench
+	name = "maintenance catwalk"
+	icon_state = "M0-0"
+	desc = "This looks marginally more safe than the ones outside, at least..."
+	icon_state_prefix = "M" // Short for "Maintenance"
+	plane = PLANE_DEFAULT
+
+/obj/mesh/catwalk/over_trench/attack_hand(mob/user)
+	if (user.in_trench && can_act(user))
+		actions.start(new /datum/action/bar/climb_trench/up(user, get_turf(src)), user)
+	. = ..()
+
 /obj/mesh/catwalk/dubious
 	name = "rusty catwalk"
 	desc = "This one looks even less safe than usual."

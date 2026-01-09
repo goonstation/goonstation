@@ -10,6 +10,17 @@
  * http://creativecommons.org/licenses/by-nc-sa/3.0/us/
  */
 
+#define TRENCH_ROD_CATWALK_CREATION 5
+
+/atom/movable/var/in_trench = FALSE
+/atom/movable/proc/enter_trench()
+	src.in_trench = TRUE
+	src.plane = PLANE_TRENCH
+
+/atom/movable/proc/exit_trench()
+	src.in_trench = FALSE
+	src.plane = PLANE_DEFAULT
+
 /turf/unsimulated/floor/auto/trench
 	name = "trench"
 	icon = 'icons/turf/trenches/trenches.dmi'
@@ -54,44 +65,58 @@
 
 	Cross(atom/movable/AM)
 		var/turf/T = get_turf(AM)
-		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/unsimulated/floor/auto/trench))
+		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istrench(T))
 			return FALSE
 
 		. = ..()
 
 	Enter(atom/AM)
-		var/mob/M = AM
-		var/turf/T = get_turf(M)
-		if (T && ismob(M) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/unsimulated/floor/auto/trench))
+		var/turf/T = get_turf(AM)
+		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+			var/mob/M = AM
+			if (M.in_trench)
+				return TRUE // already in the trench
+			var/obj/mesh/catwalk/catwalk = locate(/obj/mesh/catwalk) in src
+			if (catwalk && !catwalk.ruined)
+				return TRUE // can walk over the trench
 			if (!M.throwing && isalive(M))
 				if (M.client && !M.client.check_key(KEY_RUN) && !M.client.check_key(KEY_BOLT))
 					return
-				actions.start(new /datum/action/bar/climb_trench(M, src), M)
-
+				actions.start(new /datum/action/bar/climb_trench/down(M, src), M)
 			else
 				src.fall_down_trench(M)
-
 			return
-
 		. = ..()
 
 	Exit(atom/AM, turf/T)
-		var/mob/M = AM
-		if (T && ismob(M) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/unsimulated/floor/auto/trench))
+		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+			var/mob/M = AM
+
+			if (!M.in_trench) // on catwalk
+				return TRUE
+			if (istrench(T)) // trench Enter handles climb down if needed
+				return TRUE
 			if (!M.throwing && isalive(M))
 				if (M.client && !M.client.check_key(KEY_RUN) && !M.client.check_key(KEY_BOLT))
 					return
-				actions.start(new /datum/action/bar/climb_trench(M, T), M)
-
+				actions.start(new /datum/action/bar/climb_trench/up(M, T), M)
 			return
-
 		. = ..()
 
 	attackby(obj/item/I, mob/user, params, is_special)
 		if (src.can_fill && isdiggingtool(I))
 			actions.start(new/datum/action/bar/dig_trench(src), user)
 			return
+		else if (istype(I, /obj/item/rods))
+			if (I.amount < TRENCH_ROD_CATWALK_CREATION)
+				boutput(user, SPAN_ALERT("You need [TRENCH_ROD_CATWALK_CREATION] rods to make a catwalk!"))
+				return
+			if (locate(/obj/mesh/catwalk) in src)
+				boutput(user, SPAN_ALERT("There's already a catwalk there!"))
+				return
 
+			actions.start(new /datum/action/bar/icon/bridge_trench(src, I), user)
+			return
 		. = ..()
 
 	dig_trench()
@@ -140,6 +165,7 @@
 
 	proc/fall_down_trench(mob/M)
 		M.set_loc(src)
+		M.enter_trench()
 		M.visible_message(SPAN_ALERT("[M] falls into the trench!"))
 		M.TakeDamage("All", 15, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("stunned", 2 SECONDS)
@@ -201,36 +227,51 @@
 	Enter(atom/AM)
 		var/mob/M = AM
 		var/turf/T = get_turf(M)
-		if (T && ismob(M) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/simulated/floor/auto/trench))
+		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+			var/mob/M = AM
+			if (M.in_trench)
+				return TRUE // already in the trench
+			var/obj/mesh/catwalk/catwalk = locate(/obj/mesh/catwalk) in src
+			if (catwalk && !catwalk.ruined)
+				return TRUE // can walk over the trench
 			if (!M.throwing && isalive(M))
 				if (M.client && !M.client.check_key(KEY_RUN) && !M.client.check_key(KEY_BOLT))
 					return
-				actions.start(new /datum/action/bar/climb_trench(M, src), M)
-
+				actions.start(new /datum/action/bar/climb_trench/down(M, src), M)
 			else
 				src.fall_down_trench(M)
-
 			return
-
 		. = ..()
 
 	Exit(atom/AM, turf/T)
-		var/mob/M = AM
-		if (T && ismob(M) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/simulated/floor/auto/trench))
+		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+			var/mob/M = AM
+
+			if (!M.in_trench) // on catwalk
+				return TRUE
+			if (istrench(T)) // trench Enter handles climb down if needed
+				return TRUE
 			if (!M.throwing && isalive(M))
 				if (M.client && !M.client.check_key(KEY_RUN) && !M.client.check_key(KEY_BOLT))
 					return
-				actions.start(new /datum/action/bar/climb_trench(M, T), M)
-
+				actions.start(new /datum/action/bar/climb_trench/up(M, T), M)
 			return
-
 		. = ..()
 
 	attackby(obj/item/I, mob/user, params, is_special)
 		if (src.can_fill && isdiggingtool(I))
 			actions.start(new/datum/action/bar/dig_trench(src), user)
 			return
+		else if (istype(I, /obj/item/rods))
+			if (I.amount < TRENCH_ROD_CATWALK_CREATION)
+				boutput(user, SPAN_ALERT("You need [TRENCH_ROD_CATWALK_CREATION] rods to make a catwalk!"))
+				return
+			if (locate(/obj/mesh/catwalk) in src)
+				boutput(user, SPAN_ALERT("There's already a catwalk there!"))
+				return
 
+			actions.start(new /datum/action/bar/icon/bridge_trench(src, I), user)
+			return
 		. = ..()
 
 	dig_trench()
@@ -279,6 +320,7 @@
 
 	proc/fall_down_trench(mob/M)
 		M.set_loc(src)
+		M.enter_trench()
 		M.visible_message(SPAN_ALERT("[M] falls into the trench!"))
 		M.TakeDamage("All", 15, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("stunned", 2 SECONDS)
@@ -287,6 +329,33 @@
 			var/mob/living/L = M
 			playsound(L.loc, L.sound_scream, 100, 0, 0, L.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
+
+/datum/action/bar/icon/bridge_trench
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 6 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/turf/bridge_turf //! Turf the bridge is going over
+	var/obj/item/rods/rod_stack //! Rods we are using
+
+	New(turf/T, obj/item/I)
+		..()
+		src.bridge_turf = T
+		src.rod_stack = I
+
+	canRunCheck(in_start)
+		if(!src.owner || !src.bridge_turf || !src.rod_stack || !istrench(src.bridge_turf)|| BOUNDS_DIST(src.owner, src.bridge_turf) > 0)
+			src.interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (locate(/obj/mesh/catwalk) in src.bridge_turf) // someone else built one
+			return
+		if (src.rod_stack.change_stack_amount(-TRENCH_ROD_CATWALK_CREATION))
+			var/obj/O = new /obj/mesh/catwalk/over_trench(src.bridge_turf)
+			if(src.rod_stack.material)
+				O.setMaterial(src.rod_stack.material)
 
 /turf
 	var/can_dig = FALSE
@@ -320,3 +389,5 @@
 			var/obj/effects/E = locate(global.station_repair.weather_effect) in src
 			if(!E)
 				new global.station_repair.weather_effect(src)
+
+#undef TRENCH_ROD_CATWALK_CREATION

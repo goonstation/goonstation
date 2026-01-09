@@ -91,62 +91,54 @@
 			SPAWN((rand(11, 14) / 10) SECONDS)
 				src.play_digging_sound()
 
-
-
 /datum/action/bar/climb_trench
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "climb_trench"
 	resumable = TRUE
 	var/mob/owner_mob
-	var/turf/trench
+	var/turf/target_turf
 	var/list/collision_whitelist = null
+	var/entering
 
 	New(owner, trench)
 		..()
 		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape)
 		owner = owner
 		src.owner_mob = owner
-		src.trench = trench
+		src.target_turf = trench
 
-	onUpdate()
-		..()
-		if (BOUNDS_DIST(src.owner_mob, src.trench) > 0)
+	canRunCheck(in_start)
+		if (BOUNDS_DIST(src.owner_mob, src.target_turf) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if (BOUNDS_DIST(src.owner_mob, src.trench) > 0 || !src.trench || !src.owner_mob)
+		if (!src.target_turf || !src.owner_mob)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		if (check_for_obstruction())
-			boutput(src.owner_mob, SPAN_ALERT("Something is obstructing [src.trench]!"))
+			boutput(src.owner_mob, SPAN_ALERT("Something is obstructing [src.target_turf]!"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.owner_mob.visible_message(SPAN_NOTICE("[src.owner_mob] begins to climb [src.into_or_out_of()] the hole."))
+		src.owner_mob.visible_message(SPAN_NOTICE("[src.owner_mob] begins to climb [entering ? "into" : "out of"] the trench."), group="\ref[src.owner_mob]-trench")
 
 	onEnd()
 		..()
 		sendOwner()
 
-	proc/into_or_out_of()
-		if (istype(src.trench, /turf/simulated/floor/auto/trench))
-			return "into"
-
-		return "out of"
-
 	proc/check_for_obstruction()
 		var/obj/obstacle = null
-		var/direction = get_dir(get_turf(owner), src.trench)
+		var/direction = get_dir(get_turf(owner), src.target_turf)
 
-		if (src.trench.density)
-			obstacle = src.trench.name
+		if (src.target_turf.density)
+			obstacle = src.target_turf.name
 		else
 			// Is the trench blocked?
-			obstacle = check_turf_obstacles(src.trench)
+			obstacle = check_turf_obstacles(src.target_turf)
 
 			// If the trench is not blocked, is the owner moving in an ordinal direction? If so, consider corners.
 			if (!obstacle && (direction in ordinal))
@@ -157,6 +149,10 @@
 					var/turf/T2 = get_step(get_turf(owner), turn(direction, -45))
 					obstacle = check_turf_obstacles(T2)
 
+		if (owner_mob.in_trench)
+			var/obj/mesh/catwalk/check_catwalk = locate(/obj/mesh/catwalk) in get_turf(src.owner)
+			if (check_catwalk && !check_catwalk.ruined)
+				obstacle = check_catwalk
 
 		if(obstacle)
 			return TRUE
@@ -172,5 +168,16 @@
 			return O
 
 	proc/sendOwner()
-		src.owner_mob.set_loc(src.trench)
-		src.owner_mob.visible_message(SPAN_NOTICE("[src.owner_mob] climbs [src.into_or_out_of()] the trench."))
+		src.owner_mob.visible_message(SPAN_NOTICE("[src.owner_mob] climbs [entering ? "into" : "out of"] the trench."), group="\ref[src.owner_mob]-trench")
+		if (entering)
+			src.owner_mob.enter_trench()
+		else
+			src.owner_mob.exit_trench()
+		src.owner_mob.set_loc(src.target_turf)
+
+/datum/action/bar/climb_trench/down
+	entering = TRUE
+
+/datum/action/bar/climb_trench/up
+	entering = FALSE
+

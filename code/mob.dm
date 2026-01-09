@@ -586,6 +586,8 @@ TYPEINFO(/mob)
 
 	if (ismob(AM))
 		var/mob/tmob = AM
+		if (tmob.in_trench != src.in_trench)
+			return
 		if (ishuman(tmob))
 			if(isliving(src) && src.density)
 				var/mob/living/L = src
@@ -1585,7 +1587,7 @@ TYPEINFO(/mob)
 		var/mob/moving_mob = mover
 		if ((src.other_mobs && moving_mob.other_mobs))
 			return 1
-		return (!mover.density || !src.density || src.lying)
+		return (!mover.density || !src.density || src.lying || src.in_trench != mover.in_trench)
 	else
 		return (!mover.density || !src.density || src.lying)
 
