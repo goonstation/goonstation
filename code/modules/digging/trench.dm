@@ -225,8 +225,7 @@
 		. = ..()
 
 	Enter(atom/AM)
-		var/mob/M = AM
-		var/turf/T = get_turf(M)
+		var/turf/T = get_turf(AM)
 		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
 			var/mob/M = AM
 			if (M.in_trench)
