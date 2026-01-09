@@ -2302,12 +2302,64 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 
+
+/datum/bioEffect/power/ghost_walk
+	name = "Spectral Ascent"
+	desc = "Allows the subject to become a ghost for a short duration, leaving their body to return."
+	id = "ghost_walk"
+	icon = "ghost_ascend"
+	occur_in_genepools = 0 // Only from the genes of a boss mob.
+	probability = 0
+	msgGain = "You feel like your soul is more flexible."
+	msgLose = "Your soul feels anchored again."
+	stability_loss = 20
+	blockCount = 4
+	blockGaps = 5
+	lockProb = 40
+	lockedGaps = 1
+	lockedDiff = 3
+	lockedChars = list("G","C","A","T")
+	lockedTries = 8
+	ability_path = /datum/targetable/geneticsAbility/ghost_walk
+
+/datum/targetable/geneticsAbility/ghost_walk
+	name = "Spectral Ascent"
+	desc = "Temporarily become a ghost to survey your surrondings."
+	icon_state = "ghost_ascend"
+	needs_hands = FALSE
+	targeted = FALSE
+
+	cast()
+		if (..())
+			return 1
+
+		if (ishuman(owner))
+			owner.changeStatus("ghost_walk_effect", 30 SECONDS)
+
+/datum/targetable/gimmick/ghost_walk_return // Return ability, on the ghost
+	name = "Spectral Anchor"
+	desc = "Return to your body."
+	icon = 'icons/mob/genetics_powers.dmi'
+	icon_state = "ghost_ascend"
+	targeted = FALSE
+	var/datum/statusEffect/art_curse/displaced_soul/gene/GeneBuff
+
+	cast()
+		if (..())
+			return 1
+
+		if (istype(holder.owner, /mob/living/intangible/art_curser_displaced_soul/gene))
+			GeneBuff = holder.owner.hasStatus("ghost_walk_soul")
+			boutput(holder.owner, "You return to your body!")
+			GeneBuff.original_body.delStatus("ghost_walk_effect")
+
+
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter
 	id = "critter_do_not_use"
 
 /datum/bioEffect/power/critter/peck
-	name = "Aviornis Rostriformis "
+	name = "Aviornis Rostriformis"
 	desc = "Generates a hardened keratin area between the mouth and nose."
 	id = "beak_peck"
 	msgGain = "You feel your mouth and nose become more difficult to move."

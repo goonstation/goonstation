@@ -2952,6 +2952,7 @@
 #include "code\WorkInProgress\construction\progress.dm"
 #include "code\WorkInProgress\construction\supply_controller.dm"
 #include "code\WorkInProgress\construction\tools.dm"
+#include "code\WorkInProgress\dialogue\dialogue_cultist_base.dm"
 #include "code\WorkInProgress\dialogue\dialogue_mantalog.dm"
 #include "code\WorkInProgress\dialogue\dialogue_mantavault.dm"
 #include "code\WorkInProgress\dialogue\dialogue_NTcommander.dm"
