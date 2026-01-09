@@ -1,5 +1,13 @@
 
 (t)thu jan 08 26
+(u)glowbold
+(p)25476
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Long-range examining has changed for human crew, details in minor notes.
+(+)Using ALT+Hover to show name tags works up to five tiles away.
+(+)Humans examining other humans from zero to five tiles away gives you full equipment details.
+(+)Humans examining other humans from six to seven tiles away gives you a vague description, obscuring the person's name and equipment.
+(+)Humans examining other humans from eight to ten tiles away states you're too far away to see clearly.
 (u)Mr. Moriarty
 (p)25446
 (e)🆕⚗|C-Feature, A-Chemistry
