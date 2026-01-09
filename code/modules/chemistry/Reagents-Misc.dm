@@ -3451,38 +3451,21 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == INGEST)
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						// People with synth leg can absorb shit with no consequences. Disgusting.
-						if(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT)
-							boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened!","You feel good.")))
-						else
-							// if not synth leg
-							boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
-							SPAWN(1 SECOND)
-							if(!isdead(M) && volume >= 1)
-								var/vomit_message = SPAN_ALERT("[M] pukes violently!")
-								M.vomit(0, null, vomit_message)
+					var/mob/living/carbon/human/H = M
+					// People with synth leg can absorb shit with no consequences. Disgusting.
+					if(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT)
+						boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened!","You feel good.")))
 					else
-						// if not leg or human (definitely could get less reused code here)
+						// if not synth leg
 						boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
 						SPAWN(1 SECOND)
 							if(!isdead(M) && volume >= 1)
 								var/vomit_message = SPAN_ALERT("[M] pukes violently!")
 								M.vomit(0, null, vomit_message)
 				else
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						// nothing bad happens with synthlegs
-						if(!(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT))
-							boutput(M, SPAN_ALERT("This smells like shit! What the fuck?!"))
-							if (prob(50))
-								boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
-								var/amt = min(volume/100,1)
-								src.holder.remove_reagent("poo",amt)
-								M.reagents.add_reagent("poo",amt)
-								src.reaction_mob(M,INGEST,amt,null,amt)
-					else
+					var/mob/living/carbon/human/H = M
+					// nothing bad happens with synthlegs
+					if(!(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT))
 						boutput(M, SPAN_ALERT("This smells like shit! What the fuck?!"))
 						if (prob(50))
 							boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
