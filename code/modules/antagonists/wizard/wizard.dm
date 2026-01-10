@@ -6,7 +6,7 @@
 	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
 	wiki_link = "https://wiki.ss13.co/Wizard"
-	var/list/datum/SWFuplinkspell/purchased_spells = list()
+	var/list/datum/uplinkspell/purchased_spells = list()
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder
@@ -59,7 +59,7 @@
 		if (!src.vr)
 			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_L_HAND)
 
-		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src, src.vr)
+		var/obj/item/spellbook/SWF_uplink/SB = new /obj/item/spellbook/SWF_uplink(src, src.vr)
 		SB.wizard_key = src.owner.key
 		H.equip_if_possible(SB, SLOT_BELT)
 
@@ -133,7 +133,7 @@
 		var/list/purchases = list()
 		#define SPELL_ANIMATION_FRAME 5 // This will break if ever the wizard spell animations are changed
 
-		for (var/datum/SWFuplinkspell/purchased_spell as anything in src.purchased_spells)
+		for (var/datum/uplinkspell/purchased_spell as anything in src.purchased_spells)
 			if (purchased_spell.assoc_spell )
 				var/datum/targetable/spell/S = purchased_spell.assoc_spell
 				purchases += list(
