@@ -19,8 +19,46 @@
 		/* if (. == CAST_ATTEMPT_SUCCESS)
 			faithtrait.faith -= src.faith_cost */
 
+/datum/targetable/faith_based/alight_candles
+	name = "Alight Candles"
+	desc = "Alights all the candles in the chapel."
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "toxmob"
+	cooldown = 0
+
+	cast(atom/target)
+		..()
+		var/area/station/chapel/area = get_area(holder.owner)
+		for (var/obj/item/device/light/candle/candle in area.contents)
+			candle.light(holder.owner)
+
+/datum/targetable/faith_based/snuff_candles
+	name = "Snuff Candles"
+	desc = "Snuffs all the candles in the chapel."
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "bholerip"
+	cooldown = 5
+
+	cast(atom/target)
+		..()
+		var/area/station/chapel/area = get_area(holder.owner)
+		for (var/obj/item/device/light/candle/candle in area.contents)
+			candle.put_out(holder.owner)
 
 
+/datum/targetable/faith_based/chaplain_announcement
+	name = "Chapel Announcement"
+	desc = "Make an announcement."
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "puke"
+	cooldown = 2 MINUTES
+
+	cast(atom/target)
+		..()
+		var/message = input(holder.owner, null, "Announcement text:")
+		if (!message && message == "")
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		command_announcement(message, "[holder.owner]'s booming voice echoes from the chapel", 'sound/voice/chanting.ogg', alert_origin=ALERT_DEPARTMENT)
 
 ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 /datum/targetable/faith_based/spawn_decoration
@@ -67,3 +105,55 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 		holder.owner.abilityHolder.removeAbility(src.type)
 
 
+/datum/targetable/faith_based/spawn_decoration/tree
+	name = "Spawn Decoration"
+	desc = "spawns a decoration."
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "toxmob"
+	cooldown = 5
+	spawnable_type = /obj/tree
+
+/datum/targetable/faith_based/spawn_decoration/eternal_fire
+	name = "Eternal Fire"
+	desc = "Conjure an oddly cool flame which will burn forever, without need for fuel."
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "fire_essence1"
+	cooldown = 0
+	spawnable_type = null
+
+	cast(atom/target)
+		..()
+		var/turf/turf = get_turf(target)
+		var/atom/movable/hotspot/chemfire/fire = new (turf, CHEM_FIRE_YELLOW)
+		fire.temperature = T20C
+		fire.min_status_duration = 1
+		fire.max_status_duration = 3
+
+
+
+/// Gets a list of all 8 neighbouring turfs of the given turf. Ignores the edges of the map
+proc/get_all_neighbours(turf/T) // TODO figure out where this should go
+	if(!T) return list()
+
+	var/list/neighbours = list()
+	var/x = T.x
+	var/y = T.y
+	var/z = T.z
+
+	var/turf/north = locate(x, y+1, z)
+	if(north) neighbours += north
+	var/turf/south = locate(x, y-1, z)
+	if(south) neighbours += south
+	var/turf/east = locate(x+1, y, z)
+	if(east) neighbours += east
+	var/turf/west = locate(x-1, y, z)
+	if(west) neighbours += west
+	var/turf/ne = locate(x+1, y+1, z)
+	if(ne) neighbours += ne
+	var/turf/nw = locate(x-1, y+1, z)
+	if(nw) reneighbourssult += nw
+	var/turf/se = locate(x+1, y-1, z)
+	if(se) neighbours += se
+	var/turf/sw = locate(x-1, y-1, z)
+	if(sw) neighbours += sw
+	return neighbours
