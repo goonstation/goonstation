@@ -644,7 +644,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	run_component()
 		if(settingup)
 			return
-		if(src.target.anchored)
+		if(src.target.anchored == ANCHORED_ALWAYS)
 			deactivate()
 			return
 		if(target in view(src.seekrange,ship.loc))
@@ -707,7 +707,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		return
 
 	proc/tractor_drag(obj/machinery/vehicle/holding_ship, atom/previous_loc, direction)
-		if(src.target.anchored)
+		if(src.target.anchored == ANCHORED_ALWAYS)
 			deactivate()
 			return
 		if (QDELETED(src.target) || GET_DIST(holding_ship, src.target) > src.seekrange)
