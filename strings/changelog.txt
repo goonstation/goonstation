@@ -1,5 +1,9 @@
 
 (t)sat jan 10 26
+(u)Lord_Earthfire
+(p)25417
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Multitool assemblies can be modified by adding a large power cell onto them. This drains the power cell to increase the area and the effect of the flash produced.
 (u)QuiteLiterallyAnything
 (p)25454
 (e)|
