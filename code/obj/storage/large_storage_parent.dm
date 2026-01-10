@@ -8,7 +8,7 @@
 
 #define RELAYMOVE_DELAY 1 SECOND
 /// The percentage of a storage object's health below which it will only return one sheet on deconstruction.
-#define STORAGE_UNSALVAGEABLE_THRESHOLD 0.75
+#define STORAGE_UNSALVAGEABLE_THRESHOLD 0
 
 ABSTRACT_TYPE(/obj/storage)
 ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
