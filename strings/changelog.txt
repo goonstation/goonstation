@@ -1,5 +1,18 @@
 
+(t)sat jan 10 26
+(u)Lord_Earthfire
+(p)25417
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Multitool assemblies can be modified by adding a large power cell onto them. This drains the power cell to increase the area and the effect of the flash produced.
+(u)QuiteLiterallyAnything
+(p)25454
+(e)|
+(+)Plasma tanks may now be quickly inserted into pods lacking a fuel tank via hit.
 (t)fri jan 09 26
+(u)LorrMaster
+(p)25203
+(e)🆕🧱|C-Feature, A-Materials
+(*)Certain items can now be arcplated if their material is their default material
 (u)Cheekybrdy
 (p)23401
 (e)🗺🎨🏅|A-Mapping, C-Sprites, A-Medal
