@@ -169,8 +169,8 @@
 		S.show_tooltip = tooltip_options && length(tooltip_options)
 		S.tooltip_options = tooltip_options
 		S.mouse_opacity = mouse_opacity
-		if(blend_mode != null) // `blend_mode` is a newer parameter on this older proc. This check is made with the intention of not
-			S.blend_mode = blend_mode   // breaking things (primarily `customType` screens with a non-default `blend_mode`).
+		if(blend_mode != null) // `blend_mode` is a newer parameter on this older proc. This check is made with the intention of not breaking things.
+			S.blend_mode = blend_mode
 		src.objects += S
 
 		for (var/client/C in src.clients)
