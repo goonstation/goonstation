@@ -1988,3 +1988,21 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 	animate(spark, alpha = 255, time = 2 DECI SECONDS)
 	SPAWN(0.6 SECONDS)
 		qdel(spark)
+
+// looks like a pokeball animation
+/proc/animate_supernatural_spawn(var/atom/A, var/color_hex = "#FFFF00")
+	A.color = list(
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		GetRedPart(color_hex)/255, GetGreenPart(color_hex)/255, GetBluePart(color_hex)/255, 0
+	)
+	var/matrix/M = matrix(A.transform)
+	A.transform = A.transform.Scale(0.05, 0.05)
+	var/icon/icn = icon(A.icon, A.icon_state)
+	var/icon_height = icn.Height()
+	A.pixel_y = -icon_height * 0.4
+	animate(A, transform = M, alpha = 255, time = 0.7 SECONDS, easing = CUBIC_EASING, pixel_y = 0, flags = ANIMATION_PARALLEL)
+	SPAWN(0.4 SECONDS)
+		animate(A, color = COLOR_MATRIX_IDENTITY, time = 0.7 SECONDS, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
