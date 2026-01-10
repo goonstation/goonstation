@@ -11,7 +11,7 @@
 	has_werewolves = 0
 	major_threats = list(ROLE_WRAITH)
 
-	num_enemies_divisor = 12
+	num_enemies_divisor = 15
 
 /datum/game_mode/mixed/arcfiend/announce()
 	boutput(world, "<B>The current game mode is - Arcfiend!</B>")

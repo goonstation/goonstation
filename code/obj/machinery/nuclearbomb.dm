@@ -420,16 +420,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			return
 		src._health = max(0,src._health - amount)
 		if (src._health < 1)
+			var/mode_bomb
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+				var/datum/game_mode/nuclear/gamemode = ticker.mode
+				if(gamemode.the_bomb == src)
+					mode_bomb = "(GAMEMODE'S BOMB)"
 			src.visible_message("<b>[src]</b> breaks and falls apart into useless pieces!")
 			robogibs(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
-			var/datum/game_mode/nuclear/gamemode = null
-			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear) && src.boom_size == "nuke")
-				gamemode = ticker.mode
-				gamemode.the_bomb = null
-				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")
-				message_admins("The nuclear bomb was destroyed at [log_loc(src)].")
-				message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)]!")
+			logTheThing(LOG_GAMEMODE, null, "[src][mode_bomb] was destroyed at [log_loc(src)].")
+			message_admins("<b>[src][mode_bomb]</b> was destroyed at [log_loc(src)].")
+			message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)]!")
 			qdel(src)
 
 	proc/explode()

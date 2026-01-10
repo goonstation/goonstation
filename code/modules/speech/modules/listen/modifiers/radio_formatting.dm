@@ -48,7 +48,7 @@
 
 	// Determine that speaker name that should be displayed.
 	if (ismob(message.speaker))
-		message.speaker_to_display = message.get_speaker_name(TRUE)
+		message.speaker_to_display ||= message.get_speaker_name(TRUE)
 
 	message.format_speaker_prefix = {"\
 		<span class='radio [classes]' [css_style]>\
@@ -58,7 +58,9 @@
 
 	message.format_verb_prefix = {"\
 		</span> \
+		<span class='radio [default_frequency_class(display_frequency)]'>\
 		<b>\[[format_frequency(display_frequency)]\]</b> \
+		</span>\
 		<span class='message'>\
 	"}
 

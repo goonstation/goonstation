@@ -122,7 +122,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 15)
 				break
 	else
-		step_rand(src, BUTTBOT_MOVE_SPEED)
+		src.navigate_to(get_step_rand(src), BUTTBOT_MOVE_SPEED)
 
 /obj/machinery/bot/buttbot/process(mult)
 	if(src.exploding)

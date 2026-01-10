@@ -92,7 +92,6 @@ TYPEINFO(/obj/item/card/emag)
 	var/list/access = list()
 	var/registered = null
 	var/assignment = null
-	var/title = null
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
 	/// this determines if the icon_state of the ID changes if it is given a new job
@@ -102,9 +101,6 @@ TYPEINFO(/obj/item/card/emag)
 	// WOW
 	var/money = 0
 	var/pin = 0000
-
-	//It's a..smart card.  Sure.
-	var/datum/computer/file/cardfile = null
 
 	proc/update_name()
 		name = "[src.registered]’s ID Card ([src.assignment])"

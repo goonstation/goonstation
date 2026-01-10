@@ -318,9 +318,10 @@ TYPEINFO(/obj/item/device/flash)
 
 		if (safety == 0 && user.mind && user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && !isghostcritter(user))
 			var/nostun = 0
+			var/obj/item/implant/counterrev/implant = locate() in H.implant
 			if (!H.client || !H.mind)
 				user.show_text("[H] is braindead and cannot be converted.", "red")
-			else if (locate(/obj/item/implant/counterrev) in H.implant)
+			else if (implant?.online)
 				src.on_counterrev(M, user)
 				.= 0.5
 				nostun = 1

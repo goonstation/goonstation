@@ -926,8 +926,8 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	var/list/mob/mobs_fed_on = list() // Stores bioHolder.Uid of previous victims, so we can't feed on the same person multiple times.
 
 	set_up()
-		target_feed_count = min(10, (ticker.minds.len - 1))
-		explanation_text = "Feed on at least [target_feed_count] crew members."
+		target_feed_count = max(min(10, (ticker.minds.len - 1)), 1)
+		explanation_text = "Feed on at least [target_feed_count] crew [(target_feed_count > 1) ? "members" : "member"]."
 
 	check_completion()
 		if (feed_count >= target_feed_count)
