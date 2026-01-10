@@ -5,7 +5,10 @@ var/global/list/chaplain_spell_list
 proc/get_chaplain_spell_list()
 	if (!chaplain_spell_list)
 		chaplain_spell_list = list(
-
+			new /datum/uplinkspell/spawntree(),
+			new /datum/uplinkspell/candles(),
+			new /datum/uplinkspell/spawnfire(),
+			new /datum/uplinkspell/chaplain_announcement()
 		)
 	return chaplain_spell_list
 
@@ -92,3 +95,37 @@ proc/get_chaplain_spell_list()
 					chosen_spell.Spell_Purchased(usr,src)
 
 
+/datum/uplinkspell/spawntree
+	name = "Call forth tree"
+	eqtype = "Decoration"
+	desc = "Your deity calls forth a tree for your chapel. It requires a 3x3 area of open space."
+	assoc_spell = /datum/targetable/faith_based/spawn_decoration/tree
+	cost = 200
+
+/datum/uplinkspell/spawnfire
+	name = "Conjure Eternal Fire"
+	eqtype = "Decoration"
+	desc = "Your deity conjure for your chapel a mostly benign flame which will burn forever, without need for fuel. Just keep the firebots away \
+			from it."
+
+	assoc_spell = /datum/targetable/faith_based/spawn_decoration/eternal_fire
+	cost = 200
+
+
+/datum/uplinkspell/candles
+	name = "Alight and Snuff Candles"
+	eqtype = "Ability"
+	desc = "Two abilities, to light and snuff all candles in the chapel at once."
+	assoc_spell = /datum/targetable/faith_based/alight_candles
+	cost = 200
+
+	Spell_Purchased(var/mob/living/carbon/human/user,var/obj/item/spellbook/book)
+		..()
+		user.abilityHolder.addAbility(/datum/targetable/faith_based/snuff_candles)
+
+/datum/uplinkspell/chaplain_announcement
+	name = "Booming Voice"
+	eqtype = "Ability"
+	desc = "Call out an announcement in a booming voice."
+	assoc_spell = /datum/targetable/faith_based/chaplain_announcement
+	cost = 200
