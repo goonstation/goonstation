@@ -1284,6 +1284,18 @@ TYPEINFO(/datum/trait/partyanimal)
 			logTheThing(LOG_COMBAT, owner, "gets set on fire by their spontaneous combustion trait")
 			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
 
+/datum/trait/suddendeath
+	name = "Critical Existence Failure"
+	desc = "You die instantly upon hitting critical health."
+	id = "suddendeath"
+	points = 2
+
+/datum/trait/glassjoe
+	name = "Glass Joe"
+	desc = "There is a very teensy tiny chance for any damage received (brute, burn, toxin, oxy) to be multiplied by 100."
+	id = "glassjoe"
+	points = 0
+
 /datum/trait/carpenter
 	name = "Carpenter"
 	desc = "You can construct things more quickly than other people."

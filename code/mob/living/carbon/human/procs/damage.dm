@@ -331,6 +331,11 @@
 		brute *= 3
 		burn *= 3
 
+	if (src.traitHolder?.hasTrait("glassjoe") && prob(0.02)) // h e h
+		brute *= 100
+		burn *= 100
+		tox *= 100
+
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
 
@@ -407,6 +412,10 @@
 			src.death()
 	src.bruteloss += brute
 	src.burnloss += burn
+
+	if(src.traitHolder?.hasTrait("suddendeath"))
+		if (src.bruteloss + src.burnloss + src.toxloss + src.oxyloss >= 100)
+			src.death()
 
 	src.UpdateDamageIcon()
 	health_update_queue |= src

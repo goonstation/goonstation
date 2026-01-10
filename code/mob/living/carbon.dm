@@ -162,6 +162,9 @@
 		if (!isdead(src))
 			H.emote(pick("wheeze", "cough", "sputter"))
 
+	if (src.traitHolder?.hasTrait("glassjoe") && prob(0.02))
+		amount *= 100
+
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
 
