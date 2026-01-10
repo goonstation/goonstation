@@ -70,8 +70,6 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	var/drink_mult = 1 // how many times faster this tray drains chemicals
 
-	var/image/
-
 
 /obj/machinery/plantpot/New()
 	..()
