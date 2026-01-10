@@ -24,7 +24,7 @@
 	desc = "Alights all the candles in the chapel."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "toxmob"
-	cooldown = 0
+	cooldown = 10 SECONDS
 
 	cast(atom/target)
 		..()
@@ -37,7 +37,7 @@
 	desc = "Snuffs all the candles in the chapel."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "bholerip"
-	cooldown = 5
+	cooldown = 10 SECONDS
 
 	cast(atom/target)
 		..()
@@ -66,7 +66,7 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 	desc = "spawns a decoration."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "toxmob"
-	cooldown = 5
+	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 	var/spawnable_type
@@ -79,11 +79,10 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 			boutput(holder.owner, SPAN_ALERT("You cannot use that ability at this time."))
 			return FALSE
 
-
-
 	cast(atom/target)
+		if (!spawnable_type)
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/turf/turf = get_turf(target)
-		boutput(holder.owner, SPAN_ALERT("target: [target], x: [turf.x]; y: [turf.y]"))
 		if (!isfloor(turf))
 			boutput(holder.owner, SPAN_ALERT("You can only spawn decorations on floors."))
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
@@ -98,8 +97,6 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 					boutput(holder.owner, SPAN_ALERT("You cannot spawn a decoration here; [O] is in the way."))
 					return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		..()
-		if (!spawnable_type)
-			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/decoration = new spawnable_type(turf)
 		animate_supernatural_spawn(decoration)
 		holder.owner.abilityHolder.removeAbility(src.type)
@@ -110,7 +107,7 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 	desc = "spawns a decoration."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "toxmob"
-	cooldown = 5
+	cooldown = 30 SECONDS
 	spawnable_type = /obj/tree
 
 /datum/targetable/faith_based/spawn_decoration/eternal_fire
@@ -118,7 +115,7 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 	desc = "Conjure an oddly cool flame which will burn forever, without need for fuel."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "fire_essence1"
-	cooldown = 0
+	cooldown = 30 SECONDS
 	spawnable_type = null
 
 	cast(atom/target)
@@ -126,13 +123,13 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 		var/turf/turf = get_turf(target)
 		var/atom/movable/hotspot/chemfire/fire = new (turf, CHEM_FIRE_YELLOW)
 		fire.temperature = T20C
-		fire.min_status_duration = 1
-		fire.max_status_duration = 3
+		fire.min_status_duration = 2
+		fire.max_status_duration = 4
 
 
 
 /// Gets a list of all 8 neighbouring turfs of the given turf. Ignores the edges of the map
-proc/get_all_neighbours(turf/T) // TODO figure out where this should go
+proc/get_all_neighbours(turf/T) // TODO figure out which file this should go into
 	if(!T) return list()
 
 	var/list/neighbours = list()
@@ -151,7 +148,7 @@ proc/get_all_neighbours(turf/T) // TODO figure out where this should go
 	var/turf/ne = locate(x+1, y+1, z)
 	if(ne) neighbours += ne
 	var/turf/nw = locate(x-1, y+1, z)
-	if(nw) reneighbourssult += nw
+	if(nw) neighbours += nw
 	var/turf/se = locate(x+1, y-1, z)
 	if(se) neighbours += se
 	var/turf/sw = locate(x-1, y-1, z)

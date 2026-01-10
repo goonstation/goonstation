@@ -96,17 +96,18 @@ proc/get_chaplain_spell_list()
 
 
 /datum/uplinkspell/spawntree
-	name = "Call forth tree"
+	name = "Decor: Tree"
 	eqtype = "Decoration"
-	desc = "Your deity calls forth a tree for your chapel. It requires a 3x3 area of open space."
+	desc = "Your deity causes a tree to sprout forth for your chapel. It requires a 3x3 area of open space. \
+				\n Spell can be used once before needing to be repurchased."
 	assoc_spell = /datum/targetable/faith_based/spawn_decoration/tree
 	cost = 200
 
 /datum/uplinkspell/spawnfire
-	name = "Conjure Eternal Fire"
+	name = "Decor: Eternal Fire"
 	eqtype = "Decoration"
-	desc = "Your deity conjure for your chapel a mostly benign flame which will burn forever, without need for fuel. Just keep the firebots away \
-			from it."
+	desc = "Your deity conjures for your chapel a mostly benign flame which will burn forever, without need for fuel. Just keep the firebots away \
+			from it. \n Spell can be used once before needing to be repurchased."
 
 	assoc_spell = /datum/targetable/faith_based/spawn_decoration/eternal_fire
 	cost = 200
@@ -115,7 +116,7 @@ proc/get_chaplain_spell_list()
 /datum/uplinkspell/candles
 	name = "Alight and Snuff Candles"
 	eqtype = "Ability"
-	desc = "Two abilities, to light and snuff all candles in the chapel at once."
+	desc = "Grants two spells, one to light and one to snuff all candles in the chapel at once."
 	assoc_spell = /datum/targetable/faith_based/alight_candles
 	cost = 200
 
@@ -126,6 +127,6 @@ proc/get_chaplain_spell_list()
 /datum/uplinkspell/chaplain_announcement
 	name = "Booming Voice"
 	eqtype = "Ability"
-	desc = "Call out an announcement in a booming voice."
+	desc = "Call out an announcement for the whole station."
 	assoc_spell = /datum/targetable/faith_based/chaplain_announcement
 	cost = 200
