@@ -124,6 +124,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/contraband = 0 // If nonzero, bots consider this a thing people shouldn't be carrying without authorization
 	var/edible = 0 // can you eat the thing?
 	var/eat_sound = 'sound/items/eatfood.ogg'
+	var/can_arcplate = TRUE //! Determines whether this item can be arcplated by default
 
 	/*_____*/
 	/*Other*/
@@ -1874,7 +1875,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/should_suppress_attack(var/object, mob/user, params)
 	return flags & SUPPRESSATTACK
 
-/obj/item/proc/getTexturedWornImage(var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)
+/obj/item/proc/getTexturedWornImage(var/texture, var/blendMode = BLEND_MULTIPLY)
 	if (!src.wear_image || !texture)
 		return null
 	var/icon/mask = GetTexturedIcon(icon(src.wear_image.icon, src.wear_image.icon_state), texture)

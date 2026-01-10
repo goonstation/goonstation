@@ -412,7 +412,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, clone_file["name"], clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
+			if (pod1.growclone(selected, null, clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
@@ -425,7 +425,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, clone_file["name"], clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
+	else if (pod1.growclone(selected, null, clone_file["mind"], clone_file["holder"], clone_file["abilities"] , clone_file["traits"], clone_file["defects"]))
 		show_message("Cloning cycle activated.", "success")
 		. = TRUE
 		JOB_XP(usr, "Medical Doctor", 15)

@@ -1234,7 +1234,7 @@ TYPEINFO(/mob)
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey && !src.mind?.get_player()?.dnr)
+	if(src.ckey && !src.mind?.get_player()?.dnr && !src.mind?.get_player()?.joined_observer)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	// stop piloting pods or whatever
 	src.movement_controller_list = list()
@@ -3389,7 +3389,7 @@ TYPEINFO(/mob)
 /mob/MouseEntered(location, control, params)
 	var/mob/M = usr
 	M.atom_hovered_over = src
-	if(M.client.check_key(KEY_EXAMINE))
+	if(M.client.check_key(KEY_EXAMINE) && (HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) || GET_DIST(src, M) <= MAX_NAMETAG_RANGE))
 		var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
 		hover_tag?.show_images(M.client, FALSE, TRUE)
 
