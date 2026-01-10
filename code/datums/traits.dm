@@ -1290,10 +1290,10 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "suddendeath"
 	points = 2
 
-/datum/trait/glassjoe
-	name = "Glass Joe"
+/datum/trait/glassjaw
+	name = "Glass Jaw"
 	desc = "There is a very teensy tiny chance for any damage received (brute, burn, toxin, oxy) to be multiplied by 100."
-	id = "glassjoe"
+	id = "glassjaw"
 	points = 0
 
 /datum/trait/carpenter

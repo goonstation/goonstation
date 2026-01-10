@@ -331,7 +331,7 @@
 		brute *= 3
 		burn *= 3
 
-	if (src.traitHolder?.hasTrait("glassjoe") && prob(0.02)) // h e h
+	if (src.traitHolder?.hasTrait("glassjaw") && prob(0.02)) // h e h
 		brute *= 100
 		burn *= 100
 		tox *= 100
