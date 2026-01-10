@@ -1,4 +1,9 @@
 
+(t)sat jan 10 26
+(u)QuiteLiterallyAnything
+(p)25454
+(e)|
+(+)Plasma tanks may now be quickly inserted into pods lacking a fuel tank via hit.
 (t)fri jan 09 26
 (u)LorrMaster
 (p)25203
