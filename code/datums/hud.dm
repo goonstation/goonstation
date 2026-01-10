@@ -145,8 +145,8 @@
 		for (var/atom/A in src.objects)
 			C.screen -= A
 
-	/// Will not set the `blend_mode` of a `customType` to `BLEND_DEFAULT`.
-	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltip_options = list(), desc = null, customType = null, mouse_opacity = 1, blend_mode = BLEND_DEFAULT)
+	/// Will not set the `blend_mode` of a `customType` to `null`.
+	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltip_options = list(), desc = null, customType = null, mouse_opacity = 1, blend_mode = null)
 		if(QDELETED(src))
 			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
 		var/atom/movable/screen/hud/S
@@ -169,7 +169,7 @@
 		S.show_tooltip = tooltip_options && length(tooltip_options)
 		S.tooltip_options = tooltip_options
 		S.mouse_opacity = mouse_opacity
-		if(blend_mode != BLEND_DEFAULT) // `blend_mode` is a newer parameter on this older proc. This check is made with the intention of not
+		if(blend_mode != null) // `blend_mode` is a newer parameter on this older proc. This check is made with the intention of not
 			S.blend_mode = blend_mode   // breaking things (primarily `customType` screens with a non-default `blend_mode`).
 		src.objects += S
 
