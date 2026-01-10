@@ -1023,9 +1023,6 @@ TYPEINFO(/obj/item/mechanics)
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = FALSE
-	// This probably doesn't actually do anything. Devices with `COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL`
-	// have their 'defaultSignal' (Send Signal) handled by the holder.
-	var/sendstr = "1"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggle))
@@ -1052,7 +1049,6 @@ TYPEINFO(/obj/item/mechanics)
 		. = ..()
 		var/obj/item/mechanics/triplaser/copied_laser = copied_mechcomp
 		src.range = copied_laser.range
-		src.sendstr = copied_laser.sendstr
 
 	loosen()
 		active = FALSE
