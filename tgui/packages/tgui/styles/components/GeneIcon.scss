@@ -10,12 +10,13 @@
 
 .GeneIcon {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: 32px;
+  height: 32px;
   background-image: url('../assets/genetics_powers.png');
-  background-size: 1100% 1100%;
-  background-position: 0% 0%;
+  background-position: 0 0;
   background-repeat: no-repeat;
+  overflow: hidden;
+  transform: scale(0.7) translate(10px, -10px);
 }
 
 $gene-icons: (
@@ -116,6 +117,6 @@ $gene-icons: (
     $x: list.nth($pos, 1);
     $y: list.nth($pos, 2);
 
-    background-position: calc($x * 10%) calc($y * 10%);
+    background-position: calc($x * -32px) calc($y * -32px);
   }
 }
