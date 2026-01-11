@@ -127,7 +127,7 @@ const SlotWindow = () => {
         <Stack.Item>
           <Button
             icon="dice"
-            tooltip="Pull the lever"
+            tooltip="Pull the lever!"
             tooltipPosition="right"
             onClick={() => act('play', { bet: wager })}
           >
