@@ -39,6 +39,9 @@
 	var/decrypt_correct_char = "?"
 	var/decrypt_correct_pos = "?"
 	var/datum/genetics_appearancemenu/modify_appearance = null
+	var/emagged = FALSE
+	var/emitter_radiation_minimum_strenght = 0 //! modifies the scrambler power. Used for the emag-effect
+	var/emitter_cooldown_multiplier = 1 //! modifies the scrambler cooldown. Used for the emag-effect
 
 	var/registered_id = null
 
@@ -54,6 +57,16 @@
 /obj/machinery/computer/genetics/disposing()
 	STOP_TRACKING
 	..()
+
+/obj/machinery/computer/genetics/emag_act(var/mob/user, var/obj/item/card/emag/used_emag)
+	if(src.emagged)
+		return FALSE
+	src.emagged = TRUE
+	src.visible_message(SPAN_ALERT("[src]'s radiation dose control seems to malfunction. That doesn't look safe..."))
+	//This is 33% stronger than the emitters baseline radiation, before research. This makes sure that our clown inside comes out well done.
+	src.emitter_radiation_minimum_strenght = 100
+	src.emitter_cooldown_multiplier = 0.5
+	return TRUE
 
 /obj/machinery/computer/genetics/save_board_data(obj/item/circuitboard/circuitboard)
 	. = ..()
@@ -586,9 +599,10 @@
 			subject.bioHolder.BuildEffectPool()
 			if (addEffect) // re-mutantify if we would have been able to anyway
 				subject.bioHolder.AddEffect(addEffect)
-			if (genResearch.emitter_radiation > 0)
-				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 1.5 SIEVERTS)
-			src.equipment_cooldown(GENETICS_EMITTERS, 1200)
+			var/radiation_strenght = max(src.emitter_radiation_minimum_strenght, genResearch.emitter_radiation)
+			if (radiation_strenght > 0)
+				subject.take_radiation_dose((radiation_strenght/75) * 1.5 SIEVERTS)
+			src.equipment_cooldown(GENETICS_EMITTERS, 1200 * src.emitter_cooldown_multiplier)
 			scanner_alert(ui.user, "Genes successfully scrambled.")
 			on_ui_interacted(ui.user)
 			play_emitter_sound()
@@ -605,11 +619,12 @@
 			if(subject.stat)
 				return
 			src.log_me(subject, "gene scrambled", E)
-			if (genResearch.emitter_radiation > 0)
-				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 0.4 SIEVERTS)
+			var/radiation_strenght = max(src.emitter_radiation_minimum_strenght, genResearch.emitter_radiation)
+			if (radiation_strenght > 0)
+				subject.take_radiation_dose((radiation_strenght/75) * 0.4 SIEVERTS)
 			subject.bioHolder.RemovePoolEffect(E)
 			subject.bioHolder.AddRandomNewPoolEffect()
-			src.equipment_cooldown(GENETICS_EMITTERS, 600)
+			src.equipment_cooldown(GENETICS_EMITTERS, 600 * src.emitter_cooldown_multiplier)
 			scanner_alert(ui.user, "Gene successfully scrambled.")
 			on_ui_interacted(ui.user)
 			play_emitter_sound()
