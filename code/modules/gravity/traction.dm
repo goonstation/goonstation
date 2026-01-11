@@ -19,19 +19,22 @@
 		if(!(src.temp_flags & SPACE_PUSHING) && src.inertia_value > 0  && src.last_move != null)
 			BeginSpacePush(src)
 
+	if (src.floats_in_zero_g)
+		if (src.traction == TRACTION_FULL)
+			if (src.temp_flags & DRIFT_ANIMATION)
+				StopDriftFloat(src)
+			return
+		if (src.gforce >= 1)
+			if (src.temp_flags & DRIFT_ANIMATION)
+				StopDriftFloat(src)
+			return
+		if (!(src.temp_flags & DRIFT_ANIMATION))
+			StartDriftFloat(src)
+
 /mob/update_traction(turf/T)
 	. = ..()
 	if (src.traction == TRACTION_FULL && src.inertia_dir != 0)
 		src.inertia_dir = 0
-
-/mob/living/update_traction(turf/T)
-	. = ..()
-	if (src.floats_in_zero_g)
-		if ((src.temp_flags & DRIFT_ANIMATION) && (src.gforce >= 1 || src.traction == TRACTION_FULL || (src.traction == TRACTION_PARTIAL && src.inertia_value <= 0)))
-			StopDriftFloat(src)
-			return
-		if ((src.temp_flags & ~DRIFT_ANIMATION) && (src.gforce < 1 && (src.traction == TRACTION_NONE || (src.traction == TRACTION_PARTIAL && src.inertia_value > 0))))
-			StartDriftFloat(src)
 
 /// Check if an atom has traction with the ground due to gravity
 /atom/movable/proc/calculate_traction(turf/T=null)

@@ -74,16 +74,6 @@
 		UnsubscribeGravity(src)
 	. = ..()
 
-// simplified checks for OBJs
-/obj/set_gravity(turf/T)
-	. = ..()
-	if (.)
-		return TRUE
-	if (src.floats_in_zero_g)
-		if (src.gforce <= 0)
-			StartDriftFloat(src)
-		else
-			StopDriftFloat(src)
 
 // These should act like mobs
 /obj/critter/floats_in_zero_g = TRUE

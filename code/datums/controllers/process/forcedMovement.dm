@@ -5,7 +5,6 @@ proc/BeginSpacePush(var/atom/movable/A)
 			controller.space_controller.push_list += A
 			A.inertia_value = 1
 			A.temp_flags |= SPACE_PUSHING
-		StartDriftFloat(A)
 
 proc/EndSpacePush(var/atom/movable/A)
 	A.inertia_value = 0
@@ -16,7 +15,6 @@ proc/EndSpacePush(var/atom/movable/A)
 	if(controller)
 		controller.space_controller.push_list -= A
 		A.temp_flags &= ~SPACE_PUSHING
-	StopDriftFloat(A)
 
 proc/BeginOceanPush(atom/movable/AM, dir = SOUTH)
 	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
