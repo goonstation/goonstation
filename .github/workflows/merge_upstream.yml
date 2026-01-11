@@ -14,13 +14,13 @@ jobs:
           echo "PR_REPO=`jq -r '.head.repo.full_name' < pr.json`" >> $GITHUB_ENV
           echo "PR_BRANCH=`jq -r '.head.ref' < pr.json`" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           repository: ${{ env.PR_REPO }}
           ref: ${{ env.PR_BRANCH }}
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: yarn
