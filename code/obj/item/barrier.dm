@@ -131,6 +131,7 @@ TYPEINFO(/obj/item/barrier)
 			user?.show_text("You need two free hands in order to activate the [src.name].", "red")
 
 /obj/item/barrier/collapsible/security
+	desc = "A personal barrier. Activate this item inhand to deploy it."
 
 /obj/item/barrier/void
 	name = "Scale Shield"
