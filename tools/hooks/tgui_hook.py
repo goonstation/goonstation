@@ -204,7 +204,7 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
         return 1
 
     committer = _default_committer(repo, commit)
-    parents = [parent.oid for parent in commit.parents]
+    parents = [parent.id for parent in commit.parents]
 
     try:
         new_oid = repo.create_commit(None, commit.author, committer, commit.message, tree_id, parents)
