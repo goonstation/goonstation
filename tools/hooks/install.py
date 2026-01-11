@@ -125,9 +125,14 @@ def update_info_attributes(repo, enable):
             print(line)
 
 
-def install(target=None, *, include_tgui=True, include_base=True):
+def install(target=None, *, include_tgui=True, include_base=True, debug=False):
     repo, hooks_dir = _find_stuff(target)
     tools_hooks = os.path.split(__file__)[0]
+
+    if debug:
+        print(f'DEBUG: install called with include_tgui={include_tgui}, include_base={include_base}')
+        print(f'DEBUG: tools_hooks={tools_hooks}')
+        print(f'DEBUG: hooks_dir={hooks_dir}')
 
     keep = set()
     for full_path in glob.glob(os.path.join(tools_hooks, '*.hook')):
@@ -178,16 +183,27 @@ def install(target=None, *, include_tgui=True, include_base=True):
         write_hook(os.path.join(hooks_dir, name), command)
 
     # Use libgit2 config manipulation to set the merge driver config.
-    for full_path in glob.glob(os.path.join(tools_hooks, '*.merge')):
+    merge_files = glob.glob(os.path.join(tools_hooks, '*.merge'))
+    if debug:
+        print(f'DEBUG: Found {len(merge_files)} .merge files: {[os.path.basename(f) for f in merge_files]}')
+
+    for full_path in merge_files:
         # Merge drivers are documented here: https://git-scm.com/docs/gitattributes
         _, fname = os.path.split(full_path)
         name, _ = os.path.splitext(fname)
 
+        if debug:
+            print(f'DEBUG: Processing merge driver: {name}')
+
         if name == 'tgui':
+            if debug:
+                print(f'DEBUG: tgui merge driver found, include_tgui={include_tgui}')
             if not include_tgui:
                 print('Skipping merge driver (tgui disabled):', name)
                 continue
         elif not include_base:
+            if debug:
+                print(f'DEBUG: non-tgui merge driver, include_base={include_base}')
             print('Skipping merge driver (base disabled):', name)
             continue
 
@@ -201,15 +217,31 @@ def install(target=None, *, include_tgui=True, include_base=True):
         relative_path = shlex.quote(os.path.relpath(full_path, repo.workdir).replace('\\', '/'))
         repo.config[f"merge.{name}.driver"] = f'{relative_path} %P %O %A %B %L'
 
+    if debug:
+        print(f'DEBUG: Calling uninstall with keep={keep}')
+
     repo = uninstall(target, keep=keep)
+
+    if debug:
+        print(f'DEBUG: Calling update_info_attributes with enable={include_tgui}')
+
     if repo is not None:
         update_info_attributes(repo, enable=include_tgui)
+    elif debug:
+        print('DEBUG: repo is None, skipping update_info_attributes')
 
 
 def main(argv):
+    debug = os.environ.get('TG_DEBUG', '0') != '0'
     include_tgui = os.environ.get('TG_INCLUDE_TGUI_HOOKS', '1') != '0'
     include_base = os.environ.get('TG_INCLUDE_BASE_HOOKS', '1') != '0'
     args = list(argv[1:])
+
+    if debug:
+        print(f'DEBUG: Environment variables:')
+        print(f'  TG_DEBUG={os.environ.get("TG_DEBUG", "<not set>")}')
+        print(f'  TG_INCLUDE_TGUI_HOOKS={os.environ.get("TG_INCLUDE_TGUI_HOOKS", "<not set>")} -> include_tgui={include_tgui}')
+        print(f'  TG_INCLUDE_BASE_HOOKS={os.environ.get("TG_INCLUDE_BASE_HOOKS", "<not set>")} -> include_base={include_base}')
 
     if '--uninstall' in args:
         repo = uninstall()
@@ -225,7 +257,7 @@ def main(argv):
             print("Usage: python -m hooks.install [--uninstall] [path]")
             return 1
 
-    return install(target=target, include_tgui=include_tgui, include_base=include_base)
+    return install(target=target, include_tgui=include_tgui, include_base=include_base, debug=debug)
 
 
 if __name__ == '__main__':
