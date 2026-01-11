@@ -963,6 +963,7 @@ TYPEINFO(/obj/item/chair/folded)
 	material_amt = 0.1
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
+	can_arcplate = FALSE
 
 	New()
 		..()

@@ -80,6 +80,7 @@
 				sigil.desc = "A rag-tag sigil stitched together, it might fit in that seal now."
 				user.put_in_hand_or_drop(sigil)
 				qdel(src)
+		UpdateIcon()
 
 /obj/item/cult_sigil_pt1
 	name = "golden pattern"
@@ -103,6 +104,7 @@
 			src.pt3 = TRUE
 			src.UpdateOverlays(image('icons/obj/decoration.dmi', "sigil_pt3-o"), "sigil_pt1")
 			qdel(W)
+		UpdateIcon()
 
 // /obj/item/cult_sigil_pt2
 // 	name = "green seal"
@@ -153,7 +155,6 @@
 			boutput(user, "The eye fits in the slot on the talisman.")
 			C.pt3 = TRUE
 			C.UpdateOverlays(image('icons/obj/decoration.dmi', "sigil_pt3-o"), "sigil_pt1")
-			qdel(W)
 			qdel(src)
 		if (istype(W, /obj/item/cult_sigil))
 			var/obj/item/cult_sigil/C = W
@@ -169,6 +170,7 @@
 				sigil.desc = "A rag-tag sigil stitched together, it might fit in that seal now."
 				user.put_in_hand_or_drop(sigil)
 				qdel(src)
+		UpdateIcon()
 
 /obj/item/control_key
 	name = "voltage control safety key"
@@ -353,7 +355,7 @@
 		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
 		for(var/mob/living/carbon/human/H in (range(5)))
 			if(H.mind)
-				user.unlock_medal("Waking Dream", TRUE)
+				H.unlock_medal("Waking Nightmare", TRUE)
 		qdel(src)
 
 	proc/lever_lv(mob/user)
@@ -371,7 +373,7 @@
 		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
 		for(var/mob/living/carbon/human/H in (range(5)))
 			if(H.mind)
-				user.unlock_medal("Waking Nightmare", TRUE)
+				H.unlock_medal("Waking Dream", TRUE)
 		qdel(src)
 
 /datum/dialogueMaster/controlpc

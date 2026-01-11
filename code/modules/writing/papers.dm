@@ -478,7 +478,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Board Room Notes"
 	icon_state = "paper"
 	info = {"The meeting with REDACTED was more complicated then usual, they put their stuff in the coolers, I gave them the blood samples of the members.<br>
-	Its absurb, they have more interest on their drug then the divine being literally outside, well if they keep supplies coming in I guess I'll manage."}
+	Its absurd, they have more interest on their drug then the divine being literally outside, well if they keep supplies coming in I guess I'll manage."}
 
 /obj/item/paper/cultbase_leader_ramblings
 	name = "Truth."

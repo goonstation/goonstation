@@ -1,5 +1,27 @@
 
+(t)sun jan 11 26
+(u)JORJ949
+(p)25018
+(e)🎨⚖📄📦|C-Sprites, C-Balance, A-UI, A-Game-Objects
+(*)Kudzupeople are now proper antagonists but kudzu no longer turns every corpse into a kudzuperson. See minor changelog for details.
+(+)Each player corpse absorbed by the kudzu will grant 40-60 conversion points and be skeletonized, every 100 points the most recent corpse absorbed becomes a kudzuperson instead of being skeletonized.
+(+)Kudzupeople can no longer use their heal ability on anyone that isn't a kudzuperson or has the kudzuwalk status effect.
+(+)Kudzupeople now have an itching powder thorn shot ability to inject harmful irritants into targets.
+(+)Corpses the kudzu is currently in the process of absorbing (wrapped in vines) can now pass through dense kudzu.
+(t)sat jan 10 26
+(u)Lord_Earthfire
+(p)25417
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Multitool assemblies can be modified by adding a large power cell onto them. This drains the power cell to increase the area and the effect of the flash produced.
+(u)QuiteLiterallyAnything
+(p)25454
+(e)|
+(+)Plasma tanks may now be quickly inserted into pods lacking a fuel tank via hit.
 (t)fri jan 09 26
+(u)LorrMaster
+(p)25203
+(e)🆕🧱|C-Feature, A-Materials
+(*)Certain items can now be arcplated if their material is their default material
 (u)Cheekybrdy
 (p)23401
 (e)🗺🎨🏅|A-Mapping, C-Sprites, A-Medal
