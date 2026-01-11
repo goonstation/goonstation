@@ -188,18 +188,18 @@ function task-install-git-hooks () {
     exit 1
   }
   $includeBase = Read-Host "Do you want to install map merge and icon merge hooks? (Y/N)"
-  $env:TG_INCLUDE_TGUI_HOOKS = "1"
+  $env:HOOKS_INCLUDE_TGUI = "1"
   if ($includeBase -match '^[Yy]$') {
-    $env:TG_INCLUDE_BASE_HOOKS = "1"
+    $env:HOOKS_INCLUDE_BASE = "1"
   } else {
-    $env:TG_INCLUDE_BASE_HOOKS = "0"
+    $env:HOOKS_INCLUDE_BASE = "0"
   }
 
   & $bootstrap -m hooks.install
   $hookResult = $LASTEXITCODE
 
-  Remove-Item Env:TG_INCLUDE_TGUI_HOOKS -ErrorAction SilentlyContinue
-  Remove-Item Env:TG_INCLUDE_BASE_HOOKS -ErrorAction SilentlyContinue
+  Remove-Item Env:HOOKS_INCLUDE_TGUI -ErrorAction SilentlyContinue
+  Remove-Item Env:HOOKS_INCLUDE_BASE -ErrorAction SilentlyContinue
 
   if ($hookResult -ne 0) {
     exit $hookResult

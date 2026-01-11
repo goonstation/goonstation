@@ -194,7 +194,7 @@ task-install-git-hooks() {
     include_base=1
   fi
 
-  TG_INCLUDE_TGUI_HOOKS=1 TG_INCLUDE_BASE_HOOKS=${include_base} "${installer}" -m hooks.install
+  HOOKS_INCLUDE_TGUI=1 HOOKS_INCLUDE_BASE=${include_base} "${installer}" -m hooks.install
 
   echo "tgui: Git hooks have been installed"
   exit 0

@@ -207,8 +207,8 @@ def install(target=None, *, include_tgui=True, include_base=True):
 
 
 def main(argv):
-    include_tgui = os.environ.get('TG_INCLUDE_TGUI_HOOKS', '1') != '0'
-    include_base = os.environ.get('TG_INCLUDE_BASE_HOOKS', '1') != '0'
+    include_tgui = os.environ.get('HOOKS_INCLUDE_TGUI', '1') != '0'
+    include_base = os.environ.get('HOOKS_INCLUDE_BASE', '1') != '0'
     args = list(argv[1:])
 
     if '--uninstall' in args:
