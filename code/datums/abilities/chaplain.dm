@@ -2,7 +2,7 @@
 	//var/faith_cost = 0
 
 	tryCast(atom/target, params)
-		var/area/station/chapel/area = get_area(holder.owner)
+		/* var/area/station/chapel/area = get_area(holder.owner)
 		if (!istype(area))
 			boutput(holder.owner, SPAN_ALERT("You can only cast that spell while on holy ground."))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
@@ -10,7 +10,7 @@
 			area = get_area(target)
 			if (!istype(area))
 				boutput(holder.owner, SPAN_ALERT("You can only target holy ground with that ability."))
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN */
 		/* var/datum/trait/job/chaplain/faithtrait = holder.owner.traitHolder.getTrait("training_chaplain")
 		if (!faithtrait || faithtrait.faith < src.faith_cost)
 			boutput(holder.owner, SPAN_ALERT("Your flock lacks the faith for you to use this ability."))
@@ -100,6 +100,10 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 		var/decoration = new spawnable_type(turf)
 		animate_supernatural_spawn(decoration)
 		holder.owner.abilityHolder.removeAbility(src.type)
+		if (!atheist_manager)
+			atheist_manager = new()
+		atheist_manager.add_object(decoration, image(icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi', icon_state = "c_box", pixel_x = 20))
+		return CAST_ATTEMPT_SUCCESS
 
 
 /datum/targetable/faith_based/spawn_decoration/tree

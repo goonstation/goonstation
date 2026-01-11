@@ -1390,6 +1390,9 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "atheist"
 	icon_state = "atheist"
 	points = 0
+	var/list/hallucinated_images /// a list of objects that this atheist is discerning the true nature of
+	// ingame these are intended to be the opposite of hallucinations, but mechanically they function the same.
+	var/mob/living/owner
 
 	onAdd(mob/living/owner)
 		if (istype(owner))
@@ -1397,12 +1400,71 @@ TYPEINFO(/datum/trait/partyanimal)
 		// If they're a chaplain, reduce their faith gain rate
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 0.2
+		src.owner = owner
+		if (!atheist_manager)
+			atheist_manager = new()
+		atheist_manager.add_atheist(src)
 
 	onRemove(mob/living/owner)
 		if (istype(owner))
 			owner.add_lifeprocess(/datum/lifeprocess/faith)
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 1
+		atheist_manager.remove_atheist(src)
+
+	proc/clear_hallucinations()
+		for (var/image/I in src.hallucinated_images)
+			owner.client.images -= I
+
+	proc/clear_hallucination(obj/target)
+		for (var/image/I in src.hallucinated_images)
+			if (I.loc == target)
+				owner.client.images -= I
+				src.hallucinated_images -= I
+
+var/datum/atheist_manager/atheist_manager
+
+/datum/atheist_manager
+	var/list/atheist_traits = list()
+	var/alist/hallucinated_objects /// list of objects that atheists can discern the true nature of. [key = obj, value = image]
+
+	proc/add_atheist(datum/trait/atheist/trait)
+		if(!(trait.owner in atheist_traits))
+			atheist_traits += trait
+		for (var/obj/target in src.hallucinated_objects)
+			src.hallucinate_object(target, trait)
+
+	proc/remove_atheist(datum/trait/atheist/trait)
+		trait.clear_hallucinations()
+		atheist_traits -= trait
+
+	proc/add_object(obj/target, image/I)
+		if (!src.hallucinated_objects)
+			src.hallucinated_objects = new()
+
+		src.hallucinated_objects[target] = I
+		for(var/datum/trait/atheist/trait as anything in atheist_traits)
+			src.hallucinate_object(target, trait)
+
+	proc/remove_object(obj/target)
+		if (!src.hallucinated_objects[target])
+			return
+		for(var/datum/trait/atheist/trait as anything in atheist_traits)
+			trait.clear_hallucination(target)
+		src.hallucinated_objects -= target
+
+	proc/hallucinate_object(obj/target, datum/trait/atheist/trait)
+		var/image/current_image = new /image()
+		var/image/copy_from = src.hallucinated_objects[target]
+		current_image.appearance = copy_from.appearance
+		current_image.loc = target
+		var/atom/movable/AM_parent = trait.owner
+		current_image.plane = AM_parent.plane
+		current_image.layer = AM_parent.layer
+		current_image.pixel_x = copy_from.pixel_x
+		current_image.override = TRUE
+		trait.owner.client.images += current_image
+		LAZYLISTADD(trait.hallucinated_images, current_image)
 
 
 /datum/trait/lizard
