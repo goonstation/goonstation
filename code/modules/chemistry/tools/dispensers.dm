@@ -464,6 +464,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	var/image/lid_image = null
 	var/image/spout_image = null
 	var/obj/machinery/chem_master/linked_machine = null
+	var/obj/machinery/fluid_machinery/unary/input/port = null
 
 	New()
 		. = ..()
@@ -476,6 +477,12 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
 		)
 		src.UpdateIcon()
+
+	get_help_message(dist, mob/user)
+		if (port)
+			. = "Connected to a fluid port. Use a <b>screwdriver</b> to disconnect it."
+		else
+			. = "Can be connected to a fluid port with a <b>screwdriver</b>."
 
 	update_icon()
 		if (!src.lid_image)
@@ -553,7 +560,32 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.set_open_container(!src.is_open_container())
 			UpdateIcon()
 			return
+		if (isscrewingtool(W))
+			if (src.port)
+				logTheThing(LOG_STATION, user, "has disconnected \the [src] [log_reagents(src)] from the port at [log_loc(src)].")
+				src.port.connectedcontainer = null
+				src.port = null
+				src.anchored = UNANCHORED
+				boutput(user, SPAN_NOTICE("You disconnect [src.name] from the port."))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			else
+				var/obj/machinery/fluid_machinery/unary/input/possible_port = locate(/obj/machinery/fluid_machinery/unary/input) in loc
+				if(possible_port)
+					if (possible_port.connectedcontainer)
+						boutput(user, SPAN_NOTICE("Something is already connected to this port!"))
+						return
 
+					src.port = possible_port
+					possible_port.connectedcontainer = src
+					src.anchored = ANCHORED
+					add_fingerprint(user)
+					logTheThing(LOG_STATION, user, "has connected \the [src] [log_reagents(src)] to the port at [log_loc(src)].")
+					boutput(user, SPAN_NOTICE("You connect [src.name] to the port."))
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+				else
+					boutput(user, SPAN_NOTICE("There's nothing to connect to."))
+			return
 		. = ..()
 
 	mouse_drop(atom/over_object, src_location, over_location)
@@ -603,6 +635,9 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		return TRUE
 
 	disposing()
+		if (src.port)
+			src.port.connectedcontainer = null
+			src.port = null
 		src.linked_machine?.eject_beaker(null)
 		. = ..()
 
