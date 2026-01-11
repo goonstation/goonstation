@@ -1650,6 +1650,32 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "marijuana trench 2" //this is lowercase on purpose
 	icon_state = "green"
 
+/area/cult_base
+	name = "Experiences of the Deep Education Centre"
+	icon_state = "green"
+
+/area/cult_base/initate
+	name = "Initiate Education Area"
+	occlude_foreground_parallax_layers = TRUE
+
+/area/cult_base/acolyte
+	name = "Acolyte Research Division"
+	occlude_foreground_parallax_layers = TRUE
+
+/area/cult_base/acolyte/bedrooms
+	name = "Acolyte Bedroom Quarters"
+	occlude_foreground_parallax_layers = TRUE
+
+/area/cult_base/acolyte/outdoors
+	name = "Acolyte Ritual Area"
+
+/area/cult_base/leader
+	name = "Leader Coordination Quarters"
+	occlude_foreground_parallax_layers = TRUE
+
+/area/cult_base/leader/outdoors
+	name = "Creature Containment Quarters"
+
 /area/trench_landing
 	name = "Trench Landing"
 	icon_state = "yellow"

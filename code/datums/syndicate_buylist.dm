@@ -1022,7 +1022,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/monkey_barrel
 	name = "Barrel-O-Monkeys"
-	items = list(/obj/storage/monkey_barrel)
+	items = list(/obj/monkey_barrel)
 	cost = 6
 	vr_allowed = FALSE
 	desc = "A barrel of bloodthirsty apes. Careful!"

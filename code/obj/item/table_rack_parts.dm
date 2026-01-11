@@ -18,6 +18,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	stamina_cost = 22
 	stamina_crit_chance = 10
 	health = 8
+	can_arcplate = FALSE
 	var/furniture_type = /obj/table/auto
 	var/furniture_name = "table"
 	var/reinforced = 0
