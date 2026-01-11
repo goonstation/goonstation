@@ -169,9 +169,42 @@ function task-validate-build {
 
 ## Installs merge drivers and git hooks
 function task-install-git-hooks () {
-    Set-Location $global:basedir
-    git config --replace-all merge.tgui-merge-bundle.driver "tgui/bin/tgui --merge=bundle %P %O %A %B %L"
-    Write-Output "tgui: Merge drivers have been successfully installed!"
+  Set-Location $global:rootdir
+  $bootstrapBase = Join-Path $global:rootdir "tools/bootstrap/python"
+  $bootstrap = $bootstrapBase
+  if ($Env:OS -eq "Windows_NT") {
+    $bootstrapBat = "$bootstrapBase.bat"
+    if (Test-Path $bootstrapBat -PathType Leaf) {
+      $bootstrap = $bootstrapBat
+    }
+  }
+  $legacyDrivers = & git config --get-all merge.tgui-merge-bundle.driver 2>$null
+  if ($LASTEXITCODE -eq 0 -and $legacyDrivers) {
+    & git config --unset-all merge.tgui-merge-bundle.driver | Out-Null
+    Write-Output "tgui: removed legacy merge.tgui-merge-bundle driver"
+  }
+  if (-not (Test-Path $bootstrap -PathType Leaf)) {
+    Write-Error "tgui: bootstrap Python launcher not found at $bootstrap"
+    exit 1
+  }
+  $includeBase = Read-Host "Do you want to install map merge and icon merge hooks? (Y/N)"
+  $env:TG_INCLUDE_TGUI_HOOKS = "1"
+  if ($includeBase -match '^[Yy]$') {
+    $env:TG_INCLUDE_BASE_HOOKS = "1"
+  } else {
+    $env:TG_INCLUDE_BASE_HOOKS = "0"
+  }
+
+  & $bootstrap -m hooks.install
+  $hookResult = $LASTEXITCODE
+
+  Remove-Item Env:TG_INCLUDE_TGUI_HOOKS -ErrorAction SilentlyContinue
+  Remove-Item Env:TG_INCLUDE_BASE_HOOKS -ErrorAction SilentlyContinue
+
+  if ($hookResult -ne 0) {
+    exit $hookResult
+  }
+  Write-Output "tgui: Git hooks have been installed"
 }
 
 ## Main
@@ -229,6 +262,12 @@ if ($Args.Length -gt 0) {
   if ($Args[0] -eq "--analyze") {
     task-install
     task-rspack --mode=production --analyze
+    exit 0
+  }
+
+  if ($Args[0] -eq "--build") {
+    task-install
+    task-rspack --mode=production
     exit 0
   }
 
