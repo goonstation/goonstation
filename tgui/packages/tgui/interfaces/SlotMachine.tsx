@@ -100,7 +100,7 @@ const SlotWindow = () => {
             <Stack.Item>Amount Wagered:</Stack.Item>
             <Stack.Item>
               <NumberInput
-                minValue={20}
+                minValue={22}
                 maxValue={1000}
                 value={wager}
                 format={(value) => value + '⪽'}
