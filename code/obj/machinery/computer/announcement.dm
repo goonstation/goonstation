@@ -356,3 +356,17 @@
 				src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
 				explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
 		qdel(src)
+
+/obj/machinery/computer/announcement/clown/foldable
+	name = "Ultra Illegal Announcement Computer"
+	icon_state = "clownuncement_port"
+	area_name = "Ultra Illegal Clown"
+	circuit_type = null //Prevents deconstructing via screwdriver
+	explodes = FALSE
+	density = 0
+
+	New()
+		..()
+		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/syndicate)
+		SPAWN(0)
+			src.foldUpIntoBriefcase()

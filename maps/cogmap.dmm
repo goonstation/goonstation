@@ -22491,14 +22491,17 @@
 /area/station/storage/warehouse)
 "bJF" = (
 /obj/rack,
-/obj/item/furniture_parts/table,
-/obj/item/furniture_parts/table,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/item/device/t_scanner,
+/obj/item/furniture_parts/table,
+/obj/item/furniture_parts/table,
+/obj/item/furniture_parts/table,
+/obj/item/furniture_parts/table,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bJI" = (
@@ -22807,10 +22810,10 @@
 /turf/simulated/floor/blue,
 /area/station/storage/warehouse)
 "bKO" = (
-/obj/machinery/disposal_pipedispenser,
 /obj/window/reinforced{
 	dir = 8
 	},
+/obj/vehicle/forklift,
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
@@ -23645,10 +23648,6 @@
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
-/area/station/storage/warehouse)
-"bNP" = (
-/obj/vehicle/forklift,
-/turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bNR" = (
 /obj/item/sheet/glass{
@@ -30070,11 +30069,10 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cka" = (
-/obj/item/furniture_parts/table,
-/obj/item/device/t_scanner,
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
+/obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "ckb" = (
@@ -48676,17 +48674,6 @@
 /obj/item/camera,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"mDY" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/mesh/catwalk,
-/obj/disposalpipe/junction/left/north,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
-/area/space)
 "mEg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -61645,19 +61632,6 @@
 	icon_state = "fblue3"
 	},
 /area/station/crew_quarters/stockex)
-"vUc" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/mesh/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
-	},
-/area/space)
 "vUo" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -64147,10 +64121,6 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
-/obj/disposalpipe/segment/food{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "xNk" = (
@@ -114884,7 +114854,7 @@ aYQ
 bma
 bdN
 aap
-vUc
+glX
 rSw
 aaG
 adC
@@ -115795,7 +115765,7 @@ ymb
 ikP
 ikP
 ikP
-mDY
+rSw
 aap
 aaw
 ylM
@@ -118840,7 +118810,7 @@ bIF
 bJF
 bKP
 bvP
-bNP
+bDP
 oej
 bGc
 bDP
