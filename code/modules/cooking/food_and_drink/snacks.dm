@@ -2944,7 +2944,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 /obj/item/reagent_containers/food/snacks/maghaz
 	name = "maghaz"
-	desc = "Brain served in gravy. It's cooked enough that you don't need to worry about prions."
+	desc = "Brain served in gravy. There are some almonds in it, not sure where those came from."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "maghaz"
 	required_utensil = REQUIRED_UTENSIL_SPOON
