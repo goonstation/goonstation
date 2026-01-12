@@ -1488,6 +1488,8 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 		var/obj/item/shipcomponent/mainweapon/main_weapon = src.ship.get_part(POD_PART_MAIN_WEAPON)
 		if (!src.loaded_wep && !main_weapon)
 			return
+		if (!main_weapon.removable)
+			return
 
 		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || main_weapon && GET_COOLDOWN(main_weapon, "weapon_swap_cd"))
 			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(main_weapon, "weapon_swap_cd")) / 10, 1)
