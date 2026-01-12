@@ -58,3 +58,8 @@
 
 		. = ..()
 
+
+/datum/antagonist/generic/syndicate_agent/commander
+	id = ROLE_SYNDICATE_COMMANDER
+	antagonist_icon = "syndcomm"
+	display_name = "syndicate commander"
