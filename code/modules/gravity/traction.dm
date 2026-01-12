@@ -21,15 +21,12 @@
 
 	if (src.floats_in_zero_g)
 		if (src.traction == TRACTION_FULL)
-			if (src.temp_flags & DRIFT_ANIMATION)
-				StopDriftFloat(src)
+			StopDriftFloat(src)
 			return
 		if (src.gforce >= 1)
-			if (src.temp_flags & DRIFT_ANIMATION)
-				StopDriftFloat(src)
+			StopDriftFloat(src)
 			return
-		if (!(src.temp_flags & DRIFT_ANIMATION))
-			StartDriftFloat(src)
+		StartDriftFloat(src)
 
 /mob/update_traction(turf/T)
 	. = ..()
