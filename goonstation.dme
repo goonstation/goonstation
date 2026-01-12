@@ -901,6 +901,7 @@
 #include "code\modules\antagonists\hunter\abilities\hunter_gearspawn.dm"
 #include "code\modules\antagonists\hunter\abilities\hunter_summongear.dm"
 #include "code\modules\antagonists\hunter\abilities\hunter_taketrophy.dm"
+#include "code\modules\antagonists\kudzuperson\kudzuperson.dm"
 #include "code\modules\antagonists\macho_man\macho_man.dm"
 #include "code\modules\antagonists\macho_man\abilities\_macho_man_ability_holder.dm"
 #include "code\modules\antagonists\macho_man\abilities\_macho_man_mob.dm"
