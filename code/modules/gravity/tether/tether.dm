@@ -68,6 +68,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GRAVITY_EVENT, /obj/machinery/gravity_tether/proc/on_gravity_event)
 	src.AddComponent(/datum/component/bullet_holes, 20, 10)
 	src.cell = new cell_type_path(src)
+	src.cell.update_icon()
 	src.light = new/datum/light/point
 	if (src.cell)
 		src.last_charge_amount = src.cell.charge
@@ -82,11 +83,12 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.ma_graviton = mutable_appearance(src.icon, "graviton-idle")
 	src.ma_door = mutable_appearance(src.icon, "door-closed")
 	src.ma_cell = mutable_appearance ('icons/obj/power.dmi', "apc-hpcell")
-	src.ma_cell.pixel_x = 10
-	src.ma_cell.pixel_y = 5
+	src.ma_cell.pixel_y = -4
+	src.ma_cell.dir = SOUTH
 	src.ma_cell_charge = mutable_appearance('icons/obj/power.dmi', "cell02")
-	src.ma_cell_charge.pixel_x = 1
 	src.ma_cell_charge.pixel_y = 1
+	src.ma_cell_charge.pixel_x = 1
+	src.ma_cell_charge.dir = SOUTH
 	src.ma_wires = mutable_appearance(src.icon, "wires-intact")
 	src.ma_tamper = mutable_appearance(src.icon, "tamper-secure")
 	src.ma_bat = mutable_appearance(src.icon, "battery-full")
@@ -96,6 +98,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.ma_screen = mutable_appearance(src.icon, "screen-locked")
 	src.ma_intensity = mutable_appearance(src.icon, "level-2")
 	src.ma_dials = mutable_appearance(src.icon, "dials-regular")
+	src.update_ma_tamper()
+	src.update_ma_cell()
 	src.update_ma_screen()
 	src.update_ma_status()
 	src.UpdateIcon()
@@ -124,16 +128,15 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if (src.has_no_power())
 		. += " It doesn't seem powered on."
 	else
+		. += " It is operating at [src.gforce_intensity]G"
 		if (src.processing_state == TETHER_PROCESSING_PENDING)
-			. += " It is changing intensity."
+			. += ", and is processing a change to [src.target_intensity]G."
 		else if (src.processing_state == TETHER_PROCESSING_COOLDOWN)
-			.+= " It is cooling down from a change."
+			.+= ", and is cooling down from a recent change."
 		else if (src.glitching_out)
-			. += " It doesn't seem to be working right."
-		else if (src.gforce_intensity == 0)
-			. += " It is online, but not active."
+			. += ", and doesn't seem to be working right."
 		else
-			. += " It is operating at [src.gforce_intensity]G."
+			. += "."
 
 /obj/machinery/gravity_tether/get_help_message(dist, mob/user)
 	. = ..()
@@ -151,6 +154,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			. += "Lock using <b>[keymap ? keymap.action_to_keybind(KEY_BOLT) : "SHIFT"]</b>+<b>Click</b>."
 		else
 			. += "Lock with an appropriate <b>ID Card</b>."
+		if (istrainedsyndie(x))
+			. += "<br>Break the access lock with an <b>Electromagnetic Card</b>."
 	else
 		. += "Has no access lock."
 	if (user.traitHolder?.hasTrait("training_engineer"))

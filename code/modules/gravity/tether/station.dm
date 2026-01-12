@@ -24,6 +24,8 @@ TYPEINFO(/obj/machinery/gravity_tether)
 	. = ..()
 	src.ma_cell.pixel_x = 10
 	src.ma_cell.pixel_y = 5
+	src.ma_cell_charge.pixel_x = 1
+	src.ma_cell_charge.pixel_y = 1
 	src.light.attach(src, 1, 0.5) // light has height
 	src.update_light()
 

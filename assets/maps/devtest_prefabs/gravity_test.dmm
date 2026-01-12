@@ -2,28 +2,44 @@
 "a" = (
 /turf/simulated/floor/red/redblackchecker,
 /area/station/devzone/gravity_tether_emag)
+"c" = (
+/obj/machinery/gravity_tether/current_area,
+/turf/simulated/floor/green/checker,
+/area/station/devzone/gravity_traction_full)
+"e" = (
+/obj/machinery/gravity_tether/current_area,
+/turf/simulated/floor/orange,
+/area/station/devzone/gravity_gforce_high)
 "h" = (
-/obj/table/auto,
+/obj/machinery/gravity_tether/current_area,
 /turf/simulated/floor/darkblue,
 /area/station/devzone/gravity_gforce_half)
-"i" = (
-/obj/table/auto,
-/turf/simulated/floor/blue/checker,
-/area/station/devzone/gravity_traction_partial)
 "j" = (
 /turf/simulated/floor/red,
 /area/station/devzone/gravity_gforce_extreme)
 "o" = (
 /turf/simulated/floor/green/checker,
 /area/station/devzone/gravity_traction_full)
+"u" = (
+/obj/machinery/gravity_tether/current_area,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone/gravity_traction_partial)
 "v" = (
 /turf/simulated/floor/darkblue,
 /area/station/devzone/gravity_gforce_half)
 "w" = (
 /turf/simulated/floor/darkpurple,
 /area/station/devzone/gravity_gforce_none)
+"y" = (
+/obj/machinery/gravity_tether/current_area,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/devzone/gravity_tether_emag)
+"C" = (
+/obj/machinery/gravity_tether/current_area,
+/turf/simulated/floor/red,
+/area/station/devzone/gravity_gforce_extreme)
 "E" = (
-/obj/table/auto,
+/obj/machinery/gravity_tether/current_area,
 /turf/simulated/floor/darkpurple,
 /area/station/devzone/gravity_gforce_none)
 "G" = (
@@ -32,12 +48,20 @@
 "I" = (
 /turf/simulated/floor/orangeblack,
 /area/station/devzone/gravity_tether_max)
+"N" = (
+/obj/machinery/gravity_tether/current_area,
+/turf/simulated/floor,
+/area/station/devzone/gravity_gforce_normal)
 "P" = (
 /turf/simulated/floor/blue/checker,
 /area/station/devzone/gravity_traction_partial)
 "V" = (
 /turf/simulated/floor,
 /area/station/devzone)
+"W" = (
+/obj/machinery/gravity_tether/current_area,
+/turf/simulated/floor/orangeblack,
+/area/station/devzone/gravity_tether_max)
 "Z" = (
 /turf/simulated/floor,
 /area/station/devzone/gravity_gforce_normal)
@@ -72,14 +96,14 @@ h
 v
 v
 v
+N
 Z
 Z
 Z
-Z
+e
 G
 G
-G
-j
+C
 j
 j
 V
@@ -233,23 +257,23 @@ V
 "}
 (10,1,1) = {"
 V
+V
 w
-w
-w
-v
-v
-v
-v
-Z
-Z
-Z
-Z
-G
-G
-G
-j
-j
-j
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
 V
 "}
 (11,1,1) = {"
@@ -257,7 +281,7 @@ V
 w
 w
 w
-i
+P
 P
 P
 P
@@ -401,21 +425,21 @@ V
 "}
 (18,1,1) = {"
 V
+E
 w
 w
-w
+u
 P
 P
 P
-P
+c
 o
 o
 o
-o
+W
 I
 I
-I
-a
+y
 a
 a
 V

@@ -36,10 +36,10 @@
 		src.say("[get_access_desc(src.req_access[1])] access required.", message_params=list("group"="\ref[src]_acc"))
 		return
 	if (src.processing_state == TETHER_PROCESSING_PENDING)
-		src.say("Processing shift, [time_to_text(src.change_begin_time-TIME)] remaining.")
+		src.say("Processing shift, [src.change_begin_time-TIME > 0 ? "[time_to_text(src.change_begin_time-TIME)] remaining" : "change pending"].")
 		return
 	else if (src.processing_state == TETHER_PROCESSING_COOLDOWN)
-		src.say("Recalibrating, [time_to_text(src.cooldown_end_time-TIME)] remaining.")
+		src.say("Recalibrating, [src.cooldown_end_time-TIME > 0 ? "[time_to_text(src.cooldown_end_time-TIME)] remaining" : "refresh pending"].")
 		return
 
 	var/new_intensity = tgui_input_number(user, "Running at [src.gforce_intensity]G. Change intensity?", "Gravity Tether", src.gforce_intensity, src.maximum_intensity, round_input=FALSE)
