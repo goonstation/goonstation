@@ -30,6 +30,29 @@
 			src.icon_state = pick(src.random_icons)
 		pixel_y = rand(-8, 8)
 		pixel_x = rand(-8, 8)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_pie, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		if (is_build_in && parent_assembly.target == src)
+			//we want to handle the overlay over vis_content here
+			parent_assembly.target_overlay_invisible = TRUE
+			//we scale down the sticker and position it properly on the robot arm
+			src.pixel_x = 6
+			src.pixel_y = -6
+			src.transform *= 0.85
+			src.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+			parent_assembly.vis_contents += src
+
+	proc/assembly_removal(var/manipulated_pie, var/obj/item/assembly/parent_assembly, var/mob/user)
+		//we reset the transformations and the vis_flags here
+		src.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		src.transform = null
+		parent_assembly.vis_contents -= src
+
+/// ----------------------------------------------
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
@@ -84,7 +107,7 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if (prob(50) && !src.active)
+		if (!src.active)
 			A.visible_message(SPAN_ALERT("[src] lands on [A] sticky side down!"))
 			src.stick_to(A,rand(-5,5),rand(-8,8))
 
