@@ -4,6 +4,7 @@
 (e)⚖🧛🤖C-Balance, A-Gamemodes, A-Silicons
 (*)Changelings and other anchored mobs can't fit in disposals. You cannot slip out of a changeling's grip into disposals.
 (*)The atmospherics transporter tool for silicons has been removed.
+(+)Wanted posters can be used to roll illegal cigarettes.
 (t)sun jan 11 26
 (u)JORJ949
 (p)25018
