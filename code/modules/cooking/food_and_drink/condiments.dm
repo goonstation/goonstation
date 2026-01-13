@@ -1,3 +1,4 @@
+#define MAX_SHAKER_SHAKES 15
 // Condiments
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
@@ -177,34 +178,40 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	w_class = W_CLASS_SMALL
 	g_amt = 10
 	var/stuff = null
+	var/stuff_name = null
 	var/shakes = 0
 	var/myVerb = "shake"
 
+	New()
+		. = ..()
+		var/datum/reagent/current_reagent = reagents_cache[src.stuff]
+		src.stuff_name = current_reagent.name
+
 	afterattack(atom/A, mob/user as mob)
-		if (src.shakes >= 15)
+z		if (src.shakes >= MAX_SHAKER_SHAKES)
 			user.show_text("[src] is empty!", "red")
 			return
 		if (istype(A, /obj/item/reagent_containers/food))
 			A.reagents.add_reagent("[src.stuff]", 2)
 			src.shakes ++
-			user.show_text("You put some [src.stuff] onto [A].")
+			user.show_text("You put some [src.stuff_name] onto [A].")
 		else if (istype(A, /obj/item/reagent_containers/glass/beaker))
 			A.reagents.add_reagent("[src.stuff]", 5)
 			src.shakes += 5
-			user.show_text("You [src.myVerb] some [src.stuff] into [A]")
+			user.show_text("You [src.myVerb] some [src.stuff_name] into [A]")
 		else
 			return ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (src.shakes >= 15)
+		if (src.shakes >= MAX_SHAKER_SHAKES)
 			user.show_text("[src] is empty!", "red")
 			return
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES))
-				H.tri_message(user, SPAN_ALERT("<b>[user]</b> uselessly [myVerb]s some [src.stuff] onto [H]'s headgear!"),\
-					SPAN_ALERT("[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff] onto your headgear! Okay then."),\
-					SPAN_ALERT("You uselessly [myVerb] some [src.stuff] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]"))
+				H.tri_message(user, SPAN_ALERT("<b>[user]</b> uselessly [myVerb]s some [src.stuff_name] onto [H]'s headgear!"),\
+					SPAN_ALERT("[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff_name] onto your headgear! Okay then."),\
+					SPAN_ALERT("You uselessly [myVerb] some [src.stuff_name] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]"))
 				src.shakes ++
 				return
 			else
@@ -231,9 +238,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 									H.emote("sneeze")
 						return
 					else
-						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s some [src.stuff] at [H]'s head!"),\
-							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff] at your head! Fuck!"),\
-							SPAN_ALERT("You [myVerb] some [src.stuff] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]"))
+						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s some [src.stuff_name] at [H]'s head!"),\
+							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff_name] at your head! Fuck!"),\
+							SPAN_ALERT("You [myVerb] some [src.stuff_name] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]"))
 						src.shakes ++
 						return
 		else if (istype(target, /mob/living/critter/small_animal/slug) && src.stuff == "salt")
@@ -248,13 +255,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/))
-			if (W.reagents.has_reagent("[src.stuff]") && W.reagents.get_reagent_amount("[src.stuff]") >= 15)
+			if (W.reagents.has_reagent("[src.stuff]") && W.reagents.get_reagent_amount("[src.stuff]") >= src.shakes)
 				user.show_text("You refill [src].", "blue")
-				W.reagents.remove_reagent("[src.stuff]", 15)
+				W.reagents.remove_reagent("[src.stuff]", src.shakes)
 				src.shakes = 0
 				return
 			else
-				user.show_text("There isn't enough [src.stuff] in here to refill [src]!", "red")
+				user.show_text("There isn't enough [src.stuff_name] in here to refill [src]!", "red")
 				return
 		else
 			return ..()
@@ -291,3 +298,5 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		icon_state = "bottle-barbecue"
 		stuff = "barbecue_sauce"
 		myVerb = "squirt"
+
+#undef MAX_SHAKER_SHAKES
