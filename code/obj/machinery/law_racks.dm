@@ -657,6 +657,7 @@
 		else
 			equipped.pixel_x = rand(-2, 2)
 		src.law_circuits[slotNum]=equipped
+		src.law_circuits[slotNum].on_inserted(slotNum, src, user)
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		user.visible_message(SPAN_ALERT("[user] slides a module into the law rack"), SPAN_ALERT("You slide the module into the rack."))
 		tgui_process.update_uis(src)
@@ -756,6 +757,7 @@
 			src.law_circuits[slot] = mod
 			src.welded[slot] = welded_in
 			src.screwed[slot] = screwed_in
+			mod.on_inserted(slot, src, null)
 			tgui_process.update_uis(src)
 			if(istype(mod,/obj/item/aiModule/hologram_expansion))
 				var/obj/item/aiModule/hologram_expansion/holo = mod

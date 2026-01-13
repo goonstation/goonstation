@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Read SpacemanDMM ref from config
         id: smver
@@ -25,7 +25,7 @@ jobs:
 
       - name: Cache SpacemanDMM
         id: smcache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /home/runner/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ steps.smver.outputs.ref }}
@@ -40,7 +40,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y musl-tools
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: "yarn"
@@ -48,7 +48,7 @@ jobs:
             ./tgui/yarn.lock
             ./tgui/package.json
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.10"
           cache: pip
@@ -99,7 +99,7 @@ jobs:
   #       uses: actions/setup-dotnet@v4.2.0
   #       with:
   #         dotnet-version: 9.0.100
-  #     - uses: actions/checkout@v4
+  #     - uses: actions/checkout@v6
   #     - uses: robinraju/release-downloader@v1.11
   #       with:
   #         repository: "OpenDreamProject/OpenDream"
@@ -113,10 +113,10 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Cache BYOND
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /home/runner/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -164,13 +164,13 @@ jobs:
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
           token: "${{ secrets.ROBUDDYBOT_PAT }}"
 
       - name: Cache BYOND
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /home/runner/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -205,7 +205,7 @@ jobs:
 
       - name: Cache SpacemanDMM
         id: smcache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /home/runner/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ steps.smver.outputs.ref }}
@@ -220,13 +220,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y musl-tools
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.10"
           cache: pip

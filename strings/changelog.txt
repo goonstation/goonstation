@@ -1,3 +1,166 @@
+
+(t)sun jan 11 26
+(u)JORJ949
+(p)25018
+(e)🎨⚖📄📦|C-Sprites, C-Balance, A-UI, A-Game-Objects
+(*)Kudzupeople are now proper antagonists but kudzu no longer turns every corpse into a kudzuperson. See minor changelog for details.
+(+)Each player corpse absorbed by the kudzu will grant 40-60 conversion points and be skeletonized, every 100 points the most recent corpse absorbed becomes a kudzuperson instead of being skeletonized.
+(+)Kudzupeople can no longer use their heal ability on anyone that isn't a kudzuperson or has the kudzuwalk status effect.
+(+)Kudzupeople now have an itching powder thorn shot ability to inject harmful irritants into targets.
+(+)Corpses the kudzu is currently in the process of absorbing (wrapped in vines) can now pass through dense kudzu.
+(t)sat jan 10 26
+(u)Lord_Earthfire
+(p)25417
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Multitool assemblies can be modified by adding a large power cell onto them. This drains the power cell to increase the area and the effect of the flash produced.
+(u)QuiteLiterallyAnything
+(p)25454
+(e)|
+(+)Plasma tanks may now be quickly inserted into pods lacking a fuel tank via hit.
+(t)fri jan 09 26
+(u)LorrMaster
+(p)25203
+(e)🆕🧱|C-Feature, A-Materials
+(*)Certain items can now be arcplated if their material is their default material
+(u)Cheekybrdy
+(p)23401
+(e)🗺🎨🏅|A-Mapping, C-Sprites, A-Medal
+(*)Added a new azone, The Experiences of the Deep Education Centre. Find it in the trench on Neon!
+(t)thu jan 08 26
+(u)Emily
+(*)Tourists and Ambassadors can now choose their mutantrace.
+(+)Ambassadors now get paid a stipend, courtesy of Nanotrasen.
+(+)Sheltergrog no longer permanently makes you a frogperson when you OD.
+(u)glowbold
+(p)25476
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Long-range examining has changed for human crew, details in minor notes.
+(+)Using ALT+Hover to show name tags works up to five tiles away.
+(+)Humans examining other humans from zero to five tiles away gives you full equipment details.
+(+)Humans examining other humans from six to seven tiles away gives you a vague description, obscuring the person's name and equipment.
+(+)Humans examining other humans from eight to ten tiles away states you're too far away to see clearly.
+(u)Mr. Moriarty
+(p)25446
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Photophosphide may now be mixed safely inside of stationary ChemiCompilers.
+(u)CalliopeSoups
+(p)25485
+(e)🆕📦🎩|C-Feature, A-Game-Objects, A-Clothing
+(+)Add clothes to a template monkey in a barrel (by right clicking) to be copied, without stats, to every monkey in the barrel!
+(u)bork
+(p)25521
+(e)📄|A-UI
+(*)The Gene Booth and Genetek Scanner now properly display gene icons!
+(u)QuiteLiterallyAnything
+(p)25514
+(e)🗺|A-Mapping
+(+)Added a MULEBot to Nadir.
+(t)wed jan 07 26
+(u)Lord_Earthfire
+(p)25437
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Electropacks can be used as appliers in assemblies. When triggered, they cause a small shock on the ground
+(+)Electropack assemblies have a contraband value of 4
+(+)Electropack-assemblies, when combined with cells, drain the battery to cause an arcflash. The power depends on the cell's charge
+(u)glowbold
+(p)25506
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Leaving a changeling hivemind voluntarily will set DNR.
+(t)tue jan 06 26
+(u)TheGeneralJay
+(p)25458
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Headsets now malfunction fully and cannot be turned on manually for a set duration after an EMP. They will automatically toggle back on after the duration is up.
+(u)TheGeneralJay
+(p)25483
+(e)🔎💅👮|C-Code-Quality, C-QoL, A-Security
+(+)Securitrons can now be toggled off with a security whistle by pointing at them.
+(u)LeahTheTech
+(p)24582
+(e)🎨⚖🔨|C-Sprites, C-Balance, A-Player-Actions
+(*)Getting EMPed or hit with a powerful electric shock will now temporarily disable your implants.
+(+)Changes from testmerge: a little blue glowy icon on people with disabled implants, duration of disabled effect increased across the board, power gloves now always disable implants.
+(t)sun jan 04 26
+(u)JORJ949
+(p)25445
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Syndicate clowns can now find a highly illegal, portable, non-explosive version of the clown announcement computer in their uplinks for 5TC.
+(u)QuiteLiterallyAnything
+(p)25452
+(e)💅📦|C-QoL, A-Game-Objects
+(+)ABCUs can now be placed in pod cargo holds.
+(u)Kanthes
+(p)25407
+(e)🪲🔬|C-Bug, A-Science
+(+)Prevents the Food Processor from giving people ghost-limbs that couldn't interact with anything.
+(t)sat jan 03 26
+(u)glowbold
+(p)25473
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampires using Illusory Shroud will have their voices show as "Unknown"
+(u)glowbold
+(p)25470
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(*)Open-mic headsets can only pick up sound from the tile it's on.
+(+)Phone handset and mounted defibrillator cables reach roughly two tiles.
+(+)Phone handsets, microphones, and megaphones only pick up speech in your active hand.
+(u)CalliopeSoups
+(p)25456
+(e)🎨|C-Sprites
+(+)Trickster wraith's mass whisper is now base kit
+(+)Wraith's blood writing now has no cooldown
+(t)fri jan 02 26
+(u)JORJ949
+(p)25436
+(e)🆕🎨🧑‍✈️|C-Feature, C-Sprites, A-Command
+(*)The HoP can now print radio upgrades for each on station channel at their fabricator. Command and Security upgrades are locked to hacking it (to discourage hops from immediately making themselves a sec radio).
+(u)QuiteLiterallyAnything
+(p)25455
+(e)🔨|A-Player-Actions
+(+)Handspiders can now snap.
+(t)thu jan 01 26
+(u)Sord
+(*)New random event: EMP Storm. Spawns electrical anomalies similar to the radiation storm anomalies that EMP anything in range.
+(t)wed dec 31 25
+(u)cringe, the good looking sprites from Flaborized
+(p)23946
+(e)🆕🎨📄🔬|C-Feature, C-Sprites, A-UI, A-Science
+(*)Adds neat fluid pipes, now in the HPD.
+(u)QuiteLiterallyAnything
+(p)25426
+(e)🗺|A-Mapping
+(+)Added a cargo tug and forklift to Nadir.
+(u)glowbold
+(p)25324
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Changeling hivemind members now show floating maptext to the host
+(u)glowbold
+(p)25392
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(*)Barcoded deliveries through the belt hell system will notify the relevant departments.
+(t)mon dec 29 25
+(u)QuiteLiterallyAnything
+(p)25427
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Coffins are now made of wood (and deconstruct to it).
+(t)sun dec 28 25
+(u)Lord_Earthfire
+(p)25403
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Mousetrap rollers respect the size of the assembly used to build them.
+(u)JORJ949
+(*)Changeling, Arcfiend and Vampire mode antagonist counts have been reduced from 1/12 to 1/15.
+(+)Changeling abomination forms can now instantly smash tables.
+(t)sat dec 27 25
+(u)JORJ949
+(p)25363
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Radio frequencies before radio messages will now always be highlighted in that frequency's default colour.
+(t)fri dec 26 25
+(u)QuiteLiterallyAnything
+(p)25400
+(e)🗺|A-Mapping
+(+)Added missing pod tractor beams and tasers to the security pod bays in Cogmap 2.
 (t)thu dec 25 25
 (u)Emily
 (*)Added Barbecue Sauce
