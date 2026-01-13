@@ -17,6 +17,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	var/list/mob/climbers = list()
 	mat_changename = FALSE
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+	HELP_MESSAGE_OVERRIDE("Use an upgraded grab to bring another mob up the ladder.")
 
 /obj/ladder/broken
 	name = "broken ladder"
