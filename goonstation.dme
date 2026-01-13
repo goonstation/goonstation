@@ -235,6 +235,7 @@
 #include "code\datums\components\conveyor_lay.dm"
 #include "code\datums\components\cord.dm"
 #include "code\datums\components\crayonwalk.dm"
+#include "code\datums\components\cycle_tuck.dm"
 #include "code\datums\components\death_confetti.dm"
 #include "code\datums\components\directional.dm"
 #include "code\datums\components\disposing_confetti.dm"
