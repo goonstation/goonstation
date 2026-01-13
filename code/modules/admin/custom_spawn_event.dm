@@ -21,6 +21,8 @@
 	var/allow_dnr = FALSE
 	///Should these newly spawned players show up on the manifest?
 	var/add_to_manifest = FALSE
+	///Let players pick their own name on respawning? (Can't be disabled if selected job normally allows it)
+	var/choose_name = FALSE
 
 	proc/get_spawn_loc()
 		if (isturf(src.spawn_loc))
@@ -107,10 +109,13 @@
 
 			mind.transfer_to(new_mob)
 			if (istext(src.thing_to_spawn)) //it's a job
+				var/datum/job/job = find_job_in_controller_by_string(src.thing_to_spawn)
 				new_mob.mind.assigned_role = src.thing_to_spawn
 				if (src.add_to_manifest)
 					var/obj/item/device/pda2/pda = locate() in new_mob
 					global.data_core.addManifest(new_mob, "", "", pda?.net_id, "")
+				if(istype(job) && job.change_name_on_spawn) //Will already be called by the job setup.
+					src.choose_name = FALSE
 
 			SPAWN(1) //job equip procs have to be SPAWN(0) so this has to be SPAWN(1) for them to get an uplink, yes I know but mob init order is cursed and evil
 				if (src.antag_role == "generic_antagonist")
@@ -122,6 +127,9 @@
 				else
 					mind.wipe_antagonists()
 
+			if(src.choose_name && !jobban_isbanned(new_mob, "Custom Names"))
+				var/default = new_mob.real_name
+				new_mob.choose_name(3, src.get_mob_name(), default)
 			if (length(src.objective_text))
 				if (src.antag_role)
 					new /datum/objective/regular(src.objective_text, mind, mind.get_antagonist(src.antag_role))
@@ -164,10 +172,14 @@
 		var/potentially_incompatible = is_a_mob && !is_a_human && src.spawn_event.antag_role
 		//we want to display a warning if someone tries to spawn a job at a landmark it doesn't like (probably latejoin)
 		var/job_wanted_location
+		var/force_choose_name = FALSE
 		if (spawn_type == "job")
-			var/special_location = find_job_in_controller_by_string(src.spawn_event.thing_to_spawn).special_spawn_location
-			if (special_location != src.spawn_event.spawn_loc)
-				job_wanted_location = special_location
+			var/datum/job/chosen_job = find_job_in_controller_by_string(src.spawn_event.thing_to_spawn)
+			force_choose_name = chosen_job.change_name_on_spawn //Job doesn't care, will give players the choice regardless
+			if(force_choose_name)
+				src.spawn_event.choose_name = TRUE
+			if (chosen_job.special_spawn_location != src.spawn_event.spawn_loc)
+				job_wanted_location = chosen_job.special_spawn_location
 
 		if (src.refresh_player_count)
 			src.eligible_player_count = length(eligible_dead_player_list(TRUE, TRUE, !!src.spawn_event.antag_role, src.spawn_event.allow_dnr))
@@ -191,6 +203,8 @@
 			"allow_dnr" = src.spawn_event.allow_dnr,
 			"eligible_player_count" = src.eligible_player_count,
 			"add_to_manifest" = src.spawn_event.add_to_manifest,
+			"choose_name" = src.spawn_event.choose_name,
+			"disable_choose_name" = force_choose_name,
 		)
 
 	ui_static_data(mob/user)
@@ -260,6 +274,8 @@
 				src.refresh_player_count = TRUE
 			if ("set_manifest")
 				src.spawn_event.add_to_manifest = params["add_to_manifest"]
+			if ("choose_name")
+				src.spawn_event.choose_name = params["choose_name"]
 		return TRUE
 
 /client/proc/cmd_custom_spawn_event()
