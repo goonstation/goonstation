@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		src.stuff_name = current_reagent.name
 
 	afterattack(atom/A, mob/user as mob)
-z		if (src.shakes >= MAX_SHAKER_SHAKES)
+		if (src.shakes >= MAX_SHAKER_SHAKES)
 			user.show_text("[src] is empty!", "red")
 			return
 		if (istype(A, /obj/item/reagent_containers/food))
