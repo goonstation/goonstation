@@ -573,6 +573,11 @@
 /area/station/routing/eva{
 	name = "Router Cabinet"
 	})
+"acz" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/podbay,
+/turf/simulated/floor,
+/area/station/hangar/main)
 "acB" = (
 /obj/machinery/computer/ordercomp,
 /obj/cable{
@@ -8024,6 +8029,15 @@
 	},
 /turf/simulated/floor/caution/north,
 /area/station/engine/coldloop)
+"aHD" = (
+/obj/item/device/radio/intercom/cargo,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/engineering,
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "aHE" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -11909,6 +11923,18 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"bad" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/mass_driver{
+	id = "manualshipping"
+	},
+/obj/machinery/arrivalnotifier/export,
+/turf/simulated/floor/caution/westeast,
+/area/station/quartermaster/cargobay)
 "bae" = (
 /obj/shrub,
 /obj/item/instrument/cowbell,
@@ -22616,6 +22642,13 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"bXa" = (
+/obj/machinery/light,
+/obj/machinery/arrivalnotifier/research,
+/turf/simulated/floor/grey,
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "bXc" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -23475,6 +23508,11 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"cbN" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/security,
+/turf/simulated/floor,
+/area/station/routing/security)
 "cbS" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -24495,6 +24533,11 @@
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
 	},
+/turf/simulated/floor/caution/north,
+/area/station/hangar/medical)
+"cge" = (
+/obj/machinery/light/small,
+/obj/machinery/arrivalnotifier/medbay,
 /turf/simulated/floor/caution/north,
 /area/station/hangar/medical)
 "cgf" = (
@@ -27444,16 +27487,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
-"cNP" = (
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/blind_switch/area/east{
-	pixel_y = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "cNX" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/gas_sensor{
@@ -28264,15 +28297,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"dpz" = (
-/obj/item/device/radio/intercom/cargo,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/stripe_delivery,
-/obj/machinery/arrivalnotifier/engineering,
-/turf/simulated/floor,
-/area/station/hangar/engine)
 "dpI" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -29728,11 +29752,6 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/engine/hotloop)
-"elT" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/arrivalnotifier/catering,
-/turf/simulated/floor,
-/area/station/storage/hydroponics)
 "emj" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -30037,6 +30056,11 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
+"evz" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/catering,
+/turf/simulated/floor,
+/area/station/storage/hydroponics)
 "evN" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -30831,13 +30855,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/arcade/dungeon)
-"eVm" = (
-/obj/machinery/light,
-/obj/machinery/arrivalnotifier/research,
-/turf/simulated/floor/grey,
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "eWB" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -34170,11 +34187,6 @@
 /obj/item/aiModule/protectStation,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"hfA" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/arrivalnotifier/podbay,
-/turf/simulated/floor,
-/area/station/hangar/main)
 "hfZ" = (
 /obj/storage/crate/furnacefuel,
 /obj/machinery/light_switch/north,
@@ -38714,11 +38726,6 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor/red/side,
 /area/station/security/evidence)
-"kqr" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/arrivalnotifier/security,
-/turf/simulated/floor,
-/area/station/routing/security)
 "kqA" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -49028,18 +49035,6 @@
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
-"rwC" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/machinery/mass_driver{
-	id = "manualshipping"
-	},
-/obj/machinery/arrivalnotifier/export,
-/turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/cargobay)
 "rwO" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4;
@@ -57193,11 +57188,6 @@
 /obj/structure/woodwall,
 /turf/simulated/floor/plating/damaged1,
 /area/station/garden/aviary)
-"wXl" = (
-/obj/machinery/light/small,
-/obj/machinery/arrivalnotifier/medbay,
-/turf/simulated/floor/caution/north,
-/area/station/hangar/medical)
 "wXr" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
@@ -91388,7 +91378,7 @@ gKN
 bhh
 bin
 bin
-wXl
+cge
 bcK
 aRt
 aRt
@@ -92595,7 +92585,7 @@ aBE
 aBE
 bim
 bip
-cNP
+aRu
 oFF
 aRu
 aRu
@@ -93532,7 +93522,7 @@ moG
 bSw
 bTM
 bUQ
-eVm
+bXa
 bQU
 bzR
 bAQ
@@ -100385,7 +100375,7 @@ aaa
 aaa
 aaa
 edo
-hfA
+acz
 acQ
 adl
 acj
@@ -107434,7 +107424,7 @@ esP
 nzB
 vwR
 ppI
-rwC
+bad
 eyt
 aaa
 aaa
@@ -109544,7 +109534,7 @@ mnL
 rsZ
 gYu
 caN
-kqr
+cbN
 swb
 cdw
 acO
@@ -111291,7 +111281,7 @@ aCh
 aFx
 bnp
 aCh
-dpz
+aHD
 skX
 wMw
 lgL
@@ -112527,7 +112517,7 @@ bft
 pUm
 abd
 biZ
-elT
+evz
 blD
 bmS
 pUm

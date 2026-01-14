@@ -53,10 +53,10 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
 
-		var/turf/T = get_turf(src)
-		for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
+		for_clients_in_range(C, get_turf(src), 15)
 			boutput(C, SPAN_ALERT("The air grows heavy and thick. Something feels terribly wrong."))
 			shake_camera(C.mob, 5, 16)
+
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,0.5)
 		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 
