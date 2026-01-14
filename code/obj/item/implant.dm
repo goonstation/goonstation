@@ -809,25 +809,31 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	big_message = " buzzes, what?"
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
+	var/wasp_type = /mob/living/critter/small_animal/wasp/angry
+	var/faction = FACTION_BOTANY
 
 	implanted(mob/M, mob/I)
 		..()
-		if (istype(M))
-			LAZYLISTADDUNIQUE(M.faction, FACTION_BOTANY)
+		if (istype(M) && src.faction)
+			LAZYLISTADDUNIQUE(M.faction, src.faction)
 
 	on_remove(mob/M)
 		..()
-		if (istype(M))
-			LAZYLISTREMOVE(M.faction, FACTION_BOTANY)
+		if (istype(M) && src.faction)
+			LAZYLISTREMOVE(M.faction, src.faction)
 
 	do_effect(power)
 		// enjoy your wasps
 		for (var/i in 1 to power)
-			var/mob/living/critter/small_animal/wasp/W = new /mob/living/critter/small_animal/wasp/angry(get_turf(src))
-			W.lying = TRUE // So wasps dont hit other wasps when being flung
-			W.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2)
-			SPAWN(1 SECOND)
-				W.lying = FALSE
+			var/throw_type = THROW_NORMAL
+			var/mob/M = new src.wasp_type(get_turf(src))
+			if(ismob(M))
+				M.lying = TRUE // So wasps dont hit other wasps when being flung
+				SPAWN(1 SECOND)
+					M.lying = FALSE
+			else
+				throw_type = THROW_PHASE
+			M.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2, throw_type = throw_type)
 
 		SPAWN(1)
 			src.owner?.gib()
