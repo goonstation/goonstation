@@ -107,6 +107,7 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
+	var/obj/ai_origin_object = null
 	var/bruteloss = 0
 	var/burnloss = 0
 
