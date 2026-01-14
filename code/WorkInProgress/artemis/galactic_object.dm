@@ -350,7 +350,7 @@ var/global/datum/galaxy/GALAXY = new
 		M = M.Translate(actual_x,actual_y)
 		src.transform = M
 
-	animate_stars()
+	ANIMATE.stars()
 		if(!src)
 			return
 

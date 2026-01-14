@@ -273,7 +273,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			return
 		src.last_attackhand = world.time
 
-		interact_particle(user,src)
+		ANIMATE.MOB.interact_particle(user,src)
 		add_fingerprint(user)
 		if (src.welded)
 			user.show_text("It won't open!", "red")
@@ -970,8 +970,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	else
 		damage = I.force
 	user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src] with [I]! [damage_text]"))
-	attack_particle(user,src)
-	hit_twitch(src)
+	ANIMATE.MOB.attack_particle(user,src)
+	ANIMATE.hit_twitch(src)
 	take_damage(clamp(damage, 1, 20), user, I, null)
 	playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
 

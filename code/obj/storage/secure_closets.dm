@@ -55,7 +55,7 @@
 			user.lastattacked = get_weakref(src)
 			if (src.reinforced)
 				boutput(user, SPAN_ALERT("[src] is too reinforced to bash into!"))
-				attack_particle(user,src)
+				ANIMATE.MOB.attack_particle(user,src)
 				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 40, 1) //quiet, no hit twitch
 			else
 				src.bash(I, user)

@@ -90,7 +90,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 			animate = 1
 			src.stars_pan(vel_mag,vel_angle)
 		if(animate)
-			animate_stars()
+			ANIMATE.stars()
 			animate = 0
 			//sleep(animation_speed)
 		return

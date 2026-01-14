@@ -28,7 +28,7 @@
 
 	New()
 		..()
-		animate_levitate(src)
+		ANIMATE.levitate(src)
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -110,7 +110,7 @@
 		transmute_the_stuff()
 		if(prob(1))
 			animate(src)
-			animate_levitate(src)
+			ANIMATE.levitate(src)
 		if(prob(20))
 			var/list/walls = list()
 			for(var/turf/simulated/wall/wall in orange(1, src))

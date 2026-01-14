@@ -497,7 +497,7 @@
 
 	OnAdd()
 		..()
-		animate_fade_grayscale(owner, 5)
+		ANIMATE.fade_grayscale(owner, 5)
 
 		if(ismob(owner))
 			if(src.power > 1)
@@ -513,7 +513,7 @@
 
 	OnRemove()
 		..()
-		animate_fade_from_grayscale(owner, 5)
+		ANIMATE.fade_from_grayscale(owner, 5)
 		if(ismob(owner))
 			if(src.power > 1)
 				owner.remove_color_matrix(COLOR_MATRIX_GRAYSCALE_LABEL)

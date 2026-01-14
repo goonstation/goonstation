@@ -118,7 +118,7 @@
 	if (src.power_level > 20 && prob(40))
 		M.changeStatus("burning", 2 SECONDS)
 	if (src.power_level > 100 && prob(10))
-		animate_levitate(M, 1)
+		ANIMATE.levitate(M, 1)
 	ON_COOLDOWN(src, "last_catch", 2 SECONDS)
 	src.UpdateIcon()
 
@@ -271,7 +271,7 @@
 			else // Aaaa the tension!
 				src.visible_message(SPAN_ALERT("[O] teeters on the edge of [src]!"))
 				var/delay = rand(5, 15)
-				animate_horizontal_wiggle(O, delay, 5, 1, -1) // target, number of animation loops, speed, positive x variation, negative x variation
+				ANIMATE.horizontal_wiggle(O, delay, 5, 1, -1) // target, number of animation loops, speed, positive x variation, negative x variation
 				SPAWN(delay)
 					if (O && O.loc == src.loc)
 						if (prob(40)) // It goes in!

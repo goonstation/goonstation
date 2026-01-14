@@ -30,20 +30,20 @@
 			REMOVE_ATOM_PROPERTY(M, PROP_ATOM_NEVER_DENSE, "floorswitching")
 			M.set_density(initial(M.density))
 			if (floorturf.intact)
-				animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+				ANIMATE.slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)
 				if(M)
 					M.layer = MOB_LAYER
 					M.plane = PLANE_DEFAULT
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "floorswitching")
 				if(floorturf?.intact)
-					animate_slide(floorturf, 0, 0, 4)
+					ANIMATE.slide(floorturf, 0, 0, 4)
 
 		else
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, "underfloor")
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "floorswitching")
 			if (floorturf.intact)
-				animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+				ANIMATE.slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)
 				if(M)
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "floorswitching")
@@ -54,4 +54,4 @@
 					M.layer = BETWEEN_FLOORS_LAYER
 					M.plane = PLANE_FLOOR
 				if(floorturf?.intact)
-					animate_slide(floorturf, 0, 0, 4)
+					ANIMATE.slide(floorturf, 0, 0, 4)

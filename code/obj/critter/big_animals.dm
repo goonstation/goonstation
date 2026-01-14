@@ -207,7 +207,7 @@
 		if (sips_taken == 0 || prob(80))
 			playsound(src.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		// if (prob(20))
-		eat_twitch(src)
+		ANIMATE.eat_twitch(src)
 
 		last_drink = world.time
 		sips_taken++

@@ -1053,15 +1053,15 @@ var/list/fun_images = list()
 			src.respawn_as_self()
 			var/mob/M = src.mob
 			M.AddOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
-			heavenly_spawn(M)
+			ANIMATE.heavenly_spawn(M)
 		if("Demonically")
 			src.respawn_as_self()
 			var/mob/living/carbon/human/M = src.mob
 			M.bioHolder.AddEffect("hell_fire", magical = 1)
-			demonic_spawn(M)
+			ANIMATE.demonic_spawn(M)
 		if("Beam")
 			src.respawn_as_self()
-			spawn_beam(src.mob)
+			ANIMATE.spawn_beam(src.mob)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"

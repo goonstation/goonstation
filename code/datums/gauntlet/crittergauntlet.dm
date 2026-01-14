@@ -585,7 +585,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			var/ST = pick(supplies)
 			var/turf/T = pick(gauntlet_controller.spawnturfs)
 			new ST(T)
-			showswirl(T)
+			ANIMATE.showswirl(T)
 
 		if (only_once)
 			used = 1
@@ -598,7 +598,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			var/ST = supplies[1]
 			var/T = pick(gauntlet_controller.spawnturfs)
 			var/obj/O = new ST(T)
-			showswirl(T)
+			ANIMATE.showswirl(T)
 			SPAWN(0.5 SECONDS)
 				O.ArtifactActivated()
 
@@ -1020,7 +1020,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		if (count)
 			var/turf/T = pick(gauntlet_controller.spawnturfs)
 			var/crit_type = pick(types)
-			showswirl(T)
+			ANIMATE.showswirl(T)
 			var/atom/mob_or_critter = new crit_type(T)
 			if(iscritter(mob_or_critter))
 				var/obj/critter/C = mob_or_critter

@@ -45,10 +45,10 @@
 			if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack
 				var/anim_mult = clamp(0.5, W.force / 10, 4)
 				if (!W.hide_attack)
-					attack_particle(user,src)
-					attack_twitch(user, anim_mult, anim_mult)
+					ANIMATE.MOB.attack_particle(user,src)
+					ANIMATE.attack_twitch(user, anim_mult, anim_mult)
 				else if (W.hide_attack == ATTACK_PARTIALLY_HIDDEN)
-					attack_twitch(user, anim_mult, , anim_mult)
+					ANIMATE.attack_twitch(user, anim_mult, , anim_mult)
 
 
 			if (W.force)

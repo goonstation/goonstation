@@ -31,7 +31,7 @@
 				for (var/turf/T in range(ring_radius, Aloc))
 					/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
 					if(isfloor(T))
-						animate_buff_out(T)
+						ANIMATE.buff_out(T)
 						SPAWN(1 SECOND)
 							var/floor_type = T.type
 							var/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf = T.ReplaceWith("/turf/unsimulated/floor/specialroom/gym/macho_arena/new_turf", 1)
@@ -56,7 +56,7 @@
 							arenaropes += FF
 							var/random_deviation = rand(0, 5)
 							SPAWN(random_deviation)
-								spawn_animation1(FF)
+								ANIMATE.spawn_animation1(FF)
 								sleep(10) // animation, also to simulate them coming in and slamming into the ground
 								FF.visible_message(SPAN_ALERT("<B>[FF] slams and anchors itself into the ground!</B>"))
 								playsound(T, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
@@ -80,10 +80,10 @@
 				macho_arena_turfs = arenaropes
 				/*   // too many issues with canpass and/or lights breaking, maybe sometime in the future?
 				for (var/turf/unsimulated/floor/specialroom/gym/macho_arena/F in arenaropes)
-					animate_buff_in(F)
+					ANIMATE.buff_in(F)
 				*/
 				for (var/obj/decal/boxingrope/F in arenaropes)
-					spawn_animation1(F)
+					ANIMATE.spawn_animation1(F)
 				holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_summon_arena
 			else // desummon arena
 				clean_up_arena_turfs(src.macho_arena_turfs)
@@ -94,15 +94,15 @@
 			for (var/turf/unsimulated/floor/specialroom/gym/macho_arena/F in arenaropes)
 				SPAWN(0)
 					arenaropes -= F
-					animate_buff_out(F)
+					ANIMATE.buff_out(F)
 					sleep(10)
 					F.change_back()
 			*/
 		for (var/obj/decal/boxingrope/F in arena_turfs_to_cleanup)
 			SPAWN(0)
-				leaving_animation(F)
+				ANIMATE.leaving_animation(F)
 				qdel(F)
 		for (var/obj/stool/chair/boxingrope_corner/F in arena_turfs_to_cleanup)
 			SPAWN(0)
-				leaving_animation(F)
+				ANIMATE.leaving_animation(F)
 				qdel(F)

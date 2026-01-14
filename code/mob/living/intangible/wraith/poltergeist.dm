@@ -149,7 +149,7 @@ TYPEINFO(/mob/living/intangible/wraith/poltergeist)
 
 		//attach ghost to orbit anchor and spin it
 		orbit_anchor.vis_contents += src
-		animate_spin(orbit_anchor, orbit_direction, rand(14, 25), -1)
+		ANIMATE.spin(orbit_anchor, orbit_direction, rand(14, 25), -1)
 
 		//attach orbit anchor to the master wraith
 		master.vis_contents += orbit_anchor

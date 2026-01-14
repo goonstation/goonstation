@@ -85,7 +85,7 @@
 				var/list/material = list("gold","silver","spacelag","iridiumalloy","soulsteel","erebite","ruby","onyx","diamond","topaz","emerald","telecrystal","miracle","ice","flesh","pizza")
 				T.setMaterial(getMaterial(pick(material)))
 				var/dir_temp = pick("L", "R")
-				animate_spin(T, dir_temp, 3)
+				ANIMATE.spin(T, dir_temp, 3)
 				sleep(0.1)
 			for(var/mob/M in affected)
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()

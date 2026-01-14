@@ -674,7 +674,7 @@
 						sleep(0.1 SECONDS)
 						master.pixel_x = 0
 						master.pixel_y = 0
-					hit_twitch(master)
+					ANIMATE.hit_twitch(master)
 				src.did_spooky = 1
 
 	onStart()
@@ -683,7 +683,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		attack_twitch(master)
+		ANIMATE.attack_twitch(master)
 		master.currently_healing = 1
 		master.UpdateIcon(/*stun*/ 0, /*heal*/ 1)
 		master.visible_message(SPAN_ALERT("<B>[master] is trying to inject [master.patient]!</B>"))

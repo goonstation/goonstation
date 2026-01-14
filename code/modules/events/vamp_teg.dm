@@ -135,9 +135,9 @@
 					playsound(generator, pick(spooky_sounds), 30, 0, -1)
 					switch(rand(1,5))
 						if(1)
-							animate_flash_color_fill_inherit(pick(generator,generator.circ1,generator.circ2),"#e13333",2, 2 SECONDS)
+							ANIMATE.flash_color_fill_inherit(pick(generator,generator.circ1,generator.circ2),"#e13333",2, 2 SECONDS)
 						if(2)
-							animate_levitate(pick(generator,generator.circ1,generator.circ2), 1, 50, random_side = FALSE)
+							ANIMATE.levitate(pick(generator,generator.circ1,generator.circ2), 1, 50, random_side = FALSE)
 						if(3)
 							// Turn off light switches
 							for (var/obj/machinery/light_switch/L as() in station_switches)
@@ -240,9 +240,9 @@ datum/teg_transformation/vampire
 		teg.default_speech_output_channel = SAY_CHANNEL_THRALL
 
 	proc/vampify(obj/O)
-		animate_levitate(O, -1, 50, random_side = FALSE)
+		ANIMATE.levitate(O, -1, 50, random_side = FALSE)
 		O.color = "#bd1335"
-		animate_flash_color_fill_inherit(O,"#e13333",-1, 2 SECONDS)
+		ANIMATE.flash_color_fill_inherit(O,"#e13333",-1, 2 SECONDS)
 
 	proc/use_ability(abilityType, mob/target)
 		var/datum/targetable/vampire/A = abilityHolder.getAbility(abilityType)
@@ -372,8 +372,8 @@ datum/teg_transformation/vampire
 			if (60 to INFINITY)
 				force = force / 7
 		if (force > 0)
-			attack_particle(user,T)
-			hit_twitch(T)
+			ANIMATE.MOB.attack_particle(user,T)
+			ANIMATE.hit_twitch(T)
 			if (I.hitsound)
 				playsound(T.loc, I.hitsound, 50, 1)
 		health -= force

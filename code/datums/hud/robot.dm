@@ -342,7 +342,7 @@
 					master.set_a_intent(INTENT_HELP)
 			if ("pulling")
 				if (master.pulling)
-					unpull_particle(master,pulling)
+					ANIMATE.MOB.unpull_particle(master,pulling)
 					master.remove_pulling()
 					src.update_pulling()
 				else if(!isturf(master.loc))
@@ -436,7 +436,7 @@
 						U.update_value()
 						add_screen(U)
 						pos_x -= spacing
-						animate_buff_in(U)
+						ANIMATE.buff_in(U)
 		return
 
 	update_health()

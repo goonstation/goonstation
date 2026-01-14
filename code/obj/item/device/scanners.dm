@@ -91,12 +91,12 @@ TYPEINFO(/obj/item/device/t_scanner)
 			if (BOUNDS_DIST(A, user) > 0) // Scanning for COOL LORE SECRETS over the camera network is fun, but so is drinking and driving.
 				return
 			if(A.interesting && src.on)
-				animate_scanning(A, "#7693d3")
+				ANIMATE.scanning(A, "#7693d3")
 				user.visible_message(SPAN_ALERT("<b>[user]</b> has scanned the [A]."))
 				boutput(user, "<br><i>Historical analysis:</i><br>[SPAN_NOTICE("[A.interesting]")]")
 				return
 		else if (istype(A, /obj) && A.interesting)
-			animate_scanning(A, "#7693d3")
+			ANIMATE.scanning(A, "#7693d3")
 			user.visible_message(SPAN_ALERT("<b>[user]</b> has scanned the [A]."))
 			boutput(user, "<br><i>Analysis failed:</i><br>[SPAN_NOTICE("Unable to determine signature")]")
 

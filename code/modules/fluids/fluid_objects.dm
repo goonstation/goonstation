@@ -553,7 +553,7 @@ TYPEINFO(/obj/naval_mine)
 
 	New()
 		..()
-		animate_bumble(src)
+		ANIMATE.bumble(src)
 		add_simple_light("naval_mine", list(255, 102, 102, 40))
 
 	get_desc()

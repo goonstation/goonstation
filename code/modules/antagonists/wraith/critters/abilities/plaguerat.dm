@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 
 		SPAWN(0.8 SECONDS)
 			playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
-			eat_twitch(M)
+			ANIMATE.eat_twitch(M)
 
 	onEnd()
 		..()

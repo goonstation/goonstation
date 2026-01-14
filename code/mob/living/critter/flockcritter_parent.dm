@@ -396,7 +396,7 @@ proc/start_flock_conversion(turf/target)
 
 		F.pay_resources(FLOCK_BARRICADE_COST)
 		var/obj/O = new structurepath(target)
-		animate_flock_convert_complete(O)
+		ANIMATE.flock_convert_complete(O)
 		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 30, TRUE, extrarange = -10)
 		O.AddComponent(/datum/component/flock_interest, F?.flock)
 /////////////////////////////////////////////////////////////////////////////////
@@ -420,7 +420,7 @@ proc/start_flock_conversion(turf/target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(prob(40))
-			animate_shake(F)
+			ANIMATE.shake(F)
 			playsound(F, pick('sound/machines/mixer.ogg', 'sound/machines/repairing.ogg', 'sound/impact_sounds/Metal_Clang_1.ogg'), 30, 1, extrarange = -10)
 
 	onStart()

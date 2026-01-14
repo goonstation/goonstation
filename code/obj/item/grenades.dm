@@ -827,7 +827,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		E.color = list(0,0,0.6,0.2,0, 0.3,0,-0.8,0,0, 0,0.33,0,0,0, 0.9,0.8,0.8,0.7,0)
 		E.plane = PLANE_NOSHADOW_ABOVE
 		E.transform = matrix(0.75, MATRIX_SCALE)
-		animate_wave(E,4)
+		ANIMATE.wave(E,4)
 
 		if (T && istype(T))
 			if (T.air)

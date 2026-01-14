@@ -1923,8 +1923,8 @@
 				if (src.success_sound)
 					if (O.holder?.donor)
 						playsound(O.holder.donor, src.success_sound, 50, 1)
-				attack_particle(user, H)
-				attack_twitch(user)
+				ANIMATE.MOB.attack_particle(user, H)
+				ANIMATE.attack_twitch(user)
 				random_brute_damage(H, rand(2, 4))
 				O.surgery_contexts -= src
 				O.removal_stage = 1
@@ -2067,8 +2067,8 @@
 						do_slipup(user, H, "chest", damage, slipup_text)
 						user.showContextActions(H.organHolder.rib_contexts, H, H.organHolder.contextLayout)
 						return
-					attack_particle(user, H)
-					attack_twitch(user)
+					ANIMATE.MOB.attack_particle(user, H)
+					ANIMATE.attack_twitch(user)
 					random_brute_damage(H, rand(2, 4))
 					if (H.organHolder.rib_contexts)
 						if (src.success_text)
@@ -2097,8 +2097,8 @@
 						do_slipup(user, H, "chest", damage, slipup_text)
 						user.showContextActions(H.organHolder.subcostal_contexts, H, H.organHolder.contextLayout)
 						return
-					attack_particle(user, H)
-					attack_twitch(user)
+					ANIMATE.MOB.attack_particle(user, H)
+					ANIMATE.attack_twitch(user)
 					random_brute_damage(H, rand(2, 4))
 					if (H.organHolder.subcostal_contexts)
 						if (src.success_text)
@@ -2127,8 +2127,8 @@
 						do_slipup(user, H, "chest", damage, slipup_text)
 						user.showContextActions(H.organHolder.abdomen_contexts, H, H.organHolder.contextLayout)
 						return
-					attack_particle(user, H)
-					attack_twitch(user)
+					ANIMATE.MOB.attack_particle(user, H)
+					ANIMATE.attack_twitch(user)
 					random_brute_damage(H, rand(2, 4))
 					if (H.organHolder.abdomen_contexts)
 						if (src.success_text)
@@ -2157,8 +2157,8 @@
 						do_slipup(user, H, "chest", damage, slipup_text)
 						user.showContextActions(H.organHolder.flanks_contexts, H, H.organHolder.contextLayout)
 						return
-					attack_particle(user, H)
-					attack_twitch(user)
+					ANIMATE.MOB.attack_particle(user, H)
+					ANIMATE.attack_twitch(user)
 					random_brute_damage(H, rand(2, 4))
 					if (H.organHolder.flanks_contexts)
 						if (src.success_text)

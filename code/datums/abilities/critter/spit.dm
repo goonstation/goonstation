@@ -42,7 +42,7 @@
 			A.reagents = new /datum/reagents(10)
 			A.reagents.my_atom = A
 			A.reagents.add_reagent(reagent, 10)
-			animate_spin(A, "R", 1.4, -1)
+			ANIMATE.spin(A, "R", 1.4, -1)
 
 			var/obj/overlay/B = new /obj/overlay( A.loc )
 			B.icon_state = "acidspit"
@@ -51,7 +51,7 @@
 			B.anchored = ANCHORED
 			B.set_density(0)
 			B.layer = OBJ_LAYER
-			animate_spin(B, "R", 1.4, -1)
+			ANIMATE.spin(B, "R", 1.4, -1)
 
 			for(var/i=0, i<range, i++)
 				B.set_loc(A.loc)

@@ -202,7 +202,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
 		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
-		animate_shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
+		ANIMATE.shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
 
 	SPAWN(3 SECONDS)

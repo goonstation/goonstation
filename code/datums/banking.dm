@@ -505,7 +505,7 @@
 		var/damage = I.force
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = get_weakref(src)
-			attack_particle(user,src)
+			ANIMATE.MOB.attack_particle(user,src)
 			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,TRUE)
 			src.take_damage(damage, user)
 			user.visible_message(SPAN_ALERT("<b>[user] bashes the [src] with [I]!</b>"))

@@ -42,14 +42,14 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 				CRASH("Selected an unknown engine type - did you forget to put it here?")
 
 		for_by_tcl(comp, /obj/landmark/engine_computer)
-			showswirl(comp, TRUE)
+			ANIMATE.showswirl(comp, TRUE)
 			if(istype(comp, /obj/landmark/engine_computer/one))
 				comp.replaceWith(comp1type)
 			else
 				comp.replaceWith(comp2type)
 
 		for(var/turf/T as anything in block(target, locate(props.maxX, props.maxY, target.z)))
-			leaveresidual(T)
+			ANIMATE.leaveresidual(T)
 
 		for(var/turf/T as anything in block(locate(target.x-1, target.y-1, target.z), locate(props.maxX+2, props.maxY+2, target.z)))
 			for(var/obj/O in T)

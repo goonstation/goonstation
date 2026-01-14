@@ -1189,7 +1189,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 		if (!istype(mag) || mag.holding) // they aren't holding a magtractor or the magtractor already has something in it
 			return // so there's no room for a bulb
 
-	interact_particle(user,src)
+	ANIMATE.MOB.interact_particle(user,src)
 
 	if(current_lamp.light_status == LIGHT_EMPTY)
 		boutput(user, "There is no [fitting] in this light.")

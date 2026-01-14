@@ -235,7 +235,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 			else
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]! Ouch!"))
 			user.lastattacked = get_weakref(src)
-			attack_particle(user, src)
+			ANIMATE.MOB.attack_particle(user, src)
 
 /turf/simulated/wall/auto/feather/attackby(obj/item/C, mob/user)
 	if(!C || !user)
@@ -249,7 +249,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	else
 		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks [src] with [C]!"))
 	user.lastattacked = get_weakref(src)
-	attack_particle(user, src)
+	ANIMATE.MOB.attack_particle(user, src)
 
 /turf/simulated/wall/auto/feather/burn_down()
 	src.takeDamage("fire", 1)

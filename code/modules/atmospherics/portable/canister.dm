@@ -434,8 +434,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	else if(!src.destroyed && !iswrenchingtool(W) && !isweldingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2) && !(W.flags & SUPPRESSATTACK))
 		src.visible_message(SPAN_ALERT("[user] hits the [src] with a [W]!"))
 		user.lastattacked = get_weakref(src)
-		attack_particle(user,src)
-		hit_twitch(src)
+		ANIMATE.MOB.attack_particle(user,src)
+		ANIMATE.hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		logTheThing(LOG_STATION, user, "attacks [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force

@@ -336,7 +336,7 @@ TYPEINFO(/datum/component/equipment_fault)
 
 /datum/component/equipment_fault/grumble/ef_perform_fault(obj/O, mult)
 	if(..())
-		animate_shake(O, 5, rand(3,8),rand(3,8))
+		ANIMATE.shake(O, 5, rand(3,8),rand(3,8))
 		O.visible_message(SPAN_ALERT("[O] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!"))
 		playsound(O, pick(src.sounds_malfunction), 50, 2)
 
@@ -362,7 +362,7 @@ TYPEINFO(/datum/component/equipment_fault)
 
 /datum/component/equipment_fault/shorted/ef_process(obj/machinery/M, mult)
 	. = TRUE
-	animate_little_spark(M)
+	ANIMATE.little_spark(M)
 	if (M.power_usage)
 		if (machines_may_use_wired_power)
 			M.power_change()
@@ -435,7 +435,7 @@ TYPEINFO(/datum/component/equipment_fault)
 /datum/component/equipment_fault/faulty_wiring/ef_perform_fault(obj/O, mult)
 	var/wire = pick(APCWireColorToIndex)
 	if(..())
-		animate_little_spark(O)
+		ANIMATE.little_spark(O)
 
 		if(istype(O, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/target_airlock = O
@@ -601,5 +601,5 @@ TYPEINFO(/datum/component/equipment_fault/messy)
 		playsound(O, pick(sounds), 30, 2)
 		var/obj/decal/cleanable/junk = make_cleanable(pick(src.cleanable_types), O.loc)
 		junk.streak_cleanable(cardinal, dist_upper=1)
-		hit_twitch(O)
+		ANIMATE.hit_twitch(O)
 		O.visible_message(SPAN_NOTICE("[O] spews out some of its internals."))

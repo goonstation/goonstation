@@ -434,7 +434,7 @@ TYPEINFO(/obj/structure/woodwall)
 				src.changeHealth(rand(0, -2))
 			else
 				src.changeHealth(rand(-1, -3))
-			hit_twitch(src)
+			ANIMATE.hit_twitch(src)
 			return
 		else
 			return
@@ -446,7 +446,7 @@ TYPEINFO(/obj/structure/woodwall)
 		..()
 		user.lastattacked = get_weakref(src)
 		src.changeHealth(-W.force)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 		return
 
 	disposing()
@@ -523,19 +523,19 @@ TYPEINFO(/obj/structure/woodwall)
 		if (istype(source) && wood != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 		if (prob(20))
-			hit_twitch(wall)
+			ANIMATE.hit_twitch(wall)
 			playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 
 	onStart()
 		..()
-		hit_twitch(wall)
+		ANIMATE.hit_twitch(wall)
 		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		owner.visible_message(SPAN_NOTICE("[owner] begins repairing [wall]!"))
 
 	onEnd()
 		..()
 		owner.visible_message(SPAN_NOTICE("[owner] uses a [wood] to completely repair the [wall]!"))
-		hit_twitch(wall)
+		ANIMATE.hit_twitch(wall)
 		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		//do repair shit.
 		wall._health = wall._max_health

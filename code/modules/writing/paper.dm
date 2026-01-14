@@ -930,7 +930,7 @@
 	if (iscarbon(target) && target == user && src.sealed)
 		target.visible_message(SPAN_NOTICE("[target] stuffs [src] into [his_or_her(target)] mouth and eats it."))
 		playsound(target, 'sound/misc/gulp.ogg', 30, TRUE)
-		eat_twitch(target)
+		ANIMATE.eat_twitch(target)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
 		qdel(P)

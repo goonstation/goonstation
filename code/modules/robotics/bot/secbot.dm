@@ -796,7 +796,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 					for(var/mob/M in hearers(C, null))
 						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>", group = "storage_thud")
 					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
-					animate_storage_thump(C)
+					ANIMATE.storage_thump(C)
 				src.container_cool_off_counter++
 				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
 					src.KillPathAndGiveUp(kpagu)

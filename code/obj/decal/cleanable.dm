@@ -1382,7 +1382,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	proc/wraith_bump(mob/living/intangible/wraith/wraith)
 		if (ON_COOLDOWN(src, "wraith_bumped", 1 SECOND))
 			return
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 		src.bump_stacks += 1
 		if (src.bump_stacks >= 3)
 			new /obj/effects/impact_energy/smoke(get_turf(src))

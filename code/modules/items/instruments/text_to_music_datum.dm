@@ -419,13 +419,13 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.build_allow_list()
 
 /datum/text_to_music/mech_comp/event_play_start()
-	animate_flash_color_fill(src.holder, "#00ff00", 2, 2)
+	ANIMATE.flash_color_fill(src.holder, "#00ff00", 2, 2)
 
 /datum/text_to_music/mech_comp/event_play_end()
-	animate_flash_color_fill(src.holder, "#ff0000", 2, 2)
+	ANIMATE.flash_color_fill(src.holder, "#ff0000", 2, 2)
 
 /datum/text_to_music/mech_comp/event_reset()
-	animate_flash_color_fill(src.holder, "#0000ff", 2, 2)
+	ANIMATE.flash_color_fill(src.holder, "#0000ff", 2, 2)
 
 /datum/text_to_music/mech_comp/event_error_note_not_found(var/note_index, var/note)
 	src.log_error_message("Note <b>\[[note]\]</b> at position <b>\[[note_index]\]</b> doesn't exist for <b>\[[src.instrument_name]\]</b>.")
@@ -448,7 +448,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	if (length(src.error_messages) > MAX_ERROR_MESSAGES)
 		src.error_messages.Cut(MAX_ERROR_MESSAGES + 1, 0)
 
-	animate_flash_color_fill(src.holder, "#ff00ff", 2, 2)
+	ANIMATE.flash_color_fill(src.holder, "#ff00ff", 2, 2)
 
 /datum/text_to_music/mech_comp/proc/build_allow_list()
 	src.allow_list = list()

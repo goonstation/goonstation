@@ -27,7 +27,7 @@
 					S.recharging = 1
 					src.recharging = 1
 					user.set_loc(S.loc)
-					showswirl(user.loc)
+					ANIMATE.showswirl(user.loc)
 					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0

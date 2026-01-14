@@ -1041,7 +1041,7 @@
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
-					animate_float(I, 5, 10)
+					ANIMATE.float(I, 5, 10)
 /*
 					SPAWN(rand(0,30))
 

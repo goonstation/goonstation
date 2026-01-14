@@ -202,7 +202,7 @@
 					. = TRUE
 				else
 					O.visible_message("[O] bounces off of [hit].")
-					hit_twitch(hit)
+					ANIMATE.hit_twitch(hit)
 			else
 				if(hit.pixel_x >= 10 || hit.pixel_x <= -10 || hit.pixel_y >= 10 || hit.pixel_y <= -10)
 					if(O.special_data["debug"])
@@ -326,10 +326,10 @@
 						P.alpha = 0
 						P.die()
 						visible_message("[P] makes it into [src]. Nice shot!")
-						hit_twitch(src)
+						ANIMATE.hit_twitch(src)
 				else
 					src.visible_message("[P] bounces off of [src].")
-					hit_twitch(src)
+					ANIMATE.hit_twitch(src)
 
 	automatic_return
 		var/return_range = 5
@@ -343,7 +343,7 @@
 					nearby_turfs += T
 
 				SPAWN(rand(2 SECONDS, 5 SECONDS))
-					animate_spin(src,looping=3)
+					ANIMATE.spin(src,looping=3)
 					sleep(0.2 SECOND)
 
 					src.storage.transfer_stored_item(ball, get_turf(src))
@@ -371,7 +371,7 @@
 					P.alpha = 0
 					P.die()
 					visible_message("[P] makes it into [src]. Nice shot?")
-					hit_twitch(src)
+					ANIMATE.hit_twitch(src)
 					attack_hand(P.mob_shooter)
 		else
 			..()

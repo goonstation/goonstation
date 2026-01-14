@@ -470,7 +470,7 @@
 		R.reaction(src.holder, INGEST, clamp(R.total_volume, CHEM_EPSILON, min(absorbtion_rate, (src.holder.reagents?.maximum_volume - src.holder.reagents?.total_volume))))
 		R.trans_to(src.holder, min(R.total_volume, absorbtion_rate))
 		playsound(src.holder.loc,'sound/items/drink.ogg', rand(10,20), 1)
-		eat_twitch(src.holder)
+		ANIMATE.eat_twitch(src.holder)
 		if(fluids != src.last_fluid_group)
 			var/tasteMessage = SPAN_NOTICE("[R.get_taste_string(src.holder)]")
 			src.holder.visible_message(SPAN_NOTICE("[src.holder]'s [src] begins to absorb the fluid from [src]."),"[SPAN_NOTICE("You begin to absorb the fluid from [src].")]\n[tasteMessage]", group = "[src.holder]_drink_messages")

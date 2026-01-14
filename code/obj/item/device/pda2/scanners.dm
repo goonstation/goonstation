@@ -118,7 +118,7 @@
 			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user)
 			if (scan_result != MECHANICS_ANALYSIS_SUCCESS && O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL)
 				return
-			animate_scanning(A, "#FFFF00")
+			ANIMATE.scanning(A, "#FFFF00")
 			if (!scan_result || scan_result == MECHANICS_ANALYSIS_INCOMPATIBLE)
 				return SPAN_ALERT("Unable to scan.")
 

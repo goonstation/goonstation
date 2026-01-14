@@ -234,8 +234,8 @@
 					playsound(src.loc, W.hitsound, 50, 1)
 				src.health = max(src.health - randfloat(W.force/1.5, W.force),0)
 
-				attack_particle(user,src)
-				hit_twitch(src)
+				ANIMATE.MOB.attack_particle(user,src)
+				ANIMATE.hit_twitch(src)
 				src.check_health()
 
 				if (src.health < ROCKBOX_MAX_HEALTH / 1.5)
@@ -338,8 +338,8 @@
 
 		if(transmit)
 			FLICK("ore_storage_unit-transmit",src)
-			showswirl(eject_location)
-			leaveresidual(eject_location)
+			ANIMATE.showswirl(eject_location)
+			ANIMATE.leaveresidual(eject_location)
 
 	proc/get_output_location()
 		if (!src.output_target)

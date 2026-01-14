@@ -209,7 +209,7 @@ TYPEINFO(/mob/living/critter/changeling)
 							src.set_dir(get_dir(src,L))
 
 						src.icon_state = "[icon_prefix]handspider-flip"
-						animate_handspider_flipoff(src, prob(50) ? "L" : "R", 1, 0)
+						ANIMATE.handspider_flipoff(src, prob(50) ? "L" : "R", 1, 0)
 						SPAWN(0.7 SECONDS)
 							//Adding check for icon_state in case they die mid-flipoff (heck)
 							if(!isdead(src)) src.icon_state = "[icon_prefix]handspider"
@@ -217,7 +217,7 @@ TYPEINFO(/mob/living/critter/changeling)
 						message = "<B>[src]</B> flips off [L.name]!"
 					else
 						//No flipoff
-						animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+						ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 						message = "<B>[src]</B> does a flip!"
 
 					return message

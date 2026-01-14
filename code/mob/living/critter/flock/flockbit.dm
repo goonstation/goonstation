@@ -17,7 +17,7 @@
 	src.ai = new /datum/aiHolder/flock/bit(src)
 
 	SPAWN(1 SECOND)
-		animate_bumble(src)
+		ANIMATE.bumble(src)
 		src.zone_sel.change_hud_style('icons/mob/flock_ui.dmi')
 
 	src.name = "[pick_string("flockmind.txt", "flockbit_name_adj")] [pick_string("flockmind.txt", "flockbit_name_noun")]"
@@ -115,7 +115,7 @@
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.shrunk)
 				SPAWN(1 SECOND)
-					animate_bumble(src)
+					ANIMATE.bumble(src)
 				return null
 	return null
 

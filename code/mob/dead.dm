@@ -103,7 +103,7 @@ TYPEINFO(/mob/dead)
 					if (fart_on_other)
 						GH.change_points(15)
 					else if (GH.spooking)
-						animate_surroundings("fart")
+						ANIMATE.surroundings("fart")
 
 #endif
 
@@ -137,21 +137,21 @@ TYPEINFO(/mob/dead)
 				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 					if (GH.spooking)
-						animate_surroundings("dance")
+						ANIMATE.surroundings("dance")
 #endif
 
 		if ("flip")
 			if (src.emote_check(voluntary, 100, 1, 0))
 				message = "<B>[used_name]</B> does \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] flip!"
 				animate(src) // stop the animation
-				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
+				ANIMATE.spin(src, prob(50) ? "R" : "L", 1, 0)
 				SPAWN(1 SECOND)
-					animate_bumble(src)
+					ANIMATE.bumble(src)
 #ifdef HALLOWEEN
 				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 					if (GH.spooking)
-						animate_surroundings("flip")
+						ANIMATE.surroundings("flip")
 #endif
 
 		if ("wave","salute","nod")
@@ -194,13 +194,13 @@ TYPEINFO(/mob/dead)
 		var/success = 0
 		switch (type)
 			if ("fart")
-				animate_levitate(I, 1, 8)
+				ANIMATE.levitate(I, 1, 8)
 				success = 1
 			if ("dance")
-				eat_twitch(I)
+				ANIMATE.eat_twitch(I)
 				success = 1
 			if ("flip")
-				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
+				ANIMATE.spin(src, prob(50) ? "R" : "L", 1, 0)
 				success = 1
 		count ++
 		if (success)

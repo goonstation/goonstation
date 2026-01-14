@@ -248,7 +248,7 @@
 		if (src.muzzle_flash)
 			if (isturf(user.loc))
 				var/turf/origin = user.loc
-				muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
+				ANIMATE.muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 
 	proc/shoot_pointblank(atom/target, var/mob/user)
@@ -736,7 +736,7 @@
 			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 	user.lastattacked = get_weakref(target)
 	if (user != target)
-		attack_twitch(user, 1.2, 1.2)
+		ANIMATE.attack_twitch(user, 1.2, 1.2)
 	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
 /datum/limb/mouth/maneater/proc/fuck_up_silicons(mob/target, var/mob/user)
@@ -917,7 +917,7 @@
 				user.emote("scream")
 			if (hit)
 				user.lastattacked = get_weakref(target)
-				attack_particle(user, target)
+				ANIMATE.MOB.attack_particle(user, target)
 				return
 
 		if (istype(target, /obj/machinery))
@@ -1819,9 +1819,9 @@
 
 		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
-		attack_particle(user,target)
+		ANIMATE.MOB.attack_particle(user,target)
 		if (src != target)
-			attack_twitch(src)
+			ANIMATE.attack_twitch(src)
 
 	grab(mob/target, var/mob/living/user)
 		if (issmallanimal(user))

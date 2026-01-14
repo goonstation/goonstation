@@ -151,7 +151,7 @@
 		user.changeStatus("knockdown", 4 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[P]</b> emits a loud thump and rattles a bit."))
 
-		animate_storage_thump(P)
+		ANIMATE.storage_thump(P)
 
 		user.show_text(SPAN_ALERT("[P] [pick("cracks","bends","shakes","groans")]."))
 		damage_pipe(5)

@@ -76,7 +76,7 @@
 	var/list/bumped_queue = list()
 	density = 0
 	mob_flip_inside(var/mob/user)
-		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+		ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 
 /obj/vehicle/skateboard/New()
 	..()

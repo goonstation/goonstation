@@ -350,7 +350,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 				src.setFace(type = "happy", color = "#7fc5ed") //defaults
 
 			if (src.health > 0)
-				animate_bumble(src, floatspeed = 15, Y1 = 2, Y2 = -2) //yayyyyy bumble anim
+				ANIMATE.bumble(src, floatspeed = 15, Y1 = 2, Y2 = -2) //yayyyyy bumble anim
 
 				if (src.bedsheet)
 					src.icon_state = "g_drone[faceType ? "-[faceType]" : null]"
@@ -821,9 +821,9 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 					message = "<B>[src]</B> does a flip!"
 					m_anim = 1
 					if (prob(50))
-						animate_spin(src, "R", 1, 0)
+						ANIMATE.spin(src, "R", 1, 0)
 					else
-						animate_spin(src, "L", 1, 0)
+						ANIMATE.spin(src, "L", 1, 0)
 
 					for (var/mob/living/M in view(1, null))
 						if (M == src)
@@ -902,7 +902,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 
 			if (m_anim) //restart our passive animation
 				SPAWN(1 SECOND)
-					animate_bumble(src, floatspeed = 15, Y1 = 2, Y2 = -2)
+					ANIMATE.bumble(src, floatspeed = 15, Y1 = 2, Y2 = -2)
 
 		return
 

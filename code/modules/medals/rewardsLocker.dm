@@ -1076,7 +1076,7 @@
 		if (!istype(activator))
 			return
 		boutput(usr, SPAN_NOTICE(":shelterbee:"))
-		animate_emote(usr, /obj/effect/shelterbee)
+		ANIMATE.emote(usr, /obj/effect/shelterbee)
 		return 1
 
 /obj/effect/shelterbee
@@ -1130,7 +1130,7 @@
 	set desc = "Allows you to show others how great you feel about yourself for having paid 10 bucks."
 	set category = "Commands"
 
-	animate_emote(usr, /obj/effect/smug)
+	ANIMATE.emote(usr, /obj/effect/smug)
 	usr.verbs -= /proc/smugproc
 	usr.verbs += /proc/smugprocCD
 	SPAWN(30 SECONDS)

@@ -798,7 +798,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 						else //how even
 							logTheThing(LOG_DEBUG, null, "Telepad attempted to send [thing2send], which is not a crate or artifact")
 
-				showswirl(src.loc)
+				ANIMATE.showswirl(src.loc)
 				use_power(200) //most cost is at the array
 				src.is_transceiving = FALSE
 
@@ -824,7 +824,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 					tele_obstructed = TRUE
 				if(!tele_obstructed && transception_array.transceive(netnumber))
 					thing2get.set_loc(src.loc)
-					showswirl(src.loc)
+					ANIMATE.showswirl(src.loc)
 					use_power(200) //most cost is at the array
 				else
 					if(manual_receive)
@@ -882,7 +882,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			FLICK("neopad_activate",src)
 			SPAWN(0.4 SECONDS)
 				M.set_loc(src.loc)
-				showswirl(src.loc)
+				ANIMATE.showswirl(src.loc)
 				use_power(200)
 				telefrag(M)
 				src.is_transceiving = FALSE

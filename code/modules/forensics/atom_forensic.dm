@@ -260,7 +260,7 @@
 
 			// Noir effect alters M.color, so reapply
 			if (M.bioHolder.HasEffect("noir"))
-				animate_fade_grayscale(M, 0)
+				ANIMATE.fade_grayscale(M, 0)
 
 		else
 

@@ -693,7 +693,7 @@ var/global/list/cycling_airlocks = list()
 	if (!issilicon(user))
 		if (src.isElectrified())
 			if (src.shock(user, 100))
-				interact_particle(user,src)
+				ANIMATE.MOB.interact_particle(user,src)
 				return
 	else if (src.aiControlDisabled == 1 || src.cant_emag)
 		return
@@ -703,7 +703,7 @@ var/global/list/cycling_airlocks = list()
 
 	if (src.panel_open && valid_tool_found)
 		ui_interact(user)
-		interact_particle(user,src)
+		ANIMATE.MOB.interact_particle(user,src)
 
 	//clicking with no access, door closed, and help intent to knock
 	else if (!src.allowed(user) && (user.a_intent == INTENT_HELP) && src.density && src.requiresID())
@@ -1161,7 +1161,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	src.deconstruct_flags |= DECON_NO_ACCESS //emagged doors should be able to be deconstructed by anyone. It's utterly trashed, after all
 	if(src.welded && !src.locked)
 		audible_message(SPAN_ALERT("[src] lets out a loud whirring and grinding noise!"))
-		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
+		ANIMATE.shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
 		playsound(src, 'sound/items/mining_drill.ogg', 25, TRUE, 0, 0.8)
 		src.take_damage(src.health * 0.8)
 

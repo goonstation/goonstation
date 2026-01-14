@@ -307,7 +307,7 @@
 
 		return
 
-	animate_stars()
+	ANIMATE.stars()
 		..()
 		// This is where black hole shit should happen... suck 'em in... and SPIT 'em out
 		var/datum/galactic_object/G = master
@@ -368,7 +368,7 @@
 	New()
 		..()
 
-	animate_stars()
+	ANIMATE.stars()
 		..()
 
 	Crossed(O)
@@ -419,7 +419,7 @@
 
 		return
 
-	animate_stars()
+	ANIMATE.stars()
 		..()
 
 		// This is where black hole shit should happen... suck 'em in... and SPIT 'em out

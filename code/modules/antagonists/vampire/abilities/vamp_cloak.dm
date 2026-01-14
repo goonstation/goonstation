@@ -60,7 +60,7 @@
 			src.owner.mouse_opacity = 0
 			src.owner.alpha = 0
 			src.mist.alpha = 255
-			animate_wave(src.mist)
+			ANIMATE.wave(src.mist)
 
 	proc/remove_shroud()
 		if (!src.is_active) return
@@ -74,7 +74,7 @@
 		SPAWN(VAMP_CLOAK_ANIMATION_DELAY)
 			src.owner.mouse_opacity = 1
 			src.owner.alpha = 255
-			animate_reset(src.mist)
+			ANIMATE.reset(src.mist)
 			src.mist.color = "#666"
 			src.mist.alpha = 0
 
@@ -88,7 +88,7 @@
 		src.mist.color = "#666"
 		src.mist.vis_flags = VIS_INHERIT_DIR
 		src.mist.appearance_flags = RESET_ALPHA | KEEP_APART
-		animate_wave(src.mist)
+		ANIMATE.wave(src.mist)
 		src.owner.vis_contents.Add(src.mist)
 		var/turf/T = get_turf(src.owner)
 		if (isturf(T) && !T.is_lit())

@@ -86,7 +86,7 @@
 			src.layer = EFFECTS_LAYER_UNDER_1
 		return 1
 	else if(istype(A,/obj/machinery/vehicle/tank) || istype(A,/mob/living/critter/aquatic/king_crab))
-		animate_door_squeeze(src)
+		ANIMATE.door_squeeze(src)
 		return 1
 	//else if (istype(A,/obj/storage))
 	//	return 1
@@ -352,7 +352,7 @@
 			src.layer = EFFECTS_LAYER_UNDER_1
 		return 1
 	else if(istype(A,/obj/machinery/vehicle/tank) || istype(A,/mob/living/critter/aquatic/king_crab))
-		animate_door_squeeze(src)
+		ANIMATE.door_squeeze(src)
 		return 1
 	//else if (istype(A,/obj/storage))
 	//	return 1

@@ -735,7 +735,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 		UnsubscribeProcess()
 		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
-		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		ANIMATE.bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.homeloc = src.loc
 		//Products
@@ -829,7 +829,7 @@ TYPEINFO(/obj/submachine/laundry_machine/portable)
 	New()
 		. = ..()
 		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
-		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		ANIMATE.bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.homeloc = get_turf(src)
 

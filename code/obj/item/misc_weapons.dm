@@ -1143,7 +1143,7 @@ TYPEINFO(/obj/item/bat)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
-		attack_twitch(user, 3, 2)
+		ANIMATE.attack_twitch(user, 3, 2)
 
 	New()
 		..()

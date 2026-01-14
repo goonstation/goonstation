@@ -9,7 +9,7 @@
 		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
-		animate_scanning(M, "#0AEFEF")
+		ANIMATE.scanning(M, "#0AEFEF")
 
 	var/death_state = M.stat
 	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
@@ -337,7 +337,7 @@
 	if (!M)
 		return "<b class='alert'>ERROR: NO SUBJECT DETECTED</b>"
 	if (visible)
-		animate_scanning(M, "#9eee80")
+		ANIMATE.scanning(M, "#9eee80")
 	if (!M.has_genetics())
 		return "<b class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</b>"
 	var/mob/living/carbon/human/H = M
@@ -435,7 +435,7 @@
 		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
-		animate_scanning(M, "#0AEFEF")
+		ANIMATE.scanning(M, "#0AEFEF")
 
 	var/mob/living/carbon/human/H = M
 	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
@@ -461,7 +461,7 @@
 		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if(visible)
-		animate_scanning(A, "#a92fda")
+		ANIMATE.scanning(A, "#a92fda")
 
 	var/data = null
 	var/reagent_data = null
@@ -543,7 +543,7 @@
 		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if(visible)
-		animate_scanning(A, "#b9d689")
+		ANIMATE.scanning(A, "#b9d689")
 	var/datum/forensic_scan/scan = new(A)
 	return scan
 
@@ -561,7 +561,7 @@
 			return SPAN_ALERT("Unable to obtain a reading.")
 
 	if(visible)
-		animate_scanning(A, "#00a0ff", alpha_hex = "32")
+		ANIMATE.scanning(A, "#00a0ff", alpha_hex = "32")
 
 	var/datum/gas_mixture/check_me = A.return_air(direct = TRUE)
 	var/pressure = null
@@ -666,7 +666,7 @@
 		return
 
 	if(visible)
-		animate_scanning(A, "#70e800")
+		ANIMATE.scanning(A, "#70e800")
 
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
 		return SPAN_ALERT("Cannot scan.")
@@ -682,7 +682,7 @@
 		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
-		animate_scanning(M, "#ef0a0a")
+		ANIMATE.scanning(M, "#ef0a0a")
 
 	var/mob/living/carbon/human/H = M
 	var/datum/db_record/GR = data_core.general.find_record("name", H.name)

@@ -97,7 +97,7 @@
 					logTheThing(LOG_COMBAT, src, "Flock gnesis turret at [log_loc(src)] belonging to flock [src.flock?.name] fires at [constructTarget(src.target)].")
 					SPAWN(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
-							muzzle_flash_any(src, get_angle(src, src.target), "muzzle_flash")
+							ANIMATE.muzzle_flash_any(src, get_angle(src, src.target), "muzzle_flash")
 							sleep(src.current_projectile.shot_delay)
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 

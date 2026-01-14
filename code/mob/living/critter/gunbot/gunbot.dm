@@ -446,7 +446,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 		user.lastattacked = get_weakref(src)
 		changeHealth(-I.force)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 		..()
 
 	onDestroy()

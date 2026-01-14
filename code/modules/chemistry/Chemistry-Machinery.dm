@@ -327,7 +327,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 			AddComponent(/datum/component/equipment_fault/embers, tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
 		else
 			AddComponent(/datum/component/equipment_fault/smoke, tool_flags = TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
-		animate_shake(src, 5, rand(3,8),rand(3,8))
+		ANIMATE.shake(src, 5, rand(3,8),rand(3,8))
 		playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 
 	Exited(Obj, newloc)
@@ -465,7 +465,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	proc/set_active()
 		src.active = TRUE
 		src.power_usage = src.emagged ? 1000 : 200
-		animate_orbit(src.platform_holder, radius = src.radius, time = src.emagged ? src.orbital_period / 5 : src.orbital_period, loops = -1)
+		ANIMATE.orbit(src.platform_holder, radius = src.radius, time = src.emagged ? src.orbital_period / 5 : src.orbital_period, loops = -1)
 		if (src.emagged)
 			src.audible_message(SPAN_ALERT("[src] is rotating a bit too fast!"))
 		else

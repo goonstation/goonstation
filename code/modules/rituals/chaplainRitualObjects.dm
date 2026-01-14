@@ -30,7 +30,7 @@
 	name = "EZ-Magic kit"
 	spawn_contents = list(/obj/item/sacdagger,/obj/item/thaumometer,/obj/item/spiritshard/cheatyten,/obj/item/spiritshard/cheatyfive,/obj/item/ritualChalk/randomColor,/obj/item/ritualskull,/obj/item/paper/rituals)
 	New()
-		animate_rainbow_glow(src)
+		ANIMATE.rainbow_glow(src)
 		..()
 
 /obj/ritual_sprite
@@ -942,7 +942,7 @@
 		W.vis_flags = VIS_INHERIT_ID
 		// W.transform = matrix(0.75, MATRIX_SCALE)	//idk about scaling em down. would be a weird thing I guess. Even if I think it looks neater
 		src.vis_contents += W
-		animate_float(W, loopnum = -1, floatspeed = 15)
+		ANIMATE.float(W, loopnum = -1, floatspeed = 15)
 		switch(side)
 			if ("left")
 				left_offerings += W
@@ -1069,7 +1069,7 @@
 				manual.throw_at(M, 7, 0.4)
 
 		if (!isnull(obj_to_spawn))
-			spawn_animation1(obj_to_spawn)
+			ANIMATE.spawn_animation1(obj_to_spawn)
 			SPAWN(2 SECONDS)
 				obj_to_spawn.throw_at(M, 7, 2)
 
@@ -1096,7 +1096,7 @@
 		for (var/obj/O in left_offerings)
 			sleep(rand(0,2))
 			SPAWN(-1)
-				leaving_animation(O)
+				ANIMATE.leaving_animation(O)
 				src.vis_contents -= O
 				O.vis_flags = initial(O.vis_flags)
 				sleep(15)
@@ -1107,7 +1107,7 @@
 				var/obj/item/currency/spacebux/S = O
 				S.spent = 1
 			SPAWN(-1)
-				leaving_animation(O)
+				ANIMATE.leaving_animation(O)
 				src.vis_contents -= O
 				O.vis_flags = initial(O.vis_flags)
 				sleep(15)
@@ -1148,17 +1148,17 @@
 	//the altar doesn't tolerate getting harmed, it just leaves.
 	ex_act(severity)
 		if (severity)
-			leaving_animation(src)
+			ANIMATE.leaving_animation(src)
 			SPAWN(1.5 SECONDS)
 				qdel(src)
 
 	blob_act(var/power)
-		leaving_animation(src)
+		ANIMATE.leaving_animation(src)
 		SPAWN(1.5 SECONDS)
 			qdel(src)
 
 	meteorhit()
-		leaving_animation(src)
+		ANIMATE.leaving_animation(src)
 		SPAWN(1.5 SECONDS)
 			qdel(src)
 
