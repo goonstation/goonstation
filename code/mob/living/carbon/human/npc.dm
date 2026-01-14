@@ -373,6 +373,10 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
+					else if (src.ai_origin_object && !locate(/obj/item/grab) in src && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
+						src.set_a_intent(INTENT_GRAB)
+						src.ai_attack_target(ai_target, null)
+
 				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src)) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
 					//I can attack someone! =D
 					ai_target_old.Cut()
@@ -432,14 +436,29 @@
 
 				if(isgrab(src.r_hand) || isgrab(src.l_hand))
 					var/obj/item/grab/grab = locate(/obj/item/grab) in src
-					grab.Attackhand(src)
+					if (src.ai_origin_object && iscarbon(grab.affecting) && grab.state > GRAB_STRONG)
+						if (istype(src.ai_origin_object, /obj/artifact/cloner))
+							var/obj/artifact/cloner/cloner_art = src.ai_origin_object
+							var/datum/artifact/art_datum = cloner_art.artifact
+							if (!art_datum.activated)
+								if(BOUNDS_DIST(src, src.ai_origin_object))
+									walk_towards(src, src.ai_origin_object)
+									return
+								else // dunk nerd
+									src.ai_origin_object.Attackby(grab, src)
+									if(!grab.disposed && grab.loc == src)
+										src.emote("flip", TRUE)
+									src.ai_set_state(AI_PASSIVE) // dunked
+							else
+								src.emote("flip", TRUE)
+								src.ai_set_state(AI_PASSIVE) // dunked
 
 				if(!src.equipped() || prefer_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
 					//if(src.get_brain_damage() >= 60 && prob(25))
 					//	target.attack_paw(src) // idiots bite
 					//else
-					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
+					if(prob(30) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
 						src.set_a_intent(INTENT_GRAB)
 					src.ai_attack_target(ai_target, null)
 				else // With a weapon
@@ -515,8 +534,11 @@
 				if(length(tables))
 					src.ai_attack_target(pick(tables), grab)
 			if(!grab.disposed && grab.loc == src)
-				src.emote("flip", TRUE)
-
+				if (src.ai_origin_object)
+					if (grab.state < GRAB_AGGRESSIVE)
+					grab.Attackhand(src)
+				else
+					src.emote("flip", TRUE)
 	// swap hands
 	if(src.r_hand && src.l_hand)
 		if(prob(src.hand ? 15 : 4))
@@ -611,7 +633,8 @@
 		var/turf/T = get_turf(src)
 		if(T)
 			SPAWN(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
-				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
+				if (length(list("npc_throw")))
+					src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
