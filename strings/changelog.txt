@@ -1,4 +1,14 @@
 
+(t)mon jan 12 26
+(u)CodeJester
+(p)25557
+(e)🆕💅📨|C-Feature, C-QoL, A-Logistics
+(*)Orders made using a crew members's personal account will now add their name to the shipped crate.
+(u)glowbold
+(e)⚖🧛🤖C-Balance, A-Gamemodes, A-Silicons
+(*)Changelings and other anchored mobs can't fit in disposals. You cannot slip out of a changeling's grip into disposals.
+(*)The atmospherics transporter tool for silicons has been removed.
+(+)Wanted posters can be used to roll illegal cigarettes.
 (t)sun jan 11 26
 (u)JORJ949
 (p)25018

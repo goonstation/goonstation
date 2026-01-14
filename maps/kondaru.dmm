@@ -27570,16 +27570,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
-"cNP" = (
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/blind_switch/area/east{
-	pixel_y = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "cNX" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/gas_sensor{
@@ -92475,7 +92465,7 @@ aBE
 aBE
 bim
 bip
-cNP
+aRu
 oFF
 aRu
 aRu

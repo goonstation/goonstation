@@ -1172,8 +1172,6 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.update_appearance()
 
 		else if (istype(W, /obj/item/roboupgrade) && opened) // module changing
-			if (istype(W,/obj/item/roboupgrade/ai/))
-				boutput(user, SPAN_ALERT("This is an AI unit upgrade. It is not compatible with cyborgs."))
 			if (wiresexposed)
 				boutput(user, SPAN_ALERT("You need to get the wires out of the way first."))
 			else
