@@ -50,13 +50,22 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	/// The z-component of the order of the hashmap, i.e. the number of cells in the z-direction.
 	VAR_PROTECTED/z_order = null
 
-/datum/spatial_hashmap/New(width = world.maxx, height = world.maxy, depth = world.maxz, cell_size, name)
+	/// Whether this hashmap should track `world.maxz` and update its own z-order accordingly.
+	VAR_PROTECTED/track_world_maxz = TRUE
+
+/datum/spatial_hashmap/New(width = world.maxx, height = world.maxy, depth = world.maxz, track_world_maxz, cell_size, name)
 	. = ..()
 	START_TRACKING
 
 	width = clamp(width, 0, world.maxx)
 	height = clamp(height, 0, world.maxy)
 	depth = clamp(depth, 0, world.maxz)
+
+	if (!isnull(track_world_maxz))
+		src.track_world_maxz = track_world_maxz
+
+	if (src.track_world_maxz)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_MAXZ_INCREMENTED, PROC_REF(update_z_order))
 
 	if (!isnull(cell_size))
 		src.cell_size = cell_size
@@ -77,6 +86,8 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	src.entries_by_atom = alist()
 
 /datum/spatial_hashmap/disposing()
+	src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_MAXZ_INCREMENTED)
+
 	for (var/datum/entry as anything in src.atoms_by_entry)
 		src.unregister_hashmap_entry(entry)
 
@@ -305,7 +316,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		var/old_y = ceil(old_turf.y / src.cell_size)
 		var/new_y = ceil(new_turf.y / src.cell_size)
 
-		if ((old_x == new_x) && (old_y == new_y))
+		if ((old_x == new_x) && (old_y == new_y) && (old_turf.z == new_turf.z))
 			return
 
 		if (old_turf.z && (old_turf.z <= src.z_order))
@@ -322,3 +333,21 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		var/new_x = ceil(new_turf.x / src.cell_size)
 		var/new_y = ceil(new_turf.y / src.cell_size)
 		src.hashmap[new_turf.z][new_y][new_x] += src.entries_by_atom[component.parent]
+
+/**
+ *	Updates the z-order of the hashmap.
+ *	Internal use only.
+ */
+/datum/spatial_hashmap/proc/update_z_order(source, new_z_order)
+	if (new_z_order <= src.z_order)
+		return
+
+	var/z_levels_to_add = new_z_order - src.z_order
+	var/list/list/alist/partial_hashmap = new /list(z_levels_to_add, src.y_order, src.x_order)
+	for (var/z in 1 to z_levels_to_add)
+		for (var/y in 1 to src.y_order)
+			for (var/x in 1 to src.x_order)
+				partial_hashmap[z][y][x] = alist()
+
+	src.hashmap += partial_hashmap
+	src.z_order = new_z_order
