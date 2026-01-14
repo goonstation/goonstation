@@ -452,6 +452,9 @@
 							else
 								src.emote("flip", TRUE)
 								src.ai_set_state(AI_PASSIVE) // dunked
+					else
+						grab.Attackhand(src)
+
 
 				if(!src.equipped() || prefer_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
@@ -536,7 +539,7 @@
 			if(!grab.disposed && grab.loc == src)
 				if (src.ai_origin_object)
 					if (grab.state < GRAB_AGGRESSIVE)
-					grab.Attackhand(src)
+						grab.Attackhand(src)
 				else
 					src.emote("flip", TRUE)
 	// swap hands
