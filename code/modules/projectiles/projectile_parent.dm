@@ -1060,7 +1060,8 @@ ABSTRACT_TYPE(/datum/projectile)
 		if (narrator_mode) // yeah sorry I don't have a good way of getting rid of this one
 			playsound(sound_source, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
-			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange, pitch = DATA.shot_pitch == 1 ? null : DATA.shot_pitch)
+			var/flags = DATA.silentshot ? SOUND_DO_LOS : 0
+			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange, pitch = DATA.shot_pitch == 1 ? null : DATA.shot_pitch, flags = flags)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))
