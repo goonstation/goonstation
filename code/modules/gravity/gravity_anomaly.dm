@@ -42,7 +42,7 @@
 		if (isnum(lifespan_override))
 			src.lifespan = lifespan_override
 		if (triggered_by_event)
-			for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 19))
+			for_clients_in_range(C, get_turf(src), 15)
 				boutput(C, SPAN_ALERT("The air grows hazy. Something feels slightly off."))
 				shake_camera(C.mob, 6, 8)
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
