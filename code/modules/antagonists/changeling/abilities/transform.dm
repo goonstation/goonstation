@@ -20,6 +20,9 @@
 		var/mob/living/carbon/human/H = holder.owner
 		if(!istype(H))
 			return 1
+		if(isskeleton(H) && !H.organHolder.head) // Warn them if they're a headless skeleton.
+			if(tgui_alert(H, "We currently lack a head. Shifting forms in this state WILL kill us.", "Hesitation", list("Continue Anyways", "Stop")) != "Continue Anyways")
+				return 1
 		if (ismonkey(H))
 			if (!istype(H.default_mutantrace, /datum/mutantrace/monkey))
 				if (tgui_alert(H,"Are we sure?","Exit this lesser form?",list("Yes","No")) != "Yes")
@@ -89,6 +92,9 @@
 			boutput(holder.owner, SPAN_ALERT("We need to absorb more DNA to use this ability."))
 			return 1
 
+		if(headless_skeleton_warning(H)) // Warn them if they're a headless skeleton.
+			return 1
+
 		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(H.absorbed_dna, /proc/cmp_text_asc))
 		if (!target_name)
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
@@ -100,3 +106,20 @@
 		var/datum/absorbedIdentity/face = H.absorbed_dna[target_name]
 		face.apply_to(C)
 		return 0
+
+	/// Checks if a given changeling holder's owner is a headless skeleton. Warns them if
+	/// they are, and returns TRUE if the warning isn't heeded-- returns FALSE otherwise.
+	proc/headless_skeleton_warning(var/datum/abilityHolder/changeling/changeling_holder)
+		if(!ishuman(changeling_holder.owner))
+			return FALSE
+
+		var/mob/living/carbon/human/skeleton_owner = changeling_holder.owner
+		if(!isskeleton(skeleton_owner))
+			return FALSE
+
+		if(skeleton_owner.organHolder.head)
+			return FALSE
+
+		if(tgui_alert(skeleton_owner, "We currently lack a head. Shifting forms in this state WILL kill us.", "Hesitation", list("Continue Anyways", "Stop")) == "Continue Anyways")
+			return FALSE
+		return TRUE
