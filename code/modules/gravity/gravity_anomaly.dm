@@ -15,75 +15,82 @@
 	HELP_MESSAGE_OVERRIDE("Maybe someone else knows something about this...")
 
 	var/fault_typepath = /datum/grav_fault //! Picks from any concrete subtype of given datum
-	var/lifespan = 10 SECONDS
+	var/lifespan = 10 SECONDS //! How long the warning effects last before it triggers
+	var/sound_counter = 1 //! how many process ticks between sounds
+	var/distortion_count = 2 //! how many distortion particles to spawn and how powerful the cross-throw effect is
 
 	var/obj/effect/grav_pulse/lense = null
 	var/obj/effect/gravanom_pulse/effect = null
 	var/datum/grav_fault/fault = null
 
-	New(loc, lifespan_override=null, triggered_by_event=null)
-		..()
-		var/turf/T = get_turf(src)
-		var/fault_path = pick(concrete_typesof(src.fault_typepath))
-		src.fault = new fault_path
-		if (!src.fault)
-			qdel(src)
+/obj/anomaly/gravitational/New(loc, lifespan_override=null, triggered_by_event=null)
+	..()
+	var/turf/T = get_turf(src)
+	var/fault_path = pick(concrete_typesof(src.fault_typepath))
+	src.fault = new fault_path
+	if (!src.fault)
+		qdel(src)
+		return
+	src.effect = new /obj/effect/gravanom_pulse(src)
+	src.lense = new /obj/effect/grav_pulse(src)
+	src.vis_contents += src.effect
+	src.vis_contents += src.lense
+	animate(src, alpha = 0, time = rand(3,8), loop = -1, easing = LINEAR_EASING)
+	animate(alpha = 100, time = rand(3,8), loop = -1, easing = LINEAR_EASING)
+
+	if(!particleMaster.CheckSystemExists(/datum/particleSystem/grav_warning, src))
+		particleMaster.SpawnSystem(new /datum/particleSystem/grav_warning(src, slice_amount=src.distortion_count))
+
+	if (isnum(lifespan_override))
+		src.lifespan = lifespan_override
+	if (triggered_by_event)
+		for_clients_in_range(C, get_turf(src), 15)
+			boutput(C, SPAN_ALERT("The air grows [pick("wibbly", "wobbly")]. Something feels very slightly off."))
+			shake_camera(C.mob, 6, 8)
+	animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+	animate(alpha = initial(src.alpha), time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+	src.lense.pulse()
+
+	SPAWN (lifespan)
+		if (QDELETED(src))
 			return
-		src.effect = new /obj/effect/gravanom_pulse(src)
-		src.lense = new /obj/effect/grav_pulse(src)
-		src.vis_contents += src.effect
-		src.vis_contents += src.lense
-		animate(src, alpha = 0, time = rand(3,8), loop = -1, easing = LINEAR_EASING)
-		animate(alpha = 100, time = rand(3,8), loop = -1, easing = LINEAR_EASING)
-
-		if(!particleMaster.CheckSystemExists(/datum/particleSystem/grav_warning, src))
-			particleMaster.SpawnSystem(new /datum/particleSystem/grav_warning(src))
-
-		if (isnum(lifespan_override))
-			src.lifespan = lifespan_override
-		if (triggered_by_event)
-			for_clients_in_range(C, get_turf(src), 15)
-				boutput(C, SPAN_ALERT("The air grows hazy. Something feels slightly off."))
-				shake_camera(C.mob, 6, 8)
-		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-		src.lense.pulse()
-
-		SPAWN (lifespan)
-			if (QDELETED(src))
+		for_by_tcl(IX, /obj/machinery/interdictor)
+			if (IX.expend_interdict(500, src))
+				if(prob(20))
+					playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
+					IX.visible_message(SPAN_ALERT("<b>[IX] emits an anti-gravitational anomaly warning!</b>"))
+				SPAWN(rand(1,8))
+					playsound(src.loc, "sparks", 60, 1)
+				qdel(src)
 				return
-			for_by_tcl(IX, /obj/machinery/interdictor)
-				if (IX.expend_interdict(500, src))
-					if(prob(20))
-						playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
-						IX.visible_message(SPAN_ALERT("<b>[IX] emits an anti-gravitational anomaly warning!</b>"))
-					SPAWN(rand(1,8))
-						playsound(src.loc, "sparks", 60, 1)
-					qdel(src)
-					return
-			playsound(src.loc, 'sound/weapons/conc_grenade.ogg', 60, TRUE)
-			src.lense.pulse()
-			src.fault.effect(T)
-			qdel(src)
+		playsound(src.loc, 'sound/weapons/conc_grenade.ogg', 60, TRUE)
+		src.visible_message(SPAN_ALERT("\The [src.name] collapses into itself!"))
+		src.lense.pulse()
+		src.fault.effect(T)
+		qdel(src)
 
-	process()
-		. = ..()
-		playsound(src.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, FALSE, pitch=0.5)
 
-	disposing()
-		src.vis_contents -= src.effect
-		src.vis_contents -= src.lense
-		src.effect = null
-		src.lense = null
-		qdel(src.fault)
-		src.fault = null
-		. = ..()
+/obj/anomaly/gravitational/process()
+	. = ..()
+	if (src.sound_counter > 0)
+		src.sound_counter--
+		return
+	playsound(src.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, FALSE, pitch=0.3)
+	src.sound_counter = initial(src.sound_counter)
 
-	Crossed(atom/movable/AM)
-		. = ..()
+/obj/anomaly/gravitational/disposing()
+	src.vis_contents -= src.effect
+	src.vis_contents -= src.lense
+	src.effect = null
+	src.lense = null
+	qdel(src.fault)
+	src.fault = null
+	. = ..()
 
-		if (!AM.anchored)
-			AM.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 30, 3)
+/obj/anomaly/gravitational/Crossed(atom/movable/AM)
+	. = ..()
+	if (!AM.anchored)
+		AM.throw_at(get_edge_cheap(get_turf(src), pick(cardinal)), 5*src.distortion_count, 1*src.distortion_count)
 
 /obj/anomaly/gravitational/get_help_message(dist, mob/user)
 	. = ..()
@@ -97,20 +104,27 @@
 	desc = "Looking at this hurts your bones. Better not get too close."
 	lifespan = 10 SECONDS
 	fault_typepath = /datum/grav_fault/minor
+	color = "#990099"
+	alpha = 100
+	distortion_count = 1
 
 /obj/anomaly/gravitational/major
 	name = "concerning gravitational anomaly"
 	desc = "Looking at this hurts your bones. You feel like you already should have been running."
 	lifespan = 20 SECONDS
 	fault_typepath = /datum/grav_fault/major
+	color = "#cc0099"
+	alpha = 150
+	distortion_count = 2
 
 /obj/anomaly/gravitational/extreme
 	name = "angry gravitational anomaly"
 	desc = "Looking at this hurts your bones. It's bad. Not good. Terrible. <b>Angry</b>."
 	lifespan = 30 SECONDS
 	fault_typepath = /datum/grav_fault/extreme
-
-//TODO: Fishing Spot
+	color = "#ff0099"
+	alpha = 200
+	distortion_count = 4
 
 /obj/effect/gravanom_pulse
 	plane = PLANE_DISTORTION
@@ -118,12 +132,15 @@
 	particles = new /particles/gravitational/anomaly
 
 /datum/particleSystem/grav_warning
-	New(var/atom/location = null)
+	var/amount = 4
+
+	New(atom/location=null, particleTypeName=null, particleTime=null, particleColor=null, atom/target=null, particleSprite=null, slice_amount=4)
+		src.amount = slice_amount
 		..(location, "grav_warning", 5)
 
 	Run()
 		if (..())
-			for(var/i=0, i<4, i++)
+			for(var/i=0, i<src.amount, i++)
 				sleep(0.2 SECONDS)
 				SpawnParticle()
 			state = 1
@@ -148,7 +165,7 @@
 			animate(par, transform = first, time = 5, alpha = 5)
 			first.Reset()
 
-
+/// Creates particles to be used as displacements
 /particles/gravitational/anomaly
 	color = generator("num", 1, 5)
 	gradient = list(0, "#900", 1, "#600", 2, "#990", 3, "#660", 4, "#090", 5, "#060", "loop")
@@ -214,6 +231,7 @@ ABSTRACT_TYPE(/datum/grav_fault/minor)
 	origin.vis_contents -= lense
 	qdel(lense)
 
+// hee hee hoo hoo
 /datum/grav_fault/minor/fart/effect(turf/origin)
 	. = ..()
 	logTheThing(LOG_STATION, src, "caused everyone to fart near [log_loc(origin)].")
@@ -267,12 +285,12 @@ ABSTRACT_TYPE(/datum/grav_fault/major)
 	logTheThing(LOG_STATION, src, "spawned several minor gravitational anomalies around [log_loc(origin)]")
 	var/list/target_turfs = get_area_turfs(A, floors_only=TRUE)
 	shuffle_list(target_turfs)
-	var/amount_left = 5
+	var/amount_left = 3
 	for (var/turf/T in orange(6, origin))
 		if (prob(70))
 			continue
 		SPAWN(rand(5 SECONDS, 50 SECONDS))
-			new /obj/anomaly/gravitational/minor(origin, lifespan_override=(20 SECONDS) + (rand(5, 15) SECONDS))
+			new /obj/anomaly/gravitational/minor(T, lifespan_override=(20 SECONDS) + (rand(5, 15) SECONDS))
 		amount_left -= 1
 		if (amount_left <= 0)
 			break
@@ -340,6 +358,7 @@ ABSTRACT_TYPE(/datum/grav_fault/major)
 		if (did_drop)
 			boutput(M, SPAN_ALERT("A gravitational anomaly pulls the items out of your hands!"))
 
+/// fall down go boom
 /datum/grav_fault/major/trip/effect(turf/origin)
 	. = ..()
 	logTheThing(LOG_STATION, src, "caused everyone to trip near [log_loc(origin)]")
@@ -412,3 +431,22 @@ ABSTRACT_TYPE(/datum/grav_fault/extreme)
 					lost_limb = TRUE
 		if (lost_limb)
 			boutput(M, SPAN_COMBAT("Your arm is ripped right off by the gravitational anomaly!"))
+
+/// Spawns three major gravitational effects
+/datum/grav_fault/extreme/gravity_storm/effect(turf/origin)
+	. = ..()
+	var/area/A = get_area(origin)
+	if (!A)
+		return
+	logTheThing(LOG_STATION, src, "spawned several major gravitational anomalies around [log_loc(origin)]")
+	var/list/target_turfs = get_area_turfs(A, floors_only=TRUE)
+	shuffle_list(target_turfs)
+	var/amount_left = 3
+	for (var/turf/T in orange(6, origin))
+		if (prob(70))
+			continue
+		SPAWN(rand(5 SECONDS, 50 SECONDS))
+			new /obj/anomaly/gravitational/major(T, lifespan_override=(20 SECONDS) + (rand(5, 15) SECONDS))
+		amount_left -= 1
+		if (amount_left <= 0)
+			break
