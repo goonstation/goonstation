@@ -7,6 +7,10 @@
 
 #define DANCING_BONK "dancing_bonked"
 
+/// The maximum time per count available when a player adjusts dance speed.
+/// The lower bound is just zero.
+#define COUNT_HIGHER_BOUND 5 SECONDS
+
 #define BEAT_COUNT(_X) (AH.time_per_count * _X)
 
 /datum/abilityHolder/dancing
@@ -145,12 +149,27 @@
 	change_speed
 		var/time_change
 
+		tryCast()
+			var/datum/abilityHolder/dancing/AH = holder
+			if(!AH)
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+			// If we'd end up with either division by zero or a negative BPM.
+			if((AH.time_per_count + time_change == 0) || (60/AH.time_per_count/10 <= 0))
+				boutput(holder.owner, SPAN_ALERT("Your body can't handle dancing past [60/(AH.time_per_count/10)] BPM."))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+			if(AH.time_per_count + time_change > COUNT_HIGHER_BOUND)
+				boutput(holder.owner, SPAN_ALERT("Dancing any slower than [COUNT_HIGHER_BOUND/10] seconds per count is too boring for your shoes."))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+			return ..()
+
 		cast(atom/target)
 			. = ..()
 			var/datum/abilityHolder/dancing/AH = holder
-			if(AH)
-				AH.time_per_count += time_change
-				boutput(holder.owner,"[AH.time_per_count/10] seconds per count. ([60/(AH.time_per_count/10)] BPM)")
+			AH.time_per_count += time_change
+			boutput(holder.owner,"[AH.time_per_count/10] seconds per count. ([60/(AH.time_per_count/10)] BPM)")
 
 		faster
 			name = "Faster"
