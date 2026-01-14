@@ -1,4 +1,9 @@
 
+(t)wed jan 14 26
+(u)Kanthes
+(p)25584
+(e)|
+(+)Using a DetGadget hat to create a scuttlebot now puts the controller in the user's hand instead of on the floor.
 (t)mon jan 12 26
 (u)CodeJester
 (p)25557
