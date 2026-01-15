@@ -386,3 +386,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			src.say("Auto-compensating for local gforce change.")
 			playsound(src, 'sound/effects/manta_alarm.ogg', 50, 1)
 			src.attempt_gravity_change(value)
+
+/// Shake the camera of those affected by the change
+/obj/machinery/gravity_tether/proc/shake_affected()

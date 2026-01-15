@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 			src.target_area_refs += area_to_add
 	. = ..()
 
-/obj/machinery/gravity_tether/proc/shake_affected()
+/obj/machinery/gravity_tether/multi_area/shake_affected()
 	for (var/area/A in src.target_area_refs)
 		for(var/datum/mind/mind as anything in A.population)
 			var/mob/mob = mind.current
