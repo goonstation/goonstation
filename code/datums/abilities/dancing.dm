@@ -155,7 +155,7 @@
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 			// If we'd end up with either division by zero or a negative BPM.
-			if((AH.time_per_count + time_change == 0) || (60/AH.time_per_count/10 <= 0))
+			if((AH.time_per_count + time_change == 0) || (60/(AH.time_per_count/10) <= 0))
 				boutput(holder.owner, SPAN_ALERT("Your body can't handle dancing past [60/(AH.time_per_count/10)] BPM."))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
