@@ -6,8 +6,7 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 				)
 /obj/machinery/gravity_tether/current_area
 	name = "local-area gravity tether"
-	// TODO: Power balancing
-	passive_wattage_per_g = 10 WATTS
+	passive_wattage_per_g = 100 WATTS
 	gforce_intensity = 0
 	target_intensity = 0
 	anchored = UNANCHORED

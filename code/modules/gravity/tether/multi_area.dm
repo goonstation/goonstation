@@ -3,8 +3,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 /obj/machinery/gravity_tether/multi_area
 	// people can scan these to get single-area tethers
 	mechanics_type_override = /obj/machinery/gravity_tether/current_area
-	// TODO: Power balancing
-	passive_wattage_per_g = 10 WATTS
+	passive_wattage_per_g = 10 WATTS // these are for set pieces, don't run out usually
 	object_flags = NO_GHOSTCRITTER // not reprogrammable
 
 	/// Base area typepath. Target should probably all share the same base area.
@@ -164,8 +163,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 // TODO: Gravity is currently only recalculated on simulated tiles
 
 // The Owlery
-/obj/machinery/gravity_tether/multi_area/owlery
-	name = "Owlery gravity tether"
-	req_access = list(access_owlerymaint)
-	base_area_typepath = /area/owlery
-	base_area_exceptions = list(/area/owlery/solars)
+// /obj/machinery/gravity_tether/multi_area/owlery
+// 	name = "Owlery gravity tether"
+// 	req_access = list(access_owlerymaint)
+// 	base_area_typepath = /area/owlery
+// 	base_area_exceptions = list(/area/owlery/solars)
