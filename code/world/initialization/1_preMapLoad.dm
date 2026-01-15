@@ -125,9 +125,6 @@
 	Z_LOG_DEBUG("Preload", "Generating access name lookup") // ^^
 	generate_access_name_lookup()
 
-	// no log because this is functionally instant
-	global_signal_holder = new
-
 	Z_LOG_DEBUG("Preload", "Loading saved gamemode...")
 	world.load_mode()
 

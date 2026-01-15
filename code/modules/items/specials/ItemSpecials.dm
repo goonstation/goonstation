@@ -1377,6 +1377,19 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "syndiebarrier"
 
+/datum/item_special/barrier/void
+	image = "voidbarrier"
+	name = "Eldritch Projection"
+	desc = "Deploy a temporary barrier that reflects and amplifies projectiles. The barrier can be easily broken by any attack or a sustained push."
+	barrier_type = /obj/itemspecialeffect/barrier/void
+
+/obj/itemspecialeffect/barrier/void
+	name = "eldritch barrier"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "void-barrier"
+	amplify = 1
+	amplify_amount = 2
+
 /datum/item_special/flame
 	cooldown = 0
 	moveDelay = 5
@@ -2219,6 +2232,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		//mouse_opacity = 1
 		var/bump_count = 0
 		var/mob/master = 0
+		var/amplify = 0 // Will this effect the original damage/stun/power whatever of a projectile
+		var/amplify_amount = 0 // multiple for the amp/deamplification
 
 		setup(atom/location)
 			src.density = 1
@@ -2256,6 +2271,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				P.die()
 
 				if(Q)
+					if(amplify)
+						Q.power = Q.power * amplify_amount
 					src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
