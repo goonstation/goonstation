@@ -29,7 +29,7 @@ TYPEINFO(/obj/machinery/gravity_tether)
 	src.light.attach(src, 1, 0.5) // light has height
 	src.update_light()
 
-/obj/machinery/gravity_tether/station/initialize()
+/obj/machinery/gravity_tether/station/setup_areas()
 	var/list/station_area_names = get_accessible_station_areas()
 	var/list/area_types_to_skip = global.z_level_station_outside_area_types
 	area_types_to_skip |= global.map_settings.station_tether_ignore_area_types

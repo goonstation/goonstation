@@ -1,3 +1,7 @@
+TYPEINFO(/obj/machinery/gravity_tether)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether
 	name = "gravity tether"
@@ -73,7 +77,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if (src.cell)
 		src.last_charge_amount = src.cell.charge
 
-	if (src.req_access)
+	if (src.has_access_requirements())
 		src.locked = TRUE
 
 	src.light.set_height(1.5)
@@ -106,7 +110,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/initialize()
 	. = ..()
-	src.change_intensity(src.target_intensity)
+	src.setup_areas()
 	src.UpdateIcon()
 
 /obj/machinery/gravity_tether/disposing()
@@ -123,20 +127,28 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		return "[src] cannot be deconstructed while it is processing a gravity change!"
 	return ..()
 
+/obj/machinery/gravity_tether/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	if (newly_built)
+		src.target_intensity = 0
+		src.setup_areas()
+	src.UpdateIcon()
+
 /obj/machinery/gravity_tether/get_desc(dist, mob/user)
 	. = ..()
 	if (src.has_no_power())
 		. += " It doesn't seem powered on."
+		return
+
+	. += " It is operating at [src.gforce_intensity]G"
+	if (src.processing_state == TETHER_PROCESSING_PENDING)
+		. += ", and is processing a change to [src.target_intensity]G."
+	else if (src.processing_state == TETHER_PROCESSING_COOLDOWN)
+		.+= ", and is cooling down from a recent change."
+	else if (src.glitching_out)
+		. += ", and doesn't seem to be working right."
 	else
-		. += " It is operating at [src.gforce_intensity]G"
-		if (src.processing_state == TETHER_PROCESSING_PENDING)
-			. += ", and is processing a change to [src.target_intensity]G."
-		else if (src.processing_state == TETHER_PROCESSING_COOLDOWN)
-			.+= ", and is cooling down from a recent change."
-		else if (src.glitching_out)
-			. += ", and doesn't seem to be working right."
-		else
-			. += "."
+		. += "."
 
 /obj/machinery/gravity_tether/get_help_message(dist, mob/user)
 	. = ..()
@@ -148,7 +160,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 			. += "Unlock with an appropriate <b>ID Card</b>."
 		if (istrainedsyndie(x))
 			. += "<br>Break the access lock with an <b>Electromagnetic Card</b>."
-	else if (length(src.req_access))
+	else if (src.has_access_requirements())
 		if (isAI(user) || isrobot(user))
 			var/datum/keymap/keymap = user.client.keymap
 			. += "Lock using <b>[keymap ? keymap.action_to_keybind(KEY_BOLT) : "SHIFT"]</b>+<b>Click</b>."
@@ -159,7 +171,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	else
 		. += "Has no access lock."
 	if (user.traitHolder?.hasTrait("training_engineer"))
-		if (length(src.req_access) == 0)
+		if (!src.has_access_requirements())
 			. += "<br>Add an access lock with an <b>Access Lite</b>."
 		else
 			. += "<br>The access lock can be modified with an <b>Access Pro</b>."
@@ -194,6 +206,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 							. += "<br>Cut out the wiring with a <b>snipping</b> tool."
 						if (TETHER_WIRES_CUT)
 							. += "<br>Repair the wiring with <b>cables</b>."
+
+/// Set up the machine's targeted areas
+/obj/machinery/gravity_tether/proc/setup_areas()
+	src.change_intensity(src.target_intensity)
 
 /// Run through some checks before starting gravity change
 /obj/machinery/gravity_tether/proc/attempt_gravity_change(new_intensity)

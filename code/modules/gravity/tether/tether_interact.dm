@@ -4,11 +4,11 @@
 #define TETHER_TAMPER_REPAIR_ROD_COST 5
 
 /obj/machinery/gravity_tether/receive_silicon_hotkey(mob/user)
-	if (..() || !src.allowed(user) || !length(src.req_access) || !in_interact_range(src, user))
+	if (..() || !in_interact_range(src, user))
 		return
 	if (user.client.check_key(KEY_BOLT))
 		. = 1
-		if (src.emagged)
+		if (src.emagged || !src.allowed(user))
 			boutput(user, SPAN_NOTICE("Unable to interface with [src]!"))
 			return
 		src.locked = !src.locked
@@ -26,15 +26,24 @@
 	if(..())
 		return
 
+	if (isghostdrone(user) || isghostcritter(user))
+		return
+
 	user.lastattacked = get_weakref(src)
 
-	if (src.locked && !src.emagged)
-		// Can't call parent for interaction checks and no acess desc for syndicate IDs on purpose.
-		if (istype(src, /obj/machinery/gravity_tether/multi_area/listening_post))
-			src.say("Syndicate access required.", message_params=list("group"="\ref[src]_acc"))
+	if (!src.emagged && src.has_access_requirements())
+		if (src.locked && !issilicon(user))
+			if (istype(src, /obj/machinery/gravity_tether/multi_area/listening_post))
+				// Can't call parent for interaction checks and no access desc for syndicate IDs on purpose.
+				src.say("Syndicate access required to unlock.", message_params=list("group"="\ref[src]_acc"))
+				return
+			src.say("[get_access_desc(src.req_access[1])] access required to unlock.", message_params=list("group"="\ref[src]_acc"))
 			return
-		src.say("[get_access_desc(src.req_access[1])] access required.", message_params=list("group"="\ref[src]_acc"))
-		return
+		else if (issilicon(user))
+			if(!src.allowed(user))
+				boutput(user, SPAN_ALERT("You don't have access to this device!"))
+				return
+
 	if (src.processing_state == TETHER_PROCESSING_PENDING)
 		src.say("Processing shift, [src.change_begin_time-TIME > 0 ? "[time_to_text(src.change_begin_time-TIME)] remaining" : "change pending"].")
 		return
@@ -232,7 +241,7 @@
 		return ..()
 
 	var/obj/item/card/id/id_card = get_id_card(I)
-	if (istype(id_card) && length(src.req_access))
+	if (istype(id_card) && src.has_access_requirements())
 		if (src.allowed(user))
 			src.locked = !src.locked
 			src.update_ma_tamper()

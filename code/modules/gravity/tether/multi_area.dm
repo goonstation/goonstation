@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	src.light.set_brightness(0.7)
 	src.light.set_color(255, 255, 255)
 
-/obj/machinery/gravity_tether/multi_area/initialize()
+/obj/machinery/gravity_tether/multi_area/setup_areas()
 	for (var/area/A in get_areas(src.base_area_typepath))
 		var/valid = TRUE
 		for (var/area_typepath in src.base_area_exceptions)
