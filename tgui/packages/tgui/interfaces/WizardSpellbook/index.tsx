@@ -46,6 +46,7 @@ export const WizardSpellbook = () => {
 
   return (
     <Window
+      theme="wizard"
       title={`${owner_name || 'Wizard'}'s Spellbook`}
       height={600}
       width={720}

@@ -41,6 +41,7 @@
 @include meta.load-css('./themes/flock.scss');
 @include meta.load-css('./themes/genetek.scss');
 @include meta.load-css('./themes/retro-dark.scss');
+@include meta.load-css('./themes/wizard.scss');
 // |GOOONSTATION-ADD| Theme modes
 @include meta.load-css('./theme-modes/base-light.scss');
 @include meta.load-css('./theme-modes/ntos-light.scss');
