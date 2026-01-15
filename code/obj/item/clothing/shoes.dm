@@ -174,8 +174,10 @@
 	icon_state = "pink"
 
 TYPEINFO(/obj/item/clothing/shoes/magnetic)
-	mats = 8
-
+	mats = list("metal" = 4,
+			"conductive" = 8,
+			"fabric" = 3,
+			)
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."

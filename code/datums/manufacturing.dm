@@ -181,14 +181,12 @@
 
 /datum/manufacture/mechanics/gravity_tether_area
 	name = "Local Gravity Tether"
-	item_requirements = list("metal" = 30,
-							 "crystal_dense" = 10,
-							 "metal_superdense" = 10,
-							 "energy_extreme" = 5,)
 	create = 1
 	time = 20 SECONDS
 	frame_path = /obj/machinery/gravity_tether/current_area
 	category = "Machinery"
+
+
 
 /******************** AI display (temp) *******************/
 
@@ -509,6 +507,13 @@
 /datum/manufacture/t_scanner
 	name = "T-ray scanner"
 	item_outputs = list(/obj/item/device/t_scanner)
+	create = 1
+	time = 8 SECONDS
+	category = "Tool"
+
+/datum/manufacture/gravity_scanner
+	name = "G-force scanner"
+	item_outputs = list(/obj/item/device/analyzer/gravity_scanner)
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
@@ -3979,6 +3984,13 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	)
 	create = 1
 	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
+	category = "Clothing"
+
+/datum/manufacture/magnetic_shoes
+	name = "Magnetic Shoes"
+	create = 1
+	item_outputs = list(/obj/item/clothing/shoes/magnetic)
+	time = 6 SECONDS
 	category = "Clothing"
 
 /datum/manufacture/turbine_shaft

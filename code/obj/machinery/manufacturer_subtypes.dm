@@ -339,6 +339,7 @@
 #endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
+		/datum/manufacture/magnetic_shoes,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
@@ -684,6 +685,7 @@
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/gravity_scanner,
 		/datum/manufacture/RCD,
 		/datum/manufacture/places_pipes,
 		/datum/manufacture/RCDammo,
@@ -697,6 +699,7 @@
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
 		/datum/manufacture/heavy_firesuit,
+		/datum/manufacture/magnetic_shoes,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
