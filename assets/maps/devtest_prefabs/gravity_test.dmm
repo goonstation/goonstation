@@ -2,26 +2,14 @@
 "a" = (
 /turf/simulated/floor/red/redblackchecker,
 /area/station/devzone/gravity_tether_emag)
-"c" = (
-/obj/machinery/gravity_tether/current_area,
-/turf/simulated/floor/green/checker,
-/area/station/devzone/gravity_traction_full)
-"e" = (
-/obj/machinery/gravity_tether/current_area,
-/turf/simulated/floor/orange,
-/area/station/devzone/gravity_gforce_high)
-"h" = (
-/obj/machinery/gravity_tether/current_area,
-/turf/simulated/floor/darkblue,
-/area/station/devzone/gravity_gforce_half)
 "j" = (
 /turf/simulated/floor/red,
 /area/station/devzone/gravity_gforce_extreme)
 "o" = (
 /turf/simulated/floor/green/checker,
 /area/station/devzone/gravity_traction_full)
-"u" = (
-/obj/machinery/gravity_tether/current_area,
+"p" = (
+/obj/table/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/devzone/gravity_traction_partial)
 "v" = (
@@ -30,16 +18,8 @@
 "w" = (
 /turf/simulated/floor/darkpurple,
 /area/station/devzone/gravity_gforce_none)
-"y" = (
-/obj/machinery/gravity_tether/current_area,
-/turf/simulated/floor/red/redblackchecker,
-/area/station/devzone/gravity_tether_emag)
-"C" = (
-/obj/machinery/gravity_tether/current_area,
-/turf/simulated/floor/red,
-/area/station/devzone/gravity_gforce_extreme)
 "E" = (
-/obj/machinery/gravity_tether/current_area,
+/obj/table/auto,
 /turf/simulated/floor/darkpurple,
 /area/station/devzone/gravity_gforce_none)
 "G" = (
@@ -48,20 +28,16 @@
 "I" = (
 /turf/simulated/floor/orangeblack,
 /area/station/devzone/gravity_tether_max)
-"N" = (
-/obj/machinery/gravity_tether/current_area,
-/turf/simulated/floor,
-/area/station/devzone/gravity_gforce_normal)
 "P" = (
 /turf/simulated/floor/blue/checker,
 /area/station/devzone/gravity_traction_partial)
 "V" = (
 /turf/simulated/floor,
 /area/station/devzone)
-"W" = (
-/obj/machinery/gravity_tether/current_area,
-/turf/simulated/floor/orangeblack,
-/area/station/devzone/gravity_tether_max)
+"Y" = (
+/obj/table/auto,
+/turf/simulated/floor/darkblue,
+/area/station/devzone/gravity_gforce_half)
 "Z" = (
 /turf/simulated/floor,
 /area/station/devzone/gravity_gforce_normal)
@@ -92,18 +68,18 @@ V
 E
 w
 w
-h
 v
 v
 v
-N
+Y
 Z
 Z
 Z
-e
+Z
 G
 G
-C
+G
+j
 j
 j
 V
@@ -261,19 +237,19 @@ V
 w
 V
 V
+P
+v
 V
 V
 V
 V
 V
+I
 V
+G
+a
 V
-V
-V
-V
-V
-V
-V
+j
 V
 "}
 (11,1,1) = {"
@@ -428,18 +404,18 @@ V
 E
 w
 w
-u
 P
 P
 P
-c
+p
 o
 o
 o
-W
+o
 I
 I
-y
+I
+a
 a
 a
 V
