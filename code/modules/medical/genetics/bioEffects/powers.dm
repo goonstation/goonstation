@@ -2293,7 +2293,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Spectral Ascent"
 	desc = "Allows the subject to become a ghost for a short duration, leaving their body to return."
 	id = "ghost_walk"
-	icon = "ghost_ascend"
+	icon_state = "ghost_ascend"
 	occur_in_genepools = 0 // Only from the genes of a boss mob.
 	probability = 0
 	msgGain = "You feel like your soul is more flexible."
