@@ -5,7 +5,7 @@
 	density = 1
 	flags = USEDELAY
 	anchored = ANCHORED
-	provides_grip = 1
+	provides_grip = TRUE
 	status = REQ_PHYSICAL_ACCESS
 	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
 	var/datum/effects/system/ion_trail_follow/ion_trail = null

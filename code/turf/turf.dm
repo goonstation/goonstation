@@ -1028,7 +1028,7 @@ TYPEINFO(/turf/simulated)
 /turf/simulated
 	name = "station"
 	allows_vehicles = 0
-	provides_grip = 1
+	provides_grip = TRUE
 	var/mutable_appearance/wet_overlay = null
 	/// default melt chance from fire
 	var/default_melt_chance = 30
@@ -1118,7 +1118,7 @@ TYPEINFO(/turf/simulated)
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
-	provides_grip = 1
+	provides_grip = TRUE
 	text = "<font color=#aaa>."
 
 /turf/unsimulated/wall

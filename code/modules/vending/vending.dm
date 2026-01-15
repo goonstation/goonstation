@@ -1021,7 +1021,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	src.power_change()
 	src.anchored = UNANCHORED
-	src.provides_grip = 0
+	src.provides_grip = FALSE
 	vicTurf?.grip_atom_count -= 1
 	return
 

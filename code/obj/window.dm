@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "window"
 	desc = "A window."
 	density = 1
-	provides_grip = 1
+	provides_grip = TRUE
 	dir = NORTHEAST //full tile
 	flags = USEDELAY | ON_BORDER | FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
@@ -389,7 +389,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		if (src && src.health <= 2 && !reinforcement)
 			src.anchored = UNANCHORED
-			src.provides_grip = 0
+			src.provides_grip = FALSE
 			var/turf/T = get_turf(src)
 			T?.grip_atom_count -= 1
 			step(src, get_dir(AM, src))

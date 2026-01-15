@@ -40,7 +40,8 @@ TYPEINFO(/atom)
 	var/pixel_point = FALSE
 
 	var/interesting = ""
-	var/provides_grip = 0
+	/// Atom provides grip to neighboring tiles in zero-G
+	var/provides_grip = FALSE
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "lattice"
 	density = 0
-	provides_grip = 1
+	provides_grip = TRUE
 	anchored = ANCHORED
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
