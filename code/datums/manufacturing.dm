@@ -170,10 +170,6 @@
 
 /datum/manufacture/mechanics/gravity_tether_station
 	name = "Station Gravity Tether"
-	item_requirements = list("metal" = 50,
-							 "crystal_dense" = 20,
-							 "metal_superdense" = 20,
-							 "energy_extreme" = 10,)
 	create = 1
 	time = 60 SECONDS
 	frame_path = /obj/machinery/gravity_tether/station

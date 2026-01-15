@@ -524,7 +524,7 @@ TYPEINFO(/atom/movable)
 /atom/movable/New()
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+	if (typeinfo.mats && !(src.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED))
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet

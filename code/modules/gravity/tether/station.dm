@@ -3,8 +3,11 @@
 /// Needed so airbridge controllers can set gravity on their controlled turfs
 var/global/station_tether_gforce = 0
 
-TYPEINFO(/obj/machinery/gravity_tether)
-	mats = null
+TYPEINFO(/obj/machinery/gravity_tether/station)
+	mats = list("metal" = 50,
+							 "crystal_dense" = 20,
+							 "metal_superdense" = 20,
+							 "energy_extreme" = 10,)
 /obj/machinery/gravity_tether/station
 	name = "\improper Gravi-Tonne wide-area gravity tether"
 	icon = 'icons/obj/machines/tether_64x64.dmi'
@@ -18,6 +21,7 @@ TYPEINFO(/obj/machinery/gravity_tether)
 	active_wattage_per_g = 1 MEGA WATT
 	passive_wattage_per_g = 10 KILO WATTS
 	locked = TRUE
+	mechanics_interaction = MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE
 
 /obj/machinery/gravity_tether/station/New()
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."
