@@ -702,3 +702,39 @@
 	record_prog.active2 = SR
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
+
+#define GRAVITY_SCAN_OUTPUT(x, y) ("\The [x] is currently experiencing [y]G.")
+
+/proc/scan_gravity(atom/target, visible=FALSE)
+	var/gforce = null
+	if (!target)
+		return
+
+	if(visible)
+		animate_scanning(target, "#b66393")
+
+	if (istype(target, /turf))
+		var/turf/T = target
+		gforce = round(T.get_gforce_current(), 0.01)
+	else if (istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		gforce = round(AM.gforce, 0.01)
+	switch (gforce)
+		if (null)
+			. = SPAN_ALERT("Unable to process gravity of target.")
+		if (1)
+			. = SPAN_SUCCESS(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (-INFINITY to 0)
+			. = SPAN_ALERT(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GRAVITY_MOB_REGULAR_THRESHOLD to GRAVITY_MOB_HIGH_THRESHOLD)
+			. = SPAN_MESSAGE(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
+			. = SPAN_ALERT(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
+			. = SPAN_NOTICE(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
+			. = SPAN_NOTICE(GRAVITY_SCAN_OUTPUT(target, gforce))
+		else // ???
+			. = SPAN_MESSAGE(GRAVITY_SCAN_OUTPUT(target, gforce))
+
+#undef GRAVITY_SCAN_OUTPUT

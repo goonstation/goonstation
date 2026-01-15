@@ -1532,6 +1532,7 @@
 #include "code\modules\goonhub\event_recording\types\StationName.dm"
 #include "code\modules\goonhub\event_recording\types\Ticket.dm"
 #include "code\modules\gps\gps.dm"
+#include "code\modules\gravity\gravity_analyzer.dm"
 #include "code\modules\gravity\gravity_anomaly.dm"
 #include "code\modules\gravity\gravity_area.dm"
 #include "code\modules\gravity\gravity_atom.dm"
