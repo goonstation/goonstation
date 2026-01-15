@@ -5,6 +5,16 @@
 /// Things will drop out of the force-push loop if this is zero
 /atom/movable/var/inertia_value = 0
 
+proc/StartDriftFloat(atom/movable/AM)
+	if (!(AM.temp_flags & DRIFT_ANIMATION))
+		AM.temp_flags |= DRIFT_ANIMATION
+		animate(AM, flags=ANIMATION_END_NOW, tag="grav_drift") // reset animations so they don't stack
+		animate_drift(AM, -1, 25)
+
+proc/StopDriftFloat(atom/movable/AM)
+	AM.temp_flags &= ~DRIFT_ANIMATION
+	animate(AM, flags=ANIMATION_END_NOW, tag="grav_drift")
+
 /// Update the atom's traction against the ground
 /atom/movable/proc/update_traction(turf/T)
 	return_if_overlay_or_effect(src)
