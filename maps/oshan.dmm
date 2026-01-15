@@ -18946,11 +18946,6 @@
 /obj/table/reinforced/auto,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
-/obj/machinery/light_switch/auto,
-/obj/item/device/radio/intercom/security{
-	dir = 4;
-	pixel_y = 5
-	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -33302,9 +33297,6 @@
 /obj/blind_switch/east{
 	pixel_y = -4
 	},
-/obj/item/device/radio/intercom/security{
-	dir = 4
-	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "gEA" = (
@@ -35232,6 +35224,9 @@
 /area/station/quartermaster/refinery)
 "iYR" = (
 /obj/machinery/vending/coffee,
+/obj/item/device/radio/intercom/security{
+	dir = 1
+	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "iZr" = (
