@@ -1,4 +1,9 @@
 
+(t)thu jan 15 26
+(u)Lord_Earthfire
+(p)25438
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Singletank bombs and pipebombs now have the proper contraband value of 4 instead of 8.
 (t)wed jan 14 26
 (u)Kanthes
 (p)25584

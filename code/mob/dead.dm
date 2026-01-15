@@ -79,7 +79,6 @@ TYPEINFO(/mob/dead)
 		return
 	..()
 	var/message = null
-	var/used_name = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src
 	switch (lowertext(act))
 		if ("fart")
 			if (farting_allowed && src.emote_check(voluntary, 25, 1, 0))
@@ -89,7 +88,7 @@ TYPEINFO(/mob/dead)
 					playsound(src, 'sound/voice/farts/poo2.ogg', 7, FALSE, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 					break
 				for (var/mob/living/M in src.loc)
-					message = "<B>[used_name]</B> lets out \an [fluff] fart in [M]'s face!"
+					message = "<B>[src]</B> lets out \an [fluff] fart in [M]'s face!"
 					fart_on_other = 1
 					if (prob(95))
 						break
@@ -97,7 +96,7 @@ TYPEINFO(/mob/dead)
 						M.show_text("<i>You feel \an [fluff] [pick("draft", "wind", "breeze", "chill", "pall")]...</i>")
 						break
 				if (!fart_on_other)
-					message = "<B>[used_name]</B> lets out \an [fluff] fart!"
+					message = "<B>[src]</B> lets out \an [fluff] fart!"
 #ifdef HALLOWEEN
 				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
@@ -110,7 +109,7 @@ TYPEINFO(/mob/dead)
 
 		if ("scream")
 			if (src.emote_check(voluntary, 25, 1, 0))
-				message = "<B>[used_name]</B> lets out \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] [pick("wail", "screech", "shriek")]!"
+				message = "<B>[src]</B> lets out \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] [pick("wail", "screech", "shriek")]!"
 
 		if ("laugh")
 			if (src.emote_check(voluntary, 20, 1, 0))
@@ -119,10 +118,10 @@ TYPEINFO(/mob/dead)
 		if ("dance")
 			if (src.emote_check(voluntary, 100, 1, 0))
 				switch (rand(1, 4))
-					if (1) message = "<B>[used_name]</B> does the Monster Mash!"
-					if (2) message = "<B>[used_name]</B> gets spooky with it!"
-					if (3) message = "<B>[used_name]</B> boogies!"
-					if (4) message = "<B>[used_name]</B> busts out some [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] moves."
+					if (1) message = "<B>[src]</B> does the Monster Mash!"
+					if (2) message = "<B>[src]</B> gets spooky with it!"
+					if (3) message = "<B>[src]</B> boogies!"
+					if (4) message = "<B>[src]</B> busts out some [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] moves."
 				if (prob(2)) // roll the probability first so we're not checking for critters each time this happens
 					for (var/obj/critter/domestic_bee/responseBee in range(7, src))
 						if (!responseBee.alive)
@@ -143,7 +142,7 @@ TYPEINFO(/mob/dead)
 
 		if ("flip")
 			if (src.emote_check(voluntary, 100, 1, 0))
-				message = "<B>[used_name]</B> does \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] flip!"
+				message = "<B>[src]</B> does \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] flip!"
 				animate(src) // stop the animation
 				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
 				SPAWN(1 SECOND)
@@ -157,7 +156,7 @@ TYPEINFO(/mob/dead)
 
 		if ("wave","salute","nod")
 			if (src.emote_check(voluntary, 10, 1, 0))
-				message = "<B>[used_name]</B> [act]s."
+				message = "<B>[src]</B> [act]s."
 
 		else
 			if (voluntary)

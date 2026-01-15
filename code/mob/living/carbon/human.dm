@@ -1152,12 +1152,16 @@
 		if (istype(hand, /obj/item/paper/newspaper))
 			if (hand.two_handed)
 				return FALSE
-
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		return FALSE
 
 
 /mob/living/carbon/human/UpdateName()
 	var/id_name = get_id_card(src.wear_id)?:registered
-	if (!face_visible())
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+		src.update_name_tag("")
+	else if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
 			src.update_name_tag(id_name)
