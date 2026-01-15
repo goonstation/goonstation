@@ -529,7 +529,8 @@ proc/generate_space_color()
 			if (isitem(Obj))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
-
+	if (Obj.floats_in_zero_g && newloc && !isturf(newloc))
+		StopDriftFloat(Obj) // something removes the animation ID so just kill the float animation
 	return ..(Obj, newloc)
 
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
