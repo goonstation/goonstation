@@ -525,7 +525,7 @@ TYPEINFO(/mob/dead/observer)
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.get_player()?.dnr)
+	if(!mind || !(mind.get_player()?.dnr || isadminghost(src)))
 		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
