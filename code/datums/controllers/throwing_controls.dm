@@ -98,7 +98,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 				thr.target && thing.throwing && isturf(T) && \
 					(
 						thr.momentum > 0 || \
-						T?.get_gforce_current() == 0 || \
+						round(T?.get_gforce_current(), 0.01) == 0 || \
 						thing.throw_unlimited
 					)
 				))

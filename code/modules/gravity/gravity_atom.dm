@@ -20,7 +20,7 @@
 		T = get_turf(src)
 		if (!istype(T))
 			return TRUE
-	var/new_gforce = T.get_gforce_current()
+	var/new_gforce = round(T.get_gforce_current(), 0.01)
 	if (src.no_gravity)
 		new_gforce = 0
 	if (src.gforce == new_gforce)

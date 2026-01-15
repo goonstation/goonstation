@@ -459,7 +459,7 @@
 			dwy = src.internal_speed * src.yo
 			curr_t++
 			if (src.proj_data.affected_by_gravity)
-				src.travelled += src.internal_speed * curr_turf?.get_gforce_current()
+				src.travelled += src.internal_speed * curr_turf ? round(curr_turf.get_gforce_current(), 0.01) : 1
 			else
 				src.travelled += src.internal_speed
 		else
@@ -467,7 +467,7 @@
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
 			if (src.proj_data.affected_by_gravity)
-				src.travelled += src.proj_data.projectile_speed * curr_turf?.get_gforce_current()
+				src.travelled += src.proj_data.projectile_speed * curr_turf ? round(curr_turf.get_gforce_current(), 0.01) : 1
 			else
 				src.travelled += src.proj_data.projectile_speed
 
