@@ -682,7 +682,6 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 		src.pixel_y = initial(src.pixel_y)
 		src.attached = null
 		src.active = FALSE
-		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, "attached")
 		light_c.update(0)
 
 	green

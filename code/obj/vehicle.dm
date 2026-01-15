@@ -2447,7 +2447,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		return
 
 	var/turf/T = get_turf(src)
-	if(T.throw_unlimited && istype(T, /turf/space))
+	if(istype(T, /turf/space) && !istype(T, /turf/space/fluid))
 		return
 
 	if(length(helditems) >= 1)
