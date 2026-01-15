@@ -1048,6 +1048,16 @@ DEFINE_FLOORS(minitiles/black,
 	name = "boxing mat"
 	icon_state = "boxing"
 
+	Entered(atom/movable/M, atom/OldLoc)
+		..()
+		if (!istype(OldLoc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", INFINITE_STATUS, M)
+
+	Exited(atom/movable/M, atom/newloc)
+		..()
+		if (!istype(newloc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", 5 SECONDS, M)
+
 /turf/simulated/floor/specialroom/gym/alt
 	name = "gym mat"
 	icon_state = "gym_mat"
@@ -1402,6 +1412,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	icon_state = "snow1"
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 	New()
 		..()
@@ -1426,6 +1437,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 /turf/simulated/floor/snow/green
 	name = "snow-covered floor"
 	icon_state = "snowgreen"
+	can_dig = FALSE
 
 /turf/simulated/floor/snow/green/corner
 	name = "snow-covered floor"
@@ -1436,7 +1448,8 @@ DEFINE_FLOORS(snowcalm,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_calm";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowcalm/border,
 	icon_state = "snow_calm_border")
@@ -1446,7 +1459,8 @@ DEFINE_FLOORS(snowrough,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_rough";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowrough/border,
 	icon_state = "snow_rough_border")
@@ -1648,8 +1662,9 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /obj/effect/snow_step
 	icon = 'icons/obj/decals/blood/blood.dmi'
+	anchored = ANCHORED_ALWAYS
 	layer = DECAL_LAYER
-	plane = PLANE_FLOOR
+	plane = PLANE_NOSHADOW_BELOW
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | TILE_BOUND
 	color = "#91b8d0"
 
@@ -2322,8 +2337,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		..()
 		src.material_trigger_when_attacked(C, user, 1)
-	else
-		return attack_hand(user)
 
 /turf/simulated/floor/proc/reinforce(obj/item/rods/I)
 	src.ReplaceWithEngineFloor()

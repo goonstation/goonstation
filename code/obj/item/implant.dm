@@ -46,6 +46,7 @@ THROWING DARTS
 	var/list/mailgroups = null
 	var/net_id = null
 	var/alert_frequency = FREQ_PDA
+	can_arcplate = FALSE
 
 	New()
 		..()
@@ -327,9 +328,11 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 	scan_category = IMPLANT_SCAN_CATEGORY_HEALTH
-	var/healthstring = ""
 	uses_radio = 1
 	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+
+	var/healthstring = ""
+	var/affected = "CREW"
 
 	implanted(mob/M, mob/I)
 		..()
@@ -386,6 +389,8 @@ THROWING DARTS
 	on_life(var/mob/M, var/mult = 1)
 		if (!ishuman(src.owner))
 			return
+		if (!src.online)
+			return
 		var/mob/living/carbon/human/H = src.owner
 		if (!H.mini_health_hud)
 			H.mini_health_hud = 1
@@ -425,21 +430,12 @@ THROWING DARTS
 			if(cl_implant.owner != src.owner || !cl_implant.scanned_here)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
-		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
-		if (he_or_she(src.owner) == "they")
-			message += "they " + (length(cloner_areas) ? "were clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning implant.")
-		else
-			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "was clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning implant.")
-
+		var/message = "[affected] DEATH ALERT: [src.owner] in [myarea]. [length(cloner_areas) ? "Clone implant detected." : "No cloning implant detected."]"
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
-
-	death_alert()
-		mailgroups.Add(MGD_SECURITY)
-		..()
-		mailgroups.Remove(MGD_SECURITY)
+	affected = "SECURITY"
 
 /obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
@@ -450,6 +446,10 @@ THROWING DARTS
 		. = ..()
 		src.on_remove(src.owner)
 		qdel(src)
+
+/obj/item/implant/health/security/anti_mindhack/command
+	name = "health implant - command issue"
+	affected = "COMMAND"
 
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
@@ -809,25 +809,31 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	big_message = " buzzes, what?"
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
+	var/wasp_type = /mob/living/critter/small_animal/wasp/angry
+	var/faction = FACTION_BOTANY
 
 	implanted(mob/M, mob/I)
 		..()
-		if (istype(M))
-			LAZYLISTADDUNIQUE(M.faction, FACTION_BOTANY)
+		if (istype(M) && src.faction)
+			LAZYLISTADDUNIQUE(M.faction, src.faction)
 
 	on_remove(mob/M)
 		..()
-		if (istype(M))
-			LAZYLISTREMOVE(M.faction, FACTION_BOTANY)
+		if (istype(M) && src.faction)
+			LAZYLISTREMOVE(M.faction, src.faction)
 
 	do_effect(power)
 		// enjoy your wasps
 		for (var/i in 1 to power)
-			var/mob/living/critter/small_animal/wasp/W = new /mob/living/critter/small_animal/wasp/angry(get_turf(src))
-			W.lying = TRUE // So wasps dont hit other wasps when being flung
-			W.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2)
-			SPAWN(1 SECOND)
-				W.lying = FALSE
+			var/throw_type = THROW_NORMAL
+			var/mob/M = new src.wasp_type(get_turf(src))
+			if(ismob(M))
+				M.lying = TRUE // So wasps dont hit other wasps when being flung
+				SPAWN(1 SECOND)
+					M.lying = FALSE
+			else
+				throw_type = THROW_PHASE
+			M.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2, throw_type = throw_type)
 
 		SPAWN(1)
 			src.owner?.gib()
@@ -895,8 +901,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return FALSE
 		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
-			boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
-			return FALSE
+			if (AM.online)
+				boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
+				return FALSE
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
@@ -1405,6 +1412,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_38AP
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
+
+	bullet_38ricochet
+		name = ".38 ricochet round"
+		desc = "A bouncy variant of the .38 round. Huh. Aren't these illegal?"
 
 	bullet_9mm
 		name = "9mm round"

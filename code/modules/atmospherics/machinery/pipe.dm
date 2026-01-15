@@ -1,3 +1,22 @@
+/// Updates the color of the short, connecting underlays between pipes.
+/obj/machinery/atmospherics/proc/update_pipe_underlay(obj/machinery/atmospherics/node, var/direction, var/size, var/hide_pipe)
+	PROTECTED_PROC(TRUE)
+	var/color = null;
+	if (issimplepipe(node))
+		color = node.color;
+	else if (ismanifoldorquad(node))
+		if (ismanifoldorquad(src))
+			// If both we and the node are manifolds, we want to update the color only if we are both of the same material. This avoids weird patches of conflicting colors.
+			if (src.material == node.material)
+				color = src.color;
+		else
+			color = node.color;
+	else if (ismanifoldorquad(src))
+		// If we are a manifold and the node is neither manifold nor pipe, we want to use our color.
+		color = src.color;
+
+	SET_PIPE_UNDERLAY(node, direction, size, color, hide_pipe);
+
 /// The basic pipe parent for things that can support pipelines and bursting and stuff.
 /obj/machinery/atmospherics/pipe
 	text = ""
@@ -85,6 +104,9 @@
 
 /// Ruptures the pipe, with varying levels of leakage.
 /obj/machinery/atmospherics/pipe/proc/rupture(pressure)
+	if(!can_rupture)
+		return // nah, don't feel like it.
+
 	var/new_rupture
 
 	if(pressure && src.fatigue_pressure)
@@ -602,14 +624,15 @@
 /obj/machinery/atmospherics/pipe/manifold/hide(var/intact)
 	var/hide_pipe = CHECKHIDEPIPE(src)
 	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
-	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 90), "short", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node2, turn(src.dir, 180), "short", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node3, turn(src.dir, -90), "short", issimplepipe(src.node3) ?  src.node3.color : null, hide_pipe)
+	update_pipe_underlay(src.node1, turn(src.dir, 90),  "short", hide_pipe)
+	update_pipe_underlay(src.node2, turn(src.dir, 180), "short", hide_pipe)
+	update_pipe_underlay(src.node3, turn(src.dir, -90), "short", hide_pipe)
 
 /obj/machinery/atmospherics/pipe/manifold/weld_sheet(obj/item/sheet/sheet, mob/user)
 	. = ..()
 	src.node1?.UpdateIcon()
 	src.node2?.UpdateIcon()
+	src.node3?.UpdateIcon()
 
 /obj/machinery/atmospherics/pipe/manifold/pipeline_expansion()
 	return list(node1, node2, node3)
@@ -719,10 +742,10 @@
 /obj/machinery/atmospherics/pipe/quadway/hide(var/intact)
 	var/hide_pipe = CHECKHIDEPIPE(src)
 	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
-	SET_PIPE_UNDERLAY(src.node1, SOUTH, "short", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node2, WEST, "short", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node3, NORTH, "short", issimplepipe(src.node3) ?  src.node3.color : null, hide_pipe)
-	SET_PIPE_UNDERLAY(src.node4, EAST, "short", issimplepipe(src.node4) ?  src.node4.color : null, hide_pipe)
+	update_pipe_underlay(src.node1, SOUTH,  "short", hide_pipe)
+	update_pipe_underlay(src.node2, WEST,   "short", hide_pipe)
+	update_pipe_underlay(src.node3, NORTH,  "short", hide_pipe)
+	update_pipe_underlay(src.node4, EAST,   "short", hide_pipe)
 
 /obj/machinery/atmospherics/pipe/quadway/pipeline_expansion()
 	return list(src.node1, src.node2, src.node3, src.node4)

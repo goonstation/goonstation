@@ -33,8 +33,8 @@
 		src.on = FALSE
 
 	icon_state = src.on ? "on" : "off"
-	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
-	SET_PIPE_UNDERLAY(src.node2, src.dir, "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
+	update_pipe_underlay(src.node1, turn(src.dir, 180), "long", FALSE)
+	update_pipe_underlay(src.node2, src.dir, "long", FALSE)
 
 /obj/machinery/atmospherics/binary/volume_pump/process()
 	..()

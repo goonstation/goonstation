@@ -1500,6 +1500,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/kudzu,
+/obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bhf" = (
@@ -3081,6 +3082,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "cuB" = (
@@ -3359,6 +3361,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"cGN" = (
+/obj/machinery/drone_recharger,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "cHb" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -10065,6 +10071,7 @@
 "hjo" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "hjH" = (
@@ -10512,6 +10519,10 @@
 "hBO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
+"hCw" = (
+/obj/turbine_shaft/turbine,
+/turf/simulated/floor/black,
+/area/station/engine/substation/northwest)
 "hCM" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/yellow/checker{
@@ -12837,6 +12848,7 @@
 	},
 /obj/disposalpipe/segment/bent/east,
 /obj/landmark/antagonist/blob,
+/obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "jnU" = (
@@ -15544,6 +15556,7 @@
 /area/ghostdrone_factory)
 "lez" = (
 /obj/reagent_dispensers/foamtank,
+/obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "leV" = (
@@ -16858,7 +16871,7 @@
 	},
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/east,
-/obj/storage/closet/radiation,
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "mbU" = (
@@ -16885,6 +16898,7 @@
 /area/station/chapel/sanctuary)
 "mdp" = (
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "mds" = (
@@ -17676,6 +17690,16 @@
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
+"mFJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/drone_recharger,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "mFP" = (
 /obj/machinery/vending/monkey/research,
 /obj/mapping_helper/access/public,
@@ -20986,6 +21010,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"pgZ" = (
+/obj/machinery/drone_recharger,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "phx" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -30639,8 +30667,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
-	dir = 8;
-	id = "robotics"
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
@@ -32705,6 +32732,10 @@
 /obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
+"xsq" = (
+/obj/machinery/drone_recharger,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "xtB" = (
 /obj/lattice{
 	dir = 4;
@@ -71778,7 +71809,7 @@ fXA
 wSs
 qpn
 eUE
-jOL
+xsq
 jOL
 jOL
 jOL
@@ -75097,7 +75128,7 @@ bcs
 wOn
 whT
 bcs
-vtE
+mFJ
 vez
 xmx
 aNf
@@ -77853,7 +77884,7 @@ oxp
 vEZ
 oxp
 oxp
-vMH
+cGN
 lfe
 hql
 vMH
@@ -78687,7 +78718,7 @@ aiG
 xCH
 lGN
 lhL
-lGN
+hCw
 bOq
 oCp
 lko
@@ -86237,7 +86268,7 @@ qpn
 qpn
 qpn
 iDL
-cdy
+pgZ
 pWF
 tem
 hBO
@@ -89574,7 +89605,7 @@ cdy
 cdy
 cdy
 iDL
-cdy
+pgZ
 oYi
 slU
 qgh

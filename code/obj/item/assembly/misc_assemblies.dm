@@ -61,6 +61,7 @@ Contains:
 	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
+	can_arcplate = FALSE
 
 /obj/item/assembly/New(var/new_location)
 	src.additional_components = list()
@@ -520,9 +521,9 @@ Contains:
 	src.target_item_prefix = null
 	src.chargeable_component = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
@@ -541,11 +542,13 @@ Contains:
 	if(ismob(src.loc))
 		var/mob/handling_user = src.loc
 		handling_user.u_equip(src)
+	var/list/items_removed = list()
 	for(var/obj/item/removed_item in items_to_remove)
 		SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, null)
 		removed_item.master = null
 		if(!removed_item.qdeled && !removed_item.disposed)
 			removed_item.set_loc(target_turf)
+			items_removed.Add(removed_item)
 		if(removed_item in src.additional_components)
 			src.additional_components -= removed_item
 	src.trigger = null
@@ -553,6 +556,7 @@ Contains:
 	src.target = null
 	src.remove_attacking_component()
 	src.chargeable_component = null
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, items_removed)
 	qdel(src)
 
 
@@ -587,9 +591,9 @@ Contains:
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	src.w_class = max(src.w_class, manipulated_item.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	boutput(user, "You attach the [src.name] to the [manipulated_item.name].")
 	//Since we completed the assembly, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
@@ -637,9 +641,9 @@ Contains:
 			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, to_combine_atom)
 	//Last but not least, we update our icon, w_class and name
 	src.w_class = max(src.w_class, manipulated_item.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE

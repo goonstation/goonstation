@@ -364,7 +364,7 @@
 	proc/metabolised_addictive_reagent(var/datum/reagent/reagent, var/rate, var/mult)
 		// The minimum rate means that patches with less than ~1 unit of the addictive reagent usually won't work to satisfy addiction.
 		// This is useful because dose logic is very binary and exploitable by microdosing with ludicrously small volumes.
-		if (reagent.addiction_severity < src.severity || rate < 0.04 * mult)
+		if (rate < 0.04 * mult)
 			return
 		if (src.associated_reagent == reagent.name)
 			src.last_reagent_dose = TIME
@@ -373,7 +373,7 @@
 				src.stage = 1
 				src.stage_satisfied = FALSE
 			return
-		else if (!src.tick_satisfied)
+		else if (reagent.addiction_severity >= src.severity && !src.tick_satisfied)
 			src.tick_satisfied = TRUE
 			src.addiction_meter += src.depletion_rate * 2
 			if (!src.stage_satisfied && src.stage > 1)
@@ -381,7 +381,7 @@
 				src.stage_satisfied = TRUE
 
 	proc/ingested_addictive_reagent(var/datum/reagent/reagent, var/volume)
-		if (reagent.addiction_severity < src.severity || volume < 0.1)
+		if (volume < 0.1)
 			return
 		if (src.associated_reagent == reagent.name)
 			src.last_reagent_dose = TIME
@@ -390,7 +390,7 @@
 				boutput(src.affected_mob, SPAN_NOTICE("<b>That's the good stuff! But how long can it last?</b>"))
 				src.stage = 1
 				src.stage_satisfied = FALSE
-		else if (src.stage > 1 && !src.stage_satisfied)
+		else if (reagent.addiction_severity >= src.severity && src.stage > 1 && !src.stage_satisfied)
 			src.stage -= 1
 			src.stage_satisfied = TRUE
 			// don't want every addiction spamming this message whenever any addictive reagent is taken

@@ -20,7 +20,8 @@
 	var/list/categorised_special_job_data = list()
 	var/list/hidden_job_data = list()
 	var/list/staple_job_categories = list(JOB_COMMAND, JOB_SECURITY, JOB_RESEARCH, JOB_MEDICAL, JOB_ENGINEERING, JOB_CIVILIAN)
-	var/list/special_job_categories = list(JOB_NANOTRASEN, JOB_SYNDICATE, JOB_HALLOWEEN)// If adding more, make sure to add the category in JobManager.tsx
+	// If adding more, make sure to add the category in JobManager.tsx
+	var/list/special_job_categories = list(JOB_NANOTRASEN, JOB_SYNDICATE, JOB_HALLOWEEN, JOB_RANDOM, JOB_DAILY)
 	for (var/datum/job/job in job_controls.staple_jobs)
 		if(!(job.job_category in staple_job_categories))// If its not in this list its not a staple job so should be sorted under special jobs
 			if(job.job_category in special_job_categories)

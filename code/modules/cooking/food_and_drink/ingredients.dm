@@ -71,11 +71,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	name = "lesser slug"
-	desc = "Chopped up slug meat that's grown its own head, how talented."
+	desc = "Chopped up slug that's grown its own head, how talented. It yearns for the microwave."
 	icon_state = "lesserSlug"
 	fill_amt = 2
 	initial_volume = 25
 	initial_reagents = "slime"
+	food_color = "#A4BC62"
+	var/eyes_present = TRUE
 
 	heal(var/mob/M)
 		boutput(M, SPAN_ALERT("You can feel it wriggling..."))
@@ -343,7 +345,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 			var/obj/item/reagent_containers/food/snacks/candy/pbcup/A = new /obj/item/reagent_containers/food/snacks/candy/pbcup
 			user.u_equip(W)
 			user.put_in_hand_or_drop(A)
-
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, A, user)
 			qdel(W)
 			if (src.bites_left-- < 1)
 				qdel(src)
@@ -391,6 +393,8 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	brew_result = list("mead"=20)
 	mat_changename = "honey"
 	default_material = "honey"
+	can_arcplate = FALSE
+
 
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"
@@ -497,6 +501,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			var/obj/item/reagent_containers/food/snacks/ingredient/dough_s/D = new /obj/item/reagent_containers/food/snacks/ingredient/dough_s(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, D, user)
 			qdel(W)
 			qdel(src)
 		else if (istype(W, /obj/item/kitchen/rollingpin))
@@ -509,6 +514,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza_base(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, P, user)
 			qdel(src)
 		else if (istype(W, /obj/item/kitchen/utensil/fork))
 			boutput(user, SPAN_NOTICE("You stab holes in the dough. How vicious."))
@@ -520,6 +526,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			var/obj/item/reagent_containers/food/snacks/ingredient/holey_dough/H = new /obj/item/reagent_containers/food/snacks/ingredient/holey_dough(W.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(H)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, H, user)
 			qdel(src)
 		else if (iscuttingtool(W) || issawingtool(W))
 			boutput(user, SPAN_NOTICE("You cut the dough into two strips."))
@@ -528,8 +535,10 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			if(prob(1))
 				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message(SPAN_ALERT("<B>[src] screams!</B>"))
+			var/list/strips = list()
 			for(var/i = 1, i <= 2, i++)
-				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
+				strips.Add(new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src)))
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, strips, user)
 			qdel(src)
 		else if (istype(W, /obj/item/robodefibrillator))
 			boutput(user, SPAN_NOTICE("You defibrillate the dough, yielding a perfect stack of flapjacks."))
@@ -541,6 +550,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			var/obj/item/reagent_containers/food/snacks/pancake/F = new /obj/item/reagent_containers/food/snacks/pancake(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(F)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, F, user)
 			qdel(src)
 		else if (istype(W, /obj/item/baton))
 			var/obj/item/baton/baton = W
@@ -552,6 +562,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 						var/obj/item/reagent_containers/food/snacks/donut/result = new /obj/item/reagent_containers/food/snacks/donut(src.loc)
 						user.u_equip(src)
 						user.put_in_hand_or_drop(result)
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, result, user)
 						qdel(src)
 					else
 						boutput(user, SPAN_ALERT("You just aren't experienced enough to baton-fry."))
@@ -579,6 +590,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			var/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet/P = new /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, P, user)
 			qdel(src)
 		else ..()
 
@@ -599,6 +611,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
 			qdel(W)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, D, user)
 			qdel(src)
 		else if (istype(W, /obj/item/kitchen/rollingpin))
 			boutput(user, SPAN_NOTICE("You flatten the [src] into a long sheet."))
@@ -606,6 +619,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 				JOB_XP(user, "Chef", 1)
 			var/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/noodles = new /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet(W.loc)
 			user.put_in_hand_or_drop(noodles)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, noodles, user)
 			qdel(src)
 		else ..()
 
@@ -616,7 +630,8 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		if(prob(1))
 			playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 			src.visible_message(SPAN_ALERT("<B>[src] screams!</B>"))
-		new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
+		var/dough_circle = new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, dough_circle, user)
 		qdel (src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/dough_circle
@@ -641,8 +656,10 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W) || issawingtool(W))
 			boutput(user, SPAN_NOTICE("You cut [src] into smaller pieces..."))
+			var/list/cookies = list()
 			for(var/i = 1, i <= 4, i++)
-				new /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie(get_turf(src))
+				cookies.Add(new /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie(get_turf(src)))
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, cookies, user)
 			qdel(src)
 		if (prob(25))
 			JOB_XP(user, "Chef", 1)
@@ -693,7 +710,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 			if (iscuttingtool(W))
 				var/turf/T = get_turf(src)
 				user.visible_message("[user] cuts [src] into thick noodles.", "You cut [src] into thick noodles.")
-				new /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon(T)
+				var/udon = new /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon(T)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, udon, user)
 				qdel (src)
 
 	ramen
@@ -759,6 +777,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/pasta)
 					D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
 				user.u_equip(W)
 				user.put_in_hand_or_drop(D)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, D, user)
 				qdel(W)
 				qdel(src)
 
@@ -835,8 +854,10 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 		if (iscuttingtool(W))
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
+			var/list/slices = list()
 			for (var/i in 1 to 4)
-				new /obj/item/reagent_containers/food/snacks/ingredient/kamaboko(T)
+				slices.Add(new /obj/item/reagent_containers/food/snacks/ingredient/kamaboko(T))
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, slices, user)
 			qdel (src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed
@@ -998,6 +1019,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 			beard.reagents.set_reagent_temp(20 + T0C) //magically becomes room temperature from folding
 			user.u_equip(src)
 			user.put_in_hand_or_drop(beard)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, beard, user)
 			qdel(src)
 			return
 		src.UpdateIcon()
@@ -1016,6 +1038,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 				src.reagents.trans_to(newcandy, 15)
 				user.u_equip(src)
 				user.put_in_hand_or_drop(newcandy)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newcandy, user)
 			else
 				boutput(user, SPAN_NOTICE("The melted sugar solidifies on [W]. You give it a vaguely rocky texture."))
 				var/obj/item/reagent_containers/food/snacks/candy/rock_candy/newcandy = new /obj/item/reagent_containers/food/snacks/candy/rock_candy(get_turf(src))
@@ -1023,6 +1046,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 				src.reagents.trans_to(newcandy, 15)
 				user.u_equip(src)
 				user.put_in_hand_or_drop(newcandy)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newcandy, user)
 
 			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
 			if(istype(W,/obj/item/stick)) W.amount--
