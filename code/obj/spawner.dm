@@ -276,3 +276,13 @@
 	fifty
 		name = "mail spawner (x50)"
 		amount_to_make = 50
+
+/obj/spawner/little_monster
+	name = "monster spawner"
+	icon = 'icons/misc/mark.dmi'
+	icon_state = "ydn"
+
+	New()
+		..()
+		new /atom/movable/mysterious_beast(src.loc)
+		qdel(src)

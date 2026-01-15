@@ -112,7 +112,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "aaz" = (
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
@@ -14217,7 +14217,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "enF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19242,7 +19242,7 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "fUz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23403,7 +23403,7 @@
 	},
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "hkw" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/psych,
@@ -23420,7 +23420,7 @@
 	},
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "hkC" = (
 /obj/lattice/auto/turf_attaching,
 /turf/space,
@@ -34989,7 +34989,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "kRc" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light/emergency{
@@ -38537,7 +38537,7 @@
 /obj/table/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "lTO" = (
 /turf/simulated/floor/blue/corner{
 	dir = 1
@@ -52782,7 +52782,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "qsQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/mapping_helper/firedoor_spawn,
@@ -54494,7 +54494,9 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north{
+	areastring = "Armory Outer Perimeter"
+	},
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -54503,7 +54505,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "qUL" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/black/grime,
@@ -54564,7 +54566,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "qVS" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/morgue{
@@ -61400,14 +61402,6 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
-"tak" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/armory_outside)
 "tal" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -104950,7 +104944,7 @@ dIv
 dIv
 kpf
 gkN
-tak
+dIv
 env
 fiB
 orr

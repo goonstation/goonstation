@@ -15,13 +15,15 @@ TYPEINFO(/obj/item/places_pipes)
 	var/dispenser_delay = 5 DECI SECONDS
 	var/static/list/atmospipesforcreation = null
 	var/static/list/atmosmachinesforcreation = null
+	var/static/list/fluidpipesforcreation = null
+	var/static/list/fluidmachinesforcreation = null
 	var/static/list/icon/cache = list()
 	var/static/list/exemptedtypes = typecacheof(list(/obj/machinery/atmospherics/binary/circulatorTemp,
 		/obj/machinery/nuclear_reactor,
 		/obj/machinery/reactor_turbine,
 		/obj/machinery/atmospherics/unary/cryo_cell))
 	var/const/silicon_cost_multiplier = 200
-	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple
+	var/datum/pipe_recipe/selection = /datum/pipe_recipe/atmos/pipe/simple
 	var/selectedimage
 	var/direction = EAST
 	var/destroying = FALSE
@@ -32,14 +34,23 @@ TYPEINFO(/obj/item/places_pipes)
 	. = ..()
 	if (!src.atmospipesforcreation)
 		src.atmospipesforcreation = list()
-		for (var/datum/pipe_recipe/pipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/pipe))
+		for (var/datum/pipe_recipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/atmos/pipe))
 			src.atmospipesforcreation[initial(recipe.name)] = new recipe
 
 	if (!src.atmosmachinesforcreation)
 		src.atmosmachinesforcreation = list()
-		for (var/datum/pipe_recipe/machine/recipe as anything in concrete_typesof(/datum/pipe_recipe/machine))
+		for (var/datum/pipe_recipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/atmos/machine))
 			src.atmosmachinesforcreation[initial(recipe.name)] = new recipe
 
+	if (!src.fluidpipesforcreation)
+		src.fluidpipesforcreation = list()
+		for (var/datum/pipe_recipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/fluid/pipe))
+			src.fluidpipesforcreation[initial(recipe.name)] = new recipe
+
+	if (!src.fluidmachinesforcreation)
+		src.fluidmachinesforcreation = list()
+		for (var/datum/pipe_recipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/fluid/machine))
+			src.fluidmachinesforcreation[initial(recipe.name)] = new recipe
 	src.selection = src.atmospipesforcreation["Pipe"]
 	src.UpdateIcon()
 
@@ -98,7 +109,7 @@ TYPEINFO(/obj/item/places_pipes)
 		if(src.exemptedtypes[target.type]) //hilarium
 			actions.start(new /datum/action/bar/hpd_exemption_failure(target, user, src), user)
 			return
-		if(istype(target, /obj/machinery/atmospherics))
+		if(istype(target, /obj/machinery/atmospherics) || istype(target, /obj/fluid_pipe) || istype(target, /obj/machinery/fluid_machinery))
 			SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(destroy_item), list(user, target),\
 			 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
@@ -106,13 +117,26 @@ TYPEINFO(/obj/item/places_pipes)
 		if(!issimulatedturf(target) && !istype(target, /turf/space))
 			return
 		var/directs = selection.get_directions(direction)
-		for(var/obj/machinery/atmospherics/device in target)
-			if((device.initialize_directions & directs))
-				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
-				return
-			if(selection.exclusionary && device.exclusionary)
-				boutput(user, SPAN_ALERT("Something is occupying that space!"))
-				return
+		if(istype(src.selection, /datum/pipe_recipe/atmos))
+			for(var/obj/machinery/atmospherics/device in target)
+				if((device.initialize_directions & directs))
+					boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+					return
+				if(selection.exclusionary && device.exclusionary)
+					boutput(user, SPAN_ALERT("Something is occupying that space!"))
+					return
+		else
+			var/obj/fluid_pipe/fluidthingy
+			for(var/obj/device in target)
+				if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_machinery))
+					continue
+				fluidthingy = device
+				if((fluidthingy.initialize_directions & directs))
+					boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+					return
+				if(selection.exclusionary && fluidthingy.exclusionary)
+					boutput(user, SPAN_ALERT("Something is occupying that space!"))
+					return
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			if (!(S.cell && (S.cell.charge >= selection.cost * silicon_cost_multiplier)))
@@ -142,13 +166,26 @@ TYPEINFO(/obj/item/places_pipes)
 		boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
 		return
 	var/directs = recipe.get_directions(direction)
-	for(var/obj/machinery/atmospherics/device in target)
-		if((device.initialize_directions & directs))
-			boutput(user, SPAN_ALERT("Something is occupying that direction!"))
-			return
-		if(recipe.exclusionary && device.exclusionary)
-			boutput(user, SPAN_ALERT("Something is occupying that space!"))
-			return
+	if(istype(src.selection, /datum/pipe_recipe/atmos))
+		for(var/obj/machinery/atmospherics/device in target)
+			if((device.initialize_directions & directs))
+				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+				return
+			if(selection.exclusionary && device.exclusionary)
+				boutput(user, SPAN_ALERT("Something is occupying that space!"))
+				return
+	else
+		var/obj/fluid_pipe/fluidthingy
+		for(var/obj/device in target)
+			if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_machinery))
+				continue
+			fluidthingy = device
+			if((fluidthingy.initialize_directions & directs))
+				boutput(user, SPAN_ALERT("Something is occupying that direction!"))
+				return
+			if(selection.exclusionary && fluidthingy.exclusionary)
+				boutput(user, SPAN_ALERT("Something is occupying that space!"))
+				return
 	if (S?.cell)
 		S.cell.use(recipe.cost * silicon_cost_multiplier)
 	else
@@ -156,38 +193,33 @@ TYPEINFO(/obj/item/places_pipes)
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = TRUE
-	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
 	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
-	var/obj/machinery/atmospherics/device = new recipe.path(target)
+	var/obj/device = new recipe.path(target)
 	device.initialize(TRUE)
+	user.visible_message(SPAN_NOTICE("[user] places [device]."))
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
 	var/mob/living/silicon/S
-	if (issilicon(user))
-		S = user
-		if (!(S.cell && (S.cell.charge >= silicon_cost_multiplier)))
-			boutput(user, SPAN_ALERT("Not enough charge to destroy that!"))
-			return
-	else if(!src.resources)
-		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
-		return
-	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
+	user.visible_message(SPAN_NOTICE("[user] destroys [target]."))
 	logTheThing(LOG_STATION, user, "destroys a [target] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	if(istype(target, /obj/machinery/atmospherics/binary/valve))
 		var/obj/machinery/atmospherics/binary/valve/O = target
 		if(O.high_risk)
 			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
 	if (S?.cell)
-		S.cell.use(silicon_cost_multiplier)
+		S.cell.give(src.silicon_cost_multiplier)
 	else
-		resources -= 1
+		resources += (src.resources + 1 <= src.max_resources) ? 1 : 0
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = TRUE
-	qdel(target)
+	if (istype(target, /obj/machinery/atmospherics))
+		qdel(target)
+	else
+		target.onDestroy()
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
@@ -196,6 +228,13 @@ TYPEINFO(/obj/item/places_pipes)
 	if (!ui)
 		ui = new(user, src, "HandPipeDispenser", name)
 		ui.open()
+
+/obj/item/places_pipes/proc/getBase64Img(datum/pipe_recipe/recipe, direction = SOUTH)
+	. = src.cache["[recipe.name][direction]"]
+	if(.)
+		return
+	. = icon2base64(icon = icon(icon = recipe.icon, icon_state = recipe.icon_state, dir = direction))
+	src.cache["[recipe.name][direction]"] = .
 
 /obj/item/places_pipes/ui_data(mob/user)
 	var/mob/living/silicon/S
@@ -212,19 +251,34 @@ TYPEINFO(/obj/item/places_pipes)
 /obj/item/places_pipes/ui_static_data(mob/user)
 	. = list(
 	)
+	var/siliconmodifier = issilicon(user) ? silicon_cost_multiplier : 1
 	for (var/name in atmospipesforcreation)
-		var/datum/pipe_recipe/pipe/recipe = src.atmospipesforcreation[name]
+		var/datum/pipe_recipe/recipe = src.atmospipesforcreation[name]
 		.["atmospipes"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost * (issilicon(user) ? silicon_cost_multiplier : 1),
+			"cost" = recipe.cost * siliconmodifier,
 			))
 	for (var/name in src.atmosmachinesforcreation)
-		var/datum/pipe_recipe/machine/recipe = src.atmosmachinesforcreation[name]
+		var/datum/pipe_recipe/recipe = src.atmosmachinesforcreation[name]
 		.["atmosmachines"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost * (issilicon(user) ? silicon_cost_multiplier : 1),
+			"cost" = recipe.cost * siliconmodifier,
+			))
+	for (var/name in src.fluidpipesforcreation)
+		var/datum/pipe_recipe/recipe = src.fluidpipesforcreation[name]
+		.["fluidpipes"] += list(list(
+			"name" = name,
+			"image" = getBase64Img(recipe),
+			"cost" = recipe.cost * siliconmodifier,
+			))
+	for (var/name in src.fluidmachinesforcreation)
+		var/datum/pipe_recipe/recipe = src.fluidmachinesforcreation[name]
+		.["fluidmachines"] += list(list(
+			"name" = name,
+			"image" = getBase64Img(recipe),
+			"cost" = recipe.cost * siliconmodifier,
 			))
 	.["issilicon"] = issilicon(user)
 
@@ -234,7 +288,8 @@ TYPEINFO(/obj/item/places_pipes)
 		return
 	switch(action)
 		if("select")
-			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]]
+			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]] || \
+				fluidpipesforcreation[params["name"]] || fluidmachinesforcreation[params["name"]]
 			src.selectedimage = getBase64Img(src.selection, direction)
 			src.tooltip_rebuild = TRUE
 			. = TRUE
@@ -248,12 +303,11 @@ TYPEINFO(/obj/item/places_pipes)
 			src.UpdateIcon()
 			. = TRUE
 
-/obj/item/places_pipes/proc/getBase64Img(datum/pipe_recipe/recipe, direction = SOUTH)
-	. = src.cache["[recipe.name][direction]"]
-	if(.)
-		return
-	. = icon2base64(icon = icon(icon = recipe.icon, icon_state = recipe.icon_state, dir = direction))
-	src.cache["[recipe.name][direction]"] = .
+/obj/item/places_pipes/adminshenanigans
+	name = "extremely powerful handheld pipe dispenser"
+	resources = INFINITY
+	max_resources = INFINITY
+	dispenser_delay = 1 DECI SECOND
 
 /datum/pipe_recipe
 	var/icon = 'icons/obj/atmospherics/hhd_recipe_images.dmi'
@@ -269,8 +323,8 @@ TYPEINFO(/obj/item/places_pipes)
 	proc/get_directions(dir)
 		return 0
 
-ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
-/datum/pipe_recipe/pipe
+ABSTRACT_TYPE(/datum/pipe_recipe/atmos/pipe)
+/datum/pipe_recipe/atmos/pipe
 	simple
 		name = "Pipe"
 		path = /obj/machinery/atmospherics/pipe/simple/overfloor
@@ -391,12 +445,12 @@ ABSTRACT_TYPE(/datum/pipe_recipe/pipe)
 				if(EAST, WEST)
 					return EAST|WEST
 
-ABSTRACT_TYPE(/datum/pipe_recipe/machine)
-/datum/pipe_recipe/machine
+ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine)
+/datum/pipe_recipe/atmos/machine
 	cost = 4
 
-ABSTRACT_TYPE(/datum/pipe_recipe/machine/unary)
-/datum/pipe_recipe/machine/unary
+ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/unary)
+/datum/pipe_recipe/atmos/machine/unary
 	exclusionary = TRUE
 	get_directions(dir)
 		return dir
@@ -438,8 +492,8 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/unary)
 		icon_state = "ventscrubber"
 		desc = "A packet controlled static scrubber that can filter specific gases out of the surrounding air."
 
-ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
-/datum/pipe_recipe/machine/binary
+ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/binary)
+/datum/pipe_recipe/atmos/machine/binary
 	get_directions(dir)
 		switch(dir)
 			if(NORTH, SOUTH)
@@ -477,8 +531,8 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		icon_state = "heatexchanger"
 		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
 
-ABSTRACT_TYPE(/datum/pipe_recipe/machine/trinary)
-/datum/pipe_recipe/machine/trinary
+ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/trinary)
+/datum/pipe_recipe/atmos/machine/trinary
 	get_directions(dir)
 		switch(dir)
 			if(NORTH)
@@ -495,6 +549,173 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/trinary)
 		icon_state = "gasfilter"
 		path = /obj/machinery/atmospherics/trinary/filter
 		desc = "A scrubber that filters out a chosen gas to the side."
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluid/pipe)
+/datum/pipe_recipe/fluid/pipe
+	simple
+		name = "Fluid pipe"
+		path = /obj/fluid_pipe/straight/overfloor
+		cost = 1
+		icon_state = "fluidpipe"
+		desc = "A mere fluid pipe."
+
+		get_directions(dir)
+			switch(dir)
+				if(NORTH, SOUTH)
+					return NORTH|SOUTH
+				if(EAST, WEST)
+					return EAST|WEST
+		glass
+			name = "See-through fluid pipe"
+			path = /obj/fluid_pipe/straight/see_fluid/overfloor
+			icon_state = "fluidpipeglass"
+			cost = 2
+			desc = "A mere fluid pipe. Now with glass!"
+
+	bent
+		name = "Bent fluid pipe"
+		path = /obj/fluid_pipe/elbow/overfloor
+		cost = 1
+		icon_state = "bentfluidpipe"
+		desc = "A mere fluid pipe."
+
+		get_directions(dir)
+			switch(dir)
+				if(NORTH)
+					return NORTH|WEST
+				if(SOUTH)
+					return SOUTH|EAST
+				if(EAST)
+					return NORTH|EAST
+				if(WEST)
+					return SOUTH|WEST
+	junction
+		name = "Junction fluid pipe"
+		path = /obj/fluid_pipe/t_junction/overfloor
+		icon_state = "fluidjunction"
+		desc = "A three way fluid pipe."
+
+		get_directions(dir)
+			switch(dir)
+				if(NORTH)
+					return EAST|WEST|SOUTH
+				if(SOUTH)
+					return EAST|WEST|NORTH
+				if(EAST)
+					return NORTH|SOUTH|WEST
+				if(WEST)
+					return NORTH|SOUTH|EAST
+
+	quadway
+		name = "Quadway fluid pipe"
+		path = /obj/fluid_pipe/quad/overfloor
+		cost = 3
+		icon_state = "fluidquad"
+		desc = "A four way fluid pipe"
+
+		get_directions(dir)
+			return NORTH|SOUTH|EAST|WEST
+
+	tank
+		name = "Fluid tank"
+		path = /obj/fluid_pipe/fluid_tank
+		cost = 10
+		icon = 'icons/obj/fluidpipes/fluid_tank.dmi'
+		icon_state = "tank"
+		desc = "A very large tank capable of holding 10000 units"
+
+		get_directions(dir)
+			return dir
+
+		glass
+			name = "See-through fluid tank"
+			path = /obj/fluid_pipe/fluid_tank/see_fluid
+			cost = 11
+			desc = "A very large tank capable of holding 10000 units. This one has a glass view!"
+			icon_state = "tank-view"
+
+
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine)
+/datum/pipe_recipe/fluid/machine
+	cost = 4
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
+/datum/pipe_recipe/fluid/machine/unary
+	exclusionary = TRUE
+	get_directions(dir)
+		return dir
+
+	fluidinlet
+		name = "Inlet drain"
+		path = /obj/machinery/fluid_machinery/unary/drain/inlet_pump/overfloor
+		icon_state = "fluidinlet"
+		desc = "Drains between 10-15 units of fluid actively."
+
+	handpump
+		name = "Hand pump"
+		path = /obj/machinery/fluid_machinery/unary/hand_pump
+		icon_state = "handpump"
+		desc = "Pumps out up to 100 units of fluid manually."
+
+	nullifier
+		name = "Nullifier"
+		path = /obj/machinery/fluid_machinery/unary/nullifier
+		icon_state = "nullifier"
+		desc = "Removes up to 50 units per cycle."
+	port
+		name = "Port"
+		path = /obj/machinery/fluid_machinery/unary/input
+		icon_state = "port"
+		desc = "Allows pouring in fluids into the network directly and connecting glass plumbing. Can pull 100 units from a screwed barrel per cycle."
+	dispenser
+		name = "Dispenser"
+		path = /obj/machinery/fluid_machinery/unary/dispenser
+		icon_state = "dispenser"
+		desc = "Capable of printing patches, vials, and pills."
+	dripper
+		name = "Dripper"
+		path = /obj/machinery/fluid_machinery/unary/dripper
+		icon_state = "dripper"
+		desc = "Passively drips up to 30 units onto the floor, or into connected containers."
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/binary)
+/datum/pipe_recipe/fluid/machine/binary
+	get_directions(dir)
+		switch(dir)
+			if(NORTH, SOUTH)
+				return NORTH|SOUTH
+			if(EAST, WEST)
+				return EAST|WEST
+
+	fluidpump
+		name = "Fluid pump"
+		path = /obj/machinery/fluid_machinery/binary/pump
+		icon_state = "fluidpump"
+		desc = "Pumps from one network to another at up to 200 units per pump."
+	fluidvalve
+		name = "Fluid valve"
+		path = /obj/machinery/fluid_machinery/binary/valve
+		icon_state = "fluidvalve"
+		desc = "Connects two networks together when the valve is open."
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/trinary)
+/datum/pipe_recipe/fluid/machine/trinary
+	get_directions(dir)
+		switch(dir)
+			if(NORTH)
+				return NORTH|EAST|SOUTH
+			if(EAST)
+				return EAST|SOUTH|WEST
+			if(SOUTH)
+				return SOUTH|WEST|NORTH
+			if(WEST)
+				return WEST|NORTH|EAST
+	filter
+		name = "Fluid Filter"
+		path = /obj/machinery/fluid_machinery/trinary/filter
+		icon_state = "fluidfilter"
+		desc = "Separates fluid to the side. Requires a beaker with a minimum of 1 unit of the desired chem to filter. The largest volume is chosen."
 
 /obj/item/places_pipes/research
 	icon_state = "hpd-place-r"

@@ -114,6 +114,9 @@
 				src.deactivate()
 
 			if("Lock")
+				if(!isturf(src.loc))
+					boutput(user, SPAN_ALERT("The machine cannot lock into place here."))
+					return
 				if (src.building)
 					boutput(user, SPAN_ALERT("Lock status can't be changed with a build in progress."))
 					return

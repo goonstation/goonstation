@@ -10,6 +10,7 @@
 	default_material = null
 	uses_default_material_appearance = TRUE
 	mat_changename = TRUE //TRUE for generic names such as Bar or Wad.
+	can_arcplate = FALSE
 
 	New()
 		..()

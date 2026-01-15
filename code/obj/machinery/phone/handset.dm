@@ -12,6 +12,7 @@ TYPEINFO(/obj/item/phone_handset)
 	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
 	w_class = W_CLASS_TINY
 	say_language = LANGUAGE_ENGLISH
+	HELP_MESSAGE_OVERRIDE("Only picks up sound in your <b>active hand</b>.")
 
 	var/obj/machinery/phone/parent = null
 	var/icon/handset_icon = null
@@ -31,28 +32,14 @@ TYPEINFO(/obj/item/phone_handset)
 	src.color = parent_phone.color
 	src.UpdateOverlays(stripe_image, "stripe")
 	src.handset_icon = getFlatIcon(src)
-	processing_items.Add(src)
 
 /obj/item/phone_handset/disposing()
+	src.handset_icon = null
 	src.parent.handset = null
 	src.parent = null
 	processing_items.Remove(src)
 	. = ..()
 
-/obj/item/phone_handset/process()
-	if (!src.parent)
-		qdel(src)
-		return
-
-	if (!src.parent.answered || (BOUNDS_DIST(src, src.parent) == 0))
-		return
-
-	var/mob/holder = src.get_holder()
-	if (holder)
-		boutput(holder, SPAN_ALERT("The phone cord reaches it limit and the handset is yanked back to its base!"))
-
-	src.parent.hang_up()
-	processing_items.Remove(src)
 
 /obj/item/phone_handset/update_icon()
 	. = ..()

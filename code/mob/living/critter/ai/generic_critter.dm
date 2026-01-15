@@ -124,7 +124,6 @@
 		. = list(src.fixed_target)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
-
 /// This makes the critter maintain a distance and fire on the target from holder.owner.seek_target() if the target gets close we back away.
 /datum/aiTask/sequence/goalbased/critter/range_attack
 	name = "attacking at range"
