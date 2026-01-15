@@ -750,6 +750,17 @@ h2.astation {
   border-color: #c8714c;
 }
 
+div.acentcom {
+  border-color: #01273f;
+}
+h1.acentcom {
+  background-color: #0a4882;
+}
+h2.acentcom {
+  background-color: #395cc6;
+  border-color: #0a4882;
+}
+
 div.awatchful {
   border-color: #9b56f4;
 }
