@@ -33295,10 +33295,11 @@
 /area/station/turret_protected/ai_upload)
 "gEi" = (
 /obj/machinery/firealarm/directional/south,
-/obj/item/storage/wall/office{
-	dir = 8;
-	pixel_x = 32;
-	pixel_y = 0
+/obj/machinery/light_switch/east{
+	pixel_y = 4
+	},
+/obj/blind_switch/east{
+	pixel_y = -4
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
@@ -35242,7 +35243,10 @@
 "jah" = (
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/security/alt{
+	req_access_txt = "1";
+	id = "court_door"
+	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "jaj" = (
@@ -36485,16 +36489,15 @@
 /turf/space/fluid,
 /area/space)
 "kwD" = (
-/obj/machinery/light_switch/west{
-	pixel_y = 4
-	},
-/obj/blind_switch/west{
-	pixel_y = -4
-	},
 /obj/disposalpipe/junction{
 	dir = 1;
 	icon_state = "pipe-j2";
 	name = "factory pipe"
+	},
+/obj/item/storage/wall/office{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
