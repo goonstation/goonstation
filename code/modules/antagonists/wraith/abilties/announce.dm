@@ -8,7 +8,7 @@
 
 	cast()
 		..()
-		var/message = tgui_input_text(src.holder.owner, "What would you like to whisper to everyone?", name)
+		var/message = tgui_input_text(src.holder.owner, "What would you like to announce to everyone?", name)
 		if (!message)
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
