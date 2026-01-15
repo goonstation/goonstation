@@ -66,7 +66,7 @@
 	message.maptext_variables["maptext_y"] -= rand(12, 24)
 
 	if (isabomination(changeling_ability_holder.owner) && istype(message.speaker, /mob/dead/target_observer/hivemind_observer))
-		message.speaker.say(message.content, message_params = list("output_module_override" = SPEECH_OUTPUT_SPOKEN_HIVEMIND))
+		message.output_module_override = SPEECH_OUTPUT_SPOKEN_HIVEMIND
 	. = ..()
 
 

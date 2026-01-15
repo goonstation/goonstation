@@ -86,6 +86,21 @@ var/global/list/players = list()
 			src.client = null
 		..()
 
+	///Attempt to guarantee a player ID is loaded from the API, should only be relevant for offline players since auth handles it otherwise
+	proc/fetch_player_id()
+		if (src.id)
+			return
+		//helo yes this is mild API abuse but there isn't a dedicated "get player ID" route so I'm piggybacking on the comp ID one for now
+		var/datum/apiModel/PlayerCompIdsResource/playerCompIds
+		try
+			var/datum/apiRoute/players/compids/get/getPlayerCompIds = new
+			getPlayerCompIds.queryParams = list("ckey" = src.ckey)
+			playerCompIds = apiHandler.queryAPI(getPlayerCompIds)
+
+		catch
+			CRASH("Failed to fetch player ID for ckey [src.ckey]")
+		src.id = playerCompIds.latest_connection.player_id
+
 	/// stuff that should only be done when the client is known to be valid
 	proc/on_client_authenticated()
 		if (src.ckey in mentors)

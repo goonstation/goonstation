@@ -112,6 +112,7 @@
 	ship_uninstall()
 		ship.ClearSpecificOverlays("engine")
 		src.engine_icon = null // In case the next vehicle does not have an engine overlay
+		ship.flying = FALSE
 		..()
 
 	proc/startup_finished()
