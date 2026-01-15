@@ -133,6 +133,7 @@ export const Vendors = () => {
                       <Button.Input
                         value={name}
                         onCommit={(value) => act('rename', { name: value })}
+                        maxLength={128}
                         buttonText={name}
                       />
                     </>

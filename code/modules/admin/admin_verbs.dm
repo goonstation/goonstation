@@ -483,8 +483,6 @@ var/list/admin_verbs = list(
 		/client/proc/clear_string_cache,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
-		/client/proc/rebuild_flow_networks,
-		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
 		/client/proc/toggle_server_rebuild,
 		/client/proc/cmd_modify_respawn_variables,
@@ -1571,7 +1569,7 @@ var/list/fun_images = list()
 		"}
 		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516)
+		if (src.byond_version >= 516 && global.tgui_process)
 			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
 		else
 			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)

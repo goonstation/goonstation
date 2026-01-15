@@ -14319,6 +14319,12 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/crew_quarters/catering)
+"bKJ" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/inner/central)
 "bKO" = (
 /obj/shrub{
 	dir = 4
@@ -44092,6 +44098,12 @@
 /obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"tlv" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/arcade/dungeon)
 "tma" = (
 /turf/simulated/floor/white/checker2{
 	dir = 8
@@ -86348,7 +86360,7 @@ rJf
 rJf
 rJf
 rJf
-vzk
+tlv
 hPX
 vzk
 aaa
@@ -86650,7 +86662,7 @@ mUe
 oLx
 usb
 mNs
-vzk
+tlv
 hPX
 vzk
 aaa
@@ -86952,7 +86964,7 @@ edp
 tPS
 edp
 edp
-vzk
+tlv
 hPX
 vzk
 aaa
@@ -87254,7 +87266,7 @@ edp
 kvI
 oJE
 hKE
-vzk
+tlv
 hPX
 vzk
 aaa
@@ -87556,7 +87568,7 @@ lyh
 oLx
 rxV
 rvd
-vzk
+tlv
 hPX
 vzk
 aaa
@@ -87858,7 +87870,7 @@ oLx
 oLx
 rJf
 rJf
-vzk
+tlv
 hPX
 vzk
 ajz
@@ -88160,7 +88172,7 @@ aIt
 azU
 azU
 aYA
-vzk
+bKJ
 hPX
 vzk
 aaa
@@ -88462,7 +88474,7 @@ aBL
 wrG
 lKr
 aNo
-vzk
+bKJ
 hPX
 vzk
 aaa
@@ -88764,7 +88776,7 @@ aPr
 hll
 mmb
 azU
-vzk
+bKJ
 hPX
 vzk
 aaa
@@ -89066,7 +89078,7 @@ aPr
 hll
 mmb
 azO
-vzk
+bKJ
 hPX
 vzk
 aaa
@@ -89368,7 +89380,7 @@ aPr
 hll
 mmb
 azU
-vzk
+bKJ
 hPX
 vzk
 aaa
@@ -89670,7 +89682,7 @@ aPr
 hll
 mmb
 aDm
-vzk
+bKJ
 hPX
 vzk
 aaa
@@ -89972,7 +89984,7 @@ aPr
 uSn
 mmb
 aDm
-vzk
+bKJ
 hPX
 vzk
 aaa
@@ -90274,7 +90286,7 @@ aWh
 hll
 mqE
 nml
-vzk
+bKJ
 hPX
 vzk
 bbA
