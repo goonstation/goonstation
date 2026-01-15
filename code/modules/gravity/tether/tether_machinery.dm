@@ -17,6 +17,7 @@
 	src.update_ma_graviton()
 	src.update_ma_screen()
 	src.update_ma_dials()
+	src.update_ma_status()
 	src.UpdateIcon()
 
 /obj/machinery/gravity_tether/was_deconstructed_to_frame(mob/user)
