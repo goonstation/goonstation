@@ -921,7 +921,8 @@ proc/get_default_flock()
 
 	var/atom/M
 	for(var/enemy in src.enemies)
-		M = src.enemies[enemy]["mob"]
+		var/list/enemy_stats = src.enemies[enemy]
+		M = enemy_stats["mob"]
 		if (QDELETED(M))
 			src.removeEnemy(M)
 	for(var/atom/ignore as anything in src.ignores)
