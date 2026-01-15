@@ -761,6 +761,50 @@ h2.awatchful {
   border-color: #9b56f4;
 }
 
+div.awraith {
+  border-color: #684d52;
+}
+h1.awraith {
+  background-color: #684d52;
+}
+h2.awraith {
+  background-color: #a53c3c;
+  border-color: #684d52;
+}
+
+div.atrick {
+  border-color: #8766fc;
+}
+h1.atrick {
+  background-color: #8766fc;
+}
+h2.atrick {
+  background-color: #aa92ff;
+  border-color: #8766fc;
+}
+
+div.aplague {
+  border-color: #4a9e12;
+}
+h1.aplague {
+  background-color: #4a9e12;
+}
+h2.aplague {
+  background-color: #6ac230;
+  border-color: #4a9e12;
+}
+
+div.aharb {
+  border-color: #e4a41a;
+}
+h1.aharb {
+  background-color: #e4a41a;
+}
+h2.aharb {
+  background-color: #cab03c;
+  border-color: #e4a41a;
+}
+
 div.aegeria {
   border-color: #c64d50;
 }

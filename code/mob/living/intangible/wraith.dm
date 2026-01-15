@@ -450,6 +450,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 		src.addAbility(/datum/targetable/wraithAbility/whisper)
 		src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
 		src.addAbility(/datum/targetable/wraithAbility/blood_writing)
+		src.addAbility(/datum/targetable/wraithAbility/psychic_announcement)
 		src.addAbility(/datum/targetable/wraithAbility/haunt)
 		src.addAbility(/datum/targetable/wraithAbility/toggle_deadchat)
 
