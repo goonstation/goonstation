@@ -1018,7 +1018,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 		if(act == "scream")
 			if (src.mob.emote_check(voluntary, 3 SECONDS))
-				message = "<B>[src]</B> moans!"
+				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 			return message
 		else
@@ -1095,7 +1095,7 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 		var/message = null
 		if(act == "scream")
 			if (src.mob.emote_check(voluntary, 3 SECONDS))
-				message = "<B>[src]</B> moans!"
+				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 			return message
 		else
@@ -1351,7 +1351,7 @@ TYPEINFO(/datum/mutantrace/abomination)
 		switch (act)
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 3 SECONDS))
-					message = SPAN_ALERT("<B>[src] screeches!</B>")
+					message = SPAN_ALERT("<B>[src.mob] screeches!</B>")
 					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 		return message
 
@@ -1470,11 +1470,11 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 		switch(act)
 			if("howl", "scream")
 				if (src.mob.emote_check(voluntary, 3 SECONDS))
-					message = SPAN_ALERT("<B>[src] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B>")
+					message = SPAN_ALERT("<B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B>")
 					playsound(src.mob, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 			if("burp")
 				if (src.mob.emote_check(voluntary, 1 SECONDS))
-					message = "<B>[src]</B> belches."
+					message = "<B>[src.mob]</B> belches."
 					playsound(src.mob, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 		return message
 
@@ -1626,37 +1626,37 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 		switch(act)
 			if("scratch")
 				if (!src.mob.restrained())
-					. = "<B>[src]</B> scratches."
+					. = "<B>[src.mob]</B> scratches."
 			if("whimper")
 				if (!muzzled)
-					. = "<B>[src]</B> whimpers."
+					. = "<B>[src.mob]</B> whimpers."
 			if("yawn")
 				if (!muzzled)
-					. = "<b>[src]</B> yawns."
+					. = "<b>[src.mob]</B> yawns."
 			if("roar")
 				if (!muzzled)
-					. = "<B>[src]</B> roars."
+					. = "<B>[src.mob]</B> roars."
 			if("tail")
-				. = "<B>[src]</B> waves [his_or_her(src.mob)] tail."
+				. = "<B>[src.mob]</B> waves [his_or_her(src.mob)] tail."
 			if("paw")
 				if (!src.mob.restrained())
-					. = "<B>[src]</B> flails [his_or_her(src.mob)] paw."
+					. = "<B>[src.mob]</B> flails [his_or_her(src.mob)] paw."
 			if("scretch")
 				if (!muzzled)
-					. = "<B>[src]</B> scretches."
+					. = "<B>[src.mob]</B> scretches."
 			if("sulk")
-				. = "<B>[src]</B> sulks down sadly."
+				. = "<B>[src.mob]</B> sulks down sadly."
 			if("roll")
 				if (!src.mob.restrained())
-					. = "<B>[src]</B> rolls."
+					. = "<B>[src.mob]</B> rolls."
 			if("gnarl")
 				if (!muzzled)
-					. = "<B>[src]</B> gnarls and shows [his_or_her(src.mob)] teeth.."
+					. = "<B>[src.mob]</B> gnarls and shows [his_or_her(src.mob)] teeth.."
 			if("jump")
-				. = "<B>[src]</B> jumps!"
+				. = "<B>[src.mob]</B> jumps!"
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 5 SECONDS))
-					. = "<B>[src]</B> screams!"
+					. = "<B>[src.mob]</B> screams!"
 					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
 				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
@@ -1666,38 +1666,38 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 					for(var/mob/living/M in src.mob.loc)
 						if(M == src.mob || !M.lying)
 							continue
-						. = SPAN_ALERT("<B>[src]</B> farts in [M]'s face!")
+						. = SPAN_ALERT("<B>[src.mob]</B> farts in [M]'s face!")
 						fart_on_other = 1
 						break
 					if(!fart_on_other)
 						switch(rand(1, 27))
-							if(1) . = "<B>[src]</B> farts. It smells like... bananas. Huh."
-							if(2) . = "<B>[src]</B> goes apeshit! Or at least smells like it."
-							if(3) . = "<B>[src]</B> releases an unbelievably foul fart."
-							if(4) . = "<B>[src]</B> chimpers out of its ass."
-							if(5) . = "<B>[src]</B> farts and looks incredibly amused about it."
-							if(6) . = "<B>[src]</B> unleashes the king kong of farts!"
-							if(7) . = "<B>[src]</B> farts and does a silly little dance."
-							if(8) . = "<B>[src]</B> farts gloriously."
-							if(9) . = "<B>[src]</B> plays the song of its people. With farts."
-							if(10) . = "<B>[src]</B> screeches loudly and wildly flails its arms in a poor attempt to conceal a fart."
-							if(11) . = "<B>[src]</B> clenches and bares its teeth, but only manages a sad squeaky little fart."
-							if(12) . = "<B>[src]</B> unleashes a chain of farts by beating its chest."
-							if(13) . = "<B>[src]</B> farts so hard a bunch of fur flies off its ass."
-							if(14) . = "<B>[src]</B> does an impression of a baboon by farting until its ass turns red."
-							if(15) . = "<B>[src]</B> farts out a choking, hideous stench!"
-							if(16) . = "<B>[src]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterical laughter."
-							if(17) . = "<B>[src]</B> farts megalomaniacally."
-							if(18) . = "<B>[src]</B> rips a floor-rattling fart. Damn."
-							if(19) . = "<B>[src]</B> farts. What a damn dirty ape!"
-							if(20) . = "<B>[src]</B> farts. It smells like a nuclear engine. Not that you know what that smells like."
-							if(21) . = "<B>[src]</B> performs a complex monkey divining ritual. By farting."
-							if(22) . = "<B>[src]</B> farts out the smell of the jungle. The jungle smells gross as hell apparently."
-							if(23) . = "<B>[src]</B> farts up a methane monsoon!"
-							if(24) . = "<B>[src]</B> unleashes an utterly rancid stink from its ass."
-							if(25) . = "<B>[src]</B> makes a big goofy grin and farts loudly."
-							if(26) . = "<B>[src]</B> hovers off the ground for a moment using a powerful fart."
-							if(27) . = "<B>[src]</B> plays drums on its ass while farting."
+							if(1) . = "<B>[src.mob]</B> farts. It smells like... bananas. Huh."
+							if(2) . = "<B>[src.mob]</B> goes apeshit! Or at least smells like it."
+							if(3) . = "<B>[src.mob]</B> releases an unbelievably foul fart."
+							if(4) . = "<B>[src.mob]</B> chimpers out of its ass."
+							if(5) . = "<B>[src.mob]</B> farts and looks incredibly amused about it."
+							if(6) . = "<B>[src.mob]</B> unleashes the king kong of farts!"
+							if(7) . = "<B>[src.mob]</B> farts and does a silly little dance."
+							if(8) . = "<B>[src.mob]</B> farts gloriously."
+							if(9) . = "<B>[src.mob]</B> plays the song of its people. With farts."
+							if(10) . = "<B>[src.mob]</B> screeches loudly and wildly flails its arms in a poor attempt to conceal a fart."
+							if(11) . = "<B>[src.mob]</B> clenches and bares its teeth, but only manages a sad squeaky little fart."
+							if(12) . = "<B>[src.mob]</B> unleashes a chain of farts by beating its chest."
+							if(13) . = "<B>[src.mob]</B> farts so hard a bunch of fur flies off its ass."
+							if(14) . = "<B>[src.mob]</B> does an impression of a baboon by farting until its ass turns red."
+							if(15) . = "<B>[src.mob]</B> farts out a choking, hideous stench!"
+							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterical laughter."
+							if(17) . = "<B>[src.mob]</B> farts megalomaniacally."
+							if(18) . = "<B>[src.mob]</B> rips a floor-rattling fart. Damn."
+							if(19) . = "<B>[src.mob]</B> farts. What a damn dirty ape!"
+							if(20) . = "<B>[src.mob]</B> farts. It smells like a nuclear engine. Not that you know what that smells like."
+							if(21) . = "<B>[src.mob]</B> performs a complex monkey divining ritual. By farting."
+							if(22) . = "<B>[src.mob]</B> farts out the smell of the jungle. The jungle smells gross as hell apparently."
+							if(23) . = "<B>[src.mob]</B> farts up a methane monsoon!"
+							if(24) . = "<B>[src.mob]</B> unleashes an utterly rancid stink from its ass."
+							if(25) . = "<B>[src.mob]</B> makes a big goofy grin and farts loudly."
+							if(26) . = "<B>[src.mob]</B> hovers off the ground for a moment using a powerful fart."
+							if(27) . = "<B>[src.mob]</B> plays drums on its ass while farting."
 					playsound(src.mob.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
 					src.mob.remove_stamina(STAMINA_DEFAULT_FART_COST)
@@ -2016,13 +2016,13 @@ TYPEINFO(/datum/mutantrace/amphibian)
 		switch (act)
 			if ("scream","howl","laugh")
 				if (src.mob.emote_check(voluntary, 3 SECONDS))
-					message = SPAN_ALERT("<B>[src] makes an awful noise!</B>")
+					message = SPAN_ALERT("<B>[src.mob] makes an awful noise!</B>")
 					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return message
 
 			if("burp","fart","gasp")
 				if (src.mob.emote_check(voluntary, 1 SECOND))
-					message = "<B>[src]</B> croaks."
+					message = "<B>[src.mob]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return message
 
@@ -2030,7 +2030,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Amphibian-specific clothes filters activated." : "Disabled amphibian-specific clothes filters.")
 				src.mob.update_clothing()
-				message = "<B>[src]</B> adjusts [his_or_her(src.mob)] clothing."
+				message = "<B>[src.mob]</B> adjusts [his_or_her(src.mob)] clothing."
 				return message
 			else
 				..()
@@ -2355,7 +2355,7 @@ TYPEINFO(/datum/mutantrace/cow)
 				if (src.mob.bioHolder.HasEffect("mute"))
 					return // use muted scream emote handling
 				if (src.mob.emote_check(voluntary, 5 SECONDS))
-					. = "<B>[src]</B> moos!"
+					. = "<B>[src.mob]</B> moos!"
 					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
 				if (src.mob.emote_check(voluntary))
@@ -2364,7 +2364,7 @@ TYPEINFO(/datum/mutantrace/cow)
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
 				src.mob.update_clothing()
-				. = "<B>[src]</B> adjusts [his_or_her(src.mob)] clothing."
+				. = "<B>[src.mob]</B> adjusts [his_or_her(src.mob)] clothing."
 			else
 				.= ..()
 
@@ -2380,25 +2380,25 @@ TYPEINFO(/datum/mutantrace/cow)
 				can_output = 1
 
 		if (!can_output)
-			.= "<B>[src]</B> strains, but fails to output milk!"
+			.= "<B>[src.mob]</B> strains, but fails to output milk!"
 		else if (toilet && (src.mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in src.mob.loc)
-				.= "<B>[src]</B> dispenses milk into the toilet. What a waste."
+				.= "<B>[src.mob]</B> dispenses milk into the toilet. What a waste."
 				T.clogged += 0.1
 				break
 		else if (beaker)
-			.= pick("<B>[src]</B> takes aim and dispenses some milk into the beaker.", "<B>[src]</B> takes aim and dispenses milk into the beaker!", "<B>[src]</B> fills the beaker with milk!")
+			.= pick("<B>[src.mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[src.mob]</B> takes aim and dispenses milk into the beaker!", "<B>[src.mob]</B> fills the beaker with milk!")
 			transfer_blood(src.mob, beaker, 10)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container(TRUE))
-				.= (SPAN_ALERT("<B>[src] dispenses milk into [milk_target].</B>"))
+				.= (SPAN_ALERT("<B>[src.mob] dispenses milk into [milk_target].</B>"))
 				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return
 
 			// possibly change the text colour to the gray emote text
-			.= (pick("<B>[src]</B> milk fall out.", "<B>[src]</B> makes a milk puddle on the floor."))
+			.= (pick("<B>[src.mob]</B> milk fall out.", "<B>[src.mob]</B> makes a milk puddle on the floor."))
 
 			var/turf/T = get_turf(src.mob)
 			bleed(src.mob, 10, 3, T)
@@ -2470,7 +2470,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					playsound(src.mob, "sound/voice/screams/[voice_override].ogg", 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					. = list("<B>[src]</B> growls!", "<I>growls</I>")
+					. = list("<B>[src.mob]</B> growls!", "<I>growls</I>")
 			if ("sneeze")
 				if (src.mob.emote_check(voluntary, 2 SECONDS))
 					. = src.sneeze()
@@ -2483,7 +2483,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			if ("wheeze")
 				if (src.mob.emote_check(voluntary, 2 SECONDS))
 					playsound(src.mob, 'sound/voice/pug_wheeze.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					. = list("<B>[src]</B> wheezes.", "<I>wheezes</I>")
+					. = list("<B>[src.mob]</B> wheezes.", "<I>wheezes</I>")
 			else
 				. = ..()
 
@@ -2499,7 +2499,7 @@ TYPEINFO(/datum/mutantrace/pug)
 
 		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		var/adjective = pick("astutely", "discerningly", "intently", "casually", "doggedly", "intriguingly")
-		. = list("<B>[src]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
+		. = list("<B>[src.mob]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
 
 		var/sleuth_text = ""
 		if(A.forensic_holder)
@@ -2520,7 +2520,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	proc/sneeze()
 
 		playsound(src.mob, 'sound/voice/pug_sneeze.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src]</B> sneezes.", "<I>sneezes</I>")
+		. = list("<B>[src.mob]</B> sneezes.", "<I>sneezes</I>")
 		animate(src.mob, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 		animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
 		animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
@@ -2528,12 +2528,12 @@ TYPEINFO(/datum/mutantrace/pug)
 	proc/sniff()
 
 		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src]</B> sniffs.", "<I>sniffs</I>")
+		. = list("<B>[src.mob]</B> sniffs.", "<I>sniffs</I>")
 
 	proc/snore()
 
 		playsound(src.mob, 'sound/voice/snore.ogg', rand(5,10) * 10, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src]</B> snores.", "<I>snores</I>")
+		. = list("<B>[src.mob]</B> snores.", "<I>snores</I>")
 		src.mob.AddOverlays(snore_bubble, "snore_bubble")
 		SPAWN(1.5 SECONDS)
 			src.mob.ClearSpecificOverlays("snore_bubble")
@@ -2544,7 +2544,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			return
 
 		src.mob.throw_at(get_turf(item), 1, 1)
-		src.mob.visible_message(SPAN_ALERT("[src] staggers."))
+		src.mob.visible_message(SPAN_ALERT("[src.mob] staggers."))
 		src.mob.emote("woof")
 
 /datum/mutantrace/chicken
@@ -2564,7 +2564,7 @@ TYPEINFO(/datum/mutantrace/pug)
 		switch(act)
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 5 SECONDS))
-					. = "<B>[src]</B> BWAHCAWCKs!"
+					. = "<B>[src.mob]</B> BWAHCAWCKs!"
 					playsound(src.mob, 'sound/voice/screams/chicken_bawk.ogg', 50, 0, 0, src.mob.get_age_pitch())
 
 /datum/mutantrace/cyberman
