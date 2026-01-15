@@ -1477,8 +1477,10 @@ proc/debug_map_apc_count(delim,zlim)
 		OnEnabled(var/client/C)
 			usr = C.mob
 			src.hashmap = global.tgui_input_list(C, "Which spatial hashmap do you wish to view?", "Select Spatial Hashmap", global.by_type[/datum/spatial_hashmap])
-			src.norm = global.tgui_input_list(C, "Select a norm to use", "Norm Selection", list("Manhattan", "Supremum", "Exact Supremum"))
-			src.range = global.tgui_input_number(C, "Enter a range", "Range Selection", 5, 100, 1)
+			src.norm = global.tgui_input_list(C, "Select a norm to use", "Norm Selection", list("Manhattan", "Supremum", "Vistarget Supremum", "Exact Supremum", "Point", "Vistarget Point"))
+
+			if ((src.norm != "Point") && (src.norm != "Vistarget Point"))
+				src.range = global.tgui_input_number(C, "Enter a range", "Range Selection", 5, 100, 1)
 
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			if (isnull(src.hashmap))
@@ -1491,8 +1493,14 @@ proc/debug_map_apc_count(delim,zlim)
 					count = length(src.hashmap.fast_manhattan(theTurf, src.range))
 				if ("Supremum")
 					count = length(src.hashmap.supremum(theTurf, src.range))
+				if ("Vistarget Supremum")
+					count = length(src.hashmap.vistarget_supremum(theTurf, src.range))
 				if ("Exact Supremum")
 					count = length(src.hashmap.exact_supremum(theTurf, src.range))
+				if ("Point")
+					count = length(src.hashmap.point(theTurf))
+				if ("Vistarget Point")
+					count = length(src.hashmap.vistarget_point(theTurf))
 
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)

@@ -1982,6 +1982,7 @@
 #include "code\modules\sound\soundCache.dm"
 #include "code\modules\spatial_hashing\_spatial_hashmap_parent.dm"
 #include "code\modules\spatial_hashing\clients.dm"
+#include "code\modules\spatial_hashing\listeners.dm"
 #include "code\modules\spatial_hashing\manual.dm"
 #include "code\modules\spatial_hashing\ranch_animals.dm"
 #include "code\modules\speech\core.dm"
