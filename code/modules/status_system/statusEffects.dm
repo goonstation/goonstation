@@ -229,6 +229,11 @@
 		unique = 1
 		change = 2
 
+		high_gforce
+			name = "Pumped-er"
+			id = "fitness_stam_regen_2"
+			change = 4
+
 	staminaregen/darkness
 		id = "darkness_stam_regen"
 		name = "Dark vigor"
@@ -1266,6 +1271,11 @@
 			. = ..()
 			if(hascall(owner, "remove_stam_mod_max"))
 				owner:remove_stam_mod_max("fitness_max")
+
+		fitness_staminamax_high_gforce
+		id = "fitness_stam_max_2"
+		name = "Buffer"
+		change = 20
 
 	handcuffed
 		id = "handcuffed"
