@@ -3451,10 +3451,18 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == INGEST)
-					var/mob/living/carbon/human/H = M
 					// People with synth leg can absorb shit with no consequences. Disgusting.
-					if(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT)
-						boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened!","You feel good.")))
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.limbs.r_leg?.kind_of_limb & LIMB_PLANT | H.limbs.l_leg?.kind_of_limb & LIMB_PLANT)
+							boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened!","You feel good.")))
+						else
+							// if not synth leg
+							boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
+							SPAWN(1 SECOND)
+								if(!isdead(M) && volume >= 1)
+									var/vomit_message = SPAN_ALERT("[M] pukes violently!")
+									M.vomit(0, null, vomit_message)
 					else
 						// if not synth leg
 						boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
@@ -3465,7 +3473,7 @@ datum
 				else
 					var/mob/living/carbon/human/H = M
 					// nothing bad happens with synthlegs
-					if(!(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT))
+					if(!(H.limbs.r_leg?.kind_of_limb & LIMB_PLANT | H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
 						boutput(M, SPAN_ALERT("This smells like shit! What the fuck?!"))
 						if (prob(50))
 							boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
@@ -3479,17 +3487,17 @@ datum
 				if (!M) M = holder.my_atom
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(H.limbs.r_leg.kind_of_limb & LIMB_PLANT | H.limbs.l_leg.kind_of_limb & LIMB_PLANT)
-						M.take_toxin_damage(-0.25 * mult)
-				else
-					if(prob(20))
-						if(isliving(M) && probmult(15))
-							var/mob/living/L = M
-							L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
-					if (prob(7))
-						M.emote(pick("twitch","drool","moan"))
-						M.take_toxin_damage(1 * mult)
-						M.nauseate(2)
+					if(H.limbs.r_leg?.kind_of_limb & LIMB_PLANT | H.limbs.l_leg?.kind_of_limb & LIMB_PLANT)
+						H.take_toxin_damage(-0.25 * mult)
+					else
+						if(prob(20))
+							if(isliving(H) && probmult(15))
+								var/mob/living/L = M
+								L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+						if (prob(7))
+							H.emote(pick("twitch","drool","moan"))
+							H.take_toxin_damage(1 * mult)
+							H.nauseate(2)
 				..()
 				return
 
