@@ -197,16 +197,17 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (!M)
 			return
 		SPAWN(0)
-			var/morph = null
-			var/list/options = list(/datum/mutantrace/lizard,
-									/datum/mutantrace/skeleton,
-									/datum/mutantrace/ithillid,
-									/datum/mutantrace/martian,
-									/datum/mutantrace/amphibian,
-									/datum/mutantrace/blob,
-									/datum/mutantrace/cow)
+			var/selection = null
+			var/list/options = list("Lizard" = /datum/mutantrace/lizard,
+									"Skeleton" = /datum/mutantrace/skeleton,
+									"Ithillid" = /datum/mutantrace/ithillid,
+									"Martian" = /datum/mutantrace/martian,
+									"Amphibian" = /datum/mutantrace/amphibian,
+									"Blob" = /datum/mutantrace/blob,
+									"Cow" = /datum/mutantrace/cow)
 
-			morph = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			selection = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			var/datum/mutantrace/morph = options[selection]
 			M.set_mutantrace(morph)
 			if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
 				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
