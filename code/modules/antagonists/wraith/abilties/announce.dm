@@ -12,14 +12,5 @@
 		if (!message)
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
-		var/alert = ALERT_WRAITH
-		if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_harbinger))
-			alert = ALERT_HARBINGER
-		else if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_decay))
-			alert = ALERT_PLAGUEBRINGER
-		else if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster))
-			alert = ALERT_TRICKSTER
-
-
 		command_alert(message, "[src.holder.owner.name]", alert_origin = alert)
 		return CAST_ATTEMPT_SUCCESS

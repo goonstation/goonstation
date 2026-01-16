@@ -11,9 +11,6 @@
 #define ALERT_GENERAL "Frontier Authority Update"
 #define ALERT_STATION "Automated Mainframe Alert"
 #define ALERT_WRAITH "Wraith Screech"
-#define ALERT_HARBINGER "Harbinger Screech"
-#define ALERT_PLAGUEBRINGER "Plaguebringer Screech"
-#define ALERT_TRICKSTER "Trickster Screech"
 
 // used to style player-made announcements; the titles don't actually show in-game
 #define ALERT_DEPARTMENT "Department Announcement"
@@ -32,6 +29,3 @@
 #define ALERT_CLOWN_CLASS "aclown"
 #define ALERT_SYNDICATE_CLASS "asyn"
 #define ALERT_WRAITH_CLASS "awraith"
-#define ALERT_HARBINGER_CLASS "aharb"
-#define ALERT_PLAGUEBRINGER_CLASS "aplague"
-#define ALERT_TRICKSTER_CLASS "atrick"
