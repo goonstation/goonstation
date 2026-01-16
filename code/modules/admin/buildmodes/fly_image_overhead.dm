@@ -83,6 +83,10 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		var/random_dir = pick(NORTH, SOUTH, EAST, WEST)
 		var/new_dir
 		if (!src.target_loc || !src.dir_input)
+			boutput(usr, "No target location and/or direction input found.")
+			return
+		if (!src.audio && !src.image)
+			boutput(usr, "No audio or image file found.")
 			return
 
 		if (src.dir_input == "Random")
@@ -214,7 +218,8 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		var/sound/stopsound = sound(null, wait = 0, channel=1020)
 		world << stopsound
 		for (var/mob/image_pilot/pilotobj in world)
-			pilotobj.play()
+			if (pilotobj.loopsound)
+				pilotobj.play()
 		..()
 
 	proc/play()
