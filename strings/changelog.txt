@@ -1,5 +1,9 @@
 
 (t)thu jan 15 26
+(u)Microoowaaave
+(p)24976
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Adds clown noses, found in the clown hole and sold by Geoff!
 (u)Lord_Earthfire
 (p)25438
 (e)🪲📦|C-Bug, A-Game-Objects
