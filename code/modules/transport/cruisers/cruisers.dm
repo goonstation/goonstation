@@ -848,21 +848,33 @@
 
 	Entered(var/atom/movable/A, atom/oldloc)
 		. = ..()
-		if(!src.is_upper || !ismob(A))
+		if( !ismob(A) || !src.ship)
 			return
 		var/mob/user = A
-		src.ship.subscribe_interior(user)
-		user.set_eye(src.ship)
+
+		// make absolutely SURE they stay synced
+		if (!src.is_upper)
+			src.ship.unsubscribe_interior(user)
+			user.set_eye(null)
+		else
+			src.ship.subscribe_interior(user)
+			user.set_eye(src.ship)
 
 	Exited(atom/movable/A)
 		. = ..()
-		if(!ismob(A))
+		if( !ismob(A) || !src.ship)
 			return
 		if(get_area(A) == src)
 			return
 		var/mob/user = A
-		src.ship.unsubscribe_interior(user)
-		user.set_eye(null)
+
+		// make absolutely SURE they stay synced
+		if (src.is_upper || !istype(get_area(A),/area/cruiser))
+			src.ship.unsubscribe_interior(user)
+			user.set_eye(null)
+		else
+			src.ship.subscribe_interior(user)
+			user.set_eye(src.ship)
 
 /area/cruiser/syndicate/lower
 	name = "Syndicate cruiser interior"

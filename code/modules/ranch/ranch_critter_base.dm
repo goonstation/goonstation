@@ -460,14 +460,16 @@
 /datum/lifeprocess/ranch/crowding
 	process()
 		var/mob/living/critter/small_animal/ranch_base/C = critter_owner
-		if(istype(C))
-			if(isalive(C))
-				var/turf/T = get_turf(C)
-				var/num_neighbors = length(get_singleton(/datum/spatial_hashmap/by_type/alive_mob/ranch_animals).get_nearby_atoms_exact(T, 5))
-				if(num_neighbors > C.crowded_minimum)
-					C.change_happiness(-(num_neighbors-C.crowded_minimum)*C.crowding_coefficient)
-					if(prob(20))
-						C.visible_message(SPAN_ALERT("[C] looks upset at their crowded conditions."))
+		if (!istype(C) || !isalive(C))
+			return
+
+		var/num_neighbors = length(global.ranch_animal_hashmap.exact_supremum(get_turf(C), 5))
+		if (num_neighbors <= C.crowded_minimum)
+			return
+
+		C.change_happiness((C.crowded_minimum - num_neighbors) * C.crowding_coefficient)
+		if (prob(20))
+			C.visible_message(SPAN_ALERT("[C] looks upset at their crowded conditions."))
 
 /datum/lifeprocess/ranch/hunger
 	process()
