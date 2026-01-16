@@ -3354,24 +3354,30 @@
 		var/is_currently_exploding = FALSE //so it doesn't explode multiple times during the slight activation delay
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			if(src.is_currently_exploding)
+			if (src.is_currently_exploding)
 				return
+
+			if (istype(holder.my_atom.loc, /obj/disposalholder) || istype(holder.my_atom.loc, /obj/machinery/chemicompiler_stationary))
+				return
+
 			var/turf/T = get_turf(holder.my_atom)
-			if (istype(T) && T.is_lit(0.1) && !istype(holder.my_atom.loc, /obj/disposalholder))
-				var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
-				is_currently_exploding = TRUE
-				shine.set_loc(T)
-				playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
-				SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
-					T = get_turf(holder.my_atom) //may have moved
-					qdel(shine)
-					holder.del_reagent("photophosphide")
-					explosion(holder.my_atom, T, -1,-1,0,1)
-					playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
-					fireflash(T, 0, chemfire = CHEM_FIRE_RED)
-					if(istype(holder.my_atom, /obj))
-						var/obj/container = holder.my_atom
-						container.shatter_chemically(projectiles = TRUE)
+			if (!istype(T) || !T.is_lit(0.1))
+				return
+
+			var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
+			is_currently_exploding = TRUE
+			shine.set_loc(T)
+			playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
+			SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+				T = get_turf(holder.my_atom) //may have moved
+				qdel(shine)
+				holder.del_reagent("photophosphide")
+				explosion(holder.my_atom, T, -1,-1,0,1)
+				playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
+				fireflash(T, 0, chemfire = CHEM_FIRE_RED)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 
 	photophosphide_decay //decays in low amounts
 		name = "Photophosphide Decay"

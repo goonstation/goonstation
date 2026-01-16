@@ -1841,3 +1841,29 @@ TYPEINFO(/obj/item/ammo/power_cell/lasergat)
 	New()
 		..()
 		desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm. It has [src.max_charge]PU."
+
+	update_icon()
+		var/list/ret = list()
+		overlays = null
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 33)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			switch(ratio)
+				if(33)
+					overlays += "burst_laspistol-33"
+				if(66)
+					overlays += "burst_laspistol-66"
+				if(99)
+					overlays += "burst_laspistol-100"
+			return
+
+/obj/item/ammo/power_cell/siren_orb
+	name = "Siren Orb"
+	desc = "You've somehow dislodged this from the resonator. Good Job!"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "siren_orb"
+	charge = 400
+	max_charge = 400
+	recharge_rate = 10
+

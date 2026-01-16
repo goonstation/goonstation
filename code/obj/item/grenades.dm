@@ -1851,6 +1851,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
 	duration_put = 0.5 SECONDS //crime
+	can_arcplate = FALSE
 
 /obj/item/pipebomb/frame
 	name = "pipe frame"
