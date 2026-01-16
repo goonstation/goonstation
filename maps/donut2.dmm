@@ -27800,6 +27800,26 @@
 /obj/machinery/light/traffic_light/research_station,
 /turf/space,
 /area/space)
+"jYi" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/rust/jen,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/clown)
 "jYr" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Security East";
@@ -32349,25 +32369,6 @@
 	dir = 1
 	},
 /area/station/science/hall)
-"mBp" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -8;
-	pixel_y = 14
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/clown)
 "mBV" = (
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/cobryl,
@@ -80419,7 +80420,7 @@ xbF
 swi
 myA
 kXC
-mBp
+jYi
 eAg
 aaa
 adQ

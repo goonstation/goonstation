@@ -100,6 +100,19 @@
 "aav" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/nw)
+"aax" = (
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/turretid/armory_perimeter{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "aaz" = (
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
@@ -838,19 +851,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"akk" = (
-/obj/decal/tile_edge/line/red{
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/decal/cleanable/dirt,
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "aky" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
@@ -10544,17 +10544,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"dgL" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 8;
-	name = "Armory Outer Perimeter Security Cameras"
-	},
-/obj/decal/tile_edge/line/red{
-	dir = 6;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "dgS" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -14155,6 +14144,11 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"env" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/armory)
 "enF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14271,17 +14265,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"epF" = (
-/obj/decal/tile_edge/line/red{
-	dir = 10;
-	icon_state = "line2"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/incandescent/warm/very,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "epL" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/floorpillstatue,
@@ -19180,6 +19163,18 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
+"fUg" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "fUz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23344,12 +23339,34 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"hkk" = (
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "hkw" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/psych,
 /obj/item/clothing/mask/horse_mask,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
+"hky" = (
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/item/device/radio/intercom/bridge,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "hkC" = (
 /obj/lattice/auto/turf_attaching,
 /turf/space,
@@ -24819,6 +24836,19 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
+"hHm" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/storage/goodybag{
+	pixel_y = -6
+	},
+/obj/item/peripheral/videocard{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "hHo" = (
 /obj/decal/stripe_caution,
 /obj/machinery/clonepod,
@@ -26508,18 +26538,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/station/security/main)
-"imu" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/hologram_expansion/clown,
-/obj/item/storage/goodybag{
-	pixel_y = -6
-	},
-/obj/item/peripheral/videocard{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "imB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31993,19 +32011,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/quarters)
-"jUU" = (
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/turretid/armory_perimeter{
-	pixel_y = 28
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "jUW" = (
 /obj/machinery/disposal/small{
 	dir = 4
@@ -33380,17 +33385,6 @@
 /obj/mapping_helper/access/maint,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/asylum/medbay)
-"kqH" = (
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/item/device/radio/intercom/bridge,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "kqI" = (
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
@@ -34953,6 +34947,13 @@
 /obj/item/storage/firstaid/mental,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
+"kQY" = (
+/obj/stool,
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "kRc" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light/emergency{
@@ -38476,6 +38477,15 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"lTN" = (
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/table/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "lTO" = (
 /turf/simulated/floor/blue/corner{
 	dir = 1
@@ -52710,6 +52720,19 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"qsJ" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "qsQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/mapping_helper/firedoor_spawn,
@@ -53178,15 +53201,6 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/podbay)
-"qzY" = (
-/obj/decal/tile_edge/line/red{
-	dir = 9;
-	icon_state = "line2"
-	},
-/obj/table/auto,
-/obj/machinery/recharger,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "qAd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment{
@@ -54436,6 +54450,23 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"qUI" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/power/apc/autoname_north{
+	areastring = "Armory Outer Perimeter"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "qUL" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/black/grime,
@@ -54486,6 +54517,17 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"qVR" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8;
+	name = "Armory Outer Perimeter Security Cameras"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "qVS" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/morgue{
@@ -56544,18 +56586,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"rCK" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/stripe_delivery,
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "rCQ" = (
 /obj/table/glass/auto,
 /obj/machinery/computer/television/small{
@@ -62711,11 +62741,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"twh" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/cable,
-/turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
 "two" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet/red/fancy/edge{
@@ -65960,23 +65985,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"uwT" = (
-/obj/decal/tile_edge/line/red{
-	dir = 5;
-	icon_state = "line2"
-	},
-/obj/machinery/power/apc/autoname_north{
-	areastring = "Armory Outer Perimeter"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/decal/cleanable/dirt,
-/obj/machinery/light/incandescent/warm/very{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "uwY" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -76829,13 +76837,6 @@
 "xCJ" = (
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/nw)
-"xCP" = (
-/obj/stool,
-/obj/decal/tile_edge/line/red{
-	icon_state = "line1"
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "xCR" = (
 /obj/stool/chair{
 	dir = 4
@@ -103436,7 +103437,7 @@ vFX
 neh
 jJd
 jJd
-rCK
+fUg
 jJd
 jJd
 fAb
@@ -103737,8 +103738,8 @@ rYM
 vFX
 fzl
 jJd
-qzY
-epF
+lTN
+hkk
 fiB
 dhL
 eop
@@ -104039,8 +104040,8 @@ iQf
 guw
 jsC
 jJd
-kqH
-akk
+hky
+qsJ
 fiB
 ndg
 pbl
@@ -104341,8 +104342,8 @@ xYm
 rYD
 rtR
 jJd
-jUU
-xCP
+aax
+kQY
 fiB
 hsP
 sDS
@@ -104643,8 +104644,8 @@ jJd
 jJd
 jJd
 jJd
-uwT
-dgL
+qUI
+qVR
 fiB
 qXG
 xSp
@@ -104946,7 +104947,7 @@ dIv
 kpf
 gkN
 dIv
-twh
+env
 fiB
 orr
 gYO
@@ -152255,7 +152256,7 @@ bKc
 diY
 ppM
 dOB
-imu
+hHm
 eSa
 rFB
 jhP
