@@ -1642,7 +1642,7 @@ TYPEINFO(/mob)
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
-	if (!P || !P.proj_data || !P.proj_data.silentshot)
+	if (!P || !P.proj_data || !P.proj_data.no_hit_message)
 		boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)

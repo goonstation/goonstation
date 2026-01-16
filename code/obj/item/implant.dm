@@ -2683,7 +2683,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	casing = /obj/item/casing/small
 	impact_image_state = "bullethole-small"
 	shot_number = 1
-	//silentshot = 1
+	//no_hit_message = 1
 	var/obj/item/implant/my_implant = null
 	var/mob/implant_master = null
 
