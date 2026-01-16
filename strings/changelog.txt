@@ -1,6 +1,18 @@
 
 (t)thu jan 15 26
 (u)Lord_Earthfire
+(p)25404
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Spaceman now learned to properly balance small item pies onto robot-arm assemblies, up from tiny-only.
+(u)QuiteLiterallyAnything
+(p)25431
+(e)|
+(+)Adjusted the amount of material given by closets, crates, and the like on deconstruction.
+(u)Microoowaaave
+(p)24976
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Adds clown noses, found in the clown hole and sold by Geoff!
+(u)Lord_Earthfire
 (p)25438
 (e)🪲📦|C-Bug, A-Game-Objects
 (+)Singletank bombs and pipebombs now have the proper contraband value of 4 instead of 8.
