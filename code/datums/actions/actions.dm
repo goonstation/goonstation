@@ -1557,7 +1557,7 @@
 		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!isnull(food))
+		if (food.bites_left)
 			food.take_a_bite(consumer, mob_owner)
 		else
 			drink.take_a_drink(consumer, mob_owner)
