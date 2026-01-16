@@ -66,7 +66,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	New()
 		if(silenced)
-			current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+			src.silence_projectile()
 		..()
 		src.UpdateIcon()
 
