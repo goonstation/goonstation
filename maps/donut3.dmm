@@ -68578,9 +68578,6 @@
 /obj/random_item_spawner/junk/lots,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
-"viP" = (
-/turf/simulated/wall/auto/jen,
-/area/space)
 "viT" = (
 /obj/item_dispenser/prescription_glasses{
 	pixel_x = 1;
@@ -139124,7 +139121,7 @@ eTF
 nxQ
 qtx
 dtJ
-viP
+nxQ
 rBB
 bHz
 wZR
@@ -139426,7 +139423,7 @@ eTF
 nxQ
 lrg
 dtJ
-viP
+nxQ
 ieh
 rBB
 sam
