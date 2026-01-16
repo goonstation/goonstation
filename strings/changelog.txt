@@ -1,4 +1,9 @@
+
 (t)fri jan 16 26
+(u)LeahTheTech
+(p)25588
+(e)⚖🔊🧛|C-Balance, C-Sound, A-Gamemodes
+(+)Vampire glare, blood steal, and silenced gunshots now depend on line-of-sight to be heard. No more hearing vampires through walls.
 (u)LeahTheTech
 (+)Vampires can no longer glare through walls.
 (t)thu jan 15 26
