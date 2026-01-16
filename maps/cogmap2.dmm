@@ -1214,21 +1214,6 @@
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/station/maintenance/north)
-"aeq" = (
-/obj/table/auto,
-/obj/decal/cleanable/desk_clutter,
-/obj/decal/cleanable/dirt,
-/obj/item/instrument/bikehorn,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
-/obj/item/stamp/clown,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "aer" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/carpet/arcade,
@@ -54794,11 +54779,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"fRJ" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "fSi" = (
 /obj/machinery/optable,
 /obj/item/kitchen/utensil/knife{
@@ -55363,6 +55343,11 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/arcade)
+"gvQ" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "gvW" = (
 /obj/filing_cabinet,
 /turf/simulated/floor/carpet{
@@ -59510,6 +59495,22 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"jTJ" = (
+/obj/table/auto,
+/obj/decal/cleanable/desk_clutter,
+/obj/decal/cleanable/dirt,
+/obj/item/instrument/bikehorn,
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/obj/item/stamp/clown,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "jUc" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -109449,7 +109450,7 @@ abR
 aaa
 adf
 adD
-aeq
+jTJ
 nuC
 afW
 biF
@@ -128826,7 +128827,7 @@ qKM
 aaa
 bgM
 bhD
-fRJ
+gvQ
 bja
 bkk
 blQ
