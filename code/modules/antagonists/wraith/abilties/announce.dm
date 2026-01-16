@@ -12,5 +12,5 @@
 		if (!message)
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
-		command_alert(message, "[src.holder.owner.name]", alert_origin = alert)
+		command_alert(message, "[src.holder.owner.name]", alert_origin = ALERT_WRAITH)
 		return CAST_ATTEMPT_SUCCESS
