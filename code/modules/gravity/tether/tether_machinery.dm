@@ -62,9 +62,8 @@
 		if (TIME > src.change_begin_time)
 			src.change_intensity(src.target_intensity)
 			src.finish_gravity_change()
-			playsound(src.loc, 'sound/machines/sweep.ogg', 40, pitch=(0.5 + (src.gforce_intensity/2)))
 		else
-			playsound(src.loc, 'sound/machines/found.ogg', 60, 0)
+			playsound(src.loc, 'sound/effects/ship_alert_minor.ogg', 30, 0)
 	else if (src.processing_state == TETHER_PROCESSING_COOLDOWN)
 		if (TIME > src.cooldown_end_time)
 			src.cooldown_end_time = null
@@ -75,6 +74,8 @@
 			src.update_ma_dials()
 
 			src.UpdateIcon()
+	else if (src.glitching_out && prob(5))
+		playsound(src.loc, 'sound/effects/commsdown.ogg', 60, 1)
 	else if (prob(src.gforce_intensity))
 		playsound(src.loc, pick(global.ambience_gravity), 50, 1, pitch=(0.5 + (src.gforce_intensity/2)))
 

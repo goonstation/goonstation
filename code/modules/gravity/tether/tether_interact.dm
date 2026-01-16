@@ -244,6 +244,8 @@
 	if (istype(id_card) && src.has_access_requirements())
 		if (src.allowed(user))
 			src.locked = !src.locked
+			src.say("\The [src] is now [src.locked ? "locked" : "unlocked"].")
+			playsound(src.loc, 'sound/effects/env_damage.ogg', 60, 0)
 			src.update_ma_tamper()
 			src.update_ma_screen()
 			src.UpdateIcon()
