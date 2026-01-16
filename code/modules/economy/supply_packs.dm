@@ -8,20 +8,18 @@
 	var/datum/supply_packs/object = null
 	var/orderedby = null
 	var/comment = null
-	var/whos_id = null
+	var/used_personal_funds = FALSE
 	var/address = null
 	var/console_location = null
 
 	proc/create(var/mob/orderer)
 		var/obj/storage/S = object.create(orderer)
 
-		if(!isnull(whos_id))
-			S.name = "[S.name], Ordered by [whos_id:registered], [comment ? "([comment])":"" ]"
-		else
-			S.name = "[S.name] [comment ? "([comment])":"" ]"
+		var/show_purchaser = !isnull(src.orderedby) && src.used_personal_funds
+		S.name = "[S.name][show_purchaser ? " (Purchased by [src.orderedby])" : ""][src.comment ? " ([src.comment])" : "" ]"
 
-		if(comment)
-			S.delivery_destination = comment
+		if(src.comment)
+			S.delivery_destination = src.comment
 
 		object.exhaustion += 1
 		if(object.exhaustion > 10)
