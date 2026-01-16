@@ -1,4 +1,6 @@
-
+(t)fri jan 16 26
+(u)LeahTheTech
+(+)Vampires can no longer glare through walls.
 (t)thu jan 15 26
 (u)Lord_Earthfire
 (p)25404

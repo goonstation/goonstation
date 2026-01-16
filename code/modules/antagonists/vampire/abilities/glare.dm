@@ -28,6 +28,9 @@
 			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
+		if (!(M in hearers(target)))
+			return 1
+
 		if (isdead(target))
 			boutput(M, SPAN_ALERT("It would be a waste of time to stun the dead."))
 			return 1
