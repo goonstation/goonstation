@@ -927,8 +927,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Prosthetic Augmentation Kit"
 
 /datum/supply_packs/restricted_medicine
-	name = "Restricted Medicine Shipment"
-	desc = "x1 Omnizine bottle, x1 Perfluorodecalin bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle. Cardlocked to Medical access."
+	name = "Restricted Medicine Shipment (Cardlocked \[Medical])"
+	desc = "x1 Omnizine bottle, x1 Perfluorodecalin bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle."
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/bottle/omnizine,
 					/obj/item/reagent_containers/glass/bottle/pfd = 2,
@@ -1059,8 +1059,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Blood Bank"
 
 /datum/supply_packs/singularity_generator
-	name = "Singularity Generator Crate"
-	desc = "x1 Extremely Unstable Gravitational Singularity. Stored in a hi-tech jam jar, fired directly at your current location. Cardlocked to Chief Engineer access."
+	name = "Singularity Generator Crat (Cardlocked \[Chief Engineer])"
+	desc = "x1 Extremely Unstable Gravitational Singularity. Stored in a hi-tech jam jar, fired directly at your current location."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/the_singularitygen)
 	cost = PAY_EMBEZZLED
@@ -1069,8 +1069,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	access = access_engineering_chief
 
 /datum/supply_packs/emitter
-	name = "Emitter Crate"
-	desc = "x1 Emitter. For energizing field generators. You'll need a few of these. Cardlocked to Engineering access."
+	name = "Emitter Crate (Cardlocked \[Engineering])"
+	desc = "x1 Emitter. For energizing field generators. You'll need a few of these."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/emitter)
 	cost = PAY_EMBEZZLED
@@ -1079,8 +1079,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	access = access_engineering
 
 /datum/supply_packs/rad_collector
-	name = "Radiation Collector Crate"
-	desc = "x4 Radiation Collector Arrays, x1 Controller, x1 Soldering Iron. To harvest radiation from a singularity. Cardlocked to Engineering access."
+	name = "Radiation Collector Crate (Cardlocked \[Engineering])"
+	desc = "x4 Radiation Collector Arrays, x1 Controller, x1 Soldering Iron. To harvest radiation from a singularity."
 	category = "Engineering Department"
 	contains = list(/obj/item/electronics/frame/collector_array = 4,
 					/obj/item/electronics/frame/collector_control,
@@ -1135,8 +1135,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Spare Oxygen Canister Crate"
 
 /datum/supply_packs/abcu
-	name = "ABCU Unit Crate"
-	desc = "x1 ABCU Unit. For large construction projects. Cardlocked to Engineering access."
+	name = "ABCU Unit Crate (Cardlocked \[Engineering])"
+	desc = "x1 ABCU Unit. For large construction projects."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/abcu, /obj/item/blueprint_marker)
 	cost = PAY_TRADESMAN*5
@@ -1145,8 +1145,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	access = access_engineering
 
 /datum/supply_packs/efif1
-	name = "EFIF-1 Construction System"
-	desc = "x1 Pod-mounted Mass Construction Tool. Suitable for large-scale repairs and offsite building projects. Cardlocked to Engineering access."
+	name = "EFIF-1 Construction System (Cardlocked \[Engineering])"
+	desc = "x1 Pod-mounted Mass Construction Tool. Suitable for large-scale repairs and offsite building projects."
 	category = "Engineering Department"
 	contains = list(/obj/item/shipcomponent/mainweapon/constructor/stocked,
 					/obj/item/paper/efif_disclaimer)
@@ -1531,8 +1531,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Construction Equipment"
 
 /datum/supply_packs/lawrack
-	name = "AI Law Rack ManuDrive Crate"
-	desc = "x1 single-use ManuDrive for creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules. Cardlocked to Command access."
+	name = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
+	desc = "x1 single-use ManuDrive for creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
 	category = "Engineering Department"
 	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse)
 	cost = PAY_IMPORTANT*2
@@ -1550,8 +1550,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Pressure Crystal Crate"
 
 /datum/supply_packs/comms_dish
-	name = "Communications Dish"
-	desc = "x1 single-use Manudrive for creating a new Communications Dish and a floppy disk containing the COMMaster program. Note: Console not included. Cardlocked to Engineering access."
+	name = "Communications Dish (Cardlocked \[Engineering])"
+	desc = "x1 single-use Manudrive for creating a new Communications Dish and a floppy disk containing the COMMaster program. Note: Console not included."
 	category = "Engineering Department"
 	contains = list(/obj/item/disk/data/floppy/manudrive/comms_dish/singleuse, /obj/item/disk/data/floppy/read_only/communications)
 	cost = PAY_IMPORTANT
@@ -1675,7 +1675,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/mining_rockbox
 	name = "Rockbox™ Storage Container (Cardlocked \[Chief Engineer])"
-	desc = "x1 Rockbox™ Ore Cloud Storage Container. Cardlocked to Chief Engineer access."
+	desc = "x1 Rockbox™ Ore Cloud Storage Container."
 	category = "Engineering Department"
 	frames = list(/obj/machinery/ore_cloud_storage_container)
 	cost = PAY_EMBEZZLED
@@ -1923,7 +1923,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containername = "Operating Room kit"
 
 /datum/supply_packs/complex/field_generator
-	name = "Field Generator Crate"
+	name = "Field Generator Crate (Cardlocked \[Engineering])"
 	desc = "x4 Field Generator Frames. The four goal-posts needed to contain a singularity."
 	category = "Engineering Department"
 	frames = list(/obj/machinery/field_generator = 4)
