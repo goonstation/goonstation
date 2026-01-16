@@ -592,3 +592,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (start_recoil && icon_recoil_enabled)
 		SPAWN(0)
 			do_icon_recoil()
+
+/obj/item/gun/proc/silence_projectile()
+	src.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+	src.current_projectile.shot_sound_extrarange = -10
+	src.current_projectile.sound_los = TRUE
