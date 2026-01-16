@@ -10770,10 +10770,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/hangar)
-"aPk" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/random,
-/area/space)
 "aPn" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -41335,14 +41331,6 @@
 /obj/decal/cleanable/robot_debris,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
-"pPb" = (
-/obj/machinery/r_door_control{
-	id = "research_outpost";
-	pixel_y = 32
-	},
-/obj/disposalpipe/segment/bent/west,
-/turf/space/fluid,
-/area/space)
 "pPj" = (
 /obj/landmark/pest,
 /obj/cable{
@@ -47816,6 +47804,19 @@
 "xGb" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
+"xGE" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
+"xGT" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/light/small/floor/cool,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northmaint3";
+	name = "North Maintenance"
+	},
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "xHh" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -108361,7 +108362,7 @@ aqn
 aqn
 aqn
 aqn
-aPk
+quO
 anx
 anx
 anx
