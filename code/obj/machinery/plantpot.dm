@@ -1256,9 +1256,8 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(length(SA.contents) >= SA.maxitems)
 				boutput(h_data.user, SPAN_ALERT("Your satchel is full! You dump the rest on the floor."))
 				break
+			continue_if_overlay_or_effect(I) // please dont
 			if(istype(I,/obj/item/seed/))
-				continue
-			else if IS_OVERLAY_OR_EFFECT(I) // please dont
 				continue
 			else
 				if(SA.check_valid_content(I))
@@ -1269,8 +1268,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	// if the satchel got filled up this will dump any unharvested items on the floor
 	// if we're harvesting by hand it'll just default to this anyway! truly magical~
 	for(var/obj/I in h_data.pot.contents)
-		if IS_OVERLAY_OR_EFFECT(I) // please dont
-			continue
+		continue_if_overlay_or_effect(I) // please dont
 		I.set_loc(h_data.user.loc)
 		I.add_fingerprint(h_data.user)
 	// we got to do the same for mobs
