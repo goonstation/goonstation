@@ -84,6 +84,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.plant_sprite = new /obj/overlay(src)
 	src.plant_sprite.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE)
 	src.plant_sprite.icon = 'icons/obj/hydroponics/plants_weed.dmi'
+	src.plant_sprite.appearance_flags |= KEEP_TOGETHER
 
 	UpdateIcon()
 
@@ -1257,6 +1258,8 @@ TYPEINFO(/obj/machinery/plantpot)
 				break
 			if(istype(I,/obj/item/seed/))
 				continue
+			else if IS_OVERLAY_OR_EFFECT(I) // please dont
+				continue
 			else
 				if(SA.check_valid_content(I))
 					I.set_loc(SA)
@@ -1266,6 +1269,8 @@ TYPEINFO(/obj/machinery/plantpot)
 	// if the satchel got filled up this will dump any unharvested items on the floor
 	// if we're harvesting by hand it'll just default to this anyway! truly magical~
 	for(var/obj/I in h_data.pot.contents)
+		if IS_OVERLAY_OR_EFFECT(I) // please dont
+			continue
 		I.set_loc(h_data.user.loc)
 		I.add_fingerprint(h_data.user)
 	// we got to do the same for mobs
