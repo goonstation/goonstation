@@ -5,13 +5,15 @@
 /// Used to check if we need to recalculate gforces. If less than the area's gforce_rev, update required.
 /turf/var/gforce_area_rev = 0
 
-// no gravity in space
+// no gravity in space, we never need to update it
 /turf/space/gforce_current = 0
 /turf/space/gforce_inherent = 0
+/turf/space/gforce_area_rev = INFINITY
 
 // ocean gravity handled at zlevel
 /turf/space/fluid/gforce_current = 1
 /turf/space/fluid/gforce_inherent = 0
+/turf/space/fluid/gforce_area_rev = 0
 
 /turf/proc/change_gforce_inherent(gforce_diff)
 /turf/simulated/change_gforce_inherent(gforce_diff)
@@ -24,6 +26,16 @@
 	src.gforce_area_rev = 0
 
 /turf/proc/get_gforce_current()
+	var/area/A = src.loc
+	if (A.gforce_rev > src.gforce_area_rev)
+		src.gforce_current = round(max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent), 0.01)
+		src.gforce_area_rev = A.gforce_rev
+	return src.gforce_current
+
+/turf/space/get_gforce_current()
+	return 0
+
+/turf/space/fluid/get_gforce_current()
 	var/area/A = src.loc
 	if (A.gforce_rev > src.gforce_area_rev)
 		src.gforce_current = round(max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent), 0.01)
