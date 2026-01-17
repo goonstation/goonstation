@@ -55,7 +55,7 @@
 	else
 		arm = victim.limbs.r_arm.remove()
 	arm.set_loc(src)
-	src.visible_message(SPAN_ALERT(SPAN_BOLD("[victim] slips and gets [his_or_her] fingers caught in [src]'s whirling blades! SHIT!")), "You hear a horrible tearing sound.")
+	src.visible_message(SPAN_ALERT(SPAN_BOLD("[victim] slips and gets [his_or_her(victim)] fingers caught in [src]'s whirling blades! SHIT!")), "You hear a horrible tearing sound.")
 	playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 1)
 	victim.emote("scream")
 	random_brute_damage(victim, rand(20, 30))
