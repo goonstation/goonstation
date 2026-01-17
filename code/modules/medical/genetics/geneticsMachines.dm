@@ -39,7 +39,6 @@
 	var/decrypt_correct_char = "?"
 	var/decrypt_correct_pos = "?"
 	var/datum/genetics_appearancemenu/modify_appearance = null
-	var/emagged = FALSE
 	var/emitter_radiation_minimum_strength = 0 //! modifies the scrambler power. Used for the emag-effect
 	var/emitter_cooldown_multiplier = 1 //! modifies the scrambler cooldown. Used for the emag-effect
 
@@ -66,6 +65,14 @@
 	//This is 33% stronger than the emitters baseline radiation, before research. This makes sure that our clown inside comes out well done.
 	src.emitter_radiation_minimum_strength = 100
 	src.emitter_cooldown_multiplier = 0.5
+	return TRUE
+
+/obj/machinery/computer/genetics/demag(var/mob/user)
+	if(!src.emagged)
+		return FALSE
+	src.emitter_radiation_minimum_strength = initial(src.emitter_radiation_minimum_strength)
+	src.emitter_cooldown_multiplier = initial(src.emitter_cooldown_multiplier)
+	src.emagged = FALSE
 	return TRUE
 
 /obj/machinery/computer/genetics/save_board_data(obj/item/circuitboard/circuitboard)
