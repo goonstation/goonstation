@@ -597,3 +597,4 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	src.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
 	src.current_projectile.shot_sound_extrarange = -10
 	src.current_projectile.sound_los = TRUE
+	src.current_projectile.shot_volume = 50
