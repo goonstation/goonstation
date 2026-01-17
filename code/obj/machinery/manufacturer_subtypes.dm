@@ -532,6 +532,7 @@
 	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
+	default_collapsed_categories = list("Clothing")
 	free_resources = list(/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5,
 		/obj/item/material_piece/glass = 5,

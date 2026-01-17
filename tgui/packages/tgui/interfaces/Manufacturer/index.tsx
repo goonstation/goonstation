@@ -50,6 +50,7 @@ export const Manufacturer = () => {
     all_categories,
     available_blueprints,
     banking_info,
+    default_collapsed_categories,
     delete_allowed,
     downloaded_blueprints,
     error,
@@ -216,7 +217,7 @@ export const Manufacturer = () => {
                   blueprints_by_category[category].length > 0 && (
                     <Collapsible
                       key={category}
-                      open
+                      open={!default_collapsed_categories.includes(category)}
                       title={`${category} (${blueprints_by_category[category].length})`}
                     >
                       {(blueprints_by_category[category] ?? []).map(

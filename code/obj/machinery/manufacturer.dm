@@ -100,6 +100,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
 	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Organ", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
+	/// A list of categories which start collapsed in the UI.
+	var/list/default_collapsed_categories = list()
 	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
 
 	var/list/available = list() //! A list of every manufacture datum typepath available in this unit subtype by default
@@ -384,6 +386,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return list (
 			"fabricator_name" = src.name,
 			"all_categories" = src.categories,
+			"default_collapsed_categories" = src.default_collapsed_categories,
 			"available_blueprints" = blueprints_as_list(src.available, user),
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
 			"downloaded_blueprints" = blueprints_as_list(src.download, user),

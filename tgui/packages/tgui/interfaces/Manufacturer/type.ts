@@ -8,6 +8,7 @@ import { BooleanLike } from 'common/react';
 
 export type ManufacturerData = {
   all_categories: string[];
+  default_collapsed_categories: string[];
 
   card_owner: string;
   error: string;
