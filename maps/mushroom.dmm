@@ -10811,6 +10811,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/item/device/panicbutton/medicalalert/hop,
 /turf/simulated/floor/carpet/green/fancy,
 /area/station/crew_quarters/hop)
 "elR" = (
@@ -20519,6 +20520,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/storage/box/panic_buttons,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/processing)
 "lvP" = (
@@ -32473,13 +32475,11 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/ai_monitored/storage/eva)
 "sYg" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = -10
-	},
 /obj/table/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/toolbox/emergency,
 /obj/item/reagent_containers/glass/oilcan,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "sYO" = (
@@ -33261,6 +33261,10 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/item/storage/box/panic_buttons/medicalalert{
+	pixel_x = 9;
+	pixel_y = 14
 	},
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay)
@@ -37495,6 +37499,7 @@
 /obj/machinery/recharger,
 /obj/item/gun/kinetic/riot40mm,
 /obj/item/gun/kinetic/riot40mm,
+/obj/item/storage/box/panic_buttons,
 /turf/simulated/floor,
 /area/station/security/main)
 "wrc" = (
