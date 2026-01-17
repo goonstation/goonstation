@@ -58,7 +58,10 @@
 		var/message = input(holder.owner, null, "Announcement text:")
 		if (!message && message == "")
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		command_announcement(message, "[holder.owner]'s booming voice echoes from the chapel", 'sound/voice/chanting.ogg', alert_origin=ALERT_DEPARTMENT)
+		var/title = "[holder.owner]'s voice seems to come from above"
+		var/message_sound = 'sound/voice/chanting.ogg'
+		var/title_alt = "Unofficial announcement by [holder.owner] ([holder.owner.job ? holder.owner.job : "space hobo"])"
+		command_announcement_alt(message, title, message_sound, atheist_manager?.get_atheist_clients(), message, title_alt, message_sound, volume=50, alert_origin=ALERT_DEPARTMENT)
 
 ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 /datum/targetable/faith_based/spawn_decoration

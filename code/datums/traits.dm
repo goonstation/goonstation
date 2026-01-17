@@ -1428,6 +1428,13 @@ var/datum/atheist_manager/atheist_manager
 	var/list/atheist_traits = list()
 	var/alist/hallucinated_objects /// list of objects that atheists can discern the true nature of. [key = obj, value = image]
 
+	proc/get_atheist_clients()
+		var/list/clients = list()
+		for (var/datum/trait/atheist/trait as anything in atheist_traits)
+			if (trait.owner.client && !(trait.owner.client in clients))
+				clients += trait.owner.client
+		return clients
+
 	proc/add_atheist(datum/trait/atheist/trait)
 		if(!(trait.owner in atheist_traits))
 			atheist_traits += trait
