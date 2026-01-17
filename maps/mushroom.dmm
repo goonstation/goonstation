@@ -20407,6 +20407,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIsat)
 "lrJ" = (
+/obj/item/reagent_containers/glass/water_pipe,
 /obj/machinery/hydro_mister,
 /turf/simulated/floor/grass{
 	name = "astroturf";

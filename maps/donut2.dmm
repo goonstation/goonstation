@@ -24662,6 +24662,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "ike" = (
+/obj/item/reagent_containers/glass/water_pipe,
 /obj/machinery/hydro_mister,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
