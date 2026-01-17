@@ -3467,7 +3467,7 @@ datum
 					// nothing bad happens with synthlegs
 					if(!(H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
 						boutput(M, SPAN_ALERT("This smells like shit! What the fuck?!"))
-						if (prob(50))
+						if (prob(50) && !(H.wear_mask?.c_flags & COVERSMOUTH))
 							boutput(M, SPAN_ALERT("Shit! Some got into your mouth!"))
 							var/amt = min(volume/100,1)
 							src.holder.remove_reagent("poo",amt)
@@ -3482,7 +3482,7 @@ datum
 					H.take_toxin_damage(-0.25 * mult)
 				else
 					if(prob(20))
-						if(isliving(M) && probmult(15))
+						if(isliving(M) && prob(15))
 							var/mob/living/L = M
 							L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 					if (prob(7))
