@@ -11,22 +11,56 @@
 	var/accepted_types = list(/obj/item/card, /obj/item/paper, /obj/item/toy/diploma, /obj/item/currency/spacecash)
 	///Visual proxy for the thing being shredded
 	var/atom/movable/proxy = null
+	var/shredding = FALSE
+	var/emagged = FALSE
 
 /obj/machinery/shredder/New()
 	. = ..()
 	src.AddComponent(/datum/component/obj_projectile_damage)
 
+/obj/machinery/shredder/emag_act(mob/user, obj/item/card/emag/E)
+	if (src.emagged)
+		return FALSE
+	boutput(user, "You short out [src]'s finger-grabbing inhibitors!")
+	src.emagged = TRUE
+	return TRUE
+
 /obj/machinery/shredder/attackby(obj/item/item, mob/user)
 	if (!istypes(item, src.accepted_types))
 		return ..()
+	if (istype(item, /obj/item/card/emag)) //fine, I am merciful
+		return ..()
 	if (src.shredding)
+		return
+	if (src.emagged)
+		src.limb_tax(user)
 		return
 	user.u_equip(item)
 	src.shred(item)
 
-/obj/machinery/shredder/power_change()
+/obj/machinery/shredder/attack_hand(mob/user)
+	if (src.shredding)
+		return
+	if (src.emagged)
+		src.limb_tax(user)
+		return
 	. = ..()
 
+/obj/machinery/shredder/proc/limb_tax(mob/living/carbon/human/victim)
+	if (!ishuman(victim))
+		return //todo
+	var/obj/item/arm = null
+	if (victim.hand)
+		arm = victim.limbs.l_arm.remove()
+	else
+		arm = victim.limbs.r_arm.remove()
+	arm.set_loc(src)
+	src.visible_message(SPAN_ALERT(SPAN_BOLD("[victim] slips and gets [his_or_her] fingers caught in [src]'s whirling blades! SHIT!")), "You hear a horrible tearing sound.")
+	playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 1)
+	victim.emote("scream")
+	random_brute_damage(victim, rand(20, 30))
+	take_bleeding_damage(victim, victim, 15)
+	src.shred(arm)
 
 /obj/machinery/shredder/onDestroy()
 	if (src.powered())
@@ -36,6 +70,8 @@
 
 /obj/machinery/shredder/proc/shred(obj/item/item)
 	set waitfor = FALSE
+
+	src.shredding = TRUE
 
 	src.proxy = new
 	src.proxy.mouse_opacity = FALSE
@@ -67,3 +103,4 @@
 	sleep (5 SECONDS)
 	QDEL_NULL(src.proxy)
 	QDEL_NULL(item)
+	src.shredding = FALSE
