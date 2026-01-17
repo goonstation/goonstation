@@ -434,7 +434,7 @@
 	spawn_contents = list()
 	slots = 10
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
-	check_wclass = 1
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	color = "#ff9933"
 	satchel_variant = null
 

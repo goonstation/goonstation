@@ -21,3 +21,12 @@
 #define STORAGE_NO_HUD_STACK 1
 /// items pulled out are random picked
 #define STORAGE_NO_HUD_RANDOM 2
+
+// check_wclass behaviour defines
+
+/// Standard for any storage with list/can_hold defined. Only what is in that list can be held in the storage, independing of w_class
+#define STORAGE_CHECK_W_CLASS_IGNORE 0
+/// Above list/can_hold, everything which is within the wclass defined in max_wclass can fit in the storage as well
+#define STORAGE_CHECK_W_CLASS_INCLUDE 1
+/// Causes the storage not not allow things in list/can_hold which have a wclass higher than what is defined in max_wclass
+#define STORAGE_CHECK_W_CLASS_EXCLUDE 2

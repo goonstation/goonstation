@@ -129,7 +129,7 @@
 	var/code_len = 4
 	var/code = "1234"
 
-	New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, enforce_wclass, max_wclass, \
+	New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
 		slots, sneaky, stealthy_storage, opens_if_worn, list/params)
 		..()
 		if(params["owner"])
