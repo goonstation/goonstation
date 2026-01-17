@@ -44940,9 +44940,9 @@
 /obj/item/screwdriver{
 	pixel_x = -6
 	},
-/obj/item/parts/robot_parts/arm/left{
-	pixel_x = -9;
-	pixel_y = 7
+/obj/item/parts/robot_parts/arm/left/standard{
+	pixel_y = 8;
+	pixel_x = -9
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
