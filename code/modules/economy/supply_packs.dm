@@ -1080,7 +1080,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/rad_collector
 	name = "Radiation Collector Crate (Cardlocked \[Engineering])"
-	desc = "x4 Radiation Collector Arrays, x1 Controller, x1 Soldering Iron. To harvest radiation from a singularity."
+	desc = "x4 Radiation Collector Array Frames, x1 Collector Controller Frame, x1 Soldering Iron. To harvest radiation from a singularity."
 	category = "Engineering Department"
 	contains = list(/obj/item/electronics/frame/collector_array = 4,
 					/obj/item/electronics/frame/collector_control,
@@ -1443,7 +1443,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/banking_kit
 	name = "Banking Kit"
-	desc = "x1 ATM Circuitboard, x1 BankBoss Data Disk."
+	desc = "x1 ATM Circuitboard, x1 BankBoss Disk."
 	contains = list(/obj/item/circuitboard/atm, /obj/item/disk/data/floppy/read_only/bank_progs)
 	hidden = 1
 	cost = PAY_IMPORTANT*5
@@ -1532,7 +1532,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/lawrack
 	name = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
-	desc = "x1 single-use ManuDrive for creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
+	desc = "x1 Single-use Law Rack ManuDrive. For creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
 	category = "Engineering Department"
 	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse)
 	cost = PAY_IMPORTANT*2
@@ -1551,7 +1551,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/comms_dish
 	name = "Communications Dish (Cardlocked \[Engineering])"
-	desc = "x1 single-use Manudrive for creating a new Communications Dish and a floppy disk containing the COMMaster program. Note: Console not included."
+	desc = "x1 Single-Use Communications Disk Manudrive, x1 COMMaster Disk. For creating a new Communications Dish. Note: Console not included."
 	category = "Engineering Department"
 	contains = list(/obj/item/disk/data/floppy/manudrive/comms_dish/singleuse, /obj/item/disk/data/floppy/read_only/communications)
 	cost = PAY_IMPORTANT
@@ -1788,7 +1788,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 /datum/supply_packs/complex/mainframe_kit
 	name = "Computer Core Kit"
 	category = "Research Department"
-	desc = "x1 Memory Board, x1 Mainframe Recovery Kit, x1 TermOS B disk, x1 Computer Mainframe Frame, x1 Databank Frame, x1 Network Radio Frame, x3 Data Terminal Frames, x1 CompTech Frame."
+	desc = "x1 Memory Board, x1 Mainframe Recovery Kit, x1 TermOS B Disk, x1 Computer Mainframe Frame, x1 Databank Frame, x1 Network Radio Frame, x3 Data Terminal Frames, x1 CompTech Frame."
 	contains = list(/obj/item/disk/data/memcard,
 					/obj/item/storage/box/zeta_boot_kit,
 					/obj/item/disk/data/floppy/read_only/terminal_os)
@@ -1945,7 +1945,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/hydrostarter
 	name = "Hydroponics: Starter Crate"
-	desc = "x2 Watering Cans, x4 Compost Bags, x2 Weedkiller bottles, x2 Plant Analyzers, x4 Plant Tray frames."
+	desc = "x2 Watering Cans, x4 Compost Bags, x2 Weedkiller bottles, x2 Plant Analyzers, x4 Plant Tray Frames."
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/glass/wateringcan = 2,
 					/obj/item/reagent_containers/glass/compostbag = 4,
@@ -1983,7 +1983,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/cloner_kit
 	name = "Cloning kit"
-	desc = "x1 Cloning Console Circuitboard, x1 Cloning Scanner Frame, x1 Cloning Pod Frame, x1 Enzymatic Reclaimer Frame."
+	desc = "x1 Cloning Console Circuitboard, x1 Cloning Scanner Frame, x1 Cloning Pod Frame, x1 Enzymatic Reclaimer Frame, x1 Clone Rack Frame."
 	category = "Medical Department"
 	contains = list(/obj/item/circuitboard/cloning)
 	frames = list(/obj/machinery/clone_scanner,
