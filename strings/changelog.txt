@@ -1,5 +1,24 @@
 
+(t)fri jan 16 26
+(u)LeahTheTech
+(p)25588
+(e)⚖🔊🧛|C-Balance, C-Sound, A-Gamemodes
+(+)Vampire glare, blood steal, and silenced gunshots now depend on line-of-sight to be heard. No more hearing vampires through walls.
+(u)LeahTheTech
+(+)Vampires can no longer glare through walls.
 (t)thu jan 15 26
+(u)Lord_Earthfire
+(p)25404
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Spaceman now learned to properly balance small item pies onto robot-arm assemblies, up from tiny-only.
+(u)QuiteLiterallyAnything
+(p)25431
+(e)|
+(+)Adjusted the amount of material given by closets, crates, and the like on deconstruction.
+(u)Microoowaaave
+(p)24976
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Adds clown noses, found in the clown hole and sold by Geoff!
 (u)Lord_Earthfire
 (p)25438
 (e)🪲📦|C-Bug, A-Game-Objects
