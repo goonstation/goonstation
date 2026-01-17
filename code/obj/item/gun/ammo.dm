@@ -184,8 +184,6 @@
 			ammoGun.set_loc(K)
 			K.ammo = ammoGun
 			K.set_current_projectile(ammoGun.ammo_type)
-			if(K.silenced)
-				K.silence_projectile()
 			K.UpdateIcon()
 
 			return 1
@@ -236,8 +234,6 @@
 				ammoGun.set_loc(K)
 				K.ammo = ammoGun
 				K.set_current_projectile(A.ammo_type)
-				if(K.silenced)
-					K.silence_projectile()
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
