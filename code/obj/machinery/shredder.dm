@@ -1,4 +1,3 @@
-// https://pixabay.com/sound-effects/technology-paper-shredder-02-421981/
 /obj/machinery/shredder
 	name = "shredder"
 	desc = "Don't stick your hand in there..."
@@ -8,9 +7,10 @@
 	density = 1
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_WRENCH
+	/// What can a shredder shred?
 	var/accepted_types = list(/obj/item/card, /obj/item/paper, /obj/item/toy/diploma, /obj/item/currency/spacecash)
+	///Visual proxy for the thing being shredded
 	var/atom/movable/proxy = null
-	var/obj/item/shredding = null
 
 /obj/machinery/shredder/New()
 	. = ..()
@@ -37,14 +37,16 @@
 /obj/machinery/shredder/proc/shred(obj/item/item)
 	set waitfor = FALSE
 
-	src.shredding = item
 	src.proxy = new
 	src.proxy.mouse_opacity = FALSE
 	src.proxy.appearance = item.appearance
 	src.proxy.transform = null
+	//tech shamelessly stolen from the kitchen gibber
 	var/icon/mask_icon = icon('icons/obj/kitchen_grinder_mask.dmi', "shredder-mask")
 
+	//some things go in sideways
 	if (istypes(item, list(/obj/item/card, /obj/item/currency/spacecash)))
+		//rotate the icon ONLY so the alpha mask filter doesn't get messed up
 		var/icon/icon = getFlatIcon(item)
 		icon.Turn(90)
 		src.proxy.icon = icon
@@ -59,9 +61,9 @@
 	src.vis_contents += src.proxy
 	//particles come out a bit late so they don't show up before it hits the shredder (hopefully)
 	sleep(2 SECOND)
+	// https://pixabay.com/sound-effects/technology-paper-shredder-02-421981/
 	playsound(src, 'sound/machines/shredder.ogg', 50, 0)
-	playsound(src, 'sound/machines/mixer.ogg', 50, 1)
-	global.particleMaster.SpawnSystem(new /datum/particleSystem/shredded(src, target = src.shredding))
+	global.particleMaster.SpawnSystem(new /datum/particleSystem/shredded(src, target = item))
 	sleep (5 SECONDS)
 	QDEL_NULL(src.proxy)
-	QDEL_NULL(src.shredding)
+	QDEL_NULL(item)
