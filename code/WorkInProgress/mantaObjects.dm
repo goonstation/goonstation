@@ -710,6 +710,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS
+	default_material = "plastic"
 	stamina_damage = 15
 	stamina_cost = 8
 	stamina_crit_chance = 10
