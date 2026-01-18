@@ -173,6 +173,11 @@
 	create = 1
 	time = 60 SECONDS
 	frame_path = /obj/machinery/gravity_tether/station
+	item_requirements = list("metal" = 50,
+							"crystal_dense" = 50,
+							"metal_superdense" = 40,
+							"koshmarite" = 30,
+							"energy_extreme" = 20,)
 	category = "Machinery"
 
 /datum/manufacture/mechanics/gravity_tether_area
