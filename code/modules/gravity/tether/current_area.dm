@@ -2,6 +2,7 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 	mats = list("metal" = 30,
 				"crystal_dense" = 10,
 				"metal_superdense" = 10,
+				"koshmarite" = 5,
 				"energy_extreme" = 5)
 /obj/machinery/gravity_tether/current_area
 	name = "local-area gravity tether"

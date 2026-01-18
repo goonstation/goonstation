@@ -58,10 +58,6 @@
 #define TETHER_WIRES_BURNED 2
 #define TETHER_WIRES_CUT 3
 
-// max gforce intensity levels
-#define TETHER_INTENSITY_MAX_DEFAULT 2
-#define TETHER_INTENSITY_MAX_EMAG 4
-
 // processing / ready to change
 #define TETHER_PROCESSING_STABLE 0
 #define TETHER_PROCESSING_PENDING 1

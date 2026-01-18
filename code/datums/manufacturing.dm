@@ -183,6 +183,7 @@
 	item_requirements = list("metal" = 30,
 							 "crystal_dense" = 10,
 							 "metal_superdense" = 10,
+							 "koshmarite" = 5,
 							 "energy_extreme" = 5)
 	category = "Machinery"
 

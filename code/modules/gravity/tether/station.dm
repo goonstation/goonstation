@@ -5,9 +5,10 @@ var/global/station_tether_gforce = 0
 
 TYPEINFO(/obj/machinery/gravity_tether/station)
 	mats = list("metal" = 50,
-				"crystal_dense" = 20,
-				"metal_superdense" = 20,
-				"energy_extreme" = 10,)
+				"crystal_dense" = 50,
+				"metal_superdense" = 40,
+				"koshmarite" = 30,
+				"energy_extreme" = 20,)
 /obj/machinery/gravity_tether/station
 	name = "\improper Gravi-Tonne wide-area gravity tether"
 	icon = 'icons/obj/machines/tether_64x64.dmi'
