@@ -1642,7 +1642,7 @@ TYPEINFO(/mob)
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
-	if (!P || !P.proj_data || !P.proj_data.silentshot)
+	if (!P || !P.proj_data || !P.proj_data.no_hit_message)
 		boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -2800,6 +2800,10 @@ TYPEINFO(/mob)
 //	return radiation
 
 /mob/UpdateName()
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+		src.update_name_tag("")
+		return
 	if (src.real_name)
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 	else
@@ -2826,8 +2830,6 @@ TYPEINFO(/mob)
 	return mobs
 
 /mob/get_examine_tag(mob/examiner)
-	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
-		return null
 	return src.name_tag
 
 /mob/proc/protected_from_space()
