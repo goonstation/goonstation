@@ -61,28 +61,36 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 			var/mob/M = A
 			M.changeBodyTemp(15 KELVIN * mult, max_temp = M.base_body_temp)
 			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				var/gloves_transparency = 1
-				if(H.gloves)
-					if(H.gloves.material)
-						gloves_transparency = 1 - (H.gloves.material.getAlpha() / 255)
-					else
-						gloves_transparency = 0
-				var/photosynthesis_mult = 0
-				if(HAS_FLAG(H.limbs?.l_arm?.kind_of_limb, LIMB_PLANT))
-					if(HAS_FLAG(H.gloves?.which_hands, GLOVE_HAS_LEFT))
-						photosynthesis_mult += 0.5 * gloves_transparency
-					else
-						photosynthesis_mult += 0.5
-				if(HAS_FLAG(H.limbs?.r_arm?.kind_of_limb, LIMB_PLANT))
-					if(HAS_FLAG(H.gloves?.which_hands, GLOVE_HAS_RIGHT))
-						photosynthesis_mult += 0.5 * gloves_transparency
-					else
-						photosynthesis_mult += 0.5
-				if(photosynthesis_mult > 0)
-					var/uv_heal_amount = 1 * photosynthesis_mult
-					H.HealDamage("All", uv_heal_amount, 0, uv_heal_amount)
+				plantlimb_heal(M)
+
 	use_power(ACTIVE_POWER_USAGE)
+
+/obj/machinery/hydro_growlamp/proc/plantlimb_heal(var/mob/living/carbon/human/H)
+	var/has_plantlimb_right = HAS_FLAG(H.limbs?.r_arm?.kind_of_limb, LIMB_PLANT)
+	var/has_plantlimb_left = HAS_FLAG(H.limbs?.l_arm?.kind_of_limb, LIMB_PLANT)
+	if(!has_plantlimb_left && !has_plantlimb_right)
+		return
+	var/gloves_transparency = 1
+	if(H.gloves)
+		gloves_transparency = 0
+		if(H.gloves.material)
+			gloves_transparency = 1 - (H.gloves.material.getAlpha() / 255)
+
+	var/photosynthesis_mult = 0
+	if(has_plantlimb_left)
+		if(HAS_FLAG(H.gloves?.which_hands, GLOVE_HAS_LEFT))
+			photosynthesis_mult = 0.5 * gloves_transparency
+		else
+			photosynthesis_mult = 0.5
+	if(has_plantlimb_right)
+		if(HAS_FLAG(H.gloves?.which_hands, GLOVE_HAS_RIGHT))
+			photosynthesis_mult += 0.5 * gloves_transparency
+		else
+			photosynthesis_mult += 0.5
+
+	if(photosynthesis_mult > 0)
+		var/uv_heal_amount = 1 * photosynthesis_mult
+		H.HealDamage("All", uv_heal_amount, 0, uv_heal_amount)
 
 /obj/machinery/hydro_growlamp/attack_hand(var/mob/user)
 	src.add_fingerprint(user)
