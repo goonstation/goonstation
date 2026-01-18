@@ -870,6 +870,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.hacked)
 			src.hacked = TRUE
+			src.malfunction = TRUE
 			if(user)
 				boutput(user, SPAN_NOTICE("You remove the [src]'s product locks!"))
 			return TRUE
@@ -962,6 +963,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (isscrewingtool(W))
 			if (!src.panel_open)
 				src.panel_open = TRUE
+			else if (src.hacked)
+				boutput(user, SPAN_ALERT("The maintenance panel is jammed!"))
+				return
 			else
 				src.panel_open = FALSE
 			boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
@@ -1540,8 +1544,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		src.wires &= ~wireFlag
 		switch(wireIndex)
-			if(WIRE_EXTEND)
-				src.hacked = FALSE
 			if(WIRE_SHOCK)
 				src.time_left_electrified = 0
 			if(WIRE_MALF)
@@ -1560,7 +1562,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_SHOCK)
 				src.time_left_electrified = 0
 			if(WIRE_MALF)
-				src.malfunction = FALSE
+				if(!src.hacked) //Hacking permanently breaks it.
+					src.malfunction = FALSE
 			if(WIRE_POWER)
 				src.power_wire_cut = FALSE
 				src.check_power_status()
@@ -1571,11 +1574,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/wireIndex = APCWireColorToIndex[wireColor]
 		switch(wireIndex)
 			if(WIRE_EXTEND)
-				src.hacked = !src.hacked
+				src.hacked = TRUE
+				src.malfunction = TRUE
 			if (WIRE_SHOCK)
 				src.time_left_electrified = 30
 			if (WIRE_MALF)
-				src.malfunction = !src.malfunction
+				if(!src.hacked) //Hacking permanently breaks it.
+					src.malfunction = !src.malfunction
 			if (WIRE_POWER)
 				if(!src.is_disabled())
 					src.shock(user, 100)
