@@ -2006,3 +2006,20 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 	animate(A, transform = M, alpha = 255, time = 0.7 SECONDS, easing = CUBIC_EASING, pixel_y = 0, flags = ANIMATION_PARALLEL)
 	SPAWN(0.4 SECONDS)
 		animate(A, color = COLOR_MATRIX_IDENTITY, time = 0.7 SECONDS, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+
+
+proc/animate_supernatural_despawn(var/atom/A, var/time = 2 SECONDS, var/x_growth = 1.3, var/y_growth = 1.15)
+	var/icon/icn = icon(A.icon, A.icon_state)
+	var/icon_height = icn.Height()
+
+	var/matrix/M = matrix(A.transform)
+	M.Scale(x_growth, y_growth)
+	M.Translate(0, icon_height * ((y_growth - 1) / 2))
+
+	animate(A,
+		transform = M,
+		alpha = 0,
+		time = time,
+		easing = SINE_EASING,
+		flags = ANIMATION_PARALLEL
+	)

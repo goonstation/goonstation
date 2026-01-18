@@ -2,15 +2,22 @@
 	//var/faith_cost = 0
 
 	tryCast(atom/target, params)
-		/* var/area/station/chapel/area = get_area(holder.owner)
+		var/area/station/chapel/area = get_area(holder.owner)
+		var/is_atheist = holder.owner.traitHolder?.getTrait("atheist")
 		if (!istype(area))
-			boutput(holder.owner, SPAN_ALERT("You can only cast that spell while on holy ground."))
+			if (is_atheist)
+				boutput(holder.owner, SPAN_ALERT("You can't do that outside the chapel."))
+			else
+				boutput(holder.owner, SPAN_ALERT("You can only cast that spell while on holy ground."))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (src.targeted)
 			area = get_area(target)
 			if (!istype(area))
-				boutput(holder.owner, SPAN_ALERT("You can only target holy ground with that ability."))
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN */
+				if (is_atheist)
+					boutput(holder.owner, SPAN_ALERT("You can't do that outside the chapel."))
+				else
+					boutput(holder.owner, SPAN_ALERT("You can only target holy ground with that ability."))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		/* var/datum/trait/job/chaplain/faithtrait = holder.owner.traitHolder.getTrait("training_chaplain")
 		if (!faithtrait || faithtrait.faith < src.faith_cost)
 			boutput(holder.owner, SPAN_ALERT("Your flock lacks the faith for you to use this ability."))
@@ -101,7 +108,7 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 					return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		..()
 		var/decoration = new spawnable_type(turf)
-		animate_supernatural_spawn(decoration)
+
 		holder.owner.abilityHolder.removeAbility(src.type)
 		if (!atheist_manager)
 			atheist_manager = new()
@@ -115,7 +122,7 @@ ABSTRACT_TYPE(/datum/targetable/faith_based/spawn_decoration)
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "toxmob"
 	cooldown = 30 SECONDS
-	spawnable_type = /obj/tree
+	spawnable_type = /obj/faith_deco/tree
 
 /datum/targetable/faith_based/spawn_decoration/eternal_fire
 	name = "Eternal Fire"
@@ -161,3 +168,58 @@ proc/get_all_neighbours(turf/T) // TODO figure out which file this should go int
 	var/turf/sw = locate(x-1, y-1, z)
 	if(sw) neighbours += sw
 	return neighbours
+
+
+// TODO move the following to its own file
+
+/// The base class for decorations spawned by chaplain spells. These are not meant to inherit the functionality their counterparts might have elsewhere,
+/// since they're basically intented to be props or illusions.
+/obj/faith_deco
+	name = "Chaplain Decoration"
+	icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
+	icon_state = "c_box"
+	density = TRUE
+	var/atheist_desc
+	var/despawning = FALSE
+
+	New()
+		. = ..()
+		src.spawn_animation()
+
+	special_desc(dist, mob/user)
+		if (user.traitHolder?.getTrait("atheist"))
+			return src.atheist_desc
+		else
+			return src.desc
+
+	proc/spawn_animation()
+		animate_supernatural_spawn(src)
+
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if (!despawning && (temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST))
+			visible_message("[src] seems to burn away.")
+			despawn()
+
+	proc/despawn()
+		if (despawning)
+			return
+		despawning = TRUE
+		var/time = 2 SECONDS
+		animate_supernatural_despawn(src, time)
+		SPAWN(time)
+			make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
+			qdel(src)
+
+
+
+/obj/faith_deco/tree
+	name = "tree"
+	desc = "It's a tree."
+	atheist_desc = "Someone seems to be trying to pass this cardboard box off as a tree, who would fall for that?"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "tree"
+	anchored = ANCHORED
+	layer = EFFECTS_LAYER_UNDER_3
+
+	pixel_x = -20
+	opacity = 0
