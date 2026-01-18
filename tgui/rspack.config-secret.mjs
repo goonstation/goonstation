@@ -297,6 +297,14 @@ export class SecretBundleStoragePlugin {
         cpSync(sourcePath, destinationPath);
       }
 
+      // Strip secret bundles back out of the public output so they only live in +secret.
+      for (const file of filesToMirror) {
+        const sourcePath = path.join(outputPath, file);
+        if (existsSync(sourcePath)) {
+          rmSync(sourcePath, { force: true });
+        }
+      }
+
       logger.log(
         `Stored ${filesToMirror.size} secret bundle${
           filesToMirror.size === 1 ? '' : 's'

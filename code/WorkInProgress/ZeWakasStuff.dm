@@ -307,19 +307,19 @@ wv2 memes
 
 /datum/test_for_tgui/ui_act(action, list/params)
 	. = ..()
-	if(.)
+	if (.)
 		return
 	switch(action)
 		if("increment")
 			counter++
-			tgui_process.update_uis(src)
 			return TRUE
-	return FALSE
+
+/datum/test_for_tgui/ui_assets(mob/user)
+	. = list(new /datum/asset/basic/tgui_secret_chunk("SecretTest"))
 
 /datum/test_for_tgui/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(ui)
 		return
 	ui = new(user, src, "SecretTest")
-	ui.set_autoupdate(FALSE)
 	ui.open()

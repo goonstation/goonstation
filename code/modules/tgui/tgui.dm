@@ -39,6 +39,8 @@
 	var/list/cooldowns // |GOONSTATION-CHANGE| Different cooldown method
 	/// Are byond mouse events beyond the window passed in to the ui
 	var/mouse_hooked = FALSE // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+	/// |GOONSTATION-ADD| ID for secret interfaces if applicable.
+	var/secret_interface_id
 
 /**
  * public
@@ -61,6 +63,7 @@
 	src.src_object = src_object
 	src.window_key = "\ref[src_object]-main" // |GOONSTATION-CHANGE| (REF->\ref)
 	src.interface = interface
+	src.secret_interface_id = tgui_get_secret_interface_id(interface) // |GOONSTATION-ADD| Secret interface handling
 	if(title)
 		src.title = title
 	src.state = src_object.ui_state()
@@ -103,11 +106,17 @@
 	else
 		window.send_message("ping")
 
-	tgui_send_secret_interface_assets(user.client, interface, window) // |GOONSTATION-ADD| Secret interface handling
-
 	// |GOONSTATION-CHANGE| Different asset method
 	for(var/datum/asset/asset in src_object.ui_assets(user))
 		send_asset(asset)
+
+	// |GOONSTATION-ADD| Secret interface handling
+	if(secret_interface_id)
+		window.send_message(
+			"secret/interface",
+			list("name" = interface, "token" = secret_interface_id),
+		)
+
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))

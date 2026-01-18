@@ -74,10 +74,10 @@
 /// Lazy-loaded secret interface bundles
 /// These are not singletons
 /datum/asset/basic/tgui_secret_chunk
-	var/id
+	var/id = null
 
-/datum/asset/basic/tgui_secret_chunk/New(id)
-	src.id = id
+/datum/asset/basic/tgui_secret_chunk/New(interface_name)
+	src.id = tgui_get_secret_interface_id(interface_name)
 	. = ..()
 
 /datum/asset/basic/tgui_secret_chunk/init()

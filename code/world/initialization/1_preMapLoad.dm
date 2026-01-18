@@ -96,6 +96,9 @@
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 		Z_LOG_DEBUG("Preload", "Loading local browserassets...")
 		loadAllLocalResources("browserassets/src/")
+		#ifdef SECRETS_ENABLED
+		loadAllLocalResources("+secret/browserassets/src/")
+		#endif
 
 	Z_LOG_DEBUG("Preload", "Z-level datums...")
 	init_zlevel_datums()
