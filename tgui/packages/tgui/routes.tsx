@@ -8,7 +8,7 @@ import { lazy, Suspense } from 'react';
 
 import { useBackend } from './backend';
 import { useDebug } from './debug';
-import { hasSecretInterface, loadSecretInterface } from './interfaces-secret';
+import { loadSecretInterface } from './interfaces-secret/registry.generated';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
@@ -78,8 +78,10 @@ export function getRoutedComponent() {
 
   const name = config?.interface?.name;
 
-  if (name && hasSecretInterface(name)) {
-    return getSecretComponent(name);
+  const secretInfo = name ? config?.secretInterfaces?.[name] : null;
+
+  if (name && secretInfo?.token) {
+    return getSecretComponent(name, secretInfo.token, secretInfo.chunk);
   }
 
   const interfacePathBuilders = [
@@ -114,14 +116,18 @@ export function getRoutedComponent() {
   return Component;
 }
 
-function getSecretComponent(name: string): ComponentType {
+function getSecretComponent(
+  name: string,
+  token: string,
+  chunkFilename?: string,
+): ComponentType {
   const cached = secretComponentCache.get(name);
   if (cached) {
     return cached;
   }
 
   const LazySecret = lazy(async () => {
-    const Component = await loadSecretInterface(name);
+    const Component = await loadSecretInterface(token, chunkFilename);
     return { default: Component };
   });
 

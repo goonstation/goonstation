@@ -12,8 +12,8 @@ import { fileURLToPath } from 'url';
 
 // |GOONSTATION-CHANGE| secret interfaces
 import {
+  addSecretInterfaceEntries,
   SecretBundleStoragePlugin,
-  secretInterfacesSplitChunks,
   SecretInterfaceSyncPlugin,
 } from './rspack.config-secret.mjs';
 
@@ -174,12 +174,6 @@ export default (env = {}, argv) => {
     },
     optimization: {
       emitOnErrors: false,
-      splitChunks: {
-        chunks: 'async',
-        cacheGroups: {
-          secretInterfaces: secretInterfacesSplitChunks, // |GOONSTATION-CHANGE| secret interfaces
-        },
-      },
     },
     performance: {
       hints: false,
@@ -197,6 +191,10 @@ export default (env = {}, argv) => {
       new SecretBundleStoragePlugin(), //   |GOONSTATION-CHANGE| secret interfaces
     ],
   });
+
+  // |GOONSTATION-CHANGE| Add secret interface entrypoints (built as separate bundles,
+  // but dependOn the main tgui bundle so they don't duplicate shared code).
+  addSecretInterfaceEntries(config);
 
   if (bench) {
     config.entry = {

@@ -97,6 +97,29 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
+  if (type === 'secret/interface') {
+    const name = payload?.name;
+    const token = payload?.token;
+    const chunk = payload?.chunk;
+
+    if (!name || !token) {
+      return state;
+    }
+
+    const prev = (state.config as any)?.secretInterfaces || {};
+
+    return {
+      ...state,
+      config: {
+        ...state.config,
+        secretInterfaces: {
+          ...prev,
+          [name]: { token, chunk },
+        },
+      },
+    };
+  }
+
   if (type === 'backend/setSharedState') {
     const { key, nextState } = payload;
     return {
@@ -421,6 +444,7 @@ type BackendState<TData> = {
       name: string;
       layout: string;
     };
+    secretInterfaces?: Record<string, { token: string; chunk?: string }>;
     refreshing: BooleanLike;
     window: {
       key: string;
