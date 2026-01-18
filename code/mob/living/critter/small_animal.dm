@@ -3872,6 +3872,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/voice_gender = "male"
 	is_npc = FALSE
 	has_genes = FALSE
+	default_material = "plastic"
+	material_amt = 0.5
 
 	New()
 		..()
@@ -3899,6 +3901,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		icon_state_dead = src.icon_state
 
 		if (prob(1)) // rarely give a different material
+			src.removeMaterial()
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")

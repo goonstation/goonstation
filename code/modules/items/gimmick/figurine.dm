@@ -12,6 +12,8 @@
 	stamina_crit_chance = 0
 	//mat_changename = 0
 	rand_pos = 1
+	default_material = "plastic"
+	material_amt = 0.5
 	var/patreon_prob = 9
 	var/rare_prob = 12
 	var/datum/figure_info/info = null
@@ -1148,6 +1150,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	max_item_amount = 1
 	//reusable = 0
 	rand_pos = 1
+	default_material = "plastic"
+	material_amt = 0.5
 	var/ccolor = "y"
 	var/image/cap_image = null
 	var/itemstate = "cap-fig"

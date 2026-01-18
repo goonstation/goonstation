@@ -574,6 +574,7 @@ proc/ui_describe_reagents(atom/A)
 	flags = OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
+	default_material = "plastic"
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
 	var/bucket_sensor_type = /obj/item/bucket_sensor
@@ -1557,6 +1558,7 @@ proc/ui_describe_reagents(atom/A)
 /obj/item/reagent_containers/glass/vial/plastic
 	name = "plastic vial"
 	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()
