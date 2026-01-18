@@ -159,6 +159,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
 	w_class = W_CLASS_SMALL
+	default_material = "synthrubber_yellow"
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 3
@@ -294,6 +295,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "rubber_hammer"
 	c_flags = ONBELT
 	force = 0
+	default_material = "synthrubber_yellow"
 
 	New()
 		..()

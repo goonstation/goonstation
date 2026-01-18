@@ -220,6 +220,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "cleaning gloves"
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
+	default_material = "synthrubber_yellow"
 	protective_temperature = 550
 	material_prints = "synthetic silicone rubber fibers"
 	fingertip_color = "#ffff33"
@@ -291,6 +292,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "latex"
 	item_state = "lgloves"
 	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
+	default_material = "latex"
+	material_amt = 0.5
 	protective_temperature = 310
 	scramble_prints = 1
 	fingertip_color = "#f3f3f3"

@@ -296,6 +296,7 @@ ADMIN_INTERACT_PROCS(/obj/item/rubberduck, proc/quack, proc/evil_quack)
 	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
+	default_material = "synthrubber_yellow"
 
 /obj/item/rubberduck/attack_self(mob/user as mob)
 	if (!ON_COOLDOWN(src,"quack",2 SECONDS))

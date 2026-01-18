@@ -692,6 +692,7 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1
+	default_material = "synthrubber"
 	var/special_mode = null
 	var/is_reassignable = 1
 	var/assignment = null
@@ -768,6 +769,7 @@
 		name = "\improper captain's rubber stamp"
 		desc = "The Captain's rubber stamp for stamping important documents. Ooh, it's the really fancy National Notary 'Congressional' model with the fine ebony handle."
 		icon_state = "stamp-cap"
+		default_material = "synthrubber_green"
 		special_mode = "Captain"
 		is_reassignable = 0
 		assignment = "stamp-cap"
@@ -775,6 +777,7 @@
 		name = "\improper head of personnel's rubber stamp"
 		desc = "The Head of Personnel's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Continental' models with the kingwood handle."
 		icon_state = "stamp-hop"
+		default_material = "synthrubber_blue"
 		special_mode = "Head of Personnel"
 		is_reassignable = 0
 		assignment = "stamp-hop"
@@ -789,6 +792,7 @@
 		name = "\improper chief engineer's rubber stamp"
 		desc = "The Chief Engineer's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Mary' models with the ironwood handle."
 		icon_state = "stamp-ce"
+		default_material = "synthrubber_yellow"
 		special_mode = "Chief Engineer"
 		is_reassignable = 0
 		assignment = "stamp-ce"
@@ -796,6 +800,7 @@
 		name = "\improper medical director's rubber stamp"
 		desc = "The Medical Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Anne' models with the rosewood handle."
 		icon_state = "stamp-md"
+		default_material = "synthrubber_blue"
 		special_mode = "Medical Director"
 		is_reassignable = 0
 		assignment = "stamp-md"
@@ -803,6 +808,7 @@
 		name = "\improper research director's rubber stamp"
 		desc = "The Research Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. John' models with the purpleheart handle."
 		icon_state = "stamp-rd"
+		default_material = "synthrubber_purple"
 		special_mode = "Research Director"
 		is_reassignable = 0
 		assignment = "stamp-rd"
@@ -810,6 +816,7 @@
 		name = "\improper clown's rubber stamp"
 		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-honk"
+		default_material = "synthrubber_hotpink"
 		special_mode = "Clown"
 		is_reassignable = 0
 		assignment = "stamp-honk"
@@ -817,6 +824,7 @@
 		name = "\improper centcom executive rubber stamp"
 		desc = "Some bureaucrat from Centcom probably lost this. Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle?"
 		icon_state = "stamp-centcom"
+		default_material = "synthrubber_blue"
 		special_mode = "Centcom"
 		is_reassignable = 0
 		assignment = "stamp-centcom"
@@ -824,6 +832,7 @@
 		name = "\improper mime's rubber stamp"
 		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-mime"
+		default_material = "synthrubber_white"
 		special_mode = "Mime"
 		is_reassignable = 0
 		assignment = "stamp-mime"
@@ -831,6 +840,7 @@
 		name = "\improper chaplain's rubber stamp"
 		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the National Notary 'Chesapeake' model in varnished oak."
 		icon_state = "stamp-chap"
+		default_material = "synthrubber_black"
 		special_mode = "Chaplain"
 		is_reassignable = 0
 		assignment = "stamp-chap"
@@ -838,6 +848,7 @@
 		name = "\improper quartermaster's rubber stamp"
 		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on. A classic National Notary 'Eastport' model in oiled black walnut."
 		icon_state = "stamp-qm"
+		default_material = "synthrubber_yellow"
 		special_mode = "Quartermaster"
 		is_reassignable = 0
 		assignment = "stamp-qm"
