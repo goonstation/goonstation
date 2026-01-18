@@ -18,6 +18,7 @@
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	pass_unstable = TRUE
+	material_amt = 0.1 // Matched to their cost in QM/crate fabricators.
 
 	get_desc()
 		. = ..()

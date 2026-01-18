@@ -195,7 +195,7 @@
 	shot_sound = null
 	hit_mob_sound = null
 	hit_object_sound = null
-	silentshot = TRUE
+	no_hit_message = TRUE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		. = ..()
@@ -872,7 +872,7 @@ TYPEINFO(/obj/item/device/geiger)
 		..()
 
 /datum/projectile/special/timegun
-	silentshot = 1
+	no_hit_message = 1
 	cost = 25
 	max_range = PROJ_INFINITE_RANGE
 	dissipation_rate = 0
