@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	///  Use `proc/change_intensity(new_intensity)` to change values.
 	var/gforce_intensity = 0
 	var/target_intensity = 1 //! Current intensity setting (used when changing intensities)
-	var/maximum_intensity = TETHER_INTENSITY_MAX_DEFAULT //! Maxmimum intensity of this tether (emag changes this)
+	var/maximum_intensity = 2 //! Maxmimum intensity of this tether
 
 	var/last_charge_amount = 0 //! Last cell charge level, used for tracking charging/draining battery status
 	var/charging_state = TETHER_CHARGE_IDLE //! State of the internal cell charger

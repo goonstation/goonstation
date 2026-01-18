@@ -4355,12 +4355,6 @@ ABSTRACT_TYPE(/area/mining)
 	gravity_gforce_extreme
 		gforce_minimum = GRAVITY_MOB_EXTREME_THRESHOLD
 
-	gravity_tether_max
-		gforce_minimum = TETHER_INTENSITY_MAX_DEFAULT
-
-	gravity_tether_emag
-		gforce_minimum = TETHER_INTENSITY_MAX_EMAG
-
 /* ================================================== */
 
 

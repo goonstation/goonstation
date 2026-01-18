@@ -1,7 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/simulated/floor/red/redblackchecker,
-/area/station/devzone/gravity_tether_emag)
 "j" = (
 /turf/simulated/floor/red,
 /area/station/devzone/gravity_gforce_extreme)
@@ -25,9 +22,6 @@
 "G" = (
 /turf/simulated/floor/orange,
 /area/station/devzone/gravity_gforce_high)
-"I" = (
-/turf/simulated/floor/orangeblack,
-/area/station/devzone/gravity_tether_max)
 "P" = (
 /turf/simulated/floor/blue/checker,
 /area/station/devzone/gravity_traction_partial)
@@ -244,10 +238,10 @@ V
 V
 V
 V
-I
+G
 V
 G
-a
+j
 V
 j
 V
@@ -265,12 +259,12 @@ o
 o
 o
 o
-I
-I
-I
-a
-a
-a
+G
+G
+G
+j
+j
+j
 V
 "}
 (12,1,1) = {"
@@ -286,12 +280,12 @@ o
 o
 o
 o
-I
-I
-I
-a
-a
-a
+G
+G
+G
+j
+j
+j
 V
 "}
 (13,1,1) = {"
@@ -307,12 +301,12 @@ o
 o
 o
 o
-I
-I
-I
-a
-a
-a
+G
+G
+G
+j
+j
+j
 V
 "}
 (14,1,1) = {"
@@ -328,12 +322,12 @@ o
 o
 o
 o
-I
-I
-I
-a
-a
-a
+G
+G
+G
+j
+j
+j
 V
 "}
 (15,1,1) = {"
@@ -349,12 +343,12 @@ o
 o
 o
 o
-I
-I
-I
-a
-a
-a
+G
+G
+G
+j
+j
+j
 V
 "}
 (16,1,1) = {"
@@ -370,12 +364,12 @@ o
 o
 o
 o
-I
-I
-I
-a
-a
-a
+G
+G
+G
+j
+j
+j
 V
 "}
 (17,1,1) = {"
@@ -391,12 +385,12 @@ o
 o
 o
 o
-I
-I
-I
-a
-a
-a
+G
+G
+G
+j
+j
+j
 V
 "}
 (18,1,1) = {"
@@ -412,12 +406,12 @@ o
 o
 o
 o
-I
-I
-I
-a
-a
-a
+G
+G
+G
+j
+j
+j
 V
 "}
 (19,1,1) = {"
