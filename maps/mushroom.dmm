@@ -22134,10 +22134,7 @@
 /area/station/hallway/primary/central)
 "mBq" = (
 /obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-2"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
