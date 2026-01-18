@@ -60,6 +60,17 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 		else if (ismob(A))
 			var/mob/M = A
 			M.changeBodyTemp(15 KELVIN * mult, max_temp = M.base_body_temp)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.limbs)
+					var/photosynthesis_mult = 0
+					if(HAS_FLAG(H.limbs.l_arm?.kind_of_limb, LIMB_PLANT))
+						photosynthesis_mult += 0.5
+					if(HAS_FLAG(H.limbs.r_arm?.kind_of_limb, LIMB_PLANT))
+						photosynthesis_mult += 0.5
+					if(photosynthesis_mult > 0)
+						var/uv_heal_amount = 1 * photosynthesis_mult
+						H.HealDamage("All", uv_heal_amount, 0, uv_heal_amount)
 	use_power(ACTIVE_POWER_USAGE)
 
 /obj/machinery/hydro_growlamp/attack_hand(var/mob/user)
