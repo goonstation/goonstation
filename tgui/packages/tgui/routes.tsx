@@ -8,12 +8,42 @@ import { lazy, Suspense } from 'react';
 
 import { useBackend } from './backend';
 import { useDebug } from './debug';
-import { loadSecretInterface } from './interfaces-secret/registry.generated';
+import { loadSecretInterface } from './interfaces-secret';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
 
 const secretComponentCache = new Map<string, ComponentType>();
+
+const SECRET_STORAGE_KEY = 'tgui.secretInterfaces';
+
+function loadPersistedSecret(
+  name: string,
+): { token: string; chunk?: string } | null {
+  try {
+    const raw = sessionStorage.getItem(SECRET_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const info = parsed?.[name];
+    if (info && typeof info.token === 'string') {
+      return { token: info.token };
+    }
+  } catch {
+    // ignore storage/parse errors
+  }
+  return null;
+}
+
+function persistSecret(name: string, info: { token: string }) {
+  try {
+    const raw = sessionStorage.getItem(SECRET_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : {};
+    parsed[name] = info;
+    sessionStorage.setItem(SECRET_STORAGE_KEY, JSON.stringify(parsed));
+  } catch {
+    // ignore storage errors (storage disabled/full)
+  }
+}
 
 const routingError =
   (type: 'notFound' | 'missingExport', name: string) => () => {
@@ -78,10 +108,16 @@ export function getRoutedComponent() {
 
   const name = config?.interface?.name;
 
-  const secretInfo = name ? config?.secretInterfaces?.[name] : null;
+  let secretInfo = name ? config?.secretInterfaces?.[name] : null;
+
+  // Fallback for CTRL+R reloads: reuse last-seen secret token/chunk from sessionStorage.
+  if (!secretInfo && name) {
+    secretInfo = loadPersistedSecret(name);
+  }
 
   if (name && secretInfo?.token) {
-    return getSecretComponent(name, secretInfo.token, secretInfo.chunk);
+    persistSecret(name, secretInfo);
+    return getSecretComponent(name, secretInfo.token);
   }
 
   const interfacePathBuilders = [
@@ -116,18 +152,14 @@ export function getRoutedComponent() {
   return Component;
 }
 
-function getSecretComponent(
-  name: string,
-  token: string,
-  chunkFilename?: string,
-): ComponentType {
+function getSecretComponent(name: string, token: string): ComponentType {
   const cached = secretComponentCache.get(name);
   if (cached) {
     return cached;
   }
 
   const LazySecret = lazy(async () => {
-    const Component = await loadSecretInterface(token, chunkFilename);
+    const Component = await loadSecretInterface(token);
     return { default: Component };
   });
 

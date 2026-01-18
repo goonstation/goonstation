@@ -1,4 +1,3 @@
 *
 !.gitignore
 !index.ts
-!registry.generated.ts

@@ -2,7 +2,7 @@
  * @file Secret interface handling for rspack builds
  * @copyright 2025 Goonstation
  */
-import { createHmac, randomBytes } from 'node:crypto';
+import { createHmac } from 'node:crypto';
 import {
   cpSync,
   existsSync,
@@ -65,7 +65,7 @@ function deriveInterfaceNameFromEntry(entry) {
 }
 
 function deriveSecretChunkNameFromInterfaceName(interfaceName) {
-  const token = deriveSecretToken(interfaceName);
+  const token = deriveSecretId(interfaceName);
   if (!token) {
     return null;
   }
@@ -85,11 +85,7 @@ const secretInterfaceTarget = path.resolve(
   'tgui',
   'interfaces-secret',
 );
-const secretInterfacePreserve = new Set([
-  '.gitignore',
-  'index.ts',
-  'registry.generated.ts',
-]);
+const secretInterfacePreserve = new Set(['.gitignore', 'index.ts']);
 const secretBundleDestination = path.resolve(
   secretRepoRoot,
   'browserassets',
@@ -105,31 +101,21 @@ const secretSaltFile = path.resolve(secretRepoRoot, 'tgui', 'secret-salt.txt');
 const secretDestinationPreserve = new Set(['.gitignore']);
 const secretBundlePattern = /^secret-.*\.bundle\.js(?:\.map)?$/i;
 
-function ensureSecretSalt() {
+function deriveSecretId(interfaceName) {
   if (!existsSync(secretRepoRoot)) {
     return null;
   }
 
-  mkdirSync(path.dirname(secretSaltFile), { recursive: true });
-
   if (!existsSync(secretSaltFile)) {
-    const salt = randomBytes(32).toString('hex');
-    writeFileSync(secretSaltFile, salt);
-    return salt;
+    throw new Error(`Missing secret salt file at ${secretSaltFile}.`);
   }
 
-  const existing = readFileSync(secretSaltFile, 'utf-8').trim();
-  return existing || null;
-}
-
-function deriveSecretToken(interfaceName) {
-  const salt = ensureSecretSalt();
-  if (!salt) {
-    return null;
+  const seasoningSalt = readFileSync(secretSaltFile, 'utf-8').trim();
+  if (!seasoningSalt) {
+    throw new Error(`Secret salt is empty at ${secretSaltFile}.`);
   }
 
-  // 24 hex chars = 96 bits: short enough for filenames, large enough to avoid collisions.
-  return createHmac('md5', salt)
+  return createHmac('md5', seasoningSalt)
     .update(String(interfaceName))
     .digest('hex')
     .slice(0, 24);
@@ -182,35 +168,32 @@ export class SecretInterfaceSyncPlugin {
 
         const interfaceName = deriveInterfaceNameFromEntry(entry);
         if (interfaceName) {
-          const token = deriveSecretToken(interfaceName);
-          if (!token) {
+          const id = deriveSecretId(interfaceName);
+          if (!id) {
             continue;
           }
 
-          mapping[interfaceName] = {
-            token,
-            chunk: `secret-${token}.bundle.js`,
-          };
+          mapping[interfaceName] = id;
 
-          // Wrapper registers the component into a global registry keyed by token.
-          // Import path intentionally omits extension to avoid TS5097.
+          // Wrapper registers the component into a global registry keyed by id.
           const wrapperPath = path.join(
             secretInterfaceTarget,
             `${interfaceName}.wrapper.tsx`,
           );
 
-          const importTarget = entry.endsWith('/')
-            ? `./${interfaceName}`
-            : `./${interfaceName}`;
+          const importTarget = `./${interfaceName}`;
 
-          const wrapperContent = `// Auto-generated wrapper for ${interfaceName}\nimport Component from '${importTarget}';\n\nif (!globalThis.__SECRET_TGUI_INTERFACES__) {\n  globalThis.__SECRET_TGUI_INTERFACES__ = {};\n}\n\nglobalThis.__SECRET_TGUI_INTERFACES__['${token}'] = Component;\n\nexport default Component;\n`;
+          const wrapperContent = `// Auto-generated wrapper for ${interfaceName}
+import Component from '${importTarget}';\n// @ts-ignore
+globalThis.__SECRET_TGUI_INTERFACES__['${id}'] = Component;
+export default Component;\n`;
           mkdirSync(path.dirname(wrapperPath), { recursive: true });
           writeFileSync(wrapperPath, wrapperContent);
         }
         copied += 1;
       }
 
-      // Write mapping file (private, in +secret) for DM to read.
+      // Write mapping file for the server to read.
       mkdirSync(path.dirname(secretMappingFile), { recursive: true });
       writeFileSync(secretMappingFile, JSON.stringify(mapping, null, 2));
 
@@ -336,7 +319,7 @@ export function addSecretInterfaceEntries(config) {
   }
 
   for (const [interfaceName, info] of Object.entries(mapping)) {
-    const token = info?.token;
+    const token = typeof info === 'string' ? info : null;
     if (!token) {
       continue;
     }

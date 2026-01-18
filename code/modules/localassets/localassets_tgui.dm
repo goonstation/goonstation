@@ -72,18 +72,17 @@
 		)
 
 /// Lazy-loaded secret interface bundles
+/// These are not singletons
 /datum/asset/basic/tgui_secret_chunk
-	var/chunk_filename
+	var/id
 
-/datum/asset/basic/tgui_secret_chunk/New(chunk_name)
-	chunk_filename = chunk_name
-	local_assets = list(chunk_filename)
+/datum/asset/basic/tgui_secret_chunk/New(id)
+	src.id = id
 	. = ..()
 
 /datum/asset/basic/tgui_secret_chunk/init()
 	. = ..()
-	if (!chunk_filename)
-		return
+	local_assets = list("secret-[id].bundle.js")
 	url_map = list(
-		chunk_filename = "[resource("tgui/[chunk_filename]")]"
+		"secret-[id].bundle.js" = "[resource("tgui/secret-[id].bundle.js")]"
 	)
