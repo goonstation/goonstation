@@ -996,8 +996,13 @@
 				if (!src.restrained())
 					var/obj/item/thing = src.equipped()
 					if (thing)
-						message = "<b>[src]</b> raises [thing]."
-						maptext_out = "<I>raises [thing]</I>"
+						if (isgrab(thing))
+							var/obj/item/grab/G = thing
+							message = "<b>[src]</b> raises [(G.affecting && G.state >= GRAB_AGGRESSIVE) ? G.affecting : "a hand"]."
+							maptext_out = "<I>raises [(G.affecting && G.state >= GRAB_AGGRESSIVE) ? G.affecting : "a hand"]</i>"
+						else
+							message = "<b>[src]</b> raises [thing]."
+							maptext_out = "<I>raises [thing]</I>"
 					else
 						message = "<b>[src]</b> raises a hand."
 						maptext_out = "<I>raises a hand</I>"

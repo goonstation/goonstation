@@ -2719,6 +2719,15 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/catering)
+"ajI" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
+	opacity = 0
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "ajL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10549,26 +10558,6 @@
 	icon_state = "fred1"
 	},
 /area/station/hallway/secondary/entry)
-"aHe" = (
-/obj/machinery/guardbot_dock{
-	desc = "A recharging and command station for PR-4 Robuddies.";
-	name = "tourbot docking station"
-	},
-/obj/decal/poster/wallsign/poster_nt{
-	pixel_y = 28
-	},
-/obj/machinery/bot/guardbot/old/tourguide{
-	beacon_freq = 1443;
-	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around!  This one has a little name tag on the front labeled 'Murray'";
-	name = "Murray";
-	req_access_txt = ""
-	},
-/obj/machinery/navbeacon/tour/cog2/tour11,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fred4"
-	},
-/area/station/hallway/secondary/entry)
 "aHf" = (
 /obj/voting_box,
 /turf/simulated/floor/neutral/side{
@@ -10593,16 +10582,6 @@
 	},
 /area/shuttle/arrival/station)
 "aHj" = (
-/turf/unsimulated/floor/shuttle/white{
-	dir = 4
-	},
-/area/shuttle/arrival/station)
-"aHk" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	opacity = 0;
-	req_access_txt = ""
-	},
 /turf/unsimulated/floor/shuttle/white{
 	dir = 4
 	},
@@ -11497,17 +11476,6 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
-"aKq" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Cockpit";
-	opacity = 0;
-	req_access_txt = ""
-	},
-/turf/unsimulated/floor/shuttle/yellow{
-	dir = 4
-	},
-/area/shuttle/arrival/station)
 "aKr" = (
 /turf/unsimulated/floor/shuttle/yellow{
 	dir = 4
@@ -12351,16 +12319,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "aMW" = (
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
-/area/shuttle/arrival/station)
-"aMX" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	opacity = 0;
-	req_access_txt = ""
-	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
@@ -24483,70 +24441,6 @@
 	icon_state = "red2"
 	},
 /area/station/security/main)
-"bAq" = (
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 8;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/hallway/primary/west)
-"bAr" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 8;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/hallway/primary/west)
-"bAs" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 8;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/hallway/primary/west)
 "bAt" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/blueblack{
@@ -25052,46 +24946,6 @@
 /obj/machinery/phone,
 /turf/simulated/floor/caution/east,
 /area/station/security/main)
-"bCb" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 4;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
-/turf/simulated/floor/blueblack,
-/area/station/hallway/primary/west)
-"bCc" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 4;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
-/turf/simulated/floor/blueblack,
-/area/station/hallway/primary/west)
 "bCd" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
@@ -29326,14 +29180,6 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/east)
-"bOR" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	req_access_txt = "1"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
 /area/station/maintenance/east)
 "bOS" = (
 /obj/decal/cleanable/oil,
@@ -51593,6 +51439,19 @@
 "dzW" = (
 /turf/space,
 /area/shuttle/research/station)
+"dAe" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Research Outpost"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/research,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/research_outpost/hangar)
 "dAf" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/light{
@@ -52968,18 +52827,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
-"eTK" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Engineering Dock";
-	req_access_txt = "40"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/hangar/engine)
 "eTX" = (
 /obj/machinery/disposal,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -54002,11 +53849,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"fRJ" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "fSi" = (
 /obj/machinery/optable,
 /obj/item/kitchen/utensil/knife{
@@ -54608,6 +54450,11 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/arcade)
+"gvQ" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "gvW" = (
 /obj/filing_cabinet,
 /turf/simulated/floor/carpet{
@@ -54654,6 +54501,23 @@
 	dir = 4
 	},
 /area/station/catwalk/north)
+"gzX" = (
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
+	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eastsubstation";
+	name = "East Substation"
+	},
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor/caution/northsouth,
+/area/station/engine/substation/east)
 "gAz" = (
 /obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport{
@@ -55474,6 +55338,25 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/storage/primary)
+"hjM" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 4;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	density = 0;
+	icon_state = "glass_open";
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/mapping_helper/access/impossible,
+/turf/simulated/floor/blueblack,
+/area/station/hallway/primary/west)
 "hjW" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock"
@@ -56763,6 +56646,19 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"igV" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 8;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	name = "Pod Bay"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "ihp" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -57495,19 +57391,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/garden/owlery)
-"iQb" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/classic{
-	name = "Clown's Quarters";
-	req_access_txt = "12"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "iQz" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
@@ -58444,6 +58327,18 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/inner)
+"jDa" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/maintenance{
+	name = "Technical Storage"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/obj/mapping_helper/access/tech_storage,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "jDk" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -59201,6 +59096,16 @@
 	icon_state = "red2"
 	},
 /area/station/quartermaster/office)
+"kdR" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Cockpit";
+	opacity = 0
+	},
+/turf/unsimulated/floor/shuttle/yellow{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "kdW" = (
 /obj/item/storage/wall/medical{
 	dir = 1;
@@ -59664,6 +59569,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
+"kyK" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Clown's Quarters"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "kzF" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -59837,25 +59755,6 @@
 	dir = 4
 	},
 /area/station/catwalk/south)
-"kJw" = (
-/obj/machinery/atmospherics/pipe/simple{
-	level = 2
-	},
-/obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = "40"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "westsubstation";
-	name = "West Substation"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/engine/substation/west)
 "kKC" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/segment/mineral,
@@ -61595,6 +61494,14 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"mgJ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/access/security,
+/turf/simulated/floor,
+/area/station/maintenance/east)
 "mgV" = (
 /obj/submachine/seed_manipulator{
 	dir = 4
@@ -61702,24 +61609,6 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/catering)
-"mmQ" = (
-/obj/machinery/atmospherics/pipe/simple{
-	level = 2
-	},
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = "40"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastsubstation";
-	name = "East Substation"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/engine/substation/east)
 "mmR" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/firedoor_spawn,
@@ -61810,6 +61699,13 @@
 	dir = 10
 	},
 /area/station/solar/north)
+"mpo" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Research Outpost"
+	},
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/grey/blackgrime,
+/area/station/hangar/science)
 "mqm" = (
 /obj/landmark/start/job/botanist,
 /obj/machinery/atmospherics/unary/vent_pump{
@@ -61935,6 +61831,15 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/central)
+"mtS" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	opacity = 0
+	},
+/turf/unsimulated/floor/shuttle/white{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "muC" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/green/side{
@@ -62248,20 +62153,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"mGF" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 8;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/machinery/door/airlock/pyro/external{
-	name = "Pod Bay";
-	req_access_txt = "0"
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/main)
 "mGP" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
@@ -62349,6 +62240,15 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"mKO" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Emergency Storage B"
+	},
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor,
+/area/station/storage/emergency2)
 "mLe" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -63561,24 +63461,6 @@
 	name = "very reinforced wall"
 	},
 /area/space)
-"nPQ" = (
-/obj/securearea{
-	desc = "This hazard stripe marks a high-intensity beamline.";
-	dir = 4;
-	icon_state = "magwarning";
-	layer = 2.5;
-	name = "Beamline"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
-/turf/simulated/floor/blueblack,
-/area/station/hallway/primary/west)
 "nPU" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10
@@ -65029,6 +64911,23 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"pgE" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/disposalpipe/segment/mail/bent/south,
+/obj/mapping_helper/firedoor_spawn,
+/obj/decal/stripe_delivery,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westsubstation";
+	name = "West Substation"
+	},
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor,
+/area/station/engine/substation/west)
 "pgN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -65927,15 +65826,6 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
-"pVH" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Emergency Storage B";
-	req_access_txt = "12"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/storage/emergency2)
 "pWw" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
@@ -66292,19 +66182,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"qkZ" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/maintenance{
-	name = "Technical Storage";
-	req_access_txt = "23"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/gps_waypoint,
-/obj/mapping_helper/access/tech_storage,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "qlb" = (
 /obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -66403,6 +66280,29 @@
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/plating/damaged2,
 /area/station/science/storage)
+"qpA" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 8;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	density = 0;
+	icon_state = "glass_open";
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
+/obj/mapping_helper/access/impossible,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "qqr" = (
 /obj/machinery/firealarm/directional/north,
 /obj/reagent_dispensers/watertank/fountain,
@@ -66884,6 +66784,24 @@
 /obj/stool/chair/office/red,
 /turf/simulated/floor/black,
 /area/station/security/evidence)
+"qIi" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 4;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	density = 0;
+	icon_state = "glass_open";
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/mapping_helper/access/impossible,
+/turf/simulated/floor/blueblack,
+/area/station/hallway/primary/west)
 "qIv" = (
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/medical,
@@ -67819,6 +67737,20 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"ruj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/ne)
 "rvg" = (
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
@@ -68009,24 +67941,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"rHQ" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = "40"
-	},
-/obj/disposalpipe/segment/mail/bent/south,
-/obj/mapping_helper/firedoor_spawn,
-/obj/decal/stripe_delivery,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "westsubstation";
-	name = "West Substation"
-	},
-/turf/simulated/floor,
-/area/station/engine/substation/west)
 "rIh" = (
 /obj/table/wood/auto,
 /obj/machinery/power/data_terminal,
@@ -68180,23 +68094,6 @@
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/pharmacy)
-"rRJ" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = "40"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/decal/stripe_delivery,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastsubstation";
-	name = "East Substation"
-	},
-/turf/simulated/floor,
-/area/station/engine/substation/east)
 "rSI" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 10
@@ -69821,6 +69718,24 @@
 	dir = 1
 	},
 /area/station/engine/gravity)
+"tmE" = (
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westsubstation";
+	name = "West Substation"
+	},
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor/caution/northsouth,
+/area/station/engine/substation/west)
 "tmI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -70301,13 +70216,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
-"tFo" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Research Outpost";
-	req_access_txt = "24"
-	},
-/turf/simulated/floor/grey/blackgrime,
-/area/station/hangar/science)
 "tFI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -70433,20 +70341,6 @@
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"tOj" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Research Outpost";
-	req_access_txt = "24"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/research,
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/research_outpost/hangar)
 "tOL" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
@@ -70777,6 +70671,18 @@
 	dir = 4
 	},
 /area/station/catwalk/south)
+"ubw" = (
+/obj/machinery/door/airlock/pyro/external{
+	name = "Engineering Dock"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stripe_delivery,
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "ubD" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "combustion chamber outlet valve"
@@ -72636,6 +72542,26 @@
 	dir = 9
 	},
 /area/station/medical/medbay/lobby)
+"vZR" = (
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	density = 0;
+	icon_state = "glass_open";
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 8;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/mapping_helper/access/impossible,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "wab" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -72701,6 +72627,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"wbB" = (
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-4 Robuddies.";
+	name = "tourbot docking station"
+	},
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_y = 28
+	},
+/obj/machinery/bot/guardbot/old/tourguide{
+	beacon_freq = 1443;
+	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around!  This one has a little name tag on the front labeled 'Murray'";
+	name = "Murray"
+	},
+/obj/machinery/navbeacon/tour/cog2/tour11,
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fred4"
+	},
+/area/station/hallway/secondary/entry)
 "wcb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -73097,6 +73042,27 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"wzY" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 8;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	density = 0;
+	icon_state = "glass_open";
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/mapping_helper/access/impossible,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "wBK" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -73766,6 +73732,22 @@
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
+"xgX" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/firedoor_spawn,
+/obj/decal/stripe_delivery,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eastsubstation";
+	name = "East Substation"
+	},
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor,
+/area/station/engine/substation/east)
 "xgZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -73954,6 +73936,27 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/northeast)
+"xpF" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 4;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	autoclose = 0;
+	density = 0;
+	icon_state = "glass_open";
+	id = "pt_laser";
+	name = "Beamline Interlock"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
+/obj/mapping_helper/access/impossible,
+/turf/simulated/floor/blueblack,
+/area/station/hallway/primary/west)
 "xpO" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -74849,21 +74852,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/mining/magnet)
-"yeW" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4;
-	req_access_txt = ""
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/ne)
 "yfc" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -84074,7 +84062,7 @@ dii
 djC
 djC
 dkl
-tOj
+dAe
 dkl
 djC
 djC
@@ -100645,7 +100633,7 @@ cOR
 dby
 dcn
 iQB
-tFo
+mpo
 idD
 kwQ
 prn
@@ -104509,7 +104497,7 @@ bwP
 bpx
 bpx
 bpx
-mGF
+igV
 bAw
 bHN
 bLM
@@ -107228,9 +107216,9 @@ bgQ
 bnZ
 btk
 xpm
-bAq
+vZR
 bAy
-nPQ
+qIi
 bCe
 bCj
 bEM
@@ -107530,9 +107518,9 @@ uGQ
 boa
 btl
 lka
-bAr
+wzY
 bAT
-bCb
+hjM
 bCf
 bCk
 bmr
@@ -107832,9 +107820,9 @@ byL
 boV
 btu
 byN
-bAs
+qpA
 bAU
-bCc
+xpF
 bCg
 bCl
 bFO
@@ -110186,7 +110174,7 @@ adg
 adF
 aes
 afb
-iQb
+kyK
 afT
 bYU
 ahX
@@ -116905,7 +116893,7 @@ bVp
 iZR
 bYi
 bZy
-eTK
+ubw
 cbR
 ccI
 bZv
@@ -119334,7 +119322,7 @@ cfE
 cge
 cgC
 cgC
-qkZ
+jDa
 cjS
 clC
 cnm
@@ -122610,9 +122598,9 @@ msr
 bdx
 ePA
 beM
-rHQ
+pgE
 bfX
-kJw
+tmE
 gpN
 bhv
 ucT
@@ -122650,9 +122638,9 @@ tcp
 oAn
 ceG
 mrG
-mmQ
+gzX
 cfr
-rRJ
+xgX
 cgk
 xIm
 chH
@@ -128957,7 +128945,7 @@ qKM
 aaa
 bgM
 bhD
-fRJ
+gvQ
 bja
 bkk
 blQ
@@ -133455,7 +133443,7 @@ anh
 anh
 aum
 aum
-yeW
+ruj
 ayV
 ayV
 aBX
@@ -135268,7 +135256,7 @@ jCA
 jcD
 nfI
 oSw
-pVH
+mKO
 aAz
 aAz
 aAz
@@ -135576,7 +135564,7 @@ aAz
 aAz
 aBO
 azd
-aHe
+wbB
 aIJ
 aKh
 aLz
@@ -138898,11 +138886,11 @@ aaa
 aIS
 aEy
 aFw
-aHk
+mtS
 aFw
 aKn
 aFw
-aMX
+ajI
 aFw
 aEy
 svu
@@ -138951,9 +138939,9 @@ bUB
 bRv
 bNo
 bfI
-bOR
+mgJ
 bQL
-bOR
+mgJ
 bfI
 bgi
 bfI
@@ -141920,7 +141908,7 @@ aIS
 aDj
 aEA
 aFw
-aKq
+kdR
 aFw
 aEA
 aDj

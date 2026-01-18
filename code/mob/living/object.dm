@@ -184,7 +184,7 @@
 			if (D_ENERGY)
 				src.TakeDamage(null, 0, damage)
 
-		if(!P.proj_data.silentshot)
+		if(!P.proj_data.no_hit_message)
 			boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	blob_act(var/power)

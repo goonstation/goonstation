@@ -9202,13 +9202,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"bEi" = (
-/obj/machinery/light,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/engine/substation/east)
 "bEo" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/caution/west,
@@ -10295,15 +10288,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
-"bZs" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/engine/substation/east)
 "bZx" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -13763,19 +13747,6 @@
 	dir = 6
 	},
 /area/station/medical/medbay)
-"eBt" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/yellow{
-	anchored = 0;
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/engine/substation/east)
 "eBN" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/barber_shop)
@@ -21700,6 +21671,19 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"kjT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/yellow{
+	anchored = 0;
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/engine/substation/east)
 "kkE" = (
 /obj/machinery/firealarm/directional/west,
 /obj/table/auto,
@@ -24906,6 +24890,13 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary/blue,
 /area/station/bridge/execrestroom)
+"mtw" = (
+/obj/machinery/light,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/engine/substation/east)
 "muF" = (
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
@@ -28118,18 +28109,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"oJN" = (
-/obj/disposalpipe/segment/produce,
-/obj/machinery/disposal/mail/small/autoname/hydroponics/west,
-/obj/disposalpipe/trunk/mail{
-	dir = 8
-	},
-/obj/machinery/light_switch/east,
-/obj/machinery/hydro_mister,
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
-/area/station/hydroponics/bay)
 "oJQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -28697,6 +28676,20 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"pfu" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/tank/air,
+/obj/item/extinguisher,
+/obj/item/crowbar,
+/obj/item/device/light/flashlight,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/substation/east)
 "pfJ" = (
 /turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
 	dir = 10
@@ -28929,14 +28922,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"pqn" = (
-/obj/landmark/antagonist/blob,
-/obj/landmark/gps_waypoint,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engine/substation/east)
 "pqp" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -32922,20 +32907,6 @@
 /obj/mapping_helper/access,
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/west)
-"sko" = (
-/obj/rack,
-/obj/item/clothing/suit/hazard/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/firefighter,
-/obj/item/tank/air,
-/obj/item/extinguisher,
-/obj/item/crowbar,
-/obj/item/device/light/flashlight,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/engine/substation/east)
 "skV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34007,6 +33978,19 @@
 	dir = 4
 	},
 /area/station/science/chemistry)
+"tbc" = (
+/obj/disposalpipe/segment/produce,
+/obj/machinery/disposal/mail/small/autoname/hydroponics/west,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
+/obj/machinery/light_switch/east,
+/obj/item/reagent_containers/glass/water_pipe,
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/hydroponics/bay)
 "tbs" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -38607,6 +38591,15 @@
 /obj/machinery/door/airlock/pyro/glass/security/alt,
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
+"wmX" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/engine/substation/east)
 "wod" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -40700,6 +40693,14 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"xMV" = (
+/obj/landmark/antagonist/blob,
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/substation/east)
 "xNd" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -84619,7 +84620,7 @@ iAY
 xEX
 aym
 nTK
-oJN
+tbc
 avm
 kvu
 gKt
@@ -88599,8 +88600,8 @@ pJM
 pJM
 bzA
 pay
-eBt
-bZs
+kjT
+wmX
 agl
 iZn
 laq
@@ -89202,9 +89203,9 @@ bxp
 bvS
 jXp
 xDR
-pqn
-sko
-bEi
+xMV
+pfu
+mtw
 agl
 iZn
 laq

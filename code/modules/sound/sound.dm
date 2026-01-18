@@ -233,6 +233,12 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 			EARLY_CONTINUE_IF_QUIET(ourvolume)
 
+			//potentially expensive, do not use for commonly played sounds
+			if (flags & SOUND_DO_LOS)
+				//we return to dumb Byond builtins
+				if (!(M in hearers(MAX_SOUND_RANGE, source)))
+					continue
+
 			//sadly, we must generate
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
 			if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source]. Likely that the filename is misnamed or does not exist.")
