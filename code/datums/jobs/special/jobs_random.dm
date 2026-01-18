@@ -2,6 +2,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random
 	limit = 0
 	name = "Random"
+	job_category = JOB_RANDOM
 	request_limit = 2
 	request_cost = PAY_IMPORTANT*4
 
@@ -181,7 +182,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/diplomat
 	name = "Diplomat"
-	wages = PAY_DUMBCLOWN
+	wages = PAY_TRADESMAN
 	access_string = "Diplomat"
 	request_limit = 0 // you don't request them, they come to you
 	slot_lhan = list(/obj/item/storage/briefcase)
@@ -195,14 +196,24 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		..()
 		if (!M)
 			return
-		var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
-		M.set_mutantrace(morph)
-		if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
-			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
-		else
-			if (M.l_store)
-				M.stow_in_available(M.l_store)
-			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
+		SPAWN(0)
+			var/morph = null
+			var/list/options = list(/datum/mutantrace/lizard,
+									/datum/mutantrace/skeleton,
+									/datum/mutantrace/ithillid,
+									/datum/mutantrace/martian,
+									/datum/mutantrace/amphibian,
+									/datum/mutantrace/blob,
+									/datum/mutantrace/cow)
+
+			morph = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			M.set_mutantrace(morph)
+			if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
+				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
+			else
+				if (M.l_store)
+					M.stow_in_available(M.l_store)
+				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 
 /datum/job/special/random/testsubject
 	name = "Test Subject"

@@ -1,3 +1,9 @@
+(t)thu jan 15 26
+(u)JORJ949
+(*)You'll no longer see antag icons as a ghost while in player mode. While not in player mode and a ghost, the observer menu and AI law rack will consider you DNR and show you antags/laws.
+(t)fri nov 14 25
+(u)LeahTheTech
+(*)The "Give equipment" setting now determines whether sleeper agents receive dead drops.
 (t)thu oct 30 25
 (u)Azrun
 (*)Added 'Animation Editor' panel to create, import (JSON), export (JSON, BYOND) animations!

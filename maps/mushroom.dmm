@@ -6348,6 +6348,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/storage/secure/closet/medical{
+	name = "locker"
+	},
 /turf/simulated/floor/greenwhite/corner{
 	dir = 1
 	},
@@ -10374,6 +10377,10 @@
 "dXL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
+"dYk" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/greenwhite,
+/area/station/medical/medbay/cloner)
 "dYm" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -10804,6 +10811,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/item/device/panicbutton/medicalalert/hop,
 /turf/simulated/floor/carpet/green/fancy,
 /area/station/crew_quarters/hop)
 "elR" = (
@@ -20400,6 +20408,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIsat)
 "lrJ" = (
+/obj/item/reagent_containers/glass/water_pipe,
 /obj/machinery/hydro_mister,
 /turf/simulated/floor/grass{
 	name = "astroturf";
@@ -20512,6 +20521,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/storage/box/panic_buttons,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/processing)
 "lvP" = (
@@ -26190,6 +26200,10 @@
 /obj/machinery/firealarm/directional/north,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/extinguisher,
+/obj/item/storage/box/diskbox{
+	pixel_x = -8;
+	pixel_y = 13
+	},
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
@@ -32462,13 +32476,11 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/ai_monitored/storage/eva)
 "sYg" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = -10
-	},
 /obj/table/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/toolbox/emergency,
 /obj/item/reagent_containers/glass/oilcan,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "sYO" = (
@@ -33250,6 +33262,10 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/item/storage/box/panic_buttons/medicalalert{
+	pixel_x = 9;
+	pixel_y = 14
 	},
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay)
@@ -37484,6 +37500,7 @@
 /obj/machinery/recharger,
 /obj/item/gun/kinetic/riot40mm,
 /obj/item/gun/kinetic/riot40mm,
+/obj/item/storage/box/panic_buttons,
 /turf/simulated/floor,
 /area/station/security/main)
 "wrc" = (
@@ -95329,7 +95346,7 @@ pjO
 bqd
 qmn
 xRl
-hwc
+dYk
 eLZ
 wfD
 dRA

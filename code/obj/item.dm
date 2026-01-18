@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/wear_state = null
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
+	var/image/worn_material_texture_image = null
 	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -123,6 +124,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/contraband = 0 // If nonzero, bots consider this a thing people shouldn't be carrying without authorization
 	var/edible = 0 // can you eat the thing?
 	var/eat_sound = 'sound/items/eatfood.ogg'
+	var/can_arcplate = TRUE //! Determines whether this item can be arcplated by default
 
 	/*_____*/
 	/*Other*/
@@ -1873,3 +1875,16 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/should_suppress_attack(var/object, mob/user, params)
 	return flags & SUPPRESSATTACK
 
+/obj/item/proc/getTexturedWornImage(var/texture, var/blendMode = BLEND_MULTIPLY)
+	if (!src.wear_image || !texture)
+		return null
+	var/icon/mask = GetTexturedIcon(icon(src.wear_image.icon, src.wear_image.icon_state), texture)
+	var/image/finished = image(mask,"")
+	finished.blend_mode = blendMode
+	return finished
+
+/obj/item/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
+	..()
+	if(key != "material")
+		return
+	src.worn_material_texture_image = src.getTexturedWornImage(texture, blendMode)

@@ -51,7 +51,6 @@
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
@@ -65,6 +64,10 @@
 		if(ismob(src.loc))
 			light_dir.light_target = src.loc
 		light_dir.update(0)
+
+	setupProperties()
+		..()
+		setProperty("mining_alerts")
 
 	attack_self(mob/user)
 		src.flashlight_toggle(user, activated_inhand = TRUE)
@@ -947,6 +950,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
 		setProperty("space_movespeed", 0.2)
+		setProperty("mining_alerts")
 
 	attack_self(var/mob/user)
 		if(src.has_visor)

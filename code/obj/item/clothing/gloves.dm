@@ -365,8 +365,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 /obj/item/clothing/gloves/crafted
 	name = "gloves"
-	icon_state = "latex"
-	item_state = "lgloves"
+	icon_state = "custom"
+	item_state = "custom_gloves"
 	desc = "Custom made gloves."
 	material_prints = "custom fibers"
 
@@ -409,8 +409,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				src.setProperty("heatprot", thermal_insul * 2)
 
 	armored
-		icon_state = "black"
-		item_state = "swat_gl"
+		icon_state = "custom_armored"
+		item_state = "custom_armored"
 
 		onMaterialChanged()
 			..()
@@ -822,6 +822,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 						if("disarm")
 							logTheThing(LOG_COMBAT, user, "disarm-zaps [constructTarget(target_r,"combat")] with power gloves at [log_loc(user)], power = [PN.avail]")
 							target.changeStatus("knockdown", 3 SECONDS)
+							target.changeStatus("implants_disabled", 15 SECONDS)
 							break
 
 				var/list/next = new/list()

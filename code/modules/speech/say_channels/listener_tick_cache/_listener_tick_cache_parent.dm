@@ -5,7 +5,7 @@
  */
 /datum/listener_tick_cache
 	/// A list of message origins, and the cached `listen_module_by_type` lists associated with that origin at a specific range.
-	var/list/list/datum/listen_module/input/cached_listeners_by_range_message_origin
+	var/list/list/list/datum/listen_module/input/cached_listeners_by_range_message_origin
 	/// The tick for which `cached_listeners_by_message_origin` is valid.
 	var/cache_tick
 

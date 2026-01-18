@@ -27,6 +27,7 @@
 		"nohair",
 		"nowig",
 		"infrared",
+		"addiction",
 	)
 
 	var/list/traitData = list()
@@ -1061,7 +1062,8 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = 2
 	afterlife_blacklisted = TRUE
 	var/selected_reagent = "ethanol"
-	var/addictive_reagents = list("bathsalts", "LSD", "space_drugs", "psilocybin", "catdrugs", "methamphetamine", "ethanol", "nicotine")
+	var/addictive_reagents = list("space_drugs", "methamphetamine", "ethanol", "nicotine", "caffeine", "morphine", "cold_medicine",
+									 "crank", "krokodil")
 	var/do_addiction = FALSE
 
 	New()
@@ -1097,12 +1099,14 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "You are more resistant to addiction."
 	id = "strongwilled"
 	icon_state = "nosmoking"
+	category = list("addiction")
 	points = -1
 
 /datum/trait/addictive_personality // different than addict because you just have a general weakness to addictions instead of starting with a specific one
 	name = "Addictive Personality"
 	desc = "You are less resistant to addiction."
 	id = "addictive_personality"
+	category = list("addiction")
 	icon_state = "syringe"
 	points = 1
 

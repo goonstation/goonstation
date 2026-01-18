@@ -125,6 +125,22 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	damage_type = D_ENERGY
 	goes_through_walls = 1
 
+/datum/projectile/special/piercing/resonator
+	name = "eldritch hyperecho"
+	sname = "eldritch hyperecho"
+	icon_state = "hyperecho"
+	damage_type = D_TOXIC
+	window_pass = 1
+	damage = 30
+	pierces = -1
+	goes_through_walls = 1
+	cost = 100
+	shot_sound = 'sound/machines/sweep.ogg'
+
+	on_hit(atom/hit, direction, var/obj/projectile/projectile)
+		..()
+		hit.damage_blunt(3) // Small additional brute so it works with critters (most don't have toxic damage handlers)
+
 // Mildly crazy shit
 
 /datum/projectile/special/spreader
@@ -135,7 +151,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
 	var/pellet_shot_volume = 0
-	silentshot = 1
+	no_hit_message = 1
 	has_impact_particles = TRUE
 	// 0 = on spawn
 	// 1 = on impact
@@ -737,7 +753,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	goes_through_walls = 1
 	goes_through_mobs = 1
 
-	silentshot = 1
+	no_hit_message = 1
 
 
 	on_hit(atom/hit, direction, var/obj/projectile/P)
@@ -785,7 +801,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	goes_through_mobs = 1
 	smashes_glasses = FALSE
 
-	silentshot = 1
+	no_hit_message = 1
 	var/obj/effect/eye_glider
 	var/turf/starting_turf
 
@@ -1186,7 +1202,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "4 space wasp eggs"
 	shot_sound = null
 	shot_number = 1
-	silentshot = 1 //any noise will be handled by the egg splattering anyway
+	no_hit_message = 1 //any noise will be handled by the egg splattering anyway
 	damage = 60
 	cost = 60
 	dissipation_rate = 70
@@ -1274,7 +1290,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "space wasp egg"
 	shot_sound = null
 	shot_number = 1
-	silentshot = 1 //any noise will be handled by the egg splattering anyway
+	no_hit_message = 1 //any noise will be handled by the egg splattering anyway
 	hit_ground_chance = 0
 	damage_type = D_SPECIAL
 	damage = 15
@@ -1358,7 +1374,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_delay = 0
 	hit_ground_chance = 0 // burn right over em
 	max_range = 10
-	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
+	no_hit_message = 1 // Mr. Muggles is hit by the chemical bolt x99999
 	fullauto_valid = 0
 	var/can_spawn_fluid = FALSE
 

@@ -181,11 +181,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return amount
 
-	proc/remove_any_to(var/amount=1)
+	proc/remove_any_to(var/amount=1, var/dontreact = FALSE)
 		if(amount > total_volume) amount = total_volume
 		if(amount <= 0) return
 
-		var/datum/reagents/R = new()
+		var/datum/reagents/R = new(amount)
 
 		var/remove_ratio = amount/total_volume
 
@@ -193,7 +193,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			var/datum/reagent/current_reagent = reagent_list[reagent_id]
 			if(current_reagent)
 				var/transfer_amt = current_reagent.volume*remove_ratio
-				R.add_reagent(reagent_id, transfer_amt, current_reagent.data)
+				R.add_reagent(reagent_id, transfer_amt, current_reagent.data, src.total_temperature, dontreact)
 				src.remove_reagent(reagent_id, transfer_amt)
 
 		src.update_total()

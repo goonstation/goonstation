@@ -37,7 +37,7 @@
 			if ("precursor")
 				src.payload_reagent = pick("ephedrine", "cryostylane") //cryo fluid?
 			if ("wizard")
-				src.payload_reagent = pick("reversium", "mugwort", "fliptonium")
+				src.payload_reagent = pick("reversium", "mugwort", "chickensoup")
 		src.payload_amount = rand(100, 3000)
 		src.payload_cooldown = rand(1, 10) SECONDS
 		src.payload_duration = rand(5, 10) * 60 SECONDS

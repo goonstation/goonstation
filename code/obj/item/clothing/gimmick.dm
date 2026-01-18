@@ -1000,7 +1000,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "monkey"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES | COVERSHAIR
-	wear_layer = MOB_LAYER_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
 /obj/item/clothing/mask/niccage
@@ -2155,3 +2155,19 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "chompskysuit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
+
+//Phantom of the Opera
+
+/obj/item/clothing/mask/phantom
+	name = "half mask"
+	desc = "Someone must've taken a bite out of this mask, half of it is missing!"
+	icon_state = "phantom"
+	item_state = "phantom"
+	see_face = TRUE
+
+/obj/item/clothing/suit/gimmick/nightgown
+
+	name = "nightgown"
+	desc = "A fancy frilly nightgown. Candelabra not included."
+	icon_state = "nightgown"
+	item_state = "nightgown"

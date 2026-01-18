@@ -1,7 +1,7 @@
 var/list/admin_verbs = list(
 
 
-	1 = list(
+	list(
 		// LEVEL_BABBY, goat fart, ayn rand's armpit
 		/client/proc/cmd_admin_say,
 		/client/proc/cmd_admin_gib_self,
@@ -9,7 +9,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	2 = list(
+	list(
 		// LEVEL_MOD, moderator
 		/client/proc/admin_changes,
 		/client/proc/admin_play,
@@ -78,7 +78,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	3 = list(
+	list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
 		/datum/admins/proc/pixelexplosion,
@@ -211,7 +211,7 @@ var/list/admin_verbs = list(
 		/client/proc/deelectrify_all_airlocks
 		),
 
-	4 = list(
+	list(
 		// LEVEL_IA, admin
 		/*
 		/client/proc/noclip,
@@ -228,7 +228,7 @@ var/list/admin_verbs = list(
 		*/
 		),
 
-	5 = list(
+	list(
 		// LEVEL_PA, primary administrator
 		/datum/admins/proc/togglesuicide,
 		/datum/admins/proc/pixelexplosion,
@@ -324,7 +324,7 @@ var/list/admin_verbs = list(
 		),
 
 
-	6 = list(
+	list(
 		// LEVEL_ADMIN, Administrator
 		/datum/admins/proc/togglesoundwaiting,
 		/client/proc/debug_variables,
@@ -442,8 +442,9 @@ var/list/admin_verbs = list(
 		/client/proc/transfer_abcu_blueprints,
 		),
 
-	7 = list(
+	list(
 		// LEVEL_CODER, coder
+		/client/proc/open_colorblind_test,
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/debug_global_variable,
@@ -482,8 +483,6 @@ var/list/admin_verbs = list(
 		/client/proc/clear_string_cache,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
-		/client/proc/rebuild_flow_networks,
-		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
 		/client/proc/toggle_server_rebuild,
 		/client/proc/cmd_modify_respawn_variables,
@@ -517,7 +516,7 @@ var/list/admin_verbs = list(
 #endif
 		),
 
-	8 = list(
+	list(
 		// LEVEL_HOST, host
 		/datum/admins/proc/toggle_soundpref_override
 		),
@@ -1560,7 +1559,7 @@ var/list/fun_images = list()
 		"}
 		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516)
+		if (src.byond_version >= 516 && global.tgui_process)
 			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
 		else
 			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)

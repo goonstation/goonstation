@@ -45,7 +45,7 @@
 			UpdateIcon()
 
 	update_icon()
-		src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+		src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
 	proc/update_stack_name() //! How the material should be named at different stack sizes
 		UpdateName(src) // get the name in order so it has whatever it needs
@@ -290,9 +290,9 @@
 	update_icon()
 		if(src.icon_stack_value == 1)
 			var/ore_state = pick("ore1", "ore1b")
-			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+			src.icon_state = "[ore_state]_$$[src.default_material]"
 		else
-			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
@@ -310,9 +310,9 @@
 	update_icon()
 		if(src.icon_stack_value == 1)
 			var/ore_state = pick("ore1", "ore1b")
-			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+			src.icon_state = "[ore_state]_$$[src.default_material]"
 		else
-			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
@@ -326,9 +326,9 @@
 	update_icon()
 		if(src.icon_stack_value == 1)
 			var/ore_state = pick("ore1", "ore1b", "ore1c")
-			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+			src.icon_state = "[ore_state]_$$[src.default_material]"
 		else
-			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
 /obj/item/raw_material/cobryl // relate this to precursors
 	name = "cobryl ore"
@@ -377,9 +377,9 @@
 	update_icon()
 		if(src.icon_stack_value == 1)
 			var/ore_state = pick("ore1", "ore1b")
-			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+			src.icon_state = "[ore_state]_$$[src.default_material]"
 		else
-			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
 /obj/item/raw_material/syreline
 	name = "syreline ore"
@@ -401,9 +401,9 @@
 	update_icon()
 		if(src.icon_stack_value == 1)
 			var/ore_state = pick("ore1", "ore1b")
-			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+			src.icon_state = "[ore_state]_$$[src.default_material]"
 		else
-			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
 	ex_act(severity)
 		if(exploded)
@@ -567,7 +567,7 @@
 	var/static/shape = pick("ore","sphere","torus") // This round's randomized miracle matter shape
 
 	update_icon()
-		src.icon_state = "[src.shape][src.icon_stack_value]_$$[src.material.getName()]"
+		src.icon_state = "[src.shape][src.icon_stack_value]_$$[src.default_material]"
 
 	get_stack_value()
 		switch(src.amount)
@@ -615,9 +615,9 @@
 	update_icon()
 		if(src.icon_stack_value == 1)
 			var/ore_state = pick("ore1", "ore1b")
-			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+			src.icon_state = "[ore_state]_$$[src.default_material]"
 		else
-			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
 
 /obj/item/raw_material/gold
 	name = "gold nugget"
@@ -630,15 +630,9 @@
 /obj/item/raw_material/veranium
 	name = "veranium crystal"
 	desc = "A sparking crystal of veranium."
-	icon = 'icons/obj/items/materials/materials.dmi'
+	icon = 'icons/obj/items/materials/veranium.dmi'
 	material_name = "Veranium"
 	default_material = "veranium"
-
-	update_icon()
-		src.icon_state = "ore$$veranium"
-
-	get_stack_value()
-		return 1
 
 /obj/item/raw_material/yuranite
 	name = "yuranite"
@@ -721,6 +715,7 @@
 	material_name = "Glass"
 	default_material = "glass"
 	mat_changename = TRUE
+	can_arcplate = FALSE
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()

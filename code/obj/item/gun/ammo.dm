@@ -184,9 +184,6 @@
 			ammoGun.set_loc(K)
 			K.ammo = ammoGun
 			K.set_current_projectile(ammoGun.ammo_type)
-			if(K.silenced)
-				K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
-				K.current_projectile.shot_sound_extrarange = -10
 			K.UpdateIcon()
 
 			return 1
@@ -237,9 +234,6 @@
 				ammoGun.set_loc(K)
 				K.ammo = ammoGun
 				K.set_current_projectile(A.ammo_type)
-				if(K.silenced)
-					K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
-					K.current_projectile.shot_sound_extrarange = -10
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
@@ -719,6 +713,16 @@
 	ammo_type = new/datum/projectile/bullet/revolver_38/AP
 	icon_dynamic = 1
 	icon_short = "38A"
+	icon_empty = "speedloader_empty"
+
+/obj/item/ammo/bullets/a38/ricochet
+	sname = ".38 Spc Ricochet"
+	name = ".38 Ricochet speedloader"
+	desc = "A speedloader of .38 special ricocheting revolver bullets."
+	icon_state = "38R-7"
+	ammo_type = new/datum/projectile/bullet/revolver_38/ricochet
+	icon_dynamic = 1
+	icon_short = "38R"
 	icon_empty = "speedloader_empty"
 
 /obj/item/ammo/bullets/a38/stun
@@ -1831,3 +1835,29 @@ TYPEINFO(/obj/item/ammo/power_cell/lasergat)
 	New()
 		..()
 		desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm. It has [src.max_charge]PU."
+
+	update_icon()
+		var/list/ret = list()
+		overlays = null
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 33)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			switch(ratio)
+				if(33)
+					overlays += "burst_laspistol-33"
+				if(66)
+					overlays += "burst_laspistol-66"
+				if(99)
+					overlays += "burst_laspistol-100"
+			return
+
+/obj/item/ammo/power_cell/siren_orb
+	name = "Siren Orb"
+	desc = "You've somehow dislodged this from the resonator. Good Job!"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "siren_orb"
+	charge = 400
+	max_charge = 400
+	recharge_rate = 10
+

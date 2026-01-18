@@ -87,16 +87,25 @@
 		 *
 		 * 	Required: sweatReagent - the chemical you're sweating
 		 *  targetTurf should be left default
+		 *  Turning sweatpools on causes sweat chempools instead of cleanables
 		 */
-	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner))
+	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner), var/sweatpools = FALSE)
+		if (!prob(sweatChance))
+			return
 		var/datum/reagents/tempHolder = new
-		if (prob(sweatChance))
+		if (sweatpools)
 			tempHolder.add_reagent(sweatReagent, sweatAmount)
 			targetTurf.fluid_react_single(sweatReagent,sweatAmount)
 			tempHolder.reaction(targetTurf, TOUCH)
-		return
-
-
+		else
+			var/datum/reagent/sweatinput = global.reagents_cache[sweatReagent]
+			var/obj/decal/cleanable/water/sweat = make_cleanable(/obj/decal/cleanable/water, targetTurf)
+			sweat.color = rgb(sweatinput.fluid_r, sweatinput.fluid_g, sweatinput.fluid_b)
+			sweat.alpha = sweatinput.transparency
+			sweat.sample_reagent = sweatReagent
+			sweat.name = "sweat"
+			sweat.desc = "A bunch of sweat on the floor. Ew!"
+			sweat.dry_time = 60
 
 	/**
 		* Called when the status is changed using setStatus. Called after duration is updated etc.
@@ -1020,6 +1029,38 @@
 		onRemove()
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			. = ..()
+
+	humiliated
+		id = "humiliated"
+		name = "Humiliated"
+		desc = "Your crushing loss has humiliated you!<br>Slowed slightly, unable to sprint, unable to suicide, recieve triple damage from attacks."
+		unique = 1
+		icon_state = "-"
+		duration = INFINITE_STATUS
+		movement_modifier = /datum/movement_modifier/humiliation
+		effect_quality = STATUS_QUALITY_NEGATIVE
+
+		onAdd(optional=null)
+			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			. = ..()
+
+	victorious
+		id = "victorious"
+		name = "Victorious"
+		desc = "Your glorious win has filled you with pride!<br>Sped slightly."
+		icon_state = "janktank"
+		duration = INFINITE_STATUS
+		unique = 1
+		movement_modifier = /datum/movement_modifier/victorious
+		effect_quality = STATUS_QUALITY_POSITIVE
 
 	blocking
 		id = "blocking"
@@ -3212,7 +3253,7 @@
 	nightmare
 		id = "art_nightmare_curse"
 		name = "Nightmare Curse"
-		extra_desc = "You're being haunted by nightmares! Kill them 7 of them or perish."
+		extra_desc = "You're being haunted by nightmares! Kill 7 of them or perish."
 		removal_msg = "The nightmare ends, along with the creatures..."
 		var/list/created_creatures = list()
 		var/creatures_to_kill = 7
@@ -3293,23 +3334,28 @@
 		id = "art_displacement_curse"
 		var/mob/living/carbon/human/original_body
 		var/mob/living/intangible/art_curser_displaced_soul/soul
+		var/cursetype = "art_curser_displaced_soul"
+		var/gene = FALSE // For the gene that uses this
 		outputs_desc = FALSE
 
 		onAdd()
 			..()
-			src.soul = new(get_turf(src.owner), src.owner)
+			src.soul = new src.soul(get_turf(src.owner), src.owner)
 			var/mob/living/carbon/human/H = src.owner
 			H.mind.transfer_to(soul)
 			src.original_body = H
-			src.soul.setStatus("art_curser_displaced_soul", src.duration, src.original_body)
+			src.soul.setStatus(cursetype, src.duration, src.original_body)
 
 		onUpdate()
 			..()
 			if (QDELETED(src.original_body) || isdead(src.original_body))
-				src.remove_self()
+				if(!gene)
+					src.remove_self()
+				else
+					owner.delStatus(src.id)
 
 		onRemove()
-			src.soul.delStatus("art_curser_displaced_soul")
+			src.soul.delStatus(cursetype)
 			if (QDELETED(src.original_body) || isdead(src.original_body))
 				boutput(src.soul, SPAN_ALERT("<b>Your body has died!</b>"))
 			if (!QDELETED(src.original_body))
@@ -3317,6 +3363,14 @@
 			QDEL_NULL(src.soul)
 			src.original_body = null
 			..()
+
+		gene
+			id = "ghost_walk_effect"
+			duration = 30
+			cursetype = "ghost_walk_soul"
+			desc = "Your body is vacant with the soul wandering." // Shouldn't be seen by the user, but ghosts could I guess.
+			soul = /mob/living/intangible/art_curser_displaced_soul/gene
+			gene = TRUE
 
 	displaced_soul
 		id = "art_curser_displaced_soul"
@@ -3339,6 +3393,14 @@
 				src.outputs_removal_msg = FALSE
 			src.original_body = null
 			..()
+
+		gene
+			id = "ghost_walk_soul"
+			name = "Spectral Walker"
+			desc = "You've ascended to the spectral plane for a short duration. Use the ability to return early."
+			extra_desc = null
+			removal_msg = "You reanchor your soul."
+
 
 	light
 		id = "art_light_curse"
@@ -3867,6 +3929,48 @@
 		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/implants_disabled
+	id = "implants_disabled"
+	name = "Implants overloaded"
+	desc = "Your implants are painfully overloaded!"
+	maxDuration = 60 SECONDS
+	icon_state = "implants_disabled"
+	unique = TRUE
+
+	var/list/disabled_implants = list()
+
+	preCheck(mob/living/M)
+		return ..() && istype(M) && length(M.implant)
+
+	onAdd()
+		..()
+		src.owner.UpdateParticles(new /particles/rack_spark, src.id)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				implant.deactivate()
+				src.disabled_implants |= implant
+		if (ishuman(src.owner))
+			var/image/glow = image('icons/mob/human.dmi', "implants_disabled")
+			glow.plane = PLANE_SELFILLUM
+			src.owner.UpdateOverlays(glow, "implants_disabled")
+
+	onChange(optional)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				if (implant.online)
+					implant.deactivate()
+					src.disabled_implants |= implant
+
+	onRemove()
+		..()
+		src.owner.UpdateParticles(null, src.id)
+		for (var/obj/item/implant/implant as anything in src.disabled_implants)
+			if (!QDELETED(implant))
+				implant.activate()
+		src.owner.UpdateOverlays(null, "implants_disabled")
 
 /datum/statusEffect/therapy_zone
 	id = "therapy_zone"

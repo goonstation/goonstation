@@ -95,17 +95,24 @@
 		return
 
 	ship_install()
+		src.engine_icon = null
 		if(istype(src.ship, /obj/machinery/vehicle/pod_smooth))
 			src.engine_icon = image('icons/effects/64x64.dmi', "[src.icon_state]-off")
-			ship.AddOverlays(engine_icon, "engine")
 		else if(istype(src.ship, /obj/machinery/vehicle/miniputt) || istype(src.ship, /obj/machinery/vehicle/escape_pod) || istype(src.ship, /obj/machinery/vehicle/pod_wars_dingy))
 			src.engine_icon = image('icons/obj/ship.dmi', "[src.icon_state]-off")
+
+		if(src.engine_icon)
+			src.engine_icon.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
+			src.engine_icon.color = src.color
+			src.engine_icon.alpha = src.alpha
+			src.engine_icon.filters = src.filters.Copy()
 			ship.AddOverlays(engine_icon, "engine")
 		..()
 
 	ship_uninstall()
 		ship.ClearSpecificOverlays("engine")
 		src.engine_icon = null // In case the next vehicle does not have an engine overlay
+		ship.flying = FALSE
 		..()
 
 	proc/startup_finished()

@@ -117,9 +117,6 @@
 	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
-	if (time2text(world.realtime,"DDD") == "Fri")
-		NT |= mentors
-
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
 	load_intraround_eggs()
