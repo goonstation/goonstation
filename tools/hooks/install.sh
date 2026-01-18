@@ -5,7 +5,7 @@ SCRIPT_DIR="$(dirname "$0")"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 if [ -z "${HOOKS_INCLUDE_TGUI+x}" ]; then
-	printf "Do you want to install TGUI hooks (requires Node.js)? [Y/N]: "
+	printf "Do you want to install TGUI hooks \033[1m(REQUIRES Node.js)\033[0m? [Y/N]: "
 	read -r choice
 	case "$choice" in
 		y|Y) HOOKS_INCLUDE_TGUI=1 ;;
