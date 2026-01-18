@@ -70,3 +70,20 @@
 			"DancingScript.woff2"	= "[resource("css/fonts/DancingScript.woff2")]",
 			"PermanentMarker.woff2"	= "[resource("css/fonts/PermanentMarker.woff2")]"
 		)
+
+/// Lazy-loaded secret interface bundles
+/datum/asset/basic/tgui_secret_chunk
+	var/chunk_filename
+
+/datum/asset/basic/tgui_secret_chunk/New(chunk_name)
+	chunk_filename = chunk_name
+	local_assets = list(chunk_filename)
+	. = ..()
+
+/datum/asset/basic/tgui_secret_chunk/init()
+	. = ..()
+	if (!chunk_filename)
+		return
+	url_map = list(
+		chunk_filename = "[resource("tgui/[chunk_filename]")]"
+	)

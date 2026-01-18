@@ -102,6 +102,8 @@
 			))
 	else
 		window.send_message("ping")
+
+	tgui_send_secret_interface_assets(user.client, interface, window)
 	// |GOONSTATION-CHANGE| Different asset method
 	for(var/datum/asset/asset in src_object.ui_assets(user))
 		send_asset(asset)

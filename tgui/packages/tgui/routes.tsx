@@ -3,12 +3,17 @@
  * @copyright 2020 Aleksej Komarov
  * @license MIT
  */
+import type { ComponentType } from 'react';
+import { lazy, Suspense } from 'react';
 
 import { useBackend } from './backend';
 import { useDebug } from './debug';
+import { hasSecretInterface, loadSecretInterface } from './interfaces-secret';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
+
+const secretComponentCache = new Map<string, ComponentType>();
 
 const routingError =
   (type: 'notFound' | 'missingExport', name: string) => () => {
@@ -72,6 +77,11 @@ export function getRoutedComponent() {
   }
 
   const name = config?.interface?.name;
+
+  if (name && hasSecretInterface(name)) {
+    return getSecretComponent(name);
+  }
+
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,
     (name: string) => `./${name}.jsx`,
@@ -102,4 +112,27 @@ export function getRoutedComponent() {
   }
 
   return Component;
+}
+
+function getSecretComponent(name: string): ComponentType {
+  const cached = secretComponentCache.get(name);
+  if (cached) {
+    return cached;
+  }
+
+  const LazySecret = lazy(async () => {
+    const Component = await loadSecretInterface(name);
+    return { default: Component };
+  });
+
+  const WrappedSecret: ComponentType = () => {
+    return (
+      <Suspense fallback={<SuspendedWindow />}>
+        <LazySecret />
+      </Suspense>
+    );
+  };
+
+  secretComponentCache.set(name, WrappedSecret);
+  return WrappedSecret;
 }

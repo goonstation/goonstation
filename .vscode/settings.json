@@ -9,7 +9,14 @@
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {
 		"**/.yarn": true,
-		"**/.pnp.*": true
+		"**/.pnp.*": true,
+		"+secret/tgui": true
+	},
+	"files.exclude": {
+		"+secret/tgui": true
+	},
+	"files.watcherExclude": {
+		"+secret/tgui/**": true
 	},
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit"
