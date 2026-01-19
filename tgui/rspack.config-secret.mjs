@@ -85,7 +85,12 @@ const secretInterfaceTarget = path.resolve(
   'tgui',
   'interfaces-secret',
 );
-const secretInterfacePreserve = new Set(['.gitignore', 'index.ts']);
+const secretInterfacePreserve = new Set([
+  '.gitignore',
+  'index.ts',
+  'dummy.tsx',
+  'dummy.wrapper.tsx',
+]);
 const secretBundleDestination = path.resolve(
   secretRepoRoot,
   'browserassets',
