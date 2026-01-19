@@ -512,13 +512,13 @@ ABSTRACT_TYPE(/datum/job/daily)
 			return
 		SPAWN(0)
 			var/selection = null
-			var/list/options = list("Lizard" = /datum/mutantrace/lizard,
-									"Skeleton" = /datum/mutantrace/skeleton,
-									"Ithillid" = /datum/mutantrace/ithillid,
-									"Martian" = /datum/mutantrace/martian,
-									"Amphibian" = /datum/mutantrace/amphibian,
-									"Blob" = /datum/mutantrace/blob,
-									"Cow" = /datum/mutantrace/cow)
+			var/list/options = list(/datum/mutantrace/lizard::name = /datum/mutantrace/lizard,
+									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
+									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
+									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
+									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
+									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
 			selection = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
 			var/datum/mutantrace/morph = options[selection]
