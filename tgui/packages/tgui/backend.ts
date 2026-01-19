@@ -97,28 +97,6 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
-  if (type === 'secret/interface') {
-    const name = payload?.name;
-    const id = payload?.token || payload?.id;
-
-    if (!name || !id) {
-      return state;
-    }
-
-    const prev = (state.config as any)?.secretInterfaces || {};
-
-    return {
-      ...state,
-      config: {
-        ...state.config,
-        secretInterfaces: {
-          ...prev,
-          [name]: id,
-        },
-      },
-    };
-  }
-
   if (type === 'backend/setSharedState') {
     const { key, nextState } = payload;
     return {
@@ -210,6 +188,30 @@ export const backendReducer = (state = initialState, action) => {
     return {
       ...state,
       outgoingPayloadQueues: otherQueues,
+    };
+  }
+
+  // |GOONSTATION-ADD| Secret interface handling
+  if (type === 'backend/secret-id') {
+    const name = payload?.name;
+    const id = payload?.token || payload?.id;
+
+    if (!name || !id) {
+      return state;
+    }
+
+    // @ts-ignore
+    const prev = state.config?.secretInterfaces || {};
+
+    return {
+      ...state,
+      config: {
+        ...state.config,
+        secretInterfaces: {
+          ...prev,
+          [name]: id,
+        },
+      },
     };
   }
 
@@ -443,7 +445,7 @@ type BackendState<TData> = {
       name: string;
       layout: string;
     };
-    secretInterfaces?: Record<string, string>; // map of interface name -> secret id
+    secretInterfaces?: Record<string, string>; // |GOONSTATION-ADD| interface name -> secret id
     refreshing: BooleanLike;
     window: {
       key: string;

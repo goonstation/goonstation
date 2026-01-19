@@ -114,7 +114,7 @@
 	if(secret_interface_id)
 		send_asset(new /datum/asset/basic/tgui_secret_chunk(interface)) // send secret chunk
 		window.send_message(
-			"secret/interface",
+			"backend/secret-id",
 			list("name" = interface, "token" = secret_interface_id),
 		)
 

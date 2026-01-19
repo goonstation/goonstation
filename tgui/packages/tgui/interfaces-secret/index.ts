@@ -1,8 +1,11 @@
 /**
- * Secret interface runtime loading mechanisms.
+ * @file Secret interface routing and persistence utilities
+ * @copyright 2025 ZeWaka
+ * @license MIT
+ *
+ * @description Secret interface runtime loading mechanisms.
  * This file is tracked in the public repository.
  */
-
 import type { ComponentType } from 'react';
 
 declare global {
@@ -14,10 +17,6 @@ if (!globalThis.__SECRET_TGUI_INTERFACES__) {
 }
 
 const loaded = new Map<string, Promise<ComponentType>>();
-
-export function hasSecretInterface(id: string): boolean {
-  return Boolean(globalThis.__SECRET_TGUI_INTERFACES__?.[id]);
-}
 
 export function loadSecretInterface(id: string): Promise<ComponentType> {
   const existing = globalThis.__SECRET_TGUI_INTERFACES__?.[id];

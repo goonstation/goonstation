@@ -23,12 +23,13 @@ const require = createRequire(import.meta.url);
 
 const createStats = (verbose) => ({
   assets: verbose,
+  excludeAssets: [/^secret-.*\.bundle\.js$/i], // |GOONSTATION-CHANGE| secret interfaces
   builtAt: verbose,
   cached: false,
   children: false,
   chunks: false,
   colors: true,
-  entrypoints: true,
+  entrypoints: false, // |GOONSTATION-CHANGE| secret interfaces
   hash: false,
   modules: false,
   performance: false,
@@ -187,14 +188,12 @@ export default (env = {}, argv) => {
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
-      new SecretInterfaceSyncPlugin(), // |GOONSTATION-CHANGE| secret interfaces
-      new SecretBundleStoragePlugin(), //   |GOONSTATION-CHANGE| secret interfaces
+      new SecretInterfaceSyncPlugin(), // |GOONSTATION-ADD| secret interfaces
+      new SecretBundleStoragePlugin(), // |GOONSTATION-ADD| secret interfaces
     ],
   });
 
-  // |GOONSTATION-CHANGE| Add secret interface entrypoints (built as separate bundles,
-  // but dependOn the main tgui bundle so they don't duplicate shared code).
-  addSecretInterfaceEntries(config);
+  addSecretInterfaceEntries(config); // |GOONSTATION-ADD| secret interface entrypoints
 
   if (bench) {
     config.entry = {

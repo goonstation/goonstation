@@ -9,6 +9,11 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 - Each interface gets a secret salted HMAC-MD5 id. Bundle is `secret-<id>.bundle.js`.
 - The client only ever gets the id when it displays, the ids are not exposed in webpack.
 
+## Adding a secret UI
+1) Create an interface in `tgui/packages/tgui/interfaces-secret` (name or `name/index.tsx` decides interface name).
+2) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync → build → mirror happens automatically.
+3) Open it from DM by interface name as normal.
+
 ## Files
 - `+secret/tgui/interfaces/` – secret UIs are stored here (hidden in VSCode file browser to avoid LSP errors)
 - `tgui/packages/tgui/interfaces-secret/` – mirrored sources + auto-generated wrappers + runtime loader
@@ -23,15 +28,10 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 
 ## Runtime flow (DM → client)
 1) DM checks access, reads `+secret/tgui/secret-mapping.json` to get the token.
-2) DM sends the bundle as a normal asset and sends a `secret/interface` message with `{ name, token }`.
-3) Client routes see `config.secretInterfaces[name].token`, persist it in sessionStorage, and lazy-load via the loader.
+2) DM sends the bundle as an asset and sends a `backend/secret-id` message with `{ name : id }`.
+3) Client routes see `config.secretInterfaces[name]`, persist it in sessionStorage, and lazy-load via the loader.
 4) Loader injects `/secret-${token}.bundle.js`, waits for the bundle to self-register in `globalThis.__SECRET_TGUI_INTERFACES__[token]`.
 
-## Adding a secret UI
-1) Create an interface in `tgui/packages/tgui/interfaces-secret` (name or `name/index.tsx` decides interface name).
-2) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync → build → mirror happens automatically.
-3) Open it from DM by interface name as normal.
-
 ## Troubleshooting
-- VSCode hides `+secret/tgui/interfaces/`; builds use the mirrored copy under `interfaces-secret`.
+- VSCode hides `+secret/tgui/interfaces/`; use the mirrored copy under `interfaces-secret`.
 - If it doesn’t load: confirm the bundle exists in `+secret/browserassets/src/tgui/`, the mapping has a token for your interface, and the browser console isn’t showing a failed script load.

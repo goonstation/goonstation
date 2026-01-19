@@ -3,13 +3,14 @@
  * @copyright 2020 Aleksej Komarov
  * @license MIT
  */
-import type { ComponentType } from 'react';
-import { lazy, Suspense } from 'react';
-
 import { useBackend } from './backend';
 import { useDebug } from './debug';
-import { loadSecretInterface } from './interfaces-secret';
 import { Window } from './layouts';
+import {
+  getSecretComponent,
+  loadPersistedSecretID,
+  persistSecretID,
+} from './secret-interfaces';
 
 const requireInterface = require.context('./interfaces');
 
@@ -80,11 +81,11 @@ export function getRoutedComponent() {
 
   // Fallback for CTRL+R reloads: reuse last-seen secret id from sessionStorage.
   if (!secretId && name) {
-    secretId = loadPersistedSecret(name);
+    secretId = loadPersistedSecretID(name);
   }
 
   if (name && secretId) {
-    persistSecret(name, secretId);
+    persistSecretID(name, secretId);
     return getSecretComponent(name, secretId);
   }
 
@@ -118,55 +119,4 @@ export function getRoutedComponent() {
   }
 
   return Component;
-}
-
-const secretComponentCache = new Map<string, ComponentType>();
-
-const SECRET_STORAGE_KEY = 'tgui.secretInterfaces';
-
-function loadPersistedSecret(name: string): string | null {
-  try {
-    const raw = sessionStorage.getItem(SECRET_STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    const id = parsed?.[name];
-    return id;
-  } catch {
-    // ignore storage/parse errors
-  }
-  return null;
-}
-
-function persistSecret(name: string, id: string) {
-  try {
-    const raw = sessionStorage.getItem(SECRET_STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : {};
-    parsed[name] = id;
-    sessionStorage.setItem(SECRET_STORAGE_KEY, JSON.stringify(parsed));
-  } catch {
-    // ignore storage errors (storage disabled/full)
-  }
-}
-
-function getSecretComponent(name: string, id: string): ComponentType {
-  const cached = secretComponentCache.get(name);
-  if (cached) {
-    return cached;
-  }
-
-  const LazySecret = lazy(async () => {
-    const Component = await loadSecretInterface(id);
-    return { default: Component };
-  });
-
-  const WrappedSecret: ComponentType = () => {
-    return (
-      <Suspense fallback={null}>
-        <LazySecret />
-      </Suspense>
-    );
-  };
-
-  secretComponentCache.set(name, WrappedSecret);
-  return WrappedSecret;
 }

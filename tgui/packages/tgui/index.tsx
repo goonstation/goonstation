@@ -18,21 +18,6 @@ import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
 import { configureStore } from './store';
 
-// Defensive: sometimes Byond can deliver a non-JSON payload (e.g., asset/mappings)
-// which would otherwise throw in Byond.parseJson and kill the UI. Fall back to the
-// raw string on parse errors.
-if (typeof Byond !== 'undefined' && typeof Byond.parseJson === 'function') {
-  const originalParseJson = Byond.parseJson.bind(Byond);
-  Byond.parseJson = (input: any) => {
-    try {
-      return originalParseJson(input);
-    } catch (err) {
-      console.warn('Byond.parseJson fallback for payload', input, err);
-      return input;
-    }
-  };
-}
-
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
 
