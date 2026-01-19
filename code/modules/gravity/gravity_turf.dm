@@ -56,7 +56,7 @@
 		src.set_gforce_inherent(initial(src.gforce_inherent))
 
 /datum/infooverlay/gravity_turf
-	name = "gravity-turf"
+	name = "gravity"
 	help = {"Colors group mob gravity thresholds. Dirty cache marked with *."}
 	var/list/area/processed_areas
 
