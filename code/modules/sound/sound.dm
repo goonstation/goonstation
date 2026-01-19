@@ -174,7 +174,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
-	for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
+	for (var/client/C as anything in global.client_hashmap.fast_manhattan(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
 		var/mob/M = C.mob
 		if (!C)
 			continue
@@ -232,6 +232,12 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 			//boutput(world, "for client [C] updating volume [storedVolume] to [ourvolume] for channel [channel]")
 
 			EARLY_CONTINUE_IF_QUIET(ourvolume)
+
+			//potentially expensive, do not use for commonly played sounds
+			if (flags & SOUND_DO_LOS)
+				//we return to dumb Byond builtins
+				if (!(M in hearers(MAX_SOUND_RANGE, source)))
+					continue
 
 			//sadly, we must generate
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)

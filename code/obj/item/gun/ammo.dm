@@ -184,9 +184,6 @@
 			ammoGun.set_loc(K)
 			K.ammo = ammoGun
 			K.set_current_projectile(ammoGun.ammo_type)
-			if(K.silenced)
-				K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
-				K.current_projectile.shot_sound_extrarange = -10
 			K.UpdateIcon()
 
 			return 1
@@ -237,9 +234,6 @@
 				ammoGun.set_loc(K)
 				K.ammo = ammoGun
 				K.set_current_projectile(A.ammo_type)
-				if(K.silenced)
-					K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
-					K.current_projectile.shot_sound_extrarange = -10
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 

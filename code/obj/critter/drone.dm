@@ -1032,6 +1032,8 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	current_projectile = new/datum/projectile/laser/precursor/sphere
 	smashes_shit = 1
 	attack_cooldown = 70
+	event_handler_flags = IMMUNE_TRENCH_WARP
+
 	process()
 		..()
 		if(prob(3))
