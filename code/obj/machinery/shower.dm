@@ -112,6 +112,107 @@
 		src.use_power(50)
 		return
 
+
+/obj/machinery/shower_piped
+	name = "shower head"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "showerhead"
+	desc = "A shower head, for showering. This one has a pipe! Bit hard to see it though."
+	anchored = ANCHORED
+	flags = OPENCONTAINER
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WIRECUTTERS
+
+	var/on = FALSE //Are we currently spraying???
+	var/tmp/last_spray = 0
+	var/obj/machinery/fluid_machinery/unary/node/input
+
+	New()
+		..()
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "toggle", PROC_REF(mechcomp_toggle))
+		src.create_reagents(360)
+		new /dmm_suite/preloader(src.loc, list("dir" = src.dir))
+		src.input = new /obj/machinery/fluid_machinery/unary/node(src.loc)
+	
+	disposing()
+		QDEL_NULL(src.input)
+
+	///Silly wrapper proc to drop the args
+	proc/mechcomp_toggle()
+		src.toggle(null)
+
+	was_deconstructed_to_frame(mob/user)
+		if (src.on)
+			src.toggle(user)
+		QDEL_NULL(src.input)
+	
+	was_built_from_frame(mob/user, newly_built)
+		..()
+		new /dmm_suite/preloader(src.loc, list("dir" = src.dir))
+		src.input = new /obj/machinery/fluid_machinery/unary/node(src.loc)
+
+	attack_ai(mob/user as mob)
+		src.toggle(user)
+
+	attack_hand(mob/user)
+		src.toggle(user)
+
+	proc/toggle(mob/user)
+		src.on = !src.on
+		if (user)
+			boutput(user, "You turn [src.on ? "on" : "off"] \the [src].")
+
+#ifdef HALLOWEEN
+		if(halloween_mode && prob(15))
+			src.reagents.add_reagent("blood",40)
+#endif
+
+	process()
+		if (src.input.network && src.reagents.maximum_volume > src.reagents.total_volume)
+			var/datum/reagents/fluid = src.input.pull_from_network(src.input.network, src.reagents.maximum_volume)
+			fluid?.trans_to(src, src.reagents.maximum_volume)
+			src.input.push_to_network(src.input.network, fluid)
+			src.reagents.handle_reactions()
+
+		if(!on || (world.time < src.last_spray + SPRAY_DELAY))
+			return
+
+		if(status & (NOPOWER)) //It has a powered pump or something.
+			src.on = FALSE
+			return
+
+		src.spray()
+
+	proc/spray()
+		src.last_spray = world.time
+
+		if (src?.reagents.total_volume)
+			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
+			steam.set_up(5, 0, get_turf(src), src.reagents.get_average_color())
+			steam.attach(src)
+			steam.start()
+			
+			var/list/turf_list = list()
+			for (var/turf/T in view(1, get_turf(src))) // View and oview are unreliable as heck, apparently?
+				if (!T.ocean_canpass()) continue
+				turf_list += T
+
+			for (var/turf/T as anything in turf_list)
+				src.reagents.reaction(T, 1, 40)
+				for(var/atom/movable/AM as anything in T)
+					// Added. We don't care about unmodified shower heads, though (Convair880).
+					if (ismob(AM))
+						var/mob/M = AM
+						if (!isdead(M))
+							if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && length(src.reagents.reagent_list) > 2))
+								logTheThing(LOG_CHEMISTRY, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
+
+					src.reagents.reaction(AM, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
+			src.reagents.remove_any(40 * length(turf_list))
+
+		src.use_power(50)
+
+
 //prototypist requisition: cool futuristic shower, much less messy
 /obj/machinery/sonic_shower
 	name = "sonic shower head"
