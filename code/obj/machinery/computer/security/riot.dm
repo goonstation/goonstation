@@ -260,7 +260,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if (W:registered in src.authorized_registered)
 				boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
 				return
-			if (access_armory in W:access)
+			if (access_maxsec in W:access)
 				authorize()
 				return
 

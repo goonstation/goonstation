@@ -173,7 +173,7 @@
 		// --------------------------- Heads of staff
 		if("Captain")
 			if(IS_IT_SATURDAY)
-				return get_all_accesses() + list(access_armory, access_maxsec)
+				return get_all_accesses() + list(access_maxsec)
 			else
 				return get_all_accesses()
 		if("Head of Personnel")
@@ -185,7 +185,18 @@
 						access_research, access_hydro, access_ranch, access_ai_upload, access_pathology, access_researchfoyer,
 						access_telesci, access_teleporter, access_money)
 		if("Head of Security")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
+			if(IS_IT_SATURDAY)
+				return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
+						access_forensics_lockers, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
+						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab,
+						access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
+						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_ai_upload,
+						access_tech_storage, access_maint_tunnels, access_bar, access_janitor, access_fine_small, access_fine_large,
+						access_engineering, access_teleporter, access_engineering_engine, access_engineering_control,
+						access_mining, access_pathology, access_researchfoyer, access_chapel_office, access_telesci,
+						access_engineering_storage, access_engineering_mechanic)
+			else
+				return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
 						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
 						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab,
 						access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
