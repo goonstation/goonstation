@@ -257,7 +257,7 @@ TYPEINFO(/obj/item/card/emag)
 		name = "#1 NERRRRRRD"
 		icon_state = "id_br"
 		registered = "Nerd"
-		assingment = "Nerd"
+		assignment = "Nerd"
 		desc = "An ID that truly reflects your accomplishments."
 
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)

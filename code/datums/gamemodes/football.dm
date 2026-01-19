@@ -194,10 +194,10 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		update_scoreboard()
 		if(score_red > score_blue)
 			for (var/datum/mind/player in football_players["red"])
-				player.unlock_medal("Space Bowl Full Time Showman", TRUE)
+				player.current.unlock_medal("Space Bowl Full Time Showman", TRUE)
 		else
 			for (var/datum/mind/player in football_players["blue"])
-				player.unlock_medal("Space Bowl Full Time Showman", TRUE)
+				player.current.unlock_medal("Space Bowl Full Time Showman", TRUE)
 		the_football.blowthefuckup(500)
 
 	process()
