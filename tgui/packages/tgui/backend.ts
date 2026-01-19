@@ -99,9 +99,9 @@ export const backendReducer = (state = initialState, action) => {
 
   if (type === 'secret/interface') {
     const name = payload?.name;
-    const token = payload?.token;
+    const id = payload?.token || payload?.id;
 
-    if (!name || !token) {
+    if (!name || !id) {
       return state;
     }
 
@@ -113,7 +113,7 @@ export const backendReducer = (state = initialState, action) => {
         ...state.config,
         secretInterfaces: {
           ...prev,
-          [name]: { token },
+          [name]: id,
         },
       },
     };
@@ -443,7 +443,7 @@ type BackendState<TData> = {
       name: string;
       layout: string;
     };
-    secretInterfaces?: Record<string, { token: string }>;
+    secretInterfaces?: Record<string, string>; // map of interface name -> secret id
     refreshing: BooleanLike;
     window: {
       key: string;

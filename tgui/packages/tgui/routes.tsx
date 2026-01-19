@@ -13,38 +13,6 @@ import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
 
-const secretComponentCache = new Map<string, ComponentType>();
-
-const SECRET_STORAGE_KEY = 'tgui.secretInterfaces';
-
-function loadPersistedSecret(
-  name: string,
-): { token: string; chunk?: string } | null {
-  try {
-    const raw = sessionStorage.getItem(SECRET_STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    const info = parsed?.[name];
-    if (info && typeof info.token === 'string') {
-      return { token: info.token };
-    }
-  } catch {
-    // ignore storage/parse errors
-  }
-  return null;
-}
-
-function persistSecret(name: string, info: { token: string }) {
-  try {
-    const raw = sessionStorage.getItem(SECRET_STORAGE_KEY);
-    const parsed = raw ? JSON.parse(raw) : {};
-    parsed[name] = info;
-    sessionStorage.setItem(SECRET_STORAGE_KEY, JSON.stringify(parsed));
-  } catch {
-    // ignore storage errors (storage disabled/full)
-  }
-}
-
 const routingError =
   (type: 'notFound' | 'missingExport', name: string) => () => {
     return (
@@ -108,16 +76,16 @@ export function getRoutedComponent() {
 
   const name = config?.interface?.name;
 
-  let secretInfo = name ? config?.secretInterfaces?.[name] : null;
+  let secretId = name ? config?.secretInterfaces?.[name] : null;
 
-  // Fallback for CTRL+R reloads: reuse last-seen secret token/chunk from sessionStorage.
-  if (!secretInfo && name) {
-    secretInfo = loadPersistedSecret(name);
+  // Fallback for CTRL+R reloads: reuse last-seen secret id from sessionStorage.
+  if (!secretId && name) {
+    secretId = loadPersistedSecret(name);
   }
 
-  if (name && secretInfo?.token) {
-    persistSecret(name, secretInfo);
-    return getSecretComponent(name, secretInfo.token);
+  if (name && secretId) {
+    persistSecret(name, secretId);
+    return getSecretComponent(name, secretId);
   }
 
   const interfacePathBuilders = [
@@ -152,20 +120,48 @@ export function getRoutedComponent() {
   return Component;
 }
 
-function getSecretComponent(name: string, token: string): ComponentType {
+const secretComponentCache = new Map<string, ComponentType>();
+
+const SECRET_STORAGE_KEY = 'tgui.secretInterfaces';
+
+function loadPersistedSecret(name: string): string | null {
+  try {
+    const raw = sessionStorage.getItem(SECRET_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const id = parsed?.[name];
+    return id;
+  } catch {
+    // ignore storage/parse errors
+  }
+  return null;
+}
+
+function persistSecret(name: string, id: string) {
+  try {
+    const raw = sessionStorage.getItem(SECRET_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : {};
+    parsed[name] = id;
+    sessionStorage.setItem(SECRET_STORAGE_KEY, JSON.stringify(parsed));
+  } catch {
+    // ignore storage errors (storage disabled/full)
+  }
+}
+
+function getSecretComponent(name: string, id: string): ComponentType {
   const cached = secretComponentCache.get(name);
   if (cached) {
     return cached;
   }
 
   const LazySecret = lazy(async () => {
-    const Component = await loadSecretInterface(token);
+    const Component = await loadSecretInterface(id);
     return { default: Component };
   });
 
   const WrappedSecret: ComponentType = () => {
     return (
-      <Suspense fallback={<SuspendedWindow />}>
+      <Suspense fallback={null}>
         <LazySecret />
       </Suspense>
     );
