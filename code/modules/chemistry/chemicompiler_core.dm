@@ -30,6 +30,7 @@
 	var/ax // Amount register
 
 	var/textBuffer
+	var/textOutput
 	var/count
 	var/exec
 
@@ -42,6 +43,7 @@
 	var/messageCallback = "showMessage"
 	var/reservoirClickCallback = "reservoirClick"
 	var/reservoirCheckCallback = "reservoirCheck"
+	var/sayCallback = "sayMessage"
 	var/statusChangeCallback
 	var/minReservoir = 1
 	var/maxReservoir = 10
@@ -60,6 +62,13 @@
 	src.holder = holder
 
 /** Callbacks */
+
+/datum/chemicompiler_core/proc/sayMessage(message)
+	if(!istype(src.holder))
+		qdel(src)
+		return
+	if(sayCallback)
+		return call(src.holder, sayCallback)(message)
 
 /datum/chemicompiler_core/proc/showMessage(message)
 	if(!istype(src.holder))
@@ -181,6 +190,8 @@
 	ax = 0 // Amount register
 
 	textBuffer = ""
+	textOutput = ""
+
 	count = 0
 	exec = 0;
 
@@ -226,7 +237,6 @@
 					data[dp + 1]--
 				if(".") //buffer text
 					textBuffer += ascii2text(data[dp+1])
-					loopUsed += 19
 				if(",") //load volume of sx into ax
 					loopUsed += 9
 					var/datum/chemicompiler_executor/E = src.holder
@@ -303,10 +313,8 @@
 			if(length(data) < dp + 1)
 				data.len = dp + 1
 			if(length(textBuffer) > 80)
-				output += "[textBuffer]<br>"
+				textOutput += "[textBuffer]<br>"
 				textBuffer = ""
-				var/datum/chemicompiler_executor/E = src.holder
-				tgui_process.update_uis(E.holder)
 
 			/*if(exec % 100 == 0) //NO RECURSION. NO.
 				SPAWN(0)
@@ -314,7 +322,8 @@
 				break
 			*/
 	if(!running)
-		output += textBuffer
+		textOutput += textBuffer
+		sayMessage(textOutput)
 		statusChange(CC_STATUS_IDLE)
 		throwError(CC_NOTIFICATION_COMPLETE)
 
@@ -533,6 +542,12 @@
 		boutput(holder:loc, message)
 	else
 		holder:visible_message(message)
+
+/datum/chemicompiler_executor/proc/sayMessage(message)
+	if(!istype(holder))
+		qdel(src)
+		return
+	holder:say(message)
 
 /datum/chemicompiler_executor/proc/index_check(var/source, var/index)
 	if(!reservoirCheck(source) && index > 0)

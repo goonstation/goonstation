@@ -1235,6 +1235,8 @@ TYPEINFO(/obj/machinery/chem_master)
 
 TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	mats = 15
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY)
+
 
 /obj/machinery/chemicompiler_stationary
 	name = "ChemiCompiler CCS1001"
