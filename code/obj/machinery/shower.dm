@@ -113,6 +113,17 @@
 		return
 
 
+TYPEINFO(/obj/machinery/shower_piped)
+	can_build(turf/T, direction)
+		var/obj/fluid_pipe/fluidthingy
+		for(var/obj/device in T)
+			if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_machinery))
+				continue
+			fluidthingy = device
+			if((fluidthingy.initialize_directions & direction))
+				return FALSE
+		return TRUE
+	
 /obj/machinery/shower_piped
 	name = "shower head"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -136,6 +147,7 @@
 	
 	disposing()
 		QDEL_NULL(src.input)
+		..()
 
 	///Silly wrapper proc to drop the args
 	proc/mechcomp_toggle()

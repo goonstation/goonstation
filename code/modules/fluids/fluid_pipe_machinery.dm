@@ -627,6 +627,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 /obj/machinery/fluid_machinery/trinary/filter/disposing()
 	src.beaker.set_loc(src.loc)
 	src.beaker = null
+	..()
 
 /obj/machinery/fluid_machinery/trinary/filter/attackby(obj/item/reagent_containers/glass/B, mob/user)
 	..()
