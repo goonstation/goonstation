@@ -314,9 +314,6 @@ wv2 memes
 			counter++
 			return TRUE
 
-/datum/test_for_tgui/ui_assets(mob/user)
-	. = list(new /datum/asset/basic/tgui_secret_chunk("SecretTest"))
-
 /datum/test_for_tgui/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(ui)
