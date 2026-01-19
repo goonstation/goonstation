@@ -46,6 +46,7 @@ THROWING DARTS
 	var/list/mailgroups = null
 	var/net_id = null
 	var/alert_frequency = FREQ_PDA
+	can_arcplate = FALSE
 
 	New()
 		..()
@@ -387,6 +388,8 @@ THROWING DARTS
 
 	on_life(var/mob/M, var/mult = 1)
 		if (!ishuman(src.owner))
+			return
+		if (!src.online)
 			return
 		var/mob/living/carbon/human/H = src.owner
 		if (!H.mini_health_hud)
@@ -806,25 +809,31 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	big_message = " buzzes, what?"
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
+	var/wasp_type = /mob/living/critter/small_animal/wasp/angry
+	var/faction = FACTION_BOTANY
 
 	implanted(mob/M, mob/I)
 		..()
-		if (istype(M))
-			LAZYLISTADDUNIQUE(M.faction, FACTION_BOTANY)
+		if (istype(M) && src.faction)
+			LAZYLISTADDUNIQUE(M.faction, src.faction)
 
 	on_remove(mob/M)
 		..()
-		if (istype(M))
-			LAZYLISTREMOVE(M.faction, FACTION_BOTANY)
+		if (istype(M) && src.faction)
+			LAZYLISTREMOVE(M.faction, src.faction)
 
 	do_effect(power)
 		// enjoy your wasps
 		for (var/i in 1 to power)
-			var/mob/living/critter/small_animal/wasp/W = new /mob/living/critter/small_animal/wasp/angry(get_turf(src))
-			W.lying = TRUE // So wasps dont hit other wasps when being flung
-			W.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2)
-			SPAWN(1 SECOND)
-				W.lying = FALSE
+			var/throw_type = THROW_NORMAL
+			var/mob/M = new src.wasp_type(get_turf(src))
+			if(ismob(M))
+				M.lying = TRUE // So wasps dont hit other wasps when being flung
+				SPAWN(1 SECOND)
+					M.lying = FALSE
+			else
+				throw_type = THROW_PHASE
+			M.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2, throw_type = throw_type)
 
 		SPAWN(1)
 			src.owner?.gib()
@@ -892,8 +901,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return FALSE
 		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
-			boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
-			return FALSE
+			if (AM.online)
+				boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
+				return FALSE
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
@@ -2679,7 +2689,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	casing = /obj/item/casing/small
 	impact_image_state = "bullethole-small"
 	shot_number = 1
-	//silentshot = 1
+	//no_hit_message = 1
 	var/obj/item/implant/my_implant = null
 	var/mob/implant_master = null
 
