@@ -1,7 +1,7 @@
 TYPEINFO(/obj/item/device/analyzer/gravity_scanner)
 	mats = list("crystal" = 1,
 				"conductive" = 1,
-				"koshmarite" = 2)
+				"metal" = 2)
 /obj/item/device/analyzer/gravity_scanner
 	name = "\improper G-force scanner"
 	desc = "A device that scans nearby things to find how much G-force they're being subjected to."

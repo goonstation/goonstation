@@ -185,11 +185,10 @@
 	create = 1
 	time = 20 SECONDS
 	frame_path = /obj/machinery/gravity_tether/current_area
-	item_requirements = list("metal" = 30,
+	item_requirements = list("metal" = 20,
 							 "crystal_dense" = 10,
 							 "metal_superdense" = 10,
-							 "koshmarite" = 5,
-							 "energy_extreme" = 5)
+							 "koshmarite" = 10)
 	category = "Machinery"
 
 
