@@ -11,6 +11,7 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 
 ## Adding a secret UI
 **TODO**: fix issue of having to create file in +secret/tgui/interfaces for sync to not go batshit and delete
+**also not overwriting, shit got fucked at some point**
 1) Create an interface in `tgui/packages/tgui/interfaces-secret` (name or `name/index.tsx` decides interface name).
 2) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync → build → mirror happens automatically.
 3) Open it from DM by interface name as normal.
@@ -25,7 +26,9 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 ## Build flow (rspack)
 1) Pre-build sync: copy `+secret/tgui/interfaces/*` into `tgui/packages/tgui/interfaces-secret/`, generate wrappers, write the mapping.
 2) Build: each wrapper is an entrypoint `secret-${token}` with `dependOn: 'tgui'` so bundles stay tiny.
-3) Post-build mirror (production): copy `secret-*.bundle.js` to `+secret/browserassets/src/tgui/` and prune stale ones.
+3) Post-build mirror (production): copy `secret-*.bundle.js` to `+secret/browserassets/src/tgui/`W and prune stale ones.
+
+> Limitation: `interfaces-secret/` is treated as a mirror of `+secret/tgui/interfaces/`. Anything not in `+secret` gets wiped during the sync step (except a couple of preserved files). Always add new secret interfaces under `+secret/tgui/interfaces/` so they survive sync and wrapper generation.
 
 ## Runtime flow (DM → client)
 1) DM checks access, reads `+secret/tgui/secret-mapping.json` to get the token.

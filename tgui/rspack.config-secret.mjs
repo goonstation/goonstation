@@ -320,6 +320,14 @@ export class SecretBundleStoragePlugin {
 }
 
 export function addSecretInterfaceEntries(config) {
+  const dummyPath = path.join(secretInterfaceTarget, 'dummy.tsx');
+  if (existsSync(dummyPath)) {
+    config.entry['secret-dummy'] = {
+      import: [dummyPath],
+      dependOn: 'tgui',
+    };
+  }
+
   if (!existsSync(secretMappingFile)) {
     return;
   }
