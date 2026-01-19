@@ -550,7 +550,7 @@ proc/filter_carrier_pets(var/type)
 		switch (act)
 			if ("scream","meow")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, src.sound_scream, 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, src.sound_scream, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return SPAN_EMOTE("<b>[src]</b> meows!")
 			if ("smile","purr")
 				if (src.emote_check(voluntary, 30))
@@ -560,7 +560,7 @@ proc/filter_carrier_pets(var/type)
 					return SPAN_EMOTE("<b>[src]</b>'s tail swishes back and forth aggressively!") // cat do dis when mad.  mad catte
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return SPAN_EMOTE("<b>[src]</b> hisses!")
 		return null
 

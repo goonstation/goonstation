@@ -1,4 +1,18 @@
 
+(t)mon jan 19 26
+(u)CalliopeSoups
+(p)25449
+(e)🔊👽|C-Sound, A-Mutantraces
+(+)Monkeys now go oo aa when speaking.
+(u)nova2053
+(p)25620
+(e)🆕🍝|C-Feature, A-Catering
+(+)Hard candies (including lollipops, candy canes, and candy hearts) are now considerably more crunchy.
+(t)sun jan 18 26
+(u)EmeraldCrow
+(p)25649
+(e)🎨|C-Sprites
+(+)Adds a new Samson figurine for zodiadecius-go gambling today!
 (t)fri jan 16 26
 (u)LeahTheTech
 (p)25588
