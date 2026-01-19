@@ -242,6 +242,11 @@ export class SecretBundleStoragePlugin {
           continue;
         }
 
+        // Do not mirror the dummy placeholder bundle into +secret.
+        if (chunk.name === 'secret-dummy') {
+          continue;
+        }
+
         for (const file of chunk.files ?? []) {
           if (secretBundlePattern.test(file)) {
             filesToMirror.add(file);

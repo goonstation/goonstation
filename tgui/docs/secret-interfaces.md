@@ -39,3 +39,7 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 ## Troubleshooting
 - VSCode hides `+secret/tgui/interfaces/`; use the mirrored copy under `interfaces-secret`.
 - If it doesn’t load: confirm the bundle exists in `+secret/browserassets/src/tgui/`, the mapping has a token for your interface, and the browser console isn’t showing a failed script load.
+
+## Notes
+
+A `dummy.tsx` in `interfaces-secret/` is bundled as `secret-dummy` to force a stable secret entry for all coders, keeping the main `tgui.bundle.js` rspack-generated runtime identical. If this was not present, rspack would prune some of the loader code.
