@@ -243,6 +243,7 @@ var/global/area/current_battle_spawn = null
 	if(length(living_battlers) == 1)
 		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
 		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
+		living_battlers[1].unlock_medal("#1 Victory Royale", TRUE)
 	else
 		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
 

@@ -905,6 +905,10 @@
 	throw_speed = 1
 	throw_spin = 0
 
+	pod
+		icon_state = "paperpod"
+		throw_speed = 2.5
+
 /obj/item/paper/folded/crane
 	name = "paper crane"
 	desc = "If you fold a lot of these do you get a wish granted?"

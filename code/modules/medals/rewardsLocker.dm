@@ -1228,6 +1228,49 @@
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a welding helmet in your hands."))
 			return
 
+/datum/achievementReward/Nerd_ID
+	title = "#1 Victory ID"
+	desc = "Proves your worth."
+	required_medal = "#1 Victory Royale"
+	once_per_round = 1
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			H.equip_if_possible(new /obj/item/card/id/dabbing_license/br(H), SLOT_WEAR_ID)
+			D.redeemer = H.ckey
+			H.put_in_hand_or_drop(D)
+			return 1
+			boutput(H, "You feel pretentious.")
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem."))
+			return
+
+/datum/achievementReward/paper_pod
+	title = "(Skin) Origami Pod"
+	desc = "Requires you to hold a paper plane."
+	required_medal = "Fame and Fartuna"
+	once_per_round = 0
+
+	rewardActivate(var/mob/activator)
+		if (!istype(activator))
+			return
+
+		var/obj/item/paper/folded/plane/pod/item_target = activator.find_type_in_hand(/obj/item/paper/folded/plane)
+		if (skin_target)
+			var/obj/item/paper/folded/plane/pod/new_pod = new /obj/item/paper/folded/plane/pod(get_turf(activator))
+			new_pod.fingerprints = skin_target.fingerprints
+			new_pod.fingerprints_full = skin_target.fingerprints_full
+			new_pod.fingerprintslast = skin_target.fingerprintslast
+			skin_target.fingerprints = null
+			skin_target.fingerprints_full = null
+			skin_target.fingerprintslast = null
+			qdel(skin_target)
+			activator.put_in_hand_or_drop(new_pod)
+			return 1
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a paper plane in your hands."))
+			return
 
 // Reward management stuff
 

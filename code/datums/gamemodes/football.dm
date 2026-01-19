@@ -192,6 +192,12 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		boutput(world,"<h1>FINISH!</h1><h2>Red team: [score_red] point\s</h2><h2>Blue team: [score_blue] point\s</h2>Thanks for playing this gimmick I guess, see you next time??")
 		update_game_clock()
 		update_scoreboard()
+		if(score_red > score_blue)
+			for (var/datum/mind/player in football_players["red"])
+				player.unlock_medal("Space Bowl Full Time Showman", TRUE)
+		else
+			for (var/datum/mind/player in football_players["blue"])
+				player.unlock_medal("Space Bowl Full Time Showman", TRUE)
 		the_football.blowthefuckup(500)
 
 	process()
