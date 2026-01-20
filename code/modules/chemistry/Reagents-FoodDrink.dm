@@ -4082,7 +4082,7 @@ datum
 			fluid_r = 10
 			fluid_g = 165
 			fluid_b = 254
-			description = "This water seems contains more water per water than normal water should."
+			description = "This water seems to contain more water per water than normal water should."
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			bladder_value = -1.5
