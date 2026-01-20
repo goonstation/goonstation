@@ -19,60 +19,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export function deriveSecretChunkName(identifier) {
-  const match = identifier.match(/interfaces-secret[\\/](.+?)\.[tj]sx?$/i);
-
-  if (!match) {
-    return null;
-  }
-
-  const raw = match[1].replace(/\\/g, '/');
-  const segments = raw.split('/');
-
-  if (!segments.length) {
-    return null;
-  }
-
-  const last = segments[segments.length - 1];
-  const interfaceName =
-    last === 'index' && segments.length > 1
-      ? segments[segments.length - 2]
-      : last;
-
-  return deriveSecretChunkNameFromInterfaceName(interfaceName);
-}
-
-function deriveInterfaceNameFromEntry(entry) {
-  if (!entry) {
-    return null;
-  }
-
-  const normalized = entry.replace(/\\/g, '/');
-  const segments = normalized.split('/').filter(Boolean);
-
-  if (!segments.length) {
-    return null;
-  }
-
-  const last = segments[segments.length - 1];
-  const withoutExt = last.replace(/\.[tj]sx?$/i, '');
-
-  if (withoutExt === 'index' && segments.length > 1) {
-    return segments[segments.length - 2];
-  }
-
-  return withoutExt || null;
-}
-
-function deriveSecretChunkNameFromInterfaceName(interfaceName) {
-  const token = deriveSecretId(interfaceName);
-  if (!token) {
-    return null;
-  }
-
-  return `secret-${token}`;
-}
-
 const secretRepoRoot = path.resolve(__dirname, '../+secret');
 const secretInterfaceSource = path.resolve(
   secretRepoRoot,
@@ -106,6 +52,36 @@ const secretSaltFile = path.resolve(secretRepoRoot, 'tgui', 'secret-salt.txt');
 const secretDestinationPreserve = new Set(['.gitignore']);
 const secretBundlePattern = /^secret-.*\.bundle\.js(?:\.map)?$/i;
 
+/**
+ * @param {string} entry
+ * @returns {string | null}
+ */
+function deriveInterfaceNameFromEntry(entry) {
+  if (!entry) {
+    return null;
+  }
+
+  const normalized = entry.replace(/\\/g, '/');
+  const segments = normalized.split('/').filter(Boolean);
+
+  if (!segments.length) {
+    return null;
+  }
+
+  const last = segments[segments.length - 1];
+  const withoutExt = last.replace(/\.[tj]sx?$/i, '');
+
+  if (withoutExt === 'index' && segments.length > 1) {
+    return segments[segments.length - 2];
+  }
+
+  return withoutExt || null;
+}
+
+/**
+ * @param {string} interfaceName
+ * @returns {string | null}
+ */
 function deriveSecretId(interfaceName) {
   if (!existsSync(secretRepoRoot)) {
     return null;
@@ -127,47 +103,88 @@ function deriveSecretId(interfaceName) {
 }
 
 export class SecretInterfaceSyncPlugin {
+  /** @param {import('@rspack/core').Compiler} compiler */
   apply(compiler) {
     const logger = compiler.getInfrastructureLogger(
       'SecretInterfaceSyncPlugin',
     );
 
     const syncSecrets = () => {
-      if (!existsSync(secretRepoRoot)) {
+      let sourceDir, targetDir, sourceLabel;
+
+      const hasSecretRepo =
+        existsSync(secretRepoRoot) && existsSync(secretInterfaceSource);
+      const hasTargetContent = existsSync(secretInterfaceTarget);
+
+      if (hasSecretRepo) {
+        const secretEntries = readdirSync(secretInterfaceSource);
+        if (secretEntries.length > 0) {
+          // +secret has content, use it as source
+          sourceDir = secretInterfaceSource;
+          targetDir = secretInterfaceTarget;
+          sourceLabel = '+secret → interfaces-secret';
+        }
+      }
+
+      if (!sourceDir && hasTargetContent) {
+        // No secret repo or it's empty, check if interfaces-secret has content
+        const targetEntries = readdirSync(secretInterfaceTarget).filter(
+          (e) => !secretInterfacePreserve.has(e),
+        );
+        if (targetEntries.length > 0) {
+          // interfaces-secret has content, use it as source
+          sourceDir = secretInterfaceTarget;
+          targetDir = secretInterfaceSource;
+          sourceLabel = 'interfaces-secret → +secret';
+        }
+      }
+
+      if (!sourceDir) {
+        logger.debug('No secret interface source found; skipping sync.');
         return;
       }
 
-      if (!existsSync(secretInterfaceSource)) {
-        logger.debug('Secret interface source not found; skipping sync.');
-        return;
-      }
-
-      const entries = readdirSync(secretInterfaceSource);
+      const entries = readdirSync(sourceDir).filter(
+        (e) => !secretInterfacePreserve.has(e),
+      );
 
       if (!entries.length) {
         logger.debug('Secret interface source is empty; skipping sync.');
         return;
       }
 
-      mkdirSync(secretInterfaceTarget, { recursive: true });
+      mkdirSync(targetDir, { recursive: true });
 
-      for (const entry of readdirSync(secretInterfaceTarget)) {
+      // Selective delete: only remove files that were previously synced but no longer exist in source
+      const sourceNames = new Set(
+        entries.map((e) => e.replace(/\.[^.]+$/, '')),
+      );
+
+      for (const entry of readdirSync(targetDir)) {
         if (secretInterfacePreserve.has(entry)) {
           continue;
         }
 
-        rmSync(path.join(secretInterfaceTarget, entry), {
-          recursive: true,
-          force: true,
-        });
+        // wrappers are auto-generated
+        if (entry.endsWith('.wrapper.tsx')) {
+          continue;
+        }
+
+        const baseName = entry.replace(/\.[^.]+$/, '');
+        if (!sourceNames.has(baseName)) {
+          rmSync(path.join(targetDir, entry), {
+            recursive: true,
+            force: true,
+          });
+        }
       }
 
       const mapping = {};
       let copied = 0;
 
       for (const entry of entries) {
-        const sourcePath = path.join(secretInterfaceSource, entry);
-        const targetPath = path.join(secretInterfaceTarget, entry);
+        const sourcePath = path.join(sourceDir, entry);
+        const targetPath = path.join(targetDir, entry);
 
         cpSync(sourcePath, targetPath, { recursive: true });
 
@@ -180,7 +197,7 @@ export class SecretInterfaceSyncPlugin {
 
           mapping[interfaceName] = id;
 
-          // Wrapper registers the component into a global registry keyed by id.
+          // Always write wrappers into interfaces-secret (the build source)
           const wrapperPath = path.join(
             secretInterfaceTarget,
             `${interfaceName}.wrapper.tsx`,
@@ -188,8 +205,8 @@ export class SecretInterfaceSyncPlugin {
 
           const importTarget = `./${interfaceName}`;
 
-          const wrapperContent = `// Auto-generated wrapper for ${interfaceName}
-import Component from '${importTarget}';\n// @ts-ignore
+          const wrapperContent = `import Component from '${importTarget}';
+// @ts-ignore
 globalThis.__SECRET_TGUI_INTERFACES__['${id}'] = Component;
 export default Component;\n`;
           mkdirSync(path.dirname(wrapperPath), { recursive: true });
@@ -198,13 +215,15 @@ export default Component;\n`;
         copied += 1;
       }
 
-      // Write mapping file for the server to read.
-      mkdirSync(path.dirname(secretMappingFile), { recursive: true });
-      writeFileSync(secretMappingFile, JSON.stringify(mapping, null, 2));
+      // write mapping file
+      if (existsSync(secretRepoRoot)) {
+        mkdirSync(path.dirname(secretMappingFile), { recursive: true });
+        writeFileSync(secretMappingFile, JSON.stringify(mapping, null, 2));
+      }
 
       if (copied > 0) {
         logger.log(
-          `Synced ${copied} secret interface${copied === 1 ? '' : 's'} to tgui`,
+          `Synced ${copied} secret interface${copied === 1 ? '' : 's'} (${sourceLabel})`,
         );
       }
     };
@@ -215,6 +234,7 @@ export default Component;\n`;
 }
 
 export class SecretBundleStoragePlugin {
+  /** @param {import('@rspack/core').Compiler} compiler */
   apply(compiler) {
     const logger = compiler.getInfrastructureLogger(
       'SecretBundleStoragePlugin',
@@ -236,26 +256,24 @@ export class SecretBundleStoragePlugin {
       }
 
       const filesToMirror = new Set();
+      const filesToDelete = new Set();
 
       for (const chunk of compilation.chunks) {
         if (!chunk?.name || !chunk.name.startsWith('secret-')) {
           continue;
         }
 
-        // Do not mirror the dummy placeholder bundle into +secret.
-        if (chunk.name === 'secret-dummy') {
-          continue;
-        }
+        const isDummy = chunk.name === 'secret-dummy';
 
-        for (const file of chunk.files ?? []) {
+        for (const file of [
+          ...(chunk.files ?? []),
+          ...(chunk.auxiliaryFiles ?? []),
+        ]) {
           if (secretBundlePattern.test(file)) {
-            filesToMirror.add(file);
-          }
-        }
-
-        for (const file of chunk.auxiliaryFiles ?? []) {
-          if (secretBundlePattern.test(file)) {
-            filesToMirror.add(file);
+            filesToDelete.add(file);
+            if (!isDummy) {
+              filesToMirror.add(file);
+            }
           }
         }
       }
@@ -264,6 +282,7 @@ export class SecretBundleStoragePlugin {
         return;
       }
 
+      /** @param {Set<string>} keep */
       const cleanupDestination = (keep) => {
         if (!existsSync(secretBundleDestination)) {
           return;
@@ -308,7 +327,7 @@ export class SecretBundleStoragePlugin {
       }
 
       // Strip secret bundles back out of the public output so they only live in +secret.
-      for (const file of filesToMirror) {
+      for (const file of filesToDelete) {
         const sourcePath = path.join(outputPath, file);
         if (existsSync(sourcePath)) {
           rmSync(sourcePath, { force: true });
@@ -324,6 +343,7 @@ export class SecretBundleStoragePlugin {
   }
 }
 
+/** @param {import('@rspack/core').Configuration} config */
 export function addSecretInterfaceEntries(config) {
   const dummyPath = path.join(secretInterfaceTarget, 'dummy.tsx');
   if (existsSync(dummyPath)) {
@@ -344,12 +364,7 @@ export function addSecretInterfaceEntries(config) {
     return;
   }
 
-  for (const [interfaceName, info] of Object.entries(mapping)) {
-    const token = typeof info === 'string' ? info : null;
-    if (!token) {
-      continue;
-    }
-
+  for (const [interfaceName, id] of Object.entries(mapping)) {
     const wrapperPath = path.join(
       secretInterfaceTarget,
       `${interfaceName}.wrapper.tsx`,
@@ -359,7 +374,7 @@ export function addSecretInterfaceEntries(config) {
       continue;
     }
 
-    const entryName = `secret-${token}`;
+    const entryName = `secret-${id}`;
     config.entry[entryName] = {
       import: [wrapperPath],
       dependOn: 'tgui',

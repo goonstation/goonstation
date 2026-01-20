@@ -66,9 +66,6 @@ export default (env = {}, argv) => {
       // 'tgui-panel': ['./packages/tgui-panel'], // |GOONSTATION-CHANGE| Not used by us yet
       // 'tgui-say': ['./packages/tgui-say'], // |GOONSTATION-CHANGE| Not used by us yet
     },
-    infrastructureLogging: {
-      level: 'verbose',
-    },
     output: {
       path: argv.useTmpFolder
         ? path.resolve(__dirname, '../browserassets/src/tgui/.tmp') // |GOONSTATION-CHANGE| ('./public/.tmp') -> ('../browserassets/src/tgui/.tmp')
