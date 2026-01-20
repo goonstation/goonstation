@@ -26,11 +26,12 @@
 		response_body["gamestate"] = current_state
 		response_body["respawn"] = abandon_allowed
 		response_body["enter"] = enter_allowed
+		response_body["round_id"] = roundId
 
 		response_body["ai"] = config?.allow_ai
 		response_body["mode"] = ((ticker?.hide_mode) ? "secret" : master_mode)
 		response_body["round_duration"] = round(ticker?.round_elapsed_ticks / (1 SECOND))
-		
+
 		response_body["shuttle_direction"] = emergency_shuttle?.direction
 		response_body["shuttle_location"] = emergency_shuttle?.location
 		response_body["shuttle_timer"] = emergency_shuttle?.timeleft()
