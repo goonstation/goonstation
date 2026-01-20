@@ -1558,6 +1558,9 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!isnull(food))
+			if (!food.bites_left)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 			food.take_a_bite(consumer, mob_owner)
 		else
 			drink.take_a_drink(consumer, mob_owner)
