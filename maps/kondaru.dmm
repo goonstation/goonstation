@@ -1469,18 +1469,6 @@
 	},
 /turf/space,
 /area/space)
-"agp" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
 "agq" = (
 /obj/fitness/speedbag/captain,
 /obj/machinery/light/small{
@@ -28154,16 +28142,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"djc" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/mob/living/critter/small_animal/turtle/sylvester/HoS,
-/turf/simulated/floor/carpet/red,
-/area/station/security/hos)
 "dkL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34928,6 +34906,19 @@
 	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
+"hFb" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/storage/goodybag,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/disposalpipe/segment/transport,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "hFc" = (
 /obj/table/wood/round/auto,
 /turf/simulated/floor/grass,
@@ -58040,6 +58031,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
+"xHB" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
+/turf/simulated/floor/carpet/red,
+/area/station/security/hos)
 "xHK" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -93920,7 +93921,7 @@ aaf
 abZ
 abZ
 gQs
-agp
+hFb
 joy
 air
 aji
@@ -120878,7 +120879,7 @@ kZz
 mAR
 xPt
 bNP
-djc
+xHB
 bQM
 fAl
 bYE
