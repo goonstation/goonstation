@@ -326,10 +326,12 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
+		name = "Catering PDA"
 		icon_state = "pda-catering"
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	bartender
+		name = "Bartending PDA"
 		icon_state = "pda-bartender"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
