@@ -1,45 +1,49 @@
 # Secret TGUI interfaces
 
-Secret React UIs get stored in `+secret`, get mirrored into the workspace for builds, turn into id-named bundles, are delivered to clients via the server sending over the correct id for an interface.
+Secret React UIs get stored in `+secret` and are mirrored into the main workspace for builds. Each secret UI compiles into an id-named bundle and is delivered to clients by the server.
 
 Keep in mind that once a player opens a UI, they can dive into the minified React code.
 
 ## Core idea
 - Secret interfaces live in `+secret/tgui/interfaces/`.
-- Each interface gets a secret salted HMAC-MD5 id. Bundle is `secret-<id>.bundle.js`.
-- The client only ever gets the id when it displays, the ids are not exposed in webpack.
+- Builds compile secret entrypoints into bundles named like `secret-<id>.bundle.js`.
+- IDs are a salted HMAC-MD5 using `+secret/tgui/secret-salt.txt`.
+- The client only learns an id at runtime when it opens the UI; ids are not baked into the public bundle.
 
 ## Adding a secret UI
-**TODO**: fix issue of having to create file in +secret/tgui/interfaces for sync to not go batshit and delete
-**also not overwriting, shit got fucked at some point**
-1) Create an interface in `tgui/packages/tgui/interfaces-secret` (name or `name/index.tsx` decides interface name).
-2) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync → build → mirror happens automatically.
-3) Open it from DM by interface name as normal.
+1) Create an interface in `tgui/packages/tgui/interfaces-secret/<Name>.tsx`. The file name (or `Name/index.tsx`) determines the interface name.
+1) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync → build → mirror happens automatically.
+2) Open it from DM by interface name as normal.
 
 ## Files
-- `+secret/tgui/interfaces/` – secret UIs are stored here (hidden in VSCode file browser to avoid LSP errors)
-- `tgui/packages/tgui/interfaces-secret/` – mirrored sources + auto-generated wrappers + runtime loader
+- `+secret/tgui/interfaces/` – secret UIs
+- `tgui/packages/tgui/interfaces-secret/` – build-time mirror + auto-generated wrappers + runtime loader
 - `+secret/tgui/secret-salt.txt` – salt (and 11 herbs and spices)
-- `+secret/tgui/secret-mapping.json` – interface → id string (private; chunk = `secret-${id}.bundle.js`).
-- `+secret/browserassets/src/tgui/` – built secret bundles stored in +secret.
+- `+secret/tgui/secret-mapping.json` – interface name → id mapping
+- `+secret/browserassets/src/tgui/` – built secret bundles stored in `+secret`
 
 ## Build flow (rspack)
-1) Pre-build sync: copy `+secret/tgui/interfaces/*` into `tgui/packages/tgui/interfaces-secret/`, generate wrappers, write the mapping.
-2) Build: each wrapper is an entrypoint `secret-${token}` with `dependOn: 'tgui'` so bundles stay tiny.
-3) Post-build mirror (production): copy `secret-*.bundle.js` to `+secret/browserassets/src/tgui/`W and prune stale ones.
+1) Pre-build sync:
+	- If `+secret/tgui/interfaces/` exists and has files, it is treated as the source and synced into `interfaces-secret/`.
+	- Otherwise, `interfaces-secret/` can be used as the source and synced back into `+secret/tgui/interfaces/`.
 
-> Limitation: `interfaces-secret/` is treated as a mirror of `+secret/tgui/interfaces/`. Anything not in `+secret` gets wiped during the sync step (except a couple of preserved files). Always add new secret interfaces under `+secret/tgui/interfaces/` so they survive sync and wrapper generation.
+	During sync, wrappers are generated into `tgui/packages/tgui/interfaces-secret/` and the mapping is written to `+secret/tgui/secret-mapping.json`.
+2) Build:
+	- Each wrapper becomes an entrypoint named `secret-<id>`.
+	- A `secret-dummy` entry is always present to keep the rspack runtime in the bundle stable whether `+secret` exists or not.
+3) Post-build storage:
+	- `secret-*.bundle.js` bundles are moved into `+secret/browserassets/src/tgui/`.
 
 ## Runtime flow (DM → client)
-1) DM checks access, reads `+secret/tgui/secret-mapping.json` to get the token.
-2) DM sends the bundle as an asset and sends a `backend/secret-id` message with `{ name : id }`.
-3) Client routes see `config.secretInterfaces[name]`, persist it in sessionStorage, and lazy-load via the loader.
-4) Loader injects `/secret-${token}.bundle.js`, waits for the bundle to self-register in `globalThis.__SECRET_TGUI_INTERFACES__[token]`.
+1) DM checks access and obtains the id (token) for the interface from `+secret/tgui/secret-mapping.json`.
+2) The server provides the secret JS bundle to the client.
+3) The UI config includes `config.secretInterfaces[name] = id` (flat name → id mapping). The client persists this in `sessionStorage` to survive reloads.
+4) The loader injects `/secret-<id>.bundle.js` and waits for the bundle to self-register in `globalThis.__SECRET_TGUI_INTERFACES__[id]`.
 
 ## Troubleshooting
-- VSCode hides `+secret/tgui/interfaces/`; use the mirrored copy under `interfaces-secret`.
-- If it doesn’t load: confirm the bundle exists in `+secret/browserassets/src/tgui/`, the mapping has a token for your interface, and the browser console isn’t showing a failed script load.
+- VSCode hides `+secret/tgui/interfaces/`; use the mirrored copy under `tgui/packages/tgui/interfaces-secret/`.
+- If it doesn’t load: confirm the bundle exists in `+secret/browserassets/src/tgui/`, the mapping has an id for your interface name, and the browser console isn’t showing a failed script load.
 
 ## Notes
 
-A `dummy.tsx` in `interfaces-secret/` is bundled as `secret-dummy` to force a stable secret entry for all coders, keeping the main `tgui.bundle.js` rspack-generated runtime identical. If this was not present, rspack would prune some of the loader code.
+A `dummy.tsx` in `interfaces-secret/` is bundled as `secret-dummy` to force a stable secret entry for all builds, keeping the rspack-generated runtime in the main `tgui.bundle.js` identical for contributors without `+secret` and maintainers with `+secret`.
