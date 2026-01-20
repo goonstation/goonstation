@@ -1,6 +1,10 @@
-// |GOONSTATION-ADD| This whole secret interface handling file
+/**
+ * @file |GOONSTATION-ADD| Secret interface handling for rspack builds
+ * @copyright 2026 ZeWaka
+ * @license MIT
+ */
 
-/// Returns secret interface id from the secret mapping file.
+/// Returns the secret interface id from the secret mapping file.
 /proc/tgui_get_secret_interface_id(interface_name)
 	var/static/list/secret_mappings = null
 	if (!secret_mappings)

@@ -1,6 +1,7 @@
 /**
  * @file Secret interface handling for rspack builds
- * @copyright 2025 Goonstation
+ * @copyright 2026 ZeWaka
+ * @license MIT
  */
 import { createHmac } from 'node:crypto';
 import {
