@@ -1,5 +1,9 @@
 
 (t)tue jan 20 26
+(u)LorrMaster
+(p)25633
+(e)🪲🧱|C-Bug, A-Materials
+(+)Speculative fix for invisible Rocko
 (u)JORJ949
 (p)25654
 (e)🎨📦|C-Sprites, A-Game-Objects
