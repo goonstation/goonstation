@@ -1,5 +1,9 @@
 
 (t)tue jan 20 26
+(u)Chasu
+(p)25659
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The HPD is now cheaper to fabricate and buy.
 (u)LorrMaster
 (p)25633
 (e)🪲🧱|C-Bug, A-Materials
