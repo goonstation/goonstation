@@ -28,13 +28,16 @@
 		response_body["enter"] = enter_allowed
 		response_body["round_id"] = roundId
 
-		response_body["ai"] = config?.allow_ai
-		response_body["mode"] = ((ticker?.hide_mode) ? "secret" : master_mode)
-		response_body["round_duration"] = round(ticker?.round_elapsed_ticks / (1 SECOND))
-
-		response_body["shuttle_direction"] = emergency_shuttle?.direction
-		response_body["shuttle_location"] = emergency_shuttle?.location
-		response_body["shuttle_timer"] = emergency_shuttle?.timeleft()
+		// These can be all be null before current_state >= GAME_STATE_PREGAME
+		if(config)
+			response_body["ai"] = config.allow_ai
+		if(ticker)
+			response_body["mode"] = (ticker.hide_mode) ? "secret" : master_mode
+			response_body["round_duration"] = round(ticker.round_elapsed_ticks / (1 SECOND))
+		if(emergency_shuttle)
+			response_body["shuttle_direction"] = emergency_shuttle.direction
+			response_body["shuttle_location"] = emergency_shuttle.location
+			response_body["shuttle_timer"] = emergency_shuttle.timeleft()
 
 		response_body["station_name"] = station_name
 		response_body["map_name"] = getMapNameFromID(map_setting)
