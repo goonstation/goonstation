@@ -6,44 +6,40 @@
 	logDiary("TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
-	if (T == "ping")
-		return src.total_player_count()
-	else if(T == "players")
+	if (T == "ping") // returns the total player count
 		return src.total_player_count()
 
-	else if (T == "status")
-		var/list/s = list()
-		s["version"] = game_version
-		s["mode"] = (ticker?.hide_mode) ? "secret" : master_mode
-		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
-		s["ai"] = config.allow_ai
-		s["host"] = host ? host : null
-		s["players"] = list()
-		s["station_name"] = station_name
-		var/shuttle
-		if (emergency_shuttle)
-			if (emergency_shuttle.location == SHUTTLE_LOC_STATION) shuttle = 0 - emergency_shuttle.timeleft()
-			else shuttle = emergency_shuttle.timeleft()
-		else shuttle = "welp"
-		s["shuttle_time"] = shuttle
-		var/elapsed
-		if (current_state < GAME_STATE_FINISHED)
-			if (current_state <= GAME_STATE_PREGAME) elapsed = "pre"
-			else if (current_state > GAME_STATE_PREGAME) elapsed = round(ticker.round_elapsed_ticks / 10)
-		else if (current_state == GAME_STATE_FINISHED) elapsed = "post"
-		else elapsed = "welp"
-		s["elapsed"] = elapsed
-		var/n = 0
-		for(var/client/C in clients)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
+	else if (T == "who") // returns all currently connected players
+		var/list/players = list()
+		var/count = 0
+		for(var/client/client in clients)
+			if (client.stealth && !client.fakekey) // stealthed admins don't count
 				continue
-			s["player[n]"] = "[ckey((C.stealth || C.alt_key) ? C.fakekey : C.key)]"
-			n++
-		s["players"] = n
-		s["map_name"] = getMapNameFromID(map_setting)
-		s["map_id"] = map_setting
-		return list2params(s)
+			players["player[count]"] = "[ckey((client.stealth || client.alt_key) ? client.fakekey : client.key)]"
+			count++
+		return list2params(players)
+
+	else if (T == "status") // returns a summary of the server's state and configuration
+		var/list/response_body = list()
+		response_body["version"] = game_version
+		response_body["host"] = host
+		response_body["gamestate"] = current_state
+		response_body["respawn"] = abandon_allowed
+		response_body["enter"] = enter_allowed
+
+		response_body["ai"] = config?.allow_ai
+		response_body["mode"] = ((ticker?.hide_mode) ? "secret" : master_mode)
+		response_body["round_duration"] = round(ticker?.round_elapsed_ticks / (1 SECOND))
+		
+		response_body["shuttle_direction"] = emergency_shuttle?.direction
+		response_body["shuttle_location"] = emergency_shuttle?.location
+		response_body["shuttle_timer"] = emergency_shuttle?.timeleft()
+
+		response_body["station_name"] = station_name
+		response_body["map_name"] = getMapNameFromID(map_setting)
+		response_body["map_id"] = map_setting
+		response_body["players"] = src.total_player_count()
+		return list2params(response_body)
 
 	else // Discord bot communication (or callbacks)
 
