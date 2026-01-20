@@ -14,6 +14,7 @@
 /// returns TRUE if no change
 /atom/movable/proc/set_gravity(turf/T)
 	return_if_overlay_or_effect(src)
+	// TODO: maybe this should be the same thing?
 	if ((src.event_handler_flags & IMMUNE_TRENCH_WARP) || HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE))
 		return TRUE
 	if (!istype(T))
@@ -21,8 +22,10 @@
 		if (!istype(T))
 			return TRUE
 	var/new_gforce = round(T.get_gforce_current(), 0.01)
-	if (src.no_gravity)
+	if (src.no_gravity) // negative matter
 		new_gforce = 0
+	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING)) // floating things don't get hit with high-G effects
+		new_gforce = min(new_gforce, 1)
 	if (src.gforce == new_gforce)
 		return TRUE
 	src.gforce = new_gforce
