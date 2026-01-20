@@ -1,5 +1,9 @@
 
 (t)tue jan 20 26
+(u)LorrMaster
+(p)25634
+(e)🆕🧱|C-Feature, A-Materials
+(+)A bunch of items that should be made of plastic now use plastic as their default material.
 (u)Lord_Earthfire
 (p)25565
 (e)🆕📦|C-Feature, A-Game-Objects
