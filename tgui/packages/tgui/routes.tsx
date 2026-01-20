@@ -77,16 +77,16 @@ export function getRoutedComponent() {
 
   const name = config?.interface?.name;
 
-  let secretId = name ? config?.secretInterfaces?.[name] : null;
+  // |GOONSTATION-ADD| - check if secret interface
+  if (name) {
+    // Should we be loading a secret interface? fallback to sessionStorage
+    const secretId =
+      config?.secretInterfaces?.[name] || loadPersistedSecretID(name);
 
-  // Fallback for CTRL+R reloads: reuse last-seen secret id from sessionStorage.
-  if (!secretId && name) {
-    secretId = loadPersistedSecretID(name);
-  }
-
-  if (name && secretId) {
-    persistSecretID(name, secretId);
-    return getSecretComponent(name, secretId);
+    if (secretId) {
+      persistSecretID(name, secretId);
+      return getSecretComponent(name, secretId);
+    }
   }
 
   const interfacePathBuilders = [
