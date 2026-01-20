@@ -1,5 +1,9 @@
 
 (t)mon jan 19 26
+(u)Kanthes
+(p)25660
+(e)|
+(+)The wellspring artifact will no longer attempt to flood the station with fluids that don't like existing.
 (u)CalliopeSoups
 (p)25449
 (e)🔊👽|C-Sound, A-Mutantraces
