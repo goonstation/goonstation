@@ -3048,7 +3048,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (istype(T, /turf/space))
+		if (T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
