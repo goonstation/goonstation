@@ -563,10 +563,6 @@ TYPEINFO(/atom/movable)
 
 	src.vis_locs = null // cleans up vis_contents of visual holders of this too
 
-	if (src.provides_grip)
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.grip_atom_count -= 1
-
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
 	. = ..()
