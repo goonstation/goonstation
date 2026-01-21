@@ -703,7 +703,7 @@
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
 
-#define GRAVITY_SCAN_OUTPUT(x, y) ("\The [x] is currently experiencing [y/100]G.")
+#define GRAVITY_SCAN_OUTPUT(x, y) ("\The [x] is currently experiencing [y/GFORCE_EARTH_GRAVITY]G.")
 
 /proc/scan_gravity(atom/target, visible=FALSE)
 	var/gforce = null

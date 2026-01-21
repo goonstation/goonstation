@@ -1015,7 +1015,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.layer < victim.layer)
 			src.layer = victim.layer+1
 		src.set_loc(vicTurf)
-		random_brute_damage(victim, rand(20,40) * vicTurf.get_gforce_current()/100, TRUE)
+		random_brute_damage(victim, rand(20,40) * vicTurf.get_gforce_fractional(), TRUE)
 	else
 		src.visible_message("<b>[SPAN_ALERT("[src.name] tips over!")]</b>")
 

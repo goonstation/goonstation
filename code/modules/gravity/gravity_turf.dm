@@ -1,7 +1,7 @@
 /// current gforce on this turf
-/turf/var/gforce_current = 100
+/turf/var/gforce_current = GFORCE_EARTH_GRAVITY
 /// gforce inherent to the turf tile, e.g. asteroids and airbridges
-/turf/var/gforce_inherent = 0
+/turf/var/gforce_inherent = GFORCE_GRAVITY_MINIMUM
 /// Used to check if we need to recalculate gforces. If less than the area's gforce_rev, update required.
 /turf/var/gforce_area_rev = 0
 
@@ -39,6 +39,9 @@
 		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether, src.gforce_inherent)
 		src.gforce_area_rev = A.gforce_rev
 	return src.gforce_current
+
+/turf/proc/get_gforce_fractional()
+	. = src.get_gforce_current() / GFORCE_EARTH_GRAVITY
 
 // asteroids have enough G for some traction (for mining)
 /turf/simulated/wall/auto/asteroid/gforce_inherent = GFORCE_TRACTION_PARTIAL

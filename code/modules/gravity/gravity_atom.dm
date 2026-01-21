@@ -1,5 +1,5 @@
 /// The last gforce value applied to this AM
-/atom/movable/var/gforce = 100
+/atom/movable/var/gforce = GFORCE_EARTH_GRAVITY
 /// Atom will apply float animation in zero-G. Don't put this on lots of objects.
 /atom/movable/var/floats_in_zero_g = FALSE
 
