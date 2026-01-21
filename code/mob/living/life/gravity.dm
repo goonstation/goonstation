@@ -52,8 +52,8 @@
 						if (human_owner.traction == TRACTION_FULL)
 							return // unless you're on solid footing
 						if (istype(human_owner.back, /obj/item/tank/jetpack))
-							var/obj/item/tank/jetpack/J = src.back
-							if(J.allow_thrust(0.01, src))
+							var/obj/item/tank/jetpack/J = human_owner.back
+							if(J.allow_thrust(0.01, human_owner))
 								return // or jetpacking
 						boutput(human_owner, SPAN_ALERT("You [pick("struggle", "take effort", "manage")] to keep yourself [pick("oriented", "angled properly", "right-way-up")] in low-gravity."))
 						human_owner.remove_stamina(human_owner.traction == TRACTION_PARTIAL ? 25 : 50)
