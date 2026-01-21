@@ -40,13 +40,13 @@
 		if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
 			;  // quick no-op for most common gravity
 		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
-			// spacefaring, salvagers, and skeletons immune; lower the gravity, higher the probability, ~2 to ~20%
-			if (human_owner && !human_owner.lying && !human_owner.is_spacefaring() && !issalvager(human_owner) && !isskeleton(human_owner) && probmult(round((1 - src.owner.gforce) * 20)))
+			// spacefaring, salvagers, and skeletons immune; lower the gravity, higher the probability, ~2.5 to ~25%
+			if (human_owner && !human_owner.lying && !human_owner.is_spacefaring() && !issalvager(human_owner) && !isskeleton(human_owner) && probmult(round((1 - src.owner.gforce) * 25)))
 				switch(rand(1, 3))
 					if (1) // nausea
 						if (istype(human_owner.wear_suit, /obj/item/clothing/suit/space) || ischangeling(human_owner) || iszombie(human_owner))
 							return // wearing a space suit or not caring about organs makes you immune
-						boutput(human_owner, SPAN_ALERT("You feel your insides [pick("squirm", "shift", "wiggle", "float")] uncomfortably in low-gravity."))
+						boutput(human_owner, SPAN_ALERT("You feel your insides [pick("squirm", "shift", "wiggle", "float")] uncomfortably in low-gravity."), "grav-life")
 						human_owner.nauseate(1)
 					if (2) // stamina sap
 						if (human_owner.traction == TRACTION_FULL)
@@ -55,7 +55,7 @@
 							var/obj/item/tank/jetpack/J = human_owner.back
 							if(J.allow_thrust(0.01, human_owner))
 								return // or jetpacking
-						boutput(human_owner, SPAN_ALERT("You [pick("struggle", "take effort", "manage")] to keep yourself [pick("oriented", "angled properly", "right-way-up")] in low-gravity."))
+						boutput(human_owner, SPAN_ALERT("You [pick("struggle", "take effort", "manage")] to keep yourself [pick("oriented", "angled properly", "right-way-up")] in low-gravity."), "grav-life")
 						human_owner.remove_stamina(human_owner.traction == TRACTION_PARTIAL ? 25 : 50)
 					if (3) // blood rushes to your head
 						if (istype(human_owner.head, /obj/item/clothing/head/helmet/space) || ischangeling(human_owner) || isvampire(human_owner) || iszombie(human_owner))
@@ -71,7 +71,7 @@
 						else
 							human_owner.change_misstep_chance((1-src.owner.gforce/100)*40)
 							msg_output += "disorienting you."
-						boutput(human_owner, SPAN_ALERT(msg_output))
+						boutput(human_owner, SPAN_ALERT(msg_output), "grav-life")
 		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
 			if (src.owner.gforce >= GFORCE_MOB_PANCAKE_THRESHOLD)
 				if (src.gib_counter > rand(9, 11))
@@ -91,35 +91,35 @@
 						if(1) // drop item
 							var/obj/item/I = human_owner.equipped()
 							if (istype(I))
-								boutput(human_owner, SPAN_NOTICE("The extreme gravity [pick("yanks", "tears", "pulls")] [I] from your grip!"))
+								boutput(human_owner, SPAN_NOTICE("The extreme gravity [pick("yanks", "tears", "pulls")] [I] from your grip!"), "grav-life")
 								human_owner.drop_item(I)
 							return
 						if (2) // fall over
 							if (!human_owner.lying)
-								boutput(human_owner, SPAN_NOTICE("The extreme gravity [pick("forces", "pulls")] you to the ground!"))
+								boutput(human_owner, SPAN_NOTICE("The extreme gravity [pick("forces", "pulls")] you to the ground!"), "grav-life")
 								human_owner.changeStatus("knockdown", 1 SECOND)
 								human_owner.force_laydown_standup()
 								return
 						if (3) // crinkle bones
 							if (istype(human_owner.mutantrace, /datum/mutantrace/roach))
-								boutput(human_owner, SPAN_ALERT("The extreme gravity feels [pick("weird", "odd", "disconcerting", "uncomfortable")] on your carapace!"))
+								boutput(human_owner, SPAN_ALERT("The extreme gravity feels [pick("weird", "odd", "disconcerting", "uncomfortable")] on your carapace!"), "grav-life")
 								return // roach op
 							else if (istype(human_owner.mutantrace, /datum/mutantrace/skeleton))
 								damage *= 2 // oof ouch owie my bones x2
-								boutput(human_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] <b>all</b> your bones!"))
+								boutput(human_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] <b>all</b> your bones!"), "grav-life")
 							else
-								boutput(human_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] your skeleton!"))
+								boutput(human_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] your skeleton!"), "grav-life")
 							human_owner.TakeDamage("All", round(damage), damage_type=DAMAGE_CRUSH)
 							human_owner.playsound_local(human_owner, 'sound/effects/bones_break.ogg', 40, TRUE)
 							return
 				else if (robot_owner)
 					switch (rand(1, 3))
 						if(1) // strain frame
-							boutput(robot_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] your frame!"))
+							boutput(robot_owner, SPAN_ALERT("The extreme gravity [pick("strains", "taxes", "bends")] your frame!"), "grav-life")
 							robot_owner.playsound_local(robot_owner, "sound/effects/creaking_metal[rand(1,2)].ogg", 40, TRUE)
 							robot_owner.TakeDamage("chest", damage, damage_type=DAMAGE_CRUSH)
 						if(2) // reset tools
-							boutput(robot_owner, SPAN_ALERT("The extreme gravity trips your automatic tool reset!"))
+							boutput(robot_owner, SPAN_ALERT("The extreme gravity trips your automatic tool reset!"), "grav-life")
 							robot_owner.uneq_all()
 						if(3) // damage arms
 							var/list/choices = list()
@@ -129,5 +129,5 @@
 								choices += "r_hand"
 							if (length(choices) == 0)
 								return // unless you don't have any
-							boutput(robot_owner, SPAN_ALERT("The extreme gravity [pick("tugs", "yanks", "pulls")] at your arms!"))
+							boutput(robot_owner, SPAN_ALERT("The extreme gravity [pick("tugs", "yanks", "pulls")] at your arms!"), "grav-life")
 							robot_owner.TakeDamage(pick(choices), damage, damage_type=DAMAGE_CRUSH)
