@@ -64,4 +64,4 @@ proc/configure_zero_g_areas()
 		shuttle_type_cache += shuttle_comp.type
 
 	for (var/area/A in areas_to_zero)
-		A.set_gforce_minimum(0)
+		A.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)

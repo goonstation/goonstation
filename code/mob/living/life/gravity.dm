@@ -9,7 +9,7 @@
 		src.owner.update_traction(T)
 
 	// immunity from gravity, so clean up any gravity debuffs
-	if (HAS_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE))
+	if (HAS_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE) || src.owner.nodamage)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_MOVEMENT_PUFFS, "gravity")
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "gravity")
 		REMOVE_MOVEMENT_MODIFIER(src.owner, /datum/movement_modifier/gravity, "gravity")

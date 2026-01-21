@@ -115,7 +115,7 @@
 
 		end_location.color = null
 
-		end_location.set_gforce_minimum(1)
+		end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 		start_location.move_contents_to(end_location, centcom_turf, turf_to_skip=/turf/unsimulated/outdoors/grass, turftoleave=/turf/unsimulated/outdoors/grass)
 
 		return dest_turfs
@@ -138,7 +138,7 @@
 				O.ReplaceWith(centcom_turf, FALSE, TRUE, FALSE, TRUE)
 
 		end_location.move_contents_to(start_location, map_turf, turf_to_skip=global.map_settings.shuttle_map_turf, turftoleave=global.map_settings.shuttle_map_turf)
-		end_location.set_gforce_minimum(0)
+		end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 
 		#ifdef UNDERWATER_MAP
 		start_location.color = OCEAN_COLOR

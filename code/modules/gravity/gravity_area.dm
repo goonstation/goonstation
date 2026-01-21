@@ -1,5 +1,4 @@
 /// Minimum gravity for the area.
-/// Used
 /area/var/gforce_minimum = 100
 /// Total G-Force added by Gravity Tethers.
 /area/var/gforce_tether = 0
@@ -16,7 +15,7 @@
 	gforce_rev += 1
 
 // static area minimums
-// NOTE: initialize_gravity() zeros out any tether-linked gravity areas on init
+// NOTE: gravity initialization also zeros out any gravity tether-linked areas before the game starts!
 
 /area/space/gforce_minimum = 0
 /area/noGenerate/gforce_minimum = 0

@@ -197,9 +197,9 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 					continue
 				AM.set_loc(ejectT)
 
-		endlocation.set_gforce_minimum(1)
+		endlocation.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 		currentlocation.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
-		currentlocation.set_gforce_minimum(0)
+		currentlocation.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
 
 		// cant figure out why the walls arent behaving when moved so
 		for (var/turf/unsimulated/wall/auto/wall in end_location)

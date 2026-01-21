@@ -10,9 +10,7 @@
 /turf/space/gforce_inherent = 0
 /turf/space/gforce_area_rev = INFINITY
 
-// ocean gravity handled at zlevel
-/turf/space/fluid/gforce_current = /turf::gforce_current
-/turf/space/fluid/gforce_inherent = 0
+// ocean gravity handled at zlevel, so these need to track area revs
 /turf/space/fluid/gforce_area_rev = 0
 
 /turf/proc/change_gforce_inherent(gforce_diff)
@@ -28,17 +26,17 @@
 /turf/proc/get_gforce_current()
 	var/area/A = src.loc
 	if (A.gforce_rev > src.gforce_area_rev)
-		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent)
+		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether, src.gforce_inherent)
 		src.gforce_area_rev = A.gforce_rev
 	return src.gforce_current
 
 /turf/space/get_gforce_current()
-	return 0
+	return GFORCE_GRAVITY_MINIMUM
 
 /turf/space/fluid/get_gforce_current()
 	var/area/A = src.loc
 	if (A.gforce_rev > src.gforce_area_rev)
-		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent)
+		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether, src.gforce_inherent)
 		src.gforce_area_rev = A.gforce_rev
 	return src.gforce_current
 
@@ -65,11 +63,11 @@
 		img.app.overlays = list(src.makeText("[theTurf.gforce_current][theTurf.gforce_area_rev < A.gforce_rev ? "*" : ""]", RESET_ALPHA | RESET_COLOR))
 		switch (theTurf.gforce_current)
 			if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
-				img.app.color = "#990099"
+				img.app.color = "#909"
 			if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
-				img.app.color = "#00ff00"
+				img.app.color = "#0f0"
 			if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
-				img.app.color = "#00aaaa"
+				img.app.color = "#0aa"
 			if (GFORCE_MOB_PANCAKE_THRESHOLD to INFINITY)
 				img.app.color = "#f00"
 			if (GFORCE_MOB_BLINDNESS_THRESHOLD to GFORCE_MOB_PANCAKE_THRESHOLD)

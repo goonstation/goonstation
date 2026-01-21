@@ -50,9 +50,15 @@ proc/init_zlevel_datums()
 		global.zlevels += new /datum/zlevel(path, length(global.zlevels) + 1)
 
 	#ifndef UNDERWATER_MAP
-	global.set_zlevel_gforce(Z_LEVEL_STATION, 0, FALSE)
+	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_GRAVITY_MINIMUM, FALSE)
 	if (length(global.zlevels) >= Z_LEVEL_DEBRIS)
-		global.set_zlevel_gforce(Z_LEVEL_DEBRIS, 0, FALSE)
+		global.set_zlevel_gforce(Z_LEVEL_DEBRIS, GFORCE_GRAVITY_MINIMUM, FALSE)
 	if (length(global.zlevels) >= Z_LEVEL_MINING)
-		global.set_zlevel_gforce(Z_LEVEL_MINING, 0, FALSE)
+		global.set_zlevel_gforce(Z_LEVEL_MINING, GFORCE_GRAVITY_MINIMUM, FALSE)
+	#else
+	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, FALSE)
+	if (length(global.zlevels) >= Z_LEVEL_DEBRIS)
+		global.set_zlevel_gforce(Z_LEVEL_DEBRIS, GFORCE_EARTH_GRAVITY, FALSE)
+	if (length(global.zlevels) >= Z_LEVEL_MINING)
+		global.set_zlevel_gforce(Z_LEVEL_MINING, GFORCE_EARTH_GRAVITY, FALSE)
 	#endif
