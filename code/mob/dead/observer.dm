@@ -733,6 +733,7 @@ TYPEINFO(/mob/dead/observer)
 
 /mob/dead/observer/proc/insert_observer(var/atom/target)
 	if(target == src) //cant observe self, or it nullspaces
+		boutput(src, SPAN_NOTICE("You cannot observe yourself, silly."))
 		return
 	var/mob/targetMob = target
 	if(istype(targetMob) && isadmin(targetMob) && !targetMob.client?.player_mode && !isadmin(src)) //Activate the alarm bells
