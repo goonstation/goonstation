@@ -35,6 +35,7 @@
 			response_body["mode"] = (ticker.hide_mode) ? "secret" : master_mode
 			response_body["round_duration"] = round(ticker.round_elapsed_ticks / (1 SECOND))
 		if(emergency_shuttle)
+			response_body["shuttle_online"] = emergency_shuttle.online
 			response_body["shuttle_direction"] = emergency_shuttle.direction
 			response_body["shuttle_location"] = emergency_shuttle.location
 			response_body["shuttle_timer"] = emergency_shuttle.timeleft()
