@@ -1,7 +1,32 @@
+// gforce value/thresholds
+
+/// Earth's gravity
+#define GFORCE_EARTH_GRAVITY 100
+/// No negative gravity (for now)
+#define GFORCE_GRAVITY_MINIMUM 0
+
 /// Minimum g-force to grant partial traction
-#define GFORCE_TRACTION_PARTIAL 0.2
+#define GFORCE_TRACTION_PARTIAL 20
 /// Minimum g-force to grant full traction
-#define GFORCE_TRACTION_FULL 0.8
+#define GFORCE_TRACTION_FULL 80
+
+// mob gravity thresholds; arbitrary, allow for people to handle some minor gravity vPariance
+/// minimum gravity for people to act as normal
+#define GFORCE_MOB_REGULAR_THRESHOLD 80
+/// minimum gravity after which people feel heavier than normal
+#define GFORCE_MOB_HIGH_THRESHOLD 120
+/// gravity after this level is considered extreme, with additional effects
+#define GFORCE_MOB_EXTREME_THRESHOLD 240
+/// human mobs get a grey overlay over this gforce
+#define GFORCE_MOB_GREYOUT_THRESHOLD 480
+/// human mobs get a vision limiting overlay over this gforce
+#define GFORCE_MOB_TUNNEL_VISION_THRESHOLD 960
+/// human mobs experience complete blindness
+#define GFORCE_MOB_BLINDNESS_THRESHOLD 1460
+/// ALL mobs will gib at this threshold
+#define GFORCE_MOB_PANCAKE_THRESHOLD 1920
+
+// traction status
 
 /// AM has no traction
 #define TRACTION_NONE 0
@@ -10,20 +35,15 @@
 /// AM has full traction - mob not forced moved
 #define TRACTION_FULL 2
 
-// mob gravity thresholds; arbitrary, allow for people to handle some minor gravity variance
-/// minimum gravity for people to act as normal
-#define GRAVITY_MOB_REGULAR_THRESHOLD 0.8
-/// minimum gravity after which people feel heavier than normal
-#define GRAVITY_MOB_HIGH_THRESHOLD 1.2
-/// gravity after this level is considered extreme, with additional effects
-#define GRAVITY_MOB_EXTREME_THRESHOLD 2.4
+// HUD tooltips
 
-// For consistent tooltips between HUD types
 #define GRAVITY_DESC_NONE "You feel floaty, but that's OK."
 #define GRAVITY_DESC_LOW "You feel lighter than usual."
 #define GRAVITY_DESC_NORMAL "You feel like you're on Earth."
 #define GRAVITY_DESC_HIGH "You feel heavier than usual."
 #define GRAVITY_DESC_EXTREME "You feel extremely heavy."
+
+// gravity tether machines
 
 // event subtypes
 #define GRAVITY_EVENT_DISRUPT "disrupt"

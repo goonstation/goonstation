@@ -51,24 +51,24 @@
 		src.say("Recalibrating, [src.cooldown_end_time-TIME > 0 ? "[time_to_text(src.cooldown_end_time-TIME)] remaining" : "refresh pending"].")
 		return
 
-	var/new_intensity = tgui_input_number(user, "Running at [src.gforce_intensity]G. Change intensity?", "Gravity Tether", src.gforce_intensity, src.maximum_intensity, round_input=FALSE)
+	var/new_intensity = tgui_input_number(user, "Running at [src.gforce_intensity/100]G. Change intensity?", "Gravity Tether", src.gforce_intensity/100, src.maximum_intensity/100, round_input=FALSE)
 	if (isnull(new_intensity))
 		return
-	new_intensity = round(new_intensity, 0.01)
+	new_intensity *= 100
 	if (src.glitching_out)
-		new_intensity += round((prob(50) ? 1 : -1) * randfloat(0.2, 0.4), 0.01)
+		new_intensity += (prob(50) ? 1 : -1) * rand(20, 40)
 	if (new_intensity == src.gforce_intensity)
-		boutput(user, SPAN_NOTICE("Tether already set to [new_intensity]G!"))
+		boutput(user, SPAN_NOTICE("Tether already set to [new_intensity/100]G!"))
 		return
 
 	if (src.emagged)
-		var/choice = tgui_alert(user, "Really let \the [src] announce [new_intensity]G?", "Tether Confirmation", list("Yes", "No"))
+		var/choice = tgui_alert(user, "Really let \the [src] announce [new_intensity/100]G?", "Tether Confirmation", list("Yes", "No"))
 		if (isnull(choice))
 			return
 		if (choice == "No")
 			src.do_announcement = FALSE
 	else // phrased to be easily mistakeable for the emag text
-		if (tgui_alert(user, "Really set \the [src] [new_intensity-src.gforce_intensity> 0 ? "upwards" : "downwards" ] to [new_intensity]G?", "Tether Confirmation", list("Yes", "No")) != "Yes")
+		if (tgui_alert(user, "Really set \the [src] [new_intensity-src.gforce_intensity> 0 ? "upwards" : "downwards" ] to [new_intensity/100]G?", "Tether Confirmation", list("Yes", "No")) != "Yes")
 			return
 
 	if (in_interact_range(src, user))

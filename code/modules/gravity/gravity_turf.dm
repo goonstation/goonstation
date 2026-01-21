@@ -1,5 +1,5 @@
 /// current gforce on this turf
-/turf/var/gforce_current = 1
+/turf/var/gforce_current = 100
 /// gforce inherent to the turf tile, e.g. asteroids and airbridges
 /turf/var/gforce_inherent = 0
 /// Used to check if we need to recalculate gforces. If less than the area's gforce_rev, update required.
@@ -11,7 +11,7 @@
 /turf/space/gforce_area_rev = INFINITY
 
 // ocean gravity handled at zlevel
-/turf/space/fluid/gforce_current = 1
+/turf/space/fluid/gforce_current = /turf::gforce_current
 /turf/space/fluid/gforce_inherent = 0
 /turf/space/fluid/gforce_area_rev = 0
 
@@ -28,7 +28,7 @@
 /turf/proc/get_gforce_current()
 	var/area/A = src.loc
 	if (A.gforce_rev > src.gforce_area_rev)
-		src.gforce_current = round(max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent), 0.01)
+		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent)
 		src.gforce_area_rev = A.gforce_rev
 	return src.gforce_current
 
@@ -38,7 +38,7 @@
 /turf/space/fluid/get_gforce_current()
 	var/area/A = src.loc
 	if (A.gforce_rev > src.gforce_area_rev)
-		src.gforce_current = round(max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent), 0.01)
+		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether + src.gforce_inherent)
 		src.gforce_area_rev = A.gforce_rev
 	return src.gforce_current
 
@@ -64,15 +64,23 @@
 		var/area/A = get_area(theTurf)
 		img.app.overlays = list(src.makeText("[theTurf.gforce_current][theTurf.gforce_area_rev < A.gforce_rev ? "*" : ""]", RESET_ALPHA | RESET_COLOR))
 		switch (theTurf.gforce_current)
-			if (-INFINITY to 0)
-				img.app.color = "#0000ff"
-			if (1)
+			if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
+				img.app.color = "#990099"
+			if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
 				img.app.color = "#00ff00"
-			if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
+			if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
 				img.app.color = "#00aaaa"
-			if (GRAVITY_MOB_REGULAR_THRESHOLD to GRAVITY_MOB_HIGH_THRESHOLD)
-				img.app.color = "#009900"
-			if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
-				img.app.color = "#cc9900"
-			if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
-				img.app.color = "#ff0000"
+			if (GFORCE_MOB_PANCAKE_THRESHOLD to INFINITY)
+				img.app.color = "#f00"
+			if (GFORCE_MOB_BLINDNESS_THRESHOLD to GFORCE_MOB_PANCAKE_THRESHOLD)
+				img.app.color = "#000"
+			if (GFORCE_MOB_TUNNEL_VISION_THRESHOLD to GFORCE_MOB_BLINDNESS_THRESHOLD)
+				img.app.color = "#666"
+			if (GFORCE_MOB_GREYOUT_THRESHOLD to GFORCE_MOB_TUNNEL_VISION_THRESHOLD)
+				img.app.color = "#999"
+			if (GFORCE_MOB_EXTREME_THRESHOLD to GFORCE_MOB_GREYOUT_THRESHOLD)
+				img.app.color = "#fa0"
+			if (GFORCE_MOB_HIGH_THRESHOLD to GFORCE_MOB_EXTREME_THRESHOLD)
+				img.app.color = "#ff0"
+			if (GFORCE_EARTH_GRAVITY to GFORCE_MOB_HIGH_THRESHOLD)
+				img.app.color = "#0f0"

@@ -126,7 +126,7 @@
 			ma_overlays += src.ma_bat_charge
 
 /obj/machinery/gravity_tether/proc/update_ma_graviton()
-	if (src.has_no_power() || src.gforce_intensity <= 0.01)
+	if (src.has_no_power())
 		src.ma_graviton.icon_state = "graviton-idle"
 	else if (src.glitching_out)
 		src.ma_graviton.icon_state = "graviton-wonky"

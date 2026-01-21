@@ -35,8 +35,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	///
 	///  Use `proc/change_intensity(new_intensity)` to change values.
 	var/gforce_intensity = 0
-	var/target_intensity = 1 //! Current intensity setting (used when changing intensities)
-	var/maximum_intensity = 2 //! Maxmimum intensity of this tether
+	var/target_intensity = GFORCE_EARTH_GRAVITY //! Current intensity setting (used when changing intensities)
+	var/maximum_intensity = GFORCE_EARTH_GRAVITY * 2 //! Maxmimum intensity of this tether
 
 	var/last_charge_amount = 0 //! Last cell charge level, used for tracking charging/draining battery status
 	var/charging_state = TETHER_CHARGE_IDLE //! State of the internal cell charger
@@ -140,9 +140,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		. += " It doesn't seem powered on."
 		return
 
-	. += " It is operating at [src.gforce_intensity]G"
+	. += " It is operating at [src.gforce_intensity/100]G"
 	if (src.processing_state == TETHER_PROCESSING_PENDING)
-		. += ", and is processing a change to [src.target_intensity]G."
+		. += ", and is processing a change to [src.target_intensity/100]G."
 	else if (src.processing_state == TETHER_PROCESSING_COOLDOWN)
 		.+= ", and is cooling down from a recent change."
 	else if (src.glitching_out)
@@ -222,7 +222,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		src.visible_message(SPAN_ALERT("\The [src] can't activate here!"))
 		return
 
-	new_intensity = round(new_intensity, 0.01)
 	var/cost = abs(src.gforce_intensity - new_intensity) * src.active_wattage_per_g
 
 	var/charge_avail = 0 // in cell units
@@ -277,12 +276,10 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /// Directly changes the tether intensity and updates all relevant areas
 /obj/machinery/gravity_tether/proc/change_intensity(new_gforce)
-	if (new_gforce < 0.01) // floating point imprecision
-		new_gforce = 0
 	var/gforce_diff = new_gforce - src.gforce_intensity
 	if (gforce_diff == 0)
 		return TRUE
-	src.gforce_intensity = round(new_gforce, 0.01)
+	src.gforce_intensity = new_gforce
 
 	for (var/area/A in src.target_area_refs)
 		A.change_gforce_tether(gforce_diff)
@@ -331,8 +328,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /// Generate oods of a fault occuring based on tether state
 /obj/machinery/gravity_tether/proc/calculate_fault_chance(start_value=0)
 	. = start_value
-	if (src.gforce_intensity != 1) // non-standard intensities may introduce problems. scales with intensity
-		. += src.gforce_intensity * 2
+	if (src.gforce_intensity != GFORCE_EARTH_GRAVITY) // non-standard intensities may introduce problems. scales with intensity
+		. += src.gforce_intensity / 100 * 2
 	switch (src.wire_state) // keep your machine taken care of
 		if(TETHER_WIRES_INTACT)
 			. += 0

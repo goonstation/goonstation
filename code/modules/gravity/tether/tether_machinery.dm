@@ -77,7 +77,7 @@
 	else if (src.glitching_out && prob(5))
 		playsound(src.loc, 'sound/effects/commsdown.ogg', 60, 1)
 	else if (prob(src.gforce_intensity))
-		playsound(src.loc, pick(global.ambience_gravity), 50, 1, pitch=(0.5 + (src.gforce_intensity/2)))
+		playsound(src.loc, pick(global.ambience_gravity), 50, 1, pitch=(0.5 + (src.gforce_intensity/200)))
 
 /// The gravity tether prioritizes its own internal capacitor
 /obj/machinery/gravity_tether/use_power(amount, chan)

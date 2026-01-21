@@ -2001,3 +2001,9 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 	animate(spark, alpha = 255, time = 2 DECI SECONDS)
 	SPAWN(0.6 SECONDS)
 		qdel(spark)
+
+/proc/animate_squish_flat(atom/A)
+	var/matrix/squish_matrix = matrix(A.transform)
+	squish_matrix.Scale(1,0.2)
+	squish_matrix.Translate(0, -14)
+	animate(A, transform = squish_matrix, time = 10, easing = CIRCULAR_EASING, flags=ANIMATION_PARALLEL)

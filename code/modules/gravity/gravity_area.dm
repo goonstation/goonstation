@@ -1,6 +1,6 @@
 /// Minimum gravity for the area.
 /// Used
-/area/var/gforce_minimum = 1
+/area/var/gforce_minimum = 100
 /// Total G-Force added by Gravity Tethers.
 /area/var/gforce_tether = 0
 /// Turfs check against this rev number when updating gravity
@@ -23,5 +23,5 @@
 /area/allowGenerate/gforce_minimum = 0
 /area/abandonedship/gforce_minimum = 0
 /area/abandonedmedicalship/gforce_minimum = 0
-/area/abandonedmedicalship/robot_trader/gforce_minimum = 1 // TODO: Move D.O.C. area to an ISS subtype
+/area/abandonedmedicalship/robot_trader/gforce_minimum = 100 // TODO: Move D.O.C. area to an ISS subtype
 /area/fermid_hive/gforce_minimum = 0

@@ -88,7 +88,7 @@ TYPEINFO(/obj/machinery/gravity_tether/station)
 /obj/machinery/gravity_tether/station/begin_gravity_change(new_intensity)
 	. = ..()
 	if (src.do_announcement && !global.check_for_radio_jammers(src)) // TODO: Make this a real packet to the announcement computer
-		command_alert("The [station_or_ship()]-wide gravity tether will begin shifting to [new_intensity]G in [time_to_text(src.change_begin_time-TIME)].", "Gravity Change Warning", alert_origin = ALERT_STATION)
+		command_alert("The [station_or_ship()]-wide gravity tether will begin shifting to [new_intensity/100]G in [time_to_text(src.change_begin_time-TIME)].", "Gravity Change Warning", alert_origin = ALERT_STATION)
 	else // reset for next person
 		src.do_announcement = TRUE
 

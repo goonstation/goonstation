@@ -470,24 +470,25 @@
 		return 0
 	var/stage
 	switch(master.gforce)
-		if (GRAVITY_MOB_REGULAR_THRESHOLD to 1)
-			stage = 2
-			src.gravity.desc = GRAVITY_DESC_NORMAL
-		if (-INFINITY to 0)
+		if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
 			stage = 0
 			src.gravity.desc = GRAVITY_DESC_NONE
-		if (0 to GRAVITY_MOB_REGULAR_THRESHOLD)
-			stage = 1
-			src.gravity.desc = GRAVITY_DESC_LOW
-		if (GRAVITY_MOB_EXTREME_THRESHOLD to INFINITY)
-			stage = 4
-			src.gravity.desc = GRAVITY_DESC_EXTREME
-		if (GRAVITY_MOB_HIGH_THRESHOLD to GRAVITY_MOB_EXTREME_THRESHOLD)
-			stage = 3
-			src.gravity.desc = GRAVITY_DESC_HIGH
-		if (1 to GRAVITY_MOB_HIGH_THRESHOLD)
+		if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
 			stage = 2
 			src.gravity.desc = GRAVITY_DESC_NORMAL
+		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
+			stage = 1
+			src.gravity.desc = GRAVITY_DESC_LOW
+		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
+			stage = 4
+			src.gravity.desc = GRAVITY_DESC_EXTREME
+		if (GFORCE_MOB_HIGH_THRESHOLD to GFORCE_MOB_EXTREME_THRESHOLD)
+			stage = 3
+			src.gravity.desc = GRAVITY_DESC_HIGH
+		if (GFORCE_EARTH_GRAVITY to GFORCE_MOB_HIGH_THRESHOLD)
+			stage = 2
+			src.gravity.desc = GRAVITY_DESC_NORMAL
+
 	src.gravity.icon_state = "gravity[stage]"
 	src.gravity.tooltip_options = list("theme" = "gravInd[stage]")
 

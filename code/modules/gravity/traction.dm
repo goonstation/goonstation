@@ -33,7 +33,7 @@ proc/StopDriftFloat(atom/movable/AM)
 		if (src.traction == TRACTION_FULL)
 			StopDriftFloat(src)
 			return
-		if (src.gforce >= 1)
+		if (src.gforce >= GFORCE_EARTH_GRAVITY)
 			StopDriftFloat(src)
 			return
 		StartDriftFloat(src)
@@ -60,12 +60,17 @@ proc/StopDriftFloat(atom/movable/AM)
 		if (isfloor(src.loc) || iswall(src.loc))
 			return TRACTION_FULL
 
+	if (T.active_liquid)
+		var/obj/fluid/F = T.active_liquid
+		if (F.amt > 200)
+			return TRACTION_FULL
+
 	if (src.no_gravity)
 		return TRACTION_NONE
 
 	switch (src.gforce)
 		if (GFORCE_TRACTION_FULL to INFINITY)
-			if (T.wet >= 2) // lube / superlube
+			if (T.wet >= 2 || HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING)) // lube / superlube / floating
 				return TRACTION_PARTIAL
 			return TRACTION_FULL
 		if (GFORCE_TRACTION_PARTIAL to GFORCE_TRACTION_FULL)
