@@ -12,8 +12,8 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 
 ## Adding a secret UI
 1) Create an interface in `tgui/packages/tgui/interfaces-secret/<Name>.tsx`. The file name (or `Name/index.tsx`) determines the interface name.
-1) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync → build → mirror happens automatically.
-2) Open it from DM by interface name as normal.
+2) Build (`bin/tgui --build` or `yarn run tgui:build`). Sync → build → mirror happens automatically.
+3) Open it from DM by interface name as normal.
 
 ## Files
 - `+secret/tgui/interfaces/` – secret UIs
