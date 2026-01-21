@@ -40,7 +40,7 @@
 
 	message.format_speaker_prefix = {"\
 		<span class='game deadsay'>\
-			<span class='prefix'>DEAD: </span>\
+			<span class='prefix'>DEAD (OOC): </span>\
 			<span class='name' data-ctx='[mind_ref]'>[src.role]<span class='text-normal'> \
 	"}
 
