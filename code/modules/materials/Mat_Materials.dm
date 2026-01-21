@@ -51,6 +51,8 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/mixOnly = 0
 
 	//material appearance vars
+	/// The icon file associated with this material
+	VAR_PROTECTED/icon_file = 'icons/obj/items/materials/materials.dmi'
 	/// if not null, texture will be set when mat is applied.
 	VAR_PROTECTED/texture = ""
 	/// How to blend the [/datum/material/var/texture].
@@ -136,6 +138,9 @@ ABSTRACT_TYPE(/datum/material)
 
 	proc/getSuffixes()
 		return src.suffixes.Copy()
+
+	proc/getIconFile()
+		return src.icon_file
 
 	proc/getTexture()
 		if(islist(src.texture))
@@ -604,6 +609,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "veranium"
 	name = "veranium"
 	desc = "It looks to be sparking."
+	icon_file = 'icons/obj/items/materials/veranium.dmi'
 	color = list(0.75, 0.00, 0.00, 0.00,\
 				0.25, 1.00, 0.25, 0.00,\
 				0.00, 0.00, 0.75, 0.00,\
@@ -672,6 +678,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "pharosium"
 	name = "pharosium"
 	desc = "Pharosium is a conductive metal."
+	icon_file = 'icons/obj/items/materials/pharosium.dmi'
 	color = list(0.60, 0.30, 0.20, 0.00,\
 				0.40, 0.20, 0.10, 0.00,\
 				0.50, 0.20, 0.20, 0.00,\
@@ -688,6 +695,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "cobryl"
 	name = "cobryl"
 	desc = "Cobryl is a somewhat valuable metal."
+	icon_file = 'icons/obj/items/materials/cobryl.dmi'
 	color = list(0.50, 0.50, 0.65, 0.00,\
 				0.40, 0.40, 0.50, 0.00,\
 				0.45, 0.45, 0.55, 0.00,\
@@ -707,6 +715,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "bohrum"
 	name = "bohrum"
 	desc = "Bohrum is a heavy and highly durable metal."
+	icon_file = 'icons/obj/items/materials/bohrum.dmi'
 	color = list(0.50, 0.00, 0.00, 0.00,\
 				0.25, 0.75, 0.25, 0.00,\
 				0.00, 0.00, 0.50, 0.00,\
@@ -728,6 +737,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "mauxite"
 	name = "mauxite"
 	desc = "Mauxite is a sturdy common metal."
+	icon_file = 'icons/obj/items/materials/mauxite.dmi'
 	color = list(1.00, 0.00, 0.00, 0.00,\
 				0.00, 0.00, 0.00, 0.00,\
 				0.00, 1.00, 1.00, 0.00,\
@@ -749,6 +759,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "cerenkite"
 	name = "cerenkite"
 	desc = "Cerenkite is a highly radioactive metal."
+	icon_file = 'icons/obj/items/materials/cerenkite.dmi'
 	color = list(0.00, 0.00, 0.00, 0.00,\
 				1.00, 1.00, 0.00, 0.00,\
 				0.00, 0.00, 1.00, 0.00,\
@@ -773,6 +784,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "syreline"
 	name = "syreline"
 	desc = "Syreline is an extremely valuable and coveted metal."
+	icon_file = 'icons/obj/items/materials/syreline.dmi'
 	color = list(0.70, 0.70, 0.40, 0.00,\
 				0.60, 0.60, 0.40, 0.00,\
 				0.50, 0.50, 0.30, 0.00,\
@@ -795,6 +807,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "gold"
 	name = "gold"
 	desc = "A somewhat valuable and conductive metal."
+	icon_file = 'icons/obj/items/materials/gold.dmi'
 	color = list(0.60, 0.45, 0.00, 0.00,\
 				0.40, 0.35, 0.00, 0.00,\
 				0.50, 0.45, 0.00, 0.00,\
@@ -991,6 +1004,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "molitz"
 	name = "molitz"
 	desc = "Molitz is a common crystalline substance."
+	icon_file = 'icons/obj/items/materials/molitz.dmi'
 	color = "#FFFFFF"
 	alpha = 180
 
@@ -1029,6 +1043,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "claretine"
 	name = "claretine"
 	desc = "Claretine is a highly conductive salt."
+	icon_file = 'icons/obj/items/materials/claretine.dmi'
 	color = list(0.6, 0.00, 0.00, 0.00,\
 				0.40, 0.20, 0.20, 0.00,\
 				0.20, 0.10, 0.20, 0.00,\
@@ -1053,6 +1068,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "erebite"
 	name = "erebite"
 	desc = "Erebite is an extremely volatile high-energy mineral."
+	icon_file = 'icons/obj/items/materials/erebite.dmi'
 	color = list(0.75, 0.00, 0.00, 0.00,\
 				0.25, 0.50, 0.00, 0.00,\
 				0.25, 0.00, 0.50, 0.00,\
@@ -1083,6 +1099,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "plasmastone"
 	name = "plasmastone"
 	desc = "Plasma in its solid state."
+	icon_file = 'icons/obj/items/materials/plasmastone.dmi'
 	color = list(0.50, 0.10, 0.25, 0.00,\
 				0.15, 0.00, 0.15, 0.00,\
 				0.25, 0.10, 0.50, 0.00,\
@@ -1255,6 +1272,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "uqill"
 	name = "uqill"
 	desc = "Uqill is a rare and very dense stone."
+	icon_file = 'icons/obj/items/materials/uqill.dmi'
 	color = list(0.15, 0.15, 0.15, 0.00,\
 				0.15, 0.15, 0.15, 0.00,\
 				0.15, 0.15, 0.15, 0.00,\
@@ -1305,6 +1323,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "telecrystal"
 	name = "telecrystal"
 	desc = "Telecrystal is a gemstone with space-warping properties."
+	icon_file = 'icons/obj/items/materials/telecrystal.dmi'
 	color = list(0.50, 0.25, 0.25, 0.00,\
 				0.25, 0.00, 0.25, 0.00,\
 				0.35, 0.25, 0.45, 0.00,\
@@ -1328,6 +1347,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "miracle"
 	name = "miraclium"
 	desc = "Miraclium is a bizarre substance that can have a wide variety of effects."
+	icon_file = 'icons/obj/items/materials/miracle.dmi'
 	color = "#FFFFFF"
 
 	New()
@@ -1345,6 +1365,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "starstone"
 	name = "starstone"
 	desc = "An extremely rare jewel."
+	icon_file = 'icons/obj/items/materials/starstone.dmi'
 	color = list(0.45, 0.50, 0.50, 0.00,\
 				0.20, 0.20, 0.20, 0.00,\
 				0.30, 0.35, 0.40, 0.00,\
@@ -1367,6 +1388,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "ice"
 	name = "ice"
 	desc = "The frozen state of water."
+	icon_file = 'icons/obj/items/materials/ice.dmi'
 	color = "#E8F2FF"
 	alpha = 100
 
@@ -1502,6 +1524,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "char"
 	name = "char"
 	desc = "Char is a fossil energy source similar to coal."
+	icon_file = 'icons/obj/items/materials/char.dmi'
 	color = list(0.30, 0.30, 0.30, 0.00,\
 				0.10, 0.10, 0.10, 0.00,\
 				0.20, 0.20, 0.20, 0.00,\
@@ -1521,6 +1544,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "koshmarite"
 	name = "koshmarite"
 	desc = "An unusual dense pulsating stone. You feel uneasy just looking at it."
+	icon_file = 'icons/obj/items/materials/koshmarite.dmi'
 	color = list(1.00, 0.00, 0.25, 0.00,\
 				0.00, 0.75, 0.00, 0.00,\
 				0.25, 0.00, 1.00, 0.00,\
@@ -1546,6 +1570,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "viscerite"
 	name = "viscerite"
 	desc = "A disgusting flesh-like material. Ugh. What the hell is this?"
+	icon_file = 'icons/obj/items/materials/viscerite.dmi'
 	color = list(0.60, 0.40, 0.60, 0.00,\
 				0.60, 0.40, 0.60, 0.00,\
 				0.60, 0.40, 0.60, 0.00,\
@@ -1570,6 +1595,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "tensed_viscerite"
 	name = "tensed viscerite"
 	desc = "Fleshy mass drawn out under tension. It's translucent and thready."
+	icon_file = 'icons/obj/items/materials/viscerite.dmi'
 	color = "#dd81ff"
 	alpha = 180
 
@@ -1655,6 +1681,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "chitin"
 	name = "chitin"
 	desc = "Chitin is an organic material found in the exoskeletons of insects."
+	icon_file = 'icons/obj/items/materials/chitin.dmi'
 	color = "#118800"
 
 	New()
@@ -1953,6 +1980,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "fibrilith"
 	name = "fibrilith"
 	desc = "Fibrilith is an odd fibrous crystal known for its high tensile strength. Seems a bit similar to asbestos."
+	icon_file = 'icons/obj/items/materials/fibrilith.dmi'
 	color = list(0.40, 0.30, 0.40, 0.00,\
 				0.40, 0.30, 0.40, 0.00,\
 				0.40, 0.30, 0.40, 0.00,\
@@ -2163,6 +2191,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "plutonium"
 	name = "plutonium 239"
 	desc = "Weapons grade refined plutonium."
+	icon_file = 'icons/obj/items/materials/plutonium.dmi'
 	color = "#230e4d"
 
 	New()

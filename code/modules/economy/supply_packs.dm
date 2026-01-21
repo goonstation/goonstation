@@ -970,7 +970,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "Contains one handheld-pipe-dispenser."
 	category = "Basic Materials"
 	contains = list(/obj/item/places_pipes)
-	cost = PAY_DONTBUYIT
+	cost = PAY_EMBEZZLED*2
 	containertype = /obj/storage/crate/wooden
 	containername = "HPD Replacement"
 

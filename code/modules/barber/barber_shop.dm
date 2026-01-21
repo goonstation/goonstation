@@ -286,6 +286,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "dye"
 	flags = TABLEPASS
+	default_material = "plastic"
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left

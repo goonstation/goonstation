@@ -545,6 +545,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
+	default_material = "plastic"
 	var/bee = FALSE
 	var/randcol
 

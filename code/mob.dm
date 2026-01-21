@@ -1234,8 +1234,13 @@ TYPEINFO(/mob)
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey && !src.mind?.get_player()?.dnr && !src.mind?.get_player()?.joined_observer)
+	if(src.ckey && !src.mind?.get_player()?.joined_observer)
+		#ifdef RP_MODE // you can always respawn (into a new character) on RP
 		respawn_controller.subscribeNewRespawnee(src.ckey)
+		#else
+		if(!src.mind?.get_player()?.dnr)
+			respawn_controller.subscribeNewRespawnee(src.ckey)
+		#endif
 	// stop piloting pods or whatever
 	src.movement_controller_list = list()
 	// stop pulling shit!!
