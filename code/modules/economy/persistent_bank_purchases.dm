@@ -40,6 +40,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
+	new /datum/bank_purchaseable/shelterfrog,\
 
 	new /datum/bank_purchaseable/bird_respawn,\
 	new /datum/bank_purchaseable/critter_respawn,\
@@ -506,6 +507,23 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					launch_with_missile(M)
 			..()
 			return TRUE
+
+	shelterfrog
+		name = "Shelterfrog"
+		cost = 7000
+		icon = 'icons/mob/shelterfrog.dmi'
+		icon_state = "body_m"
+		icon_dir = SOUTH
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				switch (H.mind.assigned_role) // Special mutantrace overrides
+					if ("Test Subject","Salvager")
+						return FALSE
+					else H.set_mutantrace(/datum/mutantrace/amphibian/shelter)
+				return 1
+			return 0
 
 	critter_respawn
 		name = "Alt Ghost Critter"
