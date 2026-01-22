@@ -742,6 +742,7 @@
 	fluid_g = 165
 	fluid_b = 254
 	transparency = 80
+	overdose = 250
 	thirst_value = 0.8909
 	hygiene_value = 1.33
 	bladder_value = -0.2
@@ -800,6 +801,13 @@
 				L.changeStatus("burning", -1 * raw_volume SECONDS)
 				playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.8)
 				. = 0
+
+	do_overdose(var/severity, var/mob/M, var/mult = 1)
+		var/effect = ..(severity, M)
+		if (severity == 1)
+			M.take_brain_damage(3)
+
+
 
 /datum/reagent/water/water_holy
 	name = "holy water"
