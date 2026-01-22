@@ -24,8 +24,8 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	var/datum/light/light = null // star light, star bright, first star i see tonight
 	var/list/area/target_area_refs = list() //! List of references to areas this tether targets
 
-	var/active_wattage_per_g = 500 WATTS //! Wattage charge per G of intensity changed
-	var/passive_wattage_per_g = 100 WATTS //! Wattage charge per machine process
+	var/active_wattage_per_g_quantum = 5 WATTS //! Wattage charge per G of intensity changed
+	var/passive_wattage_per_g_quantum = 1 WATT //! Wattage charge per machine process
 
 	var/locked = FALSE //! Is the tether ID-locked?
 	var/emagged = FALSE //! Is this machine emagged
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		src.visible_message(SPAN_ALERT("\The [src] can't activate here!"))
 		return
 
-	var/cost = abs(src.gforce_intensity - new_intensity) * src.active_wattage_per_g
+	var/cost = abs(src.gforce_intensity - new_intensity) * src.active_wattage_per_g_quantum
 
 	var/charge_avail = 0 // in cell units
 	if (src.cell)
@@ -329,7 +329,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/proc/calculate_fault_chance(start_value=0)
 	. = start_value
 	if (src.gforce_intensity != GFORCE_EARTH_GRAVITY) // non-standard intensities may introduce problems. scales with intensity
-		. += src.gforce_intensity / 100 * 2
+		. += src.gforce_intensity * 2
 	switch (src.wire_state) // keep your machine taken care of
 		if(TETHER_WIRES_INTACT)
 			. += 0

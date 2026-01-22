@@ -196,7 +196,7 @@
 
 				// cut out wires
 				if(src.wire_state != TETHER_WIRES_CUT && (iscuttingtool(I) || issnippingtool(I)))
-					var/shockdmg = user.shock(src, src.gforce_intensity * (src.processing_state ? src.active_wattage_per_g : src.passive_wattage_per_g), user.hand == LEFT_HAND ? "l_arm": "r_arm")
+					var/shockdmg = user.shock(src, src.gforce_intensity * (src.processing_state ? src.active_wattage_per_g_quantum : src.passive_wattage_per_g_quantum), user.hand == LEFT_HAND ? "l_arm": "r_arm")
 					if (prob(min(shockdmg, 100)))
 						return
 					var/duration = 8 SECONDS / (is_handy ? 2 : 1)

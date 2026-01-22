@@ -76,7 +76,7 @@
 			src.UpdateIcon()
 	else if (src.glitching_out && prob(5))
 		playsound(src.loc, 'sound/effects/commsdown.ogg', 60, 1)
-	else if (prob(src.gforce_intensity))
+	else if (prob(src.gforce_intensity/100))
 		playsound(src.loc, pick(global.ambience_gravity), 50, 1, pitch=(0.5 + (src.gforce_intensity/200)))
 
 /// The gravity tether prioritizes its own internal capacitor
@@ -107,45 +107,23 @@
 /obj/machinery/gravity_tether/has_no_power()
 	if (istype(src.loc, /obj/item/electronics/frame)) //if in a frame, we are never powered
 		return TRUE
-	if (src.cell?.charge > (src.passive_wattage_per_g * src.gforce_intensity))
+	if (src.cell?.charge > (src.passive_wattage_per_g_quantum * src.gforce_intensity))
 		return FALSE
 	. = ..()
 
 /// Handle power billing and internal cell charging
 ///
-/// Uses area power until 40%, then internal cell, then area power
+/// Local/multi-area tethers only work off of battery power.
+///
+/// Station tethers use area power until 40%, then internal cell, then area power
 /obj/machinery/gravity_tether/proc/handle_power_cycle()
-	var/area/A = get_area(src)
-	var/passive_wattage_needed = src.passive_wattage_per_g * src.gforce_intensity
-	var/recharge_wattage_needed = 0
-
-	if (src.cell)
-		// calculate how much to charge up based on the standard cell charge rate, in watts
-		recharge_wattage_needed = min(
-			(src.cell.maxcharge - src.cell.charge),
-			(src.cell.maxcharge * CHARGELEVEL * PROCESSING_TIER_MULTI(src) / 4)
-		) / CELLRATE
-
+	var/passive_wattage_needed = src.passive_wattage_per_g_quantum * src.gforce_intensity
 	if (passive_wattage_needed)
 		if (src.cell)
 			var/available_cell_watts = src.cell.charge / CELLRATE
 			if (passive_wattage_needed && available_cell_watts > passive_wattage_needed)
 				if(src.use_cell_wrapper(passive_wattage_needed * CELLRATE))
 					passive_wattage_needed = 0
-
-	if (passive_wattage_needed || recharge_wattage_needed)
-		if (A.powered(EQUIP))
-			var/obj/machinery/power/apc/area_apc = A?.area_apc
-			if (istype(area_apc) && area_apc.cell?.charge)
-				var/available_area_watts = area_apc.cell?.charge / CELLRATE
-				if (passive_wattage_needed && available_area_watts > passive_wattage_needed)
-					area_apc.use_power(passive_wattage_needed, EQUIP)
-					available_area_watts -= passive_wattage_needed
-					passive_wattage_needed = 0
-				if (!passive_wattage_needed && recharge_wattage_needed && available_area_watts > recharge_wattage_needed && area_apc.cell?.percent() > 40 )
-					if(src.give_cell_wrapper(recharge_wattage_needed * CELLRATE))
-						area_apc.use_power(recharge_wattage_needed, EQUIP)
-						recharge_wattage_needed = 0
 
 	if (passive_wattage_needed) // no power, keel over
 		src.power_change()

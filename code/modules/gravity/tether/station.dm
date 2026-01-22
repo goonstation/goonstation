@@ -19,8 +19,8 @@ TYPEINFO(/obj/machinery/gravity_tether/station)
 	maptext_manager_x = 16
 	maptext_manager_y = 16
 	req_access = list(access_engineering_chief)
-	active_wattage_per_g = 1 MEGA WATT
-	passive_wattage_per_g = 10 KILO WATTS
+	active_wattage_per_g_quantum = 10 KILO WATTS
+	passive_wattage_per_g_quantum = 100 WATTS
 	locked = TRUE
 	mechanics_interaction = MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE
 
@@ -126,6 +126,74 @@ TYPEINFO(/obj/machinery/gravity_tether/station)
 		return C
 	else
 		return ..()
+
+
+/obj/machinery/gravity_tether/station/handle_power_cycle()
+	var/area/A = get_area(src)
+	var/passive_wattage_needed = src.passive_wattage_per_g_quantum * src.gforce_intensity
+	var/recharge_wattage_needed = 0
+
+	if (src.cell)
+		// calculate how much to charge up based on the standard cell charge rate, in watts
+		recharge_wattage_needed = min(
+			(src.cell.maxcharge - src.cell.charge),
+			(src.cell.maxcharge * CHARGELEVEL * PROCESSING_TIER_MULTI(src) / 4)
+		) / CELLRATE
+
+	if (passive_wattage_needed)
+		if (src.cell)
+			var/available_cell_watts = src.cell.charge / CELLRATE
+			if (passive_wattage_needed && available_cell_watts > passive_wattage_needed)
+				if(src.use_cell_wrapper(passive_wattage_needed * CELLRATE))
+					passive_wattage_needed = 0
+
+	if (passive_wattage_needed || recharge_wattage_needed)
+		if (A.powered(EQUIP))
+			var/obj/machinery/power/apc/area_apc = A?.area_apc
+			if (istype(area_apc) && area_apc.cell?.charge)
+				var/available_area_watts = area_apc.cell?.charge / CELLRATE
+				if (passive_wattage_needed && available_area_watts > passive_wattage_needed)
+					area_apc.use_power(passive_wattage_needed, EQUIP)
+					available_area_watts -= passive_wattage_needed
+					passive_wattage_needed = 0
+				if (!passive_wattage_needed && recharge_wattage_needed && available_area_watts > recharge_wattage_needed && area_apc.cell?.percent() > 40 )
+					if(src.give_cell_wrapper(recharge_wattage_needed * CELLRATE))
+						area_apc.use_power(recharge_wattage_needed, EQUIP)
+						recharge_wattage_needed = 0
+
+	if (passive_wattage_needed) // no power, keel over
+		src.power_change()
+
+	if (src.cell)
+		var/new_charging_state = TETHER_CHARGE_IDLE
+		var/new_charge_pct_state = null
+		switch (src.cell.percent())
+			if (TETHER_BATTERY_CHARGE_FULL to INFINITY)
+				new_charge_pct_state = TETHER_BATTERY_CHARGE_FULL
+			if (-INFINITY to 0)
+				new_charge_pct_state = 0
+			if (-INFINITY to TETHER_BATTERY_CHARGE_MEDIUM)
+				new_charge_pct_state = TETHER_BATTERY_CHARGE_LOW
+			if (TETHER_BATTERY_CHARGE_MEDIUM to TETHER_BATTERY_CHARGE_HIGH)
+				new_charge_pct_state = TETHER_BATTERY_CHARGE_MEDIUM
+			if (TETHER_BATTERY_CHARGE_HIGH to TETHER_BATTERY_CHARGE_FULL)
+				new_charge_pct_state = TETHER_BATTERY_CHARGE_HIGH
+
+		if (src.cell.charge == src.last_charge_amount)
+			new_charging_state = TETHER_CHARGE_IDLE
+		if (src.cell.charge > src.last_charge_amount)
+			new_charging_state = TETHER_CHARGE_CHARGING
+			src.last_charge_amount = src.cell.charge
+		else if (src.cell.charge < src.last_charge_amount)
+			new_charging_state = TETHER_CHARGE_DRAINING
+			src.last_charge_amount = src.cell.charge
+
+		if (src.charge_pct_state != new_charge_pct_state || src.charging_state != new_charging_state)
+			src.charge_pct_state = new_charge_pct_state
+			src.charging_state = new_charging_state
+			src.update_ma_bat()
+			src.update_ma_cell()
+
 
 // from /particles/rack_spark
 /particles/station_tether_spark

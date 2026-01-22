@@ -51,12 +51,12 @@
 		if (TETHER_BATTERY_CHARGE_FULL)
 			new_b += 0.1
 			new_g += 0.1
-	if (src.gforce_intensity > 1.5)
+	if (src.gforce_intensity > 150)
 		new_r += 0.2
-	if (src.gforce_intensity > 1)
+	if (src.gforce_intensity > 100)
 		new_r += 0.1
 		new_g += 0.1
-	if (src.gforce_intensity > 0.5)
+	if (src.gforce_intensity > 50)
 		new_g += 0.2
 	if (src.gforce_intensity > 0)
 		new_b += 0.2
@@ -195,13 +195,13 @@
 			src.ma_intensity.icon_state = "intensity-2"
 		if (-INFINITY to 0)
 			src.ma_intensity.icon_state = "intensity-0"
-		if (0 to 0.5)
+		if (0 to 50)
 			src.ma_intensity.icon_state = "intensity-1"
-		if (0.5 to 1)
+		if (50 to 100)
 			src.ma_intensity.icon_state = "intensity-2"
-		if (1 to 1.5)
+		if (100 to 150)
 			src.ma_intensity.icon_state = "intensity-3"
-		if (1.5 to 2)
+		if (150 to 200)
 			src.ma_intensity.icon_state = "intensity-4"
-		if (2 to INFINITY)
+		if (200 to INFINITY)
 			src.ma_intensity.icon_state = "intensity-5"

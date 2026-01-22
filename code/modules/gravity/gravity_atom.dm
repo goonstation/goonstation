@@ -24,9 +24,9 @@
 			return TRUE
 	var/new_gforce = T.get_gforce_current()
 	if (src.no_gravity) // negative matter
-		new_gforce = 0
+		new_gforce = GFORCE_GRAVITY_MINIMUM
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING)) // floating things don't get hit with high-G
-		new_gforce = min(new_gforce, 1)
+		new_gforce = min(new_gforce, GFORCE_EARTH_GRAVITY)
 	if (src.gforce == new_gforce)
 		return TRUE
 	var/gforce_immune = HAS_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE) || HAS_ATOM_PROPERTY(src.loc, PROP_ATOM_GRAVITY_IMMUNE_INSIDE)
