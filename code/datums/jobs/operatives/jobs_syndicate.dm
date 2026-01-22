@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat)
 	slot_poc1 = list(/obj/item/pinpointer/disk)
-	slot_ears = list(/obj/item/device/radio/headset/syndicate) //needs their own secret channel
+	slot_ears = list(/obj/item/device/radio/headset/syndicate/leader)
 	slot_belt = list(/obj/item/swords_sheaths/nukeop)
 	slot_card = /obj/item/card/id/syndicate/commander
 	items_in_backpack = list(/obj/item/storage/box/capella,

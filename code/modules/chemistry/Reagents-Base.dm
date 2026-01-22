@@ -649,7 +649,7 @@
 	fluid_g = 250
 	fluid_b = 160
 	transparency = 155
-	data = null
+	threshold_volume = 40
 
 	on_add()
 		if(ismob(holder?.my_atom))
@@ -664,6 +664,18 @@
 			if(M?.bioHolder.HasEffect("quiet_voice"))
 				M.bioHolder.RemoveEffect("quiet_voice")
 		..()
+
+	cross_threshold_over()
+		. = ..()
+		if (ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			APPLY_ATOM_PROPERTY(M, PROP_ATOM_FLOATING, "reagent_[src.id]")
+
+	cross_threshold_under()
+		. = ..()
+		if (ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			REMOVE_ATOM_PROPERTY(M, PROP_ATOM_FLOATING, "reagent_[src.id]")
 
 /datum/reagent/radium
 	name = "radium"

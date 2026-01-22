@@ -1568,7 +1568,7 @@ or don't if it uses a custom topopen overlay
 	set name = "View Crew Manifest"
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 	var/target = src
 	if(src.deployed_to_eyecam)
@@ -1927,7 +1927,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -1955,7 +1955,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -1981,7 +1981,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -2479,7 +2479,7 @@ proc/get_mobs_trackable_by_AI()
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(last_announcement + announcement_cooldown > world.time)

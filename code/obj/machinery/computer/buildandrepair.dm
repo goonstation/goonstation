@@ -37,6 +37,8 @@ TYPEINFO(/obj/item/circuitboard)
 	var/powernet = null
 	/// Custom data saved to the on-board memory chip from its computer type
 	var/saved_data = null
+	/// Behaviour to handle the emagging effect on the board and transfer it to the corresponding computer
+	var/emagged = FALSE
 
 	New()
 		. = ..()
@@ -49,6 +51,14 @@ TYPEINFO(/obj/item/circuitboard)
 	get_desc(dist, mob/user)
 		if (!isnull(saved_data))
 			. += "This one has an onboard memory chip."
+
+	emag_act(var/mob/user, var/obj/item/card/emag/used_emag)
+		src.emagged = TRUE
+		return TRUE
+
+	demag(var/mob/user)
+		src.emagged = FALSE
+		return TRUE
 
 /obj/item/circuitboard/security
 	name = "circuit board (security camera viewer)"
