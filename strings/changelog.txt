@@ -1,5 +1,13 @@
 
 (t)fri jan 23 26
+(u)RubberRats
+(p)25472
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Adds faded and split versions for 5 hairstyles (see minor changes).
+(*)Also adds hair parts, based off existing styles and meant to be combined with other hair.  Original sprites by Walp, Retrino and myself.
+(+)Styles with faded versions: Blunt Pompadour, Big Pompadour, Ringlets, Pageboy. Also adds a split version of Massive Braids.
+(+)Styles with hair parts: High Ponytail, Wavy Ponytail, Spiky Ponytail, Messy Ponytail, Pigtails, High Bun, Double Buns, Crown Braid
+(+)Pageboy has been resprited slightly to add texture.
 (u)QuiteLiterallyAnything
 (p)25529
 (e)⚖💊|C-Balance, A-Medical
