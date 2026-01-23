@@ -1,4 +1,87 @@
 
+(t)thu jan 22 26
+(u)A.I. the artificial idiot
+(p)25562
+(e)🎨|C-Sprites
+(*)Adds Maghaz, a dish made from brains and gravy, good for Illithids and safe for human consumption
+(t)wed jan 21 26
+(u)LeahTheTech
+(p)25661
+(e)⚖⛔🧛|C-Balance, C-Removal, A-Gamemodes
+(*)Wraiths no longer have access to deadchat. The endlessly backseating whispers of the dead have been silenced.
+(u)glowbold
+(p)25644
+(e)🪲❗🎭🐣|C-Bug, E-FUCK, A-RP, A-Respawning
+(+)RP: Setting DNR should no longer block respawn timers from appearing.
+(t)tue jan 20 26
+(u)LorrMaster
+(p)25634
+(e)🆕🧱|C-Feature, A-Materials
+(+)A bunch of items that should be made of plastic now use plastic as their default material.
+(u)Lord_Earthfire
+(p)25565
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Emagging a genetics console fries its radiation dose controller, vastly improving the gene scanners ability to cook someone alive.
+(+)Deconstructing an emagged computer console now transfers the emagged state onto the curcuitboard, making consoles build with that stay emagged.
+(u)Chasu
+(p)25659
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The HPD is now cheaper to fabricate and buy.
+(u)LorrMaster
+(p)25633
+(e)🪲🧱|C-Bug, A-Materials
+(+)Speculative fix for invisible Rocko
+(u)JORJ949
+(p)25654
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Forensic, Mining, Robotics, Bartender and Catering PDAs now have unique sprites.
+(t)mon jan 19 26
+(u)Kanthes
+(p)25660
+(e)|
+(+)The wellspring artifact will no longer attempt to flood the station with fluids that don't like existing.
+(u)CalliopeSoups
+(p)25449
+(e)🔊👽|C-Sound, A-Mutantraces
+(+)Monkeys now go oo aa when speaking.
+(u)nova2053
+(p)25620
+(e)🆕🍝|C-Feature, A-Catering
+(+)Hard candies (including lollipops, candy canes, and candy hearts) are now considerably more crunchy.
+(t)sun jan 18 26
+(u)EmeraldCrow
+(p)25649
+(e)🎨|C-Sprites
+(+)Adds a new Samson figurine for zodiadecius-go gambling today!
+(t)fri jan 16 26
+(u)LeahTheTech
+(p)25588
+(e)⚖🔊🧛|C-Balance, C-Sound, A-Gamemodes
+(+)Vampire glare, blood steal, and silenced gunshots now depend on line-of-sight to be heard. No more hearing vampires through walls.
+(u)LeahTheTech
+(+)Vampires can no longer glare through walls.
+(t)thu jan 15 26
+(u)Lord_Earthfire
+(p)25404
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Spaceman now learned to properly balance small item pies onto robot-arm assemblies, up from tiny-only.
+(u)QuiteLiterallyAnything
+(p)25431
+(e)|
+(+)Adjusted the amount of material given by closets, crates, and the like on deconstruction.
+(u)Microoowaaave
+(p)24976
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Adds clown noses, found in the clown hole and sold by Geoff!
+(u)Lord_Earthfire
+(p)25438
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Singletank bombs and pipebombs now have the proper contraband value of 4 instead of 8.
+(t)wed jan 14 26
+(u)Kanthes
+(p)25584
+(e)|
+(+)Using a DetGadget hat to create a scuttlebot now puts the controller in the user's hand instead of on the floor.
 (t)mon jan 12 26
 (u)CodeJester
 (p)25557

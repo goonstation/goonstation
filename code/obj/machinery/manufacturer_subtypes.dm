@@ -419,7 +419,7 @@
 		/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
+	available = list(/datum/manufacture/shoes,
 		/datum/manufacture/shoes_brown,
 		/datum/manufacture/shoes_white,
 		/datum/manufacture/flippers,
@@ -522,11 +522,9 @@
 		/datum/manufacture/radio_upgrade/civilian)
 	hidden = list(/datum/manufacture/id_card_gold,
 		/datum/manufacture/implant_access_infinite,
-		/datum/manufacture/radio_upgrade/command,
-		/datum/manufacture/radio_upgrade/security)
+		/datum/manufacture/radio_upgrade/command)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
-//and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "personnel manufacturer"
 	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
@@ -537,61 +535,12 @@
 		/obj/item/material_piece/glass = 5,
 		/obj/item/material_piece/cloth/cottonfabric = 5)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/id_card,
-		/datum/manufacture/implant_access,
-		/datum/manufacture/implanter,
-		/datum/manufacture/radio_upgrade/engineering,
-		/datum/manufacture/radio_upgrade/research,
-		/datum/manufacture/radio_upgrade/medical,
-		/datum/manufacture/radio_upgrade/civilian,
-		/datum/manufacture/shoes,
-		/datum/manufacture/shoes_brown,
-		/datum/manufacture/shoes_white,
-		/datum/manufacture/flippers,
-		/datum/manufacture/civilian_headset,
-		/datum/manufacture/jumpsuit_assistant,
-		/datum/manufacture/jumpsuit,
-		/datum/manufacture/jumpsuit_white,
-		/datum/manufacture/jumpsuit_pink,
-		/datum/manufacture/jumpsuit_red,
-		/datum/manufacture/jumpsuit_orange,
-		/datum/manufacture/jumpsuit_yellow,
-		/datum/manufacture/jumpsuit_green,
-		/datum/manufacture/jumpsuit_blue,
-		/datum/manufacture/jumpsuit_purple,
-		/datum/manufacture/jumpsuit_black,
-		/datum/manufacture/jumpsuit_brown,
-		/datum/manufacture/pride_lgbt,
-		/datum/manufacture/pride_ace,
-		/datum/manufacture/pride_aro,
-		/datum/manufacture/pride_bi,
-		/datum/manufacture/pride_inter,
-		/datum/manufacture/pride_lesb,
-		/datum/manufacture/pride_gay,
-		/datum/manufacture/pride_nb,
-		/datum/manufacture/pride_pan,
-		/datum/manufacture/pride_poly,
-		/datum/manufacture/pride_trans,
-		/datum/manufacture/hat_black,
-		/datum/manufacture/hat_white,
-		/datum/manufacture/hat_pink,
-		/datum/manufacture/hat_red,
-		/datum/manufacture/hat_yellow,
-		/datum/manufacture/hat_orange,
-		/datum/manufacture/hat_green,
-		/datum/manufacture/hat_blue,
-		/datum/manufacture/hat_purple,
-		/datum/manufacture/hat_tophat,
-		/datum/manufacture/handkerchief,)
 
-	hidden = list(/datum/manufacture/id_card_gold,
-		/datum/manufacture/implant_access_infinite,
-		/datum/manufacture/radio_upgrade/command,
-		/datum/manufacture/radio_upgrade/security,
-		/datum/manufacture/breathmask,
-		/datum/manufacture/patch,
-		/datum/manufacture/tricolor,
-		/datum/manufacture/hat_ltophat)
+	New()
+		src.available = /obj/machinery/manufacturer/uniform::available | /obj/machinery/manufacturer/personnel::available
+		src.hidden = /obj/machinery/manufacturer/uniform::hidden | /obj/machinery/manufacturer/personnel::hidden
+		. = ..()
+
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "crate manufacturer"
