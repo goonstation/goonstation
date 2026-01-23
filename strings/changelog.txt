@@ -1,4 +1,9 @@
 
+(t)fri jan 23 26
+(u)RubiCubie
+(p)25333
+(e)⚗|A-Chemistry
+(+)Compost now gives you food poisoning and a reminder of how bad it is. Plant people may use it as a small toxin medication instead.
 (t)thu jan 22 26
 (u)A.I. the artificial idiot
 (p)25562
