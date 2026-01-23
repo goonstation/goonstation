@@ -5,7 +5,7 @@
 RMB on buildmode button                = Begin source area selection
 
 Ctrl-RMB on buildmode button           = Toggle automatically reselect moved area
-Shift-RMB on buildmode button          = Set turf type to leave behind
+Shift-RMB on buildmode button          = Set turf type to leave behind (optional)
 Alt-RMB on buildmode button            = Toggle moving space
 
 Shift-LMB on turf                      = Move area to location
@@ -14,12 +14,12 @@ Shift-LMB on turf                      = Move area to location
 	icon_state = "buildmode_grid"
 	var/toggle_auto_reselect = TRUE
 	var/toggle_skip_space = TRUE
-	var/type_turftoleave = /turf/simulated/floor/plating
+	var/type_turftoleave
 	var/list/selected_turfs
 	var/turf/source_turf
 	var/turf/bottom_left_selected
 	var/turf/top_right_selected
-	var/tmp/image/marker = null
+	var/tmp/image/marker
 	var/selection_mode = FALSE
 
 
@@ -95,8 +95,6 @@ Shift-LMB on turf                      = Move area to location
 				AM.set_loc(T)
 			if(turftoleave)
 				S.ReplaceWith(turftoleave, keep_old_material = 0)
-			else
-				S.ReplaceWithSpaceForce()
 
 		if (toggle_auto_reselect)
 			var/turf/new_tr = locate(
