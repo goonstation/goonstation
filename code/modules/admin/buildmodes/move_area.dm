@@ -81,21 +81,51 @@ Shift-LMB on turf                      = Move area to location
 
 
 	proc/move_contents_to(var/turf/target, var/turftoleave, skip_space)
-		for (var/turf/S in selected_turfs)
-			if(istype(S, /turf/space) && skip_space) continue
-			var/turf/T = locate(S.x - bottom_left_selected.x + target.x, S.y - bottom_left_selected.y + target.y, target.z)
-			T.ReplaceWith(S.type, keep_old_material = 0)
-			T.appearance = S.appearance
-			T.set_density(S.density)
-			T.set_dir(S.dir)
+		var/list/move_data = list()
 
-			for (var/atom/movable/AM as anything in S)
+		// snapshot source
+		for (var/turf/S in selected_turfs)
+			if (istype(S, /turf/space) && skip_space)
+				continue
+
+			var/list/atoms = list()
+			for (var/atom/movable/AM in S)
 				if (istype(AM, /obj/effects/precipitation)) continue
 				if (istype(AM, /obj/overlay/tile_effect)) continue
+				atoms += AM
+
+			move_data += list(list(
+				"source" = S,
+				"type" = S.type,
+				"appearance" = S.appearance,
+				"density" = S.density,
+				"dir" = S.dir,
+				"atoms" = atoms
+			))
+
+		// write to target
+		for (var/entry in move_data)
+			var/turf/S = entry["source"]
+			var/turf/T = locate(
+				S.x - bottom_left_selected.x + target.x,
+				S.y - bottom_left_selected.y + target.y,
+				target.z
+			)
+
+			T.ReplaceWith(entry["type"], keep_old_material = 0)
+			T.appearance = entry["appearance"]
+			T.set_density(entry["density"])
+			T.set_dir(entry["dir"])
+
+			for (var/atom/movable/AM in entry["atoms"])
 				AM.set_loc(T)
-			if(turftoleave)
+
+		if (turftoleave)
+			for (var/entry in move_data)
+				var/turf/S = entry["source"]
 				S.ReplaceWith(turftoleave, keep_old_material = 0)
 
+		// auto-reselect
 		if (toggle_auto_reselect)
 			var/turf/new_tr = locate(
 				target.x + (top_right_selected.x - bottom_left_selected.x),
