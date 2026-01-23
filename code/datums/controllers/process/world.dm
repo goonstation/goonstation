@@ -30,7 +30,7 @@
 
 	doWork()
 		last_object = "sun.calc_position"
-		sun.calc_position()
+		sun?.calc_position()
 
 		last_object = "genResearch.progress"
 		genResearch?.progress()
