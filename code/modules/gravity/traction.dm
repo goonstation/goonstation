@@ -20,7 +20,7 @@ proc/StopDriftFloat(atom/movable/AM)
 	return_if_overlay_or_effect(src)
 	src.traction = src.calculate_traction(T)
 
-	if (src.traction == TRACTION_FULL || src.has_grip())
+	if (src.traction == TRACTION_FULL)
 		if (src.temp_flags & SPACE_PUSHING)
 			EndSpacePush(src)
 		else if (src.inertia_value != 0)
@@ -38,10 +38,18 @@ proc/StopDriftFloat(atom/movable/AM)
 			return
 		StartDriftFloat(src)
 
+/obj/item/dummy/update_traction(turf/T)
+	return
+
 /mob/update_traction(turf/T)
 	. = ..()
-	if (src.traction == TRACTION_FULL && src.inertia_dir != 0)
-		src.inertia_dir = 0
+	if (src.traction == TRACTION_FULL || src.has_grip())
+		if (src.temp_flags & SPACE_PUSHING)
+			EndSpacePush(src)
+		else if (src.inertia_dir != 0)
+			src.inertia_dir = 0
+		if (src.inertia_value != 0)
+			src.inertia_value = 0
 
 /// Check if an atom has traction with the ground due to gravity
 /atom/movable/proc/calculate_traction(turf/T=null)
