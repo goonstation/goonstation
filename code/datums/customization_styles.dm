@@ -566,6 +566,11 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "curtainbangs"
 				random_allowed = FALSE
 
+			scorpion_bangs
+				name = "Bangs: Scorpion"
+				id = "scorpion_bangs"
+				random_allowed = FALSE
+
 		long
 			chub2_s
 				name = "Bang: Left"
@@ -1083,6 +1088,15 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "french_twist"
 				gender = FEMININE
 
+			scorpion_braid
+				name = "Scorpion Braid"
+				id = "scorpion_braid"
+				gender = FEMININE
+
+			scorpion_braid_alternating
+				name = "Scorpion Braid: Alternating"
+				id = "scorpion_braid_alternating"
+				random_allowed = FALSE
 		gimmick
 			afroHA
 				name = "Afro: Alternating Halves"
