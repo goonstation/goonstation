@@ -13,10 +13,9 @@
   width: 32px;
   height: 32px;
   background-image: url('../assets/genetics_powers.png');
-  background-position: 0 0;
   background-repeat: no-repeat;
   overflow: hidden;
-  transform: scale(0.7) translate(10px, -10px);
+  transform: translate(0, -10px);
 }
 
 $gene-icons: (
