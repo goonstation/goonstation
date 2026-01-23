@@ -1,5 +1,9 @@
 
 (t)fri jan 23 26
+(u)QuiteLiterallyAnything
+(p)25529
+(e)⚖💊|C-Balance, A-Medical
+(+)Made short-sightedness not cover overhead text chat.
 (u)RubiCubie
 (p)25333
 (e)⚗|A-Chemistry
