@@ -13,6 +13,7 @@
 	stamina_damage = 1
 	stamina_cost = 7
 	stamina_crit_chance = 1
+	default_material = "plastic"
 	var/bladecolor = "G"
 	var/sound_attackM1 = 'sound/weapons/male_toyattack.ogg'
 	var/sound_attackM2 = 'sound/weapons/male_toyattack2.ogg'

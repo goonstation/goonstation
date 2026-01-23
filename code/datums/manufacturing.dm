@@ -996,11 +996,11 @@
 	category = "Tool"
 
 /datum/manufacture/places_pipes
-	name = "Handheld Pipe Dispencer"
-	item_requirements = list("metal_superdense" = 12,
-							 "crystal_dense" = 6,
-							 "conductive_high" = 6,
-							 "energy_high" = 6)
+	name = "Handheld Pipe Dispenser"
+	item_requirements = list("metal_dense" = 12,
+							 "crystal" = 15,
+							 "conductive_high" = 10,
+							 "energy_high" = 10)
 	item_outputs = list(/obj/item/places_pipes)
 	create = 1
 	time = 90 SECONDS
