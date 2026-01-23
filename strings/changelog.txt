@@ -1,5 +1,13 @@
 
 (t)fri jan 23 26
+(u)Mr. Moriarty
+(p)25534
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Four new measurement instructions have been added to the ChemiCompiler. See minor changelog for details.
+(+)T: Measures the temperature of the reagents in reservoir sx and stores the value in the Amount register (ax). Value rounded to the nearest degree Celsius.
+(+)A: Measures the aggregate (total) volume of the reagents in reservoir sx and stores the value in the Amount register (ax). Value rounded to the nearest unit.
+(+)V: Measures the volume of reagent number *ptr in reservoir sx and stores the value in the Amount register (ax). Value rounded to the nearest unit.
+(+)N: Measures the number of reagents in reservoir sx and stores the value in the Amount register (ax).
 (u)RubberRats
 (p)25472
 (e)🆕🎨|C-Feature, C-Sprites
