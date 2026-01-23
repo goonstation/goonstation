@@ -14,7 +14,6 @@ TYPEINFO(/obj/storage/closet)
 	volume = 70
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
-	material_amt = 0.2
 	///Will this locker auto-close when someone is flung into it
 	var/auto_close = TRUE
 
@@ -165,6 +164,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	volume = 70
 	auto_close = FALSE
 	can_leghole = FALSE
+	default_material = "wood"
 
 	wood
 		icon_closed = "woodcoffin"

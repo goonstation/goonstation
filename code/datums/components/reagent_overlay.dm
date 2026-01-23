@@ -56,7 +56,7 @@ TYPEINFO(/datum/component/reagent_overlay)
 	var/reagent_state = src.get_reagent_state(src.reagent_overlay_states)
 	var/atom/parent = src.parent
 	if (reagent_state)
-		var/image/reagent_image = image(src.reagent_overlay_icon, "f-[src.reagent_overlay_icon_state]-[reagent_state]", layer = FLOAT_LAYER - 1)
+		var/image/reagent_image = image(src.reagent_overlay_icon, "f-[src.reagent_overlay_icon_state]-[reagent_state]", layer = FLOAT_LAYER - 1, dir=parent.dir)
 		var/datum/color/average = src.container.reagents.get_average_color()
 		average.a = max(average.a, src.min_alpha)
 		reagent_image.color = average.to_rgba()

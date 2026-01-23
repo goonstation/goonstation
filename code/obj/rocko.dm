@@ -8,6 +8,7 @@
 	force = 10
 	throwforce = 15
 	throw_range = 3
+	can_arcplate = FALSE
 
 	var/static/list/rocko_is
 	var/smile = TRUE
@@ -183,7 +184,7 @@
 		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium","veranium")
 		if(!rock_list.Find(src.material.getID()))
 			return
-		src.icon = file("icons/obj/items/materials/[src.material.getID()].dmi")
+		src.icon = src.material.getIconFile()
 		var/sprite_prefix = "ore"
 		var/sprite_value = pick(1,2,3,4,5,6)
 		var/list/sprite_variants = list("")

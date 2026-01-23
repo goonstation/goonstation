@@ -545,6 +545,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
+	default_material = "plastic"
 	var/bee = FALSE
 	var/randcol
 
@@ -887,3 +888,26 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	icon_state = "burnedcultmask"
 	wear_layer = MOB_OVER_TOP_LAYER
 	see_face = FALSE
+
+// Clown nose!!
+
+/obj/item/clothing/mask/clown_nose
+	name = "clown nose"
+	desc = "A classic red clown nose. It even honks!"
+	icon_state = "clown_nose"
+	item_state = "clown_nose"
+	see_face = TRUE
+	c_flags = null
+
+	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
+	var/volume = 50
+	var/randomized_pitch = 1
+
+	proc/honk_nose(mob/user as mob)
+		if (ON_COOLDOWN(src, "clown_nose", 10 SECONDS))
+			return 1
+		src.add_fingerprint(user)
+		user?.visible_message("<B>[user]</B> honks the [src.name]!")
+		playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+		return 0
+

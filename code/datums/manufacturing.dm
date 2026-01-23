@@ -996,11 +996,11 @@
 	category = "Tool"
 
 /datum/manufacture/places_pipes
-	name = "Handheld Pipe Dispencer"
-	item_requirements = list("metal_superdense" = 12,
-							 "crystal_dense" = 6,
-							 "conductive_high" = 6,
-							 "energy_high" = 6)
+	name = "Handheld Pipe Dispenser"
+	item_requirements = list("metal_dense" = 12,
+							 "crystal" = 15,
+							 "conductive_high" = 10,
+							 "energy_high" = 10)
 	item_outputs = list(/obj/item/places_pipes)
 	create = 1
 	time = 90 SECONDS
@@ -2678,6 +2678,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 10 SECONDS
 	category = "Clothing"
 
+/datum/manufacture/backpack_brown
+	name = "Brown Backpack"
+	item_requirements = list("fabric" = 8)
+	item_outputs = list(/obj/item/storage/backpack/empty/brown)
+	create = 1
+	time = 10 SECONDS
+	category = "Clothing"
+
 /datum/manufacture/satchel
 	name = "Satchel"
 	item_requirements = list("fabric" = 8)
@@ -2706,6 +2714,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	name = "Blue Satchel"
 	item_requirements = list("fabric" = 8)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/blue)
+	create = 1
+	time = 10 SECONDS
+	category = "Clothing"
+
+/datum/manufacture/satchel_brown
+	name = "Brown Satchel"
+	item_requirements = list("fabric" = 8)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty/brown)
 	create = 1
 	time = 10 SECONDS
 	category = "Clothing"
@@ -3438,6 +3454,40 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	time = 60 SECONDS
 	category = "Resource"
+
+ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
+/datum/manufacture/radio_upgrade
+	name = "Station Radio Upgrade (ABSTRACT-YOUSHOULDNTSEEME)"
+	item_requirements = list("conductive" = 9,
+							 "crystal" = 15)
+	item_outputs = list(/obj/item/device/radio_upgrade/station/civilian)
+	create = 1
+	time = 20 SECONDS
+	category = "Tool"
+
+/datum/manufacture/radio_upgrade/command
+	name = "Command Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/command)
+
+/datum/manufacture/radio_upgrade/security
+	name = "Security Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/security)
+
+/datum/manufacture/radio_upgrade/engineering
+	name = "Engineering Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/engineering)
+
+/datum/manufacture/radio_upgrade/research
+	name = "Research Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/research)
+
+/datum/manufacture/radio_upgrade/medical
+	name = "Medical Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/medical)
+
+/datum/manufacture/radio_upgrade/civilian
+	name = "Civilian Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/civilian)
 
 /******************** QM CRATES *******************/
 

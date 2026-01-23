@@ -688,7 +688,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/always_hits_structures = FALSE //always hits doors and girders
 	var/window_pass = 0          // Can we pass windows
 	var/obj/projectile/master = null // The projectile obj that we're associated with
-	var/silentshot = 0           // Standard hit message upon bullet_act.
+	var/no_hit_message = 0       // Standard hit message upon bullet_act.
+	var/sound_los = FALSE        //! Does the sound effect strictly respect LoS (for silenced weapons)
 	var/implanted                // Path of "bullet" left behind in the mob on successful hit
 	var/disruption = 0           // planned thing to deal with pod electronics / etc
 	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
@@ -741,6 +742,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/has_impact_particles = FALSE
 	/// Override var used for special projectiles, set to true if it should use energy impact particles
 	var/energy_particles_override = FALSE
+	/// Prevent this projectile from damaging the law rack (won't affect explosions caused by the projectile)
+	var/law_rack_safe = FALSE
 
 	var/static/effect_amount = 0
 
@@ -1058,7 +1061,8 @@ ABSTRACT_TYPE(/datum/projectile)
 		if (narrator_mode) // yeah sorry I don't have a good way of getting rid of this one
 			playsound(sound_source, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
-			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange, pitch = DATA.shot_pitch == 1 ? null : DATA.shot_pitch)
+			var/flags = DATA.sound_los ? SOUND_DO_LOS : 0
+			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange, pitch = DATA.shot_pitch == 1 ? null : DATA.shot_pitch, flags = flags)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))

@@ -235,7 +235,8 @@
 
 		human.bioHolder.RemoveEffect("husk")
 		human.real_name = src.name
-		human.organHolder.head.UpdateIcon()
+		if(human.organHolder.head)
+			human.organHolder.head.UpdateIcon()
 		if (human.bioHolder?.mobAppearance?.mutant_race)
 			human.set_mutantrace(human.bioHolder.mobAppearance.mutant_race.type)
 		else

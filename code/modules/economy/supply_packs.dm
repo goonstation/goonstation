@@ -8,20 +8,18 @@
 	var/datum/supply_packs/object = null
 	var/orderedby = null
 	var/comment = null
-	var/whos_id = null
+	var/used_personal_funds = FALSE
 	var/address = null
 	var/console_location = null
 
 	proc/create(var/mob/orderer)
 		var/obj/storage/S = object.create(orderer)
 
-		if(!isnull(whos_id))
-			S.name = "[S.name], Ordered by [whos_id:registered], [comment ? "([comment])":"" ]"
-		else
-			S.name = "[S.name] [comment ? "([comment])":"" ]"
+		var/show_purchaser = !isnull(src.orderedby) && src.used_personal_funds
+		S.name = "[S.name][show_purchaser ? " (Purchased by [src.orderedby])" : ""][src.comment ? " ([src.comment])" : "" ]"
 
-		if(comment)
-			S.delivery_destination = comment
+		if(src.comment)
+			S.delivery_destination = src.comment
 
 		object.exhaustion += 1
 		if(object.exhaustion > 10)
@@ -212,7 +210,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/meateggdairy
 	name = "Catering: Meat, Eggs and Dairy Crate"
-	desc = "x25 Assorted Cooking Ingredients"
+	desc = "x25+ Assorted Cooking Ingredients"
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/hotdog = 4,
 					/obj/item/reagent_containers/food/snacks/ingredient/cheese = 4,
@@ -221,6 +219,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white,
+					/obj/item/item_box/anchovy,
 					/obj/item/kitchen/egg_box = 3,
 					/obj/item/storage/box/bacon_kit = 2)
 	cost = PAY_TRADESMAN*5
@@ -971,7 +970,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "Contains one handheld-pipe-dispenser."
 	category = "Basic Materials"
 	contains = list(/obj/item/places_pipes)
-	cost = PAY_DONTBUYIT
+	cost = PAY_EMBEZZLED*2
 	containertype = /obj/storage/crate/wooden
 	containername = "HPD Replacement"
 
