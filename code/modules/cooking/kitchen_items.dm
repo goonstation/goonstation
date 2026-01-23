@@ -653,6 +653,9 @@ TRAYS
 			src.item_state = initial(src.item_state)
 		else
 			src.item_state = src.loaded_icon_state
+		if(ismob(src.loc))
+			var/mob/potential_user = src.loc
+			potential_user.update_inhands()
 
 	update_icon()
 		..()
