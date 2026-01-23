@@ -24,8 +24,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	var/datum/light/light = null // star light, star bright, first star i see tonight
 	var/list/area/target_area_refs = list() //! List of references to areas this tether targets
 
-	var/active_wattage_per_g_quantum = 5 WATTS //! Wattage charge per G of intensity changed
+	var/active_wattage_per_g_quantum = 10 WATTS //! Wattage charge per G of intensity changed
 	var/passive_wattage_per_g_quantum = 1 WATT //! Wattage charge per machine process
+	var/uses_area_power = FALSE
 
 	var/locked = FALSE //! Is the tether ID-locked?
 	var/emagged = FALSE //! Is this machine emagged
@@ -102,6 +103,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	src.ma_screen = mutable_appearance(src.icon, "screen-locked")
 	src.ma_intensity = mutable_appearance(src.icon, "level-2")
 	src.ma_dials = mutable_appearance(src.icon, "dials-regular")
+	src.update_ma_bat()
 	src.update_ma_tamper()
 	src.update_ma_cell()
 	src.update_ma_screen()
@@ -136,7 +138,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /obj/machinery/gravity_tether/get_desc(dist, mob/user)
 	. = ..()
-	if (src.has_no_power())
+	if (!src.powered())
 		. += " It doesn't seem powered on."
 		return
 
@@ -213,7 +215,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /// Run through some checks before starting gravity change
 /obj/machinery/gravity_tether/proc/attempt_gravity_change(new_intensity)
-	if (src.has_no_power() || src.processing_state)
+	if (!src.powered() || src.processing_state)
 		return
 	if (!isfloor(src.loc))
 		src.visible_message(SPAN_ALERT("\The [src] can't activate if it isn't on solid ground!"))
@@ -297,7 +299,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 ///
 /// Will automatically target a random area/turf this tether controls
 /obj/machinery/gravity_tether/proc/random_fault(major_prob=0)
-	if (src.has_no_power())
+	if (!src.powered())
 		return
 	if (!length(src.target_area_refs))
 		return
@@ -359,7 +361,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether/proc/on_gravity_event(_, event_type, z_level, value=null)
 	if (z_level != -1 && z_level != src.z)
 		return
-	if (src.has_no_power())
+	if (!src.powered())
 		return
 	switch (event_type)
 		if (GRAVITY_EVENT_DISRUPT)

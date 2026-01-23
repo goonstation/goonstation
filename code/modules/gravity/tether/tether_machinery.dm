@@ -42,9 +42,11 @@
 
 	src.handle_power_cycle()
 
-	if (src.has_no_power())
+	if (!src.powered())
 		if (src.processing_state == TETHER_PROCESSING_PENDING)
 			src.finish_gravity_change()
+		if (src.gforce_intensity > GFORCE_GRAVITY_MINIMUM)
+			src.change_intensity(GFORCE_GRAVITY_MINIMUM)
 		return
 
 	if (src.glitching_out)
@@ -96,34 +98,56 @@
 	else
 		src.use_cell_wrapper(battery_usage)
 
-
-/obj/machinery/gravity_tether/power_change()
-	if(src.has_no_power())
-		status |= NOPOWER
-	else
-		status &= ~NOPOWER
-	src.UpdateIcon()
-
-/obj/machinery/gravity_tether/has_no_power()
-	if (istype(src.loc, /obj/item/electronics/frame)) //if in a frame, we are never powered
-		return TRUE
-	if (src.cell?.charge > (src.passive_wattage_per_g_quantum * src.gforce_intensity))
+/obj/machinery/gravity_tether/powered(chan)
+	. = FALSE
+	if (istype(src.loc, /obj/item/electronics/frame))
 		return FALSE
-	. = ..()
+	if (src.cell)
+		var/power_needed = src.passive_wattage_per_g_quantum * src.gforce_intensity
+		if (!power_needed)
+			return TRUE
+		if (src.cell && src.cell.charge > power_needed)
+			return TRUE
+	if (src.uses_area_power)
+		. = ..()
 
 /// Handle power billing and internal cell charging
 ///
 /// Local/multi-area tethers only work off of battery power.
 ///
-/// Station tethers use area power until 40%, then internal cell, then area power
+/// Station tethers use area power until 40%, then internal cell, then area power (see `code\modules\gravity\tether\station.dm.dm`)
 /obj/machinery/gravity_tether/proc/handle_power_cycle()
+	var/area/A = get_area(src)
 	var/passive_wattage_needed = src.passive_wattage_per_g_quantum * src.gforce_intensity
+	var/recharge_wattage_needed = 0
+
+	if (src.cell)
+		// calculate how much to charge up based on the standard cell charge rate, in watts
+		recharge_wattage_needed = min(
+			(src.cell.maxcharge - src.cell.charge),
+			(src.cell.maxcharge * CHARGELEVEL * PROCESSING_TIER_MULTI(src) / 4)
+		) / CELLRATE
+
 	if (passive_wattage_needed)
 		if (src.cell)
 			var/available_cell_watts = src.cell.charge / CELLRATE
 			if (passive_wattage_needed && available_cell_watts > passive_wattage_needed)
 				if(src.use_cell_wrapper(passive_wattage_needed * CELLRATE))
 					passive_wattage_needed = 0
+
+	if (src.uses_area_power && (passive_wattage_needed || recharge_wattage_needed))
+		if (A.powered(EQUIP))
+			var/obj/machinery/power/apc/area_apc = A?.area_apc
+			if (istype(area_apc) && area_apc.cell?.charge)
+				var/available_area_watts = area_apc.cell?.charge / CELLRATE
+				if (passive_wattage_needed && available_area_watts > passive_wattage_needed)
+					area_apc.use_power(passive_wattage_needed, EQUIP)
+					available_area_watts -= passive_wattage_needed
+					passive_wattage_needed = 0
+				if (!passive_wattage_needed && recharge_wattage_needed && available_area_watts > recharge_wattage_needed && area_apc.cell?.percent() > 40 )
+					if(src.give_cell_wrapper(recharge_wattage_needed * CELLRATE))
+						area_apc.use_power(recharge_wattage_needed, EQUIP)
+						recharge_wattage_needed = 0
 
 	if (passive_wattage_needed) // no power, keel over
 		src.power_change()
@@ -157,6 +181,7 @@
 			src.charging_state = new_charging_state
 			src.update_ma_bat()
 			src.update_ma_cell()
+			src.UpdateIcon()
 
 /// Wrapper for using the internal cell, needed to interrupt the default rigged effect
 /obj/machinery/gravity_tether/proc/use_cell_wrapper(amount)

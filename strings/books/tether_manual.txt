@@ -42,7 +42,8 @@
 		<li><b>Green</b>: Mostly Full</li>
 		<li><b>Yellow</b>: Under Half</li>
 		<li><b>Red</b>: Critical</li>
-		<li><b>Flashing</b>: Missing Battery</li>
+		<li><b>Dim Flashing</b>: Battery Missing</li>
+		<li><b>Dim Steady</b>: Battery Missing, Using Area Power</li>
 	</ul></li>
 	<li><b>Status</b>: Top-left LEDs<ul>
 		<li><b>Green / Steady</b>: Online, Active</li>

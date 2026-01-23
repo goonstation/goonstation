@@ -237,7 +237,7 @@
 					src.door_state = TETHER_DOOR_OPEN
 					src.update_ma_door()
 
-	if (src.has_no_power())
+	if (!src.powered())
 		return ..()
 
 	var/obj/item/card/id/id_card = get_id_card(I)
@@ -359,6 +359,7 @@
 		SPAN_NOTICE("[user] removes \the [src.cell] from \the [src]."),
 		SPAN_NOTICE("You remove \the [src.cell] from \the [src].")
 	)
+	src.power_change()
 	src.update_ma_cell()
 	src.update_ma_bat()
 	src.UpdateIcon()
@@ -374,6 +375,7 @@
 		SPAN_NOTICE("[user] installs \the [I] into \the [src]."),
 		SPAN_NOTICE("You install \the [I] into \the [src]."),
 	)
+	src.power_change()
 	src.update_ma_cell()
 	src.update_ma_bat()
 	src.UpdateIcon()

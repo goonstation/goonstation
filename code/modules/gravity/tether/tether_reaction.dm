@@ -58,7 +58,7 @@
 		if (prob(src.calculate_fault_chance(P.power * P.proj_data.ks_ratio/2)))
 			src.take_significant_damage(P.power * P.proj_data.ks_ratio/2)
 
-	if (HAS_ANY_FLAGS(P.proj_data.damage_type, D_ENERGY | D_RADIOACTIVE) && !src.has_no_power())
+	if (HAS_ANY_FLAGS(P.proj_data.damage_type, D_ENERGY | D_RADIOACTIVE) && src.powered())
 		if (prob(src.calculate_fault_chance(P.power * (1-P.proj_data.ks_ratio) / 8)))
 			if (src.wire_state == TETHER_WIRES_INTACT)
 				playsound(src, 'sound/effects/sparks4.ogg', 50)

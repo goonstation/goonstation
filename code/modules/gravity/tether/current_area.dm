@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/gravity_tether/current_area)
 				"energy_extreme" = 5)
 /obj/machinery/gravity_tether/current_area
 	name = "local-area gravity tether"
-	passive_wattage_per_g_quantum = 0.1 WATTS
+	passive_wattage_per_g_quantum = 1 WATT
 	gforce_intensity = 0
 	target_intensity = 0
 	anchored = UNANCHORED

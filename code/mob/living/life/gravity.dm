@@ -61,15 +61,16 @@
 						if (istype(human_owner.head, /obj/item/clothing/head/helmet/space) || ischangeling(human_owner) || isvampire(human_owner) || iszombie(human_owner))
 							return // unless you wear a helmet or "don't have" blood
 						var/msg_output = "You feel the blood rush to your head, "
+						var/amount = (GFORCE_EARTH_GRAVITY - src.owner.gforce) / GFORCE_EARTH_GRAVITY * 3
 						if (prob(50))
 							var/obj/item/organ/eye/leftie = human_owner.get_organ("left_eye")
 							var/obj/item/organ/eye/rightie = human_owner.get_organ("right_eye")
 							if ((isnull(leftie) || leftie.robotic || !leftie.provides_sight) && (isnull(rightie) || rightie.robotic || !rightie.provides_sight))
 								return // both eyes are in the group of states: missing, robotic, or don't provide sight
-							human_owner.change_eye_blurry((1-src.owner.gforce/100)*40, 15)
+							human_owner.change_eye_blurry(amount, 15)
 							msg_output += "bulging your eyes slightly."
 						else
-							human_owner.change_misstep_chance((1-src.owner.gforce/100)*40)
+							human_owner.change_misstep_chance(amount)
 							msg_output += "disorienting you."
 						boutput(human_owner, SPAN_ALERT(msg_output), "grav-life")
 		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)

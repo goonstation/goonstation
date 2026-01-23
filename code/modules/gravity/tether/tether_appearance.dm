@@ -12,7 +12,7 @@
 		// lays on top and has transparency
 		ma_overlays += src.ma_tamper
 
-	if (src.has_no_power())
+	if (!src.powered())
 		if (door_state != TETHER_DOOR_MISSING)
 			ma_overlays += src.ma_door
 		src.update_light()
@@ -34,7 +34,7 @@
 	src.UpdateOverlays(MA, "ma", TRUE)
 
 /obj/machinery/gravity_tether/proc/update_light()
-	if (src.has_no_power())
+	if (!src.powered())
 		src.light.disable()
 	var/new_r = 0.4
 	var/new_b = 0.4
@@ -104,7 +104,10 @@
 	var/list/ma_overlays = src.ma_bat.overlays
 	ma_overlays.Cut()
 	if (!src.cell)
-		src.ma_bat.icon_state = "battery-critical"
+		if (src.uses_area_power && src.powered())
+			src.ma_bat.icon_state = "battery-missing-area"
+		else
+			src.ma_bat.icon_state = "battery-missing"
 		return
 
 	switch (src.charge_pct_state)
@@ -126,7 +129,7 @@
 			ma_overlays += src.ma_bat_charge
 
 /obj/machinery/gravity_tether/proc/update_ma_graviton()
-	if (src.has_no_power())
+	if (!src.powered())
 		src.ma_graviton.icon_state = "graviton-idle"
 	else if (src.glitching_out)
 		src.ma_graviton.icon_state = "graviton-wonky"

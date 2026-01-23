@@ -67,9 +67,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 		/area/listeningpost/landing_bay,
 	)
 
-	// syndicate access has no name, so intercept that logic branch
+	// syndicate access has no name, so we have to intercept that logic branch here
 	attackby(obj/item/I, mob/user)
-		if (src.has_no_power())
+		if (src.powered())
 			return ..()
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
