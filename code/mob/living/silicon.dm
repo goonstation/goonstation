@@ -168,7 +168,7 @@ TYPEINFO(/mob/living/silicon)
 		usr.show_text("Unable to interface with door due to unknown interference.", "red")
 		return
 	if(isAI(src) && door_loc?.z == get_z(z) )
-		usr.show_text("Your mainframe was unable relay this command that far away!", "red")
+		usr.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if (istype(our_door, /obj/machinery/door/airlock/))

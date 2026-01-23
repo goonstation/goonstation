@@ -72,6 +72,7 @@ TYPEINFO(/datum/component/foldable)
 
 	briefcase.set_loc(get_turf(object))
 	object.set_loc(briefcase)
+	tgui_process.close_uis(src)
 	usr.visible_message(SPAN_ALERT("[usr] folds [object] back up!"))
 
 /obj/item/objBriefcase
