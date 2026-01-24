@@ -145,7 +145,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 	proc/add_all_statics()
 #ifndef SKIP_CAMERA_COVERAGE
-		if (!src.loc)
+		if (!src.loc || !src.client)
 			return
 		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
 			src.client.images |= T.aiImage
