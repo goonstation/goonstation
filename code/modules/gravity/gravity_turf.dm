@@ -6,20 +6,20 @@
 /turf/var/gforce_area_rev = 0
 
 // no gravity in space, we never need to update it
-/turf/space/gforce_current = 0
-/turf/space/gforce_inherent = 0
+/turf/space/gforce_current = GFORCE_GRAVITY_MINIMUM
 /turf/space/gforce_area_rev = INFINITY
+
+/turf/unsimulated/floor/gforce_inherent = GFORCE_EARTH_GRAVITY
+/turf/unsimulated/wall/gforce_inherent = GFORCE_EARTH_GRAVITY
 
 // ocean gravity handled at zlevel, so these need to track area revs
 /turf/space/fluid/gforce_area_rev = 0
 
 /turf/proc/change_gforce_inherent(gforce_diff)
-/turf/simulated/change_gforce_inherent(gforce_diff)
 	src.gforce_inherent += gforce_diff
 	src.gforce_area_rev = 0
 
 /turf/proc/set_gforce_inherent(new_gforce)
-/turf/simulated/set_gforce_inherent(new_gforce)
 	src.gforce_inherent = new_gforce
 	src.gforce_area_rev = 0
 

@@ -32,7 +32,7 @@
 
 /obj/machinery/gravity_tether/process(mult)
 	. = ..()
-	if (!istype(src.loc, /turf/simulated))
+	if (!isfloor(src.loc))
 		if (src.processing_state == TETHER_PROCESSING_PENDING)
 			src.finish_gravity_change()
 		if (src.gforce_intensity != 0)

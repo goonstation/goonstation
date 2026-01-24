@@ -9,6 +9,7 @@
 	if (istype(user) && I.no_gravity)
 		user.no_gravity = 1
 		user.set_gravity(get_turf(user))
+		user.update_traction(get_turf(user))
 
 /datum/component/loctargeting/no_gravity/on_removed(atom/movable/source, atom/old_loc)
 	. = ..()
@@ -19,3 +20,4 @@
 			if (A.no_gravity)
 				user.no_gravity = 1 //keep on if we are still holdin stuff
 		user.set_gravity(get_turf(user))
+		user.update_traction(get_turf(user))
