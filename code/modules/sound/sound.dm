@@ -823,6 +823,7 @@ proc/narrator_mode_sound_file(sound_file)
 		"pug" = sound('sound/misc/talk/pug.ogg'),	"pug!" = sound('sound/misc/talk/pug_exclaim.ogg'),"pug?" = sound('sound/misc/talk/pug_ask.ogg'), \
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
+		"monkey" = sound('sound/misc/talk/monkey.ogg'),	"monkey!" = sound ('sound/misc/talk/monkey_exclaim.ogg'),"monkey?" = sound('sound/misc/talk/monkey_ask.ogg'), \
 		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
 		"cyborg_distorted" = sound('sound/misc/talk/cyborg_distorted.ogg'),	"cyborg_distorted!" = sound('sound/misc/talk/cyborg_exclaim_distorted.ogg'),"cyborg_distorted?" = sound('sound/misc/talk/cyborg_ask_distorted.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\

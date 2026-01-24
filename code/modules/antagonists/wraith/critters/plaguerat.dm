@@ -1,7 +1,7 @@
 //Add death
 ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 TYPEINFO(/mob/living/critter/wraith/plaguerat)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED, SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT, SPEECH_OUTPUT_DEADCHAT_PLAGUE_RAT)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED, SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT)
 
 /mob/living/critter/wraith/plaguerat
 	name = "plague rat"
