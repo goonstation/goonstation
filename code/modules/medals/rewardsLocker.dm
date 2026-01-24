@@ -1240,15 +1240,12 @@
 
 		var/obj/item/card/id/dabbing_license/skin_target = activator.find_type_in_hand(/obj/item/card/id/dabbing_license)
 		if (skin_target)
-			var/obj/item/card/id/dabbing_license/br/new_id = new /obj/item/card/id/dabbing_license/br(get_turf(activator))
-			new_id.fingerprints = skin_target.fingerprints
-			new_id.fingerprints_full = skin_target.fingerprints_full
-			new_id.fingerprintslast = skin_target.fingerprintslast
-			skin_target.fingerprints = null
-			skin_target.fingerprints_full = null
-			skin_target.fingerprintslast = null
-			qdel(skin_target)
-			activator.put_in_hand_or_drop(new_id)
+			skin_target.name = /obj/item/card/id/dabbing_license/br::name
+			skin_target.icon_state = /obj/item/card/id/dabbing_license/br::icon_state
+			skin_target.desc = /obj/item/card/id/dabbing_license/br::desc
+			skin_target.registered = /obj/item/card/id/dabbing_license/br::registered
+			skin_target.assignment = /obj/item/card/id/dabbing_license/br::assingment
+
 			return 1
 		else
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a dabbing license in your hands."))
