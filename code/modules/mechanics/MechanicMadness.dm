@@ -42,6 +42,7 @@ TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
 	var/default_hat_y = 0
 	var/default_hat_x = 0
 	var/amount_of_prevent_move_comps = 0
+	var/assembly_overlay = null //! the overlay that will be put on the cabinet if it houses an assembly
 	custom_suicide = TRUE
 
 	New()
@@ -166,6 +167,10 @@ TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
 			src.add_medium_light("cabinet_light", src.light_color)
 		else
 			src.remove_medium_light("cabinet_light")
+		//we want to
+		src.ClearSpecificOverlays("assembly_overlay")
+		if(src.assembly_overlay && istype(locate(/obj/item/assembly) in src.contents,/obj/item/assembly))
+			src.AddOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "cabinet_assembly_overlay"), "assembly_overlay")
 
 	proc/close_storage_menus() // still ugly but probably quite better performing
 		for(var/mob/chump in src.users)
@@ -252,6 +257,7 @@ TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
 		density=1
 		anchored = UNANCHORED
 		icon_state="housing_cabinet"
+		assembly_overlay = "cabinet_assembly_overlay"
 		flags = EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
 		default_hat_y = 14
