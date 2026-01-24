@@ -20,7 +20,7 @@
 		var/mob/living/carbon/human/H = holder.owner
 		if(!istype(H))
 			return 1
-		if(headless_skeleton_warning()) // Headless skeletons die if they use this.
+		if(src.headless_skeleton_warning()) // Headless skeletons die if they use this.
 			return 1
 		if (ismonkey(H))
 			if (!istype(H.default_mutantrace, /datum/mutantrace/monkey))
