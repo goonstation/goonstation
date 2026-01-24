@@ -522,8 +522,7 @@
 		/datum/manufacture/radio_upgrade/civilian)
 	hidden = list(/datum/manufacture/id_card_gold,
 		/datum/manufacture/implant_access_infinite,
-		/datum/manufacture/radio_upgrade/command,
-		/datum/manufacture/radio_upgrade/security)
+		/datum/manufacture/radio_upgrade/command)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 /obj/machinery/manufacturer/hop_and_uniform

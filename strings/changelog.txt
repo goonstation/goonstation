@@ -1,5 +1,74 @@
 
+(t)fri jan 23 26
+(u)Mr. Moriarty
+(p)25534
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Four new measurement instructions have been added to the ChemiCompiler. See minor changelog for details.
+(+)T: Measures the temperature of the reagents in reservoir sx and stores the value in the Amount register (ax). Value rounded to the nearest degree Celsius.
+(+)A: Measures the aggregate (total) volume of the reagents in reservoir sx and stores the value in the Amount register (ax). Value rounded to the nearest unit.
+(+)V: Measures the volume of reagent number *ptr in reservoir sx and stores the value in the Amount register (ax). Value rounded to the nearest unit.
+(+)N: Measures the number of reagents in reservoir sx and stores the value in the Amount register (ax).
+(u)RubberRats
+(p)25472
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Adds faded and split versions for 5 hairstyles (see minor changes).
+(*)Also adds hair parts, based off existing styles and meant to be combined with other hair.  Original sprites by Walp, Retrino and myself.
+(+)Styles with faded versions: Blunt Pompadour, Big Pompadour, Ringlets, Pageboy. Also adds a split version of Massive Braids.
+(+)Styles with hair parts: High Ponytail, Wavy Ponytail, Spiky Ponytail, Messy Ponytail, Pigtails, High Bun, Double Buns, Crown Braid
+(+)Pageboy has been resprited slightly to add texture.
+(u)QuiteLiterallyAnything
+(p)25529
+(e)⚖💊|C-Balance, A-Medical
+(+)Made short-sightedness not cover overhead text chat.
+(u)RubiCubie
+(p)25333
+(e)⚗|A-Chemistry
+(+)Compost now gives you food poisoning and a reminder of how bad it is. Plant people may use it as a small toxin medication instead.
+(t)thu jan 22 26
+(u)A.I. the artificial idiot
+(p)25562
+(e)🎨|C-Sprites
+(*)Adds Maghaz, a dish made from brains and gravy, good for Illithids and safe for human consumption
+(t)wed jan 21 26
+(u)LeahTheTech
+(p)25661
+(e)⚖⛔🧛|C-Balance, C-Removal, A-Gamemodes
+(*)Wraiths no longer have access to deadchat. The endlessly backseating whispers of the dead have been silenced.
+(u)glowbold
+(p)25644
+(e)🪲❗🎭🐣|C-Bug, E-FUCK, A-RP, A-Respawning
+(+)RP: Setting DNR should no longer block respawn timers from appearing.
+(t)tue jan 20 26
+(u)LorrMaster
+(p)25634
+(e)🆕🧱|C-Feature, A-Materials
+(+)A bunch of items that should be made of plastic now use plastic as their default material.
+(u)Lord_Earthfire
+(p)25565
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Emagging a genetics console fries its radiation dose controller, vastly improving the gene scanners ability to cook someone alive.
+(+)Deconstructing an emagged computer console now transfers the emagged state onto the curcuitboard, making consoles build with that stay emagged.
+(u)Chasu
+(p)25659
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The HPD is now cheaper to fabricate and buy.
+(u)LorrMaster
+(p)25633
+(e)🪲🧱|C-Bug, A-Materials
+(+)Speculative fix for invisible Rocko
+(u)JORJ949
+(p)25654
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Forensic, Mining, Robotics, Bartender and Catering PDAs now have unique sprites.
 (t)mon jan 19 26
+(u)Kanthes
+(p)25660
+(e)|
+(+)The wellspring artifact will no longer attempt to flood the station with fluids that don't like existing.
+(u)CalliopeSoups
+(p)25449
+(e)🔊👽|C-Sound, A-Mutantraces
+(+)Monkeys now go oo aa when speaking.
 (u)nova2053
 (p)25620
 (e)🆕🍝|C-Feature, A-Catering
