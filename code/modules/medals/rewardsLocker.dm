@@ -1266,8 +1266,8 @@
 
 		var/obj/item/paper/folded/plane/pod/item_target = activator.find_type_in_hand(/obj/item/paper/folded/plane)
 		if (item_target)
-			target_item.icon_state = /obj/item/paper/folded/plane/pod::icon_state
-			target_item.throw_speed = /obj/item/paper/folded/plane/pod::throw_speed
+			item_target.icon_state = /obj/item/paper/folded/plane/pod::icon_state
+			item_target.throw_speed = /obj/item/paper/folded/plane/pod::throw_speed
 			return 1
 		else
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a paper plane in your hands."))
