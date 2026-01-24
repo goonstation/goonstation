@@ -40,7 +40,7 @@
 
 	message.format_speaker_prefix = {"\
 		<span class='game deadsay'>\
-			<span class='prefix'>DEAD: </span>\
+			<span class='prefix'>DEAD (OOC): </span>\
 			<span class='name' data-ctx='[mind_ref]'>[src.role]<span class='text-normal'> \
 	"}
 
@@ -64,31 +64,6 @@
 	id = SPEECH_OUTPUT_DEADCHAT_GHOST
 	priority = SPEECH_OUTPUT_PRIORITY_HIGH
 	role = "Ghost"
-
-
-/datum/speech_module/output/deadchat/wraith
-	id = SPEECH_OUTPUT_DEADCHAT_WRAITH
-	priority = SPEECH_OUTPUT_PRIORITY_HIGH
-	role = "Wraith"
-
-
-/datum/speech_module/output/deadchat/poltergeist
-	id = SPEECH_OUTPUT_DEADCHAT_POLTERGEIST
-	priority = SPEECH_OUTPUT_PRIORITY_HIGH
-	role = "Poltergeist"
-
-
-/datum/speech_module/output/deadchat/plague_rat
-	id = SPEECH_OUTPUT_DEADCHAT_PLAGUE_RAT
-	priority = SPEECH_OUTPUT_PRIORITY_HIGH
-	role = "Plague Rat"
-
-
-/datum/speech_module/output/deadchat/wraith_summon
-	id = SPEECH_OUTPUT_DEADCHAT_WRAITH_SUMMON
-	priority = SPEECH_OUTPUT_PRIORITY_HIGH
-	role = "Wraith Summon"
-
 
 /datum/speech_module/output/deadchat_announcer
 	id = SPEECH_OUTPUT_DEADCHAT_ANNOUNCER

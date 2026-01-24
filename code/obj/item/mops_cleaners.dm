@@ -592,6 +592,7 @@ TRASH BAG
 	stamina_damage = 15
 	stamina_cost = 4
 	stamina_crit_chance = 10
+	default_material = "plastic"
 
 	New()
 		..()
@@ -1107,6 +1108,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	rand_pos = TRUE
 	flags = TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
+	default_material = "plastic"
+	material_amt = 0.2
 	var/base_state = "trashbag"
 	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet
 
