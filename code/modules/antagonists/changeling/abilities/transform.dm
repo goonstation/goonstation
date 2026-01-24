@@ -91,7 +91,7 @@
 			boutput(holder.owner, SPAN_ALERT("We need to absorb more DNA to use this ability."))
 			return 1
 
-		if(headless_skeleton_warning()) // Headless skeletons die if they use this.
+		if(src.headless_skeleton_warning()) // Headless skeletons die if they use this.
 			return 1
 
 		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(H.absorbed_dna, /proc/cmp_text_asc))
