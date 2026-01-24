@@ -585,14 +585,14 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	if(winner == team_NT) //putting this in a seperate code block for cleanliness
 		for(var/datum/mind/mind in team_NT.members)
-			mind.current.unlock_medal("Red Baron", TRUE)
+			mind.current.unlock_medal("Fame and Fartuna", TRUE)
 		var/value = world.load_intra_round_value("nt_win")
 		if(isnull(value))
 			value = 0
 		world.save_intra_round_value("nt_win", value + 1)
 	else if(winner == team_SY)
 		for(var/datum/mind/mind in team_SY.members)
-			mind.current.unlock_medal("Red Baron", TRUE)
+			mind.current.unlock_medal("Fame and Fartuna", TRUE)
 		var/value = world.load_intra_round_value("sy_win")
 		if(isnull(value))
 			value = 0
