@@ -23,7 +23,7 @@
 	var/initial_digestion_delay = 6
 	var/digestion_delay = 6
 	///Counter for fluid digestion ticks
-	var/counter = 0
+	var/digestion_delay_counter = 0
 
 	New(loc, datum/organHolder/nholder)
 		. = ..()
@@ -113,7 +113,7 @@
 
 		if (src.reagents.total_volume) src.reagent_digestion(mult)
 		else
-			counter = 0
+			digestion_delay_counter = 0
 			digestion_delay = initial_digestion_delay ///Resets itself
 
 		// if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2))
@@ -175,14 +175,14 @@
 				break
 
 	proc/reagent_digestion(mult = 1)
-		if (src.counter > src.digestion_delay)
+		if (src.digestion_delay_counter > src.digestion_delay)
 			src.digestion_delay = src.initial_digestion_delay // Reagents can only affect the speed of the initial delay
-			src.counter = src.digestion_delay/2 // After the first delay, digestion begins running at half time
+			src.digestion_delay_counter = src.digestion_delay/2 // After the first delay, digestion begins running at half time
 
 			src.reagents.trans_to(src.donor, src.digestion_per_tick_fluid, src.reagents.has_reagent("charcoal", 5)? 0.5 : 1) // Charcoal reduces chemical absorbtion in the stomach
 		else
-			if (src.counter == 0) src.digestion_delay = (src.reagents.has_reagent("antacid")? 2 * src.initial_digestion_delay : src.initial_digestion_delay)
-			src.counter += mult * (src.reagents.has_reagent("snac")? 2 : 1) // Antacids and permeability increasers respectively alter the stomach absorbtion timings
+			if (src.digestion_delay_counter == 0) src.digestion_delay = (src.reagents.has_reagent("antacid")? 2 * src.initial_digestion_delay : src.initial_digestion_delay)
+			src.digestion_delay_counter += mult * (src.reagents.has_reagent("snac")? 2 : 1) // Antacids and permeability increasers respectively alter the stomach absorbtion timings
 		return
 
 	proc/digest_organ(obj/item/organ/selectedorgan)

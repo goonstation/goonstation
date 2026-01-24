@@ -56,7 +56,7 @@ datum
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.organHolder && prob(20))
-						H.organHolder.heal_organ(1*mult, 1*mult, 1*mult, "stomach")
+						H.organHolder.heal_organ(2*mult, 2*mult, 2*mult, "stomach")
 				..()
 				return
 
