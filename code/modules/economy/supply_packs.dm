@@ -656,7 +656,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/cocktailparty
 	name = "Cocktail Party Supplies"
-	desc = "x1 Cocktail Shaker, x2 Cocktail Umbrella Boxes, x2 Cocktail Doodads Boxes, x1 Fruit Wedges box, x1 Salt Shaker. All you need to be the next up and coming amateur mixologist."
+	desc = "x1 Cocktail Shaker, x2 Cocktail Umbrella Boxes, x2 Cocktail Doodads Boxes, x1 Fruit Wedges Box, x1 Salt Shaker. All you need to be the next up and coming amateur mixologist."
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/drinks/cocktailshaker,
 					/obj/item/storage/box/cocktail_umbrellas = 2,
@@ -761,7 +761,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/glowsticksassorted
 	name = "Assorted Glowsticks Crate - 4 pack"
-	desc = "x4 Assorted Glowsticks Boxes. Everything you need for your very own DIY rave!"
+	desc = "x4 Assorted Glowstick Boxes. Everything you need for your very own DIY rave!"
 	contains = list(/obj/item/storage/box/glowstickbox/assorted = 4)
 	cost = PAY_UNTRAINED*4
 	containertype = /obj/storage/crate
@@ -927,7 +927,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Prosthetic Augmentation Kit"
 
 /datum/supply_packs/restricted_medicine
-	name = "Restricted Medicine Shipment (Cardlocked \[Medical])"
+	name = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
 	desc = "x1 Omnizine bottle, x1 Perfluorodecalin bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle."
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/bottle/omnizine,
@@ -937,7 +937,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/glass/bottle/ether)
 	cost = PAY_DOCTORATE*5
 	containertype = /obj/storage/secure/crate
-	containername = "Restricted Medicine Shipment (Cardlocked \[Medical])"
+	containername = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
 	access = access_medical_director
 
 /datum/supply_packs/cyborg
