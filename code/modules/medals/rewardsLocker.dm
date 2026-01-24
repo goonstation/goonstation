@@ -1235,13 +1235,23 @@
 	once_per_round = 1
 
 	rewardActivate(var/mob/activator)
-		if (ishuman(activator))
-			var/mob/living/carbon/human/H = activator
-			H.equip_if_possible(new /obj/item/card/id/dabbing_license/br(H), SLOT_WEAR_ID)
-			boutput(H, "You feel pretentious.")
+		if (!istype(activator))
+			return
+
+		var/obj/item/card/id/dabbing_license/skin_target = activator.find_type_in_hand(/obj/item/card/id/dabbing_license)
+		if (skin_target)
+			var/obj/item/card/id/dabbing_license/br/new_id = new /obj/item/card/id/dabbing_license/br(get_turf(activator))
+			new_id.fingerprints = skin_target.fingerprints
+			new_id.fingerprints_full = skin_target.fingerprints_full
+			new_id.fingerprintslast = skin_target.fingerprintslast
+			skin_target.fingerprints = null
+			skin_target.fingerprints_full = null
+			skin_target.fingerprintslast = null
+			qdel(skin_target)
+			activator.put_in_hand_or_drop(new_id)
 			return 1
 		else
-			boutput(activator, SPAN_ALERT("Unable to redeem."))
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a dabbing license in your hands."))
 			return
 
 /datum/achievementReward/paper_pod
@@ -1256,15 +1266,8 @@
 
 		var/obj/item/paper/folded/plane/pod/item_target = activator.find_type_in_hand(/obj/item/paper/folded/plane)
 		if (item_target)
-			var/obj/item/paper/folded/plane/pod/new_pod = new /obj/item/paper/folded/plane/pod(get_turf(activator))
-			new_pod.fingerprints = item_target.fingerprints
-			new_pod.fingerprints_full = item_target.fingerprints_full
-			new_pod.fingerprintslast = item_target.fingerprintslast
-			item_target.fingerprints = null
-			item_target.fingerprints_full = null
-			item_target.fingerprintslast = null
-			qdel(item_target)
-			activator.put_in_hand_or_drop(new_pod)
+			target_item.icon_state = /obj/item/paper/folded/plane/pod::icon_state
+			target_item.throw_speed = /obj/item/paper/folded/plane/pod::throw_speed
 			return 1
 		else
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a paper plane in your hands."))
