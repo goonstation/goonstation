@@ -5,7 +5,7 @@
 RMB on buildmode button                = Begin source area selection
 
 Ctrl-RMB on buildmode button           = Toggle automatically reselect moved area
-Shift-RMB on buildmode button          = Set turf type to leave behind
+Shift-RMB on buildmode button          = Set turf type to leave behind (optional)
 Alt-RMB on buildmode button            = Toggle moving space
 
 Shift-LMB on turf                      = Move area to location
@@ -14,12 +14,12 @@ Shift-LMB on turf                      = Move area to location
 	icon_state = "buildmode_grid"
 	var/toggle_auto_reselect = TRUE
 	var/toggle_skip_space = TRUE
-	var/type_turftoleave = /turf/simulated/floor/plating
+	var/type_turftoleave
 	var/list/selected_turfs
 	var/turf/source_turf
 	var/turf/bottom_left_selected
 	var/turf/top_right_selected
-	var/tmp/image/marker = null
+	var/tmp/image/marker
 	var/selection_mode = FALSE
 
 
@@ -81,23 +81,51 @@ Shift-LMB on turf                      = Move area to location
 
 
 	proc/move_contents_to(var/turf/target, var/turftoleave, skip_space)
-		for (var/turf/S in selected_turfs)
-			if(istype(S, /turf/space) && skip_space) continue
-			var/turf/T = locate(S.x - bottom_left_selected.x + target.x, S.y - bottom_left_selected.y + target.y, target.z)
-			T.ReplaceWith(S.type, keep_old_material = 0)
-			T.appearance = S.appearance
-			T.set_density(S.density)
-			T.set_dir(S.dir)
+		var/list/move_data = list()
 
-			for (var/atom/movable/AM as anything in S)
+		// snapshot source
+		for (var/turf/S in selected_turfs)
+			if (istype(S, /turf/space) && skip_space)
+				continue
+
+			var/list/atoms = list()
+			for (var/atom/movable/AM in S)
 				if (istype(AM, /obj/effects/precipitation)) continue
 				if (istype(AM, /obj/overlay/tile_effect)) continue
-				AM.set_loc(T)
-			if(turftoleave)
-				S.ReplaceWith(turftoleave, keep_old_material = 0)
-			else
-				S.ReplaceWithSpaceForce()
+				atoms += AM
 
+			move_data += list(list(
+				"source" = S,
+				"type" = S.type,
+				"appearance" = S.appearance,
+				"density" = S.density,
+				"dir" = S.dir,
+				"atoms" = atoms
+			))
+
+		// write to target
+		for (var/entry in move_data)
+			var/turf/S = entry["source"]
+			var/turf/T = locate(
+				S.x - bottom_left_selected.x + target.x,
+				S.y - bottom_left_selected.y + target.y,
+				target.z
+			)
+
+			T.ReplaceWith(entry["type"], keep_old_material = 0)
+			T.appearance = entry["appearance"]
+			T.set_density(entry["density"])
+			T.set_dir(entry["dir"])
+
+			for (var/atom/movable/AM in entry["atoms"])
+				AM.set_loc(T)
+
+		if (turftoleave)
+			for (var/entry in move_data)
+				var/turf/S = entry["source"]
+				S.ReplaceWith(turftoleave, keep_old_material = 0)
+
+		// auto-reselect
 		if (toggle_auto_reselect)
 			var/turf/new_tr = locate(
 				target.x + (top_right_selected.x - bottom_left_selected.x),
