@@ -3,7 +3,7 @@ proc/BeginSpacePush(var/atom/movable/A)
 		var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
 		if(controller)
 			controller.space_controller.push_list += A
-			A.inertia_value = GFORCE_EARTH_GRAVITY
+			A.inertia_value = 1
 			A.temp_flags |= SPACE_PUSHING
 
 proc/EndSpacePush(var/atom/movable/A)
