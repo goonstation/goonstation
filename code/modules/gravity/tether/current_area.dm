@@ -1,9 +1,8 @@
 TYPEINFO(/obj/machinery/gravity_tether/current_area)
-	mats = list("metal" = 30,
-				"crystal_dense" = 10,
+	mats = list("metal" = 20,
 				"metal_superdense" = 10,
-				"koshmarite" = 5,
-				"energy_extreme" = 5)
+				"koshmarite" = 15,
+				"energy_high" = 10,)
 /obj/machinery/gravity_tether/current_area
 	name = "local-area gravity tether"
 	passive_wattage_per_g_quantum = 1 WATT

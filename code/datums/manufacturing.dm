@@ -174,10 +174,10 @@
 	time = 60 SECONDS
 	frame_path = /obj/machinery/gravity_tether/station
 	item_requirements = list("metal" = 50,
-							"crystal_dense" = 50,
-							"metal_superdense" = 40,
+							"crystal_dense" = 10,
+							"metal_superdense" = 30,
 							"koshmarite" = 30,
-							"energy_extreme" = 20,)
+							"energy_high" = 40,)
 	category = "Machinery"
 
 /datum/manufacture/mechanics/gravity_tether_area
@@ -186,9 +186,9 @@
 	time = 20 SECONDS
 	frame_path = /obj/machinery/gravity_tether/current_area
 	item_requirements = list("metal" = 20,
-							 "crystal_dense" = 10,
 							 "metal_superdense" = 10,
-							 "koshmarite" = 10)
+							 "koshmarite" = 15,
+							 "energy_high" = 10,)
 	category = "Machinery"
 
 
