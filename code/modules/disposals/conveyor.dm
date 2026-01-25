@@ -391,7 +391,6 @@ TYPEINFO(/obj/machinery/conveyor) {
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
 	if (!can_convey(A))
 		return
-	A.inertia_value = 0 // slides, doesn't push
 	var/movedir = currentdir	// base movement dir
 	if(divert && currentdir == divdir)	// update if diverter present
 		movedir = divert
