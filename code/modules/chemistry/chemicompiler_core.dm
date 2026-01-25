@@ -163,7 +163,7 @@
 
 
 /datum/chemicompiler_core/proc/parseCBF(string, button)
-	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@", "#", "*")
+	var/list/tokens = list(">", "<", "+", "-", ".",",", "T", "A", "V", "N", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@", "#", "*")
 	var/l = length(string)
 	var/list/inst = new
 	var/token
@@ -238,9 +238,23 @@
 				if(".") //buffer text
 					textBuffer += ascii2text(data[dp+1])
 				if(",") //load volume of sx into ax
+					loopUsed += 19
+				if ("T") // Load temperature of sx into ax.
 					loopUsed += 9
 					var/datum/chemicompiler_executor/E = src.holder
-					ax = E.reagent_volume(sx)
+					ax = E.reagent_temperature(sx)
+				if ("A", ",") // Load aggregate (total) volume of sx into ax.
+					loopUsed += 9
+					var/datum/chemicompiler_executor/E = src.holder
+					ax = E.reagent_aggregate_volume(sx)
+				if ("V") // Load volume of individual reagent from sx into ax.
+					loopUsed += 9
+					var/datum/chemicompiler_executor/E = src.holder
+					ax = E.reagent_volume(sx, src.data[src.dp + 1])
+				if ("N") // Load number of reagents in sx into ax.
+					loopUsed += 9
+					var/datum/chemicompiler_executor/E = src.holder
+					ax = E.no_of_reagents(sx)
 				if("\[") //start loop
 					if(data[dp + 1] == 0)
 						count = 1
@@ -283,7 +297,7 @@
 					tgui_process.update_uis(E.holder)
 				if("$") //heat
 					loopUsed = 30
-					var/heatTo = (273 - tx) + ax
+					var/heatTo = (T0C - tx) + ax
 					heatReagents(sx, heatTo)
 				if("@") //transfer
 					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
@@ -659,19 +673,77 @@
 	if (core.statusChangeCallback)
 		return call(holder, core.statusChangeCallback)(oldStatus, newStatus)
 
-/datum/chemicompiler_executor/proc/reagent_volume(rid)
+/datum/chemicompiler_executor/proc/reagent_temperature(reservoir_id)
 	if(!istype(src.holder))
 		qdel(src)
 		return
-	if(rid < 1 || rid > 10)
-		beepCode(1, 1) // Invalid reservoir id
-		return 0
-	if(!istype(reservoirs[rid], /obj/item/reagent_containers/glass))
-		beepCode(3, 1) // No reservoir loaded in specified position
-		return 0
-	var/obj/item/reagent_containers/holder = reservoirs[rid]
+
+	if ((reservoir_id < 1) || (reservoir_id > 10))
+		src.err(CC_ERROR_INVALID_SX)
+		return FALSE
+
+	var/obj/item/reagent_containers/holder = src.reservoirs[reservoir_id]
+	if (!istype(holder, /obj/item/reagent_containers/glass))
+		src.err(CC_ERROR_INVALID_CONTAINER_SX)
+		return FALSE
+
 	tgui_process.update_uis(src.holder)
-	return holder.reagents.total_volume
+	return round(holder.reagents.total_temperature - T0C, 1)
+
+/datum/chemicompiler_executor/proc/reagent_aggregate_volume(reservoir_id)
+	if(!istype(src.holder))
+		qdel(src)
+		return
+
+	if ((reservoir_id < 1) || (reservoir_id > 10))
+		src.err(CC_ERROR_INVALID_SX)
+		return FALSE
+
+	var/obj/item/reagent_containers/holder = src.reservoirs[reservoir_id]
+	if (!istype(holder, /obj/item/reagent_containers/glass))
+		src.err(CC_ERROR_INVALID_CONTAINER_SX)
+		return FALSE
+
+	tgui_process.update_uis(src.holder)
+	return round(holder.reagents.total_volume, 1)
+
+/datum/chemicompiler_executor/proc/reagent_volume(reservoir_id, reagent_index)
+	if(!istype(src.holder))
+		qdel(src)
+		return
+
+	if ((reservoir_id < 1) || (reservoir_id > 10))
+		src.err(CC_ERROR_INVALID_SX)
+		return FALSE
+
+	var/obj/item/reagent_containers/holder = src.reservoirs[reservoir_id]
+	if (!istype(holder, /obj/item/reagent_containers/glass))
+		src.err(CC_ERROR_INVALID_CONTAINER_SX)
+		return FALSE
+
+	if (!src.index_check(reservoir_id, reagent_index))
+		src.err(CC_ERROR_INDEX_INVALID)
+		return FALSE
+
+	tgui_process.update_uis(src.holder)
+	return round(holder.reagents.get_reagent_amount(holder.reagents.reagent_list[reagent_index]), 1)
+
+/datum/chemicompiler_executor/proc/no_of_reagents(reservoir_id)
+	if(!istype(src.holder))
+		qdel(src)
+		return
+
+	if ((reservoir_id < 1) || (reservoir_id > 10))
+		src.err(CC_ERROR_INVALID_SX)
+		return FALSE
+
+	var/obj/item/reagent_containers/holder = src.reservoirs[reservoir_id]
+	if (!istype(holder, /obj/item/reagent_containers/glass))
+		src.err(CC_ERROR_INVALID_CONTAINER_SX)
+		return FALSE
+
+	tgui_process.update_uis(src.holder)
+	return length(holder.reagents.reagent_list)
 
 /datum/chemicompiler_executor/proc/get_ui_data()
 	. = core.get_ui_data()

@@ -1395,6 +1395,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		..()
 
 	unequipped(var/mob/user)
+		user.remove_ability_holder(/datum/abilityHolder/dancing)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.hud)

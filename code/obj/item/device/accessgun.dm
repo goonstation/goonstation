@@ -211,7 +211,8 @@ TYPEINFO(/obj/item/device/accessgun)
 	afterattack(obj/target, mob/user, reach, params)
 		var/obj/machinery/door/airlock/door_reqs = target
 		if (!istype(door_reqs))
-			. = ..()
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
+			boutput(user, SPAN_NOTICE("[src] can only reprogram or scan airlocks!"))
 			return
 		if(target.deconstruct_flags & DECON_BUILT)
 			if (length(door_reqs.req_access))

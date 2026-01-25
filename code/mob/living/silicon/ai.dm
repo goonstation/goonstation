@@ -121,8 +121,6 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
 	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
-	//var/list/connected_shells = list()
-	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
 	var/printalerts = 1
 	//Comm over powernet stuff
@@ -607,18 +605,6 @@ or don't if it uses a custom topopen overlay
 				SPAWN(0)
 					src.choose_name(3)
 
-	else if (istype(W, /obj/item/roboupgrade/ai/))
-		if (src.dismantle_stage >= 2 && src.dismantle_stage < 4)
-			var/obj/item/roboupgrade/ai/R = W
-			user.visible_message(SPAN_ALERT("<b>[user.name]</b> inserts [R] into [src.name]."))
-			user.drop_item()
-			R.set_loc(src)
-			R.slot_in(src)
-		else if (src.dismantle_stage == 4 || isdead(src))
-			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be pointless."))
-		else
-			boutput(user, SPAN_ALERT("You need to open the AI's chassis cover to insert this. Unlock it with a card and then pry it open."))
-
 	else if (istype(W, /obj/item/clothing/mask/moustache/))
 		if (src.moustache_mode == 0)
 			src.moustache_mode = 1
@@ -745,8 +731,6 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
 
-	if (src.dismantle_stage >= 2 && length(src.installed_modules) > 0)
-		actions += "Remove a module"
 	if (src.dismantle_stage == 3)
 		actions += "Remove CPU Unit"
 	if (src.dismantle_stage < 4 && isdead(src))
@@ -762,13 +746,6 @@ or don't if it uses a custom topopen overlay
 
 			if ("Restart AI")
 				src.try_rebooting_it(user)
-
-			if ("Remove a module")
-				if (istype(src.installed_modules[1],/obj/item/roboupgrade/ai/))
-					var/obj/item/roboupgrade/ai/A = src.installed_modules[1]
-					A.slot_out(src)
-					user.put_in_hand_or_drop(A)
-					src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [A] from [src]."))
 	else
 		switch(user.a_intent)
 			if(INTENT_HELP)
@@ -1591,7 +1568,7 @@ or don't if it uses a custom topopen overlay
 	set name = "View Crew Manifest"
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 	var/target = src
 	if(src.deployed_to_eyecam)
@@ -1950,7 +1927,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -1978,7 +1955,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -2004,7 +1981,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -2502,7 +2479,7 @@ proc/get_mobs_trackable_by_AI()
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(last_announcement + announcement_cooldown > world.time)

@@ -210,7 +210,7 @@
 
 		if (isobserver(user))
 			. += "<br>"
-			if(user.mind.get_player()?.dnr)
+			if(user.mind.get_player()?.dnr || isadminghost(user))
 				. += "Current Laws:<br>"
 				. += src.format_for_logs()
 			else
