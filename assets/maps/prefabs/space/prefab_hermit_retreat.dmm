@@ -1,0 +1,1718 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aO" = (
+/obj/table/auto,
+/obj/machinery/cell_charger{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet,
+/area/prefab/hermit_retreat)
+"aU" = (
+/obj/item/sheet/glass/fullstack,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"aX" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3";
+	pixel_x = -1;
+	pixel_y = -9
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"bw" = (
+/turf/simulated/wall/auto/asteroid/comet/ice,
+/area/prefab/hermit_retreat)
+"cb" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cw" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/hermit_retreat)
+"df" = (
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	desc = "A mangled scrap of power cable.";
+	icon_state = "coil1";
+	name = "torn up cable"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"dn" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/prefab/hermit_retreat)
+"dZ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/hermit_retreat)
+"ep" = (
+/obj/machinery/disk_rack/office,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"eX" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/obj/item/raw_material/scrap_metal,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ff" = (
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/anomalous_server_room)
+"fk" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/incandescent/broken,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"fq" = (
+/turf/simulated/floor/plating/airless/asteroid/comet,
+/area/prefab/hermit_retreat)
+"fG" = (
+/obj/item/raw_material/shard/plasmacrystal,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"gP" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "This microwave does not look well.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "hmicro";
+	name = "broken microwave oven"
+	},
+/obj/table/auto,
+/obj/map/light/screen,
+/turf/simulated/floor/plating/airless/asteroid/comet,
+/area/prefab/hermit_retreat)
+"hz" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/variableTurf/clear,
+/area/prefab/hermit_retreat)
+"hK" = (
+/obj/stool/chair/moveable,
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/hermit_retreat)
+"hO" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"hV" = (
+/obj/fakeobject/bigcabinets/rackmount,
+/obj/map/light/screen,
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"ii" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/hermit_retreat)
+"iu" = (
+/obj/stool/bed,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"iF" = (
+/obj/item/raw_material/scrap_metal,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"iL" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 4
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"jE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"kJ" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/anomalous_server_room)
+"kK" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"mh" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"mm" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"mD" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/hermit_retreat)
+"ny" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4";
+	pixel_x = -9;
+	pixel_y = -10
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"nF" = (
+/mob/living/critter/small_animal/floateye,
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4";
+	pixel_x = -9;
+	pixel_y = -10
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/prefab/anomalous_server_room)
+"nU" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"pf" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"pg" = (
+/turf/simulated/floor/plating/damaged1,
+/area/prefab/hermit_retreat)
+"pu" = (
+/turf/simulated/floor/plating/scorched,
+/area/prefab/hermit_retreat)
+"pV" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"qd" = (
+/obj/lattice,
+/obj/machinery/communications_dish,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"rb" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"rl" = (
+/obj/decal/cleanable/writing{
+	words = "WHY WHY WHY WHY WHY WHY"
+	},
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/hermit_retreat)
+"sl" = (
+/obj/table/auto,
+/obj/random_item_spawner/circuitboards/one_or_zero,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"tV" = (
+/turf/variableTurf/clear,
+/area/prefab/hermit_retreat)
+"vn" = (
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	desc = "A mangled scrap of power cable.";
+	icon_state = "coil1";
+	name = "torn up cable"
+	},
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/hermit_retreat)
+"vL" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating/damaged1,
+/area/prefab/hermit_retreat)
+"xb" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = 2
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"xm" = (
+/obj/item/screwdriver{
+	pixel_x = 11;
+	pixel_y = 0
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"xE" = (
+/obj/random_item_spawner/circuitboards/one{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"xM" = (
+/turf/simulated/floor/airless/plating,
+/area/prefab/hermit_retreat)
+"zy" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/prefab/hermit_retreat)
+"zR" = (
+/obj/table/auto,
+/obj/item/cable_coil/yellow{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"AD" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Bt" = (
+/turf/simulated/wall/auto/asteroid/comet/ice,
+/area/noGenerate)
+"Cg" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/communications_dish,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"CR" = (
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"Dl" = (
+/obj/fakeobject{
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/prefab/anomalous_server_room)
+"Eo" = (
+/obj/item/raw_material/scrap_metal,
+/turf/variableTurf/clear,
+/area/prefab/hermit_retreat)
+"EC" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/hermit_retreat)
+"Fb" = (
+/obj/table/auto,
+/obj/random_item_spawner/desk_stuff/maybe_few{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Fn" = (
+/obj/map/light/void,
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/prefab/anomalous_server_room)
+"FC" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/hermit_retreat)
+"FZ" = (
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/prefab/anomalous_server_room)
+"Ga" = (
+/obj/decal/cleanable/writing{
+	words = "WHAT. DOES. IT. MEAN."
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Ge" = (
+/turf/simulated/floor/plating/damaged2,
+/area/prefab/hermit_retreat)
+"Hi" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/obj/machinery/disk_rack/office,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Hx" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/simulated/wall/auto/asteroid/comet/ice,
+/area/noGenerate)
+"HW" = (
+/obj/table/auto,
+/obj/item/paper/hermit_1{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Iy" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"IX" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Jr" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/prefab/anomalous_server_room)
+"Ka" = (
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/desk_clutter,
+/obj/item/paper/book/from_file/dwainedummies,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/prefab/anomalous_server_room)
+"Kk" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/circuitboards/one{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"La" = (
+/obj/computerframe{
+	anchored = 1;
+	desc = "It is highly unlikely that this still works.";
+	dir = 4;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/screen,
+/turf/simulated/floor/plating/airless/asteroid/comet,
+/area/prefab/hermit_retreat)
+"MD" = (
+/obj/item/cable_coil/cut{
+	color = "#DD0000"
+	},
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/prefab/anomalous_server_room)
+"MG" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/floatingtiles{
+	pixel_x = -1;
+	pixel_y = -25;
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"MU" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Nx" = (
+/obj/random_item_spawner/circuitboards/one_or_zero{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Ob" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating/damaged2,
+/area/prefab/hermit_retreat)
+"Od" = (
+/obj/fakeobject/tapedeck,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/prefab/anomalous_server_room)
+"Pm" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
+	dir = 4;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer";
+	tag = "icon-offbroken (EAST)"
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet,
+/area/prefab/hermit_retreat)
+"QB" = (
+/obj/random_item_spawner/circuitboards/one_or_zero{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"QF" = (
+/obj/computerframe{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet,
+/area/prefab/hermit_retreat)
+"Rf" = (
+/obj/random_item_spawner/circuitboards/one_or_zero{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Rw" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/fakeobject/teleport_pad,
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"SN" = (
+/obj/item/paper/hermit_2,
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"SQ" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ST" = (
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Tp" = (
+/turf/simulated/wall/false_wall/reinforced,
+/area/prefab/hermit_retreat)
+"Tq" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"TI" = (
+/obj/storage/closet,
+/obj/item/clothing/suit/labcoat,
+/obj/random_item_spawner/circuitboards/one,
+/obj/item/cell,
+/obj/item/storage/box/cablesbox,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"Ua" = (
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/hermit_retreat)
+"Uq" = (
+/obj/item/cable_coil/cut{
+	color = "#DD0000"
+	},
+/turf/simulated/floor/airless/black/grime,
+/area/prefab/hermit_retreat)
+"Vm" = (
+/obj/decal/floatingtiles{
+	pixel_x = 4;
+	pixel_y = -31
+	},
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3";
+	pixel_x = -11;
+	pixel_y = 8
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/anomalous_server_room)
+"VJ" = (
+/obj/fakeobject/apc_broken,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/hermit_retreat)
+"XE" = (
+/obj/table/reinforced/auto,
+/obj/fakeobject{
+	anchored = 1;
+	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "oldb";
+	name = "broken computer"
+	},
+/obj/map/light/screen,
+/turf/simulated/floor/plating,
+/area/prefab/anomalous_server_room)
+"YM" = (
+/turf/simulated/wall/auto/reinforced,
+/area/prefab/hermit_retreat)
+"Zo" = (
+/obj/storage/crate,
+/obj/item/raw_material/telecrystal,
+/obj/item/raw_material/telecrystal,
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/prefab/anomalous_server_room)
+"Zz" = (
+/obj/decal/cleanable/ash,
+/obj/computerframe{
+	anchored = 1;
+	desc = "It is highly unlikely that this still works.";
+	dir = 4;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/screen,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+"ZS" = (
+/obj/item/wrench,
+/turf/simulated/floor/airless/black,
+/area/prefab/hermit_retreat)
+
+(1,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(2,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+Bt
+Bt
+MU
+MU
+MU
+Bt
+Bt
+MU
+MU
+MU
+MU
+"}
+(3,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+"}
+(4,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+MU
+Cg
+mm
+mm
+qd
+mm
+mm
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+"}
+(5,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+"}
+(6,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+"}
+(7,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+MU
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+"}
+(8,1,1) = {"
+Tq
+Tq
+Tq
+MU
+MU
+rb
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+"}
+(9,1,1) = {"
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+Iy
+MU
+MU
+MU
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+MU
+"}
+(10,1,1) = {"
+Tq
+Tq
+MU
+qd
+MU
+MU
+MU
+MU
+Bt
+Bt
+MU
+MU
+df
+cb
+MU
+MU
+MU
+MU
+IX
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(11,1,1) = {"
+Tq
+Tq
+MU
+hO
+eX
+MU
+MU
+MU
+Bt
+Bt
+Bt
+Bt
+MU
+Iy
+MU
+Bt
+Bt
+MU
+Iy
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(12,1,1) = {"
+Tq
+Tq
+MU
+SQ
+MU
+MU
+iF
+MU
+Bt
+Bt
+Bt
+Bt
+Bt
+Hx
+Bt
+Bt
+Bt
+MU
+Iy
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(13,1,1) = {"
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(14,1,1) = {"
+Tq
+Tq
+MU
+MU
+MU
+Bt
+cb
+Bt
+dZ
+Bt
+Bt
+Bt
+Bt
+dZ
+dZ
+dZ
+dZ
+Bt
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(15,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+Bt
+dZ
+dZ
+dZ
+Bt
+QF
+La
+Pm
+xm
+aU
+AD
+dZ
+Bt
+MU
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(16,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+dZ
+dZ
+Zz
+dZ
+aO
+fq
+xM
+QB
+ST
+kK
+Kk
+dZ
+Bt
+Bt
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(17,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+dZ
+TI
+pf
+Ga
+FC
+xb
+Ua
+rl
+ST
+dZ
+dZ
+dZ
+dZ
+Bt
+Bt
+MU
+MU
+MU
+MU
+MU
+"}
+(18,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+dZ
+Hi
+ZS
+Nx
+vn
+hK
+rl
+Ua
+fk
+dZ
+pg
+Ge
+pg
+Ob
+Bt
+MU
+MU
+MU
+MU
+MU
+"}
+(19,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Bt
+dZ
+ep
+iu
+dZ
+EC
+sl
+zR
+kK
+Ua
+vL
+pg
+dn
+Eo
+tV
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(20,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+bw
+bw
+dZ
+VJ
+rl
+HW
+Fb
+Rf
+cw
+dZ
+pg
+pu
+tV
+hz
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(21,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+bw
+bw
+gP
+Ua
+Uq
+kK
+xM
+rl
+fG
+mD
+ST
+zy
+tV
+tV
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(22,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+bw
+bw
+bw
+fq
+xE
+xM
+ii
+iL
+pV
+dZ
+pg
+ST
+dZ
+Bt
+MU
+MU
+MU
+MU
+MU
+MU
+"}
+(23,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+dZ
+dZ
+dZ
+dZ
+dZ
+Tp
+dZ
+dZ
+dZ
+dZ
+ST
+ST
+dZ
+Bt
+Bt
+MU
+MU
+MU
+MU
+MU
+"}
+(24,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+bw
+bw
+dZ
+Ka
+kJ
+CR
+aX
+Jr
+YM
+dZ
+dZ
+dZ
+dZ
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+"}
+(25,1,1) = {"
+Tq
+Tq
+Bt
+Bt
+Bt
+bw
+bw
+dZ
+XE
+ff
+CR
+hV
+FZ
+FZ
+nU
+dZ
+Bt
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+"}
+(26,1,1) = {"
+Tq
+Tq
+Bt
+Bt
+Bt
+bw
+bw
+dZ
+Od
+ff
+ny
+MD
+Fn
+hV
+FZ
+dZ
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+MU
+"}
+(27,1,1) = {"
+Tq
+Tq
+Bt
+Bt
+Bt
+bw
+bw
+dZ
+dZ
+Rw
+MG
+FZ
+nF
+FZ
+FZ
+dZ
+Bt
+Bt
+Bt
+Bt
+MU
+MU
+MU
+MU
+MU
+"}
+(28,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+Bt
+Bt
+Bt
+dZ
+dZ
+dZ
+jE
+Zo
+Vm
+FZ
+dZ
+Bt
+Tq
+Tq
+Tq
+MU
+MU
+MU
+MU
+MU
+"}
+(29,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+dZ
+Dl
+SN
+CR
+mh
+dZ
+Bt
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+MU
+MU
+"}
+(30,1,1) = {"
+Tq
+Tq
+Tq
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+dZ
+dZ
+dZ
+dZ
+dZ
+dZ
+Bt
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(31,1,1) = {"
+Tq
+Tq
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Bt
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(32,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Bt
+Bt
+Tq
+Tq
+Bt
+Bt
+Bt
+Bt
+Bt
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(33,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Bt
+Tq
+Tq
+Tq
+Bt
+Bt
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(34,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(35,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(36,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(37,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(38,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(39,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}
+(40,1,1) = {"
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+"}

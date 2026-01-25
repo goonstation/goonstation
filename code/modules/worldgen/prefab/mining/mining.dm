@@ -277,6 +277,14 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 25
 		prefabSizeY = 25
 
+	hermit_retreat
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/space/prefab_hermit_retreat.dmm"
+		prefabSizeX = 40
+		prefabSizeY = 25
+
+
 // Drone Spawners
 	drone_common
 		maxNum = 8
