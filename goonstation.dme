@@ -2057,6 +2057,7 @@
 #include "code\modules\speech\modules\listen\modifiers\_listen_modifier_parent.dm"
 #include "code\modules\speech\modules\listen\modifiers\brain_damage.dm"
 #include "code\modules\speech\modules\listen\modifiers\chat_context_flags.dm"
+#include "code\modules\speech\modules\speech\modifiers\chemicompiler"
 #include "code\modules\speech\modules\listen\modifiers\clown_disbelief.dm"
 #include "code\modules\speech\modules\listen\modifiers\mob_modifiers.dm"
 #include "code\modules\speech\modules\listen\modifiers\phone_formatting.dm"
