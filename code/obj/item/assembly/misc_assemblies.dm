@@ -77,6 +77,7 @@ Contains:
 	RegisterSignal(src, COMSIG_CELL_TRY_SWAP, PROC_REF(try_cell_swap))
 	RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(do_cell_swap))
 	RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(on_geiger_tick))
+	RegisterSignal(src, COMSIG_ITEM_STORED, PROC_REF(on_storage_addition))
 	..()
 
 /obj/item/assembly/proc/set_up_new(var/mob/user, var/obj/item/new_trigger, var/obj/item/new_applier, var/obj/item/new_target)
@@ -163,6 +164,24 @@ Contains:
 /obj/item/assembly/proc/on_wearer_death(var/affected_assembly, var/mob/dying_mob)
 	//we relay the signal to the trigger, in case of health-analyser
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ON_OWNER_DEATH, dying_mob)
+
+/obj/item/assembly/proc/on_storage_addition(var/affected_assembly, var/mob/user)
+	if(istype(src.loc, /obj/item/storage/mechanics))
+		// in that case, let's place the assembly onto the cabinet
+		var/obj/item/storage/mechanics/affected_cabinet = src.loc
+		src.pixel_x = 0
+		src.pixel_y = 15
+		src.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		affected_cabinet.vis_contents += src
+
+
+
+/obj/item/assembly/Exited(var/atom/movable/affected_assembly, var/atom/new_location)
+	. = ..()
+	if(istype(src.loc, /obj/item/storage/mechanics))
+		var/obj/item/storage/mechanics/affected_cabinet = src.loc
+		src.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		affected_cabinet.vis_contents -= src
 
 /obj/item/assembly/receive_signal(datum/signal/signal)
 	if(src.expended)
