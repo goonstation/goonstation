@@ -124,7 +124,7 @@
 	fault_typepath = /datum/grav_fault/extreme
 	color = "#ff0099"
 	alpha = 200
-	distortion_count = 4
+	distortion_count = 3
 
 /obj/effect/gravanom_pulse
 	plane = PLANE_DISTORTION
