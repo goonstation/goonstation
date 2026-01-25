@@ -15,7 +15,23 @@ Contains:
 
 */
 
-//////////////////////////////////////// Assembly signal helper /////////////////////////////////
+//////////////////////////////////////// Assembly signal helper/controler /////////////////////////////////
+var/datum/assembly_controller/assembly_controls
+
+/// This datum will be a singleton with the purpose of holding icon datums of various combinations of assemblies.
+/// This is so that only one icon needs to be created for a new assembly type and we don't need to rely on a bunch of overlays.
+/// The assemblies will check if their icon exists on the controller and, if not, will generate and add it to it.
+
+/datum/assembly_controller
+	var/list/assembly_icons
+
+/datum/assembly_controller/New()
+	. = ..()
+	src.assembly_icons = list()
+
+/datum/assembly_controller/disposing()
+	. = ..()
+	src.assembly_icons = null
 
 /// This datum exists because we cannot return anything else than bitflags in signals. So we pass this with the signal and have it modified by whatever catches the signal at the end.
 /datum/assembly_signal_helper
@@ -59,6 +75,7 @@ Contains:
 	var/mob/last_armer = null //! for tracking/logging of who armed the assembly
 	var/obj/item/chargeable_component = null //! if one of the components of the assembly can be charged, it will be referenced here. Use this if you want the assembly to be reachargeable.
 	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
+	var/saved_icon_path = null //! this is used to check if the assembly needs to grab a new icon from the controler. It saves the last string generated while checking grab_icon()
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 	can_arcplate = FALSE
@@ -389,38 +406,78 @@ Contains:
 	src.add_fingerprint(user)
 	return
 
+///------ ------------------------------------------ ---------
+
+///------ Procs to handle icon generation of assemblies ---------
+
+
+/// This proc returns an icon that can be slapped onto the assembly. It is used to create the icon for the assembly_controller
+/obj/item/assembly/proc/generate_icon()
+	var/overlay_offset = 0 //how many pixels we want to move the overlays
+	var/new_icon_path = 'icons/obj/items/assemblies.dmi'
+	var/new_icon_state = "trigger_[src.trigger_icon_prefix]"
+	if(src.target && !src.target_item_prefix && !src.target_overlay_invisible)
+		new_icon_path = src.target.icon
+		new_icon_state = src.target.icon_state
+		overlay_offset += 5
+	var/icon/output_icon = icon(icon = new_icon_path,icon_state = new_icon_state)
+	if(src.target_item_prefix && !src.target_overlay_invisible)
+		var/icon/temp_icon_target = icon(icon = 'icons/obj/items/assemblies.dmi',icon_state = "target_[src.target_item_prefix]")
+		output_icon.Blend(temp_icon_target, ICON_OVERLAY, y = 1 + overlay_offset + src.icon_base_offset)
+	if(src.applier_icon_prefix)
+		var/icon/temp_icon_applier = icon(icon = 'icons/obj/items/assemblies.dmi',icon_state = "applier_[src.applier_icon_prefix]")
+		output_icon.Blend(temp_icon_applier, ICON_OVERLAY, y = 1 + overlay_offset + src.icon_base_offset)
+	//So the applier gets rendered over every other component, we add it here as an overlay
+	var/icon/temp_icon_trigger = icon(icon = 'icons/obj/items/assemblies.dmi',icon_state = "trigger_[src.trigger_icon_prefix]")
+	output_icon.Blend(temp_icon_trigger, ICON_OVERLAY, y = 1 + overlay_offset + src.icon_base_offset)
+	//last, but not least, we generate the cables for the underlay
+	if(!src.secured)
+		var/icon/temp_image_cables = icon(icon = 'icons/obj/items/assemblies.dmi',icon_state = "assembly_unsecured")
+		output_icon.Blend(temp_image_cables, ICON_UNDERLAY, y = 1 + overlay_offset + src.icon_base_offset)
+	// Now with the icon done, we can return it
+	return output_icon
+
+/// This proc returns an string that is used to save and grab the icon from the assembly_controller
+/obj/item/assembly/proc/generate_icon_string()
+	var/output_string = "trigger_[src.trigger_icon_prefix]_applier_[src.applier_icon_prefix]"
+	if(src.target && !src.target_overlay_invisible)
+		if(src.target_item_prefix)
+			output_string += "_target_[src.target_item_prefix]"
+		else
+			output_string += "_target_[src.target.icon_state]"
+	if(!src.secured)
+		output_string += "_unsecured"
+	return output_string
+
+/// This proc accesses assembly_controls to check for a new icon. If it returns true, we have updated the assemblies icon
+/obj/item/assembly/proc/grab_icon()
+	//we generate a new icon string to check if we need to update the icon
+	var/potentially_new_icon = src.generate_icon_string()
+	if(potentially_new_icon == src.saved_icon_path)
+		//if the icon path is what we have saved, nothing needs to be done and we can return here
+		return FALSE
+	// now, we check if an icon exists on the controller. If it doesn't, we need to generate it and add it to the controler
+	if(!assembly_controls.assembly_icons[potentially_new_icon])
+		assembly_controls.assembly_icons[potentially_new_icon] = src.generate_icon()
+	// now, either the icon did exist in the controller, or we added it. in both cases, we set the icon to the icon from the controller, save the new string and return true
+	src.icon = assembly_controls.assembly_icons[potentially_new_icon]
+	src.saved_icon_path = potentially_new_icon
+	return TRUE
+
+
+
 /obj/item/assembly/update_icon()
 	var/overlay_offset = 0 //how many pixels we want to move the overlays
-	src.overlays = null
-	src.underlays = null
+	src.grab_icon()
 	if(src.target && !src.target_item_prefix && !src.target_overlay_invisible)
-		//If the target doesn't add it's own special icon state
-		src.icon = src.target.icon
-		src.icon_state = src.target.icon_state
+		//With this icon, we need to add some offset to the other overlays
 		overlay_offset += 5
-	else
-		src.icon = initial(src.icon)
-		src.icon_state = "trigger_[src.trigger_icon_prefix]"
-		if(src.target_item_prefix && !src.target_overlay_invisible)
-			var/image/temp_image_target = image('icons/obj/items/assemblies.dmi', src, "target_[src.target_item_prefix]")
-			temp_image_target.pixel_y += overlay_offset + src.icon_base_offset
-			src.overlays += temp_image_target
-	if(src.applier_icon_prefix)
-		var/image/temp_image_applier = image('icons/obj/items/assemblies.dmi', src, "applier_[src.applier_icon_prefix]")
-		temp_image_applier.pixel_y += overlay_offset + src.icon_base_offset
-		src.overlays += temp_image_applier
+	// additional components add and remove overlays. In that case, we need to check them accordingly
 	if (src.additional_components)
 		for(var/obj/item/iterated_component in src.additional_components)
 			//if we have any additional components, we send them a signal to see if they add overlays to the assembly.
 			SEND_SIGNAL(iterated_component,COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS , src, overlay_offset)
-	//So the applier gets rendered over every other component, we add it here as an overlay
-	var/image/temp_image_trigger = image('icons/obj/items/assemblies.dmi', src, "trigger_[src.trigger_icon_prefix]")
-	temp_image_trigger.pixel_y += overlay_offset + src.icon_base_offset
-	src.overlays += temp_image_trigger
-	if(!src.secured)
-		var/image/temp_image_cables = image('icons/obj/items/assemblies.dmi', src, "assembly_unsecured")
-		temp_image_cables.pixel_y += overlay_offset + src.icon_base_offset
-		src.underlays += temp_image_cables
+///------ ------------------------------------------ ---------
 
 
 /obj/item/assembly/get_help_message(dist, mob/user)
