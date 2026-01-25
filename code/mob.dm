@@ -741,6 +741,8 @@ TYPEINFO(/mob)
 						return
 
 				src.set_loc(newloc)
+				tmob.inertia_value = 1
+				tmob.inertia_dir = get_dir(newloc, oldloc)
 				tmob.set_loc(oldloc)
 
 				if(tmob.buckled)
