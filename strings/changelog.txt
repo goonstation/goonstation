@@ -1,4 +1,9 @@
 
+(t)mon jan 26 26
+(u)JORJ949
+(p)25724
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Agent IDs that select the Clown, Gold, NT or Syndicate sprites will no longer lose their special icon at an ID computer.
 (t)fri jan 23 26
 (u)Mr. Moriarty
 (p)25534
