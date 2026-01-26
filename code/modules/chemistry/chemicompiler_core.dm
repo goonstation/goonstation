@@ -237,7 +237,6 @@
 					data[dp + 1]--
 				if(".") //buffer text
 					textBuffer += ascii2text(data[dp+1])
-				if(",") //load volume of sx into ax
 					loopUsed += 19
 				if ("T") // Load temperature of sx into ax.
 					loopUsed += 9
