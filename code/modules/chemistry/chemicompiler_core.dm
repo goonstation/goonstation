@@ -237,7 +237,6 @@
 					data[dp + 1]--
 				if(".") //buffer text
 					textBuffer += ascii2text(data[dp+1])
-					loopUsed += 19
 				if ("T") // Load temperature of sx into ax.
 					loopUsed += 9
 					var/datum/chemicompiler_executor/E = src.holder
