@@ -191,7 +191,6 @@
 				W.set_loc(src)
 				src.fueltank = W
 				src.myhud?.update_fuel()
-			src.open_parts_panel(user)
 			return
 
 		..()
