@@ -977,20 +977,21 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 		return TRUE
 
 /obj/machinery/light/proc/do_burn_out()
-	if(src.current_lamp.light_status == LIGHT_OK)
-		var/original_brightness = src.light.brightness
-		playsound(src, 'sound/effects/snaptape.ogg', 30, TRUE)
-		src.light.set_brightness(original_brightness * 3)
-		logTheThing(LOG_STATION, null, "Light '[name]' burned out (burnprob: [current_lamp.burnprob]) at ([log_loc(src)])")
-		SPAWN(0.2 SECONDS)
-			src.light.set_brightness(original_brightness)
-			src.current_lamp.breakprob = WORN_LIGHT_BREAKPROB
-			src.current_lamp.light_status = LIGHT_BURNED
-			src.current_lamp.update()
-			src.update_icon_state()
-			playsound(src, 'sound/effects/sparks4.ogg', 40, TRUE)
-			src.on = FALSE
-			src.light.disable()
+	if(!src.current_lamp.light_status == LIGHT_OK)
+		return
+	var/original_brightness = src.light.brightness
+	playsound(src, 'sound/effects/snaptape.ogg', 30, TRUE)
+	src.light.set_brightness(original_brightness * 3)
+	logTheThing(LOG_STATION, null, "Light '[name]' burned out (burnprob: [current_lamp.burnprob]) at ([log_loc(src)])")
+	SPAWN(0.2 SECONDS)
+		src.light.set_brightness(original_brightness)
+		src.current_lamp.breakprob = WORN_LIGHT_BREAKPROB
+		src.current_lamp.light_status = LIGHT_BURNED
+		src.current_lamp.update()
+		src.update_icon_state()
+		playsound(src, 'sound/effects/sparks4.ogg', 40, TRUE)
+		src.on = FALSE
+		src.light.disable()
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
