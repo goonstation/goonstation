@@ -374,6 +374,9 @@
 			src.hd.root.remove_file(crisis)
 			src.hd.root.add_file(new /datum/computer/file/text/pda2manual/knockoff)
 
+	computeroperator
+		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
+
 
 /obj/item/device/pda2/pickup(mob/user)
 	..()
