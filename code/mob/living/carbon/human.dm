@@ -958,7 +958,7 @@
 	src.throw_mode_off()
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
 		return
-	if (src.stat)
+	if (src.stat || src.lying)
 		return
 
 	var/obj/item/I = src.equipped()

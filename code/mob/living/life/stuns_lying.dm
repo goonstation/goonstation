@@ -44,8 +44,8 @@
 					owner.lying = TRUE
 
 				owner.stat = setStat
-				owner.empty_hands()
-
+				for (var/obj/item/grab/G in owner.equipped_list())
+					qdel(G)
 				if (world.time - last_recovering_msg >= 60 || last_recovering_msg == 0)
 					if (prob(10))
 						last_recovering_msg = world.time

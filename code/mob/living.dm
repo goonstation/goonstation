@@ -511,6 +511,9 @@ TYPEINFO(/mob/living)
 			src.swap_hand()
 		return
 
+	if (src.lying)
+		return
+
 	var/obj/item/equipped = src.equipped()
 	var/use_delay = (target.flags & CLICK_DELAY_IN_CONTENTS || !(target in src.contents)) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 	var/grace_penalty = 0
@@ -952,6 +955,8 @@ TYPEINFO(/mob/living)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
 		SEND_SIGNAL(src, COMSIG_MOB_LAYDOWN_STANDUP, src.lying)
+		if (!src.lying)
+			src.setStatus("standing_up", 1 SECOND)
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)
