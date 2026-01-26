@@ -460,7 +460,7 @@ var/list/access_all_actually = null
 		if(access_head_of_personnel)
 			return "Head of Personnel's Office"
 		if(access_dwaine_superuser)
-			return "DWAINE Superuser"
+			return "Mainframe Administration"
 		if(access_researchfoyer)
 			return "Research Foyer"
 		if(access_artlab)
