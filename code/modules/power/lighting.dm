@@ -1135,6 +1135,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
+		attack_particle(user, src)
 		user.lastattacked = get_weakref(src)
 		if(prob(1+W.force * 5))
 
