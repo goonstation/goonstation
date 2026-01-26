@@ -25,7 +25,7 @@
 /obj/item/storage/box/cablesbox/_color/spawn_contents = list(/obj/item/cable_coil/_color = 7);\
 /datum/supply_packs/electrical/_color;\
 /datum/supply_packs/electrical/_color/name = ""+"Electrical Supplies Crate ("+#_color+") - 2 pack";\
-/datum/supply_packs/electrical/_color/desc = ""+"x2 Cabling Box - "+#_color+" (14 cable coils total)";\
+/datum/supply_packs/electrical/_color/desc = ""+"x2 Cabling Boxes - "+#_color+". (14 cable coils total)";\
 /datum/supply_packs/electrical/_color/contains = list(/obj/item/storage/box/cablesbox/_color = 2);\
 /datum/supply_packs/electrical/_color/containername = ""+"Electrical Supplies Crate ("+#_color+")- 2 pack";\
 /obj/cable/auto/_color;\
