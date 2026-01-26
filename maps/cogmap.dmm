@@ -58591,19 +58591,20 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/fakeobject/airlock_broken/firelock{
-	desc = "Rust has rendered this airlock useless.";
-	dir = 4;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "bdoor_pyro";
-	name = "rusted airlock"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/fluid_pipe/straight/sewage{
 	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	panel_open = 1;
+	density = 0;
+	icon_state = "maint_open";
+	locked = 1;
+	operating = -1
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
