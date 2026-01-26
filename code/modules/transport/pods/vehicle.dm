@@ -182,15 +182,7 @@
 				return
 
 		if (istype(W, /obj/item/tank/plasma))
-			if(src.fueltank || !src.atmostank)
-				src.open_parts_panel(user)
-			else
-				logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
-				boutput(usr, SPAN_NOTICE("You attach the [W.name] to [src.name]'s fuel supply valve."))
-				user.drop_item()
-				W.set_loc(src)
-				src.fueltank = W
-				src.myhud?.update_fuel()
+			src.open_parts_panel(user)
 			return
 
 		..()
@@ -700,7 +692,10 @@
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
 					if(vehicular_manslaughter && ishuman(M))
 						src.pilot.unlock_medal("Vehicular Manslaughter", 1)
-
+			else if(istype(target, /obj/artifact))
+				var/obj/artifact/hit_artifact = target
+				//Accelerating 3 tiles from standstill into an artifact produces a physical stimulus of ~50
+				hit_artifact.ArtifactStimulus("force", round(power * 4))
 			else if(isturf(target) && power > 20)
 				if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
 					return
