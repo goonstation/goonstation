@@ -43,11 +43,6 @@
 /turf/proc/get_gforce_fractional()
 	. = src.get_gforce_current() / GFORCE_EARTH_GRAVITY
 
-// asteroids have enough G for some traction (for mining)
-/turf/simulated/wall/auto/asteroid/gforce_inherent = GFORCE_TRACTION_PARTIAL
-/turf/unsimulated/floor/plating/asteroid/gforce_inherent = GFORCE_TRACTION_PARTIAL
-/turf/simulated/floor/plating/airless/asteroid/gforce_inherent = GFORCE_TRACTION_PARTIAL
-
 /turf/setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
 	. = ..()
 	if (contains_negative_matter(src))
