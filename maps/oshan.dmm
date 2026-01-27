@@ -31185,6 +31185,17 @@
 "exn" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"exP" = (
+/obj/item/device/light/floodlight{
+	pixel_y = -2;
+	pixel_x = 5
+	},
+/obj/item/wrench{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "eyX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -31493,6 +31504,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/garden/zen)
+"ePa" = (
+/obj/disposalpipe/segment/bent{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "ePD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32161,18 +32181,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
-"ftT" = (
-/obj/item/device/light/floodlight{
-	pixel_y = -2;
-	pixel_x = 5
-	},
-/obj/item/wrench{
-	pixel_y = 2;
-	pixel_x = -6
-	},
-/obj/decal/cleanable/dirt/dirt4,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "fvh" = (
 /obj/machinery/manufacturer/personnel,
 /obj/window_blinds/cog2/left{
@@ -37775,11 +37783,11 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/cable{
-	icon_state = "1-4"
+/obj/disposalpipe/segment{
+	dir = 4
 	},
-/obj/disposalpipe/segment/bent{
-	dir = 1
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
@@ -44207,7 +44215,7 @@
 	dir = 8
 	},
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
@@ -98333,7 +98341,7 @@ abw
 bRS
 moa
 moa
-qlA
+xIm
 dou
 aqn
 aqn
@@ -98634,8 +98642,8 @@ gEi
 bRS
 bRS
 moa
+jFi
 moa
-qlA
 dou
 aqn
 aqn
@@ -98934,10 +98942,10 @@ aOZ
 xPt
 bRS
 bRS
+exP
+jFi
 moa
-moa
-moa
-qlA
+dou
 dou
 aqn
 aqn
@@ -99236,11 +99244,11 @@ bRS
 bRS
 bRS
 moa
+jFi
 moa
-moa
-moa
-xIm
 dou
+dou
+aqn
 aqn
 aqn
 aqn
@@ -99531,18 +99539,18 @@ wLQ
 bLm
 bLm
 tnU
-moa
-moa
-moa
-moa
+ePa
 moa
 moa
 moa
 moa
 moa
 jFi
-ftT
+moa
 dou
+dou
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -99832,19 +99840,19 @@ bLr
 bLr
 ncz
 aGZ
-vcb
+bLr
 lWi
 bMy
 bMy
-tzm
-tzm
-tzm
 tzm
 tzm
 uer
 moa
 dou
 dou
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -100138,14 +100146,14 @@ bXH
 aQW
 bLr
 bLr
-moa
-moa
-moa
-moa
-moa
-moa
 dou
 dou
+dou
+dou
+dou
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -100440,13 +100448,13 @@ bdo
 bON
 cfP
 bRX
-moa
 dou
-dou
-dou
-dou
-dou
-dou
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -100743,7 +100751,7 @@ aQW
 bLr
 bLr
 dou
-dou
+aqn
 aqn
 aqn
 aqn
