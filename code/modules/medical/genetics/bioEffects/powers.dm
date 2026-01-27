@@ -859,34 +859,33 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Wreath yourself in burning flames."
 	icon_state = "immolate"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+		if (misfire)
+			return src.do_misfire()
+
+		playsound(src.owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 
 		if (linked_power.power > 1)
-			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> erupts into a huge column of flames! Holy shit!"))
-			fireflash_melting(get_turf(owner), 3, 7000, 2000, chemfire = CHEM_FIRE_RED)
+			src.owner.visible_message(SPAN_ALERT("<b>[src.owner.name]</b> erupts into a huge column of flames! Holy shit!"))
+			fireflash_melting(get_turf(src.owner), 3, 7000, 2000, chemfire = CHEM_FIRE_RED)
 		else if (owner.is_heat_resistant())
-			owner.show_message(SPAN_ALERT("Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh."))
-			return
+			src.owner.show_message(SPAN_ALERT("Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh."))
+			return CAST_ATTEMPT_SUCCESS
 		else
-			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
-			owner.set_burning(100)
-		return
+			src.owner.visible_message(SPAN_ALERT("<b>[src.owner.name]</b> suddenly bursts into flames!"))
+			src.owner.set_burning(100)
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire()
-		if (..())
-			return 1
-
-		playsound(owner.loc, 'sound/effects/bamf.ogg', 50, 0)
-		owner.show_message(SPAN_ALERT("You accidentally expunge all heat from your body. Whoops!"))
-		owner.bodytemperature = 0
-
-		return
+	proc/do_misfire()
+		playsound(src.owner.loc, 'sound/effects/bamf.ogg', 50, 0)
+		src.owner.show_message(SPAN_ALERT("You accidentally expunge all heat from your body. Whoops!"))
+		src.owner.bodytemperature = 0
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
