@@ -309,9 +309,7 @@ export class SecretBundleStoragePlugin {
           continue;
         }
 
-        if (chunk.name === 'secret-dummy') {
-          continue;
-        }
+        const shouldMirror = chunk.name !== 'secret-dummy';
 
         for (const file of [
           ...(chunk.files ?? []),
@@ -319,7 +317,9 @@ export class SecretBundleStoragePlugin {
         ]) {
           if (secretBundlePattern.test(file)) {
             filesToDelete.add(file);
-            filesToMirror.add(file);
+            if (shouldMirror) {
+              filesToMirror.add(file);
+            }
           }
         }
       }
