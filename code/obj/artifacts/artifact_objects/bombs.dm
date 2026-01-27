@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		switch(artitype.name)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
-				potential_reagents = list("nanites","activated plasma","mercury","lithium","plasma","radium","uranium","phlogiston",
+				potential_reagents = list("nanites", "activated plasma","mercury","lithium","plasma","radium","uranium","phlogiston",
 				"silicon","gypsum","sodium_sulfate","diethylamine","pyrosium","thermite","fuel","acid","silicate","lube","cryostylane",
 				"ash","clacid","oil","acetone","ammonia")
 			if ("martian")
@@ -592,3 +592,96 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				src.nuclear_fallout_amount = src.nuclear_fallout_amount * src.nuclear_fallout_decay_rate
 				if(floor(src.nuclear_fallout_amount) < 1)
 					O.ArtifactDestroyed()
+
+
+// biological bomb
+
+#define BIOBOMB_SMOKEY 0
+#define BIOBOMB_CLASSICAL_GAS 1
+
+
+/obj/machinery/artifact/bomb/biological
+
+	name = "artifact biological bomb"
+	associated_datum = /datum/artifact/bomb/biological
+
+	New()
+		..()
+		src.create_reagents(rand(10,50))
+
+/datum/artifact/bomb/biological
+	type_name = "Bomb (biological)"
+	rarity_weight = 90
+	explode_delay = 0
+	alarm_initial = null
+	alarm_during = null
+	alarm_final = null
+	react_xray = list(5,65,20,11,"ORGANIC MATTER DETECTED")
+	validtypes = list("wizard","eldritch")
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
+	var/payload_type = 0 // 0 for smoke, 1 for aerosol
+	recharge_delay = 10 MINUTES
+	var/list/payload_disease_reagents = list()
+
+	post_setup()
+		. = ..()
+		payload_type = rand(0,1)
+		var/payload_type_name = "unknown"
+		switch (payload_type)
+			if (BIOBOMB_SMOKEY)
+				payload_type_name = "smoke"
+			if (BIOBOMB_CLASSICAL_GAS)
+				payload_type_name = "propellant"
+
+		var/list/potential_disease_reagents = list()
+		switch(artitype.name)
+			if ("wizard")
+				// wacky and wizard related stuff
+				potential_disease_reagents = list("rainbow fluid", "painbow fluid", "grave dust", "banana peel", "explodingheadjuice")
+			if ("eldritch")
+				// insanely terrible diseases
+				potential_disease_reagents = list("gibbis", "pubbie tears", "rat_spit", "loose_screws", "prions", "e.coli", "green mucus")
+
+		if (length(potential_disease_reagents) > 0)
+			var/reagent = pick(potential_disease_reagents)
+			payload_disease_reagents += reagent
+			log_addendum = "Payload: [payload_type_name], [jointext(payload_disease_reagents, ", ")]"
+
+		recharge_delay = rand(300,800)
+
+	deploy_payload(var/obj/O)
+		if (..())
+			return
+
+		var/list/reaction_reagents = list()
+
+		for (var/X in payload_disease_reagents)
+			reaction_reagents += X
+
+		var/amountper = 0
+		if (length(reaction_reagents) > 0)
+			amountper = round(O.reagents.maximum_volume / reaction_reagents.len)
+		else
+			amountper = 20
+
+		for (var/X in reaction_reagents)
+			O.reagents.add_reagent(X,amountper)
+
+		switch(payload_type)
+			if(BIOBOMB_SMOKEY)
+				// normal smoke
+				O.reagents.smoke_start(50)
+			if(BIOBOMB_CLASSICAL_GAS)
+				// "classic" smoke
+				O.reagents.smoke_start(50,1)
+
+		if(QDELETED(O))
+			return
+		O.reagents.clear_reagents()
+
+		SPAWN(recharge_delay)
+			if (O)
+				O.ArtifactDeactivated()
+
+#undef BIOBOMB_SMOKEY
+#undef BIOBOMB_CLASSICAL_GAS
