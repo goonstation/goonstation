@@ -617,6 +617,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	alarm_during = null
 	alarm_final = null
 	react_xray = list(5,65,20,11,"ORGANIC MATTER DETECTED")
+	touch_descriptors = list("It's covered in a thin layer of slime")
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
 	var/payload_type = 0 // 0 for smoke, 1 for aerosol
