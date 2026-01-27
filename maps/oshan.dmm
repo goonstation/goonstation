@@ -9639,9 +9639,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/red/side{
-	dir = 6
-	},
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "aID" = (
 /turf/simulated/floor/specialroom/arcade,
@@ -22831,7 +22829,7 @@
 "bMm" = (
 /obj/machinery/flasher/portable,
 /obj/decal/stripe_caution,
-/turf/simulated/floor,
+/turf/simulated/floor/red,
 /area/station/security/main)
 "bMn" = (
 /turf/simulated/floor/red/side{
@@ -23617,8 +23615,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/item/storage/box/mousetraps,
-/obj/storage/cart,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -24098,6 +24094,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/storage/cart,
+/obj/item/storage/box/mousetraps,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -29036,7 +29034,7 @@
 /obj/item/reagent_containers/syringe,
 /obj/machinery/light/incandescent/cool,
 /obj/item/storage/firstaid/regular,
-/turf/simulated/floor/red,
+/turf/simulated/floor/carpet/red/standard/edge/se,
 /area/station/security/main)
 "cBA" = (
 /obj/landmark/gps_waypoint,
@@ -29825,9 +29823,13 @@
 	name = "interrogation pipe"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/coffeemaker/security,
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8
+/obj/item/storage/box/panic_buttons{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/device/panicbutton{
+	pixel_x = -1;
+	pixel_y = -1
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -30403,7 +30405,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "dSY" = (
 /obj/machinery/firealarm/directional/east,
@@ -30504,6 +30506,10 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/engine/eva)
+"dXH" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/wood/seven,
+/area/station/security/main)
 "dYy" = (
 /obj/stove,
 /obj/item/soup_pot,
@@ -30954,9 +30960,7 @@
 /obj/machinery/computer/announcement/station/security/department{
 	dir = 8
 	},
-/turf/simulated/floor/redblack{
-	dir = 10
-	},
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "evT" = (
 /obj/machinery/door/airlock/pyro/security/alt{
@@ -31279,7 +31283,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "eLd" = (
 /obj/table/reinforced/auto,
@@ -32805,14 +32809,6 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"gqd" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/station/security/main)
 "gqm" = (
 /obj/table/auto/desk,
 /obj/item/luggable_computer/personal,
@@ -32996,7 +32992,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "gyC" = (
 /obj/machinery/light/incandescent/netural,
@@ -33581,6 +33577,9 @@
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet/blue/fancy/narrow/se,
 /area/station/crew_quarters/bar)
+"haE" = (
+/turf/simulated/floor/carpet/red/standard/edge/north,
+/area/station/security/main)
 "haP" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/camera/directional/north{
@@ -33620,7 +33619,7 @@
 /area/space)
 "hcx" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/red,
+/turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/security/main)
 "hcV" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -33841,7 +33840,7 @@
 /obj/machinery/recharger{
 	pixel_y = 10
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/carpet/red/standard/edge/sw,
 /area/station/security/main)
 "hvp" = (
 /obj/storage/secure/closet/brig,
@@ -34032,7 +34031,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "hHG" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -34149,7 +34148,7 @@
 	name = "interrogation pipe"
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "hMq" = (
 /obj/mapping_helper/firedoor_spawn,
@@ -34317,9 +34316,7 @@
 /obj/item/device/radio/intercom/security,
 /obj/machinery/vending/security,
 /obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "idT" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -34412,11 +34409,11 @@
 /obj/machinery/light/incandescent/blueish{
 	dir = 8
 	},
-/obj/cable{
-	icon_state = "1-4"
+/obj/disposalpipe/segment{
+	dir = 2
 	},
-/obj/disposalpipe/segment/bent{
-	dir = 1
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
@@ -34699,13 +34696,6 @@
 /obj/stool/bench/blue,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
-"iyk" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment/bent,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "iAv" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment{
@@ -35430,7 +35420,7 @@
 	icon_state = "0-4"
 	},
 /obj/decal/stripe_caution,
-/turf/simulated/floor,
+/turf/simulated/floor/red,
 /area/station/security/main)
 "jqt" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -36722,7 +36712,7 @@
 /obj/stool/chair/red{
 	dir = 4
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "kPi" = (
 /obj/stocking,
@@ -36930,9 +36920,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/red/side{
-	dir = 5
-	},
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "lcr" = (
 /obj/machinery/camera/directional/east{
@@ -39563,8 +39551,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/red/side{
-	dir = 4
+/turf/simulated/floor/stairs/wood{
+	dir = 8
 	},
 /area/station/security/main)
 "nPP" = (
@@ -39890,7 +39878,7 @@
 /area/space)
 "okT" = (
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "ole" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -40291,9 +40279,6 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "oGD" = (
-/obj/item/storage/box/panic_buttons{
-	pixel_x = 6
-	},
 /obj/item/clothing/head/helmet/camera/security{
 	pixel_y = 10
 	},
@@ -40303,14 +40288,12 @@
 	name = "interrogation pipe"
 	},
 /obj/item/hand_labeler{
-	pixel_y = -2
+	pixel_y = -2;
+	pixel_x = 12
 	},
 /obj/table/reinforced/auto,
 /obj/item/device/prisoner_scanner{
 	pixel_x = -11
-	},
-/obj/item/device/panicbutton{
-	pixel_x = 6
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -40453,7 +40436,7 @@
 /area/station/chapel/office)
 "oNw" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "oNJ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -41335,11 +41318,15 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/coffeemaker/security,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /obj/item/kitchen/food_box/donut_box{
-	pixel_y = 10;
+	pixel_y = -6;
 	pixel_x = -1
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/carpet/red/standard/edge/west,
 /area/station/security/main)
 "pTU" = (
 /turf/simulated/wall/auto/supernorn,
@@ -42272,7 +42259,11 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/red,
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/red/standard/edge/east,
 /area/station/security/main)
 "qYT" = (
 /obj/strip_door,
@@ -42439,7 +42430,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/machinery/flasher/portable,
 /obj/decal/stripe_caution,
-/turf/simulated/floor,
+/turf/simulated/floor/red,
 /area/station/security/main)
 "riG" = (
 /obj/table/reinforced/auto,
@@ -42792,7 +42783,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "rAw" = (
 /obj/machinery/light/incandescent/warm,
@@ -43095,7 +43086,7 @@
 /obj/item/pen{
 	pixel_y = -2
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/carpet/red/standard/edge,
 /area/station/security/main)
 "rYx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -43696,7 +43687,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "sGx" = (
 /obj/machinery/computer/tetris,
@@ -44055,7 +44046,7 @@
 	name = "interrogation pipe"
 	},
 /obj/decal/stripe_caution,
-/turf/simulated/floor,
+/turf/simulated/floor/red,
 /area/station/security/main)
 "tbN" = (
 /obj/stool/chair/comfy/red{
@@ -45272,7 +45263,7 @@
 	},
 /obj/stool/chair/office/red,
 /obj/landmark/start/job/security_assistant,
-/turf/simulated/floor/red,
+/turf/simulated/floor/carpet/red/standard,
 /area/station/security/main)
 "uCY" = (
 /obj/decal/cleanable/blood/gibs{
@@ -47213,9 +47204,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/drink_rack/mug{
-	pixel_y = 28
-	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "wYK" = (
@@ -48326,6 +48314,9 @@
 /obj/machinery/light/traffic_light/trader_diner/delay5,
 /turf/space/fluid,
 /area/space)
+"ymg" = (
+/turf/simulated/floor/carpet/red/standard/edge/ne,
+/area/station/security/main)
 
 (1,1,1) = {"
 cer
@@ -96543,7 +96534,7 @@ bQQ
 aCG
 oNw
 eKU
-hcx
+dXH
 hcx
 pTI
 huL
@@ -96846,7 +96837,7 @@ aCG
 okT
 hHC
 kNT
-bMo
+haE
 uCe
 rYv
 bJR
@@ -97146,9 +97137,9 @@ bLj
 bQR
 aCG
 idM
-gqd
+hHC
 evK
-bMo
+ymg
 qYp
 cBc
 bJR
@@ -99861,7 +99852,7 @@ bLr
 bLr
 ncz
 aGZ
-iyk
+bLr
 ceG
 bLr
 bLr
