@@ -916,7 +916,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
 	id = "stowaway"
 	icon_state = "stowaway"
-	category = list("scenario")
+	category = list("spawn scenario")
 	points = 0
 	unselectable = TRUE
 
@@ -925,7 +925,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection, but you have no PDA and your pod cannot open wormholes."
 	id = "pilot"
 	icon_state = "pilot"
-	category = list("scenario")
+	category = list("spawn scenario")
 	points = 0
 
 
@@ -934,7 +934,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You always sleep through the start of the shift, and wake up in a random bed."
 	id = "sleepy"
 	icon_state = "sleepy"
-	category = list("scenario")
+	category = list("spawn scenario")
 	points = 0
 	spawn_delay = 10 SECONDS
 
@@ -966,7 +966,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "You don't remember much about last night, but you know you had a good time."
 	id = "partyanimal"
 	icon_state = "partyanimal"
-	category = list("scenario")
+	category = list("spawn scenario")
 	points = 0
 	spawn_delay = 3 SECONDS
 
