@@ -10,6 +10,10 @@
 /// When a client is calling New() (GLOBAL_SIGNAL, client)
 #define COMSIG_GLOBAL_CLIENT_NEW "global_client_new"
 
+// ---- z-levels ----
+	/// When `world.maxz` is incremented.
+	#define COMSIG_GLOBAL_MAXZ_INCREMENTED "global_maxz_incremented"
+
 // ---- cargo pads ----
 
 	/// When a cargo pad is destroyed, deconstructed, or turned off

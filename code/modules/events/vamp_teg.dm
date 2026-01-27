@@ -209,7 +209,7 @@ datum/teg_transformation/vampire
 
 	on_transform(obj/machinery/power/generatorTemp/teg)
 		. = ..()
-		abilityHolder = new /datum/abilityHolder/vampire(src)
+		abilityHolder = new /datum/abilityHolder/vampire(teg)
 		abilityHolder.owner = teg
 		abilityHolder.addAbility(/datum/targetable/vampire/blood_steal)
 		abilityHolder.addAbility(/datum/targetable/vampire/glare)

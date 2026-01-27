@@ -45,7 +45,8 @@ TYPEINFO_NEW(/obj/table)
 		START_TRACKING
 		if (src.has_drawer)
 			src.create_storage(/datum/storage/unholdable, spawn_contents = src.drawer_contents, slots = 13, max_wclass = W_CLASS_SMALL)
-
+			src.storage.open_sound = 'sound/effects/drawer_open.ogg'
+			src.storage.close_sound = 'sound/effects/drawer_close.ogg'
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()

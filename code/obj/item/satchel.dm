@@ -409,6 +409,7 @@
 		maxitems = 30
 		flags = null
 		w_class = W_CLASS_NORMAL
+		default_material = "plastic"
 
 		New()
 			..()

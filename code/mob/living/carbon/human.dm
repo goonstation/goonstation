@@ -107,6 +107,7 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
+	var/obj/ai_origin_object = null
 	var/bruteloss = 0
 	var/burnloss = 0
 
@@ -1149,12 +1150,16 @@
 		if (istype(hand, /obj/item/paper/newspaper))
 			if (hand.two_handed)
 				return FALSE
-
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		return FALSE
 
 
 /mob/living/carbon/human/UpdateName()
 	var/id_name = get_id_card(src.wear_id)?:registered
-	if (!face_visible())
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+		src.update_name_tag("")
+	else if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
 			src.update_name_tag(id_name)
