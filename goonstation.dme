@@ -528,7 +528,7 @@
 #include "code\datums\syndicate_buylist\buylist_headrev.dm"
 #include "code\datums\syndicate_buylist\buylist_job.dm"
 #include "code\datums\syndicate_buylist\buylist_parent.dm"
-#include "code\datums\syndicate_buylist\buylist_surpus.dm"
+#include "code\datums\syndicate_buylist\buylist_surplus.dm"
 #include "code\lists\jobs.dm"
 #include "code\mob\dead.dm"
 #include "code\mob\input.dm"
