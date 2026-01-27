@@ -786,7 +786,7 @@
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 50
 	window_pass = FALSE
-	silentshot = TRUE
+	no_hit_message = TRUE
 
 	New(power=50)
 		..()
