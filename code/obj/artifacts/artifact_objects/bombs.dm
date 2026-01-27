@@ -610,6 +610,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.create_reagents(rand(10,50))
 
 /datum/artifact/bomb/biological
+	associated_object = /obj/machinery/artifact/bomb/biological
 	type_name = "Bomb (biological)"
 	rarity_weight = 90
 	explode_delay = 0
