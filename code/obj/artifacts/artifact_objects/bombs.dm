@@ -621,13 +621,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	touch_descriptors = list("It's covered in a thin layer of slime")
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
-	var/payload_type = 0 // 0 for smoke, 1 for aerosol
+	var/payload_type = BIOBOMB_SMOKEY
 	recharge_delay = 10 MINUTES
 	var/list/payload_disease_reagents = list()
 
 	post_setup()
 		. = ..()
-		payload_type = rand(0,1)
+		payload_type = pick(BIOBOMB_SMOKEY, BIOBOMB_CLASSICAL_GAS)
 		var/payload_type_name = "unknown"
 		switch (payload_type)
 			if (BIOBOMB_SMOKEY)
@@ -635,19 +635,17 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if (BIOBOMB_CLASSICAL_GAS)
 				payload_type_name = "propellant"
 
-		var/list/potential_disease_reagents = list()
+		var/reagent = "unknown"
 		switch(artitype.name)
-			if ("wizard")
-				// wacky and wizard related stuff
-				potential_disease_reagents = list("rainbow fluid", "painbow fluid", "grave dust", "banana peel", "explodingheadjuice")
-			if ("eldritch")
-				// insanely terrible diseases
-				potential_disease_reagents = list("gibbis", "pubbie tears", "rat_spit", "loose_screws", "prions", "e.coli", "green mucus")
+			if("wizard")
+				reagent = pick("rainbow fluid", "painbow fluid", "grave dust", "banana peel", "explodingheadjuice")
 
-		if (length(potential_disease_reagents) > 0)
-			var/reagent = pick(potential_disease_reagents)
+			if("eldritch")
+				reagent = pick("gibbis", "pubbie tears", "rat_spit", "loose_screws", "prions", "e.coli", "green mucus")
+
+		if(reagent)
 			payload_disease_reagents += reagent
-			log_addendum = "Payload: [payload_type_name], [jointext(payload_disease_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [jointext(reagent, ", ")]"
 
 		recharge_delay = rand(300,800)
 
