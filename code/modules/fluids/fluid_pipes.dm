@@ -154,9 +154,44 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/quad/overfloor
 	level = OVERFLOOR
 
+//thats a lot of types there
+/obj/fluid_pipe/straight/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/straight/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/straight/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/straight/waste/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/elbow/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/elbow/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/elbow/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/elbow/waste/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/t_junction/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/t_junction/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/t_junction/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/t_junction/waste/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/quad/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/quad/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/quad/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/quad/waste/overfloor
+	level = OVERFLOOR
+
+
 /obj/fluid_pipe/fluid_tank
 	name = "fluid tank"
-	desc = "A big ol' tank of fluid. Basically a big pipe."
+	desc = "A big ol' tank for fluid. Basically a big pipe."
 	icon = 'icons/obj/fluidpipes/fluid_tank.dmi'
 	icon_state = "tank"
 	density = TRUE
@@ -178,6 +213,9 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 		src.changeHealth(-I.force)
 	..()
 
+/obj/fluid_pipe/fluid_tank/water
+	default_reagent = "water"
+
 /obj/fluid_pipe/fluid_tank/see_fluid
 	icon_state = "tank-view"
 
@@ -195,6 +233,9 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	if (dist > 2)
 		return
 	. = "<br>[SPAN_NOTICE("[src.network.reagents.get_description(user, RC_FULLNESS | RC_VISIBLE | RC_SPECTRO)]")]"
+
+/obj/fluid_pipe/fluid_tank/see_fluid/water
+	default_reagent = "water"
 
 // Represents a single connected set of fluid pipes
 /datum/flow_network
