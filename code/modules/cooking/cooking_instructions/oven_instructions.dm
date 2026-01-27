@@ -270,6 +270,9 @@ ABSTRACT_TYPE(/datum/recipe_instructions/cooking/oven)
 /datum/recipe_instructions/cooking/oven/bakedpotato
 	cookbonus = 16
 
+/datum/recipe_instructions/cooking/oven/maghaz
+	cookbonus = 16
+
 /datum/recipe_instructions/cooking/oven/hotdog
 	cookbonus = 6
 

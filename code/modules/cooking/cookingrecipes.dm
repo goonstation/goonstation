@@ -1054,6 +1054,12 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/potato = 1)
 	output = /obj/item/reagent_containers/food/snacks/bakedpotato
 
+/datum/recipe/maghaz
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/condiment/gravyboat = 1,
+	/obj/item/organ/brain = 1)
+	output = /obj/item/reagent_containers/food/snacks/maghaz
+
 /datum/recipe/hotdog
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/hotdog)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1)
