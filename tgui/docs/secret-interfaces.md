@@ -24,8 +24,8 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 
 ## Build flow (rspack)
 1) Pre-build sync:
-	- If `+secret/tgui/interfaces/` exists and has files, it is treated as the source and synced into `interfaces-secret/`.
-	- Otherwise, `interfaces-secret/` can be used as the source and synced back into `+secret/tgui/interfaces/`.
+	- Both sides have entries: it merges per-interface, copying whichever file is newer for that interface to the other side.
+	- Only one side has entries: that side is the source and the other is the mirror.
 
 	During sync, wrappers are generated into `tgui/packages/tgui/interfaces-secret/` and the mapping is written to `+secret/tgui/secret-mapping.json`.
 2) Build:
@@ -40,8 +40,14 @@ Keep in mind that once a player opens a UI, they can dive into the minified Reac
 3) The UI config includes `config.secretInterfaces[name] = id` (flat name → id mapping). The client persists this in `sessionStorage` to survive reloads.
 4) The loader injects `/secret-<id>.bundle.js` and waits for the bundle to self-register in `globalThis.__SECRET_TGUI_INTERFACES__[id]`.
 
+## Deleting a secret UI
+Because deletions only propagate in one-way sync mode, remove the interface in both places:
+1) Delete the interface entry from `+secret/tgui/interfaces/`.
+2) Delete the mirrored entry from `tgui/packages/tgui/interfaces-secret/`.
+3) Run the build (`tgui/bin/tgui` or `yarn run tgui:build`). The mapping is rewritten and the secret bundle is stripped from the public output and mirrored cleanup happens in `+secret/browserassets/src/tgui/`.
+
 ## Troubleshooting
-- VSCode hides `+secret/tgui/interfaces/`; use the mirrored copy under `tgui/packages/tgui/interfaces-secret/`.
+- You can edit either copy: `+secret/tgui/interfaces/` or the mirrored `tgui/packages/tgui/interfaces-secret/`. If both sides have changes, merge mode copies the newer mtime of each interface over the older one (no conflict prompts).
 - If it doesn’t load: confirm the bundle exists in `+secret/browserassets/src/tgui/`, the mapping has an id for your interface name, and the browser console isn’t showing a failed script load.
 
 ## Notes

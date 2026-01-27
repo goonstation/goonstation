@@ -12,12 +12,6 @@
 		"**/.pnp.*": true,
 		"+secret/tgui/interfaces": true
 	},
-	"files.exclude": {
-		"+secret/tgui/interfaces": true
-	},
-	"files.watcherExclude": {
-		"+secret/tgui/interfaces/**": true
-	},
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit"
 	},

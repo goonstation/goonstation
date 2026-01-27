@@ -11,6 +11,7 @@ import {
   readdirSync,
   readFileSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from 'node:fs';
 
@@ -52,6 +53,22 @@ const secretMappingFile = path.resolve(
 const secretSaltFile = path.resolve(secretRepoRoot, 'tgui', 'secret-salt.txt');
 const secretDestinationPreserve = new Set(['.gitignore']);
 const secretBundlePattern = /^secret-.*\.bundle\.js(?:\.map)?$/i;
+const wrapperPattern = /\.wrapper\.tsx$/i;
+const isWrapperFile = (entry) => wrapperPattern.test(entry);
+
+const listInterfaceEntries = (dir) =>
+  readdirSync(dir).filter(
+    (entry) => !secretInterfacePreserve.has(entry) && !isWrapperFile(entry),
+  );
+
+const fileMtimeMs = (fullPath) => {
+  try {
+    const stat = statSync(fullPath);
+    return stat.mtimeMs || 0;
+  } catch {
+    return 0;
+  }
+};
 
 /**
  * @param {string} entry
@@ -111,72 +128,72 @@ export class SecretInterfaceSyncPlugin {
     );
 
     const syncSecrets = () => {
-      let sourceDir, targetDir, sourceLabel;
+      let sourceDir, targetDir, sourceLabel, entries, mergeMode;
 
       const hasSecretRepo =
         existsSync(secretRepoRoot) && existsSync(secretInterfaceSource);
       const hasTargetContent = existsSync(secretInterfaceTarget);
 
-      if (hasSecretRepo) {
-        const secretEntries = readdirSync(secretInterfaceSource);
-        if (secretEntries.length > 0) {
-          // +secret has content, use it as source
-          sourceDir = secretInterfaceSource;
-          targetDir = secretInterfaceTarget;
-          sourceLabel = '+secret → interfaces-secret';
-        }
-      }
+      const secretEntries = hasSecretRepo
+        ? listInterfaceEntries(secretInterfaceSource)
+        : [];
+      const publicEntries = hasTargetContent
+        ? listInterfaceEntries(secretInterfaceTarget)
+        : [];
 
-      if (!sourceDir && hasTargetContent) {
-        // No secret repo or it's empty, check if interfaces-secret has content
-        const targetEntries = readdirSync(secretInterfaceTarget).filter(
-          (e) => !secretInterfacePreserve.has(e),
+      if (!secretEntries.length && !publicEntries.length) {
+        logger.debug(
+          'No secret interfaces found in either location; skipping sync.',
         );
-        if (targetEntries.length > 0) {
-          // interfaces-secret has content, use it as source
-          sourceDir = secretInterfaceTarget;
-          targetDir = secretInterfaceSource;
-          sourceLabel = 'interfaces-secret → +secret';
-        }
-      }
-
-      if (!sourceDir) {
-        logger.debug('No secret interface source found; skipping sync.');
         return;
       }
 
-      const entries = readdirSync(sourceDir).filter(
-        (e) => !secretInterfacePreserve.has(e),
-      );
-
-      if (!entries.length) {
-        logger.debug('Secret interface source is empty; skipping sync.');
-        return;
+      if (secretEntries.length && publicEntries.length) {
+        mergeMode = true;
+        entries = Array.from(new Set([...secretEntries, ...publicEntries]));
+        sourceLabel = 'bidirectional merge';
+      } else if (secretEntries.length) {
+        sourceDir = secretInterfaceSource;
+        targetDir = secretInterfaceTarget;
+        sourceLabel = '+secret → interfaces-secret';
+        entries = secretEntries;
+      } else {
+        sourceDir = secretInterfaceTarget;
+        targetDir = secretInterfaceSource;
+        sourceLabel = 'interfaces-secret → +secret';
+        entries = publicEntries;
       }
 
-      mkdirSync(targetDir, { recursive: true });
+      if (mergeMode) {
+        mkdirSync(secretInterfaceSource, { recursive: true });
+        mkdirSync(secretInterfaceTarget, { recursive: true });
+      } else {
+        mkdirSync(targetDir, { recursive: true });
+      }
 
-      // Selective delete: only remove files that were previously synced but no longer exist in source
-      const sourceNames = new Set(
-        entries.map((e) => e.replace(/\.[^.]+$/, '')),
-      );
+      if (!mergeMode) {
+        // only remove files that were previously synced but no longer exist in source
+        const sourceNames = new Set(
+          entries.map((e) => e.replace(/\.[^.]+$/, '')),
+        );
 
-      for (const entry of readdirSync(targetDir)) {
-        if (secretInterfacePreserve.has(entry)) {
-          continue;
-        }
+        for (const entry of readdirSync(targetDir)) {
+          if (secretInterfacePreserve.has(entry)) {
+            continue;
+          }
 
-        // wrappers are auto-generated
-        if (entry.endsWith('.wrapper.tsx')) {
-          continue;
-        }
+          // wrappers are auto-generated
+          if (isWrapperFile(entry)) {
+            continue;
+          }
 
-        const baseName = entry.replace(/\.[^.]+$/, '');
-        if (!sourceNames.has(baseName)) {
-          rmSync(path.join(targetDir, entry), {
-            recursive: true,
-            force: true,
-          });
+          const baseName = entry.replace(/\.[^.]+$/, '');
+          if (!sourceNames.has(baseName)) {
+            rmSync(path.join(targetDir, entry), {
+              recursive: true,
+              force: true,
+            });
+          }
         }
       }
 
@@ -184,8 +201,36 @@ export class SecretInterfaceSyncPlugin {
       let copied = 0;
 
       for (const entry of entries) {
-        const sourcePath = path.join(sourceDir, entry);
-        const targetPath = path.join(targetDir, entry);
+        let entrySourceDir = sourceDir;
+        let entryTargetDir = targetDir;
+
+        if (mergeMode) {
+          const secretPath = path.join(secretInterfaceSource, entry);
+          const publicPath = path.join(secretInterfaceTarget, entry);
+          const hasSecret = existsSync(secretPath);
+          const hasPublic = existsSync(publicPath);
+
+          if (hasSecret && hasPublic) {
+            const secretMtime = fileMtimeMs(secretPath);
+            const publicMtime = fileMtimeMs(publicPath);
+            if (publicMtime > secretMtime) {
+              entrySourceDir = secretInterfaceTarget;
+              entryTargetDir = secretInterfaceSource;
+            } else {
+              entrySourceDir = secretInterfaceSource;
+              entryTargetDir = secretInterfaceTarget;
+            }
+          } else if (hasSecret) {
+            entrySourceDir = secretInterfaceSource;
+            entryTargetDir = secretInterfaceTarget;
+          } else {
+            entrySourceDir = secretInterfaceTarget;
+            entryTargetDir = secretInterfaceSource;
+          }
+        }
+
+        const sourcePath = path.join(entrySourceDir, entry);
+        const targetPath = path.join(entryTargetDir, entry);
 
         cpSync(sourcePath, targetPath, { recursive: true });
 
@@ -264,7 +309,9 @@ export class SecretBundleStoragePlugin {
           continue;
         }
 
-        const isDummy = chunk.name === 'secret-dummy';
+        if (chunk.name === 'secret-dummy') {
+          continue;
+        }
 
         for (const file of [
           ...(chunk.files ?? []),
@@ -272,59 +319,49 @@ export class SecretBundleStoragePlugin {
         ]) {
           if (secretBundlePattern.test(file)) {
             filesToDelete.add(file);
-            if (!isDummy) {
-              filesToMirror.add(file);
+            filesToMirror.add(file);
+          }
+        }
+      }
+
+      if (!filesToMirror.size && !filesToDelete.size) {
+        return;
+      }
+
+      if (filesToMirror.size) {
+        // Clean up old bundles that are no longer in the build
+        if (existsSync(secretBundleDestination)) {
+          for (const entry of readdirSync(secretBundleDestination)) {
+            if (secretDestinationPreserve.has(entry)) {
+              continue;
             }
+
+            if (!secretBundlePattern.test(entry)) {
+              continue;
+            }
+
+            if (filesToMirror.has(entry)) {
+              continue;
+            }
+
+            rmSync(path.join(secretBundleDestination, entry), {
+              force: true,
+            });
           }
         }
-      }
 
-      if (!filesToMirror.size && !existsSync(secretBundleDestination)) {
-        return;
-      }
+        mkdirSync(secretBundleDestination, { recursive: true });
 
-      /** @param {Set<string>} keep */
-      const cleanupDestination = (keep) => {
-        if (!existsSync(secretBundleDestination)) {
-          return;
-        }
+        for (const file of filesToMirror) {
+          const sourcePath = path.join(outputPath, file);
 
-        for (const entry of readdirSync(secretBundleDestination)) {
-          if (secretDestinationPreserve.has(entry)) {
+          if (!existsSync(sourcePath)) {
             continue;
           }
 
-          if (!secretBundlePattern.test(entry)) {
-            continue;
-          }
-
-          if (keep.has(entry)) {
-            continue;
-          }
-
-          rmSync(path.join(secretBundleDestination, entry), {
-            force: true,
-          });
+          const destinationPath = path.join(secretBundleDestination, file);
+          cpSync(sourcePath, destinationPath);
         }
-      };
-
-      cleanupDestination(filesToMirror);
-
-      if (!filesToMirror.size) {
-        return;
-      }
-
-      mkdirSync(secretBundleDestination, { recursive: true });
-
-      for (const file of filesToMirror) {
-        const sourcePath = path.join(outputPath, file);
-
-        if (!existsSync(sourcePath)) {
-          continue;
-        }
-
-        const destinationPath = path.join(secretBundleDestination, file);
-        cpSync(sourcePath, destinationPath);
       }
 
       // Strip secret bundles back out of the public output so they only live in +secret.
@@ -335,11 +372,13 @@ export class SecretBundleStoragePlugin {
         }
       }
 
-      logger.log(
-        `Stored ${filesToMirror.size} secret bundle${
-          filesToMirror.size === 1 ? '' : 's'
-        } in +secret`,
-      );
+      if (filesToMirror.size) {
+        logger.log(
+          `Stored ${filesToMirror.size} secret bundle${
+            filesToMirror.size === 1 ? '' : 's'
+          } in +secret`,
+        );
+      }
     });
   }
 }
