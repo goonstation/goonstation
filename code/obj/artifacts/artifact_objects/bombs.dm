@@ -643,9 +643,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if("eldritch")
 				reagent = pick("gibbis", "pubbie tears", "rat_spit", "loose_screws", "prions", "e.coli", "green mucus")
 
-		if(reagent)
-			payload_disease_reagents += reagent
-			log_addendum = "Payload: [payload_type_name], [jointext(reagent, ", ")]"
+		payload_disease_reagents += reagent
+		log_addendum = "Payload: [payload_type_name], [jointext(reagent, ", ")]"
 
 		recharge_delay = rand(300,800)
 
