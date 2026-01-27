@@ -305,3 +305,20 @@
 					.= 1
 				else if (abomination_only && isabomination(H))
 					.= 1
+
+	/// Checks if the mob owner of this ability's holder is a headless skeleton. Warns them if
+	/// they are, and returns TRUE if the warning isn't heeded-- returns FALSE otherwise.
+	proc/headless_skeleton_warning(var/datum/abilityHolder/changeling/changeling_holder = holder)
+		if(!ishuman(changeling_holder.owner))
+			return FALSE
+
+		var/mob/living/carbon/human/skeleton_owner = changeling_holder.owner
+		if(!isskeleton(skeleton_owner))
+			return FALSE
+
+		if(skeleton_owner.organHolder.head)
+			return FALSE
+
+		if(tgui_alert(skeleton_owner, "We currently lack a head. Shifting forms in this state WILL kill us.", "Hesitation", list("Continue Anyways", "Stop")) == "Continue Anyways")
+			return FALSE
+		return TRUE
