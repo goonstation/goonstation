@@ -977,7 +977,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 		return TRUE
 
 /obj/machinery/light/proc/do_burn_out()
-	if(!src.current_lamp.light_status == LIGHT_OK)
+	if(src.current_lamp.light_status != LIGHT_OK)
 		return
 	var/original_brightness = src.light.brightness
 	playsound(src, 'sound/effects/snaptape.ogg', 30, TRUE)
