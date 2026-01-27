@@ -363,9 +363,9 @@
 
 					switch(rarity)
 						if(1 to 8)
-							selected_biome.fauna_hashmap?.add_weakref(new /obj/item/mine/gibs/armed(T))
+							selected_biome.fauna_hashmap?.register_hashmap_entry(new /obj/item/mine/gibs/armed(T))
 						if(10 to 20)
-							selected_biome.fauna_hashmap?.add_weakref(new /obj/item/mine/gibs(T))
+							selected_biome.fauna_hashmap?.register_hashmap_entry(new /obj/item/mine/gibs(T))
 						else
 							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 

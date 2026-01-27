@@ -1096,13 +1096,6 @@
 		if(!src.case)
 			src.case = new /obj/item/luggable_computer/personal(src)
 			src.case.luggable = src
-
-		for (var/obj/item/peripheral/peripheral in peripherals)
-			peripheral.uninstalled()
-
-		src.case.set_loc(get_turf(src))
-		src.set_loc(src.case)
-		src.deployed = 0
-		return
+		. = ..()
 
 #undef MAX_INPUT_HISTORY_LENGTH
