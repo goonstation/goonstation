@@ -816,7 +816,6 @@
 				. = 0
 
 	do_overdose(var/severity, var/mob/M, var/mult = 1)
-		var/effect = ..(severity, M)
 		if (severity == 1)
 			ticks += mult
 			M.take_brain_damage(3)
