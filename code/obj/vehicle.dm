@@ -403,6 +403,13 @@ TYPEINFO(/obj/vehicle/segway)
 			other_segway.eject_rider(crashed=TRUE)
 			src.log_me(src.rider, other_segway.rider, "impact")
 			other_segway.in_bump = FALSE
+	else if(istype(AM, /obj/artifact))
+		var/obj/artifact/hit_artifact = AM
+		src.rider.visible_message(SPAN_ALERT("<b>[src.rider] crashes into [AM] with \the [src]!</b>"), SPAN_ALERT("<b>You crash into [AM] with \the [src]!</b>"))
+		hit_artifact.ArtifactStimulus("force", 25)
+		eject_rider(2)
+		in_bump = FALSE
+		return
 	in_bump = FALSE
 
 /obj/vehicle/segway/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
@@ -1163,6 +1170,13 @@ TYPEINFO(/obj/vehicle/clowncar)
 			in_bump = 0
 			SG.in_bump = 0
 			return
+	if(istype(AM, /obj/artifact))
+		var/obj/artifact/hit_artifact = AM
+		src.rider.visible_message(SPAN_ALERT("<b>[src.rider] crashes into [AM] with \the [src]!</b>"), SPAN_ALERT("<b>You crash into [AM] with \the [src]!</b>"))
+		hit_artifact.ArtifactStimulus("force", 50)
+		eject_rider(2)
+		in_bump = FALSE
+		return
 	in_bump = 0
 	return
 
