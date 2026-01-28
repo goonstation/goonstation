@@ -135,6 +135,10 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 
 					if(tmob.loc == pre_inertia_loc) //something stopped them from moving so cancel their inertia
 						tmob.inertia_dir = 0
+					else
+						var/list/chain = list()
+						chain.Add(src)
+						tmob.do_pulling(pre_inertia_loc, glide, chain)
 				else
 					EndSpacePush(M)
 					continue
