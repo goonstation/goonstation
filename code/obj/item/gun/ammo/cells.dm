@@ -184,6 +184,13 @@ TYPEINFO(/obj/item/ammo/power_cell)
 	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 60PU."
 	recharge_rate = 2 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
 
+/obj/item/ammo/power_cell/self_charging/tricklecharge
+	name = "Power Cell - Trickle Charge"
+	desc = "A prototype power cell with a koshmarite attenuator to recapture ambient and post-discharge energy. Holds 40PU."
+	recharge_rate = 0.2
+	charge = 40
+	max_charge = 40
+
 /obj/item/ammo/power_cell/self_charging/disruptor
 	name = "Power Cell - Disruptor Charger"
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
