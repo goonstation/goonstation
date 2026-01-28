@@ -149,8 +149,12 @@
 			. = ..()
 			var/datum/abilityHolder/dancing/AH = holder
 			if(AH)
+				if(AH.time_per_count + time_change > 24) // Minimum 25 BPM
+					boutput(holder.owner, "Whoa too slow!")
+					return
 				AH.time_per_count += time_change
-				boutput(holder.owner,"[AH.time_per_count/10] seconds per count. ([60/(AH.time_per_count/10)] BPM)")
+
+				boutput(holder.owner,"[AH.time_per_count/10] seconds per count. ([60/(max(AH.time_per_count, 1)/10)] BPM)")
 
 		faster
 			name = "Faster"

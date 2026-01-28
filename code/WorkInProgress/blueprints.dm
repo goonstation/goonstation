@@ -37,7 +37,7 @@
 		This fine piece of machinery can construct entire rooms from blueprints."
 	density = 1
 	opacity = 0
-	anchored = UNANCHORED
+	anchored = UNANCHORED // Set to ANCHORED_ALWAYS when locked.
 	processing_tier = PROCESSING_FULL
 	event_handler_flags = NO_MOUSEDROP_QOL
 
@@ -114,6 +114,9 @@
 				src.deactivate()
 
 			if("Lock")
+				if(!isturf(src.loc))
+					boutput(user, SPAN_ALERT("The machine cannot lock into place here."))
+					return
 				if (src.building)
 					boutput(user, SPAN_ALERT("Lock status can't be changed with a build in progress."))
 					return
@@ -350,7 +353,7 @@
 
 	proc/activate(mob/user)
 		src.locked = TRUE
-		src.anchored = ANCHORED
+		src.anchored = ANCHORED_ALWAYS
 		src.invalid_count = 0
 		for(var/datum/tileinfo/T in src.current_bp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)

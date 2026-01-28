@@ -57,6 +57,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Cryokinesis"
 	desc = "Allows the subject to control ice and cold."
 	id = "cryokinesis"
+	icon_state = "cryokinesis"
 	msgGain = "You notice a strange cold tingle in your fingertips."
 	msgLose = "Your fingers feel warmer."
 	effectType = EFFECT_TYPE_POWER
@@ -74,52 +75,50 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	targeted = TRUE
 	target_anything = TRUE
 
-	cast(atom/target)
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
+		src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> points at [target]!"))
+		playsound(src.owner.loc, 'sound/effects/bamf.ogg', 50, 0)
+		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(src.owner),"8x8snowflake","#88FFFF"))
+
+		if (misfire) cast_mis(target)
+		return cast_reg(target)
+
+	proc/cast_reg(atom/target)
 		var/turf/T = get_turf(target)
 
-		target.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(target, 'sound/effects/bamf.ogg', 50, 0)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(target),"8x8snowflake","#88FFFF"))
-
 		var/obj/decal/icefloor/B
-		for (var/turf/TF in range(linked_power.power - 1,T))
+		for (var/turf/TF in range(src.linked_power.power - 1,T))
 			B = new /obj/decal/icefloor(TF)
 			SPAWN(80 SECONDS)
 				B.dispose()
 
 		for (var/mob/living/L in T.contents)
-			if (L == owner && linked_power.safety)
+			if (L == src.owner && src.linked_power.safety)
 				continue
 			boutput(L, SPAN_NOTICE("You are struck by a burst of ice cold air!"))
 			if(L.getStatusDuration("burning"))
 				L.delStatus("burning")
 			L.bodytemperature = 100
-			if (linked_power.power > 1)
+			if (src.linked_power.power > 1)
 				new /obj/icecube(get_turf(L), L)
 
-		return
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire(atom/target)
-		if (..())
-			return 1
-
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(owner.loc, 'sound/effects/bamf.ogg', 50, 0)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(owner),"8x8snowflake","#88FFFF"))
-
-		if (!linked_power.safety)
-			boutput(owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
-			if(owner.getStatusDuration("burning"))
-				owner.delStatus("burning")
-			owner.bodytemperature = 100
-			new /obj/icecube(get_turf(owner), owner)
+	proc/cast_mis(atom/target)
+		if (!src.linked_power.safety)
+			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
+			if(src.owner.getStatusDuration("burning"))
+				src.owner.delStatus("burning")
+			src.owner.bodytemperature = 100
+			new /obj/icecube(get_turf(src.owner), src.owner)
 		else
-			boutput(owner, SPAN_ALERT("Your cryokinesis misfires!"))
-			if(owner.getStatusDuration("burning"))
-				owner.delStatus("burning")
+			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires!"))
+			if(src.owner.getStatusDuration("burning"))
+				src.owner.delStatus("burning")
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,6 +128,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Matter Eater"
 	desc = "Allows the subject to eat just about anything without harm."
 	id = "mattereater"
+	icon_state = "mattereater"
 	msgGain = "You feel hungry."
 	msgLose = "You don't feel quite so hungry anymore."
 	cooldown = 300
@@ -147,17 +147,17 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	var/using = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return TRUE
-		if (using)
-			return TRUE
-		using = TRUE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (src.using)
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		src.using = TRUE
 
 		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path) - owner.organHolder?.stomach?.stomach_contents
-		if (ismob(owner.loc) || istype(owner.loc, /obj/))
-			for (var/atom/A in owner.loc.contents)
+		var/list/items = get_filtered_atoms_in_touch_range(src.owner, mattereater.target_path) - src.owner.organHolder?.stomach?.stomach_contents
+		if (ismob(src.owner.loc) || istype(src.owner.loc, /obj/))
+			for (var/atom/A in src.owner.loc.contents)
 				if (istype(A, mattereater.target_path))
 					items += A
 
@@ -166,123 +166,89 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				items -= item
 
 		if (linked_power.power > 1)
-			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
+			items += get_filtered_atoms_in_touch_range(src.owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
 		if (!length(items))
 			boutput(usr, SPAN_ALERT("You can't find anything nearby to eat."))
-			using = FALSE
-			return
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
 
-		var/obj/the_object = tgui_input_list(owner, "Which item do you want to eat?", "Matter Eater", items)
+		var/obj/the_object = tgui_input_list(src.owner, "Which item do you want to eat?", "Matter Eater", items)
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
-			using = FALSE
-			return TRUE
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
-			owner.show_text(SPAN_ALERT("Man, that thing is long gone, far away, just let it go."))
-			using = FALSE
-			return TRUE
+		if (!(the_object in get_filtered_atoms_in_touch_range(src.owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
+			src.owner.show_text(SPAN_ALERT("Man, that thing is long gone, far away, just let it go."))
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		var/area/cur_area = get_area(owner)
-		var/turf/cur_turf = get_turf(owner)
-		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
-			owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
-			using = FALSE
-			return TRUE
+		var/area/cur_area = get_area(src.owner)
+		var/turf/cur_turf = get_turf(src.owner)
+		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!src.owner.client || !src.owner.client.holder))
+			src.owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		if (misfire)
+			owner.visible_message(SPAN_ALERT("[owner] tries to swallow [the_object] whole and nearly chokes on it."))
+			playsound(owner.loc, 'sound/items/eatfood.ogg', 50, 0)
+			playsound(owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
+			src.using = 0
 
 		if (istype(the_object, /obj/the_server_ingame_whoa))
 			var/obj/the_server_ingame_whoa/the_server = the_object
-			the_server.eaten(owner)
-			using = FALSE
-			return
+			the_server.eaten(src.owner)
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
 		if (istype(the_object, /obj/item/implant))
 			var/obj/item/implant/implant = the_object
 			if (implant.owner)
 				implant.on_remove(implant.owner)
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-
+		if (ishuman(src.owner) && isitem(the_object))
+			var/mob/living/carbon/human/H = src.owner
+			var/obj/item/the_item = the_object
 			// First, restore a little hunger, and heal our organs
-			if (isitem(the_object))
-				var/obj/item/the_item = the_object
-				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-				owner.HealDamage("All", 5, 0)
-				owner.UpdateDamageIcon()
+			H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
+			src.owner.HealDamage("All", 5, 0)
+			src.owner.UpdateDamageIcon()
 
-		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
-			var/obj/item/I = the_object
-			if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
-				I.storage?.hide_hud(owner)
-				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
-				// Organs and body parts have special behaviors we need to account for
-				if (ishuman(owner))
-					var/mob/living/carbon/human/H = owner
-					if (istype(the_object, /obj/item/organ))
-						var/obj/item/organ/organ_obj = the_object
-						if (organ_obj.donor)
-							H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
-					else if (istype(the_object, /obj/item/parts))
-						var/obj/item/parts/part = the_object
-						part.delete()
-						H.hud.update_hands()
-			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
-				owner.visible_message(SPAN_ALERT("[owner] eats [the_object]."))
-				playsound(owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
-				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
-				qdel(the_object)
+		if (QDELETED(the_object))
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
+		// Finally, ensure that the item is deleted regardless of what it is
+		var/obj/item/I = the_object
+		if(I.Eat(src.owner, src.owner, TRUE)) //eating can return false to indicate it failed
+			I.storage?.hide_hud(src.owner)
+			// Organs and body parts have special behaviors we need to account for
+			if (!handle_organs(the_object))
+				handle_parts(the_object)
+		else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+			src.owner.visible_message(SPAN_ALERT("[src.owner] eats [the_object]."))
+			playsound(src.owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
+			qdel(the_object)
 
+		logTheThing(LOG_COMBAT, src.owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(src.owner)].")
+		src.using = FALSE
+		return CAST_ATTEMPT_SUCCESS
 
+	proc/handle_organs(var/obj/item/organ/object)
+		if (!istype(object) || !ishuman(src.owner))
+			return FALSE
+		var/mob/living/carbon/human/H = src.owner
+		if (object.donor)
+			H.organHolder.drop_organ(object,H) //hide it inside self so it doesn't hang around until the eating is finished
+			return TRUE
+		return FALSE
 
-		using = FALSE
-
-
-
-	cast_misfire()
-		if (..())
-			return 1
-		if (using)
-			return 1
-		using = 1
-
-		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
-		if (ismob(owner.loc) || istype(owner.loc, /obj/))
-			for (var/atom/A in owner.loc.contents)
-				if (istype(A, mattereater.target_path))
-					items += A
-
-		if (linked_power.power > 1)
-			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
-			//So people can still get the meat ending
-
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to eat.")
-			using = 0
-			return
-
-		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_object)
-			using = 0
-			return 1
-
-		var/area/cur_area = get_area(owner)
-		var/turf/cur_turf = get_turf(owner)
-		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
-			owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
-			using = 0
-			return 1
-
-		if (istype(the_object, /obj/the_server_ingame_whoa))
-			var/obj/the_server_ingame_whoa/the_server = the_object
-			the_server.eaten(owner)
-			using = 0
-			return
-		owner.visible_message(SPAN_ALERT("[owner] tries to swallow [the_object] whole and nearly chokes on it."))
-		playsound(owner.loc, 'sound/items/eatfood.ogg', 50, 0)
-		playsound(owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
-		using = 0
-		return
+	proc/handle_parts(var/obj/item/parts/object)
+		if (!istype(object) || !ishuman(src.owner))
+			return FALSE
+		var/mob/living/carbon/human/H = src.owner
+		object.delete()
+		H.hud.update_hands()
+		return TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -292,6 +258,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Jumpy"
 	desc = "Allows the subject to leap great distances."
 	id = "jumpy"
+	icon_state = "jumpy"
 	msgGain = "Your leg muscles feel taut and strong."
 	msgLose = "Your leg muscles shrink back to normal."
 	cooldown = 100
@@ -322,55 +289,20 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Take a big leap forward."
 	icon_state = "jumpy"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (ismob(owner.loc))
 			boutput(usr, SPAN_ALERT("You can't jump right now!"))
-			return 1
-
-		var/jump_tiles = 10 * linked_power.power
-		var/pixel_move = 8 * linked_power.power
-		var/sleep_time = 1 / linked_power.power
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (istype(owner.loc,/turf/))
-			var/turf/T = owner.loc
-			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
-				var/push_off = FALSE
-				for(var/atom/A in oview(1, T))
-					if (A.stops_space_move)
-						push_off = TRUE
-						break
-				if(!push_off)
-					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-					return TRUE
-			usr.visible_message(SPAN_ALERT("<b>[owner]</b> takes a huge leap!"))
-			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-			var/prevLayer = owner.layer
-			owner.layer = EFFECTS_LAYER_BASE
+			do_jump(misfire)
 
-			animate(owner,
-				pixel_y = pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_OUT | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
-			animate(
-				pixel_y = -pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_IN | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE)
-
-			SPAWN(0)
-				for(var/i=0, i < jump_tiles, i++)
-					step(owner, owner.dir)
-					sleep(sleep_time)
-
-				owner.layer = prevLayer
-
-		if (istype(owner.loc,/obj/))
+		else if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
 			owner.changeStatus("unconscious", 5 SECONDS)
@@ -379,67 +311,49 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
 
-		return
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire()
-		if (..())
-			return 1
+	proc/do_jump(misfire)
+		var/jump_tiles = 10 * src.linked_power.power
+		var/pixel_move = 8 * src.linked_power.power
+		var/sleep_time = 1 / src.linked_power.power
+		var/turf/T = src.owner.loc
+		if (istype(T, /turf/space) || T.throw_unlimited || src.owner.no_gravity)
+			var/push_off = FALSE
+			for(var/atom/A in oview(1, T))
+				if (A.stops_space_move)
+					push_off = TRUE
+					break
+			if(!push_off)
+				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (ismob(owner.loc))
-			boutput(usr, SPAN_ALERT("You can't jump right now!"))
-			return 1
+		usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> takes a huge leap!"))
+		playsound(src.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		var/prevLayer = src.owner.layer
+		src.owner.layer = EFFECTS_LAYER_BASE
+		if(misfire)
+			playsound(src.owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
+			usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> leaps far too high and comes crashing down hard!"))
+			src.owner.changeStatus("knockdown", 10 SECONDS)
+			src.owner.changeStatus("stunned", 5 SECONDS)
+		animate(src.owner,
+			pixel_y = pixel_move * jump_tiles / 2,
+			time = sleep_time * jump_tiles / 2,
+			easing = EASE_OUT | CIRCULAR_EASING,
+			flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+		animate(
+			pixel_y = -pixel_move * jump_tiles / 2,
+			time = sleep_time * jump_tiles / 2,
+			easing = EASE_IN | CIRCULAR_EASING,
+			flags = ANIMATION_RELATIVE)
 
-		var/jump_tiles = 10 * linked_power.power
-		var/pixel_move = 8 * linked_power.power
-		var/sleep_time = 0.5 / linked_power.power
+		SPAWN(0)
+			for(var/i=0, i < jump_tiles, i++)
+				step(src.owner, src.owner.dir)
+				sleep(sleep_time)
 
-		if (istype(owner.loc,/turf/))
-			var/turf/T = owner.loc
-			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
-				var/push_off = FALSE
-				for(var/atom/A in oview(1, T))
-					if (A.stops_space_move)
-						push_off = TRUE
-						break
-				if(!push_off)
-					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-					return TRUE
-			usr.visible_message(SPAN_ALERT("<b>[owner]</b> leaps far too high and comes crashing down hard!"))
-			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
-			var/prevLayer = owner.layer
-			owner.layer = EFFECTS_LAYER_BASE
-			owner.changeStatus("knockdown", 10 SECONDS)
-			owner.changeStatus("stunned", 5 SECONDS)
-
-			animate(owner,
-				pixel_y = pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_OUT | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
-			animate(
-				pixel_y = -pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_IN | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE)
-
-			SPAWN(0)
-				for(var/i=0, i < jump_tiles, i++)
-					step(owner, owner.dir)
-					sleep(sleep_time)
-
-				owner.layer = prevLayer
-
-		if (istype(owner.loc,/obj/))
-			var/obj/container = owner.loc
-			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("knockdown", 10 SECONDS)
-			owner.changeStatus("stunned", 5 SECONDS)
-			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
-			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
-			animate_storage_thump(container)
-
-		return TRUE
+			src.owner.layer = prevLayer
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -449,6 +363,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Polymorphism"
 	desc = "Enables the subject to reconfigure their appearance to mimic that of others."
 	id = "polymorphism"
+	icon_state = "polymorphism"
 	msgGain = "You don't feel entirely like yourself somehow."
 	msgLose = "You feel secure in your identity."
 	cooldown = 1800
@@ -462,76 +377,62 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Polymorphism"
 	desc = "Mimic the appearance of others."
 	icon_state = "polymorphism"
-	targeted = 1
+	targeted = TRUE
 
-	cast(atom/target)
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (target == owner)
-			boutput(owner, SPAN_ALERT("While \"be yourself\" is pretty good advice, that would be taking it a bit too literally."))
-			return 1
-		if (BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
-			boutput(owner, SPAN_ALERT("You must be within touching distance of [target] for this to work."))
-			return 1
+		if (target == src.owner)
+			boutput(src.owner, SPAN_ALERT("While \"be yourself\" is pretty good advice, that would be taking it a bit too literally."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (BOUNDS_DIST(target, src.owner) > 0 && !src.owner.bioHolder.HasEffect("telekinesis"))
+			boutput(src.owner, SPAN_ALERT("You must be within touching distance of [target] for this to work."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (!ishuman(target))
-			boutput(owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
-			return 1
+			boutput(src.owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/living/carbon/human/H = target
 		if (!H.bioHolder || H.mutantrace?.dna_mutagen_banned)
-			boutput(owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
-			return 1
+			boutput(src.owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (!ishuman(owner))
-			boutput(owner, SPAN_ALERT("Your body doesn't seem to be compatible with this ability."))
-			return 1
+		if (!ishuman(src.owner))
+			boutput(src.owner, SPAN_ALERT("Your body doesn't seem to be compatible with this ability."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/mob/living/carbon/human/H2= target
 		if (!H2.bioHolder || H2.mutantrace?.dna_mutagen_banned)
-			boutput(owner, SPAN_ALERT("Your body doesn't seem to be compatible with this ability."))
-			return 1
+			boutput(src.owner, SPAN_ALERT("Your body doesn't seem to be compatible with this ability."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		playsound(owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> touches [target], then begins to shifts and contort!"))
+		if (misfire)
+			playsound(src.owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
+			src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> touches [target]... and nothing happens. Huh."))
+			return CAST_ATTEMPT_SUCCESS
+
+		playsound(src.owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
+		src.owner.visible_message(SPAN_ALERT("<b>[src.owner]</b> touches [target], then begins to shifts and contort!"))
 
 		SPAWN(1 SECOND)
-			if(H && owner)
-				playsound(owner.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-				owner.bioHolder.CopyOther(H.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
-				owner.real_name = H.real_name
-				owner.name = H.name
-				if(owner.bioHolder?.mobAppearance?.mutant_race)
-					owner.set_mutantrace(owner.bioHolder.mobAppearance.mutant_race.type)
-				else
-					owner.set_mutantrace(null)
-				if(ishuman(owner))
-					var/mob/living/carbon/human/O = owner
-					O.update_colorful_parts()
-		return
+			polymorph(H)
 
-	cast_misfire(atom/target)
-		if (..())
-			return 1
+		return CAST_ATTEMPT_SUCCESS
 
-		if (!ishuman(target))
-			boutput(owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
-			return 1
-		if (target == owner)
-			boutput(owner, SPAN_ALERT("While \"be yourself\" is pretty good advice, that would be taking it a bit too literally."))
-			return 1
-		var/mob/living/carbon/human/H = target
-		if (!H.bioHolder)
-			boutput(owner, SPAN_ALERT("[target] does not seem to be compatible with this ability."))
-			return 1
-
-		if (BOUNDS_DIST(H, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
-			boutput(owner, SPAN_ALERT("You must be within touching distance of [target] for this to work."))
-			return 1
-
-		playsound(owner.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> touches [target]... and nothing happens. Huh."))
-
-		return
+	proc/polymorph(var/mob/living/carbon/human/target)
+		if(!target || !src.owner)
+			return
+		playsound(owner.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+		src.owner.bioHolder.CopyOther(target.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
+		src.owner.real_name = target.real_name
+		src.owner.name = target.name
+		if(src.owner.bioHolder?.mobAppearance?.mutant_race)
+			src.owner.set_mutantrace(src.owner.bioHolder.mobAppearance.mutant_race.type)
+		else
+			src.owner.set_mutantrace(null)
+		if(ishuman(src.owner))
+			var/mob/living/carbon/human/O = src.owner
+			O.update_colorful_parts()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*  / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /  */
@@ -555,11 +456,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Swap the colors of your hair around."
 	icon_state = "polymorphism"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		var/mob/living/carbon/human/H
 		if (ishuman(owner))
@@ -585,6 +486,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 			H.visible_message(SPAN_NOTICE("<b>[H.name]</b>'s hair changes colors!"))
 			H.update_colorful_parts()
+		return CAST_ATTEMPT_SUCCESS
 
 /* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
 /* / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / */
@@ -594,6 +496,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Telepathy"
 	desc = "Allows the subject to project their thoughts into the minds of other organics."
 	id = "telepathy"
+	icon_state = "telepathy"
 	msgGain = "You can hear your own voice echoing in your mind."
 	msgLose = "Your mental voice fades away."
 	probability = 99
@@ -607,24 +510,25 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Transmit psychic messages to others."
 	icon_state = "telepathy"
 	needs_hands = FALSE
-	targeted = 1
+	targeted = TRUE
+	do_logs = FALSE //Handle logs ourselves
 
-	cast(atom/target)
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (istype(target, /obj/item/reagent_containers/food/snacks/pancake))
 			dothepixelthing(target)
 			src.holder.owner.visible_message(SPAN_ALERT(SPAN_BOLD("[src.holder.owner] blows up the pancakes with their mind!")), SPAN_ALERT("You blow up the pancakes with your mind!"))
 			src.holder.owner.bioHolder?.RemoveEffect("telepathy")
-			return
+			return CAST_ATTEMPT_SUCCESS
 
 		var/mob/living/carbon/recipient = null
 		if (iscarbon(target))
 			recipient = target
 		else if (ismob(target) && !iscarbon(target))
 			boutput(owner, SPAN_ALERT("You can't transmit to [target] as they are too different from you mentally!"))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		else
 			var/turf/T = get_turf(target)
 			for (var/mob/living/carbon/C in T.contents)
@@ -633,76 +537,41 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		if (!recipient)
 			boutput(owner, SPAN_ALERT("There's nobody there to transmit a message to."))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (recipient.bioHolder.HasEffect("psy_resist"))
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind at all!"))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if(isghostcritter(owner))
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind with your spectral brain!"))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if(!recipient.client || recipient.stat)
 			boutput(owner, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
 		if (!msg)
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		phrase_log.log_phrase("telepathy", msg)
 
 		var/psyname = "A psychic voice"
 		if (recipient.bioHolder.HasOneOfTheseEffects("telepathy","empath"))
 			psyname = "[owner.name]"
 
+		if (misfire)
+			msg = uppertext(msg)
+			owner.visible_message(SPAN_ALERT("<b>[owner]</b> puts [his_or_her(owner)] fingers to [his_or_her(owner)] temples and stares at [target] really hard."))
+			owner.say(msg)
+			logTheThing(LOG_TELEPATHY, owner, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
+
 		boutput(recipient, "<span style='color: #BD33D9'><b>[psyname]</b> echoes, \"<i>[msg]</i>\"</span>")
 		boutput(owner, "<span style='color: #BD33D9'>You echo \"<i>[msg]</i>\" to <b>[recipient.name]</b>.</span>")
 
 		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY to [constructTarget(recipient,"telepathy")]: [msg]")
 
-		return
-
-	cast_misfire(atom/target)
-		if (..())
-			return 1
-
-		var/mob/living/carbon/recipient = null
-		if (iscarbon(target))
-			recipient = target
-		else if (ismob(target) && !iscarbon(target))
-			boutput(owner, SPAN_ALERT("You can't transmit to [target] as they are too different from you mentally!"))
-			return 1
-		else
-			var/turf/T = get_turf(target)
-			for (var/mob/living/carbon/C in T.contents)
-				recipient = C
-				break
-
-		if (!recipient)
-			boutput(owner, SPAN_ALERT("There's nobody there to transmit a message to."))
-			return 1
-
-		if (recipient.bioHolder.HasEffect("psy_resist"))
-			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind at all!"))
-			return 1
-
-		if(!recipient.client || recipient.stat)
-			boutput(recipient, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
-			return 1
-
-		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
-		if (!msg)
-			return 1
-		phrase_log.log_phrase("telepathy", msg)
-		msg = uppertext(msg)
-
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> puts [his_or_her(owner)] fingers to [his_or_her(owner)] temples and stares at [target] really hard."))
-		owner.say(msg)
-
-		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
-
-		return
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -712,6 +581,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Empathic Thought"
 	desc = "The subject becomes able to read the minds of others for certain information."
 	id = "empath"
+	icon_state = "empath"
 	msgGain = "You suddenly notice more about others than you did before."
 	msgLose = "You no longer feel able to sense intentions."
 	probability = 99
@@ -880,6 +750,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Incendiary Mitochondria"
 	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
 	id = "immolate"
+	icon_state = "immolate"
 	msgGain = "You suddenly feel rather hot."
 	msgLose = "You no longer feel uncomfortably hot."
 	cooldown = 600
@@ -931,6 +802,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Self Biomass Manipulation"
 	desc = "The subject becomes able to transform the matter of their cells into a liquid state."
 	id = "melt"
+	icon_state = "melt"
 	msgGain = "You feel strange and jiggly."
 	msgLose = "You feel more solid."
 	cooldown = 1200
@@ -1006,6 +878,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "High-Pressure Intestines"
 	desc = "Vastly increases the gas capacity of the subject's digestive tract."
 	id = "superfart"
+	icon_state = "superfart"
 	msgGain = "You feel bloated and gassy."
 	msgLose = "You no longer feel gassy. What a relief!"
 	cooldown = 900
@@ -1167,6 +1040,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Optic Energizer"
 	desc = "Imbues the subject's eyes with the potential to project concentrated thermal energy."
 	id = "eyebeams"
+	icon_state = "eyebeams"
 	msgGain = "Your eyes ache and burn."
 	msgLose = "Your eyes stop aching."
 	cooldown = 80
@@ -1256,6 +1130,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Adrenaline Rush"
 	desc = "Enables the user to voluntarily empty glands of stimulants. May be dangerous with repeated use."
 	id = "adrenaline"
+	icon_state = "adrenaline"
 	probability = 66
 	blockCount = 4
 	blockGaps = 4
@@ -1313,6 +1188,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Midas Touch"
 	desc = "Allows the subject to transmute materials at will."
 	id = "midas"
+	icon_state = "midas"
 	msgGain = "Your fingers sparkle and gleam."
 	msgLose = "Your fingers return to normal."
 	cooldown = 300
@@ -1327,98 +1203,51 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Midas Touch"
 	desc = "Transmute an object to gold by touching it."
 	icon_state = "midas"
-	targeted = FALSE
+	targeted = TRUE
+	target_anything = TRUE
+	target_in_inventory = TRUE
+	var/targetable_types = /obj/item
+	var/material_override
 
 	cast(atom/target)
 		if (..())
 			return TRUE
-		if(linked_power.using)
-			return TRUE
+		return src.transmute_target(target, src.get_default_material_id())
 
-		var/obj/the_object = target
-
-		var/base_path = /obj/item
-		if (linked_power.power > 1)
-			base_path = /obj
-
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-
-		if(target)
-			if (!(target in items))
-				return TRUE
-		else
-			if (!items.len)
-				boutput(usr, SPAN_ALERT("You can't find anything nearby to touch."))
-				return TRUE
-
-			linked_power.using = 1
-			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-			if (!the_object)
-				last_cast = 0
-				linked_power.using = 0
-				return TRUE
-
-		if(isitem(the_object))
-			var/obj/item/the_item = the_object
-			if(the_item.amount > 1)
-				var/obj/item/split_item = the_item.split_stack(1)
-				split_item.set_loc(get_turf(the_item))
-				the_object = split_item
-
-		if (!linked_power)
-			owner.visible_message("[owner] touches [the_object].")
-		else
-			if (istype(linked_power,/datum/bioEffect/power/midas))
-				var/datum/bioEffect/power/midas/linked = linked_power
-				logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into [linked.transmute_material] at [log_loc(owner)].")
-				owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to [linked.transmute_material]!"))
-				the_object.setMaterial(getMaterial(linked.transmute_material))
-			else
-				logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into gold at [log_loc(owner)].")
-				owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to gold!"))
-				the_object.setMaterial(getMaterial("gold"))
-		linked_power.using = 0
-
-	cast_misfire()
+	cast_misfire(atom/target)
 		if (..())
-			return 1
-		if(linked_power.using)
-			return 1
-
-		var/base_path = /obj/item
-		if (linked_power.power > 1)
-			base_path = /obj
-
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to touch.")
-			return 1
-
-		linked_power.using = 1
-		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			linked_power.using = 0
-			return 1
-
-		if(isitem(the_object))
-			var/obj/item/the_item = the_object
-			if(the_item.amount > 1)
-				var/obj/item/split_item = the_item.split_stack(1)
-				split_item.set_loc(get_turf(the_item))
-				the_object = split_item
-
-		if (!linked_power)
-			owner.visible_message("[owner] touches [the_object].")
-		else
-			owner.visible_message(SPAN_ALERT("[owner] touches [the_object], turning it to flesh!"))
-			logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(the_object)] into flesh at [log_loc(owner)].")
-			the_object.setMaterial(getMaterial("flesh"))
-		linked_power.using = 0
-		return
+			return TRUE
+		return src.transmute_target(target, "flesh")
 
 	logCast(atom/target)
 		return
+
+	proc/get_default_material_id()
+		if(src.material_override)
+			return src.material_override
+		if(src.linked_power)
+			var/datum/bioEffect/power/midas/linked = linked_power
+			return linked.transmute_material
+		return "gold"
+
+	proc/transmute_target(atom/target, material_id)
+		if(BOUNDS_DIST(target, owner) > 0 && !owner.bioHolder.HasEffect("telekinesis"))
+			boutput(owner, SPAN_ALERT("You are too far from [target] to do that!"))
+			return 1
+		if(linked_power?.power > 1 && (src.targetable_types == /obj/item))
+			src.targetable_types = /obj
+		if(!istype(target, src.targetable_types))
+			boutput(owner, SPAN_ALERT("You cannot transmute [target]!"))
+			return 1
+		if(isitem(target))
+			var/obj/item/the_item = target
+			if(the_item.amount > 1)
+				var/obj/item/split_item = the_item.split_stack(1)
+				split_item.set_loc(get_turf(the_item))
+				target = split_item
+		logTheThing(LOG_COMBAT, owner, "uses [name] to transmute [log_object(target)] into [material_id] at [log_loc(owner)].")
+		src.owner.visible_message(SPAN_ALERT("[src.owner] touches [target], turning it to [material_id]!"))
+		target.setMaterial(getMaterial(material_id))
 
 /datum/bioEffect/power/midas/pickle
 	name = "Pickle Touch"
@@ -1454,6 +1283,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Healing Touch"
 	desc = "Allows the subject to heal the wounds of others with a touch."
 	id = "healing_touch"
+	icon_state = "healingtouch"
 	msgGain = "Your hands radiate a comforting aura."
 	msgLose = "The aura around your hands dissipates."
 	cooldown = 900
@@ -1533,6 +1363,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Dimension Shift"
 	desc = "Phase out and hide in another dimension."
 	id = "dimension_shift"
+	icon_state = "dimensionshift"
 	msgGain = "You can see a faint blue light."
 	msgLose = "The blue light fades away."
 	cooldown = 900
@@ -1631,6 +1462,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Photokinesis"
 	desc = "Allows the subject to create a source of light."
 	id = "photokinesis"
+	icon_state = "photokinesis"
 	msgGain = "Everything seems too dark!"
 	msgLose = "It's too bright!"
 	cooldown = 600
@@ -1701,6 +1533,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Erebokinesis"
 	desc = "Allows the subject to snuff out all light in an area."
 	id = "erebokinesis"
+	icon_state = "erebokinesis"
 	msgGain = "Everything seems too bright!"
 	msgLose = "It's too dark!"
 	cooldown = 600
@@ -1747,6 +1580,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Fire Breath"
 	desc = "Allows the subject to exhale fire."
 	id = "fire_breath"
+	icon_state = "firebreath"
 	msgGain = "Your throat is burning!"
 	msgLose = "Your throat feels a lot better now."
 	cooldown = 600
@@ -1804,6 +1638,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Brown Note"
 	desc = "Allows the subject to emit noises that can cause involuntary flatus in others."
 	id = "brown_note"
+	icon_state = "brownnote"
 	msgGain = "You feel mischievous!"
 	msgLose = "You want to behave yourself again."
 	cooldown = 150
@@ -1956,6 +1791,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Cloak of Darkness"
 	desc = "Enables the subject to bend low levels of light around themselves, creating a cloaking effect."
 	id = "cloak_of_darkness"
+	icon_state = "darkcloak"
 	effectType = EFFECT_TYPE_POWER
 	isBad = 0
 	probability = 33
@@ -2044,6 +1880,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Chameleon"
 	desc = "The subject becomes able to subtly alter light patterns to become invisible, as long as they remain still."
 	id = "chameleon"
+	icon_state = "chameleon"
 	effectType = EFFECT_TYPE_POWER
 	probability = 33
 	blockCount = 3
@@ -2127,6 +1964,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Mass Emesis"
 	desc = "Allows the subject to expel chemicals via the mouth."
 	id = "bigpuke"
+	icon_state = "bigpuke"
 	msgGain = "You feel sick."
 	msgLose = "You feel much better!"
 	cooldown = 30 SECONDS
@@ -2200,6 +2038,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Ink Glands"
 	desc = "Allows the subject to expel modified melanin."
 	id = "inkglands"
+	icon_state = "ink"
 	msgGain = "You feel artistic."
 	msgLose = "You don't really feel artistic anymore."
 	cooldown = 0
@@ -2251,6 +2090,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Vestigial Ballistics"
 	desc = "Allows the subject to expel one of their limbs with considerable force."
 	id = "shoot_limb"
+	icon_state = "shoot_limb"
 	msgGain = "You feel intense pressure in your hip and shoulder joints."
 	msgLose = "You joints feel much better!"
 	cooldown = 600
@@ -2361,12 +2201,64 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 
+
+/datum/bioEffect/power/ghost_walk
+	name = "Spectral Ascent"
+	desc = "Allows the subject to become a ghost for a short duration, leaving their body to return."
+	id = "ghost_walk"
+	icon = "ghost_ascend"
+	occur_in_genepools = 0 // Only from the genes of a boss mob.
+	probability = 0
+	msgGain = "You feel like your soul is more flexible."
+	msgLose = "Your soul feels anchored again."
+	stability_loss = 20
+	blockCount = 4
+	blockGaps = 5
+	lockProb = 40
+	lockedGaps = 1
+	lockedDiff = 3
+	lockedChars = list("G","C","A","T")
+	lockedTries = 8
+	ability_path = /datum/targetable/geneticsAbility/ghost_walk
+
+/datum/targetable/geneticsAbility/ghost_walk
+	name = "Spectral Ascent"
+	desc = "Temporarily become a ghost to survey your surrondings."
+	icon_state = "ghost_ascend"
+	needs_hands = FALSE
+	targeted = FALSE
+
+	cast()
+		if (..())
+			return 1
+
+		if (ishuman(owner))
+			owner.changeStatus("ghost_walk_effect", 30 SECONDS)
+
+/datum/targetable/gimmick/ghost_walk_return // Return ability, on the ghost
+	name = "Spectral Anchor"
+	desc = "Return to your body."
+	icon = 'icons/mob/genetics_powers.dmi'
+	icon_state = "ghost_ascend"
+	targeted = FALSE
+	var/datum/statusEffect/art_curse/displaced_soul/gene/GeneBuff
+
+	cast()
+		if (..())
+			return 1
+
+		if (istype(holder.owner, /mob/living/intangible/art_curser_displaced_soul/gene))
+			GeneBuff = holder.owner.hasStatus("ghost_walk_soul")
+			boutput(holder.owner, "You return to your body!")
+			GeneBuff.original_body.delStatus("ghost_walk_effect")
+
+
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter
 	id = "critter_do_not_use"
 
 /datum/bioEffect/power/critter/peck
-	name = "Aviornis Rostriformis "
+	name = "Aviornis Rostriformis"
 	desc = "Generates a hardened keratin area between the mouth and nose."
 	id = "beak_peck"
 	msgGain = "You feel your mouth and nose become more difficult to move."

@@ -201,6 +201,8 @@ TRAYS
 	force = 1
 	throwforce = 1
 	w_class = W_CLASS_TINY
+	default_material = "plastic"
+	material_amt = 0.5
 
 	New()
 		..()
@@ -231,6 +233,8 @@ TRAYS
 	force = 1
 	throwforce = 1
 	w_class = W_CLASS_TINY
+	default_material = "plastic"
+	material_amt = 0.5
 
 	New()
 		..()
@@ -261,6 +265,8 @@ TRAYS
 	force = 1
 	throwforce = 1
 	w_class = W_CLASS_TINY
+	default_material = "plastic"
+	material_amt = 0.5
 
 	New()
 		..()
@@ -290,6 +296,8 @@ TRAYS
 	desc = "These don't look very clean..."
 	icon_state = "plasticpackage"
 	w_class = W_CLASS_TINY
+	default_material = "plastic"
+	material_amt = 1.5
 	var/list/messages = list("The packaging decides to not open at this time. How rude.", "The plastic is just too strong for your fumbly fingers!", "Almost open! Wait...Nevermind.", "Almost there.....")
 
 	attack_self(mob/user as mob)

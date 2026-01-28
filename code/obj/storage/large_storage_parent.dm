@@ -7,6 +7,8 @@
 // CALL YOUR PARENTS
 
 #define RELAYMOVE_DELAY 1 SECOND
+/// The percentage of a storage object's health below which it will only return one sheet on deconstruction.
+#define STORAGE_UNSALVAGEABLE_THRESHOLD 0
 
 ABSTRACT_TYPE(/obj/storage)
 ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
@@ -22,6 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	p_class = 2.5
 	layer = STORAGE_LAYER
+	material_amt = 0.2 // All storage containers are worth two sheets by default. (The default for atoms is ten!)
 	var/intact_frame = 1 //Variable to create crates and fridges which cannot be closed anymore.
 	var/secure = 0
 	var/personal = 0
@@ -1019,6 +1022,11 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		owner.visible_message(SPAN_NOTICE("[owner] takes apart [the_storage]."))
 		the_storage.dump_contents(owner)
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
+		if(the_storage.material_amt)
+			if(the_storage._health > (the_storage._max_health * STORAGE_UNSALVAGEABLE_THRESHOLD))
+				I.amount = floor(the_storage.material_amt / 0.1) // <-- Sheets normally cost 0.1; I don't believe it's defined anywhere.
+			else
+				boutput(owner, SPAN_ALERT("Some of [the_storage]'s material was unsalvageable."))
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)
 		else
@@ -1039,6 +1047,7 @@ TYPEINFO_NEW(/obj/storage/secure)
 	locked = 1
 	icon_closed = "secure"
 	icon_opened = "secure-open"
+	object_flags = CAN_REPROGRAM_ACCESS
 	var/icon_greenlight = "greenlight"
 	var/icon_redlight = "redlight"
 	var/icon_sparks = "sparks"
@@ -1159,3 +1168,4 @@ TYPEINFO_NEW(/obj/storage/secure)
 			return 1
 
 #undef RELAYMOVE_DELAY
+#undef STORAGE_UNSALVAGEABLE_THRESHOLD

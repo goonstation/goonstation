@@ -14,6 +14,36 @@ $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
+if (-not (Get-Command Get-FileHash -ErrorAction SilentlyContinue)) {
+	function Get-FileHash {
+		param(
+			[Parameter(Mandatory = $true)]
+			[string] $Path
+		)
+
+		$sha256 = [System.Security.Cryptography.SHA256]::Create()
+		try {
+			$stream = [System.IO.File]::OpenRead($Path)
+			try {
+				$hashBytes = $sha256.ComputeHash($stream)
+			}
+			finally {
+				$stream.Dispose()
+			}
+		}
+		finally {
+			$sha256.Dispose()
+		}
+
+		$hex = [BitConverter]::ToString($hashBytes) -replace '-', ''
+		return [PSCustomObject]@{
+			Algorithm = 'SHA256'
+			Hash      = $hex
+			Path      = $Path
+		}
+	}
+}
+
 function ExtractVersion {
 	param([string] $Path, [string] $Key)
 	foreach ($Line in Get-Content $Path) {

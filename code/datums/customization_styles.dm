@@ -501,10 +501,20 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "blunt_pomp"
 				gender = MASCULINE | FEMININE
 
+			blunt_pomp_fade
+				name = "Blunt Pompadour: Faded"
+				id = "blunt_pomp_fade"
+				random_allowed = FALSE
+
 			big_pomp
 				name = "Big Pompadour"
 				id = "big_pomp"
 				gender = MASCULINE
+
+			big_pomp_fade
+				name = "Big Pompadour: Faded"
+				id = "big_pomp_fade"
+				random_allowed = FALSE
 
 			duck_ass
 				name = "Ducktail"
@@ -515,6 +525,11 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Pageboy"
 				id = "pageboy"
 				gender = MASCULINE | FEMININE
+
+			pageboy_fade
+				name = "Pageboy: Faded"
+				id = "pageboy_fade"
+				random_allowed = FALSE
 
 			cockatielbang
 				name = "Bangs: Cockatiel"
@@ -921,6 +936,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "ringlet_short"
 				gender = FEMININE
 
+			ringlets_fade
+				name = "Ringlets: Faded"
+				id = "ringlet_fade"
+				random_allowed = FALSE
 		hairup
 			bun
 				name = "Bun"
@@ -1073,6 +1092,11 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "mega_braids"
 				gender = FEMININE
 
+			massive_braids_split
+				name = "Massive Braids: Split"
+				id = "mega_braids_split"
+				random_allowed = FALSE
+
 			chignon
 				name = "Chignon"
 				id = "chignon"
@@ -1082,6 +1106,46 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "French Twist"
 				id = "french_twist"
 				gender = FEMININE
+
+			hairpart_highpony
+				name = "Hair Parts: High Ponytail"
+				id = "spud_part"
+				random_allowed = FALSE
+
+			hairpart_wavypony
+				name = "Hair Parts: Wavy Ponytail"
+				id = "wavyponytail_part"
+				random_allowed = FALSE
+
+			hairpart_spikypony
+				name = "Hair Parts: Spiky Ponytail"
+				id = "spikyponytail_part"
+				random_allowed = FALSE
+
+			hairpart_messypony
+				name = "Hair Parts: Messy Ponytail"
+				id = "messyponytail_part"
+				random_allowed = FALSE
+
+			hairpart_pigtails
+				name = "Hair Parts: Pigtails"
+				id = "pig_part"
+				random_allowed = FALSE
+
+			hairpart_doublebuns
+				name = "Hair Part: Double Buns"
+				id = "doublebun_part"
+				random_allowed = FALSE
+
+			hairpart_highbun
+				name = "Hair Part: High Bun"
+				id = "high_bun_part"
+				random_allowed = FALSE
+
+			hairpart_crownbraid
+				name = "Hair Part: Crown Braid"
+				id = "crownbraid_part"
+				random_allowed = FALSE
 
 		gimmick
 			afroHA

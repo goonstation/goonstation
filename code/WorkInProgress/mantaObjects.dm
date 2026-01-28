@@ -710,6 +710,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS
+	default_material = "plastic"
 	stamina_damage = 15
 	stamina_cost = 8
 	stamina_crit_chance = 10
@@ -1573,6 +1574,14 @@ var/obj/manta_speed_lever/mantaLever = null
 		name = "dank abyss"
 		desc = "The smell rising from it somehow permeates the surrounding water."
 		falltarget = LANDMARK_FALL_MARJ
+
+		pitwall
+			icon_state = "pit_wall"
+
+	cult
+		name = "ominious abyss"
+		desc = "The water below vibrates with a tension, as though it was raging."
+		falltarget = LANDMARK_FALL_CULTIST
 
 		pitwall
 			icon_state = "pit_wall"

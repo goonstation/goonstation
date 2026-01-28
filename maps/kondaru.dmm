@@ -575,6 +575,7 @@
 	})
 "acz" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/podbay,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "acB" = (
@@ -1468,18 +1469,6 @@
 	},
 /turf/space,
 /area/space)
-"agp" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
 "agq" = (
 /obj/fitness/speedbag/captain,
 /obj/machinery/light/small{
@@ -8082,6 +8071,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/engineering,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "aHE" = (
@@ -11996,6 +11986,7 @@
 /obj/machinery/mass_driver{
 	id = "manualshipping"
 	},
+/obj/machinery/arrivalnotifier/export,
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "bae" = (
@@ -22712,6 +22703,7 @@
 /area/station/maintenance/southwest)
 "bXa" = (
 /obj/machinery/light,
+/obj/machinery/arrivalnotifier/research,
 /turf/simulated/floor/grey,
 /area/station/routing/medsci{
 	name = "Research Router"
@@ -23577,6 +23569,7 @@
 /area/station/quartermaster/office)
 "cbN" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/security,
 /turf/simulated/floor,
 /area/station/routing/security)
 "cbS" = (
@@ -24603,6 +24596,7 @@
 /area/station/hangar/medical)
 "cge" = (
 /obj/machinery/light/small,
+/obj/machinery/arrivalnotifier/medbay,
 /turf/simulated/floor/caution/north,
 /area/station/hangar/medical)
 "cgf" = (
@@ -27564,16 +27558,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
-"cNP" = (
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/blind_switch/area/east{
-	pixel_y = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "cNX" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/gas_sensor{
@@ -28158,16 +28142,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"djc" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/mob/living/critter/small_animal/turtle/sylvester,
-/turf/simulated/floor/carpet/red,
-/area/station/security/hos)
 "dkL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30145,6 +30119,7 @@
 /area/station/hallway/primary/west)
 "evz" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/arrivalnotifier/catering,
 /turf/simulated/floor,
 /area/station/storage/hydroponics)
 "evN" = (
@@ -34931,6 +34906,19 @@
 	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
+"hFb" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/storage/goodybag,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/disposalpipe/segment/transport,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "hFc" = (
 /obj/table/wood/round/auto,
 /turf/simulated/floor/grass,
@@ -42615,6 +42603,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
+"mRr" = (
+/obj/machinery/arrivalnotifier/disposal,
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "mRv" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -46424,6 +46416,11 @@
 	dir = 8
 	},
 /area/station/science/testchamber)
+"pLn" = (
+/obj/machinery/arrivalnotifier/qm,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "pLp" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -58034,6 +58031,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
+"xHB" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
+/turf/simulated/floor/carpet/red,
+/area/station/security/hos)
 "xHK" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -59359,7 +59366,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cnq
 "}
 (2,1,1) = {"
 aaa
@@ -59660,7 +59667,7 @@ aaa
 aaa
 aaa
 aaa
-cnq
+aaa
 aaa
 "}
 (3,1,1) = {"
@@ -92459,7 +92466,7 @@ aBE
 aBE
 bim
 bip
-cNP
+aRu
 oFF
 aRu
 aRu
@@ -93914,7 +93921,7 @@ aaf
 abZ
 abZ
 gQs
-agp
+hFb
 joy
 air
 aji
@@ -94541,7 +94548,7 @@ azH
 azF
 pSQ
 aEU
-aAF
+mRr
 aET
 nML
 aHe
@@ -106990,7 +106997,7 @@ bJy
 wrs
 nKX
 nem
-hzL
+pLn
 hzL
 ovz
 uBo
@@ -120872,7 +120879,7 @@ kZz
 mAR
 xPt
 bNP
-djc
+xHB
 bQM
 fAl
 bYE

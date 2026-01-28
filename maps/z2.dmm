@@ -9828,7 +9828,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
@@ -48300,7 +48300,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
 "dyz" = (
-/obj/item/barrier,
+/obj/item/barrier/collapsible/security,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
 "dyA" = (
@@ -63434,6 +63434,16 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"kKl" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/arctic/cliff,
+/area/upper_arctic/exterior/surface)
 "kKt" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/cola/efrem{
@@ -68122,6 +68132,13 @@
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/white,
 /area/centcom/offices/kyle)
+"ori" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor/arctic/plating,
+/area/upper_arctic/exterior/abyss)
 "ors" = (
 /turf/unsimulated/floor/carpet{
 	dir = 4;
@@ -94541,7 +94558,7 @@ aPC
 nOM
 aOL
 oHu
-aSO
+ori
 aSO
 aSO
 aVj
@@ -94843,7 +94860,7 @@ qJS
 aQj
 aQU
 qJS
-aSP
+kKl
 aTI
 aTI
 aVh

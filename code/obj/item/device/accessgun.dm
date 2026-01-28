@@ -129,11 +129,11 @@ TYPEINFO(/obj/item/device/accessgun)
 			return
 
 		var/obj/O = target
-
-		if ((access_maxsec in O.req_access) || (access_armory in O.req_access))
-			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
-			boutput(user, SPAN_NOTICE("[src] can't reprogram this."))
-			return
+		for(var/access in O.req_access)
+			if (!(access in src.allowed_access_list))
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
+				boutput(user, SPAN_NOTICE("[src] doesn't have the access to reprogram [O]."))
+				return
 
 		if (is_restricted(O, user))
 			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
@@ -211,7 +211,8 @@ TYPEINFO(/obj/item/device/accessgun)
 	afterattack(obj/target, mob/user, reach, params)
 		var/obj/machinery/door/airlock/door_reqs = target
 		if (!istype(door_reqs))
-			. = ..()
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
+			boutput(user, SPAN_NOTICE("[src] can only reprogram or scan airlocks!"))
 			return
 		if(target.deconstruct_flags & DECON_BUILT)
 			if (length(door_reqs.req_access))

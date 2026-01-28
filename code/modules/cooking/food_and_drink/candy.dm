@@ -54,6 +54,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 
 /obj/item/reagent_containers/food/snacks/candy/candy_cane
 	name = "candy cane"
+	crunchy = TRUE
 	desc = "Holiday treat and aid to limping gingerbread men everywhere."
 	real_name = "candy cane"
 	icon = 'icons/misc/xmas.dmi'
@@ -259,6 +260,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop
 	name = "lollipop"
+	crunchy = TRUE
 	desc = "How many licks does it take to get to the center? No one knows, they just bite the things."
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "lpop-0"
@@ -429,6 +431,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/reagent_containers/food/snacks/candy/candyheart
 	name = "candy heart"
+	crunchy = TRUE
 	desc = "Can you find the perfect phrase for that special someone?"
 	icon_state = "heart"
 	bites_left = 1
@@ -555,6 +558,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 /obj/item/reagent_containers/food/snacks/candy/hard_candy
 	name = "hard candy"
+	crunchy = TRUE
 	desc = "A piece of hard candy."
 	real_name = "hard candy"
 	icon_state = "hardcandy-nowrap"
@@ -619,6 +623,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard
 	name = "wrapped hard candy"
+	crunchy = TRUE //probably not necessary here since i don't think you can normally eat it while it's wrapped but matter eater exists so whatever
 	desc = "A piece of wrapped hard candy."
 	real_name = "hard candy"
 	icon_state = "hardcandy"
@@ -645,6 +650,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 /obj/item/reagent_containers/food/snacks/candy/rock_candy
 	name = "rock candy"
+	crunchy = TRUE
 	desc = "Rock candy on a stick. Hard as a rock, hopefully doesn't taste like one."
 	real_name = "rock candy"
 	icon_state = "rockcandy-0"
@@ -677,6 +683,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 /obj/item/reagent_containers/food/snacks/candy/swirl_lollipop
 	name = "swirly lollipop"
+	crunchy = TRUE
 	desc = "A giant colorful lollipop in the shape of a swirl."
 	real_name = "swirly lollipop"
 	icon_state = "lpop-rainbow"

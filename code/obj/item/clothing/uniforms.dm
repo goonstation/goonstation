@@ -55,8 +55,8 @@
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	icon_state = "white"
-	item_state = "white"
+	icon_state = "custom"
+	item_state = "custom"
 
 // Colors
 
@@ -1614,10 +1614,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 	item_state = "collar_shirt-white"
 	var/shirt_colour_name = "white"
 
-	New()
-		..()
-		src.name = "[src.shirt_colour_name] collar shirt"
-		src.desc = "A plain [src.shirt_colour_name] collared shirt."
+/obj/item/clothing/under/misc/collar_shirt/New()
+	..()
+	src.name = "[src.shirt_colour_name] collar shirt"
+	src.desc = "A plain [src.shirt_colour_name] collared shirt."
+	src.AddComponent(/datum/component/cycle_tuck, base_name = src.item_state)
 
 /obj/item/clothing/under/misc/collar_shirt/white
 	icon_state = "collar_shirt-white"

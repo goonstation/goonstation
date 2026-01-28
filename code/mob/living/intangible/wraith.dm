@@ -2,10 +2,10 @@
 
 TYPEINFO(/mob/living/intangible/wraith)
 	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_WRAITHCHAT, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL_GHOST)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_WRAITHCHAT, LISTEN_INPUT_RADIO_GLOBAL_GHOST)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_WRAITHCHAT_WRAITH, SPEECH_OUTPUT_DEADCHAT_WRAITH)
+	start_speech_outputs = list(SPEECH_OUTPUT_WRAITHCHAT_WRAITH)
 
 /mob/living/intangible/wraith
 	name = "wraith"
@@ -318,7 +318,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 			if (D_ENERGY)
 				src.TakeDamage(null, 0, damage)
 
-		if(!P.proj_data.silentshot)
+		if(!P.proj_data.no_hit_message)
 			boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	ex_act(severity)
@@ -448,9 +448,9 @@ TYPEINFO(/mob/living/intangible/wraith)
 		src.addAbility(/datum/targetable/wraithAbility/animateObject)
 		src.addAbility(/datum/targetable/wraithAbility/spook)
 		src.addAbility(/datum/targetable/wraithAbility/whisper)
+		src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
 		src.addAbility(/datum/targetable/wraithAbility/blood_writing)
 		src.addAbility(/datum/targetable/wraithAbility/haunt)
-		src.addAbility(/datum/targetable/wraithAbility/toggle_deadchat)
 
 	proc/removeAllAbilities()
 		for (var/datum/targetable/wraithAbility/abil in abilityHolder.abilities)
@@ -577,7 +577,6 @@ TYPEINFO(/mob/living/intangible/wraith)
 		..()
 		src.abilityHolder.regenRate = 3
 		src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
-		src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
 		src.addAbility(/datum/targetable/wraithAbility/dread)
 		src.addAbility(/datum/targetable/wraithAbility/hallucinate)
 		src.addAbility(/datum/targetable/wraithAbility/fake_sound)
