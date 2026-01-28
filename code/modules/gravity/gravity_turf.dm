@@ -27,10 +27,12 @@
 /turf/proc/set_gforce_override(new_gforce)
 	src.gforce_override = new_gforce
 	src.gforce_area_rev = 0
+	src.get_gforce_current()
 
 /turf/proc/clear_gforce_override()
 	src.gforce_override = null
 	src.gforce_area_rev = 0
+	src.get_gforce_current()
 
 /turf/proc/get_gforce_current()
 	var/area/A = src.loc
