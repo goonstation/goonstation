@@ -99,6 +99,9 @@
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
 
+		if (target_name == src.holder.owner.real_name)
+			return 1
+
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] transforms!</B>"))
 		logTheThing(LOG_COMBAT, holder.owner, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
