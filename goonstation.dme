@@ -749,6 +749,7 @@
 #include "code\modules\admin\buildmodes\fluids.dm"
 #include "code\modules\admin\buildmodes\gas.dm"
 #include "code\modules\admin\buildmodes\glue.dm"
+#include "code\modules\admin\buildmodes\gravity.dm"
 #include "code\modules\admin\buildmodes\lighting.dm"
 #include "code\modules\admin\buildmodes\load_map.dm"
 #include "code\modules\admin\buildmodes\location.dm"
