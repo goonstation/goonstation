@@ -20,7 +20,7 @@ TYPEINFO(/obj/machinery/gravity_tether/station)
 	maptext_manager_y = 16
 	req_access = list(access_engineering_chief)
 	active_wattage_per_g_quantum = 1 KILO WATT
-	passive_wattage_per_g_quantum = 100 WATTS
+	passive_wattage_per_g_quantum = 75 WATTS
 	uses_area_power = TRUE
 	locked = TRUE
 	mechanics_interaction = MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE
