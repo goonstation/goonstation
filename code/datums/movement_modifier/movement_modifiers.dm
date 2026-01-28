@@ -353,4 +353,7 @@
 
 // high gforce adds multiplicative slowdown
 /datum/movement_modifier/gravity/modifiers(mob/user, turf/move_target, running)
-	return list(0, user.gforce > GFORCE_EARTH_GRAVITY ? user.gforce/GFORCE_EARTH_GRAVITY : 1)
+	var/gforce = user.gforce
+	if (user.bioHolder?.HasOneOfTheseEffects("dwarf", "strong"))
+		gforce = max(GFORCE_EARTH_GRAVITY, gforce - GFORCE_EARTH_GRAVITY)
+	return list(0, gforce > GFORCE_EARTH_GRAVITY ? gforce/GFORCE_EARTH_GRAVITY : 1)

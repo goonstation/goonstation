@@ -79,11 +79,6 @@
 	proc/get_heat_protection()
 		var/thermal_protection = 10 // base value
 
-		// Resistance from Bio Effects
-		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("dwarf"))
-				thermal_protection += 10
-
 		// Resistance from Clothing
 		thermal_protection += GET_ATOM_PROPERTY(src, PROP_MOB_HEATPROT)
 		thermal_protection = clamp(thermal_protection, 0, 100)

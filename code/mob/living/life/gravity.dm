@@ -37,46 +37,60 @@
 			return
 
 	var/mult = get_multiplier()
+	var/gforce = src.owner.gforce
+	if (gforce > GFORCE_EARTH_GRAVITY)
+		if (src.owner.bioHolder?.HasOneOfTheseEffects("dwarf", "hulk"))
+			gforce = max(GFORCE_EARTH_GRAVITY, gforce - GFORCE_EARTH_GRAVITY)
 
-	switch(src.owner.gforce)
+	if (src.gib_counter > 0 && gforce < GFORCE_MOB_EXTREME_THRESHOLD)
+		src.gib_counter -= clamp(randfloat(0.4,2.0), 0, src.gib_counter)
+
+	switch(gforce)
 		if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
 			;  // quick no-op for most common gravity
 		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
-			// spacefaring, salvagers, and skeletons immune; lower the gravity, higher the probability, ~2.5 to ~25%
-			if (human_owner && !human_owner.lying && !human_owner.is_spacefaring() && !issalvager(human_owner) && !isskeleton(human_owner) && probmult(round((1 - src.owner.gforce) * 25)))
-				switch(rand(1, 3))
-					if (1) // nausea
-						if (istype(human_owner.wear_suit, /obj/item/clothing/suit/space) || ischangeling(human_owner) || iszombie(human_owner))
-							return // wearing a space suit or not caring about organs makes you immune
-						boutput(human_owner, SPAN_ALERT("You feel your insides [pick("squirm", "shift", "wiggle", "float")] uncomfortably in low-gravity."), "grav-life")
-						human_owner.nauseate(1)
-					if (2) // stamina sap
-						if (human_owner.traction == TRACTION_FULL)
-							return // unless you're on solid footing
-						if (istype(human_owner.back, /obj/item/tank/jetpack))
-							var/obj/item/tank/jetpack/J = human_owner.back
-							if(J.allow_thrust(0.01, human_owner))
-								return // or jetpacking
-						boutput(human_owner, SPAN_ALERT("You [pick("struggle", "take effort", "manage")] to keep yourself [pick("oriented", "angled properly", "right-way-up")] in low-gravity."), "grav-life")
-						human_owner.remove_stamina(human_owner.traction == TRACTION_PARTIAL ? 25 : 50)
-					if (3) // blood rushes to your head
-						if (istype(human_owner.head, /obj/item/clothing/head/helmet/space) || ischangeling(human_owner) || isvampire(human_owner) || iszombie(human_owner))
-							return // unless you wear a helmet or "don't have" blood
-						var/msg_output = "You feel the blood rush to your head, "
-						var/amount = (GFORCE_EARTH_GRAVITY - src.owner.gforce) / GFORCE_EARTH_GRAVITY * 3
-						if (prob(50))
-							var/obj/item/organ/eye/leftie = human_owner.get_organ("left_eye")
-							var/obj/item/organ/eye/rightie = human_owner.get_organ("right_eye")
-							if ((isnull(leftie) || leftie.robotic || !leftie.provides_sight) && (isnull(rightie) || rightie.robotic || !rightie.provides_sight))
-								return // both eyes are in the group of states: missing, robotic, or don't provide sight
-							human_owner.change_eye_blurry(amount, 15)
-							msg_output += "bulging your eyes slightly."
-						else
-							human_owner.change_misstep_chance(amount)
-							msg_output += "disorienting you."
-						boutput(human_owner, SPAN_ALERT(msg_output), "grav-life")
+			if (!human_owner || human_owner.lying || human_owner.is_spacefaring())
+				return
+			if (issalvager(human_owner) || isskeleton(human_owner))
+				return
+			if (gforce > GFORCE_GRAVITY_MINIMUM)
+				if (!probmult(round((GFORCE_EARTH_GRAVITY - gforce)/10)))
+					return //0-10% chance of continuing, increasing chance as gforce decreases
+
+			switch(rand(1, 3))
+				if (1) // nausea
+					if (istype(human_owner.wear_suit, /obj/item/clothing/suit/space) || ischangeling(human_owner) || iszombie(human_owner))
+						return // wearing a space suit or not caring about organs makes you immune
+					boutput(human_owner, SPAN_ALERT("You feel your insides [pick("squirm", "shift", "wiggle", "float")] uncomfortably in low-gravity."), "grav-life")
+					human_owner.nauseate(1)
+				if (2) // stamina sap
+					if (human_owner.traction == TRACTION_FULL)
+						return // unless you're on solid footing
+					if (istype(human_owner.back, /obj/item/tank/jetpack))
+						var/obj/item/tank/jetpack/J = human_owner.back
+						if(J.allow_thrust(0.01, human_owner))
+							return // or jetpacking
+					boutput(human_owner, SPAN_ALERT("You [pick("struggle", "take effort", "manage")] to keep yourself [pick("oriented", "angled properly", "right-way-up")] in low-gravity."), "grav-life")
+					human_owner.remove_stamina(human_owner.traction == TRACTION_PARTIAL ? 25 : 50)
+				if (3) // blood rushes to your head
+					if (istype(human_owner.head, /obj/item/clothing/head/helmet/space) || ischangeling(human_owner) || isvampire(human_owner) || iszombie(human_owner))
+						return // unless you wear a helmet or "don't have" blood
+					var/msg_output = "You feel the blood rush to your head, "
+					var/amount = (GFORCE_EARTH_GRAVITY - src.owner.gforce) / GFORCE_EARTH_GRAVITY * 3
+					if (prob(50))
+						var/obj/item/organ/eye/leftie = human_owner.get_organ("left_eye")
+						var/obj/item/organ/eye/rightie = human_owner.get_organ("right_eye")
+						if ((isnull(leftie) || leftie.robotic || !leftie.provides_sight) && (isnull(rightie) || rightie.robotic || !rightie.provides_sight))
+							return // both eyes are in the group of states: missing, robotic, or don't provide sight
+						human_owner.change_eye_blurry(amount, 15)
+						msg_output += "bulging your eyes slightly."
+					else
+						human_owner.change_misstep_chance(amount)
+						msg_output += "disorienting you."
+					boutput(human_owner, SPAN_ALERT(msg_output), "grav-life")
+
 		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
-			if (src.owner.gforce >= GFORCE_MOB_PANCAKE_THRESHOLD)
+			if (gforce >= GFORCE_MOB_PANCAKE_THRESHOLD)
 				if (src.gib_counter > rand(9, 11))
 					message_admins("Extremely high gravity ([src.owner.gforce/100]G) gibbed [src.owner] at [log_loc(src.owner)]")
 					logTheThing(LOG_COMBAT, src, "[src.owner] was gibbed with excessive gravity of [src.owner.gforce]G at [log_loc(src.owner)]")
@@ -87,8 +101,8 @@
 					boutput(src.owner, SPAN_ALERT("Your entire being strains against the immense gravity. <b>Staying here is not safe!</b>"), "grav_gib_warning")
 					src.gib_counter += 0.69
 					return // slow people down from dying a lil bit so they gib >:o)
-			if (probmult(src.owner.gforce * 4)) // ~9% minimum
-				var/damage = max(rand(GFORCE_MOB_EXTREME_THRESHOLD, src.owner.gforce), GFORCE_MOB_GREYOUT_THRESHOLD)/GFORCE_EARTH_GRAVITY
+			if (probmult(gforce * 4)) // ~9% minimum
+				var/damage = max(rand(GFORCE_MOB_EXTREME_THRESHOLD, gforce), GFORCE_MOB_GREYOUT_THRESHOLD)/GFORCE_EARTH_GRAVITY
 				if (human_owner)
 					switch(rand(1, 3))
 						if(1) // drop item
@@ -134,6 +148,3 @@
 								return // unless you don't have any
 							boutput(robot_owner, SPAN_ALERT("The extreme gravity [pick("tugs", "yanks", "pulls")] at your arms!"), "grav-life")
 							robot_owner.TakeDamage(pick(choices), damage, damage_type=DAMAGE_CRUSH)
-
-	if (src.gib_counter > 0 && src.owner.gforce < GFORCE_MOB_EXTREME_THRESHOLD)
-		src.gib_counter -= clamp(randfloat(0.4,2.0), 0, src.gib_counter)
