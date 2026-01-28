@@ -29688,7 +29688,8 @@
 /obj/machinery/mass_driver{
 	dir = 1;
 	drive_range = 10;
-	id = "kondaru_qmfetch"
+	id = "kondaru_qmfetch";
+	bonus_range = 8
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
