@@ -419,6 +419,7 @@
 		src.hd.root.add_file(new /datum/computer/file/pda_program/robustris)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/manifest)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
 		if(length(src.default_muted_mailgroups))
 			src.host_program.muted_mailgroups = src.default_muted_mailgroups
