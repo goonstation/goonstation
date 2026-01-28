@@ -773,6 +773,7 @@ TYPEINFO(/mob)
 		var/old_loc = src.loc
 		AM.animate_movement = SYNC_STEPS
 		AM.glide_size = src.glide_size
+		AM.inertia_value = 1
 		step(AM, t)
 
 		if (isliving(AM))
