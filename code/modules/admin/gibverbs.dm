@@ -220,6 +220,23 @@
 
 		M.anvilgib(height=height, anvil_type=anvil_type)
 
+/client/proc/cmd_admin_gravitygib(mob/M as mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Gravity Gib"
+	set popup_menu = 0
+
+	if (!src.holder)
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+		if(usr.key != M.key && M.client)
+			logTheThing(LOG_ADMIN, usr, "has gravitygibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has gravitygibbed [constructTarget(M,"diary")]", "admin")
+			message_admins("[key_name(usr)] has gravitygibbed [key_name(M)]")
+
+		M.gravitygib()
+
 /client/proc/cmd_admin_flockgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Flockbit gib"
