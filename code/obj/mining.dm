@@ -2009,6 +2009,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	powered_dig_strength = 3
 	power_usage = 2
 	robot_power_usage = 50
+	default_cell = /obj/item/ammo/power_cell
 
 	examine(mob/user)
 		. = ..()
