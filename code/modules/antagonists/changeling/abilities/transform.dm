@@ -103,5 +103,7 @@
 		logTheThing(LOG_COMBAT, holder.owner, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
 		var/datum/absorbedIdentity/face = H.absorbed_dna[target_name]
+		//re-store the current identity, it may have been modified
+		H.absorbed_dna[src.holder.owner.real_name] = new /datum/absorbedIdentity(src.holder.owner)
 		face.apply_to(C)
 		return 0
