@@ -1,5 +1,9 @@
 
 (t)wed jan 28 26
+(u)Ghostplasmas & Ribbie
+(p)25601
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Added 14 hijabs and 11 headscarves to the clothing booth.
 (u)Cheekybrdy
 (p)25575
 (e)🆕🗺|C-Feature, A-Mapping

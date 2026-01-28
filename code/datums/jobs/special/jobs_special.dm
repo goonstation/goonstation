@@ -512,16 +512,17 @@ ABSTRACT_TYPE(/datum/job/daily)
 		if (!M)
 			return
 		SPAWN(0)
-			var/morph = null
-			var/list/options = list(/datum/mutantrace/lizard,
-									/datum/mutantrace/skeleton,
-									/datum/mutantrace/ithillid,
-									/datum/mutantrace/martian,
-									/datum/mutantrace/amphibian,
-									/datum/mutantrace/blob,
-									/datum/mutantrace/cow)
+			var/selection = null
+			var/list/options = list(/datum/mutantrace/lizard::name = /datum/mutantrace/lizard,
+									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
+									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
+									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
+									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
+									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
-			morph = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			selection = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			var/datum/mutantrace/morph = options[selection]
 
 			if (morph && (morph == /datum/mutantrace/martian || morph == /datum/mutantrace/blob)) // doesn't wear human clothes
 				M.equip_if_possible(new /obj/item/storage/backpack/empty(src), SLOT_BACK)
