@@ -187,7 +187,7 @@ TYPEINFO(/obj/item/ammo/power_cell)
 /obj/item/ammo/power_cell/self_charging/tricklecharge
 	name = "Power Cell - Trickle Charge"
 	desc = "A prototype power cell with a koshmarite attenuator to recapture ambient and post-discharge energy. Holds 40PU."
-	recharge_rate = 0.2
+	recharge_rate = 0.3
 	charge = 40
 	max_charge = 40
 
