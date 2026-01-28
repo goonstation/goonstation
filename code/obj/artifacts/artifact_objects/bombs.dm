@@ -596,9 +596,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 // biological bomb
 
-#define BIOBOMB_SMOKEY 0
-#define BIOBOMB_CLASSICAL_GAS 1
-
+#define BIOBOMB_CLASSICAL_GAS 0
 
 /obj/machinery/artifact/bomb/biological
 
@@ -621,30 +619,24 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	touch_descriptors = list("It's covered in a thin layer of slime")
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
-	var/payload_type = BIOBOMB_SMOKEY
+	var/payload_type = BIOBOMB_CLASSICAL_GAS
 	recharge_delay = 10 MINUTES
+	var/self_destruct_strength = 1
 	var/list/payload_disease_reagents = list()
 
 	post_setup()
 		. = ..()
-		payload_type = pick(BIOBOMB_SMOKEY, BIOBOMB_CLASSICAL_GAS)
-		var/payload_type_name = "unknown"
-		switch (payload_type)
-			if (BIOBOMB_SMOKEY)
-				payload_type_name = "smoke"
-			if (BIOBOMB_CLASSICAL_GAS)
-				payload_type_name = "propellant"
 
 		var/reagent = "unknown"
 		switch(artitype.name)
-			if("wizard")
+			if("wizard") //wizard related and silly diseases
 				reagent = pick("rainbow fluid", "painbow fluid", "grave dust", "banana peel", "explodingheadjuice")
 
-			if("eldritch")
+			if("eldritch") //horrible stuff
 				reagent = pick("gibbis", "pubbie tears", "rat_spit", "loose_screws", "prions", "e.coli", "green mucus")
 
 		payload_disease_reagents += reagent
-		log_addendum = "Payload: [payload_type_name], [jointext(reagent, ", ")]"
+		log_addendum = "Payload: [reagent]"
 
 		recharge_delay = rand(300,800)
 
@@ -666,13 +658,19 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		for (var/X in reaction_reagents)
 			O.reagents.add_reagent(X,amountper)
 
-		switch(payload_type)
-			if(BIOBOMB_SMOKEY)
-				// normal smoke
-				O.reagents.smoke_start(50)
-			if(BIOBOMB_CLASSICAL_GAS)
-				// "classic" smoke
-				O.reagents.smoke_start(50,1)
+		// "classic" smoke only
+		O.reagents.smoke_start(50,1)
+
+		// adds 50% chance for artifact to crack open
+
+		if (prob(50))
+			for (var/mob/M in viewers(O, null))
+				M.flash(2 SECONDS)
+
+			explosion_new(O, get_turf(O), self_destruct_strength, TRUE, 0, 360, TRUE)
+
+			O.ArtifactDestroyed()
+			return
 
 		if(QDELETED(O))
 			return
@@ -682,5 +680,4 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if (O)
 				O.ArtifactDeactivated()
 
-#undef BIOBOMB_SMOKEY
 #undef BIOBOMB_CLASSICAL_GAS
