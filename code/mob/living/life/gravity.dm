@@ -15,6 +15,7 @@
 		REMOVE_MOVEMENT_MODIFIER(src.owner, /datum/movement_modifier/gravity, "gravity")
 		src.human_owner?.removeOverlayComposition(/datum/overlayComposition/steelmask/tunnel_vision)
 		src.human_owner?.removeOverlayComposition(/datum/overlayComposition/greyout)
+		src.gib_counter = 0
 		return
 
 	if (T != src.owner.loc)
@@ -24,6 +25,7 @@
 			REMOVE_MOVEMENT_MODIFIER(src.owner, /datum/movement_modifier/gravity, "gravity")
 			src.human_owner?.removeOverlayComposition(/datum/overlayComposition/steelmask/tunnel_vision)
 			src.human_owner?.removeOverlayComposition(/datum/overlayComposition/greyout)
+			src.gib_counter = 0
 			return
 
 	// don't take any on-tick effects while submerged in water
@@ -132,3 +134,6 @@
 								return // unless you don't have any
 							boutput(robot_owner, SPAN_ALERT("The extreme gravity [pick("tugs", "yanks", "pulls")] at your arms!"), "grav-life")
 							robot_owner.TakeDamage(pick(choices), damage, damage_type=DAMAGE_CRUSH)
+
+	if (src.gib_counter > 0 && src.owner.gforce < GFORCE_MOB_EXTREME_THRESHOLD)
+		src.gib_counter -= clamp(randfloat(0.4,2.0), 0, src.gib_counter)
