@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 /datum/clothingbooth_item/head/cat_ears
-	cost = PAY_TRADESMAN/2
+	cost = PAY_TRADESMAN
 
 	white
 		name = "White"
