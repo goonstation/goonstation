@@ -724,3 +724,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tea_party_dress)
 		name = "Yellow"
 		swatch_background_color = "#ffe156"
 		item_path = /obj/item/clothing/under/misc/tea_party_dress/yellow
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/hawaiian)
+/datum/clothingbooth_item/w_uniform/hawaiian
+	cost = PAY_DOCTORATE/3
+
+	blue
+		name = "Blue"
+		swatch_background_color =  "#8bdbf2"
+		item_path = /obj/item/clothing/under/misc/tourist
+
+	jungle
+		name = "jungle"
+		swatch_background_color = "#3fb43f"
+		item_path = /obj/item/clothing/under/misc/tourist/max_payne
+
+/datum/clothingbooth_item/w_uniform/poncho_and_shirt
+	item_path = /obj/item/clothing/under/misc/serpico
