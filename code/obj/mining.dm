@@ -1824,7 +1824,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	afterattack(atom/target, mob/user)
 		..()
-		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mods)
+		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mode)
 			if(isturf(target))
 				src.process_charges(src.get_power_usage(), user)
 			else
@@ -1996,7 +1996,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 /obj/item/mining_tool/powered/hedron_beam
 	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
 	name = "\improper Hedron beam device"
-	desc = "A prototype multifunctional industrial tool capable of rapidly switching between welding and mining modes."
+	desc = "A prototype multifunction industrial tool capable of rapidly switching between welding and mining modes. Ships with a weak self-charging cell."
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
@@ -2009,7 +2009,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	powered_dig_strength = 3
 	power_usage = 2
 	robot_power_usage = 50
-	default_cell = /obj/item/ammo/power_cell
+	default_cell = /obj/item/ammo/power_cell/self_charging/tricklecharge
 
 	examine(mob/user)
 		. = ..()
