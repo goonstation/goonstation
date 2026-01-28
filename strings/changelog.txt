@@ -1,5 +1,9 @@
 
 (t)wed jan 28 26
+(u)Skeletonman0
+(p)25539
+(e)|
+(+)Seeds can now be planted in diggable turfs (soil, grass, etc.) while holding a shovel. Plants also now shake like bushes when hit.
 (u)Cheekybrdy
 (p)25530
 (e)🗺🔧|A-Mapping, A-Tooling
