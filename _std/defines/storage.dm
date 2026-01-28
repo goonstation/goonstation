@@ -24,9 +24,13 @@
 
 // check_wclass behaviour defines
 
-/// Standard for any storage with list/can_hold defined. Only what is in that list can be held in the storage, independing of w_class
+/// Default behavior; changes based on the `list/can_hold` variable.
+///
+///If `can_hold` is defined, store items if in `can_hold`, regardless of `max_wclass`. 
+///
+///If `can_hold` is empty/undefined, store items equal or under `max_wclass`.
 #define STORAGE_CHECK_W_CLASS_IGNORE 0
-/// Above list/can_hold, everything which is within the wclass defined in max_wclass can fit in the storage as well
+/// Store items in `can_hold` OR items equal or under `max_wclass`.
 #define STORAGE_CHECK_W_CLASS_INCLUDE 1
-/// Causes the storage not not allow things in list/can_hold which have a wclass higher than what is defined in max_wclass
+/// Store items that are in the `can_allow` list AND equal or under `max_wclass`.
 #define STORAGE_CHECK_W_CLASS_EXCLUDE 2
