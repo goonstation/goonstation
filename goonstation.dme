@@ -287,6 +287,7 @@
 #include "code\datums\components\snowballs.dm"
 #include "code\datums\components\stomach_barf.dm"
 #include "code\datums\components\storage_viscontents.dm"
+#include "code\datums\components\swallowable.dm"
 #include "code\datums\components\teleport_on_enter.dm"
 #include "code\datums\components\therapy.dm"
 #include "code\datums\components\toggle_coat.dm"

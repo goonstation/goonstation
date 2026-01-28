@@ -320,3 +320,17 @@ TYPEINFO(/obj/item/ammo/power_cell/lasergat)
 	charge = 400
 	max_charge = 400
 	recharge_rate = 10
+
+/obj/item/ammo/power_cell/aa
+	name = "\improper Surecell AA battery"
+	desc = "The very latest in highly disposable chemical power!"
+	icon_state = "aa"
+	max_charge = 40
+	charge = 0
+	rechargable = FALSE
+	unusualCell = TRUE
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/swallowable)
+		SEND_SIGNAL(src, COMSIG_CELL_CHARGE, rand(36, 39)) //fully charged AAs are a myth
