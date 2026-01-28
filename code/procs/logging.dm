@@ -497,4 +497,4 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 /proc/log_emote(source, message, voluntary = FALSE)
 	if(!source || !message)
 		return
-	logTheThing(LOG_SAY, source, "EMOTE[voluntary ? "(voluntary)" : ""]: [message] at [log_loc(source)]")
+	logTheThing(LOG_SAY, source, "EMOTE[voluntary ? "(voluntary)" : ""]: [message] [log_loc(source)]")
