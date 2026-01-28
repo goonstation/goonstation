@@ -428,8 +428,7 @@ TYPEINFO(/obj/item/mechanics)
 	get_help_message()
 		. = ..()
 		if(src.mechanically_copyable)
-			. += "You can copy this component's settings to another of the same type by hitting \
-			the component you want changed with the component you want copied."
+			. += "You can copy this component's settings to another of the same type with a <b>multitool</b>!"
 
 	disposing()
 		processing_mechanics.Remove(src)
@@ -458,20 +457,17 @@ TYPEINFO(/obj/item/mechanics)
 			RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_owner))
 			owner = user
 
-		/// Individually defined for each subtype. Called when the component is attacked by another
-		/// component of the same type. Copies the configuration/settings of the attacking component.
-		copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
-			if(!copied_mechcomp.mechanically_copyable)
-				boutput(attacker, SPAN_ALERT("The [src] in hand can't be copied!"))
-				return FALSE
-
+		/// Individually defined for each subtype. Called when this object is hit by a multitool
+		/// bearing a copying component. Copies the configuration/settings of `copied_mechcomp`.
+		copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker, atom/copying_medium)
 			var/datum/component/mechanics_holder/holder = src.GetComponent(/datum/component/mechanics_holder)
 			if("Set Send-Signal" in holder.configs) // <-- I assume copying the define for this string from 'mechComp_signals.dm' would be worse.
 				var/datum/component/mechanics_holder/copied_holder = copied_mechcomp.GetComponent(/datum/component/mechanics_holder)
 				holder.defaultSignal = copied_holder.defaultSignal
 
 			src.tooltip_rebuild = TRUE
-			boutput(attacker, SPAN_ALERT("You've copied the settings of the in-hand [src] to the [copied_mechcomp]."))
+			logTheThing(LOG_STATION, attacker, "copies the settings of [log_object(copied_mechcomp)] [log_loc(copied_mechcomp)] to a [log_object(src)] [log_loc(src)].")
+			boutput(attacker, SPAN_NOTICE("You've copied settings from [copying_medium] to the [src]."))
 
 	process()
 		if(level == OVERFLOOR || under_floor)
@@ -596,9 +592,6 @@ TYPEINFO(/obj/item/mechanics)
 			else
 				src.wrench_action(user)
 			return TRUE
-		if(W.type == src.type)
-			copy_identical_mechcomp(W, user)
-			return TRUE // Prevents chat spam with "X HAS BEEN HIT BY Y WITH Z!" messages.
 		return ..()
 
 	pixelaction(atom/target, params, mob/user)
