@@ -30,4 +30,11 @@
   em {
     color: var(--wizard-text-important);
   }
+  //The darkened text can be a little hard to read
+  p {
+    color: var(--color-text);
+  }
+  h1 {
+    color: var(--color-text);
+  }
 }
