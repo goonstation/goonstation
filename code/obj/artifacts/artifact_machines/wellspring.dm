@@ -35,7 +35,7 @@
 			if ("eldritch")
 				src.payload_reagent = pick("blood", "bloodc", "black_goop", "sewage")
 			if ("precursor")
-				src.payload_reagent = pick("ephedrine") //add more precursor reagents?
+				src.payload_reagent = pick("ephedrine", "phenol")
 			if ("wizard")
 				src.payload_reagent = pick("reversium", "mugwort", "chickensoup")
 		src.payload_amount = rand(100, 3000)

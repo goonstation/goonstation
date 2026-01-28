@@ -247,6 +247,7 @@
 		spawn_chance = rand(1, 40)
 		if (prob(5))
 			is_plastic = TRUE
+			setMaterial(getMaterial("plastic"), FALSE, FALSE, use_descriptors = FALSE)
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
@@ -651,6 +652,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	density = 0
 	opacity = 0
 	layer = EFFECTS_LAYER_UNDER_3 // below lights, above windoors
+	default_material = "plastic"
 	var/base_state = "blindsH"
 	var/open = 1
 	var/id = null

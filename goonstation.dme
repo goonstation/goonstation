@@ -751,6 +751,7 @@
 #include "code\modules\admin\buildmodes\load_map.dm"
 #include "code\modules\admin\buildmodes\location.dm"
 #include "code\modules\admin\buildmodes\meteor.dm"
+#include "code\modules\admin\buildmodes\move_area.dm"
 #include "code\modules\admin\buildmodes\paint.dm"
 #include "code\modules\admin\buildmodes\paint_matrix.dm"
 #include "code\modules\admin\buildmodes\plant.dm"
