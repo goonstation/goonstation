@@ -24,4 +24,10 @@
   .Layout__content {
     background-image: none;
   }
+
+  // Text colours
+  --wizard-text-important: #51d7f8;
+  em {
+    color: var(--wizard-text-important);
+  }
 }
