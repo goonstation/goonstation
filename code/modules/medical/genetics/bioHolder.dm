@@ -360,22 +360,24 @@ var/list/datum/bioEffect/mutini_effects = list()
 				if (!BE.can_copy)
 					continue
 
+				var/datum/bioEffect/newCopy
 				if(HasEffect(BE.id))
-					var/datum/bioEffect/newCopy = GetEffect(BE.id)
-					if(!newCopy) continue
-
-					newCopy.timeLeft = BE.timeLeft
-					var/oldpower = newCopy.power
-					newCopy.power = BE.power
-					newCopy.onPowerChange(oldpower, newCopy.power)
-					newCopy.data = BE.data
+					newCopy = GetEffect(BE.id)
 				else
-					var/datum/bioEffect/newCopy = AddEffect(BE.id, power = BE.power)
-					if(!newCopy) continue
+					newCopy = AddEffect(BE.id, power = BE.power)
 
-					newCopy.timeLeft = BE.timeLeft
-					newCopy.data = BE.data
-		return
+				if(!newCopy) //uh oh
+					continue
+
+				var/oldpower = newCopy.power
+				newCopy.power = BE.power
+				newCopy.safety = BE.safety
+				newCopy.curable_by_mutadone = BE.curable_by_mutadone
+				newCopy.timeLeft = BE.timeLeft
+				newCopy.stability_loss = BE.stability_loss
+				newCopy.data = BE.data
+				if (oldpower != newCopy.power)
+					newCopy.onPowerChange(oldpower, newCopy.power)
 
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
 		if (progress > 10)
