@@ -537,6 +537,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 	item_path = /obj/item/clothing/head/ushanka
 
 /datum/clothingbooth_item/head/flatcap
-	cost = PAYPAY_UNTRAINED
+	cost = PAY_UNTRAINED
 	item_path = /obj/item/clothing/head/flatcap
 
