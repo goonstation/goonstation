@@ -147,6 +147,16 @@
 			W.on_toggle_hood()
 		..()
 
+/obj/ability_button/tuck_cycle
+	name = "Change shirt style"
+	icon_state = "shirt-half_tuck"
+
+	execute_ability()
+		var/obj/item/clothing/under/misc/collar_shirt/W = the_item
+		if (istype(W, /obj/item/clothing/under/misc/collar_shirt))
+			W.AttackSelf(the_mob)
+		..()
+
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
 	icon_state = "magbootson"

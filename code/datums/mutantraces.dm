@@ -1585,6 +1585,7 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 	special_head = HEAD_MONKEY
 	special_head_state = "head"
 	voice_name = "monkey"
+	voice_override = "monkey"
 	override_language = LANGUAGE_MONKEY
 	override_attack = FALSE
 	understood_languages = list(LANGUAGE_MONKEY, LANGUAGE_ENGLISH)

@@ -1234,8 +1234,13 @@ TYPEINFO(/mob)
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey && !src.mind?.get_player()?.dnr && !src.mind?.get_player()?.joined_observer)
+	if(src.ckey && !src.mind?.get_player()?.joined_observer)
+		#ifdef RP_MODE // you can always respawn (into a new character) on RP
 		respawn_controller.subscribeNewRespawnee(src.ckey)
+		#else
+		if(!src.mind?.get_player()?.dnr)
+			respawn_controller.subscribeNewRespawnee(src.ckey)
+		#endif
 	// stop piloting pods or whatever
 	src.movement_controller_list = list()
 	// stop pulling shit!!
@@ -1642,7 +1647,7 @@ TYPEINFO(/mob)
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
-	if (!P || !P.proj_data || !P.proj_data.silentshot)
+	if (!P || !P.proj_data || !P.proj_data.no_hit_message)
 		boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)

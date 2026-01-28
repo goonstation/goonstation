@@ -177,6 +177,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = 0
 	trait_list = list("stowaway")
 	add_to_manifest = FALSE
+	radio_announcement = FALSE
 	low_priority_job = TRUE
 	slot_card = null
 	slot_head = list(\
@@ -464,6 +465,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	name = "Waiter"
 	wages = PAY_UNTRAINED
 	access_string = "Waiter"
+	slot_belt = list(/obj/item/device/pda2/chef)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
 	slot_suit = list(/obj/item/clothing/suit/wcoat)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -511,16 +513,17 @@ ABSTRACT_TYPE(/datum/job/daily)
 		if (!M)
 			return
 		SPAWN(0)
-			var/morph = null
-			var/list/options = list(/datum/mutantrace/lizard,
-									/datum/mutantrace/skeleton,
-									/datum/mutantrace/ithillid,
-									/datum/mutantrace/martian,
-									/datum/mutantrace/amphibian,
-									/datum/mutantrace/blob,
-									/datum/mutantrace/cow)
+			var/selection = null
+			var/list/options = list(/datum/mutantrace/lizard::name = /datum/mutantrace/lizard,
+									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
+									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
+									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
+									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
+									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
-			morph = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			selection = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			var/datum/mutantrace/morph = options[selection]
 
 			if (morph && (morph == /datum/mutantrace/martian || morph == /datum/mutantrace/blob)) // doesn't wear human clothes
 				M.equip_if_possible(new /obj/item/storage/backpack/empty(src), SLOT_BACK)
