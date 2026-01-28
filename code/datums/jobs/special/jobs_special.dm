@@ -177,6 +177,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = 0
 	trait_list = list("stowaway")
 	add_to_manifest = FALSE
+	radio_announcement = FALSE
 	low_priority_job = TRUE
 	slot_card = null
 	slot_head = list(\
