@@ -281,7 +281,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		amt_high = 5
 	barriers
 		text = "security barriers"
-		path = /obj/item/barrier
+		path = /obj/item/barrier/collapsible/security
 		amt_low = 2
 		amt_high = 3
 	defibs
