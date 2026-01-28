@@ -4,6 +4,7 @@
 /turf/var/gforce_inherent = GFORCE_GRAVITY_MINIMUM
 /// Used to check if we need to recalculate gforces. If less than the area's gforce_rev, update required.
 /turf/var/gforce_area_rev = 0
+/turf/var/gforce_override = null
 
 // no gravity in space, we never need to update it
 /turf/space/gforce_current = GFORCE_GRAVITY_MINIMUM
@@ -23,10 +24,21 @@
 	src.gforce_inherent = new_gforce
 	src.gforce_area_rev = 0
 
+/turf/proc/set_gforce_override(new_gforce)
+	src.gforce_override = new_gforce
+	src.gforce_area_rev = 0
+
+/turf/proc/clear_gforce_override()
+	src.gforce_override = null
+	src.gforce_area_rev = 0
+
 /turf/proc/get_gforce_current()
 	var/area/A = src.loc
 	if (A.gforce_rev > src.gforce_area_rev)
-		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether, src.gforce_inherent)
+		if (!isnull(src.gforce_override)) // it can be 0
+			src.gforce_current = src.gforce_override
+		else
+			src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether, src.gforce_inherent)
 		src.gforce_area_rev = A.gforce_rev
 	return src.gforce_current
 
@@ -36,7 +48,10 @@
 /turf/space/fluid/get_gforce_current()
 	var/area/A = src.loc
 	if (A.gforce_rev > src.gforce_area_rev)
-		src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether, src.gforce_inherent)
+		if (!isnull(src.gforce_override)) // it can be 0
+			src.gforce_current = src.gforce_override
+		else
+			src.gforce_current = max(A.gforce_minimum, global.zlevels[src.z].gforce + A.gforce_tether, src.gforce_inherent)
 		src.gforce_area_rev = A.gforce_rev
 	return src.gforce_current
 
@@ -46,10 +61,9 @@
 /turf/setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
 	. = ..()
 	if (contains_negative_matter(src))
-		src.set_gforce_inherent(-INFINITY) // *always* zero-G
-	else if (src.gforce_inherent != initial(src.gforce_inherent))
-		// This could be buggy, but storing it feels wasteful. How much stuff gets *un*-negatived?
-		src.set_gforce_inherent(initial(src.gforce_inherent))
+		src.set_gforce_override(0) // *always* zero-G
+	else if (src.gforce_override)
+		src.clear_gforce_override()
 
 /datum/infooverlay/gravity_turf
 	name = "gravity"
@@ -58,7 +72,7 @@
 
 	GetInfo(turf/theTurf, image/debugoverlay/img)
 		var/area/A = get_area(theTurf)
-		img.app.overlays = list(src.makeText("[theTurf.gforce_current][theTurf.gforce_area_rev < A.gforce_rev ? "*" : ""]", RESET_ALPHA | RESET_COLOR))
+		img.app.overlays = list(src.makeText("[theTurf.gforce_current/GFORCE_EARTH_GRAVITY]G[theTurf.gforce_area_rev < A.gforce_rev ? "*" : ""]", RESET_ALPHA | RESET_COLOR))
 		switch (theTurf.gforce_current)
 			if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
 				img.app.color = "#909"
