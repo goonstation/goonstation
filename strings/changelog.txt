@@ -1,4 +1,13 @@
 
+(t)wed jan 28 26
+(u)Cheekybrdy
+(p)25530
+(e)🗺🔧|A-Mapping, A-Tooling
+(+)Abstracted barriers, report any issues with a bug report!
+(u)Pirate-Rob
+(p)25531
+(e)💅💪|C-QoL, A-Traits
+(+)Renamed the 'Background' trait category to 'Scenario'.
 (t)mon jan 26 26
 (u)JORJ949
 (p)25724
