@@ -794,7 +794,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(src.current)
 		if (plantoverlay)
 			src.plant_sprite.UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
-		else:
+		else
 			src.plant_sprite.ClearSpecificOverlays("plantoverlay")
 
 		if (!(src.plant_sprite in src.vis_contents))
