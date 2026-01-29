@@ -234,6 +234,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/self_click_fluff //used when clicking self on help intent
 
 	/// Abilityholder associated with this mutantrace, will be automatically given to mobs on spawn
+	///
+	/// This **MUST** be a subtype of `/datum/abilityHolder/mutantrace` or changing mutantraces will erase other abilities!!!
 	var/mutant_abilityholder = null
 	/// List of abilities associated with this mutantrace, requires mutant_abilityholder to be set
 	var/list/mutant_abilities = list()
@@ -794,7 +796,7 @@ TYPEINFO(/datum/mutantrace/virtual)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
 
-	mutant_abilityholder = /datum/abilityHolder/virtual
+	mutant_abilityholder = /datum/abilityHolder/mutantrace/virtual
 	mutant_abilities = list(/datum/targetable/virtual/logout)
 
 	on_attach(var/mob/living/carbon/human/H)
@@ -873,7 +875,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 	ghost_icon_state = "ghost-lizard"
 
-	mutant_abilityholder = /datum/abilityHolder/lizard
+	mutant_abilityholder = /datum/abilityHolder/mutantrace/lizard
 	mutant_abilities = list(
 		/datum/targetable/lizardAbility/colorshift,
 		/datum/targetable/lizardAbility/colorchange,
@@ -883,7 +885,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(H))
-			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/lizard)
+			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/mutantrace/lizard)
 			H.AddComponent(/datum/component/consume/can_eat_inedible_organs)
 			H.mob_flags |= SHOULD_HAVE_A_TAIL
 
@@ -2127,7 +2129,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	override_attack = 1
 	persists_on_clone = FALSE
 
-	mutant_abilityholder = /datum/abilityHolder/kudzu
+	mutant_abilityholder = /datum/abilityHolder/mutantrace/kudzu
 	mutant_abilities = list(
 		/datum/targetable/kudzu/guide,
 		/datum/targetable/kudzu/growth,
@@ -2161,7 +2163,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 
 				if (istype(H.abilityHolder, /datum/abilityHolder/composite))
 					var/datum/abilityHolder/composite/ch = H.abilityHolder
-					ch.addHolder(/datum/abilityHolder/kudzu)
+					ch.addHolder(/datum/abilityHolder/mutantrace/kudzu)
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2189,8 +2191,8 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	//Should figure out what I'm doing with this and the onLife in the abilityHolder one day. I'm thinking, maybe move it all to the abilityholder, but idk, composites are weird.
 	onLife(var/mult = 1)
 		// if (!src.mob.abilityHolder)
-		// 	src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
-		var/datum/abilityHolder/kudzu/KAH = src.mob.get_ability_holder(/datum/abilityHolder/kudzu)
+		// 	src.mob.abilityHolder = new /datum/abilityHolder/mutantrace/kudzu(src.mob)
+		var/datum/abilityHolder/mutantrace/kudzu/KAH = src.mob.get_ability_holder(/datum/abilityHolder/mutantrace/kudzu)
 		if (!istype(KAH))
 			KAH = src.mob.abilityHolder
 
@@ -2200,7 +2202,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 		if (T && T.temp_flags & HAS_KUDZU)
 			if (KAH.points < KAH.MAX_POINTS)
 				// KAH.points += round_mult
-				KAH.addPoints(round_mult, /datum/abilityHolder/kudzu)
+				KAH.addPoints(round_mult, /datum/abilityHolder/mutantrace/kudzu)
 
 			//ALWAYS HEAL ON KUDZU TILES
 			src.mob.take_toxin_damage(-round_mult)
@@ -2213,7 +2215,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 			//nutrients for a bit of grace period
 			if (KAH.points > 0)
 				// KAH.points -= 10
-				KAH.addPoints(-10, /datum/abilityHolder/kudzu)
+				KAH.addPoints(-10, /datum/abilityHolder/mutantrace/kudzu)
 			else
 				//do effects from not being on kudzu here.
 				src.mob.take_toxin_damage(2 * round_mult)

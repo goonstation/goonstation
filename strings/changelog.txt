@@ -1,4 +1,42 @@
 
+(t)wed jan 28 26
+(u)Kubius
+(p)25763
+(e)|
+(+)Rebalanced the Hedron beam device: now has minor self-charging, higher welding energy cost (10 uses stored), lower mining energy cost (40 uses stored), and increased dig strength.
+(u)NibChocolateeny
+(p)25742
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Strange Soybean plants and their questionable produce now contain Partially Hydrogenated Space-Soybean Oil.
+(u)SnugglyCactus
+(p)25500
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added several variants of Hawaiian shirts to the Clothing Booth.
+(u)Ghostplasmas & Ribbie
+(p)25601
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Added 14 hijabs and 11 headscarves to the clothing booth.
+(u)Cheekybrdy
+(p)25575
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Experiences of the Deep is available on the trench of all Oshan maps.
+(u)Skeletonman0
+(p)25539
+(e)|
+(+)Seeds can now be planted in diggable turfs (soil, grass, etc.) while holding a shovel. Plants also now shake like bushes when hit.
+(u)Cheekybrdy
+(p)25530
+(e)🗺🔧|A-Mapping, A-Tooling
+(+)Abstracted barriers, report any issues with a bug report!
+(u)Pirate-Rob
+(p)25531
+(e)💅💪|C-QoL, A-Traits
+(+)Renamed the 'Background' trait category to 'Scenario'.
+(t)mon jan 26 26
+(u)JORJ949
+(p)25724
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Agent IDs that select the Clown, Gold, NT or Syndicate sprites will no longer lose their special icon at an ID computer.
 (t)fri jan 23 26
 (u)Mr. Moriarty
 (p)25534
