@@ -37593,16 +37593,6 @@
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
-"lNF" = (
-/obj/window_blinds/cog2/right{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/random,
-/area/station/security/evidence)
 "lNY" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/disposalpipe/segment/mail,
@@ -43977,11 +43967,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/window_blinds/cog2/middle{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/evidence)
@@ -88375,7 +88365,7 @@ bJJ
 bJJ
 bNm
 phK
-lNF
+phK
 sYi
 rqo
 phK
