@@ -578,7 +578,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	else
 		..()
-		if (!istype(W,/obj/item/plantanalyzer) && !istype(W,/obj/item/device/pda2))
+		if (!istype(W,/obj/item/plantanalyzer) && !istype(W,/obj/item/device/pda2) && !istype(W, /obj/item/gardentrowel))
 			src.wiggle() // hit animation
 
 /obj/machinery/plantpot/attack_ai(mob/user as mob)
@@ -749,6 +749,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 	src.AddOverlays(water_meter, "water_meter")
 	if(!src.current)
+		src.vis_contents -= src.plant_sprite
 		src.ClearSpecificOverlays("harvest_display", "health_display", "plant", "plantdeath")
 		if(status & (NOPOWER|BROKEN))
 			src.ClearSpecificOverlays("water_meter")
@@ -800,11 +801,6 @@ TYPEINFO(/obj/machinery/plantpot)
 	else
 		if ((src.plant_sprite in src.vis_contents))
 			src.vis_contents -= src.plant_sprite
-
-
-	// 	src.AddOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
-	// else
-	// 	src.ClearSpecificOverlays("plantoverlay")
 
 	if(status & (NOPOWER|BROKEN))
 		src.ClearSpecificOverlays("water_meter", "harvest_display", "health_display", "plantdeath")

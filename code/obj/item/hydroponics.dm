@@ -508,10 +508,9 @@ TYPEINFO(/obj/item/plantanalyzer)
 		..()
 
 	proc/handle_icon_setup(var/obj/machinery/plantpot/pot)
-		var/image/overlay_image = pot.GetOverlayImage("plant")
-		if(overlay_image)
-			plant_icon = overlay_image.icon
-			plant_icon_state = overlay_image.icon_state
+		if (pot.plant_sprite)
+			plant_icon = pot.plant_sprite.icon
+			plant_icon_state = pot.plant_sprite.icon_state
 			var/image/plantoverlay_image = pot.GetOverlayImage("plantoverlay")
 			if(plantoverlay_image)
 				plantoverlay_icon = plantoverlay_image.icon
