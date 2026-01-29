@@ -751,7 +751,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		if (isdead(read))
 			boutput(src.owner, SPAN_ALERT("[read.name] is dead and cannot have [his_or_her(read)] mind read."))
-			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+			return CAST_ATTEMPT_SUCCESS
 
 		if (misfire)
 			boutput(read, SPAN_ALERT("Somehow, you sense <b>[src.owner]</b> trying and failing to read your mind!"))
