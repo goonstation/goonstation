@@ -332,7 +332,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if (W:registered in src.authorized_registered)
 				boutput(user, "This ID has already issued an unauthorization! [src.auth_need - src.authorized.len] unauthorizations from others are still needed.")
 				return
-			if (access_armory in W:access)
+			if (access_maxsec in W:access)
 				unauthorize()
 				playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
 				boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))

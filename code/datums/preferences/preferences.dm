@@ -1440,7 +1440,7 @@ var/list/removed_jobs = list(
 				else if (job_datum.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					reason_tooltip = "This job requires the <i>\"Unlike the director, I went to college\"</i> medal, which you do not possess."
 				else if (job_datum.requires_whitelist && !user.client.can_play_whitelisted_roles())
-					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may also play this job on Fridays."
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may also play this job on Fridays, and everyone else on Saturdays."
 				else if (!job_datum.has_rounds_needed(user.client?.player))
 					var/played_rounds = user.client.player.get_rounds_participated()
 					var/needed_rounds = job_datum.rounds_needed_to_play
