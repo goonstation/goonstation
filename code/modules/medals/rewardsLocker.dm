@@ -1244,7 +1244,7 @@
 			skin_target.icon_state = /obj/item/card/id/dabbing_license/br::icon_state
 			skin_target.desc = /obj/item/card/id/dabbing_license/br::desc
 			skin_target.registered = /obj/item/card/id/dabbing_license/br::registered
-			skin_target.assignment = /obj/item/card/id/dabbing_license/br::assingment
+			skin_target.assignment = /obj/item/card/id/dabbing_license/br::assignment
 
 			return 1
 		else
