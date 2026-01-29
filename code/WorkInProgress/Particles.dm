@@ -1579,16 +1579,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	SpawnParticle()
 		var/obj/particle/par = ..()
 		if (src.shredding)
-			var/color
-			var/frustration = 0
-			while (!color)
-				frustration ++
-				//exclude the edges because there's usually nothing there
-				color = src.shredding.GetPixel(rand(10,25), rand(10,25))
-				if (frustration > 20) //giv up
-					qdel(par)
-					return
-			par.color = color
+			par.color = src.shredding.RandomPixelColor()
 
 	Run() //this is kind of particle system abuse but I need more consistent particle spawns than waiting for the loop to come back around
 		set waitfor = FALSE

@@ -9,13 +9,20 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_WRENCH
 	/// What can a shredder shred?
 	var/accepted_types = list(/obj/item/card, /obj/item/paper, /obj/item/toy/diploma, /obj/item/currency/spacecash)
-	///Visual proxy for the thing being shredded
+	/// Visual proxy for the thing being shredded
 	var/atom/movable/proxy = null
 	var/shredding = FALSE
 	var/emagged = FALSE
+	/// The little shredded paper window icon
+	var/icon/shreddings_icon
+	/// How many shreddings are in the window?
+	var/shreddings_count = 0
 
 /obj/machinery/shredder/New()
 	. = ..()
+	src.shreddings_icon = icon(src.icon, "blank") //todo: fix this
+	src.underlays += icon(src.icon, src.icon_state)
+	src.icon = src.shreddings_icon
 	src.AddComponent(/datum/component/obj_projectile_damage)
 
 /obj/machinery/shredder/emag_act(mob/user, obj/item/card/emag/E)
@@ -101,6 +108,31 @@
 	playsound(src, 'sound/machines/shredder.ogg', 50, 0)
 	global.particleMaster.SpawnSystem(new /datum/particleSystem/shredded(src, target = item))
 	sleep (5 SECONDS)
+	src.add_shreddings()
 	QDEL_NULL(src.proxy)
 	QDEL_NULL(item)
 	src.shredding = FALSE
+
+#define LOWER_BOUND 5
+#define SLOT_HEIGHT 6
+#define SLOT_WIDTH 5
+
+/obj/machinery/shredder/proc/add_shreddings()
+	if (src.shreddings_count >= floor(SLOT_HEIGHT/2))
+		//delete the bottom row (squashed or something)
+		src.shreddings_icon.DrawBox(null, 16 - floor(SLOT_WIDTH/2), LOWER_BOUND, 16 + ceil(SLOT_WIDTH/2), LOWER_BOUND + 1)
+		//shunt everything down one
+		src.shreddings_icon.Shift(SOUTH, 2)
+		src.shreddings_count -= 1
+
+	//draw the new top layer
+	var/icon/icon = icon(src.proxy.icon)
+	for (var/y_offset = 0 to 1)
+		var/y_pos = LOWER_BOUND + src.shreddings_count * 2 + y_offset
+		for (var/i in 1 to SLOT_WIDTH)
+			var/x_pos = 16 - floor(SLOT_WIDTH/2) + i - 1 //-1 because it makes it work
+			src.shreddings_icon.DrawBox(icon.RandomPixelColor(), x_pos, y_pos)
+
+	src.icon = src.shreddings_icon
+	src.shreddings_count += 1
+	// src.shreddings_count = min(src.shreddings_count, floor(SLOT_HEIGHT/2))
