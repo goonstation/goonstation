@@ -9,6 +9,7 @@ import { classes } from 'common/react';
 import {
   Box,
   Button,
+  Collapsible,
   Divider,
   Image,
   LabeledList,
@@ -37,12 +38,9 @@ export const DeptBox = (props) => {
     target_accesses,
   } = props;
   return (
-    <Section
+    <Collapsible
       title={name}
-      className={classes([
-        'IDComputer__DeptBox',
-        colour && `IDComputer__DeptBox_color_${colour}`,
-      ])}
+      color={colour || 'grey'} //Language
     >
       {jobs &&
         jobs.map((job, index) => {
@@ -97,7 +95,7 @@ export const DeptBox = (props) => {
             </Button>
           );
         })}
-    </Section>
+    </Collapsible>
   );
 };
 
@@ -267,7 +265,11 @@ export const IDComputer = () => {
                   </Stack>
 
                   {/* Jobs organised into sections */}
-                  <Section title="Standard Job Assignment">
+                  <hr />
+                  <Collapsible
+                    title={'Standard Job Assignment'}
+                    childStyles={{ paddingLeft: '10px' }}
+                  >
                     {standard_jobs.map(
                       (jobGrouping) =>
                         jobGrouping.jobs && (
@@ -288,9 +290,13 @@ export const IDComputer = () => {
                       jobs={custom_names}
                       isCustomRank
                     />
-                  </Section>
+                  </Collapsible>
 
-                  <Section title="Specific Area Access">
+                  <hr />
+                  <Collapsible
+                    title="Specific Area Access"
+                    childStyles={{ paddingLeft: '10px' }}
+                  >
                     {accesses_by_area.map(
                       (area) =>
                         area.accesses.length > 0 && (
@@ -303,7 +309,7 @@ export const IDComputer = () => {
                           />
                         ),
                     )}
-                  </Section>
+                  </Collapsible>
 
                   <Section title="Custom Card Look">
                     {icons.map((icon) => (

@@ -222,22 +222,22 @@
 					command_jobs = null
 
 		.["standard_jobs"] = list(
-			list(name = "Civilian", color = "civilian", jobs = civilian_jobs, style="civilian"),
-			list(name = "Engineering and Supply", color = "engineering", jobs = engineering_jobs, style="engineering"),
-			list(name = "Research", color = "research", jobs = research_jobs, style="research"),
-			list(name = "Medical", color = "medical", jobs = medical_jobs, style="medical"),
-			list(name = "Security", color = "security", jobs = security_jobs, style="security"),
-			list(name = "Command", color = "command", jobs = command_jobs, style="command"),
+			list(name = "Command", color = /datum/job/command::ui_colour, jobs = command_jobs, style="command"),
+			list(name = "Security", color = /datum/job/security::ui_colour, jobs = security_jobs, style="security"),
+			list(name = "Research", color = /datum/job/research::ui_colour, jobs = research_jobs, style="research"),
+			list(name = "Medical", color = /datum/job/medical::ui_colour, jobs = medical_jobs, style="medical"),
+			list(name = "Engineering and Supply", color = /datum/job/engineering::ui_colour, jobs = engineering_jobs, style="engineering"),
+			list(name = "Civilian", color = /datum/job/civilian::ui_colour, jobs = civilian_jobs, style="civilian"),
 		)
 
 		.["accesses_by_area"] = list(
-			list(name = "Civilian", color = "civilian", accesses = civilian_access),
-			list(name = "Engineering", color = "engineering", accesses = engineering_access),
-			list(name = "Supply", color = "engineering", accesses = supply_access),
-			list(name = "Science", color = "research", accesses = research_access),
-			list(name = "Medical", color = "medical", accesses = medical_access),
-			list(name = "Security", color = "security", accesses = security_access),
-			list(name = "Command", color = "command", accesses = command_access),
+			list(name = "Command", color = /datum/job/command::ui_colour, accesses = command_access),
+			list(name = "Security", color = /datum/job/security::ui_colour, accesses = security_access),
+			list(name = "Science", color = /datum/job/research::ui_colour, accesses = research_access),
+			list(name = "Medical", color = /datum/job/medical::ui_colour, accesses = medical_access),
+			list(name = "Engineering", color = /datum/job/engineering::ui_colour, accesses = engineering_access),
+			list(name = "Supply", color = /datum/job/engineering::ui_colour, accesses = supply_access),
+			list(name = "Civilian", color = /datum/job/civilian::ui_colour, accesses = civilian_access),
 		)
 
 		.["icons"] = list(
