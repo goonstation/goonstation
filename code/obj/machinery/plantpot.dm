@@ -579,7 +579,14 @@ TYPEINFO(/obj/machinery/plantpot)
 	else
 		..()
 		if (!istype(W,/obj/item/plantanalyzer) && !istype(W,/obj/item/device/pda2) && !istype(W, /obj/item/gardentrowel))
-			src.wiggle() // hit animation
+
+			if (src.current)
+				src.wiggle() // hit animation
+
+				// if we're dead, clear the plant out of the tray when damaged
+				if (src.dead && W.force > 0)
+					src.visible_message(SPAN_ALERT("[src] is destroyed by [user.name]'s [W]!"))
+					src.HYPdestroyplant()
 
 /obj/machinery/plantpot/attack_ai(mob/user as mob)
 	if(isrobot(user) && BOUNDS_DIST(src, user) == 0) return src.Attackhand(user)
@@ -790,7 +797,8 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
 	// all this work so we can have the damage shake effect
-	if(src.current && !src.dead)
+
+	if(src.current)
 		if (plantoverlay)
 			src.plant_sprite.UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
 		else
