@@ -790,11 +790,10 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
 	// all this work so we can have the damage shake effect
-	if(src.current && !src.dead)
+
+	if(src.current)
 		if (plantoverlay)
 			src.plant_sprite.UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
-		else
-			src.plant_sprite.ClearSpecificOverlays("plantoverlay")
 
 		if (!(src.plant_sprite in src.vis_contents))
 			src.vis_contents += src.plant_sprite
