@@ -13689,9 +13689,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "eeb" = (
-/obj/fakeobject/pole{
-	layer = 29
-	},
+/obj/barber_pole,
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
@@ -40211,9 +40209,6 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/jen,
 /area/station/chapel/sanctuary)
-"mxj" = (
-/turf/simulated/wall/auto/reinforced/jen/red,
-/area/space)
 "mxo" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
@@ -68602,9 +68597,6 @@
 /obj/random_item_spawner/junk/lots,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
-"viP" = (
-/turf/simulated/wall/auto/jen,
-/area/space)
 "viT" = (
 /obj/item_dispenser/prescription_glasses{
 	pixel_x = 1;
@@ -104996,7 +104988,7 @@ rdj
 rdj
 rdj
 rdj
-mxj
+ieL
 ieL
 gLF
 mHZ
@@ -139123,7 +139115,7 @@ eTF
 nxQ
 qtx
 dtJ
-viP
+nxQ
 rBB
 bHz
 wZR
@@ -139425,7 +139417,7 @@ eTF
 nxQ
 lrg
 dtJ
-viP
+nxQ
 ieh
 rBB
 sam

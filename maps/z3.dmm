@@ -2560,7 +2560,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "amh" = (
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	pixel_x = 12
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
