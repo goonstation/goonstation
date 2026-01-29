@@ -1,0 +1,5 @@
+*
+!.gitignore
+!index.ts
+!dummy.tsx
+!dummy.wrapper.tsx

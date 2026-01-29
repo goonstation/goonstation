@@ -2221,6 +2221,7 @@
 #include "code\modules\tgui\tgui_input_pin.dm"
 #include "code\modules\tgui\tgui_input_text.dm"
 #include "code\modules\tgui\tgui_message.dm"
+#include "code\modules\tgui\tgui_secret_interfaces.dm"
 #include "code\modules\tgui\tgui_window.dm"
 #include "code\modules\tgui\states\admin.dm"
 #include "code\modules\tgui\states\always.dm"

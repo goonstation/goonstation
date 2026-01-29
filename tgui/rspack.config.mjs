@@ -10,18 +10,26 @@ import { rspack } from '@rspack/core';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// |GOONSTATION-CHANGE| secret interfaces
+import {
+  addSecretInterfaceEntries,
+  SecretBundleStoragePlugin,
+  SecretInterfaceSyncPlugin,
+} from './rspack.config-secret.mjs';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const require = createRequire(import.meta.url);
 
 const createStats = (verbose) => ({
   assets: verbose,
+  excludeAssets: [/^secret-.*\.bundle\.js$/i], // |GOONSTATION-CHANGE| secret interfaces
   builtAt: verbose,
   cached: false,
   children: false,
   chunks: false,
   colors: true,
-  entrypoints: true,
+  entrypoints: false, // |GOONSTATION-CHANGE| secret interfaces
   hash: false,
   modules: false,
   performance: false,
@@ -180,8 +188,12 @@ export default (env = {}, argv) => {
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
+      new SecretInterfaceSyncPlugin(), // |GOONSTATION-ADD| secret interfaces
+      new SecretBundleStoragePlugin(), // |GOONSTATION-ADD| secret interfaces
     ],
   });
+
+  addSecretInterfaceEntries(config); // |GOONSTATION-ADD| secret interface entrypoints
 
   if (bench) {
     config.entry = {

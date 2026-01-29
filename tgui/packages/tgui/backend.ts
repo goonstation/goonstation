@@ -191,6 +191,30 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
+  // |GOONSTATION-ADD| Secret interface handling
+  if (type === 'backend/secret-id') {
+    const name = payload?.name;
+    const id = payload?.token || payload?.id;
+
+    if (!name || !id) {
+      return state;
+    }
+
+    // @ts-ignore
+    const prev = state.config?.secretInterfaces || {};
+
+    return {
+      ...state,
+      config: {
+        ...state.config,
+        secretInterfaces: {
+          ...prev,
+          [name]: id,
+        },
+      },
+    };
+  }
+
   return state;
 };
 
@@ -421,6 +445,7 @@ type BackendState<TData> = {
       name: string;
       layout: string;
     };
+    secretInterfaces?: Record<string, string>; // |GOONSTATION-ADD| interface name -> secret id
     refreshing: BooleanLike;
     window: {
       key: string;
