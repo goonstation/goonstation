@@ -346,6 +346,7 @@
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/breach_pouch,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 #ifdef UNDERWATER_MAP
