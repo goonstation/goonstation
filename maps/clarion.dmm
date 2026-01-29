@@ -13511,6 +13511,15 @@
 	},
 /turf/space,
 /area/station/engine/substation/west)
+"evp" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/barber_pole{
+	pixel_y = 27
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/barber_shop)
 "evq" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -19435,6 +19444,16 @@
 	dir = 4
 	},
 /area/station/crew_quarters/bar)
+"iCR" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/barber_pole{
+	pixel_y = 27
+	},
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/barber_shop)
 "iDb" = (
 /obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/bluewhite{
@@ -20956,16 +20975,6 @@
 	dir = 10
 	},
 /area/station/hallway/secondary/exit)
-"jKW" = (
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/fakeobject/pole{
-	pixel_y = 27
-	},
-/obj/machinery/light_switch/west,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/barber_shop)
 "jLd" = (
 /obj/machinery/light{
 	dir = 1;
@@ -28109,6 +28118,19 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
+"oJN" = (
+/obj/disposalpipe/segment/produce,
+/obj/machinery/disposal/mail/small/autoname/hydroponics/west,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
+/obj/machinery/light_switch/east,
+/obj/item/reagent_containers/glass/water_pipe,
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/hydroponics/bay)
 "oJQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -31784,15 +31806,6 @@
 	dir = 10
 	},
 /area/station/quartermaster/office)
-"rAQ" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/fakeobject/pole{
-	pixel_y = 27
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/barber_shop)
 "rAS" = (
 /obj/machinery/light{
 	dir = 1;
@@ -33978,19 +33991,6 @@
 	dir = 4
 	},
 /area/station/science/chemistry)
-"tbc" = (
-/obj/disposalpipe/segment/produce,
-/obj/machinery/disposal/mail/small/autoname/hydroponics/west,
-/obj/disposalpipe/trunk/mail{
-	dir = 8
-	},
-/obj/machinery/light_switch/east,
-/obj/item/reagent_containers/glass/water_pipe,
-/obj/machinery/hydro_mister,
-/turf/simulated/floor/green/side{
-	dir = 4
-	},
-/area/station/hydroponics/bay)
 "tbs" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -75838,7 +75838,7 @@ jzW
 jyZ
 gZQ
 eAw
-jKW
+iCR
 eka
 aoE
 uNm
@@ -77348,7 +77348,7 @@ jzW
 afW
 gZQ
 eAw
-rAQ
+evp
 dyl
 cwY
 prY
@@ -84620,7 +84620,7 @@ iAY
 xEX
 aym
 nTK
-tbc
+oJN
 avm
 kvu
 gKt

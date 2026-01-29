@@ -10327,6 +10327,10 @@
 /obj/random_item_spawner/ai_experimental,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"eMY" = (
+/obj/machinery/abcu,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/ptl)
 "eNS" = (
 /obj/storage/closet/fire{
 	name = "rusty firefighting supplies closet"
@@ -12152,6 +12156,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"hLi" = (
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
+/area/station/engine/ptl)
 "hMh" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/sanitary,
@@ -12495,6 +12504,38 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"ilG" = (
+/obj/machinery/door_control{
+	id = "pt_laser";
+	name = "PTL Doors";
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
+	},
+/obj/table/reinforced/auto,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = -5;
+	pixel_x = -6
+	},
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
+/area/station/engine/ptl)
 "inv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/table/reinforced/auto,
@@ -14362,14 +14403,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"kAG" = (
-/obj/fakeobject/pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/stairs/wide/other{
-	dir = 1
-	},
-/area/station/hallway/primary/east)
 "kCq" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor,
@@ -17915,10 +17948,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/hangar/engine)
-"pSW" = (
-/obj/machinery/abcu,
-/turf/simulated/floor/yellowblack,
-/area/station/engine/ptl)
 "pTd" = (
 /obj/machinery/power/reactor_stats,
 /obj/cable,
@@ -18675,6 +18704,23 @@
 	dir = 9
 	},
 /area/station/engine/engineering/ce)
+"rvg" = (
+/obj/cable/blue{
+	icon_state = "1-4"
+	},
+/obj/storage/crate/abcumarker,
+/obj/item/sheet/steel{
+	amount = 50;
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/sheet/glass{
+	amount = 50;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/ptl)
 "rwZ" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -19566,11 +19612,6 @@
 	dir = 1
 	},
 /area/station/security/main)
-"sLS" = (
-/turf/simulated/floor/yellowblack{
-	dir = 5
-	},
-/area/station/engine/ptl)
 "sNj" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
@@ -20597,23 +20638,6 @@
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
-/area/station/engine/ptl)
-"ubA" = (
-/obj/cable/blue{
-	icon_state = "1-4"
-	},
-/obj/storage/crate/abcumarker,
-/obj/item/sheet/steel{
-	amount = 50;
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/sheet/glass{
-	amount = 50;
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "ucd" = (
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -23120,6 +23144,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/security/equipment)
+"xTX" = (
+/obj/barber_pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/stairs/wide/other{
+	dir = 1
+	},
+/area/station/hallway/primary/east)
 "xVR" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -23267,38 +23299,6 @@
 	desc = "The Regional Director wouldn't stop raving about the great price they got for this carpet. Looking at it makes you uneasy."
 	},
 /area/station/crew_quarters/cafeteria)
-"yfh" = (
-/obj/machinery/door_control{
-	id = "pt_laser";
-	name = "PTL Doors";
-	pixel_x = -23;
-	dir = 8;
-	pixel_y = 1
-	},
-/obj/table/reinforced/auto,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_x = -6;
-	pixel_y = 9
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_y = 2;
-	pixel_x = -6
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_y = -5;
-	pixel_x = -6
-	},
-/obj/item/paper/book/from_file/gravity_tether{
-	pixel_y = 5;
-	pixel_x = 7
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 10
-	},
-/area/station/engine/ptl)
 "yfR" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/space_law{
@@ -56082,7 +56082,7 @@ irQ
 acN
 aXD
 lyL
-yfh
+ilG
 aDr
 ipv
 iej
@@ -56384,7 +56384,7 @@ gxV
 bbh
 bbh
 muF
-pSW
+eMY
 aDr
 gzU
 eTV
@@ -56686,7 +56686,7 @@ kUs
 sVU
 cnt
 rId
-pSW
+eMY
 aDr
 vfP
 squ
@@ -56988,7 +56988,7 @@ sSE
 aWP
 hZs
 mVT
-ubA
+rvg
 ezK
 ezK
 biJ
@@ -57891,7 +57891,7 @@ aaa
 aaa
 aaa
 mqX
-sLS
+hLi
 hYQ
 whb
 jRs
@@ -65479,7 +65479,7 @@ igd
 aAD
 xEm
 aZy
-kAG
+xTX
 aRZ
 qcv
 vFn

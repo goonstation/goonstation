@@ -24666,6 +24666,11 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters)
+"ike" = (
+/obj/item/reagent_containers/glass/water_pipe,
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grey,
+/area/station/hydroponics/bay)
 "ikk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26506,6 +26511,14 @@
 "jpT" = (
 /turf/simulated/floor/plating/airless,
 /area/station/engine/inner)
+"jpU" = (
+/obj/barber_pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/black/side{
+	dir = 6
+	},
+/area/station/crew_quarters/quarters)
 "jqf" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "East Maintenance";
@@ -37572,14 +37585,6 @@
 /obj/item/screwdriver,
 /turf/space,
 /area/space)
-"puY" = (
-/obj/fakeobject/pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/black/side{
-	dir = 6
-	},
-/area/station/crew_quarters/quarters)
 "pvt" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -38643,11 +38648,6 @@
 /obj/cable,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
-"pZv" = (
-/obj/item/reagent_containers/glass/water_pipe,
-/obj/machinery/hydro_mister,
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
 "pZx" = (
 /obj/stool/chair{
 	dir = 4
@@ -72632,7 +72632,7 @@ dax
 btx
 xpg
 weo
-pZv
+ike
 btx
 bis
 tSw
@@ -74375,7 +74375,7 @@ rAD
 azA
 pNU
 eem
-puY
+jpU
 aEF
 aFB
 aFB

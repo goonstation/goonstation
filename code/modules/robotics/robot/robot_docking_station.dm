@@ -879,6 +879,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			for (var/obj/item/parts/robot_parts/RP in R.contents)
 				RP.ropart_mend_damage(usage, 0)
 			src.reagents.remove_reagent("fuel", usage)
+			health_update_queue |= R
 			R.update_appearance()
 			. = TRUE
 
@@ -899,6 +900,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.cabling -= usage
 			if (src.cabling < 0)
 				src.cabling = 0
+			health_update_queue |= R
 			R.update_appearance()
 			. = TRUE
 

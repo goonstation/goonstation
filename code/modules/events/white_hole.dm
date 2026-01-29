@@ -663,7 +663,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/clothing/head/red = 4,
 			/obj/item/clothing/head/helmet/siren = 2,
 			/obj/machinery/flasher/portable = 1,
-			/obj/item/barrier = 1,
+			/obj/item/barrier/collapsible/security = 1,
 			/mob/living/carbon/human/npc/monkey/stirstir = 1,
 			/datum/projectile/energy_bolt = 3,
 			/datum/projectile/energy_bolt/burst = 3,

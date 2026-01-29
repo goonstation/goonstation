@@ -28059,16 +28059,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"djc" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/mob/living/critter/small_animal/turtle/sylvester/HoS,
-/turf/simulated/floor/carpet/red,
-/area/station/security/hos)
 "dkL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29684,16 +29674,6 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
-"ejV" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 10;
-	id = "kondaru_qmfetch";
-	bonus_range = 8
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
 "eka" = (
 /obj/table/auto,
 /obj/machinery/firealarm/directional/north,
@@ -37242,12 +37222,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"jpl" = (
-/obj/fakeobject/pole{
-	pixel_y = 27
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/barber_shop)
 "jpv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45996,6 +45970,12 @@
 /obj/item/storage/fanny,
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/research_outpost/indigo_rye)
+"pto" = (
+/obj/barber_pole{
+	pixel_y = 27
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/barber_shop)
 "ptX" = (
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
@@ -48178,6 +48158,16 @@
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
+"qSk" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 10;
+	id = "kondaru_qmfetch";
+	bonus_range = 8
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "qSo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -58177,6 +58167,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
+"xHB" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
+/turf/simulated/floor/carpet/red,
+/area/station/security/hos)
 "xHK" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -105607,7 +105607,7 @@ gjD
 hmG
 dpW
 etp
-ejV
+qSk
 qIn
 uUX
 qIn
@@ -121000,7 +121000,7 @@ kZz
 mAR
 xPt
 bNP
-djc
+xHB
 bQM
 fAl
 bYE
@@ -122174,7 +122174,7 @@ aVJ
 aNY
 aXX
 bUn
-jpl
+pto
 set
 bcy
 aYR

@@ -11318,7 +11318,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ihJ" = (
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	pixel_x = -14
 	},
 /obj/table/auto,

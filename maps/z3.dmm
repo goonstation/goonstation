@@ -2559,12 +2559,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/space)
-"amh" = (
-/obj/fakeobject/pole{
-	pixel_x = 12
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
 "ami" = (
 /obj/decal/tile_edge/line/purple{
 	icon_state = "tile1"
@@ -7495,16 +7489,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/h7/computer_core)
-"aMw" = (
-/obj/machinery/gravity_tether/multi_area/derelict_ai_sat,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/grime,
-/area/derelict_ai_sat)
 "aMy" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -14109,28 +14093,6 @@
 /obj/item/device/key/generic/radio,
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
-"biU" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/radiostation/serverroom)
 "bja" = (
 /obj/item/storage/toilet{
 	dir = 8
@@ -14143,23 +14105,6 @@
 /obj/decal/stripe_caution,
 /obj/cable{
 	icon_state = "2-4"
-	},
-/turf/simulated/floor,
-/area/radiostation/serverroom)
-"bje" = (
-/obj/fakeobject/cpucontroller,
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
 	},
 /turf/simulated/floor,
 /area/radiostation/serverroom)
@@ -15191,6 +15136,12 @@
 /turf/simulated/floor/airless{
 	icon_state = "hive"
 	},
+/area/space)
+"boj" = (
+/obj/barber_pole{
+	pixel_x = 12
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "bom" = (
 /obj/table/wood/auto,
@@ -16398,6 +16349,23 @@
 	icon_state = "hive"
 	},
 /area/bee_trader)
+"dYp" = (
+/obj/fakeobject/cpucontroller,
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor,
+/area/radiostation/serverroom)
 "dYA" = (
 /obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
@@ -16906,21 +16874,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/tug)
-"fAE" = (
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/obj/machinery/cashreg,
-/obj/item/paper/tug/diner_arcade_invoice{
-	icon_state = "paper";
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/paper/motel_noise_complaint{
-	pixel_y = -1;
-	pixel_x = -14
-	},
-/turf/simulated/floor/arrival,
-/area/diner/hallway)
 "fAR" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -17127,6 +17080,16 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"fZH" = (
+/obj/machinery/gravity_tether/multi_area/derelict_ai_sat,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grime,
+/area/derelict_ai_sat)
 "gaf" = (
 /turf/unsimulated/wall/auto/adventure/bee,
 /area/space_hive)
@@ -18963,6 +18926,21 @@
 	},
 /turf/simulated/floor/wood/eight,
 /area/radiostation/tv_set)
+"kpD" = (
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/dirt,
+/obj/machinery/cashreg,
+/obj/item/paper/tug/diner_arcade_invoice{
+	icon_state = "paper";
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/paper/motel_noise_complaint{
+	pixel_y = -1;
+	pixel_x = -14
+	},
+/turf/simulated/floor/arrival,
+/area/diner/hallway)
 "kpI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22450,6 +22428,28 @@
 	icon_state = "corner_east"
 	},
 /area/timewarp/ship)
+"szZ" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/radiostation/serverroom)
 "sAF" = (
 /obj/decal/poster/wallsign/stencil/left/four,
 /turf/simulated/wall/auto/reinforced/old,
@@ -58702,7 +58702,7 @@ afR
 afR
 afR
 afR
-amh
+boj
 afR
 amA
 amH
@@ -67299,7 +67299,7 @@ aaa
 aaa
 uBm
 amR
-aMw
+fZH
 aML
 vNR
 aMY
@@ -81068,7 +81068,7 @@ eFq
 aod
 xZo
 aoU
-fAE
+kpD
 ggF
 nSJ
 qcv
@@ -108536,8 +108536,8 @@ agi
 aoY
 atp
 aHY
-biU
-bje
+szZ
+dYp
 cxG
 bjE
 bjF
