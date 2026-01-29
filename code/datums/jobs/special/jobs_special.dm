@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/vice_officer
 	name = "Vice Officer"
-	ui_colour = TGUI_COLOUR_RED
+	ui_colour = /datum/job/security::ui_colour
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Vice Officer"
@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/forensic_technician
 	name = "Forensic Technician"
-	ui_colour = TGUI_COLOUR_RED
+	ui_colour = /datum/job/security::ui_colour
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Forensic Technician"
@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/toxins_researcher
 	name = "Toxins Researcher"
-	ui_colour = TGUI_COLOUR_PURPLE
+	ui_colour = /datum/job/research::ui_colour
 	limit = 0
 	wages = PAY_DOCTORATE
 	trait_list = list("training_scientist")
@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/chemist
 	name = "Chemist"
-	ui_colour = TGUI_COLOUR_PURPLE
+	ui_colour = /datum/job/research::ui_colour
 	limit = 0
 	wages = PAY_DOCTORATE
 	trait_list = "training_scientist"
@@ -138,7 +138,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/atmospheric_technician
 	name = "Atmospherish Technician"
-	ui_colour = TGUI_COLOUR_ORANGE
+	ui_colour = /datum/job/engineering::ui_colour
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Atmospheric Technician"
@@ -347,7 +347,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_miner")
 	access_string = "Head of Mining"
-	ui_colour = TGUI_COLOUR_GREEN
+	ui_colour = /datum/job/command::ui_colour
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/mining)
@@ -478,7 +478,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily/lawyer
 	day = "Thursday"
 	name = "Lawyer"
-	ui_colour = TGUI_COLOUR_RED
+	ui_colour = /datum/job/security::ui_colour
 	wages = PAY_DOCTORATE
 	access_string = "Lawyer"
 	limit = 4
@@ -632,7 +632,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
-		ui_colour = TGUI_COLOUR_NAVY
+		ui_colour = /datum/job/special/nt::ui_colour
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
@@ -675,7 +675,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	syndicate
 		name = "Syndicate Pod Pilot"
-		ui_colour = TGUI_COLOUR_CRIMSON
+		ui_colour = /datum/job/special/syndicate::ui_colour
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
