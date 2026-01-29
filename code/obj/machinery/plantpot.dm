@@ -55,7 +55,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	var/total_volume = 4 // How much volume total is actually in the tray because why the fuck was water the only reagent being counted towards the level
 	var/image/water_sprite = null
 	var/image/water_meter = null
-	var/obj/overlay/plant_sprite = null
+	var/image/plant_sprite = null
 	var/grow_level = 1 // Same as the above except for current plant growth
 	var/do_update_water_icon = 1 // this handles the water overlays specifically (water and water level) It's set to 1 by default so it'll update on spawn
 	var/growth_rate = 2
@@ -65,27 +65,17 @@ TYPEINFO(/obj/machinery/plantpot)
 	var/actionpassed 	//holds defines for action bar harvesting yay :D
 	var/more_info = FALSE // debug tray: show more info
 
-	var/startwater = 200 // how much water to start with
-	var/tanksize = 400 // how big the chem storage should be
-
-	var/drink_mult = 1 // how many times faster this tray drains chemicals
-
-
 /obj/machinery/plantpot/New()
 	..()
 	src.plantgenes = new /datum/plantgenes(src)
-	src.create_reagents(src.tanksize)
+	src.create_reagents(400)
 	// The plantpot can store 400 reagents in total, we want a bit more than the max water
 	// level since we can put other additives in the pot for various effects.
-	src.reagents.add_reagent("water", src.startwater)
+	src.reagents.add_reagent("water", 200)
 	// 200 is the exact maximum amount of water a plantpot can hold before it is considered
 	// to have too much water, which stunts plant growth speed.
 	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
-	src.plant_sprite = new /obj/overlay(src)
-	src.plant_sprite.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE)
-	src.plant_sprite.icon = 'icons/obj/hydroponics/plants_weed.dmi'
-	src.plant_sprite.appearance_flags |= KEEP_TOGETHER
-
+	src.plant_sprite = image('icons/obj/hydroponics/plants_weed.dmi', "")
 	UpdateIcon()
 
 	if(!src.net_id)
@@ -323,23 +313,6 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.UpdateIcon()
 		src.update_name()
 
-/obj/machinery/plantpot/proc/wiggle()
-	if (!src.current) return
-	if (!ON_COOLDOWN(src,"hit_sound", 0.5 SECONDS))
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
-
-	var/original_x = src.plant_sprite.pixel_x
-	var/original_y = src.plant_sprite.pixel_y
-	var/wiggle = 6
-
-	SPAWN(0)
-		while (wiggle > 0)
-			wiggle--
-			animate(src.plant_sprite, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
-			sleep(0.1 SECONDS)
-
-		animate(src.plant_sprite, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
-
 /obj/machinery/plantpot/attackby(obj/item/W, mob/user)
 	if(src.current)
 		var/datum/plant/growing = src.current
@@ -479,7 +452,6 @@ TYPEINFO(/obj/machinery/plantpot)
 			else
 				src.HYPdamageplant("physical",150,1)
 				src.visible_message(SPAN_ALERT("[user.name] cuts at [src] with [W]!"))
-				src.wiggle() // hit animation
 
 	else if(istype(W, /obj/item/seed/))
 		// Planting a seed in the tray. This one should be self-explanatory really.
@@ -576,10 +548,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			boutput(user, SPAN_ALERT("The plant isn't ready to be harvested yet!"))
 			return
 
-	else
-		..()
-		if (!istype(W,/obj/item/plantanalyzer) && !istype(W,/obj/item/device/pda2))
-			src.wiggle() // hit animation
+	else ..()
 
 /obj/machinery/plantpot/attack_ai(mob/user as mob)
 	if(isrobot(user) && BOUNDS_DIST(src, user) == 0) return src.Attackhand(user)
@@ -749,7 +718,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 	src.AddOverlays(water_meter, "water_meter")
 	if(!src.current)
-		src.ClearSpecificOverlays("harvest_display", "health_display", "plant", "plantdeath")
+		src.ClearSpecificOverlays("harvest_display", "health_display", "plant", "plantdeath", "plantoverlay")
 		if(status & (NOPOWER|BROKEN))
 			src.ClearSpecificOverlays("water_meter")
 		return
@@ -786,25 +755,14 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	src.plant_sprite.icon = iconname
 	src.plant_sprite.icon_state = planticon
+	src.plant_sprite.layer = 4
+	src.AddOverlays(plant_sprite, "plant")
 
 	var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
-	// all this work so we can have the damage shake effect
-	if(src.current && !src.dead)
-		if (plantoverlay)
-			src.plant_sprite.UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
-		else
-			src.plant_sprite.ClearSpecificOverlays("plantoverlay")
-
-		if (!(src.plant_sprite in src.vis_contents))
-			src.vis_contents += src.plant_sprite
+	if(plantoverlay)
+		src.AddOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
 	else
-		if ((src.plant_sprite in src.vis_contents))
-			src.vis_contents -= src.plant_sprite
-
-
-	// 	src.AddOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
-	// else
-	// 	src.ClearSpecificOverlays("plantoverlay")
+		src.ClearSpecificOverlays("plantoverlay")
 
 	if(status & (NOPOWER|BROKEN))
 		src.ClearSpecificOverlays("water_meter", "harvest_display", "health_display", "plantdeath")
@@ -896,7 +854,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		DNA.endurance += HYPstat_rounding(src.current_tick.endurance_bonus * src.current_tick.tick_multiplier)
 	// Now we modify chems in the tray
 	if (src.reagents)
-		src.reagents?.remove_any_except(src.current_tick.water_consumption * src.current_tick.tick_multiplier * src.drink_mult, "nectar")
+		src.reagents?.remove_any_except(src.current_tick.water_consumption * src.current_tick.tick_multiplier, "nectar")
 		// This is where drink_rate does its thing. It will remove a bit of all reagents to meet
 		// it's quota, except nectar because that's supposed to stay in the plant pot.
 		// We give off nectar and should check our nectar levels
@@ -1256,7 +1214,6 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(length(SA.contents) >= SA.maxitems)
 				boutput(h_data.user, SPAN_ALERT("Your satchel is full! You dump the rest on the floor."))
 				break
-			continue_if_overlay_or_effect(I) // please dont
 			if(istype(I,/obj/item/seed/))
 				continue
 			else
@@ -1268,7 +1225,6 @@ TYPEINFO(/obj/machinery/plantpot)
 	// if the satchel got filled up this will dump any unharvested items on the floor
 	// if we're harvesting by hand it'll just default to this anyway! truly magical~
 	for(var/obj/I in h_data.pot.contents)
-		continue_if_overlay_or_effect(I) // please dont
 		I.set_loc(h_data.user.loc)
 		I.add_fingerprint(h_data.user)
 	// we got to do the same for mobs
@@ -1589,9 +1545,6 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 	/// list of commuts to apply to plant
 	var/list/datum/plant_gene_strain/spawn_commuts = list()
 	var/auto_water = TRUE
-	startwater = 100 // dehydrated
-	tanksize = 250
-	drink_mult = 1.5 // thorsty
 
 /obj/machinery/plantpot/bareplant/New(newLoc, obj/item/seed/initial_seed)
 	SPAWN(0) // delay for prefab attribute assignment
