@@ -937,11 +937,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		return CAST_ATTEMPT_SUCCESS
 
 	proc/misfire()
-		if (!linked_power.safety && ishuman(owner))
+		if (!linked_power.safety && ishuman(src.owner))
 			// If unsynchronized, you drop a random organ. Hope it's not one of the important ones!
 			var/list/possible_drops = list("heart", "left_lung","right_lung","left_kidney","right_kidney",
 				"liver","spleen","pancreas","stomach","intestines","appendix","butt")
-			var/obj/item/organ/O = owner.organHolder?.drop_organ(pick(possible_drops))
+			var/obj/item/organ/O = src.owner.organHolder?.drop_organ(pick(possible_drops))
 			if (O)
 				logTheThing(LOG_COMBAT, src.owner, "dropped organ [O] due to misfire of unsynchronized power [name] at [log_loc(src.owner)].")
 				boutput(src.owner, SPAN_ALERT("You dissolve... mostly. Oops."))
