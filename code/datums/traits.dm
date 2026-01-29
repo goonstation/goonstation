@@ -679,7 +679,7 @@
 
 /datum/trait/wheelchair
 	name = "Wheelchair"
-	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, you have been placed on the disability list. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
+	desc = "Nanotrasen will kindly supply any crewmember a wheelchair upon request regardless of disability. (as part of a regulatory agreement)"
 	id = "wheelchair"
 	icon_state = "stumped"
 	category = list("trinkets")
