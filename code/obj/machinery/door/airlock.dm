@@ -774,7 +774,7 @@ var/global/list/cycling_airlocks = list()
 	return
 
 /obj/machinery/door/airlock/proc/interact_panel(mob/user)
-	src.panel_open = !(src.panel_open)
+	src.panel_open = !src.panel_open
 	if (src.panel_open)
 		user.visible_message(SPAN_ALERT("[user] opens the maintenance panel on \the [src.name]."))
 		logTheThing(LOG_STATION, user, "opens the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
