@@ -173,7 +173,7 @@ var/global/area/current_battle_spawn = null
 		if (tether.z == Z_LEVEL_STATION)
 			qdel(tether)
 
-	global.set_zlevel_gforce(Z_LEVEL_STATION, 1, FALSE)
+	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, FALSE)
 
 	hide_weapons_everywhere(length(living_battlers))
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
