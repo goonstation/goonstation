@@ -1463,7 +1463,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/datum/mutantrace/new_mutantrace_type = null
-			if (prob(1) && prob(1)) // 0.01% chance of a weird mutantrace
+			if (prob(0.01)) // weird mutantrace
 				new_mutantrace_type = pick(filtered_concrete_typesof(/datum/mutantrace, /proc/safe_mutantrace_nogenepool_filter))
 			else // otherwise, pick any -1 point mutrace
 				new_mutantrace_type = pick(/datum/mutantrace/lizard, /datum/mutantrace/cow, /datum/mutantrace/skeleton,	/datum/mutantrace/roach)
@@ -1472,12 +1472,7 @@ TYPEINFO(/datum/trait/partyanimal)
 				new_mutantrace_type = /datum/mutantrace/human
 			H.default_mutantrace = new_mutantrace_type
 			H.set_mutantrace(H.default_mutantrace)
-
-	onRemove(mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.default_mutantrace = /datum/mutantrace/human
-			H.set_mutantrace(H.default_mutantrace)
+		owner.traitHolder.removeTrait("random_species") // don't re-roll species
 
 /datum/trait/super_slips
 	name = "Slipping Hazard"
@@ -1591,3 +1586,32 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Missing Right Eye"
 	id = "eye_missing_right"
 	unselectable = TRUE
+
+
+/*
+	onAdd(mob/owner)
+		owner.traitHolder.removeTrait("random_species") // this is in the category of species
+		if (owner.traitHolder.getTraitWithCategory("species"))
+			return // but if we have any others, don't overwrite existing species traits
+		if (ishuman(owner))
+			if (prob(0.01)) // weird human mutantrace
+				var/mob/living/carbon/human/H = owner
+				var/datum/mutantrace/new_mutantrace_type = null
+				new_mutantrace_type = pick(filtered_concrete_typesof(/datum/mutantrace, /proc/safe_mutantrace_nogenepool_filter))
+				if (isnull(new_mutantrace_type)) // safety
+					logTheThing(LOG_DEBUG, src, "Failed to generate a random species for [owner].")
+					new_mutantrace_type = /datum/mutantrace/human
+				H.default_mutantrace = new_mutantrace_type
+				H.set_mutantrace(H.default_mutantrace)
+			else
+				switch(rand(1,4))
+					if(1)
+						owner.addTrait("roach")
+					if(2)
+						owner.addTrait("skeleton")
+					if(3)
+						owner.addTrait("cow")
+					if(4)
+						owner.addTrait("lizard")
+
+*/
