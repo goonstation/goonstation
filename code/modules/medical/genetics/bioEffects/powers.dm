@@ -910,58 +910,54 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Transform yourself into a liquid state."
 	icon_state = "melt"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return TRUE
-		if (istype(owner.loc, /obj/dummy/spell_invis)) // stops biomass manipulation and dimension shift from messing with eachother.
-			boutput(owner, SPAN_ALERT("You can't seem to turn incorporeal here."))
-			return TRUE
-		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
-			if (!linked_power.safety)
-				// If unsynchronized, you don't get to keep anything you have on you.
-				// The original version of this power instead gibbed you instantly, which wasn't very fun,
-				// and ended up as a newbie trap ("This sounds fun! *dead* oh.")
-				// This way it's a nice tradeoff, and you can always just pick things back up
-				boutput(owner, SPAN_ALERT("Everything you were carrying falls away as you dissolve!"))
-				logTheThing(LOG_COMBAT, owner, "dropped all their equipment from unsynchronized power [name] at [log_loc(owner)].")
-				owner.unequip_all()
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (istype(src.owner.loc, /obj/dummy/spell_invis)) // stops biomass manipulation and dimension shift from messing with eachother.
+			boutput(src.owner, SPAN_ALERT("You can't seem to turn incorporeal here."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!spell_invisibility(owner, 1, 0, 0, 1))
+			return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+		return misfire ? misfire() : regular()
 
-			spell_invisibility(owner, 50)
-			playsound(owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
+	proc/regular()
+		if (!linked_power.safety)
+			// If unsynchronized, you don't get to keep anything you have on you.
+			// The original version of this power instead gibbed you instantly, which wasn't very fun,
+			// and ended up as a newbie trap ("This sounds fun! *dead* oh.")
+			// This way it's a nice tradeoff, and you can always just pick things back up
+			boutput(src.owner, SPAN_ALERT("Everything you were carrying falls away as you dissolve!"))
+			logTheThing(LOG_COMBAT, src.owner, "dropped all their equipment from unsynchronized power [name] at [log_loc(src.owner)].")
+			src.owner.unequip_all()
 
+		spell_invisibility(src.owner, 50)
+		playsound(src.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire()
-		if (..())
-			return TRUE
-		if (istype(owner.loc, /obj/dummy/spell_invis))
-			boutput(owner, SPAN_ALERT("You can't seem to turn incorporeal here."))
-			return TRUE
-		// Misfires still transform you, but bad things happen.
+	proc/misfire()
+		if (!linked_power.safety && ishuman(owner))
+			// If unsynchronized, you drop a random organ. Hope it's not one of the important ones!
+			var/list/possible_drops = list("heart", "left_lung","right_lung","left_kidney","right_kidney",
+				"liver","spleen","pancreas","stomach","intestines","appendix","butt")
+			var/obj/item/organ/O = owner.organHolder?.drop_organ(pick(possible_drops))
+			if (O)
+				logTheThing(LOG_COMBAT, src.owner, "dropped organ [O] due to misfire of unsynchronized power [name] at [log_loc(src.owner)].")
+				boutput(src.owner, SPAN_ALERT("You dissolve... mostly. Oops."))
+		else
+			// If synchronized, you drop a random item you were carrying.
+			// This is a pretty weak downside, but at the same time,
+			// to get here you've managed to synchronize it and paid the stability penalty.
+			// We can afford to be nice.
+			var/obj/item/I = src.owner.unequip_random()
+			if (I)
+				logTheThing(LOG_COMBAT, src.owner, "dropped item [I] due to misfire of unsynchronized Dissolve at [log_loc(src.owner)].")
+				boutput(src.owner, SPAN_ALERT("\The [I] you were carrying falls away as you dissolve!"))
 
-		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
-			if (!linked_power.safety && ishuman(owner))
-				// If unsynchronized, you drop a random organ. Hope it's not one of the important ones!
-				var/list/possible_drops = list("heart", "left_lung","right_lung","left_kidney","right_kidney",
-					"liver","spleen","pancreas","stomach","intestines","appendix","butt")
-				var/obj/item/organ/O = owner.organHolder.drop_organ(pick(possible_drops))
-				if (O)
-					logTheThing(LOG_COMBAT, owner, "dropped organ [O] due to misfire of unsynchronized power [name] at [log_loc(owner)].")
-					boutput(owner, SPAN_ALERT("You dissolve... mostly. Oops."))
-
-			else
-				// If synchronized, you drop a random item you were carrying.
-				// This is a pretty weak downside, but at the same time,
-				// to get here you've managed to synchronize it and paid the stability penalty.
-				// We can afford to be nice.
-				var/obj/item/I = owner.unequip_random()
-				if (I)
-					logTheThing(LOG_COMBAT, owner, "dropped item [I] due to misfire of unsynchronized Dissolve at [log_loc(owner)].")
-					boutput(owner, SPAN_ALERT("\The [I] you were carrying falls away as you dissolve!"))
-
-			spell_invisibility(owner, 50)
-			playsound(owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
+		spell_invisibility(src.owner, 50)
+		playsound(src.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
