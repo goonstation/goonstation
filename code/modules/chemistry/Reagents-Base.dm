@@ -816,20 +816,22 @@
 				. = 0
 
 	do_overdose(var/severity, var/mob/M, var/mult = 1)
-		if (severity == 1)
-			ticks += mult
-			M.take_brain_damage(3)
-			if (probmult(20))
-				boutput(M, SPAN_ALERT("Everything hurts!"))
-			if (probmult(15))
-				var/vomit_message = SPAN_ALERT("[M] pukes violently!")
-				M.vomit(0, null, vomit_message)
-			if (probmult(10))
-				M.visible_message("<span class='combat bold'>[M] stumbles and falls!</span>")
-				M.changeStatus("knockdown", 2 SECONDS * mult)
-			if (ticks >= 10)
-				if(probmult(10))
-					M.setStatus("drowsy", 20 SECONDS)
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && !istype(H.mutantrace, /datum/mutantrace/ithillid))
+			if (severity == 1)
+				ticks += mult
+				M.take_brain_damage(3)
+				if (probmult(20))
+					boutput(M, SPAN_ALERT("Everything hurts!"))
+				if (probmult(15))
+					var/vomit_message = SPAN_ALERT("[M] pukes violently!")
+					M.vomit(0, null, vomit_message)
+				if (probmult(10))
+					M.visible_message("<span class='combat bold'>[M] stumbles and falls!</span>")
+					M.changeStatus("knockdown", 2 SECONDS * mult)
+				if (ticks >= 10)
+					if(probmult(10))
+						M.setStatus("drowsy", 20 SECONDS)
 
 
 
