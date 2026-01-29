@@ -203,7 +203,7 @@
 /obj/neon_lining{
 	dir = 8
 	},
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	desc = "Definitely not a barber pole, nope, nuh-uh.";
 	name = "Spinning Candy Cane Pole";
 	pixel_x = -28
@@ -524,7 +524,7 @@
 	dir = 4;
 	lining_color = "pink"
 	},
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	desc = "Definitely not a barber pole, nope, nuh-uh.";
 	name = "Spinning Candy Cane Pole";
 	pixel_x = 28
