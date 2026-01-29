@@ -18,7 +18,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_OSHAN
 	special_spawn_location = null
-	ui_colour =  /datum/job/civilian::ui_colour
+	ui_colour = /datum/job/civilian::ui_colour
 	limit = 1
 #elif defined(MAP_OVERRIDE_NADIR)
 	special_spawn_location = null
@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/medical_specialist
 	name = "Medical Specialist"
-	ui_colour =  /datum/job/medical::ui_colour
+	ui_colour = /datum/job/medical::ui_colour
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/inspector
 	name = "Inspector"
 	wages = PAY_IMPORTANT
-	ui_colour =  /datum/job/special/nt::ui_colour
+	ui_colour = /datum/job/special/nt::ui_colour
 	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
