@@ -39,8 +39,7 @@
 				FLICK("monkey2h", animation)
 				sleep(1 SECOND)
 				qdel(animation)
-				qdel(H.mutantrace)
-				H.set_mutantrace(null)
+				H.bioHolder.AddEffect("human")
 				H.transforming = 0
 				H.canmove = 1
 				H.icon = initial(H.icon)
