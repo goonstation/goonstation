@@ -115,6 +115,12 @@
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
 
+	preCheck(atom/A)
+		. = ..()
+		var/turf/T = get_turf(A)
+		if (!istype(T, /turf/simulated/floor/specialroom/gym))
+			return FALSE
+
 	onAdd(optional)
 		. = ..()
 		var/mob/M = null
@@ -131,7 +137,8 @@
 			M = owner
 		else
 			return ..(timePassed)
-		if (M.health <= 0)
+		var/turf/T = get_turf(M)
+		if (M.health <= 0 || !istype(T, /turf/simulated/floor/specialroom/gym))
 			M.delStatus("wrestler")
 
 	onRemove()
@@ -141,6 +148,9 @@
 			M = owner
 			UnregisterSignal(M, COMSIG_ATTACKHAND)
 			UnregisterSignal(M, COMSIG_ATTACKBY)
+			// TODO: This should be reversed or something
+			var/obj/itemspecialeffect/boxing/effect = new /obj/itemspecialeffect/boxing
+			effect.setup(M.loc)
 			if (M.health <= 0)
 				SPAWN(0)
 					playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)

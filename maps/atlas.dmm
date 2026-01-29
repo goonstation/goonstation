@@ -14385,7 +14385,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "kAG" = (
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	pixel_x = -14
 	},
 /turf/simulated/floor/stairs/wide/other{

@@ -1031,12 +1031,12 @@
 	standard
 		spawn_contents = list(/obj/item/gun/energy/taser_gun,
 		/obj/item/baton,
-		/obj/item/barrier)
+		/obj/item/barrier/collapsible/security)
 
 	offense
 		spawn_contents = list(/obj/item/gun/energy/wavegun,
 		/obj/item/baton,
-		/obj/item/barrier)
+		/obj/item/barrier/collapsible/security)
 
 	support
 		spawn_contents = list(/obj/item/baton,
@@ -1046,13 +1046,13 @@
 	control
 		spawn_contents = list(/obj/item/gun/energy/tasershotgun,
 		/obj/item/baton,
-		/obj/item/barrier)
+		/obj/item/barrier/collapsible/security)
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/tasershotgun
 
 	assistant
-		spawn_contents = list(/obj/item/barrier,
+		spawn_contents = list(/obj/item/barrier/collapsible/security,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/ticket_writer)
 
@@ -1061,7 +1061,7 @@
 		/obj/item/baton/ntso,
 		/obj/item/clothing/head/helmet/space/ntso,
 		/obj/item/cloth/handkerchief/nt,
-		/obj/item/barrier,
+		/obj/item/barrier/collapsible/security,
 		/obj/item/reagent_containers/food/snacks/candy/candyheart)
 
 	ntso
@@ -1074,13 +1074,13 @@
 	baton
 		spawn_contents = list(/obj/item/baton,
 		/obj/item/ammo/bullets/stunbaton,
-		/obj/item/barrier,
+		/obj/item/barrier/collapsible/security,
 		/obj/item/requisition_token/security/utility)
 
 	tasersmg
 		spawn_contents = list(/obj/item/gun/energy/tasersmg,
 		/obj/item/baton,
-		/obj/item/barrier)
+		/obj/item/barrier/collapsible/security)
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
