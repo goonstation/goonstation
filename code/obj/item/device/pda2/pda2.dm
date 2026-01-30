@@ -341,6 +341,9 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
 		mailgroups = list(MGD_BOTANY,MGD_PARTY)
 
+	computeroperator
+		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
+
 	syndicate
 		icon_state = "pda-syn"
 		name = "Military PDA"
@@ -373,9 +376,6 @@
 			var/datum/computer/file/pda_program/emergency_alert/crisis = locate() in src.hd.root.contents
 			src.hd.root.remove_file(crisis)
 			src.hd.root.add_file(new /datum/computer/file/text/pda2manual/knockoff)
-
-	computeroperator
-		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
 
 
 /obj/item/device/pda2/pickup(mob/user)
