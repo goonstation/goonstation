@@ -15,23 +15,7 @@ Contains:
 
 */
 
-//////////////////////////////////////// Assembly signal helper/controler /////////////////////////////////
-var/datum/assembly_controller/assembly_controls
-
-/// This datum will be a singleton with the purpose of holding icon datums of various combinations of assemblies.
-/// This is so that only one icon needs to be created for a new assembly type and we don't need to rely on a bunch of overlays.
-/// The assemblies will check if their icon exists on the controller and, if not, will generate and add it to it.
-
-/datum/assembly_controller
-	var/list/assembly_icons
-
-/datum/assembly_controller/New()
-	. = ..()
-	src.assembly_icons = list()
-
-/datum/assembly_controller/disposing()
-	. = ..()
-	src.assembly_icons = null
+//////////////////////////////////////// Assembly signal helper /////////////////////////////////
 
 /// This datum exists because we cannot return anything else than bitflags in signals. So we pass this with the signal and have it modified by whatever catches the signal at the end.
 /datum/assembly_signal_helper
@@ -75,7 +59,8 @@ var/datum/assembly_controller/assembly_controls
 	var/mob/last_armer = null //! for tracking/logging of who armed the assembly
 	var/obj/item/chargeable_component = null //! if one of the components of the assembly can be charged, it will be referenced here. Use this if you want the assembly to be reachargeable.
 	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
-	var/saved_icon_path = null //! this is used to check if the assembly needs to grab a new icon from the controler. It saves the last string generated while checking grab_icon()
+	var/saved_icon_path = null //! this is used to check if the assembly needs to grab a new icon from assembly_icons. It saves the last string generated while checking grab_icon()
+	var/static/list/assembly_icons = list() //! This list stores all icons the assemblies generate. this is used so multiple assemblies don't need to work with overlays or do a whole lot of icon operations. They key to save the icons is generated in generate_icon_string() and saved on the object in saved_icon_path
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 	can_arcplate = FALSE
@@ -411,7 +396,7 @@ var/datum/assembly_controller/assembly_controls
 ///------ Procs to handle icon generation of assemblies ---------
 
 
-/// This proc returns an icon that can be slapped onto the assembly. It is used to create the icon for the assembly_controller
+/// This proc returns an icon that can be slapped onto the assembly. It is used to create the icon for assembly_icons
 /obj/item/assembly/proc/generate_icon()
 	var/overlay_offset = 0 //how many pixels we want to move the overlays
 	var/new_icon_path = 'icons/obj/items/assemblies.dmi'
@@ -437,7 +422,7 @@ var/datum/assembly_controller/assembly_controls
 	// Now with the icon done, we can return it
 	return output_icon
 
-/// This proc returns an string that is used to save and grab the icon from the assembly_controller
+/// This proc returns an string that is used to save and grab the icon from the static icon list
 /obj/item/assembly/proc/generate_icon_string()
 	var/output_string = "trigger_[src.trigger_icon_prefix]_applier_[src.applier_icon_prefix]"
 	if(src.target && !src.target_overlay_invisible)
@@ -456,11 +441,11 @@ var/datum/assembly_controller/assembly_controls
 	if(potentially_new_icon == src.saved_icon_path)
 		//if the icon path is what we have saved, nothing needs to be done and we can return here
 		return FALSE
-	// now, we check if an icon exists on the controller. If it doesn't, we need to generate it and add it to the controler
-	if(!assembly_controls.assembly_icons[potentially_new_icon])
-		assembly_controls.assembly_icons[potentially_new_icon] = src.generate_icon()
-	// now, either the icon did exist in the controller, or we added it. in both cases, we set the icon to the icon from the controller, save the new string and return true
-	src.icon = assembly_controls.assembly_icons[potentially_new_icon]
+	// now, we check if an icon exists on assembly_icons. If it doesn't, we need to generate it and add it to the list
+	if(!src.assembly_icons[potentially_new_icon])
+		src.assembly_icons[potentially_new_icon] = src.generate_icon()
+	// now, either the icon did exist in the static list, or we added it. in both cases, we set the icon to the icon from the list, save the new string and return true
+	src.icon = src.assembly_icons[potentially_new_icon]
 	src.saved_icon_path = potentially_new_icon
 	return TRUE
 
