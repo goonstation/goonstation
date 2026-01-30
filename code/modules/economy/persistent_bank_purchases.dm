@@ -386,33 +386,32 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (H.mind)
-					if (H.mind.assigned_role == "Clown")
-						var/type = pick("purple","pink","yellow")
-						H.w_uniform.icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
-						H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-						H.w_uniform.icon_state = "[type]clown"
-						H.w_uniform.item_state = "[type]clown"
-						H.w_uniform.name = "[type] clown suit"
-						var/obj/item/clothing/mask/clown_hat/the_mask = H.wear_mask
-						the_mask.icon_state = "[type]clown"
-						the_mask.base_icon_state = "[type]clown"
-						the_mask.item_state = "[type]clown"
-						the_mask.name = "[type] clown mask"
-						H.shoes.icon_state = "[type]clown"
-						H.shoes.item_state = "[type]clown"
-						H.shoes.name = "[type] clown shoes"
-						H.shoes.desc = "Normal clown shoes, just [type] instead of red."
-						if (type == "purple")
-							H.w_uniform.desc = "What kind of clown are you for wearing this color? It's a good question, honk."
-							H.wear_mask.desc = "Purple is a very flattering color on almost everyone."
-						if (type == "pink")
-							H.w_uniform.desc = "The color pink is the embodiment of love and hugs and nice people. Honk."
-							H.wear_mask.desc = "This reminds you of cotton candy."
-						if (type == "yellow")
-							H.w_uniform.desc = "Have a happy honk!"
-							H.wear_mask.desc = "A ray of sunshine."
-						return 1
+				if (H.traitHolder?.hasTrait("training_clown"))
+					var/type = pick("purple","pink","yellow")
+					H.w_uniform.icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
+					H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+					H.w_uniform.icon_state = "[type]clown"
+					H.w_uniform.item_state = "[type]clown"
+					H.w_uniform.name = "[type] clown suit"
+					var/obj/item/clothing/mask/clown_hat/the_mask = H.wear_mask
+					the_mask.icon_state = "[type]clown"
+					the_mask.base_icon_state = "[type]clown"
+					the_mask.item_state = "[type]clown"
+					the_mask.name = "[type] clown mask"
+					H.shoes.icon_state = "[type]clown"
+					H.shoes.item_state = "[type]clown"
+					H.shoes.name = "[type] clown shoes"
+					H.shoes.desc = "Normal clown shoes, just [type] instead of red."
+					if (type == "purple")
+						H.w_uniform.desc = "What kind of clown are you for wearing this color? It's a good question, honk."
+						H.wear_mask.desc = "Purple is a very flattering color on almost everyone."
+					if (type == "pink")
+						H.w_uniform.desc = "The color pink is the embodiment of love and hugs and nice people. Honk."
+						H.wear_mask.desc = "This reminds you of cotton candy."
+					if (type == "yellow")
+						H.w_uniform.desc = "Have a happy honk!"
+						H.wear_mask.desc = "A ray of sunshine."
+					return 1
 				return 0
 
 			return 0

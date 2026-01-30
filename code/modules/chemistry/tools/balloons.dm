@@ -106,7 +106,7 @@
 		var/mob/living/carbon/human/H = user
 
 		var/list/actions = list()
-		if (user.mind && user.traitHolder.hasTrait("training_clown"))
+		if (user.traitHolder?.hasTrait("training_clown"))
 			actions += "Make balloon animal"
 		if (src.reagents.total_volume > 0 || TOTAL_MOLES(src.air) >= BREATH_VOLUME)
 			actions += "Inhale"

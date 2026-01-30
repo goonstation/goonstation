@@ -1132,7 +1132,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		owner.ensure_listen_tree().AddListenModifier(LISTEN_MODIFIER_CLOWN_DISBELIEF)
 
 	proc/examined(mob/owner, mob/examiner, list/lines)
-		if(examiner.job == "Clown")
+		if(examiner.traitHolder?.hasTrait("training_clown"))
 			lines += "<br>[capitalize(he_or_she(owner))] doesn't seem to notice you."
 
 	onRemove(mob/owner)
