@@ -386,7 +386,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (H.traitHolder?.hasTrait("training_clown"))
+				if (H.mind && H.mind.assigned_role == "Clown")
 					var/type = pick("purple","pink","yellow")
 					H.w_uniform.icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 					H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
