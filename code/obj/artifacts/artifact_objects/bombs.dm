@@ -596,8 +596,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 // biological bomb
 
-#define BIOBOMB_CLASSICAL_GAS 0
-
 /obj/machinery/artifact/bomb/biological
 
 	name = "artifact biological bomb"
@@ -619,9 +617,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	touch_descriptors = list("It's covered in a thin layer of slime")
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
-	var/payload_type = BIOBOMB_CLASSICAL_GAS
 	recharge_delay = 10 MINUTES
-	var/self_destruct_strength = 1
+	var/self_destruct_strength = 1 // sets the strength of explosion when artifact cracks open
 	var/list/payload_disease_reagents = list()
 
 	post_setup()
@@ -630,15 +627,15 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		var/reagent = "unknown"
 		switch(artitype.name)
 			if("wizard") //wizard related and silly diseases
-				reagent = pick("rainbow fluid", "painbow fluid", "grave dust", "banana peel", "explodingheadjuice")
+				reagent = pick("rainbow fluid", "painbow fluid", "grave dust", "explodingheadjuice")
 
 			if("eldritch") //horrible stuff
-				reagent = pick("gibbis", "pubbie tears", "rat_spit", "loose_screws", "prions", "e.coli", "green mucus")
+				reagent = pick("gibbis", "pubbie tears", "rat_spit", "loose_screws", "e.coli", "green mucus")
 
 		payload_disease_reagents += reagent
 		log_addendum = "Payload: [reagent]"
 
-		recharge_delay = rand(300,800)
+		recharge_delay = rand(30 SECONDS,80 SECONDS)
 
 	deploy_payload(var/obj/O)
 		if (..())
@@ -667,7 +664,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			for (var/mob/M in viewers(O, null))
 				M.flash(2 SECONDS)
 
-			explosion_new(O, get_turf(O), self_destruct_strength, TRUE, 0, 360, TRUE)
+			explosion_new(O, get_turf(O), self_destruct_strength, turf_safe=TRUE)
 
 			O.ArtifactDestroyed()
 			return
@@ -679,5 +676,3 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		SPAWN(recharge_delay)
 			if (O)
 				O.ArtifactDeactivated()
-
-#undef BIOBOMB_CLASSICAL_GAS
