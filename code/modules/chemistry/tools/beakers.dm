@@ -164,6 +164,15 @@
 /obj/item/reagent_containers/glass/beaker/large/cyborg
 	shatter_immune = TRUE
 
+/obj/item/reagent_containers/glass/beaker/large/plumbing
+	name = "water filter calibration tank"
+	desc = "FOR PLUMBING DO NOT REMOVE is labeled on its side."
+	get_desc(dist, mob/user)
+		if(user.mind.assigned_role == "Janitor")
+			. += SPAN_ALERT("<b>OH SHIT</b> ")
+		. += ..()
+
+
 /*  Now found in hydroponics.dm!
 
 /obj/item/reagent_containers/glass/beaker/large/happy_plant //I have to test too many fucking plant-related issues atm so I'm adding this just to make my life less annoying

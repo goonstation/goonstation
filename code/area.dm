@@ -3385,6 +3385,12 @@ ABSTRACT_TYPE(/area/station/janitor)
 	sound_environment = 3
 	workplace = 1
 
+/area/station/janitor/plumbing
+	name = "Plumbing Plant"
+	icon_state = "janitor"
+	sound_environment = 3
+	workplace = 1
+
 /area/station/science/chemistry
 	name = "Chemistry"
 	icon_state = "chem"

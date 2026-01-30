@@ -120,6 +120,9 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	drain_min = 10
 	drain_max = 15
 
+	active // For mapping
+		on = TRUE
+
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/proc/activate()
 
 
@@ -217,6 +220,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	//me when i steal code :3
 	var/list/connected_containers //! the containers currently connected to the condenser
 	var/max_amount_of_containers = 4
+
 
 /obj/machinery/fluid_machinery/unary/dripper/proc/try_adding_container(var/obj/container, var/mob/user)
 	if (!isturf(container.loc)) //if the condenser or container isn't on the floor you cannot hook it up
@@ -459,6 +463,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	var/on = FALSE
 	var/pumprate = 200
 
+	active // For mapping
+		on = TRUE
+
+
 /obj/machinery/fluid_machinery/binary/pump/New()
 	..()
 	AddComponent(/datum/component/mechanics_holder)
@@ -510,6 +518,13 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	desc = "Separates two fluid pipe networks."
 	icon_state = "valve0"
 	var/on = FALSE
+
+	overfloor
+		level = OVERFLOOR
+
+	active // For mapping
+		on = TRUE
+
 
 /obj/machinery/fluid_machinery/binary/valve/attack_hand(mob/user)
 	interact_particle(user, src)
@@ -600,6 +615,11 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 	flags = NOSPLASH
 	var/pullrate = 200
 	var/obj/item/reagent_containers/glass/beaker
+
+	plumbing
+		name = "water filter"
+		desc = "The one thing between the station and a flood of shit."
+		beaker = /obj/item/reagent_containers/glass/beaker/large/plumbing
 
 /obj/machinery/fluid_machinery/trinary/filter/attackby(obj/item/reagent_containers/glass/B, mob/user)
 	..()
