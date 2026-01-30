@@ -489,6 +489,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_belt = list(/obj/item/device/pda2/computeroperator)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_eyes = list(/obj/item/clothing/glasses/packetvision)
+	items_in_backpack = list(/obj/item/luggable_computer/techpersonal)
 	alt_names = list("Cybersecurity Expert", \
 					"IT Specialist", \
 					"Network Technician")
