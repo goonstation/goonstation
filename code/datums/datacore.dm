@@ -214,7 +214,7 @@
 		H.mind.store_memory("- [S["mi_crim"]]")
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		if (H.mind?.assigned_role == "Clown")
+		if (H.traitHolder?.hasTrait("training_clown"))
 			S["criminal"] = ARREST_STATE_CLOWN
 			S["mi_crim"] = "Clown"
 			H.update_arrest_icon()

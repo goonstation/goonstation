@@ -158,7 +158,7 @@
 	/obj/item/clothing/suit/det_suit,\
 	/obj/item/clothing/gloves/black,\
 	/obj/item/clothing/head/det_hat,\
-	/obj/item/device/radio/headset/security,\
+	/obj/item/device/radio/headset/detective,\
 	/obj/item/device/pda2/forensic)
 
 // Medical Equipment
