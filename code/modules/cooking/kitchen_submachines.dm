@@ -432,6 +432,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	var/output_icon
 	var/output_name
 	var/cooktime
+	var/datum/recipe_instructions/cooking/oven/default_instructions = new /datum/recipe_instructions/cooking/oven/default()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!emagged)
@@ -489,7 +490,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			if ("set_heat")
 				src.heat = params["heat"]
 			if ("start")
-				src.cook_food()
+				src.start_cooking_food()
 			if ("eject_all")
 				for (var/obj/item/I in src.contents)
 					I.set_loc(src.loc)
@@ -521,24 +522,27 @@ TYPEINFO(/obj/submachine/chef_oven)
 		src.output_name = null
 		src.cooktime = null
 
-		var/datum/cookingrecipe/possible = src.OVEN_get_valid_recipe()
+		var/datum/recipe/possible = src.OVEN_get_valid_recipe()
 		if (!possible)
 			return
 
-		for(var/I in possible.ingredients)
-			var/atom/item_path = I
-			src.output_icon = icon2base64(getFlatIcon(item_path, no_anim=TRUE), "chef_oven-\ref[src]")
-			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
+		var/list/items = possible.get_ingredients_data()
+		for(var/I in items)
+			src.possible_recipe_icons += icon2base64(getFlatIcon(image(I["icon"], I["icon_state"])), "chef_oven-\ref[src]")
+			src.possible_recipe_names += "[I["name"]][I["amount"] > 1 ? " x[I["amount"]]" : ""]"
 
-		if (ispath(possible.output))
-			var/atom/item_path = getVariant(possible)
-			src.output_icon = icon2base64(getFlatIcon(item_path, no_anim=TRUE), "chef_oven-\ref[src]")
+		var/atom/item_path = possible.get_mascot(src.contents)
+		if (ispath(item_path))
+			src.output_icon = icon2base64(getFlatIcon(image(initial(item_path.icon), initial(item_path.icon_state))), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
 
-		if (possible.cookbonus < 10)
-			src.cooktime = "[possible.cookbonus] seconds low"
+		var/datum/recipe_instructions/cooking/oven/instructions = possible.get_recipe_instructions(RECIPE_ID_OVEN)
+		if (!instructions)
+			instructions = src.default_instructions
+		if (instructions.cookbonus < 10)
+			src.cooktime = "[instructions.cookbonus] seconds low"
 		else
-			src.cooktime = "[floor(possible.cookbonus/2)] seconds high"
+			src.cooktime = "[floor(instructions.cookbonus/2)] seconds high"
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
@@ -555,234 +559,248 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes = list()
 
 		if (!src.recipes.len)
-			src.recipes += new /datum/cookingrecipe/oven/haggass(src)
-			src.recipes += new /datum/cookingrecipe/oven/haggis(src)
-			src.recipes += new /datum/cookingrecipe/oven/scotch_egg(src)
-			src.recipes += new /datum/cookingrecipe/oven/omelette(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/monster(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/c_butty(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/meatball(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/meatball_alt(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/egg(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/bahnmi(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/bahnmi_alt(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/human(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/monkey(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/synth(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/cheese(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/peanutbutter_honey(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/peanutbutter(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/blt(src)
-			src.recipes += new /datum/cookingrecipe/oven/sandwich/custom(src)
-			src.recipes += new /datum/cookingrecipe/oven/mapo_tofu(src)
-			src.recipes += new /datum/cookingrecipe/oven/ramen_bowl(src)
-			src.recipes += new /datum/cookingrecipe/oven/udon_bowl(src)
-			src.recipes += new /datum/cookingrecipe/oven/curry_udon_bowl(src)
-			src.recipes += new /datum/cookingrecipe/oven/coconutcurry(src)
-			src.recipes += new /datum/cookingrecipe/oven/chickenpineapplecurry(src)
-			src.recipes += new /datum/cookingrecipe/oven/tandoorichicken(src)
-			src.recipes += new /datum/cookingrecipe/oven/potatocurry(src)
-			src.recipes += new /datum/cookingrecipe/oven/onionchips(src)
-			src.recipes += new /datum/cookingrecipe/oven/mint_chutney(src)
-			src.recipes += new /datum/cookingrecipe/oven/refried_beans(src)
-			src.recipes += new /datum/cookingrecipe/oven/ultrachili(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/aburgination(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/baconator(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/butterburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/cheeseburger/monkey(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/cheeseburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/wcheeseburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/tikiburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/luauburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/coconutburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/spicychickensandwich(src)
-			src.recipes += new /datum/cookingrecipe/oven/chickensandwich(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/baconburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/meat
-			src.recipes += new /datum/cookingrecipe/oven/burger/buttburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/heartburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/brainburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/sloppyjoe(src)
-			src.recipes += new /datum/cookingrecipe/oven/superchili(src)
-			src.recipes += new /datum/cookingrecipe/oven/chili(src)
-			src.recipes += new /datum/cookingrecipe/oven/chilifries(src)
-			src.recipes += new /datum/cookingrecipe/oven/chilifries_alt(src)
-			src.recipes += new /datum/cookingrecipe/oven/poutine(src)
-			src.recipes += new /datum/cookingrecipe/oven/poutine_alt(src)
-			src.recipes += new /datum/cookingrecipe/oven/maghaz(src)
-			src.recipes += new /datum/cookingrecipe/oven/fries(src)
-			src.recipes += new /datum/cookingrecipe/oven/queso(src)
-			src.recipes += new /datum/cookingrecipe/oven/creamofmushroom(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/cheeseborger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/roburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/swede_mball(src)
-			src.recipes += new /datum/cookingrecipe/oven/donkpocket(src)
-			src.recipes += new /datum/cookingrecipe/oven/donkpocket2(src)
-			src.recipes += new /datum/cookingrecipe/oven/cornbread4(src)
-			src.recipes += new /datum/cookingrecipe/oven/cornbread3(src)
-			src.recipes += new /datum/cookingrecipe/oven/cornbread2(src)
-			src.recipes += new /datum/cookingrecipe/oven/cornbread1(src)
-			src.recipes += new /datum/cookingrecipe/oven/elvis_bread(src)
-			src.recipes += new /datum/cookingrecipe/oven/banana_bread(src)
-			src.recipes += new /datum/cookingrecipe/oven/pumpkin_bread(src)
-			src.recipes += new /datum/cookingrecipe/oven/spooky_bread(src)
-			src.recipes += new /datum/cookingrecipe/oven/banana_bread_alt(src)
-			src.recipes += new /datum/cookingrecipe/oven/honeywheat_bread(src)
-			src.recipes += new /datum/cookingrecipe/oven/eggnog(src)
-			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
-			src.recipes += new /datum/cookingrecipe/oven/brain_bread(src)
-			src.recipes += new /datum/cookingrecipe/oven/toast_bread(src)
-			src.recipes += new /datum/cookingrecipe/oven/donut(src)
-			src.recipes += new /datum/cookingrecipe/oven/bagel(src)
-			src.recipes += new /datum/cookingrecipe/oven/crumpet(src)
-			src.recipes += new /datum/cookingrecipe/oven/ice_cream_cone(src)
-			src.recipes += new /datum/cookingrecipe/oven/waffles(src)
-			src.recipes += new /datum/cookingrecipe/oven/lasagna(src)
-			src.recipes += new /datum/cookingrecipe/oven/chickenparm(src)
-			src.recipes += new /datum/cookingrecipe/oven/chickenalfredo(src)
-			src.recipes += new /datum/cookingrecipe/oven/alfredo(src)
-			src.recipes += new /datum/cookingrecipe/oven/spaghetti_pg(src)
-			src.recipes += new /datum/cookingrecipe/oven/spaghetti_m(src)
-			src.recipes += new /datum/cookingrecipe/oven/spaghetti_s(src)
-			src.recipes += new /datum/cookingrecipe/oven/spaghetti_t(src)
-			src.recipes += new /datum/cookingrecipe/oven/spaghetti_p(src)
-			src.recipes += new /datum/cookingrecipe/oven/breakfast(src)
-			src.recipes += new /datum/cookingrecipe/oven/french_toast(src)
-			src.recipes += new /datum/cookingrecipe/oven/cheesetoast(src)
-			src.recipes += new /datum/cookingrecipe/oven/bacontoast(src)
-			src.recipes += new /datum/cookingrecipe/oven/eggtoast(src)
-			src.recipes += new /datum/cookingrecipe/oven/churro(src)
-			src.recipes += new /datum/cookingrecipe/oven/nougat(src)
-			src.recipes += new /datum/cookingrecipe/oven/candy_cane(src)
-			src.recipes += new /datum/cookingrecipe/oven/cereal_box(src)
-			src.recipes += new /datum/cookingrecipe/oven/cereal_honey(src)
-			src.recipes += new /datum/cookingrecipe/oven/cereal_tanhony(src)
-			src.recipes += new /datum/cookingrecipe/oven/cereal_roach(src)
-			src.recipes += new /datum/cookingrecipe/oven/cereal_syndie(src)
-			src.recipes += new /datum/cookingrecipe/oven/cereal_flock(src)
-			src.recipes += new /datum/cookingrecipe/oven/b_cupcake(src)
-			src.recipes += new /datum/cookingrecipe/oven/beefood(src)
-			src.recipes += new /datum/cookingrecipe/oven/zongzi(src)
+			src.recipes += new /datum/recipe/haggass(src)
+			src.recipes += new /datum/recipe/haggis(src)
+			src.recipes += new /datum/recipe/scotch_egg(src)
+			src.recipes += new /datum/recipe/omelette(src)
+			src.recipes += new /datum/recipe/burger/monster(src)
+			src.recipes += new /datum/recipe/sandwich/c_butty(src)
+			src.recipes += new /datum/recipe/sandwich/meatball(src)
+			src.recipes += new /datum/recipe/sandwich/meatball_alt(src)
+			src.recipes += new /datum/recipe/sandwich/egg(src)
+			src.recipes += new /datum/recipe/sandwich/bahnmi(src)
+			src.recipes += new /datum/recipe/sandwich/bahnmi_alt(src)
+			src.recipes += new /datum/recipe/sandwich/human(src)
+			src.recipes += new /datum/recipe/sandwich/monkey(src)
+			src.recipes += new /datum/recipe/sandwich/synth(src)
+			src.recipes += new /datum/recipe/sandwich/cheese(src)
+			src.recipes += new /datum/recipe/sandwich/peanutbutter_honey(src)
+			src.recipes += new /datum/recipe/sandwich/peanutbutter(src)
+			src.recipes += new /datum/recipe/sandwich/blt(src)
+			src.recipes += new /datum/recipe/sandwich/custom(src)
+			src.recipes += new /datum/recipe/mapo_tofu(src)
+			src.recipes += new /datum/recipe/ramen_bowl(src)
+			src.recipes += new /datum/recipe/udon_bowl(src)
+			src.recipes += new /datum/recipe/curry_udon_bowl(src)
+			src.recipes += new /datum/recipe/coconutcurry(src)
+			src.recipes += new /datum/recipe/chickenpineapplecurry(src)
+			src.recipes += new /datum/recipe/tandoorichicken(src)
+			src.recipes += new /datum/recipe/potatocurry(src)
+			src.recipes += new /datum/recipe/onionchips(src)
+			src.recipes += new /datum/recipe/mint_chutney(src)
+			src.recipes += new /datum/recipe/refried_beans(src)
+			src.recipes += new /datum/recipe/ultrachili(src)
+			src.recipes += new /datum/recipe/burger/aburgination(src)
+			src.recipes += new /datum/recipe/burger/baconator(src)
+			src.recipes += new /datum/recipe/burger/butterburger(src)
+			src.recipes += new /datum/recipe/burger/cheeseburger/monkey(src)
+			src.recipes += new /datum/recipe/burger/cheeseburger(src)
+			src.recipes += new /datum/recipe/burger/wcheeseburger(src)
+			src.recipes += new /datum/recipe/burger/tikiburger(src)
+			src.recipes += new /datum/recipe/burger/luauburger(src)
+			src.recipes += new /datum/recipe/burger/coconutburger(src)
+			src.recipes += new /datum/recipe/spicychickensandwich(src)
+			src.recipes += new /datum/recipe/chickensandwich(src)
+			src.recipes += new /datum/recipe/burger/baconburger(src)
+			src.recipes += new /datum/recipe/burger/meat
+			src.recipes += new /datum/recipe/burger/buttburger(src)
+			src.recipes += new /datum/recipe/burger/heartburger(src)
+			src.recipes += new /datum/recipe/burger/brainburger(src)
+			src.recipes += new /datum/recipe/burger/sloppyjoe(src)
+			src.recipes += new /datum/recipe/superchili(src)
+			src.recipes += new /datum/recipe/chili(src)
+			src.recipes += new /datum/recipe/chilifries(src)
+			src.recipes += new /datum/recipe/chilifries_alt(src)
+			src.recipes += new /datum/recipe/poutine(src)
+			src.recipes += new /datum/recipe/poutine_alt(src)
+			src.recipes += new /datum/recipe/maghaz(src)
+			src.recipes += new /datum/recipe/fries(src)
+			src.recipes += new /datum/recipe/queso(src)
+			src.recipes += new /datum/recipe/creamofmushroom(src)
+			src.recipes += new /datum/recipe/burger/cheeseborger(src)
+			src.recipes += new /datum/recipe/burger/roburger(src)
+			src.recipes += new /datum/recipe/swede_mball(src)
+			src.recipes += new /datum/recipe/donkpocket(src)
+			src.recipes += new /datum/recipe/donkpocket2(src)
+			src.recipes += new /datum/recipe/cornbread4(src)
+			src.recipes += new /datum/recipe/cornbread3(src)
+			src.recipes += new /datum/recipe/cornbread2(src)
+			src.recipes += new /datum/recipe/cornbread1(src)
+			src.recipes += new /datum/recipe/elvis_bread(src)
+			src.recipes += new /datum/recipe/banana_bread(src)
+			src.recipes += new /datum/recipe/pumpkin_bread(src)
+			src.recipes += new /datum/recipe/spooky_bread(src)
+			src.recipes += new /datum/recipe/banana_bread_alt(src)
+			src.recipes += new /datum/recipe/honeywheat_bread(src)
+			src.recipes += new /datum/recipe/eggnog(src)
+			src.recipes += new /datum/recipe/meatloaf(src)
+			src.recipes += new /datum/recipe/brain_bread(src)
+			src.recipes += new /datum/recipe/toast_bread(src)
+			src.recipes += new /datum/recipe/donut(src)
+			src.recipes += new /datum/recipe/bagel(src)
+			src.recipes += new /datum/recipe/crumpet(src)
+			src.recipes += new /datum/recipe/ice_cream_cone(src)
+			src.recipes += new /datum/recipe/waffles(src)
+			src.recipes += new /datum/recipe/lasagna(src)
+			src.recipes += new /datum/recipe/chickenparm(src)
+			src.recipes += new /datum/recipe/chickenalfredo(src)
+			src.recipes += new /datum/recipe/alfredo(src)
+			src.recipes += new /datum/recipe/spaghetti_pg(src)
+			src.recipes += new /datum/recipe/spaghetti_m(src)
+			src.recipes += new /datum/recipe/spaghetti_s(src)
+			src.recipes += new /datum/recipe/spaghetti_t(src)
+			src.recipes += new /datum/recipe/spaghetti_p(src)
+			src.recipes += new /datum/recipe/breakfast(src)
+			src.recipes += new /datum/recipe/french_toast(src)
+			src.recipes += new /datum/recipe/cheesetoast(src)
+			src.recipes += new /datum/recipe/bacontoast(src)
+			src.recipes += new /datum/recipe/eggtoast(src)
+			src.recipes += new /datum/recipe/churro(src)
+			src.recipes += new /datum/recipe/nougat(src)
+			src.recipes += new /datum/recipe/candy_cane(src)
+			src.recipes += new /datum/recipe/cereal_box(src)
+			src.recipes += new /datum/recipe/cereal_honey(src)
+			src.recipes += new /datum/recipe/cereal_tanhony(src)
+			src.recipes += new /datum/recipe/cereal_roach(src)
+			src.recipes += new /datum/recipe/cereal_syndie(src)
+			src.recipes += new /datum/recipe/cereal_flock(src)
+			src.recipes += new /datum/recipe/b_cupcake(src)
+			src.recipes += new /datum/recipe/beefood(src)
+			src.recipes += new /datum/recipe/zongzi(src)
 
-			src.recipes += new /datum/cookingrecipe/oven/baguette(src)
-			src.recipes += new /datum/cookingrecipe/oven/garlicbread_ch(src)
-			src.recipes += new /datum/cookingrecipe/oven/garlicbread(src)
-			src.recipes += new /datum/cookingrecipe/oven/cinnamonbun(src)
-			src.recipes += new /datum/cookingrecipe/oven/fairybread(src)
-			src.recipes += new /datum/cookingrecipe/oven/chocolate_cherry(src)
-			src.recipes += new /datum/cookingrecipe/oven/danish_apple(src)
-			src.recipes += new /datum/cookingrecipe/oven/danish_cherry(src)
-			src.recipes += new /datum/cookingrecipe/oven/danish_blueb(src)
-			src.recipes += new /datum/cookingrecipe/oven/danish_weed(src)
-			src.recipes += new /datum/cookingrecipe/oven/danish_cheese(src)
-			src.recipes += new /datum/cookingrecipe/oven/painauchocolat(src)
-			src.recipes += new /datum/cookingrecipe/oven/croissant(src)
+			src.recipes += new /datum/recipe/baguette(src)
+			src.recipes += new /datum/recipe/garlicbread_ch(src)
+			src.recipes += new /datum/recipe/garlicbread(src)
+			src.recipes += new /datum/recipe/cinnamonbun(src)
+			src.recipes += new /datum/recipe/fairybread(src)
+			src.recipes += new /datum/recipe/chocolate_cherry(src)
+			src.recipes += new /datum/recipe/danish_apple(src)
+			src.recipes += new /datum/recipe/danish_cherry(src)
+			src.recipes += new /datum/recipe/danish_blueb(src)
+			src.recipes += new /datum/recipe/danish_weed(src)
+			src.recipes += new /datum/recipe/danish_cheese(src)
+			src.recipes += new /datum/recipe/painauchocolat(src)
+			src.recipes += new /datum/recipe/croissant(src)
 
-			src.recipes += new /datum/cookingrecipe/oven/pie_anything/pie_cream(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_anything(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_cherry(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_blueberry(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_raspberry(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_strawberry(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_apple(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_lime(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_lemon(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_slurry(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_pumpkin(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_custard(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_strawberry(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_bacon(src)
-			src.recipes += new /datum/cookingrecipe/oven/pot_pie(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_chocolate(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_ass(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_fish(src)
-			src.recipes += new /datum/cookingrecipe/oven/pie_weed(src)
-			src.recipes += new /datum/cookingrecipe/oven/candy_apple(src)
-			src.recipes += new /datum/cookingrecipe/oven/cake_bacon(src)
-			src.recipes += new /datum/cookingrecipe/oven/cake_true_bacon(src)
-			src.recipes += new /datum/cookingrecipe/oven/cake_meat(src)
-			src.recipes += new /datum/cookingrecipe/oven/cake_chocolate(src)
-			src.recipes += new /datum/cookingrecipe/oven/cake_cream(src)
+			src.recipes += new /datum/recipe/pie_anything/pie_cream(src)
+			src.recipes += new /datum/recipe/pie_anything(src)
+			src.recipes += new /datum/recipe/pie_cherry(src)
+			src.recipes += new /datum/recipe/pie_blueberry(src)
+			src.recipes += new /datum/recipe/pie_raspberry(src)
+			src.recipes += new /datum/recipe/pie_strawberry(src)
+			src.recipes += new /datum/recipe/pie_apple(src)
+			src.recipes += new /datum/recipe/pie_lime(src)
+			src.recipes += new /datum/recipe/pie_lemon(src)
+			src.recipes += new /datum/recipe/pie_slurry(src)
+			src.recipes += new /datum/recipe/pie_pumpkin(src)
+			src.recipes += new /datum/recipe/pie_custard(src)
+			src.recipes += new /datum/recipe/pie_strawberry(src)
+			src.recipes += new /datum/recipe/pie_bacon(src)
+			src.recipes += new /datum/recipe/pot_pie(src)
+			src.recipes += new /datum/recipe/pie_chocolate(src)
+			src.recipes += new /datum/recipe/pie_ass(src)
+			src.recipes += new /datum/recipe/pie_fish(src)
+			src.recipes += new /datum/recipe/pie_weed(src)
+			src.recipes += new /datum/recipe/candy_apple(src)
+			src.recipes += new /datum/recipe/cake_bacon(src)
+			src.recipes += new /datum/recipe/cake_true_bacon(src)
+			src.recipes += new /datum/recipe/cake_meat(src)
+			src.recipes += new /datum/recipe/cake_chocolate(src)
+			src.recipes += new /datum/recipe/cake_cream(src)
 			#ifdef XMAS
-			src.recipes += new /datum/cookingrecipe/oven/cake_fruit(src)
+			src.recipes += new /datum/recipe/cake_fruit(src)
 			#endif
-			src.recipes += new /datum/cookingrecipe/oven/cake_custom(src)
-			src.recipes += new /datum/cookingrecipe/oven/stroopwafel(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie_spooky(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie_jaffa(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie_bacon(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie_oatmeal(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie_chocolate_chip(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie_iron(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie_butter(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie_peanut(src)
-			src.recipes += new /datum/cookingrecipe/oven/cookie(src)
-			src.recipes += new /datum/cookingrecipe/oven/moon_pie_chocolate(src)
-			src.recipes += new /datum/cookingrecipe/oven/moon_pie(src)
-			src.recipes += new /datum/cookingrecipe/oven/granola_bar(src)
-			src.recipes += new /datum/cookingrecipe/oven/biscuit(src)
-			src.recipes += new /datum/cookingrecipe/oven/dog_biscuit(src)
-			src.recipes += new /datum/cookingrecipe/oven/hardtack(src)
-			src.recipes += new /datum/cookingrecipe/oven/macguffin(src)
-			src.recipes += new /datum/cookingrecipe/oven/eggsalad(src)
-			src.recipes += new /datum/cookingrecipe/oven/lipstick(src)
-			src.recipes += new /datum/cookingrecipe/oven/friedrice(src)
-			src.recipes += new /datum/cookingrecipe/oven/risotto(src)
-			src.recipes += new /datum/cookingrecipe/oven/omurice(src)
-			src.recipes += new /datum/cookingrecipe/oven/riceandbeans(src)
-			src.recipes += new /datum/cookingrecipe/oven/sushi_roll(src)
-			src.recipes += new /datum/cookingrecipe/oven/nigiri_roll(src)
-			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
-			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
-			src.recipes += new /datum/cookingrecipe/oven/flapjack_batch(src)
-			src.recipes += new /datum/cookingrecipe/oven/egg_on_rice(src)
-			src.recipes += new /datum/cookingrecipe/oven/cheese_gyudon(src)
-			src.recipes += new /datum/cookingrecipe/oven/miso_soup(src)
-			src.recipes += new /datum/cookingrecipe/oven/bibimbap(src)
-			src.recipes += new /datum/cookingrecipe/oven/katsudon_chicken(src)
-			src.recipes += new /datum/cookingrecipe/oven/katsudon_bacon(src)
-			src.recipes += new /datum/cookingrecipe/oven/katsu_curry(src)
-			src.recipes += new /datum/cookingrecipe/oven/gyudon(src)
+			src.recipes += new /datum/recipe/cake_custom(src)
+			src.recipes += new /datum/recipe/stroopwafel(src)
+			src.recipes += new /datum/recipe/cookie_spooky(src)
+			src.recipes += new /datum/recipe/cookie_jaffa(src)
+			src.recipes += new /datum/recipe/cookie_bacon(src)
+			src.recipes += new /datum/recipe/cookie_oatmeal(src)
+			src.recipes += new /datum/recipe/cookie_chocolate_chip(src)
+			src.recipes += new /datum/recipe/cookie_iron(src)
+			src.recipes += new /datum/recipe/cookie_butter(src)
+			src.recipes += new /datum/recipe/cookie_peanut(src)
+			src.recipes += new /datum/recipe/cookie(src)
+			src.recipes += new /datum/recipe/moon_pie_chocolate(src)
+			src.recipes += new /datum/recipe/moon_pie(src)
+			src.recipes += new /datum/recipe/granola_bar(src)
+			src.recipes += new /datum/recipe/biscuit(src)
+			src.recipes += new /datum/recipe/dog_biscuit(src)
+			src.recipes += new /datum/recipe/hardtack(src)
+			src.recipes += new /datum/recipe/macguffin(src)
+			src.recipes += new /datum/recipe/eggsalad(src)
+			src.recipes += new /datum/recipe/lipstick(src)
+			src.recipes += new /datum/recipe/friedrice(src)
+			src.recipes += new /datum/recipe/risotto(src)
+			src.recipes += new /datum/recipe/omurice(src)
+			src.recipes += new /datum/recipe/riceandbeans(src)
+			src.recipes += new /datum/recipe/sushi_roll(src)
+			src.recipes += new /datum/recipe/nigiri_roll(src)
+			src.recipes += new /datum/recipe/porridge(src)
+			src.recipes += new /datum/recipe/ratatouille(src)
+			src.recipes += new /datum/recipe/flapjack_batch(src)
+			src.recipes += new /datum/recipe/egg_on_rice(src)
+			src.recipes += new /datum/recipe/cheese_gyudon(src)
+			src.recipes += new /datum/recipe/miso_soup(src)
+			src.recipes += new /datum/recipe/bibimbap(src)
+			src.recipes += new /datum/recipe/katsudon_chicken(src)
+			src.recipes += new /datum/recipe/katsudon_bacon(src)
+			src.recipes += new /datum/recipe/katsu_curry(src)
+			src.recipes += new /datum/recipe/gyudon(src)
 			// Put all single-ingredient recipes after this point
-			src.recipes += new /datum/cookingrecipe/oven/pizza_custom(src)
-			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
-			src.recipes += new /datum/cookingrecipe/oven/pancake(src)
-			src.recipes += new /datum/cookingrecipe/oven/bread(src)
-			src.recipes += new /datum/cookingrecipe/oven/oatmeal(src)
-			src.recipes += new /datum/cookingrecipe/oven/salad(src)
-			src.recipes += new /datum/cookingrecipe/oven/tomsoup(src)
-			src.recipes += new /datum/cookingrecipe/oven/toast(src)
-			src.recipes += new /datum/cookingrecipe/oven/taco_shell(src)
-			src.recipes += new /datum/cookingrecipe/oven/bacon(src)
-			src.recipes += new /datum/cookingrecipe/oven/turkey(src)
-			src.recipes += new /datum/cookingrecipe/oven/steak_ling(src)
-			src.recipes += new /datum/cookingrecipe/oven/shrimp(src)
-			src.recipes += new /datum/cookingrecipe/oven/cook_meat(src)
-			src.recipes += new /datum/cookingrecipe/oven/chocolate_egg(src)
-			src.recipes += new /datum/cookingrecipe/oven/hardboiled(src)
-			src.recipes += new /datum/cookingrecipe/oven/bakedpotato(src)
-			src.recipes += new /datum/cookingrecipe/oven/rice_ball(src)
-			src.recipes += new /datum/cookingrecipe/oven/hotdog(src)
-			src.recipes += new /datum/cookingrecipe/oven/cheesewheel(src)
-			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
-			src.recipes += new /datum/cookingrecipe/oven/brownie_batch(src)
-			src.recipes += new /datum/cookingrecipe/oven/rice_bowl(src)
-			src.recipes += new /datum/cookingrecipe/oven/flan(src)
+			src.recipes += new /datum/recipe/pizza_custom(src)
+			src.recipes += new /datum/recipe/cake_custom_item(src)
+			src.recipes += new /datum/recipe/pancake(src)
+			src.recipes += new /datum/recipe/bread(src)
+			src.recipes += new /datum/recipe/oatmeal(src)
+			src.recipes += new /datum/recipe/salad(src)
+			src.recipes += new /datum/recipe/tomsoup(src)
+			src.recipes += new /datum/recipe/toast(src)
+			src.recipes += new /datum/recipe/taco_shell(src)
+			src.recipes += new /datum/recipe/bacon(src)
+			src.recipes += new /datum/recipe/turkey(src)
+			src.recipes += new /datum/recipe/steak_ling(src)
+			src.recipes += new /datum/recipe/shrimp(src)
+			src.recipes += new /datum/recipe/cook_meat(src)
+			src.recipes += new /datum/recipe/chocolate_egg(src)
+			src.recipes += new /datum/recipe/hardboiled(src)
+			src.recipes += new /datum/recipe/bakedpotato(src)
+			src.recipes += new /datum/recipe/rice_ball(src)
+			src.recipes += new /datum/recipe/hotdog(src)
+			src.recipes += new /datum/recipe/cheesewheel(src)
+			src.recipes += new /datum/recipe/melted_sugar(src)
+			src.recipes += new /datum/recipe/brownie_batch(src)
+			src.recipes += new /datum/recipe/rice_bowl(src)
+			src.recipes += new /datum/recipe/flan(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
 
-	proc/cook_food()
-		var/amount = length(src.contents)
-		if (!amount)
+
+	proc/start_cooking_food()
+		if (!length(src.contents))
 			boutput(usr, SPAN_ALERT("There's nothing in \the [src] to cook."))
 			return
-		var/output = null /// what path / item is (getting) created
+		// start cooking animation
+		src.working = 1
+		src.icon_state = "oven_bake"
+		// this is src.time seconds instead of cook_amt,
+		// because cook_amount is x2 if on "high" mode,
+		// and it seems pretty silly to make it take twice as long
+		// instead of, idk, just giving the oven 20 buttons
+		SPAWN(src.time SECONDS)
+			src.cook_food()
+
+	proc/cook_food()
+		var/amount = length(src.contents)
+		var/list/output = list() /// what path / item is (getting) created
 		var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
 		var/bonus = 0 /// correct-cook-time bonus
-		var/derivename = 0 /// if output should derive name from human meat inputs
 		var/recipebonus = 0 /// the ideal amount of cook time for the bonus
 		var/recook = 0
+		var/bad_recipe = FALSE // is the recipe a yuck item
+		var/atom/yucktype = null // this becomes a typepath if a yuck item wants to be made
+
 		// If emagged produce random output.
 		if (emagged)
 			// Enforce GIGO and prevent infinite reuse
@@ -800,138 +818,115 @@ TYPEINFO(/obj/submachine/chef_oven)
 						contentsok = 0
 						break
 				// Pick a random recipe
-			var/datum/cookingrecipe/xrecipe = pick(src.recipes)
-			var/xrecipeok = 1
-			// Don't choose recipes with human meat since we don't have a name for them
-			if (xrecipe.useshumanmeat)
-				xrecipeok = 0
-			// Don't choose recipes with special outputs since we don't have valid inputs for them
-			if (isnull(xrecipe.output))
-				xrecipeok = 0
+			var/datum/recipe/xrecipe = pick(src.recipes)
 			// Bail out to a mess if we didn't get a valid recipe
-			if (xrecipeok && contentsok)
-				output = xrecipe.output
-			else
-				output = /obj/item/reagent_containers/food/snacks/yuck
+			if (!contentsok || !xrecipe.try_get_output(src.contents, output, src))
+				bad_recipe = TRUE
+				yucktype = /obj/item/reagent_containers/food/snacks/yuck
 			// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
 			recipebonus = 0
 			bonus = -1
+			for (var/atom/movable/I in src.contents)
+				qdel(I)
 		else
 			// Non-emagged cooking
-			var/datum/cookingrecipe/R = src.OVEN_get_valid_recipe()
-			if (R)
-				// this is null if it uses normal outputs (see below),
-				// otherwise it will be the created item from this
-				output = R.specialOutput(src)
-				if (!output)
-					output = getVariant(R)
-				if (R.useshumanmeat) derivename = 1
+			var/datum/recipe/R = src.OVEN_get_valid_recipe()
+			var/datum/recipe_instructions/cooking/oven/instructions = R?.get_recipe_instructions(RECIPE_ID_OVEN)
+			if (!instructions)
+				instructions = src.default_instructions
+			if (R && R.try_get_output(src.contents, output, src))
+				instructions.output_post_process(src, output, src)
 				// derive the bonus amount from cooking
 				// being off by one in either direction is OK
 				// being off by 5 either burns it or makes it taste like shit
 				// "cookbonus" here is actually "amount of cooking needed for bonus"
-				recipebonus = R.cookbonus
-				if (abs(cook_amt - R.cookbonus) <= 1)
+				recipebonus = instructions.cookbonus
+				if (abs(cook_amt - recipebonus) <= 1)
 					// if -1, 0, or 1, you did ok
 					bonus = 1
-				else if (cook_amt <= R.cookbonus - 5)
+				else if (cook_amt <= recipebonus - 5)
 					// severely undercooked
 					bonus = -1
-				else if (cook_amt >= R.cookbonus + 5)
+				else if (cook_amt >= recipebonus + 5)
+					bad_recipe = TRUE
 					// severely overcooked and burnt
-					output = /obj/item/reagent_containers/food/snacks/yuck/burn
+					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
 					bonus = 0
+
 			// the case where there are no valid recipies is handled below in the outer context
 			// (namely it replaces them with yuck)
-		if (isnull(output))
-			output = /obj/item/reagent_containers/food/snacks/yuck
+		if (length(output) < 1)
+			yucktype = /obj/item/reagent_containers/food/snacks/yuck
+			bad_recipe = TRUE
+
 		// this only happens if the output is a yuck item, either from an
 		// invalid recipe or otherwise...
-		if (amount == 1 && output == /obj/item/reagent_containers/food/snacks/yuck)
+		if (bad_recipe && amount == 1)
 			for (var/obj/item/reagent_containers/food/snacks/F in src)
-				if(F.quality < 1)
-					// @TODO cook_amt == F.quality can never happen here
-					// (cook_amt is the time the oven is set to from 1-10,
-					//  and F.quality has to be 0 or below to get here)
-					recook = 1
-					if (cook_amt == F.quality) F.quality = 1.5
-					else if (cook_amt == F.quality + 1) F.quality = 1
-					else if (cook_amt == F.quality - 1) F.quality = 1
-					else if (cook_amt <= F.quality - 5) F.quality = 0.5
-					else if (cook_amt >= F.quality + 5)
-						output = /obj/item/reagent_containers/food/snacks/yuck/burn
-						bonus = 0
-		// start cooking animation
-		src.working = 1
-		src.icon_state = "oven_bake"
+				if(F.quality >= 1)
+					continue
+				// @TODO cook_amt == F.quality can never happen here
+				// (cook_amt is the time the oven is set to from 1-10,
+				//  and F.quality has to be 0 or below to get here)
+				recook = 1
+				if (cook_amt == F.quality) F.quality = 1.5
+				else if (cook_amt == F.quality + 1) F.quality = 1
+				else if (cook_amt == F.quality - 1) F.quality = 1
+				else if (cook_amt <= F.quality - 5) F.quality = 0.5
+				else if (cook_amt >= F.quality + 5)
+					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
+					bonus = 0
 
-		// this is src.time seconds instead of cook_amt,
-		// because cook_amount is x2 if on "high" mode,
-		// and it seems pretty silly to make it take twice as long
-		// instead of, idk, just giving the oven 20 buttons
-		SPAWN(src.time SECONDS)
-			// this is all stuff relating to re-cooking with yuck items
-			// suitably it is very gross
-			if(recook && bonus !=0)
-				for (var/obj/item/reagent_containers/food/snacks/F in src)
-					if (bonus == 1)
-						if (F.quality != 1)
-							F.quality = 1
-					else if (bonus == -1)
-						if (F.quality > 0.5)
-							F.quality = 0.5
-					if (src.emagged)
-						F.from_emagged_oven = 1
-					F.set_loc(src.loc)
-					if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
-						src.food_crime(usr, F)
-			else
-				// normal cooking here
-				var/obj/item/reagent_containers/food/snacks/F
-				if (ispath(output))
-					F = new output(src.loc)
-				else
-					F = output
-					F.set_loc( get_turf(src) )
-				// if this was a yuck item, it's bad enough to be criminal
-				if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
-					src.food_crime(usr, F)
-				// "bonus" is 1 if cook time is within 1 of the required time,
-				// 0 if it was off by 2-4 or over by 5+
-				// -1 if it was under by 5 or more
-				// basically:
-				// -5  4  3  2 -1  0 +1  2  3  4 +5   diff. from required time
-				//                 |
-				//  0  1  2  3  5  5  5  3  2  1  0   food quality
+		if (ispath(yucktype))
+			output += new yucktype()
+
+		// this is all stuff relating to re-cooking with yuck items
+		// suitably it is very gross
+		if(recook && bonus !=0)
+			for (var/obj/item/reagent_containers/food/snacks/F in src)
 				if (bonus == 1)
-					F.quality = 5
-				else
-					F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
-				// emagged ovens cannot re-cook their own outputs
-				if (src.emagged && istype(F))
+					if (F.quality != 1)
+						F.quality = 1
+				else if (bonus == -1)
+					if (F.quality > 0.5)
+						F.quality = 0.5
+				if (src.emagged)
 					F.from_emagged_oven = 1
-				// used for dishes that have their human's name in them
-				if (derivename)
-					var/foodname = F.name
-					for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
-						F.name = "[M.subjectname] [foodname]"
-						F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-						if(!isnull(F.unlock_medal_when_eaten))
-							continue
-						else if (M.subjectjob && M.subjectjob == "Clown")
-							F.unlock_medal_when_eaten = "That tasted funny"
-						else
-							F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-			// done with checking outputs...
-			// change icon back, ding, and remove used ingredients
-			src.icon_state = "oven_off"
-			src.working = 0
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			for (var/atom/movable/I in src.contents)
-				qdel(I)
+				F.set_loc(src.loc)
 
-	proc/food_crime(mob/user, obj/item/food)
-		// logTheThing(LOG_STATION, src, "[key_name(user)] commits a horrible food crime, creating [food] with quality [food.quality].")
+		for(var/item in output)
+			src.normal_cooking(item, bonus, recipebonus, cook_amt)
+
+		// done with checking outputs...
+		// change icon back, ding, and remove used ingredients
+		src.icon_state = "oven_off"
+		src.working = 0
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		for (var/atom/movable/I in src.contents)
+			qdel(I)
+
+	//helper method for normal cooking
+	proc/normal_cooking(var/atom/item, var/bonus, var/recipebonus, var/cook_amt)
+		// normal cooking here
+		if (istype(item, /atom/movable))
+			item:set_loc(get_turf(src))
+		if (!istype(item, /obj/item/reagent_containers/food/snacks))
+			return
+		var/obj/item/reagent_containers/food/snacks/F = item
+		// "bonus" is 1 if cook time is within 1 of the required time,
+		// 0 if it was off by 2-4 or over by 5+
+		// -1 if it was under by 5 or more
+		// basically:
+		// -5  4  3  2 -1  0 +1  2  3  4 +5   diff. from required time
+		//                 |
+		//  0  1  2  3  5  5  5  3  2  1  0   food quality
+		if (bonus == 1)
+			F.quality = 5
+		else
+			F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
+		// emagged ovens cannot re-cook their own outputs
+		if (src.emagged && istype(F))
+			F.from_emagged_oven = 1
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -995,33 +990,10 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 	proc/OVEN_get_valid_recipe()
 		// For every recipe, check if we can make it with our current contents
-		for (var/datum/cookingrecipe/R in src.recipes)
-			if (src.OVEN_can_cook_recipe(R))
+		for (var/datum/recipe/R in src.recipes)
+			if (R.can_cook_recipe(src.contents))
 				return R
 		return null
-
-	proc/OVEN_can_cook_recipe(datum/cookingrecipe/recipe)
-		for(var/I in recipe.ingredients)
-			if (!OVEN_checkitem(I, recipe.ingredients[I])) return FALSE
-
-		return TRUE
-
-	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
-		if (!locate(recipeitem) in src.contents) return FALSE
-		var/count = 0
-		for(var/obj/item/I in src.contents)
-			if(istype(I, recipeitem))
-				count++
-		if (count < recipecount)
-			return FALSE
-		return TRUE
-
-	proc/getVariant(datum/cookingrecipe/recipe)
-		for(var/specialIngredient in recipe.variants)
-			if(OVEN_checkitem(specialIngredient, recipe.variant_quantity))
-				return recipe.variants[specialIngredient]
-		return recipe.output
-
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
 TYPEINFO(/obj/submachine/foodprocessor)
