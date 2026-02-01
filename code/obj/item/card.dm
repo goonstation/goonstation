@@ -327,8 +327,10 @@ TYPEINFO(/obj/item/card/emag)
 		switch (color)
 			if ("clown")
 				src.icon_state = "id_clown"
+				src.keep_icon = TRUE
 			if ("golden")
 				src.icon_state = "id_gold"
+				src.keep_icon = TRUE
 			if ("No band")
 				src.icon_state = "id_basic"
 			if ("civilian")
@@ -345,8 +347,10 @@ TYPEINFO(/obj/item/card/emag)
 				src.icon_state = "id_eng"
 			if ("nanotrasen")
 				src.icon_state = "id_nanotrasen"
+				src.keep_icon = TRUE
 			if ("syndicate")
 				src.icon_state = "id_syndie"
+				src.keep_icon = TRUE
 			else
 				return // Abort process.
 		src.registered = reg

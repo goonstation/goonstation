@@ -1,3 +1,5 @@
+#define is_alist(L) (istype(L, /alist))
+
 #define LAZYLISTINIT(L) \
 	if (!L) \
 		L = list() \

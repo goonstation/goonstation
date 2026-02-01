@@ -48300,7 +48300,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
 "dyz" = (
-/obj/item/barrier,
+/obj/item/barrier/collapsible/security,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
 "dyA" = (

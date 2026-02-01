@@ -147,17 +147,17 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	var/using = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return TRUE
-		if (using)
-			return TRUE
-		using = TRUE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (src.using)
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		src.using = TRUE
 
 		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path) - owner.organHolder?.stomach?.stomach_contents
-		if (ismob(owner.loc) || istype(owner.loc, /obj/))
-			for (var/atom/A in owner.loc.contents)
+		var/list/items = get_filtered_atoms_in_touch_range(src.owner, mattereater.target_path) - src.owner.organHolder?.stomach?.stomach_contents
+		if (ismob(src.owner.loc) || istype(src.owner.loc, /obj/))
+			for (var/atom/A in src.owner.loc.contents)
 				if (istype(A, mattereater.target_path))
 					items += A
 
@@ -166,123 +166,89 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				items -= item
 
 		if (linked_power.power > 1)
-			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
+			items += get_filtered_atoms_in_touch_range(src.owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
 		if (!length(items))
 			boutput(usr, SPAN_ALERT("You can't find anything nearby to eat."))
-			using = FALSE
-			return
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
 
-		var/obj/the_object = tgui_input_list(owner, "Which item do you want to eat?", "Matter Eater", items)
+		var/obj/the_object = tgui_input_list(src.owner, "Which item do you want to eat?", "Matter Eater", items)
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
-			using = FALSE
-			return TRUE
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
-			owner.show_text(SPAN_ALERT("Man, that thing is long gone, far away, just let it go."))
-			using = FALSE
-			return TRUE
+		if (!(the_object in get_filtered_atoms_in_touch_range(src.owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
+			src.owner.show_text(SPAN_ALERT("Man, that thing is long gone, far away, just let it go."))
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		var/area/cur_area = get_area(owner)
-		var/turf/cur_turf = get_turf(owner)
-		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
-			owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
-			using = FALSE
-			return TRUE
+		var/area/cur_area = get_area(src.owner)
+		var/turf/cur_turf = get_turf(src.owner)
+		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!src.owner.client || !src.owner.client.holder))
+			src.owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		if (misfire)
+			owner.visible_message(SPAN_ALERT("[owner] tries to swallow [the_object] whole and nearly chokes on it."))
+			playsound(owner.loc, 'sound/items/eatfood.ogg', 50, 0)
+			playsound(owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
+			src.using = 0
 
 		if (istype(the_object, /obj/the_server_ingame_whoa))
 			var/obj/the_server_ingame_whoa/the_server = the_object
-			the_server.eaten(owner)
-			using = FALSE
-			return
+			the_server.eaten(src.owner)
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
 		if (istype(the_object, /obj/item/implant))
 			var/obj/item/implant/implant = the_object
 			if (implant.owner)
 				implant.on_remove(implant.owner)
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-
+		if (ishuman(src.owner) && isitem(the_object))
+			var/mob/living/carbon/human/H = src.owner
+			var/obj/item/the_item = the_object
 			// First, restore a little hunger, and heal our organs
-			if (isitem(the_object))
-				var/obj/item/the_item = the_object
-				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-				owner.HealDamage("All", 5, 0)
-				owner.UpdateDamageIcon()
+			H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
+			src.owner.HealDamage("All", 5, 0)
+			src.owner.UpdateDamageIcon()
 
-		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
-			var/obj/item/I = the_object
-			if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
-				I.storage?.hide_hud(owner)
-				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
-				// Organs and body parts have special behaviors we need to account for
-				if (ishuman(owner))
-					var/mob/living/carbon/human/H = owner
-					if (istype(the_object, /obj/item/organ))
-						var/obj/item/organ/organ_obj = the_object
-						if (organ_obj.donor)
-							H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
-					else if (istype(the_object, /obj/item/parts))
-						var/obj/item/parts/part = the_object
-						part.delete()
-						H.hud.update_hands()
-			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
-				owner.visible_message(SPAN_ALERT("[owner] eats [the_object]."))
-				playsound(owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
-				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
-				qdel(the_object)
+		if (QDELETED(the_object))
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
+		// Finally, ensure that the item is deleted regardless of what it is
+		var/obj/item/I = the_object
+		if(I.Eat(src.owner, src.owner, TRUE)) //eating can return false to indicate it failed
+			I.storage?.hide_hud(src.owner)
+			// Organs and body parts have special behaviors we need to account for
+			if (!handle_organs(the_object))
+				handle_parts(the_object)
+		else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+			src.owner.visible_message(SPAN_ALERT("[src.owner] eats [the_object]."))
+			playsound(src.owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
+			qdel(the_object)
 
+		logTheThing(LOG_COMBAT, src.owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(src.owner)].")
+		src.using = FALSE
+		return CAST_ATTEMPT_SUCCESS
 
+	proc/handle_organs(var/obj/item/organ/object)
+		if (!istype(object) || !ishuman(src.owner))
+			return FALSE
+		var/mob/living/carbon/human/H = src.owner
+		if (object.donor)
+			H.organHolder.drop_organ(object,H) //hide it inside self so it doesn't hang around until the eating is finished
+			return TRUE
+		return FALSE
 
-		using = FALSE
-
-
-
-	cast_misfire()
-		if (..())
-			return 1
-		if (using)
-			return 1
-		using = 1
-
-		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
-		if (ismob(owner.loc) || istype(owner.loc, /obj/))
-			for (var/atom/A in owner.loc.contents)
-				if (istype(A, mattereater.target_path))
-					items += A
-
-		if (linked_power.power > 1)
-			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
-			//So people can still get the meat ending
-
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to eat.")
-			using = 0
-			return
-
-		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_object)
-			using = 0
-			return 1
-
-		var/area/cur_area = get_area(owner)
-		var/turf/cur_turf = get_turf(owner)
-		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
-			owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
-			using = 0
-			return 1
-
-		if (istype(the_object, /obj/the_server_ingame_whoa))
-			var/obj/the_server_ingame_whoa/the_server = the_object
-			the_server.eaten(owner)
-			using = 0
-			return
-		owner.visible_message(SPAN_ALERT("[owner] tries to swallow [the_object] whole and nearly chokes on it."))
-		playsound(owner.loc, 'sound/items/eatfood.ogg', 50, 0)
-		playsound(owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
-		using = 0
-		return
+	proc/handle_parts(var/obj/item/parts/object)
+		if (!istype(object) || !ishuman(src.owner))
+			return FALSE
+		var/mob/living/carbon/human/H = src.owner
+		object.delete()
+		H.hud.update_hands()
+		return TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,55 +289,20 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Take a big leap forward."
 	icon_state = "jumpy"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (ismob(owner.loc))
 			boutput(usr, SPAN_ALERT("You can't jump right now!"))
-			return 1
-
-		var/jump_tiles = 10 * linked_power.power
-		var/pixel_move = 8 * linked_power.power
-		var/sleep_time = 1 / linked_power.power
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (istype(owner.loc,/turf/))
-			var/turf/T = owner.loc
-			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
-				var/push_off = FALSE
-				for(var/atom/A in oview(1, T))
-					if (A.stops_space_move)
-						push_off = TRUE
-						break
-				if(!push_off)
-					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-					return TRUE
-			usr.visible_message(SPAN_ALERT("<b>[owner]</b> takes a huge leap!"))
-			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-			var/prevLayer = owner.layer
-			owner.layer = EFFECTS_LAYER_BASE
+			do_jump(misfire)
 
-			animate(owner,
-				pixel_y = pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_OUT | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
-			animate(
-				pixel_y = -pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_IN | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE)
-
-			SPAWN(0)
-				for(var/i=0, i < jump_tiles, i++)
-					step(owner, owner.dir)
-					sleep(sleep_time)
-
-				owner.layer = prevLayer
-
-		if (istype(owner.loc,/obj/))
+		else if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
 			owner.changeStatus("unconscious", 5 SECONDS)
@@ -380,67 +311,49 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
 
-		return
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire()
-		if (..())
-			return 1
+	proc/do_jump(misfire)
+		var/jump_tiles = 10 * src.linked_power.power
+		var/pixel_move = 8 * src.linked_power.power
+		var/sleep_time = 1 / src.linked_power.power
+		var/turf/T = src.owner.loc
+		if (istype(T, /turf/space) || T.throw_unlimited || src.owner.no_gravity)
+			var/push_off = FALSE
+			for(var/atom/A in oview(1, T))
+				if (A.stops_space_move)
+					push_off = TRUE
+					break
+			if(!push_off)
+				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (ismob(owner.loc))
-			boutput(usr, SPAN_ALERT("You can't jump right now!"))
-			return 1
+		usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> takes a huge leap!"))
+		playsound(src.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		var/prevLayer = src.owner.layer
+		src.owner.layer = EFFECTS_LAYER_BASE
+		if(misfire)
+			playsound(src.owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
+			usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> leaps far too high and comes crashing down hard!"))
+			src.owner.changeStatus("knockdown", 10 SECONDS)
+			src.owner.changeStatus("stunned", 5 SECONDS)
+		animate(src.owner,
+			pixel_y = pixel_move * jump_tiles / 2,
+			time = sleep_time * jump_tiles / 2,
+			easing = EASE_OUT | CIRCULAR_EASING,
+			flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+		animate(
+			pixel_y = -pixel_move * jump_tiles / 2,
+			time = sleep_time * jump_tiles / 2,
+			easing = EASE_IN | CIRCULAR_EASING,
+			flags = ANIMATION_RELATIVE)
 
-		var/jump_tiles = 10 * linked_power.power
-		var/pixel_move = 8 * linked_power.power
-		var/sleep_time = 0.5 / linked_power.power
+		SPAWN(0)
+			for(var/i=0, i < jump_tiles, i++)
+				step(src.owner, src.owner.dir)
+				sleep(sleep_time)
 
-		if (istype(owner.loc,/turf/))
-			var/turf/T = owner.loc
-			if (istype(T, /turf/space) || T.throw_unlimited || owner.no_gravity)
-				var/push_off = FALSE
-				for(var/atom/A in oview(1, T))
-					if (A.stops_space_move)
-						push_off = TRUE
-						break
-				if(!push_off)
-					boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-					return TRUE
-			usr.visible_message(SPAN_ALERT("<b>[owner]</b> leaps far too high and comes crashing down hard!"))
-			playsound(owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-			playsound(owner.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
-			var/prevLayer = owner.layer
-			owner.layer = EFFECTS_LAYER_BASE
-			owner.changeStatus("knockdown", 10 SECONDS)
-			owner.changeStatus("stunned", 5 SECONDS)
-
-			animate(owner,
-				pixel_y = pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_OUT | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
-			animate(
-				pixel_y = -pixel_move * jump_tiles / 2,
-				time = sleep_time * jump_tiles / 2,
-				easing = EASE_IN | CIRCULAR_EASING,
-				flags = ANIMATION_RELATIVE)
-
-			SPAWN(0)
-				for(var/i=0, i < jump_tiles, i++)
-					step(owner, owner.dir)
-					sleep(sleep_time)
-
-				owner.layer = prevLayer
-
-		if (istype(owner.loc,/obj/))
-			var/obj/container = owner.loc
-			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("knockdown", 10 SECONDS)
-			owner.changeStatus("stunned", 5 SECONDS)
-			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
-			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
-			animate_storage_thump(container)
-
-		return TRUE
+			src.owner.layer = prevLayer
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
