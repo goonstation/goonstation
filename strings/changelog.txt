@@ -1,4 +1,11 @@
 
+(t)sun feb 01 26
+(u)LeahTheTech
+(p)25793
+(e)🎨⚖🧛🔨📦|C-Sprites, C-Balance, A-Gamemodes, A-Player-Actions, A-Game-Objects
+(*)Fibre wire now applies instantly, slows less, and always applies at the highest level. No more finnicky toggle system.
+(*)You can no longer grab someone who has you in a chokehold with an item (including fibre wire). Normal reverse grabs are still possible.
+(+)Fibre wire now has a clickbox in the middle of the sprite as well as on the wire itself.
 (t)sat jan 31 26
 (u)finger
 (p)25667
