@@ -198,6 +198,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	warning_initial = "begins intensifying its own gravity!"
 	warning_final = "begins to collapse in on itself!"
 
+	effect_activate(obj/O)
+		. = ..()
+		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, O.z)
+
 	deploy_payload(var/obj/O)
 		if (..())
 			return

@@ -20,6 +20,7 @@ TYPEINFO(/mob/dead)
 	..()
 	src.flags |= UNCRUSHABLE
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)

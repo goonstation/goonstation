@@ -1540,6 +1540,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
 
+/datum/supply_packs/stationgravitytether
+	name = "Station Gravity Tether ManuDrive Crate"
+	desc = "A single-use ManuDrive for creating a replacement Gravity Tether for your ship or station. Note: Multiple gravity tethers are unsupported."
+	category = "Engineering Department"
+	contains = list(/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse)
+	cost = PAY_IMPORTANT*2
+	containertype = /obj/storage/secure/crate
+	containername = "Station Gravity Tether ManuDrive Crate (Cardlocked \[Heads])"
+	access = access_heads
+
 /datum/supply_packs/pressure_crystals_qt5
 	name = "Pressure Crystal Resupply"
 	desc = "x5 Pressure Crystals. Used in high-energy research."

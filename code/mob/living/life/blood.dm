@@ -45,6 +45,9 @@
 			if (owner.get_surgery_status())
 				decrease_chance -= 1
 
+			if (owner.gforce < 1 && !owner.is_spacefaring()) // low gravity reduces bleed chance...
+				decrease_chance -= round(3 * (1 - owner.gforce))
+
 			if (probmult(decrease_chance))
 				owner.bleeding -= 1
 				boutput(owner, SPAN_NOTICE("Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")]."))
@@ -62,6 +65,8 @@
 					final_bleed *= 0.25 // this guy's basically dead anyway. more bleed just means its less likely they get a transfusion
 				else if (owner.blood_volume < 300)
 					final_bleed *= 0.75 // less blood to bleed. negative blood fx taking place
+				if (owner.gforce < 1) //... and increases blood volume loss
+					final_bleed *= (2 - owner.gforce)
 				final_bleed *= mult
 				if (prob(clamp(final_bleed, 0, 10) * 5)) // up to 50% chance to make a big bloodsplatter
 					bleed(owner, final_bleed, 5)

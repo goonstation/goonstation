@@ -59,6 +59,15 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		singleuse
 			fablimit = 1
 
+	gravity_tether
+		name = "Command ManuDrive: Station Gravity Tether Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture a station gravity tether."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/mechanics/gravity_tether_station)
+
+		singleuse
+			fablimit = 1
+
 	aiLaws //In case you want to make your own laws in the case the original ones are stolen/blown up
 		name = "Command ManuDrive: Artificial Intelligence Laws Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture the AI laws found on each NT station."
