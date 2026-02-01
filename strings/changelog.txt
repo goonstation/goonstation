@@ -1,5 +1,9 @@
 
 (t)sun feb 01 26
+(u)Lord_Earthfire
+(p)25703
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Plates now have inhand icons
 (u)TDHooligan
 (p)25744
 (e)⚖🧛|C-Balance, A-Gamemodes
