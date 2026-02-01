@@ -72,6 +72,83 @@ TYPEINFO(/obj/item/motherboard)
 		if (prob(power * 2.5))
 			qdel(src)
 
+	attack_hand(mob/user)
+		if(..())return
+
+		src.add_dialog(user)
+
+		var/dat = "<html><head><title>[name]</title></head><body>"
+
+		dat += "<hr>"
+		if(mainboard)dat += "<tt>Motherboard: [mainboard.name]</tt>"
+		else dat += "<tt>Motherboard: ----</tt>"
+		if(hd) dat += "<br><tt>Hard Drive: [hd.name]</tt> <a href='byond://?src=\ref[src];driveRemove=1'>(Remove)</a><br>"
+		else dat += "<br><tt>Hard Drive: <a href='byond://?src=\ref[src];driveAdd=1'>----</a><br></tt>"
+		dat += "<hr>"
+		dat += "<b>Peripherals:</b> [peripherals.len]/[max_peripherals]<br>"
+
+		var/i = 1
+		for(var/obj/item/peripheral/P in peripherals)
+			dat += "&nbsp;&nbsp;- [P.name] <a href='byond://?src=\ref[src];periphID=[i]'>(Remove)</a><br>"
+			i++
+
+		for(i = i; i <= max_peripherals; i++)
+			dat += "&nbsp;&nbsp;<a href='byond://?src=\ref[src];addPeriph=1'>----</a><br>"
+
+		user.Browse(dat,"window=computer;size=302x245")
+		onclose(user,"computer")
+		return
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		src.add_dialog(usr)
+
+		if(BOUNDS_DIST(src, usr) <= 0)
+			var/periphID = text2num(href_list["periphID"])
+			if (periphID > 0 && periphID <= peripherals.len)
+				var/obj/item/peripheral/peri = peripherals[periphID]
+
+				peri.set_loc(src.loc)
+				src.peripherals.Remove(peri)
+				peri.uninstalled()
+
+				src.updateUsrDialog()
+
+			if (href_list["addPeriph"])
+				var/obj/item/peripheral/P = usr.equipped()
+				if (istype(P, /obj/item/peripheral))
+					if(length(src.peripherals) < src.max_peripherals)
+						usr.drop_item()
+						src.peripherals.Add(P)
+						P.set_loc(src)
+						boutput(usr, SPAN_NOTICE("You add the [P] to the frame."))
+					else
+						boutput(usr, SPAN_ALERT("There is no more room for peripheral cards."))
+
+				src.updateUsrDialog()
+
+			if(href_list["driveRemove"])
+				if(src.hd)
+					src.hd.set_loc(src.loc)
+					boutput(usr, SPAN_NOTICE("You remove the drive."))
+					src.hd = null
+
+				src.updateUsrDialog()
+
+			if(href_list["driveAdd"])
+				var/obj/item/disk/data/fixed_disk/P = usr.equipped()
+				if(istype(P, /obj/item/disk/data/fixed_disk) && !src.hd)
+					usr.drop_item()
+					src.hd = P
+					P.set_loc(src)
+					boutput(usr, SPAN_NOTICE("You add the drive to the frame."))
+				src.updateUsrDialog()
+
+		src.add_fingerprint(usr)
+		return
+
 /obj/computer3frame/meteorhit(obj/O as obj)
 	qdel(src)
 
@@ -189,7 +266,7 @@ TYPEINFO(/obj/item/motherboard)
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
 				A.amount = src.glass_needed
 
-			if (isscrewingtool(P))
+			else if (isscrewingtool(P))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, SPAN_NOTICE("You connect the monitor."))
 				if(!ispath(computer_type, /obj/machinery/computer3))
@@ -212,6 +289,8 @@ TYPEINFO(/obj/item/motherboard)
 					W.installed(C) //Set C as their host, etc
 				//dispose()
 				src.dispose()
+			else
+				return attack_hand(user)
 
 /obj/computer3frame/proc/state_actions(obj/item/P, mob/user)
 	switch(state)
