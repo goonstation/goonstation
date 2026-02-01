@@ -154,6 +154,49 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/quad/overfloor
 	level = OVERFLOOR
 
+//thats a lot of types there
+/obj/fluid_pipe/straight/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/straight/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/straight/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/straight/waste/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/straight/see_fluid/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/straight/see_fluid/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/straight/see_fluid/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/straight/see_fluid/waste/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/elbow/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/elbow/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/elbow/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/elbow/waste/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/t_junction/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/t_junction/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/t_junction/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/t_junction/waste/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/quad/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/quad/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/quad/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/quad/waste/overfloor
+	level = OVERFLOOR
+
+
 /obj/fluid_pipe/fluid_tank
 	name = "fluid tank"
 	desc = "A big ol' tank of fluid. Basically a big pipe."
