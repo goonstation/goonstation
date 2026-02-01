@@ -1,5 +1,21 @@
 //machinery kinda, but machinery i dont want the hpd to deconstruct or build
 
+TYPEINFO(/obj/machinery/piped_sink)
+	can_build(turf/T, direction)
+		var/obj/fluid_pipe/fluidthingy
+		switch(direction)
+			if(NORTH, SOUTH)
+				direction = EAST|WEST
+			if(EAST, WEST)
+				direction = SOUTH|NORTH
+
+		for(var/obj/device in T)
+			if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_machinery))
+				continue
+			fluidthingy = device
+			if((fluidthingy.initialize_directions & direction))
+				return FALSE
+		return TRUE
 
 /obj/machinery/piped_sink
 	name = "plumbed sink"
