@@ -1702,6 +1702,10 @@ var/list/removed_jobs = list(
 			var/datum/part_customization/customization = get_part_customization(part_id)
 			customization.try_apply(character, src.custom_parts)
 
+		// apply special blood
+		if (src.blType == "Zesty Ranch" && character.blood_id != "bloodc")
+			character.blood_id = "zestyranch"
+
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))
 			src.gender = MALE
