@@ -382,7 +382,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/hivebot, proc/admin_add_tool, proc/admi
 			return
 
 	if ((message && isalive(src)))
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		log_emote(src, message, voluntary)
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(SPAN_EMOTE("[message]"), m_type)
