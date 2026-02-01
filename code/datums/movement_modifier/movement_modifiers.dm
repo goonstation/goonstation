@@ -61,6 +61,9 @@
 /datum/movement_modifier/gang_trapped
 	additive_slowdown = 2
 
+/datum/movement_modifier/standing_up
+	multiplicative_slowdown = 2
+
 /datum/movement_modifier/humiliation
 	multiplicative_slowdown = 1.1
 
