@@ -214,7 +214,12 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	..()
 
 /obj/fluid_pipe/fluid_tank/water
+	name = "fluid tank (water)"
 	default_reagent = "water"
+
+	get_desc()
+		. += "This one should hopefully be filled with water."
+		. = ..()
 
 /obj/fluid_pipe/fluid_tank/see_fluid
 	icon_state = "tank-view"
@@ -235,7 +240,12 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	. = "<br>[SPAN_NOTICE("[src.network.reagents.get_description(user, RC_FULLNESS | RC_VISIBLE | RC_SPECTRO)]")]"
 
 /obj/fluid_pipe/fluid_tank/see_fluid/water
+	name = "fluid tank (water)"
 	default_reagent = "water"
+
+	get_desc()
+		. += "This one should hopefully be filled with water."
+		. += ..()
 
 // Represents a single connected set of fluid pipes
 /datum/flow_network
