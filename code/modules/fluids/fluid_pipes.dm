@@ -163,6 +163,14 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
 /obj/fluid_pipe/straight/waste/overfloor
 	level = OVERFLOOR
+/obj/fluid_pipe/straight/see_fluid/supply
+	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
+/obj/fluid_pipe/straight/see_fluid/supply/overfloor
+	level = OVERFLOOR
+/obj/fluid_pipe/straight/see_fluid/waste
+	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
+/obj/fluid_pipe/straight/see_fluid/waste/overfloor
+	level = OVERFLOOR
 /obj/fluid_pipe/elbow/supply
 	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
 /obj/fluid_pipe/elbow/supply/overfloor
