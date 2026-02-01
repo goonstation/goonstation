@@ -460,9 +460,9 @@
 	if(!input)
 		return
 	var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Central Command Update'", "What?", "") as null|text
+	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank '[ALERT_CENTCOM]'", "What?", "") as null|text
 	if(!input3)
-		input3 = "Central Command Update"
+		input3 = ALERT_CENTCOM
 
 	if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 		for_by_tcl(C, /obj/machinery/communications_dish)
