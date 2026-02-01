@@ -132,6 +132,13 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		if(src.authed)
 			return
 
+		if(IS_IT_SATURDAY)
+			var/ircmsg[] = new()
+			ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+			ircmsg["msg"] = "authorized the armory."
+			ircbot.export_async("admin", ircmsg)
+
 		logTheThing(LOG_STATION, usr, "authorized armory access")
 		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
 		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>", "Security Level Increased", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_STATION)
@@ -162,6 +169,13 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 	proc/unauthorize()
 		if(!src.authed)
 			return
+
+		if(IS_IT_SATURDAY)
+			var/ircmsg[] = new()
+			ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+			ircmsg["msg"] = "(UN)authorized the armory."
+			ircbot.export_async("admin", ircmsg)
 
 		logTheThing(LOG_STATION, usr, "unauthorized armory access")
 		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg", alert_origin=ALERT_STATION)
@@ -260,7 +274,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if (W:registered in src.authorized_registered)
 				boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
 				return
-			if (access_armory in W:access)
+			if (access_maxsec in W:access)
 				authorize()
 				return
 
@@ -318,7 +332,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if (W:registered in src.authorized_registered)
 				boutput(user, "This ID has already issued an unauthorization! [src.auth_need - src.authorized.len] unauthorizations from others are still needed.")
 				return
-			if (access_armory in W:access)
+			if (access_maxsec in W:access)
 				unauthorize()
 				playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
 				boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
