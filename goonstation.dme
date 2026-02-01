@@ -1330,6 +1330,7 @@
 #include "code\modules\fluids\fluid_pipes.dm"
 #include "code\modules\fluids\fluid_procs.dm"
 #include "code\modules\fluids\fluid_turf.dm"
+#include "code\modules\fluids\sink.dm"
 #include "code\modules\forensics\atom_forensic.dm"
 #include "code\modules\forensics\forensic_data.dm"
 #include "code\modules\forensics\forensic_group.dm"
