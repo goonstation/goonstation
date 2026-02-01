@@ -666,6 +666,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 			explosion_new(O, get_turf(O), self_destruct_strength, turf_safe=TRUE)
 
+			O.visible_message(SPAN_ALERT("<b>With a blinding light [O] cracks open, releasing its contents into the air.</b>"))
+
 			O.ArtifactDestroyed()
 			return
 
