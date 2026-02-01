@@ -8,6 +8,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "sink"
 	flags = NOSPLASH | ACCEPTS_MOUSEDROP_REAGENTS
+	deconstruct_flags = DECON_DESTRUCT
 	var/obj/machinery/fluid_machinery/unary/node/input
 	var/obj/machinery/fluid_machinery/unary/node/output
 	var/datum/reagents/reservoir
@@ -32,6 +33,17 @@
 		QDEL_NULL(src.input)
 		QDEL_NULL(src.output)
 		..()
+
+	was_built_from_frame(mob/user, newly_built)
+		..()
+		QDEL_NULL(src.input)
+		QDEL_NULL(src.output)
+		new /dmm_suite/preloader(src.loc, list("dir" = turn(src.dir, -90)))
+		src.input = new /obj/machinery/fluid_machinery/unary/node(src.loc)
+		src.input.initialize()
+		new /dmm_suite/preloader(src.loc, list("dir" = turn(src.dir, 90)))
+		src.output = new /obj/machinery/fluid_machinery/unary/node(src.loc)
+		src.output.initialize()
 
 	process()
 		if (src.output.network)

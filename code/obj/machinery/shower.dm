@@ -131,7 +131,7 @@ TYPEINFO(/obj/machinery/shower_piped)
 	desc = "A shower head, for showering. This one has a pipe! Bit hard to see it though."
 	anchored = ANCHORED
 	flags = OPENCONTAINER
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WIRECUTTERS
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WIRECUTTERS | DECON_DESTRUCT
 
 	var/on = FALSE //Are we currently spraying???
 	var/tmp/last_spray = 0
@@ -144,6 +144,7 @@ TYPEINFO(/obj/machinery/shower_piped)
 		src.create_reagents(360)
 		new /dmm_suite/preloader(src.loc, list("dir" = src.dir))
 		src.input = new /obj/machinery/fluid_machinery/unary/node(src.loc)
+		src.input.initialize()
 
 	disposing()
 		QDEL_NULL(src.input)
@@ -153,13 +154,9 @@ TYPEINFO(/obj/machinery/shower_piped)
 	proc/mechcomp_toggle()
 		src.toggle(null)
 
-	was_deconstructed_to_frame(mob/user)
-		if (src.on)
-			src.toggle(user)
-		QDEL_NULL(src.input)
-
 	was_built_from_frame(mob/user, newly_built)
 		..()
+		QDEL_NULL(src.input)
 		new /dmm_suite/preloader(src.loc, list("dir" = src.dir))
 		src.input = new /obj/machinery/fluid_machinery/unary/node(src.loc)
 		src.input.initialize()
