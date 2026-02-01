@@ -41456,6 +41456,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/monitoring)
+"maS" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/camera/directional/west,
+/turf/space,
+/area/station/com_dish/comdish)
 "maV" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/firealarm/directional/west,
@@ -42589,10 +42597,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"mQk" = (
-/obj/machinery/camera/directional/west,
-/turf/space,
-/area/space)
 "mQo" = (
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/quarters_south)
@@ -128434,7 +128438,7 @@ bPs
 bnq
 bnq
 oUm
-sXS
+maS
 aaT
 aaa
 aaa
@@ -130547,7 +130551,7 @@ aaa
 aaa
 aaa
 aaa
-mQk
+aaa
 aaa
 aaa
 aaa
