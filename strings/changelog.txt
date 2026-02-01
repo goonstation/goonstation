@@ -1,5 +1,10 @@
 
 (t)sun feb 01 26
+(u)bamlord
+(p)25746
+(e)|
+(*)Added a new type of artifact bomb: biological
+(+)The biological artifact bomb spews out a cloud of disease reagents.
 (u)LeahTheTech
 (p)25793
 (e)🎨⚖🧛🔨📦|C-Sprites, C-Balance, A-Gamemodes, A-Player-Actions, A-Game-Objects
