@@ -123,7 +123,7 @@ TYPEINFO(/obj/machinery/shower_piped)
 			if((fluidthingy.initialize_directions & direction))
 				return FALSE
 		return TRUE
-	
+
 /obj/machinery/shower_piped
 	name = "shower head"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -144,7 +144,7 @@ TYPEINFO(/obj/machinery/shower_piped)
 		src.create_reagents(360)
 		new /dmm_suite/preloader(src.loc, list("dir" = src.dir))
 		src.input = new /obj/machinery/fluid_machinery/unary/node(src.loc)
-	
+
 	disposing()
 		QDEL_NULL(src.input)
 		..()
@@ -157,11 +157,12 @@ TYPEINFO(/obj/machinery/shower_piped)
 		if (src.on)
 			src.toggle(user)
 		QDEL_NULL(src.input)
-	
+
 	was_built_from_frame(mob/user, newly_built)
 		..()
 		new /dmm_suite/preloader(src.loc, list("dir" = src.dir))
 		src.input = new /obj/machinery/fluid_machinery/unary/node(src.loc)
+		src.input.initialize()
 
 	attack_ai(mob/user as mob)
 		src.toggle(user)
@@ -173,6 +174,7 @@ TYPEINFO(/obj/machinery/shower_piped)
 		src.on = !src.on
 		if (user)
 			boutput(user, "You turn [src.on ? "on" : "off"] \the [src].")
+			logTheThing(LOG_STATION, user, "turns a shower [log_reagents(src)] [src.on ? "on" : "off"] at [log_loc(src)].")
 
 #ifdef HALLOWEEN
 		if(halloween_mode && prob(15))
@@ -203,7 +205,7 @@ TYPEINFO(/obj/machinery/shower_piped)
 			steam.set_up(5, 0, get_turf(src), src.reagents.get_average_color())
 			steam.attach(src)
 			steam.start()
-			
+
 			var/list/turf_list = list()
 			for (var/turf/T in view(1, get_turf(src))) // View and oview are unreliable as heck, apparently?
 				if (!T.ocean_canpass()) continue
