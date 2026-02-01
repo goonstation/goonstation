@@ -154,48 +154,27 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/quad/overfloor
 	level = OVERFLOOR
 
-//thats a lot of types there
-/obj/fluid_pipe/straight/supply
-	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
-/obj/fluid_pipe/straight/supply/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/straight/waste
-	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
-/obj/fluid_pipe/straight/waste/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/straight/see_fluid/supply
-	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
-/obj/fluid_pipe/straight/see_fluid/supply/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/straight/see_fluid/waste
-	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
-/obj/fluid_pipe/straight/see_fluid/waste/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/elbow/supply
-	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
-/obj/fluid_pipe/elbow/supply/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/elbow/waste
-	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
-/obj/fluid_pipe/elbow/waste/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/t_junction/supply
-	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
-/obj/fluid_pipe/t_junction/supply/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/t_junction/waste
-	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
-/obj/fluid_pipe/t_junction/waste/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/quad/supply
-	icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi'
-/obj/fluid_pipe/quad/supply/overfloor
-	level = OVERFLOOR
-/obj/fluid_pipe/quad/waste
-	icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi'
-/obj/fluid_pipe/quad/waste/overfloor
-	level = OVERFLOOR
+#define DEFINE_PIPES_SUPPLY(PATH) \
+	PATH/supply{icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi';};\
+	PATH/overfloor{level = OVERFLOOR};
 
+#define DEFINE_PIPES_WASTE(PATH) \
+	PATH/waste{icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi';};\
+	PATH/overfloor{level = OVERFLOOR};
+
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/straight)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/straight/see_fluid)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/elbow)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/t_junction)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/quad)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/straight)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/straight/see_fluid)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/elbow)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/t_junction)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/quad)
+
+#undef DEFINE_PIPES_SUPPLY
+#undef DEFINE_PIPES_WASTE
 
 /obj/fluid_pipe/fluid_tank
 	name = "fluid tank"
