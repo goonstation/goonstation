@@ -1098,4 +1098,27 @@
 			src.case.luggable = src
 		. = ..()
 
+//A personal version, but for an Arch Linux user!
+
+/obj/item/luggable_computer/techpersonal
+	name = "Custom-Built Laptop"
+	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
+	icon_state = "oldlapshut"
+	luggable_type = /obj/machinery/computer3/luggable/techpersonal
+	w_class = W_CLASS_NORMAL
+
+
+/obj/machinery/computer3/luggable/techpersonal
+	name = "Custom-Built Laptop"
+	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
+	icon_state = "oldlap"
+	base_icon_state = "oldlap"
+	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
+
+	undeploy()
+		if(!src.case)
+			src.case = new /obj/item/luggable_computer/techpersonal(src)
+			src.case.luggable = src
+		. = ..()
+
 #undef MAX_INPUT_HISTORY_LENGTH
