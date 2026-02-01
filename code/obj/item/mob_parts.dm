@@ -99,12 +99,17 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/random_limb_blacklisted = FALSE
 	/// Can break cuffs/shackles instantly if both limbs have this set. Has to be this high because limb pathing is a fuck.
 	var/breaks_cuffs = FALSE
+	/// Fingerprints / footprints
+	var/datum/forensic_id/limb_print = null
 
 	New(atom/new_holder)
 		..()
 		if(istype(new_holder, /mob/living))
 			src.holder = new_holder
 		src.limb_data = new src.limb_type(src)
+		var/limb_id = get_limb_print()
+		if(limb_id)
+			limb_print = register_id(limb_id)
 		if (holder && movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
@@ -132,6 +137,13 @@ ABSTRACT_TYPE(/obj/item/parts)
 			bones.dispose()
 
 		..()
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		..()
+		if(!src.limb_print)
+			return
+		if(slot == "r_arm" || slot == "l_arm")
+			scan.add_text("Arm's fingerprint: [src.limb_print.id]")
 
 	//just get rid of it. don't put it on the floor, don't show a message
 	proc/delete()
@@ -389,6 +401,9 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if (src.skintoned)
 			return src.skin_tone
 		return src.fingertip_color
+
+	proc/get_limb_print()
+		return null
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination

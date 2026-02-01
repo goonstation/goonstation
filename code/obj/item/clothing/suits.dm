@@ -345,9 +345,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 
 		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		src.armor()
-		if(!src.fingerprints)
-			src.fingerprints = list()
-		src.fingerprints |= W.fingerprints
+		W.forensic_holder.copy_to(src.forensic_holder)
 		qdel(W)
 
 		if (ismob(src.loc))
