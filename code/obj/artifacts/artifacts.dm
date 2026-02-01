@@ -106,6 +106,18 @@
 		src.ArtifactTakeDamage(rand(5,20))
 		boutput(user, SPAN_ALERT("It seems to be a bit more damaged!"))
 
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, datum/callback/end_throw_callback = null)
+		if(istype(thrown_by, /obj/machinery/mass_driver))
+			var/obj/machinery/mass_driver/thrown_by_ejector = thrown_by
+			if(thrown_by_ejector.id == "ejector_medsci" || thrown_by_ejector.id == "artlabgun")
+				var/datum/artifact/A = src.artifact
+				for(var/datum/artifact_fault/F in A.faults)
+					if(istype(F, /datum/artifact_fault/ejector_resistance))
+						SPAWN(1 SECOND)
+							src.loc = thrown_by_ejector.loc
+		..()
+
 /obj/machinery/artifact
 	name = "artifact large art piece"
 	icon = 'icons/obj/artifacts/artifacts.dmi'
@@ -212,6 +224,19 @@
 			var/obj/item/ITM = M
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
+		..()
+
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, datum/callback/end_throw_callback = null)
+		if(istype(thrown_by, /obj/machinery/mass_driver))
+			var/obj/machinery/mass_driver/thrown_by_ejector = thrown_by
+			//TODO: Check other maps to see if they have other IDs on their artlab mass drivers.
+			if(thrown_by_ejector.id == "ejector_medsci" || thrown_by_ejector.id == "artlabgun")
+				var/datum/artifact/A = src.artifact
+				if(/datum/artifact_fault/ejector_resistance in A.faults)
+					SPAWN(5 SECOND)
+						//TODO: Add a sound effect and chat message when it warps back.
+						src.loc = thrown_by_ejector.loc
 		..()
 
 /obj/item/artifact
