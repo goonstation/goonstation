@@ -6,7 +6,7 @@
 
 /// add storage to an atom
 /atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), list/prevent_holding = list(),
-		check_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, stealthy_storage = FALSE, opens_if_worn = FALSE, list/params = list())
+		check_wclass = STORAGE_CHECK_W_CLASS_IGNORE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, stealthy_storage = FALSE, opens_if_worn = FALSE, list/params = list())
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
@@ -33,7 +33,7 @@
 	/// Types that have a w_class holdable but that the storage will not hold
 	var/list/prevent_holding = null
 	/// If set, if can_hold is used, an item not in can_hold or can_hold_exact can fit in the storage if its weight is low enough
-	var/check_wclass = FALSE
+	var/check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
 	/// Storage hud attached to the storage
 	var/datum/hud/storage/hud = null
 	/// Don't print a visible message on use
@@ -328,10 +328,14 @@
 
 	var/fullness = src.get_fullness(W)
 
+	// We check for the storage size if check_wclass is STORAGE_CHECK_W_CLASS_EXCLUDE or if can_hold is not defined
+	if ((!length(src.can_hold) || src.check_wclass == STORAGE_CHECK_W_CLASS_EXCLUDE) && (W.w_class > src.max_wclass))
+		return STORAGE_WONT_FIT
+
 	// if can_hold is defined, check against that
-	if (length(src.can_hold) && (fullness != STORAGE_IS_FULL))
+	else if (length(src.can_hold) && (fullness != STORAGE_IS_FULL))
 		// early skip if weight class is allowed
-		if (src.check_wclass && W.w_class <= src.max_wclass)
+		if (src.check_wclass == STORAGE_CHECK_W_CLASS_INCLUDE && W.w_class <= src.max_wclass)
 			return STORAGE_CAN_HOLD
 		for (var/type in src.can_hold)
 			if (ispath(type) && istype(W, type))
@@ -340,9 +344,6 @@
 			if (ispath(type) && W.type == type)
 				return STORAGE_CAN_HOLD
 		return STORAGE_CANT_HOLD
-
-	else if (W.w_class > src.max_wclass)
-		return STORAGE_WONT_FIT
 
 	return fullness
 
