@@ -393,7 +393,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	var/list/mob/stolen_souls = list()
 
 	for (var/atom/A in the_turf)
-		if (A.invisibility || istype(A, /obj/overlay/tile_effect))
+		if (A.invisibility || istype(A, /atom/movable/light/robust_light))
 			continue
 		var/icon/ic = getFlatIcon(A)
 		if (ic)
