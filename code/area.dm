@@ -1624,6 +1624,15 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Frontier Outpost 8"
 	icon_state = "red"
 
+/area/prefab/hermit_retreat
+	name = "Hermit's Retreat"
+	icon_state = "red"
+
+/area/prefab/anomalous_server_room
+	name = "Anomalous_server_room"
+	icon_state = "red"
+	sound_loop = 'sound/ambience/spooky/Void_Wail.ogg'
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
