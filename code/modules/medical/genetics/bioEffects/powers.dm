@@ -754,7 +754,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return CAST_ATTEMPT_SUCCESS
 
 		if (misfire)
-			boutput(read, SPAN_ALERT("Somehow, you sense <b>[src.owner]</b> trying and failing to read your mind!"))
+			boutput(read, SPAN_ALERT("You sense <b>[src.owner]</b> trying and failing to read your mind!"))
 			boutput(src.owner, SPAN_ALERT("You are mentally overwhelmed by a huge barrage of worthless data!"))
 			src.owner.emote("scream")
 			src.owner.changeStatus("unconscious", 5 SECONDS)
