@@ -54,8 +54,9 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 /obj/machinery/fluid_machinery/unary/initialize()
 	for(var/obj/fluid_pipe/target in get_step(src, src.dir))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network = target.network
-			src.network.machines += src
+			if(target.network)
+				src.network = target.network
+				src.network.machines += src
 			break
 
 /obj/machinery/fluid_machinery/unary/refresh_network(datum/flow_network/network)
@@ -433,14 +434,16 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 /obj/machinery/fluid_machinery/binary/initialize()
 	for(var/obj/fluid_pipe/target in get_step(src, turn(src.dir, 180)))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network1 = target.network
-			src.network1.machines += src
+			if(target.network)
+				src.network1 = target.network
+				src.network1.machines += src
 			break
 
 	for(var/obj/fluid_pipe/target in get_step(src, src.dir))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network2 = target.network
-			src.network2.machines += src
+			if(target.network)
+				src.network2 = target.network
+				src.network2.machines += src
 			break
 
 /obj/machinery/fluid_machinery/binary/refresh_network(datum/flow_network/network)
@@ -569,20 +572,23 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 /obj/machinery/fluid_machinery/trinary/initialize()
 	for(var/obj/fluid_pipe/target in get_step(src, turn(src.dir, 180)))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network1 = target.network
-			src.network1.machines += src
+			if(target.network)
+				src.network1 = target.network
+				src.network1.machines += src
 			break
 
 	for(var/obj/fluid_pipe/target in get_step(src, turn(src.dir, -90)))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network2 = target.network
-			src.network2.machines += src
+			if(target.network)
+				src.network2 = target.network
+				src.network2.machines += src
 			break
 
 	for(var/obj/fluid_pipe/target in get_step(src, src.dir))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network3 = target.network
-			src.network3.machines += src
+			if(target.network)
+				src.network3 = target.network
+				src.network3.machines += src
 			break
 
 /obj/machinery/fluid_machinery/trinary/refresh_network(datum/flow_network/network)
