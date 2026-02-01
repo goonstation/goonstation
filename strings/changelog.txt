@@ -1,5 +1,9 @@
 
 (t)sun feb 01 26
+(u)Pirate-Rob
+(p)25750
+(e)|
+(+)Door Panel UI now automatically opens upon opening the panel with a screwdriver.
 (u)Lord_Earthfire
 (p)25703
 (e)🎨📦|C-Sprites, A-Game-Objects
