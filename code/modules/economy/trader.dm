@@ -1322,7 +1322,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		pickupdialoguefailure = "You need to BUY things before you pick them up!"
 
 /obj/npc/trader/exclown/attackby(obj/item/W, mob/living/user)
-	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
+	if (!src.honk && user.traitHolder?.hasTrait("training_clown") && istype(W, /obj/item/toy/diploma))
 		src.visible_message(SPAN_ALERT("<B>[user]</B> pokes [src] with [W]. [src] nods knowingly."))
 		src.spawncrate(/obj/item/storage/box/banana_grenade_kit)
 		src.honk = 1

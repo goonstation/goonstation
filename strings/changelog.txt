@@ -1,4 +1,13 @@
 
+(t)sat jan 31 26
+(u)finger
+(p)25667
+(e)🔄⚙|C-Rework, A-Internal
+(+)Backend stuff regarding server information was modified. Goonhub/MedAss might fail to fetch servers while stuff gets migrated.
+(u)LeahTheTech
+(p)25792
+(e)⛔🌱|C-Removal, A-Hydroponics
+(+)Reverted the ability to plant seeds outside of hydroponics trays.
 (t)wed jan 28 26
 (u)Kubius
 (p)25763

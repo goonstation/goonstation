@@ -37513,7 +37513,7 @@
 /turf/space,
 /area/space)
 "puY" = (
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	pixel_x = -14
 	},
 /turf/simulated/floor/black/side{
