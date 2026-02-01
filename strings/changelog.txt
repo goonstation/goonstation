@@ -1,5 +1,9 @@
 
 (t)sun feb 01 26
+(u)TDHooligan
+(p)25744
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Striker birdshot damage buffed from 13 -> 16.
 (u)bamlord
 (p)25746
 (e)|
