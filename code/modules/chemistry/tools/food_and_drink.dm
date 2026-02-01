@@ -1075,6 +1075,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			src.name = t
 			src.labeled = 1
+		else if (istype(W,/obj/item/tool/omnitool))
+			var/obj/item/tool/omnitool/OT = W
+			if (OT.mode == OMNI_MODE_UNCAPPING)
+				boutput(user, SPAN_ALERT("It's a screw-top bottle."))
+			else
+				..()
 		else
 			..()
 			return

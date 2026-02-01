@@ -1828,6 +1828,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Bathroom Kit"
 
+/datum/supply_packs/complex/sonic_shower
+	name = "Sonic Showerheads"
+	desc = "Two fancy cleaning heads capable of vibrating dirt and grime off of you without the need for water."
+	category = "Basic Materials"
+	frames = list(/obj/machinery/sonic_shower = 2)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate/packing
+	containername = "Sonic Showerheads"
+
 /datum/supply_packs/complex/kitchen_kit
 	name = "Kitchen Kit"
 	desc = "x1 Fridge, x1 Oven Frame, x1 Mixer Frame, x1 Sink Frame, x1 Deep Fryer Frame, x1 Food Processor Frame, x1 FoodTech Frame, x1 Meat Spike Frame, x1 Gibber Frame."
