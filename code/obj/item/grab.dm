@@ -444,7 +444,11 @@
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
-		qdel(src)
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+			I.drop_grab()
+		else
+			qdel(src)
 
 
 	proc/check_hostage(owner, obj/projectile/P)

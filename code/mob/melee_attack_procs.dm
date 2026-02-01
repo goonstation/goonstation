@@ -253,6 +253,11 @@
 			target.visible_message(SPAN_COMBAT("<b>[src] tries to grab [target], [target.grabresistmessage]</B>"))
 		return
 
+	var/obj/item/target_weapon = target.equipped()
+	if (target_weapon?.chokehold?.affecting == src)
+		target.visible_message(SPAN_COMBAT(SPAN_BOLD("[src] scrabbles at [target]!")))
+		return
+
 	if (istype(H))
 		if(H.traitHolder && !H.traitHolder.hasTrait("glasscannon"))
 			H.process_stamina(STAMINA_GRAB_COST)
