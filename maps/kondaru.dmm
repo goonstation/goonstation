@@ -37310,7 +37310,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "jpl" = (
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	pixel_y = 27
 	},
 /turf/simulated/floor/wood,

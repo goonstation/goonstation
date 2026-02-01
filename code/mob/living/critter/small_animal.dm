@@ -550,7 +550,7 @@ proc/filter_carrier_pets(var/type)
 		switch (act)
 			if ("scream","meow")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, src.sound_scream, 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, src.sound_scream, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return SPAN_EMOTE("<b>[src]</b> meows!")
 			if ("smile","purr")
 				if (src.emote_check(voluntary, 30))
@@ -560,7 +560,7 @@ proc/filter_carrier_pets(var/type)
 					return SPAN_EMOTE("<b>[src]</b>'s tail swishes back and forth aggressively!") // cat do dis when mad.  mad catte
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return SPAN_EMOTE("<b>[src]</b> hisses!")
 		return null
 
@@ -3872,6 +3872,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/voice_gender = "male"
 	is_npc = FALSE
 	has_genes = FALSE
+	default_material = "plastic"
+	material_amt = 0.5
 
 	New()
 		..()
@@ -3899,6 +3901,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		icon_state_dead = src.icon_state
 
 		if (prob(1)) // rarely give a different material
+			src.removeMaterial()
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")

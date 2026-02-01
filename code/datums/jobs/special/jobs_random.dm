@@ -18,11 +18,11 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_OSHAN
 	special_spawn_location = null
-	ui_colour = TGUI_COLOUR_BLUE
+	ui_colour = /datum/job/civilian::ui_colour
 	limit = 1
 #elif defined(MAP_OVERRIDE_NADIR)
 	special_spawn_location = null
-	ui_colour = TGUI_COLOUR_BLUE
+	ui_colour = /datum/job/civilian::ui_colour
 	limit = 1
 #else
 	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/medical_specialist
 	name = "Medical Specialist"
-	ui_colour = TGUI_COLOUR_PINK
+	ui_colour = /datum/job/medical::ui_colour
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/inspector
 	name = "Inspector"
 	wages = PAY_IMPORTANT
-	ui_colour = TGUI_COLOUR_NAVY
+	ui_colour = /datum/job/special/nt::ui_colour
 	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
@@ -197,16 +197,17 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (!M)
 			return
 		SPAWN(0)
-			var/morph = null
-			var/list/options = list(/datum/mutantrace/lizard,
-									/datum/mutantrace/skeleton,
-									/datum/mutantrace/ithillid,
-									/datum/mutantrace/martian,
-									/datum/mutantrace/amphibian,
-									/datum/mutantrace/blob,
-									/datum/mutantrace/cow)
+			var/selection = null
+			var/list/options = list(/datum/mutantrace/lizard::name = /datum/mutantrace/lizard,
+									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
+									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
+									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
+									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
+									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
-			morph = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			selection = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			var/datum/mutantrace/morph = options[selection]
 			M.set_mutantrace(morph)
 			if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
 				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
@@ -359,7 +360,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/pharmacist
 	name = "Pharmacist"
 	wages = PAY_DOCTORATE
-	ui_colour = TGUI_COLOUR_PINK
+	ui_colour = /datum/job/medical::ui_colour
 	request_limit = 1 // limited workspace
 	trait_list = list("training_medical")
 	access_string = "Pharmacist"
@@ -373,7 +374,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/psychiatrist
 	name = "Psychiatrist"
-	ui_colour = TGUI_COLOUR_PINK
+	ui_colour = /datum/job/medical::ui_colour
 	wages = PAY_DOCTORATE
 	request_limit = 1 // limited workspace
 	trait_list = list("training_therapy")
