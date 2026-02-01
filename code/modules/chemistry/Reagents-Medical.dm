@@ -39,6 +39,38 @@ datum
 				..()
 				return
 
+		medical/antacid
+			name = "space antacid"
+			id = "antacid"
+			description = "Aluminum hydroxide, a common antacid that can relieve stomach pain."
+			reagent_state = LIQUID
+			fluid_r = 100
+			fluid_g = 120
+			fluid_b = 120
+			transparency = 180
+			depletion_rate = 0.8
+			value = 3
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.organHolder && prob(20))
+						H.organHolder.heal_organ(2*mult, 2*mult, 2*mult, "stomach")
+				..()
+				return
+
+		medical/snac
+			name = "SNAC"
+			id = "snac"
+			description = "Shorthand for Salcaprozate sodium. An intestinal permeability amplificator used in accelerating oral chemical absorbtion."
+			reagent_state = LIQUID
+			fluid_r = 100
+			fluid_g = 120
+			fluid_b = 120
+			transparency = 180
+			depletion_rate = 1
+			value = 3
 
 		medical/spaceacillin
 			name = "spaceacillin"
