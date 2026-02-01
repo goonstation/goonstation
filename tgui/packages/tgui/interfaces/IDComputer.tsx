@@ -233,6 +233,15 @@ export const IDComputer = () => {
                             {(target_rank && target_rank.trim()) ||
                               'Unassigned'}
                           </Button>
+                          <Button
+                            icon="refresh"
+                            color="green"
+                            tooltip="Fetch expected access levels"
+                            onClick={() =>
+                              act('assign', { assign: target_rank })
+                            }
+                            preserveWhitespace
+                          />
                         </LabeledList.Item>
                       </LabeledList>
                     </Stack.Item>

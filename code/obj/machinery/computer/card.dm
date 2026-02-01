@@ -429,8 +429,12 @@
 						logTheThing(LOG_STATION, usr, "changes the assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 						playsound(src.loc, "keyboard", 50, 1, -15)
 					else
-						src.update_card_accesses(get_access(t1))
-						logTheThing(LOG_STATION, usr, "changes the access and assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
+						var/potential_access_list = get_access(t1)
+						var/datum/job/target_job = find_job_in_controller_by_string(t1)
+						if(!length(potential_access_list) && target_job?.access_string)
+							potential_access_list = get_access(target_job.access_string)
+						var/success = src.update_card_accesses(potential_access_list)
+						logTheThing(LOG_STATION, usr, "changes the access and assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) to <b>[t1]</b>.[!success ? " But [src.type] could not grant all the requested accesses." : ""]")
 
 					//Wire: This possibly happens after the input() above, so we re-do the initial checks
 					if (src.authenticated && src.modify)
@@ -536,9 +540,11 @@
 				src.modify.icon_state = "id_com"
 
 	proc/update_card_accesses(var/list/access_list)
+		. = TRUE
 		for(var/access in access_list) //Remove accesses this computer cannot give
 			if(!(access in src.allowed_access_list))
 				access_list -= access
+				. = FALSE //Return wether we could give all the accesses or not
 
 		for (var/access in src.modify.access)
 			if (access in access_list)
