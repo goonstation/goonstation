@@ -768,7 +768,7 @@ toxic - poisons
 	icon_state = "birdshot1"
 	hit_ground_chance = 66
 	implanted = null
-	damage = 13
+	damage = 16
 	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
 	dissipation_rate = 4 //spread handles most of this

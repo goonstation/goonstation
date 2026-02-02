@@ -26511,14 +26511,6 @@
 "jpT" = (
 /turf/simulated/floor/plating/airless,
 /area/station/engine/inner)
-"jpU" = (
-/obj/barber_pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/black/side{
-	dir = 6
-	},
-/area/station/crew_quarters/quarters)
 "jqf" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "East Maintenance";
@@ -37585,6 +37577,14 @@
 /obj/item/screwdriver,
 /turf/space,
 /area/space)
+"puY" = (
+/obj/barber_pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/black/side{
+	dir = 6
+	},
+/area/station/crew_quarters/quarters)
 "pvt" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -57143,7 +57143,7 @@ aaa
 aaa
 aaa
 aaa
-aqX
+aaa
 aqX
 arJ
 arJ
@@ -57163,7 +57163,7 @@ arJ
 arJ
 arJ
 aqX
-aqX
+aaa
 aaa
 aaa
 aaa
@@ -57445,7 +57445,7 @@ aaa
 aaa
 aaa
 aaa
-aqX
+aaa
 aqX
 arK
 ass
@@ -57465,7 +57465,7 @@ arK
 ass
 arK
 aqX
-aqX
+aaa
 aaa
 aaa
 aaa
@@ -57767,7 +57767,7 @@ arJ
 arJ
 arJ
 aqX
-aqX
+aaa
 aaa
 aaa
 aaa
@@ -67192,7 +67192,7 @@ blZ
 bun
 bun
 blZ
-anM
+blZ
 aaa
 aaa
 blZ
@@ -74375,7 +74375,7 @@ rAD
 azA
 pNU
 eem
-jpU
+puY
 aEF
 aFB
 aFB
@@ -76806,7 +76806,7 @@ mYF
 azU
 aCy
 azU
-anM
+aCy
 aaa
 aaA
 fUw
@@ -77108,7 +77108,7 @@ aBK
 azU
 aCy
 aTJ
-anM
+aCy
 aaa
 aaA
 aai
@@ -77408,7 +77408,7 @@ mmb
 azU
 aCy
 aCy
-anM
+aCy
 acK
 kbZ
 aaa

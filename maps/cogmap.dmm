@@ -4789,6 +4789,15 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/barber_shop)
+"auC" = (
+/obj/disposalpipe/segment/mail,
+/obj/barber_pole{
+	pixel_x = -14
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/crew_quarters/locker)
 "auD" = (
 /obj/machinery/gibber/output_west,
 /turf/simulated/floor/specialroom/freezer,
@@ -17481,14 +17490,6 @@
 /obj/disposalpipe/segment,
 /obj/machinery/cargo_router/Router6,
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
-"blt" = (
-/obj/machinery/launcher_loader/east,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "blu" = (
 /obj/fluid_spawner{
@@ -43851,6 +43852,21 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
+"jbE" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/disposalpipe/segment,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/east)
 "jbK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/medical)
@@ -48380,18 +48396,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
-"mwJ" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/machinery/launcher_loader/west,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
 "mwV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -50653,6 +50657,13 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
+"ocm" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/east)
 "ocr" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -53870,22 +53881,6 @@
 	dir = 6
 	},
 /area/station/engine/ptl)
-"qsz" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 13;
-	id = "speedboost_west"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
 "qsA" = (
 /obj/item/device/multitool{
 	pixel_x = -11;
@@ -54028,15 +54023,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
-"qwq" = (
-/obj/disposalpipe/segment/mail,
-/obj/barber_pole{
-	pixel_x = -14
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 8
-	},
-/area/station/crew_quarters/locker)
 "qwS" = (
 /obj/machinery/light{
 	dir = 4
@@ -58336,6 +58322,13 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/hop)
+"tDX" = (
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/east)
 "tEf" = (
 /obj/disposalpipe/segment,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -58438,22 +58431,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
-"tJc" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/machinery/launcher_loader/east,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/disposalpipe/segment,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
 "tJH" = (
 /obj/machinery/conveyor/WE{
 	id = "ghostdrone"
@@ -59410,22 +59387,6 @@
 	dir = 10
 	},
 /area/station/medical/medbay/surgery)
-"uoc" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 5;
-	id = "speedboost_crusher"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
 "uon" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59802,22 +59763,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"uAs" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 13;
-	id = "speedboost_east"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
 "uAA" = (
 /obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 4;
@@ -103087,7 +103032,7 @@ aph
 aph
 aph
 ati
-qwq
+auC
 dRM
 aAe
 aXj
@@ -115810,7 +115755,7 @@ bkc
 bkN
 bls
 kOI
-tJc
+jbE
 bhv
 tag
 sDi
@@ -116110,9 +116055,9 @@ bhw
 bjd
 bkd
 bkO
-blt
+ocm
 aYQ
-uAs
+ocm
 aYQ
 piR
 geR
@@ -116412,9 +116357,9 @@ bbH
 bje
 bkL
 bkP
-uoc
+ocm
 aYQ
-uAs
+ocm
 aYQ
 udw
 dTZ
@@ -120040,7 +119985,7 @@ iEe
 bdK
 fBe
 aYQ
-qsz
+tDX
 bVx
 xeT
 gar
@@ -120342,7 +120287,7 @@ iEe
 sRe
 fBe
 uCv
-qsz
+tDX
 bVx
 bVx
 bdN
@@ -120644,7 +120589,7 @@ iEe
 bhn
 fBe
 bdM
-mwJ
+tDX
 lJf
 lJf
 xav

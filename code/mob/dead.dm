@@ -170,7 +170,7 @@ TYPEINFO(/mob/dead)
 			GH.change_points(5)
 
 #endif
-		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
+		log_emote(src, html_encode(message), voluntary)
 		src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]"),group = "[src]_[lowertext(act)]")
 		return 1
 	return 0
