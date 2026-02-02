@@ -504,6 +504,9 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		else
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
 			user.visible_message(SPAN_ALERT("<b>[user] violently grazes on [src]!</b>"), SPAN_NOTICE("You voraciously devour the bonzai, what a feast!"))
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				H.sims?.affectMotive("Hunger", 30)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 			src.destroy()
 			logTheThing(LOG_COMBAT, src, "was eaten by [constructTarget(user,"combat")] at [log_loc(src)].")
