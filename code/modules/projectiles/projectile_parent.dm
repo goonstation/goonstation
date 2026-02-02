@@ -1197,3 +1197,22 @@ ABSTRACT_TYPE(/datum/projectile)
 	Q.name = "reflected [Q.name]"
 	Q.launch(do_delay = (Q.reflectcount % 5 == 0))
 	return Q
+
+proc/refract_bullet(var/obj/projectile/P, var/obj/itemspecialeffect/barrier/B)
+	var/is_pos = 1 //alternating the direction in a postive manner or not for the increment
+	var/counter = 1 //amounts of times both directions negative and positive to the original have been hangled
+	var/is_even = 0 // used to see if we remove the O.G projectile
+	if(B.refract_amount % 2 == 0) //even/odd checker to see if we keep the O.G projectile
+		is_even = 1
+	for(var/refracted in B.refract_amount)
+		var/obj/projectile/W = shoot_reflected_bounce(P, B)
+		W.power = P.power / B.refract_amount
+		if(is_pos)
+			W.dir = P.dir + counter + 4 //4 is to get it processing diagonal dirs
+			is_pos = 0
+		else
+			W.dir = P.dir - counter - 4
+			counter++
+	if(is_even)
+		qdel(P)
+

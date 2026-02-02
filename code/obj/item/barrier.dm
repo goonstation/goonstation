@@ -171,13 +171,13 @@ TYPEINFO(/obj/item/barrier)
 	name = "Aegis Riot Barrier"
 	desc = "A personal barrier."
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "metal"
+	icon_state = "syndie_barrier"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "barrier0"
+	item_state = "syndie_barrier"
 	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
 	throwforce = 6
-	w_class = W_CLASS_SMALL
+	w_class = W_CLASS_NORMAL
 	stamina_damage = 30
 	stamina_cost = 10
 	stamina_crit_chance = 0

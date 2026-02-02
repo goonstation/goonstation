@@ -1376,6 +1376,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	name = "energy barrier"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "syndiebarrier"
+	refract = 1
+	refract_amount = 3
 
 /datum/item_special/barrier/void
 	image = "voidbarrier"
@@ -2232,8 +2234,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		//mouse_opacity = 1
 		var/bump_count = 0
 		var/mob/master = 0
+
 		var/amplify = 0 // Will this effect the original damage/stun/power whatever of a projectile
 		var/amplify_amount = 0 // multiple for the amp/deamplification
+
+		var/refract = 0 //does this barrier refract the projectile into multiple weaker ones?
+		var/refract_amount = 0 //amount of refractions, including the original projectile
 
 		setup(atom/location)
 			src.density = 1
@@ -2273,6 +2279,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				if(Q)
 					if(amplify)
 						Q.power = Q.power * amplify_amount
+					if(refract)
+						refract_bullet(Q,src,refract_amount)
 					src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 

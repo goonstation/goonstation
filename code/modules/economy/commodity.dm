@@ -733,6 +733,12 @@ datum/commodity/drugs/sell/poppies
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 	price = PAY_EMBEZZLED
 
+/datum/commodity/contraband/syndicate_barrier
+	comname = "Syndicate Barrier"
+	comtype = /obj/item/barrier/syndicate
+	desc = "The Aegis Riot Barrier is a barrier, which while lacking the compactibility of its NT counterpart, can refract bullets allowing for greater crowd control, and boasts greater handling."
+	price = PAY_EMBEZZLED
+
 /datum/commodity/contraband/syndicate_headset
 	comname = "Illegal Headset"
 	comtype = /obj/item/device/radio/headset/syndicate
