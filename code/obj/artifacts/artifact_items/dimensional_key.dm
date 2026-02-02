@@ -118,10 +118,21 @@
 		if (isrestrictedz(get_z(A)))
 			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [art] probably doesn't work here."))
 			return
-		for (var/obj/art_fissure_objs/door/door in range(1, A))
+		for (var/obj/art_fissure_objs/door/door in range(2, A))
 			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. This must be too close to another door."))
 			return
 		var/obj/item/artifact/dimensional_key/dim_key = art
+		var/entrance_direction
+		switch(user.dir)
+			if (NORTH)
+				entrance_direction = SOUTH_ENTRANCE
+			if (SOUTH)
+				entrance_direction = NORTH_ENTRANCE
+			if (EAST)
+				entrance_direction = WEST_ENTRANCE
+			if (WEST)
+				entrance_direction = EAST_ENTRANCE
+
 		dim_key?.create_entrance(entrance_direction, A, user)
 
 /****** Supporting items/atoms/etc. *******/
