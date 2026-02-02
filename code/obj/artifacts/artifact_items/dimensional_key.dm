@@ -118,7 +118,7 @@
 		if (isrestrictedz(get_z(A)))
 			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [art] probably doesn't work here."))
 			return
-		for (var/obj/art_fissure_objs/door/door in range(1, A))
+		for (var/obj/art_fissure_objs/door/door in range(2, A))
 			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. This must be too close to another door."))
 			return
 		var/obj/item/artifact/dimensional_key/dim_key = art
