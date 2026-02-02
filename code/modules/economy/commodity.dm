@@ -734,9 +734,9 @@ datum/commodity/drugs/sell/poppies
 	price = PAY_EMBEZZLED
 
 /datum/commodity/contraband/syndicate_barrier
-	comname = "Syndicate Barrier"
+	comname = "Aegis Riot Barrier"
 	comtype = /obj/item/barrier/syndicate
-	desc = "The Aegis Riot Barrier is a barrier, which while lacking the compactibility of its NT counterpart, can refract bullets allowing for greater crowd control, and boasts greater handling."
+	desc = "The Aegis Riot Barrier, which while lacking the compactibility of its NT counterpart, can refract bullets allowing for greater crowd control, and boasts greater handling."
 	price = PAY_EMBEZZLED
 
 /datum/commodity/contraband/syndicate_headset
