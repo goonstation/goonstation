@@ -160,7 +160,7 @@
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 			if(AH.time_per_count + time_change > COUNT_HIGHER_BOUND)
-				boutput(holder.owner, SPAN_ALERT("Dancing any slower than [COUNT_HIGHER_BOUND/10] seconds per count is too boring for your shoes."))
+				boutput(holder.owner, SPAN_ALERT("Dancing any slower than [COUNT_HIGHER_BOUND/10] seconds per count is too boring."))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 			return ..()
