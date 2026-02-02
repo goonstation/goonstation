@@ -9,6 +9,7 @@
 	associated_datum = /datum/artifact/dimensional_key
 	var/datum/allocated_region/fissure_region
 
+	// TODO: This should be a direction-boolean (or direction-object) alist to make checks easier
 	// var names here are in reference to inside the fissure - south means south entrance of the room
 	var/south_entr_placed = FALSE
 	var/north_entr_placed = FALSE
@@ -21,6 +22,10 @@
 		var/list/adj_entr_turfs
 		switch (entrance_dir)
 			if (SOUTH_ENTRANCE)
+				if (src.south_entr_placed)
+					boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+					return
+				src.south_entr_placed = TRUE
 				fissure_entr = src.fissure_region.turf_at(15, 14)
 				new /obj/art_fissure_objs/cross_dummy/north(entrance, fissure_entr)
 				new /obj/art_fissure_objs/cross_dummy/south(src.fissure_region.turf_at(15, 13), get_step(entrance, SOUTH))
@@ -28,6 +33,10 @@
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y - 1, entrance.z)
 			if (NORTH_ENTRANCE)
+				if (src.north_entr_placed)
+					boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+					return
+				src.north_entr_placed = TRUE
 				fissure_entr = src.fissure_region.turf_at(15, 24)
 				new /obj/art_fissure_objs/cross_dummy/south(entrance, fissure_entr)
 				new /obj/art_fissure_objs/cross_dummy/north(src.fissure_region.turf_at(15, 25), get_step(entrance, NORTH))
@@ -35,6 +44,10 @@
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y + 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (EAST_ENTRANCE)
+				if (src.east_entr_placed)
+					boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+					return
+				src.east_entr_placed = TRUE
 				fissure_entr = src.fissure_region.turf_at(17, 19)
 				new /obj/art_fissure_objs/cross_dummy/west(entrance, fissure_entr)
 				new /obj/art_fissure_objs/cross_dummy/east(src.fissure_region.turf_at(18, 19), get_step(entrance, EAST))
@@ -42,6 +55,10 @@
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x + 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (WEST_ENTRANCE)
+				if (src.west_entr_placed)
+					boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+					return
+				src.west_entr_placed = TRUE
 				fissure_entr = src.fissure_region.turf_at(13, 19)
 				new /obj/art_fissure_objs/cross_dummy/east(entrance, fissure_entr)
 				new /obj/art_fissure_objs/cross_dummy/west(src.fissure_region.turf_at(12, 19), get_step(entrance, WEST))
@@ -101,33 +118,22 @@
 		if (isrestrictedz(get_z(A)))
 			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [art] probably doesn't work here."))
 			return
-
+		for (var/obj/art_fissure_objs/door/door in range(2, A))
+			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. This must be too close to another door."))
+			return
 		var/obj/item/artifact/dimensional_key/dim_key = art
+		var/entrance_direction
+		switch(user.dir)
+			if (NORTH)
+				entrance_direction = SOUTH_ENTRANCE
+			if (SOUTH)
+				entrance_direction = NORTH_ENTRANCE
+			if (EAST)
+				entrance_direction = WEST_ENTRANCE
+			if (WEST)
+				entrance_direction = EAST_ENTRANCE
 
-		if (user.dir == NORTH)
-			if (!dim_key.south_entr_placed)
-				dim_key.create_entrance(SOUTH_ENTRANCE, A, user)
-				dim_key.south_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == SOUTH)
-			if (!dim_key.north_entr_placed)
-				dim_key.create_entrance(NORTH_ENTRANCE, A, user)
-				dim_key.north_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == EAST)
-			if (!dim_key.west_entr_placed)
-				dim_key.create_entrance(WEST_ENTRANCE, A, user)
-				dim_key.west_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == WEST)
-			if (!dim_key.east_entr_placed)
-				dim_key.create_entrance(EAST_ENTRANCE, A, user)
-				dim_key.east_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+		dim_key?.create_entrance(entrance_direction, A, user)
 
 /****** Supporting items/atoms/etc. *******/
 

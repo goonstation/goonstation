@@ -17637,14 +17637,6 @@
 /obj/machinery/cargo_router/Router6,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"blt" = (
-/obj/machinery/launcher_loader/east,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
 "blu" = (
 /obj/fluid_spawner{
 	amount = 1700
@@ -48422,18 +48414,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
-"mwJ" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/machinery/launcher_loader/west,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
 "mwV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -53875,15 +53855,6 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 13;
-	id = "speedboost_west"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "qsA" = (
@@ -58395,7 +58366,6 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/machinery/launcher_loader/east,
 /obj/window/reinforced{
 	dir = 8
 	},
@@ -59362,22 +59332,6 @@
 	dir = 10
 	},
 /area/station/medical/medbay/surgery)
-"uoc" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 5;
-	id = "speedboost_crusher"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
 "uon" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59758,15 +59712,6 @@
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
-	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	drive_range = 13;
-	id = "speedboost_east"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
@@ -116058,7 +116003,7 @@ bhw
 bjd
 bkd
 bkO
-blt
+uAs
 aYQ
 uAs
 aYQ
@@ -116360,7 +116305,7 @@ bbH
 bje
 bkL
 bkP
-uoc
+uAs
 aYQ
 uAs
 aYQ
@@ -120592,7 +120537,7 @@ iEe
 bhn
 fBe
 bdM
-mwJ
+qsz
 lJf
 lJf
 xav

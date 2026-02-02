@@ -1,4 +1,41 @@
 
+(t)sun feb 01 26
+(u)JORJ949
+(p)25595
+(e)💅🚨🔨|C-QoL, A-Admin, A-Player-Actions
+(+)Central Command Updates now have their own announcement colour.
+(u)Pirate-Rob
+(p)25750
+(e)|
+(+)Door Panel UI now automatically opens upon opening the panel with a screwdriver.
+(u)Lord_Earthfire
+(p)25703
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Plates now have inhand icons
+(u)TDHooligan
+(p)25744
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Striker birdshot damage buffed from 13 -> 16.
+(u)bamlord
+(p)25746
+(e)|
+(*)Added a new type of artifact bomb: biological
+(+)The biological artifact bomb spews out a cloud of disease reagents.
+(u)LeahTheTech
+(p)25793
+(e)🎨⚖🧛🔨📦|C-Sprites, C-Balance, A-Gamemodes, A-Player-Actions, A-Game-Objects
+(*)Fibre wire now applies instantly, slows less, and always applies at the highest level. No more finnicky toggle system.
+(*)You can no longer grab someone who has you in a chokehold with an item (including fibre wire). Normal reverse grabs are still possible.
+(+)Fibre wire now has a clickbox in the middle of the sprite as well as on the wire itself.
+(t)sat jan 31 26
+(u)finger
+(p)25667
+(e)🔄⚙|C-Rework, A-Internal
+(+)Backend stuff regarding server information was modified. Goonhub/MedAss might fail to fetch servers while stuff gets migrated.
+(u)LeahTheTech
+(p)25792
+(e)⛔🌱|C-Removal, A-Hydroponics
+(+)Reverted the ability to plant seeds outside of hydroponics trays.
 (t)wed jan 28 26
 (u)Kubius
 (p)25763
