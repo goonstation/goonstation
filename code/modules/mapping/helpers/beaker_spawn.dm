@@ -1,9 +1,7 @@
 /// The default glassware type glassware helpers use for chem dispensers.
 #define DEFAULT_CHEM_GLASSWARE /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher
-/// The default glassware type glassware helpers use for alcohol dispensers.
-#define DEFAULT_ALCOHOL_GLASSWARE /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher
-/// The default glassware type glassware helpers use for soda dispensers.
-#define DEFAULT_SODA_GLASSWARE /obj/item/reagent_containers/glass/beaker/large
+/// The default glassware type glassware helpers use for drink (soda and/or alcohol) dispensers.
+#define DEFAULT_DRINK_GLASSWARE /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher
 
 /// Glassware spawning helper:
 /// Allows glassware to be put directly into a dispenser at round start.
@@ -35,12 +33,12 @@
 				dispenser.add_beaker_no_user(container)
 				return
 
-			if(istype(dispenser, /obj/machinery/chem_dispenser/soda))
+			if(istype(dispenser, /obj/machinery/chem_dispenser))
 				container = DEFAULT_CHEM_GLASSWARE
+			else if(istype(dispenser, /obj/machinery/chem_dispenser/soda))
+				container = DEFAULT_DRINK_GLASSWARE
 			else if(istype(dispenser, /obj/machinery/chem_dispenser/alcohol))
-				container = DEFAULT_ALCOHOL_GLASSWARE
-			else if(istype(dispenser, /obj/machinery/chem_dispenser))
-				container = DEFAULT_SODA_GLASSWARE
+				container = DEFAULT_DRINK_GLASSWARE
 
 			container = new container(src.loc)
 			dispenser.add_beaker_no_user(container)
@@ -59,5 +57,4 @@
 		Perhaps there wasn't a valid dispenser on its turf?")
 
 #undef DEFAULT_CHEM_GLASSWARE
-#undef DEFAULT_ALCOHOL_GLASSWARE
-#undef DEFAULT_SODA_GLASSWARE
+#undef DEFAULT_DRINK_GLASSWARE
