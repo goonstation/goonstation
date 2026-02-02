@@ -1098,8 +1098,8 @@ var/global/list/mapNames = list(
 			return "south-east"
 	return "unknown[side ? " side" : null]"
 
+/// Fetches the map name from a given map ID. Returns null if none could be found
 /proc/getMapNameFromID(id)
 	for (var/map in mapNames)
 		if (id == mapNames[map]["id"])
 			return map
-	return 0

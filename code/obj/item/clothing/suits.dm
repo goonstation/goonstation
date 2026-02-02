@@ -897,6 +897,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			src.item_state = src.icon_state
 			see_face = FALSE
 			src.c_flags = initial(src.c_flags)
+			if (src.eyeholes)
+				src.c_flags &= ~COVERSEYES
 			wear_layer = MOB_OVER_TOP_LAYER
 
 	proc/cut_eyeholes()

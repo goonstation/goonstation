@@ -162,10 +162,11 @@
 /world/proc/setupZLevel(new_zlevel)
 	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
 
+/// Returns the number of unstealthed clients currently connected to the server
 /world/proc/total_player_count()
-	var/n = 0
-	for(var/client/C)
-		if (C.stealth && !C.fakekey) // stealthed admins don't count
+	var/total = 0
+	for(var/client/client in clients)
+		if (client.stealth && !client.fakekey) // stealthed admins don't count
 			continue
-		n++
-	return n
+		total++
+	return total
