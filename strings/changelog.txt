@@ -1,5 +1,9 @@
 
 (t)sun feb 01 26
+(u)JORJ949
+(p)25595
+(e)💅🚨🔨|C-QoL, A-Admin, A-Player-Actions
+(+)Central Command Updates now have their own announcement colour.
 (u)Pirate-Rob
 (p)25750
 (e)|
