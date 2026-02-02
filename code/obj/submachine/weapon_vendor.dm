@@ -432,7 +432,7 @@
 
 /datum/materiel/sidearm/barrier
 	name = "Security Barrier"
-	path = /obj/item/barrier
+	path = /obj/item/barrier/collapsible/security
 	description = "A barrier that grants great protection while held and can deploy shields that reflect projectiles."
 
 /datum/materiel/sidearm/EOD

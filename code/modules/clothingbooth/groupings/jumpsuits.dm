@@ -358,18 +358,18 @@
 		/datum/clothingbooth_item/w_uniform/tea_party_dress/orange,
 		/datum/clothingbooth_item/w_uniform/tea_party_dress/red,
 		/datum/clothingbooth_item/w_uniform/tea_party_dress/yellow,
-
-
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
-/datum/clothingbooth_grouping/hawaiian
 	name = "Hawaiian Shirt"
 	item_paths = list(
-		/datum/clothingbooth_item/w_uniform/hawaiian/blue,
-		/datum/clothingbooth_item/w_uniform/hawaiian/jungle,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/red,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/yellow,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/blue,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/pink,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/black,
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,

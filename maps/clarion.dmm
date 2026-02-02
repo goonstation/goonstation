@@ -20833,7 +20833,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	pixel_y = 27
 	},
 /obj/machinery/light_switch/west,
@@ -31544,7 +31544,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/fakeobject/pole{
+/obj/barber_pole{
 	pixel_y = 27
 	},
 /turf/simulated/floor/wood,

@@ -766,7 +766,7 @@ toxic - poisons
 	icon_state = "birdshot1"
 	hit_ground_chance = 66
 	implanted = null
-	damage = 13
+	damage = 16
 	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
 	dissipation_rate = 4 //spread handles most of this
@@ -2410,7 +2410,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 			if(clown_tally > 0)
 				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE)
 
-			if (H.job == "Clown" || clown_tally >= 2)
+			if (H.traitHolder?.hasTrait("training_clown") || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)
 				H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
 				H.emote("twitch_v")
