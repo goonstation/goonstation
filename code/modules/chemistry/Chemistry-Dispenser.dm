@@ -142,7 +142,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.beaker.reagents?.handle_reactions()
 			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
-		add_beaker(B, user)
+		add_glassware(B, user)
 		if(B.qdeled)
 			B = null
 		else
@@ -244,7 +244,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		return
 
 	/// Proc for adding a beaker to a dispenser (`user` optional though necessary if one exists).
-	proc/add_beaker(var/obj/item/reagent_containers/container, var/mob/user)
+	proc/add_glassware(var/obj/item/reagent_containers/container, var/mob/user)
 		if(!user)
 			src.beaker = container
 			container.set_loc(src)
@@ -374,7 +374,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 						if (newbeaker.current_lid)
 							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return
-						add_beaker(newbeaker, usr)
+						add_glassware(newbeaker, usr)
 						. = TRUE
 			if ("remove")
 				if(!beaker)

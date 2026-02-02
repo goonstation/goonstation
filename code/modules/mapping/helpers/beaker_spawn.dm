@@ -30,7 +30,7 @@
 
 		for(var/obj/machinery/chem_dispenser/dispenser in src.loc)
 			if(container)
-				dispenser.add_beaker(container)
+				dispenser.add_glassware(container)
 				return
 
 			// Every type of drink dispenser needs to be here prior to the chem dispenser check
@@ -45,7 +45,7 @@
 				container = DEFAULT_CHEM_GLASSWARE
 
 			container = new container(src.loc)
-			dispenser.add_beaker(container)
+			dispenser.add_glassware(container)
 			return
 
 		for(var/obj/machinery/espresso_machine/espressoer in src.loc)
