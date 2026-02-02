@@ -121,12 +121,9 @@ TYPEINFO(/obj/machinery/espresso_machine)
 				user.show_text("The [src.name] can't hold any more [src.cup_name]s, doofus!")
 				return ..()
 			else
-				src.cupsinside += 1
 				user.drop_item()
-				W.set_loc(src)
+				add_cup(W)
 				user.show_text ("You place the [src.cup_name] into [src].")
-				src.update()
-				tgui_process.update_uis(src)
 				return ..()
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -165,8 +162,8 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		qdel(src)
 		return
 
-	/// Simplified proc for adding a cup to an espresso machine without worrying about a user.
-	proc/add_cup_no_user(var/obj/item/reagent_containers/food/drinks/espressocup/cup)
+	/// Proc for adding a cup to an espresso machine.
+	proc/add_cup(var/obj/item/reagent_containers/food/drinks/espressocup/cup)
 		src.cupsinside += 1
 		cup.set_loc(src)
 		src.update()

@@ -142,12 +142,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.beaker.reagents?.handle_reactions()
 			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
-		src.beaker = B
-		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
-		if(!B.cant_drop)
-			user.drop_item()
-			if(!B.qdeled)
-				B.set_loc(src)
+		add_beaker(B, user)
 		if(B.qdeled)
 			B = null
 		else
@@ -155,9 +150,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
 				boutput(user, "You add the [glass_name] to the machine!")
-		B.reagents?.handle_reactions()
-		src.UpdateIcon()
-		src.ui_interact(user)
 
 	bullet_act(obj/projectile/P)
 		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
@@ -251,13 +243,25 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
-	/// Simplified proc for adding a beaker to a dispenser without worrying about a user.
-	proc/add_beaker_no_user(var/obj/item/reagent_containers/container)
+	/// Proc for adding a beaker to a dispenser (`user` optional though necessary if one exists).
+	proc/add_beaker(var/obj/item/reagent_containers/container, var/mob/user)
+		if(!user)
+			src.beaker = container
+			container.set_loc(src)
+			APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, src)
+			container.reagents?.handle_reactions()
+			src.UpdateIcon()
+			return
+
 		src.beaker = container
-		container.set_loc(src)
 		APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, src)
+		if(!container.cant_drop)
+			user.drop_item()
+			if(!container.qdeled)
+				container.set_loc(src)
 		container.reagents?.handle_reactions()
 		src.UpdateIcon()
+		src.ui_interact(user)
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
@@ -370,12 +374,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 						if (newbeaker.current_lid)
 							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return
-						if(!newbeaker.cant_drop) // borgs and item arms
-							usr.drop_item()
-							newbeaker.set_loc(src)
-						src.beaker = newbeaker
-						APPLY_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
-						src.UpdateIcon()
+						add_beaker(newbeaker, usr)
 						. = TRUE
 			if ("remove")
 				if(!beaker)
