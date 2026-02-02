@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Syndicate Barrier"
 	items = list(/obj/item/barrier/syndicate)
 	cost = 2
-	desc = "The Aegis Riot Barrier is a barrier, which while lacking the compactibility of its NT counterpart, can refract bullets allowing for greater crowd control, and boasts greater handling."
+	desc = "The Aegis Riot Barrier, which while lacking the compactibility of its NT counterpart, can refract bullets allowing for greater crowd control, and boasts greater handling."
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
