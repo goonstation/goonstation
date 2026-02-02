@@ -45,6 +45,7 @@
 // |GOOONSTATION-ADD| Theme modes
 @include meta.load-css('./theme-modes/base-light.scss');
 @include meta.load-css('./theme-modes/ntos-light.scss');
+@include meta.load-css('./theme-modes/wizard-light.scss');
 
 // |GOOONSTATION-ADD| Components
 @include meta.load-css('./components/ColorCheckbox.scss');

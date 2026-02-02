@@ -1,0 +1,20 @@
+/**
+ * Copyright (c) 2026 ZeWaka
+ * SPDX-License-Identifier: MIT
+ */
+
+.theme-wizard.mode-light:root {
+  // --wizard: #8c14aa;
+  --bg-color: color-mix(in srgb, #d9eaff 80%, var(--wizard) 20%);
+  --component-bg-color: #d9eaff;
+
+  --titlebar-background: color-mix(in srgb, var(--wizard), white 75%);
+
+  .Layout__content {
+    background-image: none;
+  }
+
+  .Button--color--good {
+    background-color: color-mix(in hsl, var(--color-good), white 30%);
+  }
+}
