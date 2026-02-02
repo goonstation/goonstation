@@ -9,7 +9,7 @@
 
 /// The maximum time per count available when a player adjusts dance speed.
 /// The lower bound is just zero.
-#define COUNT_HIGHER_BOUND 5 SECONDS
+#define COUNT_HIGHER_BOUND 2 SECONDS
 
 #define BEAT_COUNT(_X) (AH.time_per_count * _X)
 
