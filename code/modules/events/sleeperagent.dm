@@ -16,6 +16,8 @@
 	var/list/numbers = list(0, 0, 0, 0, 0, 0)
 	var/list/listeners = null
 	var/list/candidates = null
+	var/list/preferred_candidates = null
+	var/list/traitor_candidates = null
 
 	admin_call(var/source)
 		if (..())
@@ -124,6 +126,8 @@
 	proc/gather_listeners()
 		//setup empty lists
 		src.listeners = list()
+		src.preferred_candidates = list()
+		src.traitor_candidates = list()
 		src.candidates = list()
 
 		for (var/mob/living/carbon/human/H in mobs)
@@ -133,11 +137,23 @@
 				if (Hs.frequency == src.frequency)
 					src.listeners += H
 					boutput(H, SPAN_NOTICE("A peculiar noise intrudes upon the radio frequency of your [Hs.name]."))
-					if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && (H.client.preferences.be_sleeper_agent || src.override_player_pref) && isalive(H))
+					if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && isalive(H))
 						var/datum/job/J = find_job_in_controller_by_string(H?.mind.assigned_role)
-						if (J.can_be_antag(ROLE_SLEEPER_AGENT))
-							src.candidates.Add(H)
+
+						if (H.client.preferences.be_sleeper_agent || src.override_player_pref)
+							if (J.can_be_antag(ROLE_SLEEPER_AGENT))
+								src.preferred_candidates.Add(H)
+						else if (H.client.preferences.be_traitor)
+							if (J.can_be_antag(ROLE_SLEEPER_AGENT))
+								src.traitor_candidates.Add(H)
 				break
+
+		if (length(src.preferred_candidates)) // If we have preferred candidates, pull from that
+			src.candidates = src.preferred_candidates
+		else // Try to pull from traitors if we don't have preferred candidates
+			message_admins("No preferred candidates found for sleeper event. Attempting to pull from pool of traitor candidates.")
+			src.candidates = src.traitor_candidates
+
 		for (var/mob/living/silicon/robot/R in mobs)
 			if(!isalive(R))
 				continue
@@ -258,6 +274,8 @@
 		//clear lists
 		src.listeners = null
 		src.candidates = null
+		src.preferred_candidates = null
+		src.traitor_candidates = null
 
 		//clear flags
 		src.admin_override = FALSE
