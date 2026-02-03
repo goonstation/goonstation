@@ -1205,8 +1205,9 @@ proc/refract_bullet(var/obj/projectile/P, var/obj/itemspecialeffect/barrier/B)
 	if(B.refract_amount % 2 == 0) //even/odd checker to see if we keep the O.G projectile
 		is_even = 1
 	for(var/refracted in B.refract_amount)
-		var/obj/projectile/W = shoot_reflected_bounce(P, B)
-		W.power = P.power / B.refract_amount
+		var/obj/projectile/W = initialize_projectile(B.loc || get_turf(P), P.proj_data, P.x, P.y, B, play_shot_sound = FALSE)
+		W.proj_data.damage = P.proj_data.damage / B.refract_amount
+		W.proj_data.stun = P.proj_data.stun / B.refract_amount
 		if(is_pos)
 			W.dir = P.dir + counter + 4 //4 is to get it processing diagonal dirs
 			is_pos = 0

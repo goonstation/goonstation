@@ -26,6 +26,8 @@ TYPEINFO(/obj/item/barrier)
 	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
 	var/use_two_handed = 0
 
+	var/barrier_limit = 1 // How many barriers can be simultaneously activated by this one barrier?
+
 	var/status = 0
 	var/obj/itemspecialeffect/barrier/E = null
 
@@ -130,6 +132,22 @@ TYPEINFO(/obj/item/barrier)
 		else
 			user?.show_text("You need two free hands in order to activate the [src.name].", "red")
 
+/obj/item/barrier/chargable
+	//stolen variables from energy.dm
+	var/rechargeable = 1 // Can we put this barrier in a recharger? False should be a very rare exception.
+	var/robocharge = 800
+	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
+	var/from_frame_cell_type = /obj/item/ammo/power_cell
+	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
+	var/wait_cycle = 0 // Using a self-charging cell should auto-update the barrier's sprite.
+	var/can_swap_cell = 0
+	var/uses_charge_overlay = FALSE //! Does this barrier use charge overlays on the sprite?
+	var/charge_icon_state
+	var/restrict_cell_type
+	var/image/charge_image = null
+
+	var/barrier_cost = null //power cost of the barrier
+
 /obj/item/barrier/collapsible/security
 	desc = "A personal barrier. Activate this item inhand to deploy it."
 
@@ -163,25 +181,27 @@ TYPEINFO(/obj/item/barrier)
 		setProperty("disorient_resist_ear", 35) //idk how lol ok
 		setProperty("deflection", 25)
 		c_flags |= BLOCK_TOOLTIP && ONBACK
+		c_flags &= ~ONBELT
 
 		src.setItemSpecial(/datum/item_special/barrier/void)
 		BLOCK_SETUP(BLOCK_ALL)
 
-/obj/item/barrier/syndicate
+/obj/item/barrier/chargable/syndicate
 	name = "Aegis Riot Barrier"
-	desc = "A personal barrier."
+	desc = "A syndicate bootleg of a security barrier. It lacks compactibility for a more solid frame and the ability to refract projectiles."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "syndie_barrier"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "syndie_barrier"
 	c_flags = EQUIPPED_WHILE_HELD | ONBELT
-	force = 2
+	force = 6
 	throwforce = 6
 	w_class = W_CLASS_NORMAL
 	stamina_damage = 30
 	stamina_cost = 10
 	stamina_crit_chance = 0
 	hitsound = 0
+	barrier_cost = 20
 
 	setupProperties()
 		..()
@@ -191,6 +211,7 @@ TYPEINFO(/obj/item/barrier)
 		setProperty("disorient_resist", 65)
 		setProperty("disorient_resist_eye", 65)
 		setProperty("disorient_resist_ear", 50)
+		setProperty("deflection", 20)
 
 		src.setItemSpecial(/datum/item_special/barrier/syndie)
 		BLOCK_SETUP(BLOCK_ALL)
