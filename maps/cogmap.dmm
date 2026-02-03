@@ -44294,9 +44294,6 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "hYn" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -44305,6 +44302,9 @@
 	pixel_y = 21
 	},
 /obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
+	dir = 8
+	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -63571,10 +63571,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "uYN" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
