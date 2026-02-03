@@ -6,7 +6,6 @@
  */
 
 import { useState } from 'react';
-import { resource } from '../../goonstation/cdn';
 import {
   Box,
   Button,
@@ -16,9 +15,11 @@ import {
   Table,
   Tabs,
 } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
+import { resource } from '../../goonstation/cdn';
 import { Window } from '../../layouts';
-import { TraderData, CommodityData } from './type';
+import { CommodityData, TraderData } from './type';
 
 export const Trader = () => {
   const { data, act } = useBackend<TraderData>();
@@ -143,8 +144,6 @@ type CommodityProps = {
 const CommodityEntry = (props: CommodityProps) => {
   const { commodity, view_type } = props;
   const { data, act } = useBackend<TraderData>();
-  let available =
-    view_type != 'selling' || commodity.price > data.available_currency;
   return (
     <Table.Row className="candystripe">
       <Table.Cell py="5px">
@@ -157,14 +156,14 @@ const CommodityEntry = (props: CommodityProps) => {
         <Stack vertical>
           <Stack.Item>
             <Button
-              icon={view_type == 'selling' ? 'cart-shopping' : 'coins'}
+              icon={view_type === 'selling' ? 'cart-shopping' : 'coins'}
               onClick={() =>
-                act(view_type == 'selling' ? 'purchase' : 'sell', {
+                act(view_type === 'selling' ? 'purchase' : 'sell', {
                   ref: commodity.ref,
                 })
               }
             >
-              {view_type == 'selling' ? 'Buy' : 'Sell'} {commodity.price}{' '}
+              {view_type === 'selling' ? 'Buy' : 'Sell'} {commodity.price}{' '}
               {data.currency_name}
             </Button>
           </Stack.Item>
@@ -181,7 +180,7 @@ const CommodityEntry = (props: CommodityProps) => {
             </Button>
           </Stack.Item>
           <Stack.Item>
-            {view_type == 'selling' && commodity.amount_left && (
+            {view_type === 'selling' && commodity.amount_left && (
               <Box> {commodity.amount_left} Left!</Box>
             )}
           </Stack.Item>
