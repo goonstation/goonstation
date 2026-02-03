@@ -1,4 +1,9 @@
 
+(t)tue feb 03 26
+(u)glowbold
+(p)25808
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Changeling abomination form cannot buckle or be buckled into a chair.
 (t)sun feb 01 26
 (u)JORJ949
 (p)25595
