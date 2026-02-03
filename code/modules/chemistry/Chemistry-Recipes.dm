@@ -1265,6 +1265,16 @@
 		drinkrecipe = TRUE
 		hidden = TRUE
 
+	cocktail_triplewater
+		name = "Triple Water"
+		id = "cocktail_triplewater"
+		result = "cocktail_triplewater"
+		required_reagents = list("water" = 1, "water_holy" = 1, "tonic" = 1)
+		result_amount = 1
+		mix_phrase = "The diffrent water molecules seem to intertwine as the drink increases in density."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	cocktail_beach
 		name = "Bliss on the Beach"
 		id = "beach"

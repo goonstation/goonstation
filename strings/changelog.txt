@@ -1,5 +1,28 @@
 
+(t)tue feb 03 26
+(u)glowbold
+(p)25808
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Changeling abomination form cannot buckle or be buckled into a chair.
+(u)JORJ949
+(*)AI Cores can now be loaded into cargo holds if unanchored.
 (t)sun feb 01 26
+(u)JORJ949
+(p)25595
+(e)💅🚨🔨|C-QoL, A-Admin, A-Player-Actions
+(+)Central Command Updates now have their own announcement colour.
+(u)Pirate-Rob
+(p)25750
+(e)|
+(+)Door Panel UI now automatically opens upon opening the panel with a screwdriver.
+(u)Lord_Earthfire
+(p)25703
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Plates now have inhand icons
+(u)TDHooligan
+(p)25744
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Striker birdshot damage buffed from 13 -> 16.
 (u)bamlord
 (p)25746
 (e)|
