@@ -764,5 +764,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/hawaiian_shirt)
 		swatch_foreground_shape = SWATCH_POLKADOTS
 		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/black
 
+	jungle
+		name = "Jungle"
+		swatch_background_color = "#167935"
+		swatch_foreground_color = "#1D223C"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/tourist/max_payne
+
 /datum/clothingbooth_item/w_uniform/poncho_and_shirt
 	item_path = /obj/item/clothing/under/misc/serpico

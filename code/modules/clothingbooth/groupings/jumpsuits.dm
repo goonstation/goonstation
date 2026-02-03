@@ -371,6 +371,7 @@
 		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/blue,
 		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/pink,
 		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/black,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/jungle,
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
