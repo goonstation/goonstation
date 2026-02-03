@@ -101,6 +101,8 @@ proc/alert_origin_class(alert_origin)
 			return ALERT_WEATHER_CLASS
 		if(ALERT_STATION)
 			return ALERT_STATION_CLASS
+		if(ALERT_CENTCOM)
+			return ALERT_CENTCOM_CLASS
 		if(ALERT_WATCHFUL_EYE)
 			return ALERT_WATCHFUL_EYE_CLASS
 		if(ALERT_EGERIA_PROVIDENCE)

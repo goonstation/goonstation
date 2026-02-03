@@ -276,8 +276,13 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 /// Accepts a pipe to merge with.
 /datum/flow_network/proc/merge_pipe(obj/fluid_pipe/fluid_pipe)
-	if(isnull(fluid_pipe.network))
+	if(QDELETED(fluid_pipe.network))
 		fluid_pipe.network = src
+		src.pipes += fluid_pipe
+		src.reagents.maximum_volume += fluid_pipe.capacity
+		if(fluid_pipe.default_reagent)
+			src.reagents.add_reagent(fluid_pipe.default_reagent, fluid_pipe.capacity)
+		
 		var/datum/component/reagent_overlay/other_target/fluid_component = fluid_pipe.GetComponent(/datum/component/reagent_overlay/other_target)
 		if(fluid_component)
 			var/states = fluid_component.reagent_overlay_states

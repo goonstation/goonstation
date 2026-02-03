@@ -4076,6 +4076,18 @@ datum
 						new /obj/item/reagent_containers/food/snacks/plant/orange(M.loc)
 						new /obj/item/reagent_containers/food/snacks/plant/lemon(M.loc)
 
+		fooddrink/cocktail_triplewater
+			name = "triple water"
+			id = "cocktail_triplewater"
+			fluid_r = 10
+			fluid_g = 165
+			fluid_b = 254
+			description = "This water seems to contain more water per water than normal water should."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+			taste = "like water, but more"
+
 		fooddrink/lemonade
 			name = "lemonade"
 			id = "lemonade"

@@ -287,7 +287,7 @@ TYPEINFO(/obj/item/device/flash)
 	src.handle_animations(user, item_in_use)
 	// Handle turboflash power cell.
 	// Flash target mobs.
-	for (var/atom/A in oviewers((3 + src.range_mod), get_turf(src)))
+	for (var/atom/A in viewers((3 + src.range_mod), get_turf(src)))
 		var/mob/living/M
 		if (istype(A, /obj/vehicle))
 			var/obj/vehicle/V = A
@@ -295,7 +295,7 @@ TYPEINFO(/obj/item/device/flash)
 				M = V.rider
 		else if (ismob(A))
 			M = A
-		if (M)
+		if (M && M != user)
 			if (flash_power > 1)
 				M.apply_flash(35, 0, 0, 25)
 			else
