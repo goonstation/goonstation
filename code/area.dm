@@ -2855,6 +2855,7 @@ TYPEINFO(/area/station/engine/power/transmission)
 /area/station/engine/power/transmission
 	name = "Power transmission"
 	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/station/engine/power/transmission/north
 	name = "North power transmission arm"
