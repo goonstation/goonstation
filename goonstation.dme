@@ -1321,6 +1321,7 @@
 #include "code\modules\fishing\fishing_lootpools.dm"
 #include "code\modules\fishing\fishing_spots.dm"
 #include "code\modules\fluids\air.dm"
+#include "code\modules\fluids\bath.dm"
 #include "code\modules\fluids\fluid_commands.dm"
 #include "code\modules\fluids\fluid_core.dm"
 #include "code\modules\fluids\fluid_groups.dm"
