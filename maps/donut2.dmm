@@ -7615,6 +7615,13 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/restroom)
+"aTB" = (
+/obj/cable/orange{
+	icon_state = "2-4"
+	},
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power/transmission/north)
 "aTJ" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -9239,7 +9246,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/power/transmission/west)
 "bcd" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -15928,6 +15935,9 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
+"cVE" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/substation/west)
 "cVX" = (
 /obj/submachine/ATM{
 	pixel_y = -24
@@ -16384,7 +16394,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/east)
 "dkE" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Security Lobby";
@@ -17316,7 +17326,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/east)
 "dOS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -17523,6 +17533,12 @@
 	dir = 4
 	},
 /area/station/engine/inner)
+"dWv" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/power/transmission/east)
 "dWD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -19380,7 +19396,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/north)
 "fai" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/weapons/secure,
@@ -22761,7 +22777,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/space)
+/area/station/engine/power/transmission/north)
 "heK" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -22947,7 +22963,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
 "hld" = (
 /mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/random,
@@ -23884,7 +23900,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
 "hQp" = (
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
@@ -27415,7 +27431,7 @@
 	},
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/east)
 "jQV" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -27522,7 +27538,7 @@
 	},
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/east)
 "jWP" = (
 /obj/storage/crate,
 /obj/random_item_spawner/junk/lots,
@@ -28101,7 +28117,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/east)
 "kmE" = (
 /obj/random_item_spawner/snacks/one_or_zero,
 /turf/simulated/floor/plating,
@@ -30792,7 +30808,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/east)
 "lJO" = (
 /turf/simulated/floor/blueblack{
 	dir = 4
@@ -34651,7 +34667,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/space)
+/area/station/engine/power/transmission/north)
 "nTx" = (
 /obj/machinery/computer3/generic/secure_data,
 /obj/cable,
@@ -36598,6 +36614,9 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"oRD" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power/transmission/east)
 "oRQ" = (
 /turf/unsimulated/floor{
 	desc = "";
@@ -36668,7 +36687,7 @@
 	},
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
 "oUa" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -37135,6 +37154,15 @@
 "piO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/garden/owlery)
+"pjp" = (
+/obj/cable/orange{
+	icon_state = "1-8"
+	},
+/obj/cable/orange{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power/transmission/north)
 "pjA" = (
 /obj/window/reinforced{
 	dir = 8
@@ -37194,6 +37222,15 @@
 	name = "reinforced plating"
 	},
 /area/station/engine/ptl)
+"plL" = (
+/obj/cable/orange{
+	icon_state = "1-4"
+	},
+/obj/cable/orange{
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power/transmission/north)
 "pma" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -38404,6 +38441,9 @@
 	dir = 4
 	},
 /area/station/hangar/main)
+"pUa" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power/transmission/north)
 "pUk" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -39247,7 +39287,7 @@
 	name = "barkley's basketball"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/engine/substation/west)
 "qsJ" = (
 /obj/decal/tile_edge/floorguide/mining,
 /turf/simulated/floor,
@@ -41044,6 +41084,12 @@
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
+"ryh" = (
+/obj/cable/orange{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power/transmission/north)
 "ryq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41428,6 +41474,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"rIX" = (
+/obj/cable/orange{
+	icon_state = "1-8"
+	},
+/obj/cable/orange{
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power/transmission/north)
 "rJd" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro{
@@ -42526,7 +42581,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/ai_monitored/armory)
 "sro" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/storage/closet/fire,
@@ -43108,6 +43163,12 @@
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/juryroom)
+"sIp" = (
+/obj/cable/orange{
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power/transmission/north)
 "sIs" = (
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/black,
@@ -43119,7 +43180,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/ai_monitored/armory)
 "sJD" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine,
@@ -43188,7 +43249,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/ai_monitored/armory)
 "sLe" = (
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
@@ -45991,6 +46052,9 @@
 	icon_state = "fred6"
 	},
 /area/station/crew_quarters/jazz)
+"upd" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power/transmission/west)
 "upg" = (
 /obj/machinery/camera/directional/west{
 	pixel_x = -10;
@@ -46297,7 +46361,14 @@
 	},
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
+"uzX" = (
+/obj/cable/orange{
+	icon_state = "2-8"
+	},
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power/transmission/north)
 "uzZ" = (
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/ai_upload,
@@ -46331,7 +46402,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/east)
 "uBD" = (
 /obj/decal/cleanable/paper,
 /obj/disposalpipe/segment{
@@ -47375,7 +47446,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/ai_monitored/armory)
 "vki" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -47384,6 +47455,12 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
+"vkk" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power/transmission/east)
 "vkx" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -47821,7 +47898,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
 "vtk" = (
 /obj/landmark/magnet_shield,
 /obj/securearea{
@@ -47911,7 +47988,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
 "vvx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48078,7 +48155,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
 "vzn" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -48677,7 +48754,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/power/transmission/north)
 "vSl" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
@@ -49781,7 +49858,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
 "wAX" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/storage/closet/fire,
@@ -50385,6 +50462,12 @@
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"wWs" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/power/transmission/east)
 "wWE" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering,
@@ -51012,7 +51095,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/engine/power/transmission/west)
 "xtw" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum,
@@ -74281,7 +74364,7 @@ qQJ
 xWC
 wCY
 aRr
-anM
+cVE
 vzk
 hPX
 vzk
@@ -79719,7 +79802,7 @@ aaa
 aaa
 uzN
 wAc
-anM
+upd
 hkf
 oTX
 aaa
@@ -80337,7 +80420,7 @@ bck
 bck
 bck
 bck
-acd
+bck
 iwR
 bck
 pGD
@@ -81523,7 +81606,7 @@ aaa
 aaa
 aaa
 aaa
-uzN
+aTB
 pwl
 hLB
 ehi
@@ -81824,8 +81907,8 @@ vSb
 vSb
 eZW
 eZW
-lJH
-wAc
+plL
+ryh
 hDS
 hLB
 hsV
@@ -82126,8 +82209,8 @@ vSb
 vSb
 nTr
 nTr
-uAS
-anM
+rIX
+pUa
 xbm
 qPe
 qpc
@@ -82428,8 +82511,8 @@ vSb
 vSb
 eZW
 eZW
-xsS
-dkD
+pjp
+sIp
 hDS
 hLB
 hsV
@@ -82731,7 +82814,7 @@ aaa
 aaa
 aaa
 aaa
-jQH
+uzX
 inL
 hLB
 ehi
@@ -84551,7 +84634,7 @@ aaa
 aaa
 jQH
 dkD
-anM
+oRD
 dOI
 jWe
 acy
@@ -85154,9 +85237,9 @@ aaa
 aaa
 aaa
 aaa
-vzk
-hPX
-vzk
+vkk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -85456,9 +85539,9 @@ aaa
 aaa
 aaa
 aaa
-bca
-bca
-bca
+dWv
+dWv
+dWv
 aaa
 aaa
 aaa
@@ -85758,9 +85841,9 @@ aaa
 aaa
 aaa
 aaa
-bca
-bca
-bca
+dWv
+dWv
+dWv
 aaa
 aaa
 aaa
@@ -86060,9 +86143,9 @@ aaa
 aaa
 aaa
 aaa
-bca
-bca
-bca
+dWv
+dWv
+dWv
 aaa
 aaa
 aaa
@@ -86363,8 +86446,8 @@ rJf
 rJf
 rJf
 tlv
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -86665,8 +86748,8 @@ oLx
 usb
 mNs
 tlv
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -86967,8 +87050,8 @@ tPS
 edp
 edp
 tlv
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -87269,8 +87352,8 @@ kvI
 oJE
 hKE
 tlv
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -87571,8 +87654,8 @@ oLx
 rxV
 rvd
 tlv
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -87873,8 +87956,8 @@ oLx
 rJf
 rJf
 tlv
-hPX
-vzk
+wWs
+vkk
 ajz
 ajz
 ajz
@@ -88175,8 +88258,8 @@ azU
 azU
 aYA
 bKJ
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -88477,8 +88560,8 @@ wrG
 lKr
 aNo
 bKJ
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -88779,8 +88862,8 @@ hll
 mmb
 azU
 bKJ
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -89081,8 +89164,8 @@ hll
 mmb
 azO
 bKJ
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -89383,8 +89466,8 @@ hll
 mmb
 azU
 bKJ
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 aaa
@@ -89685,8 +89768,8 @@ hll
 mmb
 aDm
 bKJ
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 kbZ
@@ -89987,8 +90070,8 @@ uSn
 mmb
 aDm
 bKJ
-hPX
-vzk
+wWs
+vkk
 aaa
 aaa
 acK
@@ -90289,8 +90372,8 @@ hll
 mqE
 nml
 bKJ
-hPX
-vzk
+wWs
+vkk
 bbA
 aaa
 aCy
@@ -100872,7 +100955,7 @@ vYI
 iHo
 ePV
 jmv
-acd
+bgP
 bgP
 bgP
 bgP
@@ -100882,7 +100965,7 @@ sST
 bgP
 bgP
 bgP
-acd
+bgP
 jmv
 ePV
 ugH
@@ -101175,7 +101258,7 @@ cLl
 cLl
 xtC
 jmv
-acd
+bgP
 bgP
 bgP
 bgP
@@ -101183,7 +101266,7 @@ sbg
 bgP
 bgP
 bgP
-acd
+bgP
 jmv
 tJA
 cLl
@@ -101478,13 +101561,13 @@ cLl
 cLl
 xtC
 jmv
-acd
+bgP
 vkd
 sIP
 srl
 sIP
 sKT
-acd
+bgP
 jmv
 tJA
 cLl
