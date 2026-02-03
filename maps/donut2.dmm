@@ -9246,7 +9246,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/power/transmission/west)
+/area/space)
 "bcd" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -17533,12 +17533,6 @@
 	dir = 4
 	},
 /area/station/engine/inner)
-"dWv" = (
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/engine/power/transmission/east)
 "dWD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -48754,7 +48748,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/power/transmission/north)
+/area/space)
 "vSl" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
@@ -85539,9 +85533,9 @@ aaa
 aaa
 aaa
 aaa
-dWv
-dWv
-dWv
+bca
+bca
+bca
 aaa
 aaa
 aaa
@@ -85841,9 +85835,9 @@ aaa
 aaa
 aaa
 aaa
-dWv
-dWv
-dWv
+bca
+bca
+bca
 aaa
 aaa
 aaa
@@ -86143,9 +86137,9 @@ aaa
 aaa
 aaa
 aaa
-dWv
-dWv
-dWv
+bca
+bca
+bca
 aaa
 aaa
 aaa
