@@ -2515,8 +2515,8 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 
 /datum/manufacture/breach_pouch
 	name = "Mining charge pouch"
-	item_requirements = list("fabric" = 40,
-							 "metal_superdense" = 6)
+	item_requirements = list("fabric" = 10,
+							 "metal_dense" = 2)
 	item_outputs = list(/obj/item/storage/breach_pouch)
 	create = 1
 	time = 15 SECONDS

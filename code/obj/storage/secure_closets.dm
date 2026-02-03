@@ -817,7 +817,7 @@
 	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/backpack/engineering,
-	/obj/item/breaching_charge/mining/light = 3,
+	/obj/item/storage/breach_pouch/filled,
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,

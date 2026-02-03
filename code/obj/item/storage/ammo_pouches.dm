@@ -235,6 +235,9 @@
 	prevent_holding = list(/obj/item/storage)
 	can_hold = list(/obj/item/breaching_charge/mining)
 
+	filled
+		spawn_contents = list(/obj/item/breaching_charge/mining/light = 3)
+
 /obj/item/storage/emp_grenade_pouch
 	name = "EMP grenade pouch"
 	desc = "A pouch designed to hold EMP grenades."
