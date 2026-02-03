@@ -25,7 +25,6 @@ datum
 			value = 2
 			overdose = 69
 			thirst_value = 0.4
-			bladder_value = -0.2
 			viscosity = 0.2
 			var/obj/machinery/maptext_monitor/proc_monitor/bilked_account/counter = null
 			var/bilk_ratio = 0.1
@@ -93,7 +92,6 @@ datum
 			fluid_g = 255
 			transparency = 255
 			thirst_value = 0.6
-			bladder_value = -0.2
 			viscosity = 0.3
 			var/list/flushed_reagents = list("capsaicin")
 
@@ -234,7 +232,6 @@ datum
 			taste = "creamy"
 			thirst_value = 0.3
 			hunger_value = 0.3
-			bladder_value = -0.2
 			viscosity = 0.5
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -293,7 +290,6 @@ datum
 			fluid_b = 27
 			transparency = 190
 			var/alch_strength = 0.07  // ABV, with 1 being 100% ABV
-			bladder_value = -0.15
 			thirst_value = 0.4
 			viscosity = 0.2
 
@@ -522,7 +518,6 @@ datum
 			description = "A dark German beer, typically served with dark bread, cream cheese, and an intense appreciation for the law."
 			reagent_state = LIQUID
 			taste = "lawful"
-			bladder_value = -2
 			fluid_r = 61
 			fluid_g = 57
 			fluid_b = 56
@@ -765,7 +760,6 @@ datum
 			reagent_state = LIQUID
 			taste = "seaworthy"
 			thirst_value = 0.899
-			bladder_value = -1
 			fluid_r = 0
 			fluid_g = 255
 			fluid_b = 0
@@ -1220,7 +1214,6 @@ datum
 			reagent_state = LIQUID
 			//decays into sugar/some sort of stimulant, maybe gives unique stimulant effect/messages, like bold red GOTTA GO FASTs? Makes you take damage when you run into a wall?
 			taste = "FAST"
-			bladder_value = -5
 			stun_resist = 6
 			threshold = THRESHOLD_INIT
 
@@ -2390,7 +2383,6 @@ datum
 			taste = "sugary"
 			thirst_value = 0.75
 			viscosity = 0.4
-			bladder_value = -0.2
 			caffeine_content = 0.15
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2412,10 +2404,6 @@ datum
 			thirst_value = 0.75
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.sims)
-						H.sims.affectMotive("Bladder", (-0.05 * mult))
 				M.changeBodyTemp(-5 KELVIN * mult, min_temp = M.base_body_temp)
 				..(M, mult)
 				return
@@ -2517,7 +2505,6 @@ datum
 			fluid_b = 16
 			transparency = 245
 			thirst_value = 0.3
-			bladder_value = -0.1
 			energy_value = 0.3
 			taste = "bitter"
 
@@ -2605,7 +2592,6 @@ datum
 			addiction_prob = 0.4
 			var/tickcounter = 0
 			thirst_value = -0.2
-			bladder_value = 0.04
 			energy_value = 1
 			stun_resist = 15
 			taste = "supercharged"
@@ -2659,7 +2645,6 @@ datum
 			fluid_b = 54
 			thirst_value = 1
 			taste = "herbal"
-			bladder_value = 0.04
 			energy_value = 0.04
 			minimum_reaction_temperature = -INFINITY
 			caffeine_content = 0.2
@@ -2692,7 +2677,6 @@ datum
 			taste = "delicate"
 			transparency = 232
 			thirst_value = 0.75
-			bladder_value = 0.04
 			energy_value = 0.04
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -2718,7 +2702,6 @@ datum
 			fluid_g = 120
 			fluid_b = 65
 			taste = "herbal"
-			bladder_value = 0.04
 			energy_value = 0.04
 			transparency = 232
 			thirst_value = 1.5
@@ -2740,7 +2723,6 @@ datum
 			transparency = 160
 			taste = "fizzy"
 			thirst_value = 0.78
-			bladder_value = 0.05
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(probmult(4))
@@ -2843,7 +2825,6 @@ datum
 			transparency = 255
 			hunger_value = 1
 			thirst_value = 1
-			bladder_value = -1
 			viscosity = 0.3
 			taste = "festive"
 			threshold = THRESHOLD_INIT
@@ -2937,7 +2918,6 @@ datum
 			depletion_rate = 0.2
 			hunger_value = 2
 			thirst_value = 0.5
-			bladder_value = -1
 			taste = "soothing"
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -3517,7 +3497,6 @@ datum
 			description = "A citric beverage extracted from limes."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tart"
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -3542,7 +3521,6 @@ datum
 			description = "An extremely tart juice usually mixed into other drinks and juices."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tart"
 
 		fooddrink/juice_orange
@@ -3554,7 +3532,6 @@ datum
 			description = "A citric beverage extracted from oranges."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tangy"
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -3582,7 +3559,6 @@ datum
 			description = "A citric beverage extracted from lemons."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "sour"
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -3607,7 +3583,6 @@ datum
 			description = "Tomatoes pureed down to a liquid state."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "nutritious"
 
 		fooddrink/juice_strawberry
@@ -3619,7 +3594,6 @@ datum
 			description = "Fresh juice produced by strawberries."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "like strawberries"
 
 		fooddrink/juice_blueberry
@@ -3664,7 +3638,6 @@ datum
 			description = "The juice from a thousand screaming cherries. Silent screams."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = list("sweet", "tart")
 
 		fooddrink/juice_blueraspberry
@@ -3676,7 +3649,6 @@ datum
 			description = "Radically flavorlicious. There's really nothing else to call it."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "like FD&C Blue No. 1"
 
 		fooddrink/juice_pineapple
@@ -3688,7 +3660,6 @@ datum
 			description = "Juice from a pineapple. A surprise, considering the name!"
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tangy"
 
 		fooddrink/juice_watermelon
@@ -3700,7 +3671,6 @@ datum
 			description = "A delicious summer drink!"
 			reagent_state = LIQUID
 			thirst_value = 2
-			bladder_value = -1.5
 			taste = "dilute"
 
 		fooddrink/juice_apple
@@ -3712,7 +3682,6 @@ datum
 			description = "Fresh juice produced by apples."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tart"
 
 		fooddrink/juice_peach
@@ -3724,7 +3693,6 @@ datum
 			description = "An artificial peach drink that is legally sold as 100% all natural peach juice."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "peachy"
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3744,7 +3712,6 @@ datum
 			description = "A glass of carrot juice a day keeps the ophthalmologist away."
 			reagent_state = LIQUID
 			thirst_value = 1
-			bladder_value = -1
 			taste = "like carrots"
 
 		fooddrink/juice_pumpkin
@@ -3756,7 +3723,6 @@ datum
 			description = "The journey to juice a pumpkin has finally come to an end, with very orange results."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "earthy"
 
 		fooddrink/juice_banana
@@ -3768,7 +3734,6 @@ datum
 			description = "A juice which has a smooth, naturally sweet flavor with subtle hints of tropical freshness."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tropical"
 
 		fooddrink/juice_grapefruit
@@ -3780,7 +3745,6 @@ datum
 			description = "A tart beverage extracted from grapefruits."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "caustic"
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3813,7 +3777,6 @@ datum
 			description = "Well, it's not actually milk, considering that coconuts aren't mammals with mammary glands. It's really more like coconut juice. Or coconut water."
 			reagent_state = LIQUID
 			thirst_value = 1
-			bladder_value = -1
 			taste = "tropical"
 
 		fooddrink/turmeric
@@ -3944,7 +3907,6 @@ datum
 			description = "A salty brine containing garlic and dill, typically used to ferment and pickle cucumbers."
 			reagent_state = LIQUID
 			thirst_value = 1
-			bladder_value = -1
 			taste = "briny"
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3960,7 +3922,6 @@ datum
 			description = "A refreshing mixed drink of orange, lemon and lime juice."
 			reagent_state = LIQUID
 			thirst_value = 2
-			bladder_value = -2
 			taste = "zesty"
 
 			fluid_r = 12
@@ -3986,7 +3947,6 @@ datum
 			energy_value = 10
 			hunger_value = -2
 			thirst_value = -2
-			bladder_value = -2
 			stun_resist = 100
 			taste = "bonkers"
 			threshold = THRESHOLD_INIT
@@ -4086,7 +4046,6 @@ datum
 			description = "A refreshing, sweet and sour drink consisting of sugar and lemon juice."
 			reagent_state = LIQUID
 			thirst_value = 0.7
-			bladder_value = -0.2
 			taste = list("sweet", "sour")
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -4124,7 +4083,6 @@ datum
 			transparency = 200
 			description = "A mixture of half lemonade and half tea, sometimes named after a dead Earth golfer. Not to be confused with the dairy kind."
 			thirst_value = 2
-			bladder_value = -2
 			viscosity = 0.1
 			taste = "refreshing"
 
@@ -4842,7 +4800,6 @@ datum
 			reagent_state = LIQUID
 			taste = "sweet with a hint of bitter"
 			thirst_value = 1
-			bladder_value = 0.04
 			energy_value = 0.04
 			var/list/flushed_reagents = list("cholesterol")
 
