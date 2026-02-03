@@ -763,3 +763,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/hawaiian_shirt)
 		swatch_foreground_color = "#3FB54F"
 		swatch_foreground_shape = SWATCH_POLKADOTS
 		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/black
+
+/datum/clothingbooth_item/w_uniform/poncho_and_shirt
+	item_path = /obj/item/clothing/under/misc/serpico

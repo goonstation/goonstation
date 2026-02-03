@@ -363,6 +363,7 @@
 		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
+/datum/clothingbooth_grouping/hawaiian_shirt
 	name = "Hawaiian Shirt"
 	item_paths = list(
 		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/red,
