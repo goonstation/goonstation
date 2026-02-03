@@ -2852,7 +2852,6 @@ ABSTRACT_TYPE(/area/station/engine)
 
 TYPEINFO(/area/station/engine/power/transmission)
 	valid_bounty_area = FALSE
-ABSTRACT_TYPE(/area/station/engine/power/transmission)
 /area/station/engine/power/transmission
 	name = "Power transmission"
 	icon_state = "yellow"
