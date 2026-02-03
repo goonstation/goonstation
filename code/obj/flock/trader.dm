@@ -157,6 +157,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	picture = "flocktrader.png"
 	name = "Flocktrader Sa.le"
 	desc = "Some sort of weird holographic image on some fancy totem thing. Seems like it wants to trade."
+	theme = "flock"
 	var/is_greeting = 0
 	var/grad_col_1 = "#3cb5a3"
 	var/grad_col_2 = "#124e43"
@@ -196,8 +197,6 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 
 
 	greeting= {"[src.name] clicks from your headset. \"[gradientText(grad_col_1, grad_col_2, "Greetings, spacefarer. There are many permutations of the Signal, and we are an iteration less inclined to senseless destruction. Do you wish to engage in trade?")]\""}
-
-	portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
 	sell_dialogue = {"[src.name] makes a short burst of pink noise. \"[gradientText(grad_col_1, grad_col_2, "We always seek raw materials for repairs and maintenance. We value some materials more than others, though.")]\""}
 
