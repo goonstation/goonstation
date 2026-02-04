@@ -67,12 +67,6 @@
 			do_event(source == "spawn_antag", source)
 
 	proc/do_event(var/force_antags = FALSE, var/source)
-		gen_numbers()
-		gather_listeners()
-		if (!length(src.listeners))
-			cleanup_event()
-			return
-
 		if(!src.admin_override)
 			var/temp = rand(0,99)
 			if(temp < 50)
@@ -84,6 +78,12 @@
 					src.num_agents = 1
 				else
 					src.num_agents = 0
+
+		gen_numbers()
+		gather_listeners()
+		if (!length(src.listeners))
+			cleanup_event()
+			return
 
 		SPAWN(1 SECOND)
 			broadcast_sound(src.signal_intro)
@@ -148,11 +148,12 @@
 								src.traitor_candidates.Add(H)
 				break
 
-		if (length(src.preferred_candidates)) // If we have preferred candidates, pull from that
+		if (length(src.preferred_candidates) >= src.num_agents) // If we have enough preferred candidates, pull from that
 			src.candidates = src.preferred_candidates
-		else // Try to pull from traitors if we don't have preferred candidates
-			message_admins("No preferred candidates found for sleeper event. Attempting to pull from pool of traitor candidates.")
-			src.candidates = src.traitor_candidates
+		else // Try to pull from traitors if we don't have enough preferred candidates
+			message_admins("Insufficient amount of preferred candidates found for sleeper event. Attempting to pull from pool of traitor candidates.")
+			src.candidates += src.preferred_candidates
+			src.candidates += src.traitor_candidates
 
 		for (var/mob/living/silicon/robot/R in mobs)
 			if(!isalive(R))
