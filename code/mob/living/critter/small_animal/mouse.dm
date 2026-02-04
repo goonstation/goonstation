@@ -71,6 +71,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 			var/image/overlay_eyes = image(src.icon, "mouse_eyes")
 			overlay_eyes.color = eye_color
 			src.UpdateOverlays(overlay_eyes, "eyes")
+		else
+			src.UpdateOverlays(null, "hair")
+			src.UpdateOverlays(null, "eyes")
 
 	death()
 		if (src.use_custom_color)
