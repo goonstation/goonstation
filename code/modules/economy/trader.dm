@@ -1,3 +1,22 @@
+#define TRADER_RESPONSE_GREETING "greeting"
+#define TRADER_RESPONSE_ANGRY "angry"
+#define TRADER_RESPONSE_WHO_ARE_YOU "who_are_you"
+// When the player is buying items
+#define TRADER_RESPONSE_VIEWING_SOLD_ITEMS "view_sold"
+#define TRADER_RESPONSE_SUCCESSFUL_PURCHASE "purchase_success"
+#define TRADER_RESPONSE_FAILED_PURCHASE "purchase_failed"
+// When the player is selling items
+#define TRADER_RESPONSE_VIEWING_BOUGHT_ITEMS "view_bought"
+#define TRADER_RESPONSE_SUCCESSFUL_SALE "sale_success"
+#define TRADER_RESPONSE_FAILED_SALE "sale_fail"
+// When the player is collecting items
+#define TRADER_RESPONSE_SUCCESSFUL_CART "cart_success"
+#define TRADER_RESPONSE_FAILED_CART "cart_fail"
+// Haggling
+#define TRADER_RESPONSE_SUCCESSFUL_HAGGLE "haggle_success"
+#define TRADER_RESPONSE_FAILED_HAGGLE "haggle_fail"
+
+
 /proc/most_applicable_trade(var/list/datum/commodity/goods_buy, var/obj/item/sell_item)
 	var/list/goods_buy_types = new /list(0)
 	for(var/datum/commodity/N as anything in goods_buy)
@@ -127,11 +146,11 @@
 
 		switch(action)
 			if ("viewsold")
-				if(!ON_COOLDOWN(src, "traderviewdialogue", 1 SECOND))
-					src.say(buy_dialogue)
+				if(!ON_COOLDOWN(src, "traderviewselldialogue", 1 SECOND))//Tabs are spammable, voicelines shouldn't be
+					src.trader_response(TRADER_RESPONSE_VIEWING_SOLD_ITEMS, usr)
 			if ("viewbought")
-				if(!ON_COOLDOWN(src, "traderviewdialogue", 1 SECOND))
-					src.say(sell_dialogue)
+				if(!ON_COOLDOWN(src, "traderviewbuydialogue", 1 SECOND))//Tabs are spammable, voicelines shouldn't be
+					src.trader_response(TRADER_RESPONSE_VIEWING_BOUGHT_ITEMS, usr)
 			if ("purchase")
 				src.handle_purchase(usr, locate(params["ref"]) in (src.goods_sell | src.goods_illegal))
 			if ("haggle")
@@ -147,7 +166,7 @@
 					angry = 1
 					src.anger()
 				else
-					src.haggle(askingprice, !(commodity in src.goods_buy), commodity)
+					src.haggle(askingprice, !(commodity in src.goods_buy), commodity, usr)
 			if ("sell")
 				src.handle_sell(usr, locate(params["ref"]) in src.goods_buy)
 			if ("card")
@@ -155,9 +174,9 @@
 			if ("pickupcart")
 				if(length(src.shopping_cart))
 					src.spawncrate()
-					src.say(src.pickupdialogue)
+					src.trader_response(TRADER_RESPONSE_SUCCESSFUL_CART, usr)
 				else if (!ON_COOLDOWN(src, "tradercartfaildialogue", 1 SECOND))
-					src.say(src.pickupdialoguefailure)
+					src.trader_response(TRADER_RESPONSE_FAILED_CART, usr)
 
 		src.add_fingerprint(usr)
 		tgui_process.update_uis(src)
@@ -185,9 +204,9 @@
 		if(..())
 			return
 		if(src.angry)
-			boutput(user, SPAN_NOTICE("[src] seems too angry to trade right now."))
+			src.trader_response(TRADER_RESPONSE_ANGRY, user)
 			return
-		src.say(src.greeting)
+		src.trader_response(TRADER_RESPONSE_GREETING, user)
 		ui_interact(user)
 
 	disposing()
@@ -230,10 +249,10 @@
 		if(shopping_cart.len + quantity > amount_per_order)
 			src.say("Error. Maximum purchase limit of [amount_per_order] items exceeded")
 			return
-		var/current_funds = src.barter ? barter_customers[barter_lookup(usr)] : account["current_money"]
+		var/current_funds = src.barter ? barter_customers[barter_lookup(user)] : account["current_money"]
 		var/cost = commodity.price * quantity
 		if(current_funds < cost)
-			src.say(pick(src.failed_purchase_dialogue))
+			src.trader_response(TRADER_RESPONSE_FAILED_PURCHASE, user)
 			return
 		if(src.barter)
 			src.barter_customers[barter_lookup(usr)] -= cost
@@ -245,7 +264,7 @@
 			logTheThing(LOG_STATION, usr, "bought ([quantity]) [commodity.comtype] from [src] at [log_loc(get_turf(src))]")
 		while(quantity-- > 0)
 			shopping_cart += new commodity.comtype()
-		src.say(pick(src.successful_purchase_dialogue))
+		src.trader_response(TRADER_RESPONSE_SUCCESSFUL_PURCHASE, user)
 
 	proc/handle_sell(var/mob/user, var/datum/commodity/commodity)
 		if(!user || !commodity) return
@@ -258,10 +277,10 @@
 			boutput(user, SPAN_ALERT("You need to register an ID to sell things!"))
 			return
 		if (!(commodity.subtype_valid ? istype(sell_item, commodity.comtype) : commodity.comtype == sell_item.type))
-			src.say(pick(src.failed_sale_dialogue))
+			src.trader_response(TRADER_RESPONSE_FAILED_SALE, user)
 			return
 		var/value = sold_item(commodity, sell_item, sell_item.amount, user)
-		src.say(pick(src.successful_sale_dialogue))
+		src.trader_response(TRADER_RESPONSE_SUCCESSFUL_SALE, user)
 		qdel(sell_item)
 		if(src.log_trades)
 			logTheThing(LOG_STATION, user, "sold [sell_item] to [src] for [value] at [log_loc(get_turf(src))]")
@@ -333,7 +352,7 @@
 	////////////////////////////////////////////////////
 	/////////Proc for haggling with dealer ////////////
 	///////////////////////////////////////////////////
-	proc/haggle(var/askingprice, var/buying, var/datum/commodity/H)
+	proc/haggle(var/askingprice, var/buying, var/datum/commodity/H, var/mob/user)
 		// if something's gone wrong and there's no input, reject the haggle
 		// also reject if there's no change in the price at all
 		if (!askingprice) return
@@ -343,33 +362,33 @@
 			// we're buying, so we want to pay less per unit
 			if(askingprice > H.price)
 				if (src.bullshit >= 5)
-					src.say(errormsgs[1])
+					src.trader_response(TRADER_RESPONSE_FAILED_HAGGLE, user, 1)
 					H.price = askingprice
 					return
 				else
-					src.say(src.errormsgs[2])
+					src.trader_response(TRADER_RESPONSE_FAILED_HAGGLE, user, 2)
 					return
 		else
 			// we're selling, so we want to be paid MORE per unit
 			if(askingprice < H.price)
 				if (src.bullshit >= 5)
 					H.price = askingprice
-					src.say(src.errormsgs[3])
+					src.trader_response(TRADER_RESPONSE_FAILED_HAGGLE, user, 3)
 					return
 				else
-					src.say(src.errormsgs[4])
+					src.trader_response(TRADER_RESPONSE_FAILED_HAGGLE, user, 4)
 					return
 		//check if we're trying to scam a trader that is, for whatever reason, buying and selling the exact same commodity
 		if(buying == 1)
 			for(var/datum/commodity/arbitrage in src.goods_buy)
 				if(arbitrage.type == H.type && askingprice < arbitrage.price)
-					src.say(src.errormsgs[5])
+					src.trader_response(TRADER_RESPONSE_FAILED_HAGGLE, user, 5)
 					H.haggleattempts++
 					return
 		else
 			for(var/datum/commodity/arbitrage in src.goods_sell)
 				if(arbitrage.type == H.type && askingprice > arbitrage.price)
-					src.say(src.errormsgs[5])
+					src.trader_response(TRADER_RESPONSE_FAILED_HAGGLE, user, 5)
 					H.haggleattempts++
 					return
 
@@ -379,12 +398,12 @@
 		var/negatol = 0 - src.hiketolerance
 		if (buying == 1) // we're buying, so price must be checked for negative
 			if (hikeperc <= negatol || askingprice < H.baseprice / 5)
-				src.say(src.errormsgs[5])
+				src.trader_response(TRADER_RESPONSE_FAILED_HAGGLE, user, 5)
 				H.haggleattempts++
 				return
 		else
 			if (hikeperc >= src.hiketolerance || askingprice > H.baseprice * 5) // we're selling, so check hike for positive
-				src.say(src.errormsgs[5])
+				src.trader_response(TRADER_RESPONSE_FAILED_HAGGLE, user, 5)
 				H.haggleattempts++
 				return
 		// now, the actual haggling part! find the middle ground between the two prices
@@ -401,9 +420,9 @@
 		H.haggleattempts++
 		// warn the player if the trader isn't going to take any more haggling
 		if (patience == H.haggleattempts)
-			src.say(src.hagglemsgs[src.hagglemsgs.len])
+			src.trader_response(TRADER_RESPONSE_SUCCESSFUL_HAGGLE, user, length(src.hagglemsgs))
 		else
-			src.say(pick(src.hagglemsgs))
+			src.trader_response(TRADER_RESPONSE_SUCCESSFUL_HAGGLE, user, rand(1, length(src.hagglemsgs)))
 
 	///////////////////////////////////////////////
 	////// special handling for selling an item ///
@@ -459,6 +478,56 @@
 						barter_customers[barter_lookup(user)] += cratevalue
 				else
 					boutput(user, SPAN_NOTICE("[src] finds nothing of interest in [O]."))
+
+	proc/trader_say(var/message, var/mob/target)
+		src.say(message)
+
+	emote(act, voluntary = 0, atom/target)
+		. = ..()
+		src.visible_message(SPAN_EMOTE("[SPAN_BOLD(src.name)] [act]"))
+
+	proc/trader_response(var/response_type, var/mob/user, var/haggle_entry)
+		var/response_strings = src.fetch_response_strings(response_type, user, haggle_entry)
+		if(islist(response_strings)) //Some traders emote and speak at the same time
+			for(var/string in response_strings)
+				src.trader_say(string, user)
+		else
+			src.trader_say(response_strings, user)
+
+	///Can return a list of things to say/emote, or just a single string. Starting the string with a * makes it an emote instead.
+	proc/fetch_response_strings(var/response_type, var/mob/user, var/haggle_entry)
+		. = ""
+		switch(response_type)
+			if(TRADER_RESPONSE_GREETING)
+				. = src.greeting
+			if(TRADER_RESPONSE_ANGRY)
+				. = src.angrynope
+			if(TRADER_RESPONSE_WHO_ARE_YOU)
+				. = src.whotext
+			// When the player is buying items
+			if(TRADER_RESPONSE_VIEWING_SOLD_ITEMS)
+				. = src.buy_dialogue
+			if(TRADER_RESPONSE_SUCCESSFUL_PURCHASE)
+				. = pick(src.successful_purchase_dialogue)
+			if(TRADER_RESPONSE_FAILED_PURCHASE)
+				. = pick(src.failed_purchase_dialogue)
+			// When the player is selling items
+			if(TRADER_RESPONSE_VIEWING_BOUGHT_ITEMS)
+				. = src.sell_dialogue
+			if(TRADER_RESPONSE_SUCCESSFUL_SALE)
+				. = pick(src.successful_sale_dialogue)
+			if(TRADER_RESPONSE_FAILED_SALE)
+				. = pick(src.failed_sale_dialogue)
+			// When the player is collecting items
+			if(TRADER_RESPONSE_SUCCESSFUL_CART)
+				. = src.pickupdialogue
+			if(TRADER_RESPONSE_FAILED_CART)
+				. = src.pickupdialoguefailure
+			// Haggling
+			if(TRADER_RESPONSE_SUCCESSFUL_HAGGLE)
+				. = src.hagglemsgs[haggle_entry]
+			if(TRADER_RESPONSE_FAILED_HAGGLE)
+				. = src.errormsgs[haggle_entry]
 
 // trader except money never comes out. You sell to accrue credit that can then be spent so it is a closed system.
 /obj/npc/trader/barter
@@ -673,34 +742,33 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 
 
 
-
+		//Special martian trader behaviour: prefix with '&' to display generic "feelings" to players that aren't emoted or telepathied
 		src.name = pick( "L'zeurk Xin", "Norzamed Bno", "Kleptar Sde", "Z'orrel Ryvc", "Kleeborp Sie", "Kleebarp Yee", "Kleebop Zho")
-		greeting= {"As you approach the martian, thoughts begins to enter your head.
-			<I>\"Greetings Human, unlike most martians, I am quite friendly. All I desire is to sell my wares\"</I>.
-			<b>[src.name]</b> gestures towards his goods and awaits for you to make your choice."}
+		greeting= list("Greetings Human, unlike most martians, I am quite friendly. All I desire is to sell my wares",
+						"*gestures towards his goods and awaits for you to make your choice.")
 
-		sell_dialogue = "You receive visions of various individuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
+		sell_dialogue = "&You receive visions of various individuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
 
-		buy_dialogue = "You hear a voice in your head,<I>\"Please select what you would like to buy\".</I>"
+		buy_dialogue = "Please select what you would like to buy."
 
-		successful_sale_dialogue = list("<i>A wave of joy washes over you upon the completion of the sale.</i>",
-			"In your head you hear a voice say, <i>\"Thank you for your business. Perhaps we shouldn't wipe you all out.\"</i>",
-			"[src.name] quickly begans putting his new merchandise away. Despite that, you somehow know that the martian is grateful for the sale")
+		successful_sale_dialogue = list("&A wave of joy washes over you upon the completion of the sale.",
+			"Thank you for your business. Perhaps we shouldn't wipe you all out.",
+			list("*quickly begans putting his new merchandise away.", "&Despite that, you somehow know that the martian is grateful for the sale"))
 
-		failed_sale_dialogue = list("<i>You feel an intense feeling of irritation come over you</i>. A foreign thought enters your head, <i>\"Please don't waste my time. I have better things to do than to look at worthless junk.\"</i>",
-			"[src] telepathically communicates to you, <i>\"I'm sorry I currently have no interest in that item, perhaps you should try another trader.\"",
-			"You suddenly and unnaturally feel incredibly stupid and embarassed about your mistake. You hang your head in shame.",
-			"The martian pats you gently on the head, and shakes it head. It seems [src] feels sorry for you")
+		failed_sale_dialogue = list(list("&You feel an intense feeling of irritation come over you", "Please don't waste my time. I have better things to do than to look at worthless junk."),
+			"I'm sorry I currently have no interest in that item, perhaps you should try another trader.",
+			"&You suddenly and unnaturally feel incredibly stupid and embarassed about your mistake. You hang your head in shame.",
+			"*The martian pats you gently on the head, and shakes it head. It seems [src] feels sorry for you")
 
-		successful_purchase_dialogue = list("[src.name] communicates to you, <i>\"Thank you for your business\"</i>.",
-			"A thought enters your head, <i>\"An excellent choice. Tell me when you are ready to pick it up\".</i>")
+		successful_purchase_dialogue = list("Thank you for your business.",
+			"An excellent choice. Tell me when you are ready to pick it up.")
 
-		failed_purchase_dialogue = list("[src.name] communicates to you, <i>\"I am sorry, but you currenty do not have enough funds to purchase this.\"</I>",
-			"[src.name] communicates to you, <i>\"Are you trying to pull a trick on me because I am a martian? You don't have enough credits to purchase this.\"</I>")
+		failed_purchase_dialogue = list("I am sorry, but you currenty do not have enough funds to purchase this.",
+			"Are you trying to pull a trick on me because I am a martian? You don't have enough credits to purchase this.")
 
-		pickupdialogue = "A foreign thought enters your head, <i>\"Thank you for your business. Please come again\"</i>"
+		pickupdialogue = "Thank you for your business. Please come again."
 
-		pickupdialoguefailure = "[src.name] checks something on a strange device. <i>\"I'm sorry, but you don't have anything to pick up\"</i>."
+		pickupdialoguefailure = list("*checks something on a strange device.", "I'm sorry, but you don't have anything to pick up.")
 
 	activatesecurity()
 		for(var/mob/M in AIviewers(src))
@@ -711,6 +779,17 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
+	//Special martian trader behaviour: prefix with '&' to display generic "feelings" to players that aren't emoted or telepathied
+	trader_say(var/message, var/mob/target)
+		if (dd_hasprefix(message, "*"))
+			return ..()
+		if(!target)
+			target = AIviewers(5, src)
+		if (dd_hasprefix(message, "&"))
+			boutput(target, SPAN_NOTICE(copytext(message, 2)))
+		else
+			boutput(target, SPAN_MARTIANSAY("<b>An alien voice echoes in your mind... </b> [message]"))
+
 ////////Robot parent
 ABSTRACT_TYPE(/obj/npc/trader/robot)
 /obj/npc/trader/robot
@@ -720,29 +799,29 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 
 	New()
 		..()
-		greeting= {"[src.name]'s eyes light up, and he states, \"Salutations organic, welcome to my shop. Please browse my wares.\""}
+		greeting= list("*'s eyes light up.", "Salutations organic, welcome to my shop. Please browse my wares.")
 
-		sell_dialogue = "[src.name] states, \"There are several individuals in my database that are looking to procure goods."
+		sell_dialogue = "There are several individuals in my database that are looking to procure goods."
 
-		buy_dialogue = "[src.name] states,\"Please select what you would like to buy\"."
+		buy_dialogue = "Please select what you would like to buy."
 
-		successful_sale_dialogue = list("[src.name] states, \"Thank you for the business organic.\"",
-			"[src.name], \"I am adding you to the Good Customer Database.\"")
+		successful_sale_dialogue = list("Thank you for the business organic.",
+			"I am adding you to the Good Customer Database.")
 
-		failed_sale_dialogue = list("[src.name] states, \"<ERROR> Item not in purchase database.\"",
-			"[src.name] states, \"I'm sorry I currently have no interest in that item, perhaps you should try another trader.\"",
-			"[src.name] starts making a loud and irritating noise. [src.name] states, \"Fatal Exception Error: Cannot locate item\"",
-			"[src.name] states, \"Invalid Input\"")
+		failed_sale_dialogue = list("<ERROR> Item not in purchase database.",
+			"I'm sorry I currently have no interest in that item, perhaps you should try another trader.",
+			list("*starts making a loud and irritating noise.", "Fatal Exception Error: Cannot locate item"),
+			"Invalid Input")
 
-		successful_purchase_dialogue = list("[src.name] states, \"Thank you for your business\".",
-			"[src.name] states, \"My logic drives calculate that was a wise purchase\".")
+		successful_purchase_dialogue = list("Thank you for your business.",
+			"My logic drives calculate that was a wise purchase.")
 
-		failed_purchase_dialogue = list("[src.name] states, \"I am sorry, but you currenty do not have enough funds to purchase this.\"",
-			"[src.name] states, \"Is this organic unit malfunctioning? You do not have enough funds to buy this\"")
+		failed_purchase_dialogue = list("I am sorry, but you currenty do not have enough funds to purchase this.",
+			"Is this organic unit malfunctioning? You do not have enough funds to buy this.")
 
-		pickupdialogue = "[src.name] states, \"Thank you for your business. Please come again\"."
+		pickupdialogue = "Thank you for your business. Please come again\"."
 
-		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
+		pickupdialoguefailure = "I'm sorry, but you don't have anything to pick up."
 
 	activatesecurity()
 		for(var/mob/M in AIviewers(src))
@@ -995,31 +1074,31 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_buy += new /datum/commodity/goldbar(src)
 		/////////////////////////////////////////////////////////
 
-		greeting= {"[src.name] buzzes cheerfully."}
+		greeting= "*buzzes cheerfully."
 
-		sell_dialogue = "[src.name] bumbles a bit."
+		sell_dialogue = "*bumbles a bit."
 
-		buy_dialogue = "[src.name] buzzes inquisitively."
+		buy_dialogue = "*buzzes inquisitively."
 
-		angrynope = "[src.name] buzzes angrily."
-		whotext = "[src.name] makes a bunch of buzzing noises. You are not sure what they mean."
+		angrynope = "*buzzes angrily."
+		whotext = "*makes a bunch of buzzing noises. You are not sure what they mean."
 
-		successful_sale_dialogue = list("[src.name] does a little dance. He looks pretty pleased.")
+		successful_sale_dialogue = list("*does a little dance. He looks pretty pleased.")
 
-		failed_sale_dialogue = list("[src.name] grumbles.",
-			"[src.name] buzzes grumpily.",
-			"[src.name] grumpily bumbles.",
-			"[src.name] looks sad. Look what you've gone and done.")
+		failed_sale_dialogue = list("*grumbles.",
+			"*buzzes grumpily.",
+			"*grumpily bumbles.",
+			"*looks sad. Look what you've gone and done.")
 
-		successful_purchase_dialogue = list("[src.name] grustles.",
-			"[src.name] buzzes happily. You feel happier too.")
+		successful_purchase_dialogue = list("*grustles.",
+			"*buzzes happily. You feel happier too.")
 
-		failed_purchase_dialogue = list("[src.name] gives a somber little buzz.",
-			"[src.name] pouts. You feel pretty bad about yourself.")
+		failed_purchase_dialogue = list("*gives a somber little buzz.",
+			"*pouts. You feel pretty bad about yourself.")
 
-		pickupdialogue = "[src.name] bumbles a bunch."
+		pickupdialogue = "*bumbles a bunch."
 
-		pickupdialoguefailure = "[src.name] grumps."
+		pickupdialoguefailure = "*grumps."
 
 	activatesecurity()
 		for(var/mob/M in AIviewers(src))
@@ -1292,31 +1371,31 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_omega(src)
 		/////////////////////////////////////////////////////////
 
-		greeting= {"<i>A hand sticking out from a toilet waves in your direction.</i>"}
+		greeting= "*waves in your direction."
 
-		sell_dialogue = "<i>A hand sticking out from a toilet points at itself.</i>"
+		sell_dialogue = "*points at itself."
 
-		buy_dialogue = "<i>A hand sticking out from a toilet points at you and beckons.</i>"
+		buy_dialogue = "*points at you and beckons."
 
-		angrynope = "<i>A hand sticking out from a toilet gives you the middle finger. Rude.</i>"
-		whotext = "<i>A hand sticking out from a toilet waves at you.</i>"
+		angrynope = "*gives you the middle finger. Rude."
+		whotext = "*waves at you."
 
-		successful_purchase_dialogue = list("<i>A hand sticking out from a toilet flashes the peace sign.</i>",
-			"<i>A hand sticking out from a toilet gives you the thumbs up.</i>",
-			"<i>A hand sticking out from a toilet snaps.</i>")
+		successful_purchase_dialogue = list("*flashes the peace sign.</i>",
+			"*gives you the thumbs up.",
+			"*snaps.")
 
-		failed_sale_dialogue = list("<i>A hand sticking out from a toilet flips you off.</i>",
-			"<i>A hand sticking out from a toilet gestures angrily.</i>")
+		failed_sale_dialogue = list("*flips you off.",
+			"*gestures angrily.")
 
-		successful_sale_dialogue = list("<i>A hand sticking out from a toilet does a jazz hand.</i>",
-			"<i>A hand sticking out from a toilet gives you the universal gesture for OK.</i>")
+		successful_sale_dialogue = list("*does a jazz hand.",
+			"*gives you the universal gesture for OK.")
 
-		failed_purchase_dialogue = list("<i>A hand sticking out from a toilet twitches.</i>",
-			"<i>A hand sticking out from a toilet gives you the bird.</i>")
+		failed_purchase_dialogue = list("*twitches.",
+			"*gives you the bird.")
 
-		pickupdialogue = "<i>A hand sticking out from a toilet points at you and then at itself.</i>"
+		pickupdialogue = "*points at you and then at itself"
 
-		pickupdialoguefailure = "<i>A hand sticking out from a toilet flails around for a bit.</i>"
+		pickupdialoguefailure = "*flails around for a bit."
 
 /obj/npc/trader/twins
 	icon = 'icons/obj/large/64x64.dmi'
@@ -1433,3 +1512,16 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 
 */
+#undef TRADER_RESPONSE_GREETING
+#undef TRADER_RESPONSE_ANGRY
+#undef TRADER_RESPONSE_WHO_ARE_YOU
+#undef TRADER_RESPONSE_VIEWING_SOLD_ITEMS
+#undef TRADER_RESPONSE_SUCCESSFUL_PURCHASE
+#undef TRADER_RESPONSE_FAILED_PURCHASE
+#undef TRADER_RESPONSE_VIEWING_BOUGHT_ITEMS
+#undef TRADER_RESPONSE_SUCCESSFUL_SALE
+#undef TRADER_RESPONSE_FAILED_SALE
+#undef TRADER_RESPONSE_SUCCESSFUL_CART
+#undef TRADER_RESPONSE_FAILED_CART
+#undef TRADER_RESPONSE_SUCCESSFUL_HAGGLE
+#undef TRADER_RESPONSE_FAILED_HAGGLE
