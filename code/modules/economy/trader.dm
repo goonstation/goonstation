@@ -892,6 +892,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 	angrynope = "Unable to process request."
 	whotext = "I am a trading unit. I have been authorized to engage in trade with you."
 	picture = "robot.png"
+	speech_verb_say = "states"
 
 	New()
 		..()
@@ -1001,6 +1002,12 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 	icon_state = "syndibot"
 	illegal = TRUE
 
+	var/static/list/snark = list(
+		"Sorry, but you aren't cool enough for my wares.",
+		"Have you tried being meaner? My wares are only for the strongest and meanest, traveller.",
+		"You can't handle my goods, an innocent like you would CRUMBLE.",
+	) // ty zewaka
+
 	New()
 		..()
 		var/carlsell = rand(1,12)
@@ -1022,6 +1029,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 
 		src.goods_illegal += new /datum/commodity/podparts/cloak(src)
 		src.goods_illegal += new /datum/commodity/podparts/redarmor(src)
+		src.goods_illegal += new /datum/commodity/contraband/ai_kit_syndie(src)
 		src.goods_illegal += new /datum/commodity/clothing_restock(src)
 
 		#ifdef UNDERWATER_MAP
@@ -1040,9 +1048,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 		src.goods_sell += new /datum/commodity/contraband/flare(src)
 		src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
-
 		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
-		src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
 
 		src.goods_buy += new /datum/commodity/contraband/egun(src)
 		src.goods_buy += new /datum/commodity/contraband/secheadset(src)
@@ -1052,8 +1058,10 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_buy += new /datum/commodity/goldbar(src)
 
 	attack_hand(mob/user)
-		if (!user.mind || !user.mind.is_antagonist())
-			boutput(user, SPAN_ALERT("[src] doesn't seem very keen on talking with you."))
+		if (!user.mind)
+			return
+		if (!user.mind.is_antagonist())
+			src.say(pick(src.snark))
 			return
 		. = ..()
 
