@@ -1,4 +1,4 @@
-//machinery kinda, but machinery i dont want the hpd to deconstruct or build
+//fluid machinery kinda, but machinery i dont want the hpd to deconstruct or build
 
 TYPEINFO(/obj/machinery/piped_sink)
 	can_build(turf/T, direction)

@@ -179,7 +179,7 @@
 			on = FALSE
 		else
 			if(src.reagents.is_full())
-				boutput(user, SPAN_NOTICE("The tub is already full!</alert>"))
+				boutput(user, SPAN_ALERT("The tub is already full!"))
 			else
 				if (!src.input.network)
 					boutput(user, SPAN_ALERT("You try to turn on the tap, but nothing's connected to the back!"))
@@ -206,6 +206,7 @@
 				src.on_reagent_change()
 
 				var/count = 0
+				// TODO: Connect to disposals
 				for (var/obj/O in src)
 					count++
 					qdel(O)
@@ -226,7 +227,7 @@
 				src.reagents.add_reagent(src.default_reagent, 50)
 			src.on_reagent_change()
 			if (src.reagents.is_full())
-				src.visible_message(SPAN_NOTICE("As the [src] finishes filling, the tap shuts off automatically."))
+				src.visible_message(SPAN_NOTICE("As \the [src] finishes filling, the tap shuts off automatically."))
 				playsound(src.loc, 'sound/misc/pourdrink2.ogg', 60, 5)
 				src.on = FALSE
 		if (src.occupant)
