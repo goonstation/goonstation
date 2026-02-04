@@ -145,6 +145,20 @@ proc/filter_carrier_pets(var/type)
 /* -------------------- Mouse -------------------- */
 /* =============================================== */
 
+ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
+
+/mob/living/critter/small_animal/mouse/proc/glorp()
+	src.icon_state = "mouse-glorp"
+	src.icon_state_dead = "mouse-glorp-dead"
+	src.fur_color = "#42BC52"
+	src.real_name = "alien mouse"
+	src.desc = "Gleep glorp bzeewop?"
+	src.sound_scream = 'sound/voice/animal/glorp/glorp1.ogg'
+	src.icon_state_exclaim = "mouse-glorp-exclaim"
+	src.use_custom_color = FALSE
+	src.UpdateName()
+	src.setup_overlays()
+
 /mob/living/critter/small_animal/mouse
 	name = "space mouse"
 	desc = "A mouse.  In space."
@@ -163,10 +177,13 @@ proc/filter_carrier_pets(var/type)
 	ai_retaliate_patience = 0 //retaliate when hit immediately
 	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 	player_can_spawn_with_pet = TRUE
+	sound_scream = 'sound/voice/animal/mouse_squeak.ogg'
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
 	var/shiny_chance = 4096 ///One in this chance of being shiny
 	var/is_shiny = FALSE
+	/// If set, flick to this icon state on scream emote
+	var/icon_state_exclaim = null
 
 	New()
 		..()
@@ -215,7 +232,9 @@ proc/filter_carrier_pets(var/type)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, src.sound_scream, 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					if(src.icon_state_exclaim)
+						FLICK(src.icon_state_exclaim, src)
 					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("smile")
 				if (src.emote_check(voluntary, 50))
@@ -375,15 +394,6 @@ proc/filter_carrier_pets(var/type)
 				src.visible_message("[src] shakes [his_or_her(src)] head sadly.")
 			sleep(1 SECOND)
 			src.ai.enable()
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					FLICK("remy-exclaim", src)
-					return SPAN_EMOTE("<b>[src]</b> squeaks!")
-		return ..()
 
 
 /* ============================================= */
@@ -3979,7 +3989,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/colorkey_overlays = 0
 	icon_state = "mouse-mentor"
 	icon_state_dead = "mouse-mentor-dead"
-	var/icon_state_exclaim = "mouse-mentor-exclaim"
+	icon_state_exclaim = "mouse-mentor-exclaim"
 	health_brute = 35
 	health_burn = 35
 	is_npc = FALSE
@@ -4075,12 +4085,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					if(src.icon_state_exclaim)
-						FLICK(src.icon_state_exclaim, src)
-					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
