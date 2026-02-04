@@ -10,7 +10,7 @@ export interface TraderData {
   theme: string;
   image: string;
   currency_name: string;
-  items_in_cart: number;
+  items_in_cart: CartItemData[];
 
   accepts_card: boolean;
   available_currency: number;
@@ -26,4 +26,9 @@ export interface CommodityData {
   price: number;
   amount_left: number;
   ref: string;
+}
+
+export interface CartItemData {
+  name: string;
+  iconBase64: string;
 }

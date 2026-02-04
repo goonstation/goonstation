@@ -110,7 +110,16 @@
 	ui_data(mob/user)
 		. = list()
 		.["theme"] = src.theme
-		.["items_in_cart"] = length(src.shopping_cart)
+		var/list/cart_items = list()
+		if (length(src.shopping_cart))
+			for (var/atom/movable/cart_item as anything in src.shopping_cart)
+				cart_items += list(
+					list(
+						"iconBase64" = "[icon2base64(getFlatIcon(cart_item))]",
+						"name" = "[cart_item.name]",
+					)
+				)
+		.["items_in_cart"] = cart_items
 		var/account = FindBankAccountByName(src.scan?.registered)
 		if(src.barter && !src.barter_customers[barter_lookup(user)])
 			src.barter_customers[barter_lookup(user)] = 0

@@ -7,6 +7,7 @@
 
 import { useState } from 'react';
 import {
+  BlockQuote,
   Box,
   Button,
   Image,
@@ -19,11 +20,12 @@ import {
 import { useBackend } from '../../backend';
 import { resource } from '../../goonstation/cdn';
 import { Window } from '../../layouts';
+import { capitalize } from './../common/stringUtils';
 import { CommodityData, TraderData } from './type';
 
 export const Trader = () => {
   const { data, act } = useBackend<TraderData>();
-  const [viewing_sell_tab, setSellTab] = useState(true);
+  const [viewing_tab, setTab] = useState('sell');
   return (
     <Window theme={data.theme} width={600} height={700}>
       <Window.Content>
@@ -34,28 +36,36 @@ export const Trader = () => {
           <Stack.Item>
             <Tabs>
               <Tabs.Tab
-                selected={!!viewing_sell_tab}
+                selected={viewing_tab === 'sell'}
                 onClick={() => {
-                  setSellTab(true);
+                  setTab('sell');
                   act('viewsold');
                 }}
               >
                 Selling Items
               </Tabs.Tab>
               <Tabs.Tab
-                selected={!viewing_sell_tab}
+                selected={viewing_tab === 'buy'}
                 onClick={() => {
-                  setSellTab(false);
+                  setTab('buy');
                   act('viewbought');
                 }}
               >
                 Buying Items
               </Tabs.Tab>
+              <Tabs.Tab
+                selected={viewing_tab === 'cart'}
+                onClick={() => {
+                  setTab('cart');
+                }}
+              >
+                View Cart
+              </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
             <Section fill scrollable noTopPadding>
-              {!!viewing_sell_tab && (
+              {viewing_tab === 'sell' && (
                 <Table>
                   {data.goods_sell.map((commodity) => (
                     <CommodityEntry
@@ -66,7 +76,7 @@ export const Trader = () => {
                   ))}
                 </Table>
               )}
-              {!viewing_sell_tab && (
+              {viewing_tab === 'buy' && (
                 <Table>
                   {data.goods_buy.map((commodity) => (
                     <CommodityEntry
@@ -74,6 +84,24 @@ export const Trader = () => {
                       commodity={commodity}
                       view_type={'buying'}
                     />
+                  ))}
+                </Table>
+              )}
+              {viewing_tab === 'cart' && (
+                <Table>
+                  {data.items_in_cart.map((item, index) => (
+                    <Table.Row className="candystripe" key={index}>
+                      <Table.Cell width="32px">
+                        <Image
+                          height="32px"
+                          width="32px"
+                          src={`data:image/png;base64,${item.iconBase64}`}
+                        />
+                      </Table.Cell>
+                      <Table.Cell verticalAlign="middle">
+                        <Box>{capitalize(item.name)}</Box>
+                      </Table.Cell>
+                    </Table.Row>
                   ))}
                 </Table>
               )}
@@ -115,7 +143,7 @@ const TraderInfo = () => {
             </Section>
             <Section>
               <Stack.Item>
-                <b>Items in cart:</b> {data.items_in_cart}
+                <b>Items in cart:</b> {data.items_in_cart.length}
               </Stack.Item>
               <Stack.Item>
                 <Button
@@ -150,7 +178,7 @@ const CommodityEntry = (props: CommodityProps) => {
         <Box mb="5px" bold>
           {commodity.name}
         </Box>
-        <Box>{commodity.description}</Box>
+        <BlockQuote>{commodity.description}</BlockQuote>
       </Table.Cell>
       <Table.Cell py="5px" align="right">
         <Stack vertical>
