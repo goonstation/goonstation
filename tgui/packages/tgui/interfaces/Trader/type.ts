@@ -7,6 +7,7 @@
 
 export interface TraderData {
   name: string;
+  theme: string;
   image: string;
   currency_name: string;
   items_in_cart: number;

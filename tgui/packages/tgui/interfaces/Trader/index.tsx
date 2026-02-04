@@ -25,7 +25,7 @@ export const Trader = () => {
   const { data, act } = useBackend<TraderData>();
   const [viewing_sell_tab, setSellTab] = useState(true);
   return (
-    <Window width={600} height={700}>
+    <Window theme={data.theme} width={600} height={700}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
