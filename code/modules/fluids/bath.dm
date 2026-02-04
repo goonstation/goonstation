@@ -181,6 +181,9 @@
 			if(src.reagents.is_full())
 				boutput(user, SPAN_NOTICE("The tub is already full!</alert>"))
 			else
+				if (!src.input.network)
+					boutput(user, SPAN_ALERT("You try to turn on the tap, but nothing's connected to the back!"))
+					return
 				user.visible_message(SPAN_NOTICE("[user] turns on the bathtub's tap."), SPAN_NOTICE("You turn on the bathtub's tap."))
 				playsound(src.loc, 'sound/misc/pourdrink.ogg', 60, 4)
 				src.on_reagent_change()
