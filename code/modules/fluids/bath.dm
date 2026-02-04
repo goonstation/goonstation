@@ -219,7 +219,7 @@
 
 	process()
 		if (src.on)
-			var/datum/reagents/fluid = src.input.pull_from_network(src.input.network, 100)
+			var/datum/reagents/fluid = src.input.pull_from_network(src.input.network, 150)
 			fluid.trans_to_direct(src.reagents, fluid.total_volume)
 			src.input.push_to_network(src.input.network, fluid)
 			if (src.default_reagent)
