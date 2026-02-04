@@ -1003,38 +1003,46 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 
 	New()
 		..()
-		var/carlsell = rand(1,10)
+		var/carlsell = rand(1,12)
 		src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
 		src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
 		src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
 		src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
 		src.goods_illegal += new /datum/commodity/contraband/syndicate_headset(src)
-		if (carlsell <= 3)
+		if (carlsell <= 4) // 4/12 => ~33% each item, with half of that range overlapping ranges below for two items
 			src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-		if (carlsell >= 2 && carlsell <= 6)
+		if (carlsell >= 3 && carlsell <= 7)
 			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-		if (carlsell >= 5 && carlsell <= 8)
+		if (carlsell >= 6 && carlsell <= 10)
 			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-		if (carlsell >= 9)
+		if (carlsell > 10) // 2/12 => 16% chance for all
 			src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
 			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
 
+		src.goods_illegal += new /datum/commodity/podparts/cloak(src)
+		src.goods_illegal += new /datum/commodity/podparts/redarmor(src)
+		src.goods_illegal += new /datum/commodity/clothing_restock(src)
+
+		#ifdef UNDERWATER_MAP
+		src.goods_illegal += new /datum/commodity/HEtorpedo(src)
+		#endif
+
+		// these use a different selection process to generate more round variety
+		if (carlsell % 2) // 50%
+			src.goods_sell += new /datum/commodity/podparts/ballistic_9mm(src)
+		if (carlsell % 3) // 33%
+			src.goods_sell += new /datum/commodity/podparts/ballistic(src)
+		if (carlsell % 4) // 25%
+			src.goods_sell += new /datum/commodity/podparts/artillery(src)
+
+		src.goods_sell += new /datum/commodity/podparts/ballistic_22(src)
 		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 		src.goods_sell += new /datum/commodity/contraband/flare(src)
 		src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
-		src.goods_sell += new /datum/commodity/podparts/cloak(src)
-		src.goods_sell += new /datum/commodity/podparts/redarmor(src)
-		src.goods_sell += new /datum/commodity/podparts/ballistic_22(src)
-		src.goods_sell += new /datum/commodity/podparts/ballistic_9mm(src)
-		src.goods_sell += new /datum/commodity/podparts/ballistic(src)
-		src.goods_sell += new /datum/commodity/podparts/artillery(src)
+
 		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
 		src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
-		src.goods_sell += new /datum/commodity/clothing_restock(src)
-#ifdef UNDERWATER_MAP
-		src.goods_sell += new /datum/commodity/HEtorpedo(src)
-#endif
 
 		src.goods_buy += new /datum/commodity/contraband/egun(src)
 		src.goods_buy += new /datum/commodity/contraband/secheadset(src)
@@ -1042,6 +1050,12 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_buy += new /datum/commodity/contraband/spareid(src)
 		src.goods_buy += new /datum/commodity/contraband/captainid(src)
 		src.goods_buy += new /datum/commodity/goldbar(src)
+
+	attack_hand(mob/user)
+		if (!user.mind || !user.mind.is_antagonist())
+			boutput(user, SPAN_ALERT("[src] doesn't seem very keen on talking with you."))
+			return
+		. = ..()
 
 ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 /obj/npc/trader/robot/robuddy
