@@ -1029,11 +1029,11 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		#endif
 
 		// these use a different selection process to generate more round variety
-		if (carlsell % 2) // 50%
+		if ((carlsell % 2) == 0) // 50%
 			src.goods_sell += new /datum/commodity/podparts/ballistic_9mm(src)
-		if (carlsell % 3) // 33%
+		if ((carlsell % 3) == 0) // 33%
 			src.goods_sell += new /datum/commodity/podparts/ballistic(src)
-		if (carlsell % 4) // 25%
+		if ((carlsell % 4) == 0) // 25%
 			src.goods_sell += new /datum/commodity/podparts/artillery(src)
 
 		src.goods_sell += new /datum/commodity/podparts/ballistic_22(src)
