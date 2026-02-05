@@ -33,6 +33,43 @@
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, volume)
 
+/// Similar to command_announcement, but sends an alternative text, title and sound to a select group of targets instead.
+/// Unlike similar procs, alt_targets needs to be a list of clients, but if given an empty list or null it will fall back to command_announcement
+/proc/command_announcement_alt(text, title, sound_to_play = "", alt_targets, text_alt, title_alt, sound_to_play_alt = "", volume = 100, alert_origin=null)
+	if(!title || !text)
+		return
+
+	if(!alt_targets || length(alt_targets) == 0)
+		return command_announcement(text, title, sound_to_play, 1, volume, alert_origin)
+
+	if(!text_alt || !title_alt)
+		return
+
+	var/origin_class = alert_origin_class(alert_origin)
+	var/regular_html = generate_alert_html(title, text, origin_class)
+	var/alt_html = generate_alert_html(title_alt, text_alt, origin_class)
+
+	boutput(alt_targets, alt_html)
+	if(sound_to_play_alt && length(sound_to_play_alt) > 0)
+		playsound_global(alt_targets, sound_to_play_alt, volume)
+
+	var/regular_targets = clients - alt_targets
+	boutput(regular_targets, regular_html)
+	if(sound_to_play && length(sound_to_play) > 0)
+		playsound_global(regular_targets, sound_to_play, volume)
+
+/proc/generate_alert_html(title, text, origin_class)
+	var/title_html = ""
+	if(length(title))
+		title_html = "<h2 class=\"command_alert [origin_class]\">[title]</h2>"
+
+	return {"
+		<div class="command_alert [origin_class]">
+			[title_html]
+			<p class="command_alert [origin_class]">[replacetext(text, "\n", "<br>\n")]</p>
+		</div>
+	"}
+
 /proc/advanced_command_alert(text, title="", sound_to_play = "", alert_origin=null)
 	if(!text) return 0
 
