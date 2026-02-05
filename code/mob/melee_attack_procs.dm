@@ -108,6 +108,9 @@
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
 			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
 			mask.honk_nose(src)
+		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_nose))
+			var/obj/item/clothing/mask/clown_nose/mask = src.wear_mask
+			mask.honk_nose(src)
 		else
 			var/item = src.get_random_equipped_thing_name()
 			if (item)
@@ -248,6 +251,11 @@
 	if (!target.canbegrabbed)
 		if (target.grabresistmessage)
 			target.visible_message(SPAN_COMBAT("<b>[src] tries to grab [target], [target.grabresistmessage]</B>"))
+		return
+
+	var/obj/item/target_weapon = target.equipped()
+	if (target_weapon?.chokehold?.affecting == src)
+		target.visible_message(SPAN_COMBAT(SPAN_BOLD("[src] scrabbles at [target]!")))
 		return
 
 	if (istype(H))

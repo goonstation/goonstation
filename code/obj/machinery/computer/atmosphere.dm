@@ -48,6 +48,7 @@ Mixer Control
 	)
 
 	save_board_data(obj/item/circuitboard/circuitboard)
+		. = ..()
 		circuitboard.saved_data = src.frequency
 
 	load_board_data(obj/item/circuitboard/circuitboard)

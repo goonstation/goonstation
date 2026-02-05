@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 /datum/clothingbooth_item/head/cat_ears
-	cost = PAY_TRADESMAN/2
+	cost = PAY_TRADESMAN
 
 	white
 		name = "White"
@@ -535,3 +535,135 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 /datum/clothingbooth_item/head/ushanka
 	cost = PAY_TRADESMAN
 	item_path = /obj/item/clothing/head/ushanka
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/hijab)
+/datum/clothingbooth_item/head/hijab
+	cost = PAY_TRADESMAN/5
+
+	black
+		name = "Black"
+		swatch_background_color = "#090a22"
+		item_path = /obj/item/clothing/head/hijab/black
+
+	darkblue
+		name = "Dark Blue"
+		swatch_background_color = "#1a378d"
+		item_path = /obj/item/clothing/head/hijab/darkblue
+
+	lightblue
+		name = "Light Blue"
+		swatch_background_color = "#24bdc6"
+		item_path = /obj/item/clothing/head/hijab/lightblue
+
+	green
+		name = "Green"
+		swatch_background_color = "#3fb54f"
+		item_path = /obj/item/clothing/head/hijab/green
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#d3cb21"
+		item_path = /obj/item/clothing/head/hijab/yellow
+
+	orange
+		name = "Orange"
+		swatch_background_color = "#d37610"
+		item_path = /obj/item/clothing/head/hijab/orange
+
+	brown
+		name = "Brown"
+		swatch_background_color = "#724f29"
+		item_path = /obj/item/clothing/head/hijab/brown
+
+	red
+		name = "Red"
+		swatch_background_color = "#d71d15"
+		item_path = /obj/item/clothing/head/hijab/red
+
+	pink
+		name = "Pink"
+		swatch_background_color = "#f57382"
+		item_path = /obj/item/clothing/head/hijab/pink
+
+	purple
+		name = "Purple"
+		swatch_background_color = "#b320c3"
+		item_path = /obj/item/clothing/head/hijab/purple
+
+	white
+		name = "White"
+		swatch_background_color = "#ebf0f2"
+		item_path = /obj/item/clothing/head/hijab/white
+
+	flower
+		name = "Flower Pattern"
+		swatch_background_color = "#63bfdc"
+		swatch_foreground_color = "#d44e99"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
+		item_path = /obj/item/clothing/head/hijab/flower
+
+	zigzag
+		name = "Zigzag Pattern"
+		swatch_background_color = "#4d091f"
+		swatch_foreground_color = "#e19a38"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
+		item_path = /obj/item/clothing/head/hijab/zigzag
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/headscarf)
+/datum/clothingbooth_item/head/headscarf
+	cost = PAY_TRADESMAN/5
+
+	black
+		name = "Black"
+		swatch_background_color = "#090a22"
+		item_path = /obj/item/clothing/head/headscarf/black
+
+	purple
+		name = "Purple"
+		swatch_background_color = "#b320c3"
+		item_path = /obj/item/clothing/head/headscarf/purple
+
+	darkblue
+		name = "Dark Blue"
+		swatch_background_color = "#1a378d"
+		item_path = /obj/item/clothing/head/headscarf/darkblue
+
+	lightblue
+		name = "Light Blue"
+		swatch_background_color = "#24bdc6"
+		item_path = /obj/item/clothing/head/headscarf/lightblue
+
+	green
+		name = "Green"
+		swatch_background_color = "#167935"
+		item_path = /obj/item/clothing/head/headscarf/green
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#ddb720"
+		item_path = /obj/item/clothing/head/headscarf/yellow
+
+	orange
+		name = "Orange"
+		swatch_background_color = "#d37610"
+		item_path = /obj/item/clothing/head/headscarf/orange
+
+	brown
+		name = "Brown"
+		swatch_background_color = "#4a281b"
+		item_path = /obj/item/clothing/head/headscarf/brown
+
+	pink
+		name = "Pink"
+		swatch_background_color = "#f57382"
+		item_path = /obj/item/clothing/head/headscarf/pink
+
+	red
+		name = "Red"
+		swatch_background_color = "#d73715"
+		item_path = /obj/item/clothing/head/headscarf/red
+
+	white
+		name = "White"
+		swatch_background_color = "#ebf0f2"
+		item_path = /obj/item/clothing/head/headscarf/white

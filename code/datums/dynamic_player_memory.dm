@@ -30,7 +30,8 @@
 		src.memory_text = "The conspiracy consists of: "
 
 		for (var/datum/mind/conspirator in src.antag_datum.conspirators)
-			if (conspirator.assigned_role == "Clown")
-				src.memory_text += "<b>a Clown</b>, "
+			var/datum/job/J = find_job_in_controller_by_string(conspirator.assigned_role)
+			if (J?.change_name_on_spawn)
+				src.memory_text += "<b>\an [J.name]</b>"
 			else
 				src.memory_text += "<b>[conspirator.current.real_name]</b>, "

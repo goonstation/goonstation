@@ -129,6 +129,9 @@ TYPEINFO(/mob/dead/target_observer/hivemind_observer)
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
 		if(tgui_alert(src, "This will automatically set DNR. Continue?", "DNR Confirmation", list("Yes", "No")) == "Yes")
 			boutput(src, SPAN_ALERT("You have parted with the hivemind."))
+			#ifdef RP_MODE
+			respawn_controller.subscribeNewRespawnee(src.ckey)
+			#endif
 			src.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, set_dnr=TRUE)
 	else
 		boutput(src, SPAN_ALERT("You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds."))

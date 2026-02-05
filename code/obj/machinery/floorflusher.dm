@@ -136,6 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		//you can only fall in if its open
 		if (open != 1)
 			return
+		return_if_overlay_or_effect(AM)
 		if (istype(AM, /obj/projectile))
 			return
 		if (isobj(AM))

@@ -140,7 +140,7 @@ TYPEINFO(/mob/living/carbon/cube)
 				else
 					if (voluntary) src.show_text("Invalid Emote: [act]")
 		if (message && isalive(src))
-			logTheThing(LOG_SAY, src, "EMOTE: [message]")
+			log_emote(src, message, voluntary)
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
 					O.show_message(message, m_type)

@@ -33,7 +33,7 @@
 	if (..())
 		return
 
-	if(affected_mob.job == "Clown")
+	if(affected_mob.traitHolder?.hasTrait("training_clown"))
 		D.state = "Asymptomatic"
 		return
 	if(isdead(affected_mob))

@@ -298,6 +298,7 @@
 /obj/item/reagent_containers/glass/bottle/chemical/plastic
 	name = "plastic chemical bottle"
 	desc = "A 3D-printed reagent storage bottle."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()
@@ -434,3 +435,4 @@
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10
 	fluid_overlay_states = 0
+	default_material = "plastic"

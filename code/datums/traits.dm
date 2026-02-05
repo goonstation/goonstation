@@ -679,7 +679,7 @@
 
 /datum/trait/wheelchair
 	name = "Wheelchair"
-	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, you have been placed on the disability list. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
+	desc = "Nanotrasen will kindly supply any crewmember a wheelchair upon request regardless of disability. (as part of a regulatory agreement)"
 	id = "wheelchair"
 	icon_state = "stumped"
 	category = list("trinkets")
@@ -908,14 +908,15 @@ ABSTRACT_TYPE(/datum/trait/job)
 			var/mob/living/carbon/human/H = owner
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_CANTSPRINT, "trait")
 
-//Category: Background.
+//Category: Scenarios - Fuscia border
+//Traits that change your spawn location.
 
 /datum/trait/stowaway
 	name = "Stowaway"
 	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
 	id = "stowaway"
 	icon_state = "stowaway"
-	category = list("background")
+	category = list("spawn scenario")
 	points = 0
 	unselectable = TRUE
 
@@ -924,7 +925,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection, but you have no PDA and your pod cannot open wormholes."
 	id = "pilot"
 	icon_state = "pilot"
-	category = list("background")
+	category = list("spawn scenario")
 	points = 0
 
 
@@ -933,7 +934,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You always sleep through the start of the shift, and wake up in a random bed."
 	id = "sleepy"
 	icon_state = "sleepy"
-	category = list("background")
+	category = list("spawn scenario")
 	points = 0
 	spawn_delay = 10 SECONDS
 
@@ -965,7 +966,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "You don't remember much about last night, but you know you had a good time."
 	id = "partyanimal"
 	icon_state = "partyanimal"
-	category = list("background")
+	category = list("spawn scenario")
 	points = 0
 	spawn_delay = 3 SECONDS
 
@@ -1131,7 +1132,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		owner.ensure_listen_tree().AddListenModifier(LISTEN_MODIFIER_CLOWN_DISBELIEF)
 
 	proc/examined(mob/owner, mob/examiner, list/lines)
-		if(examiner.job == "Clown")
+		if(examiner.traitHolder?.hasTrait("training_clown"))
 			lines += "<br>[capitalize(he_or_she(owner))] doesn't seem to notice you."
 
 	onRemove(mob/owner)
@@ -1462,7 +1463,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/datum/mutantrace/new_mutantrace_type = null
-			if (prob(1) && prob(1)) // 0.01% chance of a weird mutantrace
+			if (prob(0.01)) // weird mutantrace
 				new_mutantrace_type = pick(filtered_concrete_typesof(/datum/mutantrace, /proc/safe_mutantrace_nogenepool_filter))
 			else // otherwise, pick any -1 point mutrace
 				new_mutantrace_type = pick(/datum/mutantrace/lizard, /datum/mutantrace/cow, /datum/mutantrace/skeleton,	/datum/mutantrace/roach)
@@ -1471,12 +1472,7 @@ TYPEINFO(/datum/trait/partyanimal)
 				new_mutantrace_type = /datum/mutantrace/human
 			H.default_mutantrace = new_mutantrace_type
 			H.set_mutantrace(H.default_mutantrace)
-
-	onRemove(mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.default_mutantrace = /datum/mutantrace/human
-			H.set_mutantrace(H.default_mutantrace)
+		owner.traitHolder.removeTrait("random_species") // don't re-roll species
 
 /datum/trait/super_slips
 	name = "Slipping Hazard"
@@ -1590,3 +1586,32 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Missing Right Eye"
 	id = "eye_missing_right"
 	unselectable = TRUE
+
+
+/*
+	onAdd(mob/owner)
+		owner.traitHolder.removeTrait("random_species") // this is in the category of species
+		if (owner.traitHolder.getTraitWithCategory("species"))
+			return // but if we have any others, don't overwrite existing species traits
+		if (ishuman(owner))
+			if (prob(0.01)) // weird human mutantrace
+				var/mob/living/carbon/human/H = owner
+				var/datum/mutantrace/new_mutantrace_type = null
+				new_mutantrace_type = pick(filtered_concrete_typesof(/datum/mutantrace, /proc/safe_mutantrace_nogenepool_filter))
+				if (isnull(new_mutantrace_type)) // safety
+					logTheThing(LOG_DEBUG, src, "Failed to generate a random species for [owner].")
+					new_mutantrace_type = /datum/mutantrace/human
+				H.default_mutantrace = new_mutantrace_type
+				H.set_mutantrace(H.default_mutantrace)
+			else
+				switch(rand(1,4))
+					if(1)
+						owner.addTrait("roach")
+					if(2)
+						owner.addTrait("skeleton")
+					if(3)
+						owner.addTrait("cow")
+					if(4)
+						owner.addTrait("lizard")
+
+*/

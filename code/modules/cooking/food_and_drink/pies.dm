@@ -32,7 +32,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 /// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
 /obj/item/reagent_containers/food/snacks/pie/proc/assembly_check(var/manipulated_pie, var/obj/item/second_part, var/mob/user)
-	if (src.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
+	if (src.w_class > W_CLASS_SMALL)
 		boutput(user, SPAN_NOTICE("[src] is way too large. You can't find any way to balance it on the arm."))
 		return TRUE
 
@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	var/mob/M = hit_atom
 	var/mob/thrower = thr.thrown_by
 	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
-	if (thrower?.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
+	if (thrower?.traitHolder?.hasTrait("training_clown") && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
 		src.clown_pie(thrower, M)
 		return
 

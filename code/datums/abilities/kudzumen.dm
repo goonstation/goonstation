@@ -39,7 +39,7 @@
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
-/datum/abilityHolder/kudzu
+/datum/abilityHolder/mutantrace/kudzu
 	usesPoints = 1
 	regenRate = 0
 	tabName = "kudzu"
@@ -94,7 +94,7 @@
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
-	preferred_holder_type = /datum/abilityHolder/kudzu
+	preferred_holder_type = /datum/abilityHolder/mutantrace/kudzu
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 	var/unlock_message = null
@@ -164,8 +164,8 @@
 
 	cast(atom/target)
 		. = ..()
-		if (istype(holder, /datum/abilityHolder/kudzu))
-			var/datum/abilityHolder/kudzu/KAH = holder
+		if (istype(holder, /datum/abilityHolder/mutantrace/kudzu))
+			var/datum/abilityHolder/mutantrace/kudzu/KAH = holder
 			KAH.nutrients_meter.update()
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
@@ -265,7 +265,7 @@
 
 	cast(atom/T)
 		. = ..()
-		var/datum/abilityHolder/kudzu/HK = holder
+		var/datum/abilityHolder/mutantrace/kudzu/HK = holder
 		if (!HK.stealthed)
 			HK.stealthed = 1
 			boutput(holder.owner, SPAN_HINT("You secrete nutrients to refract light."))
@@ -322,8 +322,8 @@
 
 			//Transfer nutrients to our brethren.
 			var/mob/living/carbon/human/H = target
-			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))
-				var/datum/abilityHolder/kudzu/KAH = H.abilityHolder
+			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/mutantrace/kudzu))
+				var/datum/abilityHolder/mutantrace/kudzu/KAH = H.abilityHolder
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
 				H.changeStatus("knockdown", -3 SECONDS)
 		return
@@ -520,7 +520,7 @@
 	var/obj/item/kudzu/kudzumen_vine/vine = null
 	var/active = 0
 
-	New(var/datum/abilityHolder/kudzu/holder)
+	New(var/datum/abilityHolder/mutantrace/kudzu/holder)
 		..(holder)
 
 		vine = new/obj/item/kudzu/kudzumen_vine(holder?.owner)		//make the vine item in
@@ -581,9 +581,9 @@
 			return 1
 
 /atom/movable/screen/kudzu
-	var/datum/abilityHolder/kudzu/holder
+	var/datum/abilityHolder/mutantrace/kudzu/holder
 
-	New(var/datum/abilityHolder/kudzu/holder)
+	New(var/datum/abilityHolder/mutantrace/kudzu/holder)
 		..()
 		src.holder = holder
 
@@ -628,7 +628,7 @@
 	var/datum/controller/process/kudzu/kudzu_controller
 	var/amount = 0
 
-	New(var/datum/abilityHolder/kudzu/holder, var/datum/controller/process/kudzu/K)
+	New(var/datum/abilityHolder/mutantrace/kudzu/holder, var/datum/controller/process/kudzu/K)
 		..(holder)
 		if (istype(K))
 			kudzu_controller = K
@@ -714,7 +714,7 @@
 
 			//This isn't supposed to be dropped. We'll try to cast the ability to sync it if it does though.
 			// //find abilityholder and cast ability to put it back in the guy.
-			// var/datum/abilityHolder/kudzu/KH = user.get_ability_holder(/datum/abilityHolder/kudzu)
+			// var/datum/abilityHolder/mutantrace/kudzu/KH = user.get_ability_holder(/datum/abilityHolder/mutantrace/kudzu)
 			// if (istype(KH))
 			// 	var/datum/targetable/kudzu/vine_appendage/VA = KH.getAbility(/datum/targetable/kudzu/vine_appendage)
 			// 	VA.cast()

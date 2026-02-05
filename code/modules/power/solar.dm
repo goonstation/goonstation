@@ -265,7 +265,6 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/lastgen = 0
 	var/active = TRUE
 	var/obj/machinery/power/tracker/tracker
-	var/emagged = FALSE
 
 	north
 		solar_id = "north"

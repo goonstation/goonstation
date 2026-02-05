@@ -1099,7 +1099,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/message = specific_emotes(act, param, voluntary)
 	var/m_type = specific_emote_type(act)
 	var/custom = 0 //Sorry, gotta make this for chat groupings.
-	var/used_name = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3 ? "Something" : src
+
 
 	if (!message)
 		switch (lowertext(act))
@@ -1120,36 +1120,36 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 						if (param)
 							switch(act)
 								if ("bow","wave","nod")
-									message = "<B>[used_name]</B> [act]s to [param]."
+									message = "<B>[src]</B> [act]s to [param]."
 									maptext_out = "<I>[act]s to [M]</I>"
 								if ("glare","stare","look","leer")
-									message = "<B>[used_name]</B> [act]s at [param]."
+									message = "<B>[src]</B> [act]s at [param]."
 									maptext_out = "<I>[act]s at [M]</I>"
 								else
-									message = "<B>[used_name]</B> [act]s [param]."
+									message = "<B>[src]</B> [act]s [param]."
 									maptext_out = "<I>[act]s [M]</I>"
 						else
 							switch(act)
 								if ("hug")
-									message = "<B>[used_name]</b> [act]s itself."
+									message = "<B>[src]</b> [act]s itself."
 									maptext_out = "<I>[act]s itself</I>"
 								else
-									message = "<B>[used_name]</b> [act]s."
+									message = "<B>[src]</b> [act]s."
 									maptext_out = "<I>[act]s [M]</I>"
 					else
-						message = "<B>[used_name]</B> struggles to move."
-						maptext_out = "<I>[used_name] struggles to move</I>"
+						message = "<B>[src]</B> struggles to move."
+						maptext_out = "<I>[src] struggles to move</I>"
 					m_type = 1
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				if (src.emote_check(voluntary, 10))
-					message = "<B>[used_name]</B> [act]s."
+					message = "<B>[src]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
 					m_type = 1
 			if ("gasp","cough","laugh","giggle","sigh")
 				// basic hearable single-word emotes
 				if (src.emote_check(voluntary, 10))
-					message = "<B>[used_name]</B> [act]s."
+					message = "<B>[src]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
 					m_type = 2
 			if ("customv")
@@ -1157,7 +1157,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					param = input("Choose an emote to display.")
 					if(!param) return
 				param = html_encode(sanitize(param))
-				message = "<b>[used_name]</b> [param]"
+				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
@@ -1166,7 +1166,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					param = input("Choose an emote to display.")
 					if(!param) return
 				param = html_encode(sanitize(param))
-				message = "<b>[used_name]</b> [param]"
+				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 2
@@ -1174,7 +1174,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				if (!param)
 					return
 				param = html_encode(sanitize(param))
-				message = "<b>[used_name]</b> [param]"
+				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
 				m_type = 1
@@ -1184,7 +1184,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 					else
-						message = "<b>[used_name]</B> does a flip!"
+						message = "<b>[src]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
 
 	if (!message)
@@ -1202,7 +1202,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		for (var/mob/M in A.contents)
 			recipients += M
 
-	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	log_emote(src, message, voluntary)
 	act = lowertext(act)
 	for (var/mob/M as anything in recipients)
 		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
