@@ -2850,6 +2850,22 @@ ABSTRACT_TYPE(/area/station/engine)
 	icon_state = "engine_power"
 	sound_environment = 5
 
+TYPEINFO(/area/station/engine/power/transmission)
+	valid_bounty_area = FALSE
+/area/station/engine/power/transmission
+	name = "Power transmission"
+	icon_state = "yellow"
+	requires_power = FALSE
+
+/area/station/engine/power/transmission/north
+	name = "North power transmission arm"
+
+/area/station/engine/power/transmission/east
+	name = "East power transmission arm"
+
+/area/station/engine/power/transmission/west
+	name = "West power transmission arm"
+
 /area/station/engine/monitoring
 	name = "Engineering Control Room"
 	icon_state = "engine_control"
