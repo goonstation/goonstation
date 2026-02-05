@@ -374,7 +374,15 @@ TYPEINFO(/mob/dead/observer)
 		if(istype(get_area(src), /area/afterlife))
 			qdel(src)
 
-		if(!(mind?.get_player()?.dnr || mind?.get_player()?.joined_observer))
+		var/do_respawn = TRUE
+		if(mind?.get_player()?.joined_observer)
+			do_respawn = FALSE
+		#ifndef RP_MODE
+		if(mind?.get_player()?.dnr)
+			do_respawn = FALSE
+		#endif
+
+		if (do_respawn)
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
