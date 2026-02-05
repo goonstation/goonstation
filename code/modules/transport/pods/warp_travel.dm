@@ -113,8 +113,8 @@
 	var/obj/target = null
 	/// allows a portal to warp to restricted Zs and areas
 	var/bypass_tele_block = FALSE
-	anchored = ANCHORED
-	event_handler_flags = USE_FLUID_ENTER
+	anchored = ANCHORED_ALWAYS
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP | IMMUNE_OCEAN_PUSH
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
 	SPAWN(0)

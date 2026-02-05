@@ -67,6 +67,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	speech_verb_say = "beeps"
+	provides_grip = TRUE
 
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
@@ -1014,12 +1015,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.layer < victim.layer)
 			src.layer = victim.layer+1
 		src.set_loc(vicTurf)
-		random_brute_damage(victim, rand(20,40),1)
+		random_brute_damage(victim, rand(20,40) * vicTurf.get_gforce_fractional(), TRUE)
 	else
 		src.visible_message("<b>[SPAN_ALERT("[src.name] tips over!")]</b>")
 
 	src.power_change()
 	src.anchored = UNANCHORED
+	src.provides_grip = FALSE
+	vicTurf?.grip_atom_count -= 1
 	return
 
 /obj/machinery/vending/set_broken()
@@ -1888,6 +1891,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/elective_prosthetics_for_dummies, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/teg_guide, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/gravity_tether, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/horrorcontest, 2, cost=PAY_UNTRAINED/5)
 
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/the_trial, 1, cost=PAY_UNTRAINED/5, hidden=1)

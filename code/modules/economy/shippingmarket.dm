@@ -712,7 +712,10 @@
 					if (P && !P.density)
 						P.close()
 
-		shipped_thing.throw_at(target, src.launch_distance, 1)
+		if (global.map_currently_underwater || global.is_map_on_ground_terrain)
+			shipped_thing.throw_at(target, src.launch_distance, 1)
+		else
+			shipped_thing.throw_at(target, 1, 1)
 #endif
 
 	proc/get_path_to_market()

@@ -4,6 +4,7 @@
 	name = "Pressure Tank"
 	desc = "A large vessel containing pressurized gas."
 	density = TRUE
+	provides_grip = TRUE
 	var/volume = 1620 //in liters, 0.9 meters by 0.9 meters by 2 meters
 
 /obj/machinery/atmospherics/unary/tank/New()
