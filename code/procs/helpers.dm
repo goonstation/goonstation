@@ -2478,6 +2478,7 @@ proc/is_incapacitated(mob/M)
 	return (M &&(\
 		M.hasStatus("stunned") || \
 		M.hasStatus("knockdown") || \
+		M.hasStatus("standing_up") || \
 		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
