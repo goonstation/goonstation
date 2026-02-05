@@ -1059,7 +1059,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Blood Bank"
 
 /datum/supply_packs/singularity_generator
-	name = "Singularity Generator Crat (Cardlocked \[Chief Engineer])"
+	name = "Singularity Generator Crate (Cardlocked \[Chief Engineer])"
 	desc = "x1 Extremely Unstable Gravitational Singularity. Stored in a hi-tech jam jar, fired directly at your current location."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/the_singularitygen)
