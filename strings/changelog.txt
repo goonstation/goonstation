@@ -1,4 +1,9 @@
 
+(t)thu feb 05 26
+(u)JORJ949
+(p)25783
+(e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
+(*)Trainee Roles, alongside Sous-Chef and Blue Clown will now be able to buy whatever traitor items their main role can buy (i.e. blue clowns can buy clown items, Tech Trainees can buy Engineer items).
 (t)tue feb 03 26
 (u)glowbold
 (p)25808
