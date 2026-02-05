@@ -69,9 +69,10 @@
 
 			if (istype(AM, /mob))
 				if (isliving(AM))
-					if (!isdead(AM))
-						boutput(AM, SPAN_COMBAT("You're buried alive! <b>HOLY SHIT</b>!"))
-					RegisterSignal(AM, COMSIG_MOB_FLIP, PROC_REF(mob_flip_inside))
+					var/mob/living/M = AM
+					if (!isdead(M))
+						boutput(M, SPAN_COMBAT("You're buried alive! <b>HOLY SHIT</b>!"))
+					RegisterSignal(M, COMSIG_MOB_FLIP, PROC_REF(mob_flip_inside))
 
 				if (src.has_buried_mob)
 					continue
