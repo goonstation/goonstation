@@ -6,7 +6,6 @@
 // PLEASE JUST MAKE A MESS OF make_my_stuff() INSTEAD
 // CALL YOUR PARENTS
 
-#define RELAYMOVE_DELAY 1 SECOND
 /// The percentage of a storage object's health below which it will only return one sheet on deconstruction.
 #define STORAGE_UNSALVAGEABLE_THRESHOLD 0
 
@@ -219,7 +218,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			return
 		if (src.hasStatus("teleporting"))
 			return
-		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
+		if (world.time < (src.last_relaymove_time + DEFAULT_INTERNAL_RELAYMOVE_DELAY))
 			return
 		src.last_relaymove_time = world.time
 
@@ -784,7 +783,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
 			spawn_contents = null
 
-		var/newloc = get_turf(src)
+		var/newloc = src.loc
 		vis_controller?.show()
 		for (var/obj/O in src)
 			if (!(O in vis_controller?.vis_items))
@@ -1167,5 +1166,4 @@ TYPEINFO_NEW(/obj/storage/secure)
 				user.show_text("You repair the lock on [src].", "blue")
 			return 1
 
-#undef RELAYMOVE_DELAY
 #undef STORAGE_UNSALVAGEABLE_THRESHOLD

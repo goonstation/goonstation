@@ -185,10 +185,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 						ejectT = locate(westBound - 1,T.y,T.z)
 				if (istype(AM, /atom/movable/buried_storage))
 					var/atom/movable/buried_storage/buried_storage = AM
-					for (var/atom/movable/buried as anything in buried_storage)
-						buried.set_loc(ejectT)
-					buried_storage.has_buried_mob = FALSE
-					buried_storage.number_of_objects = 0
+					buried_storage.move_storage_contents_to_turf(ejectT)
 					continue
 				AM.set_loc(ejectT)
 

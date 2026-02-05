@@ -17,3 +17,5 @@
 #define MODIFIER_SHIFT  (1<<1)
 #define MODIFIER_ALT    (1<<2)
 #define MODIFIER_CTRL   (1<<3)
+
+#define DEFAULT_INTERNAL_RELAYMOVE_DELAY (1 SECOND)

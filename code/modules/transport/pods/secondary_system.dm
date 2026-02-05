@@ -140,8 +140,11 @@
 /obj/item/shipcomponent/secondary_system/cargo
 	name = "Cargo Hold"
 	desc = "Allows the ship to load crates and transport them. One of Tradecraft Seneca's best sellers."
-	var/list/load = list() //Current crates inside
-	var/maxcap = 3 //how many crates it can hold
+	var/list/load = list() //! Current items loaded in
+	var/maxcap = 3 //! How many items it can hold
+	var/bust_out_health = 10 //! How many times do you have to bang your head against the top to get free
+	var/last_relaymove_time //! Last time someone inside us tried to move out
+	/// What itempaths will this cargo hold accept?
 	var/list/acceptable = list(/obj/storage/crate,
 	/obj/storage/secure/crate,
 	/obj/machinery/artifact,
@@ -325,16 +328,20 @@
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 	return 0
 
-/obj/item/shipcomponent/secondary_system/cargo/proc/unload(var/atom/movable/C,var/turf/T)
-	if(!C || !(C in load))
+/obj/item/shipcomponent/secondary_system/cargo/proc/unload(atom/movable/AM, turf/T)
+	if (!istype(T))
+		if (src.ship)
+			T = get_turf(src.ship)
+		else
+			T = get_turf(src)
+	src.eject_nonload(T)
+
+	if (!AM || !(AM in src.load))
 		return
 
-	if(T)
-		C.set_loc(T)
-	else
-		C.set_loc(ship.loc)
-	step(C, turn(ship.dir,180))
-	return C
+	AM.set_loc(T)
+	step(AM, turn(src.ship.dir,180))
+	return AM
 
 /obj/item/shipcomponent/secondary_system/cargo/proc/get_unloadable(mob/user)
 	var/list/cargo_by_name = list()
@@ -356,7 +363,67 @@
 			AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3,7), 3)
 		else
 			break
+	var/extra_bits = src.eject_nonload(get_turf(src.ship))
+	for (var/atom/movable/AM in extra_bits)
+		AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3,7), 3)
 	..()
+
+/obj/item/shipcomponent/secondary_system/cargo/proc/eject_nonload(turf/T)
+	if (!istype(T))
+		if (src.ship)
+			T = get_turf(src.ship)
+		else
+			T = get_turf(src)
+	if (!istype(T))
+		return // ???
+
+	var/list/ejectables = src.contents - src.load
+	for (var/atom/movable/AM in ejectables)
+		continue_if_overlay_or_effect(AM)
+		AM.set_loc(T)
+	return ejectables
+
+/obj/item/shipcomponent/secondary_system/cargo/relaymove(mob/user, direction, delay, running)
+	if (is_incapacitated(user))
+		return
+	if (src.hasStatus("teleporting"))
+		return
+	if (world.time < (src.last_relaymove_time + DEFAULT_INTERNAL_RELAYMOVE_DELAY))
+		return
+	src.last_relaymove_time = world.time
+
+	if (!src.ship)
+		src.eject_nonload(get_turf(src))
+	else
+		src.bust_out()
+
+	. = ..()
+
+/obj/item/shipcomponent/secondary_system/cargo/mob_flip_inside(mob/user)
+	src.bust_out()
+	. = ..()
+
+/obj/item/shipcomponent/secondary_system/cargo/proc/bust_out()
+	if (src.bust_out_health)
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
+		src.bust_out_message(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
+		src.bust_out_health--
+	if (src.bust_out_health <= 0)
+		if (src.ship)
+			src.ship.eject_part(slot=POD_PART_SECONDARY, give_message=FALSE)
+			src.on_shipdeath(src.ship)
+		src.bust_out_message(SPAN_ALERT("[src] breaks apart!"))
+		playsound(src, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+		SPAWN(1 DECI SECOND)
+			var/newloc = get_turf(src)
+			make_cleanable( /obj/decal/cleanable/machine_debris,newloc)
+			qdel(src)
+
+/obj/item/shipcomponent/secondary_system/cargo/proc/bust_out_message(message)
+	if (src.ship)
+		src.ship.visible_message(message)
+	else
+		src.visible_message(message)
 
 /obj/item/shipcomponent/secondary_system/cargo/jumpseat
 	name = "personal containment unit"
@@ -366,7 +433,7 @@
 	hud_state = "jumpseat"
 
 /obj/item/shipcomponent/secondary_system/cargo/jumpseat/handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
-		. = src.ship.handle_internal_lifeform(lifeform_inside_me, breath_request, mult)
+	. = src.ship.handle_internal_lifeform(lifeform_inside_me, breath_request, mult)
 
 /obj/item/shipcomponent/secondary_system/cargo/jumpseat/activate()
 	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
