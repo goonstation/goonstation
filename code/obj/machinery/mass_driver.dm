@@ -28,6 +28,6 @@
 				boutput(M, SPAN_NOTICE("The mass driver lets out a screech, it mustn't be able to handle any more items."))
 			break
 		use_power(500)
-		O.throw_at(target, drive_range * src.power, src.power, throw_type=src.throw_type, params=src.throw_params)
+		O.throw_at(target, drive_range * src.power, src.power, thrown_by=src, throw_type=src.throw_type, params=src.throw_params)
 	FLICK("mass_driver1", src)
 	return

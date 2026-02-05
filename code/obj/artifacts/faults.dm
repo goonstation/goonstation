@@ -281,3 +281,12 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 		boutput(user, SPAN_ALERT("The [cosmeticSource.name] stings you!"))
 		if (user.reagents)
 			user.reagents.add_reagent(poison_type,poison_amount)
+
+/datum/artifact_fault/ejector_resistance
+	type_name = "Ejector resistance"
+	trigger_prob = 5
+
+	//This fault doesn't have a deployment effect, instead happening as a check on the
+	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
+		if (..())
+			return
