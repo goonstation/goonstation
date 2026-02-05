@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/datum/forensic_id/print_mask = null // Partial fingerprint mask. Basically just regular text, but hex values get replaced with fingerprint characters
 
 	var/can_be_charged = 0 // Currently, there are provisions for icon state "yellow" only. You have to update this file and mob_procs.dm if you're wanna use other glove sprites (Convair880).
-
+	var/glove_ID = null //TODO: Remove variable after full-merge + secret update
 	var/crit_override = 0 //overrides user's stamina crit chance, unless the user has some special limb attached
 	var/bonus_crit_chance = 0 //bonus stamina crit chance; used additively in melee_attack_procs if crit_override is 0, otherwise replaces existing crit chance
 	var/stamina_dmg_mult = 0 //used additively in melee_attack_procs
