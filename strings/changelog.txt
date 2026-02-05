@@ -1,5 +1,15 @@
 
 (t)thu feb 05 26
+(u)glowbold & c
+(p)25091
+(e)🆕🗺🎨🧫💡|C-Feature, A-Mapping, C-Sprites, C-Experimental, A-Station-Systems
+(*)Station-wide Gravity Tethers provide gravity to space stations/ships. More details in minor notes.
+(*)(TESTMERGE) Post gameplay feedback in <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=24832">the thread here</a>: https://forum.ss13.co/showthread.php?tid=24832
+(+)Low and zero gravity causes nausea and disorientation unless you wear space gear.
+(+)High and extreme gravity causes sluggishness and injury.
+(+)Local-Area Gravity Tethers and Gravity Scanners can be printed in Engineering manufacturers.
+(+)Station-wide Gravity Tethers can be printed by a disk in the CE locker, or from Cargo.
+(+)A-zones always have gravity. Some debris/asteroid field areas have localized gravity tethers.
 (u)JORJ949
 (p)25783
 (e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
