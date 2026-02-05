@@ -3452,9 +3452,53 @@ datum
 			hygiene_value = -5
 			viscosity = 0.5
 			fluid_flags = FLUID_STACKING_BANNED
+			taste = "dirty"
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.health_change += 0.66
+			// Compost now actually tastes like shit! Ew!
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (method == INGEST)
+					// People with synth leg can absorb shit with no consequences. Disgusting.
+					var/mob/living/carbon/human/H = M
+					if(istype(H) && (H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+						boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened!","You feel good.")))
+					else
+						// if not synth leg
+						boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
+						SPAWN(1 SECOND)
+							if(!isdead(M) && volume >= 1)
+								M.vomit(0, null, SPAN_ALERT("[M] pukes violently!"))
+				else
+					var/mob/living/carbon/human/H = M
+					// nothing bad happens with synthlegs
+					if(!(H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+						var/output_message = "This smells like shit! What the fuck?!"
+						if (prob(50) && !(H.wear_mask?.c_flags & COVERSMOUTH))
+							output_message += " Shit! Some got into your mouth!"
+							var/amt = min(volume/100,1)
+							src.holder.remove_reagent("poo",amt)
+							M.reagents.add_reagent("poo",amt)
+							src.reaction_mob(M,INGEST,amt,null,amt)
+						boutput(M, SPAN_ALERT(output_message))
+				return
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				var/mob/living/carbon/human/H = M
+				if(istype(H) && (H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+					H.take_toxin_damage(-0.25 * mult)
+				else
+					if (isliving(M) && probmult(0.75))
+						var/mob/living/L = M
+						L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+					if (probmult(7))
+						M.emote(pick("twitch","drool","moan"))
+						M.take_toxin_damage(1 * mult)
+						M.nauseate(2)
+				..()
+				return
 
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"

@@ -429,7 +429,7 @@
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			if (H.mind.assigned_role == "Clown")
+			if (H.traitHolder?.getTrait("training_clown"))
 				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), SLOT_HEAD)
 				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
 				D.redeemer = H.ckey

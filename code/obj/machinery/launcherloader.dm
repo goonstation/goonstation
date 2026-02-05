@@ -93,6 +93,11 @@
 		return_if_overlay_or_effect(A)
 		activate()
 
+	attack_hand(mob/user)
+		. = ..()
+		if(.)
+			return
+		activate()
 
 /obj/machinery/launcher_loader/north
 	dir = NORTH
@@ -155,6 +160,7 @@
 			for(var/atom/movable/AM2 in src.loc)
 				if(AM2.anchored || AM2 == src || HAS_ATOM_PROPERTY(AM2, PROP_ATOM_FLOATING) || isflockmob(AM2)) continue
 				step(AM2,src.dir)
+				// AM2?.inertia_value = 0 // slides, doesn't push
 
 			driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
 

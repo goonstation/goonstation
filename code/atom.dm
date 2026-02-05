@@ -40,7 +40,8 @@ TYPEINFO(/atom)
 	var/pixel_point = FALSE
 
 	var/interesting = ""
-	var/stops_space_move = 0
+	/// Atom provides grip to neighboring tiles in zero-G
+	var/provides_grip = FALSE
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
@@ -522,7 +523,7 @@ TYPEINFO(/atom/movable)
 /atom/movable/New()
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+	if (typeinfo.mats && !(src.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED))
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
@@ -536,6 +537,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -548,6 +552,10 @@ TYPEINFO(/atom/movable)
 /atom/movable/disposing()
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
+	if (temp_flags & DRIFT_ANIMATION)
+		StopDriftFloat(src)
+	if (temp_flags & GRAVITY_SUBSCRIBER)
+		UnsubscribeGravity(src)
 
 	src.attached_objs?.Cut()
 	src.attached_objs = null
@@ -653,11 +661,17 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in old_locs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in old_locs)
+				covered_turf.grip_atom_count -= 1
 	if(isturf(src.loc))
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -1031,6 +1045,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in oldlocs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in oldlocs)
+				covered_turf.grip_atom_count -= 1
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -1046,6 +1063,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)

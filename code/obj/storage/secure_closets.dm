@@ -211,7 +211,7 @@
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-	/obj/item/barrier,
+	/obj/item/barrier/collapsible/security,
 	/obj/item/device/pda2/hos,
 	/obj/item/circuitboard/card/security,
 	/obj/item/circuitboard/announcement/security)
@@ -302,6 +302,7 @@
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
 		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
 		/obj/item/stamp/ce,
@@ -381,7 +382,7 @@
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
-	/obj/item/barrier)
+	/obj/item/barrier/collapsible/security)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -398,7 +399,7 @@
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
-	/obj/item/barrier)
+	/obj/item/barrier/collapsible/security)
 
 	make_my_stuff()
 		..()

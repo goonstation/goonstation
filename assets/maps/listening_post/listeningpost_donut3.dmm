@@ -650,14 +650,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Di" = (
-/obj/storage/crate,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/machinery/light_switch/west,
+/obj/machinery/gravity_tether/multi_area/listening_post,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/power)
 "DB" = (
@@ -679,6 +672,13 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/storage/crate,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
 /turf/simulated/floor/plating/jen,
 /area/listeningpost/power)
 "Fq" = (
@@ -947,6 +947,7 @@
 /obj/cable/black{
 	icon_state = "2-4"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/caution/north,
 /area/listeningpost/power)
 "Sw" = (

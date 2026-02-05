@@ -48299,10 +48299,6 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
-"dyz" = (
-/obj/item/barrier,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/mbc)
 "dyA" = (
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/wood/two,
@@ -56171,6 +56167,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"flh" = (
+/obj/item/barrier/collapsible/security,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/mbc)
 "fll" = (
 /obj/machinery/light{
 	dir = 1
@@ -104113,7 +104113,7 @@ aaa
 aaa
 aaa
 aaa
-daq
+aaa
 aaa
 aaa
 aaa
@@ -161600,7 +161600,7 @@ mXo
 ucy
 wel
 dxW
-dyz
+flh
 dza
 wel
 hCo

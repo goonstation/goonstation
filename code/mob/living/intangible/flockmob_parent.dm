@@ -247,7 +247,7 @@ TYPEINFO(/mob/living/intangible/flock)
 				playsound(src, 'sound/misc/flockmind/flockmind_caw.ogg', 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 
 	if (message)
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		log_emote(src, message, voluntary)
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

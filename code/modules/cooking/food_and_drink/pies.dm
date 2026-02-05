@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	var/mob/M = hit_atom
 	var/mob/thrower = thr.thrown_by
 	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
-	if (thrower?.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
+	if (thrower?.traitHolder?.hasTrait("training_clown") && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
 		src.clown_pie(thrower, M)
 		return
 
@@ -107,12 +107,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 		face_pie.pixel_y = target.mutantrace.head_offset
 	target.UpdateOverlays(face_pie, overlay_key)
 	src.set_loc(target)
-	target.bioHolder?.AddEffect("bad_eyesight")
+	target.bioHolder?.AddEffect("bad_eyesight_temp")
 	JOB_XP(user, "Clown", 1)
 	SPAWN(rand(src.min_stuck_time, src.max_stuck_time))
 		if (QDELETED(target))
 			return
-		target.bioHolder?.RemoveEffect("bad_eyesight")
+		target.bioHolder?.RemoveEffect("bad_eyesight_temp")
 		target.UpdateOverlays(null, overlay_key)
 		if (QDELETED(src))
 			return

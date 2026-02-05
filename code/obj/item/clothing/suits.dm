@@ -132,10 +132,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 /obj/item/clothing/suit/hoodie/random
 	New()
-		if (prob(50))
-			hcolor = null
-		else
-			hcolor = "blue"
+		src.hcolor = pick(null, "blue", "darkblue", "white", "pink", "blank", "grey", "dullgrey", "magenta", "green", "yellow", "red")
 		..()
 
 /obj/item/clothing/suit/hoodie/large
@@ -898,6 +895,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			src.item_state = src.icon_state
 			see_face = FALSE
 			src.c_flags = initial(src.c_flags)
+			if (src.eyeholes)
+				src.c_flags &= ~COVERSEYES
 			wear_layer = MOB_OVER_TOP_LAYER
 
 	proc/cut_eyeholes()

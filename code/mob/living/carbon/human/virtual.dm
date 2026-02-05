@@ -89,7 +89,7 @@ TYPEINFO(/mob/living/carbon/human/virtual)
 
 
 
-/datum/abilityHolder/virtual
+/datum/abilityHolder/mutantrace/virtual
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Virtual"
@@ -99,7 +99,7 @@ TYPEINFO(/mob/living/carbon/human/virtual)
 /datum/targetable/virtual
 	pointCost = 0
 	targeted = 0
-	preferred_holder_type = /datum/abilityHolder/virtual
+	preferred_holder_type = /datum/abilityHolder/mutantrace/virtual
 	icon = 'icons/misc/kudzu_plus.dmi'
 	icon_state = "kudzu-template"
 
