@@ -494,6 +494,8 @@
 					i--
 				else
 					break
+			if (length(crossing) == 1)
+				proj_data.precalculated = FALSE
 
 
 		if (proj_data.precalculated)
