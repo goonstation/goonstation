@@ -9,12 +9,12 @@
  */
 
 
-/// How many times do people have to dig from inside to get out
+/// How many digs from inside to set free
 #define BURIED_DIG_OUT_THESHOLD 20
-/// How many digs should cause cracks to form at the surface?
+/// How many digs from inside to show surface cracks
 #define BURIED_CRACKS_FORM_THRESHOLD 15
-/// Probability of converting a relaymove into a dig out
-#define BURIED_DIG_OUT_CHANCE 30
+/// Probability of rolling progress towards digging out
+#define BURIED_DIG_OUT_CHANCE 15
 
 /atom/movable/buried_storage
 	icon = null
@@ -28,7 +28,6 @@
 	var/has_buried_mob = FALSE
 	var/number_of_objects = 0
 	var/dig_outs = 0
-	var/last_relaymove_time
 	var/obj/overlay/tile_effect/cracks/my_cracks
 
 	New(newLoc)
@@ -51,9 +50,8 @@
 			return
 		if (src.hasStatus("teleporting"))
 			return
-		if (world.time < (src.last_relaymove_time + DEFAULT_INTERNAL_RELAYMOVE_DELAY))
+		if(ON_COOLDOWN(src, "relaymove", DEFAULT_INTERNAL_RELAYMOVE_DELAY))
 			return
-		src.last_relaymove_time = world.time
 		src.dig_out_from_inside(user)
 
 	proc/mob_flip_inside(mob/user)

@@ -143,7 +143,6 @@
 	var/list/load = list() //! Current items loaded in
 	var/maxcap = 3 //! How many items it can hold
 	var/bust_out_health = 10 //! How many times do you have to bang your head against the top to get free
-	var/last_relaymove_time //! Last time someone inside us tried to move out
 	/// What itempaths will this cargo hold accept?
 	var/list/acceptable = list(/obj/storage/crate,
 	/obj/storage/secure/crate,
@@ -388,10 +387,8 @@
 		return
 	if (src.hasStatus("teleporting"))
 		return
-	if (world.time < (src.last_relaymove_time + DEFAULT_INTERNAL_RELAYMOVE_DELAY))
+	if(ON_COOLDOWN(src, "relaymove", DEFAULT_INTERNAL_RELAYMOVE_DELAY))
 		return
-	src.last_relaymove_time = world.time
-
 	if (!src.ship)
 		src.eject_nonload(get_turf(src))
 	else

@@ -54,7 +54,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
 	var/datum/db_record/account = null
-	var/last_relaymove_time
 	var/is_short = 0 // can you not stand in it?  ie, crates?
 	var/crunches_contents = 0 // for the syndicate trashcart & hotdog stand
 	var/crunches_deliciously = 0 // :I
@@ -218,9 +217,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			return
 		if (src.hasStatus("teleporting"))
 			return
-		if (world.time < (src.last_relaymove_time + DEFAULT_INTERNAL_RELAYMOVE_DELAY))
+		if(ON_COOLDOWN(src, "relaymove", DEFAULT_INTERNAL_RELAYMOVE_DELAY))
 			return
-		src.last_relaymove_time = world.time
 
 		if (istype(get_turf(src), /turf/space) || !get_turf(src))
 			if (!istype(get_turf(src), /turf/space/fluid))
