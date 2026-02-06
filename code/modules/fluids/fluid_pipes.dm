@@ -156,11 +156,11 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 #define DEFINE_PIPES_SUPPLY(PATH) \
 	PATH/supply{icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi';};\
-	PATH/overfloor{level = OVERFLOOR};
+	PATH/supply/overfloor{level = OVERFLOOR};
 
 #define DEFINE_PIPES_WASTE(PATH) \
 	PATH/waste{icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi';};\
-	PATH/overfloor{level = OVERFLOOR};
+	PATH/waste/overfloor{level = OVERFLOOR};
 
 DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/straight)
 DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/straight/see_fluid)
