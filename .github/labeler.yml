@@ -1,0 +1,127 @@
+# A-Admin:
+A-AI:
+- changed-files:
+  - any-glob-to-any-file: code/mob/living/critter/ai/*
+A-API:
+- changed-files:
+  - any-glob-to-any-file: code/modules/goonhub/*
+A-Atmospherics:
+- changed-files:
+  - any-glob-to-any-file: code/modules/atmospherics/*
+A-Catering:
+- changed-files:
+  - any-glob-to-any-file: code/modules/cooking/*
+A-Chemistry:
+- changed-files:
+  - any-glob-to-any-file: code/modules/chemistry/*
+A-Clothing:
+- changed-files:
+  - any-glob-to-any-file: code/modules/clothingbooth/*
+# A-Command:
+A-Critters:
+- changed-files:
+  - any-glob-to-any-file: code/datums/critter_mobs/*
+  - any-glob-to-any-file: code/mob/living/critter.dm
+  - any-glob-to-any-file: code/mob/living/critter/*
+  - any-glob-to-any-file: code/obj/critter/*
+A-Customization-Rework:
+- changed-files:
+  - any-glob-to-any-file: code/datums/customization_styles.dm
+A-Engineering:
+- changed-files:
+  - any-glob-to-any-file: code/modules/mechanics/*
+A-Events:
+- changed-files:
+  - any-glob-to-any-file: code/modules/holiday/*
+A-Game-Objects:
+- changed-files:
+  - any-glob-to-any-file: code/modules/items/*
+A-Gamemodes:
+- changed-files:
+  - any-glob-to-any-file: code/datums/gamemodes/*
+  - any-glob-to-any-file: code/datums/antag_weighting.dm
+  - any-glob-to-any-file: code/datums/syndicate_buylist/*
+  - any-glob-to-any-file: code/mob/living/intangible/*
+  - any-glob-to-any-file: code/obj/flock/*
+A-Hydroponics:
+- changed-files:
+  - any-glob-to-any-file: code/modules/hydroponics/*
+  - any-glob-to-any-file: code/modules/ranch/*
+A-Internal:
+- changed-files:
+  - any-glob-to-any-file: code/modules/mapping/*
+  - any-glob-to-any-file: code/modules/spatial_hashing/*
+  - any-glob-to-any-file: code/modules/tgs/*
+A-Logistics:
+- changed-files:
+  - any-glob-to-any-file: code/modules/economy/*
+  - any-glob-to-any-file: code/modules/mining/*
+A-Mapping:
+- changed-files:
+  - any-glob-to-any-file: '**/*.dmm'
+  - any-glob-to-any-file: code/modules/mapping/*
+A-Materials:
+- changed-files:
+  - any-glob-to-any-file: code/modules/materials/*
+# A-Medal:
+A-Medical:
+- changed-files:
+  - any-glob-to-any-file: code/modules/medical/*
+A-Mutantraces:
+- changed-files:
+  - any-glob-to-any-file: code/datums/mutantraces.dm
+A-Player-Actions:
+- changed-files:
+  - any-glob-to-any-file: code/datums/actions/*
+# A-Respawning:
+# A-RP:
+A-Science:
+- changed-files:
+  - any-glob-to-any-file: code/obj/artifacts/*
+# A-Secret:
+# A-Security:
+A-Silicons:
+- changed-files:
+  - any-glob-to-any-file: code/datums/ai_laws.dm
+  - any-glob-to-any-file: code/mob/living/intangible/ai-camera.dm
+  - any-glob-to-any-file: code/mob/living/silicon.dm
+  - any-glob-to-any-file: code/mob/living/silicon/*
+  - any-glob-to-any-file: code/modules/robotics/*
+A-Station-Systems:
+- changed-files:
+  - any-glob-to-any-file: code/modules/disposals/*
+  - any-glob-to-any-file: code/modules/gravity/*
+  - any-glob-to-any-file: code/modules/networks/*
+  - any-glob-to-any-file: code/modules/packets/*
+  - any-glob-to-any-file: code/modules/power/*
+  - any-glob-to-any-file: code/datums/datacore.dm
+A-Status-Effects:
+- changed-files:
+  - any-glob-to-any-file: code/modules/status_system/*
+A-Tooling:
+- changed-files:
+  - any-glob-to-any-file: .github/*
+A-Traits:
+- changed-files:
+  - any-glob-to-any-file: code/datums/traits.dm
+A-UI:
+- changed-files:
+  - any-glob-to-any-file: '**/*.dmf'
+  - any-glob-to-any-file: browserassets/*
+  - any-glob-to-any-file: code/chui/*
+  - any-glob-to-any-file: code/modules/interface/*
+  - any-glob-to-any-file: code/modules/tgui/*
+  - any-glob-to-any-file: tgui/*
+A-Vehicles:
+- changed-files:
+  - any-glob-to-any-file: code/modules/transport/pods/*
+C-Sound:
+- changed-files:
+  - any-glob-to-any-file: code/modules/sound/*
+  - any-glob-to-any-file: '**/*.ogg'
+C-Sprites:
+- changed-files:
+  - any-glob-to-any-file: '**/*.dmi'
+C-Documentation:
+- changed-files:
+  - any-glob-to-any-file: '**/*.md'

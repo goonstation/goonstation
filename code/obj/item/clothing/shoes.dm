@@ -191,6 +191,9 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	abilities = list(/obj/ability_button/magboot_toggle)
 
 	proc/activate(mob/M)
+		if (GET_COOLDOWN(src, "emp_check"))
+			boutput(M, SPAN_ALERT("\The [src] are still kerfuzzled!"))
+			return FALSE
 		if (src.check_move(M, get_turf(M), null, TRUE))
 			boutput(M, SPAN_ALERT("There's nothing to anchor to!"))
 			playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
@@ -212,6 +215,15 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		step_lots = FALSE
 		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
+
+	emp_act()
+		. = ..()
+		ON_COOLDOWN(src, "emp_check", 10 SECONDS)
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if (H.shoes == src && src.magnetic)
+				src.deactivate(H)
+			boutput(H, SPAN_ALERT("\The [src] kerfuzzle out!"))
 
 	unequipped(mob/user)
 		. = ..()

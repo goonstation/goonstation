@@ -19686,7 +19686,7 @@
 /area/diner/hallway)
 "lUt" = (
 /obj/machinery/door/airlock/pyro/classic{
-	name = "Check-In"
+	name = "Ice Machine (Out of Order)"
 	},
 /obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/grime,
