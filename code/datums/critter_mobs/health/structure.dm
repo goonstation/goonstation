@@ -3,7 +3,7 @@
 	associated_damage_type = "brute"
 
 	on_attack(var/obj/item/I, var/mob/M)
-		if (isweldingtool(I) && M.a_intent != "harm")
+		if (isweldingtool(I) && M.a_intent != INTENT_HARM)
 			if (I:try_weld(M,0))
 				if (damaged())
 					holder.visible_message(SPAN_NOTICE("[M] repairs some dents on [holder]!"))
