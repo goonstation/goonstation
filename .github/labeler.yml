@@ -42,7 +42,6 @@ A-Gamemodes:
   - any-glob-to-any-file: code/datums/antag_weighting.dm
   - any-glob-to-any-file: code/datums/syndicate_buylist/*
   - any-glob-to-any-file: code/mob/living/intangible/*
-  - all-globs-to-all-files: '!code/mob/living/intangible/ai-camera.dm'
   - any-glob-to-any-file: code/obj/flock/*
 A-Hydroponics:
 - changed-files:
