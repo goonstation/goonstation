@@ -72,7 +72,7 @@ A-Mutantraces:
   - any-glob-to-any-file: code/datums/mutantraces.dm
 A-Player-Actions:
 - changed-files:
-  - any-glob-to-any-file: code/datums/*
+  - any-glob-to-any-file: code/datums/actions/*
 # A-Respawning:
 # A-RP:
 A-Science:
