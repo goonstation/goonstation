@@ -1,5 +1,9 @@
 
 (t)fri feb 06 26
+(u)Ribbie
+(p)25677
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)No more observing yourself.
 (u)Ikea
 (p)25772
 (e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
