@@ -77,7 +77,6 @@
 #include "code\client\providers\goonhub.dm"
 #include "code\client\providers\provider.dm"
 #include "code\datums\admin_changelog.dm"
-#include "code\datums\admin_powers.dm"
 #include "code\datums\ai_laws.dm"
 #include "code\datums\antag_weighting.dm"
 #include "code\datums\banking.dm"
