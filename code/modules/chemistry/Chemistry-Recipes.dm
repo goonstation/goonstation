@@ -5351,6 +5351,13 @@
 		mix_phrase = "The mixture turns yellowish and emits a loud grumping sound"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
+		var/static/caused_gravity_disturbance = FALSE
+
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			if (!caused_gravity_disturbance && holder.my_atom.z == Z_LEVEL_STATION)
+				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, -1) // alerts ALL tethers, once.
+				caused_gravity_disturbance = TRUE
 
 	flubber
 		name = "Liquified Space Rubber"

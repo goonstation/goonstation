@@ -1532,6 +1532,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
 			var/max_iterations = 20
+			src.inertia_value = 1
 			for(var/turf/T in path)
 				if(max_iterations-- <= 0)
 					break

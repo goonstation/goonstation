@@ -55,6 +55,12 @@
 		Once all breaches have been repaired, obtain and utilize an air canister (white, potentially with a red stripe) and space HVAC on heat setting. Alternatively utilize an oxygen grenade ensuring no staff members are in the blast zone prior to activation.
 		<br>
 		<br>
+		<h3>PREVENT STATION DAMAGE</h3>
+		If you are in an orbital or trans-orbital post, there is a Gravity Tether that ensures an Earth-like enviornment. Detailed manuals can be found near the Gravity Tether unit or in local bookstores.
+		<br>
+		Ensure that the gravity tether remains powered and functional for the duration of your shift.
+		<br>
+		<br>
 		Station integrity can be further ensured during localized events through the construction of Spatial Interdictors. All Nanotrasen stations and ships come standard with one assembly kit for a Spatial Interdictor located in the Engineering Department.
 		<br>
 		<br>

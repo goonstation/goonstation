@@ -559,7 +559,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
+		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED) && T.get_gforce_current() > GFORCE_GRAVITY_MINIMUM)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -643,6 +643,9 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
+	if (user.traction == TRACTION_NONE)
+		return 0
+
 	if (!G.can_pin)
 		return 0
 
@@ -661,6 +664,9 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
+	if (user.traction == TRACTION_NONE)
+		return 0
+
 	if (!G.can_pin)
 		return 0
 
@@ -677,6 +683,9 @@
 		return 0
 
 	if (BOUNDS_DIST(src, M) > 0)
+		return 0
+
+	if (user.traction == TRACTION_NONE)
 		return 0
 
 	if (!G.can_pin)
@@ -925,8 +934,7 @@
 		var/target_dir = get_dir(user,target)
 		if(!target_dir)
 			target_dir = user.dir
-		if (!istype(T, /turf/space) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir &&!isghostcritter(user))
-
+		if (T.get_gforce_current() > GFORCE_GRAVITY_MINIMUM && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir &&!isghostcritter(user))
 			user.changeStatus("knockdown", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
 			var/turf/target_turf = get_step(user, target_dir)

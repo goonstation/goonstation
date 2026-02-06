@@ -210,9 +210,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.UpdateOverlays(booster_image, "booster_image")
 		else
 			src.ClearSpecificOverlays("booster_image")
-			var/turf/T = get_turf(src)
-
-			if(T.throw_unlimited && istype(T, /turf/space))
+			if (user.traction == TRACTION_NONE)
 				return
 
 		// Next, we do some simple math to adjust the vehicle's glide_size based on its speed and to compensate for lag
@@ -2342,8 +2340,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	if (broken)
 		return
 
-	var/turf/T = get_turf(src)
-	if(T.throw_unlimited && istype(T, /turf/space) && !src.booster_upgrade)
+	if(user.traction == TRACTION_NONE && !src.booster_upgrade)
 		return
 
 	//forklift
@@ -2351,7 +2348,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		src.dir = user.dir
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 		if (!src.booster_upgrade)
-			if(T.throw_unlimited && istype(T, /turf/space))
+			if(user.traction == TRACTION_NONE)
 				return
 		src.glide_size = (32 / td) * world.tick_lag
 		for(var/mob/M in src)
@@ -2450,7 +2447,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		return
 
 	var/turf/T = get_turf(src)
-	if(T.throw_unlimited && istype(T, /turf/space))
+	if(istype(T, /turf/space) && !istype(T, /turf/space/fluid))
 		return
 
 	if(length(helditems) >= 1)

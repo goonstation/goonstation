@@ -686,6 +686,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	disposing()

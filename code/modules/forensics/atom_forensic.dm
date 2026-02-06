@@ -286,6 +286,8 @@
 		return
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 		return
+	if (src.traction == TRACTION_NONE)
+		return
 	var/turf/T = get_turf(src)
 	if(istype_exact(T, /turf/space)) //can't smear blood on space
 		return

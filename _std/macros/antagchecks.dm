@@ -25,6 +25,7 @@
 #define ispoltergeist(x) istype(x, /mob/living/intangible/wraith/poltergeist)
 #define isarcfiend(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/arcfiend) != null)
 #define ispirate(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_PIRATE) || x:mind:get_antagonist(ROLE_PIRATE_FIRST_MATE) || x:mind:get_antagonist(ROLE_PIRATE_CAPTAIN)))
+#define issalvager(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_SALVAGER)))
 
 #define isblob(x) istype(x, /mob/living/intangible/blob_overmind)
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_SPY_THIEF))

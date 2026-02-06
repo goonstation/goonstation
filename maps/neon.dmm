@@ -5335,11 +5335,11 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "dVv" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 8
+	},
+/obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning{
+	dir = 1
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -19225,14 +19225,11 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/southeast)
 "nQs" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	id = "burn_2";
-	on = 1;
-	tag = "icon-off (NORTH)"
-	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
+	},
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{
+	dir = 1
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -30507,6 +30504,10 @@
 "vTB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/customs)
+"vTM" = (
+/obj/machinery/atmospherics/unary/vent_pump/overfloor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "vTQ" = (
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
 /obj/machinery/space_heater,
@@ -74573,7 +74574,7 @@ isf
 wmN
 qRk
 qRk
-qRk
+vTM
 byN
 qpn
 qpn

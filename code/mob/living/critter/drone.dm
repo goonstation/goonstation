@@ -28,6 +28,9 @@
 	New()
 		..()
 		setup_loot_table()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
+		src.remove_lifeprocess("gravity")
+
 		src.name = "[initial(name)] [drone_designation]-[rand(num_max)]"
 		src.real_name = src.name
 
@@ -99,7 +102,6 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		inertia_dir = 0
 
 	examine(mob/user)
 		. = ..()
