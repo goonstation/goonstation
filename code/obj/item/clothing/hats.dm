@@ -83,7 +83,7 @@ proc/filter_trait_hats(var/type)
 
 /obj/item/clothing/head/serpico
 	name = "bucket hat"
-	desc = "Weirdly tall"
+	desc = "Weirdly tall."
 	icon_state = "serpico"
 	item_state = "serpico"
 
