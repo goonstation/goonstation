@@ -114,8 +114,11 @@ A-Status-Effects:
 A-Tooling:
 - changed-files:
   - any-glob-to-any-file: .github/*
-  - any-glob-to-any-file: tools/*
-  - all-globs-to-all-files: '!tools/updatepaths/**'
+A-Tooling:
+- all:
+  - changed-files:
+    - any-glob-to-any-file: tools/*
+    - all-globs-to-all-files: '!tools/updatepaths/**'
 A-Traits:
 - changed-files:
   - any-glob-to-any-file: code/datums/traits.dm
