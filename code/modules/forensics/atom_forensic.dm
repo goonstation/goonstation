@@ -77,7 +77,8 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/datum/forensic_data/fingerprint/fprint_data = H.get_fingerprint()
-		src.forensic_holder.add_evidence(fprint_data, FORENSIC_GROUP_FINGERPRINTS)
+		if(fprint_data)
+			src.forensic_holder.add_evidence(fprint_data, FORENSIC_GROUP_FINGERPRINTS)
 	if(M.mind?.color)
 		var/datum/forensic_data/basic/color_data = new(M.mind.color, flags = 0)
 		src.add_evidence(color_data, FORENSIC_GROUP_SLEUTH)
