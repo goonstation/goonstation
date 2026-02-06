@@ -66,6 +66,7 @@ A-Logistics:
   - any-glob-to-any-file: code/modules/siphon/*
 A-Mapping:
 - changed-files:
+  - any-glob-to-any-file: maps/**/*
   - any-glob-to-any-file: '**/*.dmm'
   - any-glob-to-any-file: code/modules/mapping/*
 A-Materials:
@@ -131,10 +132,12 @@ A-Vehicles:
   - any-glob-to-any-file: code/modules/transport/pods/*
 C-Sound:
 - changed-files:
+  - any-glob-to-any-file: sound/**/*
   - any-glob-to-any-file: code/modules/sound/*
   - any-glob-to-any-file: '**/*.ogg'
 C-Sprites:
 - changed-files:
+  - any-glob-to-any-file: icons/**/*
   - any-glob-to-any-file: '**/*.dmi'
 C-Documentation:
 - changed-files:
