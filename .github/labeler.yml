@@ -1,4 +1,6 @@
-# A-Admin:
+A-Admin:
+- changed-files:
+  - any-glob-to-any-file: code/modules/admin/*
 A-AI:
 - changed-files:
   - any-glob-to-any-file: code/mob/living/critter/ai/*
@@ -41,8 +43,11 @@ A-Gamemodes:
   - any-glob-to-any-file: code/datums/gamemodes/*
   - any-glob-to-any-file: code/datums/antag_weighting.dm
   - any-glob-to-any-file: code/datums/syndicate_buylist/*
+  - any-glob-to-any-file: code/obj/item/uplinks/*
+  - any-glob-to-any-file: code/obj/item/nuclear_operative/*
   - any-glob-to-any-file: code/mob/living/intangible/*
   - any-glob-to-any-file: code/obj/flock/*
+  - any-glob-to-any-file: code/datums/flock/*
 A-Hydroponics:
 - changed-files:
   - any-glob-to-any-file: code/modules/hydroponics/*
@@ -52,10 +57,13 @@ A-Internal:
   - any-glob-to-any-file: code/modules/mapping/*
   - any-glob-to-any-file: code/modules/spatial_hashing/*
   - any-glob-to-any-file: code/modules/tgs/*
+  - any-glob-to-any-file: code/modules/unit_tests/*
+  - any-glob-to-any-file: code/modules/cross_server/*
 A-Logistics:
 - changed-files:
   - any-glob-to-any-file: code/modules/economy/*
   - any-glob-to-any-file: code/modules/mining/*
+  - any-glob-to-any-file: code/modules/siphon/*
 A-Mapping:
 - changed-files:
   - any-glob-to-any-file: '**/*.dmm'
@@ -73,11 +81,14 @@ A-Mutantraces:
 A-Player-Actions:
 - changed-files:
   - any-glob-to-any-file: code/datums/actions/*
-# A-Respawning:
+A-Respawning:
+- changed-files:
+  - any-glob-to-any-file: code/modules/medical/cloning/*
 # A-RP:
 A-Science:
 - changed-files:
   - any-glob-to-any-file: code/obj/artifacts/*
+  - any-glob-to-any-file: code/modules/telescience/*
 # A-Secret:
 # A-Security:
 A-Silicons:
@@ -89,6 +100,7 @@ A-Silicons:
   - any-glob-to-any-file: code/modules/robotics/*
 A-Station-Systems:
 - changed-files:
+  - any-glob-to-any-file: code/modules/camera/*
   - any-glob-to-any-file: code/modules/disposals/*
   - any-glob-to-any-file: code/modules/gravity/*
   - any-glob-to-any-file: code/modules/networks/*
@@ -101,6 +113,8 @@ A-Status-Effects:
 A-Tooling:
 - changed-files:
   - any-glob-to-any-file: .github/*
+  - any-glob-to-any-file: tools/*
+  - all-globs-to-all-files: '!tools/updatepaths/**'
 A-Traits:
 - changed-files:
   - any-glob-to-any-file: code/datums/traits.dm
