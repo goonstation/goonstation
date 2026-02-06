@@ -1,4 +1,9 @@
 
+(t)fri feb 06 26
+(u)Ikea
+(p)25772
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(*)Mining charge pouches can now be printed from the mining fabricator
 (t)thu feb 05 26
 (u)glowbold & c
 (p)25091
