@@ -234,9 +234,9 @@ export const IDComputer = () => {
                               'Unassigned'}
                           </Button>
                           <Button
-                            icon="refresh"
+                            icon="id-card"
                             color="green"
-                            tooltip="Fetch expected access levels"
+                            tooltip="Set Access to Assignment"
                             onClick={() =>
                               act('assign', { assign: target_rank })
                             }
