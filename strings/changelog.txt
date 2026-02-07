@@ -1,5 +1,39 @@
 
+(t)fri feb 06 26
+(u)Ribbie
+(p)25677
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)No more observing yourself.
+(u)Ikea
+(p)25772
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(*)Mining charge pouches can now be printed from the mining fabricator
+(t)thu feb 05 26
+(u)glowbold & c
+(p)25091
+(e)🆕🗺🎨🧫💡|C-Feature, A-Mapping, C-Sprites, C-Experimental, A-Station-Systems
+(*)Station-wide Gravity Tethers provide gravity to space stations/ships. More details in minor notes.
+(+)Low and zero gravity causes nausea and disorientation unless you wear space gear.
+(+)High and extreme gravity causes sluggishness and injury.
+(+)Local-Area Gravity Tethers and Gravity Scanners can be printed in Engineering manufacturers.
+(+)Station-wide Gravity Tethers can be printed by a disk in the CE locker, or from Cargo.
+(+)A-zones always have gravity. Some debris/asteroid field areas have localized gravity tethers.
+(u)JORJ949
+(p)25783
+(e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
+(*)Trainee Roles, alongside Sous-Chef and Blue Clown will now be able to buy whatever traitor items their main role can buy (i.e. blue clowns can buy clown items, Tech Trainees can buy Engineer items).
+(t)tue feb 03 26
+(u)glowbold
+(p)25808
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Changeling abomination form cannot buckle or be buckled into a chair.
+(u)JORJ949
+(*)AI Cores can now be loaded into cargo holds if unanchored.
 (t)sun feb 01 26
+(u)JORJ949
+(p)25595
+(e)💅🚨🔨|C-QoL, A-Admin, A-Player-Actions
+(+)Central Command Updates now have their own announcement colour.
 (u)Pirate-Rob
 (p)25750
 (e)|

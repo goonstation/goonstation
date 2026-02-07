@@ -24,6 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	provides_grip = TRUE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSAL_CHUTE_CHARGING	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -671,6 +672,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "disposal-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH
@@ -691,6 +693,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "brig-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH
@@ -729,6 +732,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "ore-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH

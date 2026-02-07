@@ -115,6 +115,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost/landing_bay)
+"eD" = (
+/obj/machinery/gravity_tether/multi_area/listening_post,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "eY" = (
 /obj/table/auto,
 /obj/item/reagent_containers/bath_bomb,
@@ -274,6 +278,10 @@
 	icon_state = "gym_mat"
 	},
 /area/listeningpost/syndicate_teleporter)
+"nY" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "oz" = (
 /obj/cable/orange,
 /obj/machinery/power/furnace{
@@ -404,6 +412,9 @@
 "zz" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/break_room)
+"zY" = (
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "Be" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -714,7 +725,6 @@
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
-/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Um" = (
@@ -1596,12 +1606,12 @@ Cn
 Cn
 Cn
 RR
-RR
-RR
-RR
+eD
+nY
+zY
 RR
 Cn
-OR
+Cn
 OR
 OR
 OR
@@ -1629,11 +1639,11 @@ OR
 OR
 Cn
 Cn
-Cn
-Cn
-Cn
-Cn
-Cn
+RR
+RR
+RR
+RR
+RR
 Cn
 OR
 OR
@@ -1662,13 +1672,13 @@ OR
 OR
 OR
 OR
-OR
 Cn
 Cn
 Cn
 Cn
 Cn
-OR
+Cn
+Cn
 OR
 OR
 Cn

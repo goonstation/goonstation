@@ -183,6 +183,8 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 									return
 								*/
 
+						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
+
 						var/filler_turf = text2path(start_location.filler_turf)
 						if (!filler_turf)
 							filler_turf = centcom_turf
@@ -191,6 +193,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							if (istype(P, filler_turf))
 								P.ReplaceWith(src.map_turf, keep_old_material = 0, force = 1)
 
+						start_location.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
 
 						settimeleft(SHUTTLELEAVETIME)
 
@@ -300,6 +303,8 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						if (particle_spawn)
 							particle_spawn.start_particles()
 
+						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
+
 						DEBUG_MESSAGE("Now moving shuttle!")
 						start_location.move_contents_to(end_location, map_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
 
@@ -307,6 +312,9 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
 							if(length(turfs_to_fix))
 								station_repair.repair_turfs(turfs_to_fix, force_floor=TRUE)
+
+						start_location.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
+
 
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)
@@ -339,10 +347,16 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						var/filler_turf = text2path(end_location.filler_turf)
 						if (!filler_turf)
 							filler_turf = centcom_turf
+
+						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
+
 						start_location.move_contents_to(end_location, src.transit_turf, turf_to_skip=/turf/space)
 						for (var/turf/G in end_location)
 							if (istype(G, src.transit_turf))
 								G.ReplaceWith(filler_turf, keep_old_material = 0, force = 1)
+
+						start_location.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
+
 						command_announcement("The Emergency Shuttle has arrived at CentCom!", \
 							"Emergency Shuttle at CentCom", \
 							'sound/misc/shuttle_centcom.ogg', \

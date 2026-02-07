@@ -3015,7 +3015,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || istype(AM, /obj/item/dummy))
+		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || istype(AM, /obj/item/dummy) || AM.traction == TRACTION_NONE)
 			return
 		return_if_overlay_or_effect(AM)
 		if (limiter && (ticker.round_elapsed_ticks < limiter))

@@ -6,6 +6,7 @@
 	cant_emag = TRUE
 	layer = (GRILLE_LAYER + 0.01)
 	object_flags = 0
+	provides_grip = TRUE
 
 	health = 1800
 	health_max = 1800
