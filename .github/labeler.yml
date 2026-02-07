@@ -112,11 +112,9 @@ A-Status-Effects:
 - changed-files:
   - any-glob-to-any-file: code/modules/status_system/*
 A-Tooling:
-- changed-files:
-  - any-glob-to-any-file: .github/*
-A-Tooling:
 - all:
   - changed-files:
+    - any-glob-to-any-file: .github/*
     - any-glob-to-any-file: tools/*
     - all-globs-to-all-files: '!tools/updatepaths/**'
 A-Traits:
