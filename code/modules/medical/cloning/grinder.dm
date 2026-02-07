@@ -250,36 +250,36 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		src.UpdateIcon(1)
 		SubscribeToProcess()
 
-	attackby(obj/item/grab/G, mob/user)
-		if (istype(G, /obj/item/grinder_upgrade))
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/grinder_upgrade))
 			if (src.upgraded)
 				boutput(user, SPAN_ALERT("There is already an upgrade card installed."))
 				return
-			user.visible_message("[user] installs [G] into [src].", "You install [G] into [src].")
+			user.visible_message("[user] installs [I] into [src].", "You install [I] into [src].")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			src.upgraded = 1
 			user.drop_item()
-			qdel(G)
+			qdel(I)
 			return
 
-		if (ispryingtool(G))
+		if (ispryingtool(I))
 			if (src.upgraded)
 				user.visible_message("[user] begins removing the upgrade module from [src].", "You begin removing the upgrade module from [src].")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_upgrade_module), list(user), G.icon, G.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_upgrade_module), list(user), I.icon, I.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
 			else
 				boutput(user, SPAN_ALERT("There is no upgrade card installed."))
 			return
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is still running, hold your horses!"))
 			return
-		if (istype(G, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(G, /obj/item/reagent_containers/food) && (findtext(G.name, "meat")||findtext(G.name,"bacon"))) || (istype(G, /obj/item/parts/human_parts)) || istype(G, /obj/item/clothing/head/butt) || istype(G, /obj/item/organ) || istype(G,/obj/item/raw_material/martian))
+		if (istype(I, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(I, /obj/item/reagent_containers/food) && (findtext(I.name, "meat")||findtext(I.name,"bacon"))) || (istype(I, /obj/item/parts/human_parts)) || istype(I, /obj/item/clothing/head/butt) || istype(I, /obj/item/organ) || istype(I,/obj/item/raw_material/martian))
 			if (length(src.meats) >= src.max_meat)
 				boutput(user, SPAN_ALERT("There is already enough meat in there! You should not exceed the maximum safe meat level!"))
 				return
 
-			if (G.contents && length(G.contents) > 0 && !istype(G, /obj/item/reagent_containers/food/snacks/shell))
-				for (var/obj/item/W in G.contents)
+			if (I.contents && length(I.contents) > 0 && !istype(I, /obj/item/reagent_containers/food/snacks/shell))
+				for (var/obj/item/W in I.contents)
 					if (istype(W, /obj/item/skull) || istype(W, /obj/item/organ/brain) || istype(W, /obj/item/organ/eye))
 						continue
 
@@ -288,28 +288,16 @@ TYPEINFO(/obj/machinery/clonegrinder)
 						W.dropped(user)
 						W.layer = initial(W.layer)
 
-			src.meats += G
-			user.u_equip(G)
-			G.set_loc(src)
-			user.visible_message("<b>[user]</b> loads [G] into [src].","You load [G] into [src]")
+			src.meats += I
+			user.u_equip(I)
+			I.set_loc(src)
+			user.visible_message("<b>[user]</b> loads [I] into [src].","You load [I] into [src]")
 			return
 
-		else if (istype(G, /obj/item/reagent_containers/glass))
-			return
+		else if (istype(I, /obj/item/reagent_containers/glass))
+			return // handled in reagent afterattack
 
-		else if (!istype(G) || !iscarbon(G.affecting))
-			boutput(user, SPAN_ALERT("This item is not suitable for [src]."))
-			return
-		if (src.occupant)
-			boutput(user, SPAN_ALERT("There is already somebody in there."))
-			return
-
-		else if (G?.affecting && !src.emagged && !isdead(G.affecting) && (!isnpcmonkey(G.affecting) || G.affecting.client))
-			user.visible_message(SPAN_ALERT("[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!"))
-			return
-
-		src.add_fingerprint(user)
-		actions.start(new /datum/action/bar/icon/put_in_reclaimer(G.affecting, src, G, 50), user)
+		boutput(user, SPAN_ALERT("This item is not suitable for [src]."))
 		return
 
 	update_icon(update_grindpaddle=FALSE)
@@ -409,77 +397,3 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			var/obj/upgrade = new /obj/item/grinder_upgrade(src.loc)
 			src.visible_message(SPAN_ALERT("The [upgrade] module falls to the floor!"))
 			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
-
-/datum/action/bar/icon/put_in_reclaimer
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 50
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "grabbed"
-
-	var/mob/living/carbon/human/target
-	var/obj/machinery/clonegrinder/grinder
-	var/obj/item/grab/grab
-
-	New(var/mob/living/carbon/human/ntarg, var/obj/machinery/clonegrinder/ngrind, var/obj/item/grab/ngrab, var/duration_i)
-		..()
-		if (ntarg)
-			target = ntarg
-		if (ngrind)
-			grinder = ngrind
-		if (ngrab)
-			grab = ngrab
-		if (duration_i)
-			duration = duration_i
-
-	onUpdate()
-		..()
-		if (grab == null || target == null || grinder == null || owner == null || BOUNDS_DIST(owner, grinder) > 0 || BOUNDS_DIST(owner, target) > 0 || BOUNDS_DIST(target, grinder) > 0)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		if (grinder.occupant)
-			interrupt(INTERRUPT_ALWAYS)
-		var/mob/source = owner
-		if (!istype(source) || !source.find_in_hand(grab) || grab.affecting != target)
-			interrupt(INTERRUPT_ALWAYS)
-
-	onStart()
-		..()
-		owner.visible_message(SPAN_ALERT("<b>[owner] starts to put [target] into [grinder]!</b>"))
-
-	onEnd()
-		..()
-		if (grinder.occupant)
-			return
-		owner.visible_message(SPAN_ALERT("<b>[owner] stuffs [target] into [grinder]!</b>"))
-		logTheThing(LOG_COMBAT, owner, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
-		if (!isdead(target) && !isnpcmonkey(target))
-			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
-		if (grinder.auto_strip && !grinder.emagged)
-			if(target.hasStatus("handcuffed"))
-				target.handcuffs.drop_handcuffs(target) //handcuffs have special handling for zipties and such, remove them properly first
-			target.unequip_all()
-			if(istype(target.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
-				var/obj/item/parts/human_parts/arm/right/item/right_arm = target.limbs.r_arm
-				right_arm.remove()
-			if(istype(target.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
-				var/obj/item/parts/human_parts/arm/left/item/left_arm = target.limbs.l_arm
-				left_arm.remove()
-			if (length(target.implant))
-				for (var/obj/item/implant/I in target.implant)
-					if (istype(I,/obj/item/implant/projectile))
-						continue
-					I.on_remove(target)
-					target.implant.Remove(I)
-					if (istype(I,/obj/item/implant/cloner))
-						qdel(I)
-						continue
-					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
-					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
-					wadblood.color = target.blood_color
-					newcase.UpdateOverlays(wadblood, "blood")
-					newcase.blood_DNA = target.bioHolder.Uid
-					newcase.blood_type = target.bioHolder.bloodType
-
-		target.set_loc(grinder)
-		grinder.occupant = target
-		qdel(grab)
