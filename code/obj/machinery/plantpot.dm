@@ -31,6 +31,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	power_usage = 25
+	provides_grip = TRUE
 	var/datum/plant/current = null // What is currently growing in the plant pot
 	var/datum/plantgenes/plantgenes = null // Set this up in New
 	var/tickcount = 0  // Automatic. Tracks how many ticks have elapsed, for CPU efficiency things.
@@ -578,8 +579,15 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	else
 		..()
-		if (!istype(W,/obj/item/plantanalyzer) && !istype(W,/obj/item/device/pda2))
-			src.wiggle() // hit animation
+		if (!istype(W,/obj/item/plantanalyzer) && !istype(W,/obj/item/device/pda2) && !istype(W, /obj/item/gardentrowel))
+
+			if (src.current)
+				src.wiggle() // hit animation
+
+				// if we're dead, clear the plant out of the tray when damaged
+				if (src.dead && W.force > 0)
+					src.visible_message(SPAN_ALERT("[src] is destroyed by [user.name]'s [W]!"))
+					src.HYPdestroyplant()
 
 /obj/machinery/plantpot/attack_ai(mob/user as mob)
 	if(isrobot(user) && BOUNDS_DIST(src, user) == 0) return src.Attackhand(user)
@@ -749,6 +757,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 	src.AddOverlays(water_meter, "water_meter")
 	if(!src.current)
+		src.vis_contents -= src.plant_sprite
 		src.ClearSpecificOverlays("harvest_display", "health_display", "plant", "plantdeath")
 		if(status & (NOPOWER|BROKEN))
 			src.ClearSpecificOverlays("water_meter")
@@ -789,7 +798,8 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
 	// all this work so we can have the damage shake effect
-	if(src.current && !src.dead)
+
+	if(src.current)
 		if (plantoverlay)
 			src.plant_sprite.UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
 		else
@@ -800,11 +810,6 @@ TYPEINFO(/obj/machinery/plantpot)
 	else
 		if ((src.plant_sprite in src.vis_contents))
 			src.vis_contents -= src.plant_sprite
-
-
-	// 	src.AddOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
-	// else
-	// 	src.ClearSpecificOverlays("plantoverlay")
 
 	if(status & (NOPOWER|BROKEN))
 		src.ClearSpecificOverlays("water_meter", "harvest_display", "health_display", "plantdeath")

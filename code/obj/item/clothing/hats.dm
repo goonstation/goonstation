@@ -82,6 +82,8 @@ proc/filter_trait_hats(var/type)
 	item_state = "bgloves"
 
 /obj/item/clothing/head/serpico
+	name = "bucket hat"
+	desc = "Weirdly tall."
 	icon_state = "serpico"
 	item_state = "serpico"
 
@@ -2695,7 +2697,7 @@ obj/item/clothing/head/headscarf
 		name = "red headscarf"
 		icon_state = "headscarf-red"
 		item_state = "headscarf-red"
-		
+
 	white
 		name = "white headscarf"
 		icon_state = "headscarf-white"

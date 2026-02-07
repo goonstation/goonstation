@@ -165,3 +165,5 @@ The cloning disk rack displays a red flashing light when it thinks someone can b
 Shuttle votes aren't in the rules, if you have access and the station's in bad shape you can call the shuttle!
 Want to express yourself, but can't put things into words? Press M to make your own, custom emote! You can also press CTRL + M to emote audibly - chortle and snort at your own, bad jokes!
 You can find the GPS verb under the commands tab after the game has started. It is quite helpful in finding your way around the station!
+You can click-drag yourself over a crate to slide on top of it - even in zero-G!
+You can keep moving in zero-G - just keep to walls, windows, and tables! Or snag some magboots...

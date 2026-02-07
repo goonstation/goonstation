@@ -4,6 +4,8 @@
 #define MECHANICS_INTERACTION_SKIP_IF_FAIL 1
 /// This atom cannot be scanned at all.
 #define MECHANICS_INTERACTION_BLACKLISTED 2
+/// This atom always registers as incompatible. Similar to blacklisted, but gives user feedback.
+#define MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE 3
 
 /// The scan attempt succeeded.
 #define MECHANICS_ANALYSIS_SUCCESS 1

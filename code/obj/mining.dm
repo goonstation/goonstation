@@ -1824,7 +1824,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	afterattack(atom/target, mob/user)
 		..()
-		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mods)
+		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mode)
 			if(isturf(target))
 				src.process_charges(src.get_power_usage(), user)
 			else
@@ -1996,7 +1996,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 /obj/item/mining_tool/powered/hedron_beam
 	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
 	name = "\improper Hedron beam device"
-	desc = "A prototype multifunctional industrial tool capable of rapidly switching between welding and mining modes."
+	desc = "A prototype multifunction industrial tool capable of rapidly switching between welding and mining modes. Ships with a weak self-charging cell."
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
@@ -2006,10 +2006,10 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	tool_flags = TOOL_WELDING
 	force = 10
 	dig_strength = 0
-	powered_dig_strength = 3
-	power_usage = 2
+	powered_dig_strength = 5
+	power_usage = 1
 	robot_power_usage = 50
-	default_cell = /obj/item/ammo/power_cell
+	default_cell = /obj/item/ammo/power_cell/self_charging/tricklecharge
 
 	examine(mob/user)
 		. = ..()
@@ -2025,7 +2025,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 		FLICK("hedron-MtoW", src)
 		..()
 
-	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
+	proc/try_weld(mob/user, var/fuel_amt = 4, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
 	//All welding tools just copy and paste this proc? Horrible, but out of scope so it can be some other handsome coder's problem.
 		if (!src.is_on) //are we in welding mode?
 			if(use_amt == -1)

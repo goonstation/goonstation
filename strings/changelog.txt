@@ -1,5 +1,84 @@
 
+(t)fri feb 06 26
+(u)Ribbie
+(p)25677
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)No more observing yourself.
+(u)Ikea
+(p)25772
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(*)Mining charge pouches can now be printed from the mining fabricator
+(t)thu feb 05 26
+(u)glowbold & c
+(p)25091
+(e)🆕🗺🎨🧫💡|C-Feature, A-Mapping, C-Sprites, C-Experimental, A-Station-Systems
+(*)Station-wide Gravity Tethers provide gravity to space stations/ships. More details in minor notes.
+(+)Low and zero gravity causes nausea and disorientation unless you wear space gear.
+(+)High and extreme gravity causes sluggishness and injury.
+(+)Local-Area Gravity Tethers and Gravity Scanners can be printed in Engineering manufacturers.
+(+)Station-wide Gravity Tethers can be printed by a disk in the CE locker, or from Cargo.
+(+)A-zones always have gravity. Some debris/asteroid field areas have localized gravity tethers.
+(u)JORJ949
+(p)25783
+(e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
+(*)Trainee Roles, alongside Sous-Chef and Blue Clown will now be able to buy whatever traitor items their main role can buy (i.e. blue clowns can buy clown items, Tech Trainees can buy Engineer items).
+(t)tue feb 03 26
+(u)glowbold
+(p)25808
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Changeling abomination form cannot buckle or be buckled into a chair.
+(u)JORJ949
+(*)AI Cores can now be loaded into cargo holds if unanchored.
+(t)sun feb 01 26
+(u)JORJ949
+(p)25595
+(e)💅🚨🔨|C-QoL, A-Admin, A-Player-Actions
+(+)Central Command Updates now have their own announcement colour.
+(u)Pirate-Rob
+(p)25750
+(e)|
+(+)Door Panel UI now automatically opens upon opening the panel with a screwdriver.
+(u)Lord_Earthfire
+(p)25703
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Plates now have inhand icons
+(u)TDHooligan
+(p)25744
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Striker birdshot damage buffed from 13 -> 16.
+(u)bamlord
+(p)25746
+(e)|
+(*)Added a new type of artifact bomb: biological
+(+)The biological artifact bomb spews out a cloud of disease reagents.
+(u)LeahTheTech
+(p)25793
+(e)🎨⚖🧛🔨📦|C-Sprites, C-Balance, A-Gamemodes, A-Player-Actions, A-Game-Objects
+(*)Fibre wire now applies instantly, slows less, and always applies at the highest level. No more finnicky toggle system.
+(*)You can no longer grab someone who has you in a chokehold with an item (including fibre wire). Normal reverse grabs are still possible.
+(+)Fibre wire now has a clickbox in the middle of the sprite as well as on the wire itself.
+(t)sat jan 31 26
+(u)finger
+(p)25667
+(e)🔄⚙|C-Rework, A-Internal
+(+)Backend stuff regarding server information was modified. Goonhub/MedAss might fail to fetch servers while stuff gets migrated.
+(u)LeahTheTech
+(p)25792
+(e)⛔🌱|C-Removal, A-Hydroponics
+(+)Reverted the ability to plant seeds outside of hydroponics trays.
 (t)wed jan 28 26
+(u)Kubius
+(p)25763
+(e)|
+(+)Rebalanced the Hedron beam device: now has minor self-charging, higher welding energy cost (10 uses stored), lower mining energy cost (40 uses stored), and increased dig strength.
+(u)NibChocolateeny
+(p)25742
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Strange Soybean plants and their questionable produce now contain Partially Hydrogenated Space-Soybean Oil.
+(u)SnugglyCactus
+(p)25500
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added several variants of Hawaiian shirts to the Clothing Booth.
 (u)Ghostplasmas & Ribbie
 (p)25601
 (e)🎨🎩|C-Sprites, A-Clothing

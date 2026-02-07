@@ -22,7 +22,6 @@
 	fullbright = 0
 	luminosity = 1
 	intact = 0 //allow wire laying
-	throw_unlimited = 0
 	//todo fix : cannot flip.
 	//todo : TOUCH reagent func
 

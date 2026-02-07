@@ -216,6 +216,7 @@
 	anchored = ANCHORED
 	density = 1
 	opacity = 0
+	provides_grip = TRUE
 
 /obj/fakeobject/shuttleweapon
 	name = "weapons unit"
@@ -262,6 +263,7 @@
 	anchored = ANCHORED
 	density = 1
 	opacity = 0
+	provides_grip = TRUE
 
 /obj/fakeobject/falseladder
 	name = "ladder"

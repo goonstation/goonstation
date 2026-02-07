@@ -464,6 +464,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name = "Strange soybean"
 	name_prefix = "Strange "
 	crop = /obj/item/reagent_containers/food/snacks/plant/soy/soylent
+	assoc_reagents = list("badgrease")
 	iconmod = "Soylent"
 
 // Contusine Mutations

@@ -741,6 +741,8 @@ TYPEINFO(/mob)
 						return
 
 				src.set_loc(newloc)
+				tmob.inertia_value = 1
+				tmob.inertia_dir = get_dir(newloc, oldloc)
 				tmob.set_loc(oldloc)
 
 				if(tmob.buckled)
@@ -771,6 +773,7 @@ TYPEINFO(/mob)
 		var/old_loc = src.loc
 		AM.animate_movement = SYNC_STEPS
 		AM.glide_size = src.glide_size
+		AM.inertia_value = 1
 		step(AM, t)
 
 		if (isliving(AM))
@@ -2334,6 +2337,49 @@ TYPEINFO(/mob)
 		if(shadow)
 			qdel(shadow)
 
+/mob/proc/gravitygib()
+	logTheThing(LOG_COMBAT, src, "is gravity-gibbed at [log_loc(src)].")
+	src.transforming = TRUE
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "gravitygib")
+	src.anchored = ANCHORED_ALWAYS
+	if (ishuman(src))
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_2.ogg', 50, TRUE)
+	animate_squish_flat(src)
+	SPAWN (10)
+		if (QDELETED(src))
+			return
+		src.unequip_all()
+		var/list/ejectables = src.list_ejectables()
+		for(var/obj/item/organ/organ in ejectables)
+			if(organ.donor == src)
+				organ.on_removal()
+		var/turf/T = get_turf(src)
+		if (T)
+			for(var/obj/O in ejectables)
+				O.set_loc(T)
+			if (ishuman(src))
+				src.visible_message(SPAN_ALERT("The overwhelming gravity crushes [src] into a fine red paste!"))
+				var/mob/living/carbon/human/H = src
+				for (var/i in 1 to 3)
+					var/obj/decal/cleanable/blood/gibs/core/gib = make_cleanable(/obj/decal/cleanable/blood/gibs/core, T)
+					gib.blood_DNA = blood_DNA
+					gib.blood_type = blood_type
+					if(H.blood_id) gib.sample_reagent = H.blood_id
+			else if (issilicon(src))
+				src.visible_message(SPAN_ALERT("The overwhelming gravity crushes [src] into a pile of bits!"))
+				playsound(T, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, TRUE)
+				make_cleanable(/obj/decal/cleanable/oil, T)
+				make_cleanable(/obj/decal/cleanable/robot_debris/limb, T)
+				make_cleanable(/obj/decal/cleanable/robot_debris, T)
+		for(var/obj/item/implant/I in src) qdel(I)
+		src.death()
+		if (src.client)
+			var/mob/dead/observer/newmob = ghostize()
+			if (newmob) newmob.corpse = null
+
+		qdel(src)
+
+
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
@@ -3003,9 +3049,10 @@ TYPEINFO(/mob)
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
-		if ((istype(src.loc, /turf/space) || src.no_gravity) && ismob(source))
+		if (src.traction != TRACTION_FULL && ismob(source))
 			var/mob/M = source
 			src.inertia_dir = M.inertia_dir
+			src.inertia_value = 1
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()

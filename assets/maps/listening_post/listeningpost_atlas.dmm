@@ -1117,6 +1117,7 @@
 /turf/simulated/floor/airless/engine,
 /area/listeningpost/landing_bay)
 "Vn" = (
+/obj/machinery/gravity_tether/multi_area/listening_post,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
 "Vv" = (

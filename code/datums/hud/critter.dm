@@ -34,6 +34,8 @@
 	var/atom/movable/screen/hud/bleeding = null
 	/// resting hud element
 	var/atom/movable/screen/hud/resting = null
+	/// gravity hud element
+	var/atom/movable/screen/hud/gravity = null
 
 	/// hud owner mob
 	var/mob/living/critter/master = null
@@ -65,6 +67,7 @@
 	src.create_health_element()
 	src.create_stamina_element()
 	src.create_temperature_element()
+	src.create_gravity_element()
 
 	// these elements rely on being able to breathe
 	if (src.master.get_health_holder("oxy"))
@@ -461,6 +464,34 @@
 		return 0
 	src.resting.icon_state = "rest[src.master.hasStatus("resting") ? 1 : 0]"
 
+/// Update the gravity indicator
+/datum/hud/critter/proc/update_gravity_indicator()
+	if (!src.gravity)
+		return 0
+	var/stage
+	switch(master.gforce)
+		if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
+			stage = 0
+			src.gravity.desc = GRAVITY_DESC_NONE
+		if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
+			stage = 2
+			src.gravity.desc = GRAVITY_DESC_NORMAL
+		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
+			stage = 1
+			src.gravity.desc = GRAVITY_DESC_LOW
+		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
+			stage = 4
+			src.gravity.desc = GRAVITY_DESC_EXTREME
+		if (GFORCE_MOB_HIGH_THRESHOLD to GFORCE_MOB_EXTREME_THRESHOLD)
+			stage = 3
+			src.gravity.desc = GRAVITY_DESC_HIGH
+		if (GFORCE_EARTH_GRAVITY to GFORCE_MOB_HIGH_THRESHOLD)
+			stage = 2
+			src.gravity.desc = GRAVITY_DESC_NORMAL
+
+	src.gravity.icon_state = "gravity[stage]"
+	src.gravity.tooltip_options = list("theme" = "gravInd[stage]")
+
 /// updates status effects on the owner's hud
 /mob/living/critter/updateStatusUi()
 	if(src.hud && istype(src.hud, /datum/hud/critter))
@@ -531,6 +562,10 @@
 	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\
 	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 	src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
+
+/datum/hud/critter/proc/create_gravity_element()
+	src.gravity = src.create_screen("gravity","Gravity", src.hud_icon, "gravity2",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "gravInd02"))
 
 /datum/hud/critter/proc/create_throwing_element()
 	src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, src.master.can_throw ? "throw0" : "drop0",\
