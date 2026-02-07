@@ -1976,6 +1976,7 @@
 #include "code\modules\robotics\laws\ai_modules.dm"
 #include "code\modules\robotics\laws\ai_rack_manager.dm"
 #include "code\modules\robotics\laws\law_racks.dm"
+#include "code\modules\robotics\laws\random_laws.dm"
 #include "code\modules\robotics\robot\robot_docking_station.dm"
 #include "code\modules\robotics\robot\robot_module_rewriter.dm"
 #include "code\modules\robotics\robot\module\brobocop.dm"
