@@ -3315,6 +3315,35 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"anx" = (
+/obj/machinery/door_control{
+	id = "hangar_engine";
+	name = "Engineering Hangar Door Control";
+	pixel_y = 24
+	},
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = -5;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/device/analyzer/gravity_scanner{
+	pixel_y = -7;
+	pixel_x = 7
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "anH" = (
 /obj/machinery/computer/arcade{
 	desc = "The VR representation of a popular computer game."
@@ -19450,9 +19479,6 @@
 /obj/landmark/bill_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"bux" = (
-/turf/simulated/floor,
-/area/station/hangar/engine)
 "buz" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -39654,34 +39680,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "fTe" = (
-/obj/machinery/door_control{
-	id = "hangar_engine";
-	name = "Engineering Hangar Door Control";
-	pixel_y = 24
-	},
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/gravity_tether{
-	pixel_y = 5;
-	pixel_x = 7
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_y = -5;
-	pixel_x = -6
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_y = 2;
-	pixel_x = -6
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_x = -6;
-	pixel_y = 9
-	},
-/obj/item/device/analyzer/gravity_scanner{
-	pixel_y = -7;
-	pixel_x = 7
-	},
-/turf/simulated/floor,
-/area/station/hangar/engine)
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/gravity)
 "fTj" = (
 /obj/table/auto,
 /obj/item/item_box/postit{
@@ -45192,6 +45193,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/airbridge)
+"jVX" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "jVY" = (
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor/green/side{
@@ -48887,14 +48892,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
-"mMN" = (
-/obj/machinery/door_control{
-	id = "hangar_engine";
-	name = "Engineering Hangar Door Control";
-	pixel_y = 24
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/engine)
 "mNL" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment/morgue{
@@ -49795,10 +49792,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"nvi" = (
-/obj/machinery/gravity_tether/station,
-/turf/simulated/floor,
-/area/station/hangar/engine)
 "nvq" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
@@ -57617,6 +57610,14 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
+"sZA" = (
+/obj/machinery/gravity_tether/station,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "tag" = (
 /obj/disposalpipe/segment,
 /obj/machinery/conveyor/EW{
@@ -62444,9 +62445,13 @@
 /turf/space,
 /area/station/com_dish/auxdish)
 "wvM" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/obj/machinery/door_control{
+	id = "hangar_engine";
+	name = "Engineering Hangar Door Control";
+	pixel_y = 24
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "wwh" = (
 /obj/lattice{
 	dir = 8;
@@ -111839,7 +111844,7 @@ aXq
 oAI
 aZt
 aSq
-wvM
+fTe
 aap
 iyf
 bep
@@ -113651,7 +113656,7 @@ aXw
 aWb
 aZz
 aSq
-wvM
+fTe
 acW
 adC
 adC
@@ -113670,7 +113675,7 @@ nne
 aaG
 adC
 bqp
-fTe
+anx
 qVe
 xkc
 bqp
@@ -113972,7 +113977,7 @@ nne
 aaG
 adC
 bqp
-nvi
+sZA
 maK
 eMs
 bqp
@@ -114274,7 +114279,7 @@ nne
 aaG
 adC
 bqp
-bux
+jVX
 bqX
 bqX
 qNS
@@ -114880,7 +114885,7 @@ aaG
 adC
 okz
 mea
-mMN
+wvM
 bsl
 bqp
 bsS
