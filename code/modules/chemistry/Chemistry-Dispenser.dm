@@ -245,23 +245,17 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	/// Proc for adding a beaker to a dispenser (`user` optional though necessary if one exists).
 	proc/add_glassware(var/obj/item/reagent_containers/container, var/mob/user)
-		if(!user)
-			src.beaker = container
-			container.set_loc(src)
-			APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, src)
-			container.reagents?.handle_reactions()
-			src.UpdateIcon()
+		if(QDELETED(container) || container.cant_drop)
 			return
 
-		src.beaker = container
+		user?.drop_item(container)
+		container.set_loc(src)
 		APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, src)
-		if(!container.cant_drop)
-			user.drop_item()
-			if(!container.qdeled)
-				container.set_loc(src)
+		src.beaker = container
 		container.reagents?.handle_reactions()
 		src.UpdateIcon()
-		src.ui_interact(user)
+		if (user)
+			src.ui_interact(user)
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
