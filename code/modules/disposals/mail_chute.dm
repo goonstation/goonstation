@@ -335,6 +335,7 @@
 	handle_normal_state = "mail-handle"
 	light_style = "disposal"
 	density = 0
+	provides_grip = FALSE
 
 /obj/machinery/disposal/mail/small/autoname
 	autoname = TRUE

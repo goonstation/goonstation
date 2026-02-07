@@ -209,6 +209,9 @@ var/list/list/by_cat = list()
 #define TR_CAT_PORTABLE_MACHINERY "portable_machinery"
 #define TR_CAT_MANUFACTURER_LINK "manufacturer_link"
 #define TR_CAT_TIMING_TIMERS "timing_timers" //item timers that are actively timing right now
+#define TR_CAT_GRAVITY_TETHERS "gravity_tethers" //! Station, single-area, and multi-area gravity tethers
+#define TR_CAT_SHUTTLE_COMPUTERS "shuttle_computer" //! Shuttle computers
+
 // powernets? processing_items?
 // mobs? ai-mobs?
 

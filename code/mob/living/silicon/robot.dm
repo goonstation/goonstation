@@ -10,6 +10,7 @@
 	var/painted = 0
 	var/paint = null
 
+ADMIN_INTERACT_PROCS(/mob/living/silicon/robot, proc/admin_add_tool, proc/admin_remove_tool)
 TYPEINFO(/mob/living/silicon/robot)
 	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
 
@@ -688,7 +689,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			for (var/mob/M in A.contents)
 				recipients += M
 
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		log_emote(src, message, voluntary)
 		act = lowertext(act)
 		for (var/mob/M as anything in recipients)
 			M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
@@ -3613,6 +3614,20 @@ TYPEINFO(/mob/living/silicon/robot)
 /mob/living/silicon/robot/remove_pulling()
 	..()
 	src.hud?.update_pulling()
+
+/mob/living/silicon/robot/proc/admin_add_tool()
+	set name = "Add Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_add_tool()
+
+/mob/living/silicon/robot/proc/admin_remove_tool()
+	set name = "Remove Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_remove_tool()
 
 /datum/statusEffect/low_power/robot
 	id = "low_power_robot"

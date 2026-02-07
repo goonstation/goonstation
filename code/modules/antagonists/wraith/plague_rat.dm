@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/mob/plague_rat
 	id = ROLE_PLAGUE_RAT
 	display_name = "plague rat"
+	antagonist_icon = "wraithsummon"
 	mob_path = /mob/living/critter/wraith/plaguerat/young
 	wiki_link = "https://wiki.ss13.co/Wraith#Path_2:_The_Plaguebringer"
 
