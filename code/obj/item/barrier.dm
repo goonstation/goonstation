@@ -132,21 +132,6 @@ TYPEINFO(/obj/item/barrier)
 		else
 			user?.show_text("You need two free hands in order to activate the [src.name].", "red")
 
-/obj/item/barrier/chargable
-	//stolen variables from energy.dm
-	var/rechargeable = 1 // Can we put this barrier in a recharger? False should be a very rare exception.
-	var/robocharge = 800
-	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
-	var/from_frame_cell_type = /obj/item/ammo/power_cell
-	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
-	var/wait_cycle = 0 // Using a self-charging cell should auto-update the barrier's sprite.
-	var/can_swap_cell = 0
-	var/uses_charge_overlay = FALSE //! Does this barrier use charge overlays on the sprite?
-	var/charge_icon_state
-	var/restrict_cell_type
-	var/image/charge_image = null
-
-	var/barrier_cost = null //power cost of the barrier
 
 /obj/item/barrier/collapsible/security
 	desc = "A personal barrier. Activate this item inhand to deploy it."
@@ -186,14 +171,14 @@ TYPEINFO(/obj/item/barrier)
 		src.setItemSpecial(/datum/item_special/barrier/void)
 		BLOCK_SETUP(BLOCK_ALL)
 
-/obj/item/barrier/chargable/syndicate
+/obj/item/barrier/syndicate
 	name = "Aegis Riot Barrier"
-	desc = "A syndicate bootleg of a security barrier. It lacks compactibility for a more solid frame and the ability to refract projectiles."
+	desc = "A syndicate bootleg of the security barrier. It lacks compactibility for a more solid frame and the ability to refract projectiles."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "syndie_barrier"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "syndie_barrier"
-	c_flags = EQUIPPED_WHILE_HELD | ONBELT
+	c_flags = EQUIPPED_WHILE_HELD
 	force = 6
 	throwforce = 6
 	w_class = W_CLASS_NORMAL
@@ -201,7 +186,6 @@ TYPEINFO(/obj/item/barrier)
 	stamina_cost = 10
 	stamina_crit_chance = 0
 	hitsound = 0
-	barrier_cost = 20
 
 	setupProperties()
 		..()

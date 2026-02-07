@@ -2265,11 +2265,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		proc/on_move(mob/living/mover, previous_loc, dir)
 			if (mover.loc != previous_loc && !(mover.restrain_time > TIME) && !remote)
 				src.deactivate(mover)
-			else
-				if(caller.master.cell_type)
-					SEND_SIGNAL(master, COMSIG_CELL_USE, 20)
-					if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 0))
-						src.deactivate(mover)
 
 		proc/deactivate(mob/living/user)
 			src.UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
@@ -2290,8 +2285,11 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 				if(Q)
 					if(amplify)
-						Q.proj_data.damage = Q.proj_data.damage * amplify_amount
-						Q.proj_data.stun = Q.proj_data.stun * amplify_amount
+						if(Q.proj_data)// cause projectiles can somehow work without this
+							Q.proj_data.damage = Q.proj_data.damage * amplify_amount
+							Q.proj_data.stun = Q.proj_data.stun * amplify_amount
+						else
+							Q.power = Q.power * amplify_amount
 					if(refract)
 						refract_bullet(Q,src)
 					src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
