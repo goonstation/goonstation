@@ -741,7 +741,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	var/icon_damaged = "barricade-damaged"
 
 	var/health = 100

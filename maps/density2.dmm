@@ -3492,7 +3492,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/manufacturer/engineering,
+/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "xq" = (
@@ -7335,6 +7335,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
+"YZ" = (
+/obj/machinery/manufacturer/engineering,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "Za" = (
 /obj/mesh/catwalk,
 /obj/machinery/turret,
@@ -51990,8 +51994,8 @@ Pf
 sR
 sc
 xp
+YZ
 ei
-tn
 sV
 tn
 oN

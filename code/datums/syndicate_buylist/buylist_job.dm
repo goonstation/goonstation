@@ -1,3 +1,12 @@
+// Categories of jobs that can be put into the list of jobs that can buy the thing. For use when several jobs should be considered the same job
+// for the purposes of buylist entries. E.g. All clowns should get clown traitor items in their list
+#define ALL_COMMAND "Captain", "Head of Personnel", "Head of Security", "Research Director", "Medical Director", "Chief Engineer"
+#define ALL_RESEARCH "Research Director", "Scientist", "Research Trainee"
+#define ALL_DOCTORS "Medical Director", "Medical Doctor", "Medical Trainee"
+#define ALL_ENGINEERS "Chief Engineer", "Engineer", "Technical Trainee"
+#define ALL_CHEFS "Chef", "Sous-Chef"
+#define ALL_CLOWNS "Clown", "Blue Clown"
+
 //////////////////////////////////////////////// Job-specific items  ////////////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/clowncar
@@ -6,7 +15,7 @@
 	cost = 5
 	vr_allowed = FALSE
 	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Can be loaded with banana peels. Comes with an extra set of clown clothes."
-	job = list("Clown")
+	job = list(ALL_CLOWNS)
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/boomboots
@@ -15,7 +24,7 @@
 	cost = 12
 	vr_allowed = FALSE
 	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
-	job = list("Clown")
+	job = list(ALL_CLOWNS)
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV
 
@@ -25,7 +34,7 @@
 	cost = 5
 	vr_allowed = FALSE
 	desc = "A clown mask haunted by the souls of those who honked before. Only true clowns should attempt to wear this. It also functions like a gas mask."
-	job = list("Clown")
+	job = list(ALL_CLOWNS)
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR
 
@@ -35,7 +44,7 @@
 	cost = 5
 	vr_allowed = FALSE
 	desc = "A heavily illegal and portable version of the NanoTrasen announcement computer modified to be as annoying as possible. Not lined with explosives."
-	job = list("Clown")
+	job = list(ALL_CLOWNS)
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV
 
@@ -44,7 +53,7 @@
 	items = list(/obj/item/storage/box/fakerevolver)
 	cost = 1
 	desc = "A revolver with a twist. It will always fire backwards! Watch some vigilante try to get you NOW!"
-	job = list("Clown")
+	job = list(ALL_CLOWNS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/chambomb
@@ -54,7 +63,7 @@
 	vr_allowed = FALSE
 	desc = "2 questionable mixtures of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
 	br_allowed = TRUE
-	job = list("Clown", "Mail Courier")
+	job = list(ALL_CLOWNS, "Mail Courier")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/sinjector
@@ -71,7 +80,7 @@
 	items = list(/obj/item/bible/mini)
 	cost = 1
 	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Chaplain", "Clown")
+	job = list("Staff Assistant", "Chaplain", ALL_CLOWNS)
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -229,7 +238,7 @@
 	cost = 4
 	vr_allowed = FALSE
 	desc = "A standard Nanotrasen mechanic's analyzer with jailbroken internals. This baby doesn't give a damn about DRM, patents, or \"safety\"!"
-	job = list("Engineer", "Chief Engineer")
+	job = list(ALL_ENGINEERS)
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/stimulants
@@ -237,7 +246,7 @@
 	items = list(/obj/item/storage/box/stimulants)
 	cost = 6
 	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This 3-pack of all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Users are recommended to take only a single dose at a time, and let withdrawal symptoms play out naturally.</font>"
-	job = list("Medical Doctor","Medical Director","Scientist","Geneticist","Pathologist","Research Director")
+	job = list(ALL_DOCTORS, ALL_RESEARCH, "Geneticist", "Pathologist")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/syringegun
@@ -245,7 +254,7 @@
 	items = list(/obj/item/gun/reagent/syringe)
 	cost = 3
 	desc = "This stainless-steel, revolving wonder fires needles. Perfect for today's safari-loving Syndicate doctor! Loaded by transferring reagents to the gun's internal reservoir."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
+	job = list(ALL_DOCTORS, ALL_RESEARCH, "Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/powergloves
@@ -254,7 +263,7 @@
 	cost = 6
 	desc = "These marvels of modern technology employ nanites and space science to draw energy from nearby cables to zap things. BZZZZT!"
 	not_in_crates = TRUE
-	job = list("Engineer", "Chief Engineer")
+	job = list(ALL_ENGINEERS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/zappy_implant
@@ -262,7 +271,7 @@
 	items = list(/obj/item/implanter/zappy)
 	cost = 1
 	desc = "This implant turns you into a living (or dying) generator, zapping those around you with a volume of electricity that scales with the number of implants upon your demise."
-	job = list("Engineer", "Chief Engineer")
+	job = list(ALL_ENGINEERS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/poisonbottle
@@ -271,7 +280,7 @@
 	cost = 1
 	vr_allowed = FALSE //rat poison
 	desc = "A bottle of poison. Which poison? Who knows."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender", "Chef")
+	job = list(ALL_DOCTORS, ALL_RESEARCH, "Bartender", ALL_CHEFS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/poisonbundle
@@ -280,7 +289,7 @@
 	cost = 7
 	vr_allowed = FALSE //rat poison
 	desc = "A box filled with seven random poison bottles."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender", "Chef")
+	job = list(ALL_DOCTORS, ALL_RESEARCH, "Bartender", ALL_CHEFS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/chemicompiler
@@ -289,7 +298,7 @@
 	cost = 5
 	not_in_crates = TRUE
 	desc = "A handheld version of the Chemicompiler machine in Chemistry."
-	job = list("Research Director", "Scientist")
+	job = list(ALL_RESEARCH)
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/robosuit
@@ -334,21 +343,21 @@
 	cost = 5
 	desc = "Have you ever been making a pizza and thought \"this pizza would be better if I could fatally injure someone by throwing it at them\"? Well think no longer! Because you're sharpening pizzas now. You weirdo."
 	br_allowed = TRUE
-	job = list("Chef")
+	job = list(ALL_CHEFS)
 
 /datum/syndicate_buylist/traitor/syndiesauce
 	name = "Syndicate Sauce"
 	items = list(/obj/item/reagent_containers/food/snacks/condiment/syndisauce)
 	cost = 1
 	desc = "Our patented secret blend of herbs and spices! Guaranteed to knock even the harshest food critic right off their feet! And into the grave. Because this is poison."
-	job = list("Chef", "Bartender")
+	job = list(ALL_CHEFS, "Bartender")
 
 /datum/syndicate_buylist/traitor/donkpockets
 	name = "Syndicate Donk Pockets"
 	items = list(/obj/item/storage/box/donkpocket_w_kit)
 	cost = 2
 	desc = "Ready to eat, no microwave required! The pocket-sandwich station personnel crave, now with added medical agents to heal you up in a pinch! Zero grams trans-fat per serving*!<br><br><font size=1>*Made with partially-hydrogenated wizard blood.</font>"
-	job = list("Chef")
+	job = list(ALL_CHEFS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/butcherknife
@@ -357,7 +366,7 @@
 	cost = 7
 	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
 	not_in_crates = TRUE
-	job = list("Chef")
+	job = list(ALL_CHEFS)
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/hotdog_cart
@@ -367,7 +376,7 @@
 	desc = "A sinister hotdog cart which traps people inside and squishes them into, you guessed it, hot dogs."
 	not_in_crates = TRUE
 	vr_allowed = FALSE //i don't know why this is here but it's on the trash compactor cart so w/e
-	job = list("Chef", "Sous-Chef", "Waiter")
+	job = list(ALL_CHEFS, "Waiter")
 	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(var/obj/storage/cart/hotdog/syndicate/cart, var/mob/living/owner)
@@ -396,7 +405,7 @@
 	items = list(/obj/item/gun/energy/vuvuzela_gun)
 	cost = 3
 	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
+	job = list("Staff Assistant", ALL_CLOWNS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/moustache_grenade
@@ -404,7 +413,7 @@
 	items = list(/obj/item/old_grenade/moustache)
 	cost = 1
 	desc = "A disturbingly hairy grenade."
-	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
+	job = list("Staff Assistant", ALL_CLOWNS)
 
 /datum/syndicate_buylist/traitor/hotdog_bomb
 	name = "Hotdog Bomb"
@@ -412,14 +421,14 @@
 	cost = 1
 	desc = "Turn your worst enemies into hotdogs."
 	br_allowed = TRUE
-	job = list("Chef", "Sous-Chef", "Waiter", "Clown")
+	job = list(ALL_CHEFS, "Waiter", ALL_CLOWNS)
 
 /datum/syndicate_buylist/traitor/chemgrenades
 	name = "Chem Grenade Starter Pouch"
 	items = list(/obj/item/storage/custom_chem_grenade_pouch)
 	cost = 2
 	desc = "Tired of destroying your own face with acid reactions? Want to make the janitor feel incompetent? This pouch gets you started with five grenades. Just add beakers and screw!"
-	job = list("Scientist","Research Director")
+	job = list(ALL_RESEARCH)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/traitorthermalscanner
@@ -437,7 +446,7 @@
 	cost = 3
 	vr_allowed = FALSE
 	desc = "A modified cargo transporter which welds containers shut and sells their contents directly to the black market, swipe your ID to set the account. Any hapless crewmembers sold will be teleported to a random point in space and will reward cash bonuses based on their job."
-	job = list("Quartermaster","Miner","Engineer","Chief Engineer")
+	job = list("Quartermaster", "Miner", ALL_ENGINEERS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/telegun
@@ -472,7 +481,7 @@
 	cost = 6
 	vr_allowed = FALSE
 	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it. Disclaimer: the appearance of the altered cloning pod may cause alarm and probing questions from those who are not yet loyal."
-	job = list("Geneticist", "Medical Doctor", "Medical Director")
+	job = list("Geneticist", ALL_DOCTORS)
 
 /datum/syndicate_buylist/traitor/deluxe_mindhack_module
 	name = "Deluxe Mindhack Cloning Module Kit"
@@ -480,7 +489,7 @@
 	cost = 10 //  Always leave them 1tc so they can buy the moustache. Style is key.
 	vr_allowed = FALSE
 	desc = "A Deluxe Mindhack Cloning Kit. Contains a mindhack cloning module and a cloning lab in a box!"
-	job = list("Geneticist", "Medical Doctor", "Medical Director")
+	job = list("Geneticist", ALL_DOCTORS)
 
 /datum/syndicate_buylist/traitor/buddy_ammofab
 	name = "Guardbuddy Ammo Replicator"
@@ -543,7 +552,7 @@
 	vr_allowed = FALSE
 	not_in_crates = TRUE
 	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
-	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
+	job = list(ALL_COMMAND)
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/megaphone
@@ -562,7 +571,7 @@
 	vr_allowed = FALSE
 	not_in_crates = TRUE
 	desc = "An AI law module that at a glance looks completely normal, but could tell the AI to do anything."
-	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
+	job = list(ALL_COMMAND)
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/barberang
@@ -572,3 +581,10 @@
 	desc = "An aerodynamic, extra-sharp hand razor designed to be thrown, knocking down and shearing the hair off of anyone it hits. The razor will then return, allowing for stolen hair to be easily retrieved. Notice: hitting a bald target will disrupt the razor's aerodynamic properties and void the warranty."
 	job = list("Barber")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+#undef ALL_COMMAND
+#undef ALL_RESEARCH
+#undef ALL_DOCTORS
+#undef ALL_ENGINEERS
+#undef ALL_CHEFS
+#undef ALL_CLOWNS

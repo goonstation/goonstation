@@ -1164,7 +1164,7 @@
 		if (!isturf(src.owner.loc))
 			return
 		var/turf/T = get_turf(src.owner)
-		if (!istype(T) || T.throw_unlimited)
+		if (!istype(T) || src.owner.traction == TRACTION_NONE)
 			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return

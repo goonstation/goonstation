@@ -66,6 +66,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	icon = 'icons/misc/featherzone.dmi'
 	anchored = ANCHORED
 	density = 1
+	provides_grip = TRUE
 
 /////////
 // WING
