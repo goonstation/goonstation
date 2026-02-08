@@ -54904,9 +54904,9 @@
 	},
 /area/station/hydroponics/bay)
 "qVe" = (
-/obj/table/auto,
 /obj/item/shipcomponent/mainweapon/foamer,
 /obj/item/storage/toolbox/mechanical,
+/obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "qWh" = (
