@@ -132,7 +132,7 @@
 	icon_state = "hard_case"
 	desc = "A box containing an old hunting rifle and some ammo."
 	slots = 3
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/gun/kinetic/hunting_rifle,\
 	/obj/item/ammo/bullets/rifle_3006)
 	spawn_contents = list(/obj/item/gun/kinetic/hunting_rifle,\
@@ -143,7 +143,7 @@
 	icon_state = "hard_case"
 	desc = "A box containing a pod-targeting missile launcher and ammunition."
 	slots = 5
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/gun/kinetic/missile_launcher,\
 	/obj/item/ammo/bullets/pod_seeking_missile)
 	spawn_contents = list(/obj/item/gun/kinetic/missile_launcher,\
@@ -155,7 +155,7 @@
 	color = "red"
 	desc = "A box containing a collapsible recoiling cannon and some 20mm ammo."
 	slots = 3
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/gun/kinetic/cannon,\
 	/obj/item/ammo/bullets/cannon)
 	spawn_contents = list(/obj/item/gun/kinetic/cannon,\
@@ -167,7 +167,7 @@
 	color = "red"
 	desc = "A box containing a massive antiair rifle and some .50 frag ammo."
 	slots = 3
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/gun/kinetic/antiair,\
 	/obj/item/ammo/bullets/antiair)
 	spawn_contents = list(/obj/item/gun/kinetic/antiair,\
@@ -178,7 +178,7 @@
 	icon_state = "hard_case"
 	desc = "A box containing an absurdly large revolver and some .500 magnum ammo."
 	slots = 3
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/gun/kinetic/bigiron,\
 	/obj/item/ammo/bullets/fivehundred)
 	spawn_contents = list(/obj/item/gun/kinetic/bigiron,\
@@ -286,7 +286,7 @@
 	name = "bowling bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/clothing/under/gimmick/bowling,\
 		/obj/item/bowling_ball)
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
@@ -300,7 +300,7 @@
 	name = "space-american football kit"
 	desc = "This kit contains everything you need to become a great football player. Wearing all of the equipment inside will grant you the ability to rush down and tackle anyone who stands in your way!"
 	icon_state = "box"
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
 		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football)
 	spawn_contents = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
@@ -406,7 +406,7 @@
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/boomerang,
 	/obj/item/clothing/under,
 	/obj/item/ammo/bullets/tranq_darts)
