@@ -39658,7 +39658,8 @@
 /obj/machinery/door_control{
 	id = "hangar_engine";
 	name = "Engineering Hangar Door Control";
-	pixel_y = 24
+	dir = 8;
+	pixel_x = -24
 	},
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/gravity_tether{
@@ -47951,9 +47952,10 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "mea" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 29
+/obj/machinery/door_control{
+	id = "hangar_engine";
+	name = "Engineering Hangar Door Control";
+	pixel_y = 24
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -54651,12 +54653,6 @@
 /area/station/engine/elect)
 "qNS" = (
 /obj/machinery/light_switch/west,
-/obj/machinery/door_control{
-	id = "hangar_engine";
-	name = "Engineering Hangar Door Control";
-	pixel_y = -24;
-	dir = 1
-	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "qNX" = (
@@ -113364,7 +113360,7 @@ aag
 nne
 aaG
 adC
-bqp
+fdD
 bqp
 lsA
 hRj
@@ -113666,7 +113662,7 @@ aag
 nne
 aaG
 adC
-bqp
+okz
 fTe
 qVe
 xkc
@@ -114573,7 +114569,7 @@ nne
 aap
 azt
 bqp
-fdD
+bqp
 bqX
 brE
 ikt
@@ -114875,7 +114871,7 @@ glX
 rSw
 aaG
 adC
-okz
+bqp
 mea
 bqX
 bsl
