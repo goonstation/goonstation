@@ -684,9 +684,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 							src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
 					if(GOAL_REFINEMENT)
-						goal_desc = "sanitation hardware enhancement"
-						src.payout += rand(80,130) * 20
-						src.item_rewarders += new /datum/rc_itemreward/sonic_shower
+						goal_desc = "full-stack enhancements to multifunction tool production"
+						src.item_rewarders += new /datum/rc_itemreward/sorta_omnitools
+						if(prob(35))
+							src.rc_entries += rc_buildentry(/datum/rc_entry/item/matanalyzer,1)
+						else
+							src.rc_entries += rc_buildentry(/datum/rc_entry/stack/bohrum,2)
+						if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/prox_sensor,1)
+						if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
+						if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/tracking_beacon,1)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
 
 			if(PROTOTYPIST_REV_ENG)
@@ -855,6 +861,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/claretine/minprice
 	feemod = 0
 
+/datum/rc_entry/stack/bohrum
+	name = "bohrum"
+	commodity = /datum/commodity/ore/bohrum
+	typepath_alt = /obj/item/material_piece/bohrum
+	feemod = PAY_DOCTORATE
+
 /datum/rc_entry/stack/electrum
 	name = "electrum"
 	typepath = /obj/item/material_piece
@@ -872,6 +884,11 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/control_unit
 	name = "programmable control unit"
 	typepath = /obj/item/mechanics/mc14500
+
+/datum/rc_entry/item/tracking_beacon
+	name = "teleport-grade tracking beacon"
+	typepath = /obj/item/mechanics/interval_timer
+	feemod = PAY_DOCTORATE * 5
 
 /datum/rc_entry/item/magnet_link
 	name = "NT vehicle-grade magnet link array"
@@ -1027,24 +1044,17 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			yielder += new rewardthing
 		return yielder
 
-/datum/rc_itemreward/sonic_shower
-	name = "sonic shower head"
+/datum/rc_itemreward/sorta_omnitools
+	name = "6-in-1 multifunctional tool"
 
 	New()
 		..()
-		count = rand(2,3)
+		count = rand(11,16)
 
 	build_reward()
 		var/list/yielder = list()
 		for(var/i in 1 to count)
-			var/obj/item/electronics/frame/F = new
-			F.store_type = /obj/machinery/sonic_shower
-			F.name = "sonic shower head frame"
-			F.viewstat = 2
-			F.secured = 2
-			F.icon_state = "dbox_big"
-			F.w_class = W_CLASS_BULKY
-			yielder += F
+			yielder += new /obj/item/tool/omnitool/knockoff
 		return yielder
 
 //artifact reverse engineer rewards

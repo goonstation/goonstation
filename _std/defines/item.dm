@@ -94,6 +94,8 @@
 #define OMNI_MODE_WELDING 7
 #define OMNI_MODE_DECON 8
 #define OMNI_MODE_SOLDERING 9
+#define OMNI_MODE_SPOONING 10
+#define OMNI_MODE_UNCAPPING 11
 
 //fluid_canister flags
 #define FLUID_CANISTER_MODE_OFF 1
