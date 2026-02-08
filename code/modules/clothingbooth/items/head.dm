@@ -536,6 +536,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 	cost = PAY_TRADESMAN
 	item_path = /obj/item/clothing/head/ushanka
 
+/datum/clothingbooth_item/head/flatcap
+	cost = PAY_UNTRAINED
+	item_path = /obj/item/clothing/head/flatcap
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/hijab)
 /datum/clothingbooth_item/head/hijab
 	cost = PAY_TRADESMAN/5
