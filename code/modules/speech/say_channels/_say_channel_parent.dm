@@ -13,11 +13,11 @@ ABSTRACT_TYPE(/datum/say_channel)
 	/// The message to display to a speaker if they attempt to send a message over this channel while it is disabled.
 	var/disabled_message = "This say channel is currently disabled."
 	/// An associative list of listeners registered to this channel, indexed by input module type.
-	var/list/list/datum/listen_module/input/listeners
+	var/list/list/datum/listen_module/input/listeners = null
 	/// Whether this local channel should request registered input modules to track their outermost listeners.
 	var/track_outermost_listener = FALSE
 	/// An associative list of module trees, with the associated number of times a signal has been registered to them.
-	var/list/module_tree_signal_registrations
+	var/list/module_tree_signal_registrations = null
 	/// Whether messages sent through this channel should be affected by say or listen modifiers.
 	var/affected_by_modifiers = TRUE
 	/// Whether the speaker of a message sent through this channel should make a sound on sending a message.
@@ -128,6 +128,8 @@ ABSTRACT_TYPE(/datum/say_channel)
 /// Unregister a listener so it no longer receieves messages from this channel.
 /datum/say_channel/proc/UnregisterInput(datum/listen_module/input/registered)
 	src.listeners[registered.type] -= registered
+	if (!length(src.listeners[registered.type]))
+		src.listeners -= registered.type
 
 	if (src.track_outermost_listener)
 		registered.parent_tree.listener_origin.ensure_outermost_listener_tracker().unrequest_track()
@@ -154,9 +156,9 @@ ABSTRACT_TYPE(/datum/say_channel/global_channel)
  */
 /datum/say_channel/global_channel
 	/// The channel ID of this global channel's partner delimited channel.
-	var/delimited_channel_id
+	var/delimited_channel_id = null
 	/// This global channel datum's partner delimited channel datum. All messages sent through this channel will be sent to every listener on the delimited channel.
-	var/datum/say_channel/delimited/delimited_channel
+	var/datum/say_channel/delimited/delimited_channel = null
 
 /datum/say_channel/global_channel/New()
 	. = ..()
@@ -190,7 +192,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited)
  */
 /datum/say_channel/delimited
 	/// This delimited channel datum's partner global channel datum. All messages sent through this channel are also sent to the global channel.
-	var/datum/say_channel/global_channel/global_channel
+	var/datum/say_channel/global_channel/global_channel = null
 
 /datum/say_channel/delimited/PassToListeners(datum/say_message/message, list/list/datum/listen_module/input/listen_modules_by_type, from_global_channel = FALSE)
 	. = ..()
@@ -211,15 +213,18 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
  */
 /datum/say_channel/delimited/local
 	track_outermost_listener = TRUE
+	/// The spatial hashmap that is responsible for tracking all input modules registered to this channel.
+	var/datum/spatial_hashmap/listeners/hashmap = null
 	/// The listener tick cache is responsible for storing the "listeners by type" lists calculated by `PassToChannel()` for a single tick.
-	var/datum/listener_tick_cache/listener_tick_cache
+	var/datum/listener_tick_cache/listener_tick_cache = null
 	/// The type of listener tick cache that this say channel should use.
 	var/listener_tick_cache_type = /datum/listener_tick_cache
 
 /datum/say_channel/delimited/local/New()
 	. = ..()
 
-	src.listener_tick_cache = new src.listener_tick_cache_type
+	src.hashmap = new(name = "Say Channel ([src.channel_id])")
+	src.listener_tick_cache = new src.listener_tick_cache_type()
 
 /datum/say_channel/delimited/local/PassToChannel(datum/say_message/message)
 	var/list/list/datum/listen_module/input/listen_modules_by_type = src.listener_tick_cache.read_from_cache(message)
@@ -227,44 +232,51 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 		src.PassToListeners(message, listen_modules_by_type)
 		return
 
+	var/turf/centre = get_turf(message.message_origin)
+	if (!centre)
+		return
+
 	listen_modules_by_type = list()
+	for (var/type as anything in src.listeners)
+		listen_modules_by_type[type] = list()
 
 	if (isturf(GET_MESSAGE_OUTERMOST_LISTENER_LOC(message)))
-		var/turf/centre = get_turf(message.message_origin)
-		if (!centre)
-			return
 		SET_UP_HEARD_TURFS(visible_turfs, message.heard_range, centre)
 
-		for (var/type in src.listeners)
-			listen_modules_by_type[type] ||= list()
-			for (var/datum/listen_module/input/input as anything in src.listeners[type])
-				// If the outermost listener's loc is a turf, perform line of sight and range checks.
-				if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
-					// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
-					if (!input.ignore_line_of_sight_checks)
-						if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
-							continue
-					// If the input ignores line of sight checks, then the listener may hear the message if they are within the message's heard range.
-					else if (!INPUT_IN_RANGE(input, centre, message.heard_range))
+		for (var/datum/listen_module/input/input as anything in src.hashmap.vistarget_supremum(centre, message.heard_range))
+			// If the outermost listener's loc is a turf, perform line of sight and range checks.
+			if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
+				// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
+				if (!input.ignore_line_of_sight_checks)
+					if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
 						continue
-				// If the outermost listener's loc is not a turf, determine whether the message can be heard based on a shared loc chain.
-				else if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+				// If the input ignores line of sight checks, then the listener may hear the message if they are within the message's heard range.
+				else if (!INPUT_IN_RANGE(input, centre, message.heard_range))
 					continue
+			// If the outermost listener's loc is not a turf, determine whether the message can be heard based on a shared loc chain.
+			else if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+				continue
 
-				listen_modules_by_type[type] += input
+			listen_modules_by_type[input.type] += input
 
 	else
-		for (var/type in src.listeners)
-			listen_modules_by_type[type] ||= list()
-			for (var/datum/listen_module/input/input as anything in src.listeners[type])
-				// Determine whether the message can be heard based on a shared loc chain.
-				if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
-					continue
+		for (var/datum/listen_module/input/input as anything in src.hashmap.vistarget_point(centre))
+			// Determine whether the message can be heard based on a shared loc chain.
+			if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+				continue
 
-				listen_modules_by_type[type] += input
+			listen_modules_by_type[input.type] += input
 
 	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
+
+/datum/say_channel/delimited/local/RegisterInput(datum/listen_module/input/bundled/registree)
+	. = ..()
+	src.hashmap.register_hashmap_entry(registree, registree.parent_tree.listener_origin)
+
+/datum/say_channel/delimited/local/UnregisterInput(datum/listen_module/input/bundled/registered)
+	src.hashmap.unregister_hashmap_entry(registered)
+	. = ..()
 
 
 
@@ -278,7 +290,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/bundled)
  */
 /datum/say_channel/delimited/bundled
 	/// A list of subchannels, each an associative list of listeners registered to that subchannel, indexed by input module type.
-	var/list/list/list/datum/listen_module/input/listeners_by_subchannel
+	var/list/list/list/datum/listen_module/input/listeners_by_subchannel = null
 
 /datum/say_channel/delimited/bundled/New()
 	. = ..()
