@@ -390,6 +390,18 @@
 
 		return ..()
 
+/datum/overlayComposition/steelmask/tunnel_vision
+
+/datum/overlayComposition/greyout
+	New()
+		var/datum/overlayDefinition/meaty = new()
+		meaty.d_icon = 'icons/effects/overlays/meatyC.dmi'
+		meaty.d_icon_state = "meatyC"
+		meaty.d_blend_mode = 2
+		meaty.d_alpha = 140
+		meaty.d_color = "#999999"
+		definitions.Add(meaty)
+		return ..()
 
 // temporary blindness overlay until the other one is fixed
 /datum/overlayComposition/limited_sight
@@ -423,6 +435,8 @@
 		//meaty.d_color = "#610306"
 		definitions.Add(meaty)
 		return ..()
+
+/datum/overlayComposition/blinded/cryo
 
 /datum/overlayComposition/blinded_r_eye
 	New()

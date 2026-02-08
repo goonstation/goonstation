@@ -34,7 +34,7 @@ TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 	. = ..()
 
 /datum/component/consume/organpoints
-	var/target_abilityholder = /datum/abilityHolder/lizard
+	var/target_abilityholder = /datum/abilityHolder/mutantrace/lizard
 	var/static/list/organ2points = list(/obj/item/organ/head=2,/obj/item/skull=0,/obj/item/organ/brain=3,/obj/item/organ/chest=5,/obj/item/organ/heart=2,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=0)
 
 TYPEINFO(/datum/component/consume/organpoints)

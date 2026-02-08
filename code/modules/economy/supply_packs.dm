@@ -1059,7 +1059,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Blood Bank"
 
 /datum/supply_packs/singularity_generator
-	name = "Singularity Generator Crat (Cardlocked \[Chief Engineer])"
+	name = "Singularity Generator Crate (Cardlocked \[Chief Engineer])"
 	desc = "x1 Extremely Unstable Gravitational Singularity. Stored in a hi-tech jam jar, fired directly at your current location."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/the_singularitygen)
@@ -1538,6 +1538,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_IMPORTANT*2
 	containertype = /obj/storage/secure/crate
 	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
+	access = access_heads
+
+/datum/supply_packs/stationgravitytether
+	name = "Station Gravity Tether ManuDrive Crate"
+	desc = "A single-use ManuDrive for creating a replacement Gravity Tether for your ship or station. Note: Multiple gravity tethers are unsupported."
+	category = "Engineering Department"
+	contains = list(/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse)
+	cost = PAY_IMPORTANT*2
+	containertype = /obj/storage/secure/crate
+	containername = "Station Gravity Tether ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
 
 /datum/supply_packs/pressure_crystals_qt5

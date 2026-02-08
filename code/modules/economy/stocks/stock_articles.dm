@@ -106,4 +106,4 @@
 			T_list[I] = list(product_tokens[I])
 		for (var/I in T_list)
 			token_string = replacetext(token_string, "%[I]%", pick(T_list[I]))
-		return ucfirst(token_string)
+		return capitalize(token_string)

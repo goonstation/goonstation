@@ -807,7 +807,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/chem_grenade/cryo = 4)
 
 	weapons3
-		spawn_contents = list(/obj/item/barrier,
+		spawn_contents = list(/obj/item/barrier/collapsible/security,
 		/obj/item/chem_grenade/shock = 2)
 
 	weapons4

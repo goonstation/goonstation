@@ -283,3 +283,43 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 		/datum/clothingbooth_grouping_tag/season/winter,
 	)
+
+/datum/clothingbooth_grouping/hijab
+	name = "Hijab"
+	item_paths = list(
+		/datum/clothingbooth_item/head/hijab/black,
+		/datum/clothingbooth_item/head/hijab/darkblue,
+		/datum/clothingbooth_item/head/hijab/lightblue,
+		/datum/clothingbooth_item/head/hijab/green,
+		/datum/clothingbooth_item/head/hijab/yellow,
+		/datum/clothingbooth_item/head/hijab/orange,
+		/datum/clothingbooth_item/head/hijab/brown,
+		/datum/clothingbooth_item/head/hijab/red,
+		/datum/clothingbooth_item/head/hijab/pink,
+		/datum/clothingbooth_item/head/hijab/purple,
+		/datum/clothingbooth_item/head/hijab/white,
+		/datum/clothingbooth_item/head/hijab/flower,
+		/datum/clothingbooth_item/head/hijab/zigzag,
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual,
+	)
+
+/datum/clothingbooth_grouping/headscarf
+	name = "Headscarf"
+	item_paths = list(
+		/datum/clothingbooth_item/head/headscarf/black,
+		/datum/clothingbooth_item/head/headscarf/purple,
+		/datum/clothingbooth_item/head/headscarf/darkblue,
+		/datum/clothingbooth_item/head/headscarf/lightblue,
+		/datum/clothingbooth_item/head/headscarf/green,
+		/datum/clothingbooth_item/head/headscarf/yellow,
+		/datum/clothingbooth_item/head/headscarf/orange,
+		/datum/clothingbooth_item/head/headscarf/brown,
+		/datum/clothingbooth_item/head/headscarf/pink,
+		/datum/clothingbooth_item/head/headscarf/red,
+		/datum/clothingbooth_item/head/headscarf/white,
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual,
+	)

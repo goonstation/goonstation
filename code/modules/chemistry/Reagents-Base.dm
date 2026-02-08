@@ -138,7 +138,6 @@
 	depletion_rate = 0.05 // ethanol depletes slower but is formed in smaller quantities
 	overdose = 100 // ethanol poisoning
 	thirst_value = -0.02
-	bladder_value = -0.2
 	hygiene_value = 1
 	target_organs = list("liver")	//heart,  "stomach", "intestines", "left_kidney", "right_kidney"
 
@@ -756,7 +755,6 @@
 	transparency = 80
 	thirst_value = 0.8909
 	hygiene_value = 1.33
-	bladder_value = -0.2
 	taste = "bland"
 	minimum_reaction_temperature = -INFINITY
 	target_organs = list("left_kidney", "right_kidney")
@@ -900,7 +898,6 @@
 	reagent_state = LIQUID
 	thirst_value = 0.8909
 	hygiene_value = 0.75
-	bladder_value = -0.25
 	taste = "bitter"
 
 	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
@@ -940,7 +937,6 @@
 	reagent_state = LIQUID
 	thirst_value = -0.3 //Sea water actually slowly dehydrates you because you use more liquid to get rid of the salt then you gain.
 	hygiene_value = 0.3
-	bladder_value = -0.5
 	taste = "gross"
 
 /datum/reagent/ice
@@ -953,7 +949,6 @@
 	fluid_b = 250
 	transparency = 200
 	thirst_value = 0.8909
-	bladder_value = -0.2
 	minimum_reaction_temperature = T0C+1 // if it adds 1'C water, 1'C is good enough.
 	taste = "cold"
 
@@ -983,7 +978,6 @@
 	fluid_b = 247
 	transparency = 180
 	thirst_value = 0.3
-	bladder_value = -0.1
 	taste = "steamy"
 
 	reaction_turf(var/turf/t, var/volume)

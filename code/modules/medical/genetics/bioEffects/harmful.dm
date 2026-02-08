@@ -198,6 +198,23 @@
 					applied = 0
 		return
 
+/datum/bioEffect/shortsighted/temp
+	id = "bad_eyesight_temp"
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = FALSE
+	curable_by_mutadone = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	can_research = FALSE
+	can_copy = FALSE
+	can_make_injector = FALSE
+	reclaim_fail = 100
+	reclaim_mats = 0
+	acceptable_in_mutini = FALSE
+	stability_loss = 0
+	effect_group = null
+
 /datum/bioEffect/stupefaction
 	name = "Stupefaction"
 	desc = "Causes damage to the subject's brain structure, occassionally utterly stupefying and stunning them."

@@ -23,6 +23,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	change_name_on_spawn = TRUE
+	ui_colour = TGUI_COLOUR_NAVY
 	slot_back = list()
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/blue)
 	slot_ears = list(/obj/item/device/radio/headset/clown)
@@ -30,9 +31,11 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_card = /obj/item/card/id/clown
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/blue)
 	slot_belt = list(/obj/item/storage/fanny/funny)
-	slot_poc1 = list(/obj/item/bananapeel)
-	slot_poc2 = list(/obj/item/device/pda2/clown)
-	slot_lhan = list(/obj/item/instrument/bikehorn)
+	slot_poc1 = list(/obj/item/device/pda2/clown)
+	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/plant/banana)
+	items_in_belt = list(/obj/item/cloth/towel/clown)
+	slot_lhan = list(/obj/item/instrument/bikehorn/blue)
+	wiki_link = "https://wiki.ss13.co/Clown"
 
 	faction = list(FACTION_CLOWN)
 

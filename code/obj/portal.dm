@@ -5,10 +5,10 @@
 	density = 1
 	var/failchance = 5
 	var/obj/item/target = null
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	var/portal_lums = 2
 	var/datum/light/light
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP | IMMUNE_OCEAN_PUSH
 
 /obj/portal/New()
 	..()
