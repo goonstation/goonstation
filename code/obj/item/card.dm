@@ -253,6 +253,13 @@ TYPEINFO(/obj/item/card/emag)
 		Brain Damage accumulated: [brain_damage_count]<br/>
 		People dabbed on: [dabbed_on_count]<br/>"}
 
+	br
+		name = "#1 NERRRRRRD"
+		icon_state = "id_br"
+		registered = "Nerd"
+		assignment = "Nerd"
+		desc = "An ID that truly reflects your accomplishments."
+
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return

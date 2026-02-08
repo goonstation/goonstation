@@ -1228,6 +1228,47 @@
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a welding helmet in your hands."))
 			return
 
+/datum/achievementReward/Nerd_ID
+	title = "#1 Victory ID"
+	desc = "Proves your worth."
+	required_medal = "#1 Victory Royale"
+	once_per_round = 1
+
+	rewardActivate(var/mob/activator)
+		if (!istype(activator))
+			return
+
+		var/obj/item/card/id/dabbing_license/skin_target = activator.find_type_in_hand(/obj/item/card/id/dabbing_license)
+		if (skin_target)
+			skin_target.name = /obj/item/card/id/dabbing_license/br::name
+			skin_target.icon_state = /obj/item/card/id/dabbing_license/br::icon_state
+			skin_target.desc = /obj/item/card/id/dabbing_license/br::desc
+			skin_target.registered = /obj/item/card/id/dabbing_license/br::registered
+			skin_target.assignment = /obj/item/card/id/dabbing_license/br::assignment
+
+			return 1
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a dabbing license in your hands."))
+			return
+
+/datum/achievementReward/paper_pod
+	title = "(Skin) Origami Pod"
+	desc = "Requires you to hold a paper plane."
+	required_medal = "Fame and Fartuna"
+	once_per_round = 0
+
+	rewardActivate(var/mob/activator)
+		if (!istype(activator))
+			return
+
+		var/obj/item/paper/folded/plane/pod/item_target = activator.find_type_in_hand(/obj/item/paper/folded/plane)
+		if (item_target)
+			item_target.icon_state = /obj/item/paper/folded/plane/pod::icon_state
+			item_target.throw_speed = /obj/item/paper/folded/plane/pod::throw_speed
+			return 1
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a paper plane in your hands."))
+			return
 
 // Reward management stuff
 

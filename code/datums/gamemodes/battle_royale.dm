@@ -246,9 +246,11 @@ var/global/area/current_battle_spawn = null
 	for (var/client/C in clients)
 		battlersleft_hud.remove_client(C)
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
-	if(length(living_battlers) == 1)
-		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
-		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
+	if(length(living_battlers) == 1 && ishuman(living_battlers[1].current))
+		var/mob/living/carbon/human/winner = living_battlers[1].current
+		boutput(world,"<h2 class='alert'>[winner.name] (played by [winner.ckey]) has won!</h2>")
+		boutput(winner,"<h1 class='notice'>Holy shit you won!!!</h1>")
+		winner.unlock_medal("#1 Victory Royale", TRUE)
 	else
 		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
 
