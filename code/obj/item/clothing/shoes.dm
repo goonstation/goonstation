@@ -303,6 +303,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "galoshes"
 	desc = "Rubber boots that prevent slipping on wet surfaces."
 	icon_state = "galoshes"
+	default_material = "synthrubber_yellow"
 	c_flags = NOSLIP
 	step_sound = "step_rubberboot"
 	step_priority = STEP_PRIORITY_LOW
@@ -418,6 +419,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "flippers"
 	desc = "A pair of rubber flippers that improves swimming ability when worn."
 	icon_state = "flippers"
+	default_material = "synthrubber_blue"
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
