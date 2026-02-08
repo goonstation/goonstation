@@ -34251,7 +34251,7 @@
 /area/station/security/interrogation)
 "hMq" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /obj/machinery/door/airlock/pyro/weapons/secure{
 	dir = 4
 	},

@@ -21788,7 +21788,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
