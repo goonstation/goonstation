@@ -2442,7 +2442,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "ajA" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -39042,7 +39042,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "fwA" = (
 /obj/disposalpipe/segment/morgue{
 	icon_state = "pipe-c";
@@ -47975,7 +47975,7 @@
 /area/station/crew_quarters/bathroom)
 "mfw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "mfz" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/cable{
@@ -51076,7 +51076,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "opC" = (
 /obj/machinery/status_display{
 	pixel_x = 32
@@ -52632,7 +52632,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "poS" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "genetics";
@@ -54353,7 +54353,7 @@
 	status = 2
 	},
 /turf/simulated/floor,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "qFT" = (
 /obj/landmark/pest,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -56504,7 +56504,7 @@
 	},
 /obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "skm" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -56943,7 +56943,7 @@
 /area/space)
 "sAK" = (
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "sAT" = (
 /obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/alarm{
@@ -57526,7 +57526,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "sUv" = (
 /obj/player_piano,
 /turf/simulated/floor/specialroom/chapel{
@@ -62439,7 +62439,7 @@
 "wvM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "wwh" = (
 /obj/lattice{
 	dir = 8;
@@ -63196,7 +63196,7 @@
 	name = "Danger: High Voltage"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "wXJ" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
