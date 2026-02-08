@@ -2442,7 +2442,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "ajA" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -35188,6 +35188,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"cVo" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "cVt" = (
 /obj/cable,
 /obj/cable{
@@ -39038,7 +39042,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "fwA" = (
 /obj/disposalpipe/segment/morgue{
 	icon_state = "pipe-c";
@@ -39651,9 +39655,35 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "fTe" = (
-/obj/machinery/gravity_tether/station,
-/turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/obj/machinery/door_control{
+	id = "hangar_engine";
+	name = "Engineering Hangar Door Control";
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = -5;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/device/analyzer/gravity_scanner{
+	pixel_y = -7;
+	pixel_x = 7
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "fTj" = (
 /obj/table/auto,
 /obj/item/item_box/postit{
@@ -47839,7 +47869,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "maL" = (
@@ -47923,9 +47952,10 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "mea" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
+/obj/machinery/door_control{
+	id = "hangar_engine";
+	name = "Engineering Hangar Door Control";
+	pixel_y = 24
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -47945,7 +47975,7 @@
 /area/station/crew_quarters/bathroom)
 "mfw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "mfz" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/cable{
@@ -49465,23 +49495,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/table/reinforced/auto,
-/obj/item/clothing/shoes/magnetic{
-	pixel_x = -6;
-	pixel_y = 9
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_y = 2;
-	pixel_x = -6
-	},
-/obj/item/clothing/shoes/magnetic{
-	pixel_y = -5;
-	pixel_x = -6
-	},
-/obj/item/paper/book/from_file/gravity_tether{
-	pixel_y = 5;
-	pixel_x = 7
-	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "nkI" = (
@@ -51056,12 +51070,13 @@
 	name = "Jazzy Turtleneck"
 	},
 /obj/item/clothing/head/flatcap,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "opC" = (
 /obj/machinery/status_display{
 	pixel_x = 32
@@ -52617,7 +52632,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "poS" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "genetics";
@@ -53945,6 +53960,14 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/gas)
+"quP" = (
+/obj/machinery/gravity_tether/station,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor,
+/area/station/hangar/engine)
 "quR" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -54325,8 +54348,12 @@
 	icon_state = "0-8"
 	},
 /obj/decal/stripe_delivery,
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
 /turf/simulated/floor,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "qFT" = (
 /obj/landmark/pest,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -54877,14 +54904,9 @@
 	},
 /area/station/hydroponics/bay)
 "qVe" = (
-/obj/machinery/door_control{
-	id = "hangar_engine";
-	name = "Engineering Hangar Door Control";
-	pixel_y = 24
-	},
-/obj/table/auto,
 /obj/item/shipcomponent/mainweapon/foamer,
 /obj/item/storage/toolbox/mechanical,
+/obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "qWh" = (
@@ -56482,7 +56504,7 @@
 	},
 /obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "skm" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -56921,7 +56943,7 @@
 /area/space)
 "sAK" = (
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "sAT" = (
 /obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/alarm{
@@ -57504,7 +57526,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "sUv" = (
 /obj/player_piano,
 /turf/simulated/floor/specialroom/chapel{
@@ -62415,16 +62437,9 @@
 /turf/space,
 /area/station/com_dish/auxdish)
 "wvM" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/machinery/light/small{
-	dir = 1;
-	status = 2
-	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "wwh" = (
 /obj/lattice{
 	dir = 8;
@@ -63181,7 +63196,7 @@
 	name = "Danger: High Voltage"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/gravity)
+/area/station/engine/substation/pylon)
 "wXJ" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -111817,8 +111832,8 @@ aXq
 oAI
 aZt
 aSq
-mfw
-mfw
+wvM
+aap
 iyf
 bep
 uwm
@@ -112119,7 +112134,7 @@ aXr
 aYw
 aUE
 aSq
-wvM
+mfw
 mfw
 mfw
 beq
@@ -113025,7 +113040,7 @@ aXu
 veJ
 cFF
 aSq
-fTe
+sAK
 sAK
 poA
 rLw
@@ -113327,7 +113342,7 @@ aXv
 aYA
 aZy
 aSq
-sAK
+mfw
 mfw
 mfw
 aaq
@@ -113345,7 +113360,7 @@ aag
 nne
 aaG
 adC
-adC
+fdD
 bqp
 lsA
 hRj
@@ -113629,8 +113644,8 @@ aXw
 aWb
 aZz
 aSq
-mfw
-mfw
+wvM
+acW
 adC
 adC
 adC
@@ -113647,8 +113662,8 @@ aag
 nne
 aaG
 adC
-adC
-bqp
+okz
+fTe
 qVe
 xkc
 bqp
@@ -113931,7 +113946,7 @@ aXw
 aWc
 aWc
 aWc
-adC
+acW
 adC
 adC
 adC
@@ -113949,8 +113964,8 @@ aag
 nne
 aaG
 adC
-adC
 bqp
+quP
 maK
 eMs
 bqp
@@ -114251,8 +114266,8 @@ aag
 nne
 aaG
 adC
-adC
-fdD
+bqp
+cVo
 bqX
 bqX
 qNS
@@ -114553,8 +114568,8 @@ aap
 nne
 aap
 azt
-adC
-okz
+bqp
+bqp
 bqX
 brE
 ikt
