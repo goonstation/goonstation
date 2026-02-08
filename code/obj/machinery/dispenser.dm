@@ -20,6 +20,7 @@ TYPEINFO(/obj/machinery/dispenser)
 	var/pltanks = 10
 	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
+	provides_grip = TRUE
 
 	//These keep track of tanks that people have inserted back into the machine (for shenanigans!)
 	var/list/inserted_o2 = list()

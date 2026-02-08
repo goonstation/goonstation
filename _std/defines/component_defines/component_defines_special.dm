@@ -190,3 +190,7 @@
 #define COMSIG_EXTRADIMENSIONAL_PREFAB_ENTERED "extradimensional_prefab_entered"
 /// When an `/atom/movable` attempts to leave a dimensional locker. (sender, atom_movable, old_loc)
 #define COMSIG_EXTRADIMENSIONAL_PREFAB_EXIT "extradimensional_prefab_exit"
+
+// ---- Gravity Events ----
+/// When gravity events occur (source, type) (see _std/defines/gravity.dm )
+#define COMSIG_GRAVITY_EVENT "gravity_event"

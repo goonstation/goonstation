@@ -463,3 +463,12 @@ proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/materia
 	//average thermal conductivity approximated as 10^(x/5)-1
 	//common values 0 = 0, 5 = 10, 10 = 100
 	return ((10**(hTC1/5)-1)+(10**(hTC2/5)-1))/2
+
+proc/contains_negative_matter(atom/target_atom)
+	if (target_atom.material)
+		. = (target_atom.material.getID() == "negativematter")
+		if(!.)
+			for(var/datum/material/parent_mat in target_atom.material.getParentMaterials())
+				if(parent_mat.getID() == "negativematter")
+					. = TRUE
+					break

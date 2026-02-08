@@ -251,7 +251,7 @@ export const BioEffect = (props) => {
             disabled={materialCur < boothCost}
             icon="person-booth"
             color="good"
-            onClick={() => setBooth({ ref: ref, price: 200, desc: '' })}
+            onClick={() => setBooth({ ref: ref, price: 300, desc: '' })}
           >
             Sell at Booth
           </Button>

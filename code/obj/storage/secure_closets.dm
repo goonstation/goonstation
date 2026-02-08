@@ -302,6 +302,7 @@
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
 		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
 		/obj/item/stamp/ce,
@@ -817,7 +818,7 @@
 	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/backpack/engineering,
-	/obj/item/breaching_charge/mining/light = 3,
+	/obj/item/storage/breach_pouch/filled,
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,

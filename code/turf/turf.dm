@@ -40,7 +40,6 @@
 	/// an associative list of gangs to gang claims, representing who has a claim to, or other ownership on this tile
 	var/list/datum/gangtileclaim/controlling_gangs
 	var/wet = 0
-	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0
 	var/step_priority = 0 //compare vs. shoe for step sounds
@@ -281,7 +280,6 @@
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0
-	throw_unlimited = 1
 	plane = PLANE_SPACE
 	special_volume_override = 0
 	text = ""
@@ -523,13 +521,12 @@ proc/generate_space_color()
 			if (isitem(Obj))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = min(Ar.sims_score + 4, 100)
-
+	if (Obj.floats_in_zero_g && newloc && !isturf(newloc))
+		StopDriftFloat(Obj) // something removes the animation ID so just kill the float animation
 	return ..(Obj, newloc)
 
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
-	if(ismob(M) && !src.throw_unlimited && !M.no_gravity)
-		var/mob/tmob = M
-		tmob.inertia_dir = 0
+	M.set_gravity(src)
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
@@ -540,9 +537,7 @@ proc/generate_space_color()
 			if (isitem(M))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
-
-	if(!src.throw_unlimited && M?.no_gravity)
-		BeginSpacePush(M)
+	M.update_traction(src)
 
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
@@ -580,20 +575,6 @@ proc/generate_space_color()
 
 	if (!(A.last_move))
 		return
-
-	//if(!(src in A.locs))
-	//	return
-
-//	if (locate(/obj/movable, src))
-//		return 1
-
-	//if (!istype(src,/turf/space/fluid))//ignore inertia if we're in the ocean
-	if (src.throw_unlimited)//ignore inertia if we're in the ocean (faster but kind of dumb check)
-		if ((ismob(A) && src.x > 2 && src.x < (world.maxx - 1))) //fuck?
-			var/mob/M = A
-			if((M.client && M.client.flying) || (ismob(M) && HAS_ATOM_PROPERTY(M, PROP_MOB_NOCLIP)))
-				return//aaaaa
-			BeginSpacePush(M)
 
 	if (src.x <= 1)
 		edge_step(A, world.maxx- 2, 0)
@@ -708,6 +689,7 @@ var/global/in_replace_with = 0
 	var/old_cameras = src.cameras
 	var/old_camera_coverage_emitters = src.camera_coverage_emitters
 	var/old_pass_unstable = src.pass_unstable
+	var/old_grip_atom_count = src.grip_atom_count - src.provides_grip
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -810,6 +792,7 @@ var/global/in_replace_with = 0
 
 	new_turf.opaque_atom_count = old_opaque_atom_count
 	new_turf.pass_unstable += old_pass_unstable
+	new_turf.grip_atom_count += old_grip_atom_count
 
 	new_turf.blocked_dirs = old_blocked_dirs
 
@@ -1038,7 +1021,7 @@ TYPEINFO(/turf/simulated)
 /turf/simulated
 	name = "station"
 	allows_vehicles = 0
-	stops_space_move = 1
+	provides_grip = TRUE
 	var/mutable_appearance/wet_overlay = null
 	/// default melt chance from fire
 	var/default_melt_chance = 30
@@ -1128,7 +1111,7 @@ TYPEINFO(/turf/simulated)
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
-	stops_space_move = 1
+	provides_grip = TRUE
 	text = "<font color=#aaa>."
 
 /turf/unsimulated/wall

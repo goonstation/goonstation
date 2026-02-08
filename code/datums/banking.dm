@@ -391,6 +391,7 @@
 	name = "You shouldn't see me!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atm"
+	provides_grip = TRUE
 
 	New()
 		..()

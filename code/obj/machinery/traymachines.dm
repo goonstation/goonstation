@@ -34,6 +34,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 	icon_state = "morgue1"
 	density = TRUE
 	anchored = ANCHORED
+	provides_grip = TRUE
 	power_usage = 50
 
 	//tray related variables

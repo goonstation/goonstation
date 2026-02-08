@@ -31,7 +31,7 @@ TYPEINFO(/datum/component/analyzable)
 	// if this item doesn't have mats defined or was constructed or
 	// attempting to scan a syndicate item and this is a normal scanner
 	var/typeinfo/obj/typeinfo = parent_atom.get_typeinfo()
-	if (isnull(typeinfo.mats) || typeinfo.mats == 0 || (parent_atom.is_syndicate && !I.is_syndicate))
+	if (isnull(typeinfo.mats) || typeinfo.mats == 0 || (parent_atom.is_syndicate && !I.is_syndicate) || parent_atom.mechanics_interaction == MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE)
 		return MECHANICS_ANALYSIS_INCOMPATIBLE
 	var/obj/item/electronics/scanner/S = I
 	if (istype(S))
