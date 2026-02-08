@@ -154,6 +154,28 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/quad/overfloor
 	level = OVERFLOOR
 
+#define DEFINE_PIPES_SUPPLY(PATH) \
+	PATH/supply{icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi';};\
+	PATH/supply/overfloor{level = OVERFLOOR};
+
+#define DEFINE_PIPES_WASTE(PATH) \
+	PATH/waste{icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi';};\
+	PATH/waste/overfloor{level = OVERFLOOR};
+
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/straight)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/straight/see_fluid)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/elbow)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/t_junction)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/quad)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/straight)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/straight/see_fluid)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/elbow)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/t_junction)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/quad)
+
+#undef DEFINE_PIPES_SUPPLY
+#undef DEFINE_PIPES_WASTE
+
 /obj/fluid_pipe/fluid_tank
 	name = "fluid tank"
 	desc = "A big ol' tank of fluid. Basically a big pipe."

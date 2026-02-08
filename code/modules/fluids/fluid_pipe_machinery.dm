@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/obj/machinery/fluid_machinery)
 /obj/machinery/fluid_machinery
-	icon = 'icons/obj/fluidpipes/fluid_pipe.dmi'
+	icon = 'icons/obj/fluidpipes/fluid_machines.dmi'
 	desc = "Does cool things to fluids."
 	processing_tier = PROCESSING_QUARTER
 	anchored = ANCHORED
