@@ -993,7 +993,7 @@ var/global/curr_day = null
 
 		if("resourcePreloadComplete")
 			boutput(src, SPAN_NOTICE("<b>Preload completed.</b>"))
-			src.Browse(null, "window=resourcePreload")
+			src << browse(null, "window=resourcePreload")
 			return
 
 		if ("loginnotice_ack")
