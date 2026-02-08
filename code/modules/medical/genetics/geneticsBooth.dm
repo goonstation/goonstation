@@ -51,6 +51,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
 	speech_verb_say = "beeps"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	HELP_MESSAGE_OVERRIDE({""})
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
@@ -134,6 +135,10 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		UpdateIcon()
 		..()
 
+	get_help_message(dist, mob/user)
+		. = ..()
+		if(length(src.offered_genes) && !issilicon(user))
+			. += "You could swipe a sufficiently <b>high-level ID</b> through it to adjust its contents and pricing."
 
 	attack_hand(var/mob/user)
 		if (occupant)
@@ -145,9 +150,11 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			return
 		if(length(src.offered_genes))
 			src.show_context_options(user)
-			src.show_admin_panel(user)
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
+			return
+		if(issilicon(user)) // Silicons can't open it with an ID, but they don't often use the gene booth.
+			src.show_admin_panel(user) // ^ Always opening it for them shouldn't be too bad then.
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if(src.eject_strength != THROW_THROUGH_WALL)
@@ -169,20 +176,28 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	proc/show_context_options(var/mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	proc/show_admin_panel(mob/user)
-		if(user && src.allowed(user))
-			if(length(offered_genes))
-				. = ""
-				for (var/datum/geneboothproduct/P as() in offered_genes)
-					. += "<u>[P.name]</u><small> "
-					. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
-					. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+	/// Displays the booth's gene selection locking and price adjustment UI.
+	proc/show_admin_panel(mob/user, obj/item/card/id)
+		if(status & (NOPOWER | BROKEN))
+			return
+		if(!user)
+			return
+		if(istype(id) && !src.allowed(user) && !issilicon(user))
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, 0)
+			return
 
-			else
-				. += "[src] has no products available for purchase right now."
-			src.add_dialog(user)
-			user.Browse("<HEAD><TITLE>Genebooth Administrative Control Panel</TITLE></HEAD><TT>[.]</TT>", "window=genebooth")
-			onclose(user, "genebooth")
+		if(length(offered_genes))
+			. = ""
+			for (var/datum/geneboothproduct/P as() in offered_genes)
+				. += "<u>[P.name]</u><small> "
+				. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
+				. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+
+		else
+			. += "[src] has no products available for purchase right now."
+		src.add_dialog(user)
+		user.Browse("<HEAD><TITLE>Genebooth Administrative Control Panel</TITLE></HEAD><TT>[.]</TT>", "window=genebooth")
+		onclose(user, "genebooth")
 
 	Topic(href, href_list)
 		if (usr.stat)
@@ -389,6 +404,11 @@ TYPEINFO(/obj/machinery/genetics_booth)
 					src.eject_occupant(0,0, direction)
 
 	attackby(obj/item/W, mob/user)
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if(length(src.offered_genes) && istype(id_card))
+			src.show_admin_panel(user, id_card)
+			return
+
 		user.lastattacked = get_weakref(src)
 		letgo_hp -= W.force
 		attack_particle(user,src)
