@@ -94,7 +94,6 @@ A-Science:
 # A-Security:
 A-Silicons:
 - changed-files:
-  - any-glob-to-any-file: code/datums/ai_laws.dm
   - any-glob-to-any-file: code/mob/living/intangible/ai-camera.dm
   - any-glob-to-any-file: code/mob/living/silicon.dm
   - any-glob-to-any-file: code/mob/living/silicon/*
