@@ -742,7 +742,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 				var/list/next = new/list()
 				for(var/atom/movable/M in orange(3, target_r))
-					if(M == user || istype(M, /obj/line_obj/elec) || istype(M, /obj/elec_trg_dummy) || istype(M, /obj/overlay/tile_effect) || M.invisibility) continue
+					if(M == user || istype(M, /obj/line_obj/elec) || istype(M, /obj/elec_trg_dummy) || istype(M, /atom/movable/light/robust_light) || M.invisibility) continue
 					next.Add(M)
 
 				if(istype(target_r, /obj/elec_trg_dummy)) dummies.Add(target_r)

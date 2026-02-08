@@ -79,7 +79,7 @@
 	name = "dusty computer tower";
 	desc = "An old computer operating console. Most of the lights have gone out, except for one that's gently flashing red. You can hear a faint humming coming from it..."
 	},
-/obj/overlay/simple_light/disco_lighting/oscillator{
+/atom/movable/light/simple_light/disco_lighting/oscillator{
 	color_1 = "#000000";
 	color_2 = "#BB0B05";
 	pixel_y = -39;

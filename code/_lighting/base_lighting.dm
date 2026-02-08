@@ -19,6 +19,20 @@
 	blend_mode = BLEND_ADD
 	appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
 
+/atom/movable/light
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
+	anchored = ANCHORED_ALWAYS
+	pass_unstable = FALSE
+	mouse_opacity = 0
+	layer = LIGHTING_LAYER_BASE
+	plane = PLANE_LIGHTING
+	blend_mode = BLEND_ADD
+	mat_changename = 0
+	mat_changedesc = 0
+	density = FALSE
+
+	meteorhit(obj/M)
+		return
 
 /area
 	var/force_fullbright = 0
