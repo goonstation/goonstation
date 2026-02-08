@@ -476,3 +476,21 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 #endif
+
+/datum/job/special/random/computeroperator
+	name = "Computer Operator"
+	wages = PAY_DOCTORATE
+	access_string = "Computer Operator"
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/misc/casualjeanswb = 1, \
+					/obj/item/clothing/under/misc/casualjeansgrey = 1, \
+					/obj/item/clothing/under/misc/casualjeansblue = 1, \
+					/obj/item/clothing/under/misc/casualjeanskhaki = 1)
+	slot_suit = list(/obj/item/clothing/suit/hoodie/random)
+	slot_belt = list(/obj/item/device/pda2/computeroperator)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_eyes = list(/obj/item/clothing/glasses/packetvision)
+	items_in_backpack = list(/obj/item/luggable_computer/techpersonal)
+	alt_names = list("Cybersecurity Expert", \
+					"IT Specialist", \
+					"Network Technician")

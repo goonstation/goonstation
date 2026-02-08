@@ -341,6 +341,9 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
 		mailgroups = list(MGD_BOTANY,MGD_PARTY)
 
+	computeroperator
+		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
+
 	syndicate
 		icon_state = "pda-syn"
 		name = "Military PDA"
