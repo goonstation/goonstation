@@ -3367,6 +3367,101 @@ datum
 			fluid_b = 165
 			fluid_g = 144
 
+		// highly addictive blood type, but also highly polarizing.
+		// previously had this as a fooddrink subtype but still want vampires to be able to use it and i dont feel like dealing with that
+		blood/zestyranch
+			name = "zesty ranch"
+			id = "zestyranch"
+			fluid_r = 230
+			fluid_g = 210
+			fluid_b = 184
+			transparency = 255
+			hygiene_value = -2
+			hunger_value = 0.1
+			viscosity = 0.4
+			depletion_rate = 0.4
+			addiction_prob = 20
+			addiction_min = 10
+			taste = list("zesty", "ranchy")
+			description = "An uncommon type of \"Zesty Ranch\" dressing. There is currently an ongoing debate between experts over whether this is infact a real, valid condiment."
+			reagent_state = LIQUID
+
+			// is it good for them or will it make them vomit
+			var/like = FALSE
+			// have we described it already
+			var/described = FALSE
+
+			// is the person immune to the properties
+			var/immune = FALSE
+
+			on_add()
+				src.like = prob(40) // randomize whether the mob actually likes it
+				src.described = FALSE
+
+			on_mob_life(mob/living/M, mult)
+				// its either delicious or toxic and disgusting to us, unless we're immune to its serious effects
+				if (!src.immune)
+					if (src.like)
+						M.HealDamage("All", 0.3 * mult, 0.3 * mult)
+					else
+						M.take_toxin_damage(0.5 * mult)
+
+				..(M, mult)
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
+
+				if(method == INGEST && volume_passed >= 1)
+					// find out if the nerd's immune
+					if (!src.immune)
+						src.immune = (M.blood_id == src.id)
+
+						// asymptomatic
+						if (src.immune)
+							src.addiction_prob = 0
+							// gross hack
+							src.addiction_min = 330
+
+					var/datum/ailment/addiction/AD = M.addicted_to_reagent(src)
+					// zesty ranch enjoyers have natural immunity to the wonders / horrors of zesty ranch
+					// addiction makes you want more
+					if (AD)
+						if (!src.like && !immune)
+							boutput(M, SPAN_NOTICE("You're starting to really appreciate the flavor."))
+						src.like = TRUE
+
+
+					if(!ON_COOLDOWN(M, "zestyranch_taste", 1 SECOND))
+						if (src.like)
+							// we like the taste, but have we seen it before
+							if (!src.described)
+								if (!src.immune)
+									boutput(M, "<B>THIS TASTES <font size='92'>~<font color='#FF0000'> A<font color='#FF9900'> M<font color='#FFff00'> A<font color='#00FF00'> Z<font color='#0000FF'> I<font color='#FF00FF'> N<font color='#660066'> G<font color='#000000'> ~ !</font></B>")
+								else
+									boutput(M, SPAN_NOTICE("That tasted decent actually."))
+								src.described = TRUE
+						else
+							// we hate it, and we will probably vomit
+							if (!src.described)
+								if (!src.immune)
+									boutput(M, SPAN_ALERT("Aaaagh! It tastes fucking horrendous!"))
+								else
+									boutput(M, SPAN_ALERT("That tasted.... [pick("strange","weird","odd","unusual", "overly ranchy")]."))
+								src.described = TRUE
+
+							if (!src.immune)
+								M.nauseate(rand(2,4))
+					else if (!AD)
+						// you still have time to change your mind before its too late
+						if (!src.like)
+							src.like = prob(60)
+							if (src.like)
+								boutput(M, SPAN_NOTICE("You're starting to really appreciate the flavor."))
+						else
+							src.like = prob(40)
+							if (!src.like)
+								boutput(M, SPAN_ALERT("Now that you think about it, the flavor is really, really strange."))
+
+				..(M, method, volume_passed)
 
 		vomit
 			name = "vomit"
