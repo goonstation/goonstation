@@ -637,7 +637,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "NT Captain Gold ID"
 	comtype = /obj/item/card/id/gold/captains_spare
 	desc = "NT gold-level registered captain ID."
-	price = PAY_EMBEZZLED
+	price = PAY_EMBEZZLED * 4
 
 	bee
 		comname = "Captain Gold ID"
@@ -663,7 +663,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Head of Security Beret"
 	comtype = /obj/item/clothing/head/hos_hat
 	desc = "The beloved beret of an NT HoS."
-	price = PAY_EMBEZZLED*2
+	price = PAY_EMBEZZLED*4
 
 /datum/commodity/contraband/egun
 	comname = "Energy Gun"
