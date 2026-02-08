@@ -757,7 +757,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.reagents.reaction(consumer, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(src.gulp_size, (consumer.reagents?.maximum_volume - consumer.reagents?.total_volume))))
 			SPAWN(0.5 SECONDS)
 				if (src?.reagents && consumer?.reagents)
-					src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
+					if(iscarbon(consumer))
+						var/mob/living/carbon/C = consumer
+						if (C.organHolder.stomach) reagents.trans_to(C.organHolder.stomach, min(reagents.total_volume, src.gulp_size))
+					else
+						src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
 
 		playsound(consumer.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		eat_twitch(consumer)

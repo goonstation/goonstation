@@ -2645,6 +2645,24 @@
 		required_reagents = list("mutadone" = 3, "lithium" = 1)
 		result_amount = 4
 
+	antacid
+		name = "Antacid"
+		id = "antacid"
+		result = "antacid"
+		required_reagents = list("aluminium" = 1, "oxygen" = 1, "hydrogen" = 1, "sodium" = 1)
+		result_amount = 3
+		min_temperature = T0C + 60
+		mix_phrase = "The chemicals condense together into a gray-ish colorless liquid."
+
+	snac
+		name = "SNAC"
+		id = "snac"
+		result = "snac"
+		required_reagents = list("carbon" = 1, "oxygen" = 1, "nitrogen" = 1, "sodium" = 1)
+		result_amount = 4
+		min_temperature = T0C + 85
+		mix_phrase = "The chemicals condense together into a gray-ish colorless liquid."
+
 	cold_medicine
 		name = "Robustissin"
 		id = "cold_medicine"
