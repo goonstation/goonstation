@@ -1265,6 +1265,16 @@
 		drinkrecipe = TRUE
 		hidden = TRUE
 
+	cocktail_triplewater
+		name = "Triple Water"
+		id = "cocktail_triplewater"
+		result = "cocktail_triplewater"
+		required_reagents = list("water" = 1, "water_holy" = 1, "tonic" = 1)
+		result_amount = 1
+		mix_phrase = "The diffrent water molecules seem to intertwine as the drink increases in density."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	cocktail_beach
 		name = "Bliss on the Beach"
 		id = "beach"
@@ -3354,24 +3364,30 @@
 		var/is_currently_exploding = FALSE //so it doesn't explode multiple times during the slight activation delay
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			if(src.is_currently_exploding)
+			if (src.is_currently_exploding)
 				return
+
+			if (istype(holder.my_atom.loc, /obj/disposalholder) || istype(holder.my_atom.loc, /obj/machinery/chemicompiler_stationary))
+				return
+
 			var/turf/T = get_turf(holder.my_atom)
-			if (istype(T) && T.is_lit(0.1) && !istype(holder.my_atom.loc, /obj/disposalholder))
-				var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
-				is_currently_exploding = TRUE
-				shine.set_loc(T)
-				playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
-				SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
-					T = get_turf(holder.my_atom) //may have moved
-					qdel(shine)
-					holder.del_reagent("photophosphide")
-					explosion(holder.my_atom, T, -1,-1,0,1)
-					playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
-					fireflash(T, 0, chemfire = CHEM_FIRE_RED)
-					if(istype(holder.my_atom, /obj))
-						var/obj/container = holder.my_atom
-						container.shatter_chemically(projectiles = TRUE)
+			if (!istype(T) || !T.is_lit(0.1))
+				return
+
+			var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
+			is_currently_exploding = TRUE
+			shine.set_loc(T)
+			playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
+			SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+				T = get_turf(holder.my_atom) //may have moved
+				qdel(shine)
+				holder.del_reagent("photophosphide")
+				explosion(holder.my_atom, T, -1,-1,0,1)
+				playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
+				fireflash(T, 0, chemfire = CHEM_FIRE_RED)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 
 	photophosphide_decay //decays in low amounts
 		name = "Photophosphide Decay"
@@ -5335,6 +5351,13 @@
 		mix_phrase = "The mixture turns yellowish and emits a loud grumping sound"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
+		var/static/caused_gravity_disturbance = FALSE
+
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			if (!caused_gravity_disturbance && holder.my_atom.z == Z_LEVEL_STATION)
+				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, -1) // alerts ALL tethers, once.
+				caused_gravity_disturbance = TRUE
 
 	flubber
 		name = "Liquified Space Rubber"

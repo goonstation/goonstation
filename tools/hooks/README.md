@@ -14,9 +14,18 @@ or other script you can run instead - see the links below for details.
 
 ## Hooks
 
-* **Pre-commit**: Runs [mapmerge2] to reduce the diff on any changed maps.
+* **Pre-commit**: Runs [mapmerge2] to reduce the diff on any changed maps, and optionally rebuilds TGUI bundles.
+* **Post-merge**: Automatically rebuilds TGUI bundles after a merge if TGUI source files changed.
+* **Post-rewrite**: Automatically rebuilds TGUI bundles after a rebase if TGUI source files changed.
 * **DMI merger**: Attempts to [fix icon conflicts] when performing a Git merge.
 * **DMM merger**: Attempts to [fix map conflicts] when performing a Git merge.
+* **TGUI merger**: Flags TGUI bundles to be ignored and be rebuilt.
+
+## Environment Variables
+
+You can control which hooks are installed using environment variables:
+* `TG_INCLUDE_TGUI_HOOKS` - Set to `0` to skip TGUI hooks (default: `1`)
+* `TG_INCLUDE_BASE_HOOKS` - Set to `0` to skip map/icon merge hooks (default: `1`)
 
 ## Adding New Hooks
 

@@ -40,13 +40,17 @@ TYPEINFO(/atom)
 	var/pixel_point = FALSE
 
 	var/interesting = ""
-	var/stops_space_move = 0
+	/// Atom provides grip to neighboring tiles in zero-G
+	var/provides_grip = FALSE
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
 
 	proc/RawClick(location,control,params)
 		return
+
+	/// Use this if you want people to be able to open the inventory of contained mobs
+	var/open_inv_within = FALSE
 
 	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
 	var/gas_impermeable = FALSE
@@ -520,7 +524,7 @@ TYPEINFO(/atom/movable)
 /atom/movable/New()
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+	if (typeinfo.mats && !(src.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED))
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
@@ -534,6 +538,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -546,6 +553,10 @@ TYPEINFO(/atom/movable)
 /atom/movable/disposing()
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
+	if (temp_flags & DRIFT_ANIMATION)
+		StopDriftFloat(src)
+	if (temp_flags & GRAVITY_SUBSCRIBER)
+		UnsubscribeGravity(src)
 
 	src.attached_objs?.Cut()
 	src.attached_objs = null
@@ -651,11 +662,17 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in old_locs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in old_locs)
+				covered_turf.grip_atom_count -= 1
 	if(isturf(src.loc))
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -767,7 +784,11 @@ TYPEINFO(/atom/movable)
 	if(special_description)
 		return list(special_description)
 
-	. = list("This is \an [src.name].")
+	var/name_to_use = src.name
+	if (isliving(src) && !isobserver(user) && !isintangible(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_EXAMINE_ALL_NAMES) && dist > MAX_NAMETAG_RANGE)
+		. = list("This is someone.")
+	else
+		. = list("This is \an [name_to_use].")
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
@@ -1025,6 +1046,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in oldlocs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in oldlocs)
+				covered_turf.grip_atom_count -= 1
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -1040,6 +1064,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)

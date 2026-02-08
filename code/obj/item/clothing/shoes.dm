@@ -174,8 +174,10 @@
 	icon_state = "pink"
 
 TYPEINFO(/obj/item/clothing/shoes/magnetic)
-	mats = 8
-
+	mats = list("metal" = 4,
+			"conductive" = 8,
+			"fabric" = 3,
+			)
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
@@ -189,6 +191,9 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	abilities = list(/obj/ability_button/magboot_toggle)
 
 	proc/activate(mob/M)
+		if (GET_COOLDOWN(src, "emp_check"))
+			boutput(M, SPAN_ALERT("\The [src] are still kerfuzzled!"))
+			return FALSE
 		if (src.check_move(M, get_turf(M), null, TRUE))
 			boutput(M, SPAN_ALERT("There's nothing to anchor to!"))
 			playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
@@ -211,20 +216,29 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
 
+	emp_act()
+		. = ..()
+		ON_COOLDOWN(src, "emp_check", 10 SECONDS)
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if (H.shoes == src && src.magnetic)
+				src.deactivate(H)
+			boutput(H, SPAN_ALERT("\The [src] kerfuzzle out!"))
+
 	unequipped(mob/user)
 		. = ..()
 		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
 		//is the turf we're on solid?
-		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid) || T.throw_unlimited))
+		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid)))
 			return FALSE
-		//this is kind of expensive to put on Move BUT in my defense it will only happen for magboots wearers standing on a space tile
-		//what are the chances they're also next to botany's server lag weed pile at the same time?
-		for (var/atom/A in oview(1,T))
-			if (A.stops_space_move)
-				if (!quiet && iswall(A) && prob(30)) //occasionally play a clonk for the people inside to hear
-					playsound(A, src.step_sound, 50, 1, extrarange = global.footstep_extrarange)
+		for (var/dir in alldirs)
+			var/turf/check = get_step(T, dir)
+			if (check.grip_atom_count > 0)
+				if (!quiet && prob(30)) //occasionally play a clonk for the people inside to hear
+					playsound(T, src.step_sound, 50, 1, extrarange = global.footstep_extrarange)
+					mover.playsound_local(src, src.step_sound, 50, 1)
 				return FALSE
 		//if we've got here then there would be nothing stopping us drifting off, so block the move
 		return TRUE

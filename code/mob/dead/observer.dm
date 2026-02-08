@@ -525,7 +525,7 @@ TYPEINFO(/mob/dead/observer)
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.get_player()?.dnr)
+	if(!mind || !(mind.get_player()?.dnr || isadminghost(src)))
 		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
@@ -732,6 +732,9 @@ TYPEINFO(/mob/dead/observer)
 
 
 /mob/dead/observer/proc/insert_observer(var/atom/target)
+	if(target == src) //cant observe self, or it nullspaces
+		boutput(src, SPAN_NOTICE("You cannot observe yourself, silly."))
+		return
 	var/mob/targetMob = target
 	if(istype(targetMob) && isadmin(targetMob) && !targetMob.client?.player_mode && !isadmin(src)) //Activate the alarm bells
 		logTheThing(LOG_DEBUG, src, "observes non-player mode admin [constructName(target)]") //They shouldn't be here unless forced manually

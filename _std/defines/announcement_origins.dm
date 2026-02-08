@@ -10,6 +10,7 @@
 #endif
 #define ALERT_GENERAL "Frontier Authority Update"
 #define ALERT_STATION "Automated Mainframe Alert"
+#define ALERT_CENTCOM "Central Command Update"
 
 // used to style player-made announcements; the titles don't actually show in-game
 #define ALERT_DEPARTMENT "Department Announcement"
@@ -21,6 +22,7 @@
 #define ALERT_ANOMALY_CLASS "aanomaly"
 #define ALERT_WEATHER_CLASS "aweather"
 #define ALERT_STATION_CLASS "astation"
+#define ALERT_CENTCOM_CLASS "acentcom"
 #define ALERT_WATCHFUL_EYE_CLASS "awatchful"
 #define ALERT_EGERIA_CLASS "aegeria"
 #define ALERT_DEPARTMENT_CLASS "adept"

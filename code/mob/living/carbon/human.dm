@@ -107,6 +107,7 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
+	var/obj/ai_origin_object = null
 	var/bruteloss = 0
 	var/burnloss = 0
 
@@ -408,13 +409,13 @@
 		if (istext(target) && ispath(new_type))
 			if (target == "both_arms" || target == "l_arm")
 				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm) || ispath(new_type, /obj/item/parts/artifact_parts/arm))
-					var/l_held_item
+					var/obj/item/l_held_item
 					if (src.l_arm)
 						if (no_drop && src.holder.l_hand)
 							l_held_item = src.holder.l_hand
 						src.l_arm.delete()
 					src.l_arm = new new_type(src.holder)
-					if (l_held_item)
+					if (l_held_item && !QDELETED(l_held_item))
 						src.holder.equip_if_possible(l_held_item, SLOT_L_HAND)
 				else // need to make an item arm
 					if (src.l_arm)
@@ -429,13 +430,13 @@
 
 			if (target == "both_arms" || target == "r_arm")
 				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm) || ispath(new_type, /obj/item/parts/artifact_parts/arm))
-					var/r_held_item
+					var/obj/item/r_held_item
 					if (src.r_arm)
 						if (no_drop && src.holder.r_hand)
 							r_held_item = src.holder.r_hand
 						src.r_arm.delete()
 					src.r_arm = new new_type(src.holder)
-					if (r_held_item)
+					if (r_held_item && !QDELETED(r_held_item))
 						src.holder.equip_if_possible(r_held_item, SLOT_R_HAND)
 				else // need to make an item arm
 					if (src.r_arm)
@@ -1009,12 +1010,14 @@
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
-		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
+		if (!src.traction) //they're floating, move em one space in the opposite direction
 			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
+			src.inertia_value = 1
 			step(src, inertia_dir)
-		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
+		if (ismob(I) && !I.traction)
 			var/mob/M = I
 			M.inertia_dir = throw_dir
+			M.inertia_value = 1
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
@@ -1149,12 +1152,16 @@
 		if (istype(hand, /obj/item/paper/newspaper))
 			if (hand.two_handed)
 				return FALSE
-
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		return FALSE
 
 
 /mob/living/carbon/human/UpdateName()
 	var/id_name = get_id_card(src.wear_id)?:registered
-	if (!face_visible())
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+		src.update_name_tag("")
+	else if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
 			src.update_name_tag(id_name)
@@ -1976,6 +1983,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (length(L))
 		for (var/obj/O in L)
 			O.emp_act()
+	src.changeStatus("implants_disabled", 30 SECONDS)
 	boutput(src, SPAN_ALERT("<B>BZZZT</B>"))
 
 /mob/living/carbon/human/verb/consume(mob/M as mob in oview(0))
@@ -3040,7 +3048,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (istype(T, /turf/space))
+		if (T.get_gforce_current() < GFORCE_TRACTION_PARTIAL)
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
@@ -3308,7 +3316,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
 		arrestState = ARREST_STATE_ARREST
 	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
-		if (locate(/obj/item/implant/counterrev) in src.implant)
+		var/obj/item/implant/counterrev/implant = locate() in src.implant
+		if (implant?.online)
 			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
 			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 				arrestState = ARREST_STATE_REVHEAD

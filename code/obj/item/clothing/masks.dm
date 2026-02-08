@@ -438,7 +438,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		. = ..()
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_WEAR_MASK)
-			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
+			if ( user.mind && user.traitHolder?.hasTrait("training_clown") && istraitor(user) )
 				src.cant_other_remove = 1
 				src.cant_self_remove = 0
 			else
@@ -478,7 +478,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				src.victim.emote("laugh")
 
 	afterattack(atom/target, mob/user, reach, params)
-		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
+		if ( reach <= 1 && user.traitHolder?.hasTrait("training_clown") && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
@@ -545,6 +545,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
+	default_material = "plastic"
 	var/bee = FALSE
 	var/randcol
 
@@ -887,3 +888,26 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	icon_state = "burnedcultmask"
 	wear_layer = MOB_OVER_TOP_LAYER
 	see_face = FALSE
+
+// Clown nose!!
+
+/obj/item/clothing/mask/clown_nose
+	name = "clown nose"
+	desc = "A classic red clown nose. It even honks!"
+	icon_state = "clown_nose"
+	item_state = "clown_nose"
+	see_face = TRUE
+	c_flags = null
+
+	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
+	var/volume = 50
+	var/randomized_pitch = 1
+
+	proc/honk_nose(mob/user as mob)
+		if (ON_COOLDOWN(src, "clown_nose", 10 SECONDS))
+			return 1
+		src.add_fingerprint(user)
+		user?.visible_message("<B>[user]</B> honks the [src.name]!")
+		playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+		return 0
+

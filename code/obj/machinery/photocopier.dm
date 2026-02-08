@@ -630,7 +630,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			var/obj/item/poster/P = w
 			scan_poster(P, user)
 		else if(istype(w, /obj/item/paper_booklet))
-			var/obj/item/poster/B = w
+			var/obj/item/paper_booklet/B = w
 			scan_booklet(B, user)
 		else if(istype(w, /obj/item/currency/spacecash))
 			var/obj/item/currency/spacecash/C = w

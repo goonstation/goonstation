@@ -27,7 +27,7 @@
 				for (var/atom/A as anything in src.get_tracked_examine_atoms())
 					hover_tag = A.get_examine_tag(src)
 					hover_tag?.show_images(src.client, TRUE, FALSE)
-			if (src.atom_hovered_over)
+			if (src.atom_hovered_over && (GET_DIST(src.atom_hovered_over, src) <= MAX_NAMETAG_RANGE))
 				var/atom/A = src.atom_hovered_over
 				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
 				hover_tag?.show_images(src.client, FALSE, TRUE)
@@ -193,14 +193,8 @@
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 				var/spacemove = 0
-				if (src.no_gravity || (old_loc.throw_unlimited && !src.is_spacefaring()) )
-
+				if (src.traction == TRACTION_NONE && !src.has_grip())
 					spacemove = 1
-					for (var/atom/A in oview(1,src))
-						if (A.stops_space_move && (!src.no_gravity || !isfloor(A)))
-							spacemove = 0
-							break
-
 				if (spacemove)
 					if (istype(src.back, /obj/item/tank/jetpack))
 						var/obj/item/tank/jetpack/J = src.back
@@ -266,6 +260,7 @@
 						src.force_laydown_standup()
 
 					if (do_step)
+						src.inertia_value = 1
 						step(src, move_dir)
 						if (src.loc != old_loc)
 							OnMove()
@@ -296,9 +291,8 @@
 
 						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
 							if (!src?.client?.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
-								//just fall over in place when in space (to prevent zooming)
-								var/turf/current_turf = get_turf(src)
-								if (!(istype(current_turf, /turf/space)))
+								//just fall over in place without traction (to prevent zooming)
+								if (src.traction != TRACTION_NONE)
 									src.throw_at(get_step(src, move_dir), 1, 1)
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()

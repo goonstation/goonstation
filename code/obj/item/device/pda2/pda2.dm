@@ -219,6 +219,7 @@
 
 		robotics
 			name = "Robotics PDA"
+			icon_state = "pda-robotics"
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY, MGO_SILICON)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			default_muted_mailgroups = list(MGA_SALES)
@@ -240,7 +241,7 @@
 
 	forensic
 		name = "Forensic PDA"
-		icon_state = "pda-s"
+		icon_state = "pda-forensic"
 		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
@@ -312,7 +313,7 @@
 
 	mining
 		name = "Mining PDA"
-		icon_state = "pda-q"
+		icon_state = "pda-mining"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
 		mailgroups = list(MGD_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
@@ -325,9 +326,13 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
+		name = "Catering PDA"
+		icon_state = "pda-catering"
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	bartender
+		name = "Bartending PDA"
+		icon_state = "pda-bartender"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 

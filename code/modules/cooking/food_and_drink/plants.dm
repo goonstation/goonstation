@@ -312,6 +312,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 2
 	food_color = "#BBF33D"
+	initial_volume = 20 //Limiting this so there's a max of 10u of both grease and bad-grease
+
+	make_reagents() //explicitly don't invoke the parent or else we'll get 20u of regular grease.
+		src.reagents.add_reagent("grease",10)
+		src.reagents.add_reagent("badgrease",10)
 
 
 /obj/item/reagent_containers/food/snacks/plant/bean
