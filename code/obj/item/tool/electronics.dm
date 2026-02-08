@@ -315,7 +315,7 @@
 		// can_build is only defined on subtypes of /typeinfo/atom/movable, if other types need can_build implementation add a stub proc and more handling here
 		return TRUE
 	var/typeinfo/atom/movable/AM_typeinfo = type_typeinfo
-	return AM_typeinfo.can_build(T)
+	return AM_typeinfo.can_build(T, src.dir)
 
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")

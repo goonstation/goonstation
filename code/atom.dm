@@ -480,7 +480,7 @@ TYPEINFO(/atom/movable)
 
 	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
 	/// if an object type can be built somewhere, before instantiating the object itself.
-	proc/can_build(turf/T)
+	proc/can_build(turf/T, direction)
 		return TRUE
 
 /atom/movable
