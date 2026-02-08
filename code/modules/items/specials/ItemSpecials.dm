@@ -254,6 +254,7 @@
 		E.setup(get_turf(user))
 		E.set_dir(direction)
 		E.icon_state = name
+		E.caller = src
 
 	proc/usable(var/mob/user)
 		if (!user) user = usr
@@ -1343,6 +1344,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			E.setup(turf)
 			E.master = user
 			E.set_dir(direction)
+			E.caller = src
 			E.RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/obj/itemspecialeffect/barrier, on_move))
 			if(istype(master, /obj/item/barrier))
 				var/obj/item/barrier/B = master
@@ -1376,6 +1378,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	name = "energy barrier"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "syndiebarrier"
+	refract = 1
+	refract_amount = 3
 
 /datum/item_special/barrier/void
 	image = "voidbarrier"
@@ -2067,6 +2071,9 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	var/clash_time = 6
 
 	var/do_flick = 1
+
+	var/datum/item_special/caller = null
+
 	New()
 		..()
 
@@ -2232,8 +2239,14 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		//mouse_opacity = 1
 		var/bump_count = 0
 		var/mob/master = 0
+
 		var/amplify = 0 // Will this effect the original damage/stun/power whatever of a projectile
 		var/amplify_amount = 0 // multiple for the amp/deamplification
+
+		var/refract = 0 //does this barrier refract the projectile into multiple weaker ones?
+		var/refract_amount = 0 //amount of refractions, including the original projectile
+
+		var/remote = 0 // does this barrier need to be sustained by someone next to it?
 
 		setup(atom/location)
 			src.density = 1
@@ -2250,7 +2263,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			qdel(src)
 
 		proc/on_move(mob/living/mover, previous_loc, dir)
-			if (mover.loc != previous_loc && !(mover.restrain_time > TIME))
+			if (mover.loc != previous_loc && !(mover.restrain_time > TIME) && !remote)
 				src.deactivate(mover)
 
 		proc/deactivate(mob/living/user)
@@ -2272,7 +2285,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 				if(Q)
 					if(amplify)
-						Q.power = Q.power * amplify_amount
+						if(Q.proj_data)// cause projectiles can somehow work without this
+							Q.proj_data.damage = Q.proj_data.damage * amplify_amount
+							Q.proj_data.stun = Q.proj_data.stun * amplify_amount
+						else
+							Q.power = Q.power * amplify_amount
+					if(refract)
+						refract_bullet(Q,src)
 					src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 

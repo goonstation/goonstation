@@ -26,6 +26,8 @@ TYPEINFO(/obj/item/barrier)
 	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
 	var/use_two_handed = 0
 
+	var/barrier_limit = 1 // How many barriers can be simultaneously activated by this one barrier?
+
 	var/status = 0
 	var/obj/itemspecialeffect/barrier/E = null
 
@@ -130,6 +132,7 @@ TYPEINFO(/obj/item/barrier)
 		else
 			user?.show_text("You need two free hands in order to activate the [src.name].", "red")
 
+
 /obj/item/barrier/collapsible/security
 	desc = "A personal barrier. Activate this item inhand to deploy it."
 
@@ -163,21 +166,22 @@ TYPEINFO(/obj/item/barrier)
 		setProperty("disorient_resist_ear", 35) //idk how lol ok
 		setProperty("deflection", 25)
 		c_flags |= BLOCK_TOOLTIP && ONBACK
+		c_flags &= ~ONBELT
 
 		src.setItemSpecial(/datum/item_special/barrier/void)
 		BLOCK_SETUP(BLOCK_ALL)
 
 /obj/item/barrier/syndicate
 	name = "Aegis Riot Barrier"
-	desc = "A personal barrier."
+	desc = "A syndicate bootleg of the security barrier. It lacks compactibility for a more solid frame and the ability to refract projectiles."
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "metal"
+	icon_state = "syndie_barrier"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "barrier0"
-	c_flags = EQUIPPED_WHILE_HELD | ONBELT
-	force = 2
+	item_state = "syndie_barrier"
+	c_flags = EQUIPPED_WHILE_HELD
+	force = 6
 	throwforce = 6
-	w_class = W_CLASS_SMALL
+	w_class = W_CLASS_NORMAL
 	stamina_damage = 30
 	stamina_cost = 10
 	stamina_crit_chance = 0
@@ -191,6 +195,7 @@ TYPEINFO(/obj/item/barrier)
 		setProperty("disorient_resist", 65)
 		setProperty("disorient_resist_eye", 65)
 		setProperty("disorient_resist_ear", 50)
+		setProperty("deflection", 20)
 
 		src.setItemSpecial(/datum/item_special/barrier/syndie)
 		BLOCK_SETUP(BLOCK_ALL)

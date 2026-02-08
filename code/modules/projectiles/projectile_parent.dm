@@ -1214,3 +1214,38 @@ ABSTRACT_TYPE(/datum/projectile)
 	Q.name = "reflected [Q.name]"
 	Q.launch(do_delay = (Q.reflectcount % 5 == 0))
 	return Q
+
+proc/refract_bullet(var/obj/projectile/P, var/obj/itemspecialeffect/barrier/B)
+	//this procedure refracts a bullet according to quantity listed on the barrier's effect
+	var/is_pos = 1 //alternating the direction in a postive manner or not for the increment
+	var/counter = 0 //amounts of times both directions negative and positive to the original have been handled
+	var/is_even = 0 // used to see if we remove the O.G projectile
+	logTheThing(LOG_ADMIN, P, "The proc ran. This is the projectile we're using")
+	logTheThing(LOG_ADMIN, B, "The proc ran. This is the barrier we're using.")
+	if(B.refract_amount % 2 == 0) //even/odd checker to see if we keep the O.G projectile
+		is_even = 1
+		logTheThing(LOG_ADMIN, P, "Even check worked.")
+	for(var/refracted in B.refract_amount)
+		logTheThing(LOG_ADMIN, P, "For loop started.")
+		var/obj/projectile/W = initialize_projectile(B.loc || get_turf(P), P.proj_data, P.x, P.y, B, play_shot_sound = FALSE)
+		logTheThing(LOG_ADMIN, P, "Projectile Made.")
+		if(W.proj_data) // cause projectiles can somehow work without this
+			W.proj_data.damage = P.proj_data.damage / B.refract_amount
+			W.proj_data.stun = P.proj_data.stun / B.refract_amount
+			logTheThing(LOG_ADMIN, P, "Projectile Data Changed.")
+		else
+			W.power = P.power / B.refract_amount
+			logTheThing(LOG_ADMIN, P, "Projectile Power failsafe proc'd.")
+		if(is_pos)
+			W.dir = P.dir + counter + 4 //4 is to get it processing diagonal dirs
+			W.dir = P.angle + (15*counter)
+			is_pos = 0
+			counter++
+			logTheThing(LOG_ADMIN, P, "Positive check ran.")
+		else
+			W.dir = P.dir - counter - 4
+			W.dir = P.angle + (15*counter)
+			logTheThing(LOG_ADMIN, P, "Negative check ran.")
+	if(is_even)
+		qdel(P)
+
