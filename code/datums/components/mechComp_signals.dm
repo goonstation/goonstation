@@ -1,6 +1,7 @@
 #define DC_ALL "Disconnect All"
 #define LIST_CONNECTIONS "List Connections"
 #define CONNECT_COMP "Connect Component"
+#define COPY_COMP "Copy Component"
 #define SET_SEND "Set Send-Signal"
 #define TOGGLE_MATCH "Toggle Exact Match"
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
@@ -102,7 +103,13 @@ TYPEINFO(/datum/component/mechanics_holder)
 	src.lines = list()
 
 	src.configs.Add(list(DC_ALL, CONNECT_COMP, LIST_CONNECTIONS))
-	..()
+	if(!istype(parent, /obj/item/mechanics))
+		..()
+		return
+
+	var/obj/item/mechanics/mechanical_parent = parent
+	if(mechanical_parent.mechanically_copyable)
+		src.configs.Add(COPY_COMP)
 
 /datum/component/mechanics_holder/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT, PROC_REF(addInput))
@@ -409,6 +416,11 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if(connector)
 		src.link_devices(comsig_target, connector.connectee, user)
 		return TRUE
+	var/datum/component/mechanics_copier/copier = W.GetComponent(/datum/component/mechanics_copier)
+	if(copier && istype(copier.copied, src.parent.type))
+		var/obj/item/mechanics/mechanical_target = src.parent // `Initialize()` has an `istype()` check which should guarantee `src.parent`'s type.
+		mechanical_target.copy_identical_mechcomp(copier.copied, user, W)
+		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
 		if(hacked_door.panel_open)
@@ -442,6 +454,10 @@ TYPEINFO(/datum/component/mechanics_holder)
 				if(CONNECT_COMP)
 					W.AddComponent(/datum/component/mechanics_connector, src.parent)
 					boutput(user, SPAN_NOTICE("Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!"))
+					return TRUE
+				if(COPY_COMP)
+					W.AddComponent(/datum/component/mechanics_copier, src.parent)
+					boutput(user, SPAN_NOTICE("[W] will now copy settings from the [src.parent] to identical mechanics components! Use [W] in hand to stop copying!"))
 					return TRUE
 				if(LIST_CONNECTIONS)
 					ListConnections(user)
@@ -480,6 +496,40 @@ TYPEINFO(/datum/component/mechanics_holder)
 
 /datum/component/mechanics_connector/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	. = ..()
+
+
+/// Component for pulsing tools that will copy mechcomponents the user clicks on to the specified mechcomponent.
+/// Very much similar to (and ironically copied from) `/datum/component/mechanics_connector`
+/datum/component/mechanics_copier
+	/// A specific mechcomponent, this is the one we will copy onto clicked components.
+	var/atom/copied
+
+/datum/component/mechanics_copier/Initialize(var/datum/component/mechanics_holder/copied_holder)
+	. = ..()
+	if(!ispulsingtool(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	src.copied = copied_holder
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(stop_linking))
+
+	// Our pulsing tool parent gets a help message indicating what mechcomp component it's copying.
+	var/obj/item/item_parent = parent
+	RegisterHelpMessageHandler(item_parent, PROC_REF(get_help_msg))
+
+/datum/component/mechanics_copier/proc/stop_linking(var/obj/item/thing, mob/user)
+	// If our pulsing tool parent is also connecting then let that `stop_linking()` first.
+	if(parent.GetComponent(/datum/component/mechanics_connector))
+		return
+	boutput(user, SPAN_NOTICE("You stop copying with the [parent]."))
+	src.RemoveComponent()
+
+/datum/component/mechanics_copier/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "It is currently copying mechanics component settings from a [copied]."
+
+/datum/component/mechanics_copier/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	UnregisterHelpMessageHandler(parent)
 	. = ..()
 
 #undef MAX_OUTGOING_PER_TICK
