@@ -307,6 +307,11 @@
 		else if (istype(src, /turf/unsimulated))
 			var/turf/unsimulated/floor/auto/trench/T = src.ReplaceWith(/turf/unsimulated/floor/auto/trench)
 			T.old_type = type
+		if (src.buried_storage)
+			if (src.buried_storage.my_cracks)
+				qdel(src.buried_storage.my_cracks)
+				src.buried_storage.my_cracks = null
+			src.buried_storage.dig_outs = 0
 		src.reset_terrainify_effects()
 
 	proc/reset_terrainify_effects()
