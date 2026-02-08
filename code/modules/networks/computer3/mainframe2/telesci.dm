@@ -54,6 +54,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	var/realy = 0
 	var/realz = 0
 	var/tmp/session = null
+	var/frequency = FREQ_TELESCI
 	var/obj/laser_sink/perm_portal/start_portal
 	var/obj/laser_sink/perm_portal/end_portal
 	var/image/disconnectedImage
@@ -73,7 +74,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
-
+			MAKE_DEVICE_RADIO_PACKET_COMPONENT(src.net_id, "telepad", src.frequency)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -135,13 +136,69 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		else if (!src.overlays.len)
 			src.overlays += src.disconnectedImage
 
+	proc/receive_radio_signal(datum/signal/received_signal)
+		var/signal_sender = received_signal.data["sender"]
+		// we don't listen to any signals without a sender ID
+		if(!signal_sender)
+			return
+		//now, if we are not targeted by the package, we only listen to ping packets
+		if(received_signal.data["address_1"] != src.net_id)
+			if(received_signal.data["address_1"] == "ping")
+				var/datum/signal/new_signal = get_free_signal()
+				new_signal.source = src
+				new_signal.data["address_1"] = signal_sender
+				new_signal.data["sender"] = src.net_id
+				new_signal.data["command"] = "ping_reply"
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
+			return
+		//the only
+		var/signal_command = lowertext(received_signal.data["command"])
+		if(!signal_command)
+			return
+
+		switch(signal_command)
+			//with the help command, we send them information about any packets this object answers to
+			if("help")
+				var/datum/signal/new_signal = get_free_signal()
+				new_signal.data["address_1"] = signal_sender
+				new_signal.data["sender"] = src.net_id
+				if((!received_signal.data["topic"]))
+					new_signal.data["description"] = "Telepord pad, enables the teleportation of matter across long distances"
+					new_signal.data["topics"] = "status, coords"
+				else
+					new_signal.data["topic"] = received_signal.data["topic"]
+					switch(lowertext(received_signal.data["topic"]))
+						if("status")
+							new_signal.data["description"] = "Checks if the teleportation pad in question is connected to the mainframe and returns that mainframes network id. Does not require any arguments."
+						if("coords")
+							new_signal.data["description"] = "Returns the data of the internal GPS of the teleportation pad. Does not require any arguments."
+						else
+							new_signal.data["description"] = "ERROR: UNKNOWN TOPIC"
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
+
+			//with coords, we send the person the coordinates of the telepad. At last, the packet nerd is the answer to the telesci nerd's crime den
+			if("coords")
+				var/datum/signal/new_signal = get_free_signal()
+				var/turf/T = get_turf(src)
+				new_signal.data["address_1"] = signal_sender
+				new_signal.data["sender"] = src.net_id
+				new_signal.data["command"] = "coords_reply"
+				new_signal.data["x"] = "[T.x]"
+				new_signal.data["y"] = "[T.y]"
+				//new_signal.data["location"] = "[src.get_z_info(T)]"// TODO make the proc from the GPS a global proc
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
+
 	receive_signal(datum/signal/signal)
-		if(status & (NOPOWER|BROKEN) || !src.link)
+		if(status & (NOPOWER|BROKEN))
 			return
 		if(!signal || !src.net_id || signal.encryption)
 			return
 
-		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
+		if(signal.transmission_method != TRANSMISSION_WIRE)
+			// we react differently to radio signals and give people the ability to ping us for coords
+			return src.receive_radio_signal(signal)
+		// if we are not listening to a radio signal, we only want to receive packets while connected.
+		if(!src.link)
 			return
 
 		var/target = signal.data["sender"]
