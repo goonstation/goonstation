@@ -70,6 +70,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		else if (isrobot(src.holder))
 			src.robot_emag_effect()
 
+	get_limb_print()
+		return build_id_fingerprint(FORENSIC_CHARS_HEX)
+
 	proc/human_emag_effect()
 		var/mob/living/carbon/human/H = src.holder
 		var/mob/living/target = H //default to hitting ourselves

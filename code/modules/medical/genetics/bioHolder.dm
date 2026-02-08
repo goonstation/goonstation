@@ -25,13 +25,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/Uid = "not initialized" //Unique id for the mob. Used for fingerprints and whatnot.
 	var/uid_hash
-	var/fingerprints
+
+	var/datum/forensic_id/default_fingerprints = null
 
 	New(var/mob/owneri)
 		owner = owneri
 		Uid = CreateUid()
 		bioUids[Uid] = null
-		build_fingerprints()
+
+		var/fprint_id = build_id_separate(build_id_norepeat(FORENSIC_CHARS_FINGERPRINTS, 16), 4)
+		src.default_fingerprints = register_id(fprint_id)
+
 		mobAppearance = new/datum/appearanceHolder()
 
 		mobAppearance.owner = owner
@@ -47,13 +51,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return ..()
 
 	proc/build_fingerprints()
-		uid_hash = md5(Uid)
-		var/fprint_base = uppertext(md5_to_more_pronouncable(uid_hash))
-		var/list/fprint_parts = list()
-		for(var/i in 1 to length(fprint_base) step 6)
-			if(i + 6 <= length(fprint_base) + 1)
-				fprint_parts += copytext(fprint_base, i, i + 6)
-		fingerprints = jointext(fprint_parts, "-")
+		var/id_text = build_id_norepeat(FORENSIC_CHARS_FINGERPRINTS, 16)
+		id_text = build_id_separate(id_text, 4)
+		src.default_fingerprints = register_id(id_text)
 
 	disposing()
 		for(var/D in effects)
@@ -345,7 +345,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			ownerName = toCopy.ownerName || toCopy.owner.real_name // To quote line 386, "fuck this shit"
 			Uid = toCopy.Uid
 			uid_hash = md5(Uid)
-			build_fingerprints()
+			default_fingerprints = toCopy.default_fingerprints
 
 		if (copyPool)
 			src.RemoveAllPoolEffects()

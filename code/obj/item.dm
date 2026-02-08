@@ -589,9 +589,9 @@ ABSTRACT_TYPE(/obj/item)
 				ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)
 				var/msg = "([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)]"
 				if (W?.firesource)
-					msg += " by item ([W]). Last touched by: [key_name(W.fingerprintslast)]"
+					msg += " by item ([W]). Last touched by: [key_name(W.get_last_ckey())]"
 				message_admins(msg)
-				logTheThing(LOG_BOMBING, W?.fingerprintslast, msg)
+				logTheThing(LOG_BOMBING, W?.get_last_ckey(), msg)
 
 	var/image/I = image('icons/effects/fire.dmi', null, "item_fire", pixel_y = 5) // pixel shift for centering
 	I.alpha = 180

@@ -136,6 +136,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.part_arm_l = new /obj/item/parts/robot_parts/arm/left/light(src)
 			src.part_leg_r = new /obj/item/parts/robot_parts/leg/right/light(src)
 			src.part_leg_l = new /obj/item/parts/robot_parts/leg/left/light(src)
+			part_arm_r.limb_print = part_arm_l.limb_print // Give starter arms the same fingerprints
 			for(var/obj/item/parts/robot_parts/P in src.contents)
 				P.holder = src
 				if(P.robot_movement_modifier)

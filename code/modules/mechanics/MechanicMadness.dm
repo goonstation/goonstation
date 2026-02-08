@@ -1064,11 +1064,12 @@ TYPEINFO(/obj/item/mechanics)
 
 	attack_hand(mob/user)
 		if(level == UNDERFLOOR && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
-			if(ishuman(user) && user.bioHolder)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
 				LIGHT_UP_HOUSING
 				FLICK("comp_hscan1",src)
 				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
-				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
+				var/sendstr = (send_name ? user.real_name : H.get_fingerprint(ignore_gloves = TRUE))
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
 				boutput(user, SPAN_ALERT("The hand scanner can only be used by humanoids."))

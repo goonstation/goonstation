@@ -3384,10 +3384,21 @@ mob/living/carbon/human/has_genetics()
 
 /mob/living/carbon/human/on_forensic_scan(datum/forensic_scan/scan)
 	..()
-	if(!src.gloves?.hide_prints)
-		scan.add_text("Subject's Fingerprints: [src.bioHolder?.fingerprints]")
-	if(src.gloves)
-		scan.add_text("Subject's Glove ID: [src.gloves.glove_ID] [src.gloves.material_prints ? "([src.gloves.material_prints])" : null]")
+	if(!src.gloves?.print_mask || src.gloves?.print_mask == FORENSIC_GLOVE_MASK_FINGERLESS)
+		var/datum/forensic_id/print_right = src.limbs?.r_arm?.limb_print
+		var/datum/forensic_id/print_left = src.limbs?.l_arm?.limb_print
+		if(print_right || print_left)
+			if(print_right == print_left)
+				scan.add_text("Subject's Fingerprints: [print_right.id]")
+			else if(!print_right)
+				scan.add_text("Subject's Fingerprints: [print_left.id]")
+			else if(!print_left)
+				scan.add_text("Subject's Fingerprints: [print_right.id]")
+			else
+				scan.add_text("Fingerprints (Right): [print_right.id]")
+				scan.add_text("Fingerprints (Left): [print_left.id]")
+	if(src.gloves?.fibers)
+		scan.add_text("Subject's Glove ID: ([src.gloves.fibers.id])")
 	if(src.bioHolder.Uid)
 		scan.add_text("Subject's DNA: [src.bioHolder.Uid]")
 
@@ -3411,3 +3422,28 @@ mob/living/carbon/human/has_genetics()
 				wound_count++
 		if(wound_count)
 			scan.add_text("Gunshot wounds: [wound_count] fragments detected")
+
+/mob/living/carbon/human/proc/get_fingerprint(var/ignore_gloves = FALSE, force_hand = -1)
+	RETURN_TYPE(/datum/forensic_data/fingerprint)
+	var/datum/forensic_id/print = null
+	var/datum/forensic_id/fibers = null
+	var/datum/forensic_id/mask = null
+	if(!src.limbs)
+		return null
+	var/which_hand = LEFT_HAND
+	if((src.hand == LEFT_HAND || force_hand == LEFT_HAND) && limbs.l_arm)
+		print = limbs.l_arm.limb_print
+	else if((src.hand == RIGHT_HAND || force_hand == RIGHT_HAND) && limbs.r_arm)
+		print = limbs.r_arm.limb_print
+		which_hand = RIGHT_HAND
+	if(!print)
+		return null
+	if(src.gloves && !ignore_gloves)
+		var/is_hand_covered = HAS_FLAG(src.gloves.which_hands, GLOVE_HAS_LEFT) && which_hand == LEFT_HAND
+		is_hand_covered |= HAS_FLAG(src.gloves.which_hands, GLOVE_HAS_RIGHT) && which_hand == RIGHT_HAND
+		if(is_hand_covered)
+			fibers = src.gloves.fibers
+			mask = src.gloves.print_mask
+	var/fprint_flags = FORENSIC_REMOVE_CLEANING
+	var/datum/forensic_data/fingerprint/new_fprint = new(print, fibers, mask, fprint_flags)
+	return new_fprint

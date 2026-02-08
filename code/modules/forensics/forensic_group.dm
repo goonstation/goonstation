@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 	proc/report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
 		return
 
-	proc/copy_to(var/datum/forensic_holder/other)
+	proc/copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan)
 		return
 
 	proc/get_header()
@@ -103,9 +103,9 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		for(var/datum/forensic_data/f_data in src.evidence_list)
 			report.add_line(f_data.get_text(scan), src.get_header())
 
-	copy_to(var/datum/forensic_holder/other)
+	copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan)
 		for(var/datum/forensic_data/evidence_data in src.evidence_list)
-			var/datum/forensic_data/evidence_copy = evidence_data.get_copy()
+			var/datum/forensic_data/evidence_copy = evidence_data.get_copy(scan)
 			other.add_evidence(evidence_copy, src.category)
 
 	/// If duplicate evidence is added, you can have that affect the value of the existing evidence
@@ -203,5 +203,106 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 			if(time_since < time_since_list[i] MINUTES)
 				return intensity_list[i]
 		return intensity_list[1]
+
+/datum/forensic_group/adminprints // Chain of custody for admins
+	var/list/datum/forensic_data/adminprint/print_list = list() // All the players who touched this
+	var/datum/forensic_data/adminprint/last_print = null // The last player to touch this thing
+	category = FORENSIC_GROUP_ADMINPRINTS
+	group_flags = 0
+
+	disposing()
+		src.print_list.len = 0
+		src.print_list = null
+		..()
+
+	apply_evidence(var/datum/forensic_data/new_data)
+		if(!istype(new_data, /datum/forensic_data/adminprint))
+			return
+		var/datum/forensic_data/adminprint/data = new_data
+
+		if(!src.last_print)
+			src.print_list += data
+			src.last_print = data
+		else if(src.last_print.time_end < data.time_end)
+			// Incoming adminprint is recent
+			if(src.last_print.clientKey == data.clientKey)
+				src.last_print.time_end = data.time_end
+			else
+				src.print_list += data
+				src.last_print = data
+		else
+			// Incoming adminprint is old (perhaps copied from someplace else)
+			src.print_list += data
+
+	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
+		for(var/datum/forensic_data/adminprint/f_data in src.print_list)
+			report.add_line(f_data.get_text(scan), src.get_header())
+
+	proc/get_adminprints()
+		var/aprint_text = ""
+		for(var/datum/forensic_data/adminprint/print in src.print_list)
+			aprint_text += "<li>[print.get_text()]</li>"
+		aprint_text += "<li><b>Last touched by:</b> [replace_if_false(src.get_last_ckey(), "None")].</li>"
+		return aprint_text
+
+	copy_to(var/datum/forensic_holder/other)
+		for(var/datum/forensic_data/adminprint/evidence_data in src.print_list)
+			var/datum/forensic_data/adminprint/evidence_copy = evidence_data.get_copy()
+			other.add_evidence(evidence_copy, src.category)
+
+	get_header()
+		return "Adminprints"
+
+	/// Returns the ckey of the last about-to-be-sorry hooligan who touched this thing
+	proc/get_last_ckey()
+		return src.last_print.clientKey.id
+
+/datum/forensic_group/fingerprints
+	var/list/datum/forensic_data/fingerprint/evidence_list = new/list()
+	category = FORENSIC_GROUP_FINGERPRINTS
+	group_flags = FORENSIC_REMOVE_CLEANING
+
+	disposing()
+		src.evidence_list.len = 0
+		src.evidence_list = null
+		..()
+
+	apply_evidence(var/datum/forensic_data/new_data)
+		if(!istype(new_data, /datum/forensic_data/fingerprint))
+			return
+		var/datum/forensic_data/fingerprint/data = new_data
+
+		var/oldest = 1
+		for(var/i in 1 to length(src.evidence_list))
+			var/datum/forensic_data/fingerprint/i_data = src.evidence_list[i]
+			if(data.print == i_data.print && data.fibers == i_data.fibers && data.print_mask == i_data.print_mask)
+				evidence_list[i].time_start = min(evidence_list[i].time_start, data.time_start)
+				evidence_list[i].time_end = max(evidence_list[i].time_end, data.time_end)
+				return
+			if(evidence_list[i].time_end < evidence_list[oldest].time_end)
+				oldest = i
+		if(length(src.evidence_list) < FORENSIC_EVIDENCE_MAX)
+			// Randomize the order. Do it here so that it is the same order for each scan.
+			src.evidence_list.Insert(rand(length(evidence_list) + 1), data)
+		else
+			src.evidence_list[oldest] = data
+
+	remove_evidence(var/removal_flags)
+		if(!should_remove(src.group_flags, removal_flags))
+			return
+		src.evidence_list.len = 0
+		return TRUE
+
+	report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report)
+		for(var/datum/forensic_data/f_data in src.evidence_list)
+			report.add_line(f_data.get_text(scan), src.get_header())
+
+	copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan)
+		for(var/datum/forensic_data/evidence_data in src.evidence_list)
+			var/datum/forensic_data/evidence_copy = evidence_data.get_copy(scan)
+			other.add_evidence(evidence_copy, src.category)
+
+	get_header()
+		return FORENSIC_HEADER_FINGERPRINTS
 
 #undef FORENSIC_EVIDENCE_MAX

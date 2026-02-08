@@ -2304,6 +2304,12 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 		. += corrupted_bit
 	return jointext(.,"")
 
+/// Replace a value with another if the original is null. Otherwise returns the original.
+proc/replace_if_false(var/original, var/replacement)
+	if(original)
+		return original
+	else
+		return replacement
 
 /// Returns given text replaced entirely by nonsense chars
 proc/illiterateGarbleText(var/message)

@@ -75,7 +75,7 @@
 
 /datum/effects/system/explosion/proc/start()
 	var/obj/effects/explosion/E = new/obj/effects/explosion( location )
-	E.fingerprintslast = source.fingerprintslast
+	source.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 	var/datum/effects/system/expl_particles/P = new/datum/effects/system/expl_particles()
 	P.set_up(10,location)
 	P.start()

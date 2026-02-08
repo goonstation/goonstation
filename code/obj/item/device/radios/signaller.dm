@@ -92,7 +92,7 @@ TYPEINFO(/obj/item/device/radio/signaler)
 	if (!(src.wires & WIRE_TRANSMIT))
 		return
 
-	logTheThing(LOG_SIGNALERS, !usr && src.master ? src.master.fingerprintslast : usr, "used remote signaller[src.master ? " (connected to [src.master.name])" : ""] at [src.master ? "[log_loc(src.master)]" : "[log_loc(src)]"]. Frequency: [format_frequency(frequency)]/[code].")
+	logTheThing(LOG_SIGNALERS, !usr && src.master ? src.master.get_last_ckey() : usr, "used remote signaller[src.master ? " (connected to [src.master.name])" : ""] at [src.master ? "[log_loc(src.master)]" : "[log_loc(src)]"]. Frequency: [format_frequency(frequency)]/[code].")
 
 	var/datum/signal/signal = get_free_signal()
 	signal.source = src

@@ -89,6 +89,147 @@
 		indices = null
 		..()
 
+	proc/forensic_search(var/search_input)
+		var/list/datum/db_record/record_matches = forensic_search_subjects(search_input)
+		var/result = ""
+		if(length(record_matches) > 0)
+			result = SPAN_SUCCESS("<li>Records matching \"[search_input]\"</li>")
+			var/match_num = ""
+			if(length(record_matches) > 1)
+				match_num = " (1/[length(record_matches)])"
+			var/match_count = 1
+			for(var/datum/db_record/R in record_matches)
+				result += "<li>[SPAN_NOTICE("Match[match_num]:<b> [R["name"]]</b>")]" + " ([R["rank"]])</li>"
+				var/fprint_right = R["fingerprint_right"]
+				var/fprint_left = R["fingerprint_left"]
+				if(fprint_right == fprint_left)
+					result += "<li style='margin-left:15px;list-style-type:none'><i>Fingerprints:</i> [fprint_right]</li>"
+				else
+					result += "<li style='margin-left:15px;list-style-type:none'><i>Fingerprint (R):</i> [fprint_right]</li>\
+								<li style='margin-left:15px;list-style-type:none'><i>Fingerprint (L):</i> [fprint_left]</li>"
+				result += "<li style='margin-left:15px;list-style-type:none'><i>Blood DNA:</i> [R["dna"]]</li>"
+				match_count++
+				match_num = " ([match_count]/[length(record_matches)])"
+			return result
+
+		// Search for partial fingerprints
+		record_matches = forensic_search_fingerprint_partial(search_input)
+		if(length(record_matches) > 0)
+			result = SPAN_SUCCESS("<li>Potential matches for \"[search_input]\"</li>")
+			for(var/datum/db_record/R in record_matches)
+				var/fprint_right = R["fingerprint_right"]
+				var/fprint_left = R["fingerprint_left"]
+				var/match_result = SPAN_NOTICE("<li style='margin-left:15px;list-style-type:none'>["<b>[R["name"]]</b>"]")
+				if(fprint_right == fprint_left)
+					match_result += ": [fprint_right]</li>"
+				else
+					match_result += ": [fprint_right]  |  [fprint_left]</li>"
+				result += match_result
+			return result
+		return SPAN_ALERT("No match found in security records for \"[search_input]\".")
+
+	/// Search for records based on name, dna, or fingerprints
+	proc/forensic_search_subjects(var/search_input)
+		var/search_low = lowertext(search_input)
+		var/list/datum/db_record/subject_records = list()
+		for(var/datum/db_record/R as anything in data_core.general.records)
+			var/is_subj = (search_low == lowertext(R["dna"]))
+			is_subj = is_subj || (search_low == lowertext(R["name"]))
+			is_subj = is_subj || (search_low == lowertext(R["fingerprint_right"]))
+			is_subj = is_subj || (search_low == lowertext(R["fingerprint_left"]))
+			if(is_subj)
+				subject_records += R
+		return subject_records
+
+	proc/forensic_search_fingerprint_partial(var/search_input)
+		RETURN_TYPE(/list/datum/db_record)
+		if(!search_input)
+			return null
+		var/list/record_prints = list()
+		var/list/datum/db_record/record_refs = list()
+
+		// Collect the fingerprint data and their associated records that we need to go through
+		for(var/list/datum/db_record/record in data_core.general.records)
+			var/fprint_right = record["fingerprint_right"]
+			var/fprint_left = record["fingerprint_left"]
+			if(fprint_right == fprint_left)
+				if(!fprint_right)
+					continue
+				record_prints.Add(fprint_right)
+				record_refs.Add(record)
+			else
+				if(fprint_right)
+					record_prints.Add(fprint_right)
+					record_refs.Add(record)
+				if(fprint_left)
+					record_prints.Add(fprint_left)
+					record_refs.Add(record)
+		if(!record_prints || !record_refs)
+			return null
+
+		// Get the input into a more usable format
+		// Print: (..3..-4567-...?...-CDEF) => Bunches: list("_3_","4567","_?_","CDEF")
+		search_input = limit_chars(search_input, list("?",".","-"), TRUE, TRUE)
+		var/list/input_bunches = splittext(search_input, "-")
+		for(var/i in length(input_bunches) to 1 step -1)
+			if(input_bunches[i] == "")
+				input_bunches.Cut(i, i+1)
+		if(length(input_bunches) == 0)
+			return null
+		var/list/input_empty = list()
+		for(var/i in 1 to length(input_bunches))
+			input_bunches[i] = text_replace_repeat(input_bunches[i], ".", "_")
+			var/is_empty = !contains_chars(input_bunches[i], null, TRUE, TRUE)
+			input_empty += is_empty
+
+		var/trim_start = 0
+		var/trim_end = 0
+		for(var/i in 1 to length(input_empty))
+			if(!input_empty[i])
+				break
+			trim_start++
+		for(var/i in length(input_empty) to 1 step -1)
+			if(!input_empty[i])
+				break
+			trim_end++
+		trim_list(input_bunches, trim_start, trim_end)
+		if(length(input_bunches) == 0)
+			return null
+
+		// Find and collect all records containing a matching print
+		var/list/datum/db_record/match_records = list() // All records with a matching print
+		for(var/i in 1 to length(record_prints))
+			var/list/rec_bunches = splittext(record_prints[i], "-")
+			trim_list(rec_bunches, trim_start, trim_end)
+			if(length(rec_bunches) == 0)
+				continue
+			var/input_index = 1
+			for(var/k in 1 to length(rec_bunches))
+				var/bunch_match = FALSE
+				if(findtext(input_bunches[input_index], "_")) // (-...A...-) or (...A...B...)
+					// Not efficient to split the input bunch every time, but should be fine
+					var/list/input_bunch_split = splittext(input_bunches[input_index], "_")
+					input_bunch_split.RemoveAll("")
+					if(length(input_empty) == 1)
+						// Check the whole fingerprint rather than individual bunches
+						if(findtextEx_ordered(record_prints[i], input_bunch_split))
+							bunch_match = TRUE
+					else if(findtextEx_ordered(rec_bunches[k], input_bunch_split))
+						bunch_match = TRUE
+				else if(findtextEx(input_bunches[input_index], "?"))
+					if(text_replace_repeat(input_bunches[input_index], "?", "?") == "?") // Bunch only contains question marks
+						input_index++
+					else if(text_equals_partial(rec_bunches[k], input_bunches[input_index], "?")) // (-??A?-)
+						bunch_match = TRUE
+				if(bunch_match)
+					input_index++
+				else
+					input_index = 1
+				if(input_index == length(input_bunches) + 1) // Found a match!
+					match_records += record_refs[i]
+					break
+		return match_records
+
 /datum/db_record
 	VAR_PRIVATE/datum/record_database/db
 	VAR_PRIVATE/list/fields

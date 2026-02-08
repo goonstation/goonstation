@@ -936,23 +936,17 @@ proc/debug_map_apc_count(delim,zlim)
 		help = {"Shows the ckey of the last person to touch stuff on a turf. If multiple peeople the tile is red and you need to hover over it to see a list.<br>Uses the View Fingerprints last_touched thing and a bunch of interactions don't do fingerprints so don't rely on this."}
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			var/list/lines = list()
-			var/toucher = null
 			for(var/atom/A in list(theTurf) + theTurf.contents)
-				if(is_ok(A) && A.fingerprintslast)
-					if(isnull(toucher))
-						toucher = A.fingerprintslast
-					else if(toucher != A.fingerprintslast)
-						toucher = -1
-					lines += "[A.name] - [A.fingerprintslast]"
-			if(isnull(toucher))
-				img.app.alpha = 0
-				return
-			img.app.desc = lines.Join("<br>\n")
-			if(toucher == -1)
+				if(!is_ok(A))
+					continue
+				var/last_ckey = A.get_last_ckey()
+				if(!last_ckey)
+					continue
+				lines += "[A.name]: [replace_if_false(last_ckey, "None")]"
+			if(lines.len == 0)
+				lines += "None"
 				img.app.color = "#FF0000"
-			else
-				img.app.color = debug_color_of(toucher)
-				img.app.overlays = list(src.makeText(toucher, RESET_ALPHA | RESET_COLOR))
+			img.app.desc = lines.Join("<br>\n")
 		proc/is_ok(atom/A)
 			return TRUE
 

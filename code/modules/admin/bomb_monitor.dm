@@ -71,7 +71,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[TV.attached_device ? device_name : "Nothing"]
 							</td>
 							<td>
-								[TV.fingerprintslast ? TV.fingerprintslast : "N/A"]
+								Last ckey: [replace_if_false(TV.get_last_ckey(), "None")]
 							</td>
 							<td>
 								<a href='byond://?src=\ref[src];toggle_dud=\ref[TV]'>[TV.force_dud ? SPAN_ALERT("YES") : "No"]</a>
@@ -113,7 +113,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							[checked_bomb.trigger ? checked_bomb.trigger : "Nothing"]
 						</td>
 						<td>
-							[checked_bomb.fingerprintslast ? checked_bomb.fingerprintslast : "N/A"]
+							Last ckey: [replace_if_false(checked_bomb.get_last_ckey(), "None")]
 						</td>
 						<td>
 							<a href='byond://?src=\ref[src];toggle_dud=\ref[checked_bomb]'>[checked_bomb.force_dud ? SPAN_ALERT("YES") : "No"]</a>
@@ -151,10 +151,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[det.attachedTo ? ref : "Nothing"]
 							</td>
 							<td>
-								[det.fingerprintslast ? det.fingerprintslast : "N/A"]
+								Last ckey: [replace_if_false(det.get_last_ckey(), "None")]
 							</td>
 							<td>
-								[det.attachedTo && det.attachedTo.fingerprintslast ? det.attachedTo.fingerprintslast : "N/A"]
+								Last ckey: [replace_if_false(det.attachedTo.get_last_ckey(), "None")]
 							</td>
 							<td>
 								<a href='byond://?src=\ref[src];toggle_dud=\ref[det]'>[det.force_dud ? SPAN_ALERT("YES") : "No"]</a>

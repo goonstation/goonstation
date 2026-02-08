@@ -501,8 +501,6 @@ TYPEINFO(/obj/item/interdictor_board)
 		if (canbuild)
 			boutput(user, SPAN_NOTICE("You empty the box of parts onto the floor."))
 			var/obj/frame = new /obj/interdictor_frame( get_turf(user) )
-			frame.fingerprints = src.fingerprints
-			frame.fingerprints_full = src.fingerprints_full
 			frame.forensic_holder = src.forensic_holder
 			qdel(src)
 

@@ -867,7 +867,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			animate(E, alpha=0, time=2 SECONDS)
 			playsound(T, 'sound/weapons/flashbang.ogg', 15, TRUE)
 
-		E.fingerprintslast = src.fingerprintslast
+		src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 		qdel(src)
 		return
 
@@ -906,7 +906,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 			playsound(T, 'sound/effects/Explosion2.ogg', 100, TRUE)
 			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
-			E.fingerprintslast = src.fingerprintslast
+			src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 
 		qdel(src)
 		return
@@ -1057,7 +1057,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		playsound(src.loc, sound_explode, 45, 1)
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src))
-		E.fingerprintslast = src.fingerprintslast
+		src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 
 		invisibility = INVIS_ALWAYS_ISH
 		SPAWN(15 SECONDS)

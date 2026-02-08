@@ -2057,6 +2057,9 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 		..()
 		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
 
+	get_fiber_mask()
+		return create_glovemask_order(2) // 1/2 chance of match
+
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."

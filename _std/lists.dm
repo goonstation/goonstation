@@ -386,3 +386,10 @@ proc/params2complexlist(params)
 	for(var/i in 1 to round(listlen / 2)) \
 		x.Swap(i, listlen - i + 1) \
 	} while (0)
+
+/// Cuts elements from the start and end of the list.
+#define trim_list(L, start_amt, end_amt) \
+	do { \
+	L.Cut(length(L) - end_amt + 1); \
+	L.Cut(1, start_amt + 1) \
+	} while (0)

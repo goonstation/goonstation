@@ -2473,7 +2473,7 @@ TYPEINFO(/mob)
 				output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
 
 			if (output_target.client)
-				output_target.client.view_fingerprints(OL[IP])
+				output_target.client.view_adminprints(OL[IP])
 
 	return
 #undef REFRESH
