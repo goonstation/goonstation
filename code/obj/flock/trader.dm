@@ -152,12 +152,16 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 ////////////////
 // Contains mini-quest logic so I'm putting it here and not just in the trader.dm file
 ////////////////
+TYPEINFO(/obj/npc/trader/flock)
+	start_speech_modifiers = list(SPEECH_MODIFIER_FLOCK_GRADIENT)
+
 /obj/npc/trader/flock
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "totem"
 	picture = "flocktrader.png"
 	name = "Flocktrader Sa.le"
 	desc = "Some sort of weird holographic image on some fancy totem thing. Seems like it wants to trade."
+	theme = "flock"
 	var/is_greeting = 0
 	var/grad_col_1 = "#3cb5a3"
 	var/grad_col_2 = "#124e43"
@@ -196,31 +200,29 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	src.goods_sell += new/datum/commodity/flock/tech/ai_kit_flock(src)
 
 
-	greeting= {"[src.name] clicks from your headset. \"[gradientText(grad_col_1, grad_col_2, "Greetings, spacefarer. There are many permutations of the Signal, and we are an iteration less inclined to senseless destruction. Do you wish to engage in trade?")]\""}
+	greeting= "Greetings, spacefarer. There are many permutations of the Signal, and we are an iteration less inclined to senseless destruction. Do you wish to engage in trade?"
 
-	portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+	sell_dialogue = "We always seek raw materials for repairs and maintenance. We value some materials more than others, though."
 
-	sell_dialogue = {"[src.name] makes a short burst of pink noise. \"[gradientText(grad_col_1, grad_col_2, "We always seek raw materials for repairs and maintenance. We value some materials more than others, though.")]\""}
+	buy_dialogue = "Our technology is rare in this region of space. We must warn you that some items may be beyond your capacity to operate. You lack the knowledge and frequencies required. We are prohibited from providing them."
 
-	buy_dialogue = {"[src.name] whirrs and rattles. \"[gradientText(grad_col_1, grad_col_2, "Our technology is rare in this region of space. We must warn you that some items may be beyond your capacity to operate. You lack the knowledge and frequencies required. We are prohibited from providing them.")]\""}
+	successful_sale_dialogue = list("*holographic head nods silently in approval.",
+		"You are a valued trading partner. If you have further resources to provide, we can provide further compensation.")
 
-	successful_sale_dialogue = list("[src.name]'s holographic head nods silently in approval.",
-		"[src.name] warbles in a rising glissando. \"[gradientText(grad_col_1, grad_col_2, "You are a valued trading partner. If you have further resources to provide, we can provide further compensation.")]\"")
+	failed_sale_dialogue = list("The intent is appreciated but we cannot process this at this time.",
+		"We have no use for this. Maybe others will?",
+		"We apologise but we have other priorities to attend to at the moment. Please take your, hrm, merchandise elsewhere.",
+		"Are your cognitive systems functioning correctly? We can't assess proper function for your type.")
 
-	failed_sale_dialogue = list("[src.name] beeps in a descending portamento. \"[gradientText(grad_col_1, grad_col_2, "The intent is appreciated but we cannot process this at this time.")]\"",
-		"[src.name] chirps rapidly. \"[gradientText(grad_col_1, grad_col_2, "We have no use for this. Maybe others will?")]\"",
-		"[src.name] squawks. \"[gradientText(grad_col_1, grad_col_2, "We apologise but we have other priorities to attend to at the moment. Please take your, hrm, merchandise elsewhere.")]\"",
-		"[src.name] beeps questioningly. \"[gradientText(grad_col_1, grad_col_2, "Are your cognitive systems functioning correctly? We can't assess proper function for your type.")]\"")
+	successful_purchase_dialogue = list("We hope you can find good use for our preconfigured matter.",
+		"We appreciate your custom, even if it pains us to part with our own mass.")
 
-	successful_purchase_dialogue = list("[src.name] sings a short melody. \"[gradientText(grad_col_1, grad_col_2, "We hope you can find good use for our preconfigured matter.")]\"",
-		"[src.name] bloops. \"[gradientText(grad_col_1, grad_col_2, "We appreciate your custom, even if it pains us to part with our own mass.")]\"")
+	failed_purchase_dialogue = list("We need credits to purchase materials from others. We cannot afford to operate a charity.",
+		"We sympathize with your dearth of resources, but good will does not help us fix our vessel.")
 
-	failed_purchase_dialogue = list("[src.name] makes a descending bleep. \"[gradientText(grad_col_1, grad_col_2, "We need credits to purchase materials from others. We cannot afford to operate a charity.")]\"",
-		"[src.name] slowly shakes its head. \"[gradientText(grad_col_1, grad_col_2, "We sympathize with your dearth of resources, but good will does not help us fix our vessel.")]\"")
+	pickupdialogue = "A pleasure conducting business with you."
 
-	pickupdialogue = "[src.name] caws contentedly. \"[gradientText(grad_col_1, grad_col_2, "A pleasure conducting business with you.")]\""
-
-	pickupdialoguefailure = "[src.name] emits a burst of static. \"[gradientText(grad_col_1, grad_col_2, "You have nothing to collect. We do not have time to instruct you in basic trading protocol. Please find someone else to teach you.")]\""
+	pickupdialoguefailure = "You have nothing to collect. We do not have time to instruct you in basic trading protocol. Please find someone else to teach you."
 
 	// String 1 - player is being dumb and hiked a price up when buying, trader accepted it because they're a dick
 	// String 2 - same as above only the trader is being nice about it
@@ -228,18 +230,18 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	// String 4 - same as string 3 except with a nice trader
 	// String 5 - player haggled further than the trader is willing to tolerate
 	// String 6 - trader has had enough of your bullshit and is leaving
-	errormsgs = list("\"[gradientText(grad_col_1, grad_col_2, "Your generosity knows no bounds! How delightful.")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "You are offering greater than the asking price. We appreciate this, but we ought to inform you of this first.")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "Truly luminous, you are, to provide such a discount! We'll be taking this.")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "In the interests of fair trade, we wish to inform you we were prepared to pay more for your items. Do not starve yourself for us.")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "Unreasonable. Unreasonable! Your assessment of value is questionable. Calculate with more care.")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "You are far too incompetent to be worth the effort. Leave our ship at once, you are taking up time we can spend with other clients.")]\"")
+	errormsgs = list("Your generosity knows no bounds! How delightful.",
+		"You are offering greater than the asking price. We appreciate this, but we ought to inform you of this first.",
+		"Truly luminous, you are, to provide such a discount! We'll be taking this.",
+		"In the interests of fair trade, we wish to inform you we were prepared to pay more for your items. Do not starve yourself for us.",
+		"Unreasonable. Unreasonable! Your assessment of value is questionable. Calculate with more care.",
+		"You are far too incompetent to be worth the effort. Leave our ship at once, you are taking up time we can spend with other clients.")
 
-	hagglemsgs = list("\"[gradientText(grad_col_1, grad_col_2, "Is this price more feasible?")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "We know exactly what the value is. Does this motivate?")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "We are re-evaluating your worth as trading partner. Will this do?")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "We have more agreeable clients we could be working with. We hope this suffices.")]\"",
-		"\"[gradientText(grad_col_1, grad_col_2, "We will not agree to any other price. Take it or leave it.")]\"")
+	hagglemsgs = list("Is this price more feasible?",
+		"We know exactly what the value is. Does this motivate?",
+		"We are re-evaluating your worth as trading partner. Will this do?",
+		"We have more agreeable clients we could be working with. We hope this suffices.",
+		"We will not agree to any other price. Take it or leave it.")
 
 	// set up environmental things
 	SPAWN(10 SECONDS)
@@ -256,7 +258,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	flockdronegibs(location)
 
 /obj/npc/trader/flock/activatesecurity()
-	src.visible_message("<B>[src.name]</B> screeches, \"[gradientText(grad_col_1, grad_col_2, "We will not tolerate this!")]\"")
+	src.trader_say("We will not tolerate this!")
 	for(var/turf/T in get_area_turfs( get_area(src) ))
 		for(var/mob/living/L in T)
 			if(isflockmob(L))

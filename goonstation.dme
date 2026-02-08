@@ -3002,7 +3002,6 @@
 #include "code\WorkInProgress\dialogue\dialogue_NTrep.dm"
 #include "code\WorkInProgress\dialogue\dialogue_polaris.dm"
 #include "code\WorkInProgress\dialogue\dialogueSystem.dm"
-#include "code\WorkInProgress\dialogue\dialogueTraders.dm"
 #include "code\WorkInProgress\griffening\griffening_cards.dm"
 #include "code\WorkInProgress\optics\beamline.dm"
 #include "code\WorkInProgress\pali\blob_fabricator.dm"
