@@ -1781,3 +1781,16 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 #undef IMAGE_OFFSET_X
 #undef IMAGE_OFFSET_Y
+
+/obj/item/paper/hermit_1
+	name = "Pessimistic note"
+	info = {"If you're reading this don't bother. I came here to investigate that Class 19 powersurge that probably led you here as well,
+	but looks like it's a false detection. I don't know, whoever lived here is long gone and they were clearly fucking insane. I'm gettin outta here,
+	place is giving me the creeps.<br>
+	-Eric"}
+
+/obj/item/paper/hermit_2
+	name = "Hermit's ramblings"
+	desc = "A hastily written note, only the first section is legible."
+	info = {"I AM A PETAL IN THE WIND. I AM DUST AMONGST THE STARFIELD. I AM A GRAIN OF SAND THAT PASSESS BETWEEN YOUR FINGERS.
+	 I AM A SPECK OF ASH WITHIN THE INFERNO. I AM THE SHADOW OF THE..."}
