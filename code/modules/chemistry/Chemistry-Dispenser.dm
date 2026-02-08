@@ -143,12 +143,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.beaker.reagents?.handle_reactions()
 			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
-		src.beaker = B
-		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
-		if(!B.cant_drop)
-			user.drop_item()
-			if(!B.qdeled)
-				B.set_loc(src)
+		add_glassware(B, user)
 		if(B.qdeled)
 			B = null
 		else
@@ -156,9 +151,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
 				boutput(user, "You add the [glass_name] to the machine!")
-		B.reagents?.handle_reactions()
-		src.UpdateIcon()
-		src.ui_interact(user)
 
 	bullet_act(obj/projectile/P)
 		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
@@ -251,6 +243,20 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		else
 			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
+
+	/// Proc for adding a beaker to a dispenser (`user` optional though necessary if one exists).
+	proc/add_glassware(var/obj/item/reagent_containers/container, var/mob/user)
+		if(QDELETED(container) || container.cant_drop)
+			return
+
+		user?.drop_item(container)
+		container.set_loc(src)
+		APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, src)
+		src.beaker = container
+		container.reagents?.handle_reactions()
+		src.UpdateIcon()
+		if (user)
+			src.ui_interact(user)
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
@@ -363,12 +369,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 						if (newbeaker.current_lid)
 							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return
-						if(!newbeaker.cant_drop) // borgs and item arms
-							usr.drop_item()
-							newbeaker.set_loc(src)
-						src.beaker = newbeaker
-						APPLY_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
-						src.UpdateIcon()
+						add_glassware(newbeaker, usr)
 						. = TRUE
 			if ("remove")
 				if(!beaker)
