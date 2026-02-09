@@ -1569,7 +1569,6 @@
 #include "code\modules\interface\client_browse.dm"
 #include "code\modules\interface\flock_examine_tag.dm"
 #include "code\modules\interface\input.dm"
-#include "code\modules\interface\keybind_menu_chui.dm"
 #include "code\modules\interface\keybind_style.dm"
 #include "code\modules\interface\keymap.dm"
 #include "code\modules\interface\message_modal.dm"
