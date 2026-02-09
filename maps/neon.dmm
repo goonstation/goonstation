@@ -8220,11 +8220,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"fRn" = (
-/obj/lattice,
-/obj/item/device/infra_sensor,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "fRz" = (
 /obj/decal/poster/wallsign/danger_highvolt{
 	pixel_x = -32
@@ -22544,12 +22539,6 @@
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor,
 /area/radiostation/hallway)
-"qkB" = (
-/obj/item/device/infra,
-/obj/item/device/infra,
-/obj/item/device/infra,
-/turf/simulated/floor/grime,
-/area/iss)
 "qkF" = (
 /obj/machinery/teleport/portal_generator,
 /turf/simulated/floor/grime,
@@ -46659,7 +46648,7 @@ abY
 qsc
 qsc
 uxK
-fRn
+pDn
 yen
 cjx
 pDn
@@ -108881,7 +108870,7 @@ iJU
 cKH
 iJU
 iJU
-qkB
+ehk
 ehk
 ehk
 qKt

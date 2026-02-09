@@ -939,24 +939,9 @@
 /area/station/crew_quarters/quarters)
 "aey" = (
 /obj/table/auto,
-/obj/item/device/infra{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/device/infra{
-	pixel_y = -1
-	},
-/obj/item/device/infra{
-	pixel_x = 5;
-	pixel_y = -1
-	},
 /obj/item/clothing/head/helmet/hardhat{
 	pixel_x = -7;
 	pixel_y = 13
-	},
-/obj/item/device/infra_sensor{
-	pixel_x = 5;
-	pixel_y = 9
 	},
 /turf/simulated/floor/plating/damaged2,
 /area/station/hallway/secondary/construction)
@@ -13475,10 +13460,6 @@
 /obj/item/wirecutters{
 	pixel_x = -8;
 	pixel_y = 7
-	},
-/obj/item/device/infra{
-	pixel_x = 11;
-	pixel_y = 11
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"

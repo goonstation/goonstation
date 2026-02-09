@@ -25889,7 +25889,6 @@
 /area/research_outpost/indigo_rye)
 "clh" = (
 /obj/table/wood/auto,
-/obj/item/device/infra_sensor,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12

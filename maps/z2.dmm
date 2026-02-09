@@ -9159,11 +9159,6 @@
 /obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
-"aQw" = (
-/obj/table/wood/auto,
-/obj/item/device/infra_sensor,
-/turf/unsimulated/floor/carpet/grime,
-/area/crater/biodome/research)
 "aQx" = (
 /obj/window/cubicle{
 	dir = 1
@@ -116900,7 +116895,7 @@ aMI
 aOb
 aOY
 aPL
-aQw
+aQA
 aRi
 aSe
 aTd

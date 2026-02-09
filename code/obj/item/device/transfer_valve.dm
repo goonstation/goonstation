@@ -65,7 +65,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		if(istype(item, /obj/item/tank) || istype(item, /obj/item/clothing/head/butt))
 			src.attach_tank(user)
-		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/infra) || istype(item, /obj/item/device/prox_sensor))
+		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/prox_sensor))
 			if(attached_device)
 				boutput(user, SPAN_ALERT("There is already an device attached to the valve, remove it first!"))
 				return

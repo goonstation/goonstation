@@ -12187,12 +12187,6 @@
 "aUV" = (
 /turf/simulated/floor/white/grime,
 /area/iss)
-"aUW" = (
-/obj/item/device/infra,
-/obj/item/device/infra,
-/obj/item/device/infra,
-/turf/simulated/floor/grime,
-/area/iss)
 "aUX" = (
 /obj/machinery/recharge_station{
 	desc = "It looks like some of the safety interlocks are damaged.";
@@ -12992,11 +12986,6 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
-"bad" = (
-/obj/lattice,
-/obj/item/device/infra_sensor,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "baf" = (
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/chapel)
@@ -18975,7 +18964,6 @@
 /obj/machinery/networked/printer{
 	print_id = "Bridge"
 	},
-/obj/item/device/infra,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -60310,7 +60298,7 @@ aUm
 aVM
 aUm
 aUm
-aUW
+aUL
 aUL
 aUL
 aVC
@@ -130309,7 +130297,7 @@ eDl
 coU
 coU
 lEK
-bad
+bht
 jvN
 bgc
 bht

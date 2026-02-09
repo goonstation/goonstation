@@ -15138,7 +15138,6 @@
 	},
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/ai_experimental,
-/obj/item/device/infra_sensor,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "fDe" = (
