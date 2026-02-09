@@ -533,7 +533,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
-		.["meatLevels"] += P.meat_level
+		.["meatLevels"] += round(100 * (P.meat_level / MAXIMUM_MEAT_LEVEL))
 		.["podSpeed"] += P.is_speedy
 		.["podEfficient"] += P.is_efficient
 		.["cloneHack"] += P.clonehack
