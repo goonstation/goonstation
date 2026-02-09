@@ -1,3 +1,7 @@
+#define GRIND_NOTHING 0
+#define GRIND_BODIES 1
+#define GRIND_GEAR 2
+
 //WHAT DO YOU WANT FROM ME(AT)
 TYPEINFO(/obj/machinery/clonegrinder)
 	mats = 10
@@ -17,10 +21,10 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	var/process_per_tick = 0	// how much shit it will output per tick
 	var/mob/living/occupant = null
 	var/list/meats = list() //Meat that we want to reclaim.
-	var/max_meat = 7 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var.
-	var/emagged = 0
-	var/auto_strip = 1 // disabled when emagged (people were babies about this when it being turned off was the default) :V
+	var/max_meat = 10 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var.
+	var/grind_level = GRIND_NOTHING
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
+	HELP_MESSAGE_OVERRIDE("Fill with organs, limbs, meat, and blood to maintain cloner biomass.")
 
 	New()
 		..()
@@ -39,6 +43,19 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		. = ..()
 		if (src.upgraded)
 			. += "This one has an efficiency upgrade installed."
+		if (istrainedsyndie(user))
+			if (src.grind_level == GRIND_NOTHING)
+				. += "<br>" + SPAN_NOTICE("It looks like <b>all safeties are enabled</b>, for now...")
+			if (src.grind_level == GRIND_BODIES)
+				. += "<br>" + SPAN_ALERT("It looks like the arm guard is removed, and the reclaimer will <b>save worn items and destroy dead bodies</b>.")
+			if (src.grind_level == GRIND_GEAR)
+				. += "<br>" + SPAN_ALERT("It looks like all safeties are removed, and the reclaimer will <b>destroy all worn items and dead bodies</b>!")
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		if (istrainedsyndie(user))
+			. += "<br>Will save gear and destroy dead bodies if an <b>Electromagnetic Card (EMAG)</b> is used once."
+			. += "<br>Will destroy dead bodies and gear if an <b>Electromagnetic Card (EMAG)</b> is used again."
 
 	proc/find_pods()
 		if (!islist(src.pods))
@@ -126,24 +143,27 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		src.UpdateIcon(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (!src.emagged)
-			if (user)
-				boutput(user, SPAN_NOTICE("You override the reclaimer's safety mechanism."))
-			logTheThing(LOG_COMBAT, user, "emagged [src] at [log_loc(src)].")
-			emagged = 1
-			return 1
-		else
-			if (user)
-				boutput(user, "The safety mechanism's already burnt out!")
-			return 0
+		switch(src.grind_level)
+			if (GRIND_NOTHING)
+				boutput(user, SPAN_NOTICE("The inlet port on [src] opens wide enough for bodies to be put in."))
+				src.grind_level = GRIND_BODIES
+				logTheThing(LOG_COMBAT, user, "emagged [src], causing it to accept bodies, at [log_loc(src)].")
+			if (GRIND_BODIES)
+				boutput(user, SPAN_NOTICE("The gear-stripping safety mechanism on [src] shorts out."))
+				src.grind_level = GRIND_GEAR
+				logTheThing(LOG_COMBAT, user, "double-emagged [src], causing it to consume gear, at [log_loc(src)].")
+			if (GRIND_GEAR)
+				boutput(user, SPAN_NOTICE("The safety mechanism's already burnt out!"))
+				return FALSE
+		return TRUE
 
 	demag(var/mob/user)
-		if (!src.emagged)
-			return 0
-		emagged = 0
+		if (src.grind_level == GRIND_NOTHING)
+			return FALSE
+		src.grind_level = GRIND_NOTHING
 		if (user)
 			boutput(user, SPAN_NOTICE("You repair the reclaimer's safety mechanism."))
-		return 1
+		return TRUE
 
 	attack_hand(mob/user)
 		interact_particle(user,src)
@@ -230,7 +250,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 
 				qdel(theMeat)
 				// Each bit of meat adds 2 units
-				process_total += 2
+				process_total += 4
 
 			src.meats.len = 0
 
@@ -244,7 +264,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		// 16 * 0.4 = 6.4 ->   7 ticks
 		// 16 / 7 =            2.2857 per tick
 		// end result is that they produce the same amounts, the upgrade just does it faster
-		src.process_timer = ceil(process_total * (src.upgraded ? 0.4 : 0.8))
+		src.process_timer = ceil(process_total * (src.upgraded ? 0.5 : 1))
 		src.process_per_tick = process_total / process_timer
 
 		src.UpdateIcon(1)
@@ -296,6 +316,27 @@ TYPEINFO(/obj/machinery/clonegrinder)
 
 		else if (istype(I, /obj/item/reagent_containers/glass))
 			return // handled in reagent afterattack
+
+		else if (istype(I, /obj/item/card/emag))
+			return // prevents "unsuitable" message
+
+		else if (isgrab(I))
+			var/obj/item/grab/G = I
+			if (src.grind_level == GRIND_NOTHING)
+				user.visible_message(SPAN_ALERT("[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!"))
+				return ..()
+
+			if (src.occupant)
+				boutput(user, SPAN_ALERT("There is already somebody in there."))
+
+				return ..()
+
+			if (G?.affecting && !isdead(G.affecting) && (!isnpcmonkey(G.affecting) || G.affecting.client))
+				user.visible_message(SPAN_ALERT("[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!"))
+				return ..()
+
+			src.add_fingerprint(user)
+			actions.start(new /datum/action/bar/icon/put_in_reclaimer(G.affecting, src, G, 50), user)
 
 		boutput(user, SPAN_ALERT("This item is not suitable for [src]."))
 		return
@@ -397,3 +438,88 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			var/obj/upgrade = new /obj/item/grinder_upgrade(src.loc)
 			src.visible_message(SPAN_ALERT("The [upgrade] module falls to the floor!"))
 			playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
+
+/datum/action/bar/icon/put_in_reclaimer
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 50
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "grabbed"
+
+	var/mob/living/carbon/human/target
+	var/obj/machinery/clonegrinder/grinder
+	var/obj/item/grab/grab
+
+	New(var/mob/living/carbon/human/ntarg, var/obj/machinery/clonegrinder/ngrind, var/obj/item/grab/ngrab, var/duration_i)
+		..()
+		if (ntarg)
+			target = ntarg
+		if (ngrind)
+			grinder = ngrind
+		if (ngrab)
+			grab = ngrab
+		if (duration_i)
+			duration = duration_i
+
+	onUpdate()
+		..()
+		if (grab == null || target == null || grinder == null || owner == null || BOUNDS_DIST(owner, grinder) > 0 || BOUNDS_DIST(owner, target) > 0 || BOUNDS_DIST(target, grinder) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (grinder.occupant)
+			interrupt(INTERRUPT_ALWAYS)
+		var/mob/source = owner
+		if (!istype(source) || !source.find_in_hand(grab) || grab.affecting != target)
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		owner.visible_message(SPAN_ALERT("<b>[owner] starts to put [target] into [grinder]!</b>"))
+
+	onEnd()
+		..()
+		if (grinder.occupant)
+			return
+
+		if (grinder.grind_level == GRIND_NOTHING)
+			return
+
+		if (grinder.grind_level == GRIND_BODIES)
+			if(target.hasStatus("handcuffed"))
+				target.handcuffs.drop_handcuffs(target) //handcuffs have special handling for zipties and such, remove them properly first
+			target.unequip_all()
+			if(istype(target.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+				var/obj/item/parts/human_parts/arm/right/item/right_arm = target.limbs.r_arm
+				right_arm.remove()
+			if(istype(target.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+				var/obj/item/parts/human_parts/arm/left/item/left_arm = target.limbs.l_arm
+				left_arm.remove()
+			if (length(target.implant))
+				for (var/obj/item/implant/I in target.implant)
+					if (istype(I,/obj/item/implant/projectile))
+						continue
+					I.on_remove(target)
+					target.implant.Remove(I)
+					if (istype(I,/obj/item/implant/cloner))
+						qdel(I)
+						continue
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
+					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
+					wadblood.color = target.blood_color
+					newcase.UpdateOverlays(wadblood, "blood")
+					newcase.blood_DNA = target.bioHolder.Uid
+					newcase.blood_type = target.bioHolder.bloodType
+		owner.visible_message(SPAN_ALERT("<b>[owner] stuffs [target] into [grinder]!</b>"))
+		logTheThing(LOG_COMBAT, owner, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
+		if (!isdead(target) && !isnpcmonkey(target))
+			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
+
+		target.set_loc(grinder)
+		grinder.occupant = target
+		qdel(grab)
+
+/obj/machinery/clonegrinder/mindhack_deluxe
+		grind_level = GRIND_BODIES
+
+#undef GRIND_NOTHING
+#undef GRIND_BODIES
+#undef GRIND_GEAR
