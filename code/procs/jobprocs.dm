@@ -671,6 +671,7 @@ Equip items from body traits.
 	var/T = pick(trinket_safelist)
 	var/obj/item/trinket = null
 
+	// ONLY put traits in the "trinkets" category in this if-else chain
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
@@ -701,8 +702,6 @@ Equip items from body traits.
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)
-	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
-		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("wheelchair"))
 		SPAWN(0) // Ensures wheelchair spawns with you even if you aren't latejoining at arrivals.
 			var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
@@ -720,13 +719,19 @@ Equip items from body traits.
 		trinket.quality = rand(5,80)
 		trinkets_to_equip += trinket
 
-	// fake trinket-like zippo lighter for the smoker trait
+	// personalized technically-not-trinkets
 	if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
 		var/obj/item/device/light/zippo/smoker_zippo = new(src)
 		smoker_zippo.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [smoker_zippo.name]"
 		smoker_zippo.real_name = smoker_zippo.name
 		smoker_zippo.quality = rand(5,80)
 		trinkets_to_equip += smoker_zippo
+	if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
+		var/obj/item/reagent_containers/emergency_injector/epinephrine/allergic_pen = new(src)
+		allergic_pen.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [allergic_pen.name]"
+		allergic_pen.real_name = allergic_pen.name
+		allergic_pen.quality = rand(5,80)
+		trinkets_to_equip += allergic_pen
 
 	for (var/obj/item/I in trinkets_to_equip)
 		var/equipped = 0
