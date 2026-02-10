@@ -103,10 +103,9 @@
 	if (istype(src.loc, /obj/item/electronics/frame))
 		return FALSE
 	if (src.cell)
-		var/power_needed = src.passive_wattage_per_g_quantum * src.gforce_intensity
-		if (!power_needed)
-			return TRUE
-		if (src.cell && src.cell.charge > power_needed)
+		var/passive_wattage_needed = src.passive_wattage_per_g_quantum * src.gforce_intensity
+		var/available_cell_watts = src.cell.charge / CELLRATE
+		if (passive_wattage_needed && available_cell_watts > passive_wattage_needed)
 			return TRUE
 	if (src.uses_area_power)
 		. = ..()

@@ -3,6 +3,8 @@
 /datum/lifeprocess/gravity/process(datum/gas_mixture/environment)
 	. = ..()
 	var/turf/T = get_turf(src.owner)
+	if (!istype(T))
+		return
 
 	if (src.owner.gforce != T.get_gforce_current())
 		src.owner.set_gravity(T)
@@ -51,16 +53,24 @@
 		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
 			if (!human_owner || human_owner.lying || human_owner.is_spacefaring())
 				return
-			if (issalvager(human_owner) || isskeleton(human_owner))
+			if (issalvager(human_owner) || isskeleton(human_owner) || ischangeling(human_owner))
 				return
 			if (gforce > GFORCE_GRAVITY_MINIMUM)
 				if (!probmult(round((GFORCE_EARTH_GRAVITY - gforce)/10)))
 					return //0-10% chance of continuing, increasing chance as gforce decreases
+			if (probmult(25))
+				return
 
 			switch(rand(1, 3))
 				if (1) // nausea
-					if (istype(human_owner.wear_suit, /obj/item/clothing/suit/space) || ischangeling(human_owner) || iszombie(human_owner))
-						return // wearing a space suit or not caring about organs makes you immune
+					if (iszombie(human_owner))
+						return
+					var/obj/item/clothing/suit/suit = human_owner.wear_suit
+					if (istype(suit) && HAS_FLAG(suit.c_flags, SPACEWEAR))
+						return
+					var/obj/item/clothing/under/uniform = human_owner.w_uniform
+					if (istype(uniform) && HAS_FLAG(uniform.c_flags, SPACEWEAR))
+						return
 					boutput(human_owner, SPAN_ALERT("You feel your insides [pick("squirm", "shift", "wiggle", "float")] uncomfortably in low-gravity."), "grav-life")
 					human_owner.nauseate(1)
 				if (2) // stamina sap
@@ -71,10 +81,16 @@
 						if(J.allow_thrust(0.01, human_owner))
 							return // or jetpacking
 					boutput(human_owner, SPAN_ALERT("You [pick("struggle", "take effort", "manage")] to keep yourself [pick("oriented", "angled properly", "right-way-up")] in low-gravity."), "grav-life")
-					human_owner.remove_stamina(human_owner.traction == TRACTION_PARTIAL ? 25 : 50)
+					human_owner.remove_stamina(human_owner.traction == TRACTION_PARTIAL ? 15 : 30)
 				if (3) // blood rushes to your head
-					if (istype(human_owner.head, /obj/item/clothing/head/helmet/space) || ischangeling(human_owner) || isvampire(human_owner) || iszombie(human_owner))
-						return // unless you wear a helmet or "don't have" blood
+					if (isvampire(human_owner) || iszombie(human_owner))
+						return
+					var/obj/item/clothing/head/head = human_owner.head
+					if (istype(head) && HAS_FLAG(head.c_flags, SPACEWEAR))
+						return
+					var/obj/item/clothing/mask/mask = human_owner.wear_mask
+					if (istype(mask) && HAS_FLAG(mask.c_flags, SPACEWEAR))
+						return
 					var/msg_output = "You feel the blood rush to your head, "
 					var/amount = (GFORCE_EARTH_GRAVITY - src.owner.gforce) / GFORCE_EARTH_GRAVITY * 3
 					if (prob(50))
