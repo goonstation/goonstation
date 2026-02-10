@@ -20,6 +20,7 @@
 #else
 	pixel_x = -32
 #endif
+	soundproofing = SOUNDPROOFING_MUTE
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
