@@ -650,7 +650,6 @@
 			bread_module.bread = equipped
 			bread_module.highlight_color = equipped.get_average_color(TRUE)
 			bread_module.name = equipped.name
-			bread_module.lawText = "CATASTROPHIC [prob(5) ? "B" : ""]READ ERROR: [copytext(bread_module.highlight_color, 2)]-[rand(200, 999)]"
 			equipped = bread_module
 		if (!equipped.wonky)
 			equipped.pixel_x = 0
