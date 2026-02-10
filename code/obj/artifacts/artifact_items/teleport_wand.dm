@@ -53,7 +53,7 @@
 		var/turf/start_loc = get_turf(user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.shoes?.magnetic_teleport_check(H, get_turf(H), destination)
+			H.shoes?.magnetic_teleport_check(H, get_turf(H), T)
 
 		logTheThing(LOG_COMBAT, user, "was teleported by Telewand artifact [O] from [log_loc(user)] to [log_loc(T)].")
 		user.set_loc(T)
