@@ -45,7 +45,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			. += "This one has an efficiency upgrade installed."
 		if (istrainedsyndie(user))
 			if (src.grind_level == GRIND_NOTHING)
-				. += "<br>" + SPAN_NOTICE("It looks like <b>all safeties are enabled</b>, for now...")
+				. += "<br>" + SPAN_ALERT("It looks like <b>all safeties are enabled</b>, for now...")
 			if (src.grind_level == GRIND_BODIES)
 				. += "<br>" + SPAN_ALERT("It looks like the arm guard is removed, and the reclaimer will <b>save worn items and destroy dead bodies</b>.")
 			if (src.grind_level == GRIND_GEAR)
