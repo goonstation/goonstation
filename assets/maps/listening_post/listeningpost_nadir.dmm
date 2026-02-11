@@ -161,6 +161,12 @@
 	dir = 6
 	},
 /area/listeningpost/vestibule)
+"hy" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/unsimulated/wall/trench,
+/area/space)
 "hD" = (
 /obj/rack,
 /obj/item/device/nanoloom{
@@ -749,11 +755,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 1;
-	id = "Sleeper_Access";
-	name = "Teleport Pad"
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicate_teleporter)
 "Fa" = (
@@ -1869,7 +1871,7 @@ FR
 "}
 (17,1,1) = {"
 dJ
-dJ
+hy
 dJ
 LN
 FR

@@ -676,6 +676,12 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
+"JE" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/variableTurf/clear,
+/area/space)
 "JR" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -761,13 +767,11 @@
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/break_room)
 "Oe" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Listening Post"
-	},
 /obj/cable/black{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -1465,7 +1469,7 @@ sT
 sT
 "}
 (15,1,1) = {"
-sT
+JE
 sT
 sT
 sT

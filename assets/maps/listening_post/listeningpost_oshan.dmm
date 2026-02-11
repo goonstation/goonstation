@@ -310,11 +310,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/listeningpost/vestibule)
 "uX" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
-	id = "Sleeper_Access";
-	name = "Weather Satellite"
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle/red,
 /area/listeningpost/syndicate_teleporter)
 "wD" = (
