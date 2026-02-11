@@ -1884,6 +1884,7 @@
 /obj/item/scalpel,
 /obj/machinery/drainage/big,
 /obj/item/reagent_containers/syringe,
+/obj/machinery/camera/directional/east,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "aho" = (
@@ -46302,6 +46303,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"wmS" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/blue/checker{
+	dir = 8
+	},
+/area/station/medical/medbay/lobby)
 "wmV" = (
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
@@ -96877,7 +96884,7 @@ bcH
 axv
 axv
 azA
-aAT
+wmS
 atw
 chd
 chd
