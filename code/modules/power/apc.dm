@@ -559,11 +559,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
 	var/obj/item/cable_coil/coil = W
-	if (coil.use(4))
+	if (coil?.use(4))
 		boutput(user, "You repair the autotransformer.")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		src.repair_status = 2
-	else
 
 /obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
 	boutput(user, "You tune the autotransformer.")

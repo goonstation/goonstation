@@ -451,7 +451,7 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 		if(STATE_HAS_BOARD)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
 				var/obj/item/cable_coil/coil = P
-				if (coil.use(5))
+				if (coil?.use(5))
 					boutput(user, SPAN_NOTICE("You add cables to the frame."))
 					src.state = STATE_HAS_CABLES
 					src.icon_state = "3"

@@ -2130,7 +2130,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		qdel(src)
 
 	proc/finish_repairs(obj/item/cable_coil/C, mob/user)
-		if(C.use(10))
+		if(C?.use(10))
 			heat_repair = 0
 			playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
 			src.icon_state = "makeshift-energy"

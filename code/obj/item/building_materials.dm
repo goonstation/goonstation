@@ -269,7 +269,7 @@ MATERIAL
 
 	proc/build_terminal(obj/item/cable_coil/cable, mob/user)
 		if ((src in user) && (cable in user))
-			if (coil.use(1))
+			if (cable.use(1))
 				new /obj/machinery/power/data_terminal(get_turf(user))
 				src.change_stack_amount(-1)
 

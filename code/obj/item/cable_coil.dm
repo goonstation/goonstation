@@ -157,7 +157,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	proc/use(var/used)
 		. = src.change_stack_amount(-used)
 		if (.)
-			if (src.amount <= 0)
+			if (QDELETED(src))
 				if (currently_laying && usr)
 					UnregisterSignal(usr, COMSIG_MOVABLE_MOVED)
 				return 1
