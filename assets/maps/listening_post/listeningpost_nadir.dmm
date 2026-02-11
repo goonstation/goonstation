@@ -161,12 +161,6 @@
 	dir = 6
 	},
 /area/listeningpost/vestibule)
-"hy" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/unsimulated/wall/trench,
-/area/space)
 "hD" = (
 /obj/rack,
 /obj/item/device/nanoloom{
@@ -1871,7 +1865,7 @@ FR
 "}
 (17,1,1) = {"
 dJ
-hy
+dJ
 dJ
 LN
 FR

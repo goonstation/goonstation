@@ -676,12 +676,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
-"JE" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/variableTurf/clear,
-/area/space)
 "JR" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1469,7 +1463,7 @@ sT
 sT
 "}
 (15,1,1) = {"
-JE
+sT
 sT
 sT
 sT

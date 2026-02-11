@@ -73,7 +73,7 @@
 /datum/listening_post/proc/reset_post()
 	for (var/obj/machinery/door/airlock/door in by_type[/obj/machinery/door])
 		if (door.id == "Sleeper_Access")
-			door.req_access = initial(door.req_access)
+			door.req_access = list(access_impossible)
 			door.explosion_resistance = initial(door.explosion_resistance)
 			door.cant_emag = initial(door.cant_emag)
 			door.hardened = initial(door.hardened)
