@@ -549,6 +549,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 //section: resonators
 
+#define RESONATOR_CABLE_REPAIR_COST 3
+
 /obj/machinery/siphon/resonator
 	name = "\improper Type-AX siphon resonator"
 	desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
@@ -632,23 +634,17 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user,"The service panel isn't open.")
 				return
 			if(HAS_FLAG(src.status,BROKEN))
-				if(W.amount >= 3)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 40, 1)
-					boutput(user, "You replace the resonator's damaged wiring.")
-					status &= ~BROKEN
-					src.UpdateIcon()
-					src.update_fx()
-					W.amount -= 3
-					if (W.amount < 1)
-						var/mob/source = user
-						source.u_equip(W)
-						qdel(W)
-					else if(W.inventory_counter)
-						W.inventory_counter.update_number(W.amount)
+				var/obj/item/cable_coil/coil = W
+				if (!coil.use(RESONATOR_CABLE_REPAIR_COST))
+					boutput(user, "You need at least [RESONATOR_CABLE_REPAIR_COST] lengths of wire to repair the damage.")
 					return
-				else
-					boutput(user, "You need at least three lengths of wire to repair the damage.")
-					return
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 40, 1)
+				boutput(user, "You replace the resonator's damaged wiring.")
+				status &= ~BROKEN
+				src.UpdateIcon()
+				src.update_fx()
+				coil.use(RESONATOR_CABLE_REPAIR_COST)
+				return
 			else
 				boutput(user, "The internal wiring doesn't seem to need repair.")
 				return
@@ -834,3 +830,5 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		devdat["Maximum Intensity"] = src.max_intensity
 		devdat["Shear Modifier"] = src.shearmod * src.intensity
 		return devdat
+
+#undef RESONATOR_CABLE_REPAIR_COST

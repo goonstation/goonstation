@@ -1137,9 +1137,9 @@ TYPEINFO(/mob/living/silicon/robot)
 			var/obj/item/cable_coil/coil = W
 			src.add_fingerprint(user)
 			if(health < max_health)
-				coil.use(1)
-				HealDamage("All", 0, 120)
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
+				if(coil.use(1))
+					HealDamage("All", 0, 120)
+					src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
 			else
 				boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 			src.update_appearance()

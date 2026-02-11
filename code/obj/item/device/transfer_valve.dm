@@ -96,11 +96,9 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				return
 
 			var/obj/item/cable_coil/coil = item
-			if (coil.amount < 2)
+			if(!coil.use(2))
 				boutput(user, SPAN_ALERT("You do not have enough cable to produce two straps! (2 units required)"))
 				return
-			coil.use(2)
-
 			c_flags |= ONBACK
 			boutput(user, SPAN_NOTICE("You attach two loops of [item] to the transfer valve!"))
 			UpdateIcon()
