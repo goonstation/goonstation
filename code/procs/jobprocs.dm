@@ -191,87 +191,63 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			return picks
 	return list()
 
+// Picks an item from a job item list, with special handling for job items
+/proc/equip_job_item_slot(list/items, mob/living/carbon/human/H, slot)
+	if (isnull(items))
+		return
+	var/item_path
+	switch(length(items))
+		if(0)
+			return
+		if(1)
+			item_path = items[1]
+		if(2 to INFINITY)
+			item_path = weighted_pick(items)
+	if (!H.equip_new_if_possible(item_path, slot))
+		var/obj/item/I = new item_path(src)
+		H.stow_in_available(I, TRUE)
+
+/// Attempt to equip all job items
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
-	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), SLOT_W_UNIFORM)
-	else if (length(JOB.slot_jump))
-		H.equip_new_if_possible(JOB.slot_jump[1], SLOT_W_UNIFORM)
+	equip_job_item_slot(JOB.slot_jump, H, SLOT_W_UNIFORM)
 	// Backpack and contents
-	if (JOB.slot_back && length(JOB.slot_back) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_back), SLOT_BACK)
-	else if (length(JOB.slot_back))
-		H.equip_new_if_possible(JOB.slot_back[1], SLOT_BACK)
+	equip_job_item_slot(JOB.slot_back, H, SLOT_BACK)
 	if (JOB.slot_back && length(JOB.items_in_backpack))
 		for (var/X in JOB.items_in_backpack)
 			if(ispath(X))
 				H.equip_new_if_possible(X, SLOT_IN_BACKPACK)
 	// Belt and contents
-	if (JOB.slot_belt && length(JOB.slot_belt) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), SLOT_BELT)
-	else if (length(JOB.slot_belt))
-		H.equip_new_if_possible(JOB.slot_belt[1], SLOT_BELT)
+	equip_job_item_slot(JOB.slot_belt, H, SLOT_BELT)
 	if (JOB.slot_belt && length(JOB.items_in_belt) && H.belt?.storage)
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
 				H.equip_new_if_possible(X, SLOT_IN_BELT)
 	// Footwear
-	if (JOB.slot_foot && length(JOB.slot_foot) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), SLOT_SHOES)
-	else if (length(JOB.slot_foot))
-		H.equip_new_if_possible(JOB.slot_foot[1], SLOT_SHOES)
+	equip_job_item_slot(JOB.slot_foot, H, SLOT_SHOES)
 	// Suit
-	if (JOB.slot_suit && length(JOB.slot_suit) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_suit), SLOT_WEAR_SUIT)
-	else if (length(JOB.slot_suit))
-		H.equip_new_if_possible(JOB.slot_suit[1], SLOT_WEAR_SUIT)
+	equip_job_item_slot(JOB.slot_suit, H, SLOT_WEAR_SUIT)
 	// Ears
-	if (JOB.slot_ears && length(JOB.slot_ears) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), SLOT_EARS)
-	else if (length(JOB.slot_ears))
-		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],
-	/obj/item/device/radio/headset)))
-			H.equip_new_if_possible(JOB.slot_ears[1], SLOT_EARS)
+	if (H.traitHolder?.hasTrait("allears"))
+		;
+	else
+		equip_job_item_slot(JOB.slot_ears, H, SLOT_EARS)
 	// Mask
-	if (JOB.slot_mask && length(JOB.slot_mask) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_mask), SLOT_WEAR_MASK)
-	else if (length(JOB.slot_mask))
-		H.equip_new_if_possible(JOB.slot_mask[1], SLOT_WEAR_MASK)
+	equip_job_item_slot(JOB.slot_mask, H, SLOT_WEAR_MASK)
 	// Gloves
-	if (JOB.slot_glov && length(JOB.slot_glov) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_glov), SLOT_GLOVES)
-	else if (length(JOB.slot_glov))
-		H.equip_new_if_possible(JOB.slot_glov[1], SLOT_GLOVES)
+	equip_job_item_slot(JOB.slot_glov, H, SLOT_GLOVES)
 	// Eyes
-	if (JOB.slot_eyes && length(JOB.slot_eyes) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_eyes), SLOT_GLASSES)
-	else if (length(JOB.slot_eyes))
-		H.equip_new_if_possible(JOB.slot_eyes[1], SLOT_GLASSES)
+	equip_job_item_slot(JOB.slot_eyes, H, SLOT_GLASSES)
 	// Head
-	if (JOB.slot_head && length(JOB.slot_head) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_head), SLOT_HEAD)
-	else if (length(JOB.slot_head))
-		H.equip_new_if_possible(JOB.slot_head[1], SLOT_HEAD)
+	equip_job_item_slot(JOB.slot_head, H, SLOT_HEAD)
 	// Left pocket
-	if (JOB.slot_poc1 && length(JOB.slot_poc1) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_L_STORE)
-	else if (length(JOB.slot_poc1))
-		H.equip_new_if_possible(JOB.slot_poc1[1], SLOT_L_STORE)
+	equip_job_item_slot(JOB.slot_poc1, H, SLOT_L_STORE)
 	// Right pocket
-	if (JOB.slot_poc2 && length(JOB.slot_poc2) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc2), SLOT_R_STORE)
-	else if (length(JOB.slot_poc2))
-		H.equip_new_if_possible(JOB.slot_poc2[1], SLOT_R_STORE)
+	equip_job_item_slot(JOB.slot_poc2, H, SLOT_R_STORE)
 	// Left hand
-	if (JOB.slot_lhan && length(JOB.slot_lhan) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_L_HAND)
-	else if (length(JOB.slot_lhan))
-		H.equip_new_if_possible(JOB.slot_lhan[1], SLOT_L_HAND)
+	equip_job_item_slot(JOB.slot_lhan, H, SLOT_L_HAND)
 	// Right hand
-	if (JOB.slot_rhan && length(JOB.slot_rhan) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_R_HAND)
-	else if (length(JOB.slot_rhan))
-		H.equip_new_if_possible(JOB.slot_rhan[1], SLOT_R_HAND)
+	equip_job_item_slot(JOB.slot_rhan, H, SLOT_R_HAND)
 
 	//#ifdef APRIL_FOOLS
 	//H.back?.setMaterial(getMaterial("jean"))
