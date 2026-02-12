@@ -184,6 +184,17 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			boutput(user, SPAN_ALERT("There is nothing loaded to reclaim!"))
 			return
 
+		var/do_grind = FALSE
+		src.find_pods()
+		for (var/obj/machinery/clonepod/pod in src.pods)
+			if (pod.meat_level < MAXIMUM_MEAT_LEVEL)
+				do_grind = TRUE
+				break
+
+		if (!do_grind)
+			boutput(user, SPAN_ALERT("No connected clone pods can store more biomatter!"))
+			return
+
 		user.visible_message("<b>[user]</b> activates [src]!", "You activate [src].")
 		if (istype(src.occupant))
 			logTheThing(LOG_COMBAT, user, "activated [src.name] with [constructTarget(src.occupant,"combat")] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
