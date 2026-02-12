@@ -71,6 +71,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
 		src.create_reagents(100)
+		src.drip = new(src)
 
 		src.UpdateIcon()
 		genResearch.clonepods.Add(src) //This will be used for genetics bonuses when cloning
@@ -165,7 +166,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		switch (chosen_option)
 			if(CLONEPOD_ACTION_REMOVE_IV)
 				if (src.drip)
-					if (tgui_alert(user, "Take \the [src.drip] out of [src]?", "Clone Pod IV Drip", list("Remove", "Leave")) == "Remove")
+					if (tgui_alert(user, "Take \the [src.drip] out of [src]?", "Clone Pod IV Drip", list("Yes", "Cancel")) == "Yes")
 						user.put_in_hand_or_drop(src.drip)
 						src.drip = null
 				return
@@ -194,9 +195,12 @@ TYPEINFO(/obj/machinery/clonepod)
 			. += "<br>Biomatter reserves are [meat_pct]% full."
 
 		if (src.drip)
-			. += "<br>\The [src.drip] is hooked up."
+			if (src.drip.reagents.total_volume > 0)
+				. += "<br>\The [src.drip] is slowly draining into the pod."
+			else
+				. += "<br>\The [src.drip] is empty."
 		else
-			. += "<br>There is no IV drip hooked up."
+			. += "<br>There is no internal IV drip hooked up."
 
 	is_open_container()
 		return 2
@@ -469,10 +473,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				power_usage = 200
 			return ..()
 
-		if (src.drip?.reagents?.total_volume > 0)
-			src.drip.reagents.trans_to(src, src.drip.amount_per_transfer_from_this, mult)
-			if(src.drip.reagents.total_volume == 0)
-				src.send_pda_message("Clonepod Internal IV drip has run dry.")
+		src.drip.reagents.trans_to(src, src.drip.amount_per_transfer_from_this, mult)
 
 		if (src.occupant && src.occupant.loc == src)
 			// If we have a body inside the pod right now...
