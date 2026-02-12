@@ -63,7 +63,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	var/perfect_clone = FALSE		//if TRUE, then clones always keep normal name and receive no health debuffs
 
-	HELP_MESSAGE_OVERRIDE("Transfer 10 units of reagents by <b>clicking with a beaker in-hand</b>.<br>Transfer reagents over time by <b>clicking with an IV bag in-hand</b>.")
+	HELP_MESSAGE_OVERRIDE("Transfer 10 units of reagents by <b>clicking</b> with a <b>beaker</b> in-hand.<br>Transfer reagents over time by <b>clicking</b> with an <b>IV bag</b> in-hand.<br>Access extra functions by <b>clicking</b> with an <b>open hand</b>.")
 
 	New()
 		..()
@@ -473,7 +473,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				power_usage = 200
 			return ..()
 
-		src.drip.reagents.trans_to(src, src.drip.amount_per_transfer_from_this, mult)
+		src.drip?.reagents.trans_to(src, src.drip.amount_per_transfer_from_this, mult)
 
 		if (src.occupant && src.occupant.loc == src)
 			// If we have a body inside the pod right now...
