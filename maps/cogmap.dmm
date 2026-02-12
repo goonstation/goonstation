@@ -55367,6 +55367,9 @@
 	pixel_x = -1;
 	pixel_y = -3
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "rzS" = (

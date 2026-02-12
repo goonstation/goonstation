@@ -1210,12 +1210,6 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
-"afj" = (
-/obj/item/reagent_containers/food/snacks/pizzaslice/standard/meatball{
-	doants = 0
-	},
-/turf/simulated/floor/stairs/dark/wide,
-/area/station/medical/morgue)
 "afl" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -7450,7 +7444,6 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
-/obj/machinery/light_switch/auto,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "aWo" = (
@@ -19737,6 +19730,13 @@
 	},
 /turf/simulated/floor/orange,
 /area/station/engine/gas)
+"sUU" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor/darkblue,
+/area/station/medical/morgue)
 "sVU" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -71535,7 +71535,7 @@ aBx
 acX
 aGV
 ajm
-afj
+afW
 adr
 adm
 aaa
@@ -73046,7 +73046,7 @@ aWL
 aKm
 ahp
 aWm
-aGV
+sUU
 acZ
 aaa
 aaa

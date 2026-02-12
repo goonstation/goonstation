@@ -5820,6 +5820,9 @@
 	name = "funky ol' heart"
 	},
 /obj/disposalpipe/segment/bent/east,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "axJ" = (

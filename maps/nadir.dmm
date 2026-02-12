@@ -31187,6 +31187,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /turf/simulated/floor/blackwhite{
 	dir = 5
 	},
