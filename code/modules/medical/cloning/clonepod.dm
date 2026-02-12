@@ -944,7 +944,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	src.drip = new_drip
 	if (old_drip)
 		user.put_in_hand_or_drop(old_drip)
-	playsound(src, "sound/items/towel.ogg", 40)
+	playsound(src, 'sound/items/towel.ogg', 40)
 
 #undef CLONEPOD_ACTION_REMOVE_IV
 #undef CLONEPOD_ACTION_EJECT_CLONE
