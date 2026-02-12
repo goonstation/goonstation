@@ -299,7 +299,6 @@
 	name = "Illegal Announcement Computer"
 	icon_state = "announcementclown"
 	circuit_type = /obj/item/circuitboard/announcement/clown
-	var/emagged = FALSE
 	var/explodes = TRUE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."

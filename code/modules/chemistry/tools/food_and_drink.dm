@@ -96,7 +96,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
 					H.sims.affectMotive("Hunger", healing * 6)
-					H.sims.affectMotive("Bladder", -healing * 0.2)
 
 			if (quality >= 5)
 				boutput(M, SPAN_NOTICE("That tasted amazing!"))
@@ -1533,6 +1532,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
 			var/max_iterations = 20
+			src.inertia_value = 1
 			for(var/turf/T in path)
 				if(max_iterations-- <= 0)
 					break

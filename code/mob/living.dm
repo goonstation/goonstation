@@ -1443,7 +1443,7 @@ TYPEINFO(/mob/living)
 				if (!P.reagents)
 					src.take_toxin_damage(damage)
 
-	if (!P.proj_data.silentshot)
+	if (!P.proj_data.no_hit_message)
 		boutput(src, SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null

@@ -16,6 +16,8 @@
 	var/list/numbers = list(0, 0, 0, 0, 0, 0)
 	var/list/listeners = null
 	var/list/candidates = null
+	var/list/preferred_candidates = null
+	var/list/traitor_candidates = null
 
 	admin_call(var/source)
 		if (..())
@@ -65,12 +67,6 @@
 			do_event(source == "spawn_antag", source)
 
 	proc/do_event(var/force_antags = FALSE, var/source)
-		gen_numbers()
-		gather_listeners()
-		if (!length(src.listeners))
-			cleanup_event()
-			return
-
 		if(!src.admin_override)
 			var/temp = rand(0,99)
 			if(temp < 50)
@@ -82,6 +78,12 @@
 					src.num_agents = 1
 				else
 					src.num_agents = 0
+
+		gen_numbers()
+		gather_listeners()
+		if (!length(src.listeners))
+			cleanup_event()
+			return
 
 		SPAWN(1 SECOND)
 			broadcast_sound(src.signal_intro)
@@ -124,6 +126,8 @@
 	proc/gather_listeners()
 		//setup empty lists
 		src.listeners = list()
+		src.preferred_candidates = list()
+		src.traitor_candidates = list()
 		src.candidates = list()
 
 		for (var/mob/living/carbon/human/H in mobs)
@@ -133,11 +137,24 @@
 				if (Hs.frequency == src.frequency)
 					src.listeners += H
 					boutput(H, SPAN_NOTICE("A peculiar noise intrudes upon the radio frequency of your [Hs.name]."))
-					if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && (H.client.preferences.be_traitor || src.override_player_pref) && isalive(H))
+					if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && isalive(H))
 						var/datum/job/J = find_job_in_controller_by_string(H?.mind.assigned_role)
-						if (J.can_be_antag(ROLE_SLEEPER_AGENT))
-							src.candidates.Add(H)
+
+						if (H.client.preferences.be_sleeper_agent || src.override_player_pref)
+							if (J.can_be_antag(ROLE_SLEEPER_AGENT))
+								src.preferred_candidates.Add(H)
+						else if (H.client.preferences.be_traitor)
+							if (J.can_be_antag(ROLE_SLEEPER_AGENT))
+								src.traitor_candidates.Add(H)
 				break
+
+		if (length(src.preferred_candidates) >= src.num_agents) // If we have enough preferred candidates, pull from that
+			src.candidates = src.preferred_candidates
+		else // Try to pull from traitors if we don't have enough preferred candidates
+			message_admins("Insufficient amount of preferred candidates found for sleeper event. Attempting to pull from pool of traitor candidates.")
+			src.candidates += src.preferred_candidates
+			src.candidates += src.traitor_candidates
+
 		for (var/mob/living/silicon/robot/R in mobs)
 			if(!isalive(R))
 				continue
@@ -258,6 +275,8 @@
 		//clear lists
 		src.listeners = null
 		src.candidates = null
+		src.preferred_candidates = null
+		src.traitor_candidates = null
 
 		//clear flags
 		src.admin_override = FALSE

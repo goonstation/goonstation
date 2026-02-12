@@ -5810,14 +5810,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
-"avu" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/storage/goodybag,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown,
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/clown)
 "avv" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/power/apc/autoname_west,
@@ -11675,6 +11667,13 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"aSU" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "aSV" = (
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_x = 32
@@ -22826,11 +22825,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
-"bMm" = (
-/obj/machinery/flasher/portable,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "bMn" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -23607,18 +23601,6 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
-"bPs" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/quartermaster/refinery)
 "bPB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/sec_foyer)
@@ -24086,16 +24068,6 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/t_scanner,
 /obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/quartermaster/refinery)
-"bRo" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/storage/cart,
-/obj/item/storage/box/mousetraps,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -35892,6 +35864,11 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"jOR" = (
+/obj/machinery/flasher/portable,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "jPd" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -37803,6 +37780,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/science/lobby)
+"maO" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/storage/goodybag,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/clothing/mask/clown_nose,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/clown)
 "maS" = (
 /mob/living/critter/small_animal/seal,
 /turf/simulated/floor/grass,
@@ -44302,6 +44288,18 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
+"trV" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "trY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
@@ -44436,6 +44434,16 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
+"tAT" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/storage/cart,
+/obj/item/storage/box/mousetraps,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "tBo" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -47189,13 +47197,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
-"wYx" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
 "wYK" = (
 /obj/storage/closet/emergency,
 /obj/item/tank/pocket/oxygen,
@@ -85347,7 +85348,7 @@ bNe
 bLY
 bLY
 bLY
-bRo
+tAT
 bJE
 bRk
 bUM
@@ -87157,7 +87158,7 @@ uhE
 qur
 ybR
 aOL
-bPs
+trV
 bLY
 sQl
 bSA
@@ -95009,7 +95010,7 @@ aoP
 bMn
 aiX
 hIa
-wYx
+aSU
 aSW
 fec
 aqk
@@ -95621,7 +95622,7 @@ adn
 bJR
 jqm
 tbv
-bMm
+jOR
 bJR
 lbK
 bLr
@@ -103390,7 +103391,7 @@ arC
 arz
 aek
 azU
-avu
+maO
 acc
 arz
 ayN

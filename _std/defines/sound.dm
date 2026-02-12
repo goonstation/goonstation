@@ -45,6 +45,7 @@ var/global/list/audio_channel_name_to_id = list(
 #define SOUND_IGNORE_SPACE (1<<0)
 #define SOUND_SKIP_OBSERVERS (1<<1) //! Only applies to local playsound(s)
 #define SOUND_IGNORE_DEAF (1<<2) //! No you can't ignore admin PMs because you lost your auditory headset
+#define SOUND_DO_LOS (1<<3) //makes any opaque object totally occlude the sound, use sparingly and only for "sneaky" sounds
 
 #define MAX_SOUND_RANGE max_sound_range
 #define MAX_SOUND_RANGE_NORMAL 33

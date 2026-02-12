@@ -2,7 +2,7 @@
 
 ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
-	ui_colour = TGUI_COLOUR_PURPLE
+	ui_colour = TGUI_COLOUR_VIOLET
 	slot_card = /obj/item/card/id/research
 	job_category = JOB_RESEARCH
 

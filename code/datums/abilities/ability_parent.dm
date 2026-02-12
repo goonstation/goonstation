@@ -1304,7 +1304,7 @@
 					return H.addAbility(abilityType)
 
 		var/datum/abilityHolder/holder
-		if (length(src.holders) && (!istype(src.holders[1], /datum/abilityHolder/hidden) || ispath(preferred_holder_type, /datum/abilityHolder/hidden)))
+		if (length(src.holders) && (!istypes(src.holders[1], list(/datum/abilityHolder/hidden, /datum/abilityHolder/mutantrace)) || ispath(preferred_holder_type, /datum/abilityHolder/hidden)))
 			holder = holders[1]
 		else
 			holder = src.addHolder(preferred_holder_type)

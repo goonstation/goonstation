@@ -14,6 +14,7 @@
 	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/networked.dmi'
+	provides_grip = TRUE
 	var/net_id = null
 	var/host_id = null //Who are we connected to? (If we have a single host)
 	var/old_host_id = null //Were we previously connected to someone?  Do we care?

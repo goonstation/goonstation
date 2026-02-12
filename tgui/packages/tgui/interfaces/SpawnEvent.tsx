@@ -27,6 +27,8 @@ interface SpawnEventData {
   allow_dnr;
   eligible_player_count;
   add_to_manifest;
+  choose_name;
+  disable_choose_name;
 }
 
 export const SpawnEvent = () => {
@@ -49,9 +51,11 @@ export const SpawnEvent = () => {
     allow_dnr,
     eligible_player_count,
     add_to_manifest,
+    choose_name,
+    disable_choose_name,
   } = data;
   return (
-    <Window title="Ghost Spawn Editor" width={500} height={360}>
+    <Window title="Ghost Spawn Editor" width={500} height={400}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -203,6 +207,18 @@ export const SpawnEvent = () => {
                 onClick={() => act('set_allow_dnr', { allow_dnr: !allow_dnr })}
               >
                 Allow DNR players
+              </Button.Checkbox>
+            </LabeledList.Item>
+            <LabeledList.Item label="Choose Name">
+              <Button.Checkbox
+                checked={choose_name}
+                disabled={disable_choose_name}
+                tooltip="Allow players who respawn to choose their own name"
+                onClick={() =>
+                  act('choose_name', { choose_name: !choose_name })
+                }
+              >
+                Respawnees choose name
               </Button.Checkbox>
             </LabeledList.Item>
             {spawn_type === 'job' && (

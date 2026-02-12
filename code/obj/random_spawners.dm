@@ -845,7 +845,8 @@
 	/obj/item/tank/pocket/oxygen,
 	/obj/item/tank/mini/oxygen,
 	/obj/item/weldingtool,
-	/obj/item/wrench)
+	/obj/item/wrench,
+	/obj/item/ammo/power_cell/aa)
 
 	one
 		amt2spawn = 1
