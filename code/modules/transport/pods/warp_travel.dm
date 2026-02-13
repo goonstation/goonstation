@@ -113,14 +113,25 @@
 	var/obj/target = null
 	/// allows a portal to warp to restricted Zs and areas
 	var/bypass_tele_block = FALSE
-	anchored = ANCHORED
-	event_handler_flags = USE_FLUID_ENTER
+	anchored = ANCHORED_ALWAYS
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP | IMMUNE_OCEAN_PUSH
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.shoes?.magnetic)
+			return
 	SPAWN(0)
 		src.teleport(M)
 		return
 	return
+
+/obj/warp_portal/Cross(atom/movable/mover)
+	if (ishuman(mover))
+		var/mob/living/carbon/human/H = mover
+		if(H.shoes?.magnetic)
+			return FALSE
+	. = ..()
 
 /obj/warp_portal/Crossed(atom/movable/AM as mob|obj)
 	..()

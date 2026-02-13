@@ -724,3 +724,42 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tea_party_dress)
 		name = "Yellow"
 		swatch_background_color = "#ffe156"
 		item_path = /obj/item/clothing/under/misc/tea_party_dress/yellow
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/hawaiian_shirt)
+/datum/clothingbooth_item/w_uniform/hawaiian_shirt
+	name = "Hawaiian Shirt"
+
+	red
+		name = "Red"
+		swatch_background_color = "#D73715"
+		swatch_foreground_color = "#EBF0F2"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/red
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#D3CB21"
+		swatch_foreground_color = "#AE4005"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/yellow
+
+	blue
+		name = "Blue"
+		swatch_background_color = "#24BDC6"
+		swatch_foreground_color = "#004981"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/tourist
+
+	pink
+		name = "Pink"
+		swatch_background_color = "#F57382"
+		swatch_foreground_color = "#D3CB21"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/pink
+
+	black
+		name = "Black"
+		swatch_background_color = "#343442"
+		swatch_foreground_color = "#3FB54F"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/black

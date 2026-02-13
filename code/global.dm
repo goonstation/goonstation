@@ -34,8 +34,6 @@ var/global
 
 	datum/datacore/data_core = null
 
-	turf/buzztile = null
-
 	atom/movable/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.

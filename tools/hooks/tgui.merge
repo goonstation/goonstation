@@ -1,0 +1,16 @@
+#!/bin/sh
+# Always prefer the current branch's bundle when merging.
+# Arguments: %P %O %A %B %L (see gitattributes docs)
+set -e
+
+output_path="$1"
+ours_path="$3"
+
+if [ -n "$ours_path" ] && [ -f "$ours_path" ]; then
+	cat "$ours_path" > "$output_path"
+else
+	# Fallback: leave file untouched but signal success.
+	:
+fi
+
+exit 0

@@ -465,15 +465,24 @@
 	OnAdd()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, src.power)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 	OnRemove()
 		. = ..()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, newval)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
@@ -1155,7 +1164,7 @@
 		if (!isturf(src.owner.loc))
 			return
 		var/turf/T = get_turf(src.owner)
-		if (!istype(T) || T.throw_unlimited)
+		if (!istype(T) || src.owner.traction == TRACTION_NONE)
 			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return

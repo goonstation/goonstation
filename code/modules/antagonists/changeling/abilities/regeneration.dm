@@ -160,7 +160,7 @@
 
 /datum/targetable/changeling/regeneration
 	name = "Speed Regeneration"
-	desc = "Regenerate your health quickly and rather loudly."
+	desc = "Regenerate your health quickly and rather loudly. <b>Doesn't work well with fire or burns</b>."
 	icon_state = "speedregen"
 	human_only = 1
 	cooldown = 900

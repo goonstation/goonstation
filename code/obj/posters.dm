@@ -425,6 +425,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 	desc = "A machine that can design and print out wanted posters."
 	density = 1
 	anchored = ANCHORED
+	object_flags = NO_GHOSTCRITTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "poster_printer"

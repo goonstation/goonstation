@@ -134,7 +134,7 @@
 	},
 /area/listeningpost/tech_room)
 "ho" = (
-/obj/storage/crate/furnacefuel,
+/obj/machinery/gravity_tether/multi_area/listening_post,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "ht" = (
@@ -603,6 +603,7 @@
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Ds" = (

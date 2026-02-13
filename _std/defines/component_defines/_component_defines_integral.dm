@@ -9,7 +9,7 @@
 
 #define SEND_COMPLEX_SIGNAL(target, sigtype, arguments...) SEND_SIGNAL(target, sigtype[2], ##arguments)
 
-#define GLOBAL_SIGNAL global_signal_holder // dummy datum that exclusively exists to hold onto global signals
+#define GLOBAL_SIGNAL (global.global_signal_holder ||= new()) // dummy datum that exclusively exists to hold onto global signals
 
 /**
 	* `target` to use for signals that are global and not tied to a single datum.

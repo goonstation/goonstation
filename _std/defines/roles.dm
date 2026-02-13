@@ -3,6 +3,7 @@
 #define ROLE_NUKEOP "nukeop"
 #define ROLE_NUKEOP_COMMANDER "nukeop_commander"
 #define ROLE_SYNDICATE_AGENT "syndicate_agent"
+#define ROLE_SYNDICATE_COMMANDER "syndicate_commander"
 #define ROLE_VAMPIRE "vampire"
 #define ROLE_GANG_LEADER "gang_leader"
 #define ROLE_WIZARD "wizard"
@@ -44,6 +45,7 @@
 #define ROLE_NUKEOP_GUNBOT "nukeop_gunbot"
 #define ROLE_ZOMBIE "zombie"
 #define ROLE_BROKEN "broken"
+#define ROLE_KUDZUPERSON "kudzu"
 
 // gimmicks
 #define ROLE_BATTLER "battler"

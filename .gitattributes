@@ -16,9 +16,9 @@
 *.dmm	merge=dmm
 *.dmi	merge=dmi
 
-## TGUI bundle merge drivers
-*.bundle.*	binary merge=tgui-merge-bundle
-*.chunk.*	binary merge=tgui-merge-bundle
+## TGUI bundle artifacts
+*.bundle.*	binary
+*.chunk.*	binary
 
 # Other text stuff
 *.txt	text eol=lf

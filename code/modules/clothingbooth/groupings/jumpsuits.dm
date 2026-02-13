@@ -364,3 +364,16 @@
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
+
+/datum/clothingbooth_grouping/hawaiian_shirt
+	name = "Hawaiian Shirt"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/red,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/yellow,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/blue,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/pink,
+		/datum/clothingbooth_item/w_uniform/hawaiian_shirt/black,
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual,
+	)

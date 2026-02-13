@@ -18,7 +18,7 @@ TYPEINFO_NEW(/obj/table)
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	mat_changename = 1
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	material_amt = 0.2
@@ -45,7 +45,8 @@ TYPEINFO_NEW(/obj/table)
 		START_TRACKING
 		if (src.has_drawer)
 			src.create_storage(/datum/storage/unholdable, spawn_contents = src.drawer_contents, slots = 13, max_wclass = W_CLASS_SMALL)
-
+			src.storage.open_sound = 'sound/effects/drawer_open.ogg'
+			src.storage.close_sound = 'sound/effects/drawer_close.ogg'
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
