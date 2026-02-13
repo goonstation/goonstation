@@ -1,3 +1,4 @@
+/// This proc returns a string able to be used with gps devices to display information about a Z-level
 /proc/get_z_info(var/turf/T)
 	. =  "Landmark: Unknown"
 	if (!T)
