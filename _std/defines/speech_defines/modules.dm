@@ -122,6 +122,7 @@
 #define SPEECH_MODIFIER_BOT_SECURITY "sec_bot"
 #define SPEECH_MODIFIER_BOT_SOVIET "soviet_bot"
 #define SPEECH_MODIFIER_BOT_XMAS "xmas_bot"
+#define SPEECH_MODIFIER_CHEMICOMPILER "chemicompiler"
 #define SPEECH_MODIFIER_CRYPTID_PLUSHIE "cryptid_plushie"
 #define SPEECH_MODIFIER_DECTALK_BOT "bot_dectalk"
 #define SPEECH_MODIFIER_DECTALK_HEAD_SURGEON "head_surgeon_dectalk"

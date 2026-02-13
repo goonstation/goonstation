@@ -140,10 +140,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
 		src.cabling += C.amount
+		C.change_stack_amount(-C.amount)
 		boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
-		if (user.contents.Find(W))
-			user.drop_item()
-		qdel(W)
 
 	//this is defined here instead of just using OPENCONTAINER because we want to be able to dump large amounts of reagents at once
 	else if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))

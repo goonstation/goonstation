@@ -2189,6 +2189,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/hawaiian_shirt)
 	icon_state = "floral-pink"
 	item_state = "floral-pink"
 
+/obj/item/clothing/under/misc/hawaiian_shirt/sec
+	name = "security hawaiian shirt"
+	icon_state = "floral-sec"
+	item_state = "floral-sec"
+
 // New chaplain stuff
 
 /obj/item/clothing/under/gimmick/weirdo

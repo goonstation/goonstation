@@ -30,16 +30,16 @@
 				hearer_loc = hearer_loc.loc
 
 		// Format the message based on thickness.
-		if (isnull(outermost) || (relative_thickness < 0) || (matched_loc && (relative_thickness == 0)))
+		if (isnull(outermost) || (relative_thickness < SOUNDPROOFING_ON) || (matched_loc && (relative_thickness == 0)))
 			message.speaker_location_text = ""
 
-		else if (relative_thickness == 0)
+		else if (relative_thickness == SOUNDPROOFING_ON)
 			message.speaker_location_text = "(on [bicon(outermost)] [outermost])"
 
-		else if (relative_thickness < 10)
+		else if (relative_thickness < SOUNDPROOFING_MUFFLED)
 			message.speaker_location_text = "(inside [bicon(outermost)] [outermost])"
 
-		else if (relative_thickness < 20)
+		else if (relative_thickness < SOUNDPROOFING_MUTE)
 			message.speaker_to_display = "muffled"
 			message.speaker_location_text = "(inside [bicon(outermost)] [outermost])"
 

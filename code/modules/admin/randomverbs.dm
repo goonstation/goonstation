@@ -338,7 +338,9 @@
 			var/path = text2path(split[i])
 			if(ispath(path, /obj/item/aiModule))
 				var/obj/item/aiModule/module = new path(ticker.ai_law_rack_manager.default_ai_rack)
-				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, TRUE, TRUE)
+				if (module.wonky)
+					module.pixel_x = rand(-2, 2)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, module.can_be_secured, module.can_be_secured)
 				if(istype(module,/obj/item/aiModule/hologram_expansion))
 					var/obj/item/aiModule/hologram_expansion/holo = module
 					ticker.ai_law_rack_manager.default_ai_rack.holo_expansions |= holo.expansion
