@@ -1,3 +1,25 @@
+/proc/get_z_info(var/turf/T)
+	. =  "Landmark: Unknown"
+	if (!T)
+		return
+	if (!istype(T))
+		T = get_turf(T)
+	if (!T)
+		return
+	if (T.z == 1)
+		. = "Landmark: [capitalize(station_or_ship())]"
+	else if (T.z == 2)
+		. =  "Landmark: Restricted"
+	else if (T.z == 3)
+		. =  "Landmark: Debris Field"
+	else if (T.z == 5)
+		#ifdef UNDERWATER_MAP
+		. =  "Landmark: Trench"
+		#else
+		. =  "Landmark: Asteroid Field"
+		#endif
+
+
 TYPEINFO(/obj/item/device/gps)
 	mats = 2
 
@@ -24,33 +46,6 @@ TYPEINFO(/obj/item/device/gps)
 	var/tracking_x = 1
 	var/tracking_y = 1
 
-	proc/get_z_info(var/turf/T)
-		. =  "Landmark: Unknown"
-		if (!T)
-			return
-		if (!istype(T))
-			T = get_turf(T)
-		if (!T)
-			return
-		if (T.z == 1)
-			. = "Landmark: [capitalize(station_or_ship())]"
-/*			if (ismap("DESTINY"))
-				. =  "Landmark: NSS Destiny"
-			else if (ismap("CLARION"))
-				. =  "Landmark: NSS Clarion"
-			else
-				. =  "Landmark: Station"
-*/
-		else if (T.z == 2)
-			. =  "Landmark: Restricted"
-		else if (T.z == 3)
-			. =  "Landmark: Debris Field"
-		else if (T.z == 5)
-			#ifdef UNDERWATER_MAP
-			. =  "Landmark: Trench"
-			#else
-			. =  "Landmark: Asteroid Field"
-			#endif
 
 	proc/get_gps_info()
 		var/list/gps_info = list()
@@ -65,7 +60,7 @@ TYPEINFO(/obj/item/device/gps)
 								  "obj_ref" = "\ref[G]",
 								  "x" = T.x,
 								  "y" = T.y,
-								  "z_info" = src.get_z_info(T),
+								  "z_info" = get_z_info(T),
 								  "distress" = !!G.distress))
 
 		return gps_info
@@ -83,7 +78,7 @@ TYPEINFO(/obj/item/device/gps)
 								  "obj_ref" = "\ref[imp]",
 								  "x" = T.x,
 								  "y" = T.y,
-								  "z_info" = src.get_z_info(T)))
+								  "z_info" = get_z_info(T)))
 
 		return imp_info
 
@@ -96,7 +91,7 @@ TYPEINFO(/obj/item/device/gps)
 								   "obj_ref" = "\ref[B]",
 								   "x" = T.x,
 								   "y" = T.y,
-								   "z_info" = src.get_z_info(T)))
+								   "z_info" = get_z_info(T)))
 
 		return warp_info
 
@@ -236,7 +231,7 @@ TYPEINFO(/obj/item/device/gps)
 		reply.data["identifier"] = "[src.serial]-[src.identifier]"
 		reply.data["x"] = "[T.x]"
 		reply.data["y"] = "[T.y]"
-		reply.data["location"] = "[src.get_z_info(T)]"
+		reply.data["location"] = "[get_z_info(T)]"
 		reply.data["distress_alert"] = "[distressAlert]"
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 
@@ -298,7 +293,7 @@ TYPEINFO(/obj/item/device/gps)
 					reply.data["identifier"] = "[src.serial]-[src.identifier]"
 					reply.data["x"] = "[T.x]"
 					reply.data["y"] = "[T.y]"
-					reply.data["location"] = "[src.get_z_info(T)]"
+					reply.data["location"] = "[get_z_info(T)]"
 					reply.data["distress"] = "[src.distress]"
 				else
 					return //COMMAND NOT RECOGNIZED
