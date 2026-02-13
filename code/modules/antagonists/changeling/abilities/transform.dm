@@ -39,8 +39,10 @@
 				FLICK("monkey2h", animation)
 				sleep(1 SECOND)
 				qdel(animation)
-				qdel(H.mutantrace)
-				H.set_mutantrace(null)
+				if (ispath(H.default_mutantrace, /datum/mutantrace/monkey))
+					H.bioHolder.AddEffect("human")
+				else
+					H.set_mutantrace(null)
 				H.transforming = 0
 				H.canmove = 1
 				H.icon = initial(H.icon)
@@ -99,9 +101,14 @@
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
 
+		if (target_name == src.holder.owner.real_name)
+			return 1
+
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] transforms!</B>"))
 		logTheThing(LOG_COMBAT, holder.owner, "transforms into [target_name] as a changeling [log_loc(holder.owner)].")
 		var/mob/living/carbon/human/C = holder.owner
 		var/datum/absorbedIdentity/face = H.absorbed_dna[target_name]
+		//re-store the current identity, it may have been modified
+		H.absorbed_dna[src.holder.owner.real_name] = new /datum/absorbedIdentity(src.holder.owner)
 		face.apply_to(C)
 		return 0

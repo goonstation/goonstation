@@ -1,13 +1,16 @@
+// If you add an IMPLANT_STATUS state, you also need to update the related TGUI interface
 #define MARIONETTE_IMPLANT_STATUS_IDLE "IDLE"
 #define MARIONETTE_IMPLANT_STATUS_ACTIVE "ACTIVE"
 #define MARIONETTE_IMPLANT_STATUS_DANGER "DANGER"
 #define MARIONETTE_IMPLANT_STATUS_WAITING "WAITING..."
 #define MARIONETTE_IMPLANT_STATUS_NO_RESPONSE "NO RESPONSE"
 #define MARIONETTE_IMPLANT_STATUS_BURNED_OUT "BURNED OUT"
+
 #define MARIONETTE_IMPLANT_ERROR_NO_TARGET "TARG_NULL"
 #define MARIONETTE_IMPLANT_ERROR_DEAD_TARGET "TARG_DEAD"
 #define MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY "BADPASS"
 #define MARIONETTE_IMPLANT_ERROR_INVALID "INVALID"
+#define MARIONETTE_IMPLANT_ERROR_UNABLE "UNABLE"
 
 /*
 CONTAINS:
@@ -1096,12 +1099,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 				src.adjust_heat(15)
 			if ("move", "step", "bump")
-				logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
-				var/step_dir = text2dir(uppertext(data))
-				if (step_dir && (step_dir in cardinal))
-					step(src.owner, step_dir)
+				if (can_act(src.owner, FALSE))
+					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+					var/step_dir = text2dir(uppertext(data))
+					if (step_dir && (step_dir in cardinal))
+						step(src.owner, step_dir)
+					else
+						fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
 				else
-					fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
+					fail_reason = MARIONETTE_IMPLANT_ERROR_UNABLE
 				src.adjust_heat(5)
 			if ("shock", "zap")
 				// Note the lack of immunity from the elec_resist mutation here here
@@ -1171,7 +1177,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	/// Adjusts `heat` by `to_heat`. Also handles potentially burning out when overheating, and alerting a linked address if we enter the danger zone.
 	proc/adjust_heat(to_heat)
-		if (src.heat > src.heat_danger_zone && prob(20) && to_heat > 0)
+		if (src.heat > src.heat_danger_zone && prob(20 + src.heat - src.heat_danger_zone) && to_heat > 0)
 			SPAWN (0.25 SECONDS) // Give the implant time to send the activation reply
 				src.burn_out()
 		src.heat = max(0, src.heat + to_heat)
@@ -2781,7 +2787,9 @@ TYPEINFO(/obj/item/gun/implanter)
 #undef MARIONETTE_IMPLANT_STATUS_WAITING
 #undef MARIONETTE_IMPLANT_STATUS_NO_RESPONSE
 #undef MARIONETTE_IMPLANT_STATUS_BURNED_OUT
+
 #undef MARIONETTE_IMPLANT_ERROR_NO_TARGET
 #undef MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 #undef MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY
 #undef MARIONETTE_IMPLANT_ERROR_INVALID
+#undef MARIONETTE_IMPLANT_ERROR_UNABLE

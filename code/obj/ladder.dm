@@ -112,13 +112,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	. = ..()
 	if(isnull(src.material))
 		return
-	var/found_negative = (src.material.getID() == "negativematter")
-	if(!found_negative)
-		for(var/datum/material/parent_mat in src.material.getParentMaterials())
-			if(parent_mat.getID() == "negativematter")
-				found_negative = TRUE
-				break
-	if(found_negative)
+	if(contains_negative_matter(src))
 		src.AddComponent(/datum/component/extradimensional_storage/ladder)
 
 /obj/ladder/proc/update_id(new_id)

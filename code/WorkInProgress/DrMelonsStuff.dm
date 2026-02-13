@@ -315,7 +315,12 @@
 					if (!current_reagent)
 						continue
 					src.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
-
+		if (HAS_ATOM_PROPERTY_FROM_SOURCE(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src))
+			if (src.reagents.total_volume < 400)
+				REMOVE_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
+		else
+			if (src.reagents.total_volume >= 400)
+				APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 	Exited(atom/movable/Obj, loc)
 		..()
 		if (Obj == src.occupant)

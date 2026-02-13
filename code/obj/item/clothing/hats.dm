@@ -82,6 +82,8 @@ proc/filter_trait_hats(var/type)
 	item_state = "bgloves"
 
 /obj/item/clothing/head/serpico
+	name = "bucket hat"
+	desc = "Weirdly tall."
 	icon_state = "serpico"
 	item_state = "serpico"
 
@@ -2561,3 +2563,142 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 		..()
 		if(ON_COOLDOWN(src, "gnome giggle",15 SECONDS)) return
 		playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 100, 1)
+
+// HIJABS
+ABSTRACT_TYPE(/obj/item/clothing/head/hijab)
+obj/item/clothing/head/hijab
+	name = "hijab"
+	desc = ""
+	icon_state = "hijab-black"
+	item_state = "hijab-black"
+	w_class = W_CLASS_TINY
+	c_flags = COVERSHAIR
+
+	black
+		name = "black hijab"
+		icon_state = "hijab-black"
+		item_state = "hijab-black"
+
+	darkblue
+		name = "dark blue hijab"
+		icon_state = "hijab-dblue"
+		item_state = "hijab-dblue"
+
+	lightblue
+		name = "light blue hijab"
+		icon_state = "hijab-lblue"
+		item_state = "hijab-lblue"
+
+	green
+		name = "green hijab"
+		icon_state = "hijab-green"
+		item_state = "hijab-green"
+
+	yellow
+		name = "yellow hijab"
+		icon_state = "hijab-yellow"
+		item_state = "hijab-yellow"
+
+	orange
+		name = "orange hijab"
+		icon_state = "hijab-orange"
+		item_state = "hijab-orange"
+
+	brown
+		name = "brown hijab"
+		icon_state = "hijab-brown"
+		item_state = "hijab-brown"
+
+	red
+		name = "red hijab"
+		icon_state = "hijab-red"
+		item_state = "hijab-red"
+
+	pink
+		name = "pink hijab"
+		icon_state = "hijab-pink"
+		item_state = "hijab-pink"
+
+	purple
+		name = "purple hijab"
+		icon_state = "hijab-purple"
+		item_state = "hijab-purple"
+
+	white
+		name = "white hijab"
+		icon_state = "hijab-white"
+		item_state = "hijab-white"
+
+	flower
+		name = "flower hijab"
+		icon_state = "hijab-flower"
+		item_state = "hijab-flower"
+
+	zigzag
+		name = "zigzag hijab"
+		icon_state = "hijab-zigzag"
+		item_state = "hijab-zigzag"
+
+//HEADSCARVES
+ABSTRACT_TYPE(/obj/item/clothing/head/headscarf)
+obj/item/clothing/head/headscarf
+	name = "headscarf"
+	desc = ""
+	icon_state = "headscarf-black"
+	item_state = "headscarf-black"
+	w_class = W_CLASS_TINY
+
+	black
+		name = "black headscarf"
+		icon_state = "headscarf-black"
+		item_state = "headscarf-black"
+
+	purple
+		name = "purple headscarf"
+		icon_state = "headscarf-purple"
+		item_state = "headscarf-purple"
+
+	darkblue
+		name = "dark blue headscarf"
+		icon_state = "headscarf-dblue"
+		item_state = "headscarf-dblue"
+
+	lightblue
+		name = "light blue headscarf"
+		icon_state = "headscarf-lblue"
+		item_state = "headscarf-lblue"
+
+	green
+		name = "green headscarf"
+		icon_state = "headscarf-green"
+		item_state = "headscarf-green"
+
+	yellow
+		name = "yellow headscarf"
+		icon_state = "headscarf-yellow"
+		item_state = "headscarf-yellow"
+
+	orange
+		name = "orange headscarf"
+		icon_state = "headscarf-orange"
+		item_state = "headscarf-orange"
+
+	brown
+		name = "brown headscarf"
+		icon_state = "headscarf-brown"
+		item_state = "headscarf-brown"
+
+	pink
+		name = "pink headscarf"
+		icon_state = "headscarf-pink"
+		item_state = "headscarf-pink"
+
+	red
+		name = "red headscarf"
+		icon_state = "headscarf-red"
+		item_state = "headscarf-red"
+
+	white
+		name = "white headscarf"
+		icon_state = "headscarf-white"
+		item_state = "headscarf-white"

@@ -314,7 +314,7 @@
 			break
 	if (isliving(C))
 		var/mob/living/L = C
-		if(isdead(L))
+		if(isdead(L) || isAI(L))
 			acceptable_cargo = 1
 	if (!acceptable_cargo)
 		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
