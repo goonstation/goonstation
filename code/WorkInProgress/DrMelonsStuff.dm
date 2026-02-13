@@ -264,6 +264,10 @@
 				src.on_reagent_change()
 				on = TRUE
 
+	proc/actually_drain()
+		src.reagents.clear_reagents()
+		src.on_reagent_change()
+
 	proc/drain_bathtub(mob/user)
 		src.add_fingerprint(user)
 		if (GET_DIST(user, src) <= 1 && !is_incapacitated(user))
@@ -274,8 +278,7 @@
 					if(!H.gloves)
 						reagents.reaction(H, TOUCH, 5)
 				playsound(src.loc, 'sound/misc/drain_glug.ogg', 70, 1)
-				src.reagents.clear_reagents()
-				src.on_reagent_change()
+				src.actually_drain()
 
 				var/count = 0
 				for (var/obj/O in src)
