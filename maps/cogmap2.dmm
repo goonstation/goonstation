@@ -67671,6 +67671,7 @@
 	dir = 4;
 	name = "grody blue chair"
 	},
+/mob/living/carbon/human/npc/monkey/krimpus,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

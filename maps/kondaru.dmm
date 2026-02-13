@@ -31865,6 +31865,10 @@
 	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
+"fIo" = (
+/mob/living/carbon/human/npc/monkey/krimpus,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "fIr" = (
 /obj/lattice{
 	dir = 8;
@@ -116193,7 +116197,7 @@ uzb
 rOU
 pJk
 pJk
-pJk
+fIo
 cpw
 cpw
 cpw

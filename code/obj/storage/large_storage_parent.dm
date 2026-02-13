@@ -846,13 +846,31 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 
 		if (M.ckey && (M.ckey == owner_ckey))
 			return
-		src.locked = TRUE
+
 		M.show_text("Is it getting... smaller in here?", "red")
-		SPAWN(5 SECONDS)
+		playsound(src.loc, 'sound/machines/hydraulic.ogg', 50, 1)
+		src.visible_message(SPAN_ALERT("[src] whirrs loudly!."))
+
+		SPAWN(5 SECONDS) // give unstunned people a chance to escape
+			if (src.open) // but also slam it shut on them if they open it and are still on the ground. owned, idiot
+				src.close()
+			src.locked = TRUE
+			src.visible_message(SPAN_ALERT("[src] locks shut and whirrs horrifyingly!"))
 			if (M in src.contents)
+				if (!isdead(M))
+					M.emote("scream")
+				M.TakeDamage("chest", 150) //let's potentially trigger a health alert if someone is about to be murdered
+				M.show_text("<b>Oh fuck this is getting CRAMPED!</b>", "red")
+				bleed(M, 100, 5)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/machines/hydraulic.ogg', 50, 1)
+
+		SPAWN(10 SECONDS)
+			if (M in src.contents)
+				playsound(src.loc, 'sound/machines/hydraulic.ogg', 50, 1)
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 				M.show_text("<b>OH JESUS CHRIST</b>", "red")
-				bleed(M, 500, 5)
+				bleed(M, 400, 5)
 				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
 				var/mob/living/carbon/cube/meatcube = M.make_cube(null, rand(10,15), get_turf(src))
 				if (src.crunches_deliciously)
@@ -867,6 +885,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 						I.set_loc(src)
 
 			src.locked = FALSE
+			src.visible_message(SPAN_ALERT("[src] unlocks."))
 
 	// Added (Convair880).
 	proc/log_me(var/mob/user, var/mob/occupant, var/action = "")
