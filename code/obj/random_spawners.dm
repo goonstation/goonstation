@@ -845,7 +845,8 @@
 	/obj/item/tank/pocket/oxygen,
 	/obj/item/tank/mini/oxygen,
 	/obj/item/weldingtool,
-	/obj/item/wrench)
+	/obj/item/wrench,
+	/obj/item/ammo/power_cell/aa)
 
 	one
 		amt2spawn = 1
@@ -1911,7 +1912,8 @@
 	icon_state = "rand_gun"
 	amt2spawn = 1
 
-	items2spawn = list(/obj/item/gun/energy/stasis,
+	items2spawn = list(/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun_jr,
 	/obj/item/gun/energy/phaser_huge)

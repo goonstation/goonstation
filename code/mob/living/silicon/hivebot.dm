@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/mob/living/silicon/hivebot, proc/admin_add_tool, proc/admin_remove_tool)
 /mob/living/silicon/hivebot
 	name = "Robot"
 	voice_name = "synthesized voice"
@@ -381,7 +382,7 @@
 			return
 
 	if ((message && isalive(src)))
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		log_emote(src, message, voluntary)
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(SPAN_EMOTE("[message]"), m_type)
@@ -1022,6 +1023,20 @@ Frequency:
 
 	on_close_viewport(datum/viewport/vp)
 		src.mainframe?.on_close_viewport(vp)
+
+/mob/living/silicon/hivebot/proc/admin_add_tool()
+	set name = "Add Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_add_tool()
+
+/mob/living/silicon/hivebot/proc/admin_remove_tool()
+	set name = "Remove Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_remove_tool()
 
 /*-----Shell-Creation---------------------------------------*/
 

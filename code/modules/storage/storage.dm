@@ -214,6 +214,9 @@
 		src.linked_item.add_fingerprint(user)
 		animate_storage_rustle(src.linked_item)
 	else
+		// don't show storages other people are wearing
+		if (ismob(src.linked_item.loc) && src.linked_item.loc != user)
+			return FALSE
 		// make sure only the user can see the storage
 		for (var/mob/M as anything in src.hud.mobs)
 			if (M != user)

@@ -57,7 +57,7 @@
 				H.ckey = H.last_client.ckey
 		if (istype(H.abilityHolder, /datum/abilityHolder/composite))
 			var/datum/abilityHolder/composite/Comp = H.abilityHolder
-			Comp.removeHolder(/datum/abilityHolder/kudzu)
+			Comp.removeHolder(/datum/abilityHolder/mutantrace/kudzu)
 		else if (H.abilityHolder)
 			H.abilityHolder.dispose()
 			H.abilityHolder = null

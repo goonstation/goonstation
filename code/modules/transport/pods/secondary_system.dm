@@ -314,7 +314,7 @@
 			break
 	if (isliving(C))
 		var/mob/living/L = C
-		if(isdead(L))
+		if(isdead(L) || isAI(L))
 			acceptable_cargo = 1
 	if (!acceptable_cargo)
 		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -644,6 +644,9 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	run_component()
 		if(settingup)
 			return
+		if(src.target.anchored == ANCHORED_ALWAYS)
+			deactivate()
+			return
 		if(target in view(src.seekrange,ship.loc))
 			step_to(target, ship, 1)
 			return
@@ -704,6 +707,9 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		return
 
 	proc/tractor_drag(obj/machinery/vehicle/holding_ship, atom/previous_loc, direction)
+		if(src.target.anchored == ANCHORED_ALWAYS)
+			deactivate()
+			return
 		if (QDELETED(src.target) || GET_DIST(holding_ship, src.target) > src.seekrange)
 			UnregisterSignal(src.ship, COMSIG_MOVABLE_MOVED)
 			return

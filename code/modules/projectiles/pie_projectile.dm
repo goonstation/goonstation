@@ -8,6 +8,7 @@
 	shot_number = 1
 	shot_sound = 'sound/effects/throw.ogg'
 	damage_type = D_SPECIAL
+	affected_by_gravity = TRUE
 
 	on_hit(atom/hit, angle, var/obj/projectile/P)
 		if (ismob(hit))

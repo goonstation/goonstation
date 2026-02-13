@@ -122,6 +122,7 @@
 
 /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	name = "fruitcake"
+	crunchy = TRUE
 	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake_fruit"
@@ -250,6 +251,7 @@
 
 	fruit_cake
 		name = "slice of fruit cake"
+		crunchy = TRUE
 		desc = "The most despicable dessert ever sliced. According to legend, a vengeful deity invented sliced bread solely to allow the distribution of these miniature monstrosities to unsuspecting crewmembers."
 		icon_state = "fruitcakeslice"
 		real_name = "fruitcake \"bread\""

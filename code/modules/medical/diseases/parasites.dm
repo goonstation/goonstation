@@ -187,7 +187,7 @@
 							larva.custom_bee_type = /obj/critter/domestic_bee/mimebee/noirbee
 						else
 							larva.custom_bee_type = /obj/critter/domestic_bee/mimebee
-					else if (human.mind?.assigned_role == "Clown")
+					else if (human.traitHolder?.hasTrait("training_clown"))
 						larva.color = "#ff0033"
 						larva.custom_bee_type = /obj/critter/domestic_bee/clownbee
 					else if (iscluwne(human))

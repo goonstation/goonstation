@@ -1092,6 +1092,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chilifries/poutine
 
+/datum/cookingrecipe/oven/maghaz
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/condiment/gravyboat = 1,
+	/obj/item/organ/brain = 1)
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/maghaz
+
 /datum/cookingrecipe/oven/bakedpotato
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/potato = 1)
 	cookbonus = 16

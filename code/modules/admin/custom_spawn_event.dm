@@ -128,8 +128,9 @@
 					mind.wipe_antagonists()
 
 			if(src.choose_name && !jobban_isbanned(new_mob, "Custom Names"))
-				var/default = new_mob.real_name
-				new_mob.choose_name(3, src.get_mob_name(), default)
+				SPAWN(0)
+					var/default = new_mob.real_name
+					new_mob.choose_name(3, src.get_mob_name(), default)
 			if (length(src.objective_text))
 				if (src.antag_role)
 					new /datum/objective/regular(src.objective_text, mind, mind.get_antagonist(src.antag_role))

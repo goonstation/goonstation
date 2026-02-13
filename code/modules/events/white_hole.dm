@@ -663,7 +663,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/clothing/head/red = 4,
 			/obj/item/clothing/head/helmet/siren = 2,
 			/obj/machinery/flasher/portable = 1,
-			/obj/item/barrier = 1,
+			/obj/item/barrier/collapsible/security = 1,
 			/mob/living/carbon/human/npc/monkey/stirstir = 1,
 			/datum/projectile/energy_bolt = 3,
 			/datum/projectile/energy_bolt/burst = 3,
@@ -901,6 +901,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				shake_camera(C.mob, 5, 16)
 
 			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)
+			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 
 		processing_items |= src
 

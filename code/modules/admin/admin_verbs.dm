@@ -302,6 +302,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_tysongib,
 		/client/proc/cmd_admin_smitegib,
 		/client/proc/cmd_admin_anvilgib,
+		/client/proc/cmd_admin_gravitygib,
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,

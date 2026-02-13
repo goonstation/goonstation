@@ -7,7 +7,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 	icon_state = "dresser"
 	icon_closed = "dresser"
 	icon_opened = "dresser-open"
-	soundproofing = 10
+	soundproofing = SOUNDPROOFING_MUFFLED
 	open_sound = 'sound/misc/coffin_open.ogg'
 	close_sound = 'sound/misc/coffin_close.ogg'
 	var/trick = 0 //enjoy some gimmicky bullfuckery
@@ -21,7 +21,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 /obj/storage/closet/wardrobe
 	name = "wardrobe"
 	desc = "It's a wardrobe closet! This one can be opened AND closed. Comes prestocked with some changes of clothes."
-	soundproofing = 10
+	soundproofing = SOUNDPROOFING_MUFFLED
 
 /* ==================== */
 /* ----- Standard ----- */

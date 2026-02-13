@@ -873,7 +873,6 @@ proc/Create_Tommyname()
 /obj/item/garrote/proc/toggle_wire_readiness()
 	set_readiness(!wire_readied)
 
-
 /obj/item/garrote/proc/set_readiness(new_readiness)
 	wire_readied = new_readiness
 	// Try to stretch the wire
@@ -893,15 +892,9 @@ proc/Create_Tommyname()
 
 /obj/item/garrote/proc/update_state()
 	if(src.chokehold && !istype(src.chokehold, /obj/item/grab/block))
-		var/obj/item/grab/garrote_grab/GG = src.chokehold
-		if(!GG.extra_deadly)
-			icon_state = "garrote2"
-			//We're choking someone out - apply a hefty slowdown
-			src.setProperty("movespeed", 6)
-		else
-			icon_state = "garrote3"
-			// We're really putting our back into it now - apply a heftier slowdown
-			src.setProperty("movespeed", 12)
+		icon_state = "garrote3"
+		//We're choking someone out - apply a hefty slowdown
+		src.setProperty("movespeed", 6)
 	else
 		icon_state = "garrote[wire_readied]"
 		//Slow us down slightly when we have the thing readied to encourage late-readying
@@ -922,7 +915,6 @@ proc/Create_Tommyname()
 
 	return (assailant_dir & target_rear) > 0 || target.lying || target.stat
 
-
 // Try to grab someone
 /obj/item/garrote/proc/attempt_grab(var/mob/living/assailant, var/mob/living/target)
 	// Can't strangle someone who doesn't exist. Or if we're already strangling someone.
@@ -939,11 +931,8 @@ proc/Create_Tommyname()
 		assailant.show_message(SPAN_COMBAT("You're too busy strangling [chokehold.affecting] to strangle someone else!"))
 		return FALSE
 
-	// TODO: check that target has their back turned
 	if(is_behind_target(assailant, target))
-		// Try to grab a dude
-		actions.start(new/datum/action/bar/private/icon/garrote_target(target, src), assailant)
-		return TRUE
+		src.try_grab(target, assailant)
 	else
 		assailant.show_message(SPAN_COMBAT("You have to be behind your target or they'll see you coming!"))
 
@@ -980,75 +969,23 @@ proc/Create_Tommyname()
 	if(src.chokehold && src.loc != src.chokehold.assailant)
 		set_readiness(0)
 
-/obj/item/garrote/proc/try_upgrade_grab()
-	if (istype(src.chokehold, /obj/item/grab/block))
-		return
-	var/obj/item/grab/garrote_grab/GG = src.chokehold
-	GG.extra_deadly = !GG.extra_deadly
-	if(GG.extra_deadly)
-		GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] tightens their grip on \the [src], it digs into [GG.affecting]'s neck!</span>")
-	else
-		GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] releases their hold on [GG.affecting] slightly!</span>")
-
-	src.update_state()
-
 // Change the size of the garrote or the posture
 /obj/item/garrote/attack_self(mob/user)
 	if(!chokehold)
 		..()
 		src.toggle_wire_readiness()
-	else
-		src.try_upgrade_grab()
 
 /obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	if (target && target == src.chokehold?.affecting)
-		src.try_upgrade_grab()
-	else
-		if (src.attempt_grab(user, target)) //if we successfully grab someone then do an attack twitch
-			attack_twitch(user)
-
-/datum/action/bar/private/icon/garrote_target
-	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "neck_over"
-	var/mob/living/target
-	var/obj/item/garrote/the_garrote
-
-	New(target, garrote)
-		src.target = target
-		the_garrote=garrote
-		..()
-
-	proc/check_conditions()
-		. = 0
-		if(BOUNDS_DIST(owner, target) > 0 || !target || !isturf(target.loc) || !owner || !the_garrote || !the_garrote.wire_readied)
-			interrupt(INTERRUPT_ALWAYS)
-			. = 1
-
-	onUpdate()
-		..()
-
-		if(check_conditions())
-			return
-
-	onStart()
-		..()
-		if(check_conditions())
-			return
-
-	onEnd()
-		..()
-		if(check_conditions())
-			return
-
-		the_garrote.try_grab(target, owner)
+	if (src.chokehold)
+		return
+	if (src.attempt_grab(user, target)) //if we successfully grab someone then do an attack twitch
+		attack_twitch(user)
 
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
 	irresistible = 1
-	var/extra_deadly = 0
+
 	check()
 		if(!assailant || !affecting)
 			qdel(src)
@@ -1062,15 +999,15 @@ proc/Create_Tommyname()
 
 	// An extra dangerous grab
 	process_kill(var/mob/living/carbon/human/H, mult = 1)
-		if(extra_deadly)
-			affecting.TakeDamage(zone="All", brute=rand(3, 7) * mult)
-			affecting.losebreath += (1 * mult)
-			if(prob(25))
-				// Wire digging into a neck.
-				take_bleeding_damage(affecting, assailant, rand(0, 20) * mult)
+		affecting.TakeDamage(zone="All", brute=rand(3, 7) * mult)
+		affecting.losebreath += (1 * mult)
+		if(prob(25))
+			// Wire digging into a neck.
+			take_bleeding_damage(affecting, assailant, rand(0, 20) * mult)
 		..()
 
 	attack_self(user)
+		return
 
 
 /proc/trigger_anti_cheat(var/mob/M, var/message, var/external_alert = 1)

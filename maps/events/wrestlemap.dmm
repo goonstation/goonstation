@@ -25,20 +25,19 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aai" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/carpet/green/fancy/narrow/west,
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/black/side,
 /area/station/engine/monitoring)
 "aaj" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grey,
 /area/station/storage/warehouse)
-"aak" = (
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
-/area/station/engine/monitoring)
 "aal" = (
-/obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
+/obj/stool/bench/yellow/auto,
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/green/fancy/narrow/west,
 /area/station/engine/monitoring)
 "aam" = (
 /obj/table/reinforced/bar/auto,
@@ -6066,6 +6065,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/breakroom)
+"cHW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor,
+/area/station/engine/monitoring)
 "cHY" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/device/radio/intercom/medical{
@@ -15218,6 +15224,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor,
 /area/station/engine/monitoring)
 "gRL" = (
@@ -24144,6 +24151,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "kNz" = (
@@ -88153,7 +88161,7 @@ hbw
 jqP
 cHM
 azm
-bYp
+cHW
 dhJ
 eVx
 yaT
@@ -89057,7 +89065,7 @@ fRz
 jgn
 hbw
 jqP
-aak
+cHM
 eXG
 qfF
 iwd

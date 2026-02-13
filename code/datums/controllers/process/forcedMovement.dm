@@ -1,26 +1,30 @@
 proc/BeginSpacePush(var/atom/movable/A)
 	if (!(A.temp_flags & SPACE_PUSHING))
-		var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-		controller.space_controller.push_list += A
-		A.temp_flags |= SPACE_PUSHING
+		var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
+		if(controller)
+			controller.space_controller.push_list += A
+			A.inertia_value = 1
+			A.temp_flags |= SPACE_PUSHING
 
 proc/EndSpacePush(var/atom/movable/A)
+	A.inertia_value = 0
 	if(ismob(A))
 		var/mob/M = A
 		M.inertia_dir = 0
-	var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-	controller.space_controller.push_list -= A
-	A.temp_flags &= ~SPACE_PUSHING
+	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
+	if(controller)
+		controller.space_controller.push_list -= A
+		A.temp_flags &= ~SPACE_PUSHING
 
 proc/BeginOceanPush(atom/movable/AM, dir = SOUTH)
-	var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-	controller.ocean_controller.addAtom(AM, dir)
+	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
+	if(controller)
+		controller.ocean_controller.addAtom(AM, dir)
 
 proc/EndOceanPush(atom/movable/AM)
-	if (!global.processScheduler) //grumble grumble race conditions
-		return
-	var/datum/controller/process/fMove/controller = global.processScheduler.getProcess("Forced movement")
-	controller.ocean_controller.removeAtom(AM)
+	var/datum/controller/process/fMove/controller = global.processScheduler?.getProcess("Forced movement")
+	if(controller)
+		controller.ocean_controller.removeAtom(AM)
 
 /// Controls forced movements
 /datum/controller/process/fMove
@@ -67,7 +71,12 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 				continue
 
 			var/turf/T = M.loc
-			if (!istype(T) || (!(istype(T, /turf/space) || T.throw_unlimited) || T != M.loc) && !M.no_gravity)
+
+			if (M.traction >= TRACTION_PARTIAL && istype(T))
+				M.inertia_value -= T.get_gforce_current()
+
+			// inside something or it has traction on the ground
+			if (!istype(T) || M.traction == TRACTION_FULL || M.inertia_value <= 0)
 				EndSpacePush(M)
 				continue
 
@@ -77,50 +86,32 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 					EndSpacePush(M)
 					continue
 
-				if (istype(T, /turf/space) || M.no_gravity)
-					var/prob_slip = 5
+				var/prob_slip = 5
 
-					if (tmob.hasStatus("handcuffed"))
-						prob_slip = 100
+				if (tmob.restrained() || !tmob.canmove)
+					prob_slip = 100
 
-					if (!tmob.canmove)
-						prob_slip = 100
+				if (M.has_grip())
+					if (!( tmob.l_hand ))
+						prob_slip -= 3
+					else if (tmob.l_hand.w_class <= W_CLASS_SMALL)
+						prob_slip -= 1
 
-					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
-							if (!( tmob.l_hand ))
-								prob_slip -= 3
-							else if (tmob.l_hand.w_class <= W_CLASS_SMALL)
-								prob_slip -= 1
+					if (!( tmob.r_hand ))
+						prob_slip -= 2
+					else if (tmob.r_hand.w_class <= W_CLASS_SMALL)
+						prob_slip -= 1
 
-							if (!( tmob.r_hand ))
-								prob_slip -= 2
-							else if (tmob.r_hand.w_class <= W_CLASS_SMALL)
-								prob_slip -= 1
-
-							break
-
-					prob_slip = round(prob_slip)
-					if (prob_slip < 5) //next to something, but they might slip off
-						if (prob(prob_slip) )
-							boutput(tmob, SPAN_NOTICE("<B>You slipped!</B>"))
-							tmob.inertia_dir = tmob.last_move
-							step(tmob, tmob.inertia_dir)
-							continue
-						else
-							EndSpacePush(M)
-							continue
-
-				else
-					var/end = 0
-					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
-							end = 1
-							break
-					if (end)
+				prob_slip = round(prob_slip)
+				if (prob_slip < 5) //next to something, but they might slip off
+					if (prob(prob_slip) )
+						boutput(tmob, SPAN_NOTICE("<B>You slipped!</B>"))
+						tmob.inertia_dir = tmob.last_move
+						step(tmob, tmob.inertia_dir)
+						continue
+					else
 						EndSpacePush(M)
 						continue
-
 
 				if (M && !( M.anchored ) && !(M.flags & NODRIFT))
 					if (! (TIME > (tmob.l_move_time + src.interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
@@ -144,6 +135,10 @@ ABSTRACT_TYPE(/datum/force_push_controller)
 
 					if(tmob.loc == pre_inertia_loc) //something stopped them from moving so cancel their inertia
 						tmob.inertia_dir = 0
+					else
+						var/list/chain = list()
+						chain.Add(src)
+						tmob.do_pulling(pre_inertia_loc, glide, chain)
 				else
 					EndSpacePush(M)
 					continue

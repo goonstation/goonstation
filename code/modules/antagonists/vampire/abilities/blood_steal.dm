@@ -144,7 +144,7 @@
 	goes_through_walls = 1
 	//goes_through_mobs = 1
 	auto_find_targets = 0
-	silentshot = 1
+	no_hit_message = 1
 	pierces = -1
 	max_range = 10
 	shot_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
