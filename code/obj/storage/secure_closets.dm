@@ -2,7 +2,7 @@
 	name = "secure locker"
 	desc = "A card-locked storage locker."
 	object_flags = NO_GHOSTCRITTER
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
 	p_class = 3
 	open_sound = 'sound/misc/locker_open.ogg'

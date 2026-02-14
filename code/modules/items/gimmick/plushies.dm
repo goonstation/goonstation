@@ -342,6 +342,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	desc = "Talk and fidget things out. It'll be okay."
 	icon_state = "stress_ball"
 	throw_range = 10
+	default_material = "synthrubber_yellow"
 
 /obj/item/toy/plush/small/stress_ball/attack_self(mob/user as mob)
 	animate_door_squeeze(src) //squish

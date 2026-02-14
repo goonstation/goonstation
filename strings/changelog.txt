@@ -1,4 +1,71 @@
 
+(t)fri feb 13 26
+(u)Smallsandman
+(p)25410
+(e)🗺|A-Mapping
+(*)Redesigned oshan labs interrogation room.
+(u)CelineTheYeen
+(p)25381
+(e)🗺|A-Mapping
+(+)The North East maintenance tunnels on Oshan have been redesigned.
+(u)Sord
+(+)The syndicate trash cart and hotdog cart can now be escaped within the first 5 seconds.
+(+)Both syndicate carts now take 10 seconds to kill and are much more loud about it
+(u)Sord
+(p)25891
+(e)🗺❗|A-Mapping, E-FUCK
+(*)Remapped a large amount of disposal/mail/transport pipes on Oshan. Bug report if any mail pipes don't correctly route mail.
+(u)QuiteLiterallyAnything
+(p)25414
+(e)🆕💅🛠️|C-Feature, C-QoL, A-Engineering
+(*)MechComp devices can now have their settings copied to others of the same type via the menu they display when hit with a multitool.
+(t)thu feb 12 26
+(u)Ikea
+(p)25757
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)The bucket hat, flat cap, poncho and shirt, blue hawaiian shirt's, and the dirty vest have been removed from the security clothing vendor. The bucket hat is now in the fish gear vendor and the rest and the max payne hawaiian shirt are in the clothing booth. There is a new sec themed Hawaiian shirt in the sec clothing vendor.
+(u)Ribbie & Telareti
+(p)25619
+(e)🎨|C-Sprites
+(*)Added three new hairs: Scorpion Braids, Scorpion Braids: Alternating, Bangs: Scorpion.
+(u)LorrMaster
+(p)25645
+(e)🆕🧱|C-Feature, A-Materials
+(+)A bunch of items that should be made of rubber now use synthrubber as their default material.
+(u)Smallsandman
+(p)25887
+(e)🗺|A-Mapping
+(*)Added krimpus to Kondaru, No longer is she on vacation (or missing).
+(u)Smallsandman
+(p)25325
+(e)🗺|A-Mapping
+(*)Moves Oshan Laboratories Evidence room.
+(u)SkinChangerDev
+(p)25725
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Added a new gimmick job, the Computer Operator, along with an associated PDA and Laptop
+(u)Chasu
+(p)25720
+(e)💅⚗|C-QoL, A-Chemistry
+(+)The ChemiCompiler will now say its text output out loud
+(u)TDHooligan
+(p)25745
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)You can now be hit by 5 razorbill bullets a second, up from 3.
+(u)TheGeneralJay
+(p)25801
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)Traitor and sleeper agent preferences have been separated.
+(+)Sleeper preferences will take priority when a sleeper event is called, but will fall back on traitor preferences if there are no available sleeper candidates.
+(t)tue feb 10 26
+(u)Cheekybrdy
+(p)25840
+(e)🗺💡|A-Mapping, A-Station-Systems
+(+)Cog1's gravity tether is now in the engineering hangar.
+(u)glowbold
+(p)25872
+(e)⚗🔬🚗|A-Chemistry, A-Science, A-Vehicles
+(*)Magnet boots are more resistant to teleportation. This is both a buff and a nerf.
 (t)sun feb 08 26
 (u)JORJ949
 (p)25795
