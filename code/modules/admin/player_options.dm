@@ -24,9 +24,6 @@
 	var/hos = (M.ckey in NT)
 	var/is_admin = M.client?.holder && ! M.client.player_mode
 
-	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
-	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
-
 	var/key_string = "no ckey"
 	var/html_key_string = "<i>no ckey</i>"
 	if (M.key)
@@ -42,7 +39,7 @@
 
 	var/list/dat = list()
 	dat += {"
-	[header_thing_chui_toggle]
+	<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>
 	<title>[M.name] ([key_string]) Options</title>
 	<style>
 		a {

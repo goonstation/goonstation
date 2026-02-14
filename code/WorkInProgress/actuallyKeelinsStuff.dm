@@ -2857,6 +2857,10 @@ Returns:
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
 			if(ismob(AM))
+				if (ishuman(AM))
+					var/mob/living/carbon/human/H = AM
+					if(H.shoes?.magnetic)
+						return
 				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
 			if (istype(AM, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
 				var/obj/critter/gunbot/drone/drone = AM

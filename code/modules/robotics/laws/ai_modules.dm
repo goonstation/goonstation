@@ -527,6 +527,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 	can_be_secured = FALSE
 	var/obj/item/reagent_containers/food/bread = null
 
+	on_inserted(slotNum, obj/machinery/lawrack/rack, mob/user)
+		. = ..()
+		if(!src.bread)
+			src.bread = new/obj/item/reagent_containers/food/snacks/breadslice(src)
+		src.lawText = "CATASTROPHIC [prob(5) ? "B" : ""]READ ERROR: [copytext(src.bread.get_average_color(TRUE), 2)]-[rand(200, 999)]"
+
 	on_removed(slotNum, obj/machinery/lawrack/rack, mob/user)
 		if (user)
 			user.u_equip(src)

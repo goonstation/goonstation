@@ -23,7 +23,7 @@ TYPEINFO(/mob/dead/target_observer)
 		START_TRACKING
 
 	disposing()
-		src.target?.listen_tree.remove_message_importing_tree(src.listen_tree)
+		src.target?.listen_tree?.remove_message_importing_tree(src.listen_tree)
 
 		//If our target is a mob we should also clean ourselves up and leave their observer list without a null in it.
 		var/mob/living/M = src.target
@@ -91,7 +91,7 @@ TYPEINFO(/mob/dead/target_observer)
 			return //No sense in doing all this if we're not changing targets
 
 		if(src.target)
-			src.target.listen_tree.remove_message_importing_tree(src.listen_tree)
+			src.target.listen_tree?.remove_message_importing_tree(src.listen_tree)
 
 			var/mob/living/M = src.target
 			src.target = null
@@ -122,6 +122,8 @@ TYPEINFO(/mob/dead/target_observer)
 				src.attach_hud(hud)
 
 		if (isobj(target))
+			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, VERB_REF(stop_observing))
+		else if (isAIeye(target))
 			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, VERB_REF(stop_observing))
 
 		src.target.ensure_listen_tree().add_message_importing_tree(src.ensure_listen_tree())

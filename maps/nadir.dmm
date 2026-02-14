@@ -49474,7 +49474,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/hop)
 "vUQ" = (
-/obj/machinery/door/airlock/pyro/glass/med,
+/obj/machinery/door/airlock/pyro/glass/med{
+	id = "nadirmed"
+	},
 /obj/mapping_helper/access/medical,
 /obj/cable{
 	icon_state = "1-2"

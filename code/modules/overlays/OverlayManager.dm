@@ -526,14 +526,14 @@
 		return ..()
 
 	resonator
-	New()
-		var/datum/overlayDefinition/sniper_scope = new()
-		sniper_scope.d_icon = 'icons/effects/overlays/sniper_scope.dmi'
-		sniper_scope.d_icon_state = "resonator"
-		sniper_scope.do_wide_fill = 0
-		definitions.Add(sniper_scope)
+		New()
+			var/datum/overlayDefinition/sniper_scope = new()
+			sniper_scope.d_icon = 'icons/effects/overlays/sniper_scope.dmi'
+			sniper_scope.d_icon_state = "resonator"
+			sniper_scope.do_wide_fill = 0
+			definitions.Add(sniper_scope)
 
-		return ..()
+			return ..()
 
 /datum/overlayComposition/telephoto
 	New()

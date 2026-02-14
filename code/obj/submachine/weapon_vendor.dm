@@ -274,6 +274,7 @@
 		materiel_stock += new/datum/materiel/fishing_gear/master_rod
 		materiel_stock += new/datum/materiel/fishing_gear/uniform
 		materiel_stock += new/datum/materiel/fishing_gear/hat
+		materiel_stock += new/datum/materiel/fishing_gear/bucket_hat
 		materiel_stock += new/datum/materiel/fishing_gear/fish_box
 		materiel_stock += new/datum/materiel/fishing_gear/fish_mount
 		..()
@@ -733,6 +734,12 @@
 	path = /obj/item/clothing/head/fish_fear_me
 	description = "The ultimate angling headwear. Comes with a new, personalised message every time."
 	cost = 15
+
+/datum/materiel/fishing_gear/bucket_hat
+	name = "Bucket hat"
+	path = /obj/item/clothing/head/serpico
+	description = "The culmination of millions of years of hat design, perfect for any sunny afternoon out on the dock."
+	cost = 5
 
 /datum/materiel/fishing_gear/fish_mount
 	name = "Fish Wall Mount"
