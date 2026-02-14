@@ -880,7 +880,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(current_reagent)
 			current_reagent.volume -= amount
 			current_reagent.check_threshold()
-			if(current_reagent.volume <= 0 && (reagents_change || update_total))
+			if(current_reagent.volume <= CHEM_EPSILON && (reagents_change || update_total))
 				del_reagent(reagent)
 
 			if (update_total)
@@ -892,7 +892,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	// removed a check if reagent_list existed here in the interest of performance
 	// if this happens again try to figure out why the fuck reagent_list would go null
-	proc/has_reagent(var/reagent, var/amount=0)
+	proc/has_reagent(var/reagent, var/amount=CHEM_EPSILON)
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
 
@@ -902,7 +902,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				return TRUE
 		return FALSE
 
-	proc/has_active_reaction(var/reaction_id, var/amount=0)
+	proc/has_active_reaction(var/reaction_id, var/amount=CHEM_EPSILON)
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if(C.id == reaction_id)
 				return C && C.result_amount >= amount
