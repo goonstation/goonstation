@@ -310,7 +310,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		var/datum/reagents/target_reagents = target.reagents
 		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
-		if(amount <= 0) return
+		amount = round(amount, CHEM_EPSILON)
+		if(amount <= CHEM_EPSILON) return
 
 		if (do_fluid_react && issimulatedturf(target))
 			var/turf/simulated/T = target
@@ -871,6 +872,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/remove_reagent(var/reagent, var/amount, var/update_total = 1, var/reagents_change = 1)
 
 		if(!isnum(amount)) return 1
+		amount = round(amount, CHEM_EPSILON)
 
 		if (istype(reagent, /datum/reagent))
 			CRASH("Attempt to remove reagent by ref")
