@@ -294,8 +294,9 @@
 
 	process()
 		if (src.on)
-			src.reagents.add_reagent(src.default_reagent, 100)
-			src.on_reagent_change()
+			if (src.default_reagent)
+				src.reagents.add_reagent(src.default_reagent, 100)
+				src.on_reagent_change()
 			if (src.reagents.is_full())
 				src.visible_message(SPAN_NOTICE("As the [src] finishes filling, the tap shuts off automatically."))
 				playsound(src.loc, 'sound/misc/pourdrink2.ogg', 60, 5)
