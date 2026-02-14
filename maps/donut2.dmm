@@ -8749,7 +8749,6 @@
 	},
 /area/station/bridge)
 "bac" = (
-/obj/item/device/infra,
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},

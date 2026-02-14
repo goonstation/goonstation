@@ -401,12 +401,17 @@
 				if(!in_interact_range(src, ui.user))
 					return
 
-				if (!ui.user.equipped() || !isweldingtool(ui.user.equipped()))
-					boutput(ui.user,"You need a welding tool for that!")
-					return
-
 				if(!law_circuits[slotNum])
 					boutput(ui.user,"There's nothing to weld!")
+					return
+
+				if(ui.user.client?.holder?.ghost_interaction)
+					src.welded[slotNum] = !src.welded[slotNum]
+					tgui_process.update_uis(src)
+					return
+
+				if (!ui.user.equipped() || !isweldingtool(ui.user.equipped()))
+					boutput(ui.user,"You need a welding tool for that!")
 					return
 
 				var/obj/item/weldingtool/equipped = ui.user.equipped()
@@ -425,12 +430,18 @@
 			if("screw")
 				if(!in_interact_range(src, ui.user))
 					return
-				if (!ui.user.equipped() || !isscrewingtool(ui.user.equipped()))
-					boutput(ui.user,"You need a screwdriver for that!")
-					return
 
 				if(!law_circuits[slotNum])
 					boutput(ui.user,"There's nothing to screw in!")
+					return
+
+				if(ui.user.client?.holder?.ghost_interaction)
+					src.screwed[slotNum] = !src.screwed[slotNum]
+					tgui_process.update_uis(src)
+					return
+
+				if (!ui.user.equipped() || !isscrewingtool(ui.user.equipped()))
+					boutput(ui.user,"You need a screwdriver for that!")
 					return
 
 				if(screwed[slotNum])
@@ -444,6 +455,11 @@
 				return
 			if("rack")
 				if(!in_interact_range(src, ui.user))
+					return
+				if(ui.user.client?.holder?.ghost_interaction && law_circuits[slotNum])
+					src.welded[slotNum] = FALSE
+					src.screwed[slotNum] = FALSE
+					src.remove_module_callback(slotNum, ui.user)
 					return
 				if (welded[slotNum])
 					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but it's welded in place!"), SPAN_ALERT("You struggle with the module but it's welded in place!"))
@@ -620,6 +636,7 @@
 		logTheThing(LOG_STATION, src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
 		update_last_laws()
 
+	//Admin ghost interaction welding/screwing skips these as it doesn't care if it can weld and doesn't want to give a visible message
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
 		if (!src.law_circuits[slot_number].can_weld(slot_number, src, user))
 			return
@@ -650,7 +667,6 @@
 			bread_module.bread = equipped
 			bread_module.highlight_color = equipped.get_average_color(TRUE)
 			bread_module.name = equipped.name
-			bread_module.lawText = "CATASTROPHIC [prob(5) ? "B" : ""]READ ERROR: [copytext(bread_module.highlight_color, 2)]-[rand(200, 999)]"
 			equipped = bread_module
 		if (!equipped.wonky)
 			equipped.pixel_x = 0
@@ -675,14 +691,17 @@
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		if(isnull(src.law_circuits[slotNum]))
 			return FALSE
-		if (!src.law_circuits[slotNum].can_remove(slotNum, src, user))
+		if (!src.law_circuits[slotNum].can_remove(slotNum, src, user) && !user?.client?.holder?.ghost_interaction)
 			return FALSE
 		//add circuit to hand
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> an AI law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		playsound(src, 'sound/machines/law_remove.ogg', 80)
-		user.visible_message(SPAN_ALERT("[user] slides a module out of the law rack"), SPAN_ALERT("You slide the module out of the rack."))
-		user.put_in_hand_or_drop(src.law_circuits[slotNum])
+		if(user?.client?.holder?.ghost_interaction) //No visible message when an admin ghost removes it
+			src.law_circuits[slotNum].set_loc(src.loc)
+		else
+			user.visible_message(SPAN_ALERT("[user] slides a module out of the law rack"), SPAN_ALERT("You slide the module out of the rack."))
+			user.put_in_hand_or_drop(src.law_circuits[slotNum])
 		if(istype(src.law_circuits[slotNum],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slotNum]
 			src.holo_expansions -= holo.expansion

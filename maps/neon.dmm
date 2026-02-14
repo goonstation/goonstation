@@ -8220,11 +8220,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"fRn" = (
-/obj/lattice,
-/obj/item/device/infra_sensor,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "fRz" = (
 /obj/decal/poster/wallsign/danger_highvolt{
 	pixel_x = -32
@@ -8897,6 +8892,10 @@
 /obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"gop" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "goO" = (
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
@@ -15264,6 +15263,7 @@
 /obj/disposalpipe/trunk/morgue{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "kUx" = (
@@ -16493,6 +16493,16 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
+"lLx" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "lLN" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
@@ -17156,10 +17166,10 @@
 	},
 /area/station/hallway/primary/north)
 "miK" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/door/airlock/pyro/medical/alt2,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/morgue,
+/obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "miS" = (
@@ -20036,7 +20046,10 @@
 	dir = 8;
 	pixel_x = 4
 	},
-/turf/simulated/floor/sanitary,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "oup" = (
 /obj/lattice{
@@ -21651,12 +21664,12 @@
 	},
 /area/station/science/lab)
 "pGV" = (
-/obj/machinery/door/airlock/pyro/medical/alt2,
-/obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment/morgue,
-/obj/mapping_helper/access/morgue,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "pHu" = (
 /obj/machinery/computer/camera_viewer,
 /obj/cable{
@@ -22544,12 +22557,6 @@
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor,
 /area/radiostation/hallway)
-"qkB" = (
-/obj/item/device/infra,
-/obj/item/device/infra,
-/obj/item/device/infra,
-/turf/simulated/floor/grime,
-/area/iss)
 "qkF" = (
 /obj/machinery/teleport/portal_generator,
 /turf/simulated/floor/grime,
@@ -24065,7 +24072,10 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/turf/simulated/floor/sanitary,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "rsk" = (
 /obj/item/device/radio/intercom{
@@ -30621,7 +30631,7 @@
 	dir = 2
 	},
 /obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/sanitary,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "vWm" = (
 /obj/machinery/computer/announcement/station/security{
@@ -31129,6 +31139,12 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"wkt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "wkz" = (
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/scorched,
@@ -32155,11 +32171,10 @@
 /turf/simulated/floor/caution/north,
 /area/diner/hangar)
 "wWX" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "wXo" = (
@@ -46659,7 +46674,7 @@ abY
 qsc
 qsc
 uxK
-fRn
+pDn
 yen
 cjx
 pDn
@@ -73321,11 +73336,11 @@ mOR
 wSs
 rVy
 aru
-jOL
-dLu
-kAL
+pGV
+mko
 miK
-xAG
+aoV
+dBJ
 xAG
 jYu
 pYf
@@ -73624,10 +73639,10 @@ mxD
 kTr
 aru
 wWX
-mko
-pGV
-aoV
-dBJ
+dLu
+kAL
+lLx
+wkt
 bLy
 kAL
 qzg
@@ -73929,7 +73944,7 @@ abF
 aFp
 kAL
 vVQ
-xAG
+gop
 qeV
 kAL
 vmH
@@ -108881,7 +108896,7 @@ iJU
 cKH
 iJU
 iJU
-qkB
+ehk
 ehk
 ehk
 qKt

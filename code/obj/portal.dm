@@ -21,11 +21,23 @@
 		animate_portal_appear(src)
 		playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 
+
 /obj/portal/Bumped(mob/M as mob|obj)
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.shoes?.magnetic)
+			return
 	SPAWN(0)
 		src.teleport(M)
 		return
 	return
+
+/obj/portal/Cross(atom/movable/mover)
+	if (ishuman(mover))
+		var/mob/living/carbon/human/H = mover
+		if(H.shoes?.magnetic)
+			return FALSE
+	. = ..()
 
 /obj/portal/Crossed(atom/movable/AM as mob|obj)
 	..()
@@ -57,8 +69,7 @@
 	..()
 
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
-	if( istype(M, /obj/effects)) //sparks don't teleport
-		return
+	return_if_overlay_or_effect(M)
 	if (M.anchored)
 		return
 	if (src.icon_state == "portal1")

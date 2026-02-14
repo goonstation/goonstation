@@ -173,8 +173,8 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	attackby(obj/item/W, mob/user)
 		if (!src.wireadded)
 			if (istype(W, /obj/item/cable_coil))
-				if (W.amount >= 2)
-					W.amount -= 2
+				var/obj/item/cable_coil/coil = W
+				if (coil.use(2))
 					src.wireadded = TRUE
 					boutput(user, SPAN_NOTICE("You attach the wire to the spear, now you just need a tip."))
 					src.help_message = "Now attach a piece of <b>scrap metal, glass, or plasmaglass</b> to complete the spear."
@@ -340,8 +340,8 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		. = ..()
 		if (!src.wireadded)
 			if (istype(W, /obj/item/cable_coil))
-				if (W.amount >= 2)
-					W.amount -= 2
+				var/obj/item/cable_coil/coil = W
+				if (coil.use(2))
 					src.wireadded = TRUE
 					boutput(user, SPAN_NOTICE("You attach the wire to the club, now you just need some extra material."))
 					src.desc = "A metal shaft attached to a handle with wire wrapped around it. You should be able to improve it further."

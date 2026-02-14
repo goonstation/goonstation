@@ -3206,6 +3206,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	ai_init()
 
 /mob/living/carbon/human/proc/on_realname_change()
+	src.bioHolder?.ownerName = src.real_name
 	src.limbs?.rename_limbs(src.real_name)
 	src.organHolder?.rename_organs(src.real_name)
 	src.UpdateName()

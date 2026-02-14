@@ -38283,7 +38283,6 @@
 /area/station/maintenance/east)
 "wNO" = (
 /obj/table/wood/auto,
-/obj/item/device/infra,
 /obj/item/handcuffs,
 /obj/item/clothing/glasses/blindfold,
 /obj/machinery/light/small/floor,
