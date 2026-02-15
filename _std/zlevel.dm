@@ -74,7 +74,11 @@ proc/init_zlevel_datums()
 			if (2)
 				name_to_set = "Restricted"
 			if (3)
+				#ifdef UNDERWATER_MAP
 				name_to_set = "Debris Field"
+				#else
+				name_to_set = "Deep Trench"
+				#endif
 			if (5)
 				#ifdef UNDERWATER_MAP
 				name_to_set =  "Trench"
