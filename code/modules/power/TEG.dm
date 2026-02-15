@@ -234,9 +234,9 @@
 						if(surplus <= 0 && fan_power_draw > apc_charge)
 							src.warning_active |= WARNING_APC_DRAINING
 
-						if(fan_power_draw * WARNING_FAIL_1MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_1MIN_ITERS)))
+						if((fan_power_draw - surplus) * WARNING_FAIL_1MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_1MIN_ITERS)))
 							src.warning_active |= WARNING_1MIN
-						else if(fan_power_draw * WARNING_FAIL_5MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_5MIN_ITERS)))
+						else if((fan_power_draw - surplus) * WARNING_FAIL_5MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_5MIN_ITERS)))
 							src.warning_active |= WARNING_5MIN
 
 		else if(pressure_delta < 0)
