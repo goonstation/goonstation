@@ -154,6 +154,28 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/quad/overfloor
 	level = OVERFLOOR
 
+#define DEFINE_PIPES_SUPPLY(PATH) \
+	PATH/supply{icon = 'icons/obj/fluidpipes/fluid_pipe_supply.dmi';};\
+	PATH/supply/overfloor{level = OVERFLOOR};
+
+#define DEFINE_PIPES_WASTE(PATH) \
+	PATH/waste{icon = 'icons/obj/fluidpipes/fluid_pipe_waste.dmi';};\
+	PATH/waste/overfloor{level = OVERFLOOR};
+
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/straight)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/straight/see_fluid)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/elbow)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/t_junction)
+DEFINE_PIPES_SUPPLY(/obj/fluid_pipe/quad)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/straight)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/straight/see_fluid)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/elbow)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/t_junction)
+DEFINE_PIPES_WASTE(/obj/fluid_pipe/quad)
+
+#undef DEFINE_PIPES_SUPPLY
+#undef DEFINE_PIPES_WASTE
+
 /obj/fluid_pipe/fluid_tank
 	name = "fluid tank"
 	desc = "A big ol' tank of fluid. Basically a big pipe."
@@ -223,8 +245,13 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 /// Accepts a pipe to merge with.
 /datum/flow_network/proc/merge_pipe(obj/fluid_pipe/fluid_pipe)
-	if(isnull(fluid_pipe.network))
+	if(QDELETED(fluid_pipe.network))
 		fluid_pipe.network = src
+		src.pipes += fluid_pipe
+		src.reagents.maximum_volume += fluid_pipe.capacity
+		if(fluid_pipe.default_reagent)
+			src.reagents.add_reagent(fluid_pipe.default_reagent, fluid_pipe.capacity)
+		
 		var/datum/component/reagent_overlay/other_target/fluid_component = fluid_pipe.GetComponent(/datum/component/reagent_overlay/other_target)
 		if(fluid_component)
 			var/states = fluid_component.reagent_overlay_states

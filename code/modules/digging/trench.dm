@@ -18,6 +18,7 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_TRENCH
 	can_replace_with_stuff = TRUE
 	layer = PLATING_LAYER
+	HELP_MESSAGE_OVERRIDE("Climb in and out of the trench by <b>sprinting</b>.")
 
 	var/old_type
 	var/can_fill = TRUE
@@ -157,6 +158,7 @@
 	// Trench prying is rather buggy and unsupported by their current code.
 	pryable = FALSE
 	layer = PLATING_LAYER
+	HELP_MESSAGE_OVERRIDE("Climb in and out of the trench by <b>sprinting</b>.")
 
 	var/old_type
 	var/can_fill = TRUE
@@ -305,6 +307,11 @@
 		else if (istype(src, /turf/unsimulated))
 			var/turf/unsimulated/floor/auto/trench/T = src.ReplaceWith(/turf/unsimulated/floor/auto/trench)
 			T.old_type = type
+		if (src.buried_storage)
+			if (src.buried_storage.my_cracks)
+				qdel(src.buried_storage.my_cracks)
+				src.buried_storage.my_cracks = null
+			src.buried_storage.dig_outs = 0
 		src.reset_terrainify_effects()
 
 	proc/reset_terrainify_effects()

@@ -58,6 +58,7 @@
 			shake_camera(C.mob, 5, 16)
 
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,0.5)
+		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 
 		sleep(lifespan / 2)
 		if (!stable)

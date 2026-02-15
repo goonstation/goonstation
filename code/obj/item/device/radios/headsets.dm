@@ -408,7 +408,6 @@
 	frequency = R_FREQ_SECURITY
 	locked_frequency = TRUE
 	speaker_range = 0
-	secure_frequencies = list("g" = R_FREQ_SECURITY)
 
 /obj/item/device/radio/commentator
 	name = "commentator radio"

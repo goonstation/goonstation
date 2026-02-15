@@ -152,6 +152,8 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/deployable_turret/riot)
 				qdel(machine)
+			if (/obj/machinery/computer/transit_shuttle/mining)
+				qdel(machine)
 
 	for_by_tcl(circuitboard, /obj/item/circuitboard)
 		qdel(circuitboard)
@@ -168,6 +170,12 @@ var/global/area/current_battle_spawn = null
 
 	for_by_tcl(obj_vehicle, /obj/vehicle)
 		qdel(obj_vehicle)
+
+	for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
+		if (tether.z == Z_LEVEL_STATION)
+			qdel(tether)
+
+	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, FALSE)
 
 	hide_weapons_everywhere(length(living_battlers))
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)

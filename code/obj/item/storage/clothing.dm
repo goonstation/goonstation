@@ -158,7 +158,7 @@
 	/obj/item/clothing/suit/det_suit,\
 	/obj/item/clothing/gloves/black,\
 	/obj/item/clothing/head/det_hat,\
-	/obj/item/device/radio/headset/security,\
+	/obj/item/device/radio/headset/detective,\
 	/obj/item/device/pda2/forensic)
 
 // Medical Equipment
@@ -267,7 +267,7 @@
 
 /obj/item/storage/box/costume
 	icon_state = "costume"
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/clothing/under)
 
 /obj/item/storage/box/costume/clown
