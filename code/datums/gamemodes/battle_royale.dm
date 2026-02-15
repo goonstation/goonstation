@@ -152,6 +152,8 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/deployable_turret/riot)
 				qdel(machine)
+			if (/obj/machinery/computer/transit_shuttle/mining)
+				qdel(machine)
 
 	for_by_tcl(circuitboard, /obj/item/circuitboard)
 		qdel(circuitboard)
