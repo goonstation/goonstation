@@ -270,11 +270,11 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
 
-/datum/say_channel/delimited/local/RegisterInput(datum/listen_module/input/bundled/registree)
+/datum/say_channel/delimited/local/RegisterInput(datum/listen_module/input/registree)
 	. = ..()
 	src.hashmap.register_hashmap_entry(registree, registree.parent_tree.listener_origin)
 
-/datum/say_channel/delimited/local/UnregisterInput(datum/listen_module/input/bundled/registered)
+/datum/say_channel/delimited/local/UnregisterInput(datum/listen_module/input/registered)
 	src.hashmap.unregister_hashmap_entry(registered)
 	. = ..()
 
