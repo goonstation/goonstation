@@ -349,20 +349,6 @@ menu "menu"
 		name = ""
 		command = ""
 		category = "&Interface"
-	elem "use_chui"
-		name = "&Use Chui (Styled Popups)"
-		command = "set-chui"
-		category = "&Interface"
-		is-checked = false
-		can-check = true
-		saved-params = "is-checked"
-	elem "use_chui_custom_frames"
-		name = "Enable Chui's custom window frames"
-		command = "set-chui-custom-frames"
-		category = "&Interface"
-		is-checked = true
-		can-check = true
-		saved-params = "is-checked"
 	elem "use_hand_ghosts"
 		name = "Show item ghosts on mouse-over"
 		command = "set-hand-ghosts"

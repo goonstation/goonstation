@@ -25867,17 +25867,6 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/research_outpost/indigo_rye)
-"clh" = (
-/obj/table/wood/auto,
-/obj/item/device/infra_sensor,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/item/device/multitool,
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/carpet/purple/fancy/edge/ne,
-/area/research_outpost/indigo_rye)
 "clp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28508,6 +28497,16 @@
 /obj/machinery/camera/directional/south,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/east)
+"dyZ" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/device/multitool,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/research_outpost/indigo_rye)
 "dzp" = (
 /obj/machinery/light{
 	dir = 4;
@@ -68871,7 +68870,7 @@ cku
 ckG
 ckS
 cjy
-clh
+dyZ
 clt
 clE
 ckM

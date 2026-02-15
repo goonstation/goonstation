@@ -83,10 +83,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		else if(istype(W, /obj/item/cable_coil))
 			var/obj/item/cable_coil/coil = W
 			if (src.ropart_get_damage_percentage(1) > 0)
-				src.ropart_mend_damage(0,20)
-				coil.use(1)
-				src.add_fingerprint(user)
-				user.visible_message("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.")
+				if (coil.use(1))
+					src.ropart_mend_damage(0,20)
+					src.add_fingerprint(user)
+					user.visible_message("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.")
 			else
 				boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 				return

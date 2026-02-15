@@ -1,4 +1,38 @@
 
+(t)sun feb 15 26
+(u)JORJ949
+(p)25878
+(e)🗺⚖🧛|A-Mapping, C-Balance, A-Gamemodes
+(*)The listening post is no longer accessless once opened. Instead the doors become syndicate access and destroyable.
+(t)sat feb 14 26
+(u)Lord_Earthfire
+(p)25896
+(e)⚖🧱|C-Balance, A-Materials
+(+)The output of agent b of molitz beta crystals was increased by around 150%.
+(u)glowbold
+(p)25822
+(e)🆕🗺⚖🔄💊🔨🚗|C-Feature, A-Mapping, C-Balance, C-Rework, A-Medical, A-Player-Actions, A-Vehicles
+(+)You can escape from being buried alive by moving and flipping.
+(t)fri feb 13 26
+(u)Smallsandman
+(p)25410
+(e)🗺|A-Mapping
+(*)Redesigned oshan labs interrogation room.
+(u)CelineTheYeen
+(p)25381
+(e)🗺|A-Mapping
+(+)The North East maintenance tunnels on Oshan have been redesigned.
+(u)Sord
+(+)The syndicate trash cart and hotdog cart can now be escaped within the first 5 seconds.
+(+)Both syndicate carts now take 10 seconds to kill and are much more loud about it
+(u)Sord
+(p)25891
+(e)🗺❗|A-Mapping, E-FUCK
+(*)Remapped a large amount of disposal/mail/transport pipes on Oshan. Bug report if any mail pipes don't correctly route mail.
+(u)QuiteLiterallyAnything
+(p)25414
+(e)🆕💅🛠️|C-Feature, C-QoL, A-Engineering
+(*)MechComp devices can now have their settings copied to others of the same type via the menu they display when hit with a multitool.
 (t)thu feb 12 26
 (u)Ikea
 (p)25757

@@ -326,7 +326,7 @@
 	var/obj/item/cable_coil/cable = I
 	if (!istype(cable))
 		return
-	if (!cable.change_stack_amount(-TETHER_WIRE_REPAIR_CABLE_COST))
+	if (!cable.use(TETHER_WIRE_REPAIR_CABLE_COST))
 		return
 
 	user.visible_message(

@@ -278,13 +278,13 @@
 	src.disconnect_viewers()
 
 /obj/machinery/camera/proc/repair_camera(mob/user, obj/item/cable_coil/cables)
-	cables?.change_stack_amount(-1)
-	src.set_camera_status(TRUE)
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
-	src.light.enable()
-	if (user)
-		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
-		add_fingerprint(user)
+	if (cables?.use(1))
+		src.set_camera_status(TRUE)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
+		src.light.enable()
+		if (user)
+			user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
+			add_fingerprint(user)
 
 /// Adds the minimap component for the camera
 /obj/machinery/camera/proc/add_to_minimap()

@@ -10,14 +10,8 @@
 				M.show_message(SPAN_ALERT("Nothing to repair on [holder]!"))
 				return 0
 			var/amt_req = round(dmg / 5) + 1
-			if (amt_req >= C.amount)
-				HealDamage(C.amount * 5)
-				holder.visible_message(SPAN_NOTICE("[M] repairs some wiring on [holder]!"))
-				M.show_message(SPAN_ALERT("Your [C] runs out!"))
-				C.amount = 0
-				qdel(C)
-			else
-				C.use(amt_req)
+			var/amount_to_repair = min(round(dmg/5 + 1), C.amount)
+			if(C.use(amount_to_repair))
 				HealDamage(amt_req * 5)
 				holder.visible_message(SPAN_NOTICE("[M] repairs some wiring on [holder]!"))
 			return 0
