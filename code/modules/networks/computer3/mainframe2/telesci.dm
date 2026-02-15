@@ -180,12 +180,13 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("coords")
 				var/datum/signal/new_signal = get_free_signal()
 				var/turf/T = get_turf(src)
+				var/datum/zlevel/current_z_level = zlevels[T.z]
 				new_signal.data["address_1"] = signal_sender
 				new_signal.data["sender"] = src.net_id
 				new_signal.data["command"] = "coords_reply"
 				new_signal.data["x"] = "[T.x]"
 				new_signal.data["y"] = "[T.y]"
-				new_signal.data["location"] = "[get_z_info(T)]"
+				new_signal.data["location"] = "["Landmark: [current_z_level.display_name]"]"
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
 			if("status")
 				var/datum/signal/new_signal = get_free_signal()
