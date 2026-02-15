@@ -155,17 +155,15 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			name = "uninsulated [conductor.getName()]-[base_name]"
 
 	proc/use(var/used)
-		if (src.amount < used)
-			return 0
-		amount -= used
-		if (src.amount <= 0)
-			if (currently_laying && usr)
-				UnregisterSignal(usr, COMSIG_MOVABLE_MOVED)
-			qdel(src)
-			return 1
-		else
-			UpdateIcon()
-			return 1
+		. = src.change_stack_amount(-used)
+		if (.)
+			if (QDELETED(src))
+				if (currently_laying && usr)
+					UnregisterSignal(usr, COMSIG_MOVABLE_MOVED)
+				return 1
+			else
+				UpdateIcon()
+				return 1
 
 	_update_stack_appearance()
 		UpdateIcon()

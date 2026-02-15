@@ -857,6 +857,11 @@ datum
 					if (isrestrictedz(mob_turf?.z))
 						boutput(M, SPAN_NOTICE("You feel strange. Almost a sense of guilt."))
 						return
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.shoes?.magnetic)
+							boutput(H, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
+							return
 					var/telerange = 10
 					elecflash(M,power=2)
 					var/list/randomturfs = new/list()

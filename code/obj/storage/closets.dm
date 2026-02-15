@@ -6,7 +6,7 @@ TYPEINFO(/obj/storage/closet)
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
 	object_flags = NO_GHOSTCRITTER
-	soundproofing = 3
+	soundproofing = SOUNDPROOFING_STORAGE
 	can_flip_bust = 1
 	p_class = 3
 	open_sound = 'sound/misc/locker_open.ogg'

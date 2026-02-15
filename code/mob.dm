@@ -9,7 +9,7 @@ TYPEINFO(/mob)
 	density = 1
 	layer = MOB_LAYER
 	animate_movement = 2
-	soundproofing = 10
+	soundproofing = SOUNDPROOFING_MUFFLED
 
 	flags = FLUID_SUBMERGE
 

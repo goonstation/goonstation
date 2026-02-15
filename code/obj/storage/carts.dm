@@ -6,7 +6,7 @@
 	icon_closed = "cart"
 	icon_opened = "cartopen"
 	icon_welded = "welded-crate"
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	throwforce = 50
 	flip_health = 4
 	can_flip_bust = 1

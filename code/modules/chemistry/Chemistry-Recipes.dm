@@ -252,7 +252,6 @@
 			if (holder)
 				holder.del_reagent("lumen")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			var/location = get_turf(holder.my_atom)
 			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
@@ -280,7 +279,6 @@
 			if (holder)
 				holder.del_reagent("pyrosium")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 /*		The smoke reaction now deletes pyrosium (thalmerite) to prevent it from spreading everywhere without blocking delayed smoke reactions - IM
@@ -328,7 +326,6 @@
 				holder.del_reagent("aranesp")
 				holder.del_reagent("booster_enzyme")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 	booster_enzyme
@@ -4221,7 +4218,8 @@
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
 				s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			else
 				var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -4230,7 +4228,8 @@
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = (created_volume / max(length(holder.covered_cache),1)))
 					s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			return
 
 	metalfoam

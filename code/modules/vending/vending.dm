@@ -2074,12 +2074,12 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			boardinstalled = TRUE
 		else if (state == "WIRESINSTALLED")
 			var/obj/item/cable_coil/targetcoil = target
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			targetcoil.use(5)
-			wiresinstalled = TRUE
-			icon_state = "standard-frame-wired"
-			desc = glassdesc
-			boutput(user, SPAN_NOTICE("You add cables to the frame."))
+			if (targetcoil.use(5))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				wiresinstalled = TRUE
+				icon_state = "standard-frame-wired"
+				desc = glassdesc
+				boutput(user, SPAN_NOTICE("You add cables to the frame."))
 		else if (state == "GLASSINSTALLED")
 			var/obj/item/sheet/glass/S = target
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)

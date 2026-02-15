@@ -312,6 +312,8 @@
 						access_researchfoyer, access_artlab, access_telesci, access_robotdepot, access_fine_small)
 		if("Hall Monitor")
 			return list(access_ticket)
+		if("Computer Operator")
+			return list(access_maint_tunnels, access_tech_storage, access_dwaine_superuser, access_research, access_researchfoyer, access_robotdepot)
 		if("Admin")
 			return access_all_actually
 		else
