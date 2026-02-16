@@ -2,7 +2,7 @@
 	name = "secure locker"
 	desc = "A card-locked storage locker."
 	object_flags = NO_GHOSTCRITTER
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
 	p_class = 3
 	open_sound = 'sound/misc/locker_open.ogg'
@@ -818,7 +818,7 @@
 	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/backpack/engineering,
-	/obj/item/breaching_charge/mining/light = 3,
+	/obj/item/storage/breach_pouch/filled,
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,

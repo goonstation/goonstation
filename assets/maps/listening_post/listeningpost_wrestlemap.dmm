@@ -378,14 +378,11 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/syndicate_teleporter)
 "ww" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
-	id = "Sleeper_Access";
-	name = "Listening Post"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
 "wU" = (

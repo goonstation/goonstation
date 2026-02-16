@@ -65,7 +65,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		if(istype(item, /obj/item/tank) || istype(item, /obj/item/clothing/head/butt))
 			src.attach_tank(user)
-		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/infra) || istype(item, /obj/item/device/prox_sensor))
+		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/prox_sensor))
 			if(attached_device)
 				boutput(user, SPAN_ALERT("There is already an device attached to the valve, remove it first!"))
 				return
@@ -96,11 +96,9 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				return
 
 			var/obj/item/cable_coil/coil = item
-			if (coil.amount < 2)
+			if(!coil.use(2))
 				boutput(user, SPAN_ALERT("You do not have enough cable to produce two straps! (2 units required)"))
 				return
-			coil.use(2)
-
 			c_flags |= ONBACK
 			boutput(user, SPAN_NOTICE("You attach two loops of [item] to the transfer valve!"))
 			UpdateIcon()

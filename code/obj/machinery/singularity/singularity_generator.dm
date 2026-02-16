@@ -27,6 +27,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 	var/last_ckey = src.get_last_ckey()
 	logTheThing(LOG_BOMBING, last_ckey, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [replace_if_false(last_ckey, "None")]")
 	message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(last_ckey)]")
+	message_ghosts("A [src.name] was activated, spawning a singularity at [log_loc(src, ghostjump=TRUE)].")
 
 	var/turf/T = get_turf(src)
 	if(isrestrictedz(T?.z))

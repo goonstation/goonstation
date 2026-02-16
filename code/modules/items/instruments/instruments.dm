@@ -641,6 +641,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 /obj/item/instrument/bikehorn/blue
 	name = "blue bike horn"
 	icon_state = "bike_horn_blue"
+	item_state = "bike_horn_blue"
 
 /* -------------------- Harmonica -------------------- */
 
