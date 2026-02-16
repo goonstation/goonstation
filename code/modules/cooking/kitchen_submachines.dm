@@ -893,6 +893,8 @@ TYPEINFO(/obj/submachine/chef_oven)
 				if (src.emagged)
 					F.from_emagged_oven = 1
 				F.set_loc(src.loc)
+				if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
+					src.food_crime(usr, F)
 
 		for(var/item in output)
 			src.normal_cooking(item, bonus, recipebonus, cook_amt)
@@ -904,6 +906,9 @@ TYPEINFO(/obj/submachine/chef_oven)
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 		for (var/atom/movable/I in src.contents)
 			qdel(I)
+
+	proc/food_crime(mob/user, obj/item/reagent_containers/food/food)
+		game_stats.Increment("food_crimes")
 
 	//helper method for normal cooking
 	proc/normal_cooking(var/atom/item, var/bonus, var/recipebonus, var/cook_amt)

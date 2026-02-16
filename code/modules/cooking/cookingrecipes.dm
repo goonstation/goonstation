@@ -31,6 +31,7 @@ ABSTRACT_TYPE(/datum/recipe/burger)
 			var/obj/item/reagent_containers/food/snacks/burger/burgle/burgle = new()
 			possibly_meat.transfer_all_reagents(burgle)
 			output_list += burgle
+			game_stats.Increment("food_crimes")
 			return TRUE
 		else
 			return ..()
