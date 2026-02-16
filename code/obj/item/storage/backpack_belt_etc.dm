@@ -721,6 +721,7 @@
 
 /obj/item/storage/fanny/funny/blue
 	icon_state = "funny-blue"
+	item_state = "funny-blue"
 
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
