@@ -719,6 +719,9 @@
 	/obj/item/storage/box/balloonbox)
 	slots = 7
 
+/obj/item/storage/fanny/funny/blue
+	icon_state = "funny-blue"
+
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
 	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
