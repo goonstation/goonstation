@@ -310,7 +310,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		var/datum/reagents/target_reagents = target.reagents
 		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
-		if(amount <= 0) return
+		amount = round(amount, CHEM_EPSILON)
+		if(amount <= CHEM_EPSILON) return
 
 		if (do_fluid_react && issimulatedturf(target))
 			var/turf/simulated/T = target
@@ -871,6 +872,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/remove_reagent(var/reagent, var/amount, var/update_total = 1, var/reagents_change = 1)
 
 		if(!isnum(amount)) return 1
+		amount = round(amount, CHEM_EPSILON)
 
 		if (istype(reagent, /datum/reagent))
 			CRASH("Attempt to remove reagent by ref")
@@ -880,7 +882,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(current_reagent)
 			current_reagent.volume -= amount
 			current_reagent.check_threshold()
-			if(current_reagent.volume <= 0 && (reagents_change || update_total))
+			if(current_reagent.volume <= CHEM_EPSILON && (reagents_change || update_total))
 				del_reagent(reagent)
 
 			if (update_total)
@@ -892,7 +894,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	// removed a check if reagent_list existed here in the interest of performance
 	// if this happens again try to figure out why the fuck reagent_list would go null
-	proc/has_reagent(var/reagent, var/amount=0)
+	proc/has_reagent(var/reagent, var/amount=CHEM_EPSILON)
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
 
@@ -902,7 +904,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				return TRUE
 		return FALSE
 
-	proc/has_active_reaction(var/reaction_id, var/amount=0)
+	proc/has_active_reaction(var/reaction_id, var/amount=CHEM_EPSILON)
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if(C.id == reaction_id)
 				return C && C.result_amount >= amount

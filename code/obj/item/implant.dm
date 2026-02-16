@@ -2176,6 +2176,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.activated = FALSE
 		..()
 
+/obj/item/implant/confetti
+	var/datum/component/my_comp = null
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		src.my_comp = M.AddComponent(/datum/component/death_confetti)
+
+	on_remove(mob/M)
+		. = ..()
+		src.my_comp?.RemoveComponent()
+		src.my_comp = null
+
 /* ============================================================= */
 /* ------------------------- Implanter ------------------------- */
 /* ============================================================= */

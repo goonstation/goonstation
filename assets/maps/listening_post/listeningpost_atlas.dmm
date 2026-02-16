@@ -531,14 +531,11 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "uP" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Weather Satellite"
-	},
 /obj/cable/black{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"

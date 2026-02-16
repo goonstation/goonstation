@@ -24,6 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 	if(isnull(max_radius))
 		return
 
+	message_ghosts("A [src.name] was activated, spawning a singularity at [log_loc(src, ghostjump=TRUE)].")
 	logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 	message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
 
