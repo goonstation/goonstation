@@ -564,13 +564,11 @@
 	//grab the ID card from an access implant if this is one
 	var/modify_only = 0
 	if (istype(I,/obj/item/implantcase/access) || istype(I,/obj/item/implant/access))
-		if (src.modify)
-			..()
-			return
+		if (!src.modify)
+			I = get_card_from(I)
 		else if (!src.scan)
 			boutput(user, SPAN_NOTICE("[I] will not work in the authentication card slot."))
 			return
-		I = get_card_from(I)
 		modify_only = 1
 
 	if (istype(I, /obj/item/card/id))
@@ -579,7 +577,7 @@
 			user.drop_item()
 			I.set_loc(src)
 			src.scan = I
-		else
+		else if (!src.modify)
 			boutput(user, SPAN_NOTICE("You insert [src.eject ? src.eject : I] into the target card slot."))
 			user.drop_item()
 			if (src.eject)
