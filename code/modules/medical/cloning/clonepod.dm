@@ -14,6 +14,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/carbon/human/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -55,7 +56,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	///Total meat used to grow the current clone
 	var/meat_used
 
-	var/static/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=1,"bloodc"=0.5)
+	var/static/list/clonepod_accepted_reagents = list("blood"=0.25,"bloodc"=0.25,"synthflesh"=2,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=2)
 
 	// Copied from manufacturer.dm, except -- get this -- used for functioning, not MALfunctioning. wow.
 	var/static/list/sounds_function = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
@@ -63,7 +64,12 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	var/perfect_clone = FALSE		//if TRUE, then clones always keep normal name and receive no health debuffs
 
-	HELP_MESSAGE_OVERRIDE("Transfer 10 units of reagents by <b>clicking</b> with a <b>beaker</b> in-hand.<br>Transfer reagents over time by <b>clicking</b> with an <b>IV bag</b> in-hand.<br>Access extra functions by <b>clicking</b> with an <b>open hand</b>.")
+	HELP_MESSAGE_OVERRIDE({"The clone pod will convert inserted blood, synthflesh, and meat slurry into biomatter.
+	Convert 10 units of reagents to biomatter by <b>clicking</b> with a <b>beaker in-hand</b>.
+	Convert all reagents in a beaker to biomatter by <b>click-dragging</b> from container to the clone pod.
+	Transfer reagents over time to uncompleted clones by <b>clicking</b> with an <b>IV bag in-hand</b>.
+	Access extra functions by <b>clicking</b> with an <b>open hand</b>.
+	"})
 
 	New()
 		..()
@@ -196,14 +202,15 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (src.drip)
 			if (src.drip.reagents.total_volume > 0)
-				. += "<br>\The [src.drip] is slowly draining into the pod."
+				. += "<br>\The [src.drip] is installed."
 			else
 				. += "<br>\The [src.drip] is empty."
 		else
 			. += "<br>There is no internal IV drip hooked up."
 
+
 	is_open_container()
-		return 2
+		return FALSE
 
 	update_icon()
 		if (src.portable) // no need here
@@ -473,8 +480,6 @@ TYPEINFO(/obj/machinery/clonepod)
 				power_usage = 200
 			return ..()
 
-		src.drip?.reagents.trans_to(src, src.drip.amount_per_transfer_from_this, mult)
-
 		if (src.occupant && src.occupant.loc == src)
 			// If we have a body inside the pod right now...
 
@@ -551,6 +556,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 				if (src.occupant.reagents.get_reagent_amount("mannitol") < 6)
 					src.occupant.reagents.add_reagent("mannitol", 2 * mult)
+
+				// Let doctors slap an IV bag in to "help" clones get healed quickly.
+				src.drip?.reagents.trans_to(src.occupant, src.drip.amount_per_transfer_from_this, mult)
 
 				//Also heal some oxy ourselves because epinephrine is so bad at preventing it!!
 				src.occupant.take_oxygen_deprivation(-10 * mult) // cogwerks: speeding this up too
@@ -756,10 +764,6 @@ TYPEINFO(/obj/machinery/clonepod)
 				if (theReagent)
 					src.meat_level = min(src.meat_level + (theReagent.volume * clonepod_accepted_reagents[reagent_id]), MAXIMUM_MEAT_LEVEL)
 					src.reagents.del_reagent(reagent_id)
-
-		if (src.occupant)
-			src.reagents.reaction(src.occupant, INGEST, 1000)
-			src.reagents.trans_to(src.occupant, 1000)
 
 	//Put messages in the connected computer's temp var for display.
 	proc/connected_message(var/message, status)

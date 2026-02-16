@@ -21,7 +21,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	var/process_per_tick = 0	// how much shit it will output per tick
 	var/mob/living/occupant = null
 	var/list/meats = list() //Meat that we want to reclaim.
-	var/max_meat = 10 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var.
+	var/max_meat = 5 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var.
 	var/grind_level = GRIND_NOTHING
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
 	HELP_MESSAGE_OVERRIDE("Add organs, limbs, and meat to process by <b>clicking</b> with the <b>item</b> in-hand.<br>Turn the reclaimer on by <b>clicking</b> with an <b>open hand</b>.")
@@ -43,6 +43,8 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		. = ..()
 		if (src.upgraded)
 			. += "This one has an efficiency upgrade installed."
+		if (src.process_timer)
+			. += "<br>It is currently processing its contents into biomatter."
 		if (istrainedsyndie(user))
 			if (src.grind_level == GRIND_NOTHING)
 				. += "<br>" + SPAN_ALERT("It looks like <b>all safeties are enabled</b>, for now...")
@@ -129,6 +131,8 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			// give an equal amount of reagents to each pod that happens to be around
 			var/volume_to_share = (src.reagents.total_volume / max(pods.len, 1))
 			for (var/obj/machinery/clonepod/pod in src.pods)
+				if (pod.meat_level == MAXIMUM_MEAT_LEVEL)
+					continue
 				src.reagents.trans_to(pod, volume_to_share)
 				DEBUG_MESSAGE("[src].reagents.trans_to([pod] [log_loc(pod)], [src.reagents.total_volume]/[max(pods.len, 1)])")
 
@@ -258,24 +262,35 @@ TYPEINFO(/obj/machinery/clonegrinder)
 				src.meats -= theMeat
 				if (theMeat.reagents)
 					theMeat.reagents.trans_to(src, src.upgraded ? 10 : 5)
-
+				if (istype(theMeat, /obj/item/parts/human_parts))
+					src.reagents.add_reagent("meat_slurry", 5)
+					src.reagents.add_reagent("synthflesh", 5)
+				else if (istype(theMeat, /obj/item/clothing/head/butt))
+					src.reagents.add_reagent("meat_slurry", 5)
+					src.reagents.add_reagent("beff", 5)
+				else if (istype(theMeat, /obj/item/organ))
+					if (prob(50))
+						src.reagents.add_reagent("meat_slurry", 10)
+					else
+						src.reagents.add_reagent("synthflesh", 10)
 				qdel(theMeat)
-				// Each bit of meat adds 2 units
 				process_total += 4
 
 			src.meats.len = 0
 
-		// process_timer = total * 0.8 or 0.4 (rounded up) - slightly faster than before
+		// process_timer = total * 0.75 or 0.25 (rounded up) - slightly faster than before, even faster now
 		// normal:
-		// 8 * 2 (human) =    16 units
-		// 16 * 0.8 = 12.8 -> 13 ticks
-		// 16 / 13 =           1.2307 per tick
+		// 8 * 2 (human)	= 16 units
+		// 4 * 5 (meat)		= 20 units
+		// 20 * 0.75		= 15 ticks
+		// 20 / 15 			= 1.33 per tick
 		// upgraded:
-		// 8 * 2 =            16 units
-		// 16 * 0.4 = 6.4 ->   7 ticks
-		// 16 / 7 =            2.2857 per tick
+		// 8 * 2 (human)	= 16 units
+		// 4 * 5 (meat)		= 20 units
+		// 20 * 0.25		= 5 ticks
+		// 20 / 5			= 4 per tick
 		// end result is that they produce the same amounts, the upgrade just does it faster
-		src.process_timer = ceil(process_total * (src.upgraded ? 0.5 : 1))
+		src.process_timer = ceil(process_total * (src.upgraded ? 0.25 : 0.75))
 		src.process_per_tick = process_total / process_timer
 
 		src.UpdateIcon(1)
