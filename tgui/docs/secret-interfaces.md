@@ -2,7 +2,7 @@
 
 Secret React UIs get stored in `+secret` and are mirrored into the main workspace for builds. Each secret UI compiles into an id-named bundle and is delivered to clients by the server.
 
-Keep in mind that once a player opens a UI, they can dive into the minified React code.
+Keep in mind that once a player opens a UI, they can dive into the minified React code. There is currently no obsfucation.
 
 ## Core idea
 - Secret interfaces live in `+secret/tgui/interfaces/`.
@@ -47,7 +47,7 @@ Because deletions only propagate in one-way sync mode, remove the interface in b
 3) Run the build (`tgui/bin/tgui` or `yarn run tgui:build`). The mapping is rewritten and the secret bundle is stripped from the public output and mirrored cleanup happens in `+secret/browserassets/src/tgui/`.
 
 ## Troubleshooting
-- You can edit either copy: `+secret/tgui/interfaces/` or the mirrored `tgui/packages/tgui/interfaces-secret/`. If both sides have changes, merge mode copies the newer mtime of each interface over the older one (no conflict prompts).
+- You can edit either copy: `+secret/tgui/interfaces/` or the mirrored `tgui/packages/tgui/interfaces-secret/`. If both sides have changes, merge mode copies the one with the newer modified time of each interface over the older one (no conflict prompts).
 - If it doesn’t load: confirm the bundle exists in `+secret/browserassets/src/tgui/`, the mapping has an id for your interface name, and the browser console isn’t showing a failed script load.
 
 ## Notes
