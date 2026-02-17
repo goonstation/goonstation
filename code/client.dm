@@ -345,10 +345,11 @@
 
 			#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
-				changes()
-
-			if (isadmin(src) && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
-				admin_changes()
+				if (!tgui_process)
+					SPAWN(3 SECONDS)
+						changes()
+				else
+					changes()
 			#endif
 		else
 			if (noir)

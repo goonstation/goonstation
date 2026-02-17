@@ -30,10 +30,7 @@
 	makepowernets()
 
 	Z_LOG_DEBUG("World/New", "Setting up changelogs...")
-	legacy_changelog = new /datum/changelog()
-	changelog = new /datum/changelog(TRUE)
-	legacy_admin_changelog = new /datum/admin_changelog()
-	admin_changelog = new /datum/admin_changelog(TRUE)
+	changelog = new /datum/changelog
 
 #ifdef DATALOGGER
 	game_stats = new

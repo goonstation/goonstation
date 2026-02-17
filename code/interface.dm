@@ -3,35 +3,13 @@
 		changes()
 			set category = "Commands"
 			set name = "Changelog"
-			set desc = "Show or hide the changelog"
-			if (winexists(src, "changes") && winget(src, "changes", "is-visible") == "true")
-				src.Browse(null, "window=changes")
+			set desc = "Show the changelog"
+
+			if (!tgui_process)
+				boutput(src, SPAN_ALERT("Changelog will be ready to view in a few seconds."))
+				return
 			else
-				var/changelogHtml
-				var/data
-				if (!cdn)
-					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
-				if (byond_version >= 516)
-					changelogHtml = grabResource("html/changelog.html")
-					data = changelog.html
-				else
-					changelogHtml = grabResource("html/legacy_changelog.html")
-					data = legacy_changelog.html
-				var/fontcssdata = {"
-				<style type="text/css">
-				@font-face {
-					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
-					text-rendering: optimizeLegibility;
-				}
-				</style>
-				"}
-				changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
-				changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-				if (byond_version >= 516 && global.tgui_process)
-					message_modal(src, changelogHtml, "Changelog", width = 500, height = 650, sanitize = FALSE)
-				else
-					src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
+				global.changelog.ui_interact(src.mob)
 				src.changes = 1
 
 		bugreport()
