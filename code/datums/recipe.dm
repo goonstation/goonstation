@@ -1,18 +1,19 @@
 /**
- * A generic structure for recipes, which interfaces with a list of atoms and matches them against an internal list of ingredients. Also responsible
- * for instantiating the output object.
+ * A generic structure for recipes, which interfaces with a list of atoms and matches them against an internal list of types representing ingredients.
+ * Also responsible for instantiating the appropriate output object.
  *
- * the most performance-critical responsibility of the recipe is the pattern-matching, due to its usage in loops. Everything else can/should be
+ * The most performance-critical responsibility of the recipe is the pattern-matching, due to its usage in loops. Everything else can/should be
  * abstracted away as needed.
  *
- * For example, you might want to have a recipe that works with stacks of items. In that case, it would be unwise to add the logic into the base
- * can_cook_recipe proc, since that would bloat the performance for every other recipe. It would be encouraged to create a recipe subclass for that
- * override behaviour. On the other hand, if you instead wanted a group of recipes that had some shared behaviour such as all results being turned
- * blue after instantiation, it would be better to implement that in a cooking_instructions child or some other abstracted subsystem, so the behaviour
+ * For example, you might want to have a recipe that works with the contents of reagent containers. In that case, it would be unwise to add the logic
+ * into the base can_cook_recipe proc, since that would bloat the performance for every other recipe. It would be encouraged to create a recipe
+ * subclass and then override to account for that behaviour.
+ * On the other hand, if you instead wanted a group of recipes that had some shared behaviour such as all results being turned blue after
+ * instantiation, it would be better to implement that in a cooking_instructions child or some other abstracted subsystem, so the behaviour
  * can be shared regardless of the pattern of ingredients.
  *
- * Other examples of patterns that would warrant a non-unique recipe subclass would be handling items with complex components, states, or working with
- * reagent containers when their contents matter to the recipe.
+ * Other examples of patterns that would warrant a non-unique recipe subclass would be handling items with complex components, states, or relevant
+ * data.
  *
  * The basic usage of this is to first find a recipe that matches the list of ingredients you have, with can_cook_recipe(), and then use the same
  * list to instantiate the output using get_output(). For machine-specific interactions, implement a bespoke recipe_instruction for that machine.
@@ -99,7 +100,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			return
 		src.account_for_tools(input_list, output_list)
 
-	/// Detects any tools present in the input list and adds them to the output list
+	/// Detects any tools present in the input list and adds them to the output list.
 	proc/account_for_tools(list/input, list/output)
 		PROTECTED_PROC(TRUE)
 		if (!tools)
@@ -179,7 +180,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			if (extras)
 				extras += unused
 
-	/// returns whether the given type exists within the recipe's ingredients list
+	/// Returns whether the given type exists within the recipe's ingredients list
 	proc/type_in_ingredients(var/atom/type)
 		return istypes(type, src.ingredients)
 
@@ -205,7 +206,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			out += list(item)
 		return out
 
-	/// Returns an associative list representing the displayable data for the mascot, the single atom that represents the output for this recipe
+	/// Returns an associative list representing the displayable data for the mascot, the single atom that represents the output for this recipe.
 	proc/get_mascot_data(list/item_list)
 		var/atom/mascot = src.get_mascot(item_list)
 		var/amount = islist(src.output) ? src.output[mascot] : 1
@@ -217,7 +218,7 @@ ABSTRACT_TYPE(/datum/recipe)
 		)
 		return item
 
-	/// Returns a single atom path that represents the output for this recipe. By default this will be the first-found path in the ingredient list.
+	/// Returns a single atom path that represents the output for this recipe. By default this will be the first-found path in the output list.
 	/// Although note that associated lists are not necessarily ordered the same as they're added.
 	proc/get_mascot(list/item_list)
 		var/recipe_output
