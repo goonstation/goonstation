@@ -4790,38 +4790,28 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		src.add_dialog(user)
-		add_fingerprint(user)
+		src.ui_interact(user)
 
-		var/dat = "<center><h4>Tour Monitor</h4></center>"
-		if (!linked_bot)
-			dat += "<font color=red>No tour guide detected!</font>"
-		else
-			dat += "<b>Guide:</b> <center>\[[linked_bot.name]]</center><br>"
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "TourConsole")
+			ui.open()
 
-			if ((linked_bot in orange(1, src)) && linked_bot.charge_dock)
-				dat += "<center><a href='byond://?src=\ref[src];start_tour=1'>Begin Tour</a></center>"
+	ui_data(mob/user)
+		var/area/guideArea = get_area(src.linked_bot)
+		. = list("tour_guide" = src.linked_bot?.name,
+				 "tour_ready" = src.linked_bot.charge_dock && (src.linked_bot in orange(1, src)),
+				 "guide_location" = istype(guideArea) ? guideArea.name : null
+				)
 
-			else
-				var/area/guideArea = get_area(linked_bot)
-				dat += "<b>Current Location:</b> [istype(guideArea) ? guideArea.name : "<font color=red>Unknown</font>"]"
-
-
-		user.Browse("<head><title>Tour Monitor</title></head>[dat]", "window=tourconsole;size=302x245")
-		onclose(user, "tourconsole")
-		return
-
-	Topic(href, href_list)
-		if(..())
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
 			return
-		src.add_dialog(usr)
-		src.add_fingerprint(usr)
-
-		if (href_list["start_tour"] && linked_bot && (linked_bot in orange(1, src)) && linked_bot.charge_dock)
-			linked_bot.charge_dock.eject_robot()
-
-		src.updateUsrDialog()
-		return
+		switch (action)
+			if ("begin_tour")
+				src.linked_bot.charge_dock.eject_robot()
 
 TYPEINFO(/obj/machinery/bot/guardbot/old)
 	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_OLD)
