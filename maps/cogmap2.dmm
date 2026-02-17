@@ -45740,23 +45740,23 @@
 "cSn" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cSo" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cSp" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cSq" = (
 /obj/machinery/vending/medical,
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cSr" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -46496,7 +46496,7 @@
 "cVk" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cVm" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -47153,7 +47153,7 @@
 /obj/item/device/reagentscanner,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cXH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47163,7 +47163,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cXJ" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
@@ -47467,7 +47467,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cYR" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
@@ -47479,7 +47479,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cYS" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -47695,19 +47695,19 @@
 	pixel_x = -4
 	},
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cZI" = (
 /obj/landmark/start/job/medical_doctor,
 /obj/stool/chair/office,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cZJ" = (
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cZK" = (
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "cZL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47990,7 +47990,7 @@
 	},
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "daI" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/toxin,
@@ -48004,12 +48004,12 @@
 /obj/random_item_spawner/medicine,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "daJ" = (
 /obj/machinery/vending/player/chemicals,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "daK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52068,7 +52068,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "efv" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
@@ -52123,7 +52123,7 @@
 /obj/machinery/light/incandescent,
 /obj/storage/cart/medcart/crash,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "eik" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -52628,7 +52628,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "eMD" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light{
@@ -55044,7 +55044,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "gXp" = (
 /obj/cable/blue{
 	icon_state = "4-8"
@@ -55167,7 +55167,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "hdr" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -57355,15 +57355,6 @@
 /area/station/mining/staff_room)
 "iOp" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/power/apc{
-	areastring = "Pharmacy";
-	dir = 1;
-	name = "Pharmacy APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "iOr" = (
@@ -58873,15 +58864,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
-"jVt" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/solar/south)
 "jVv" = (
 /obj/machinery/firealarm/directional/north,
 /obj/stool/chair/couch{
@@ -60535,7 +60517,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "lnj" = (
 /turf/unsimulated/floor/shuttle/green{
 	dir = 4
@@ -62042,7 +62024,7 @@
 	},
 /obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "mCB" = (
 /obj/mesh/catwalk{
 	dir = 6
@@ -62773,7 +62755,7 @@
 "njd" = (
 /obj/storage/cart/medcart/crash,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "njn" = (
 /obj/machinery/firealarm/directional/east,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -67265,7 +67247,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "ram" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -68091,7 +68073,7 @@
 	},
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "rSI" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 10
@@ -68216,7 +68198,7 @@
 "rXL" = (
 /obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "rXW" = (
 /obj/strip_door,
 /obj/disposalpipe/segment{
@@ -68991,7 +68973,7 @@
 "sEq" = (
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "sEs" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -69417,7 +69399,7 @@
 /obj/item/reagent_containers/glass/beaker/large/brute,
 /obj/item/reagent_containers/dropper,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "sVT" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -71970,7 +71952,7 @@
 /obj/machinery/light_switch/west,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "vyj" = (
 /obj/table/auto,
 /obj/item/plate,
@@ -74814,13 +74796,6 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"ydT" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/pharmacy)
 "yen" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -74920,7 +74895,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue/checker,
-/area/station/medical/medbay/pharmacy)
+/area/station/medical/medbay)
 "yhA" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock"
@@ -106060,7 +106035,7 @@ cXG
 cYQ
 cZH
 sVP
-cGJ
+cHZ
 dac
 dch
 ddh
@@ -106362,7 +106337,7 @@ hdq
 cVk
 cZI
 daH
-cGJ
+cHZ
 dad
 dcA
 dcg
@@ -106664,7 +106639,7 @@ cXH
 rQO
 cZJ
 daI
-cGJ
+cHZ
 daq
 dcB
 deh
@@ -106966,9 +106941,9 @@ gXa
 eMz
 sEq
 daJ
-cGJ
+cHZ
 iOp
-jVt
+dcA
 ddv
 ryB
 ddv
@@ -107260,15 +107235,15 @@ gsJ
 cNM
 vvt
 cSy
-cGJ
-cGJ
-cGI
+cHZ
+cHZ
+cTG
 lmZ
-ydT
+cYY
 cYR
-cGI
-cGI
-cGJ
+cTG
+cTG
+cHZ
 dcG
 ddO
 ddv
