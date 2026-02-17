@@ -319,11 +319,6 @@
 	mode = OMNI_MODE_SCREWING
 	switch_delay = 0.5 SECONDS
 
-	setupProperties()
-		..()
-		src.AddComponent(/datum/component/soldering, 1.5 SECONDS)
-		setProperty("conductivity", 0)
-
 /obj/item/tool/omnitool/silicon
 	prefix = "silicon-omnitool"
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
