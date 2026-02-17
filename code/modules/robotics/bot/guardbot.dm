@@ -4812,6 +4812,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		switch (action)
 			if ("begin_tour")
 				src.linked_bot.charge_dock.eject_robot()
+				. = TRUE
 
 TYPEINFO(/obj/machinery/bot/guardbot/old)
 	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_OLD)
