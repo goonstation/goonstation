@@ -13194,7 +13194,8 @@
 	pixel_x = -7;
 	pixel_y = 4
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "ejQ" = (
@@ -29591,7 +29592,7 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/pharmacist,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "pMB" = (
@@ -33941,6 +33942,12 @@
 	dir = 5
 	},
 /area/station/crew_quarters/cafeteria)
+"sXK" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "sYi" = (
 /obj/machinery/light,
 /turf/simulated/floor/orangeblack/side{
@@ -34464,7 +34471,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -41257,7 +41264,8 @@
 	pixel_x = 15;
 	pixel_y = -2
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "yit" = (
@@ -71097,7 +71105,7 @@ cdV
 nyD
 wKe
 yis
-pLQ
+sXK
 vkf
 fCk
 bkT

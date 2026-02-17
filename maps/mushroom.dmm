@@ -12896,7 +12896,7 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/pharmacist,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -18874,6 +18874,17 @@
 /obj/cable,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"jZH" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/mapping_helper/access/pharmacy,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "jZL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18921,6 +18932,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"kbr" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/medical/medbay/pharmacy)
 "kby" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/incandescent{
@@ -38711,7 +38726,7 @@
 /area/station/crew_quarters/courtroom)
 "xem" = (
 /obj/machinery/door/airlock/pyro/glass/med,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -96416,7 +96431,7 @@ dRA
 igQ
 xKP
 bBS
-lpx
+jZH
 rnf
 inG
 oda
@@ -96720,7 +96735,7 @@ xKP
 dFv
 xem
 vAw
-inG
+kbr
 dTs
 kvV
 pDP

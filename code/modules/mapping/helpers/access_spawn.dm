@@ -80,6 +80,11 @@
 	req_access = list(access_medical)
 	color = MEDICAL
 
+/obj/mapping_helper/access/pharmacy
+	name = "pharmacy spawn"
+	req_access = list(access_pharmacy)
+	color = MEDICAL
+
 //////////// Engineering ////
 /obj/mapping_helper/access/cargo
 	name = "cargo access spawn"

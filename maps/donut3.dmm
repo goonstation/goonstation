@@ -35160,7 +35160,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -6;
 	pixel_y = 1
@@ -36199,7 +36199,7 @@
 "lom" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/machinery/cashreg{
 	pixel_x = -4;
 	pixel_y = -1
@@ -45172,7 +45172,7 @@
 /obj/item/clothing/glasses/spectro{
 	pixel_x = -3
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"
@@ -50421,7 +50421,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -56317,6 +56317,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/pharmacist,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -71949,7 +71950,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "1-2"
 	},

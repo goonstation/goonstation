@@ -164,7 +164,6 @@ var/list/medical_gimmicks = list(
 	"Ophthalmic Specialist",
 	"Orthopaedic Specialist",
 	"Otorhinolaryngology Specialist",
-	"Pharmacist",
 	"Plastic Surgeon",
 	"Psychiatrist",
 	"Psychologist",
