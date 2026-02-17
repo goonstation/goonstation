@@ -563,7 +563,7 @@
 /obj/machinery/computer/card/attackby(obj/item/I, mob/user)
 	//grab the ID card from an access implant if this is one
 	var/modify_only = 0
-	if (istypes(I, list(/obj/item/implantcase/access, /obj/item/implant/access))
+	if (istypes(I, list(/obj/item/implantcase/access, /obj/item/implant/access)))
 		if (!src.modify)
 			I = get_card_from(I)
 		else if (!src.scan)
