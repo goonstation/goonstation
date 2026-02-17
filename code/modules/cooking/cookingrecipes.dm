@@ -1557,6 +1557,7 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 				batter.custom_item = I
 				I.set_loc(batter)
 				batter.name = "[I:real_name ? I:real_name : I.name] cake batter"
+				input_list -= I
 				for (var/obj/M in input_list)
 					qdel(M)
 
