@@ -856,6 +856,7 @@
 #include "code\modules\antagonists\changeling\abilities\_changeling_ability_holder.dm"
 #include "code\modules\antagonists\changeling\abilities\abomination.dm"
 #include "code\modules\antagonists\changeling\abilities\absorb.dm"
+#include "code\modules\antagonists\changeling\abilities\headspider.dm"
 #include "code\modules\antagonists\changeling\abilities\hivemind.dm"
 #include "code\modules\antagonists\changeling\abilities\mimic_voice.dm"
 #include "code\modules\antagonists\changeling\abilities\morph_arm.dm"
