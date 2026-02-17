@@ -96,10 +96,11 @@ ABSTRACT_TYPE(/datum/job/medical)
 	name = "Pharmacist"
 	wages = PAY_DOCTORATE
 	ui_colour = /datum/job/medical::ui_colour
-	request_limit = 1 // limited workspace
+	limit = 1 // limited workspace
 	trait_list = list("training_medical")
 	access_string = "Pharmacist"
 	slot_card = /obj/item/card/id/medical
+	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_belt = list(/obj/item/device/pda2/medical)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/shirt_pants)
