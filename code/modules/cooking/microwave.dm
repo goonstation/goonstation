@@ -140,7 +140,7 @@ TYPEINFO(/obj/machinery/microwave)
 		else
 			boutput(user, SPAN_ALERT("It's broken! It could be fixed with some common tools."))
 		return
-	if (O.cant_drop) //For borg held items, if the microwave is clean and functioning
+	if (O.cant_drop) //For borg held items, if the microwave is functioning
 		boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 	else if (isghostdrone(user))
 		boutput(user, SPAN_ALERT("[src] refuses to interface with you, as you are not a properly trained chef!"))
@@ -401,11 +401,13 @@ TYPEINFO(/obj/machinery/microwave)
 /// warm up the contents
 /obj/machinery/microwave/proc/heat_up(var/datum/recipe_instructions/microwave/instructions)
 	// it seems fairly feasible to make the microwave heat up the contents of containers, but it would have to take into account where the
-	// outputs are meant to go, whether they go back in the container or not, what the size of the container is, and I just can't be arsed
+	// outputs are meant to go, whether they go back in the container or not, what the size of the container is, if it can hold the results when there
+	// are multiple, and I just can't be arsed
 	var/list/src_contents = src.contents.Copy()
 	var/list/output = list()
 	var/cook_delay = (instructions.cook_time / (length(src.contents) + 1))
 	var/contents_length = length(src_contents)
+	var/list/post_cook_effects = list()
 
 	for(var/i = 1, i <= contents_length, i++)
 		sleep(cook_delay)
@@ -422,7 +424,8 @@ TYPEINFO(/obj/machinery/microwave)
 				src.affect_thing(out, instructions)
 		else
 			src.affect_thing(src_contents[1], instructions)
-
+		if (sequential_instructions.post_cook_effect)
+			post_cook_effects += sequential_instructions
 		if (sequential_instructions?.delete_ingredient)
 			src.for_deletion += src_contents[1]
 		if (sequential_instructions.force_breakage)
@@ -443,6 +446,10 @@ TYPEINFO(/obj/machinery/microwave)
 		return
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	src.stop_cooking()
+
+	// call all the effects that the successful recipes want to perform upon being ejected
+	for(var/datum/recipe_instructions/microwave/instruction in post_cook_effects)
+		instruction.post_cook_effect(src)
 
 /// Do the microwave effects on each output object
 /obj/machinery/microwave/proc/affect_thing(var/atom/thing, var/datum/recipe_instructions/microwave/instructions = null)
