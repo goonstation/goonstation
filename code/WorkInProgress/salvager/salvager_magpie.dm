@@ -2,14 +2,14 @@
 var/datum/magpie_manager/magpie_man = new
 /datum/magpie_manager
 	var/obj/npc/trader/salvager/magpie
-#if !defined(LIVE_SERVER)
+#if !defined(LIVE_SERVER) && !defined(UNIT_TESTS)
 	var/datum/mapPrefab/allocated/salvager_local/local_prefab = new /datum/mapPrefab/allocated/salvager_local
 #endif
 
 	proc/setup()
 		src.magpie = locate("M4GP13")
 
-		#if !defined(LIVE_SERVER) // don't load the map prefab on live, it's only used for testing
+		#if !defined(LIVE_SERVER) && !defined(UNIT_TESTS) // don't load the map prefab on live, it's only used for testing
 		if( !magpie_man.magpie )
 			src.local_prefab = get_singleton(/datum/mapPrefab/allocated/salvager_local).load()
 			src.magpie = locate("M4GP13")
