@@ -391,25 +391,25 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			var/output_message = "The heat is quite uncomfortable!"
 			switch(src.air_contents.temperature)
 				if((500) to (1500))
-					burn_damage = rand(4,8)
+					burn_damage = rand(3,6)
 					output_message = "It burns!"
 				if((1500) to (5000))
-					burn_damage = rand(8,10)
+					burn_damage = rand(5,8)
 					burn_amount = 10
 					output_message = "Oh god! That burns!"
 				if((5000) to (50000))
-					burn_damage = rand(10,13)
+					burn_damage = rand(8,10)
 					burn_amount = 33
 					output_message = "Why?! This is torment!!"
-				if((50000) to (10000000))
-					burn_damage = rand(14,20)
+				if((50000) to (1000000))
+					burn_damage = rand(12,16)
 					burn_amount = 33
 					output_message = "Why?! This is torment!!"
-				if((10000000) to (INFINITY)) //yes, that's 10 million. Engineers, you know what to do
+				if((1000000) to (INFINITY)) //yes, that's 1 million. You got to get 5 mol into that tube somehow. The tube expels gas and cools down over time. Engineers, you know what to do
 					burn_damage = 20
 					burn_amount = 33
 					output_message = "This is fine..."
-					if(rand(10))
+					if(rand(15))
 						var/mob/mob_to_gib = src.occupant
 						src.go_out()
 						mob_to_gib.firegib(TRUE)
