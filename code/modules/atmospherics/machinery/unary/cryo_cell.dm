@@ -431,7 +431,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 					src.occupant.take_oxygen_deprivation(-10)
 			else
 				src.occupant.take_oxygen_deprivation(-2)
-	elsse
+	else
 		src.go_out()
 		return
 	if(src.beaker)
