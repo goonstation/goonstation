@@ -2087,3 +2087,15 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/flan)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/raw_flan = 1)
 	output = /obj/item/reagent_containers/food/snacks/flan
+
+// Yuck is the generic invalid-recipe output for the oven. This recipe is for making sure the same singular instance of yuck that's put in is spat
+// out again.
+/datum/recipe/yuck
+	ingredients = list(/obj/item/reagent_containers/food/snacks/yuck = 1)
+	output = /obj/item/reagent_containers/food/snacks/yuck
+	category = null
+
+	get_output(var/list/input_list, var/list/output_list)
+		for (var/obj/item/I in input_list)
+			if (istype(I, /obj/item/reagent_containers/food/snacks/yuck))
+				output_list += I

@@ -772,6 +772,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/brownie_batch(src)
 			src.recipes += new /datum/recipe/rice_bowl(src)
 			src.recipes += new /datum/recipe/flan(src)
+			src.recipes += new /datum/recipe/yuck(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
@@ -792,14 +793,10 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.cook_food()
 
 	proc/cook_food()
-		var/amount = length(src.contents)
 		var/list/output = list() /// what path / item is (getting) created
 		var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
 		var/bonus = 0 /// correct-cook-time bonus
 		var/recipebonus = 0 /// the ideal amount of cook time for the bonus
-		var/recook = 0
-		var/bad_recipe = FALSE // is the recipe a yuck item
-		var/atom/yucktype = null // this becomes a typepath if a yuck item wants to be made
 
 		// If emagged produce random output.
 		if (emagged)
@@ -821,12 +818,14 @@ TYPEINFO(/obj/submachine/chef_oven)
 			var/datum/recipe/xrecipe = pick(src.recipes)
 			// Bail out to a mess if we didn't get a valid recipe
 			if (!contentsok || !xrecipe.try_get_output(src.contents, output, src))
-				bad_recipe = TRUE
-				yucktype = /obj/item/reagent_containers/food/snacks/yuck
+				for (var/I as anything in output)
+					qdel(I)
+				output.Cut(0, length(output))
+				output += new /obj/item/reagent_containers/food/snacks/yuck()
 			// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
 			recipebonus = 0
 			bonus = -1
-			for (var/atom/movable/I in src.contents)
+			for (var/atom/movable/I as anything in src.contents)
 				qdel(I)
 		else
 			// Non-emagged cooking
@@ -834,70 +833,35 @@ TYPEINFO(/obj/submachine/chef_oven)
 			var/datum/recipe_instructions/cooking/oven/instructions = R?.get_recipe_instructions(RECIPE_ID_OVEN)
 			if (!instructions)
 				instructions = src.default_instructions
-			if (R && R.try_get_output(src.contents, output, src))
+
+			recipebonus = instructions.cookbonus
+			// check for burn first, so we don't have to bother creating then deleting the output
+			if (R && cook_amt >= recipebonus + 5)
+				output += new /obj/item/reagent_containers/food/snacks/yuck/burn()
+				bonus = 0
+			else if (R && R.try_get_output(src.contents, output, src))
 				instructions.output_post_process(src, output, src)
 				// derive the bonus amount from cooking
 				// being off by one in either direction is OK
 				// being off by 5 either burns it or makes it taste like shit
 				// "cookbonus" here is actually "amount of cooking needed for bonus"
-				recipebonus = instructions.cookbonus
 				if (abs(cook_amt - recipebonus) <= 1)
 					// if -1, 0, or 1, you did ok
 					bonus = 1
 				else if (cook_amt <= recipebonus - 5)
 					// severely undercooked
 					bonus = -1
-				else if (cook_amt >= recipebonus + 5)
-					bad_recipe = TRUE
-					// severely overcooked and burnt
-					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
-					bonus = 0
 
-			// the case where there are no valid recipies is handled below in the outer context
-			// (namely it replaces them with yuck)
+		// when there are no valid recipes, the output will be yuck.
 		if (length(output) < 1)
-			yucktype = /obj/item/reagent_containers/food/snacks/yuck
-			bad_recipe = TRUE
-
-		// this only happens if the output is a yuck item, either from an
-		// invalid recipe or otherwise...
-		if (bad_recipe && amount == 1)
-			for (var/obj/item/reagent_containers/food/snacks/F in src)
-				if(F.quality >= 1)
-					continue
-				// @TODO cook_amt == F.quality can never happen here
-				// (cook_amt is the time the oven is set to from 1-10,
-				//  and F.quality has to be 0 or below to get here)
-				recook = 1
-				if (cook_amt == F.quality) F.quality = 1.5
-				else if (cook_amt == F.quality + 1) F.quality = 1
-				else if (cook_amt == F.quality - 1) F.quality = 1
-				else if (cook_amt <= F.quality - 5) F.quality = 0.5
-				else if (cook_amt >= F.quality + 5)
-					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
-					bonus = 0
-
-		if (ispath(yucktype))
-			output += new yucktype()
-
-		// this is all stuff relating to re-cooking with yuck items
-		// suitably it is very gross
-		if(recook && bonus !=0)
-			for (var/obj/item/reagent_containers/food/snacks/F in src)
-				if (bonus == 1)
-					if (F.quality != 1)
-						F.quality = 1
-				else if (bonus == -1)
-					if (F.quality > 0.5)
-						F.quality = 0.5
-				if (src.emagged)
-					F.from_emagged_oven = 1
-				F.set_loc(src.loc)
-				if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
-					src.food_crime(usr, F)
+			output += new /obj/item/reagent_containers/food/snacks/yuck()
 
 		for(var/item in output)
-			src.normal_cooking(item, bonus, recipebonus, cook_amt)
+			var/obj/item/reagent_containers/food/snacks/yuck = item
+			if (istype(yuck) && yuck.quality < 1)
+				src.yuck_cooking(item, bonus, cook_amt)
+			else
+				src.normal_cooking(item, bonus, recipebonus, cook_amt)
 
 		// done with checking outputs...
 		// change icon back, ding, and remove used ingredients
@@ -909,6 +873,33 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 	proc/food_crime(mob/user, obj/item/reagent_containers/food/food)
 		game_stats.Increment("food_crimes")
+
+	// if the output is a yuck item, it needs some special handling as our dedicated invalid-recipe output.
+	proc/yuck_cooking(var/obj/item/reagent_containers/food/snacks/yuck/F, var/bonus, var/cook_amt)
+		// @TODO cook_amt == F.quality can never happen here
+		// (cook_amt is the time the oven is set to from 1-10,
+		//  and F.quality has to be 0 or below to get here)
+		if (cook_amt == F.quality) F.quality = 1.5
+		else if (cook_amt == F.quality + 1) F.quality = 1
+		else if (cook_amt == F.quality - 1) F.quality = 1
+		else if (cook_amt <= F.quality - 5) F.quality = 0.5
+		else if (cook_amt >= F.quality + 5)
+			if (!istype(F, /obj/item/reagent_containers/food/snacks/yuck/burn))
+				qdel(F)
+				F = new /obj/item/reagent_containers/food/snacks/yuck/burn()
+			bonus = 0
+
+		// this is all stuff relating to re-cooking with yuck items
+		// suitably it is very gross
+		if (bonus == 1)
+			if (F.quality != 1)
+				F.quality = 1
+		else if (bonus == -1 && F.quality > 0.5)
+			F.quality = 0.5
+		if (src.emagged)
+			F.from_emagged_oven = 1
+		src.food_crime(usr, F)
+		F.set_loc(get_turf(src))
 
 	//helper method for normal cooking
 	proc/normal_cooking(var/atom/item, var/bonus, var/recipebonus, var/cook_amt)
