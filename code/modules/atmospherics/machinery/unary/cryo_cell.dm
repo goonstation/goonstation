@@ -399,10 +399,10 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 					output_message = "Oh god! That burns!"
 				if((5000) to (50000))
 					burn_damage = rand(8,10)
-					burn_amount = 33
+					burn_amount = 20
 					output_message = "Why?! This is torment!!"
 				if((50000) to (3000000))
-					burn_damage = rand(12,16)
+					burn_damage = rand(10,12)
 					burn_amount = 33
 					output_message = "Why?! This is torment!!"
 				if((3000000) to (INFINITY)) //yes, that's 3 million. You got to get 5 mol into that tube somehow. The tube expels gas and cools down over time. Engineers, you know what to do
