@@ -63,6 +63,11 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.use_power(src.occupied_power_use, EQUIP)
 
 	if(src.air_contents)
+		if(src.beaker && istype(beaker, /obj/item/reagent_containers/glass))
+			// cryotubes cool people and the chemicals they keep in them
+			var/obj/item/reagent_containers/glass/manipulated_beaker = beaker
+			var/datum/reagents/manipulated_reagents = manipulated_beaker.reagents
+			manipulated_reagents.temperature_reagents(src.air_contents.temperature, exposed_volume = (600 + manipulated_reagents.total_volume * 7.5), change_cap = 30)
 		src.ARCHIVED(temperature) = src.air_contents.temperature
 		src.heat_gas_contents()
 		src.expel_gas()
@@ -398,7 +403,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		return
 	if(src.beaker)
 		src.beaker.reagents.trans_to(occupant, 0.1, 10)
-		src.beaker.reagents.reaction(occupant, TOUCH, 5, paramslist = list("nopenetrate")) //1/10th of small beaker - matches old rate for default beakers, give or take
+		src.beaker.reagents.reaction(occupant, TOUCH, 5, can_burn = FALSE, paramslist = list("nopenetrate")) //1/10th of small beaker - matches old rate for default beakers, give or take
 
 /// Slowly heats air_contents to 20C
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
