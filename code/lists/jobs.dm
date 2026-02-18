@@ -107,6 +107,7 @@ var/list/engineering_jobs = list(
 var/list/medical_jobs = list(
 	"Medical Director",
 	"Medical Doctor",
+	"Pharmacist",
 	"Roboticist",
 	"Geneticist",
 	"Medical Trainee",

@@ -535,6 +535,16 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
 
+/obj/item/clothing/under/rank/pharmacist
+	name = "pharmacist's jumpsuit"
+	desc = "Proves you know how to make chemicals explode and/or heal people."
+	icon_state = "pathology"
+	item_state = "pathology"
+
+	april_fools
+		icon_state = "medical-alt"
+		item_state = "medical-alt"
+
 /obj/item/clothing/under/rank/pathologist
 	name = "pathologist's jumpsuit"
 	desc = "Scientifically proven to block up to 99% of pathogens."
