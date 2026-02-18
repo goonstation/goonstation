@@ -122,7 +122,19 @@ const TraderInfo = () => {
       </Stack.Item>
       <Stack.Item grow>
         <Stack vertical fill>
-          <Section title={data.name} fill>
+          <Section
+            title={data.name}
+            buttons={
+              <Button
+                onClick={() => {
+                  act('whoareyou');
+                }}
+              >
+                Who are you?
+              </Button>
+            }
+            fill
+          >
             <Section>
               <Stack.Item>
                 <b>{data.currency_name} in account:</b>{' '}

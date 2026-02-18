@@ -154,6 +154,10 @@
 			return
 
 		switch(action)
+			if ("whoareyou")
+				if(!ON_COOLDOWN(src, "traderwhoareyou", 5 SECONDS))
+					usr.say("Who are you?")
+					src.trader_response(TRADER_RESPONSE_WHO_ARE_YOU, usr)
 			if ("viewsold")
 				if(!ON_COOLDOWN(src, "traderviewselldialogue", 1 SECOND))//Tabs are spammable, voicelines shouldn't be
 					src.trader_response(TRADER_RESPONSE_VIEWING_SOLD_ITEMS, usr)
