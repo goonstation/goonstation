@@ -401,11 +401,11 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 					burn_damage = rand(8,10)
 					burn_amount = 33
 					output_message = "Why?! This is torment!!"
-				if((50000) to (1000000))
+				if((50000) to (3000000))
 					burn_damage = rand(12,16)
 					burn_amount = 33
 					output_message = "Why?! This is torment!!"
-				if((1000000) to (INFINITY)) //yes, that's 1 million. You got to get 5 mol into that tube somehow. The tube expels gas and cools down over time. Engineers, you know what to do
+				if((3000000) to (INFINITY)) //yes, that's 3 million. You got to get 5 mol into that tube somehow. The tube expels gas and cools down over time. Engineers, you know what to do
 					burn_damage = 20
 					burn_amount = 33
 					output_message = "This is fine..."
