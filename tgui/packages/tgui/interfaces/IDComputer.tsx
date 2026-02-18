@@ -240,7 +240,6 @@ export const IDComputer = () => {
                             onClick={() =>
                               act('assign', { assign: target_rank })
                             }
-                            preserveWhitespace
                           />
                         </LabeledList.Item>
                       </LabeledList>
