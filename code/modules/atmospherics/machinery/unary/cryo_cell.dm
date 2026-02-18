@@ -374,14 +374,52 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.UpdateOverlays(null, "defib")
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
-	if(TOTAL_MOLES(src.air_contents) < 10 MOLES)
+	if(TOTAL_MOLES(src.air_contents) < 5 MOLES)
 		return
 	if(ishuman(src.occupant))
 		if(isdead(src.occupant))
 			return
 		var/temp_change = 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
 		src.occupant.changeBodyTemp(temp_change, src.air_contents.temperature, src.air_contents.temperature)
-		src.occupant.changeStatus("burning", -10 SECONDS)
+		// we douse the person if we are running the cryotube under 100 °C, else we burn them alive in the cryotube
+		if(src.air_contents.temperature < T100C)
+			src.occupant.changeStatus("burning", -10 SECONDS)
+		else
+			//let's cook the person, depending on how hot we make our cryotube
+			var/burn_amount = 0
+			var/burn_damage = rand(2,4)
+			var/output_message = "The heat is quite uncomfortable!"
+			switch(src.air_contents.temperature)
+				if((500) to (1500))
+					burn_damage = rand(4,8)
+					output_message = "It burns!"
+				if((1500) to (5000))
+					burn_damage = rand(8,10)
+					burn_amount = 10
+					output_message = "Oh god! That burns!"
+				if((5000) to (50000))
+					burn_damage = rand(10,13)
+					burn_amount = 33
+					output_message = "Why?! This is torment!!"
+				if((50000) to (10000000))
+					burn_damage = rand(14,20)
+					burn_amount = 33
+					output_message = "Why?! This is torment!!"
+				if((10000000) to (INFINITY)) //yes, that's 10 million. Engineers, you know what to do
+					burn_damage = 20
+					burn_amount = 33
+					output_message = "This is fine..."
+					if(rand(10))
+						var/mob/mob_to_gib = src.occupant
+						src.go_out()
+						mob_to_gib.firegib(TRUE)
+						return
+			src.occupant.TakeDamage("All", 0, burn_damage, 0, DAMAGE_BURN)
+			if(!ON_COOLDOWN(src.occupant, "cryotube_burning", 10 SECONDS))
+				boutput(src.occupant, SPAN_ALERT("[output_message]"))
+			if(burn_amount > 0 && isliving(src.occupant))
+				var/mob/living/target_to_burn = src.occupant
+				target_to_burn.update_burning(burn_amount)
 		var/mob/living/carbon/human/H = null
 		if (ishuman(occupant))
 			H = occupant
@@ -393,7 +431,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 					src.occupant.take_oxygen_deprivation(-10)
 			else
 				src.occupant.take_oxygen_deprivation(-2)
-	else
+	elsse
 		src.go_out()
 		return
 	if(src.beaker)
