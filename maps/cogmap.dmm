@@ -25924,7 +25924,7 @@
 	pixel_y = 21
 	},
 /obj/decal/stripe_delivery,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bWl" = (
@@ -29226,7 +29226,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
-/obj/machinery/portable_reclaimer,
+/obj/machinery/nanofab/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -57896,6 +57896,7 @@
 	dir = 8;
 	pixel_x = 15
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
