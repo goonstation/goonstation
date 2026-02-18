@@ -42838,6 +42838,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "cGP" = (
@@ -52121,7 +52122,7 @@
 /area/station/medical/medbay/lobby)
 "ehM" = (
 /obj/machinery/light/incandescent,
-/obj/storage/cart/medcart/crash,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "eik" = (
@@ -60441,7 +60442,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
 "liV" = (
-/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/head)
 "ljx" = (
@@ -62025,6 +62025,10 @@
 /obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"mCt" = (
+/obj/storage/secure/closet/research/chemical/pharmacy,
+/turf/simulated/floor/black,
+/area/station/medical/medbay/pharmacy)
 "mCB" = (
 /obj/mesh/catwalk{
 	dir = 6
@@ -68972,6 +68976,7 @@
 /area/station/science/lab)
 "sEq" = (
 /obj/machinery/firealarm/directional/east,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "sEs" = (
@@ -109346,7 +109351,7 @@ cAL
 mRp
 cKY
 yfA
-jMb
+mCt
 jMb
 lFI
 cGI

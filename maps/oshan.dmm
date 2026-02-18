@@ -2930,6 +2930,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "ani" = (
@@ -2978,6 +2979,7 @@
 /area/station/medical/medbay/surgery)
 "anq" = (
 /obj/machinery/firealarm/directional/west,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},

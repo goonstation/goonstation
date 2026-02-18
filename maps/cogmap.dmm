@@ -44425,6 +44425,7 @@
 	},
 /area/station/solar/north)
 "jxO" = (
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},

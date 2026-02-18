@@ -35037,7 +35037,7 @@
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
 "hRE" = (
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "hRI" = (
@@ -58053,7 +58053,6 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/east)
 "xCO" = (
-/obj/storage/secure/closet/medical/chemical,
 /obj/cable{
 	icon_state = "4-8"
 	},

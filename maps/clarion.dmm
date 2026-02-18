@@ -13372,6 +13372,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "eqq" = (
@@ -14072,7 +14073,6 @@
 	},
 /area/station/quartermaster/office)
 "eRH" = (
-/obj/storage/secure/closet/medical/chemical,
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/medical/head)

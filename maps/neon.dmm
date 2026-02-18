@@ -2796,6 +2796,7 @@
 /area/station/hallway/primary/north)
 "cmj" = (
 /obj/item/device/radio/intercom/medical,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -12006,7 +12007,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "iFg" = (
-/obj/storage/secure/closet/medical/chemical,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
@@ -23500,7 +23500,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/storage/secure/closet/medical/medicine,
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "qTd" = (

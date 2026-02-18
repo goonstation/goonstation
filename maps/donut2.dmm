@@ -7035,7 +7035,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aQp" = (
-/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/carpet/blue/fancy/narrow/north,
 /area/station/medical/head)
 "aQs" = (
@@ -29118,6 +29117,7 @@
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /obj/machinery/light/incandescent,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/treatment)
 "kPs" = (
