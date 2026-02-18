@@ -387,7 +387,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		else
 			//let's cook the person, depending on how hot we make our cryotube
 			var/burn_amount = 0
-			var/burn_damage = rand(2,4)
+			var/burn_damage = rand(1,3)
 			var/output_message = "The heat is quite uncomfortable!"
 			switch(src.air_contents.temperature)
 				if((500) to (1500))
