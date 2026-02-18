@@ -2,7 +2,7 @@
 /datum/targetable/changeling/prepare_headspider
 	name = "Prepare Headspider"
 	desc = "Prepare a headspider to release on death."
-	icon_state = "absorb"
+	icon_state = "headspider"
 	targeted = 0
 	pointCost = 10
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
