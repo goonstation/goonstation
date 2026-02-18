@@ -334,6 +334,15 @@
 	icon_override = "med"
 	icon_tooltip = "Medical"
 
+/obj/item/device/radio/headset/pharmacist
+	name = "pharmaceutical headset"
+	desc = "One of the most commonly produced headsets by Nanotrasen, despite the comparably low hire rates of pharmacists."
+	icon_state = "pharmacist headset"
+	wear_state = "med headset"
+	secure_frequencies = list("m" = R_FREQ_MEDICAL, "r" = R_FREQ_RESEARCH)
+	icon_override = "pharmacist"
+	icon_tooltip = "Pharmacist"
+
 /obj/item/device/radio/headset/research
 	name = "research headset"
 	desc = "A science headset, for science. Whether directly or by proxy, these are frequently burned, exploded, corroded, dissolved, shot, and teleported, to name a few."
