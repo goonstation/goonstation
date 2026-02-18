@@ -266,6 +266,9 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_FLUID_ENTER
 
+		blue
+			icon_state = "pda-clown-blue"
+
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
 			LAZYLISTREMOVE(M.attached_objs, src)
@@ -340,6 +343,9 @@
 		icon_state = "pda-hydro"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
 		mailgroups = list(MGD_BOTANY,MGD_PARTY)
+
+	computeroperator
+		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
 
 	syndicate
 		icon_state = "pda-syn"

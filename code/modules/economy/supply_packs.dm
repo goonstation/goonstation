@@ -938,7 +938,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_DOCTORATE*5
 	containertype = /obj/storage/secure/crate
 	containername = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
-	access = access_medical_director
+	access = access_pharmacy
 
 /datum/supply_packs/cyborg
 	name = "Cyborg Component Crate"

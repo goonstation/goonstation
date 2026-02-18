@@ -267,7 +267,7 @@
 
 /obj/item/storage/box/costume
 	icon_state = "costume"
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/clothing/under)
 
 /obj/item/storage/box/costume/clown

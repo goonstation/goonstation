@@ -2,7 +2,7 @@
 // for the purposes of buylist entries. E.g. All clowns should get clown traitor items in their list
 #define ALL_COMMAND "Captain", "Head of Personnel", "Head of Security", "Research Director", "Medical Director", "Chief Engineer"
 #define ALL_RESEARCH "Research Director", "Scientist", "Research Trainee"
-#define ALL_DOCTORS "Medical Director", "Medical Doctor", "Medical Trainee"
+#define ALL_DOCTORS "Medical Director", "Medical Doctor", "Medical Trainee", "Pharmacist"
 #define ALL_ENGINEERS "Chief Engineer", "Engineer", "Technical Trainee"
 #define ALL_CHEFS "Chef", "Sous-Chef"
 #define ALL_CLOWNS "Clown", "Blue Clown"
@@ -298,7 +298,7 @@
 	cost = 5
 	not_in_crates = TRUE
 	desc = "A handheld version of the Chemicompiler machine in Chemistry."
-	job = list(ALL_RESEARCH)
+	job = list(ALL_RESEARCH, "Pharmacist")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/robosuit

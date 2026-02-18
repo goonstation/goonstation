@@ -269,9 +269,9 @@ MATERIAL
 
 	proc/build_terminal(obj/item/cable_coil/cable, mob/user)
 		if ((src in user) && (cable in user))
-			new /obj/machinery/power/data_terminal(get_turf(user))
-			src.change_stack_amount(-1)
-			cable.change_stack_amount(-1)
+			if (cable.use(1))
+				new /obj/machinery/power/data_terminal(get_turf(user))
+				src.change_stack_amount(-1)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]!"))

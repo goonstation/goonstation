@@ -9159,11 +9159,6 @@
 /obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
-"aQw" = (
-/obj/table/wood/auto,
-/obj/item/device/infra_sensor,
-/turf/unsimulated/floor/carpet/grime,
-/area/crater/biodome/research)
 "aQx" = (
 /obj/window/cubicle{
 	dir = 1
@@ -55174,7 +55169,8 @@
 /obj/item/instrument/bikehorn/blue{
 	pixel_y = 8;
 	pixel_x = -10;
-	name = "long-coveted, latest-model NT-branded Special Operations Bike Horn"
+	name = "long-coveted, latest-model NT-branded Special Operations Bike Horn";
+	rarity = 4
 	},
 /obj/item/clothing/head/NTberet/commander,
 /obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea{
@@ -116900,7 +116896,7 @@ aMI
 aOb
 aOY
 aPL
-aQw
+aQA
 aRi
 aSe
 aTd

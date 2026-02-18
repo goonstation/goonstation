@@ -20,7 +20,7 @@
 	var/list/engineering_access_list = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
 	var/list/supply_access_list = list(access_cargo, access_supply_console, access_mining, access_mining_outpost)
 	var/list/research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
-	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics, access_pathology)
+	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics, access_pathology, access_pharmacy)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket, access_fine_small, access_fine_large)
 	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser, access_money)
 	var/list/allowed_access_list

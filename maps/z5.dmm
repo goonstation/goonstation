@@ -3706,11 +3706,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/dock)
-"Gr" = (
-/obj/lattice,
-/obj/item/device/infra_sensor,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "Gs" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -21517,7 +21512,7 @@ zp
 Ac
 Ac
 Ey
-Gr
+GU
 bf
 XN
 GU

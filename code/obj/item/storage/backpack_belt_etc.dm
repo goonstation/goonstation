@@ -7,7 +7,7 @@
 	icon_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
-	soundproofing = 20
+	soundproofing = SOUNDPROOFING_MUTE
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
@@ -655,7 +655,7 @@
 	desc = "A small leather pouch, suitable for storing ammunition and other essential equipment for the operation of flintlock weaponry. It has room on it's strap to sling a flintlock rifle over."
 	icon_state = "flintlock_satchel"
 	item_state = "flintlock_satchel"
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/gun/kinetic/single_action/flintlock/rifle)
 	spawn_contents = list(/obj/item/gun/kinetic/single_action/flintlock/rifle, /obj/item/ammo/bullets/flintlock/rifle)
 	slots = 4
@@ -718,6 +718,10 @@
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
 	slots = 7
+
+/obj/item/storage/fanny/funny/blue
+	icon_state = "funny-blue"
+	item_state = "funny-blue"
 
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
@@ -812,7 +816,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	can_hold = list(/obj/item/deconstructor)
-	check_wclass = 1
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 /obj/item/storage/belt/utility/nt_engineer
 	name = "specialist engineering belt"
@@ -840,7 +844,7 @@
 	can_hold = list(/obj/item/rcd,
 	/obj/item/rcd_ammo,
 	/obj/item/deconstructor)
-	check_wclass = 1
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	inventory_counter_enabled = 1
 
 	New()
@@ -900,7 +904,7 @@
 	icon_state = "injectorbelt"
 	item_state = "medical"
 	can_hold = list(/obj/item/robodefibrillator)
-	check_wclass = 1
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 /obj/item/storage/belt/medical/prepared
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
@@ -933,7 +937,7 @@
 	can_hold = list(
 		/obj/item/mining_tool,
 		/obj/item/mining_tools)
-	check_wclass = 1
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 /obj/item/storage/belt/mining/prepared
 	spawn_contents = list(/obj/item/mining_tool/powered/pickaxe,
@@ -953,7 +957,7 @@
 		/obj/item/chicken_carrier,
 		/obj/item/fishing_rod,
 		/obj/item/syndie_fishing_rod)
-	check_wclass = 1
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 	prepared
 		spawn_contents = list(/obj/item/chicken_carrier,
@@ -984,7 +988,7 @@
 	desc = "Holds all the things you need for a proper werewolf hunt."
 	icon_state = "hunterbelt"
 	item_state = "hunter"
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(
 		/obj/item/gun/bow/crossbow,
 		/obj/item/plant/herb/aconite,
@@ -1012,7 +1016,7 @@
 	/obj/item/gun/energy/cornicen3,
 	/obj/item/gun/kinetic/missile_launcher,
 	/obj/item/ammo/bullets/pod_seeking_missile)
-	check_wclass = 1
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 // kiki's detective shoulder (holster)
 // get it? like kiki's delivery service? ah, i'll show myself out.
@@ -1094,12 +1098,12 @@
 	icon_state = "minerbelt"
 	item_state = "utility"
 	can_hold = list(/obj/item/ammo/bullets)
-	check_wclass = 0
+	check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
 
 ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /obj/item/storage/belt/gun
 	var/gun_type
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 	New()
 		..()
@@ -1162,7 +1166,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	/obj/item/chem_grenade,
 	/obj/item/storage/grenade_pouch,
 	/obj/item/ammo/bullets/grenade_round)
-	check_wclass = 0
+	check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
 
 // combat medic storage 7 slot
 
@@ -1272,7 +1276,7 @@ TYPEINFO(/obj/item/inner_tube)
 	can_hold = list(/obj/item/gun/energy/blaster_pod_wars,
 	/obj/item/survival_machete,
 	/obj/item/survival_axe) // how it holds an axe doesn't make sense, but we're doing it anyways. shut up
-	check_wclass = 1
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	slots = 3
 
 /obj/item/storage/belt/podwars/pistol
@@ -1307,7 +1311,7 @@ TYPEINFO(/obj/item/inner_tube)
 	desc = "A heavy duty tactical belt capable of holding a large number of objects"
 	icon_state = "secbelt"
 	item_state = "secbelt"
-	check_wclass = 0
+	check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
 	slots = 6
 	max_wclass = W_CLASS_BULKY
 	can_hold = null
