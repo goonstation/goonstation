@@ -381,9 +381,16 @@
 /obj/item/device/radio/headset/clown
 	name = "clown's headset"
 	desc = "Anybody using this headset is unlikely to be taken seriously."
+	icon_state = "clown headset"
 	icon_override = "clown"
 	icon_tooltip = "Clown"
 	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
+
+/obj/item/device/radio/headset/clown/blue
+	name = "blue clown's headset"
+	icon_state = "blue clown headset"
+	icon_override = "clown_blue"
+	icon_tooltip = "Blue Clown"
 
 /obj/item/device/radio/headset/ghost_buster
 	name = "\improper Ghost Buster's headset"

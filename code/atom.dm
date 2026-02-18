@@ -192,7 +192,6 @@ TYPEINFO(/atom)
 		if (temp_flags & (HAS_BAD_SMOKE))
 			ClearBadsmokeRefs(src)
 
-		fingerprints_full = null
 		tag = null
 		src.forensic_holder = null
 

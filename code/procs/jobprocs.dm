@@ -314,7 +314,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 		//remove problem traits from people on pod_wars
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
-			var/trait_name = H.traitHolder.getTraitWithCategory("background")
+			var/trait_name = H.traitHolder.getTraitWithCategory("spawn scenario")
 			H.traitHolder.removeTrait(trait_name)
 			H.traitHolder.removeTrait("puritan")
 

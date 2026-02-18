@@ -749,11 +749,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 1;
-	id = "Sleeper_Access";
-	name = "Teleport Pad"
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicate_teleporter)
 "Fa" = (

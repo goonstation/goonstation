@@ -266,6 +266,9 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_FLUID_ENTER
 
+		blue
+			icon_state = "pda-clown-blue"
+
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
 			LAZYLISTREMOVE(M.attached_objs, src)

@@ -12073,7 +12073,7 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/pharmacist,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "baP" = (
@@ -12547,7 +12547,6 @@
 /area/station/medical/medbay/pharmacy)
 "bdT" = (
 /obj/stool/chair/office,
-/obj/landmark/start/job/medical_doctor,
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
@@ -28535,7 +28534,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "dAY" = (
@@ -35038,7 +35037,7 @@
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
 "hRE" = (
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "hRI" = (
@@ -38145,7 +38144,7 @@
 	name = "Pharmacy"
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -42627,7 +42626,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "mSD" = (
@@ -58054,7 +58053,6 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/east)
 "xCO" = (
-/obj/storage/secure/closet/medical/chemical,
 /obj/cable{
 	icon_state = "4-8"
 	},

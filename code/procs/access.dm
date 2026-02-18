@@ -176,7 +176,7 @@
 		if("Head of Personnel")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
 						access_fine_small, access_fine_large, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
-						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
+						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers, access_pharmacy,
 						access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_supply_console,
 						access_research, access_hydro, access_ranch, access_ai_upload, access_pathology, access_researchfoyer,
@@ -184,7 +184,7 @@
 		if("Head of Security")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
 						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
-						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab,
+						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab, access_pharmacy,
 						access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_ai_upload,
 						access_tech_storage, access_maint_tunnels, access_bar, access_janitor, access_fine_small, access_fine_large,
@@ -199,7 +199,7 @@
 						)
 		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
-						access_maint_tunnels, access_tech_storage, access_medical_lockers,
+						access_maint_tunnels, access_tech_storage, access_medical_lockers, access_pharmacy,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload, access_teleporter
 						)
 		if("Chief Engineer")
@@ -241,14 +241,14 @@
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Pharmacist")
-			return list(access_research,access_tech_storage, access_maint_tunnels, access_chemistry,
-						access_medical_lockers, access_medical, access_morgue, access_researchfoyer)
+			return list(access_maint_tunnels, access_pharmacy,
+						access_medical_lockers, access_medical, access_morgue)
 		if("Psychiatrist")
 			return list(access_medical, access_maint_tunnels)
 		if("Medical Specialist")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
-						access_medlab) //Mdir minus head stuff
+						access_medlab, access_pharmacy) //Mdir minus head stuff
 
 		// --------------------------- Science
 		if("Scientist", "Research Trainee")
@@ -335,7 +335,7 @@
 				access_engineering_power, access_engineering_engine,
 				access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
 				access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_medical_director,
-				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money)
+				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money, access_pharmacy)
 #endif
 
 // Generated at round start.
@@ -479,6 +479,8 @@ var/list/access_all_actually = null
 			return "Fines (Small)"
 		if (access_fine_large)
 			return "Fines (Large)"
+		if (access_pharmacy)
+			return "Pharmacy"
 
 
 proc/colorAirlock(access)

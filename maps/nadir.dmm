@@ -1284,6 +1284,9 @@
 	pixel_x = -15;
 	pixel_y = 5
 	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = -8
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "aAN" = (
@@ -24008,18 +24011,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ksw" = (
-/obj/table/reinforced/auto,
 /obj/drink_rack/mug{
 	pixel_y = 32
 	},
-/obj/item/kitchen/food_box/sugar_box{
-	pixel_x = -11;
-	pixel_y = 11
-	},
-/obj/item/device/radio/headset/medical{
-	pixel_x = 9;
-	pixel_y = 3
-	},
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "ksL" = (
@@ -25419,7 +25414,6 @@
 	name = "The Warrens"
 	})
 "kXR" = (
-/obj/storage/secure/closet/medical/chemical,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -30221,7 +30215,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/cashreg,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
@@ -44254,7 +44248,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -53875,6 +53869,7 @@
 /obj/stool/chair/office{
 	dir = 8
 	},
+/obj/landmark/start/job/pharmacist,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},

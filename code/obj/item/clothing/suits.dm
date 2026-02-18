@@ -345,9 +345,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 
 		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		src.armor()
-		if(!src.fingerprints)
-			src.fingerprints = list()
-		src.fingerprints |= W.fingerprints
+		W.forensic_holder.copy_to(src.forensic_holder)
 		qdel(W)
 
 		if (ismob(src.loc))
@@ -724,6 +722,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			. = "Your most prized lab coat; it took all your life savings to get it designed and tailored just for you."
 		else
 			. = "A bunch of purple glitter and cheap plastic glued together in a sad attempt to make a stylish lab coat."
+
+/obj/item/clothing/suit/labcoat/pharmacist
+	name = "pharmacist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pharmacist."
+	icon_state = "PTlabcoat"
+	item_state = "PTlabcoat"
+	coat_style = "PTlabcoat"
+
+	april_fools
+		icon_state = "PTlabcoat-alt"
+		item_state = "PTlabcoat-alt"
+		coat_style = "PTlabcoat-alt"
 
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
