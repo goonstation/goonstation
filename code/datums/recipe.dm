@@ -35,6 +35,8 @@ ABSTRACT_TYPE(/datum/recipe)
 	New()
 		// merge tools into ingredients, because as far as the recipe is concerned tools are ingredients
 		if(src.tools)
+			if (!src.ingredients)
+				src.ingredients = list()
 			for(var/key in src.tools)
 				if (key in src.ingredients)
 					src.ingredients[key] += src.tools[key]
@@ -94,11 +96,14 @@ ABSTRACT_TYPE(/datum/recipe)
 		else if(ispath(output_paths))
 			output_list += new output_paths
 			. = TRUE
+
+		src.account_for_tools(input_list, output_list)
+		// recipes that only spit out the tools used are technically useful, and thus valid
+		if (length(output_list))
+			. = TRUE
 		if (!.)
 			// By default, a failure here likely means the recipe has been set up wrong. This isn't necessarily true if this proc gets overriden.
 			stack_trace("Recipe of type [string_type_of_anything(src)] failed with input: [english_list(input_list)].")
-			return
-		src.account_for_tools(input_list, output_list)
 
 	/// Detects any tools present in the input list and adds them to the output list.
 	proc/account_for_tools(list/input, list/output)
