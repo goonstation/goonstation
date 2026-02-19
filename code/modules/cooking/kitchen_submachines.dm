@@ -857,8 +857,8 @@ TYPEINFO(/obj/submachine/chef_oven)
 			output += new /obj/item/reagent_containers/food/snacks/yuck()
 
 		for(var/item in output)
-			var/obj/item/reagent_containers/food/snacks/yuck = item
-			if (istype(yuck) && yuck.quality < 1)
+			var/obj/item/reagent_containers/food/snacks/yuck/yuckitem = item
+			if (istype(yuckitem) && yuckitem.quality < 1)
 				src.yuck_cooking(item, bonus, cook_amt)
 			else
 				src.normal_cooking(item, bonus, recipebonus, cook_amt)
