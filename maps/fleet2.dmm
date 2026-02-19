@@ -1181,6 +1181,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/camera/directional/east,
+/obj/machinery/info_map,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/north/meridian)
 "aDe" = (
@@ -8275,6 +8276,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/camera/directional/east,
+/obj/machinery/info_map,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/north/dionysus)
 "dGp" = (
@@ -11293,7 +11295,9 @@
 /area/station/engine/substation/dionysus)
 "eXI" = (
 /obj/table/wood/auto,
-/obj/displaycase/captain,
+/obj/displaycase/captain{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/bridge/meridian)
 "eXR" = (
@@ -11512,7 +11516,13 @@
 	id = "ai_core";
 	name = "AI Core Shield"
 	},
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "fcm" = (
 /obj/decal/tile_edge/line/red{
@@ -13119,7 +13129,7 @@
 /turf/simulated/floor/wood/five,
 /area/station/crew_quarters/dionysus)
 "fJk" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
@@ -14292,7 +14302,7 @@
 /obj/machinery/conveyor/WE{
 	id = "disposal-meridian"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal/meridian)
 "ggU" = (
@@ -15495,7 +15505,7 @@
 /obj/machinery/conveyor/WE{
 	id = "disposal-asc"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal/asclepius)
 "gHg" = (
@@ -17147,7 +17157,7 @@
 /obj/machinery/conveyor/WE{
 	id = "disposal-dionysus"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal/dionysus)
 "htl" = (
@@ -24576,7 +24586,11 @@
 	id = "ai_core";
 	name = "AI Core Shield"
 	},
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "kEA" = (
 /obj/machinery/shower{
@@ -28483,7 +28497,7 @@
 /obj/machinery/conveyor/WE{
 	id = "disposal-maru"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal/maru)
 "mtK" = (
@@ -31037,6 +31051,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/camera/directional/east,
+/obj/machinery/info_map,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/north/maru)
 "nEk" = (
@@ -31712,9 +31727,16 @@
 	name = "AI Core Shield"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "nUm" = (
 /obj/stool/chair{
@@ -36354,6 +36376,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/camera/directional/east,
+/obj/machinery/info_map,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/north/asclepius)
 "pXT" = (
@@ -36614,7 +36637,13 @@
 	id = "ai_core";
 	name = "AI Core Shield"
 	},
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "qeH" = (
 /turf/simulated/floor/stairs{
@@ -38231,6 +38260,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/camera/directional/east,
+/obj/machinery/info_map,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/north/tenebrae)
 "qRI" = (
@@ -40353,6 +40383,23 @@
 	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
+"rPc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "rPd" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -41113,6 +41160,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/camera/directional/east,
+/obj/machinery/info_map,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/north/hammer)
 "shh" = (
@@ -45576,7 +45624,7 @@
 /obj/machinery/conveyor/WE{
 	id = "disposal-hammer"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal/hammer)
 "tWR" = (
@@ -46037,6 +46085,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/camera/directional/east{
+	pixel_y = 11
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -50029,7 +50080,7 @@
 /obj/machinery/conveyor/WE{
 	id = "disposal-tene"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal/tenebrae)
 "vPO" = (
@@ -52894,6 +52945,17 @@
 /obj/landmark/start/job/miner,
 /turf/simulated/floor/yellowblack,
 /area/station/mining/staff_room)
+"xfk" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "xfn" = (
 /obj/stool/chair{
 	dir = 8
@@ -124956,7 +125018,7 @@ tDU
 tDU
 lWH
 psG
-fcj
+rPc
 ugI
 fcj
 uFL
@@ -125258,9 +125320,9 @@ rXo
 tDU
 tDU
 fdH
-fcj
+xfk
 tDU
-fcj
+xfk
 aXo
 tDU
 tDU
