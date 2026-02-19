@@ -304,7 +304,7 @@
 	},
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/green/fancy/innercorner/omni,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "ahw" = (
@@ -521,6 +521,9 @@
 	level = 2
 	},
 /obj/machinery/meter,
+/obj/cable/orange{
+	icon_state = "4-10"
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
@@ -757,7 +760,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "arX" = (
@@ -1893,7 +1896,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "aSK" = (
@@ -2213,7 +2216,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "aZj" = (
@@ -3007,7 +3010,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "bsI" = (
@@ -3098,7 +3101,7 @@
 	},
 /mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "buy" = (
@@ -3486,7 +3489,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "bCn" = (
@@ -7139,7 +7142,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "cYM" = (
@@ -8027,7 +8030,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "drW" = (
@@ -8724,6 +8727,12 @@
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"dJh" = (
+/obj/cable/orange{
+	icon_state = "5-10"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "dJx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -11260,7 +11269,7 @@
 	pixel_x = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "eOt" = (
@@ -14034,7 +14043,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "fSD" = (
@@ -14706,7 +14715,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "gev" = (
@@ -15912,7 +15921,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "gCs" = (
@@ -18617,7 +18626,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "hLf" = (
@@ -18968,7 +18977,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "hSl" = (
@@ -20147,7 +20156,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "iqC" = (
@@ -22080,7 +22089,7 @@
 "jgk" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "jgu" = (
@@ -26039,10 +26048,10 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/bridge/asclepius)
 "kTt" = (
-/obj/decal/boxingropeenter,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
+/obj/railing/boxing,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "kTx" = (
@@ -28116,6 +28125,9 @@
 	level = 2
 	},
 /obj/machinery/meter,
+/obj/cable/orange{
+	icon_state = "5-10"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "lRf" = (
@@ -28770,7 +28782,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/grey,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "mfL" = (
@@ -30715,7 +30727,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "mZw" = (
@@ -31209,7 +31221,7 @@
 	})
 "nkE" = (
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "nkM" = (
@@ -32000,8 +32012,9 @@
 /obj/machinery/conveyor/SN{
 	id = "qmin"
 	},
+/obj/landmark/supply_delivery,
 /turf/simulated/floor/airless/plating,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "nCR" = (
 /obj/stool/bench/blue/auto,
 /obj/cable{
@@ -33664,7 +33677,7 @@
 /area/station/crew_quarters/dionysus)
 "ona" = (
 /turf/simulated/wall/auto/reinforced/jen/green,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "onv" = (
@@ -35351,7 +35364,10 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets/tenebrae)
 "paI" = (
-/obj/machinery/atmospherics/binary/reactor_turbine,
+/obj/machinery/reactor_turbine,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "paM" = (
@@ -36240,7 +36256,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "pse" = (
@@ -37459,7 +37475,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "pTE" = (
@@ -37791,6 +37807,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/hallway/primary/central/dionysus)
+"qaU" = (
+/obj/cable/orange{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "qaV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -40698,7 +40720,7 @@
 /area/station/maintenance/disposal/tenebrae)
 "rrD" = (
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "rrY" = (
@@ -41253,6 +41275,9 @@
 /area/station/hallway/primary/central/meridian)
 "rCY" = (
 /obj/machinery/light/small/floor,
+/obj/cable/orange{
+	icon_state = "9-10"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "rDr" = (
@@ -41404,7 +41429,7 @@
 	pixel_x = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "rHt" = (
@@ -44595,7 +44620,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "sYu" = (
@@ -44777,8 +44802,8 @@
 /turf/simulated/floor/wood,
 /area/station/hallway/primary/central/dionysus)
 "tcR" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
 /obj/cable/orange,
+/obj/machinery/nuclear_reactor/prefilled/normal,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "tcT" = (
@@ -45077,7 +45102,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "thi" = (
@@ -46205,7 +46230,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "tCe" = (
@@ -47546,6 +47571,9 @@
 	can_rupture = 0;
 	dir = 9
 	},
+/obj/cable/orange{
+	icon_state = "5-6"
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
@@ -48741,7 +48769,7 @@
 	network = "public"
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "uCw" = (
@@ -51773,7 +51801,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "vQH" = (
@@ -52519,7 +52547,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "wjR" = (
@@ -52681,7 +52709,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "woa" = (
@@ -53424,7 +53452,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "wCg" = (
@@ -54335,6 +54363,9 @@
 /obj/cable/orange{
 	icon_state = "1-6"
 	},
+/obj/cable/orange{
+	icon_state = "6-8"
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
@@ -54651,7 +54682,7 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "xdW" = (
@@ -54994,7 +55025,7 @@
 /obj/item/crowbar,
 /obj/cable,
 /turf/simulated/floor/wood/seven,
-/area/station/bridge/hos{
+/area/station/bridge/customs{
 	name = "Dionysus Command Center"
 	})
 "xmX" = (
@@ -84711,7 +84742,7 @@ dpa
 xqv
 xqv
 xqv
-xqv
+qaU
 xqv
 doj
 kAF
@@ -85012,7 +85043,7 @@ jcc
 quK
 nwg
 gtl
-xqv
+dJh
 aWP
 doj
 doj
@@ -85612,7 +85643,7 @@ tNS
 hUr
 bJP
 quK
-xqv
+dJh
 xqv
 rCY
 vAd
