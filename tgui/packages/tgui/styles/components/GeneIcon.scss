@@ -15,7 +15,7 @@
   background-image: url('../assets/genetics_powers.png');
   background-repeat: no-repeat;
   overflow: hidden;
-  transform: translate(0, -10px);
+  transform: scale(0.75) translate(9px, -9px);
 }
 
 $gene-icons: (
