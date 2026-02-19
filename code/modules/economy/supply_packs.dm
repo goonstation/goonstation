@@ -1833,7 +1833,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	frames = list(/obj/item/storage/toilet = 4,
 					/obj/machinery/shower,
 					/obj/machinery/bathtub,
-					/obj/submachine/chef_sink/chem_sink)
+					/obj/machinery/sink/slim)
 	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Bathroom Kit"
@@ -1845,7 +1845,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/storage/secure/closet/fridge)
 	frames = list(/obj/submachine/chef_oven,
 					/obj/machinery/mixer,
-					/obj/submachine/chef_sink,
+					/obj/machinery/sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,
 					/obj/machinery/vending/kitchen,
