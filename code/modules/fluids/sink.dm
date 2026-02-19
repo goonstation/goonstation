@@ -1,4 +1,3 @@
-//TODO: Make these not submachines, possibly break out into their own files
 TYPEINFO(/obj/machinery/sink)
 	mats = 12
 
@@ -300,7 +299,7 @@ TYPEINFO(/obj/machinery/sink)
 		src.onRestart()
 
 
-TYPEINFO(/obj/machinery/piped)
+TYPEINFO(/obj/machinery/sink/piped)
 	can_build(turf/T, direction)
 		var/obj/fluid_pipe/fluidthingy
 		switch(direction)
@@ -319,7 +318,7 @@ TYPEINFO(/obj/machinery/piped)
 
 /obj/machinery/sink/piped
 	name = "plumbed sink"
-	desc = "A slim sink unit connected to plumbing."
+	desc = "A sink unit connected to plumbing."
 	var/obj/machinery/fluid_machinery/unary/node/input
 	var/obj/machinery/fluid_machinery/unary/node/output
 	var/datum/reagents/drainage
