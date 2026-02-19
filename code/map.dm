@@ -37,8 +37,6 @@ var/global/list/mapNames = list(
 	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Density2" = 			list("id" = "DENSITY2",		"settings" = "density2",		"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
-	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
-	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	"Phaethon Fleet" =		list("id" = "FLEET2",		"settings" = "fleet2",			"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
@@ -971,88 +969,6 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria))
-
-/datum/map_settings/ozymandias
-	name = "OZYMANDIAS"
-	goonhub_map = "/maps/ozymandias"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	job_limits_from_landmarks = TRUE
-	job_limits_override = list(
-		/datum/job/special/atmospheric_technician = 1,
-		/datum/job/special/hairdresser = 1,
-		/datum/job/research/research_assistant = 2,
-		/datum/job/medical/medical_assistant = 2
-	)
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	airlock_style = "pyro"
-
-	escape_dir = EAST
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
-
-	valid_nuke_targets = list("the security equipment wing" = list(/area/station/security/equipment),
-		"the central research sector hub" = list(/area/station/science/lobby),
-		"the quartermasters' office" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the basketball court" = list(/area/station/crew_quarters/fitness),
-		"the medbay's central loop" = list(/area/station/medical/medbay),
-		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
-		"the data center" = list(/area/station/crew_quarters/info),
-		"the artifact lab" = list(/area/station/science/artifact),
-		"the chapel reception hall" = list(/area/station/crew_quarters/quarters))
-
-/datum/map_settings/fleet
-	name = "FLEET"
-	display_name = "Bellerophon Fleet"
-	style = "ship"
-	goonhub_map = "/maps/bellerophon fleet"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	arrivals_type = MAP_SPAWN_CRYO
-	dir_fore = NORTH
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	escape_dir = EAST
-
-	merchant_left_centcom = null
-	merchant_left_station = null
-	merchant_right_centcom = null
-	merchant_right_station = null
-
-	valid_nuke_targets = list("the Demeter primary zone" = list(/area/station/garden/aviary),
-		"the Tenebrae primary zone" = list(/area/station/science/lobby),
-		"the Asclepius primary zone" = list(/area/station/medical/medbay),
-		"the Meridian primary zone" = list(/area/station/crew_quarters/captain),
-		"the Dionysus primary zone" = list(/area/station/crew_quarters/cafeteria),
-		"the Maru primary zone" = list(/area/station/engine/engineering),
-		"the Hammer primary zone" = list(/area/station/security/main))
 
 /datum/map_settings/fleet2
 	name = "FLEET2"
