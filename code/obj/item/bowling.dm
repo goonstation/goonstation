@@ -1,9 +1,9 @@
 /obj/item/clothing/under/gimmick/bowling
 	name = "bowling suit"
 	desc = "Who's up for some bowling?"
-	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_athletic.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_athletic.dmi'
 	icon_state = "bowling"
 	item_state = "bowling"
 	item_function_flags = IMMUNE_TO_ACID
@@ -62,19 +62,19 @@
 			playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
-				if (ishuman(hitMob))
-					SPAWN( 0 )
-						if (istype(user))
-							if (istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
-								src.hitHard(hitMob, user)
+				SPAWN( 0 )
+					if (istype(user))
+						if (istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+							src.hitHard(hitMob, user)
+							if (ishuman(hitMob))
 								var/turf/new_target = get_steps(hitMob, get_dir(thr.thrown_from, get_turf(hitMob)), 8)
 								hitMob.throw_at(new_target, 8, thr.speed, thr.params, thr.thrown_from, thr.thrown_by, thr.throw_type)
 								if(!(hitMob == user) && !ON_COOLDOWN(user, "bowling_speak", 1 SECOND))
 									user.say(pick("Who's the kingpin now, baby?", "STRIIIKE!", "Watch it, pinhead!", "Ten points!"))
-							else
-								src.hitWeak(hitMob, user)
 						else
 							src.hitWeak(hitMob, user)
+					else
+						src.hitWeak(hitMob, user)
 		return
 
 	attack(obj/item/W, mob/user, params)

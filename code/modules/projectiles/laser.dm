@@ -101,6 +101,7 @@ toxic - poisons
 
 /datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
 	name = "heavy laser"
+	law_rack_safe = TRUE
 
 /datum/projectile/laser/diffuse
 	sname = "diffuse laser"
@@ -298,8 +299,9 @@ toxic - poisons
 				var/mob/M = vehicle.pilot
 				if (istype(M))
 					var/damage_pilot = TRUE
-					if (istype(vehicle.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
-						var/obj/item/shipcomponent/secondary_system/shielding/shielding = vehicle.sec_system
+					var/sec_part = vehicle.get_part(POD_PART_SECONDARY)
+					if (istype(sec_part, /obj/item/shipcomponent/secondary_system/shielding))
+						var/obj/item/shipcomponent/secondary_system/shielding/shielding = sec_part
 						if (shielding.active)
 							damage_pilot = FALSE
 					if (damage_pilot)
@@ -348,6 +350,17 @@ toxic - poisons
 				icon_state = "phaser_med"
 			else
 				icon_state = "phaser_light"
+	smg
+		name = "micro phaser bolt"
+		icon_state = "phaser_light"
+		sname = "micro phaser bolt"
+		damage = 8
+		cost = 10
+		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
+		fullauto_valid = 1
 
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"

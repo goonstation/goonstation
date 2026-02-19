@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/intangible)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/living/intangible
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
@@ -7,7 +10,7 @@
 	blinded = 0
 	anchored = ANCHORED
 	throws_can_hit_me = FALSE
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
+	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
 	canbegrabbed = FALSE
 	can_lie = FALSE
 
@@ -15,6 +18,7 @@
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
@@ -24,12 +28,12 @@
 		return
 	can_strip()
 		return 0
+	can_eat()
+		return FALSE
 	can_use_hands()
 		return 0
 	is_active()
 		return 0
-	say_understands(var/other)
-		return 1
 	Cross(atom/movable/mover)
 		return 1
 

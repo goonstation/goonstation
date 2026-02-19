@@ -6,7 +6,7 @@
 	cure_desc = "Mutadone"
 	reagentcure = list("mutadone")
 	recureprob = 15
-	associated_reagent = "liquid plasma"
+	associated_reagent = "activated plasma"
 	affected_species = list("Monkey", "Human")
 
 /datum/ailment/disease/plasmatoid/stage_act(mob/living/affected_mob,  datum/ailment_data/D, mult)

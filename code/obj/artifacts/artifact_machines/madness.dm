@@ -369,7 +369,7 @@
 				continue
 
 			if(!ON_COOLDOWN(L, "halluc_cooldown_\ref[src]", 60 SECONDS)) //dont spam logs - we only want to log when a new effect applies - not a refresh
-				logTheThing(LOG_COMBAT, L, "was affected by a [src.effect_type] hallucination from [src.associated_object] at [log_loc(src.associated_object)]")
+				logTheThing(LOG_COMBAT, L, "was affected by a [src.effect_type] hallucination from [src.associated_object] at [log_loc(O)]")
 			else
 				EXTEND_COOLDOWN(L, "halluc_cooldown_\ref[src]", 60 SECONDS)
 

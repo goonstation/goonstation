@@ -25,13 +25,13 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 		if (build_stage >= 4)														//If build_stage is 4 or higher, which shouldn't be possible, alert the player to in turt alert coders.
 			user.show_message(SPAN_NOTICE("Uh oh, it seems you broke it!"), 1)
 			desc = "This doodad is broken. Call a coder."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if (ispulsingtool(W) && build_stage <= 0)								//Step 1 of construction: Multitool.
 			build_stage = 1
 			user.show_message(SPAN_NOTICE("You rearrange and attune the wiring inside!"), 1)
 			desc = "A remote signaller frame with wiring sticking out."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if (istype(W,/obj/item/sheet) && build_stage == 1)						//Step 2 of construction: Metal Sheet.
 			W.amount -= 1
@@ -42,14 +42,14 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 			build_stage = 2
 			user.show_message(SPAN_NOTICE("You make a crude but functional circuit board port and slot it into the frame!"), 1)
 			desc = "A remote signaller frame with a handmade circuit board port slotted loosely into it, connected with wires."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if (istype(W,/obj/item/circuitboard/secure_data) && build_stage == 2)	//Step 3 of construction: Circuit Board.
 			qdel(W)
 			build_stage = 3
 			user.show_message(SPAN_NOTICE("You put the circuit board in the port!"), 1)
 			desc = "A remote signaller frame with a circuit board inside, being held together with a custom port and some wiring."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else if (iswrenchingtool(W) && build_stage == 3)							//Step 4 of construction: Wrench.
 			build_stage = 4
 			var/obj/item/makeshift_syndicate_signaller/A = new /obj/item/makeshift_syndicate_signaller
@@ -57,7 +57,8 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 			A.add_fingerprint(user)
 			user.show_message(SPAN_NOTICE("You connect and secure all the loose parts!"), 1)
 			desc = "An illegal-looking signaller, clearly makeshift. If you're seeing this, alert a coder please."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, A, user)
 			qdel(src)
 			return
 		return
@@ -102,7 +103,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 							icon_state = "explosion"
 							user.show_message(SPAN_NOTICE("You sent a signal to unknown coordinates derived from the uploaded metadata! This can't be good..."), 1)
 							desc = "Oh shit, it's overloading!"
-							tooltip_rebuild = 1
+							tooltip_rebuild = TRUE
 							is_exploding = TRUE
 							spawn(2 SECONDS)
 								logTheThing(LOG_COMBAT, user, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
@@ -115,7 +116,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 					else
 						user.show_message(SPAN_NOTICE("You failed to send a signal. The device seems oddly dormant..."), 1)
 						desc = "This device is dormant. It has no purpose now."
-						tooltip_rebuild = 1
+						tooltip_rebuild = TRUE
 				else
 					user.show_message(SPAN_NOTICE("You failed to send a signal. To avoid interference, it's best to try again in an unrestricted area."), 1)
 			else
@@ -136,7 +137,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 				set_icon_state("metadata_[metadata]")
 				if (metadata >= 8)
 					desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 			else if (metadata >= 8)										//If all metadata nodes are filled, alert the player instead.
 				user.show_message(SPAN_NOTICE("All 8 metadata nodes have been filled already!"), 1)
 			return
@@ -156,7 +157,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 				. = TRUE
 			if(metadata >= 8)
 				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			set_icon_state("metadata_[metadata]")
 		else
 			user.show_message(SPAN_NOTICE("This device has been emagged already!"), 1)
@@ -177,5 +178,5 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
 			else
 				desc = "This device has no menacing aura around it. In fact, it is completely dormant."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 	return

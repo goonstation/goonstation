@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Rogue Status Removed!',
-  content: (
+const RogueRemovedContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are no longer a rogue robot!</h1>
 
@@ -18,5 +17,10 @@ export const acw: AlertContentWindow = {
         to life somehow.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Rogue Status Removed!',
+  component: RogueRemovedContentWindow,
 };

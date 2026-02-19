@@ -128,7 +128,7 @@
 				for (var/obj/item/W in HH)
 					if (istype(W, /obj/item/skull/))
 						var/obj/item/skull/S = W
-						S.name = "[HH.real_name]'s skull"
+						S.name = "[HH.real_name]’s skull"
 						tvalue += S.value // Can might have another skull in their pocket, who knows.
 						no_of_skulls++
 						S.set_loc(get_turf(HH)) // We always want to drop that skull, since gib ejectables are a RNG thing.

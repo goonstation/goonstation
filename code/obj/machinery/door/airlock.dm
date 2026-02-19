@@ -774,13 +774,15 @@ var/global/list/cycling_airlocks = list()
 	return
 
 /obj/machinery/door/airlock/proc/interact_panel(mob/user)
-	if (!src.panel_open)
+	src.panel_open = !src.panel_open
+	if (src.panel_open)
 		user.visible_message(SPAN_ALERT("[user] opens the maintenance panel on \the [src.name]."))
 		logTheThing(LOG_STATION, user, "opens the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
+		ui_interact(user)
+		interact_particle(user,src)
 	else
 		user.visible_message(SPAN_ALERT("[user] closes the maintenance panel on \the [src.name]."))
 		logTheThing(LOG_STATION, user, "closes the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
-	src.panel_open = !(src.panel_open)
 	tgui_process.update_uis(src)
 	src.UpdateIcon()
 	playsound(src.loc, 'sound/items/screwdriver2.ogg', 25, TRUE)
@@ -884,10 +886,11 @@ var/global/list/cycling_airlocks = list()
 	return 0
 
 /obj/machinery/door/airlock/autoclose()
-	if(!src.welded)
-		close(0, 1)
-	else
-		..()
+	if (!src.isWireCut(AIRLOCK_WIRE_AI_CONTROL))
+		if(!src.welded)
+			close(0, 1)
+		else
+			..()
 	return
 
 // ========== mechcomp duplicate code ============
@@ -1168,10 +1171,16 @@ TYPEINFO(/obj/machinery/door/airlock)
 	. = ..()
 	src.deconstruct_flags &= ~DECON_NO_ACCESS //well, ya got it fixed, somehow
 
-/obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
-	..()
+/obj/machinery/door/airlock/overload_act(mob/user)
+	if (src.hardened)
+		return FALSE
+	if (src.secondsMainPowerLost > 0)
+		return FALSE
+	src.loseMainPower()
+	return TRUE
 
-	if (!isAI(user) && !issilicon(user))
+/obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
+	if(..())
 		return
 
 	if (src.aiControlDisabled == 1) return
@@ -1248,7 +1257,6 @@ TYPEINFO(/obj/machinery/door/airlock)
 		"hackingProgression" = src.hackingProgression,
 		"hackMessage" = src.hackMessage,
 		"aiControlVar" = src.aiControlDisabled,
-		"aiControlDisabled" = src.aiControlDisabled,
 
 		"noPower" = (src.status & NOPOWER),
 		"powerIsOn" = src.arePowerSystemsOn() && !(src.status & NOPOWER),

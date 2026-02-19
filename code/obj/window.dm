@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "window"
 	desc = "A window."
 	density = 1
-	stops_space_move = 1
+	provides_grip = TRUE
 	dir = NORTHEAST //full tile
 	flags = USEDELAY | ON_BORDER | FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
@@ -177,9 +177,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 
 		if (src.health == 0 && nosmash)
+			. = get_turf(src)
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
-			smash()
+			. = smash()
 		UpdateIcon()
 
 	damage_slashing(var/amount)
@@ -193,7 +194,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			smash()
+			. = smash()
 		UpdateIcon()
 
 	damage_piercing(var/amount)
@@ -207,7 +208,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			smash()
+			. = smash()
 		UpdateIcon()
 
 	damage_corrosive(var/amount)
@@ -219,7 +220,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			return
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			smash()
+			. = smash()
 		UpdateIcon()
 
 	damage_heat(var/amount, var/nosmash)
@@ -236,9 +237,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			if (nosmash)
+				. = get_turf(src)
 				qdel(src)
 			else
-				smash()
+				. = smash()
 		UpdateIcon()
 
 	ex_act(severity)
@@ -260,7 +262,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	meteorhit(var/obj/M)
 		if (istype(M, /obj/newmeteor/massive) && !(IS_ARRIVALS(get_area(src))))
-			smash()
+			. = smash()
 			return
 		src.damage_blunt(20)
 
@@ -279,11 +281,11 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC)
-				damage_blunt(damage*3)
+				. = damage_blunt(damage*3)
 			if(D_PIERCING)
-				damage_piercing(damage*2)
+				. = damage_piercing(damage*2)
 			if(D_ENERGY)
-				damage_heat(damage / 5)
+				. = damage_heat(damage / 5)
 
 	reagent_act(var/reagent_id,var/volume)
 		if (..())
@@ -387,7 +389,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		if (src && src.health <= 2 && !reinforcement)
 			src.anchored = UNANCHORED
-			src.stops_space_move = 0
+			src.provides_grip = FALSE
+			var/turf/T = get_turf(src)
+			T?.grip_atom_count -= 1
 			step(src, get_dir(AM, src))
 		..()
 		return
@@ -487,7 +491,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				user.show_text("You have [state == 1 ? "unfastened the window from" : "fastened the window to"] the frame.", "blue")
 			else
 				src.anchored = !(src.anchored)
-				src.stops_space_move = !(src.stops_space_move)
+				src.provides_grip = !(src.provides_grip)
+				var/turf/T = get_turf(src)
+				T?.grip_atom_count += src.provides_grip ? 1 : -1
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
 				logTheThing(LOG_STATION, user, "[src.anchored ? "anchored" : "unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
@@ -516,6 +522,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		logTheThing(LOG_STATION, usr, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
+			. = get_turf(src)
 			qdel(src)
 			return
 		var/atom/movable/A
@@ -532,6 +539,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			A = new /obj/item/rods(src.loc)
 			A.setMaterial(reinforcement)
 		playsound(src, src.shattersound, 70, 1)
+		. = get_turf(src)
 		qdel(src)
 
 	proc/update_nearby_tiles(need_rebuild, var/selfnotify = 0)
@@ -1002,12 +1010,15 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	smash()
 		if(health <= 0)
+			. = get_turf(src)
 			qdel(src)
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
-			src.stops_space_move = !(src.stops_space_move)
+			src.provides_grip = !(src.provides_grip)
+			var/turf/T = get_turf(src)
+			T?.grip_atom_count += src.provides_grip ? 1 : -1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened [src] to the floor." : "You have unfastened [src].")
 			return

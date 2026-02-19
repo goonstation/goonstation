@@ -1,0 +1,15 @@
+/*!
+ * Anton by The Anton Project Authors (https://github.com/googlefonts/AntonFont.git)
+ * License - SIL OFL 1.1
+ */
+@font-face{font-family:Anton;font-style:normal;font-weight:400;font-display:block;src:url('{{resource("css/fonts/anton-regular.woff2")}}') format('woff2')}
+/*!
+ * Dancing Script by The Dancing Script Authors (https://github.com/googlefonts/DancingScript.git)
+ * License - SIL OFL 1.1
+ */
+@font-face{font-family:'Dancing Script';font-style:normal;font-weight:400;src:url('{{resource("css/fonts/DancingScript.woff2")}}') format('woff2')}
+/*!
+ * Permanent Marker by Font Diner (https://github.com/googlefonts/PermanentMarker.git)
+ * License - Apache 2.0
+ */
+@font-face{font-family:'Permanent Marker';font-style:normal;font-weight:400;src:url('{{resource("css/fonts/PermanentMarker.woff2")}}') format('woff2')}

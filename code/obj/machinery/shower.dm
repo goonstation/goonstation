@@ -112,7 +112,7 @@
 		src.use_power(50)
 		return
 
-//prototypist requisition: cool futuristic shower, much less messy
+//fancy loud futuristic shower, much less messy
 /obj/machinery/sonic_shower
 	name = "sonic shower head"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -206,7 +206,7 @@
 					cleaned_a_nerd = TRUE
 
 		if(cleaned_a_nerd)
-			playsound(src.loc, 'sound/effects/screech.ogg', 50, 0, 0, 0.7)
+			playsound(src.loc, 'sound/effects/radio_sweep5.ogg', 50, 0, 0, 0.7)
 			FLICK("sonicshower-on",src)
 			src.use_power(750)
 

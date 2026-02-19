@@ -58,6 +58,7 @@
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
 			setup_starting_peripheral2 = /obj/item/peripheral/sound_card
 			setup_starting_program = /datum/computer/file/terminal_program/email
+			object_flags = NO_BLOCK_TABLE
 
 			personel_alt
 				icon_state = "old_alt"
@@ -120,6 +121,19 @@
 				icon_state = "bank2"
 				base_icon_state = "bank2"
 
+		personnel_management
+			name = "personnel management computer"
+			icon_state = "personnel_management"
+			base_icon_state = "personnel_management"
+			setup_drive_size = 80
+			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
+			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_program = list(
+				/datum/computer/file/terminal_program/bank_records,
+				/datum/computer/file/terminal_program/secure_records,
+				/datum/computer/file/terminal_program/job_controls,
+			)
+
 		communications
 			name = "Communications Console"
 			icon_state = "comm"
@@ -137,39 +151,11 @@
 				icon_state = "communications2"
 				base_icon_state = "communications2"
 
-		disease_research
-			name = "Disease Database"
-			icon_state = "resdis"
-			setup_starting_program = /datum/computer/file/terminal_program/disease_research
-			setup_drive_size = 48
-
 		artifact_research
 			name = "Artifact Database"
 			icon_state = "resart"
 			setup_starting_program = /datum/computer/file/terminal_program/artifact_research
 			setup_drive_size = 48
-
-		hangar_control
-			name = "Hangar Control"
-			icon_state = "comm"
-			//setup_starting_program = /datum/computer/file/terminal_program/hangar_control
-			setup_drive_size = 48
-		hangar_research
-			name = "Hangar Research"
-			icon_state = "resrob"
-			//setup_starting_program = /datum/computer/file/terminal_program/hangar_research
-			setup_drive_size = 48
-		robotics_research
-			name = "Robotics Database"
-			icon_state = "resrob"
-			setup_starting_program = /datum/computer/file/terminal_program/robotics_research
-			setup_drive_size = 48
-/*
-		dna_scan
-			name = "DNA Modifier Access Console"
-			icon_state = "scanner"
-			setup_starting_peripheral1 = /obj/item/peripheral/dnascanner_control
-*/
 
 		engine
 			name = "Engine Control Console"
@@ -200,16 +186,6 @@
 		radio
 			name = "wireless computer"
 			setup_starting_peripheral1 = /obj/item/peripheral/network/radio
-
-		basic_test
-			name = "personal computer"
-			//setup_starting_program = /datum/computer/file/terminal_program/basic
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/drive/cart_reader
-
-		supply
-			name = "Supply Ordering Computer"
-			setup_idscan_path = /obj/item/peripheral/card_scanner/register
 
 	terminal //Terminal computer, stripped down with less cards.
 		name = "Terminal"
@@ -255,6 +231,9 @@
 				icon = 'icons/obj/computerpanel.dmi'
 				icon_state = "dwaine2"
 				base_icon_state = "dwaine2"
+
+			os_loaded
+				setup_os_string = "ZETA_MAINFRAME"
 
 
 	luggable //A portable(!!) computer 3. Cards cannot be exchanged.
@@ -644,6 +623,7 @@
 		A.icon_state = "3"
 	else
 		user?.show_text("You disconnect the monitor.", "blue")
+		logTheThing(LOG_STATION, user, "disassembles [src] [log_loc(src)]")
 		A.state = 4
 		A.icon_state = "4"
 
@@ -714,6 +694,9 @@
 					src.unscrew_monitor()
 				else
 					src.set_broken()
+
+/obj/machinery/computer3/overload_act()
+	return !src.set_broken()
 
 /obj/machinery/computer3/disposing()
 	if (hd)
@@ -1017,6 +1000,7 @@
 
 		src.case.set_loc(get_turf(src))
 		src.set_loc(src.case)
+		tgui_process.close_uis(src)
 		src.deployed = 0
 		return
 
@@ -1073,9 +1057,11 @@
 				dv.authid = W
 				update_static_data(usr)
 			return
-		else
-			src.Attackhand(user)
-		return
+		..()
+
+	grab_smash(obj/item/grab/G, mob/user)
+		if(..())
+			src.set_broken()
 
 	powered()
 		if(!src.cell || src.cell.charge <= 0)
@@ -1110,13 +1096,29 @@
 		if(!src.case)
 			src.case = new /obj/item/luggable_computer/personal(src)
 			src.case.luggable = src
+		. = ..()
 
-		for (var/obj/item/peripheral/peripheral in peripherals)
-			peripheral.uninstalled()
+//A personal version, but for an Arch Linux user!
 
-		src.case.set_loc(get_turf(src))
-		src.set_loc(src.case)
-		src.deployed = 0
-		return
+/obj/item/luggable_computer/techpersonal
+	name = "Custom-Built Laptop"
+	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
+	icon_state = "oldlapshut"
+	luggable_type = /obj/machinery/computer3/luggable/techpersonal
+	w_class = W_CLASS_NORMAL
+
+
+/obj/machinery/computer3/luggable/techpersonal
+	name = "Custom-Built Laptop"
+	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
+	icon_state = "oldlap"
+	base_icon_state = "oldlap"
+	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
+
+	undeploy()
+		if(!src.case)
+			src.case = new /obj/item/luggable_computer/techpersonal(src)
+			src.case.luggable = src
+		. = ..()
 
 #undef MAX_INPUT_HISTORY_LENGTH

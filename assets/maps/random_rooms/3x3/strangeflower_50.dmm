@@ -8,7 +8,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "f" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/decal/cleanable/writing{
@@ -23,7 +23,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 5
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/candle_light{
 	pixel_y = 7;
@@ -35,7 +35,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "n" = (
 /obj/candle_light{
 	pixel_y = 7
@@ -44,7 +44,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 4
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 10
@@ -52,18 +52,18 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 9
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/grasstodirt,
-/area/space)
+/area/dmm_suite/clear_area)
 "K" = (
 /obj/decal/alienflower{
 	dir = 6
 	},
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/grass,
-/area/space)
+/area/dmm_suite/clear_area)
 "U" = (
 /obj/candle_light{
 	pixel_x = 11
@@ -75,7 +75,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 6
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "V" = (
 /obj/candle_light{
 	pixel_x = -7
@@ -84,7 +84,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 10
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 U

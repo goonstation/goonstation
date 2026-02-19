@@ -10,6 +10,7 @@
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	event_handler_flags = IMMUNE_SINGULARITY
+	provides_grip = TRUE
 	pass_unstable = FALSE
 	bound_width = 96
 	bound_x = -32
@@ -19,6 +20,7 @@
 #else
 	pixel_x = -32
 #endif
+	open_to_sound = FALSE
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
@@ -220,8 +222,13 @@
 							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
 								antagonist.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
-							user.ghostize()
-							qdel(user)
+							var/mob/dead/observer/ghost = user.ghostize()
+							//hopefully that's all the links?
+							ghost.corpse = null
+							user.ghost = null
+							user.last_ckey = null
+							//Disabling this for now, humans don't GC usually anyway and it was messing with cloner implants
+							// qdel(user)
 							return 1
 
 		return 0

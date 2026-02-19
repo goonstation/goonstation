@@ -6,10 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Omni-Traitor Tips',
-  theme: 'syndicate',
-  content: (
+const OmnitraitorContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are an omnitraitor!</h1>
 
@@ -22,5 +20,11 @@ export const acw: AlertContentWindow = {
         use the <em>Notes</em> verb.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Omni-Traitor Tips',
+  theme: 'syndicate',
+  component: OmnitraitorContentWindow,
 };

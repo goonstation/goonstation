@@ -22,7 +22,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	var/flushing = 0	// true if flushing in progress
 	var/mail_tag = null // mail_tag to apply on next flush
 	var/mail_id = null // id for linking a flusher for mail tagging
-	HELP_MESSAGE_OVERRIDE({"You can use a <b>crowbar</b> to pry it open."})
+	var/emagged = FALSE
+	HELP_MESSAGE_OVERRIDE({"Pry it open with a <b>crowbar</b>.<br>If open, crawl inside with an <b>empty hand</b>."})
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
@@ -92,6 +93,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		..()
 		STOP_TRACKING
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			src.emagged = TRUE
+			boutput(user, SPAN_NOTICE("You short out the locking mechanism on \the [src]."))
+
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
@@ -130,6 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		//you can only fall in if its open
 		if (open != 1)
 			return
+		return_if_overlay_or_effect(AM)
 		if (istype(AM, /obj/projectile))
 			return
 		if (isobj(AM))
@@ -142,7 +149,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		if (isliving(AM))
 			if (AM:anchored >= ANCHORED_ALWAYS) return
-			if (isintangible(AM)) // STOP EATING BLOB OVERMINDS ALSO
+			if (AM.gforce <= 0) return
+			if (HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING)) // STOP EATING BLOB OVERMINDS ALSO
 				return
 			var/mob/living/M = AM
 			if (M.buckled)
@@ -211,6 +219,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			src.remove_dialog(user)
 			return
 
+		if (can_act(user))
+			boutput(user, SPAN_ALERT("You climb into \the [src]!"))
+			user.set_loc(src)
+			for (var/mob/C in AIviewers(src))
+				if(C == user)
+					continue
+				C.show_message("[user] climbs into \the [src]!", 3)
+			src.flush = TRUE
+			src.update()
 
 	// eject the contents of the unit
 	proc/eject()
@@ -275,7 +292,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		if(status & NOPOWER)			// won't charge if no power
 			return
-
+		if (!src.open && src.emagged && prob(10))
+			src.openup()
 		..()
 		if(mode != 1)		// if off or ready, no need to charge
 			return

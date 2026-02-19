@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Goonhub Logout</title>
+  </head>
+  <body>
+    <script>
+      function doLogout() {
+        const goonhubUrl = '{$goonhub_url}';
+        const ref = '{$ref}';
+        window.location = `${goonhubUrl}/game-auth/logout?ref=${ref}`;
+      }
+    </script>
+  </body>
+</html>

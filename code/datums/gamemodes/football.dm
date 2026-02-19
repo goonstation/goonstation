@@ -40,7 +40,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
 			if (!istype(player)) continue
-			if (player.ready)
+			if (player.ready_play)
 				if (player.mind)
 					src.init_player(player, 0, 1)
 
@@ -238,7 +238,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 
 		footballer.equip_if_possible(new /obj/item/device/radio/headset(footballer), SLOT_EARS)
 
-		var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare(footballer) // for whatever reason, this is neccessary
+		var/obj/item/card/id/gold/captains_spare/I = new /obj/item/card/id/gold/captains_spare(footballer) // for whatever reason, this is neccessary
 		I.registered = "[footballer.name]"
 		I.icon = 'icons/obj/items/card.dmi'
 		I.icon_state = "fingerprint0"

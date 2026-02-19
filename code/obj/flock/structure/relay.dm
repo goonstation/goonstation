@@ -62,7 +62,7 @@ TYPEINFO(/obj/flock_structure/relay)
 			command_alert("Emergency shuttle departure delayed due to anomalous radio signal interference.")
 
 	boutput(src.flock?.flockmind, SPAN_ALERT("<b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b>"))
-	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
+	src.flock.system_say_source.say("RELAY CONSTRUCTED! DEFEND THE RELAY!!")
 	play_sound()
 	SPAWN(10 SECONDS)
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
@@ -156,7 +156,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"
 	desc = "Your life is flashing before your eyes. Looks like this is the end."
-	flock_speak(null, "!!! TRANSMITTING SIGNAL !!!", src.flock)
+	src.flock.system_say_source.say("!!! TRANSMITTING SIGNAL !!!")
 	src.visible_message("<span class='flocksay bold'>[src] begins sparking wildly! The air is charged with static!</span>")
 
 	SPAWN(0)
@@ -189,12 +189,7 @@ TYPEINFO(/obj/flock_structure/relay)
 
 ///Brick every headset noisily
 /obj/flock_structure/relay/proc/destroy_radios()
-	// mid-tier jank, but it's a nice easy way to get the radio network
-	var/obj/item/device/radio/headset/entrypoint = new()
-	var/list/obj/radios = get_radio_connection_by_id(entrypoint, "main").network.analog_devices
-	for (var/obj/item/device/radio/radio in radios)
-		if (!istype(radio))
-			continue
+	for_by_tcl(radio, /obj/item/device/radio)
 		if (prob(30)) //give it a slight cascading effect
 			sleep(0.1 SECONDS)
 		playsound(radio, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1, pitch = 0.4)
@@ -207,7 +202,6 @@ TYPEINFO(/obj/flock_structure/relay)
 		radio.secure_frequencies = list()
 		radio.set_secure_frequencies()
 		no_more_radios = TRUE
-	qdel(entrypoint)
 
 /obj/flock_structure/relay/takeDamage(var/damageType, var/amount)
 	..()

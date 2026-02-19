@@ -149,6 +149,19 @@ var/datum/geneticsResearchManager/genResearch = new()
 	proc/checkCooldownBonus()
 		return genResearch.equipment_cooldown_multiplier - (min(genResearch.checkClonepodBonus(), 2) * 0.05)
 
+	/// set all bioEffects to a specific research level,
+	/// * `level`: the bioEfect's `research_level` to change to, default `EFFECT_RESEARCH_ACTIVATED`.
+	/// * `everything`: if `TRUE`, research otherwise unresearchable genes (i.e. wizard/contract genes)
+	proc/debug_SetResearchLevel(level=EFFECT_RESEARCH_ACTIVATED, everything=FALSE)
+		for (var/id as anything in bioEffectList)
+			var/datum/bioEffect/BE = bioEffectList[id]
+			if (BE.can_research || everything)
+				BE.research_level = level
+				if (level >= EFFECT_RESEARCH_DONE)
+					BE.onResearched()
+		for_by_tcl(computer, /obj/machinery/computer/genetics)
+			computer.update_static_data_for_all_viewers()
+
 /datum/geneticsResearchEntry
 	var/name = "HERF" //Name of the research entry
 	var/desc = "DERF" //Description
@@ -217,6 +230,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 		if (global_instance.research_level < EFFECT_RESEARCH_DONE)
 			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
+			global_instance.onResearched()
 		..()
 
 // TIER ONE
@@ -457,14 +471,23 @@ var/datum/geneticsResearchManager/genResearch = new()
 // Things related to DNA samples //
 ///////////////////////////////////
 
-/proc/create_new_dna_sample_file(var/mob/living/L)
+/proc/create_new_dna_sample_file(var/mob/living/L, visible_name=FALSE)
 	if (!istype(L) && L.has_genetics())
 		return null
 	if (!istype(L.bioHolder))
 		return null
 
 	var/datum/computer/file/genetics_scan/scan = new /datum/computer/file/genetics_scan()
-	scan.subject_name = L.real_name
+
+	if (visible_name)
+		var/mob/living/carbon/human/H = L
+		if (H.face_visible())
+			scan.subject_name = H.real_name
+		else
+			scan.subject_name = H.name
+	else
+		scan.subject_name = L.real_name
+
 	scan.subject_uID = L.bioHolder.Uid
 	scan.subject_stability = L.bioHolder.genetic_stability
 	scan.scanned_at = TIME

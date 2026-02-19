@@ -103,6 +103,11 @@
 	src.take_oxygen_deprivation(-INFINITY)
 	..()
 
+/mob/living/carbon/stabilize()
+	src.take_toxin_damage(-max(src.toxloss-10, 0))
+	src.take_oxygen_deprivation(-max(src.oxyloss-10, 0))
+	..()
+
 /mob/living/carbon/take_brain_damage(var/amount)
 	if (..())
 		return
@@ -169,3 +174,5 @@
 /mob/living/carbon/get_oxygen_deprivation()
 	return src.oxyloss
 
+/mob/living/carbon/try_affect_all_addictions(var/value)
+	return src.reagents?.addiction_cache += value

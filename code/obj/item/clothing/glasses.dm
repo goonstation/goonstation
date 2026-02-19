@@ -13,9 +13,13 @@
 	block_vision = 0
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	compatible_species = list("human", "cow", "werewolf", "flubber")
+	var/nudge_compatible = TRUE //! Works with the "nudge" emote
+	var/flash_compatible = FALSE //! Does an anime styled sparkle-flash effect when nudged
+	var/is_nudged = FALSE //! Are the glasses currently nudged upwards?
+	var/flash_state = "flash" //! Icon state to use when nudged and flash compatible
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth))
@@ -23,12 +27,39 @@
 			return
 		return ..()
 
+	equipped(mob/user, slot)
+		. = ..()
+		src.is_nudged = FALSE
+
+	unequipped(mob/user)
+		. = ..()
+		if (src.flash_compatible)
+			user.ClearSpecificOverlays("glasses_flash")
+
+	/// Does the flash effect when nudging glasses upwards
+	proc/nudge_flash()
+		if (!src.flash_compatible)
+			return
+		var/mob/living/carbon/human/H = src.loc
+		if (!istype(H))
+			return
+		if (!src.is_nudged)
+			var/image/glasses_flash_overlay = image('icons/mob/clothing/eyes.dmi', icon_state=flash_state, layer=src.wear_layer+0.1)
+			glasses_flash_overlay.alpha = 100
+			glasses_flash_overlay.pixel_y = H.mutantrace.head_offset
+			glasses_flash_overlay.appearance_flags = KEEP_TOGETHER
+			H.AddOverlays(glasses_flash_overlay, "glasses_flash")
+			playsound(H, 'sound/effects/glare.ogg', 60, pitch=2)
+			particleMaster.SpawnSystem(new /datum/particleSystem/glasses_sparkle(src.loc, src.color))
+		else
+			H.ClearSpecificOverlays("glasses_flash")
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"
 	item_state = "crafted"
 	desc = "A simple pair of glasses."
+	flash_compatible = TRUE
 
 	onMaterialChanged()
 		..()
@@ -46,10 +77,25 @@
 	item_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
+	nudge_compatible = FALSE
+	var/pinhole = FALSE
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 100)
+
+	attackby(obj/item/I, mob/user)
+		if ((isscrewingtool(I) || istype(I, /obj/item/pen)) && !src.pinhole)
+			src.pinhole = TRUE
+			src.block_vision = FALSE
+			setProperty("disorient_resist_eye", 2) // matches eyepatch with pinhole
+			boutput(user, SPAN_NOTICE("You poked two holes into the blindfold, now you can pretend that you can see without seeing"))
+		else
+			. = ..()
+
+	get_desc()
+		if (src.pinhole)
+			. += " Wait? There are tiny holes in it!"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target) && user.a_intent != INTENT_HARM) //ishuman() works on monkeys too apparently.
@@ -84,6 +130,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	icon_state = "meson"
 	item_state = "glasses"
 	desc = "Goggles that allow you to see the structure of the station through walls."
+	flash_compatible = TRUE
 	color_r = 0.92
 	color_g = 1
 	color_b = 0.92
@@ -123,6 +170,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
+	flash_compatible = TRUE
 
 	attack_self(mob/user)
 		user.show_text("You swap the style of your glasses.")
@@ -135,12 +183,15 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	name = "round glasses"
 	icon_state = "glasses_round"
 	item_state = "glasses_round"
+	flash_state = "round_flash"
 	desc = "Big round corrective lenses, perfect for the near-sighted nerd."
+
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
 	desc = "Admittedly, they are rather strange."
 	icon_state = "ectoglasses"
+	flash_compatible = TRUE
 	color_r = 0.89
 	color_g = 1
 	color_b = 0.85
@@ -161,6 +212,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	name = "ectoplasmoleic imager"
 	desc = "A pair of goggles with a dumb name."
 	icon_state = "ectogoggles"
+	flash_state = "goggle_flash"
 
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
@@ -215,9 +267,9 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 				boutput(H, SPAN_ALERT("<B>Your HUD malfunctions!</B>"))
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
-				H.bioHolder.AddEffect("bad_eyesight")
+				H.bioHolder.AddEffect("bad_eyesight_temp")
 				SPAWN(10 SECONDS)
-					H.bioHolder.RemoveEffect("bad_eyesight")
+					H.bioHolder.RemoveEffect("bad_eyesight_temp")
 
 	emag_act(mob/user)
 		if (src.image_group != CLIENT_IMAGE_GROUP_ARREST_ICONS)
@@ -327,14 +379,14 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 				boutput(H, SPAN_ALERT("<B>Your thermals malfunction!</B>"))
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
-				H.bioHolder.AddEffect("bad_eyesight")
+				H.bioHolder.AddEffect("bad_eyesight_temp")
 				if(upgraded)
 					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
 				else
 					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
 
 				SPAWN(10 SECONDS)
-					H.bioHolder.RemoveEffect("bad_eyesight")
+					H.bioHolder.RemoveEffect("bad_eyesight_temp")
 					if(H.glasses == src)
 						if(upgraded)
 							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
@@ -365,6 +417,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "\improper VISOR goggles"
 	icon_state = "visor"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	desc = "VIS-tech Optical Rejuvinator goggles allow the blind to see while worn."
 	allow_blind_sight = 1
 	color_r = 0.92
@@ -396,7 +450,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	icon_state = "eyepatch-R"
 	item_state = "headset"
 	block_eye = "R"
-	var/pinhole = 0
+	nudge_compatible = FALSE
+	var/pinhole = FALSE
 	var/mob/living/carbon/human/equipper
 	wear_layer = MOB_GLASSES_LAYER2
 
@@ -411,11 +466,12 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		return ..()
 
 	attackby(obj/item/W, mob/user)
-		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
+		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !src.pinhole)
+			setProperty("disorient_resist_eye", 2) // You still have something on your eye and taking up a slot
 			if( equipper && equipper.glasses == src )
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
-				pinhole = 1
-				block_eye = null
+				src.pinhole = TRUE
+				src.block_eye = FALSE
 				appearance_flags |= RESET_COLOR
 				if(!theEye)
 					user.show_message(SPAN_ALERT(">Um. Wow. Thats kinda grode."))
@@ -425,14 +481,18 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				logTheThing(LOG_COMBAT, user, "removes their [log_object(theEye)] using an eyepatch and [log_object(W)] at [log_loc(user)].")
 				return
 			else
-				pinhole = 1
-				block_eye = null
+				pinhole = TRUE
+				block_eye = FALSE
 				appearance_flags |= RESET_COLOR
 				user.show_message(SPAN_NOTICE("You poke a tiny pinhole into [src]!"))
-				if (!pinhole)
-					desc = "[desc] Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
 				return
 		return ..()
+
+	get_desc ()
+		if (src.pinhole)
+			. += " Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
+
+
 	attack_self(mob/user)
 
 		if (src.icon_state == "eyepatch-R")
@@ -498,27 +558,28 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	icon_state = "vr_scuttlebot"
 	item_state = "vr_scuttlebot"
 	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
+	var/pigeon_controller = FALSE
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
 		..()
 		var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
 			if(connected_scuttlebot.mind)
-				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
+				boutput(user, SPAN_ALERT("The [pigeon_controller ? "P1G30N" : "scuttlebot"] is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldn't be found."))
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The [pigeon_controller ? "P1G30N" : "scuttlebot"] couldn't be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else
-			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
+			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The [pigeon_controller ? "P1G30N" : "scuttlebot"] is likely destroyed."))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot))
 			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S)
-				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
+				boutput(user, "You try to put the goggles back into the [pigeon_controller ? "P1G30N" : "hat"] but it grumps at you, not recognizing the goggles.")
 				return 1
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
@@ -527,11 +588,13 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					var/obj/item/clothing/head/det_hat/gadget/newgadget = new /obj/item/clothing/head/det_hat/gadget(get_turf(S))
 					if (S.is_inspector)
 						newgadget.make_inspector()
+				else if (istype(S, /mob/living/critter/robotic/scuttlebot/mail))
+					new /obj/item/clothing/suit/pigeon(get_turf(S))
 				else
 					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 					if (S.is_inspector)
 						newscuttle.make_inspector()
-			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			boutput(user, "You stuff the goggles back into the [pigeon_controller ? "Carrier Pigeon" : "detgadget hat"]. It powers down with a low whirr.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
@@ -545,6 +608,13 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		..()
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()
+	mail
+		name = "P1G30N remote controller"
+		desc = "A pair of VR goggles connected to a remote pigeon. Use them on the scuttlebot to turn it back into a plushie."
+		icon_state = "vr_dungeon_exit"
+		item_state = "vr_dungeon_exit"
+
+		pigeon_controller = TRUE
 
 /obj/item/clothing/glasses/vr_fake //Only exist IN THE MATRIX.  Used to log out.
 	name = "\improper VR goggles"
@@ -576,6 +646,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
+	flash_compatible = TRUE
 	var/scan_upgrade = 0
 	var/health_scan = 0
 	color_r = 0.85
@@ -641,6 +712,8 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	name = "spectroscopic scanner goggles"
 	icon_state = "spectro"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	desc = "Goggles with an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	color_r = 1 // pink tint?
 	color_g = 0.8
@@ -663,6 +736,55 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	icon_state = "spectro_monocle"
 	item_state = "spectro_monocle"
 	desc = "Such a dapper eyepiece! And a practical one at that."
+
+// Glasses that allow the wearer to scan plants & seeds
+TYPEINFO(/obj/item/clothing/glasses/phyto)
+	mats = 6
+
+/obj/item/clothing/glasses/phyto
+	name = "phytoscopic analyzer goggles"
+	icon_state = "phyto"
+	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
+	desc = "Goggles with a modified variant of the Raman spectroscope for rapid qualitative and quantitative analysis of botanical samples."
+	color_r = 0.7
+	color_g = 0.9
+	color_b = 0.7
+	var/vision_type = PHYTOVISION_NORMAL
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 5)
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/analyzer/phytoscopic_upgrade))
+			if (src.vision_type >= PHYTOVISION_UPGRADED)
+				boutput(user, SPAN_ALERT("[src] already has a gene scan upgrade!"))
+				return
+			src.vision_type = PHYTOVISION_UPGRADED
+			var/mob/living/carbon/human/human_user = user
+			if (istype(human_user) && human_user.glasses == src)
+				APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src, src.vision_type)
+			src.icon_state = "phyto-upgraded"
+			boutput(user, SPAN_NOTICE("Gene scan upgrade installed."))
+			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
+			user.u_equip(W)
+			qdel(W)
+			return
+		return ..()
+
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src, src.vision_type)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_PHYTOVISION, src)
+
+/obj/item/clothing/glasses/phyto/upgraded
+	icon_state = "phyto-upgraded"
+	vision_type = PHYTOVISION_UPGRADED
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
@@ -738,9 +860,9 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 				boutput(H, SPAN_ALERT("<B>Your nightvision goggles malfunction!</B>"))
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
-				H.bioHolder.AddEffect("bad_eyesight")
+				H.bioHolder.AddEffect("bad_eyesight_temp")
 				SPAWN(10 SECONDS)
-					H.bioHolder.RemoveEffect("bad_eyesight")
+					H.bioHolder.RemoveEffect("bad_eyesight_temp")
 
 	flashblocking //Admin or gimmick spawn option
 		name = "advanced night vision sechud goggles"
@@ -835,6 +957,8 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	desc = "Goggles with an integrated local atmospheric pressure scanner, capable of providing a visualization of surrounding air pressure."
 	icon_state = "atmos"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	abilities = list(/obj/ability_button/atmos_goggle_toggle)
 	var/list/image/atmos_overlays = list()
 	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
@@ -893,6 +1017,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	name = "blue-light filtering glasses"
 	desc = "A pair of glasses that reduce eye-strain from staring a computer screen all shift."
 	icon_state = "oglasses"
+	flash_compatible = TRUE
 	// would be nice if these tinted TGUI
 
 	color_r = 1

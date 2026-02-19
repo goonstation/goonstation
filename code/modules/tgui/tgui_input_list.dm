@@ -100,11 +100,8 @@
 	src.start_with_search = start_with_search == "auto" ? length(items) > 10 : start_with_search
 	src.capitalize = capitalize
 
-	// Gets rid of illegal characters
-	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
-
 	for(var/i in items)
-		var/string_key = allowIllegal ? i : whitelistedWords.Replace("[i]", "")
+		var/string_key = allowIllegal ? i : strip_illegal_characters(i)
 
 		src.items += string_key
 		src.items_map[string_key] = i

@@ -6,4 +6,4 @@
 
 //https://stackoverflow.com/questions/36389130/how-to-calculate-the-day-of-the-week-based-on-unix-time
 //thank u stack overflow
-#define IS_IT_FRIDAY (floor((BUILD_TIME_UNIX / 86400) + 4) % 7)
+#define IS_IT_FRIDAY ((floor((BUILD_TIME_UNIX / 86400) + 4) % 7) == 5)

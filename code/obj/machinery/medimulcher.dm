@@ -100,7 +100,7 @@
 						playsound(user.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 75)
 						boutput(user, SPAN_COMBAT("[src] lashes out and gnaws on your arm! [prob(50) ? "Holy shit!" : "What the fuck?"]"))
 			else
-				boutput(user, SPAN_ALERT("[src] doesn't respond to your touch."))
+				boutput(user, SPAN_ALERT("[src] doesn't respond."))
 			src.last_poke_time = TIME
 
 	attackby(obj/item/W, mob/user)

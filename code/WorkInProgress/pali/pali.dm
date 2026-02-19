@@ -104,11 +104,11 @@
 	desc = "An offshoot species of <i>branta canadensis</i> adapted for being a jerk."
 	icon_state = "untitled"
 	icon_state_dead = "untitled-dead"
-	speechverb_say = "honks"
-	speechverb_exclaim = "calls"
-	speechverb_ask = "warbles"
-	speechverb_gasp = "mumbles"
-	speechverb_stammer = "cackles"
+	speech_verb_say = "honks"
+	speech_verb_exclaim = "calls"
+	speech_verb_ask = "warbles"
+	speech_verb_gasp = "mumbles"
+	speech_verb_stammer = "cackles"
 	death_text = "%src% lets out a final weak honk and keels over."
 	feather_color = list("#f2ebd5","#ffffff")
 	flags = null
@@ -173,12 +173,13 @@
 	var/loc_maptext_y = 0
 	New()
 		..()
-		loc.maptext = loc_maptext
-		loc.maptext_width = loc_maptext_width
-		loc.maptext_height = loc_maptext_height
-		loc.maptext_x = loc_maptext_x
-		loc.maptext_y = loc_maptext_y
-		qdel(src)
+		SPAWN(0)
+			loc.maptext = loc_maptext
+			loc.maptext_width = loc_maptext_width
+			loc.maptext_height = loc_maptext_height
+			loc.maptext_x = loc_maptext_x
+			loc.maptext_y = loc_maptext_y
+			qdel(src)
 
 
 // I'm archiving a slightly improved version of the hell portal which is now gone
@@ -286,9 +287,9 @@
 	can_throw = 0
 	can_grab = 0
 	can_disarm = 0
-	speechverb_say = "rattles"
-	speechverb_exclaim = "rattles"
-	speechverb_ask = "rattles"
+	speech_verb_say = "rattles"
+	speech_verb_exclaim = "rattles"
+	speech_verb_ask = "rattles"
 	flags = TABLEPASS
 	fits_under_table = 1
 	blood_id = "iron"
@@ -575,7 +576,7 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 				if (M == L)
 					boutput(M, SPAN_ALERT("You are sucked into \the [src]!"))
 				else if (isadmin(M) && !M.client.player_mode)
-					boutput(M, SPAN_ALERT("[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a>"))
+					boutput(M, SPAN_ALERT("[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='byond://?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a>"))
 				else
 					boutput(M, SPAN_ALERT("[L] is sucked into \the [src]!"))
 
@@ -630,27 +631,41 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, proc/toggle_can_switch_target)
 /obj/item/kitchen/utensil/knife/tracker
 	name = "target tracker knife"
-	icon_state = "knife_onedir"
+	icon_state = "tracking_knife"
 	desc = "Poor man's pinpointer. Just stab someone to track where they are!"
 	force = 4
 	throwforce = 6
 	var/can_switch_target = TRUE
+	var/eye_open = FALSE
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		if(can_switch_target)
 			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
+		if (!src.eye_open)
+			src.eye_open = TRUE
+			src.icon_state = "tracking_knife_tracking"
+			flick("tracking_knife_eye_open", src)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		. = ..()
 		if(ismob(hit_atom) && can_switch_target)
 			src.AddComponent(/datum/component/angle_watcher, hit_atom, base_transform=matrix())
+		if (!src.eye_open)
+			src.eye_open = TRUE
+			src.icon_state = "tracking_knife_tracking"
+			flick("tracking_knife_eye_open", src)
 
 	clean_forensic()
 		. = ..()
 		if(can_switch_target)
 			src.GetComponent(/datum/component/angle_watcher)?.RemoveComponent()
 			animate(src, transform=null, time=2 SECONDS, flags=ANIMATION_PARALLEL, easing=ELASTIC_EASING)
+			if (src.eye_open)
+				src.eye_open = FALSE
+				src.icon_state = "tracking_knife"
+				flick("tracking_knife_eye_close", src)
+
 
 	proc/set_target()
 		set name = "Set Target"
@@ -660,9 +675,11 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 				"Select a target to track with this knife.")?.output
 		if(target)
 			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
+			src.icon_state = "tracking_knife_tracking"
 		else
 			src.GetComponent(/datum/component/angle_watcher)?.RemoveComponent()
 			animate(src, transform=null, time=2 SECONDS, flags=ANIMATION_PARALLEL, easing=ELASTIC_EASING)
+			src.icon_state = "tracking_knife"
 
 	proc/toggle_can_switch_target()
 		set name = "Toggle Target Switching"

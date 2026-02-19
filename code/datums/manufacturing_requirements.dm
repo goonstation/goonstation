@@ -92,6 +92,12 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	id = "conductive_high"
 	property_threshold = 8
 
+/datum/manufacturing_requirement/match_property/thermal_conductive
+	name = "Thermally Conductive"
+	id = "heat"
+	property_id = "thermal"
+	property_threshold = 6
+
 /datum/manufacturing_requirement/match_property/dense
 	name = "High Density Matter"
 	id = "dense"
@@ -275,6 +281,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 	requirement_ids = list(
 		"dense_property_ultra",
 		"crystal",
+	)
+
+/datum/manufacturing_requirement/mixed/dense_thermal
+	name = "Very High Density Thermal Conductor"
+	id = "heat_dense"
+	requirement_ids = list(
+		"dense_super",
+		"heat",
 	)
 
 /datum/manufacturing_requirement/mixed/metal

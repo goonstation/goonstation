@@ -178,7 +178,9 @@ datum/v_space
 
 	proc/create_Vcharacter(var/mob/user, var/network_device, var/network, turf/B)
 		var/mob/living/carbon/human/virtual/virtual_character
-
+		var/ghost_name = 0
+		if(isobserver(user) && !isAIeye(user))
+			ghost_name = user.real_name
 		if (inactive_bodies.len)
 			virtual_character = inactive_bodies[1]
 			inactive_bodies -= virtual_character
@@ -187,7 +189,7 @@ datum/v_space
 				inactive_bodies -= virtual_character
 			virtual_character.full_heal()
 		else
-			virtual_character = new(B)
+			virtual_character = new(B, ghost_name)
 
 		virtual_character.network_device = network_device
 		virtual_character.body = user
@@ -238,6 +240,8 @@ datum/v_space
 
 		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
 		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color
+
+		character.bioHolder.mobAppearance.pronouns = user.bioHolder.mobAppearance.pronouns
 
 		sanitize_null_values(character)
 

@@ -1,7 +1,17 @@
+TYPEINFO(/mob/dead)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_GHOST)
+
 /mob/dead
 	stat = STAT_DEAD
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	pass_unstable = FALSE
+	use_speech_bubble = TRUE
+	default_speech_output_channel = SAY_CHANNEL_DEAD
+
 	///Our corpse, if one exists
 	var/mob/living/corpse
 
@@ -10,6 +20,7 @@
 	..()
 	src.flags |= UNCRUSHABLE
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)
@@ -19,14 +30,12 @@
 /mob/dead/Cross(atom/movable/mover)
 	return 1
 
-/mob/dead/say_understands()
-	return 1
-
 /mob/dead/can_strip()
 	return 0
 
 /mob/dead/Login()
 	. = ..()
+
 	if(client?.holder?.ghost_interaction)
 		setalive(src)
 
@@ -51,11 +60,11 @@
 		..()
 	else
 		if (GET_DIST(src, target) > 0)
-			src.set_dir(get_dir(src, target))
+			src.set_dir(get_dir_accurate(src, target))
 		src.examine_verb(target)
 
 /mob/dead/process_move(keys)
-	if(keys && src.move_dir && !src.override_movement_controller && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
+	if(keys && src.move_dir && !src.get_active_movement_controller() && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
 		var/mob/dead/O = src
 		O.set_loc(get_turf(src))
 	. = ..()
@@ -64,51 +73,13 @@
 	// INVIS_ALWAYS ghosts are logged out/REALLY hidden.
 	return (P.hits_ghosts && (src.invisibility != INVIS_ALWAYS))
 
-/mob/dead/say(var/message)
-	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	if (!message)
-		return
-
-	..()
-	if (dd_hasprefix(message, "*"))
-		return src.emote(copytext(message, 2),1)
-
-	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
-
-	if (src.client && src.client.ismuted())
-		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
-		return
-
-	if(src?.client?.preferences.auto_capitalization)
-		message = capitalize(message)
-
-	phrase_log.log_phrase("deadsay", message)
-	. = src.say_dead(message)
-
-	for (var/mob/M in hearers(null, null))
-		if (!M.stat)
-			if (M.job == "Chaplain")
-				if (prob (80))
-					M.show_message(SPAN_REGULAR("<i>You hear muffled speech... but nothing is there...</i>"), 2)
-				else
-					M.show_message(SPAN_REGULAR("<i>[stutter(message)]</i>"), 2)
-			else
-				if (prob(90))
-					return
-				else if (prob (95))
-					M.show_message(SPAN_REGULAR("<i>You hear muffled speech... but nothing is there...</i>"), 2)
-				else
-					M.show_message(SPAN_REGULAR("<i>[stutter(message)]</i>"), 2)
-
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
-	if (!deadchat_allowed)
+	if (!global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DEAD).enabled)
 		src.show_text("<b>Deadchat is currently disabled.</b>")
 		return
 	..()
 	var/message = null
 	switch (lowertext(act))
-
 		if ("fart")
 			if (farting_allowed && src.emote_check(voluntary, 25, 1, 0))
 				var/fluff = pick("spooky", "eerie", "ectoplasmic", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")
@@ -199,7 +170,7 @@
 			GH.change_points(5)
 
 #endif
-		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
+		log_emote(src, html_encode(message), voluntary)
 		src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]"),group = "[src]_[lowertext(act)]")
 		return 1
 	return 0

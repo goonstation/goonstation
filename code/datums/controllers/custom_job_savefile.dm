@@ -1,12 +1,12 @@
 /datum/job_controller/proc/convert_to_cloudsave(client/user)
-	if(!user || IsGuestKey( user.key ))
+	if(!user)
 		return FALSE
 	//convert cloudsave save to cloudsave data a a a a aaaaaaaaaa
 	for(var/i in 1 to CUSTOMJOB_SAVEFILE_PROFILES_MAX)
-		var/save = user.player.cloudSaves.getSave("custom_job_[i]")
+		var/save = user.player?.cloudSaves.getSave("custom_job_[i]")
 		if(save)
-			user.player.cloudSaves.putData("custom_job_[i]", save)
-			user.player.cloudSaves.deleteSave("custom_job_[i]")
+			user.player?.cloudSaves.putData("custom_job_[i]", save)
+			user.player?.cloudSaves.deleteSave("custom_job_[i]")
 
 	//convert old savefiles to cloudsave
 	var/path = "data/admin_custom_job_saves/[user.ckey].sav"
@@ -67,7 +67,8 @@
 			F["[i]_items_in_belt"] >> converter.items_in_belt
 			if(isnull(converter.items_in_belt))
 				converter.items_in_belt = list()
-			F["[i]_announce_on_join"] >> converter.announce_on_join
+			F["[i]_announce_on_join"] >> converter.world_announce_priority //Backup to keep old job saves the same
+			F["[i]_world_announce_priority"] >> converter.world_announce_priority
 			F["[i]_add_to_manifest"] >> converter.add_to_manifest
 			F["[i]_radio_announcement"] >> converter.radio_announcement
 			F["[i]_spawn_id"] >> converter.spawn_id
@@ -77,7 +78,7 @@
 			var/savefile/F2 = savefile_save(converter)
 			F2["profile_number"] << i
 			var/exported = F2.ExportText()
-			user.player.cloudSaves.putData("custom_job_[i]", exported)
+			user.player?.cloudSaves.putData("custom_job_[i]", exported)
 	fdel(path) //once we're in cloudland, nuke it
 
 
@@ -123,24 +124,16 @@
 
 
 /datum/job_controller/proc/cloudsave_save(client/user, profileNum)
-	if (user)
-		if (IsGuestKey( user.key ))
-			return FALSE
-
 	var/savefile/save = src.savefile_save(src.job_creator)
 	save["profile_number"] << profileNum
 	var/exported = save.ExportText()
 
-	user.player.cloudSaves.putData("custom_job_[profileNum]", exported)
+	user.player?.cloudSaves.putData("custom_job_[profileNum]", exported)
 	return TRUE
 
 
 /datum/job_controller/proc/cloudsave_load(client/user, profileNum)
-	if (user)
-		if (IsGuestKey(user.key))
-			return FALSE
-
-	var/cloudSaveData = user.player.cloudSaves.getData("custom_job_[profileNum]")
+	var/cloudSaveData = user.player?.cloudSaves.getData("custom_job_[profileNum]")
 
 	var/savefile/save = new
 	save.ImportText( "/", cloudSaveData )
@@ -157,7 +150,7 @@
 
 	var/list/job_names = list()
 	for(var/i in 1 to CUSTOMJOB_SAVEFILE_PROFILES_MAX)
-		var/save = user.player.cloudSaves.getData("custom_job_[i]")
+		var/save = user.player?.cloudSaves.getData("custom_job_[i]")
 		if(save)
 			F.ImportText("/", save)
 			var/job_name = null

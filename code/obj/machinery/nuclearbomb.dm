@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	icon_state = "nuclearbomb"//1"
 	density = 1
 	anchored = UNANCHORED
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	_health = 150
 	_max_health = 150
 	processing_tier = PROCESSING_FULL
@@ -18,6 +18,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/motion_sensor_triggered = 0
 	var/done = 0
 	var/debugmode = 0
+	var/emagged = FALSE
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
 	var/obj/item/record/record = null
@@ -267,7 +268,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 				return
 
 			var/timer_modifier = 0
-			if (isnukeop(user))
+			if (istrainedsyndie(user))
 				timer_modifier = -src.timer_modifier_disk
 				user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
 			else
@@ -365,6 +366,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.take_damage(power)
 		return
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(!src.emagged)
+			boutput(user, SPAN_ALERT("You try jamming [E] into [src]'s authentication disk slot. That's definitely gonna void the warranty."))
+			src.name = "buclear nomb"
+			src.emagged = TRUE
+			return TRUE
+		return FALSE
+
 	meteorhit()
 		src.take_damage(rand(30,60))
 
@@ -411,16 +420,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			return
 		src._health = max(0,src._health - amount)
 		if (src._health < 1)
+			var/mode_bomb
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+				var/datum/game_mode/nuclear/gamemode = ticker.mode
+				if(gamemode.the_bomb == src)
+					mode_bomb = "(GAMEMODE'S BOMB)"
 			src.visible_message("<b>[src]</b> breaks and falls apart into useless pieces!")
 			robogibs(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
-			var/datum/game_mode/nuclear/gamemode = null
-			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear) && src.boom_size == "nuke")
-				gamemode = ticker.mode
-				gamemode.the_bomb = null
-				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")
-				message_admins("The nuclear bomb was destroyed at [log_loc(src)].")
-				message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)]!")
+			logTheThing(LOG_GAMEMODE, null, "[src][mode_bomb] was destroyed at [log_loc(src)].")
+			message_admins("<b>[src][mode_bomb]</b> was destroyed at [log_loc(src)].")
+			message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)]!")
 			qdel(src)
 
 	proc/explode()
@@ -454,14 +464,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		//explosion(src, src.loc, 35, 45, 55, 55)
 
 
-#ifdef MAP_OVERRIDE_MANTA
-		world.showCinematic("manta_nukies")
-#else
 		var/datum/hud/cinematic/cinematic = new
 		for (var/client/C in clients)
 			cinematic.add_client(C)
 		cinematic.play("nuke")
-#endif
 		if(istype(gamemode))
 			gamemode.nuke_detonated = 1
 			gamemode.check_win()
@@ -478,13 +484,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		creepify_station()
 
-		if(!istype(gamemode))
-			sleep(1 SECOND)
-			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
-
-			sleep(30 SECONDS)
-			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
-			Reboot_server()
+		if(!istype(gamemode)) //The station exploded, the cinematic has played, end the round naturally instead of forcing a reboot
+			ticker.mode.force_round_finished = TRUE
 
 	proc/change_status_display()
 		var/datum/signal/status_signal = get_free_signal()
@@ -599,11 +600,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		return FALSE
 
 	get_desc(dist, mob/user)
-		var/can_user_recognize = !extremely_convincing && \
-			( \
-				user?.mind?.get_antagonist(ROLE_NUKEOP) || user?.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER) || \
-				dist <= src.recognizable_range || (FACTION_SYNDICATE in user?.faction) \
-			)
+		var/can_user_recognize = !extremely_convincing && (istrainedsyndie(user) || dist <= src.recognizable_range)
 		if(isnull(src.our_bomb?.deref()) || can_user_recognize)
 			. = "<br>An extremely powerful balloon capable of deceiving the whole station."
 		else

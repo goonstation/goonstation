@@ -31,13 +31,14 @@
 
 	New()
 		..()
-		src.create_reagents(src.fuel_capacity)
-		src.reagents.add_reagent("fuel", src.fuel_capacity)
-		src.inventory_counter.update_number(src.get_fuel())
+		if(src.fuel_capacity)
+			src.create_reagents(src.fuel_capacity)
+			src.reagents.add_reagent("fuel", src.fuel_capacity)
+			src.inventory_counter.update_number(src.get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
 
-		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
+		src.AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
 
 		// Welder + rods  -> Welder/Rods Assembly
 		src.AddComponent(/datum/component/assembly, /obj/item/rods, PROC_REF(welder_rod_construction), TRUE)
@@ -65,7 +66,8 @@
 
 	examine()
 		. = ..()
-		. += "It has [get_fuel()] units of fuel left!"
+		if (src.fuel_capacity)
+			. += "It has [src.get_fuel()] units of fuel left!"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (is_special)
@@ -326,6 +328,12 @@
 	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, with a green handle."
 	icon_state = "weldingtool-off-green"
 	icon_state_variant_suffix = "-green"
+
+/obj/item/weldingtool/purple
+	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, with an eccentric purple handle."
+	icon_state = "weldingtool-off-purple"
+	icon_state_variant_suffix = "-purple"
+
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"

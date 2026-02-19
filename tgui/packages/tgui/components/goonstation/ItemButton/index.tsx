@@ -44,7 +44,7 @@ export const ItemButton = (props: ItemButtonProps) => {
   } = props;
 
   return (
-    <Stack style={{ display: 'inline-flex' }}>
+    <Stack style={{ display: 'inline-flex' }} g={0}>
       <ItemButtonMainButton
         image={image}
         name={name}

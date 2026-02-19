@@ -278,8 +278,9 @@
 	icon_greenlight = null
 	secure = 2
 	can_leghole = FALSE
+	object_flags = 0
 
-	close()
+	close(var/entangleLogic, mob/user)
 		..()
 		if(!src.locked)
 			src.locked = 1

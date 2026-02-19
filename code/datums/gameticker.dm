@@ -1,5 +1,6 @@
 var/global/datum/controller/gameticker/ticker
 var/global/current_state = GAME_STATE_INVALID
+var/global/game_force_started = FALSE
 
 #define LATEJOIN_FULL_WAGE_GRACE_PERIOD 9 MINUTES
 /datum/controller/gameticker
@@ -82,7 +83,7 @@ var/global/current_state = GAME_STATE_INVALID
 				// hey boo the rounds starting and you didnt ready up
 				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
-					if (!P.ready)
+					if (!P.ready_play && !P.ready_tutorial)
 						targets += P
 				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
 				did_reminder = TRUE
@@ -174,23 +175,39 @@ var/global/current_state = GAME_STATE_INVALID
 	else
 		src.mode.announce()
 
+	// setup initial special random jobs based on roundstart count of players
+	var/latejoin_job_count = clamp(ceil(src.roundstart_player_count(FALSE) / 7), 5, 15)
+	var/list/datum/job/latejoin_jobs = list()
+	for (var/datum/job/J in global.job_controls.special_jobs)
+		if (istype(J, /datum/job/special/random))
+			latejoin_jobs += J
+	var/count = 0
+	while(count < latejoin_job_count && length(latejoin_jobs))
+		var/datum/job/J = pick(latejoin_jobs)
+		latejoin_jobs -= J
+		if (J.limit >= 1)
+			continue
+		J.limit = 1
+		count++
+	logTheThing(LOG_DEBUG, null, "Dynamic latejoin scaling added [latejoin_job_count] random jobs")
+
 	logTheThing(LOG_DEBUG, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
 	message_admins("Chosen game mode: [mode] ([master_mode]).")
 
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()
 
-#ifdef RP_MODE
-	looc_allowed = 1
+#if defined(RP_MODE) || defined(NIGHTSHADE)
+	global.toggle_looc_allowed(TRUE)
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
-	ooc_allowed = 0
+	global.toggle_ooc_allowed(FALSE)
 	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
 	if (istype(src.mode, /datum/game_mode/construction))
-		looc_allowed = 1
+		global.toggle_looc_allowed(TRUE)
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	else
-		ooc_allowed = 0
+		global.toggle_ooc_allowed(FALSE)
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #endif
 #ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
@@ -200,7 +217,7 @@ var/global/current_state = GAME_STATE_INVALID
 		if (!istype(C.mob,/mob/new_player))
 			continue
 		var/mob/new_player/P = C.mob
-		if (P.ready)
+		if (P.ready_play)
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
@@ -271,24 +288,22 @@ var/global/current_state = GAME_STATE_INVALID
 
 		for(var/mob/new_player/lobby_player in mobs)
 			if(lobby_player.client)
-				if(lobby_player.client.antag_tokens > 0)
-					winset(lobby_player, "joinmenu", "size=240x200")
-					winset(lobby_player, "joinmenu.observe", "pos=18,136")
-					winset(lobby_player, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=false")
-				winset(lobby_player, "joinmenu.button_joingame", "is-disabled=false;is-visible=true")
-				winset(lobby_player, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
-
-		//Setup the hub site logging
-		var hublog_filename = "data/stats/data.txt"
-		if (fexists(hublog_filename))
-			fdel(hublog_filename)
-
-		hublog = file(hublog_filename)
-		hublog << ""
+				lobby_player.update_joinmenu()
 
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 		roundManagement.recordUpdate(mode)
+
+#ifdef GENERATE_GOONHUB_MAP
+	SPAWN(3.5 SECONDS)
+		var/client/map_client
+		UNTIL((map_client = locate() in clients), 10 SECONDS)
+		if (isnewplayer(map_client.mob))
+			var/mob/new_player/dude = map_client.mob
+			dude.observe_round()
+			UNTIL(!isnewplayer(map_client.mob), 10 SECONDS)
+		map_client.mapWorld(automated = TRUE)
+#endif
 
 #ifdef BAD_MONKEY_NO_BANANA
 	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
@@ -298,6 +313,9 @@ var/global/current_state = GAME_STATE_INVALID
 	SPAWN(10 MINUTES) // standard engine warning
 		for_by_tcl(E, /obj/machinery/computer/power_monitor/smes)
 			LAGCHECK(LAG_LOW)
+			var/area/A = get_area(E) // only check the main (engine) pnet
+			if (!istype(A, /area/station) || istype(A, /area/station/engine/substation) || istype(A, /area/station/solar) || istype(A, /area/station/maintenance/solar))
+				continue
 			var/datum/powernet/PN = E.get_direct_powernet()
 			if(PN?.avail <= 0)
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning", alert_origin = ALERT_STATION)
@@ -321,13 +339,13 @@ var/global/current_state = GAME_STATE_INVALID
 	for (var/client/C in global.clients)
 		var/mob/new_player/mob = C.mob
 		if (istype(mob))
-			if (mob.ready)
+			if (mob.ready_play)
 				readied_count++
 			else
 				unreadied_count++
 	var/total = readied_count + (unreadied_count/2)
 	if (loud)
-		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+		logTheThing(LOG_GAMEMODE, null, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
 	return total
 
 //Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
@@ -340,9 +358,9 @@ var/global/current_state = GAME_STATE_INVALID
 			try
 				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
 			catch (var/exception/e)
-				logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
-				logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
-				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_ADMIN, null, "The automated map switch vote couldn't run because: [e.name]")
+				logTheThing(LOG_DIARY, null, "The automated map switch vote couldn't run because: [e.name]", "admin")
+				message_admins("The automated map switch vote couldn't run because: [e.name]")
 
 /datum/controller/gameticker
 	proc/distribute_jobs()
@@ -350,6 +368,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 	proc/create_characters()
 		// SHOULD_NOT_SLEEP(TRUE)
+		var/tutorial_offset = 0.2 SECONDS
 		for (var/mob/new_player/player in mobs)
 #ifdef TWITCH_BOT_ALLOWED
 			if (player.twitch_bill_spawn)
@@ -357,7 +376,7 @@ var/global/current_state = GAME_STATE_INVALID
 				continue
 #endif
 
-			if (player.ready)
+			if (player.ready_play)
 				var/datum/player/P
 				if (player.mind)
 					P = player.mind.get_player()
@@ -394,6 +413,11 @@ var/global/current_state = GAME_STATE_INVALID
 						player.client.use_antag_token()	//Removes a token from the player
 					player.create_character()
 					qdel(player)
+			else if (player.ready_tutorial)
+				boutput(player, SPAN_ALERT("Spawning the tutorial area in [ceil(tutorial_offset/10)] second[s_es(ceil(tutorial_offset/10))]."))
+				SPAWN(tutorial_offset)
+					player.play_tutorial()
+				tutorial_offset += 0.2 SECONDS
 
 	proc/add_minds(var/periodic_check = 0)
 		// SHOULD_NOT_SLEEP(TRUE)
@@ -465,20 +489,34 @@ var/global/current_state = GAME_STATE_INVALID
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				// adjust the counter up or down and keep it within the set boundaries
-				if (world.cpu >= TICKLAG_CPU_MAX)
-					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
-						highCpuCount++
-				else if (world.cpu <= TICKLAG_CPU_MIN)
-					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
-						highCpuCount--
+				// Pre-compute the next lower tick-lag and what CPU would look like
+				var/next_lower_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
+				var/pred_cpu_low = world.cpu * (world.tick_lag / next_lower_tick_lag)
+				var/pred_map_low = world.map_cpu * (world.tick_lag / next_lower_tick_lag)
 
-				if (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+				// CPU counters
+				var/cpu_over_high = (world.cpu >= TICKLAG_CPU_MAX)
+				var/cpu_over_predicted = ((pred_cpu_low >= TICKLAG_CPU_MAX) && (highCpuCount < 0))
+				var/cpu_low = (((world.cpu <= TICKLAG_CPU_MIN) && (pred_cpu_low < TICKLAG_CPU_MAX)) || ((world.cpu <= TICKLAG_CPU_MIN) && (highCpuCount > 0)))
+
+				if (cpu_over_high || cpu_over_predicted)
+					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
+						++highCpuCount
+				else if (cpu_low)
+					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						--highCpuCount
+
+				// Map-CPU counters
+				var/map_over_high = (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+				var/map_over_predicted = ((pred_map_low >= TICKLAG_MAPCPU_MAX) && (highMapCpuCount < 0))
+				var/map_low = (((world.map_cpu <= TICKLAG_MAPCPU_MIN) && (pred_map_low < TICKLAG_MAPCPU_MAX)) || ((world.map_cpu <= TICKLAG_MAPCPU_MIN) && (highMapCpuCount > 0)))
+
+				if (map_over_high || map_over_predicted)
 					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
-						highMapCpuCount++
-				else if (world.map_cpu <= TICKLAG_MAPCPU_MIN)
+						++highMapCpuCount
+				else if (map_low)
 					if (highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
-						highMapCpuCount--
+						--highMapCpuCount
 
 				// adjust the tick_lag, if needed
 				var/dilated_tick_lag
@@ -500,7 +538,7 @@ var/global/current_state = GAME_STATE_INVALID
 			src.add_minds(1)
 			src.last_readd_lost_minds_to_ticker = world.time
 
-		if(mode.check_finished())
+		if(mode.check_finished() || mode.force_round_finished)
 			current_state = GAME_STATE_FINISHED
 
 			// This does a little more than just declare - it handles all end of round processing
@@ -528,10 +566,8 @@ var/global/current_state = GAME_STATE_INVALID
 				for(var/client/client in global.clients)
 					image_group.add_client(client)
 
-			// i feel like this should probably be a proc call somewhere instead but w/e
-			if (!ooc_allowed)
-				ooc_allowed = 1
-				boutput(world, "<B>OOC is now enabled.</B>")
+			global.toggle_ooc_allowed(TRUE)
+			boutput(world, "<B>OOC is now enabled.</B>")
 
 			SPAWN(5 SECONDS)
 				//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] game-ending spawn happening")
@@ -893,6 +929,10 @@ var/global/current_state = GAME_STATE_INVALID
 		cloud_saves_put_data_bulk(bulk_commit)
 		logTheThing(LOG_DEBUG, null, "Done with spacebux")
 
+	logTheThing(LOG_DEBUG, null, "Starting round end drops...")
+	src.do_roundend_drops()
+	logTheThing(LOG_DEBUG, null, "Done with round end drops")
+
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
 
@@ -932,9 +972,10 @@ var/global/current_state = GAME_STATE_INVALID
 					E.show_inspector_report()
 					E.addAbility(/datum/targetable/inspector_report)
 				SPAWN(0)
-					E.mind.personal_summary.generate_xp(E.key)
-					E.mind.personal_summary.ui_interact(E)
-					E.addAbility(/datum/targetable/personal_summary)
+					if (E.mind?.personal_summary)
+						E.mind?.personal_summary.generate_xp(E.key)
+						E.mind?.personal_summary.ui_interact(E)
+						E.addAbility(/datum/targetable/personal_summary)
 
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
@@ -948,5 +989,67 @@ var/global/current_state = GAME_STATE_INVALID
 	if (!src.creds)
 		src.creds = new /datum/crewCredits
 	return src.creds
+
+//% - this is the maximum possible chance with very few people on one server and a lot on another
+#define BASE_TOKEN_CHANCE 20
+// the ratio of players between this server and the highest one before drops start to occur
+//eg. 36 players on Morty, 60 on Sylvester = we start to drop tokens, at a very low chance
+#define RATIO_THRESHOLD 0.6
+
+/datum/controller/gameticker/proc/do_roundend_drops()
+	var/datum/game_server/self = global.game_servers.find_server(global.config.server_id)
+	var/self_player_count = world.total_player_count() //the game server datum for the current server doesn't report player count, wack
+	var/is_nightshade = findtext(self.name, "nightshade")
+	var/datum/game_server/highest_pop = null
+	for (var/server_id in global.game_servers.servers)
+		var/datum/game_server/server = global.game_servers.servers[server_id]
+		var/other_is_nightshade = findtext(server.name, "nightshade")
+		if ((!!is_nightshade) ^ (!!other_is_nightshade)) //rare non-bitwise xor use case!!
+			continue
+		if (text2num_safe(server.player_count) > text2num_safe(highest_pop?.player_count))
+			highest_pop = server
+
+	var/highest_player_count = text2num_safe(highest_pop.player_count)
+
+	logTheThing(LOG_DEBUG, null, "Round end drops: we are [is_nightshade ? "" : "not"] nightshade, highest population server is [highest_pop?.name] with [highest_player_count] players")
+
+	//for when nightshade is winding down and we don't want to be giving people free tokens every round
+	if (highest_player_count <= 20)
+		logTheThing(LOG_DEBUG, null, "All linked servers below population threshold, no round end drops.")
+		return
+
+	var/pop_ratio = self_player_count / highest_player_count
+	if (pop_ratio > RATIO_THRESHOLD)
+		logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [pop_ratio], greater than threshold [RATIO_THRESHOLD], aborting end round drops.")
+		return // servers are reasonably balanced, no drops for u
+
+	//scale by round length, normalised at 50 minutes
+	var/length_ratio = min(src.round_elapsed_ticks/(50 MINUTES), 1)
+
+	var/actual_token_chance = BASE_TOKEN_CHANCE * ((RATIO_THRESHOLD - pop_ratio) / RATIO_THRESHOLD) * length_ratio
+	logTheThing(LOG_DEBUG, null, "Population ratio with largest server: [self_player_count]/[highest_player_count]: [pop_ratio]. Round length [ticker.round_elapsed_ticks / 600] minutes, length scaling set at [length_ratio]. Starting end round drops with token chance [actual_token_chance]")
+
+	var/list/players = list()
+	for (var/mob/M as anything in mobs)
+		var/datum/player/player = M.mind?.get_player()
+		if (!player || (player in players))
+			continue
+		if (jobban_isbanned(M, "Syndicate"))
+			continue
+		players += player
+		//also scale by how long they've been in the round, no joining at the end just for the chance
+		var/time_ratio = player.current_playtime / ticker.round_elapsed_ticks
+		var/player_unique_chance = actual_token_chance * time_ratio
+		if (player.get_antag_tokens() >= 1)
+			boutput(M, SPAN_BOLD("You would have been eligable for an antag token drop this round, but you already have one!"))
+			continue
+		if (!prob(player_unique_chance))
+			continue //unlucky
+		player.set_antag_tokens(1)
+		boutput(M, SPAN_BOLD("You have recieved an antag token drop for playing on a less populated server!"))
+		logTheThing(LOG_DEBUG, M, "[player.key] received an antag token drop with chance [player_unique_chance]%")
+
+#undef BASE_TOKEN_CHANCE
+#undef RATIO_THRESHOLD
 
 #undef LATEJOIN_FULL_WAGE_GRACE_PERIOD

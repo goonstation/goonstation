@@ -574,7 +574,8 @@
 						var/turf/simulated/T = get_step(F, dir)
 						if (T && T.active_liquid && T.active_liquid.group == F.group)
 							dirs |= dir
-					fluid_ma.icon_state = num2text(dirs)
+
+					fluid_ma.icon_state = "[num2text(dirs)][F.gforce < GFORCE_TRACTION_PARTIAL ? "ng" : ""]"
 
 					if (F.overlay_refs && length(F.overlay_refs))
 						if (F)
@@ -582,6 +583,9 @@
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
+
+				if (fluid_ma.icon_state == "15" && F.last_depth_level >= 2)
+					fluid_ma.icon_state = "15-lines"
 			else
 				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 

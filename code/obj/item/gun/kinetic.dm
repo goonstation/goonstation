@@ -51,6 +51,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// `icon_state` of the muzzle flash of the gun (if any)
 	muzzle_flash = "muzzle_flash"
 
+	/// Feedback for incompatible ammo can be customized for clarity.
+	var/ammo_incompatible_msg = "This ammo won't fit!"
+
 	// caliber list: update as needed
 	// 0.22 - pistols
 	// 0.308 - rifles
@@ -62,8 +65,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
 	New()
-		if(silenced)
-			current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
 		..()
 		src.UpdateIcon()
 
@@ -123,7 +124,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					user.show_text("You can't reload this gun.", "red")
 					return
 				if(AMMO_RELOAD_INCOMPATIBLE)
-					user.show_text("This ammo won't fit!", "red")
+					user.show_text(src.ammo_incompatible_msg, "red")
 					return
 				if(AMMO_RELOAD_SOURCE_EMPTY)
 					user.show_text("There's no ammo left in [b.name].", "red")
@@ -133,12 +134,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					return
 				if(AMMO_RELOAD_PARTIAL)
 					user.visible_message(SPAN_ALERT("[user] reloads [src]."), SPAN_ALERT("There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining."))
-					src.tooltip_rebuild = 1
+					src.tooltip_rebuild = TRUE
 					src.logme_temp(user, src, b) // Might be useful (Convair880).
 					return
 				if(AMMO_RELOAD_FULLY)
 					user.visible_message(SPAN_ALERT("[user] reloads [src]."), SPAN_ALERT("You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name]."))
-					src.tooltip_rebuild = 1
+					src.tooltip_rebuild = TRUE
 					src.logme_temp(user, src, b)
 					return
 				if(AMMO_RELOAD_TYPE_SWAP)
@@ -214,9 +215,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				FLICK(flick_state, src)
 
-		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
-			user.inertia_dir = get_dir(target, user)
-			step(user, user.inertia_dir)
+		if(..() && user.traction != TRACTION_FULL)
+			user.inertia_dir = get_dir_accurate(target, user)
+			user.inertia_value = 1
+			step(user, user.inertia_dir) // Propel user in opposite direction
 
 	proc/eject_magazine(mob/user)
 		if (src.ammo.amount_left <= 0)
@@ -533,6 +535,30 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(src.current_projectile.shot_number > 1)
 			src.current_projectile.shot_number = 1
 
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/staple_gun))
+			var/obj/item/staple_gun/stapler = I
+			if (stapler.ammo <= 0)
+				boutput(user, SPAN_ALERT("You try loading staples from \the [I], but it's all out!"))
+			else
+				var/obj/item/ammo/bullets/staples/temp_ammo = new
+				temp_ammo.amount_left = stapler.ammo
+				temp_ammo.name = I.name
+				src.Attackby(temp_ammo, user)
+				temp_ammo.loadammo(temp_ammo, src)
+				stapler.ammo = temp_ammo.amount_left
+				qdel(temp_ammo)
+			return
+		if (istype(I, /obj/item/implant/projectile/staple))
+			var/obj/item/ammo/bullets/staples/temp_ammo = new
+			temp_ammo.amount_left = 1
+			src.Attackby(temp_ammo, user)
+			temp_ammo.loadammo(temp_ammo, src)
+			if (temp_ammo.amount_left == 0)
+				qdel(I)
+			qdel(temp_ammo)
+			return
+		. = ..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(failured)
@@ -623,7 +649,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new barrel.default_projectile)
 		src.projectiles = list(current_projectile)
 		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 
 /obj/item/gun/kinetic/revolver/vr
 	icon = 'icons/effects/VR.dmi'
@@ -669,10 +695,17 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 1
 	recoil_strength = 3
 	icon_recoil_cap = 30
+
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/HP)
 		..()
+
+	//override the shot sound and volume because we have a silencer
+	set_current_projectile(datum/projectile/newProj)
+		. = ..()
+		src.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+		src.current_projectile.shot_volume = 30
 
 /obj/item/gun/kinetic/capella
 	name = "\improper Capella Mk. 8 competition pistol"
@@ -794,6 +827,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_max = 14
 	recoil_inaccuracy_max = 20
 	rarity = 3
+	abilities = list(/obj/ability_button/toggle_scope)
 
 	New()
 		ammo = new default_magazine
@@ -801,9 +835,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
+
 /obj/item/gun/kinetic/dart_rifle
 	name = "tranquilizer rifle"
-	desc = "A veterinary tranquilizer rifle chambered in .308 caliber."
+	desc = "A veterinary tranquilizer rifle chambered in .308 caliber. This rifle can only accept .308 tranquilizer darts."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
@@ -824,6 +859,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	New()
 		ammo = new default_magazine
+		ammo_incompatible_msg = "[src] can only accept .308 tranquilizer darts!"
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart)
 		..()
 
@@ -1226,7 +1262,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "american180"
 	item_state = "a180"
 	spread_angle = 3
-	shoot_delay = 1
+	shoot_delay = 3
 	has_empty_state = FALSE // non detachable mag, for now...
 	w_class = W_CLASS_BULKY
 	force = MELEE_DMG_RIFLE
@@ -1468,7 +1504,25 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
+		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
 		..()
+
+	pickup(mob/user)
+		. = ..()
+		if (user.mind?.assigned_role == "Detective")
+			src.verbs |= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+
+	dropped(mob/user)
+		. = ..()
+		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+
+	verb/claim_colt()
+		set src in usr
+		set category = "Local"
+		set name = "Convert to Colt"
+
+		var/datum/jobXpReward/reward = global.xpRewards["The Colt"]
+		reward.try_claim(usr, FALSE)
 
 //0.393
 /obj/item/gun/kinetic/foamdartgun
@@ -1722,6 +1776,29 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_45)
+		..()
+
+
+//0.50
+
+/obj/item/gun/kinetic/bigiron
+	name = "Maelor 500 magnum"
+	desc = "An immense revolver from Mabinogi Firearms Company. You could probably stop a charging space bear with this thing. Or a bus."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	icon_state = "maelor"
+	item_state = "colt_saa"
+	w_class = W_CLASS_NORMAL
+	force = MELEE_DMG_RIFLE
+	ammo_cats = list(AMMO_DEAGLE)
+	rarity = 5
+	spread_angle = 1
+	max_ammo_capacity = 7
+	default_magazine = /obj/item/ammo/bullets/fivehundred
+	recoil_strength = 25
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		..()
 
 //0.58
@@ -2375,7 +2452,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		W.setMaterial(getMaterial("wood"))
 		W.name = "mangled chunk of wood"
 		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
-		W.icon = 'icons/obj/materials.dmi'
+		W.icon = 'icons/obj/items/materials/materials.dmi'
 		W.icon_state = "scrap4"
 
 		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris
@@ -2456,6 +2533,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
 	fire_animation = FALSE
 	recoil_strength = 20
+	abilities = list(/obj/ability_button/toggle_scope)
 
 	New()
 		ammo = new default_magazine
@@ -3382,6 +3460,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 3
 	recoil_strength = 15
 	recoil_inaccuracy_max = 0 // just to be nice :)
+	abilities = list(/obj/ability_button/toggle_scope)
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
@@ -3400,17 +3479,18 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 // WIP //////////////////////////////////
 /obj/item/gun/kinetic/antiair
 	name = "MORS-X anti-air rifle"
-	desc = "A ruthlessly powerful rifle firing 20mm frag rounds. Built to swat down UFOs out of the sky."
+	desc = "A ruthlessly powerful rifle firing .50 caliber frag rounds. Built to swat down UFOs out of the sky."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "antiair"
-	item_state = "missile_launcher"
+	item_state = "antiair"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = 10
 	contraband = 50
 	rarity = 5
-	ammo_cats = list(AMMO_CANNON_20MM)
+	ammo_cats = list(AMMO_DEAGLE) // whatever close enough
 	max_ammo_capacity = 4
 	auto_eject = 1
+	gildable = 1
 
 	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
@@ -3420,14 +3500,19 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 5
 	slowdown_time = 10
 
+	recoil_strength = 19
+	recoil_inaccuracy_max = 12
+	icon_recoil_cap = 30
+
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
+	abilities = list(/obj/ability_button/toggle_scope)
 
 
 	New()
-		ammo = new/obj/item/ammo/bullets/cannon/antiair
-		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/circle/antiair)
+		ammo = new/obj/item/ammo/bullets/antiair
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/antiair)
 		AddComponent(/datum/component/holdertargeting/sniper_scope, 10, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
@@ -3473,7 +3558,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	update_icon()
 		. = ..()
-		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
+		src.icon_state = initial(src.icon_state) + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
 
 	canshoot(mob/user)
 		if (!src.broke_open)
@@ -3513,7 +3598,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
 			src.toggle_action(user)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
-		..()
+		. = ..()
 
 	proc/toggle_action(mob/user)
 		if (!src.broke_open)
@@ -3528,3 +3613,25 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		UpdateIcon()
 
+/obj/item/gun/kinetic/sawnoff/long_barrel
+	name = "\improper Double Barrel Shotgun"
+	desc = "A bloody and worn double barreled shotgun. Details indicate recent usage in a last stand fight."
+	item_state = "double_barrel"
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	icon_state = "double_barrel"
+	gildable = FALSE
+	recoil_strength = 20
+	two_handed = TRUE
+	contraband = 5
+	force = MELEE_DMG_RIFLE
+	default_magazine = /obj/item/ammo/bullets/a12/bird/two
+
+	New()
+		..()
+		src.name = "\improper Double Barrel Shotgun"
+		if (prob(25))
+			src.name = pick("Last Stand", "Zombie Slayer", "Head Popper")
+		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		P.proj_data.shot_sound = 'sound/weapons/long_barrel.ogg'

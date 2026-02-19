@@ -86,6 +86,19 @@
 	minimum_task_ticks = 1
 	maximum_task_ticks = 3
 
+/datum/aiTask/timed/wander/floor_only
+/datum/aiTask/timed/wander/floor_only/on_tick()
+	var/list/valid_dirs = list()
+	for (var/dir in alldirs)
+		if (isfloor(get_step(holder.owner, dir)))
+			valid_dirs += dir
+	if (length(valid_dirs) == 0)
+		valid_dirs = alldirs // we're stranded!
+	holder.owner.move_dir = pick(valid_dirs)
+	holder.owner.process_move()
+	holder?.stop_move() // Just in case they yeet themselves out of existance
+	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
 // a timed task that also relates to a target and the acquisition of said target

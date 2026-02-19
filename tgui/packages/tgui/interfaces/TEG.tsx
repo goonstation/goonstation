@@ -53,7 +53,7 @@ export const TEG = () => {
   const formatTemperature = (temperature) =>
     `${temperature >= 1000 ? temperature.toExponential(3) : temperature} K`;
   return (
-    <Window height={520} width={300}>
+    <Window height={525} width={300}>
       <Window.Content>
         <Section title="Status">
           <LabeledList>

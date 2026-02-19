@@ -128,7 +128,7 @@
 		stored_info = list(name,desc,icon_state)
 
 	proc/flip()
-		tooltip_rebuild = 1 //makes sure the card tooltips get updated everytime
+		tooltip_rebuild = TRUE //makes sure the card tooltips get updated everytime
 		if(!facedown)
 			name = "playing card"
 			desc = "A face-down card."

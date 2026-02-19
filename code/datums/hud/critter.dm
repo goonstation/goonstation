@@ -34,6 +34,8 @@
 	var/atom/movable/screen/hud/bleeding = null
 	/// resting hud element
 	var/atom/movable/screen/hud/resting = null
+	/// gravity hud element
+	var/atom/movable/screen/hud/gravity = null
 
 	/// hud owner mob
 	var/mob/living/critter/master = null
@@ -65,6 +67,7 @@
 	src.create_health_element()
 	src.create_stamina_element()
 	src.create_temperature_element()
+	src.create_gravity_element()
 
 	// these elements rely on being able to breathe
 	if (src.master.get_health_holder("oxy"))
@@ -232,9 +235,9 @@
 
 			if ("mintent")
 				if (src.master.m_intent == "run")
-					src.master.m_intent = "walk"
+					src.master.set_m_intent("walk")
 				else
-					src.master.m_intent = "run"
+					src.master.set_m_intent("run")
 				boutput(src.master, "You are now [src.master.m_intent == "walk" ? "walking" : "running"]")
 				src.update_mintent()
 
@@ -376,7 +379,7 @@
 	if (!src.bleeding) return //doesn't have a hud element to update
 	if (isdead(src.master))
 		src.bleeding.icon_state = "blood0"
-		src.bleeding.tooltipTheme = "healthDam healthDam0"
+		src.bleeding.tooltip_options = list("theme" = "healthDam0")
 		return
 
 	var/state = 0
@@ -396,7 +399,7 @@
 			theme = 6
 
 	src.bleeding.icon_state = "blood[state]"
-	src.bleeding.tooltipTheme = "healthDam healthDam[theme]"
+	src.bleeding.tooltip_options = list("theme" = "healthDam[theme]")
 
 /// updates temperature hud element
 /datum/hud/critter/proc/update_temp_indicator()
@@ -404,7 +407,7 @@
 		return
 	if(src.master.getStatusDuration("burning") && !src.master.is_heat_resistant())
 		src.bodytemp.icon_state = "tempF" // on fire
-		src.bodytemp.tooltipTheme = "tempInd tempIndF"
+		src.bodytemp.tooltip_options = list("theme" = "tempIndF")
 		src.bodytemp.desc = "OH FUCK FIRE FIRE FIRE OH GOD FIRE AAAAAAA"
 		return
 
@@ -440,7 +443,7 @@
 			src.bodytemp.desc = "The temperature feels fine."
 
 	src.bodytemp.icon_state = "temp[state]"
-	src.bodytemp.tooltipTheme = "tempInd tempInd[state]"
+	src.bodytemp.tooltip_options = list("theme" = "tempInd[state]")
 
 /// updates toxic gas hud element
 /datum/hud/critter/proc/update_tox_indicator(var/status)
@@ -460,6 +463,34 @@
 	if (!src.resting)
 		return 0
 	src.resting.icon_state = "rest[src.master.hasStatus("resting") ? 1 : 0]"
+
+/// Update the gravity indicator
+/datum/hud/critter/proc/update_gravity_indicator()
+	if (!src.gravity)
+		return 0
+	var/stage
+	switch(master.gforce)
+		if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
+			stage = 0
+			src.gravity.desc = GRAVITY_DESC_NONE
+		if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
+			stage = 2
+			src.gravity.desc = GRAVITY_DESC_NORMAL
+		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
+			stage = 1
+			src.gravity.desc = GRAVITY_DESC_LOW
+		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
+			stage = 4
+			src.gravity.desc = GRAVITY_DESC_EXTREME
+		if (GFORCE_MOB_HIGH_THRESHOLD to GFORCE_MOB_EXTREME_THRESHOLD)
+			stage = 3
+			src.gravity.desc = GRAVITY_DESC_HIGH
+		if (GFORCE_EARTH_GRAVITY to GFORCE_MOB_HIGH_THRESHOLD)
+			stage = 2
+			src.gravity.desc = GRAVITY_DESC_NORMAL
+
+	src.gravity.icon_state = "gravity[stage]"
+	src.gravity.tooltip_options = list("theme" = "gravInd[stage]")
 
 /// updates status effects on the owner's hud
 /mob/living/critter/updateStatusUi()
@@ -497,7 +528,8 @@
 	if (src.master.use_stamina)
 		var/stamloc = "EAST[src.next_topright()], NORTH"
 		src.stamina = src.create_screen("stamina","Stamina", src.hud_icon, "stamina",\
-		stamloc, HUD_LAYER, tooltipTheme = "stamina")
+		stamloc, HUD_LAYER, tooltip_options = list("theme" = "stamina"))
+		src.stamina.mouse_opacity = 2
 		src.stamina_back = src.create_screen("stamina_back","Stamina", src.hud_icon, "stamina_back",\
 		stamloc, HUD_LAYER_UNDER_1)
 		if (src.master.stamina_bar)
@@ -505,7 +537,7 @@
 
 /datum/hud/critter/proc/create_temperature_element()
 	src.bodytemp = src.create_screen("bodytemp","Temperature", src.hud_icon, "temp0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "tempInd0"))
 	src.bodytemp.desc = "The temperature feels fine."
 
 /datum/hud/critter/proc/create_oxygen_element()
@@ -518,18 +550,22 @@
 
 /datum/hud/critter/proc/create_toxin_element()
 	src.toxin = src.create_screen("toxin","Toxic Warning",src.hud_icon, "toxin0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusToxin"))
 	src.toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
 /datum/hud/critter/proc/create_radiation_element()
 	src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "statusRad"))
 	src.rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 /datum/hud/critter/proc/create_bleeding_element()
 	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 	src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
+
+/datum/hud/critter/proc/create_gravity_element()
+	src.gravity = src.create_screen("gravity","Gravity", src.hud_icon, "gravity2",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltip_options = list("theme" = "gravInd02"))
 
 /datum/hud/critter/proc/create_throwing_element()
 	src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, src.master.can_throw ? "throw0" : "drop0",\

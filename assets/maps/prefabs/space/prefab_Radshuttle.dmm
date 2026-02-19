@@ -299,7 +299,7 @@
 	},
 /obj/decal/cleanable/greenpuke,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen/extended/empty,
+/obj/item/tank/pocket/extended/empty,
 /obj/decal/cleanable/dirt/dirt4{
 	dir = 8
 	},
@@ -325,7 +325,7 @@
 	},
 /obj/random_item_spawner/hat/one_or_zero,
 /obj/mapping_helper/mob_spawn/corpse/human/skeleton,
-/obj/item/tank/emergency_oxygen/extended/empty,
+/obj/item/tank/pocket/extended/empty,
 /obj/item/clothing/mask/breath,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/shuttle/green,
@@ -444,7 +444,7 @@
 	},
 /obj/random_item_spawner/junk/lots,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen/extended/empty,
+/obj/item/tank/pocket/extended/empty,
 /turf/simulated/floor/shuttle/green,
 /area/prefab/radshuttle)
 "aX" = (

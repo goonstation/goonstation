@@ -2,6 +2,7 @@
 	id = ROLE_WEREWOLF
 	display_name = "werewolf"
 	antagonist_icon = "werewolf"
+	wiki_link = "https://wiki.ss13.co/Werewolf"
 
 	/// The ability holder of this werewolf, containing their respective abilities.
 	var/datum/abilityHolder/werewolf/ability_holder

@@ -1,13 +1,16 @@
+// If you add an IMPLANT_STATUS state, you also need to update the related TGUI interface
 #define MARIONETTE_IMPLANT_STATUS_IDLE "IDLE"
 #define MARIONETTE_IMPLANT_STATUS_ACTIVE "ACTIVE"
 #define MARIONETTE_IMPLANT_STATUS_DANGER "DANGER"
 #define MARIONETTE_IMPLANT_STATUS_WAITING "WAITING..."
 #define MARIONETTE_IMPLANT_STATUS_NO_RESPONSE "NO RESPONSE"
 #define MARIONETTE_IMPLANT_STATUS_BURNED_OUT "BURNED OUT"
+
 #define MARIONETTE_IMPLANT_ERROR_NO_TARGET "TARG_NULL"
 #define MARIONETTE_IMPLANT_ERROR_DEAD_TARGET "TARG_DEAD"
 #define MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY "BADPASS"
 #define MARIONETTE_IMPLANT_ERROR_INVALID "INVALID"
+#define MARIONETTE_IMPLANT_ERROR_UNABLE "UNABLE"
 
 /*
 CONTAINS:
@@ -39,20 +42,21 @@ THROWING DARTS
 	var/death_triggered = 0
 	var/online = 0
 	var/instant = 1
-	var/scan_category = "other" // "health", "cloner", "other", "syndicate", "unknown", or "not_shown"
+	var/scan_category = IMPLANT_SCAN_CATEGORY_OTHER
 
 	//For PDA/signal alert stuff on implants
 	var/uses_radio = 0
 	var/list/mailgroups = null
 	var/net_id = null
-	var/pda_alert_frequency = FREQ_PDA
+	var/alert_frequency = FREQ_PDA
+	can_arcplate = FALSE
 
 	New()
 		..()
 		if (uses_radio)
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
-			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, pda_alert_frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.alert_frequency)
 		if (ismob(src.loc))
 			src.implanted(src.loc)
 
@@ -77,17 +81,21 @@ THROWING DARTS
 		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
+		if (isliving(M))
+			var/mob/living/living = M
+			LAZYLISTADD(living.implant, src)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant?.Add(src)
-			if (src.scan_category == "other" || src.scan_category == "unknown")
+			if (src.scan_category == IMPLANT_SCAN_CATEGORY_OTHER || src.scan_category == IMPLANT_SCAN_CATEGORY_UNKNOWN)
 				var/image/img = H.prodoc_icons["other"]
 				img.icon_state = "implant-other"
-		else if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants?.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
+
+		// signals
+		RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, PROC_REF(on_life))
+		RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(on_death))
+
 		activate()
 
 	// called when an implant is removed from M
@@ -95,32 +103,33 @@ THROWING DARTS
 		SHOULD_CALL_PARENT(TRUE)
 		deactivate()
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_REMOVED, M)
+		if (isliving(M))
+			var/mob/living/living = M
+			living.implant -= src
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant -= src
 			var/has_other_imp = FALSE
 			for (var/obj/item/implant/I as anything in H.implant)
-				if (I.scan_category == "other" || I.scan_category == "unknown")
+				if (I.scan_category == IMPLANT_SCAN_CATEGORY_OTHER || I.scan_category == IMPLANT_SCAN_CATEGORY_UNKNOWN)
 					has_other_imp = TRUE
 					break
 			if (!has_other_imp)
 				var/image/I = H.prodoc_icons["other"]
 				I.icon_state = null
-		if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants?.Remove(src)
 		if (implant_overlay)
 			M.update_clothing()
 		src.owner = null
 		src.implanted = 0
+		UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
+		UnregisterSignal(M, COMSIG_MOB_DEATH)
 
 	proc/activate()
-		online = 1
+		online = TRUE
 
 	proc/deactivate()
-		online = 0
+		online = FALSE
 
-	proc/on_life(var/mult = 1)
+	proc/on_life(mob/M, mult = 1)
 		if(ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			if(online)
@@ -141,30 +150,26 @@ THROWING DARTS
 			if (death_triggered && isalive(C))
 				death_triggered = 0
 
-	proc/do_process(var/mult = 1)
+	proc/do_process(mult = 1)
 		return
 
 	proc/on_crit()
-		crit_triggered = 1
-		return
+		SHOULD_CALL_PARENT(TRUE)
+		crit_triggered = TRUE
 
 	proc/on_death()
-		death_triggered = 1
+		SHOULD_CALL_PARENT(TRUE)
+		death_triggered = TRUE
 		deactivate()
 
 	proc/get_coords()
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = src.owner
-			if (locate(src) in H.implant)
-				var/turf/T = get_turf(H)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
-		else if (ismobcritter(src.owner))
-			var/mob/living/critter/C = src.owner
-			if (locate(src) in C.implants)
-				var/turf/T = get_turf(C)
-				if (istype(T))
-					return " at [T.x],[T.y],[T.z]"
+		if (!isliving(src.owner))
+			return
+		var/mob/living/living_owner = src.owner
+		if (locate(src) in living_owner.implant)
+			var/turf/T = get_turf(src.owner)
+			if (istype(T))
+				return " at [T.x],[T.y],[T.z]"
 
 	proc/send_message(var/message, var/alertgroup, var/sender_name)
 		DEBUG_MESSAGE("sending message: [message]")
@@ -252,7 +257,9 @@ THROWING DARTS
 	name = "cloner record implant"
 	icon_state = "implant-b"
 	impcolor = "b"
-	scan_category = "cloner"
+	scan_category = IMPLANT_SCAN_CATEGORY_CLONER
+	alert_frequency = FREQ_CLONER_IMPLANT
+	uses_radio = TRUE
 	var/area/scanned_here
 
 	New()
@@ -261,6 +268,7 @@ THROWING DARTS
 
 	implanted(mob/M, mob/I)
 		..()
+		global.processing_items |= src
 		if (!istype(M, /mob/living/carbon/human))
 			return
 		var/mob/living/carbon/human/H = M
@@ -268,6 +276,18 @@ THROWING DARTS
 			return
 		var/image/img = H.prodoc_icons["cloner"]
 		img.icon_state = "implant-cloner"
+
+	process()
+		if (!src.implanted || isdead(src.owner)) //dead silence
+			return
+		var/datum/signal/signal = get_free_signal()
+		signal.data = list(
+			"address_1"="00000000",
+			"command"="heartbeat",
+			"bio_id"= src.owner.bioHolder.Uid,
+			"sender" = src.net_id,
+		)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	on_remove(mob/M)
 		..()
@@ -310,10 +330,12 @@ THROWING DARTS
 	name = "health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
-	scan_category = "health"
-	var/healthstring = ""
+	scan_category = IMPLANT_SCAN_CATEGORY_HEALTH
 	uses_radio = 1
 	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+
+	var/healthstring = ""
+	var/affected = "CREW"
 
 	implanted(mob/M, mob/I)
 		..()
@@ -367,8 +389,10 @@ THROWING DARTS
 		H.mini_health_hud = 0
 		H.show_text("You feel less in-tune with your body.", "red")
 
-	on_life(var/mult = 1)
+	on_life(var/mob/M, var/mult = 1)
 		if (!ishuman(src.owner))
+			return
+		if (!src.online)
 			return
 		var/mob/living/carbon/human/H = src.owner
 		if (!H.mini_health_hud)
@@ -406,24 +430,15 @@ THROWING DARTS
 		var/myarea = get_area(src)
 		var/list/cloner_areas = list()
 		for(var/obj/item/implant/cloner/cl_implant in src.owner)
-			if(cl_implant.owner != src.owner)
+			if(cl_implant.owner != src.owner || !cl_implant.scanned_here)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
-		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
-		if (he_or_she(src.owner) == "they")
-			message += "they " + (length(cloner_areas) ? "have been clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning record.")
-		else
-			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "has been clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning record.")
-
+		var/message = "[affected] DEATH ALERT: [src.owner] in [myarea]. [length(cloner_areas) ? "Clone implant detected." : "No cloning implant detected."]"
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
-
-	death_alert()
-		mailgroups.Add(MGD_SECURITY)
-		..()
-		mailgroups.Remove(MGD_SECURITY)
+	affected = "SECURITY"
 
 /obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
@@ -435,12 +450,16 @@ THROWING DARTS
 		src.on_remove(src.owner)
 		qdel(src)
 
+/obj/item/implant/health/security/anti_mindhack/command
+	name = "health implant - command issue"
+	affected = "COMMAND"
+
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
 	var/uses = 1
 	impcolor = "r"
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	activation_emote = "shrug"
 	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
 
@@ -480,7 +499,7 @@ THROWING DARTS
 	name = "signaler implant"
 	icon_state = "implant-r"
 	impcolor = "r"
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	activation_emote = "wink"
 	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
 	var/obj/item/device/radio/signaler/signaler = null
@@ -531,9 +550,6 @@ THROWING DARTS
 		. = ..()
 		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker/minimap)
 		C?.RemoveComponent(/datum/component/minimap_marker/minimap)
-
-	on_death()
-		src.deactivate()
 
 /obj/item/implant/pod_wars/nanotrasen
 
@@ -653,6 +669,7 @@ THROWING DARTS
 	impcolor = "r"
 
 	on_death()
+		. = ..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			H.reagents.add_reagent("formaldehyde", 5)
@@ -671,7 +688,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-r"
 	impcolor = "r"
 	instant = TRUE
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	var/active = FALSE
 	var/power = 1 //! Means different things for different implants, but in a general sense how Powerful the effect is. Scales additively with implant number.
 	var/big_message = " fucks up really bad why did you do this"
@@ -795,25 +812,31 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	big_message = " buzzes, what?"
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
+	var/wasp_type = /mob/living/critter/small_animal/wasp/angry
+	var/faction = FACTION_BOTANY
 
 	implanted(mob/M, mob/I)
 		..()
-		if (istype(M))
-			LAZYLISTADDUNIQUE(M.faction, FACTION_BOTANY)
+		if (istype(M) && src.faction)
+			LAZYLISTADDUNIQUE(M.faction, src.faction)
 
 	on_remove(mob/M)
 		..()
-		if (istype(M))
-			LAZYLISTREMOVE(M.faction, FACTION_BOTANY)
+		if (istype(M) && src.faction)
+			LAZYLISTREMOVE(M.faction, src.faction)
 
 	do_effect(power)
 		// enjoy your wasps
 		for (var/i in 1 to power)
-			var/mob/living/critter/small_animal/wasp/W = new /mob/living/critter/small_animal/wasp/angry(get_turf(src))
-			W.lying = TRUE // So wasps dont hit other wasps when being flung
-			W.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2)
-			SPAWN(1 SECOND)
-				W.lying = FALSE
+			var/throw_type = THROW_NORMAL
+			var/mob/M = new src.wasp_type(get_turf(src))
+			if(ismob(M))
+				M.lying = TRUE // So wasps dont hit other wasps when being flung
+				SPAWN(1 SECOND)
+					M.lying = FALSE
+			else
+				throw_type = THROW_PHASE
+			M.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2, throw_type = throw_type)
 
 		SPAWN(1)
 			src.owner?.gib()
@@ -825,16 +848,27 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-b"
 	var/active = 0
 
-	implanted(var/mob/M, mob/I)
-		..()
-		if (istype(M))
-			M.robot_talk_understand = 1
+	implanted(mob/M, mob/I)
+		. = ..()
 
-	on_remove(var/mob/M)
-		..()
-		if (istype(M))
-			M.robot_talk_understand = 0
-		return
+		if (!istype(M))
+			return
+
+		M.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_listen_tree().AddListenInput(LISTEN_INPUT_SILICONCHAT)
+		M.listen_tree.AddKnownLanguage(LANGUAGE_SILICON)
+		M.listen_tree.AddKnownLanguage(LANGUAGE_BINARY)
+
+	on_remove(mob/M)
+		. = ..()
+
+		if (!istype(M))
+			return
+
+		M.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_SILICONCHAT)
+		M.listen_tree.RemoveKnownLanguage(LANGUAGE_SILICON)
+		M.listen_tree.RemoveKnownLanguage(LANGUAGE_BINARY)
 
 /obj/item/implant/bloodmonitor
 	name = "blood monitor implant"
@@ -846,9 +880,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-mh"
 	impcolor = "r"
 	instant = 1
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	var/uses = 1
 	var/expire = TRUE
+	var/inactive = FALSE //Has this implant been overriden on the current implantee
 	var/mob/implant_hacker = null // who is the person mindhacking the implanted person
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
@@ -869,20 +904,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return FALSE
 		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
-			boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
-			return FALSE
+			if (AM.online)
+				boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
+				return FALSE
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
 			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return FALSE
-		// Same here, basically. Multiple active implants is just asking for trouble.
-		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
-		for (var/obj/item/implant/mindhack/MS in H.implant)
-			var/obj/item/implant/mindhack/Inew = new MS.type(H)
-			H.implant += Inew
-			qdel(MS)
 		return TRUE
 
 	implanted(var/mob/M, var/mob/I)
@@ -893,6 +923,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
 		M.changeStatus("stunned", 10 SECONDS)
 		M.changeStatus("knockdown", 10 SECONDS)
+
+		//Remove any existing mindhack statuses and override existing implants
+		var/mob/living/carbon/human/H = M
+		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
+		for (var/obj/item/implant/mindhack/MS in H.implant)
+			if(MS != src)
+				MS.inactive = TRUE
+		src.inactive = FALSE
 
 		if(M == I)
 			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
@@ -905,8 +943,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove(var/mob/M)
 		..()
 		src.former_implantee = M
-		M.delStatus("mindhack")
-		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
+		if(!src.inactive) //If this isn't the implant currently mindhacking the owner don't remove antag status
+			M.delStatus("mindhack")
+			M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
+		src.inactive = FALSE //Set back to normal incase its used again
 		return
 
 	proc/add_orders(var/orders)
@@ -916,13 +956,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
 
+/obj/item/implant/mindhack/super
+	name = "mindhack DELUXE implant"
+	expire = FALSE
+	uses = 2
+
 /obj/item/implant/marionette
 	name = "marionette implant"
 	desc = "This thing looks really complicated."
 	icon_state = "implant-mh"
 	impcolor = "r"
-	scan_category = "syndicate"
-	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
+	alert_frequency = FREQ_MARIONETTE_IMPLANT
 
 	/// A network address that this implant is linked to. Can be null.
 	/// Packets sent by this address skip the passkey requirement, and if the implant burns out,
@@ -958,7 +1003,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		// The `uses_radio` variable only adds a sender component, not a two-way one. So we have to do that manually!
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.pda_alert_frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.alert_frequency)
 		processing_items.Add(src)
 
 	disposing()
@@ -1054,12 +1099,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 				src.adjust_heat(15)
 			if ("move", "step", "bump")
-				logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
-				var/step_dir = text2dir(uppertext(data))
-				if (step_dir && (step_dir in cardinal))
-					step(src.owner, step_dir)
+				if (can_act(src.owner, FALSE))
+					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to step to the [lowertext(data)] at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
+					var/step_dir = text2dir(uppertext(data))
+					if (step_dir && (step_dir in cardinal))
+						step(src.owner, step_dir)
+					else
+						fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
 				else
-					fail_reason = MARIONETTE_IMPLANT_ERROR_INVALID
+					fail_reason = MARIONETTE_IMPLANT_ERROR_UNABLE
 				src.adjust_heat(5)
 			if ("shock", "zap")
 				// Note the lack of immunity from the elec_resist mutation here here
@@ -1129,7 +1177,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	/// Adjusts `heat` by `to_heat`. Also handles potentially burning out when overheating, and alerting a linked address if we enter the danger zone.
 	proc/adjust_heat(to_heat)
-		if (src.heat > src.heat_danger_zone && prob(20) && to_heat > 0)
+		if (src.heat > src.heat_danger_zone && prob(20 + src.heat - src.heat_danger_zone) && to_heat > 0)
 			SPAWN (0.25 SECONDS) // Give the implant time to send the activation reply
 				src.burn_out()
 		src.heat = max(0, src.heat + to_heat)
@@ -1336,17 +1384,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
 			return TRUE
 
-/obj/item/implant/mindhack/super
-	name = "mindhack DELUXE implant"
-	expire = 0
-	uses = 2
-
 /obj/item/implant/projectile
 	name = "bullet"
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "bullet"
 	desc = "A spent bullet."
-	scan_category = "not_shown"
+	scan_category = IMPLANT_SCAN_CATEGORY_NOT_SHOWN
 	var/bleed_time = 60
 	var/bleed_timer = 0
 	var/leaves_wound = TRUE
@@ -1375,6 +1418,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_38AP
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
+
+	bullet_38ricochet
+		name = ".38 ricochet round"
+		desc = "A bouncy variant of the .38 round. Huh. Aren't these illegal?"
 
 	bullet_9mm
 		name = "9mm round"
@@ -1492,7 +1539,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		proc/on_pull_out(mob/living/puller)
 			return
 
-		on_life(mult)
+		on_life(mob/M, mult)
 			. = ..()
 			if (src.reagents?.total_volume)
 				src.reagents.trans_to(owner, 1 * mult)
@@ -1704,7 +1751,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			return 0
 		else
 			uses -= 1
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		return 1
 
 	infinite
@@ -1747,7 +1794,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /* ============================================================ */
 
 /obj/item/implant/artifact
-	scan_category = "unknown"
+	scan_category = IMPLANT_SCAN_CATEGORY_UNKNOWN
 	var/cant_take_out = FALSE
 	var/artifact_implant_type = null
 	var/active = FALSE
@@ -2129,6 +2176,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.activated = FALSE
 		..()
 
+/obj/item/implant/confetti
+	var/datum/component/my_comp = null
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		src.my_comp = M.AddComponent(/datum/component/death_confetti)
+
+	on_remove(mob/M)
+		. = ..()
+		src.my_comp?.RemoveComponent()
+		src.my_comp = null
+
 /* ============================================================= */
 /* ------------------------- Implanter ------------------------- */
 /* ============================================================= */
@@ -2158,7 +2217,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			. += "It appears to contain \a [src.imp.name]."
 
 	proc/update()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (src.imp)
 			src.icon_state = src.imp.impcolor ? "implanter1-[imp.impcolor]" : "implanter1-g"
 		else
@@ -2367,7 +2426,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			else
 				if (P.linked_address)
 					. += "<br>[SPAN_NOTICE("This implant is linked to a remote of network address [P.linked_address].")]"
-				. += "<br>[SPAN_NOTICE("Frequency: [P.pda_alert_frequency]")]"
+				. += "<br>[SPAN_NOTICE("Frequency: [P.alert_frequency]")]"
 				. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
 				. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
 
@@ -2488,7 +2547,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		. += "It appears to contain \a [src.imp.name]."
 
 /obj/item/implantcase/proc/update()
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	if (src.imp)
 		if (disposable)
 			src.icon_state = src.imp.impcolor ? "implantpaper-[imp.impcolor]" : "implantpaper-g"
@@ -2513,7 +2572,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.name = "glass case - '[t]'"
 		else
 			src.name = "glass case"
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		return
 	else if (istype(I, /obj/item/implanter))
 		var/obj/item/implanter/Imp = I
@@ -2592,7 +2651,7 @@ TYPEINFO(/obj/item/gun/implanter)
 				return
 
 			my_implant = I
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			if (istype(W, /obj/item/implant))
 				user.u_equip(W)
@@ -2637,7 +2696,7 @@ TYPEINFO(/obj/item/gun/implanter)
 			return ..()
 		my_implant.set_loc(P)
 		my_implant = null
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /datum/projectile/implanter
 	name = "implant bullet"
@@ -2648,7 +2707,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	casing = /obj/item/casing/small
 	impact_image_state = "bullethole-small"
 	shot_number = 1
-	//silentshot = 1
+	//no_hit_message = 1
 	var/obj/item/implant/my_implant = null
 	var/mob/implant_master = null
 
@@ -2740,7 +2799,9 @@ TYPEINFO(/obj/item/gun/implanter)
 #undef MARIONETTE_IMPLANT_STATUS_WAITING
 #undef MARIONETTE_IMPLANT_STATUS_NO_RESPONSE
 #undef MARIONETTE_IMPLANT_STATUS_BURNED_OUT
+
 #undef MARIONETTE_IMPLANT_ERROR_NO_TARGET
 #undef MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 #undef MARIONETTE_IMPLANT_ERROR_BAD_PASSKEY
 #undef MARIONETTE_IMPLANT_ERROR_INVALID
+#undef MARIONETTE_IMPLANT_ERROR_UNABLE

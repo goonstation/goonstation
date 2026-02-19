@@ -159,6 +159,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
 	w_class = W_CLASS_SMALL
+	default_material = "synthrubber_yellow"
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 3
@@ -294,6 +295,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "rubber_hammer"
 	c_flags = ONBELT
 	force = 0
+	default_material = "synthrubber_yellow"
 
 	New()
 		..()
@@ -321,7 +323,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
-	desc = "The pinacle of human technology. An electronic cigarette!"
+	desc = "The pinnacle of human technology. An electronic cigarette!"
 	icon = 'icons/obj/items/cigarettes.dmi'
 	inhand_image_icon = 'icons/obj/items/cigarettes.dmi'
 	initial_volume = 50
@@ -381,12 +383,12 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			src.emagged = 1
 		return 1
 
-	attackby(obj/item/reagent_containers/ecig_refill_cartridge/E, mob/usr) //you may call this redundantly overdoing it. I say fuck you
+	attackby(obj/item/reagent_containers/ecig_refill_cartridge/E, mob/user) //you may call this redundantly overdoing it. I say fuck you
 		if (istype(E, /obj/item/reagent_containers/ecig_refill_cartridge))
 			if (!E.reagents.total_volume)
-				usr.show_text("\The [src] is empty.", "red")
+				user.show_text("\The [src] is empty.", "red")
 				return
-			usr.show_text("You refill the [src] with the cartridge.", "red")
+			user.show_text("You refill the [src] with the cartridge.", "red")
 			E.reagents.trans_to(src, 50)
 			src.reagents.add_reagent("nicotine", 50)
 			qdel(E) //this technically implies that vapes infinitely eat these refills. I say the catriges are made of pure nicotine and are slowly absorbed
@@ -473,23 +475,6 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	item_state = "ecigrefill"
 	icon_state = "ecigrefill"
 	flags = TABLEPASS
-
-/obj/item/wrestlingbell
-	name = "Wrestling bell"
-	desc = "A bell used to signal the start of a wrestling match"
-	anchored = ANCHORED
-	density = 1
-	icon = 'icons/obj/wrestlingbell.dmi'
-	icon_state = "wrestlingbell"
-	deconstruct_flags = DECON_WRENCH
-	var/last_ring = 0
-
-	attack_hand(mob/user)
-		if(last_ring + 20 >= world.time)
-			return
-		else
-			last_ring = world.time
-			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 
 /obj/item/trophy
 	name = "trophy"
@@ -653,6 +638,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon_state = "waste"
 	default_material = "slag"
 	var/datum/gas_mixture/leak_gas = new
+	can_arcplate = FALSE
 
 	New()
 		. = ..()

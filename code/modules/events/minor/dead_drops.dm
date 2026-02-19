@@ -7,7 +7,7 @@
 	var/sleepers = list()
 	var/lock = FALSE
 	var/tracker = TRUE
-	weight = 200
+	weight = 500
 
 	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )
@@ -15,8 +15,7 @@
 
 		var/found = FALSE
 		for (var/datum/mind/M in ticker.mode?.traitors + ticker.mode?.Agimmicks)
-			var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
-			if(SA && isnull(SA.dead_drop) && !isdead(M.current))
+			if (src.eligible(M))
 				found = TRUE
 				break
 
@@ -24,6 +23,10 @@
 			. = ..()
 		else
 			. = FALSE
+
+	proc/eligible(datum/mind/M)
+		var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
+		return SA && isnull(SA.dead_drop) && !isdead(M.current) && SA.did_equip
 
 	admin_call(var/source)
 		if (..())
@@ -59,8 +62,7 @@
 
 		sleepers = list()
 		for (var/datum/mind/M in ticker.mode.traitors + ticker.mode.Agimmicks)
-			var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
-			if(SA && isnull(SA.dead_drop) && !isdead(M.current))
+			if (src.eligible(M))
 				src.sleepers += M
 
 		SPAWN(0)
@@ -68,11 +70,17 @@
 			do_event(source)
 
 	proc/do_event(var/source)
-		var/list/station_areas = get_accessible_station_areas()
+		var/list/potential_drop_zones = list()
+		var/list/area/stationAreas = get_accessible_station_areas()
+		for(var/area_name in stationAreas)
+			if(istype(stationAreas[area_name], /area/station/security) || stationAreas[area_name].teleport_blocked || istype(stationAreas[area_name], /area/station/turret_protected))
+				continue
+			potential_drop_zones += stationAreas[area_name]
+
 		for (var/datum/mind/M in src.sleepers )
 			var/keycode = random_hex(4)
 			var/datum/dead_drop/sleeper_dd = new src.dead_drop_type()
-			var/target = sleeper_dd.find_target_location(M.current, station_areas)
+			var/target = sleeper_dd.find_target_location(M.current, potential_drop_zones)
 
 			sleeper_dd.add(target, M.current, keycode, src.tracker)
 			var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
@@ -80,10 +88,16 @@
 
 		lock = FALSE
 
+
 /proc/give_them_dead_drop(mob/M, atom/target, datum/dead_drop/drop_type)
 	USR_ADMIN_ONLY
 
-	var/list/station_areas = get_accessible_station_areas()
+	var/list/potential_drop_zones = list()
+	var/list/area/stationAreas = get_accessible_station_areas()
+	for(var/area_name in stationAreas)
+		if(istype(stationAreas[area_name], /area/station/security) || stationAreas[area_name].teleport_blocked || istype(stationAreas[area_name], /area/station/turret_protected))
+			continue
+		potential_drop_zones += stationAreas[area_name]
 	var/dead_drop_type = drop_type
 	var/keycode = random_hex(4)
 
@@ -96,7 +110,7 @@
 
 	var/datum/dead_drop/sleeper_dd = new dead_drop_type()
 	if(!target)
-		target = sleeper_dd.find_target_location(M, station_areas)
+		target = sleeper_dd.find_target_location(M, potential_drop_zones)
 
 	sleeper_dd.add(target, M, keycode, TRUE)
 
@@ -282,6 +296,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 				var/area = get_area(target)
 				if(area in area_type_filter)
 					by_cat[TR_CAT_POSSIBLE_DEAD_DROP] -= target
+					attempts = 0
 				else
 					target = pick(by_cat[TR_CAT_POSSIBLE_DEAD_DROP])
 					attempts--
@@ -293,11 +308,14 @@ ABSTRACT_TYPE(/datum/dead_drop)
 
 
 /datum/dead_drop/infil
+	items_max = 4
 	items = list(/obj/item/card/id/syndicate=100,
-				/obj/item/device/flash/turbo=50,
 				/obj/item/gun/kinetic/pistol=25,
 				/obj/item/radiojammer=25,
-				/obj/item/tool/omnitool=5)
+				/obj/item/tool/omnitool=10,
+				/obj/item/assembly/flash_cell=5,
+				/obj/item/handcuffs/guardbot=5
+				)
 
 /datum/dead_drop/destruction
 	items_max = 4
@@ -307,7 +325,8 @@ ABSTRACT_TYPE(/datum/dead_drop)
 				/obj/item/breaching_charge=50,
 				/obj/item/gun/kinetic/pistol=10,
 				/obj/item/storage/landmine_pouch=10,
-				/obj/item/tool/omnitool=5)
+				/obj/item/tool/omnitool=5
+				)
 
 /datum/dead_drop/assassin
 	items = list(/obj/item/card/id/syndicate=100,
@@ -315,13 +334,14 @@ ABSTRACT_TYPE(/datum/dead_drop)
 				/obj/item/pen/sleepypen=25,
 				/obj/item/dagger/syndicate=10,
 				/obj/item/reagent_containers/glass/bottle/poison=10,
-				/obj/item/garrote=10)
+				/obj/item/garrote=10
+				)
 
 /datum/dead_drop/chaos
 	items_max = 5
 	items = list(/obj/item/card/id/syndicate=100,
-			/obj/item/device/flash/turbo=25,
-			/obj/item/gun/kinetic/pistol=25
+			/obj/item/gun/kinetic/pistol=25,
+			/obj/item/assembly/flash_cell=5
 			)
 
 
@@ -345,4 +365,3 @@ OPT_INTO_DEAD_DROP(/obj/reagent_dispensers/watertank/fountain)
 OPT_INTO_DEAD_DROP(/obj/machinery/computer)
 OPT_INTO_DEAD_DROP(/obj/machinery/power/apc)
 OPT_INTO_DEAD_DROP(/obj/machinery/phone)
-OPT_INTO_DEAD_DROP(/obj/machinery/disposal)

@@ -653,6 +653,29 @@ var/datum/artifact_controller/artifact_controls
 		namestring += "[pick(verber)]"
 		return namestring
 
+/datum/artifact_origin/lattice
+	type_name = "Lattice"
+	name = "lattice"
+	max_sprites = 1
+	nofx = TRUE
+	scramblechance = 0
+	activation_sounds = list('sound/machines/ArtifactLat1.ogg', 'sound/machines/ArtifactLat2.ogg', 'sound/machines/ArtifactLat3.ogg')
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Lattice_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Lattice_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Lattice_3.ogg')
+	fault_types = list()
+	adjectives = list("thrumming", "chiming", "resonating", "vibrating", "humming", "ringing", "oscillating", "rhythmic")
+	nouns_large = list("heap", "craft", "harp")
+	nouns_small = list("instrument", "bell", "tool")
+	touch_descriptors = list("You feel air rushing around the surface.", "It feels almost like running water.", "You feel vibrations.")
+
+	generate_name()
+		var/namestring = ""
+		namestring += pick("fate", "universe", "omen", "catalyst", "secret", "music", "hymn")
+		namestring += " "
+		namestring += pick("whisperer", "harbinger", "singer", "weaver", "raveller", "unraveller")
+		return namestring
+
 
 // TODO: These origins are not ready for general use yet
 
@@ -673,14 +696,6 @@ var/datum/artifact_controller/artifact_controls
 		'sound/musical_instruments/artifact/Artifact_Void_2.ogg',
 		'sound/musical_instruments/artifact/Artifact_Void_3.ogg',
 		'sound/musical_instruments/artifact/Artifact_Void_4.ogg')
-	max_sprites = 6
-
-/datum/artifact_origin/lattice
-	name = "lattice"
-	activation_sounds = list('sound/machines/ArtifactLat1.ogg', 'sound/machines/ArtifactLat2.ogg', 'sound/machines/ArtifactLat3.ogg')
-	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Lattice_1.ogg',
-		'sound/musical_instruments/artifact/Artifact_Lattice_2.ogg',
-		'sound/musical_instruments/artifact/Artifact_Lattice_3.ogg')
 	max_sprites = 6
 
 /datum/artifact_origin/feather

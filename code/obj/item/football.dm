@@ -33,7 +33,7 @@
 /obj/item/clothing/under/football
 	name = "athletic pants"
 	desc = "These are athletic pants bearing the colors of the Spacecow Wobbegongs. The fabric feels like victory."
-	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js_athletic.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	icon_state = "fb_blue"
 	item_function_flags = IMMUNE_TO_ACID
@@ -69,20 +69,19 @@
 	if (!wearing_football_gear())
 		boutput(src, SPAN_ALERT("You need to wear more football gear first! It just wouldn't be safe."))
 		return
-
+	if (src.buckled)
+		src.buckled.unbuckle()
 	var/obj/item/clothing/suit/armor/football/S = src.wear_suit
 	if (S.in_rush) return
 	S.in_rush = 1
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 0.4, 0 , 2)
 
 	var/charge_dir = src.dir
-	var/turf/T = get_turf(src)
 	for(var/i=1, i<20, i++)
 		if (!S.in_rush)
 			break
 		S.in_rush = i
-		T = get_step(T, charge_dir)
-		src.Move(T)
+		step(src, charge_dir)
 		sleep(0.1 SECONDS)
 
 	S.in_rush = 0

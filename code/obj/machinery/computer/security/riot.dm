@@ -1,8 +1,16 @@
+
+TYPEINFO(/obj/machinery/computer/riotgear)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/computer/riotgear
 	name = "Armory Authorization"
 	icon_state = "drawbr"
 	density = 0
 	glow_in_dark_screen = TRUE
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/auth_need = 3
 	var/list/authorized
 	var/list/authorized_registered = null
@@ -126,7 +134,7 @@
 
 		logTheThing(LOG_STATION, usr, "authorized armory access")
 		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
-		command_announcement("<br><b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>", "Security Level Increased", 'sound/misc/announcement_1.ogg')
+		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>", "Security Level Increased", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_STATION)
 		authed = 1
 		src.ClearSpecificOverlays("screen_image")
 		src.icon_state = "drawbr-alert"
@@ -156,7 +164,7 @@
 			return
 
 		logTheThing(LOG_STATION, usr, "unauthorized armory access")
-		command_announcement("<br><b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg")
+		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg", alert_origin=ALERT_STATION)
 		authed = 0
 		src.ClearSpecificOverlays("screen_image")
 		icon_state = "drawbr"
@@ -174,13 +182,11 @@
 				O.req_access = list(access_armory)
 				LAGCHECK(LAG_REALTIME)
 
-	proc/print_auth_needed(var/mob/author)
+	proc/print_auth_needed(mob/author)
 		if (author)
-			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is [src.authed ? "closed" : "opened"].\"")), 2)
+			src.say("[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is [src.authed ? "closed" : "opened"].")
 		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is [src.authed ? "closed" : "opened"].\"")), 2)
+			src.say("[src.auth_need - src.authorized.len] authorizations needed until Armory is [src.authed ? "closed" : "opened"].")
 
 
 /obj/machinery/computer/riotgear/attack_hand(mob/user)

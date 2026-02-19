@@ -54,3 +54,7 @@
 				SEND_SIGNAL(owner, COMSIG_MOB_SCOPE_MOVED, delta_x, delta_y)
 
 		return 0.5
+//When this movement controller starts being used
+/datum/movement_controller/sniper_scope/proc/start()
+//When this movement controller stops being used
+/datum/movement_controller/sniper_scope/proc/stop()

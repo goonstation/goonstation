@@ -23,20 +23,16 @@ const CheckboxCell = ({ checked, onClick, id }) => (
   </Table.Cell>
 );
 
-const NumberInputCell = ({ number, unit, onChange, id }) => (
-  <Table.Cell py="0.5em" collapsing>
-    <Box align="center">
-      <NumberInput
-        minValue={0}
-        maxValue={Infinity}
-        unit={unit}
-        width="5em"
-        value={number}
-        step={1}
-        onChange={(value) => onChange(id, value)}
-      />
-    </Box>
-  </Table.Cell>
+const EffectNumberInput = ({ number, unit, onChange, id }) => (
+  <NumberInput
+    minValue={0}
+    maxValue={Infinity}
+    unit={unit}
+    width="5em"
+    value={number}
+    step={1}
+    onChange={(value) => onChange(id, value)}
+  />
 );
 
 const HeaderCell = ({ children }) => (
@@ -71,6 +67,7 @@ export const BioEffectManager = () => {
   // Defining the actions that can be performed from the UI.
   const addBioEffect = () => act('addBioEffect');
   const updateCooldown = (id, value) => act('updateCooldown', { id, value });
+  const resetCooldown = (id) => act('resetCooldown', { id });
   const updateStability = (value) => act('updateStability', { value });
   const toggleBoosted = (id) => act('toggleBoosted', { id });
   const toggleReinforced = (id) => act('toggleReinforced', { id });
@@ -137,12 +134,23 @@ export const BioEffectManager = () => {
                       onClick={toggleSynced}
                       id={effect.id}
                     />
-                    <NumberInputCell
-                      number={effect.cooldown}
-                      unit="ds"
-                      onChange={updateCooldown}
-                      id={effect.id}
-                    />
+                    <Table.Cell collapsing>
+                      {!!effect.is_power && (
+                        <>
+                          <EffectNumberInput
+                            number={effect.cooldown}
+                            unit="ds"
+                            onChange={updateCooldown}
+                            id={effect.id}
+                          />
+                          <Button
+                            icon="rotate-right"
+                            tooltip="Reset cooldown"
+                            onClick={() => resetCooldown(effect.id)}
+                          />
+                        </>
+                      )}
+                    </Table.Cell>
                     {/* Buttons for managing and deleting the bioeffect */}
                     <Table.Cell py="0.5em" collapsing>
                       <Box align="center" nowrap>

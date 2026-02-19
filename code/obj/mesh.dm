@@ -5,7 +5,7 @@ TYPEINFO(/obj/mesh)
 	///Objects this mesh will try to automatically connect to
 	var/list/connects_to_obj = null
 /obj/mesh
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	anchored = ANCHORED
 	flags = CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
@@ -408,7 +408,9 @@ TYPEINFO_NEW(/obj/mesh/grille)
 	if (isscrewingtool(I) && (istype(src.loc, /turf/simulated) || src.anchored))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !( src.anchored )
-		src.stops_space_move = !(src.stops_space_move)
+		src.provides_grip = !(src.provides_grip)
+		var/turf/T = get_turf(src)
+		T?.grip_atom_count += src.provides_grip ? 1 : -1
 		src.visible_message(SPAN_ALERT("<b>[user]</b> [src.anchored ? "fastens" : "unfastens"] [src]."))
 		return
 
@@ -500,7 +502,7 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	icon_state = "C15-0"
 	layer = CATWALK_LAYER
 	plane = PLANE_FLOOR
-	event_handler_flags = 0
+	event_handler_flags = IMMUNE_MINERAL_MAGNET
 	default_material = "steel"
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
@@ -549,7 +551,7 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 /obj/mesh/catwalk/dubious
 	name = "rusty catwalk"
 	desc = "This one looks even less safe than usual."
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MINERAL_MAGNET
 	///How far are we along to collapsing
 	var/collapse_counter = 0
 

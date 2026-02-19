@@ -20,6 +20,16 @@ if there is otherwise unique behaviour which you add to another mob consider mov
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(src.holder, src))
 
+/// Floor-only Wanderer
+/datum/aiHolder/wanderer/floor_only
+	New()
+		..()
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer/floor_only, list(src))
+
+/datum/aiTask/prioritizer/critter/wanderer/floor_only/New()
+	..()
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/floor_only, list(src.holder, src))
+
 /// Aggressive Wanderer
 /datum/aiHolder/aggressive
 	New()

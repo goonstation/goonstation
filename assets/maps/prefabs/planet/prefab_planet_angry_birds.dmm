@@ -64,8 +64,7 @@
 /area/noGenerate)
 "B" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = null
+	dir = 4
 	},
 /turf/unsimulated/floor/black/side{
 	dir = 8

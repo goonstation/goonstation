@@ -1,0 +1,21 @@
+/turf/simulated/floor{icon_state="carpet1"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpet2"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpetN"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpetNE"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpetE"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpetSE"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpetS"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpetSW"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpetW"} : /turf/simulated/floor/carpet{@OLD}
+/turf/simulated/floor{icon_state="carpetNW"} : /turf/simulated/floor/carpet{@OLD}
+
+/turf/unsimulated/floor{icon_state="carpet1"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpet2"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpetN"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpetNE"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpetE"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpetSE"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpetS"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpetSW"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpetW"} : /turf/simulated/floor/carpet{@OLD}
+/turf/unsimulated/floor{icon_state="carpetNW"} : /turf/simulated/floor/carpet{@OLD}

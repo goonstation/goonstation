@@ -70,4 +70,22 @@ TYPEINFO(/obj/item/organ/pancreas/cyber)
 			if(donor.reagents.get_reagent_amount("ephedrine") < 10) //this is maybe a bad idea. leaving it in for now
 				donor.reagents.add_reagent("ephedrine", 1 * mult)
 
+/obj/item/organ/pancreas/amphibian
+	name = "amphibian pancreas"
+	organ_name = "amphibian pancreas"
+	icon_state = "amphibian_pancreas"
+	desc = "Are you sure this is a pancreas?"
 
+/obj/item/organ/pancreas/skeleton
+	name = "skeleton pancreas"
+	desc = "This is, allegedly, a skeleton pancreas. Not that you'd be able to tell by looking."
+	icon_state = "skeleton_pancreas"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/pancreas/martian
+	name = "pliable lump"
+	desc = "This is... probably a pancreas."
+	icon_state = "martian_pancreas"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

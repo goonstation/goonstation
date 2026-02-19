@@ -7,8 +7,6 @@
 	pointCost = 1
 	cooldown = 2 SECONDS
 	min_req_dist = 20
-	proc/ghostify_message(var/message)
-		return message
 
 	cast(atom/target)
 		. = ..()
@@ -29,15 +27,9 @@
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
-		message = ghostify_message(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-		var/image/chat_maptext/whisper_text = null
-		var/maptext_color = dead_maptext_color(src.holder.owner.name)
-		whisper_text = make_chat_maptext(H, "<span style='text-shadow: 0 0 3px black; -dm-text-outline: 2px black;'>[message]</span>", alpha = 180)
-		if(whisper_text)
-			whisper_text.show_to(src.holder.owner.client)
-			whisper_text.show_to(H.client)
-			oscillate_colors(whisper_text, list(maptext_color, "#c482d1"))
+		DISPLAY_MAPTEXT(target, list(target), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/wraith_whisper, message, src.holder.owner)
 
 		boutput(usr, "<b>You whisper to [target]:</b> [message]")
 		boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")

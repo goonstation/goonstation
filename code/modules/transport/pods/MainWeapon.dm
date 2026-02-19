@@ -24,6 +24,35 @@
 
 	power_used = 65
 	system = "Main Weapon"
+
+	can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		if(vehicle.weapon_class == 0)
+			boutput(user, SPAN_ALERT("Weapons cannot be installed in this ship!"))
+			return FALSE
+		var/obj/item/shipcomponent/mainweapon/current_weapon = vehicle.get_part(POD_PART_MAIN_WEAPON)
+		if(current_weapon && !current_weapon.removable)
+			boutput(user, SPAN_ALERT("[current_weapon] is fused to the hull and cannot be removed."))
+			return FALSE
+		return TRUE
+
+	get_install_slot()
+		return POD_PART_MAIN_WEAPON
+
+	ship_install()
+		..()
+		if(src.ship.uses_weapon_overlays && src.appearanceString)
+			var/image/weap_image = image('icons/effects/64x64.dmi', "[src.appearanceString]")
+			weap_image.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
+			weap_image.color = src.color
+			weap_image.alpha = src.alpha
+			weap_image.filters = src.filters.Copy()
+			src.ship.UpdateOverlays(weap_image, "mainweapon")
+
+	ship_uninstall()
+		..()
+		if (src.ship.uses_weapon_overlays && src.appearanceString)
+			src.ship.UpdateOverlays(null, "mainweapon")
+
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
@@ -34,7 +63,7 @@
 			if(r_gunner)
 				dat += {"<B>Gunner:</B>"}
 				if(!gunner)
-					dat += {"<A href='?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
+					dat += {"<A href='byond://?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
 				else
 					dat += {"[src]<BR>"}
 			if(uses_ammunition)
@@ -67,7 +96,7 @@
 
 /obj/item/shipcomponent/mainweapon/buildTooltipContent()
 	. = ..() + src.current_projectile?.get_tooltip_content()
-	. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/frenzy.png")]\" width=\"10\" height=\"10\" /> Firerate: [src.firerate / 10] seconds"
+	. += "<br><img src=\"[resource("images/tooltips/frenzy.png")]\" class='icon' style='width: .8em; height: .8em;' /> Firerate: [src.firerate / 10] seconds"
 	src.lastTooltipContent = .
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
@@ -88,7 +117,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir, src.spread)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread, src.shots_to_fire)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -224,6 +253,10 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 8
+
+/obj/item/shipcomponent/mainweapon/gun/pod_wars //normal nukies can have the fun version
+	firerate = 20
 
 /obj/item/shipcomponent/mainweapon/minigun
 	name = "Minigun"
@@ -235,6 +268,7 @@
 	current_projectile = new/datum/projectile/bullet/akm/pod
 	icon_state = "minigun"
 	muzzle_flash = "muzzle_flash"
+	contraband = 6
 
 /obj/item/shipcomponent/mainweapon/gun_9mm
 	name = "PEP-9 Ballistic System"
@@ -246,6 +280,7 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 5
 
 /obj/item/shipcomponent/mainweapon/gun_9mm/uses_ammo
 	name = "PEP-9L Ballistic System"
@@ -264,6 +299,7 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 4
 
 /obj/item/shipcomponent/mainweapon/gun_22/uses_ammo
 	name = "PEP-22L Ballistic System"
@@ -280,10 +316,11 @@
 	power_used = 50
 	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
 	appearanceString = "pod_weapon_cerberus"
-	firerate = 5 SECONDS
+	firerate = 10 SECONDS
 	shots_to_fire = 3
 	spread = 30
 	large_pod_compatible = FALSE
+	contraband = 10
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
@@ -305,6 +342,7 @@
 	appearanceString = "pod_weapon_hammer_railgun"
 	icon_state = "hammer-railgun"
 	muzzle_flash = "muzzle_flash_launch"
+	contraband = 8
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
@@ -339,6 +377,7 @@
 	firerate = 100
 	icon_state = "grenade-launcher"
 	muzzle_flash = "muzzle_flash_launch"
+	contraband = 10
 
 	lower_ammo
 		remaining_ammunition = 6
@@ -365,9 +404,9 @@
 			dat +="<B>Weapon Mode:</B><BR>"
 			if(mode == 0)
 				dat+="Heat Beam<BR>"
-				dat+="<A href='?src=\ref[src];death=1'>Death Ray</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];death=1'>Death Ray</A><BR>"
 			else
-				dat+="<A href='?src=\ref[src];heat=1'>Heat Beam</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];heat=1'>Heat Beam</A><BR>"
 				dat+="Death Ray<BR>"
 
 		else
@@ -451,9 +490,9 @@
 			dat +="<B>Weapon Mode:</B><BR>"
 			if(mode == 0)
 				dat+="Metalfoam Constructor Nozzles<BR>"
-				dat+="<A href='?src=\ref[src];cutter=1'>Switch to Cutter Blades</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Cutter Blades</A><BR>"
 			else
-				dat+="<A href='?src=\ref[src];foam=1'>Switch to Foam Nozzles</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];foam=1'>Switch to Foam Nozzles</A><BR>"
 				dat+="Industrial Cutter Blades<BR>"
 
 		else
@@ -851,37 +890,37 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			switch(mode)
 				if(EFIF_MODE_FLOORS)
 					dat+="<B>Floors</B><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_R_FLOORS)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
 					dat+="<B>Reinforced Floors</B><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_WALLS)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
 					dat+="<B>Walls</B><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_REPAIR)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
 					dat+="<B>Repair</B><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				else
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
 					dat+="<B>Drilling</B><BR>"
 			dat+="<BR>"
-			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
-			dat+="[src.steel_sheets?.amount] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
+			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='byond://?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
+			dat+="[src.steel_sheets?.amount] of [src.max_sheets] Steel Sheets Loaded <A href='byond://?src=\ref[src];load=1'>(Load)</A><BR>"
 
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
@@ -1099,6 +1138,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	desc = "An unfinished pod weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	firerate = 100
+	contraband = 100
 	var/increment
 	var/pod_is_large = FALSE
 	var/core_inserted = FALSE
@@ -1186,7 +1226,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is missing."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
 			core_inserted = TRUE
@@ -1194,14 +1234,14 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			set_icon_state("SPS")
 			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is installed."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 
 	proc/purge_sps(var/point_x, var/point_y)
 		for (var/mob/M in locate(point_x,point_y,ship.loc.z))
 			random_burn_damage(M, 60)
 			M.changeStatus("knockdown", 2 SECOND)
-			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/atom, emote), "scream")
 			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))
@@ -1225,6 +1265,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 /datum/projectile/laser/light/pod/burst
 	damage = 25
 	shot_delay = 0.2 SECONDS
+
+/datum/projectile/laser/light/pod/support_gunner
+	damage = 5
 
 /datum/projectile/disruptor
 	impact_range = 4

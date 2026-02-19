@@ -18,6 +18,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	stamina_cost = 22
 	stamina_crit_chance = 10
 	health = 8
+	can_arcplate = FALSE
 	var/furniture_type = /obj/table/auto
 	var/furniture_name = "table"
 	var/reinforced = 0
@@ -83,7 +84,8 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	mouse_drop(atom/movable/target)
 		. = ..()
-		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target))
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target) && BOUNDS_DIST(src, usr) == 0 \
+			&& BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(usr, target) == 0 && can_reach(usr, src) && can_reach(usr, target)) // i hate mouse_drop
 			actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), usr)
 
 /* ---------- Table Parts ---------- */
@@ -102,6 +104,13 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	attack_self(mob/user)
 		TABLE_WARNING(user)
+
+	mouse_drop(atom/movable/target)
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target) && target == get_turf(usr))
+			TABLE_WARNING(usr)
+			return
+		. = ..()
+
 
 #undef TABLE_WARNING
 
@@ -647,7 +656,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 	onUpdate()
 		..()
-		if (parts == null || owner == null || BOUNDS_DIST(owner, parts) > 0 || BOUNDS_DIST(owner, target_turf) > 0)
+		if (parts == null || owner == null || BOUNDS_DIST(owner, parts) > 0 || BOUNDS_DIST(parts, target_turf) > 0 || BOUNDS_DIST(owner, target_turf) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -669,7 +678,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 			var/obj/blocker
 			for (var/obj/O in target_turf)
-				if (O.density)
+				if (O.density && !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) || (ispath(parts.furniture_type, /obj/table) && HAS_FLAG(O.object_flags, NO_BLOCK_TABLE))))
 					blocker = O
 					break
 

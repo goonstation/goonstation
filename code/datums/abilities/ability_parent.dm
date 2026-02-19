@@ -264,7 +264,8 @@
 		if (!ispath(abilityType))
 			return
 		if (locate(abilityType) in src.abilities)
-			return
+			var/datum/targetable/A = locate(abilityType) in src.abilities
+			return A
 		var/datum/targetable/A = new abilityType(src)
 		A.holder = src // redundant but can't hurt I guess
 		src.abilities += A
@@ -428,6 +429,7 @@
 
 	///Returns the actual mob currently controlling this holder, in case src.owner and composite_owner.owner differ (eg flockmind in a drone)
 	proc/get_controlling_mob()
+		RETURN_TYPE(/mob)
 		return src.composite_owner?.owner || src.owner
 
 /atom/movable/screen/ability
@@ -517,18 +519,18 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (src?.owner && usr.client.tooltipHolder && control == "mapwindow.map")
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
+		if (src?.owner && src.owner.show_tooltip && usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(arglist(list(
+				"type" = TOOLTIP_HOVER,
+				"target" = src,
+				"mouse" = params,
 				"title" = src.name,
-				"content" = (src.desc ? src.desc : null),
+				"content" = src.desc ? src.desc : null,
 				"theme" = src.owner.theme,
-				"flags" = src.owner.tooltip_flags
-			))
+			) + src.owner.tooltip_options))
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		usr.client?.tooltips?.hide(TOOLTIP_HOVER)
 
 /atom/movable/screen/abilitystat
 	maptext_x = 6
@@ -876,7 +878,8 @@
 	var/icon_state = "blob-template"
 
 	var/theme = null // for wire's tooltips, it's about time this got varized
-	var/tooltip_flags = null
+	var/show_tooltip = TRUE
+	var/list/tooltip_options = list()
 
 	///do we log casting this action? set false for stuff that doesn't need to be logged, like dancing
 	var/do_logs = TRUE
@@ -923,10 +926,10 @@
 
 		/// Handle actual ability effects. This is the one you want to override.
 		/// Returns for this proc can be found in defines/abilities.dm.
-		cast(atom/target)
+		cast(atom/target, params)
 			SHOULD_CALL_PARENT(TRUE)
 			if (do_logs)
-				logCast(target)
+				logCast(target, params)
 			if(interrupt_action_bars)
 				actions.interrupt(holder.owner, INTERRUPT_ACT)
 
@@ -992,7 +995,7 @@
 				if (!.)
 					localholder.deductPoints(pointCost)
 
-		logCast(atom/target)
+		logCast(atom/target, params)
 			if (src.targeted)
 				if (!isnull(target))
 					logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src.name] on [constructTarget(target, "combat")] at [log_loc(target)]")
@@ -1301,7 +1304,7 @@
 					return H.addAbility(abilityType)
 
 		var/datum/abilityHolder/holder
-		if (length(src.holders) && (!istype(src.holders[1], /datum/abilityHolder/hidden) || ispath(preferred_holder_type, /datum/abilityHolder/hidden)))
+		if (length(src.holders) && (!istypes(src.holders[1], list(/datum/abilityHolder/hidden, /datum/abilityHolder/mutantrace)) || ispath(preferred_holder_type, /datum/abilityHolder/hidden)))
 			holder = holders[1]
 		else
 			holder = src.addHolder(preferred_holder_type)

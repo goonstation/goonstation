@@ -1,12 +1,11 @@
 /mob/living/critter/small_animal/pig
 	name = "space pig"
-	real_name = "space pig"
 	desc = "A pig. In space."
 	icon_state = "pig"
 	icon_state_dead = "pig-dead"
 	density = TRUE
-	speechverb_say = "oinks"
-	speechverb_exclaim = "squeals"
+	speech_verb_say = "oinks"
+	speech_verb_exclaim = "squeals"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	name_the_meat = FALSE
 	var/feral = FALSE
@@ -60,7 +59,6 @@
 
 /mob/living/critter/small_animal/pig/feral_hog
 	name = "feral hog"
-	real_name = "feral hog"
 	desc = "A feral hog. In space."
 	health_brute = 35
 	health_burn = 35

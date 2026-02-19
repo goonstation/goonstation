@@ -67,6 +67,13 @@
 			holder.RemoveEffect(src.id)
 			holder.RemovePoolEffect(src)
 
+	onResearched()
+		for (var/hemochromia in concrete_typesof(/datum/bioEffect/hemochromia))
+			var/datum/bioEffect/BE = new hemochromia
+			var/datum/bioEffect/GBE = BE.global_instance
+			GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_DONE)
+
+
 ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 /datum/bioEffect/hemochromia

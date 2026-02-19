@@ -567,6 +567,26 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.color = debug_color_of(artists[1])
 			img.app.desc = built.Join("<br/>")
 
+	turbine_shafts
+		name = "turbine shafts"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/obj/turbine_shaft/shaft = locate() in theTurf
+			if (!shaft)
+				img.app.alpha = 0
+				return
+			img.app.color = debug_color_of(shaft.network)
+
+	currents
+		name = "currents"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/obj/effects/current/current = locate() in theTurf
+			if (!current)
+				img.app.alpha = 0
+				return
+			img.app.icon = 'icons/effects/effects.dmi'
+			img.app.icon_state = "arrow"
+			img.app.dir = current.dir
+
 	powernet
 		name = "power networks"
 		help = {"red - contains 0 (no powernet), that's probably bad<br>white - contains multiple powernets<br>other - coloured based on the single powernet<br>numbers - ids of all powernets on the tile"}
@@ -916,23 +936,17 @@ proc/debug_map_apc_count(delim,zlim)
 		help = {"Shows the ckey of the last person to touch stuff on a turf. If multiple peeople the tile is red and you need to hover over it to see a list.<br>Uses the View Fingerprints last_touched thing and a bunch of interactions don't do fingerprints so don't rely on this."}
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			var/list/lines = list()
-			var/toucher = null
 			for(var/atom/A in list(theTurf) + theTurf.contents)
-				if(is_ok(A) && A.fingerprintslast)
-					if(isnull(toucher))
-						toucher = A.fingerprintslast
-					else if(toucher != A.fingerprintslast)
-						toucher = -1
-					lines += "[A.name] - [A.fingerprintslast]"
-			if(isnull(toucher))
-				img.app.alpha = 0
-				return
-			img.app.desc = lines.Join("<br>\n")
-			if(toucher == -1)
+				if(!is_ok(A))
+					continue
+				var/last_ckey = A.get_last_ckey()
+				if(!last_ckey)
+					continue
+				lines += "[A.name]: [replace_if_false(last_ckey, "None")]"
+			if(lines.len == 0)
+				lines += "None"
 				img.app.color = "#FF0000"
-			else
-				img.app.color = debug_color_of(toucher)
-				img.app.overlays = list(src.makeText(toucher, RESET_ALPHA | RESET_COLOR))
+			img.app.desc = lines.Join("<br>\n")
 		proc/is_ok(atom/A)
 			return TRUE
 
@@ -1430,19 +1444,18 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "spatial hashmap count"
 		help = "Displays the amount of objects in the spatial hashmap on each turf"
 
-		var/hashmap_type = null
+		var/datum/spatial_hashmap/hashmap = null
 
-		OnEnabled(var/client/C)
+		OnEnabled(client/C)
 			usr = C.mob
-			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
+			src.hashmap = global.tgui_input_list(C, "Which spatial hashmap do you wish to view?", "Select Spatial Hashmap", global.by_type[/datum/spatial_hashmap])
 
 		GetInfo(turf/theTurf, image/debugoverlay/img)
-			if(isnull(hashmap_type))
+			if (isnull(src.hashmap))
 				img.app.alpha = 0
 				return
-			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
-			var/list/things_nearby = map.get_nearby(theTurf, 0)
-			var/count = length(things_nearby)
+
+			var/count = length(src.hashmap.fast_manhattan(theTurf, 0))
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
@@ -1451,21 +1464,30 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "spatial hashmap in range"
 		help = "Displays the amount of objects in certain range in a selected hashmap on each turf"
 
-		var/hashmap_type = null
+		var/datum/spatial_hashmap/hashmap = null
+		var/norm = null
 		var/range = null
 
 		OnEnabled(var/client/C)
 			usr = C.mob
-			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
-			range = tgui_input_number(C.mob, "Enter a range", "Range Selection", 5, 100, 1)
+			src.hashmap = global.tgui_input_list(C, "Which spatial hashmap do you wish to view?", "Select Spatial Hashmap", global.by_type[/datum/spatial_hashmap])
+			src.norm = global.tgui_input_list(C, "Select a norm to use", "Norm Selection", list("Manhattan", "Supremum", "Exact Supremum"))
+			src.range = global.tgui_input_number(C, "Enter a range", "Range Selection", 5, 100, 1)
 
 		GetInfo(turf/theTurf, image/debugoverlay/img)
-			if(isnull(hashmap_type))
+			if (isnull(src.hashmap))
 				img.app.alpha = 0
 				return
-			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
-			var/list/things_nearby = map.get_nearby_atoms_exact(theTurf, range)
-			var/count = length(things_nearby)
+
+			var/count = 0
+			switch (src.norm)
+				if ("Manhattan")
+					count = length(src.hashmap.fast_manhattan(theTurf, src.range))
+				if ("Supremum")
+					count = length(src.hashmap.supremum(theTurf, src.range))
+				if ("Exact Supremum")
+					count = length(src.hashmap.exact_supremum(theTurf, src.range))
+
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
@@ -1509,7 +1531,22 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.alpha = 100
 			else
 				img.app.alpha = 0
-
+	fluid_pipes
+		name = "fluid pipes"
+		help = {"highlights fluid pipes<br>pipe color - the pipeline to which it belongs<br>numbers:<br>total units<br>maximum units<br>% filled"}
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = "#ffffff"
+			img.app.overlays = list()
+			img.app.alpha = 0
+			for(var/obj/fluid_pipe/pipe in theTurf)
+				var/image/pipe_image = image(pipe.icon, icon_state = pipe.icon_state, dir = pipe.dir)
+				pipe_image.alpha = 200
+				pipe_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+				img.app.alpha = 80
+				pipe_image.color = debug_color_of(pipe.network)
+				pipe_image.maptext = "<span class='pixel r ol'>[round(pipe.network.reagents.total_volume,0.1)]<br>[round(pipe.network.reagents.maximum_volume,1)]<br>[round(100*pipe.network.reagents.total_volume/pipe.network.reagents.maximum_volume,0.1)]%</span>"
+				pipe_image.maptext_x = -3
+				img.app.overlays += pipe_image
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
@@ -1663,16 +1700,17 @@ proc/info_overlay_choices()
 			var/y = text2num(splittext(offs[2], ":")[1])
 			var/image/im = usr.client.infoOverlayImages["[x]-[y]"]
 			if(im?.desc)
-				usr.client.tooltipHolder.transient.show(src, list(
-					"params" = params,
-					"title" = "Diagnostics",
-					"content" = (im.desc)
-				))
+				usr.client.tooltips.show(
+					TOOLTIP_HOVER, src,
+					mouse = params,
+					title = "Diagnostics",
+					content = (im.desc)
+				)
 		else
 			.=..()
 	MouseExited()
 		if(usr.client.activeOverlay)
-			usr.client.tooltipHolder.transient.hide()
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 		else
 			.=..()
 

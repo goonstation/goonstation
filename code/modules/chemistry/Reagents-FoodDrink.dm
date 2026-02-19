@@ -25,8 +25,9 @@ datum
 			value = 2
 			overdose = 69
 			thirst_value = 0.4
-			bladder_value = -0.2
 			viscosity = 0.2
+			var/obj/machinery/maptext_monitor/proc_monitor/bilked_account/counter = null
+			var/bilk_ratio = 0.1
 
 			on_mob_life(var/mob/M, var/mult = 1) //temp
 				if(!M) M = holder.my_atom
@@ -38,6 +39,14 @@ datum
 					if(M.get_toxin_damage())
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult)
+
+				var/datum/db_record/bilked = data_core.bank.find_record("name", M.real_name)
+				if(!isnull(src.counter))
+					bilk_ratio = 1
+				else
+					bilk_ratio = 0.1
+				if(bilked["current_money"] > 0)
+					bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
 				..()
 				return
 
@@ -46,7 +55,7 @@ datum
 				if (severity == 1) //lesser
 					M.stuttering += 1
 					if(effect <= 1)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly clutches [his_or_her(M)] gut!"))
 						M.emote("scream")
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 3)
@@ -62,12 +71,16 @@ datum
 				else if (severity == 2) // greater
 					if(effect <= 5)
 						M.visible_message(pick(SPAN_ALERT("<b>[M.name]</b> jerks bolt upright, then collapses!"),
-							SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!")))
+							SPAN_ALERT("<b>[M.name]</b> suddenly clutches [his_or_her(M)] gut!")))
 						M.setStatusMin("knockdown", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
 						M.dizziness += 5
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
+						// Maptext counter
+					else if(effect <= 50)
+						if(isnull(src.counter) && (data_core.bank.find_record("name", M.real_name)["current_money"] > 0))
+							src.counter = new(bilked = M,bilk = src)
 
 		fooddrink/milk
 			name = "milk"
@@ -79,7 +92,6 @@ datum
 			fluid_g = 255
 			transparency = 255
 			thirst_value = 0.6
-			bladder_value = -0.2
 			viscosity = 0.3
 			var/list/flushed_reagents = list("capsaicin")
 
@@ -220,7 +232,6 @@ datum
 			taste = "creamy"
 			thirst_value = 0.3
 			hunger_value = 0.3
-			bladder_value = -0.2
 			viscosity = 0.5
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -279,7 +290,6 @@ datum
 			fluid_b = 27
 			transparency = 190
 			var/alch_strength = 0.07  // ABV, with 1 being 100% ABV
-			bladder_value = -0.15
 			thirst_value = 0.4
 			viscosity = 0.2
 
@@ -295,18 +305,10 @@ datum
 				if(!istype(holder) || !istype(holder.my_atom) || !ishuman(holder.my_atom))
 					return
 				var/mob/living/carbon/human/H = holder.my_atom
-				if(seen_by_camera(H))
-					// determine the name of the perp (goes by ID if wearing one)
-					var/perpname = H.name
-					if(H:wear_id && H:wear_id:registered)
-						perpname = H:wear_id:registered
-					var/datum/db_record/gen_record = data_core.general.find_record("name", perpname)
-					var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-					// Yes. Its 21. This is Space America. That is canon now.
-					if(gen_record && sec_record && text2num(gen_record["age"]) < 21 && sec_record["criminal"] != ARREST_STATE_ARREST)
-						sec_record["criminal"] = ARREST_STATE_ARREST
-						sec_record["mi_crim"] = "Underage drinking."
-						H.update_arrest_icon()
+				var/datum/db_record/gen_record = data_core.general.find_record("name", H.name)
+				// Yes. Its 21. This is Space America. That is canon now.
+				if(gen_record && text2num(gen_record["age"]) < 21)
+					H.apply_automated_arrest("Underage drinking.")
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
@@ -516,7 +518,6 @@ datum
 			description = "A dark German beer, typically served with dark bread, cream cheese, and an intense appreciation for the law."
 			reagent_state = LIQUID
 			taste = "lawful"
-			bladder_value = -2
 			fluid_r = 61
 			fluid_g = 57
 			fluid_b = 56
@@ -759,7 +760,6 @@ datum
 			reagent_state = LIQUID
 			taste = "seaworthy"
 			thirst_value = 0.899
-			bladder_value = -1
 			fluid_r = 0
 			fluid_g = 255
 			fluid_b = 0
@@ -857,6 +857,11 @@ datum
 					if (isrestrictedz(mob_turf?.z))
 						boutput(M, SPAN_NOTICE("You feel strange. Almost a sense of guilt."))
 						return
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.shoes?.magnetic)
+							boutput(H, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
+							return
 					var/telerange = 10
 					elecflash(M,power=2)
 					var/list/randomturfs = new/list()
@@ -1214,7 +1219,6 @@ datum
 			reagent_state = LIQUID
 			//decays into sugar/some sort of stimulant, maybe gives unique stimulant effect/messages, like bold red GOTTA GO FASTs? Makes you take damage when you run into a wall?
 			taste = "FAST"
-			bladder_value = -5
 			stun_resist = 6
 			threshold = THRESHOLD_INIT
 
@@ -1591,8 +1595,7 @@ datum
 			taste = list("rich", "fruity")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if(M.bodytemperature < 400)
-					M.bodytemperature = min(M.bodytemperature+(5 * mult),400)
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = 400 KELVIN)
 				..()
 
 		fooddrink/alcoholic/tomcollins
@@ -1732,8 +1735,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -2067,8 +2069,7 @@ datum
 			taste = list("sweet", "festive")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (M.bodytemperature < (T0C + 40))
-					M.bodytemperature += 5 * mult
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = T0C + 40)
 				..()
 
 		fooddrink/alcoholic/ironbrew
@@ -2273,7 +2274,7 @@ datum
 			taste = "hot"
 			addiction_prob = 0.1 // heh
 			addiction_min = 7.5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			//penetrates_skin = 1
 			viscosity = 0.2
 
@@ -2285,14 +2286,13 @@ datum
 						M.emote(pick("choke","gasp","cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 						M.take_oxygen_deprivation(rand(0,10) * mult)
-						M.bodytemperature += rand(5,20) * mult
+						M.changeBodyTemp(rand(5,20) KELVIN * mult)
 				else
 					if(prob(10) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
 						M.emote(pick("cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 				M.stuttering += rand(0,2)
-				M.bodytemperature += rand(0,3) * mult
-
+				M.changeBodyTemp(rand(0,3) KELVIN * mult)
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2355,9 +2355,9 @@ datum
 				if(prob(25))
 					M.emote(pick("choke","gasp"))
 					M.take_oxygen_deprivation(rand(0,10) * mult)
-					M.bodytemperature += rand(0,7) * mult
+					M.changeBodyTemp(rand(0,7) KELVIN * mult)
 				M.stuttering += rand(0,2)
-				M.bodytemperature += rand(0,3) * mult
+				M.changeBodyTemp(rand(0,3) KELVIN * mult)
 				if(probmult(10))
 					M.emote(pick("cough"))
 
@@ -2388,13 +2388,11 @@ datum
 			taste = "sugary"
 			thirst_value = 0.75
 			viscosity = 0.4
-			bladder_value = -0.2
 			caffeine_content = 0.15
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.changeStatus("drowsy", -10 SECONDS)
-				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = M.base_body_temp)
 				..()
 				return
 
@@ -2411,12 +2409,7 @@ datum
 			thirst_value = 0.75
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.sims)
-						H.sims.affectMotive("Bladder", (-0.05 * mult))
-				if(M.bodytemperature > M.base_body_temp) // So it doesn't act like supertep
-					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = M.base_body_temp)
 				..(M, mult)
 				return
 
@@ -2455,7 +2448,7 @@ datum
 			transparency = 255
 			addiction_prob = 0.1 // hey man some people really like weird cheese
 			addiction_min = 5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			taste = "weird"
 			hunger_value = 1
 			viscosity = 0.6
@@ -2517,14 +2510,12 @@ datum
 			fluid_b = 16
 			transparency = 245
 			thirst_value = 0.3
-			bladder_value = -0.1
 			energy_value = 0.3
 			taste = "bitter"
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if (M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
 
 		fooddrink/caffeinated/coffee/fresh
 			name = "freshly brewed coffee"
@@ -2564,7 +2555,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				if(M.get_brain_damage() < 60 || killer)
+				if(M.get_brain_damage() < BRAIN_DAMAGE_MAJOR || killer)
 					M.take_brain_damage(2 * mult)
 
 			killer
@@ -2606,7 +2597,6 @@ datum
 			addiction_prob = 0.4
 			var/tickcounter = 0
 			thirst_value = -0.2
-			bladder_value = 0.04
 			energy_value = 1
 			stun_resist = 15
 			taste = "supercharged"
@@ -2660,7 +2650,6 @@ datum
 			fluid_b = 54
 			thirst_value = 1
 			taste = "herbal"
-			bladder_value = 0.04
 			energy_value = 0.04
 			minimum_reaction_temperature = -INFINITY
 			caffeine_content = 0.2
@@ -2693,7 +2682,6 @@ datum
 			taste = "delicate"
 			transparency = 232
 			thirst_value = 0.75
-			bladder_value = 0.04
 			energy_value = 0.04
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -2719,15 +2707,13 @@ datum
 			fluid_g = 120
 			fluid_b = 65
 			taste = "herbal"
-			bladder_value = 0.04
 			energy_value = 0.04
 			transparency = 232
 			thirst_value = 1.5
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -2742,7 +2728,6 @@ datum
 			transparency = 160
 			taste = "fizzy"
 			thirst_value = 0.78
-			bladder_value = 0.05
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(probmult(4))
@@ -2765,8 +2750,7 @@ datum
 			var/ticks = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
 				M.reagents.add_reagent("sugar", 2 * src.calculate_depletion_rate(M, mult))
 				if (ispug(M) || istype(M, /mob/living/critter/small_animal/dog))
 					M.changeStatus("poisoned", 8 SECONDS * mult)
@@ -2846,7 +2830,6 @@ datum
 			transparency = 255
 			hunger_value = 1
 			thirst_value = 1
-			bladder_value = -1
 			viscosity = 0.3
 			taste = "festive"
 			threshold = THRESHOLD_INIT
@@ -2940,7 +2923,6 @@ datum
 			depletion_rate = 0.2
 			hunger_value = 2
 			thirst_value = 0.5
-			bladder_value = -1
 			taste = "soothing"
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -3351,6 +3333,19 @@ datum
 				if(probmult(16))
 					M.emote("fart")
 
+		fooddrink/barbecue_sauce
+			name = "barbecue sauce"
+			id = "barbecue_sauce"
+			taste = "smoky"
+			description = "A wonderful sauce that finds its home on many different kinds of food. Sometimes made with worcestershire sauce, although this appears not to have been."
+			reagent_state = SOLID
+			fluid_r = 125
+			fluid_g = 64
+			fluid_b = 15
+			transparency = 255
+			viscosity = 0.7
+			depletion_rate = 0.4
+
 		fooddrink/beff
 			name = "beff"
 			id = "beff"
@@ -3494,8 +3489,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature > 280)
-					M.bodytemperature = max(M.bodytemperature-(5 * mult),280)
+				M.changeBodyTemp(-5 KELVIN * mult, min_temp = 280 KELVIN)
 				..()
 				return
 
@@ -3508,7 +3502,6 @@ datum
 			description = "A citric beverage extracted from limes."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tart"
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -3533,7 +3526,6 @@ datum
 			description = "An extremely tart juice usually mixed into other drinks and juices."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tart"
 
 		fooddrink/juice_orange
@@ -3545,7 +3537,6 @@ datum
 			description = "A citric beverage extracted from oranges."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tangy"
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -3573,7 +3564,6 @@ datum
 			description = "A citric beverage extracted from lemons."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "sour"
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -3598,7 +3588,6 @@ datum
 			description = "Tomatoes pureed down to a liquid state."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "nutritious"
 
 		fooddrink/juice_strawberry
@@ -3610,7 +3599,6 @@ datum
 			description = "Fresh juice produced by strawberries."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "like strawberries"
 
 		fooddrink/juice_blueberry
@@ -3655,7 +3643,6 @@ datum
 			description = "The juice from a thousand screaming cherries. Silent screams."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = list("sweet", "tart")
 
 		fooddrink/juice_blueraspberry
@@ -3667,7 +3654,6 @@ datum
 			description = "Radically flavorlicious. There's really nothing else to call it."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "like FD&C Blue No. 1"
 
 		fooddrink/juice_pineapple
@@ -3679,7 +3665,6 @@ datum
 			description = "Juice from a pineapple. A surprise, considering the name!"
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tangy"
 
 		fooddrink/juice_watermelon
@@ -3691,7 +3676,6 @@ datum
 			description = "A delicious summer drink!"
 			reagent_state = LIQUID
 			thirst_value = 2
-			bladder_value = -1.5
 			taste = "dilute"
 
 		fooddrink/juice_apple
@@ -3703,7 +3687,6 @@ datum
 			description = "Fresh juice produced by apples."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tart"
 
 		fooddrink/juice_peach
@@ -3715,7 +3698,6 @@ datum
 			description = "An artificial peach drink that is legally sold as 100% all natural peach juice."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "peachy"
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3735,7 +3717,6 @@ datum
 			description = "A glass of carrot juice a day keeps the ophthalmologist away."
 			reagent_state = LIQUID
 			thirst_value = 1
-			bladder_value = -1
 			taste = "like carrots"
 
 		fooddrink/juice_pumpkin
@@ -3747,7 +3728,6 @@ datum
 			description = "The journey to juice a pumpkin has finally come to an end, with very orange results."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "earthy"
 
 		fooddrink/juice_banana
@@ -3759,7 +3739,6 @@ datum
 			description = "A juice which has a smooth, naturally sweet flavor with subtle hints of tropical freshness."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "tropical"
 
 		fooddrink/juice_grapefruit
@@ -3771,7 +3750,6 @@ datum
 			description = "A tart beverage extracted from grapefruits."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			bladder_value = -1.5
 			taste = "caustic"
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3804,7 +3782,6 @@ datum
 			description = "Well, it's not actually milk, considering that coconuts aren't mammals with mammary glands. It's really more like coconut juice. Or coconut water."
 			reagent_state = LIQUID
 			thirst_value = 1
-			bladder_value = -1
 			taste = "tropical"
 
 		fooddrink/turmeric
@@ -3935,7 +3912,6 @@ datum
 			description = "A salty brine containing garlic and dill, typically used to ferment and pickle cucumbers."
 			reagent_state = LIQUID
 			thirst_value = 1
-			bladder_value = -1
 			taste = "briny"
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3951,7 +3927,6 @@ datum
 			description = "A refreshing mixed drink of orange, lemon and lime juice."
 			reagent_state = LIQUID
 			thirst_value = 2
-			bladder_value = -2
 			taste = "zesty"
 
 			fluid_r = 12
@@ -3977,7 +3952,6 @@ datum
 			energy_value = 10
 			hunger_value = -2
 			thirst_value = -2
-			bladder_value = -2
 			stun_resist = 100
 			taste = "bonkers"
 			threshold = THRESHOLD_INIT
@@ -4067,6 +4041,17 @@ datum
 						new /obj/item/reagent_containers/food/snacks/plant/orange(M.loc)
 						new /obj/item/reagent_containers/food/snacks/plant/lemon(M.loc)
 
+		fooddrink/cocktail_triplewater
+			name = "triple water"
+			id = "cocktail_triplewater"
+			fluid_r = 10
+			fluid_g = 165
+			fluid_b = 254
+			description = "This water seems to contain more water per water than normal water should."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			taste = "like water, but more"
+
 		fooddrink/lemonade
 			name = "lemonade"
 			id = "lemonade"
@@ -4077,7 +4062,6 @@ datum
 			description = "A refreshing, sweet and sour drink consisting of sugar and lemon juice."
 			reagent_state = LIQUID
 			thirst_value = 0.7
-			bladder_value = -0.2
 			taste = list("sweet", "sour")
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -4115,7 +4099,6 @@ datum
 			transparency = 200
 			description = "A mixture of half lemonade and half tea, sometimes named after a dead Earth golfer. Not to be confused with the dairy kind."
 			thirst_value = 2
-			bladder_value = -2
 			viscosity = 0.1
 			taste = "refreshing"
 
@@ -4322,9 +4305,9 @@ datum
 
 				return
 
-		fooddrink/temp_bioeffect/worcestershire_sauce
-			name = "Worcestershire sauce"
-			id = "worcestershire_sauce"
+		fooddrink/temp_bioeffect/yorkshire_sauce
+			name = "yorkshire sauce"
+			id = "yorkshire_sauce"
 			description = "Just looking at this substance makes you want to break for Tea."
 			fluid_r = 119
 			fluid_g = 51
@@ -4392,7 +4375,7 @@ datum
 			fluid_g = 255
 			addiction_prob = 0.2
 			addiction_min = 5
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			overdose = 50
 			hunger_value = 0.25
 			taste = "offputting"
@@ -4833,7 +4816,6 @@ datum
 			reagent_state = LIQUID
 			taste = "sweet with a hint of bitter"
 			thirst_value = 1
-			bladder_value = 0.04
 			energy_value = 0.04
 			var/list/flushed_reagents = list("cholesterol")
 

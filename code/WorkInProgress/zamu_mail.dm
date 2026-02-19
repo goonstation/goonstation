@@ -186,17 +186,9 @@
 
 		// I TOLD YOU IT WAS ILLEGAL!!!
 		// I WARNED YOU DOG!!!
-		if (ishuman(owner) && seen_by_camera(owner))
-			var/perpname = owner.name
-			if (owner:wear_id && owner:wear_id:registered)
-				perpname = owner:wear_id:registered
-
-			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-			if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
-				sec_record["criminal"] = ARREST_STATE_ARREST
-				sec_record["mi_crim"] = "Mail fraud."
-				var/mob/living/carbon/human/H = owner
-				H.update_arrest_icon()
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.apply_automated_arrest("Mail fraud.")
 
 
 /obj/decal/cleanable/mail_fraud
@@ -277,7 +269,7 @@
 			var/spawn_type = weighted_pick(mail_types_by_job[J.type])
 			package = new(where)
 			package.spawn_type = spawn_type
-			package_color = J.linkcolor ? J.linkcolor : "#FFFFFF"
+			package_color = global.tgui_colours_to_rgb[J.ui_colour] || "#FFFFFF"
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
 			// just throw some random crap in there, fuck it. who cares. not us
@@ -559,6 +551,9 @@ var/global/mail_types_by_job = list(
 		/obj/item/seed/alien = 10,
 		/obj/item/satchel/hydro = 7,
 		/obj/item/satchel/hydro/large = 5,
+		/obj/item/clothing/glasses/phyto = 10,
+		/obj/item/clothing/glasses/phyto/upgraded = 7,
+		/obj/item/device/analyzer/phytoscopic_upgrade = 7,
 		/obj/item/reagent_containers/glass/bottle/powerplant = 5,
 		/obj/item/reagent_containers/glass/bottle/fruitful = 5,
 		/obj/item/reagent_containers/glass/bottle/topcrop = 5,
@@ -617,6 +612,11 @@ var/global/mail_types_by_job = list(
 		/obj/item/storage/goodybag = 3,
 		),
 
+	/datum/job/civilian/mail_courier = list(
+		/obj/item/clothing/suit/pigeon = 3,
+		/obj/item/satchel/mail/large = 5,
+		),
+
 	/datum/job/civilian/staff_assistant = list(
 		/obj/item/football = 2,
 		/obj/item/basketball = 2,
@@ -657,7 +657,7 @@ var/global/mail_types_everyone = list(
 	/obj/item/reagent_containers/food/snacks/chips = 6,
 	/obj/item/reagent_containers/food/snacks/popcorn = 6,
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical = 5,
-	/obj/item/tank/emergency_oxygen = 5,
+	/obj/item/tank/pocket/oxygen = 5,
 	/obj/item/wrench = 4,
 	/obj/item/crowbar = 4,
 	/obj/item/screwdriver = 4,
@@ -680,8 +680,25 @@ var/global/mail_types_everyone = list(
 	/obj/item/clothing/glasses/vr/arcade = 2,
 	/obj/item/device/light/zippo = 4,
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 6,
+	/obj/item/paper/postcard/beach = 3,
+	/obj/item/paper/postcard/canyon = 3,
+	/obj/item/paper/postcard/mountain = 3,
+	/obj/item/paper/postcard/lovemd = 3,
+	/obj/item/paper/postcard/mdstatehouse = 3,
+	/obj/item/paper/postcard/moonfootprint = 3,
+	/obj/item/paper/postcard/apollo = 3,
+	/obj/item/paper/postcard/shelterfrogking = 3,
+	/obj/item/paper/postcard/cowbee = 3,
+	/obj/item/paper/postcard/believe = 3,
+	/obj/item/paper/postcard/silicongreeting = 3,
+	/obj/item/paper/postcard/thundrando = 3,
+	/obj/item/paper/postcard/pumpkinpatch = 3,
+	/obj/item/paper/postcard/chicago = 2,
+	/obj/item/paper/postcard/sadcrab = 2,
+	/obj/item/paper/postcard/spacequebec = 2,
+	/obj/item/paper/postcard/pyramid = 2,
 
-	// mostly taken from gangwar as a "relatively safe list of random hats"
+	// mostly taken from gangwar as a "relatively sa-fe list of random hats"
 	/obj/item/clothing/head/biker_cap = 1,
 	/obj/item/clothing/head/cakehat = 1,
 	/obj/item/clothing/head/chav = 1,

@@ -53,7 +53,7 @@ export const Hypospray = () => {
             maxValue={reagentData.maxVolume}
             step={1}
             stepPixelSize={10}
-            onChange={(e, value) => act('changeAmount', { amount: value })}
+            onChange={(_e, value) => act('changeAmount', { amount: value })}
           />
         </Section>
       </Window.Content>

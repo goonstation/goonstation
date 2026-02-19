@@ -4,6 +4,8 @@
 	var/detectTime = 0
 	var/locked = 1
 
+SET_UP_DIRECTIONALS(/obj/machinery/camera/motion, OFFSETS_CAMERA)
+
 /obj/machinery/camera/motion/process()
 	// motion camera event loop
 	. = ..()

@@ -136,6 +136,7 @@
 	var/turf/magnetic_center
 	alpha = 128
 	anchored = ANCHORED_ALWAYS
+	event_handler_flags = IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 
 	small
 		width = 7
@@ -159,11 +160,12 @@
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			for (var/obj/O in T)
-				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
+				continue_if_overlay_or_effect(O)
+				if (!HAS_FLAG(O.event_handler_flags, IMMUNE_MINERAL_MAGNET))
 					qdel(O)
 			T.ClearAllOverlays()
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+				if(ismobcritter(L) && L.is_npc)
 					qdel(L)
 			if(istype(T,/turf/unsimulated) && ( T.can_build || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
@@ -924,7 +926,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			. = ..()
 			if (length(space_overlays)) // Are we on the edge of a chunk wall
 				if (src.ore) return // Skip if there's ore here already
-				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				var/list/color_vals = algae_controller().get_color(src)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
@@ -932,7 +934,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 					AddOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
-		destroy_asteroid(dropOre)
+		destroy_asteroid(dropOre, var/mob/user)
 			ClearSpecificOverlays("glow_algae")
 			remove_medium_light("glow_algae")
 			var/list/turf/neighbors = getNeighbors(src, alldirs)
@@ -1045,6 +1047,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
 
+	plasma_reef
+		name = "dense plasmacoral"
+		desc = "A large formation of plasmacoral, completely impassable."
+		invincible = TRUE
+		default_material = "plasmacoral"
+		mat_changename = TRUE
+		uses_default_material_appearance = FALSE
+		stone_color = "#A114FF"
+		color = "#A114FF"
+
 	algae
 		name = "sea foam"
 		desc = "Rapid depressuziation has flash-frozen sea water and algae into hardened foam."
@@ -1064,7 +1076,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			AddOverlays(algea, "glow_algae")
 			add_medium_light("glow_algae", color_vals)
 
-		destroy_asteroid(dropOre)
+		destroy_asteroid(dropOre, var/mob/user)
 			ClearSpecificOverlays("glow_algae")
 			remove_medium_light("glow_algae")
 			var/list/turf/neighbors = getNeighbors(src, alldirs)
@@ -1309,7 +1321,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				dig_feedback = "You can't even make a dent! You need a stronger tool."
 
 		if (prob(dig_chance))
-			destroy_asteroid()
+			destroy_asteroid(user = user)
 		else
 			if (dig_feedback)
 				boutput(user, SPAN_ALERT("[dig_feedback]"))
@@ -1348,7 +1360,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		return
 
-	proc/destroy_asteroid(var/dropOre=1)
+	proc/destroy_asteroid(var/dropOre=1, var/mob/user)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 
@@ -1357,14 +1369,20 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (src.invincible)
 			return
 		if (E)
-			if (E.excavation_string)
+			var/user_has_mining_alert = (user && HAS_ATOM_PROPERTY(user, PROP_MOB_MINING_ALERTS))
+			if (user_has_mining_alert && E.mining_alert_string)
+				src.tri_message(user, E.excavation_string ? SPAN_ALERT("[E.excavation_string]") : null, null, "IMA says, \"[E.mining_alert_string]\"")
+			else if (E.excavation_string)
 				src.visible_message(SPAN_ALERT("[E.excavation_string]"))
+			if (user_has_mining_alert && E.excavation_alert_sound)
+				SPAWN(0.2 SECONDS) // this spawn desyncs the alert sound and the mining-tool sfx, which gives a better sense of cause and effect
+					user.playsound_local(user, E.excavation_alert_sound, 50, 1)
 			E.onExcavate(src)
 		var/ore_to_create = src.default_ore
 		if (ispath(ore_to_create) && dropOre)
 			if (O)
 				ore_to_create = O.output
-				O.onExcavate(src)
+				O.onExcavate(src, user)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
 				new ore_to_create(src)
@@ -1549,6 +1567,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 #ifdef UNDERWATER_MAP
 	fullbright = 0
 	luminosity = 3
+	special_volume_override = 0.62 // without this, the rock floors in the trench attenuate incorrectly and become very loud
 #else
 	luminosity = 1
 #endif
@@ -1805,7 +1824,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	afterattack(atom/target, mob/user)
 		..()
-		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mods)
+		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mode)
 			if(isturf(target))
 				src.process_charges(src.get_power_usage(), user)
 			else
@@ -1955,6 +1974,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_item_state = "pshovel1"
 	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 6
 	powered_force = 12
 	dig_strength = 0
@@ -1976,7 +1996,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 /obj/item/mining_tool/powered/hedron_beam
 	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
 	name = "\improper Hedron beam device"
-	desc = "A prototype multifunctional industrial tool capable of rapidly switching between welding and mining modes."
+	desc = "A prototype multifunction industrial tool capable of rapidly switching between welding and mining modes. Ships with a weak self-charging cell."
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
@@ -1986,10 +2006,10 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	tool_flags = TOOL_WELDING
 	force = 10
 	dig_strength = 0
-	powered_dig_strength = 3
-	power_usage = 2
+	powered_dig_strength = 5
+	power_usage = 1
 	robot_power_usage = 50
-	default_cell = /obj/item/ammo/power_cell
+	default_cell = /obj/item/ammo/power_cell/self_charging/tricklecharge
 
 	examine(mob/user)
 		. = ..()
@@ -2005,7 +2025,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 		FLICK("hedron-MtoW", src)
 		..()
 
-	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
+	proc/try_weld(mob/user, var/fuel_amt = 4, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
 	//All welding tools just copy and paste this proc? Horrible, but out of scope so it can be some other handsome coder's problem.
 		if (!src.is_on) //are we in welding mode?
 			if(use_amt == -1)
@@ -2036,6 +2056,9 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	New()
 		..()
 		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
+
+	get_fiber_mask()
+		return create_glovemask_order(2) // 1/2 chance of match
 
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
@@ -2173,7 +2196,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
 
 		for (var/obj/geode/geode in get_turf(src))
-			geode.ex_act(2, null, 5 * src.expl_heavy)
+			geode.ex_act(2, null, 5)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
@@ -2208,6 +2231,7 @@ TYPEINFO(/obj/item/cargotele)
 			for (var/subtype in typesof(supertype))
 				allowed_types[subtype] = 1
 		allowed_types -= /obj/storage/closet/flock
+		allowed_types -= concrete_typesof(/obj/storage/crate/gang_crate)
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
@@ -2306,8 +2330,22 @@ TYPEINFO(/obj/item/cargotele)
 		if(!mob_teled)
 			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
 
-		cargo.set_loc(get_turf(src.target))
-		target.receive_cargo(cargo)
+		// teleportation instability causes targets to get sent randomly
+		var/obj/submachine/cargopad/pad
+		var/turf/turf
+		if (cargo.artifact?.activated && cargo.artifact.teleportationally_unstable)
+			if (prob(30))
+				turf = get_random_station_turf()
+			else
+				pad = pick(global.cargo_pad_manager.pads)
+				turf = get_turf(pad)
+		else
+			pad = src.target
+			turf = get_turf(pad)
+
+		cargo.set_loc(turf)
+		pad?.receive_cargo(cargo)
+
 		elecflash(src)
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -2729,6 +2767,8 @@ TYPEINFO(/obj/submachine/cargopad)
 	researchoutpost
 		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
+	radio
+		name = "Radio Station Pad"
 
 	New()
 		..()

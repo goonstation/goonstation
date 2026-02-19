@@ -113,7 +113,9 @@
 	can_rupture = 0;
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "pO" = (
@@ -151,7 +153,7 @@
 	icon_state = "1-4"
 	},
 /obj/cable/orange,
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
+/obj/machinery/nuclear_reactor/prefilled/normal,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "uc" = (
@@ -176,7 +178,10 @@
 	can_rupture = 0;
 	dir = 5
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = 11
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "wt" = (
@@ -220,7 +225,10 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -9
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Bm" = (
@@ -243,7 +251,10 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "Fg" = (
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = 10
+	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5
 	},
@@ -269,7 +280,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "Kv" = (
@@ -293,7 +306,9 @@
 	can_rupture = 0;
 	dir = 4
 	},
-/obj/machinery/meter,
+/obj/machinery/meter{
+	pixel_y = 11
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "OH" = (
@@ -344,7 +359,7 @@
 /area/station/engine/inner)
 "Wj" = (
 /obj/cable/orange,
-/obj/machinery/atmospherics/binary/reactor_turbine,
+/obj/machinery/reactor_turbine,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "WB" = (

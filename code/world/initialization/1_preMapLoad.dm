@@ -5,6 +5,7 @@
  * YOU WILL BE SENT TO THE CRUSHER IF YOU TOUCH THIS UNNECESSAIRLY
  */
 /world/proc/Genesis()
+	global.runtimeDetails = list()
 #ifdef LIVE_SERVER
 	world.log = file("data/errors.log")
 #endif
@@ -24,8 +25,6 @@
 #endif
 	if (should_init_tracy)
 		prof_init()
-
-	enable_auxtools_debugger()
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
@@ -55,7 +54,7 @@
 	world.log << "========================================"
 	world.log << ""
 #endif
-
+	enable_auxtools_debugger()
 	Z_LOG_DEBUG("Preload", "  radio")
 	radio_controller = new /datum/controller/radio()
 
@@ -93,10 +92,9 @@
 	cdn = config.cdn
 	cdnManifest = loadCdnManifest()
 	disableResourceCache = config.disableResourceCache
-	chui = new()
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 		Z_LOG_DEBUG("Preload", "Loading local browserassets...")
-		recursiveFileLoader("browserassets/src/")
+		loadAllLocalResources("browserassets/src/")
 
 	Z_LOG_DEBUG("Preload", "Z-level datums...")
 	init_zlevel_datums()
@@ -125,9 +123,6 @@
 
 	Z_LOG_DEBUG("Preload", "Generating access name lookup") // ^^
 	generate_access_name_lookup()
-
-	// no log because this is functionally instant
-	global_signal_holder = new
 
 	Z_LOG_DEBUG("Preload", "Loading saved gamemode...")
 	world.load_mode()
@@ -163,14 +158,14 @@
 	actions = new /datum/action_controller()
 	Z_LOG_DEBUG("Preload", "  explosions")
 	explosions = new /datum/explosion_controller()
-	Z_LOG_DEBUG("Preload", "  ghost_notifier")
-	ghost_notifier = new /datum/ghost_notification_controller()
 	Z_LOG_DEBUG("Preload", "  respawn_controller")
 	respawn_controller = new /datum/respawn_controls()
 	Z_LOG_DEBUG("Preload", " cargo_pad_manager")
 	cargo_pad_manager = new /datum/cargo_pad_manager()
 	Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 	camera_coverage_controller = new /datum/controller/camera_coverage()
+	Z_LOG_DEBUG("Preload", " instrumnt_sound_bank")
+	instrument_sound_bank = new()
 
 	Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 	hydro_controls.set_up()
@@ -263,6 +258,8 @@
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
+
+	sortList(global.material_cache, /proc/cmp_text_asc)
 
 /proc/buildManufacturingRequirementCache()
 	requirement_cache = list()

@@ -7,7 +7,6 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
 interface SpawnEventData {
@@ -21,12 +20,15 @@ interface SpawnEventData {
   objective_text;
   spawn_type;
   loc_type;
+  job_wanted_location;
   incompatible_antag;
   equip_antag;
   ask_permission;
   allow_dnr;
   eligible_player_count;
   add_to_manifest;
+  choose_name;
+  disable_choose_name;
 }
 
 export const SpawnEvent = () => {
@@ -42,15 +44,18 @@ export const SpawnEvent = () => {
     objective_text,
     spawn_type,
     loc_type,
+    job_wanted_location,
     incompatible_antag,
     equip_antag,
     ask_permission,
     allow_dnr,
     eligible_player_count,
     add_to_manifest,
+    choose_name,
+    disable_choose_name,
   } = data;
   return (
-    <Window title="Ghost Spawn Editor" width={500} height={360}>
+    <Window title="Ghost Spawn Editor" width={500} height={400}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -97,7 +102,7 @@ export const SpawnEvent = () => {
                   minValue={0}
                   maxValue={120}
                   step={1}
-                  onDrag={(spawn_delay) =>
+                  onChange={(spawn_delay) =>
                     act('set_spawn_delay', { spawn_delay: spawn_delay * 10 })
                   }
                   disabled={!ask_permission}
@@ -119,7 +124,7 @@ export const SpawnEvent = () => {
                 minValue={1}
                 maxValue={100}
                 step={1}
-                onDrag={(amount) => act('set_amount', { amount })}
+                onChange={(amount) => act('set_amount', { amount })}
               />
               {`/${eligible_player_count} `}
               <Button
@@ -129,7 +134,7 @@ export const SpawnEvent = () => {
               {amount_to_spawn === 1 &&
                 spawn_type === 'mob_ref' &&
                 thing_name && (
-                  <ButtonCheckbox
+                  <Button.Checkbox
                     checked={spawn_directly}
                     onClick={() =>
                       act('set_spawn_directly', {
@@ -139,7 +144,7 @@ export const SpawnEvent = () => {
                     tooltip="Puts the ghost mind directly into the original mob instead of copying it."
                   >
                     Spawn as original
-                  </ButtonCheckbox>
+                  </Button.Checkbox>
                 )}
             </LabeledList.Item>
             <LabeledList.Item label="Spawn location">
@@ -157,6 +162,14 @@ export const SpawnEvent = () => {
               >
                 {loc_type === 'landmark' ? spawn_loc : 'Landmark'}
               </Button>
+              {!!job_wanted_location && (
+                <Button
+                  onClick={() => act('select_default_job_landmark')}
+                  color="red"
+                  icon="exclamation"
+                  tooltip="Selected job wants to spawn at a specific landmark, click me to select that landmark."
+                />
+              )}
             </LabeledList.Item>
             <LabeledList.Item label="Antagonist status">
               <Button selected={antag_role} onClick={() => act('select_antag')}>
@@ -167,7 +180,7 @@ export const SpawnEvent = () => {
                   <Button color="red" onClick={() => act('clear_antag')}>
                     x
                   </Button>
-                  <ButtonCheckbox
+                  <Button.Checkbox
                     checked={equip_antag}
                     tooltip="Give antag default equipment and abilities? Will overwrite anything already equipped in those slots."
                     onClick={() =>
@@ -175,7 +188,7 @@ export const SpawnEvent = () => {
                     }
                   >
                     Equip antags
-                  </ButtonCheckbox>
+                  </Button.Checkbox>
                 </>
               )}
               {!!incompatible_antag && (
@@ -188,17 +201,29 @@ export const SpawnEvent = () => {
               )}
             </LabeledList.Item>
             <LabeledList.Item label="DNR">
-              <ButtonCheckbox
+              <Button.Checkbox
                 checked={allow_dnr}
                 tooltip="Allow players who have set DNR to respawn in this event"
                 onClick={() => act('set_allow_dnr', { allow_dnr: !allow_dnr })}
               >
                 Allow DNR players
-              </ButtonCheckbox>
+              </Button.Checkbox>
+            </LabeledList.Item>
+            <LabeledList.Item label="Choose Name">
+              <Button.Checkbox
+                checked={choose_name}
+                disabled={disable_choose_name}
+                tooltip="Allow players who respawn to choose their own name"
+                onClick={() =>
+                  act('choose_name', { choose_name: !choose_name })
+                }
+              >
+                Respawnees choose name
+              </Button.Checkbox>
             </LabeledList.Item>
             {spawn_type === 'job' && (
               <LabeledList.Item label="Manifest">
-                <ButtonCheckbox
+                <Button.Checkbox
                   checked={add_to_manifest}
                   tooltip="Add players spawned by this event to the station manifest"
                   onClick={() =>
@@ -206,7 +231,7 @@ export const SpawnEvent = () => {
                   }
                 >
                   Add to manifest
-                </ButtonCheckbox>
+                </Button.Checkbox>
               </LabeledList.Item>
             )}
             <LabeledList.Item label="Objective text">
@@ -214,7 +239,7 @@ export const SpawnEvent = () => {
                 value={objective_text}
                 fluid
                 height={5}
-                onChange={(_, value) =>
+                onBlur={(value) =>
                   act('set_objective_text', { objective_text: value })
                 }
               />

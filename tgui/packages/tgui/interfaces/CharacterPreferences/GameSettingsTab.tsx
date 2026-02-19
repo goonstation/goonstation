@@ -29,8 +29,7 @@ export const GameSettingsTab = () => {
           }
         >
           <Box mb="5px" color="label">
-            Changes the font size used in popup windows. Only works when CHUI is
-            disabled.
+            Changes the font size used in some popup windows.
           </Box>
           <Button onClick={() => act('update-fontSize')}>
             {data.fontSize ? data.fontSize + '%' : 'Default'}
@@ -259,6 +258,20 @@ export const GameSettingsTab = () => {
               tooltipPosition="top"
             >
               Use AZERTY Keyboard Layout
+            </Button.Checkbox>
+          </Box>
+          <Box mb="5px" color="label">
+            Usually middle mouse is a handy shortcut to open and close lockers.
+            Tick this to enable the legacy behaviour of it swapping hands
+            instead.
+          </Box>
+          <Box mb="5px">
+            <Button.Checkbox
+              checked={data.middleMouseSwap}
+              onClick={() => act('update-middleMouseSwap')}
+              tooltip="Middle mouse swaps hands"
+            >
+              Middle mouse swaps hands.
             </Button.Checkbox>
           </Box>
           <Box color="label">

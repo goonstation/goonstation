@@ -227,7 +227,7 @@
 		T.Attackby(W, user)
 		return
 
-	if (T.intact)
+	if (T.intact && !istype(T, /turf/space))
 		return
 	if (issnippingtool(W))
 		src.cut(user,T)

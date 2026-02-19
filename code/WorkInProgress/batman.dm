@@ -27,7 +27,7 @@
 			src.equip_new_if_possible(/obj/item/device/radio/headset/command, SLOT_EARS)
 			src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
 			src.equip_new_if_possible(/obj/item/handcuffs/tape_roll, SLOT_L_STORE)
-			src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
+			src.equip_new_if_possible(/obj/item/tank/pocket/oxygen, SLOT_R_STORE)
 
 			src.equip_new_if_possible(/obj/item/storage/box/tactical_kit, SLOT_IN_BACKPACK)
 			src.equip_new_if_possible(/obj/item/storage/medical_pouch, SLOT_IN_BACKPACK)

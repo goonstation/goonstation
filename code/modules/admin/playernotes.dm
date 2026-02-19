@@ -55,7 +55,7 @@
 		</style>
 		"})
 
-	dat += "<h1 style='text-align: center;'>Player Notes for <b>[player]</b></h1><center><a href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A> - <a href='?src=\ref[src];action=loginnotice;target=[player]'[noticelink]</a></center><br><br><table><tbody>"
+	dat += "<h1 style='text-align: center;'>Player Notes for <b>[player]</b></h1><center><a href='byond://?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A> - <a href='byond://?src=\ref[src];action=loginnotice;target=[player]'[noticelink]</a></center><br><br><table><tbody>"
 
 	if (!length(playerNotes.data))
 		dat += "No notes. <i>Yet.</i>"
@@ -65,22 +65,26 @@
 			var/list/row_classes = list()
 			var/noteReason = playerNote.note
 
-			var/regex/R = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
-			if (R.Find(noteReason))
-				row_classes += "ban"
-				noteReason = R.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
-
 			var/list/legacyData
 			if (length(playerNote.legacy_data))
 				legacyData = json_decode(playerNote.legacy_data)
 
+			var/gameAdminCkey = playerNote.game_admin?.player?.ckey
+			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
+				gameAdminCkey = legacyData["game_admin_ckey"]
+
+			var/regex/old_ban_regex = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
+			var/regex/new_ban_regex = new("Banned from (.+?) for (.+). Reason: (.+)", "m")
+			if (old_ban_regex.Find(noteReason))
+				row_classes += "ban"
+				noteReason = old_ban_regex.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
+			else if (new_ban_regex.Find(noteReason))
+				row_classes += "ban"
+				noteReason = new_ban_regex.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>[gameAdminCkey]</b> &mdash; $2<br><blockquote>$3</blockquote>")
+
 			var/id = playerNote.server_id
 			if (!id && ("oldserver" in legacyData))
 				id = legacyData["oldserver"]
-
-			var/gameAdminCkey = playerNote.game_admin?.ckey
-			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
-				gameAdminCkey = legacyData["game_admin_ckey"]
 
 			if (gameAdminCkey == "bot")
 				row_classes += "auto"
@@ -90,7 +94,7 @@
 			<tr class="[classes]">
 				<th>[id]</th>
 				<th>[playerNote.created_at]</th>
-				<th style='width: 0; white-space: pre;'>#[playerNote.id] <a href="?src=\ref[src];action=notes2;target=[player];type=del;id=[playerNote.id]" style="background: red; color: white; display: inline-block; text-align: center; padding: 0.1em 0.25em; border-radius: 4px; text-decoration: none;">&times;</a></th>
+				<th style='width: 0; white-space: pre;'>#[playerNote.id] <a href="byond://?src=\ref[src];action=notes2;target=[player];type=del;id=[playerNote.id]" style="background: red; color: white; display: inline-block; text-align: center; padding: 0.1em 0.25em; border-radius: 4px; text-decoration: none;">&times;</a></th>
 			</tr>
 			<tr class="[classes]" style="margin-bottom: 1em;">
 				<th>[gameAdminCkey]</th>

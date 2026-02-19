@@ -114,7 +114,7 @@
 /area/prefab/larrys_laundry)
 "mf" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "mx" = (

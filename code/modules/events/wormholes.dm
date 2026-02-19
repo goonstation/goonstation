@@ -14,11 +14,17 @@
 			for(var/i in 1 to length(random_floor_turfs))
 				holepick = pick(random_floor_turfs)
 				targpick = pick(random_floor_turfs)
-				var/obj/portal/P = new /obj/portal/wormhole
-				P.set_loc(holepick)
-				P.set_target(targpick)
-				SPAWN(rand(18 SECONDS, 32 SECONDS))
-					qdel(P)
+				if (prob(1) && prob(10))
+					var/obj/vortex/V = new /obj/vortex
+					V.set_loc(holepick)
+					SPAWN(rand(18 SECONDS, 32 SECONDS))
+						qdel(V)
+				else
+					var/obj/portal/P = new /obj/portal/wormhole
+					P.set_loc(holepick)
+					P.set_target(targpick)
+					SPAWN(rand(18 SECONDS, 32 SECONDS))
+						qdel(P)
 				if (rand(1,1000) == 1)
 					Artifact_Spawn(holepick)
 				sleep(rand(1, 15))
@@ -36,6 +42,11 @@ var/global/list/turf/random_floor_turfs = null
 
 	while (rand_amt > length(random_floor_turfs))
 		var/turf/T = pick(station_z_turfs)
-		if(!IS_ARRIVALS(get_area(T)) && istype(T,/turf/simulated/floor) && !(locate(/obj/window) in T))
+		if (T in random_floor_turfs)
+			continue
+		var/area/A = get_area(T)
+		if (IS_ARRIVALS(A) || (A.teleport_blocked && !istype(A, /area/station/security)))
+			continue
+		if(istype(T,/turf/simulated/floor) && !(locate(/obj/window) in T))
 			random_floor_turfs += T
 			LAGCHECK(LAG_LOW)

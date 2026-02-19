@@ -1,0 +1,254 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/securearea{
+	desc = "A warning sign which reads 'Outpost launcher hub'";
+	name = "Outpost launcher hub"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 300;
+	id = "outpostla"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/machinery/launcher_loader/north,
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_south"
+	},
+/area/dmm_suite/clear_area)
+"o" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/machinery/launcher_loader/west{
+	id = "outpostla2"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
+	id = "artlabgun";
+	name = "Emergency Ejection Button";
+	pixel_y = 24
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/decal/poster/wallsign/stencil/right/q{
+	pixel_x = -3;
+	pixel_y = 48
+	},
+/obj/decal/poster/wallsign/stencil/right/m{
+	pixel_y = 48
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
+	id = "outpostla";
+	name = "Emergency Ejection Button";
+	pixel_y = 24
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/decal/poster/wallsign/space{
+	pixel_y = 40
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/machinery/mass_driver{
+	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
+	dir = 1;
+	drive_range = 300;
+	id = "artlabgun"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/dmm_suite/clear_area)
+"E" = (
+/turf/space,
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/machinery/door/poddoor/pyro/podbay_autoclose{
+	id = "artlabgun"
+	},
+/obj/machinery/mass_driver{
+	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
+	dir = 1;
+	drive_range = 300;
+	id = "artlabgun"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/machinery/door/poddoor/pyro{
+	id = "outpostla"
+	},
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 300;
+	id = "outpostla"
+	},
+/turf/simulated/floor/plating/airless,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 300;
+	id = "outpostla2"
+	},
+/turf/simulated/floor/engine/vacuum{
+	icon_state = "engine_caution_west"
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+O
+f
+Z
+f
+C
+E
+E
+E
+E
+E
+E
+a
+a
+a
+v
+"}
+(2,1,1) = {"
+e
+o
+u
+n
+E
+E
+E
+E
+E
+E
+E
+J
+A
+M
+z
+"}
+(3,1,1) = {"
+S
+f
+o
+f
+C
+E
+E
+E
+E
+E
+E
+a
+a
+a
+w
+"}
+(4,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+L
+g
+M
+z
+"}
+(5,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+E
+a
+a
+a
+x
+"}

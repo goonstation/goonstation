@@ -1,6 +1,5 @@
 /mob/living/critter/robotic/gunbot/meleebot
 	name = "Syndicate CQC Unit"
-	real_name = "Syndicate CQC Unit"
 	icon_state = "clawbot"
 	base_icon_state = "clawbot"
 	desc = "A security robot specially designed for close quarters combat. Prone to overheating.."

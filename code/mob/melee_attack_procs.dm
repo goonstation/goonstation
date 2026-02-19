@@ -108,6 +108,9 @@
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
 			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
 			mask.honk_nose(src)
+		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_nose))
+			var/obj/item/clothing/mask/clown_nose/mask = src.wear_mask
+			mask.honk_nose(src)
 		else
 			var/item = src.get_random_equipped_thing_name()
 			if (item)
@@ -248,6 +251,11 @@
 	if (!target.canbegrabbed)
 		if (target.grabresistmessage)
 			target.visible_message(SPAN_COMBAT("<b>[src] tries to grab [target], [target.grabresistmessage]</B>"))
+		return
+
+	var/obj/item/target_weapon = target.equipped()
+	if (target_weapon?.chokehold?.affecting == src)
+		target.visible_message(SPAN_COMBAT(SPAN_BOLD("[src] scrabbles at [target]!")))
 		return
 
 	if (istype(H))
@@ -725,7 +733,7 @@
 				BORG.compborg_lose_limb(BORG.part_head)
 			else
 				user.visible_message(SPAN_COMBAT("<b>[user] pounds on [BORG.name]'s head furiously!</B>"))
-				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
 					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
@@ -734,12 +742,12 @@
 
 	else if (isAI(target))
 		user.visible_message(SPAN_COMBAT("<b>[user] [pick("wails", "pounds", "slams")] on [target]'s terminal furiously!</B>"))
-		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 		damage = 10
 
 	else
 		user.visible_message(SPAN_COMBAT("<b>[user] smashes [target] furiously!</B>"))
-		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 		damage = 10
 		if (!target.anchored && prob(30))
 			user.visible_message(SPAN_COMBAT("<b>...and sends [him_or_her(target)] flying!</B>"))
@@ -754,7 +762,7 @@
 		random_brute_damage(target, damage)
 		target.UpdateDamageIcon()
 
-	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] for [damage] damage at [log_loc(user)].")
 	return
 
 /////////////////////////////////////////////////////// attackResult datum ////////////////////////////////////////
@@ -879,7 +887,7 @@
 		if (!(suppress & SUPPRESS_LOGS))
 			if (!length(logs))
 				if (!istype(src, /datum/attackResults/disarm))
-					logs = list("punches [constructTarget(target,"combat")]")
+					logs = list("punches [constructTarget(target,"combat")] for [src.damage] damage")
 
 //Pod wars friendly fire check
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -951,10 +959,21 @@
 					target.changeStatus("knockdown", 2 SECONDS)
 					target.force_laydown_standup()
 					disarm_log += " shoving them down"
+					target.inertia_dir = get_dir(owner, target)
+					target.inertia_value = 1
+					target.update_traction(get_turf(target))
+					owner.inertia_dir = get_dir(target, owner)
+					owner.inertia_value = 1
+					owner.update_traction(get_turf(owner))
 				if ("shoved" in src.disarm_RNG_result)
+					target.inertia_value = 1
 					step_away(target, owner, 1)
 					target.OnMove(owner)
+					target.update_traction(get_turf(target))
 					disarm_log += " shoving them away"
+					owner.inertia_dir = get_dir(target, owner)
+					owner.inertia_value = 1
+					owner.update_traction(get_turf(owner))
 			else
 				target.deliver_move_trigger("bump")
 			logTheThing(LOG_COMBAT, owner, "disarms [constructTarget(target,"combat")][jointext(disarm_log, ", ")] at [log_loc(owner)].")

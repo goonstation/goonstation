@@ -53,8 +53,19 @@
 		"slots" = slots,
 		"handcuffed" = src.human.hasStatus("handcuffed"),
 		"internal" = src.human.internal != null,
-		"canSetInternal" = istype(src.human.wear_mask, /obj/item/clothing/mask) && istype(src.human.back, /obj/item/tank) && !src.human.internal
+		"canSetInternal" = src.can_set_internal()
 	)
+
+/datum/humanInventory/proc/can_set_internal()
+	if(src.human.internal || !istype(src.human.wear_mask, /obj/item/clothing/mask))
+		return FALSE
+	if(!HAS_FLAG(src.human.wear_mask.c_flags, MASKINTERNALS))
+		return FALSE
+	var/list/eq_list = list(src.human.back, src.human.belt, src.human.r_hand, src.human.l_hand, src.human.r_store, src.human.l_store)
+	for(var/I in eq_list)
+		if(istype(I, /obj/item/tank))
+			return TRUE
+	return FALSE
 
 /datum/humanInventory/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

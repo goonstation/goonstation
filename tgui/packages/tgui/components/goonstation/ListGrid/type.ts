@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases
 export type RowId = string;
 
 interface ValuedColumnConfig<T extends object, V> {

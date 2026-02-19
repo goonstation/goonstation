@@ -1,6 +1,5 @@
 /mob/living/critter/robotic/gunbot/medibot
 	name = "Syndicate Medical Unit"
-	real_name = "Syndicate Medical Unit"
 	icon_state = "medibot"
 	base_icon_state = "medibot"
 	desc = "A medical unit, doesn't pose as much of a threat. Looks a little smaller than the other ones."

@@ -22,6 +22,7 @@ TYPEINFO(/obj/item/light_parts)
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
 	material_amt = 0.2
+	can_arcplate = FALSE
 
 	var/installed_icon_state = "tube-empty"
 	var/installed_base_state = "tube"
@@ -291,6 +292,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		. = ..()
 		src.broken(explode_rigged = TRUE)
 
+	overload_act()
+		if(current_lamp.light_status == LIGHT_EMPTY || current_lamp.light_status == LIGHT_BROKEN)
+			return FALSE
+		src.broken(nospark=FALSE, explode_rigged=TRUE)
+		return TRUE
+
 //big standing lamps
 /obj/machinery/light/flamp
 	name = "floor lamp"
@@ -504,6 +511,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		..()
 		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
+	overload_act()
+		return FALSE
+
 	exitsign
 		name = "illuminated exit sign"
 		desc = "This sign points the way to the escape shuttle."
@@ -522,6 +532,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	removable_bulb = 0
 	install_type = INSTALL_WALL
 
+	overload_act()
+		return FALSE
+
 /obj/machinery/light/runway_light
 	name = "runway light"
 	desc = "A small light used to guide pods into hangars."
@@ -536,6 +549,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	wallmounted = 0
 	removable_bulb = 0
 	install_type = INSTALL_FLOOR
+
+	overload_act()
+		return FALSE
+
 	delay2
 		icon_state = "runway20"
 		base_state = "runway2"
@@ -596,6 +613,9 @@ _PATH/delay5{icon_state = "runway50"; base_state = "runway5"}
 	ex_act(severity)
 		if(severity == 1)
 			..()
+
+	overload_act()
+		return FALSE
 
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)
@@ -957,6 +977,8 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 		return TRUE
 
 /obj/machinery/light/proc/do_burn_out()
+	if(src.current_lamp.light_status != LIGHT_OK)
+		return
 	var/original_brightness = src.light.brightness
 	playsound(src, 'sound/effects/snaptape.ogg', 30, TRUE)
 	src.light.set_brightness(original_brightness * 3)
@@ -1115,6 +1137,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
+		attack_particle(user, src)
 		user.lastattacked = get_weakref(src)
 		if(prob(1+W.force * 5))
 
@@ -1136,6 +1159,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 		else
 			boutput(user, "You hit the light!")
+			playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 100, 1)
 
 /obj/machinery/light/proc/uninstall_fixture()
 	var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
@@ -1218,7 +1242,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 		return
 
 	if(current_lamp.light_status == LIGHT_OK || current_lamp.light_status == LIGHT_BURNED)
-		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
+		playsound(src.loc, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 75, 1)
 
 	if(!nospark)
 		if(on)

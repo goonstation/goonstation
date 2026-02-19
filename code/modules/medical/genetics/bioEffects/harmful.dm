@@ -40,6 +40,14 @@
 	lockedTries = 10
 	icon_state  = "speech_mime"
 
+	OnAdd()
+		. = ..()
+		owner.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MUTE)
+
+	OnRemove()
+		owner.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MUTE)
+		. = ..()
+
 /datum/bioEffect/deaf
 	name = "Deafness"
 	desc = "Diminishes the subject's tympanic membrane, rendering them unable to hear."
@@ -136,24 +144,16 @@
 	reclaim_fail = 15
 	var/talk_prob = 10
 	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
-	var/empowered_popup_style = "font-weight: bold;"
 	icon_state  = "bad"
 
-	OnLife(var/mult)
-		if(..()) return
-		var/mob/living/L = owner
-		if (!L)
+	OnLife(mult)
+		if (..() || isdead(src.owner) || !probmult(talk_prob))
 			return
-		if (isdead(L))
-			return
-		if (probmult(talk_prob))
-			if(src.power > 1)
-				var/original_speechpopupstyle = L.speechpopupstyle
-				L.speechpopupstyle += empowered_popup_style
-				L.say(pick(talk_strings))
-				L.speechpopupstyle = original_speechpopupstyle
-				return
-			L.say(pick(talk_strings))
+
+		if(src.power > 1)
+			src.owner.say(pick(talk_strings), message_params = list("maptext_css_values" = list("font-weight" = "bold")))
+		else
+			src.owner.say(pick(talk_strings))
 
 /datum/bioEffect/shortsighted
 	name = "Diminished Optic Nerves"
@@ -197,6 +197,23 @@
 					owner.detach_hud(src.hud)
 					applied = 0
 		return
+
+/datum/bioEffect/shortsighted/temp
+	id = "bad_eyesight_temp"
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = FALSE
+	curable_by_mutadone = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	can_research = FALSE
+	can_copy = FALSE
+	can_make_injector = FALSE
+	reclaim_fail = 100
+	reclaim_mats = 0
+	acceptable_in_mutini = FALSE
+	stability_loss = 0
+	effect_group = null
 
 /datum/bioEffect/stupefaction
 	name = "Stupefaction"
@@ -511,6 +528,12 @@
 			boutput(L, SPAN_NOTICE("You feel quite strange. Almost as if you're not supposed to be here."))
 			return
 
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.shoes?.magnetic)
+				boutput(L, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
+				return
+
 		if (probmult(tele_prob))
 			var/list/randomturfs = new/list()
 			for(var/turf/simulated/floor/T in orange(L, 10))
@@ -520,7 +543,7 @@
 				L.emote("hiccup")
 				var/turf/destination = pick(randomturfs)
 				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
-				L.set_loc(pick(destination))
+				L.set_loc(destination)
 
 //////////////
 // Annoying //
@@ -878,6 +901,7 @@
 				var/mob/living/carbon/human/this_one = pick(potential_victims)
 				boutput(src, SPAN_ALERT("Your mind twangs uncomfortably!"))
 				boutput(this_one, SPAN_ALERT("Your mind twangs uncomfortably!"))
+				logTheThing(LOG_COMBAT, owner, "swapped minds with [this_one] via Meta-Neural Transferral gene.")
 				owner.mind.swap_with(this_one)
 
 /datum/bioEffect/mutagenic_field/prenerf

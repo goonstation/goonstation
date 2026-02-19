@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/mob/living/silicon/hivebot, proc/admin_add_tool, proc/admin_remove_tool)
 /mob/living/silicon/hivebot
 	name = "Robot"
 	voice_name = "synthesized voice"
@@ -7,15 +8,13 @@
 	health = 60
 	max_health = 60
 	var/beebot = 0
-	robot_talk_understand = 2
-	var/glitchy_speak = 0
 
 	// 3 tools can be activated at any one time.
 	var/obj/item/robot_module/module = null
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
-	var/datum/hud/shell/hud
+	var/datum/hud/silicon/shell/hud
 
 	var/obj/item/device/radio/radio = null
 
@@ -69,9 +68,9 @@
 	SPAWN(1 SECOND)
 		if (!src.cell)
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
-		src.camera = new /obj/machinery/camera/auto/AI(src)
+		src.camera = new /obj/machinery/camera/AI(src)
 		src.camera.c_tag = src.name
-		src.camera.network = "Robots"
+		src.camera.network = CAMERA_NETWORK_ROBOTS
 
 	..()
 	src.botcard.access = get_all_accesses()
@@ -298,7 +297,7 @@
 			if (!M)
 				param = null
 			else
-				message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows its name out in smoke."
+				message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src] takes a drag from a cigarette and blows its name out in smoke."
 				m_type = 2
 
 		if ("flip")
@@ -383,7 +382,7 @@
 			return
 
 	if ((message && isalive(src)))
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		log_emote(src, message, voluntary)
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(SPAN_EMOTE("[message]"), m_type)
@@ -501,14 +500,14 @@
 		if (src.get_burn_damage() < 1)
 			user.show_text("There's no burn damage on [src.name]'s wiring to mend.", "red")
 			return
-		coil.use(1)
-		src.HealDamage("All", 0, 30)
-		if (src.get_burn_damage() < 1)
-			src.fireloss = 0
-			src.visible_message(SPAN_ALERT("<b>[user.name]</b> fully repairs the damage to [src.name]'s wiring."))
-		else
-			boutput(user, SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
-		health_update_queue |= src
+		if (coil.use(1))
+			src.HealDamage("All", 0, 30)
+			if (src.get_burn_damage() < 1)
+				src.fireloss = 0
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> fully repairs the damage to [src.name]'s wiring."))
+			else
+				boutput(user, SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
+			health_update_queue |= src
 
 	else if (istype(W, /obj/item/clothing/suit/bee))
 		boutput(user, "You stuff [src] into [W]! It fits surprisingly well.")
@@ -673,8 +672,8 @@
 		src.ears = src.radio
 	var/dat = {"
 <TT>
-Microphone: [src.radio.broadcasting ? "<A href='byond://?src=\ref[src.radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];talk=1'>Disengaged</A>"]<BR>
-Speaker: [src.radio.listening ? "<A href='byond://?src=\ref[src.radio];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];listen=1'>Disengaged</A>"]<BR>
+Microphone: [src.radio.microphone_enabled ? "<A href='byond://?src=\ref[src.radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];talk=1'>Disengaged</A>"]<BR>
+Speaker: [src.radio.speaker_enabled ? "<A href='byond://?src=\ref[src.radio];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];listen=1'>Disengaged</A>"]<BR>
 Frequency:
 <A href='byond://?src=\ref[src.radio];freq=-10'>-</A>
 <A href='byond://?src=\ref[src.radio];freq=-2'>-</A>
@@ -778,6 +777,7 @@ Frequency:
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
 		src.update_name_tag()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	else if(src.real_name == "Cyborg")
 		src.real_name += " "
@@ -793,36 +793,9 @@ Frequency:
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
 	src.update_name_tag()
+	REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	return
-
-/mob/living/silicon/hivebot/say_understands(var/other)
-	if (isAI(other))
-		return TRUE
-	if (ishuman(other))
-		var/mob/living/carbon/human/H = other
-		if (!H.mutantrace.exclusive_language)
-			return TRUE
-		else
-			return ..()
-	if (isrobot(other) || isshell(other))
-		return TRUE
-	return ..()
-
-/mob/living/silicon/hivebot/say_quote(var/text)
-	if (src.mainframe && src.mainframe.glitchy_speak)
-		text = voidSpeak(text)
-	var/ending = copytext(text, length(text))
-
-	if (singing)
-		return singify_text(text)
-
-	if (ending == "?")
-		return "queries, \"[text]\"";
-	else if (ending == "!")
-		return "declares, \"[text]\"";
-
-	return "states, \"[text]\"";
 
 /mob/living/silicon/hivebot/find_in_hand(var/obj/item/I, var/this_hand)
 	if (!I)
@@ -921,11 +894,16 @@ Frequency:
 	. = ..()
 	src.hud?.update_pulling()
 
+/mob/living/silicon/hivebot/remove_pulling()
+	..()
+	src.hud?.update_pulling()
+
 /*-----Actual AI Shells---------------------------------------*/
 
 /mob/living/silicon/hivebot/eyebot
 	name = "Eyebot"
 	icon_state = "eyebot"
+	open_to_sound = TRUE
 	health = 25
 	do_hurt_slowdown = FALSE
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
@@ -1043,7 +1021,22 @@ Frequency:
 		available_ai_shells -= src
 		..()
 
+	on_close_viewport(datum/viewport/vp)
+		src.mainframe?.on_close_viewport(vp)
 
+/mob/living/silicon/hivebot/proc/admin_add_tool()
+	set name = "Add Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_add_tool()
+
+/mob/living/silicon/hivebot/proc/admin_remove_tool()
+	set name = "Remove Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_remove_tool()
 
 /*-----Shell-Creation---------------------------------------*/
 
@@ -1096,15 +1089,12 @@ Frequency:
 	else if (istype(W, /obj/item/cable_coil))
 		if (src.build_step == 1)
 			var/obj/item/cable_coil/coil = W
-			if (coil.amount >= 3)
+			if (coil.use(3))
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				coil.amount -= 3
 				src.icon_state = "shell-cable"
-				if (coil.amount < 1)
-					user.drop_item()
-					qdel(coil)
 				return
 			else
 				boutput(user, "You need at least three lengths of cable to install it in [src].")

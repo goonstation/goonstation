@@ -56,7 +56,7 @@ TYPEINFO(/datum/component/minimap_marker/minimap)
 	if (!(minimap.minimap_type & src.minimaps_to_display_on) || !src.marker_icon || !src.marker_icon_state)
 		return
 
-	minimap.create_minimap_marker(src.parent, src.marker_icon, src.marker_icon_state, src.name, FALSE, src.list_on_ui)
+	minimap.create_minimap_marker(parent, src.marker_icon, src.marker_icon_state, src.name, FALSE, src.list_on_ui)
 
 /datum/component/minimap_marker/minimap/InheritComponent(datum/component/minimap_marker/minimap/C, i_am_original)
 	ADD_FLAG(src.minimaps_to_display_on , C.minimaps_to_display_on)

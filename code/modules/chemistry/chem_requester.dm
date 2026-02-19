@@ -62,7 +62,7 @@ var/list/datum/chem_request/chem_requests = list()
 		for (var/id in basic_elements)
 			var/datum/reagent/reagent = reagents_cache[id]
 			chems[lowertext(reagent.name)] = id
-		.["chemicals"] = sortList(chems, /proc/cmp_text_asc)
+		.["chemicals"] = chems
 		.["max_volume"] = src.max_volume
 
 	ui_interact(mob/user, datum/tgui/ui)

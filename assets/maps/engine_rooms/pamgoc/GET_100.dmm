@@ -527,11 +527,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -553,10 +550,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bi" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
+/obj/machinery/firealarm/directional/south{
+	layer = 3.5
 	},
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
@@ -565,9 +560,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bj" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
 	name = "cold loop inlet valve"

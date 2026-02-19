@@ -44,7 +44,7 @@
 
 		// give back stored pills first
 		if (src.contents.len)
-			for (var/i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill), i--)
+			for (var/i = src.contents.len; i > 0 && !istype(P, /obj/item/reagent_containers/pill); i--)
 				P = src.contents[i]
 
 		// otherwise create a new one from the reagent holder
@@ -80,6 +80,7 @@
 		else
 			src.desc = "A [src.pname] pill bottle. There [totalpills==1? "is [totalpills] pill." : "are [totalpills] pills." ]"
 			src.inventory_counter.update_number(totalpills)
+		src.tooltip_rebuild = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/pill))
@@ -198,7 +199,7 @@
 		playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
 
 		// clumsy and braindamaged people have a chance to consume multiple pills at once and drop others on the floor.
-		if(total_pills() > 0 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > 40) && prob(20))
+		if(total_pills() > 0 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > BRAIN_DAMAGE_MODERATE) && prob(20))
 			user.visible_message(SPAN_NOTICE("[user] throws the contents of [src] at their own face!"),
 								null, SPAN_NOTICE("Someone pops some pills."))
 			for(var/i = 1; i <= rand(1, 4); i++) // pop multiple pills at once

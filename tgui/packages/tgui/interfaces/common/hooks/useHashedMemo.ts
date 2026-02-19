@@ -18,7 +18,7 @@ import { useRef } from 'react';
 export const useHashedMemo = <T>(value: T, hashFn?: (value: T) => string) => {
   const resolvedHashFn = hashFn ?? JSON.stringify;
   const memoizedValue = useRef(value);
-  const memoizedHash = useRef<string | undefined>();
+  const memoizedHash = useRef<string | undefined>(undefined);
   // values have not changed, no need to update
   if (value === memoizedValue.current) {
     return memoizedValue.current;

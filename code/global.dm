@@ -34,14 +34,11 @@ var/global
 
 	datum/datacore/data_core = null
 
-	turf/buzztile = null
-
 	atom/movable/screen/renderSourceHolder
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
-	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
-	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
+	list/pre_auth_clients = list()
 	list/clients = list()
 	list/donator_ckeys = list()
 	list/online_donator_ckeys = list()
@@ -92,9 +89,8 @@ var/global
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
-	list/spacePushList = list()
 	/// All the accessible areas on the station in one convenient place
-	list/station_areas = list()
+	list/area/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = FALSE
 	/// Areas built anew belong to a single unconnected zone, which gives its turfs over to other expandable areas when contacting them
@@ -266,7 +262,6 @@ var/global
 
 	diary = null
 	diary_name = null
-	hublog = null
 	game_version = "Goonstation 13 (r" + ORIGIN_REVISION + ")"
 
 	master_mode = "traitor"
@@ -276,16 +271,13 @@ var/global
 	game_start_delayed = 0
 	game_end_delayed = 0
 	game_end_delayer = null
-	ooc_allowed = 1
-	looc_allowed = 0
 	dooc_allowed = 1
 	player_capa = 0
 	player_cap = 55
 	player_cap_grace = list()
 	/// specifies if pcap kick messages show display to admins in chat
-	pcap_kick_messages = TRUE
+	pcap_kick_messages = FALSE
 	traitor_scaling = 1
-	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
 	debug_mixed_forced_flock = 0
@@ -437,6 +429,9 @@ var/global
 	list/datum/chemical_reaction/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
 	list/list/datum/chemical_reaction/chem_reactions_by_result = list() // Chemical reactions indexed by result ID
 
+	/// A single reaction is only in this list once, hopefully keyed by its least likely reagent, keeping the list of possible reactions small
+	list/limited_chem_reactions = list()
+
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
 
@@ -455,8 +450,6 @@ var/global
 	list/obj/machinery/camera/dirty_cameras = list() //Cameras that should be rebuilt
 
 	list/list/obj/machinery/camera/camnets = list() //Associative list keyed by network name, contains a list of each camera in a network.
-	list/datum/particleSystem/mechanic/camera_path_list = list() //List of particlesystems that the connection display proc creates. I dunno where else to put it. :(
-	camera_network_reciprocity = 1 //If camera connections reciprocate one another or if the path is calculated separately for each camera
 	list/datum/ai_camera_tracker/tracking_list = list()
 
 	centralConn = 1 //Are we able to connect to the central server?
@@ -483,11 +476,15 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "\
+		[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful","Treason")]\
+		[pick("-"," ")]\
+		[pick("Credits","Bux","Tokens","Cash","Dollars","Crystals","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees","Coins")]"
 
 	list/valid_modes = list("secret","action","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
+	rebuildServerContainer = FALSE
 
 	datum/minimap_renderer/minimap_renderer
 	list/minimap_marker_targets = list()
@@ -538,7 +535,7 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
-	list/protected_frequencies = list(R_FREQ_SYNDICATE)
+	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD, R_FREQ_SALVAGER)
 	///base movedelay threshold for slipping
 	base_slip_delay = BASE_SPEED_SUSTAINED
 

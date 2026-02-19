@@ -44,7 +44,7 @@ var/global/area/current_battle_spawn = null
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 
-		if (player.ready)
+		if (player.ready_play)
 			src.traitors.Add(player)
 			if(player.mind)
 				player.mind.assigned_role = "MODE"
@@ -152,6 +152,8 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/deployable_turret/riot)
 				qdel(machine)
+			if (/obj/machinery/computer/transit_shuttle/mining)
+				qdel(machine)
 
 	for_by_tcl(circuitboard, /obj/item/circuitboard)
 		qdel(circuitboard)
@@ -168,6 +170,12 @@ var/global/area/current_battle_spawn = null
 
 	for_by_tcl(obj_vehicle, /obj/vehicle)
 		qdel(obj_vehicle)
+
+	for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
+		if (tether.z == Z_LEVEL_STATION)
+			qdel(tether)
+
+	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, FALSE)
 
 	hide_weapons_everywhere(length(living_battlers))
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
@@ -336,10 +344,13 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/gun/kinetic/airzooka)
 	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
 	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
+	weapon_supplies.Add(/obj/item/gun/kinetic/makarov)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_small)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_huge)
+	weapon_supplies.Add(/obj/item/gun/energy/phaser_gun)
 	weapon_supplies.Add(/obj/item/gun/energy/alastor)
 	weapon_supplies.Add(/obj/item/gun/energy/heavyion)
+	weapon_supplies.Add(/obj/item/gun/energy/resonator)
 	weapon_supplies.Add(/obj/item/bat)
 	weapon_supplies.Add(/obj/item/ratstick)
 	weapon_supplies.Add(/obj/item/saw)
@@ -358,6 +369,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
+	weapon_supplies.Add(/obj/item/razor_blade/barberang)
 
 	var/list/armor_supplies = list()
 	// Feel free to add more!
@@ -375,19 +387,46 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
 	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate)
-	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/commissar_greatcoat)
-	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/knight)
+	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat)
+	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate/specialist/knight)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security/improved)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/swat)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
-	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)
+	armor_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/space/ntso)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/space/nanotrasen)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/viking)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/football)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/batman)
+
+	var/list/utility_supplies = list()
+	utility_supplies.Add(/obj/item/barrier/collapsible/security)
+	utility_supplies.Add(/obj/item/barrier/void)
+	utility_supplies.Add(/obj/item/clothing/glasses/thermal/traitor)
+	utility_supplies.Add(/obj/item/clothing/glasses/nightvision)
+	utility_supplies.Add(/obj/item/clothing/glasses/sunglasses)
+	utility_supplies.Add(/obj/item/device/energy_shield/viking)
+	utility_supplies.Add(/obj/item/reagent_containers/patch/synthflesh)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary)
+	// Ranch Eggs
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/plant)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/void) // table ambushes ig
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/snow)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/wizard)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/knight)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/mime)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy) // Keeping this a one off cause I know someone will kill themselves and be salty
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
+#ifdef SECRETS_ENABLED
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+#endif
 
 
 	var/total_storage
@@ -428,6 +467,9 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					if (prob(25))
 						weapon = pick(weapon_supplies)
 						new weapon(locker)
+					if (prob(15))
+						var/obj/utility = pick(utility_supplies)
+						new utility(locker)
 				else
 					// Misc weapon and armor chests
 					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest(T)
@@ -438,6 +480,9 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 						new armor(chest)
 					if (prob(33))
 						new /obj/item/reagent_containers/patch/mini/synthflesh(chest)
+					if (prob(25))
+						var/obj/utility = pick(utility_supplies)
+						new utility(chest)
 
 proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
@@ -544,7 +589,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), SLOT_L_STORE)
 	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), SLOT_R_STORE)
 
-	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
+	var/obj/item/card/id/gold/captains_spare/I = new /obj/item/card/id/gold/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
 	I.access |= list(access_maxsec, access_armory)

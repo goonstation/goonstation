@@ -109,6 +109,9 @@ TYPEINFO(/obj/machinery/chem_heater)
 				src.set_broken()
 		..()
 
+	overload_act()
+		return !src.set_broken()
+
 	meteorhit()
 		qdel(src)
 		return
@@ -1232,6 +1235,8 @@ TYPEINFO(/obj/machinery/chem_master)
 
 TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	mats = 15
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_CHEMICOMPILER)
+
 
 /obj/machinery/chemicompiler_stationary
 	name = "ChemiCompiler CCS1001"

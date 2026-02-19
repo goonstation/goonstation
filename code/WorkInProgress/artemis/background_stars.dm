@@ -171,7 +171,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 /area/background_canvas
 	name = "background_canvas"
 	icon_state = "yellow"
-	teleport_blocked = 2
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 	expandable = 0
 	requires_power = FALSE
 

@@ -9,23 +9,29 @@
 	var/id = 1
 	anchored = ANCHORED
 	layer = 2.6
-	var/drive_range = 200 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
-	plane = PLANE_NOSHADOW_BELOW
+	var/drive_range = 200 //only relevant for drivers launching over solid ground on terrestrial maps and terrainify
+	var/bonus_range = 1 // when tossing stuff over turfs with gravity, add this range
+	var/throw_type = THROW_NORMAL
+	var/throw_params = null
 
-/obj/machinery/mass_driver/proc/drive(amount)
+/obj/machinery/mass_driver/proc/drive()
 	if(status & (BROKEN|NOPOWER))
 		return
 	use_power(500)
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, src.dir)
 	for(var/atom/movable/O in src.loc)
-		if(O.anchored || isobserver(O) || isintangible(O) || HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING)) continue
+		if(O.anchored || HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING)) continue
 		O_limit++
 		if(O_limit >= 20)
-			for(var/mob/M in hearers(src, null))
-				boutput(M, SPAN_NOTICE("The mass driver lets out a screech, it mustn't be able to handle any more items."))
+			src.visible_message(SPAN_NOTICE("The mass driver lets out a screech, it mustn't be able to handle any more items."))
 			break
 		use_power(500)
-		O.throw_at(target, drive_range * src.power, src.power)
+		O.throw_at(target, src.get_throw_range(), src.power, throw_type=src.throw_type, params=src.throw_params)
 	FLICK("mass_driver1", src)
 	return
+
+/obj/machinery/mass_driver/proc/get_throw_range()
+	if (global.zlevels[src.z].gforce > 0)
+		return src.drive_range * src.power
+	return src.power + src.bonus_range

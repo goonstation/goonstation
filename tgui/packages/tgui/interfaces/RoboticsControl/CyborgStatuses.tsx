@@ -71,7 +71,7 @@ export const CyborgStatuses = (props: SiliconStatusesProps) => {
           <Table.Cell>{item.module || 'None'}</Table.Cell>
           <Table.Cell>
             {!item.lock_time ? (
-              <NoticeBox warning inline>
+              <NoticeBox inline>
                 <Button
                   disabled={!user_is_ai}
                   onClick={() =>
@@ -95,7 +95,7 @@ export const CyborgStatuses = (props: SiliconStatusesProps) => {
           </Table.Cell>
           <Table.Cell collapsing>
             {!item.killswitch_time ? (
-              <NoticeBox warning inline>
+              <NoticeBox inline>
                 <Button
                   disabled={user_is_cyborg || user_is_ai}
                   onClick={() =>

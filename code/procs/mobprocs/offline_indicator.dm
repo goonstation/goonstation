@@ -27,13 +27,16 @@ var/image/remote_indicator_off = image('icons/mob/overhead_icons32x48.dmi', "rem
 
 /mob/Login()
 	src.logout_at = null
-	src.ClearSpecificOverlays(OFFLINE_OVERLAY_KEY)
+	src.clear_offline_indicator()
 	. = ..()
 
 /mob/death()
-	src.ClearSpecificOverlays(OFFLINE_OVERLAY_KEY)
+	src.clear_offline_indicator()
 	. = ..()
 
+/mob/proc/clear_offline_indicator()
+	SHOULD_CALL_PARENT(TRUE)
+	src.ClearSpecificOverlays(OFFLINE_OVERLAY_KEY)
 
 /mob/living/create_offline_indicator(force = FALSE)
 	set waitfor = FALSE

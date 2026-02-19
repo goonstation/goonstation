@@ -60,6 +60,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	default_material = "steel"
+	can_arcplate = FALSE
 	///the material id string (lowercase) of the starting reinforcement
 	var/default_reinforcement = null
 	uses_default_material_appearance = TRUE
@@ -68,6 +69,7 @@ MATERIAL
 		..()
 		if (src.default_reinforcement)
 			src.set_reinforcement(getMaterial(src.default_reinforcement))
+		src.item_state = src.icon_state_base
 		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
@@ -109,6 +111,7 @@ MATERIAL
 			if (reinforcement)
 				src.name = "[reinforcement]-reinforced " + src.name
 				src.icon_state_base += "-r"
+			src.item_state = src.icon_state_base
 			src.color = src.material.getColor()
 			src.alpha = src.material.getAlpha()
 		inventory_counter?.update_number(amount)
@@ -266,9 +269,9 @@ MATERIAL
 
 	proc/build_terminal(obj/item/cable_coil/cable, mob/user)
 		if ((src in user) && (cable in user))
-			new /obj/machinery/power/data_terminal(get_turf(user))
-			src.change_stack_amount(-1)
-			cable.change_stack_amount(-1)
+			if (cable.use(1))
+				new /obj/machinery/power/data_terminal(get_turf(user))
+				src.change_stack_amount(-1)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]!"))
@@ -419,10 +422,10 @@ MATERIAL
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
 
-					if (!istype(T, /turf/simulated/floor))
+					if (!(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/space_phoenix_ice_tunnel)))
 						boutput(usr, SPAN_ALERT("You can't build girders here."))
 						return
-					if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+					if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 						boutput(usr, SPAN_ALERT("You can't build girders here."))
 						return
 					if (!amount_check(2,usr)) return
@@ -513,20 +516,20 @@ MATERIAL
 /obj/item/sheet/steel
 	item_state = "sheet-metal"
 	default_material = "steel"
-	color = "#8C8C8C"
 
 	reinforced
 		icon_state = "sheet-m-r_5"
+		item_state = "sheet-m-r"
 		default_reinforcement = "steel"
 
 /obj/item/sheet/glass
 	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
 	item_state = "sheet-glass"
 	default_material = "glass"
-	color = "#A3DCFF"
 
 	reinforced
 		icon_state = "sheet-g-r_5"
+		item_state = "sheet-g-r"
 		default_reinforcement = "steel"
 
 	crystal
@@ -606,6 +609,7 @@ MATERIAL
 	inventory_counter_enabled = 1
 	material_amt = 0.05
 	uses_default_material_appearance = TRUE
+	can_arcplate = FALSE
 
 	New()
 		..()
@@ -965,6 +969,7 @@ MATERIAL
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
 	material_amt = 0.025
+	can_arcplate = FALSE
 
 	New(make_amount = 0)
 		..()
@@ -1014,7 +1019,7 @@ MATERIAL
 			var/obj/item/tile/F = split_stack(1)
 			if (!istype(F))
 				return
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			user.put_in_hand_or_drop(F)
 		else
 			..()
@@ -1036,14 +1041,14 @@ MATERIAL
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T
 					F.Attackby(src, user)
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 				else
 					boutput(user, "You cannot build on or repair this turf!")
 					return
 			else
 				// Otherwise, try to build on top of it
 				src.build(S)
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 		src.add_fingerprint(user)
 		return
 
@@ -1065,10 +1070,10 @@ MATERIAL
 			boutput(user, SPAN_NOTICE("You add [success] tiles to the stack. It now has [W.amount] tiles."))
 		else
 			boutput(user, SPAN_NOTICE("You add [src.amount - success] tiles to the stack. It now has [src.amount] tiles."))
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (!W.disposed)
 			W.add_fingerprint(user)
-			W.tooltip_rebuild = 1
+			W.tooltip_rebuild = TRUE
 		return
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
@@ -1286,20 +1291,13 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 		tcomputer
 			recipe_id = "tcomputer"
 			craftedType = /obj/computer3frame/terminal
-			name = "Computer Terminal Frame"
+			name = "Terminal Frame"
 			sheet_cost = 3
 			icon = 'icons/obj/terminal_frame.dmi'
 			icon_state = "0"
 		computer
 			recipe_id = "computer"
 			craftedType = /obj/computerframe
-			name = "Console Frame"
-			sheet_cost = 5
-			icon = 'icons/obj/computer_frame.dmi'
-			icon_state = "0"
-		hcomputer
-			recipe_id = "hcomputer"
-			craftedType = /obj/computer3frame
 			name = "Computer Frame"
 			sheet_cost = 5
 			icon = 'icons/obj/computer_frame.dmi'

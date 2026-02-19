@@ -75,7 +75,7 @@
 	turf_type = /turf/unsimulated/floor/cave/asteroid
 
 /datum/biome/asteroid/wall
-	turf_type = /turf/simulated/wall/auto/asteroid
+	turf_type = /turf/simulated/wall/auto/asteroid/cave
 
 /datum/biome/asteroid/fermid
 	flora_types = list(/obj/overlay/tile_effect/cracks/spawner/fermid/random=5, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid=1)
@@ -95,13 +95,16 @@
 
 	fauna_types = list(/mob/living/critter/fermid=100, /obj/overlay/tile_effect/cracks/spawner/fermid=25, /mob/living/critter/fermid/worker=25, /mob/living/critter/fermid/hulk=10, /mob/living/critter/fermid/queen=5, /mob/living/critter/fermid/grub=5)
 	fauna_density = 2
-	minimum_fauna_distance = 2
+	minimum_fauna_distance = 3
+
+/turf/simulated/wall/auto/asteroid/cave
+	replace_type = /turf/unsimulated/floor/cave/asteroid
 
 /datum/map_generator/cave_generator/asteroid
 	///2D list of all biomes based on heat and humidity combos.
 	possible_biomes = list(
 	BIOME_LOW_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/asteroid/fermid,
+		BIOME_LOW_HUMIDITY = /datum/biome/asteroid,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/asteroid,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/asteroid,
 		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid
@@ -110,13 +113,13 @@
 		BIOME_LOW_HUMIDITY = /datum/biome/asteroid,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/asteroid,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/asteroid/fermid,
-		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid/fermid/hive
+		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid/fermid
 		),
 	BIOME_HIGHMEDIUM_HEAT = list(
 		BIOME_LOW_HUMIDITY = /datum/biome/asteroid,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/asteroid/fermid,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/asteroid,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/asteroid/fermid/hive,
-		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid/fermid/nest
+		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid/fermid
 		),
 	BIOME_HIGH_HEAT = list(
 		BIOME_LOW_HUMIDITY = /datum/biome/asteroid,
@@ -126,7 +129,7 @@
 		)
 	)
 	rock_wall_biome = /datum/biome/asteroid/wall
-	wall_turf_type	= /turf/simulated/wall/auto/asteroid
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/cave
 	floor_turf_type = /turf/unsimulated/floor/cave/asteroid
 
 ///Seeds the rust-g perlin noise with a random number.

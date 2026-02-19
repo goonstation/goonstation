@@ -123,9 +123,9 @@
 var/list/input_window_presets =  list(
 	"say" = list("saywindow", "say \\\"text\\\"", ".say", ".cancel_typing say"),
 	"whisper" = list("whisperwindow", "whisper \\\"text\\\"", ".whisper", ".cancel_typing whisper"),
-	"emote" = list("emotewindow", "Choose an emote to display.", ".emote", ".cancel_typing emote"),
-	"me"  = list("mewindow",  "me (text)",        ".me",  ".cancel_typing me"),
-	"radiosay" = list("radiosaywindow", "main channel radio", "say_main_radio", null),
+	"emote" = list("emotewindow", "Choose an emote to display.", ".emote", ".cancel_emote_typing emote"),
+	"me"  = list("mewindow",  "me (text)",        ".me",  ".cancel_emote_typing me"),
+	"radiosay" = list("radiosaywindow", "main channel radio", "say_over_main_radio", null),
 	"radiochannelsay" = list("radiochannelsaywindow", "radio channel radio", "say_channel_radio", null),
 )
 

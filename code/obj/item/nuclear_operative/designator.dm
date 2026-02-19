@@ -16,6 +16,7 @@
 	var/ship_looking_for = ""
 	/// Overlay sprite for where the strike will land, set to null for no overlay
 	var/image/target_overlay = null
+	abilities = list(/obj/ability_button/toggle_scope)
 
 	New()
 		..()
@@ -26,6 +27,10 @@
 	disposing()
 		linked_gun = null
 		target_overlay = null
+		..()
+	dropped(mob/user as mob)
+		var/obj/ability_button/toggle_scope/scope = locate(/obj/ability_button/toggle_scope) in src.ability_buttons
+		scope?.icon_state = "scope_on"
 		..()
 
 	proc/airstrike(atom/target, params, mob/user, reach)

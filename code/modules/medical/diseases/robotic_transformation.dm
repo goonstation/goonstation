@@ -48,6 +48,8 @@
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."))
 			if (probmult(8))
 				boutput(affected_mob, SPAN_ALERT("You can feel... something...inside you."))
+			if (probmult(8))
+				src.text_vision(affected_mob)
 		if(5)
 			boutput(affected_mob, SPAN_ALERT("Your skin feels as if it's about to burst off..."))
 			affected_mob.take_toxin_damage(10 * mult)
@@ -61,7 +63,7 @@
 
 				var/turf/T = get_turf(affected_mob)
 
-				if (isnpcmonkey(affected_mob) || jobban_isbanned(affected_mob, "Cyborg") || isvirtual(affected_mob))
+				if (isnpcmonkey(affected_mob) || jobban_isbanned(affected_mob, "Cyborg") || affected_mob.traitHolder?.hasTrait("cyber_incompatible") || isvirtual(affected_mob))
 					//affected_mob.ghostize()
 					var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,/obj/machinery/bot/medbot,/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,/obj/machinery/bot/floorbot)
 					var/obj/machinery/bot/X = new robopath (T)
@@ -72,6 +74,15 @@
 					logTheThing(LOG_COMBAT, affected_mob, "was transformed into a cyborg by the disease [name] at [log_loc(affected_mob)].")
 					gibs(T, null, bdna, btype)
 					affected_mob:Robotize_MK2(1)
+			else if (affected_mob.client && prob(20))
+				src.text_vision(affected_mob)
+
+/datum/ailment/disease/robotic_transformation/proc/text_vision(mob/affected_mob)
+	var/client/C = affected_mob.client
+	boutput(affected_mob, SPAN_ALERT("You begin to see the world as points of data..."))
+	winset(C, "mapwindow.map", "text-mode=true")
+	SPAWN(3 SECONDS)
+		winset(C, "mapwindow.map", "text-mode=false")
 
 // Looks identical to the evil one. Hope you trust the doctor who shoved this in you!
 /datum/ailment/disease/good_robotic_transformation

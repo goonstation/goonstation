@@ -21,6 +21,11 @@ var/zapLimiter = 0
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
 
+	/// Only allow building an APC in an area if no APC currently is powering the area.
+	can_build(turf/T)
+		var/area/A = get_area(T)
+		return A.area_apc == null
+
 ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapStuff)
 
 /obj/machinery/power/apc
@@ -204,6 +209,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	if (!QDELETED(src.area))
 		if(istype(src.area,/area/unconnected_zone)) //if we built in an as-yet APCless zone, we've created a new built zone as a consequence
 			unconnected_zone.propagate_zone(get_turf(src))
+			var/area/A = get_area(src)
+			src.area = A
+			A.area_apc = src
 		else
 			src.area.area_apc = src
 
@@ -224,6 +232,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/disposing()
 	STOP_TRACKING
+	if(src.area?.area_apc == src)
+		src.area.area_apc = null
 	cell = null
 	terminal?.master = null
 	terminal = null
@@ -301,8 +311,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 		if (cell)
 			// if opened, update overlays for cell
-			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			AddOverlays(I_cell, "cell")
+			var/image/i_cell
+			if(cell.artifact)
+				i_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.artifact.artiappear.name]")
+			else
+				i_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
+			AddOverlays(i_cell, "cell")
 
 	else if(emagged)
 		icon_state = "apcemag"
@@ -544,10 +558,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				boutput(user, SPAN_ALERT("Access denied."))
 
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
-	W.change_stack_amount(-4)
-	boutput(user, "You repair the autotransformer.")
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-	src.repair_status = 2
+	var/obj/item/cable_coil/coil = W
+	if (coil?.use(4))
+		boutput(user, "You repair the autotransformer.")
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		src.repair_status = 2
 
 /obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
 	boutput(user, "You tune the autotransformer.")
@@ -1451,10 +1466,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/set_broken()
+	if(src.hardened) // cannot be broken
+		return TRUE
 	. = ..()
 	if(.) return
 	operating = 0
 	update()
+
+/obj/machinery/power/apc/overload_act()
+	if(src.hardened)
+		return FALSE
+	return !src.set_broken()
 
 // overload all the lights in this APC area
 
@@ -1592,9 +1614,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/receive_silicon_hotkey(var/mob/user)
-	..()
-
-	if (!isAI(user) && !issilicon(user))
+	if(..())
 		return
 
 	if (user.client.check_key(KEY_OPEN))

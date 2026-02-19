@@ -12,6 +12,8 @@
 	stamina_crit_chance = 0
 	//mat_changename = 0
 	rand_pos = 1
+	default_material = "plastic"
+	material_amt = 0.5
 	var/patreon_prob = 9
 	var/rare_prob = 12
 	var/datum/figure_info/info = null
@@ -862,8 +864,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "froggitdogget"
 
 	munien
-		name = "\improper Elijah Retluoc"
-		icon_state = "elijahretluoc"
+		name = "\improper Elijah Caldwell"
+		icon_state = "elijahcaldwell"
 		ckey = "munien"
 
 	calliopesoups
@@ -1069,6 +1071,78 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Normal Human"
 		icon_state = "normalhuman"
 		ckey = "lazybones123"
+	emeraldcrow
+		name = "\improper Caitlin"
+		icon_state = "caitlin"
+		ckey = "emeraldcrow"
+	kikimofo
+		name = "\improper Kiki Kolana"
+		icon_state = "kikikolana"
+		ckey = "kikimofo"
+	fffootloose
+		name = "\improper Leeland Ponds"
+		icon_state = "leelandponds"
+		ckey = "fffootloose"
+	tamedevil
+		name = "\improper Vaughn Guy"
+		icon_state = "vaughnguy"
+		ckey = "tamedevil"
+	laticauda
+		name = "\improper Tommy Guillaume"
+		icon_state = "tommyguillaume"
+		ckey = "laticauda"
+	brainrot
+		name = "\improper Latte Cappuccino"
+		icon_state = "lattecappuccino"
+		ckey = "brainrot"
+	outbackcatgirl
+		name = "\improper Catherine McFluffums"
+		icon_state = "catherinemcfluffums"
+		ckey = "outbackcatgirl"
+	superbongotime
+		name = "\improper Laylith Blackwing"
+		icon_state = "laylithblackwing"
+		ckey = "superbongotime"
+	raccoonpope
+		name = "\improper Cynthia Xeonyr"
+		icon_state = "cynthiaxeonyr"
+		ckey = "raccoonpope"
+	ovaiggy
+		name = "\improper Sachie Blunt"
+		icon_state = "sachieblunt"
+		ckey = "ovaiggy"
+	ithebinman
+		name = "\improper The Mucus Man"
+		icon_state = "themucusman"
+		ckey = "ithebinman"
+	snugglycactus
+		name = "\improper Ribbert McFrogg"
+		icon_state = "ribbertmcfrogg"
+		ckey = "snugglycactus"
+	b0opy
+		name = "\improper Dementia Dan"
+		icon_state = "dementiadan"
+		ckey = "b0opy"
+	haikuart
+		name = "\improper Rocky Roach"
+		icon_state = "rockyroach"
+		ckey = "haikuart"
+	warsometimeschanges
+		name = "\improper Alice Dawn"
+		icon_state = "alicedawn"
+		ckey = "warsometimeschanges"
+	annmagedon
+		name = "\improper Charlotte Chirtte"
+		icon_state = "charlottechirtte"
+		ckey = "annmagedon"
+	literallily
+		name = "\improper Amanita Clearwater"
+		icon_state = "amanitaclearwater"
+		ckey = "literallily"
+	zodiadecius
+		name = "\improper Samson"
+		icon_state = "samson"
+		ckey = "zodiadecius"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -1080,6 +1154,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	max_item_amount = 1
 	//reusable = 0
 	rand_pos = 1
+	default_material = "plastic"
+	material_amt = 0.5
 	var/ccolor = "y"
 	var/image/cap_image = null
 	var/itemstate = "cap-fig"

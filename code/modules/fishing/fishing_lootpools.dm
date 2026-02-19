@@ -19,10 +19,10 @@
 /// This proc checks for all the conditionals that could apply to a fishing spot. Modify that for special conditions.
 /datum/fishing_lootpool/proc/check_conditionals(var/mob/user, var/obj/item/fishing_rod/fishing_rod)
 	. = TRUE
-	if(fishing_rod.tier < src.minimum_rod_tier || fishing_rod.tier > src.maximum_rod_tier)
+	if(fishing_rod?.tier < src.minimum_rod_tier || fishing_rod?.tier > src.maximum_rod_tier)
 		return FALSE
 	if (required_lure != null)
-		var/obj/item/lure = fishing_rod.get_lure()
+		var/obj/item/lure = fishing_rod?.get_lure()
 		if (!istype(lure, required_lure)) return FALSE
 
 /// This proc generates a new loottable out of a given current one
@@ -52,7 +52,8 @@
 	/obj/item/reagent_containers/food/fish/bass = 30,\
 	/obj/item/reagent_containers/food/fish/salmon = 20,\
 	/obj/item/reagent_containers/food/fish/herring = 15,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/anchovy = 10)
 
 ///lava fish as T3 fish for fire-sources
 /datum/fishing_lootpool/lava_fish

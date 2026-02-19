@@ -133,6 +133,11 @@ Custom Books
 	desc = "A Book on how to use the wireless Components of the Mechanic's lab"
 	file_path = "strings/books/mechanicbook.txt"
 
+/obj/item/paper/book/from_file/text_to_music_com // based off the revised Player Piano book
+	name = "Text to Music Component Manual"
+	desc = "Details the use of the Text to Music Component."
+	file_path = "strings/books/text_to_music_com.txt"
+
 /obj/item/paper/book/from_file/teg_guide //By Azrun, part of the February 2021 Contest
 	name = "Thermo-electric Power Generation"
 	icon_state = "tegbook"
@@ -150,6 +155,12 @@ Custom Books
 	icon_state = "orangebook"
 	desc = "A book detailing behaviors and operations of Nadir's transception array"
 	file_path = "strings/books/transception_guide.txt"
+
+/obj/item/paper/book/from_file/gravity_tether
+	name = "Gravi-Tonne Tether Manual"
+	icon_state = "tether_book"
+	desc = "An in-depth guide to the monitoring and operation of a Gravity Tether."
+	file_path = "strings/books/tether_manual.txt"
 
 /****Civilian Guides****/
 
@@ -354,11 +365,7 @@ Custom Books
 				return
 
 			jerk.traitHolder?.addTrait("wasitsomethingisaid")
-
-			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
-			S?["criminal"] = ARREST_STATE_ARREST
-			S?["mi_crim"] = "Reading highly-confidential private information."
-			jerk.update_arrest_icon()
+			jerk.apply_automated_arrest("Reading highly-confidential private information.", requires_camera_seen = FALSE, use_visible_name = FALSE)
 		else
 			return list("It appears to be heavily encrypted information.")
 
@@ -578,3 +585,10 @@ all for the love of you.</tt>"}
 			I heard something scary, so I leave for a few minutes, leaving my key behind. I come back. AND THEY'RE LOCKED... WITH A NOTE ON THE TABLE
 			SAYING THE KEY'S INSIDE ONE OF THEM. WHY??? I kicked the table, and YES, there is something metal in there. Well... what am I going to do
 			now?"}
+
+/obj/item/paper/book/from_file/horrorcontest
+	name = "Splinters of a Haunted Station"
+	desc = "A book containing a series of short horror stories to tell in the dark."
+	icon_state = "sbook"
+	file_path = "strings/books/three_sentence_horror.txt"
+

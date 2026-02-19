@@ -5,9 +5,9 @@
 	desc = "A strange shell of a person looking straight ahead with lifeless eyes."
 	density = 1
 	icon_state = "shade"
-	speechverb_say = "says"
-	speechverb_exclaim = "exclaims"
-	speechverb_ask = "asks"
+	speech_verb_say = "says"
+	speech_verb_exclaim = "exclaims"
+	speech_verb_ask = "asks"
 	var/const/life_tick_spacing = 20
 	health_brute = 8
 	health_brute_vuln = 1
@@ -99,7 +99,12 @@
 			src.mind.transfer_to(master)
 			var/datum/targetable/ability = master_ability_holder.getAbility(/datum/targetable/wraithAbility/haunt)
 			ability.doCooldown()
+
+			for (var/mob/dead/target_observer/observer as anything in src.observers)
+				observer.set_observe_target(src.master)
+
 			src.master = null
+
 		playsound(src, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60, 0)
 		. = ..()
 

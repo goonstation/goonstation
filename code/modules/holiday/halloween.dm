@@ -250,34 +250,6 @@
 		newfolder.add_file( new /datum/computer/file/text/hjam_rlog_2(src))
 		newfolder.add_file( new /datum/computer/file/text/hjam_rlog_3(src))
 
-//Old outpost stuff
-/obj/machinery/computer3/generic/outpost1
-	name = "VR Research Console"
-	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-	setup_starting_peripheral2 = /obj/item/peripheral/printer
-	setup_drive_type = /obj/item/disk/data/fixed_disk/outpost_rdrive
-
-/obj/item/disk/data/fixed_disk/outpost_rdrive
-	title = "VR_HDD"
-
-	New()
-		..()
-		//First off, create the directory for logging stuff
-		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
-		newfolder.name = "logs"
-		src.root.add_file( newfolder )
-		newfolder.add_file( new /datum/computer/file/record/c3help(src))
-		//newfolder.add_file( new /datum/computer/file/text/hjam_passlog(src))
-		//This is the bin folder. For various programs I guess sure why not.
-		newfolder = new /datum/computer/folder
-		newfolder.name = "bin"
-		src.root.add_file( newfolder )
-		newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
-
-		src.root.add_file( new /datum/computer/file/text/outpost_rlog_1(src))
-		src.root.add_file( new /datum/computer/file/text/outpost_rlog_2(src))
-		//src.root.add_file( new /datum/computer/file/text/hjam_rlog_3(src))
-
 //Haunted camera. Steals people's souls.
 /obj/item/camera/haunted
 	name = "rusty camera"

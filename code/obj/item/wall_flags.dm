@@ -140,6 +140,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	desc = "A makeshift cape made out of a pride flag. Still creased, of course."
 	icon = 'icons/obj/items/flag.dmi'
 	burn_possible = FALSE
+	c_flags = ONBACK
 	var/altside_cape
 
 	attack_self(mob/user as mob)

@@ -10,9 +10,7 @@
 /world
 	mob = /mob/new_player
 
-	#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
-	turf = /turf/space/fluid/manta
-	#elif defined(UNDERWATER_MAP)
+	#ifdef UNDERWATER_MAP
 	turf = /turf/space/fluid
 	#else
 	turf = /turf/space
@@ -145,6 +143,9 @@
 	// the space filling this z-level will be somewhat broken (which you will hopefully replace with whatever it is you want to replace it with).
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MAXZ_INCREMENTED, new_maxz)
+
 	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)
 		#ifdef CHECK_MORE_RUNTIMES
 		in_replace_with++
@@ -160,3 +161,12 @@
 
 /world/proc/setupZLevel(new_zlevel)
 	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
+
+/// Returns the number of unstealthed clients currently connected to the server
+/world/proc/total_player_count()
+	var/total = 0
+	for(var/client/client in clients)
+		if (client.stealth && !client.fakekey) // stealthed admins don't count
+			continue
+		total++
+	return total

@@ -46,6 +46,7 @@ export const WizardSpellbook = () => {
 
   return (
     <Window
+      theme="wizard"
       title={`${owner_name || 'Wizard'}'s Spellbook`}
       height={600}
       width={720}
@@ -68,7 +69,7 @@ export const WizardSpellbook = () => {
                   placeholder="Search by name"
                   width="100%"
                   autoSelect
-                  onInput={(_: unknown, value: string) => setSearchQuery(value)}
+                  onChange={(value: string) => setSearchQuery(value)}
                 />
               </Section>
             </Stack.Item>

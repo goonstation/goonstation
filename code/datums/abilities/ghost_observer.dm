@@ -55,19 +55,18 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = "spooktober spook points",//src.name,
-				"content" = "[spooktober_GH.points] Points <br>All Points are shared between ghosts. <br>Spinning chairs, flipping, using the ouija board, and farting on people as a ghost generates more points faster.",//(src.desc ? src.desc : null),
-				"theme" = theme
-			))
+		if (usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = "spooktober spook points",
+				content = "[spooktober_GH.points] Points <br>All Points are shared between ghosts. <br>Spinning chairs, flipping, using the ouija board, and farting on people as a ghost generates more points faster.",
+				theme = src.theme
+			)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 #endif
 
@@ -343,7 +342,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	targeted = 0
 	cooldown = 0
 	special_screen_loc = "NORTH,EAST"
-	tooltip_flags = TOOLTIP_LEFT
 	var/displaying_buttons = 0
 
 	New()

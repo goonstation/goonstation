@@ -347,7 +347,7 @@
 	station_bounties[/obj/item/firstbill] = 2
 	station_bounties[/obj/captain_bottleship] = 3
 	station_bounties[/obj/item/hand_tele] = 3
-	station_bounties[/obj/item/card/id/captains_spare] = 3
+	station_bounties[/obj/item/card/id/gold/captains_spare] = 3
 	station_bounties[/obj/item/rcd] = 2
 	station_bounties[/obj/item/rcd/construction/chiefEngineer] = 3
 
@@ -537,7 +537,7 @@
 			if (!Turf || Turf.z != Z_LEVEL_STATION)
 				continue
 			var/area/A = get_area(Object)
-			if (A.name == "Listening Post")
+			if (istype(A, /area/listeningpost))
 				continue
 			if (valid_spy_thief_targets_by_type[Object.type])
 				valid_spy_thief_targets_by_type[Object.type] += Object

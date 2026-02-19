@@ -76,12 +76,12 @@
 
 	html += "<tr><td style='vertical-align: top;'><b>IP</b></td><td>"
 	html += "Last seen: [playerStats.latest_connection.ip]<br>"
-	html += "<a href='?src=\ref[src];action=show_player_ips;ckey=[ckey];'>See All</a>"
+	html += "<a href='byond://?src=\ref[src];action=show_player_ips;ckey=[ckey];'>See All</a>"
 	html += "</td></tr>"
 
 	html += "<tr><td style='vertical-align: top;'><b>Computer ID</b></td><td>"
 	html += "Last seen: [playerStats.latest_connection.comp_id]<br>"
-	html += "<a href='?src=\ref[src];action=show_player_compids;ckey=[ckey];'>See All</a>"
+	html += "<a href='byond://?src=\ref[src];action=show_player_compids;ckey=[ckey];'>See All</a>"
 	html += "</td></tr>"
 
 	html += "</table>"

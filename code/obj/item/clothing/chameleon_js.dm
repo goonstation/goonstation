@@ -1,9 +1,9 @@
 /obj/item/clothing/under/chameleon
 	name = "black jumpsuit"
 	desc = "A generic jumpsuit with no rank markings."
-	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
+	icon = 'icons/obj/clothing/jumpsuits/item_js.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
 	icon_state = "black"
 	item_state = "black"
 	var/list/clothing_choices = list()
@@ -37,6 +37,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
+			P.hide_underwear = U.hide_underwear
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -49,9 +50,9 @@
 			src.desc = "Groovy!"
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
-			icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+			icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
 			wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
-			inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+			inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
@@ -81,17 +82,20 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.hide_underwear = T.hide_underwear
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
+			usr.update_body()
 
 /datum/chameleon_jumpsuit_pattern
 	var/name = "black jumpsuit"
 	var/desc = "A generic jumpsuit with no rank markings."
 	var/icon_state = "black"
 	var/item_state = "black"
-	var/sprite_item = 'icons/obj/clothing/uniforms/item_js.dmi'
+	var/sprite_item = 'icons/obj/clothing/jumpsuits/item_js.dmi'
 	var/sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
-	var/sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+	var/sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js.dmi'
+	var/hide_underwear = FALSE
 
 	white
 		name = "white jumpsuit"
@@ -157,9 +161,9 @@
 		desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
 		icon_state = "assistant"
 		item_state = "assistant"
-		sprite_item = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
+		sprite_item = 'icons/obj/clothing/jumpsuits/item_js_rank.dmi'
 		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
-		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
+		sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js_rank.dmi'
 
 	rank/engineer
 		name = "engineer's jumpsuit"
@@ -190,6 +194,12 @@
 		desc = "Genetics is very green these days, isn't it?"
 		icon_state = "genetics"
 		item_state = "genetics"
+
+	rank/pharmacist
+		name = "pharmacist's jumpsuit"
+		desc = "Proves you know how to make chemicals explode and/or heal people."
+		icon_state = "pharmacist"
+		item_state = "pharmacist"
 
 	rank/hydroponics
 		name = "botanist's jumpsuit"
@@ -298,9 +308,9 @@
 		desc = "The crisp threads of a postmaster."
 		icon_state = "mail"
 		item_state = "mail"
-		sprite_item = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+		sprite_item = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
 		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
-		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+		sprite_hand = 'icons/mob/inhand/jumpsuits/hand_js_misc.dmi'
 
 /obj/item/clothing/head/chameleon
 	name = "hat"
@@ -314,7 +324,6 @@
 	var/current_choice = new/datum/chameleon_hat_pattern
 	blocked_from_petasusaphilic = TRUE
 	item_function_flags = IMMUNE_TO_ACID
-	seal_hair = FALSE
 
 	New()
 		..()
@@ -344,7 +353,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
-			P.seal_hair = U.seal_hair
+			P.seal_hair = U.c_flags & COVERSHAIR
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -360,7 +369,7 @@
 			src.hides_from_examine = null
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.seal_hair = FALSE
+			src.c_flags &= ~COVERSHAIR
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -389,7 +398,10 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
-			src.seal_hair = T.seal_hair
+			if (T.seal_hair)
+				c_flags |= COVERSHAIR
+			else
+				c_flags &= ~COVERSHAIR
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
@@ -572,7 +584,6 @@
 	item_state = "hoodie"
 	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
-	over_hair = FALSE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_suit_pattern/hoodie
 
@@ -604,7 +615,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
-			P.over_hair = U.over_hair
+			P.over_hair = U.c_flags & COVERSHAIR
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -647,11 +658,14 @@
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
 			src.icon = T.sprite_item
-			src.over_hair = T.over_hair
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			if (T.over_hair)
+				c_flags |= COVERSHAIR
+			else
+				c_flags &= ~COVERSHAIR
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
@@ -686,6 +700,12 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		desc = "A protective laboratory coat with the green markings of a Geneticist."
 		icon_state = "GNlabcoat"
 		item_state = "GNlabcoat"
+
+	labcoat_pharmacy
+		name = "pharmacist's labcoat"
+		desc = "A protective laboratory coat with the green markings of a Pharmacist."
+		icon_state = "PHlabcoat"
+		item_state = "PHlabcoat"
 
 	labcoat_robotics
 		name = "roboticist's labcoat"
@@ -900,7 +920,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-		over_hair = FALSE
+		over_hair = TRUE
 		hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES|C_GLASSES|C_EARS
 
 	chef_coat
@@ -1237,8 +1257,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_gloves_pattern
 	material_prints = "black leather fibers"
-	hide_prints = TRUE
-	scramble_prints = FALSE
 	fingertip_color = "#535353"
 
 	New()
@@ -1313,7 +1331,11 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.material_prints = T.print_type
-			src.fingertip_color = T.fingertip_color
+			var/glove_fp_mask = T.get_fiber_mask(src)
+			if(glove_fp_mask)
+				src.print_mask = register_id(glove_fp_mask)
+				var/list/fiber_chars = list("c","f","g","h","i","j","k","r","s","t","v","w","x","y","z")
+				fibers = register_id("[src.material_prints]: [build_id(fiber_chars, 7)]")
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
@@ -1326,9 +1348,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	var/sprite_worn = 'icons/mob/clothing/hands.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
 	var/print_type = "black leather fibers"
-	var/hide_prints = TRUE
-	var/scramble_prints = FALSE
 	var/fingertip_color = null
+
+	proc/get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+		return FORENSIC_GLOVE_MASK_NONE
 
 	insulated
 		desc = "Tough rubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
@@ -1336,26 +1359,30 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "yellow"
 		item_state = "ygloves"
 		print_type = "insulative fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#ffff33"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_order(3) // 1/8 chance of match
 
 	fingerless
 		desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
 		name = "fingerless gloves"
 		icon_state = "fgloves"
 		item_state = "finger-"
-		hide_prints = FALSE
-		scramble_prints = FALSE
 		fingertip_color = null
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return FORENSIC_GLOVE_MASK_FINGERLESS
 
 	latex
 		name = "latex gloves"
 		icon_state = "latex"
 		item_state = "lgloves"
 		desc = "Thin, disposal medical gloves used to help prevent the spread of germs."
-		scramble_prints = TRUE
 		fingertip_color = "#f3f3f3"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_bunch(2) // 1/16 chance of match
 
 	boxing
 		name = "boxing gloves"
@@ -1363,9 +1390,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "boxinggloves"
 		item_state = "bogloves"
 		print_type = "red leather fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#f80000"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_bunch(1) // 1/4 chance of match
 
 	long
 		desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
@@ -1373,9 +1401,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "long_gloves"
 		item_state = "long_gloves"
 		print_type = "synthetic silicone rubber fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#ffff33"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_order(2) // 1/2 chance of match
 
 	gauntlets
 		name = "concussion gauntlets"
@@ -1383,9 +1412,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "cgaunts"
 		item_state = "bgloves"
 		print_type = "industrial-grade mineral fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#535353"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_order(2) // 1/2 chance of match
 
 	caps_gloves
 		name = "captain's gloves"
@@ -1393,9 +1423,10 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "capgloves"
 		item_state = "capgloves"
 		print_type = "high-quality synthetic fibers"
-		hide_prints = TRUE
-		scramble_prints = FALSE
 		fingertip_color = "#3fb54f"
+
+		get_fiber_mask(var/obj/item/clothing/gloves/gloves)
+			return gloves.create_glovemask_order(2) // 1/2 chance of match
 
 /obj/item/storage/belt/chameleon
 	name = "utility belt"
@@ -1541,8 +1572,9 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_backpack_pattern
 	spawn_contents = list()
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/storage/belt/chameleon)
+	satchel_variant = null //Set and then unset in convert_to_satchel, but should remain null as we don't know what we're disguised as.
 
 	New()
 		..()
@@ -1618,6 +1650,27 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
+
+	//Needs special casing to first figure out which bag we're disguised as, then call parent when we've figured out which satchel we need to be
+	convert_to_satchel(name_base_item)
+		var/list/bag_types = concrete_typesof(/obj/item/storage/backpack)
+		for (var/obj/item/storage/backpack/bag as anything in bag_types)
+			if((bag::icon_state == src.icon_state) && (bag::icon == src.icon))
+				src.satchel_variant = bag::satchel_variant
+		. = ..(name_base_item)
+		//Make sure to add the new satchel disguise to our list if it isn't already there
+		for(var/datum/chameleon_backpack_pattern/check_pattern in src.clothing_choices)
+			if(check_pattern.name == src.name)
+				return .
+		var/datum/chameleon_backpack_pattern/P = new /datum/chameleon_backpack_pattern(src)
+		P.name = src.name
+		P.desc = src.desc
+		P.icon_state = src.icon_state
+		P.item_state = src.item_state
+		P.sprite_item = src.icon
+		P.sprite_worn = src.wear_image_icon
+		P.sprite_hand = src.inhand_image_icon
+		src.clothing_choices += P
 
 	verb/change()
 		set name = "Change Appearance"
@@ -1721,6 +1774,18 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists."
 		icon_state = "satchel_genetics"
 		item_state = "satchel_genetics"
+
+	pharmacist
+		name = "pharmacy backpack"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of pharmacists."
+		icon_state = "bp_pharma"
+		item_state = "bp_pharma"
+
+	pharmacist_satchel
+		name = "pharmacy satchel"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of pharmacists."
+		icon_state = "satchel_pharma"
+		item_state = "satchel_pharma"
 
 	medic
 		name = "medic's backpack"
@@ -2002,6 +2067,17 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		hat_type = new/datum/chameleon_hat_pattern
 		suit_type = new/datum/chameleon_suit_pattern/labcoat_genetics
 		glasses_type = new/datum/chameleon_glasses_pattern/prodoc
+		shoes_type = new/datum/chameleon_shoes_pattern/white
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern/medical
+		backpack_type = new/datum/chameleon_backpack_pattern/genetics
+
+	pharmacist
+		name = "Pharmacist"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/pharmacist
+		hat_type = new/datum/chameleon_hat_pattern
+		suit_type = new/datum/chameleon_suit_pattern/labcoat_pharmacy
+		glasses_type = new/datum/chameleon_glasses_pattern/spectro
 		shoes_type = new/datum/chameleon_shoes_pattern/white
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
 		belt_type = new/datum/chameleon_belt_pattern/medical

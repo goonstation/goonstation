@@ -124,7 +124,7 @@
 	floor_turf_type = /turf/unsimulated/floor/plating/asteroid/lavamoon
 
 	var/lava_noise = null
-	var/datum/spatial_hashmap/manual/near_station
+	var/datum/spatial_hashmap/manual/near_station = null
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/lavamoon_generator/generate_terrain(list/turf/turfs, reuse_seed, flags)
@@ -136,20 +136,23 @@
 	if(!length(turfs))
 		return
 
-	if(!near_station && turfs[1].z == Z_LEVEL_STATION)
-		near_station = new(cs=10)
-		near_station.update_cooldown = INFINITY
-		var/list/station_turfs = null
-		var/list/station_areas = get_accessible_station_areas()
-		for(var/AR in station_areas)
-			station_turfs = get_area_turfs(station_areas[AR], 1)
-			if(length(station_turfs))
-				for(var/j in 1 to 5)
-					near_station.add_target(pick(station_turfs))
-		station_turfs = get_area_turfs(/area/listeningpost, 1)
-		if(length(station_turfs))
-			for(var/j in 1 to 5)
-				near_station.add_target(pick(station_turfs))
+	if (!src.near_station && turfs[1].z == Z_LEVEL_STATION)
+		src.near_station = new(cell_size = 10, name = "Near-Station Turfs")
+
+		var/list/area/station_areas = global.get_accessible_station_areas()
+		var/list/turf/station_turfs = null
+		for (var/area_name in station_areas)
+			station_turfs = global.get_area_turfs(station_areas[area_name], TRUE)
+			if (!length(station_turfs))
+				continue
+
+			for(var/i in 1 to 5)
+				src.near_station.register_hashmap_entry(pick(station_turfs))
+
+		var/list/turf/listening_post_turfs = global.get_area_turfs(/area/listeningpost, TRUE)
+		if (length(listening_post_turfs))
+			for (var/i in 1 to 5)
+				src.near_station.register_hashmap_entry(pick(listening_post_turfs))
 
 	if(!lava_noise)
 		src.lava_noise = rustg_cnoise_generate("[src.lava_percent]", "5", "6", "3", "[world.maxx]", "[world.maxy]")
@@ -166,7 +169,7 @@
 		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[drift_x]", "[drift_y]"))
 
 		var/datum/biome/selected_biome
-		if(length(near_station?.get_nearby(gen_turf, range=6)))
+		if(length(src.near_station?.fast_manhattan(gen_turf, range = 6)))
 			selected_biome = /datum/biome/lavamoon
 		else if(flags & MAPGEN_FLOOR_ONLY)
 			selected_biome = /datum/biome/lavamoon
@@ -220,7 +223,7 @@
 	carbon_dioxide = 20
 	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
 
-	destroy_asteroid(var/dropOre=1)
+	destroy_asteroid(var/dropOre=1, var/mob/user)
 		if(src.ore || prob(5)) // provide less rock
 			default_ore = /datum/material/crystal/gemstone
 		. = ..()

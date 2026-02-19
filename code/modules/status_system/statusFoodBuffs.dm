@@ -127,9 +127,7 @@
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
-			if (M.bodytemperature > M.base_body_temp + 3)
-				for(var/i in 1 to times)
-					M.bodytemperature -= 2
+			M.changeBodyTemp(-2 KELVIN * times, min_temp = M.base_body_temp + 3)
 
 /datum/statusEffect/foodwarm
 	id = "food_warm"
@@ -152,9 +150,7 @@
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
-			if (M.bodytemperature < M.base_body_temp + 8)
-				for(var/i in 1 to times)
-					M.bodytemperature += 6
+			M.changeBodyTemp(6 KELVIN * times, max_temp = M.base_body_temp + 8)
 
 /datum/statusEffect/staminaregen/food
 	id = "food_refreshed"
@@ -414,6 +410,22 @@
 	getChefHint()
 		. = "Gives the consumer an absolutely terrible breath smell."
 
+	onAdd()
+		. = ..()
+		RegisterSignal(owner, COMSIG_ATOM_SAY, PROC_REF(smell_breath))
+
+	onRemove()
+		UnregisterSignal(owner,COMSIG_ATOM_SAY)
+		. = ..()
+
+	proc/smell_breath()
+		for (var/mob/living/L in oview(2, owner))
+			if (prob(50))
+				continue
+
+			boutput(L, SPAN_ALERT("Good lord, [owner]'s breath smells bad!"))
+			L.nauseate(1)
+
 /datum/statusEffect/slimy
 	id = "food_slimy"
 	name ="Food (Slimy)"
@@ -421,10 +433,9 @@
 	maxDuration = 600
 	icon_state = "-"
 	unique = 1
-	var/reagent_id = "slime"
 
 	onUpdate(timePassed)
-		dropSweat(src.reagent_id, 5, 5)
+		dropSweat("slime", 5, 5, sweatpools=TRUE)
 
 /datum/statusEffect/sweaty
 	id = "food_sweaty"
@@ -432,7 +443,7 @@
 	desc = "You feel sweaty!"
 	icon_state = "sweaty"
 	exclusiveGroup = "Food"
-	maxDuration = 3000
+	maxDuration = 900
 	unique = 1
 
 	var/sweat_adjective = "" // used for getChefHint()
@@ -448,7 +459,7 @@
 		maxDuration = 600
 
 		onUpdate(timePassed)
-			dropSweat("water", 5, 20)
+			dropSweat("water", 5, 10, sweatpools=TRUE)
 
 	bigger
 		name ="Food (Sweaty++)"
@@ -458,7 +469,7 @@
 		maxDuration = 300
 
 		onUpdate(timePassed)
-			dropSweat("water", 15, 35)
+			dropSweat("water", 15, 35, sweatpools=TRUE)
 
 	getChefHint()
 		. = "Makes the consumer [sweat_adjective]sweaty."

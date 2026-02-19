@@ -172,6 +172,10 @@ var/global/list/job_start_locations = list()
 	name = "Roboticist"
 	icon_state = "roboticist"
 
+/obj/landmark/start/job/pharmacist
+	name = "Pharmacist"
+	icon_state = "pharmacist"
+
 /obj/landmark/start/job/scientist
 	name = "Scientist"
 	icon_state = "scientist"
@@ -282,6 +286,26 @@ var/global/list/job_start_locations = list()
 	north
 		name = "missile latejoin spawn marker (north)"
 		dir = NORTH
+
+/obj/landmark/latejoin_job
+	name = "latejoin spawn marker"
+	icon_state = "x"
+
+/obj/landmark/latejoin_job/radio_show_host
+	name = "Radio Show Host Spawn"
+	name_override = LANDMARK_RADIO_SHOW_HOST_SPAWN
+
+/obj/landmark/latejoin_job/journalist
+	name = "Journalist Spawn"
+	name_override = LANDMARK_JOURNALIST_SPAWN
+
+/obj/landmark/latejoin_job/actor
+	name = "Actor Spawn"
+	name_override = LANDMARK_ACTOR_SPAWN
+
+/obj/landmark/latejoin_job/influencer
+	name = "Influencer Spawn"
+	name_override = LANDMARK_INFLUENCER_SPAWN
 
 /* ===== Misc Spawn/Start ===== */
 
@@ -512,6 +536,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/icemoon
 	name = "Senex"
 
+/obj/landmark/lrt/icemoon2
+	name = "Senex II"
+
 /obj/landmark/lrt/solarium
 	name = "Sol"
 
@@ -590,6 +617,9 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/fall/sea/marj
 	name = LANDMARK_FALL_MARJ
+
+/obj/landmark/fall/sea/cult
+	name = LANDMARK_FALL_CULTIST
 
 /* ===== Visual Contents ===== */
 

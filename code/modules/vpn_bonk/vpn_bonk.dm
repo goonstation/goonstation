@@ -1,6 +1,6 @@
 var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
 
-/client/New()
+/client/post_auth()
 	. = ..()
 	vpn_scan()
 
@@ -10,12 +10,14 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #ifdef DO_VPN_CHECKS
 	if (vpn_blacklist_enabled)
 		var/is_vpn_address = global.vpn_ip_checks["[src.address]"]
-		var/list/round_stats = src.player?.get_round_stats(TRUE)
 
 		// We have already checked this user this round and they are indeed on a VPN, kick em
 		if (is_vpn_address)
 			src.vpn_bonk(repeat_attempt = TRUE)
 			return
+
+		UNTIL(src.player.fetched_round_stats, 10 SECONDS)
+		var/list/round_stats = src.player.get_round_stats()
 
 		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
 		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits

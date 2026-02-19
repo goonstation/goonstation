@@ -504,6 +504,11 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/plant/herb/cannabis/white/spawnable
 	price = PAY_UNTRAINED
 
+/datum/commodity/drugs/sell/CBD
+	comname = "CBD Pills"
+	comtype = /obj/item/reagent_containers/pill/CBD
+	price = PAY_DOCTORATE
+
 /datum/commodity/drugs/sell/methamphetamine
 	comname = "Methamphetamine (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/methamphetamine
@@ -630,7 +635,7 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/contraband/captainid
 	comname = "NT Captain Gold ID"
-	comtype = /obj/item/card/id/captains_spare
+	comtype = /obj/item/card/id/gold/captains_spare
 	desc = "NT gold-level registered captain ID."
 	price = PAY_EMBEZZLED
 
@@ -1566,6 +1571,12 @@ datum/commodity/drugs/sell/poppies
 	desc = "The delightful regalia of a terrible polkadot mascot."
 	price = PAY_UNTRAINED
 
+/datum/commodity/costume/chompskysuit
+	comname = "Gnome Chompsky costume"
+	comtype = /obj/item/storage/box/costume/chompskysuit
+	desc = "Roam as a Gnome with this giant-sized gnome costume."
+	price = PAY_UNTRAINED
+
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"
 	comtype = /obj/item/storage/backpack/breadpack
@@ -1641,6 +1652,13 @@ datum/commodity/drugs/sell/poppies
 	desc = "A high quality sabre."
 	onmarket = 0
 	price = PAY_UNTRAINED
+
+/datum/commodity/clown_nose
+	comname = "Clown Nose"
+	comtype = /obj/item/clothing/mask/clown_nose
+	desc = "A clown nose, simple!"
+	onmarket = 0
+	price = PAY_UNTRAINED/5
 
 /*
 /datum/commodity/screamshoes

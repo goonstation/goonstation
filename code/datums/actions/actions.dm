@@ -612,23 +612,16 @@
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message(SPAN_ALERT("<B>[source] removes [I] from [target]!</B>"), 1)
-
 				// Re-added (Convair880).
-				if (istype(I, /obj/item/mousetrap/))
-					var/obj/item/mousetrap/MT = I
-					if (MT?.armed)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
-				else if (istype(I, /obj/item/mine))
-					var/obj/item/mine/M = I
-					if (M.armed && M.used_up != 1)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						M.triggered(source)
+				if SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, source)
+					for (var/mob/O in AIviewers(owner))
+						O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
 
 				target.u_equip(I)
-				I.set_loc(target.loc)
+				if (target.loc.open_inv_within)
+					I.set_loc(get_turf(source))
+				else
+					I.set_loc(target.loc)
 				I.dropped(target)
 				I.layer = initial(I.layer)
 				I.add_fingerprint(source)
@@ -664,7 +657,7 @@
 					boutput(source, SPAN_ALERT("[item] can not be put there."))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(!isturf(target.loc))
+			if(!isturf(target.loc) && !target.loc.open_inv_within)
 				if(in_start)
 					boutput(source, SPAN_ALERT("You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!"))
 				interrupt(INTERRUPT_ALWAYS)
@@ -682,7 +675,7 @@
 					boutput(source, SPAN_ALERT("There's nothing in that slot."))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(!isturf(target.loc))
+			if(!isturf(target.loc) && !target.loc.open_inv_within)
 				if(in_start)
 					boutput(source, SPAN_ALERT("You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!"))
 				interrupt(INTERRUPT_ALWAYS)
@@ -722,29 +715,37 @@
 				remove_internals = 0
 	onEnd()
 		..()
-		if(owner && target && BOUNDS_DIST(owner, target) == 0)
-			SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
-			if(remove_internals)
-				target.internal.add_fingerprint(owner)
-				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
-					T.icon_state = "airoff"
-				target.internal = null
+		if(!owner || !target || !BOUNDS_DIST(owner, target) == 0)
+			return
+		SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+		if(remove_internals)
+			target.internal.add_fingerprint(owner)
+			for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
+				T.icon_state = "airoff"
+			target.internal = null
+			target.update_inv()
+			for(var/mob/O in AIviewers(owner))
+				O.show_message(SPAN_ALERT("<B>[owner] removes [target]'s internals!</B>"), 1)
+		else
+			if (!istype(target.wear_mask, /obj/item/clothing/mask))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(!HAS_FLAG(target.wear_mask.c_flags, MASKINTERNALS))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			var/list/eq_list = list(src.target.back, src.target.belt, src.target.r_hand, src.target.l_hand, src.target.r_store, src.target.l_store)
+			for(var/I in eq_list)
+				if(!istype(I, /obj/item/tank))
+					continue
+				var/obj/item/tank/tank = I
+				tank.toggle_valve()
 				target.update_inv()
-				for(var/mob/O in AIviewers(owner))
-					O.show_message(SPAN_ALERT("<B>[owner] removes [target]'s internals!</B>"), 1)
-			else
-				if (!istype(target.wear_mask, /obj/item/clothing/mask))
-					interrupt(INTERRUPT_ALWAYS)
-					return
-				else
-					if (istype(target.back, /obj/item/tank))
-						target.internal = target.back
-						target.update_inv()
-						for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
-							T.icon_state = "airon"
-						for(var/mob/M in AIviewers(target, 1))
-							M.show_message(text("[] is now running on internals.", src.target), 1)
-						target.internal.add_fingerprint(owner)
+				for(var/mob/M in AIviewers(target, 1))
+					M.show_message(text("[] is now running on internals.", src.target), 1)
+				target.internal.add_fingerprint(owner)
+				return
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 /datum/action/bar/icon/handcuffSet //This is used when you try to handcuff someone.
 	duration = 40
@@ -876,7 +877,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 
-	New(var/dur)
+	New(dur)
 		duration = dur
 		..()
 
@@ -886,7 +887,10 @@
 			var/mob/living/carbon/human/H = owner
 			duration = round(duration * H.handcuffs.remove_self_multiplier)
 
-		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"))
+		owner.visible_message(
+			SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"),
+			SPAN_ALERT("You attempt to remove your handcuffs. (This will take around [round(duration/10)] seconds and you need to stand still)")
+		)
 
 	onUpdate()
 		. = ..()
@@ -894,19 +898,26 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-	onInterrupt(var/flag)
+	onInterrupt(flag)
 		..()
-		boutput(owner, SPAN_ALERT("Your attempt to remove your handcuffs was interrupted!"))
 		if(!(flag & INTERRUPT_ACTION))
+			if (owner.hasStatus("handcuffed"))
+				boutput(owner, SPAN_ALERT("Your attempt to remove your handcuffs was interrupted!"))
 			src.resumable = FALSE
+
+	onResume(datum/action/attempted)
+		. = ..()
+		boutput(owner, SPAN_ALERT("You're still removing your handcuffs. (Around [round((src.duration-src.time_spent())/10)] seconds remaining)"), "handcuff_removal")
 
 	onEnd()
 		..()
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
-			H.visible_message(SPAN_ALERT("<B>[H] attempts to remove the handcuffs!</B>"))
-			boutput(H, SPAN_NOTICE("You successfully remove your handcuffs."))
+			H.visible_message(
+				SPAN_ALERT("<B>[H] manages to remove the handcuffs!</B>"),
+				SPAN_NOTICE("You successfully remove your handcuffs.")
+			)
 			logTheThing(LOG_COMBAT, H, "removes their own handcuffs at [log_loc(H)].")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
@@ -915,18 +926,36 @@
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	icon_state = "orange1"
 
-	New(var/dur)
+	New(dur)
 		duration = dur
 		..()
 
 	onStart()
 		..()
-		for(var/mob/O in AIviewers(owner))
-			O.show_message(SPAN_ALERT("<B>[owner] attempts to remove the shackles!</B>"), 1)
+		owner.visible_message(
+			SPAN_ALERT("<B>[owner] attempts to remove the shackles!</B>"),
+			SPAN_ALERT("You attempt to remove your shackles. (This will take around [round(src.duration/10)] seconds and you need to stand still)")
+		)
 
-	onInterrupt(var/flag)
+	onUpdate()
+		. = ..()
+		if (isnull(owner) || !ishuman(owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/living/carbon/human/H = owner
+		if (!H.shoes || !H.shoes.chained)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onInterrupt(flag)
 		..()
-		boutput(owner, SPAN_ALERT("Your attempt to remove the shackles was interrupted!"))
+		if(!(flag & INTERRUPT_ACTION))
+			boutput(owner, SPAN_ALERT("Your attempt to remove the shackles was interrupted!"))
+			src.resumable = FALSE
+
+	onResume(datum/action/attempted)
+		. = ..()
+		boutput(owner, SPAN_ALERT("You're still removing your shackles. (Around [round((src.duration-src.time_spent())/10)] seconds remaining)"), "shackle_removal")
 
 	onEnd()
 		..()
@@ -939,9 +968,10 @@
 				H.update_clothing()
 				if (SH)
 					SH.layer = initial(SH.layer)
-				for(var/mob/O in AIviewers(H))
-					O.show_message(SPAN_ALERT("<B>[H] manages to remove the shackles!</B>"), 1)
-				H.show_text("You successfully remove the shackles.", "blue")
+				H.visible_message(
+					SPAN_ALERT("<B>[H] manages to remove the shackles!</B>"),
+					SPAN_NOTICE("You successfully remove the shackles.")
+				)
 				logTheThing(LOG_COMBAT, H, "removes their own shackles at [log_loc(H)].")
 
 
@@ -1172,13 +1202,13 @@
 
 	onUpdate() //check for special conditions that could interrupt the picking-up here.
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || !can_act(src.owner)) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working || !can_act(src.owner))  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else
@@ -1227,6 +1257,8 @@
 		if(picker == null || owner == null) //Interrupt if the user or the magpicker disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (!can_act(src.owner))
+			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
@@ -1526,9 +1558,13 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!isnull(food))
+			if (!food.bites_left)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 			food.take_a_bite(consumer, mob_owner)
 		else
 			drink.take_a_drink(consumer, mob_owner)
+		consumer.lastgasp()
 
 /datum/action/bar/icon/syringe
 	duration = 3 SECONDS
@@ -1986,10 +2022,17 @@
 	var/pixel_x_hand_offset = null
 	var/pixel_y_hand_offset = null
 
+	var/initial_pixel_x = null
+	var/initial_pixel_y = null
+	var/initial_vis_flags = null
+
 	New(mob/user, obj/item/item, hand_icon, x_offset = 6, y_offset = 2, x_hand_offset = 6, y_hand_offset = 2)
 		. = ..()
 		src.user = user
 		src.item = item
+		src.initial_pixel_x = src.item.pixel_x
+		src.initial_pixel_y = src.item.pixel_y
+		src.initial_vis_flags= src.item.vis_flags
 		src.hand_icon = hand_icon
 		src.pixel_x_offset = x_offset
 		src.pixel_y_offset = y_offset
@@ -2006,15 +2049,20 @@
 			src.pixel_x_offset = -src.pixel_x_offset
 			src.pixel_x_hand_offset = -src.pixel_x_hand_offset
 
-		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, src.pixel_x_offset, src.pixel_y_offset)
-		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
+		src.item.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		src.item.pixel_x = src.pixel_x_offset
+		src.item.pixel_y = src.pixel_y_offset
+		src.user.vis_contents += src.item
 
-		src.user.UpdateOverlays(overlay, "showoff_overlay")
+		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
 		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
 
 		src.user.set_dir(SOUTH)
 
 	onDelete()
 		. = ..()
-		src.user.UpdateOverlays(null, "showoff_overlay")
+		src.user.vis_contents -= src.item
+		src.item.vis_flags = initial_vis_flags
+		src.item.pixel_x = initial_pixel_x
+		src.item.pixel_y = initial_pixel_y
 		src.user.UpdateOverlays(null, "showoff_hand_overlay")

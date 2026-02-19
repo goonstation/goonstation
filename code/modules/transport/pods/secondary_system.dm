@@ -7,6 +7,9 @@
 	var/hud_state = "blank"
 	icon_state= "sec_system"
 
+	get_install_slot()
+		return POD_PART_SECONDARY
+
 	proc/Use(mob/user as mob)
 		boutput(user, "[ship.ship_message("No special function for this ship!")]")
 		return
@@ -137,8 +140,10 @@
 /obj/item/shipcomponent/secondary_system/cargo
 	name = "Cargo Hold"
 	desc = "Allows the ship to load crates and transport them. One of Tradecraft Seneca's best sellers."
-	var/list/load = list() //Current crates inside
-	var/maxcap = 3 //how many crates it can hold
+	var/list/load = list() //! Current items loaded in
+	var/maxcap = 3 //! How many items it can hold
+	var/bust_out_health = 10 //! How many times do you have to bang your head against the top to get free
+	/// What itempaths will this cargo hold accept?
 	var/list/acceptable = list(/obj/storage/crate,
 	/obj/storage/secure/crate,
 	/obj/machinery/artifact,
@@ -152,7 +157,8 @@
 	/obj/machinery/nuclearbomb,
 	/obj/bomb_decoy,
 	/obj/gold_bee,
-	/obj/reagent_dispensers/beerkeg)
+	/obj/reagent_dispensers/beerkeg,
+	/obj/machinery/abcu)
 
 	hud_state = "cargo"
 	f_active = 1
@@ -310,7 +316,7 @@
 			break
 	if (isliving(C))
 		var/mob/living/L = C
-		if(isdead(L))
+		if(isdead(L) || isAI(L))
 			acceptable_cargo = 1
 	if (!acceptable_cargo)
 		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -321,16 +327,20 @@
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 	return 0
 
-/obj/item/shipcomponent/secondary_system/cargo/proc/unload(var/atom/movable/C,var/turf/T)
-	if(!C || !(C in load))
+/obj/item/shipcomponent/secondary_system/cargo/proc/unload(atom/movable/AM, turf/T)
+	if (!istype(T))
+		if (src.ship)
+			T = get_turf(src.ship)
+		else
+			T = get_turf(src)
+	src.eject_nonload(T)
+
+	if (!AM || !(AM in src.load))
 		return
 
-	if(T)
-		C.set_loc(T)
-	else
-		C.set_loc(ship.loc)
-	step(C, turn(ship.dir,180))
-	return C
+	AM.set_loc(T)
+	step(AM, turn(src.ship.dir,180))
+	return AM
 
 /obj/item/shipcomponent/secondary_system/cargo/proc/get_unloadable(mob/user)
 	var/list/cargo_by_name = list()
@@ -352,7 +362,65 @@
 			AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3,7), 3)
 		else
 			break
+	var/extra_bits = src.eject_nonload(get_turf(src.ship))
+	for (var/atom/movable/AM in extra_bits)
+		AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3,7), 3)
 	..()
+
+/obj/item/shipcomponent/secondary_system/cargo/proc/eject_nonload(turf/T)
+	if (!istype(T))
+		if (src.ship)
+			T = get_turf(src.ship)
+		else
+			T = get_turf(src)
+	if (!istype(T))
+		return // ???
+
+	var/list/ejectables = src.contents - src.load
+	for (var/atom/movable/AM in ejectables)
+		continue_if_overlay_or_effect(AM)
+		AM.set_loc(T)
+	return ejectables
+
+/obj/item/shipcomponent/secondary_system/cargo/relaymove(mob/user, direction, delay, running)
+	if (is_incapacitated(user))
+		return
+	if (src.hasStatus("teleporting"))
+		return
+	if(ON_COOLDOWN(src, "relaymove", DEFAULT_INTERNAL_RELAYMOVE_DELAY))
+		return
+	if (!src.ship)
+		src.eject_nonload(get_turf(src))
+	else
+		src.bust_out()
+
+	. = ..()
+
+/obj/item/shipcomponent/secondary_system/cargo/mob_flip_inside(mob/user)
+	src.bust_out()
+	. = ..()
+
+/obj/item/shipcomponent/secondary_system/cargo/proc/bust_out()
+	if (src.bust_out_health)
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
+		src.bust_out_message(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
+		src.bust_out_health--
+	if (src.bust_out_health <= 0)
+		if (src.ship)
+			src.ship.eject_part(slot=POD_PART_SECONDARY, give_message=FALSE)
+			src.on_shipdeath(src.ship)
+		src.bust_out_message(SPAN_ALERT("[src] breaks apart!"))
+		playsound(src, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+		SPAWN(1 DECI SECOND)
+			var/newloc = get_turf(src)
+			make_cleanable( /obj/decal/cleanable/machine_debris,newloc)
+			qdel(src)
+
+/obj/item/shipcomponent/secondary_system/cargo/proc/bust_out_message(message)
+	if (src.ship)
+		src.ship.visible_message(message)
+	else
+		src.visible_message(message)
 
 /obj/item/shipcomponent/secondary_system/cargo/jumpseat
 	name = "personal containment unit"
@@ -362,7 +430,7 @@
 	hud_state = "jumpseat"
 
 /obj/item/shipcomponent/secondary_system/cargo/jumpseat/handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
-		. = src.ship.handle_internal_lifeform(lifeform_inside_me, breath_request, mult)
+	. = src.ship.handle_internal_lifeform(lifeform_inside_me, breath_request, mult)
 
 /obj/item/shipcomponent/secondary_system/cargo/jumpseat/activate()
 	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
@@ -640,6 +708,9 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	run_component()
 		if(settingup)
 			return
+		if(src.target.anchored == ANCHORED_ALWAYS)
+			deactivate()
+			return
 		if(target in view(src.seekrange,ship.loc))
 			step_to(target, ship, 1)
 			return
@@ -700,6 +771,9 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		return
 
 	proc/tractor_drag(obj/machinery/vehicle/holding_ship, atom/previous_loc, direction)
+		if(src.target.anchored == ANCHORED_ALWAYS)
+			deactivate()
+			return
 		if (QDELETED(src.target) || GET_DIST(holding_ship, src.target) > src.seekrange)
 			UnregisterSignal(src.ship, COMSIG_MOVABLE_MOVED)
 			return
@@ -832,7 +906,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		var/dat = "<TT><B>[src] Console</B><BR><HR>"
 		for(var/mob/M in ship)
 			if(M == ship.pilot) continue
-			dat +="<A href='?src=\ref[src];release=[M.name]'><B><U>[M.name]</U></B></A><BR>"
+			dat +="<A href='byond://?src=\ref[src];release=[M.name]'><B><U>[M.name]</U></B></A><BR>"
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 
@@ -863,11 +937,12 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	var/configure_mode = 0 //If true, entering a valid code sets that as the code.
 	var/can_reset = TRUE //! Can you reset the code for this lock?
 
+	get_install_slot()
+		return POD_PART_LOCK
+
 	disposing()
 		if (ship)
 			ship.locked = 0
-			ship.lock = null
-
 		..()
 
 	deactivate()
@@ -925,7 +1000,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		<tr><td><a href='#' onclick='keypadIn(1); return false;'>1</a></td><td><a href='#' onclick='keypadIn(2); return false;'>2</a></td><td><a href='#' onclick='keypadIn(3); return false;'>3</a></td></td><td><a href='#' onclick='keypadIn("C"); return false;'>C</a></td></tr>
 		<tr><td><a href='#' onclick='keypadIn(0); return false;'>0</a></td><td><a href='#' onclick='keypadIn("F"); return false;'>F</a></td><td><a href='#' onclick='keypadIn("E"); return false;'>E</a></td></td><td><a href='#' onclick='keypadIn("D"); return false;'>D</a></td></tr>
 
-		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
+		<tr><td colspan=2 width = 100px><a id = "enterkey" href='byond://?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
 	</table>
 
 <script language="JavaScript">
@@ -1347,7 +1422,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is missing."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
 			core_inserted = TRUE
@@ -1355,7 +1430,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 			set_icon_state("SRS")
 			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 
 ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
@@ -1439,6 +1514,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	name = "Inferno Trailblazer"
 	desc = "A totally RADICAL plasma igniter for your ship! Leave behind the COOLEST flames in the Frontier! Manufacturer is not responsible for deaths this device may cause."
 	hud_state = "trailblazer"
+	icon_state = "trailblazer"
 	f_active = TRUE
 
 	Use()
@@ -1461,6 +1537,12 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	f_active = TRUE
 	var/obj/item/shipcomponent/mainweapon/loaded_wep = null
 
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		if(istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			vehicle.install_part(user, src, POD_PART_SECONDARY)
+
 	Use(mob/user)
 		src.activate(user)
 
@@ -1473,35 +1555,36 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 		if (!.)
 			return
 
-		if (!src.loaded_wep && !src.ship.m_w_system)
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.ship.get_part(POD_PART_MAIN_WEAPON)
+		if (!src.loaded_wep && !main_weapon)
+			return
+		if (!main_weapon.removable)
 			return
 
-		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd"))
-			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd")) / 10, 1)
+		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || main_weapon && GET_COOLDOWN(main_weapon, "weapon_swap_cd"))
+			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(main_weapon, "weapon_swap_cd")) / 10, 1)
 			boutput(src.ship.pilot, "[src.ship.ship_message("[src.ship]'s weapons are too hot to swap out! [swap_cd] seconds left.")]")
 			return
 
 		for (var/mob/M in src.ship)
-			if (src.loaded_wep && src.ship.m_w_system)
-				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
-			else if (src.ship.m_w_system)
-				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out.")]")
+			if (src.loaded_wep && main_weapon)
+				boutput(M, "[src.ship.ship_message("[main_weapon] has been swapped out for [src.loaded_wep].")]")
+			else if (main_weapon)
+				boutput(M, "[src.ship.ship_message("[main_weapon] has been swapped out.")]")
 				src.ship.UpdateOverlays(null, "mainweapon") //todo: make pod components actually clean up their own overlays
 			else
 				boutput(M, "[src.ship.ship_message("[src.loaded_wep] has been swapped in.")]")
 
-		var/obj/item/shipcomponent/mainweapon/weapon = src.ship?.m_w_system
-		if (istype(weapon))
-			src.ship.eject_part(weapon, FALSE)
-			src.ship.null_part(weapon)
+		var/currently_active = main_weapon.active
+		if(main_weapon)
+			src.ship.eject_part(null, POD_PART_MAIN_WEAPON)
 		var/obj/item/shipcomponent/mainweapon/stored_weapon = src.loaded_wep
 		if (stored_weapon)
-			stored_weapon.ship = src.ship // prevents a bug in activate()
-			src.ship.Install(stored_weapon, FALSE)
+			src.ship.install_part(null, stored_weapon, POD_PART_MAIN_WEAPON, currently_active)
 			src.loaded_wep = null
 			src.UpdateIcon()
-		if (istype(weapon))
-			src.loaded_wep = weapon
+		if (istype(main_weapon))
+			src.loaded_wep = main_weapon
 			src.loaded_wep.set_loc(src)
 			src.UpdateIcon()
 
@@ -1538,3 +1621,15 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	update_icon()
 		..()
 		src.icon_state = "weapons_loader-[src.loaded_wep ? "loaded" : "unloaded"]"
+
+/obj/item/shipcomponent/secondary_system/gunner_support
+	name = "Gunner Module"
+	desc = "An upper-pod gunner module that allows passengers to fire weak phaser bolts in an ordinal direction of their choosing."
+	icon_state = "gunner_support"
+	hud_state = "gunner_support"
+	power_used = 50
+
+	proc/fire_at(atom/A, mob/gunner)
+		if (ON_COOLDOWN(src, "fire", 0.8 SECONDS))
+			return
+		src.ship.ShootProjectiles(gunner, new/datum/projectile/laser/light/pod/support_gunner, get_dir(src.ship, A), 1)

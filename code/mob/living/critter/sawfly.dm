@@ -18,9 +18,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/datum/weakref/master = null //first friendly they imprint upon for /datum/aiTask/timed/targeted/follower
 	var/obj/item/old_grenade/sawfly/ourgrenade = null
 
-	speechverb_say = "whirrs"
-	speechverb_exclaim = "buzzes"
-	speechverb_ask = "hums"
+	speech_verb_say = "whirrs"
+	speech_verb_exclaim = "buzzes"
+	speech_verb_ask = "hums"
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
 	var/retaliate = FALSE

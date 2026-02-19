@@ -87,16 +87,25 @@
 		 *
 		 * 	Required: sweatReagent - the chemical you're sweating
 		 *  targetTurf should be left default
+		 *  Turning sweatpools on causes sweat chempools instead of cleanables
 		 */
-	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner))
+	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner), var/sweatpools = FALSE)
+		if (!prob(sweatChance))
+			return
 		var/datum/reagents/tempHolder = new
-		if (prob(sweatChance))
+		if (sweatpools)
 			tempHolder.add_reagent(sweatReagent, sweatAmount)
 			targetTurf.fluid_react_single(sweatReagent,sweatAmount)
 			tempHolder.reaction(targetTurf, TOUCH)
-		return
-
-
+		else
+			var/datum/reagent/sweatinput = global.reagents_cache[sweatReagent]
+			var/obj/decal/cleanable/water/sweat = make_cleanable(/obj/decal/cleanable/water, targetTurf)
+			sweat.color = rgb(sweatinput.fluid_r, sweatinput.fluid_g, sweatinput.fluid_b)
+			sweat.alpha = sweatinput.transparency
+			sweat.sample_reagent = sweatReagent
+			sweat.name = "sweat"
+			sweat.desc = "A bunch of sweat on the floor. Ew!"
+			sweat.dry_time = 60
 
 	/**
 		* Called when the status is changed using setStatus. Called after duration is updated etc.
@@ -220,6 +229,10 @@
 		unique = 1
 		change = 2
 
+		onAdd(optional=100)
+			. = ..()
+			change = 2 * (optional/100)
+
 	staminaregen/darkness
 		id = "darkness_stam_regen"
 		name = "Dark vigor"
@@ -237,7 +250,7 @@
 		icon_state = "stam-"
 		duration = INFINITE_STATUS
 		maxDuration = null
-		change = -5
+		change = -2.5
 
 	staminaregen/cursed
 		id = "weakcurse"
@@ -782,6 +795,73 @@
 				var/mob/M = owner
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stim_withdrawl")
 
+	simpledot/werewolf_bane
+		id = "werewolf_bane"
+		name = "Wolf's Bane"
+		desc = "POISON!"
+		icon_state = "wolf_bane"
+		maxDuration = 5 MINUTES
+//////////////////////////////////effect_quality =
+		var/stage = 0
+
+		onAdd(optional=null)
+			changeState()
+			return ..(optional)
+
+		getTooltip()
+			var/how_much = ""
+			switch(stage)
+				if(0)
+					how_much = "a bit of"
+				if(1)
+					how_much = "a little"
+				if(2)
+					how_much = "some"
+				if(3)
+					how_much = "quite a lot"
+				if(4)
+					how_much = "a dangerous amount of"
+				if(5)
+					how_much = "way way way too much"
+			. = "You are afflicted with [how_much] wolf's bane."
+
+		onUpdate(timePassed)
+			changeState()
+			if (istype(owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = owner
+				if (iswerewolf(H))
+					if (prob(8))
+						H.changeStatus("stunned", 1 SECONDS)
+					if (prob(10))
+						H.dizziness = clamp(H.dizziness+5, 0, stage*5)
+					if (stage >= 2 && prob(stage*10)) //Why not?
+						H.take_toxin_damage(stage)
+					H.make_jittery(2)
+					return
+				if (H.get_ability_holder(/datum/abilityHolder/werewolf) != null) //If wolf in human form
+					if (prob(40))
+						H.dizziness = clamp(H.dizziness+5, 0, stage*5)
+					H.make_jittery(5)
+					return
+
+			return ..(timePassed)
+
+		proc/changeState()
+			if(owner?.reagents)
+				if (duration >= 200 SECONDS)
+					stage = 4
+				else if (duration >= 100 SECONDS)
+					stage = 3
+				else if (duration > 50 SECONDS)
+					stage = 2
+				else if (duration <= 20 SECONDS)
+					stage = 1
+				else if (duration <= 0)
+					stage = 0
+					return
+				// TODO: different icons per stage
+				// icon_state = "wolf_bane[stage]"
+
 	stuns
 		effect_quality = STATUS_QUALITY_NEGATIVE
 
@@ -953,6 +1033,38 @@
 		onRemove()
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			. = ..()
+
+	humiliated
+		id = "humiliated"
+		name = "Humiliated"
+		desc = "Your crushing loss has humiliated you!<br>Slowed slightly, unable to sprint, unable to suicide, recieve triple damage from attacks."
+		unique = 1
+		icon_state = "-"
+		duration = INFINITE_STATUS
+		movement_modifier = /datum/movement_modifier/humiliation
+		effect_quality = STATUS_QUALITY_NEGATIVE
+
+		onAdd(optional=null)
+			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			if (ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NO_SELF_HARM, src)
+			. = ..()
+
+	victorious
+		id = "victorious"
+		name = "Victorious"
+		desc = "Your glorious win has filled you with pride!<br>Sped slightly."
+		icon_state = "janktank"
+		duration = INFINITE_STATUS
+		unique = 1
+		movement_modifier = /datum/movement_modifier/victorious
+		effect_quality = STATUS_QUALITY_POSITIVE
 
 	blocking
 		id = "blocking"
@@ -1149,8 +1261,9 @@
 		getTooltip()
 			. = "Your stamina max is increased by [change]."
 
-		onAdd(optional=null)
+		onAdd(optional=100)
 			. = ..()
+			src.change = 10 * (optional/100)
 			if(hascall(owner, "add_stam_mod_max"))
 				owner:add_stam_mod_max("fitness_max", change)
 
@@ -1158,6 +1271,7 @@
 			. = ..()
 			if(hascall(owner, "remove_stam_mod_max"))
 				owner:remove_stam_mod_max("fitness_max")
+
 
 	handcuffed
 		id = "handcuffed"
@@ -1197,6 +1311,12 @@
 			. = ..()
 			if (ishuman(owner))
 				H = owner
+			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE, src)
+
+		onRemove()
+			. = ..()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE, src)
+
 
 	possessing
 		id = "possessing"
@@ -2440,7 +2560,7 @@
 /datum/statusEffect/quickcharged
 	id = "quick_charged"
 	name = "Quick charged"
-	icon_state = "stam-"
+	icon_state = "stam+"
 	maxDuration = null
 
 	getTooltip()
@@ -2744,7 +2864,7 @@
 	onAdd(optional)
 		..()
 		var/mob/living/M = src.owner
-		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(remove_self))
+		RegisterSignal(M, COMSIG_ATOM_SAY, PROC_REF(remove_self))
 		if (!istype(M) || !M.bioHolder)
 			src.remove_self()
 			return
@@ -2761,7 +2881,7 @@
 		if (src.added_accent)
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
-		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+		UnregisterSignal(src.owner, COMSIG_ATOM_SAY)
 
 /datum/statusEffect/graffiti
 	id = "graffiti_blind"
@@ -2871,6 +2991,7 @@
 		if (!isdead(L))
 			for (var/datum/ailment_data/ailment as anything in L.ailments)
 				ailment.stage_act(mult)
+		L.reagents?.addiction_cache = 0
 
 		for (var/mob/living/other_mob in hearers(4, L))
 			if (prob(40) && other_mob != L)
@@ -3037,6 +3158,10 @@
 		var/mob/living/L = src.owner
 		if (!isdead(L) && src.outputs_removal_msg)
 			boutput(L, SPAN_NOTICE(src.removal_msg))
+		if(id != "art_curser_displaced_soul")
+			src.linked_curser.active_cursees -= L
+		if(!length(src.linked_curser.active_cursees))
+			src.linked_curser.curse_cleanup()
 		src.linked_curser = null
 		..()
 
@@ -3072,13 +3197,15 @@
 			if (src.blood_to_collect <= 0)
 				src.linked_curser.lift_curse(TRUE)
 			else if (H.blood_volume <= 0 || isdead(H))
-				H.visible_message(SPAN_ALERT("[H] spontaneously implodes!!! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
-				for (var/i in 1 to rand(3, 4))
-					var/obj/decal/cleanable/blood_splat = make_cleanable(/obj/decal/cleanable/blood/splatter, get_turf(H))
-					blood_splat.streak_cleanable(pick(cardinal), full_streak = prob(25), dist_upper = rand(4, 6))
-				playsound(H, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 40, TRUE)
-				H.implode(TRUE)
-				src.linked_curser.lift_curse_specific(FALSE, H)
+				H.visible_message(SPAN_ALERT("[H] spontaneously dessicates, drained of all fluids! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
+				playsound(H, 'sound/impact_sounds/Flesh_Crush_1.ogg', 70, TRUE)
+				H.death(FALSE)
+				H.disfigured = TRUE
+				H.UpdateName()
+				H.bioHolder?.AddEffect("husk")
+				H.bioHolder?.mobAppearance.flavor_text = "A desiccated husk."
+				H.set_clothing_icon_dirty()
+				src.remove_self()
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
@@ -3122,9 +3249,12 @@
 				src.final_msg_given = TRUE
 				H.playsound_local(H, 'sound/ambience/spooky/Void_Calls.ogg', 75, FALSE)
 			if (H.bioHolder.age >= src.original_age + 120)
+				H.visible_message(SPAN_ALERT("[H] collapses into a pile of bones!"))
+				H.set_mutantrace(/datum/mutantrace/skeleton)
 				H.death(FALSE)
-				H.skeletonize()
-				src.linked_curser.lift_curse_specific(FALSE, H)
+				H.decomp_stage = DECOMP_STAGE_SKELETONIZED
+				H.set_clothing_icon_dirty()
+				src.remove_self()
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
@@ -3135,7 +3265,7 @@
 	nightmare
 		id = "art_nightmare_curse"
 		name = "Nightmare Curse"
-		extra_desc = "You're being haunted by nightmares! Kill them 7 of them or perish."
+		extra_desc = "You're being haunted by nightmares! Kill 7 of them or perish."
 		removal_msg = "The nightmare ends, along with the creatures..."
 		var/list/created_creatures = list()
 		var/creatures_to_kill = 7
@@ -3156,7 +3286,9 @@
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			if (src.creatures_to_kill <= 0 || QDELETED(H) || isdead(H))
-				src.linked_curser.lift_curse_specific(!QDELETED(H) && !isdead(H), H)
+				if(!(QDELETED(H) || isdead(H)))
+					playsound(H, 'sound/effects/lit.ogg', 100, TRUE)
+				src.remove_self()
 				return
 			src.time_passed += timePassed
 			if (src.time_passed < 10 SECONDS)
@@ -3199,7 +3331,7 @@
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			if (QDELETED(H) || isdead(H))
-				src.linked_curser.lift_curse_specific(FALSE, H)
+				src.remove_self()
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
@@ -3214,23 +3346,28 @@
 		id = "art_displacement_curse"
 		var/mob/living/carbon/human/original_body
 		var/mob/living/intangible/art_curser_displaced_soul/soul
+		var/cursetype = "art_curser_displaced_soul"
+		var/gene = FALSE // For the gene that uses this
 		outputs_desc = FALSE
 
 		onAdd()
 			..()
-			src.soul = new(get_turf(src.owner), src.owner)
+			src.soul = new src.soul(get_turf(src.owner), src.owner)
 			var/mob/living/carbon/human/H = src.owner
 			H.mind.transfer_to(soul)
 			src.original_body = H
-			src.soul.setStatus("art_curser_displaced_soul", src.duration, src.original_body)
+			src.soul.setStatus(cursetype, src.duration, src.original_body)
 
 		onUpdate()
 			..()
 			if (QDELETED(src.original_body) || isdead(src.original_body))
-				src.linked_curser.lift_curse_specific(FALSE, src.original_body)
+				if(!gene)
+					src.remove_self()
+				else
+					owner.delStatus(src.id)
 
 		onRemove()
-			src.soul.delStatus("art_curser_displaced_soul")
+			src.soul.delStatus(cursetype)
 			if (QDELETED(src.original_body) || isdead(src.original_body))
 				boutput(src.soul, SPAN_ALERT("<b>Your body has died!</b>"))
 			if (!QDELETED(src.original_body))
@@ -3238,6 +3375,14 @@
 			QDEL_NULL(src.soul)
 			src.original_body = null
 			..()
+
+		gene
+			id = "ghost_walk_effect"
+			duration = 30
+			cursetype = "ghost_walk_soul"
+			desc = "Your body is vacant with the soul wandering." // Shouldn't be seen by the user, but ghosts could I guess.
+			soul = /mob/living/intangible/art_curser_displaced_soul/gene
+			gene = TRUE
 
 	displaced_soul
 		id = "art_curser_displaced_soul"
@@ -3260,6 +3405,14 @@
 				src.outputs_removal_msg = FALSE
 			src.original_body = null
 			..()
+
+		gene
+			id = "ghost_walk_soul"
+			name = "Spectral Walker"
+			desc = "You've ascended to the spectral plane for a short duration. Use the ability to return early."
+			extra_desc = null
+			removal_msg = "You reanchor your soul."
+
 
 	light
 		id = "art_light_curse"
@@ -3347,6 +3500,8 @@
 		. = ..()
 		RegisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(standup))
 		RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
+		var/mob/mob_owner = src.owner
+		src.standup(null, mob_owner.lying)
 
 	proc/check_valid()
 		var/obj/table/table = locate() in src.owner.loc
@@ -3473,6 +3628,12 @@
 	icon_state = "empulsar"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
+
+	onAdd()
+		..()
+		if(istype(src.owner, /obj/vehicle))
+			var/obj/vehicle/V = src.owner
+			V.stop()
 
 /datum/statusEffect/pod_corrosion
 	id = "pod_corrosion"
@@ -3667,16 +3828,165 @@
 	name = "Extra Health Regneration"
 	icon_state = "phoenix_health_regen"
 	effect_quality = STATUS_QUALITY_POSITIVE
-	var/critters_collected = 0
-	var/humans_collected = 0
 
 	getTooltip()
 		var/mob/living/critter/space_phoenix/phoenix = src.owner
-		return "You have [src.critters_collected]/5 critters and [src.humans_collected]/5 humans collected in your nest, giving you an extra [phoenix.extra_life_regen] points of out of combat health regeneration."
+		var/datum/abilityHolder/space_phoenix/ability_holder = phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
+		if (!ability_holder)
+			return "Cannot connect to ability holder, please file a bug report!"
+		return "Extra [phoenix.extra_life_regen] out of combat health regeneration from [min(ability_holder.stored_critter_count, 5)] / 5 critters and [min(ability_holder.stored_human_count, 5)] / 5 humans collected in your nest."
 
 /datum/statusEffect/phoenix_revive_ready
 	id = "phoenix_revive_ready"
 	name = "Revival on Death"
 	icon_state = "phoenix_revive_ready"
 	desc = "You will be resurrected upon death with full health."
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/broken
+	id = "broken_madness"
+	name = "Broken"
+	desc = "You have been driven to madness by the immense psychic pressure of the unknowable minds drifting far above."
+	visible = TRUE
+	icon_state = "madness"
+
+	onAdd(optional)
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.addOverlayComposition(/datum/overlayComposition/insanity/large)
+
+	onRemove()
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+		var/datum/antagonist/antag_datum = mob_owner.mind?.get_antagonist(ROLE_BROKEN)
+		if (!antag_datum || antag_datum.removing)
+			return
+		message_admins("[key_name(src.owner)] regained their sanity and is no longer broken.")
+		logTheThing(LOG_ADMIN, src.owner, "regained their sanity and is no longer broken.")
+		mob_owner.mind.remove_antagonist(ROLE_BROKEN, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
+
+/datum/statusEffect/mimicDisguise
+	id = "mimic_disguise"
+	name = "Disguised"
+	desc = "Your speed and health are matching with your disguise."
+	icon_state = "mimicface"
+	visible = TRUE
+	var/pixels = null
+	var/speed_string = null
+
+	getTooltip()
+		var/mob/living/critter/mimic/mob_owner = src.owner
+		return "Health: [mob_owner.max_health], Speed: [speed_string]"
+	onAdd(optional)
+		. = ..()
+		src.onChange(optional)
+	onChange(optional)
+		. = ..()
+		src.pixels = optional
+		scale()
+
+	proc/scale()
+		var/health = null
+		var/mob/living/critter/mimic/antag_spawn/mob_owner = src.owner
+		if (mob_owner.modifier)
+			REMOVE_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src.type)
+		if (src.pixels <= 70)
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_fast
+			health = 10
+			speed_string = "Fast!"
+		else if (src.pixels <= 230 || mob_owner.base_form)
+			mob_owner.modifier = /datum/movement_modifier/mimic
+			health = 25
+			speed_string = "Normal."
+		else if (src.pixels <= 800)
+			health = 50
+		else
+			health = src.pixels / 12
+			if (health > 120)
+				health = 120
+
+		if (health >= 50 && health <= 90)
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_slow
+			speed_string = "Slow."
+		else if (health >= 90)
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_superslow
+			speed_string = "Super slow..."
+
+		mob_owner.max_health = health
+		mob_owner.health = mob_owner.max_health
+		APPLY_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src.type)
+		src.getTooltip()
+
+/datum/statusEffect/spellshield
+	id = "spellshield"
+	name = "Spell shield"
+	desc = "You have an active spellshield, protecting you from various damage sources."
+	icon_state = "nradiation1"
+
+	onAdd()
+		..()
+		var/mob/M = src.owner
+
+		M.AddOverlays(image('icons/effects/effects.dmi', M, "enshield", MOB_LAYER + 1), "spellshield_overlay")
+		boutput(M, SPAN_NOTICE("<b>You are surrounded by a magical barrier!</b>"))
+		M.visible_message(SPAN_ALERT("[M] is encased in a protective shield."))
+		playsound(M, 'sound/effects/MagShieldUp.ogg', 50, TRUE)
+
+	onRemove()
+		..()
+		var/mob/M = src.owner
+		M.ClearSpecificOverlays("spellshield_overlay")
+
+		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
+		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
+		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/implants_disabled
+	id = "implants_disabled"
+	name = "Implants overloaded"
+	desc = "Your implants are painfully overloaded!"
+	maxDuration = 60 SECONDS
+	icon_state = "implants_disabled"
+	unique = TRUE
+
+	var/list/disabled_implants = list()
+
+	preCheck(mob/living/M)
+		return ..() && istype(M) && length(M.implant)
+
+	onAdd()
+		..()
+		src.owner.UpdateParticles(new /particles/rack_spark, src.id)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				implant.deactivate()
+				src.disabled_implants |= implant
+		if (ishuman(src.owner))
+			var/image/glow = image('icons/mob/human.dmi', "implants_disabled")
+			glow.plane = PLANE_SELFILLUM
+			src.owner.UpdateOverlays(glow, "implants_disabled")
+
+	onChange(optional)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				if (implant.online)
+					implant.deactivate()
+					src.disabled_implants |= implant
+
+	onRemove()
+		..()
+		src.owner.UpdateParticles(null, src.id)
+		for (var/obj/item/implant/implant as anything in src.disabled_implants)
+			if (!QDELETED(implant))
+				implant.activate()
+		src.owner.UpdateOverlays(null, "implants_disabled")
+
+/datum/statusEffect/therapy_zone
+	id = "therapy_zone"
+	name = "Therapeutic Atmosphere"
+	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
+	icon_state = "therapy_zone"
 	effect_quality = STATUS_QUALITY_POSITIVE

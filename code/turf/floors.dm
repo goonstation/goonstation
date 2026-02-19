@@ -16,6 +16,7 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
 	var/has_material = TRUE
@@ -737,7 +738,7 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
@@ -746,11 +747,11 @@ TYPEINFO(/turf/simulated/floor/carpet)
 
 /turf/simulated/floor/carpet/grime
 	name = "cheap carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/floor/carpet/arcade
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "arcade_carpet"
 
 /turf/simulated/floor/carpet/arcade/half
@@ -760,16 +761,15 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	icon_state = "arcade_carpet_blank"
 
 /turf/simulated/floor/carpet/office
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "office_carpet"
 
 /turf/simulated/floor/carpet/office/other
-	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 
 DEFINE_FLOORS(carpet/regalcarpet,
 	name = "regal carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "regal_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)
@@ -782,7 +782,7 @@ DEFINE_FLOORS(carpet/regalcarpet/innercorner,
 
 DEFINE_FLOORS(carpet/darkcarpet,
 	name = "dark carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "dark_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)
@@ -795,7 +795,7 @@ DEFINE_FLOORS(carpet/darkcarpet/innercorner,
 
 DEFINE_FLOORS(carpet/clowncarpet,
 	name = "clown carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "clown_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)
@@ -1048,6 +1048,16 @@ DEFINE_FLOORS(minitiles/black,
 /turf/simulated/floor/specialroom/gym
 	name = "boxing mat"
 	icon_state = "boxing"
+
+	Entered(atom/movable/M, atom/OldLoc)
+		..()
+		if (!istype(OldLoc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", INFINITE_STATUS, M)
+
+	Exited(atom/movable/M, atom/newloc)
+		..()
+		if (!istype(newloc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", 5 SECONDS, M)
 
 /turf/simulated/floor/specialroom/gym/alt
 	name = "gym mat"
@@ -1401,8 +1411,9 @@ TYPEINFO(/turf/simulated/floor/snow)
 	name = "snow"
 	default_material = null
 	icon_state = "snow1"
-	step_material = "step_outdoors"
+	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 	New()
 		..()
@@ -1414,6 +1425,10 @@ TYPEINFO(/turf/simulated/floor/snow)
 			icon_state = "snow4"
 		src.set_dir(pick(cardinal))
 
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		src.snow_prints(AM)
+
 /turf/simulated/floor/snow/snowball
 
 	New()
@@ -1423,6 +1438,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 /turf/simulated/floor/snow/green
 	name = "snow-covered floor"
 	icon_state = "snowgreen"
+	can_dig = FALSE
 
 /turf/simulated/floor/snow/green/corner
 	name = "snow-covered floor"
@@ -1432,8 +1448,9 @@ DEFINE_FLOORS(snowcalm,
 	name = "snow";\
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_calm";\
-	step_material = "step_outdoors";\
-	step_priority = STEP_PRIORITY_MED)
+	step_material = "step_snow";\
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowcalm/border,
 	icon_state = "snow_calm_border")
@@ -1442,8 +1459,9 @@ DEFINE_FLOORS(snowrough,
 	name = "snow";\
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_rough";\
-	step_material = "step_outdoors";\
-	step_priority = STEP_PRIORITY_MED)
+	step_material = "step_snow";\
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowrough/border,
 	icon_state = "snow_rough_border")
@@ -1527,7 +1545,8 @@ TYPEINFO(/turf/simulated/floor/grass)
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "synthrubber"
+	default_material = "synthrubber_green"
+	can_dig = TRUE
 
 	#ifdef SEASON_WINTER
 	New()
@@ -1543,6 +1562,65 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /turf/proc/grassify()
 	.=0
+
+/turf/proc/snow_prints(atom/movable/AM)
+	if (isliving(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+		var/mob/living/M = AM
+		if (M.lying)
+			var/obj/effect/snow_step/dragged = new(src)
+			dragged.icon_state = "tracks" // TODO: tracks but the middle is filled in a little
+			dragged.dir = AM.dir
+			return
+
+
+		var/l_leg_icon_state
+		var/r_leg_icon_state
+
+		if (ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if (H.limbs?.l_leg)
+				if (H.limbs.l_leg.kind_of_limb & LIMB_TREADS)
+					l_leg_icon_state = "tracks"
+				else
+					l_leg_icon_state = "footprints"
+			if (H.limbs?.r_leg)
+				if (H.limbs.r_leg.kind_of_limb & LIMB_TREADS)
+					r_leg_icon_state = "tracks"
+				else
+					r_leg_icon_state = "footprints"
+
+		else if (isrobot(AM))
+			var/mob/living/silicon/robot/R = AM
+			if (R.part_leg_l)
+				if (R.part_leg_l.kind_of_limb & LIMB_TREADS)
+					l_leg_icon_state = "tracks"
+				else
+					l_leg_icon_state = "footprints"
+			if (R.part_leg_r)
+				if (R.part_leg_r.kind_of_limb & LIMB_TREADS)
+					r_leg_icon_state = "tracks"
+				else
+					r_leg_icon_state = "footprints"
+
+		// both legs are the same, use a single combined iconstate
+		if (l_leg_icon_state == r_leg_icon_state)
+			var/obj/effect/snow_step/both_steppy = new(src)
+			if(l_leg_icon_state == "footprints")
+				l_leg_icon_state = pick("footprints1","footprints2")
+			both_steppy.icon_state = l_leg_icon_state
+			both_steppy.dir = AM.dir
+			return
+
+		// separate or one leg
+		if (l_leg_icon_state)
+			var/obj/effect/snow_step/left_steppy = new(src)
+			left_steppy.icon_state = "[l_leg_icon_state]L"
+			left_steppy.dir = AM.dir
+		if (r_leg_icon_state)
+			var/obj/effect/snow_step/right_steppy = new(src)
+			right_steppy.icon_state = "[r_leg_icon_state]R"
+			right_steppy.dir = AM.dir
+		return
 
 /// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
 /// silent: makes the overlay invisible and prevents the sound effect
@@ -1581,6 +1659,39 @@ TYPEINFO(/turf/simulated/floor/grass)
 		var/obj/mesh/catwalk/catwalk = locate() in src
 		catwalk?.ClearSpecificOverlays("wet_overlay")
 	src.wet = 0
+
+
+/obj/effect/snow_step
+	icon = 'icons/obj/decals/blood/blood.dmi'
+	anchored = ANCHORED_ALWAYS
+	layer = DECAL_LAYER
+	plane = PLANE_NOSHADOW_BELOW
+	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | TILE_BOUND
+	color = "#91b8d0"
+
+	New()
+		. = ..()
+		var/weather_severity = 0
+		src.fade_away((10-(weather_severity*3)) * 10 DECI SECONDS)
+		return
+
+	proc/weather_fade()
+		var/weather_severity = 0
+		if (isnull(weather_severity) || weather_severity < 1)
+			return
+
+		// todo: Add dynamic selection of weather severity
+		// Using active events, parallax, or other indicators
+		// sev0 = 10 seconds (clear skies)
+		// sev1 = 7 seconds (light snow)
+		// sev2 = 4 seconds (heavy snow)
+		// sev3 = 1 second (blizzard)
+		src.fade_away((10-(weather_severity*3)) * 10 DECI SECONDS)
+
+	proc/fade_away(time)
+		animate_buff_out_time(src, time)
+		SPAWN(time)
+			qdel(src)
 
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
@@ -1629,6 +1740,7 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 	#endif
 	mat_changename = 0
 	mat_changedesc = 0
+	can_dig = TRUE
 
 TYPEINFO(/turf/simulated/floor/dirt)
 	mat_appearances_to_ignore = list("steel","synthrubber")
@@ -1638,6 +1750,7 @@ TYPEINFO(/turf/simulated/floor/dirt)
 	icon_state = "dirt"
 	mat_changename = 0
 	mat_changedesc = 0
+	can_dig = TRUE
 
 /////////////////////////////////////////
 
@@ -1652,6 +1765,7 @@ TYPEINFO(/turf/simulated/floor/marslike)
 	icon_state = "placeholder"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 /turf/simulated/floor/marslike/t1
 	icon_state = "t1"
@@ -1715,7 +1829,8 @@ DEFINE_FLOORS(grasslush,
 	mat_changename = 0;\
 	mat_changedesc = 0;\
 	step_material = "step_outdoors";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(grasslush/border,
 	icon_state = "grass_lush_border")
@@ -1857,8 +1972,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			var/obj/machinery/vehicle/O = mover
-			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
-				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+			var/sec_system = O?.get_part(POD_PART_SECONDARY)
+			if (istype(sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = sec_system
 				if (I.crashable)
 					mover.Bump(src)
 					return TRUE
@@ -2220,9 +2336,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
+		..()
 		src.material_trigger_when_attacked(C, user, 1)
-	else
-		return attack_hand(user)
 
 /turf/simulated/floor/proc/reinforce(obj/item/rods/I)
 	src.ReplaceWithEngineFloor()
@@ -2584,6 +2699,20 @@ TYPEINFO(/turf/simulated/floor/auto)
 				edge_overlay.plane = PLANE_FLOOR
 				T.AddOverlays(edge_overlay, "edge_[direction]")
 
+/turf/simulated/floor/auto/grass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	#ifdef SEASON_AUTUMN
+	icon_state = "grass_autumn"
+	#else
+	icon_state = "grass"
+	#endif
+	mat_changename = 0
+	mat_changedesc = 0
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
+
 /turf/simulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
 	desc = "Grass. In a swamp. Truly fascinating."
@@ -2616,6 +2745,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 	icon_state = "dirt"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
+	can_dig = TRUE
 
 /turf/simulated/floor/auto/sand
 	name = "sand"
@@ -2624,6 +2754,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 	icon_state = "sand_other"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
 	icon_state_edge = "sand_edge"
+	can_dig = TRUE
 	var/tuft_prob = 2
 
 	New()
@@ -2724,13 +2855,18 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon_state = "snow1"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
 	icon_state_edge = "snow_edge"
-	step_material = "step_outdoors"
+	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 	New()
 		. = ..()
 		if(src.type == /turf/simulated/floor/auto/snow && prob(10))
 			src.icon_state = "snow[rand(1,5)]"
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		src.snow_prints(AM)
 
 /turf/simulated/floor/auto/snow/rough
 	name = "snow"
@@ -2750,6 +2886,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	desc = ""
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass"
+	can_dig = TRUE
 
 	New()
 		..()
@@ -2761,6 +2898,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	desc = ""
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass_edge"
+	can_dig = TRUE
 
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")

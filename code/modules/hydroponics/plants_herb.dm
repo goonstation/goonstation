@@ -285,6 +285,8 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && !ON_COOLDOWN(POT, "nettle_sting", sting_cooldown SECONDS))
 			for (var/mob/living/M in range(1,POT))
+				if (issilicon(M) || istype(M, /mob/living/critter/plant))
+					continue
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (istype(H.w_uniform, /obj/item/clothing/under/rank/hydroponics) || istype(H.w_uniform, /obj/item/clothing/under/misc/hydroponics))

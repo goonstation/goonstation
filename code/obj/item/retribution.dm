@@ -74,7 +74,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Destruction System!"), 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is missing."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
 			core_inserted = TRUE
@@ -93,7 +93,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 
 			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Destruction System!"), 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is installed."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 
 	attack_self(mob/user as mob)
@@ -148,7 +148,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 				else
 					random_burn_damage(scan_target, 30)
 					scan_target.changeStatus("knockdown", 2 SECOND)
-				INVOKE_ASYNC(scan_target, TYPE_PROC_REF(/mob, emote), "scream")
+				INVOKE_ASYNC(scan_target, TYPE_PROC_REF(/atom, emote), "scream")
 				playsound(scan_target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else if (istype(scan_target, /obj/structure/girder))
 				create_scan_decal = TRUE
@@ -204,7 +204,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 
 /obj/decal/purge_beam
 	name = "Linear Purge Beam"
-	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
+	desc = "A powerful laser. Standing in its path isn't the wisest of choices."
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
@@ -220,7 +220,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 
 /obj/decal/purge_beam_end
 	name = "Linear Purge Beam"
-	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
+	desc = "A powerful laser. Standing in its path isn't the wisest of choices."
 	anchored = ANCHORED
 	density = 0
 	opacity = 0

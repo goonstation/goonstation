@@ -358,7 +358,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 			dir_out_char = "W"
 
 
-	if (operating == CONVEYOR_STOPPED || operating == CONVEYOR_FORWARD)
+	if (operating == null || operating == CONVEYOR_STOPPED || operating == CONVEYOR_FORWARD)
 		new_icon += dir_in_char + dir_out_char
 	else if (operating == CONVEYOR_REVERSE)
 		new_icon += dir_out_char + dir_in_char
@@ -545,7 +545,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 	else if (istype(I, /obj/item/cable_coil))	// if cable, see if a mob is present
 		var/mob/M = locate() in src.loc
-		if(M)
+		var/obj/item/cable_coil/coil = I
+		if(M && coil.use(1))
 			if (M == user)
 				src.visible_message(SPAN_NOTICE("[M] ties [himself_or_herself(M)] to the conveyor."))
 				// note don't check for lying if self-tying
@@ -558,10 +559,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 			M.buckled = src //behold the most mobile of stools
 			src.add_fingerprint(user)
-			I:use(1)
+
 			M.lying = 1
 			M.set_clothing_icon_dirty()
-			return
+		return
 
 			// else if no mob in loc, then allow coil to be placed
 	else if (isscrewingtool(I))

@@ -9,11 +9,8 @@ import { Box, Image } from 'tgui-core/components';
 import { resource } from '../../../goonstation/cdn';
 import type { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  width: 470,
-  height: 320,
-  title: 'Use /tg/ style interface?',
-  content: (
+const TGInterfaceContentWindow = () => {
+  return (
     <>
       <Box>
         Would you rather use a /tg/ style interface? If so, checkout the options
@@ -24,5 +21,12 @@ export const acw: AlertContentWindow = {
       </Box>
       <Image src={resource('images/tg_control_info.png')} />
     </>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  width: 470,
+  height: 320,
+  title: 'Use /tg/ style interface?',
+  component: TGInterfaceContentWindow,
 };

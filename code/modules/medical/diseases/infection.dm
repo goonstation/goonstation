@@ -26,7 +26,7 @@
 				return
 			if(probmult(5))
 				boutput(affected_mob, SPAN_ALERT("You feel feverish!"))
-				affected_mob.bodytemperature += rand(5,10)
+				affected_mob.changeBodyTemp(rand(5,10) KELVIN)
 				affected_mob.take_toxin_damage(1)
 
 			if(probmult(4)) affected_mob.emote("groan")
@@ -41,7 +41,7 @@
 			if(probmult(7))
 				affected_mob.emote(pick("tremble", "groan", "shake"))
 				boutput(affected_mob, SPAN_ALERT("You feel like you're burning up!"))
-				affected_mob.bodytemperature += rand(10,30)
+				affected_mob.changeBodyTemp(rand(10,30) KELVIN)
 				random_burn_damage(affected_mob,1)
 				affected_mob.take_toxin_damage(1)
 			if(probmult(5))

@@ -56,16 +56,9 @@
 	trigger(var/act)
 		switch (act)
 			if ("speak")
-				src.speak()
+				src.say(src.message)
 			if ("toggletext")
 				src.floating_text = !src.floating_text
-
-	proc/speak()
-		var/chat_text = null
-		if (floating_text)
-			chat_text = make_chat_maptext(src, message, floating_text_style)
-		for (var/mob/O in all_hearers(5, src.loc))
-			O.show_message("<span class='say bold'>[SPAN_NAME("[name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()

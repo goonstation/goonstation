@@ -370,8 +370,8 @@
 /area/prefab/sea_monkey_hideout)
 "bs" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/steak_h,
-/obj/item/reagent_containers/food/snacks/steak_h,
+/obj/item/reagent_containers/food/snacks/steak/human,
+/obj/item/reagent_containers/food/snacks/steak/human,
 /obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/carpet,
 /area/prefab/sea_monkey_hideout)
@@ -411,7 +411,7 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/sea_monkey_hideout)
 "bA" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8;
 	icon_state = "security"
 	},

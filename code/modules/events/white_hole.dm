@@ -175,8 +175,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/deconstructor = 1,
 			/obj/item/raw_material/shard/glass = 5,
 			/obj/item/rcd = 0.5,
-			/obj/item/pipebomb/bomb/syndicate = 0.1,
-			/obj/item/pipebomb/bomb/engineering = 0.3,
+			/obj/item/assembly/timer_ignite_pipebomb/syndicate = 0.1,
+			/obj/item/assembly/timer_ignite_pipebomb/engineering = 0.3,
 			/mob/living/carbon/human/normal/engineer = 0.5,
 			/mob/living/carbon/human/normal/chiefengineer = 0.1,
 			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
@@ -231,13 +231,13 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/body_bag = 2,
 			/obj/item/reagent_containers/glass/bottle/formaldehyde = 1,
 			/obj/item/skull = 5,
-			/obj/item/skull/strange = 0.1,
-			/obj/item/skull/odd = 0.1,
-			/obj/item/skull/peculiar = 0.1,
-			/obj/item/skull/menacing = 0.1,
-			/obj/item/skull/crystal = 0.1,
-			/obj/item/skull/gold = 0.1,
-			/obj/item/skull/noface = 0.1,
+			/obj/item/skull/hunter = 0.1,
+			/obj/item/skull/changeling = 0.1,
+			/obj/item/skull/wizard = 0.1,
+			/obj/item/skull/vampire = 0.1,
+			/obj/item/skull/omnitraitor = 0.1,
+			/obj/item/skull/macho = 0.1,
+			/obj/item/skull/cluwne = 0.1,
 			/mob/living/carbon/human/normal/chaplain = 0.2,
 			/mob/living/critter/skeleton = 1,
 			/obj/item/gun/energy/ghost = 0.2,
@@ -480,7 +480,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/weldingtool = 10,
 			/obj/item/device/radio = 10,
 			/obj/item/tank/air = 10,
-			/obj/item/tank/emergency_oxygen = 2,
+			/obj/item/tank/pocket/oxygen = 2,
 			/obj/item/extinguisher = 10,
 			/obj/item/clothing/mask/gas/emergency = 3,
 			/obj/burning_barrel = 2,
@@ -549,7 +549,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/stool/chair/comfy = 5,
 			/mob/living/critter/small_animal/cat/jones = 5,
 			/obj/item/clothing/suit/bedsheet/captain = 2,
-			/obj/item/card/id/captains_spare = 0.1,
+			/obj/item/card/id/gold/captains_spare = 0.1,
 			/obj/item/currency/spacecash/small = 5,
 			/obj/item/stamp/hop = 1,
 			/obj/item/stamp/cap = 1,
@@ -663,7 +663,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/clothing/head/red = 4,
 			/obj/item/clothing/head/helmet/siren = 2,
 			/obj/machinery/flasher/portable = 1,
-			/obj/item/barrier = 1,
+			/obj/item/barrier/collapsible/security = 1,
 			/mob/living/carbon/human/npc/monkey/stirstir = 1,
 			/datum/projectile/energy_bolt = 3,
 			/datum/projectile/energy_bolt/burst = 3,
@@ -896,11 +896,12 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			particleMaster.SpawnSystem(new /datum/particleSystem/whitehole_warning(src))
 
 		if(triggered_by_event)
-			var/turf/T = get_turf(src)
-			for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
+			for_clients_in_range(C, get_turf(src), 15)
 				boutput(C, SPAN_ALERT("The air grows light and thin. Something feels terribly wrong."))
 				shake_camera(C.mob, 5, 16)
+
 			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)
+			SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 
 		processing_items |= src
 
@@ -1366,8 +1367,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		var/turf/T = locate_throw_target(thing)
 		if(isnull(T))
 			return
-		// TODO make the thing pass through things for first few tiles
-		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30)
+		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30, throw_type=THROW_PHASE)
 
 	disposing()
 		if(src.light)

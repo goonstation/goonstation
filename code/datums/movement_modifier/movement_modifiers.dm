@@ -61,6 +61,12 @@
 /datum/movement_modifier/gang_trapped
 	additive_slowdown = 2
 
+/datum/movement_modifier/humiliation
+	multiplicative_slowdown = 1.1
+
+/datum/movement_modifier/victorious
+	multiplicative_slowdown = 0.9
+
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
 
@@ -138,6 +144,9 @@
 
 /datum/movement_modifier/robot_mag_upgrade
 	additive_slowdown = 0.5
+
+/datum/movement_modifier/robot_no_power
+	multiplicative_slowdown = 1.5
 
 // robot heads
 /datum/movement_modifier/robot_part/light_head
@@ -326,3 +335,25 @@
 
 /datum/movement_modifier/healbot
 	additive_slowdown = -0.4
+
+/datum/movement_modifier/mimic
+	additive_slowdown = 0
+
+/datum/movement_modifier/mimic/mimic_fast
+	additive_slowdown = -0.4
+
+/datum/movement_modifier/mimic/mimic_slow
+	additive_slowdown = 2
+
+/datum/movement_modifier/mimic/mimic_superslow
+	additive_slowdown = 5
+
+/datum/movement_modifier/gravity
+	ask_proc = TRUE
+
+// high gforce adds multiplicative slowdown
+/datum/movement_modifier/gravity/modifiers(mob/user, turf/move_target, running)
+	var/gforce = user.gforce
+	if (user.bioHolder?.HasOneOfTheseEffects("dwarf", "strong"))
+		gforce = max(GFORCE_EARTH_GRAVITY, gforce - GFORCE_EARTH_GRAVITY)
+	return list(0, gforce > GFORCE_EARTH_GRAVITY ? gforce/GFORCE_EARTH_GRAVITY : 1)

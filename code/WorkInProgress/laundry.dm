@@ -110,13 +110,8 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						newcash.set_loc(src)
 					//Money laundering is a crime!
 					var/mob/living/carbon/human/criminal = src.activator
-					if (ishuman(criminal) && seen_by_camera(criminal))
-						var/perpname = criminal.name
-						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-						if(sec_record  && sec_record["criminal"] != ARREST_STATE_ARREST)
-							sec_record["criminal"] = ARREST_STATE_ARREST
-							sec_record["mi_crim"] = "Money laundering."
-							criminal.update_arrest_icon()
+					if(criminal)
+						criminal.apply_automated_arrest("Money laundering.")
 			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0
@@ -256,6 +251,35 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	else
 		return ..()
 
+/obj/submachine/laundry_machine/hitby(atom/movable/MO, datum/thrown_thing/thr)
+	if (istype(MO, /mob/living))
+		if (src.open)
+			var/mob/living/M = MO
+			M.visible_message(SPAN_ALERT("<B>[M] gets tossed into the washing machine!</B>"))
+			logTheThing(LOG_COMBAT, M, "is thrown into a [src.name] at [log_loc(src)].")
+			M.set_loc(src)
+			M.changeStatus("knockdown", 1.5 SECONDS)
+			src.occupant = M
+			src.open = 0
+			src.cycle = PRE
+			cycle_max = CYCLE_TIME_MOB_INSIDE
+			if (!processing_items.Find(src))
+				processing_items.Add(src)
+			UpdateIcon()
+	else
+		return ..()
+
+/obj/submachine/laundry_machine/relaymove(mob/user as mob)
+	if (src.occupant == user && !src.on)
+		if (!can_act(user))
+			return
+		user.set_loc(src.loc)
+		src.occupant = null
+		src.open = 1
+		src.UpdateIcon()
+		cycle_max = CYCLE_TIME
+		playsound(src, 'sound/machines/click.ogg', 50)
+
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
 		return
@@ -337,16 +361,17 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					src.unload()
 					src.cycle = PRE
 		if("cycle")
-			if (!occupant) //You cant turn it on or off if someone is inside to prevent people getting stuck inside
-				src.on = !src.on
-				. = TRUE
-				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
-				src.activator = usr
-				if (src.on)
-					src.cycle = PRE
-					src.open = 0
-					if (!(src in processing_items))
-						processing_items.Add(src)
+			if (src.occupant)
+				src.cycle_max = CYCLE_TIME_MOB_INSIDE
+			src.on = !src.on
+			. = TRUE
+			src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+			src.activator = usr
+			if (src.on)
+				src.cycle = PRE
+				src.open = 0
+				if (!(src in processing_items))
+					processing_items.Add(src)
 	src.UpdateIcon()
 
 /obj/submachine/laundry_machine/Click(location, control, params)

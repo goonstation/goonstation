@@ -176,7 +176,7 @@
 		SPAWN(0.5 SECONDS)
 			random_events.announce_events = 0
 			random_events.force_event("Power Outage","Scripted Disaster Mode Event")
-
+			global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, TRUE)
 	else
 		command_alert("[disaster_name] event detected on the station.  Unfortunately, the shuttle is currently unavailable due to [contrived_excuse]. All personnel must contain this event.", "Hazardous Event Alert")
 

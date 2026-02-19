@@ -48,7 +48,8 @@
 	G["pronouns"] = H.get_pronouns().name
 
 	G["age"] ="[H.bioHolder.age]"
-	G["fingerprint"] = "[H.bioHolder.fingerprints]"
+	G["fingerprint_right"] = "[H.limbs?.r_arm?.limb_print.id]"
+	G["fingerprint_left"] = "[H.limbs?.l_arm?.limb_print.id]"
 	G["dna"] = H.bioHolder.Uid
 	G["p_stat"] = "Active"
 	G["m_stat"] = "Stable"
@@ -214,7 +215,7 @@
 		H.mind.store_memory("- [S["mi_crim"]]")
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		if (H.mind?.assigned_role == "Clown")
+		if (H.traitHolder?.hasTrait("training_clown"))
 			S["criminal"] = ARREST_STATE_CLOWN
 			S["mi_crim"] = "Clown"
 			H.update_arrest_icon()
@@ -322,8 +323,6 @@
 				continue // Only Continue as Captain, as non-captain command staff appear both in the command section and their departmental section
 			else
 				Command.Add(entry)
-				if(rank == "Communications Officer")
-					continue
 
 		if((rank in security_jobs) || (rank in security_gimmicks))
 			if(rank in command_jobs)
@@ -459,10 +458,10 @@
 			var/datum/eventRecord/Fine/fineEvent = new()
 			fineEvent.buildAndSend(src, usr)
 
-/datum/fine/proc/approve(var/approved_by,var/their_job)
+/datum/fine/proc/approve(var/approved_by,var/their_job,var/ticket_level)
 	if(approver || paid) return
-	if (amount > MAX_FINE_NO_APPROVAL && !(JOBS_CAN_TICKET_BIG)) return
-	if (!(their_job in JOBS_CAN_TICKET_SMALL)) return
+	if (amount > MAX_FINE_NO_APPROVAL && !(ticket_level >= TICKET_LEVEL_FINE_LARGE)) return
+	if (ticket_level < TICKET_LEVEL_FINE_SMALL) return
 
 	approver = approved_by
 	approver_job = their_job

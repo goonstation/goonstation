@@ -7,6 +7,7 @@
 	cooldown = 20 SECONDS
 	special_screen_loc="NORTH,EAST-1"
 	min_req_dist = 10
+	show_tooltip = FALSE
 
 	var/obj/spookMarker/marker = new /obj/spookMarker()		//removed for now
 	var/status = 0

@@ -170,7 +170,7 @@
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			boutput(user, SPAN_NOTICE("You stamp \the [src]."))
 			return
 
@@ -199,7 +199,7 @@
 				else
 					src.icon_state = "postit-writing"
 			src.words += "[src.words ? "<br>" : ""][t]"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			pen.in_use = 0
 			src.add_fingerprint(user)
 			return
@@ -413,7 +413,6 @@
 	name = "gold star sticker"
 	icon_state = "gold_star"
 	desc = "This sticker contains a tiny radio transmitter that handles audio and video. Closer inspection reveals an interface on the back with camera, radio, and visual options."
-	open_to_sound = TRUE
 
 	var/has_radio = TRUE // just in case you wanted video-only ones, I guess?
 	var/obj/item/device/radio/spy/radio = null
@@ -422,9 +421,9 @@
 	var/has_camera = TRUE // the detective's stickers don't get a camera
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "sticker"
-	var/camera_network = "stickers"
-	var/tv_network = "public"
-	var/sec_network = "SS13"
+	var/camera_network = CAMERA_NETWORK_STICKERS
+	var/tv_network = CAMERA_NETWORK_PUBLIC
+	var/sec_network = CAMERA_NETWORK_STATION
 
 	var/has_selectable_skin = 1 //
 	var/list/skins = list("gold_star" = "gold star", "banana", "umbrella", "heart", "clover", "skull", "Larrow" = "left arrow",
@@ -440,8 +439,6 @@
 			var/new_skin = pick(src.skins)
 			var/new_name = istext(src.skins[new_skin]) ? src.skins[new_skin] : null
 			src.set_type(new_skin, new_name)
-		if (!src.has_selectable_skin)
-			src.verbs -= /obj/item/sticker/spy/verb/set_sticker_type
 
 		if (has_camera)
 			src.camera = new /obj/machinery/camera (src)
@@ -456,19 +453,27 @@
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
 			SPAWN(1 DECI SECOND)
-				src.radio.broadcasting = FALSE
-				//src.radio.listening = 0
+				src.radio.toggle_microphone(FALSE)
 
 	attack_self(mob/user as mob)
-		var/choice = "Set radio"
+		var/list/choices = list("Radio")
 		if (src.has_camera)
-			choice = tgui_alert(user, "What would you like to do with [src]?", "Configure sticker", list("Set radio", "Set camera"))
-		if (!choice)
+			choices += "Camera"
+		if (src.has_selectable_skin)
+			choices += "Shape"
+
+		var/choice = "Radio"
+		if (length(choices) > 1)
+			choice = tgui_alert(user, "What would you change on [src]?", "Configure Sticker", choices)
+		if (!choice || !(choice in choices))
 			return
-		if (choice == "Set radio")
-			src.set_internal_radio(user)
-		else
-			src.set_internal_camera(user)
+		switch (choice)
+			if ("Radio")
+				src.set_internal_radio(user)
+			if ("Camera")
+				src.set_internal_camera(user)
+			if ("Shape")
+				src.set_sticker_shape(user)
 
 	fall_off()
 		if (src.radio)
@@ -556,10 +561,10 @@
 			usr.Browse(null, "window=radio")
 			usr.Browse(null, "window=sticker_internal_camera")
 
-	verb/set_sticker_type()
-		if (!ishuman(usr) || !islist(src.skins))
+	proc/set_sticker_shape(mob/user)
+		if (!ishuman(user) || !islist(src.skins))
 			return
-		var/new_skin = input(usr,"Select Sticker Type:","Spy Sticker",null) as null|anything in src.skins
+		var/new_skin = tgui_input_list(user, "Select Sticker Shape", "Spy Sticker", src.skins)
 		if (!new_skin)
 			return
 		var/new_name = istext(src.skins[new_skin]) ? src.skins[new_skin] : null
@@ -587,26 +592,25 @@
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
-	slots = 8
+	soundproofing = SOUNDPROOFING_MUTE
 	spawn_contents = list(/obj/item/sticker/spy = 5,
 	/obj/item/device/camera_viewer/sticker,
-	/obj/item/device/radio/headset,
 	/obj/item/pinpointer/category/spysticker)
 
 /obj/item/storage/box/spy_sticker_kit/radio_only
 	spawn_contents = list(/obj/item/sticker/spy/radio_only = 5,
-	/obj/item/device/radio/headset)
+	/obj/item/device/radio/headset,
+	/obj/item/pinpointer/category/spysticker)
 
 /obj/item/storage/box/spy_sticker_kit/radio_only/detective
 	spawn_contents = list(/obj/item/sticker/spy/radio_only/det_only = 6,
-	/obj/item/device/radio/headset/detective,
 	/obj/item/pinpointer/category/spysticker/det)
 
 /obj/item/device/radio/spy
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
-	listening = 0
-	hardened = 0
+	has_speaker = FALSE
+	hardened = FALSE
 
 /obj/item/device/radio/spy/det_only
 	locked_frequency = 1
@@ -662,7 +666,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	attackby(obj/item/W, mob/user, params)
 		if (src.attached)
 			src.attached.Attackby(W, user)
-			user.lastattacked = user
+			user.lastattacked = get_weakref(user)
 		else
 			. = ..()
 

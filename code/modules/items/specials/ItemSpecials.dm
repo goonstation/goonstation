@@ -38,6 +38,27 @@
 				return NORTHEAST
 	return NORTH
 
+/// Get the closest direction to the target rather than prioritizing a certain axis
+/proc/get_dir_accurate(var/atom/source, var/atom/target, var/intercardinal = TRUE)
+	if(!source || !target)
+		CRASH("Invalid Params for get_dir_accurate: Source:[identify_object(source)] Target:[identify_object(target)]")
+	var/dir_angle = get_angle(source, target)
+	if(!intercardinal) // Only care about N,S,E, and W
+		switch(dir_angle)
+			if(45 to 135) return EAST
+			if(135 to 181, -181 to -135) return SOUTH
+			if(-135 to -45) return WEST
+			else return NORTH
+	switch(dir_angle)
+		if(22.5 to 67.5) return NORTHEAST
+		if(67.5 to 112.5) return EAST
+		if(112.5 to 157.5) return SOUTHEAST
+		if(157.5 to 181, -181 to -157.5) return SOUTH
+		if(-67.5 to -22.5) return NORTHWEST
+		if(-112.5 to -67.5) return WEST
+		if(-157.5 to -112.5) return SOUTHWEST
+		else return NORTH
+
 /proc/get_dir_pixel(var/atom/source, var/atom/target, params) //Get_dir using pixel coordinates of mouse
 	var/dx = (target.x - source.x) * 32
 	var/dy = (target.y - source.y) * 32
@@ -729,14 +750,12 @@
 					playsound(master, 'sound/effects/flame.ogg', 50, FALSE)
 		return
 
-	csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
+	csaber
 
-		damageMult = 0.54
+		damageMult = 0.8
 
 		onAdd()
 			if(master)
-				//cooldown = master.click_delay
-				overrideStaminaDamage = master.stamina_damage * 0.9
 				var/obj/item/sword/saber = master
 				if (istype(saber))
 					swipe_color = get_hex_color_from_blade(saber.bladecolor)
@@ -897,7 +916,7 @@
 							A.Attackhand(user, params)
 						attacked += A
 						A.throw_at(get_edge_target_turf(A,direction), 5, 3)
-						if (ishuman(A))
+						if (isnpc(A))
 							var/mob/living/carbon/human/H = A
 							if (isdead(H))
 								H.gib()
@@ -1196,7 +1215,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if (ismob(hit))
 			var/mob/M = hit
 			M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
-			M.bodytemperature += (4 * mult)
+			M.changeBodyTemp(4 KELVIN * mult)
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, TRUE, 0.1, 2.8)
 
 		logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
@@ -1357,6 +1376,19 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	name = "energy barrier"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "syndiebarrier"
+
+/datum/item_special/barrier/void
+	image = "voidbarrier"
+	name = "Eldritch Projection"
+	desc = "Deploy a temporary barrier that reflects and amplifies projectiles. The barrier can be easily broken by any attack or a sustained push."
+	barrier_type = /obj/itemspecialeffect/barrier/void
+
+/obj/itemspecialeffect/barrier/void
+	name = "eldritch barrier"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "void-barrier"
+	amplify = 1
+	amplify_amount = 2
 
 /datum/item_special/flame
 	cooldown = 0
@@ -1567,7 +1599,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (ismob(hit))
 				var/mob/M = hit
 				M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-				M.bodytemperature += (4 * mult)
+				M.changeBodyTemp(4 KELVIN * mult)
 				playsound(hit, 'sound/effects/electric_shock.ogg', 60, TRUE, 0.1, 2.8)
 			logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
 
@@ -2200,6 +2232,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		//mouse_opacity = 1
 		var/bump_count = 0
 		var/mob/master = 0
+		var/amplify = 0 // Will this effect the original damage/stun/power whatever of a projectile
+		var/amplify_amount = 0 // multiple for the amp/deamplification
 
 		setup(atom/location)
 			src.density = 1
@@ -2237,6 +2271,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				P.die()
 
 				if(Q)
+					if(amplify)
+						Q.power = Q.power * amplify_amount
 					src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
@@ -2282,6 +2318,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	derev
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "derev"
+		pixel_x = -16
+		pixel_y = -8
+		can_clash = 0
+
+	boxing
+		icon = 'icons/effects/64x64.dmi'
+		icon_state = "boxing"
 		pixel_x = -16
 		pixel_y = -8
 		can_clash = 0

@@ -20,7 +20,7 @@ TYPEINFO(/obj/item/pinpointer)
 	/// do not set directly, use turn_on and turn_off
 	var/active = FALSE
 	var/icon_type = "disk"
-	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technologically advanced arrow."
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -100,7 +100,7 @@ TYPEINFO(/obj/item/pinpointer)
 				if(ismob(src.loc))
 					boutput(src.loc, SPAN_ALERT("Pinpointer target out of range."))
 				return
-			src.set_dir(get_dir(src,target))
+			src.set_dir(get_dir_accurate(src,target))
 			var/dist = GET_DIST(src,target)
 			switch(dist)
 				if(0)
@@ -135,6 +135,8 @@ TYPEINFO(/obj/item/pinpointer)
 			if(A.disposed || isnull(T))
 				continue
 			if(!isnull(z_locked) && z_locked != T.z)
+				continue
+			if(isnull(z_locked) && T.z != Z_LEVEL_STATION)
 				continue
 			var/dist = GET_DIST(A, src)
 			if(!isnull(max_range) && dist > max_range)
@@ -354,7 +356,7 @@ TYPEINFO(/obj/item/pinpointer)
 			blood_dna = A.blood_DNA
 		else if (CHECK_LIQUID_CLICK(A))
 			var/turf/T = get_turf(A)
-			blood_dna = T.active_liquid.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
+			blood_dna = T.active_liquid?.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
 		if(!blood_dna)
 			var/datum/reagents/reagents = A.reagents
 			if(isturf(A))
@@ -394,7 +396,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	var/list/itemrefs
 	var/list/accepted_types
 	hudarrow_color = "#ee4444"
-	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technologically advanced arrow."
 
 	proc/track(var/list/L)
 		itemrefs = list()

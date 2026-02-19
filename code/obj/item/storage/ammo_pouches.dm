@@ -189,13 +189,12 @@
 	icon_state = "ammopouch-sec"
 	health = 6
 	w_class = W_CLASS_SMALL
-	slots = 6
+	slots = 5
 	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash,\
 	/obj/item/reagent_containers/food/snacks/donut,\
-	/obj/item/instrument/whistle/security,
-	/obj/item/device/panicbutton)
+	/obj/item/instrument/whistle/security)
 	prevent_holding = list(/obj/item/storage)
 
 	empty
@@ -205,8 +204,7 @@
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 1,\
 	/obj/item/instrument/whistle/security,\
-	/obj/item/reagent_containers/food/snacks/donut/custom/frosted,
-	/obj/item/device/panicbutton)
+	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
 /obj/item/storage/ntsc_pouch
 	name = "tacticool pouch"
@@ -220,13 +218,25 @@
 	spawn_contents = list(/obj/item/handcuffs/ = 1,
 	/obj/item/handcuffs/guardbot = 1,
 	/obj/item/device/flash,
-	/obj/item/instrument/whistle/security,
-	/obj/item/device/panicbutton)
+	/obj/item/instrument/whistle/security)
 
 
 	ntso
 		spawn_contents = list(/obj/item/gun/kinetic/clock_188/boomerang/ntso,
 		/obj/item/ammo/bullets/bullet_9mm = 4)
+
+/obj/item/storage/breach_pouch
+	name = "mining charge pouch"
+	desc = "A large pouch specially designed to hold all of your nanotrasen approved explosives."
+	icon_state = "ammopouch-mining"
+	w_class = W_CLASS_SMALL
+	slots = 5
+	opens_if_worn = TRUE
+	prevent_holding = list(/obj/item/storage)
+	can_hold = list(/obj/item/breaching_charge/mining)
+
+	filled
+		spawn_contents = list(/obj/item/breaching_charge/mining/light = 3)
 
 /obj/item/storage/emp_grenade_pouch
 	name = "EMP grenade pouch"
@@ -364,6 +374,20 @@
 	spawn_contents = list(
 		/obj/item/old_grenade/sawfly/firsttime = 3,
 		/obj/item/remote/sawflyremote
+	)
+
+/obj/item/storage/werewolf_hunter_pouch
+	name = "werewolf hunter's pouch"
+	desc = "A pouch for carrying some useful herbal grenades."
+	icon_state = "ammopouch"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 4
+	opens_if_worn = TRUE
+	prevent_holding = list(/obj/item/storage)
+	spawn_contents = list(
+		/obj/item/old_grenade/thing_thrower/aconite = 2,
+		/obj/item/old_grenade/thing_thrower/garlic
 	)
 
 // Pod wars pouches

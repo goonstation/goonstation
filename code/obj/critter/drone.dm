@@ -129,6 +129,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	New()
 		..()
 		name = "Drone SC-[rand(1,999)]"
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 		START_TRACKING
 
 	disposing()
@@ -752,7 +753,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			projectile_type = /datum/projectile/laser/drill/saw_teeth
 			current_projectile = new/datum/projectile/laser/drill/saw_teeth
 			smashes_shit = 0
-			event_handler_flags = IMMUNE_MANTA_PUSH
+			event_handler_flags = IMMUNE_OCEAN_PUSH
 			//TODO : TEENSY REDRAW TO ICON TO MAKE IT A LITTLE MORE ROBOTTY
 
 			New()
@@ -783,7 +784,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		current_projectile = new/datum/projectile/bullet/lmg/weak
 		attack_cooldown = 20
 		projectile_spread = 13
-		event_handler_flags = IMMUNE_MANTA_PUSH
+		event_handler_flags = IMMUNE_OCEAN_PUSH
 
 		New()
 			..()
@@ -842,12 +843,14 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		desc = "This Syndicate drone is equipped with a corrosive chemical weapon. Rude!"
 		icon = 'icons/mob/critter/robotic/drone/acid.dmi'
 		icon_state = "drone_acid"
-		dead_state = "drone_acid"
+		dead_state = "drone_acid-dead"
 		health = 200
 		maxhealth = 200
 		score = 65
 		projectile_type = /datum/projectile/special/acid
 		current_projectile = new/datum/projectile/special/acid
+		drop_loot_chance = 100
+		droploot = /obj/item/reagent_containers/glass/beaker/large/round/random_acid
 
 		New()
 			..()
@@ -1030,6 +1033,8 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	current_projectile = new/datum/projectile/laser/precursor/sphere
 	smashes_shit = 1
 	attack_cooldown = 70
+	event_handler_flags = IMMUNE_TRENCH_WARP
+
 	process()
 		..()
 		if(prob(3))

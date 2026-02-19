@@ -71,6 +71,7 @@ export const GeneralAlert = () => {
                       index={marker.index}
                       marker={marker.marker}
                       key={marker.index}
+                      target_ref={marker.target_ref}
                     />
                   ))}
                 </Flex.Item>

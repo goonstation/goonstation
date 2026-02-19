@@ -32,7 +32,6 @@ export const AppearanceEditor = (props) => {
     style1,
     style2,
     style3,
-    fixColors,
     hasEyes,
     hasSkin,
     hasHair,
@@ -96,7 +95,6 @@ export const AppearanceEditor = (props) => {
                 <ColorInput
                   color={color1}
                   onChange={(c) => act('editappearance', { color1: c })}
-                  fix={fixColors}
                 />
               </LabeledList.Item>
             )}
@@ -118,7 +116,6 @@ export const AppearanceEditor = (props) => {
                 <ColorInput
                   color={color2}
                   onChange={(c) => act('editappearance', { color2: c })}
-                  fix={fixColors}
                 />
               </LabeledList.Item>
             )}
@@ -140,7 +137,6 @@ export const AppearanceEditor = (props) => {
                 <ColorInput
                   color={color3}
                   onChange={(c) => act('editappearance', { color3: c })}
-                  fix={fixColors}
                 />
               </LabeledList.Item>
             )}
@@ -163,8 +159,8 @@ export const AppearanceEditor = (props) => {
   );
 };
 
-const ColorInput = (params, context) => {
-  const { color, onChange, fix } = params;
+const ColorInput = (params) => {
+  const { color, onChange } = params;
 
   const r = parseInt(color.substr(1, 2), 16);
   const g = parseInt(color.substr(3, 2), 16);
@@ -187,29 +183,29 @@ const ColorInput = (params, context) => {
       <Knob
         inline
         ml={1}
-        minValue={fix ? 50 : 0}
-        maxValue={fix ? 190 : 255}
+        minValue={0}
+        maxValue={255}
         value={r}
         color="red"
-        onChange={(_, newR) => onComponentChange(Math.round(newR), g, b)}
+        onChange={(_e, newR) => onComponentChange(Math.round(newR), g, b)}
       />
       <Knob
         inline
         ml={1}
-        minValue={fix ? 50 : 0}
-        maxValue={fix ? 190 : 255}
+        minValue={0}
+        maxValue={255}
         value={g}
         color="green"
-        onChange={(_, newG) => onComponentChange(r, Math.round(newG), b)}
+        onChange={(_e, newG) => onComponentChange(r, Math.round(newG), b)}
       />
       <Knob
         inline
         ml={1}
-        minValue={fix ? 50 : 0}
-        maxValue={fix ? 190 : 255}
+        minValue={0}
+        maxValue={255}
         value={b}
         color="blue"
-        onChange={(_, newB) => onComponentChange(r, g, Math.round(newB))}
+        onChange={(_e, newB) => onComponentChange(r, g, Math.round(newB))}
       />
     </Box>
   );

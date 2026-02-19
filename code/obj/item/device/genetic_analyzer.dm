@@ -12,7 +12,7 @@
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 /obj/item/device/analyzer/genetic/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	var/datum/computer/file/genetics_scan/GS = create_new_dna_sample_file(target)
+	var/datum/computer/file/genetics_scan/GS = create_new_dna_sample_file(target, visible_name=TRUE)
 	if (!GS)
 		return
 	user.visible_message(

@@ -16,9 +16,9 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	var/image/bulb
 	var/image/bulb_light
 
-	speechverb_say = "bzzs"
-	speechverb_exclaim = "bzzts"
-	speechverb_ask = "hums"
+	speech_verb_say = "bzzs"
+	speech_verb_exclaim = "bzzts"
+	speech_verb_ask = "hums"
 
 	health_brute = 10
 	health_burn = 10
@@ -287,9 +287,9 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 	icon_state = "dragonfly"
 	blood_id = "hemolymph"
 
-	speechverb_say = "bzzs"
-	speechverb_exclaim = "bzzts"
-	speechverb_ask = "hums"
+	speech_verb_say = "bzzs"
+	speech_verb_exclaim = "bzzts"
+	speech_verb_ask = "hums"
 
 	health_brute = 10
 	health_burn = 10

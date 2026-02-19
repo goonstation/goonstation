@@ -9,48 +9,12 @@
 	associated_datum = /datum/artifact/dimensional_key
 	var/datum/allocated_region/fissure_region
 
+	// TODO: This should be a direction-boolean (or direction-object) alist to make checks easier
 	// var names here are in reference to inside the fissure - south means south entrance of the room
 	var/south_entr_placed = FALSE
 	var/north_entr_placed = FALSE
 	var/east_entr_placed = FALSE
 	var/west_entr_placed = FALSE
-
-	afterattack(atom/target, mob/user, reach)
-		..()
-		if (!src.artifact.activated)
-			return
-		if (!reach)
-			return
-		if (!iswall(target))
-			return
-		if (BOUNDS_DIST(user, target) > 0 || isrestrictedz(get_z(target)))
-			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [src] probably doesn't work here"))
-			return
-
-		if (user.dir == NORTH)
-			if (!src.south_entr_placed)
-				src.create_entrance(SOUTH_ENTRANCE, target, user)
-				src.south_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == SOUTH)
-			if (!src.north_entr_placed)
-				src.create_entrance(NORTH_ENTRANCE, target, user)
-				src.north_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == EAST)
-			if (!src.west_entr_placed)
-				src.create_entrance(WEST_ENTRANCE, target, user)
-				src.west_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
-		else if (user.dir == WEST)
-			if (!src.east_entr_placed)
-				src.create_entrance(EAST_ENTRANCE, target, user)
-				src.east_entr_placed = TRUE
-			else
-				boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
 
 	proc/create_entrance(entrance_dir, turf/entrance, mob/user)
 		var/obj/art_fissure_objs/door/inner_door
@@ -58,6 +22,10 @@
 		var/list/adj_entr_turfs
 		switch (entrance_dir)
 			if (SOUTH_ENTRANCE)
+				if (src.south_entr_placed)
+					boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+					return
+				src.south_entr_placed = TRUE
 				fissure_entr = src.fissure_region.turf_at(15, 14)
 				new /obj/art_fissure_objs/cross_dummy/north(entrance, fissure_entr)
 				new /obj/art_fissure_objs/cross_dummy/south(src.fissure_region.turf_at(15, 13), get_step(entrance, SOUTH))
@@ -65,6 +33,10 @@
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y - 1, entrance.z)
 			if (NORTH_ENTRANCE)
+				if (src.north_entr_placed)
+					boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+					return
+				src.north_entr_placed = TRUE
 				fissure_entr = src.fissure_region.turf_at(15, 24)
 				new /obj/art_fissure_objs/cross_dummy/south(entrance, fissure_entr)
 				new /obj/art_fissure_objs/cross_dummy/north(src.fissure_region.turf_at(15, 25), get_step(entrance, NORTH))
@@ -72,6 +44,10 @@
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x - 1, entrance.y + 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (EAST_ENTRANCE)
+				if (src.east_entr_placed)
+					boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+					return
+				src.east_entr_placed = TRUE
 				fissure_entr = src.fissure_region.turf_at(17, 19)
 				new /obj/art_fissure_objs/cross_dummy/west(entrance, fissure_entr)
 				new /obj/art_fissure_objs/cross_dummy/east(src.fissure_region.turf_at(18, 19), get_step(entrance, EAST))
@@ -79,6 +55,10 @@
 				inner_door.outer_entrance_spawned = TRUE
 				adj_entr_turfs = block(entrance.x + 1, entrance.y - 1, entrance.z, entrance.x + 1, entrance.y + 1, entrance.z)
 			if (WEST_ENTRANCE)
+				if (src.west_entr_placed)
+					boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand."))
+					return
+				src.west_entr_placed = TRUE
 				fissure_entr = src.fissure_region.turf_at(13, 19)
 				new /obj/art_fissure_objs/cross_dummy/east(entrance, fissure_entr)
 				new /obj/art_fissure_objs/cross_dummy/west(src.fissure_region.turf_at(12, 19), get_step(entrance, WEST))
@@ -112,7 +92,7 @@
 
 /datum/artifact/dimensional_key
 	associated_object = /obj/item/artifact/dimensional_key
-	type_name = "Dimensional key"
+	type_name = "Dimensional Key"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 200
 	validtypes = list("eldritch", "precursor")
@@ -129,6 +109,31 @@
 		var/turf/T = artkey.fissure_region.get_center()
 		var/area/artifact_fissure/fissure_area = get_area(T)
 		fissure_area.fissure_region = artkey.fissure_region
+
+	effect_attack_atom(obj/art, mob/living/user, atom/A)
+		if (..())
+			return
+		if (!iswall(A))
+			return
+		if (isrestrictedz(get_z(A)))
+			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. [art] probably doesn't work here."))
+			return
+		for (var/obj/art_fissure_objs/door/door in range(2, A))
+			boutput(user, SPAN_ALERT("Nothing happens, except for a light stinging sensation in your hand. This must be too close to another door."))
+			return
+		var/obj/item/artifact/dimensional_key/dim_key = art
+		var/entrance_direction
+		switch(user.dir)
+			if (NORTH)
+				entrance_direction = SOUTH_ENTRANCE
+			if (SOUTH)
+				entrance_direction = NORTH_ENTRANCE
+			if (EAST)
+				entrance_direction = WEST_ENTRANCE
+			if (WEST)
+				entrance_direction = EAST_ENTRANCE
+
+		dim_key?.create_entrance(entrance_direction, A, user)
 
 /****** Supporting items/atoms/etc. *******/
 
@@ -167,7 +172,10 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 			AM.set_loc(get_step(src.exit_turf, turn(AM.dir, 180)))
 			SPAWN(0.001) // just a really low value
 				AM.set_loc(src.exit_turf)
-
+				if (istype(AM, /obj/stool)) // i dont like this but buckled is weird as shit
+					var/obj/stool/stool = AM
+					if (stool.buckled_guy)
+						stool.buckled_guy.set_loc(src.exit_turf)
 		else
 			return ..()
 

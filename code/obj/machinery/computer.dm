@@ -13,6 +13,7 @@
 	var/id = null
 	var/frequency = null
 	var/base_icon_state = null
+	var/emagged = FALSE //! the emag behaviour is done in the corresponding computer frame, but we need to carry over the effect onto the curcuit board.
 
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
@@ -49,8 +50,11 @@
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
 			list(W, user), W.icon, W.icon_state, null, null)
 			return
-		else
-			src.Attackhand(user)
+		..()
+
+	grab_smash(obj/item/grab/G, mob/user)
+		if(..())
+			src.set_broken()
 
 	get_help_message(dist, mob/user)
 		if (src.circuit_type)
@@ -70,6 +74,7 @@
 			A.icon_state = "3"
 		else
 			user?.show_text("You disconnect the monitor.", "blue")
+			logTheThing(LOG_STATION, user, "disassembles [src] [log_loc(src)]")
 			A.state = 4
 			A.icon_state = "4"
 		var/obj/item/circuitboard/M = new src.circuit_type(A)
@@ -81,6 +86,7 @@
 		A.circuit = M
 		A.anchored = ANCHORED
 		src.special_deconstruct(A, user)
+		src.save_board_data(M)
 		qdel(src)
 
 	///Put the code for finding the stuff your computer needs in this proc
@@ -90,6 +96,19 @@
 	///Special changes for deconstruction can be added by overriding this
 	proc/special_deconstruct(var/obj/computerframe/frame as obj, mob/user)
 
+	///save custom data to a circuit board
+	proc/save_board_data(obj/item/circuitboard/circuitboard)
+		if(src.emagged)
+			//we transfer the emagged state from the computer onto the curcuitboard
+			circuitboard.emag_act(null, null)
+
+	///Load custom data from a circuit board
+	proc/load_board_data(obj/item/circuitboard/circuitboard)
+		if(circuitboard.emagged)
+			//we transfer the emagged state from the curcuitboard onto the computer
+			src.emag_act(null, null)
+		if(isnull(circuitboard.saved_data))
+			return TRUE // no data to load
 
 /*
 /obj/machinery/computer/airtunnel
@@ -97,10 +116,6 @@
 	icon = 'airtunnelcomputer.dmi'
 	icon_state = "console00"
 */
-
-/obj/machinery/computer/hangar
-	name = "Hangar"
-	icon_state = "teleport"
 
 /obj/machinery/computer/New()
 	..()
@@ -153,8 +168,10 @@
 		set_broken()
 		src.set_density(0)
 
+/obj/machinery/computer/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/computer/power_change()
-	//if(!istype(src,/obj/machinery/computer/security/telescreen))
 	if(status & BROKEN)
 		icon_state = "[src.base_icon_state]b"
 		light.disable()

@@ -18,7 +18,6 @@ const regexParseNode = (params) => {
   let fragment;
   let n = 0;
   let count = 0;
-  // eslint-disable-next-line no-cond-assign
   while ((match = regex.exec(text))) {
     n += 1;
     // Safety check to prevent permanent

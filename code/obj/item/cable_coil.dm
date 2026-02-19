@@ -34,6 +34,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	special_grab = /obj/item/grab
 	inventory_counter_enabled = 1
 	material_amt = 1 / 30
+	can_arcplate = FALSE
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
@@ -54,12 +55,73 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		if (spawn_conductor_name)
 			applyCableMaterials(src, getMaterial(spawn_insulator_name), getMaterial(spawn_conductor_name))
 		BLOCK_SETUP(BLOCK_ROPE)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS, PROC_REF(assembly_overlay_addition))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK, PROC_REF(assembly_check))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS)
+		. = ..()
+
+	/// ----------- Trigger/Applier-Assembly-Related Procs -----------
+
+	/// TThe amount of cable coil required for canbombs
+	#define CABLE_COIL_REQUIRED_CANBOMB 6
+
+	proc/assembly_overlay_addition(var/manipulated_coil, var/obj/item/assembly/parent_assembly, overlay_offset)
+		if(parent_assembly.special_construction_identifier == "canbomb")
+			var/image/temp_image = image('icons/obj/items/assemblies.dmi', parent_assembly, "cable_coil_canbomb")
+			parent_assembly.overlays += temp_image
+
+
+	proc/assembly_check(var/manipulated_coil, var/obj/item/second_part, var/mob/user)
+		//if we're building a canbomb, we need 6 units of cablecoil
+		var/obj/item/assembly/assembly_in_progress = second_part
+		if (assembly_in_progress.special_construction_identifier == "canbomb" && src.amount < CABLE_COIL_REQUIRED_CANBOMB)
+			boutput(user, SPAN_NOTICE("You need at least [CABLE_COIL_REQUIRED_CANBOMB] pieces of cable on this coil for this step."))
+			return TRUE
+
+	proc/assembly_setup(var/manipulated_coil, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//when we have a user, we know we were build, so we can split off excess cabling
+		if(is_build_in && user)
+			// we assume a standard of 5 cabling for an assembly (or whatever bullshit lower than that you enabled)
+			var/cable_used = min(5, src.amount)
+			// we change it accordingly to the special construction we want to do
+			switch(parent_assembly.special_construction_identifier)
+				if("canbomb")
+					cable_used = CABLE_COIL_REQUIRED_CANBOMB
+			// if we have access, split it off and put it on the ground
+			if(src.amount > cable_used)
+				var/obj/item/cable_coil/new_coil = src.split_stack(src.amount - cable_used)
+				new_coil.add_fingerprint(user)
+				new_coil.set_loc(get_turf(user))
+				user.put_in_hand_or_drop(new_coil)
+	/// ----------------------------------------------
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins coiling cable!"))
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, SPAN_NOTICE("You finish coiling cable."))
+
+	attack_hand(mob/user)
+		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+			var/splitnum = round(input("How many cables do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
+				return
+			splitnum = round(clamp(splitnum, 0, src.amount))
+			if(amount == 0)
+				return
+			var/obj/item/cable_coil/new_stack = split_stack(splitnum)
+			if (!istype(new_stack))
+				boutput(user, SPAN_ALERT("Invalid entry, try again."))
+				return
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+			boutput(user, SPAN_NOTICE("You take [splitnum] cables from the stack, leaving [src.amount] cables behind."))
+			tgui_process.update_uis(src)
+		else
+			..(user)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -93,17 +155,15 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			name = "uninsulated [conductor.getName()]-[base_name]"
 
 	proc/use(var/used)
-		if (src.amount < used)
-			return 0
-		amount -= used
-		if (src.amount <= 0)
-			if (currently_laying && usr)
-				UnregisterSignal(usr, COMSIG_MOVABLE_MOVED)
-			qdel(src)
-			return 1
-		else
-			UpdateIcon()
-			return 1
+		. = src.change_stack_amount(-used)
+		if (.)
+			if (QDELETED(src))
+				if (currently_laying && usr)
+					UnregisterSignal(usr, COMSIG_MOVABLE_MOVED)
+				return 1
+			else
+				UpdateIcon()
+				return 1
 
 	_update_stack_appearance()
 		UpdateIcon()
@@ -233,21 +293,11 @@ obj/item/cable_coil/dropped(mob/user)
 	if (conductor)
 		. += "Its conductive layer is made out of [conductor]."
 
-/obj/item/cable_coil/attackby(obj/item/W, mob/user)
-	if (issnippingtool(W) && src.amount > 1)
-		var/cut_amount = round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num)
-		if (!in_interact_range(src, user))
-			boutput(user, "You're too far away from the cable that you're trying to cut from!")
-			return
-		var/obj/item/cable_coil/cable = src.split_stack(cut_amount)
-		if (istype(cable))
-			user.put_in_hand_or_drop(cable) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
-			boutput(user, "You cut a piece off the [base_name].")
-		return
-
+obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (check_valid_stack(W))
 		stack_item(W)
 		if(!user.is_in_hands(src))
+			user.u_equip(src)
 			user.put_in_hand(src)
 		boutput(user, "You join the cable coils together.")
 

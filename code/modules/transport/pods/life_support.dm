@@ -6,3 +6,6 @@
 	var/tempreg = 310
 	system = "Life Support"
 	icon_state = "life_support"
+
+	get_install_slot()
+		return POD_PART_LIFE_SUPPORT

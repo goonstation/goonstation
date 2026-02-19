@@ -87,7 +87,7 @@
 			return ..()
 
 	proc/can_buckle(var/mob/living/to_buckle, var/mob/user)
-		if (!istype(to_buckle) || isintangible(to_buckle) || isflockmob(to_buckle)) //no buckling AI-eyes
+		if (!istype(to_buckle) || isintangible(to_buckle) || isflockmob(to_buckle) || isabomination(to_buckle)) //no buckling AI-eyes
 			return FALSE
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
@@ -397,7 +397,7 @@ TYPEINFO(/obj/stool/wooden)
 		return TRUE
 
 	proc/unbuckle_mob(var/mob/M as mob, var/mob/user as mob)
-		if (M.buckled && !user.restrained())
+		if (M.buckled && !user.restrained() && !is_incapacitated(user))
 			if (allow_unbuckle)
 				if (M != user)
 					user.visible_message(SPAN_NOTICE("<b>[M]</b> is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
@@ -682,7 +682,7 @@ TYPEINFO(/obj/stool/chair)
 
 			if (M.buckled && M != chair_chump)
 				if (allow_unbuckle)
-					if(user.restrained())
+					if(user.restrained() || is_incapacitated(user))
 						return
 					if (M != user)
 						user.visible_message(SPAN_NOTICE("<b>[M]</b> is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
@@ -719,6 +719,7 @@ TYPEINFO(/obj/stool/chair)
 				C.icon_state = "folded_[src.icon_state]"
 				C.item_state = C.icon_state
 
+			C.forensic_holder = src.forensic_holder
 			qdel(src)
 		else
 			src.rotate()
@@ -962,6 +963,7 @@ TYPEINFO(/obj/item/chair/folded)
 	material_amt = 0.1
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
+	can_arcplate = FALSE
 
 	New()
 		..()
@@ -984,6 +986,7 @@ TYPEINFO(/obj/item/chair/folded)
 		C.setMaterial(src.material)
 	if (src.c_color)
 		C.icon_state = src.c_color
+	C.forensic_holder = src.forensic_holder
 	C.set_dir(user.dir)
 	ON_COOLDOWN(user, "chair_stand", 1 SECOND)
 	boutput(user, "You unfold [C].")
@@ -1208,7 +1211,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 
 	set_loc(newloc)
 		. = ..()
-		unbuckle()
+		if(src.buckled_guy?.loc != src.loc)
+			unbuckle()
 
 /* ======================================================= */
 /* -------------------- Dining Chairs -------------------- */
@@ -1308,12 +1312,12 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 
 	update_icon()
 		if (src.dir == NORTH)
-			src.layer = FLY_LAYER+1
+			src.layer = MOB_LAYER_BASE+1
 		else
-			src.layer = OBJ_LAYER
-			if ((src.dir == WEST || src.dir == EAST) && !src.arm_image)
+			src.layer = initial(src.layer)
+			if ((src.dir == WEST || src.dir == EAST) && src.arm_icon_state && !src.arm_image)
 				src.arm_image = image(src.icon, src.arm_icon_state)
-				src.arm_image.layer = FLY_LAYER+1
+				src.arm_image.layer = MOB_LAYER_BASE+1
 				src.UpdateOverlays(src.arm_image, "arm")
 
 	left

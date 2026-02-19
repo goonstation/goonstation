@@ -9,9 +9,9 @@ TYPEINFO(/obj/laser_sink/mirror)
 /obj/laser_sink/mirror
 	name = "laser mirror"
 	desc = "A highly reflective mirror designed to redirect extremely high energy laser beams."
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/lasers/laser_devices.dmi'
 	icon_state = "laser_mirror0"
 
 	var/obj/linked_laser/out_laser = null

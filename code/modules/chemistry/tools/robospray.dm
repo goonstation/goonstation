@@ -98,7 +98,7 @@
 
 		target.reagents.add_reagent(currentreagent, amt_prop)
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		UpdateIcon()
 		playsound(target, src.sound_inject, 80, 0)
 		return 0
@@ -116,7 +116,7 @@
 
 			botreagents[reagent] = min(amt + refill_amount, max_fill_amount)
 			if (reagent == currentreagent)
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				UpdateIcon()
 
 		return 0

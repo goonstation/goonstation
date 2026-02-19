@@ -157,7 +157,7 @@
 			incoming.UpdateIcon()
 			if (istype(incoming, /obj/item/satchel))
 				var/obj/item/satchel/changed_satchel = incoming
-				changed_satchel.tooltip_rebuild = 1
+				changed_satchel.tooltip_rebuild = TRUE
 			if (transfers)
 				attacker.visible_message(SPAN_NOTICE("[attacker] dumps [transfers] items out of [incoming] into [parent]."))
 			else

@@ -22,7 +22,6 @@ datum
 			depletion_rate = 0.6
 			energy_value = 1
 			hunger_value = -0.1
-			bladder_value = -0.1
 			thirst_value = -0.05
 			threshold = THRESHOLD_INIT
 
@@ -184,7 +183,6 @@ datum
 			overdose = 20
 			value = 20 // 10 2 1 3 1 heat explosion :v
 			energy_value = 1.5
-			bladder_value = -0.1
 			hunger_value = -0.05
 			thirst_value = -0.05
 			stun_resist = 60
@@ -199,7 +197,7 @@ datum
 					M.emote(pick("laugh", "giggle"))
 				if(prob(6))
 					boutput(M, SPAN_NOTICE("<b>You feel warm.</b>"))
-					M.bodytemperature += rand(1,10) * mult
+					M.changeBodyTemp(rand(1,10) KELVIN * mult)
 				if(prob(4))
 					boutput(M, SPAN_ALERT("<b>You feel kinda awful!</b>"))
 					M.take_toxin_damage(1 * mult)
@@ -218,7 +216,7 @@ datum
 						M.emote("scream")
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"))
-						M.bodytemperature += rand(5,30) * mult
+						M.changeBodyTemp(rand(5,30) KELVIN * mult)
 						M.take_brain_damage(1 * mult)
 						M.take_toxin_damage(1 * mult)
 						M.setStatusMin("stunned", 3 SECONDS * mult)
@@ -228,7 +226,7 @@ datum
 				else if (severity == 2)
 					if (effect <= 2)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is sweating like a pig!"))
-						M.bodytemperature += rand(20,100) * mult
+						M.changeBodyTemp(rand(20,100) KELVIN * mult)
 						M.take_toxin_damage(5 * mult)
 						M.setStatusMin("stunned", 4 SECONDS * mult)
 					else if (effect <= 4)
@@ -312,6 +310,7 @@ datum
 				new /image('icons/effects/hallucinations.dmi', "dragon"),
 				new /image('icons/effects/hallucinations.dmi', "pig"),
 				new /image('icons/effects/hallucinations.dmi', "slime"),
+				new /image('icons/effects/hallucinations.dmi', "shambler"),
 				new /image('icons/misc/critter.dmi', "martianW"),
 			)
 			var/static/list/monkey_names = strings("names/monkey.txt")
@@ -439,7 +438,7 @@ datum
 			fluid_b = 230
 			addiction_prob = 1 //Less addictive than ethanol due to its higher depletion rate
 			addiction_min = 50
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			stun_resist = 3
 			depletion_rate = 0.05
 			taste = "bitter"
@@ -640,7 +639,7 @@ datum
 							invisible_people += chosen
 
 				if(counter > 25)                   //some side effects (not using a switch statement so the stages stack)
-					if(M.get_brain_damage() <= 40)
+					if(M.get_brain_damage() <= BRAIN_DAMAGE_MODERATE)
 						M.take_brain_damage(1 * mult) //some amount of brain damage
 					if(probmult(9) && !ON_COOLDOWN(M, "heartbeat_hallucination", 60 SECONDS)) //play some hearbeat sounds
 						M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
@@ -651,7 +650,7 @@ datum
 				if (ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 
-					if(!isnull(invisible_group) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
+					if(!isnull(invisible_group) && (M.get_brain_damage() > BRAIN_DAMAGE_MINOR / 2))          //hits you and knocks you down for a little
 						M.visible_message(SPAN_ALERT("<B>[M]</B> starts convulsing violently!"),\
 											"You feel as if your body is tearing itself apart!")
 						M.setStatusMin("knockdown", 10 SECONDS)
@@ -683,17 +682,13 @@ datum
 				M.stuttering += rand(0,2)
 				if(M.client && probmult(5))
 					for (var/obj/critter/domestic_bee/bee in view(7,M))
-						var/chat_text = null
 						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list(
 							"M"="[M]",
 							"beeMom"=bee.beeMom ? bee.beeMom : "Mom",
 							"other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Spacebee" : "Seabee",
 							"bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"
-							))
-						if(!M.client.preferences.flying_chat_hidden)
-							var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
-							chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
-						M.show_message("[bee] buzzes \"[text]\"",2, assoc_maptext = chat_text)
+						))
+						bee.say(text, atom_listeners_override = list(M))
 						break
 
 				if(probmult(5))
@@ -751,7 +746,7 @@ datum
 			transparency = 190
 			addiction_prob = 15
 			addiction_min = 10
-			max_addiction_severity = "LOW"
+			addiction_severity = LOW_ADDICTION_SEVERITY
 			overdose = 35 // raise if too low - trying to aim for one sleepypen load being problematic, two being deadlyish
 			//var/counter = 1
 			//note that nicotine is also horribly poisonous in concentrated form IRM - could be used as a poor-man's toxin?
@@ -792,7 +787,7 @@ datum
 						M.emote("twitch")
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"))
-						M.bodytemperature += rand(15,30) * mult
+						M.changeBodyTemp(rand(15,30) KELVIN * mult)
 						M.take_toxin_damage(3 * mult)
 					else if (effect <= 7)
 						M.take_toxin_damage(4 * mult)
@@ -884,7 +879,7 @@ datum
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is super sweaty!"))
 						boutput(M, SPAN_ALERT("<b>You feel hot! Is it hot in here?!</b>"))
-						M.bodytemperature += rand(30,60)
+						M.changeBodyTemp(rand(30,60) KELVIN)
 						M.take_toxin_damage(4)
 					else if (effect <= 7)
 						M.take_toxin_damage(5)
@@ -985,7 +980,7 @@ datum
 				if(probmult(15)) M.emote(pick("smile", "grin", "yawn", "laugh", "drool"))
 				if(prob(10))
 					boutput(M, SPAN_NOTICE("<b>You feel pretty chill.</b>"))
-					M.bodytemperature -= 1 * mult
+					M.changeBodyTemp(-1 * mult)
 					M.emote("smile")
 				if(prob(5))
 					boutput(M, SPAN_ALERT("<b>You feel too chill!</b>"))
@@ -993,7 +988,7 @@ datum
 					M.setStatusMin("stunned", 2 SECONDS * mult)
 					M.take_toxin_damage(1 * mult)
 					M.take_brain_damage(1 * mult)
-					M.bodytemperature -= 20 * mult
+					M.changeBodyTemp(-20 * mult)
 				if(prob(2))
 					boutput(M, SPAN_ALERT("<b>Your skin feels all rough and dry.</b>"))
 					random_brute_damage(M, 2 * mult)
@@ -1009,7 +1004,7 @@ datum
 						M.emote("drool")
 					else if (effect <= 4)
 						M.emote("shiver")
-						M.bodytemperature -= 40 * mult
+						M.changeBodyTemp(-40 * mult)
 					else if (effect <= 7)
 						boutput(M, SPAN_ALERT("<b>Your skin is cracking and bleeding!</b>"))
 						random_brute_damage(M, 5 * mult)
@@ -1035,7 +1030,7 @@ datum
 							M.emote("faint")
 					else if (effect <= 7)
 						M.emote("shiver")
-						M.bodytemperature -= 70 * mult
+						M.changeBodyTemp(-70 * mult)
 
 		drug/catdrugs
 			name = "cat drugs"
@@ -1092,7 +1087,6 @@ datum
 			depletion_rate = 0.2
 			value = 39 // 13c * 3  :v
 			energy_value = 3
-			bladder_value = -0.1
 			hunger_value = -0.3
 			thirst_value = -0.2
 			var/list/flushed_reagents = list("mannitol","synaptizine")
@@ -1173,7 +1167,6 @@ datum
 			depletion_rate = 0.6
 			value = 13 // 9c + 1c + 1c + 1c + heat
 			energy_value = 1.5
-			bladder_value = -0.09
 			hunger_value = -0.09
 			thirst_value = -0.09
 			stun_resist = 50
@@ -1294,7 +1287,6 @@ datum
 					if (K.sims)
 						K.sims.affectMotive("Energy", 2)
 						K.sims.affectMotive("fun", 1)
-						K.sims.affectMotive("Bladder", -0.5)
 						K.sims.affectMotive("Hunger", -1)
 						K.sims.affectMotive("Thirst", -2)
 				var/mob/living/H = M
@@ -1321,7 +1313,7 @@ datum
 						M.changeStatus("unconscious", 2 SECONDS)
 					if(check < 20)
 						boutput(M, SPAN_NOTICE("<b>You feel A LOT warmer.</b>"))
-						M.bodytemperature += rand(30,60)
+						M.changeBodyTemp(rand(30,60) KELVIN)
 				..()
 				return
 

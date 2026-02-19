@@ -21,7 +21,8 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const DeptBox = (props) => {
+// Also used by AccessPro
+export const DeptBox = (props) => {
   const { act } = useBackend();
   const {
     name,
@@ -63,14 +64,14 @@ const DeptBox = (props) => {
                     icon="save"
                     tooltip="Save"
                     onClick={() => act('save', { save: index + 1 })}
-                    pl="10px"
+                    px="0.4rem"
                     mx="0.2rem"
                   />
                   <Button
                     icon="check"
                     tooltip="Apply"
                     onClick={() => act('apply', { apply: index + 1 })}
-                    pl="10px"
+                    px="0.4rem"
                     mx="0.2rem"
                     mr="1rem"
                   />
@@ -123,7 +124,8 @@ interface StandardJob {
   style: string;
 }
 
-interface AccessByArea {
+// AccessByArea also used by AccessPro
+export interface AccessByArea {
   name: string;
   color: string;
   accesses: number[];
@@ -231,6 +233,14 @@ export const IDComputer = () => {
                             {(target_rank && target_rank.trim()) ||
                               'Unassigned'}
                           </Button>
+                          <Button
+                            icon="id-card"
+                            color="green"
+                            tooltip="Set Access to Assignment"
+                            onClick={() =>
+                              act('assign', { assign: target_rank })
+                            }
+                          />
                         </LabeledList.Item>
                       </LabeledList>
                     </Stack.Item>

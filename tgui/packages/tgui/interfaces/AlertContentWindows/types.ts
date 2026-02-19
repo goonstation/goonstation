@@ -10,6 +10,6 @@ export type AlertContentWindow = {
   width?: number; // Default to 600
   height?: number; // Defaults to 480
   title?: string; // Defaults to Antagonist Tips
-  content: React.ReactNode;
+  component: React.ComponentType;
   theme?: string;
 };

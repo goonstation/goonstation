@@ -57,7 +57,7 @@
 		H.equip_if_possible(new /obj/item/pinpointer/gold_bee(H), SLOT_IN_BACKPACK)
 		H.equip_if_possible(new /obj/item/clothing/glasses/eyepatch/pirate(H), SLOT_GLASSES)
 		H.equip_if_possible(new /obj/item/requisition_token/pirate(H), SLOT_R_STORE)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
 		H.equip_if_possible(new /obj/item/swords_sheaths/pirate(H), SLOT_BELT)
 		H.equip_if_possible(new /obj/item/pirate_hand_tele(H), SLOT_R_HAND)
 

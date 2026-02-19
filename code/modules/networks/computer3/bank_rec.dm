@@ -122,7 +122,7 @@
 		"Mining" = list(/datum/job/engineering/miner),
 		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
 		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant, /datum/job/command/research_director),
-		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/souschef, /datum/job/daily/waiter),
+		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/random/souschef, /datum/job/daily/waiter),
 		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
 		"Security" = list(/datum/job/security, /datum/job/command/head_of_security),
 		"Medical" = list(/datum/job/medical/medical_doctor, /datum/job/medical/medical_assistant, /datum/job/command/medical_director),
@@ -199,7 +199,8 @@
 				general_record["sex"] = "Other"
 				general_record["pronouns"] = "Unknown"
 				general_record["age"] = "Unknown"
-				general_record["fingerprint"] = "Unknown"
+				general_record["fingerprint_right"] = "Unknown"
+				general_record["fingerprint_left"] = "Unknown"
 				general_record["p_stat"] = "Active"
 				general_record["m_stat"] = "Stable"
 				data_core.general.add_record(general_record)
@@ -365,6 +366,12 @@
 
 					src.active_general["age"] = newAge
 
+				if(FIELDNUM_RANK)
+					if (ckey(inputText))
+						src.active_general["rank"] = copytext(inputText, 1, 33)
+					else
+						return
+
 				if(FIELDNUM_WAGE)
 					if (!src.active_bank)
 						src.print_text("No bank record loaded!")
@@ -444,8 +451,10 @@
 
 		if(MENU_SEARCH_PICK)
 			var/input = text2num_safe(ckey(strip_html(text)))
-			if(isnull(input) || input < 0 || input >> length(src.possible_active))
-				src.print_text("Cancelled")
+			if(isnull(input) || input < 1 || input >> length(src.possible_active))
+				src.master.temp = null
+				src.print_text(mainmenu_text())
+				src.print_text("<br>Search operation cancelled.")
 				src.menu = MENU_MAIN
 				return
 
@@ -465,7 +474,7 @@
 
 			var/list/datum/db_record/results = list()
 			for(var/datum/db_record/R as anything in data_core.general.records)
-				var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+				var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint_right"]), ckey(R["fingerprint_left"]), ckey(R["rank"])), " ")
 				if(findtext(haystack, searchText))
 					results += R
 
@@ -715,7 +724,9 @@
 			src.log_wrapper("Issued bonus of [src.bonus_amount][CREDIT_SIGN] ([bonus_total][CREDIT_SIGN] total) to team [src.teams[src.bonus_team]].")
 			command_announcement(
 				"Bonus of [src.bonus_amount][CREDIT_SIGN] issued to all [src.teams[src.bonus_team]] staff.<br>Reason: [inputText]",
-				"Payroll Announcement by [src.authenticated] ([src.account.assignment])"
+				"Payroll Announcement by [src.authenticated] ([src.account.assignment])",
+				'sound/misc/bingbong.ogg',
+				alert_origin=ALERT_DEPARTMENT
 			)
 			global.wagesystem.station_budget -= bonus_total
 			global.wagesystem.last_issued_bonus_time = world.time
@@ -866,7 +877,8 @@
 	<br>\[04]<b>Pronouns:</b> [src.active_general["pronouns"]]
 	<br>\[05]<b>Age:</b> [src.active_general["age"]]
 	<br>\[06]<b>Rank:</b> [src.active_general["rank"]]
-	<br>\[__]<b>Fingerprint:</b> [src.active_general["fingerprint"]]
+	<br>\[__]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]
+	<br>\[__]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]
 	<br>\[__]<b>DNA:</b> [src.active_general["dna"]]
 	<br>\[__]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
 	<br>\[__]Physical Status: [src.active_general["p_stat"]]
@@ -958,7 +970,8 @@
 		<br><br>Pronouns: [src.active_general["pronouns"]]
 		<br><br>Age: [src.active_general["age"]]
 		<br><br>Rank: [src.active_general["rank"]]
-		<br><br>Fingerprint: [src.active_general["fingerprint"]]
+		<br><br>Fingerprint (R): [src.active_general["fingerprint_right"]]
+		<br><br>Fingerprint (L): [src.active_general["fingerprint_left"]]
 		<br><br>DNA: [src.active_general["dna"]]
 		<br><br>Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
 		<br><br>Physical Status: [src.active_general["p_stat"]]
@@ -996,7 +1009,8 @@
 		printRecord.fields += "Pronouns: [src.active_general["pronouns"]]"
 		printRecord.fields += "Age: [src.active_general["age"]]"
 		printRecord.fields += "Rank: [src.active_general["rank"]]"
-		printRecord.fields += "Fingerprint: [src.active_general["fingerprint"]]"
+		printRecord.fields += "Fingerprint (R): [src.active_general["fingerprint_right"]]"
+		printRecord.fields += "Fingerprint (L): [src.active_general["fingerprint_left"]]"
 		printRecord.fields += "DNA: [src.active_general["dna"]]"
 		printRecord.fields += "Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]"
 		printRecord.fields += "Physical Status: [src.active_general["p_stat"]]"

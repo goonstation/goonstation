@@ -7,8 +7,8 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  content: (
+const SalvagerContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">
         You are a <s>pirate</s> salvager!
@@ -50,6 +50,15 @@ export const acw: AlertContentWindow = {
         7. Your objectives will always be stored in your notes. To access them,
         use the <em>Notes</em> verb.
       </p>
+
+      <p>
+        8. There is a way to get back to the Magpie if you are stranded. Seek
+        out Thrifty B.O.B. on the salvage vessel.
+      </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  component: SalvagerContentWindow,
 };

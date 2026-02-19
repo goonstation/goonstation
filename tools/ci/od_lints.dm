@@ -5,7 +5,6 @@
 #pragma UndefineMissingDirective error
 #pragma DefinedMissingParen error
 #pragma ErrorDirective error
-#pragma WarningDirective error
 #pragma MiscapitalizedDirective error
 
 //2000-2999

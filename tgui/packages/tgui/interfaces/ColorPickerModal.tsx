@@ -14,12 +14,13 @@ import {
   validHex,
 } from 'common/goonstation/colorful';
 import { classes } from 'common/react';
-import { Component, FocusEvent, FormEvent } from 'react';
+import { Component } from 'react';
 import { logger } from 'tgui/logging';
 import {
   Autofocus,
   Box,
   Flex,
+  Input,
   NumberInput,
   Section,
   Stack,
@@ -95,14 +96,15 @@ export const ColorPickerModal = () => {
   );
 };
 
-export const ColorSelector = (
-  {
-    color,
-    setColor,
-    defaultColor,
-  }: { color: HsvaColor; setColor; defaultColor: string },
-  context,
-) => {
+export const ColorSelector = ({
+  color,
+  setColor,
+  defaultColor,
+}: {
+  color: HsvaColor;
+  setColor;
+  defaultColor: string;
+}) => {
   const handleChange = (params: Partial<HsvaColor>) => {
     setColor((current: HsvaColor) => {
       return Object.assign({}, current, params);
@@ -388,22 +390,18 @@ export class ColorInput extends Component<ColorInputBaseProps> {
   }
 
   // Trigger `onChange` handler only if the input value is a valid color
-  handleInput = (e: FormEvent<HTMLInputElement>) => {
-    const inputValue = this.props.escape(e.currentTarget.value);
+  handleInput = (e: string) => {
+    const inputValue = this.props.escape(e);
     this.setState({ localValue: inputValue });
   };
-
+  string;
   // Take the color from props if the last typed color (in local state) is not valid
-  handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    if (e.currentTarget) {
-      if (!this.props.validate(e.currentTarget.value)) {
+  handleBlur = (e: string) => {
+    if (e) {
+      if (!this.props.validate(e)) {
         this.setState({ localValue: this.props.escape(this.props.color) }); // return to default;
       } else {
-        this.props.onChange(
-          this.props.escape
-            ? this.props.escape(e.currentTarget.value)
-            : e.currentTarget.value,
-        );
+        this.props.onChange(this.props.escape ? this.props.escape(e) : e);
       }
     }
   };
@@ -421,19 +419,16 @@ export class ColorInput extends Component<ColorInputBaseProps> {
 
   render() {
     return (
-      <Box className={classes(['Input', this.props.fluid && 'Input--fluid'])}>
-        <div className="Input__baseline">.</div>
-        <input
-          className="Input__input"
-          value={
-            this.props.format
-              ? this.props.format(this.state.localValue)
-              : this.state.localValue
-          }
-          onInput={this.handleInput}
-          onBlur={this.handleBlur}
-        />
-      </Box>
+      <Input
+        fluid={this.props.fluid}
+        value={
+          this.props.format
+            ? this.props.format(this.state.localValue)
+            : this.state.localValue
+        }
+        onChange={this.handleInput}
+        onBlur={this.handleBlur}
+      />
     );
   }
 }

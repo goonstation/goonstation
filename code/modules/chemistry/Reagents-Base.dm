@@ -138,7 +138,6 @@
 	depletion_rate = 0.05 // ethanol depletes slower but is formed in smaller quantities
 	overdose = 100 // ethanol poisoning
 	thirst_value = -0.02
-	bladder_value = -0.2
 	hygiene_value = 1
 	target_organs = list("liver")	//heart,  "stomach", "intestines", "left_kidney", "right_kidney"
 
@@ -431,7 +430,11 @@
 		if(!M) M = holder.my_atom
 		if(holder.has_reagent("epinephrine"))
 			holder.remove_reagent("epinephrine", 2 * mult)
-		M.take_toxin_damage(1 * mult)
+		var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = M.bioHolder?.GetEffect("plasma_metabolism")
+		if (!plasma_bioeffect)
+			M.take_toxin_damage(1 * mult)
+		else
+			plasma_bioeffect.absorb_liquid_plasma(mult)
 		..()
 		return
 
@@ -497,7 +500,9 @@
 	fluid_g = 200
 	fluid_b = 200
 	transparency = 255
+	overdose = 30
 	taste = "metallic"
+	var/finaltone = rgb(108, 125, 183)
 
 	reaction_obj(var/obj/item/I, var/volume)
 		if (I.material && I.material.getID() == "silver")
@@ -518,6 +523,20 @@
 				I.setMaterial(getMaterial("silver"))
 				holder.remove_reagent(src.id, 50)
 				.= 0
+	do_overdose(severity, mob/M, mult) //turns your skin blue
+		. = ..()
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/currenttone = H.bioHolder?.mobAppearance.s_tone
+			if(currenttone && color_dist(currenttone, finaltone) >= 5000) //these numbers might need tweaking
+				var/newtone = BlendRGB(currenttone, finaltone, 0.04)
+				H.bioHolder.mobAppearance.s_tone = newtone
+				H.set_face_icon_dirty()
+				H.set_body_icon_dirty()
+				if (H.limbs)
+					H.limbs.reset_stone()
+				H.update_colorful_parts()
+
 
 /datum/reagent/sulfur
 	name = "sulfur"
@@ -629,7 +648,7 @@
 	fluid_g = 250
 	fluid_b = 160
 	transparency = 155
-	data = null
+	threshold_volume = 40
 
 	on_add()
 		if(ismob(holder?.my_atom))
@@ -644,6 +663,18 @@
 			if(M?.bioHolder.HasEffect("quiet_voice"))
 				M.bioHolder.RemoveEffect("quiet_voice")
 		..()
+
+	cross_threshold_over()
+		. = ..()
+		if (ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			APPLY_ATOM_PROPERTY(M, PROP_ATOM_FLOATING, "reagent_[src.id]")
+
+	cross_threshold_under()
+		. = ..()
+		if (ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			REMOVE_ATOM_PROPERTY(M, PROP_ATOM_FLOATING, "reagent_[src.id]")
 
 /datum/reagent/radium
 	name = "radium"
@@ -724,7 +755,6 @@
 	transparency = 80
 	thirst_value = 0.8909
 	hygiene_value = 1.33
-	bladder_value = -0.2
 	taste = "bland"
 	minimum_reaction_temperature = -INFINITY
 	target_organs = list("left_kidney", "right_kidney")
@@ -795,13 +825,6 @@
 		var/mob/living/M = target
 		if(istype(M))
 			var/list/covered = holder.covered_turf()
-			if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
-				var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
-				if(M in pz.brandlist)
-					pz.brandlist -= M
-					boutput(M,SPAN_SUCCESS("<b>The feeling of an otherworldly presence passes...</b>"))
-				for(var/mob/zoldorf/Z in M)
-					Z.set_loc(Z.homebooth)
 			if (isvampire(M))
 				M.emote("scream")
 				for(var/mob/O in AIviewers(M, null))
@@ -818,12 +841,34 @@
 				else
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
+						var/removed_curse = FALSE
 						if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
-							H.bioHolder.RemoveEffect("blood_curse")
-							H.bioHolder.RemoveEffect("blind_curse")
-							H.bioHolder.RemoveEffect("weak_curse")
-							H.bioHolder.RemoveEffect("rot_curse")
-							H.bioHolder.RemoveEffect("death_curse")
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+							else
+								H.bioHolder.RemoveEffect("blood_curse")
+								H.bioHolder.RemoveEffect("blind_curse")
+								H.bioHolder.RemoveEffect("weak_curse")
+								H.bioHolder.RemoveEffect("rot_curse")
+								H.bioHolder.RemoveEffect("death_curse")
+								removed_curse = TRUE
+						else if(M.hasStatus("art_blood_curse") || M.hasStatus("art_aging_curse") || M.hasStatus("art_nightmare_curse") || M.hasStatus("art_maze_curse") || M.hasStatus("art_displacement_curse") || M.hasStatus("art_light_curse"))
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+							else
+								M.delStatus("art_blood_curse")
+								M.delStatus("art_aging_curse")
+								M.delStatus("art_nightmare_curse")
+								M.delStatus("art_maze_curse")
+								M.delStatus("art_displacement_curse")
+								M.delStatus("art_light_curse")
+								playsound(H, 'sound/effects/lit.ogg', 100, TRUE)
+								removed_curse = TRUE
+						else
+							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
+						if(removed_curse)
 							H.visible_message("[H] screams as some black smoke exits their body.")
 							H.emote("scream")
 							random_burn_damage(H, 5)
@@ -833,8 +878,6 @@
 								if (S)
 									S.set_up(5, 0, T, null, "#3b3b3b")
 									S.start()
-						else
-							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 					else
 						boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 					M.take_brain_damage(0 - clamp(volume, 0, 10))
@@ -855,7 +898,6 @@
 	reagent_state = LIQUID
 	thirst_value = 0.8909
 	hygiene_value = 0.75
-	bladder_value = -0.25
 	taste = "bitter"
 
 	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
@@ -895,7 +937,6 @@
 	reagent_state = LIQUID
 	thirst_value = -0.3 //Sea water actually slowly dehydrates you because you use more liquid to get rid of the salt then you gain.
 	hygiene_value = 0.3
-	bladder_value = -0.5
 	taste = "gross"
 
 /datum/reagent/ice
@@ -908,7 +949,6 @@
 	fluid_b = 250
 	transparency = 200
 	thirst_value = 0.8909
-	bladder_value = -0.2
 	minimum_reaction_temperature = T0C+1 // if it adds 1'C water, 1'C is good enough.
 	taste = "cold"
 
@@ -938,7 +978,6 @@
 	fluid_b = 247
 	transparency = 180
 	thirst_value = 0.3
-	bladder_value = -0.1
 	taste = "steamy"
 
 	reaction_turf(var/turf/t, var/volume)

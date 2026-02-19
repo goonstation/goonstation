@@ -47,7 +47,7 @@ export const Freezer = () => {
                 minValue={73.15}
                 maxValue={293.15}
                 format={(value) => value + ' K'}
-                onDrag={(_e, value) =>
+                onChange={(_e, value) =>
                   act('set_target_temperature', { value: value })
                 }
               />

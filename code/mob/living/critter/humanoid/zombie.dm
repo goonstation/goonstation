@@ -6,7 +6,6 @@
 
 /mob/living/critter/zombie
 	name = "zombie"
-	real_name = "zombie"
 	desc = "BraaAAAinnsSSs..."
 	icon = 'icons/mob/critter/humanoid/zombie.dmi'
 	icon_state = "zombie"

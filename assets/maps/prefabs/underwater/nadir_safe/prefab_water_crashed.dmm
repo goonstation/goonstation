@@ -240,7 +240,7 @@
 /area/station/turret_protected/sea_crashed)
 "ba" = (
 /obj/fakeobject/firealarm_broken{
-	dir = 4;
+	dir = 8;
 	icon_state = "firex";
 	pixel_x = -24
 	},
@@ -374,7 +374,8 @@
 "bv" = (
 /obj/fakeobject/firealarm_broken{
 	pixel_x = 0;
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)

@@ -2,16 +2,22 @@
 
 #define GHOST_HAIR_ALPHA 192
 
+TYPEINFO(/mob/dead/observer)
+	start_listen_modifiers = list(LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_RADIO_GLOBAL_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/dead/observer
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE_NOWARP
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP | IMMUNE_TRENCH_WARP
+	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP | IMMUNE_TRENCH_WARP
 	density = FALSE
 	canmove = TRUE
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
+
 	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
@@ -24,7 +30,6 @@
 	/// Observer menu TGUI datum. Can be null.
 	var/datum/observe_menu/observe_menu = null
 	var/last_words = null //! Last words of the mob before they died
-	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
 	corpse = null
@@ -369,7 +374,7 @@
 		if(istype(get_area(src), /area/afterlife))
 			qdel(src)
 
-		if(!mind?.get_player()?.dnr)
+		if(!(mind?.get_player()?.dnr || mind?.get_player()?.joined_observer))
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
@@ -472,7 +477,7 @@
 			wigmat = wigmat.getMutable()
 			wigmat.setColor(src.bioHolder.mobAppearance.customizations["hair_bottom"].color)
 			O.wig.setMaterial(wigmat)
-			O.wig.name = "[O.name]'s hair"
+			O.wig.name = "[O.name]’s hair"
 			O.wig.icon = 'icons/mob/human_hair.dmi'
 			O.wig.icon_state = cust_one
 			O.wig.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
@@ -520,7 +525,7 @@
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.get_player()?.dnr)
+	if(!mind || !(mind.get_player()?.dnr || isadminghost(src)))
 		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
@@ -656,9 +661,6 @@
 	else
 		boutput(usr, "Couldn't find anywhere in that area to go to!")
 
-/mob/dead/observer/say_understands(var/other)
-	return 1
-
 /* //dont need this anymores
 /mob/dead/observer/verb/toggle_wide()
 	set name = "Toggle Widescreen"
@@ -730,6 +732,14 @@
 
 
 /mob/dead/observer/proc/insert_observer(var/atom/target)
+	if(target == src) //cant observe self, or it nullspaces
+		boutput(src, SPAN_NOTICE("You cannot observe yourself, silly."))
+		return
+	var/mob/targetMob = target
+	if(istype(targetMob) && isadmin(targetMob) && !targetMob.client?.player_mode && !isadmin(src)) //Activate the alarm bells
+		logTheThing(LOG_DEBUG, src, "observes non-player mode admin [constructName(target)]") //They shouldn't be here unless forced manually
+		message_admins("[key_name(src)] starts observing non-player mode admin [key_name(target)]")
+		boutput(targetMob.client, SPAN_ALERT("<b>[key_name(src)] IS OBSERVING YOU!! If you didn't do this, kick them out!</b>"))
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	src.set_loc(newobs)
 	newobs.attach_hud(hud)
