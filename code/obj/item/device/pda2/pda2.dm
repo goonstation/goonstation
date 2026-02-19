@@ -229,7 +229,15 @@
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_CRISIS, MGA_CLONER)
+
+	pharmacist
+		name = "Pharmacy PDA"
+		icon_state = "pda-pha"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
+		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_CRISIS, MGA_DEATH, MGA_MEDCRIT)
+		default_muted_mailgroups = list(MGA_SALES)
 
 	security
 		name = "Security PDA"

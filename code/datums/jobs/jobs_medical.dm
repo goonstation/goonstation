@@ -97,11 +97,11 @@ ABSTRACT_TYPE(/datum/job/medical)
 	wages = PAY_DOCTORATE
 	limit = 1 // limited workspace
 	access_string = "Pharmacist"
-	slot_back = list(/obj/item/storage/backpack/medic)
-	slot_belt = list(/obj/item/device/pda2/medical)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/pharmacist)
+	slot_belt = list(/obj/item/device/pda2/pharmacist)
+	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_jump = list(/obj/item/clothing/under/rank/pharmacist)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/pharmacist)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_ears = list(/obj/item/device/radio/headset/pharmacist)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
 	items_in_backpack = list(/obj/item/storage/box/beakerbox)

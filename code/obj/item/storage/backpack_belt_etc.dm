@@ -208,6 +208,14 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	satchel_variant = /obj/item/storage/backpack/satchel/genetics
 
+/obj/item/storage/backpack/pharmacist
+	name = "pharmacy backpack"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of pharmacists."
+	icon_state = "bp_pharma"
+	item_state = "bp_pharma"
+	spawn_contents = list(/obj/item/storage/box/starter)
+	satchel_variant = /obj/item/storage/backpack/satchel/pharmacist
+
 /obj/item/storage/backpack/engineering
 	name = "engineering backpack"
 	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the back of engineering personnel."
@@ -535,6 +543,13 @@
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists."
 	icon_state = "satchel_genetics"
 	item_state = "satchel_genetics"
+	spawn_contents = list(/obj/item/storage/box/starter)
+
+/obj/item/storage/backpack/satchel/pharmacist
+	name = "pharmacy satchel"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of pharmacists."
+	icon_state = "satchel_pharma"
+	item_state = "satchel_pharma"
 	spawn_contents = list(/obj/item/storage/box/starter)
 
 /obj/item/storage/backpack/satchel/engineering
