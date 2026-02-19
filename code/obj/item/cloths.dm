@@ -134,7 +134,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	src.AddComponent(/datum/component/swallowable, required_role = "Clown")
 
 /obj/item/cloth/towel/clown/attackby(obj/item/I, mob/user)
-	if (I.w_class != W_CLASS_TINY || user.mind?.assigned_role != "Clown")
+	if (I.w_class != W_CLASS_TINY || !user.traitHolder?.hasTrait("training_clown"))
 		return ..()
 	if (!isnull(hidden_pocket))
 		boutput(user, SPAN_ALERT("You already have an item stored in the towel!"))

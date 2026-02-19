@@ -5,7 +5,7 @@
 	density = 1
 	flags = USEDELAY
 	anchored = ANCHORED
-	stops_space_move = 1
+	provides_grip = TRUE
 	status = REQ_PHYSICAL_ACCESS
 	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
@@ -76,6 +76,9 @@
 
 		. = ..()
 		START_TRACKING
+		// pods control own drift
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 
 
 	remove_air(amount as num)

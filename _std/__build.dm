@@ -218,12 +218,12 @@ o+`        `-` ``..-:yooos-..----------..`
 #define ORIGIN_REVISION "1"
 /// The latest commit author on the origin at the time of the server build, for display
 #define ORIGIN_AUTHOR "bob"
-// This exists and is set to a list of PR numbers when testmerges exist - goonhub-ci/scripts/compile.sh#L104
+// This exists and is set to a list of PR numbers when testmerges exist - goonstation/goonhub/app/Libraries/GameBuilder/Build.php#L392
 // #define TESTMERGE_PRS list(123, 456)
 
 // The following describe when the server was compiled
-#define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
-#define BUILD_TIME_TIMEZONE_OFFSET -0500
+#define BUILD_TIME_TIMEZONE_ALPHA "UTC" // Server is UTC
+#define BUILD_TIME_TIMEZONE_OFFSET 0000
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
 #define BUILD_TIME_MONTH 03

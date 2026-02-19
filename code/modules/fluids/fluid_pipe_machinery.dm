@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/obj/machinery/fluid_machinery)
 /obj/machinery/fluid_machinery
-	icon = 'icons/obj/fluidpipes/fluid_pipe.dmi'
+	icon = 'icons/obj/fluidpipes/fluid_machines.dmi'
 	desc = "Does cool things to fluids."
 	processing_tier = PROCESSING_QUARTER
 	anchored = ANCHORED
@@ -54,8 +54,9 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 /obj/machinery/fluid_machinery/unary/initialize()
 	for(var/obj/fluid_pipe/target in get_step(src, src.dir))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network = target.network
-			src.network.machines += src
+			if(target.network)
+				src.network = target.network
+				src.network.machines += src
 			break
 
 /obj/machinery/fluid_machinery/unary/refresh_network(datum/flow_network/network)
@@ -120,6 +121,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	drain_min = 10
 	drain_max = 15
 
+/obj/machinery/fluid_machinery/unary/drain/inlet_pump/active
+	on = TRUE
+	icon_state = "inlet1"
+
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/proc/activate()
 
 
@@ -128,6 +133,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	src.on = !src.on
 	src.UpdateIcon(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
+	logTheThing(LOG_STATION, user, "turns a fluid drain [src.on ? "on" : "off"] at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/process()
 	var/area/A = get_area(src)
@@ -138,6 +144,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 			src.on = FALSE
 			src.UpdateIcon(TRUE)
 			src.visible_message(SPAN_ALERT("[src] shuts down due to lack of APC power."))
+			logTheThing(LOG_STATION, null, "A fluid drain shuts off from a lack of power at [log_loc(src)].")
 		return
 	if(!src.on)
 		return
@@ -155,6 +162,11 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/fluid_machinery/unary/drain/inlet_pump/overfloor/active
+	on = TRUE
+	icon_state = "inlet1"
+
 
 /obj/machinery/fluid_machinery/unary/hand_pump
 	name = "hand pump"
@@ -174,6 +186,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	var/turf/simulated/T = get_turf(src)
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
 	if (isnull(fluid)) return
+	logTheThing(LOG_STATION, user, "pumped to the floor [log_reagents(fluid)] with a hand pump at [log_loc(src)].")
 	fluid?.trans_to(T, fluid.total_volume)
 	qdel(fluid)
 
@@ -201,6 +214,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 
 	var/datum/reagents/fluid = src.pull_from_network(src.network, src.pullrate)
 	boutput(user, SPAN_NOTICE("You fill [I] with [fluid.trans_to(I, fluid.total_volume)] units of the contents of [src]."))
+	logTheThing(LOG_STATION, user, "filled [log_object(I)] [log_reagents(I)] with a hand pump at [log_loc(src)].")
 	qdel(fluid)
 	playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
@@ -291,6 +305,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 		var/inp = tgui_input_number(user, "Please enter drip amount (Will round to [QUANTIZATION_UNITS]):", "Dispense Amount", src.pullrate, src.maxpullrate, MINIMUM_REAGENT_MOVED)
 		if (!inp) return
 		src.pullrate = clamp(round(inp, QUANTIZATION_UNITS), MINIMUM_REAGENT_MOVED, src.maxpullrate)
+		logTheThing(LOG_STATION, user, "set a dripper's pullrate to [src.pullrate] units at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/unary/dripper/process()
 	if(!src.network)
@@ -350,33 +365,40 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 			P.color_overlay.alpha = P.color_overlay_alpha
 			P.overlays += P.color_overlay
 			src.visible_message("[src] ejects a pill.")
+			logTheThing(LOG_STATION, null, "A fluid dispenser dispensed a [log_object(P)] [log_reagents(P)] at [log_loc(src)].")
 		if("vials")
 			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src))
 			src.reagents.trans_to(V, src.amount)
 			src.visible_message("[src] ejects a vial.")
+			logTheThing(LOG_STATION, null, "A fluid dispenser dispensed a [log_object(V)] [log_reagents(V)] at [log_loc(src)].")
 		if("patches")
 			var/obj/item/reagent_containers/patch/P = new(get_turf(src))
 			src.reagents.trans_to(P, src.amount)
 			src.visible_message("[src] ejects a patch.")
+			logTheThing(LOG_STATION, null, "A fluid dispenser dispensed a [log_object(P)] [log_reagents(P)] at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/unary/dispenser/proc/set_amount(var/datum/mechanicsMessage/input)
 	var/newamount = text2num_safe(input.signal)
 	if (!newamount)
 		return
 	src.amount = round(clamp(newamount, src.min, src.max), QUANTIZATION_UNITS)
+	logTheThing(LOG_STATION, null, "A fluid dispenser was set to dispense [src.amount] units through MechComp at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/unary/dispenser/proc/set_amount_manual(obj/item/W, mob/user)
 	var/inp = tgui_input_number(user, "Please enter dispense amount (Will round to [QUANTIZATION_UNITS]):", "Dispense Amount", src.amount, src.max, src.min)
 	if (!inp) return
 	src.amount = round(inp, QUANTIZATION_UNITS)
+	logTheThing(LOG_STATION, user, "set a fluid dispenser to dispense [src.amount] units at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/unary/dispenser/proc/set_type(obj/item/W, mob/user)
 	var/inp = tgui_input_list(user, "Select a type to output.", "Dispense Type", src.itemlist)
 	src.itemtodispense = (inp in src.itemlist) ? inp : src.itemtodispense
+	logTheThing(LOG_STATION, user, "set a fluid dispenser to dispense [src.itemtodispense] at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/unary/dispenser/proc/set_automatic(obj/item/W, mob/user)
 	src.automatic = !src.automatic
 	boutput(user, SPAN_NOTICE("Automatic mode is now set to [src.automatic ? "true" : "false"]."))
+	logTheThing(LOG_STATION, user, "set a fluid dispenser's automatic mode [src.automatic ? "on" : "false"] at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/unary/dispenser/New()
 	..()
@@ -433,14 +455,16 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 /obj/machinery/fluid_machinery/binary/initialize()
 	for(var/obj/fluid_pipe/target in get_step(src, turn(src.dir, 180)))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network1 = target.network
-			src.network1.machines += src
+			if(target.network)
+				src.network1 = target.network
+				src.network1.machines += src
 			break
 
 	for(var/obj/fluid_pipe/target in get_step(src, src.dir))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network2 = target.network
-			src.network2.machines += src
+			if(target.network)
+				src.network2 = target.network
+				src.network2.machines += src
 			break
 
 /obj/machinery/fluid_machinery/binary/refresh_network(datum/flow_network/network)
@@ -459,6 +483,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	var/on = FALSE
 	var/pumprate = 200
 
+/obj/machinery/fluid_machinery/binary/pump/active
+	on = TRUE
+	icon_state = "pump1"
+
 /obj/machinery/fluid_machinery/binary/pump/New()
 	..()
 	AddComponent(/datum/component/mechanics_holder)
@@ -470,21 +498,25 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	if(src.on == FALSE)
 		src.on = TRUE
 		src.UpdateIcon(TRUE)
+		logTheThing(LOG_STATION, null, "A fluid pump was toggled on through MechComp at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/binary/pump/proc/deactivate()
 	if(src.on == TRUE)
 		src.on = FALSE
 		src.UpdateIcon(TRUE)
+		logTheThing(LOG_STATION, null, "A fluid pump was toggled off through MechComp at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/binary/pump/proc/toggle()
 	src.on = !src.on
 	src.UpdateIcon(TRUE)
+	logTheThing(LOG_STATION, null, "A fluid pump was toggled [src.on ? "on" : "off"] through MechComp at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/binary/pump/attack_hand(mob/user)
 	interact_particle(user, src)
 	src.on = !src.on
 	src.UpdateIcon(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
+	logTheThing(LOG_STATION, user, "turned a fluid pump [src.on ? "on" : "off"] at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/binary/pump/update_icon(animate)
 	if(animate)
@@ -511,6 +543,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	icon_state = "valve0"
 	var/on = FALSE
 
+/obj/machinery/fluid_machinery/binary/valve/active
+	on = TRUE
+	icon_state = "valve1"
+
 /obj/machinery/fluid_machinery/binary/valve/attack_hand(mob/user)
 	interact_particle(user, src)
 	if(ON_COOLDOWN(src, "fluidvalve", 1 SECOND))
@@ -518,6 +554,8 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	src.on = !src.on
 	src.UpdateIcon(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
+	logTheThing(LOG_STATION, user, "turns a fluid valve [src.on ? "on" : "off"] at [log_loc(src)].")
+
 	if(!(src.network1 && src.network2))
 		return
 	if(src.on)
@@ -569,20 +607,23 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 /obj/machinery/fluid_machinery/trinary/initialize()
 	for(var/obj/fluid_pipe/target in get_step(src, turn(src.dir, 180)))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network1 = target.network
-			src.network1.machines += src
+			if(target.network)
+				src.network1 = target.network
+				src.network1.machines += src
 			break
 
 	for(var/obj/fluid_pipe/target in get_step(src, turn(src.dir, -90)))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network2 = target.network
-			src.network2.machines += src
+			if(target.network)
+				src.network2 = target.network
+				src.network2.machines += src
 			break
 
 	for(var/obj/fluid_pipe/target in get_step(src, src.dir))
 		if(target.initialize_directions & get_dir(target,src))
-			src.network3 = target.network
-			src.network3.machines += src
+			if(target.network)
+				src.network3 = target.network
+				src.network3.machines += src
 			break
 
 /obj/machinery/fluid_machinery/trinary/refresh_network(datum/flow_network/network)
@@ -600,6 +641,24 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 	flags = NOSPLASH
 	var/pullrate = 200
 	var/obj/item/reagent_containers/glass/beaker
+	var/default_reagent = null
+
+/obj/machinery/fluid_machinery/trinary/filter/New()
+	..()
+	if(default_reagent)
+		src.beaker = new /obj/item/reagent_containers/glass/vial
+		src.beaker.reagents.add_reagent(default_reagent, 5)
+		src.UpdateIcon()
+
+/obj/machinery/fluid_machinery/trinary/filter/disposing()
+	src.beaker.set_loc(src.loc)
+	src.beaker = null
+	..()
+
+/obj/machinery/fluid_machinery/trinary/filter/water
+	name = "water filter"
+	default_reagent = "water"
+	icon_state = "filter1"
 
 /obj/machinery/fluid_machinery/trinary/filter/attackby(obj/item/reagent_containers/glass/B, mob/user)
 	..()
@@ -614,16 +673,19 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 	if(src.beaker)
 		user?.put_in_hand_or_drop(src.beaker)
 		boutput(user, "You swap the [B] with the [src.beaker] already loaded into the machine.")
+		logTheThing(LOG_STATION, user, "removed [log_object(src.beaker)] [log_reagents(src.beaker)] from a fluid filter at [log_loc(src)].")
 		src.beaker = null
 
 	user.u_equip(B)
 	src.beaker = B
 	B.set_loc(src)
 	icon_state = "filter1"
+	logTheThing(LOG_STATION, user, "added [log_object(src.beaker)] [log_reagents(src.beaker)] to a fluid filter at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/trinary/filter/attack_hand(mob/user)
 	..()
 	if(src.beaker)
+		logTheThing(LOG_STATION, user, "removed [log_object(src.beaker)] [log_reagents(src.beaker)] from a fluid filter at [log_loc(src)].")
 		user.put_in_hand_or_drop(src.beaker)
 		src.beaker = null
 		icon_state = "filter0"

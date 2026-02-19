@@ -438,7 +438,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		. = ..()
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_WEAR_MASK)
-			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
+			if ( user.mind && user.traitHolder?.hasTrait("training_clown") && istraitor(user) )
 				src.cant_other_remove = 1
 				src.cant_self_remove = 0
 			else
@@ -478,7 +478,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				src.victim.emote("laugh")
 
 	afterattack(atom/target, mob/user, reach, params)
-		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
+		if ( reach <= 1 && user.traitHolder?.hasTrait("training_clown") && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
@@ -608,10 +608,10 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		else if (istype(W,/obj/item/cable_coil/))
 			boutput(user, SPAN_NOTICE("You attach the cable to the mask. Looks like you can wear it now."))
 			var/obj/item/cable_coil/C = W
-			C.use(1)
+			if(!C.use(1))
+				return
 			var/obj/item/clothing/mask/paper/M = new /obj/item/clothing/mask/paper(src.loc)
 			user.put_in_hand_or_drop(M)
-			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
 			if (src.color)
 				M.color = src.color
 			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, M, user)

@@ -38,22 +38,6 @@ ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 			if (charges > 1) name += " packet"
 		if (charges > 1) src.inventory_counter.update_number(src.charges)
 
-	afterattack(atom/target, mob/user, reach, params)
-		. = ..()
-		if (!isturf(target)) return
-		if (!user.find_tool_in_hand(TOOL_DIGGING))
-			return
-
-		var/turf/T = target
-		if (T.can_dig) // if we can dig it to make trenches, we can plant using it
-
-			var/datum/component/arable/A = T.AddComponent(/datum/component/arable/single_use)
-			A.auto_water = FALSE // disable auto watering
-			A.plant_seed(T,src,user)
-
-
-
-
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		// If the crop is just straight up seeds. Don't need reagents, but we do
 		// need to pass genes and whatnot along like we did for fruit.

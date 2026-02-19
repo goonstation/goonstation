@@ -178,13 +178,8 @@
 		if (skin_target)
 			var/obj/item/reagent_containers/glass/bucket/red/new_bucket = new /obj/item/reagent_containers/glass/bucket/red(get_turf(activator))
 			new_bucket.reagents = skin_target.reagents
-			new_bucket.fingerprints = skin_target.fingerprints
-			new_bucket.fingerprints_full = skin_target.fingerprints_full
-			new_bucket.fingerprintslast = skin_target.fingerprintslast
+			new_bucket.forensic_holder = skin_target.forensic_holder
 			skin_target.reagents = null
-			skin_target.fingerprints = null
-			skin_target.fingerprints_full = null
-			skin_target.fingerprintslast = null
 			// Update borg's bucket in their module, don't drop it
 			if (issilicon(activator))
 				var/mob/living/silicon/robot/borg_activator = activator
@@ -434,7 +429,7 @@
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			if (H.mind.assigned_role == "Clown")
+			if (H.traitHolder?.getTrait("training_clown"))
 				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), SLOT_HEAD)
 				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
 				D.redeemer = H.ckey
@@ -1215,12 +1210,7 @@
 		var/obj/item/clothing/head/helmet/welding/skin_target = activator.find_type_in_hand(/obj/item/clothing/head/helmet/welding)
 		if (skin_target)
 			var/obj/item/clothing/head/helmet/welding/fire/new_helmet = new /obj/item/clothing/head/helmet/welding/fire(get_turf(activator))
-			new_helmet.fingerprints = skin_target.fingerprints
-			new_helmet.fingerprints_full = skin_target.fingerprints_full
-			new_helmet.fingerprintslast = skin_target.fingerprintslast
-			skin_target.fingerprints = null
-			skin_target.fingerprints_full = null
-			skin_target.fingerprintslast = null
+			new_helmet.forensic_holder = skin_target.forensic_holder
 			qdel(skin_target)
 			activator.put_in_hand_or_drop(new_helmet)
 			return 1

@@ -4107,10 +4107,6 @@
 /obj/decal/cleanable/ranch_feed,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
-"Dz" = (
-/obj/item/device/infra_sensor,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
 "DK" = (
 /obj/fakeobject/ritual_symbol{
 	icon_state = "corruptus"
@@ -12991,7 +12987,7 @@ Ns
 FT
 Hn
 Hn
-Dz
+Ns
 Ns
 Ns
 Ns

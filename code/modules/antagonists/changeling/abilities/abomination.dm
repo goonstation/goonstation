@@ -63,7 +63,7 @@
 			H.changeStatus("knockdown", 5 SECONDS)
 		if (C)
 			C.points = max(C.points - 15, 0)
-			var/datum/absorbedIdentity/face = pick(C.absorbed_dna)
+			var/datum/absorbedIdentity/face = C.absorbed_dna[pick(C.absorbed_dna)]
 			face.apply_to(src)
 		H.update_face()
 		H.update_body()

@@ -10,6 +10,7 @@
 	var/painted = 0
 	var/paint = null
 
+ADMIN_INTERACT_PROCS(/mob/living/silicon/robot, proc/admin_add_tool, proc/admin_remove_tool)
 TYPEINFO(/mob/living/silicon/robot)
 	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
 
@@ -135,6 +136,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.part_arm_l = new /obj/item/parts/robot_parts/arm/left/light(src)
 			src.part_leg_r = new /obj/item/parts/robot_parts/leg/right/light(src)
 			src.part_leg_l = new /obj/item/parts/robot_parts/leg/left/light(src)
+			part_arm_r.limb_print = part_arm_l.limb_print // Give starter arms the same fingerprints
 			for(var/obj/item/parts/robot_parts/P in src.contents)
 				P.holder = src
 				if(P.robot_movement_modifier)
@@ -688,7 +690,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			for (var/mob/M in A.contents)
 				recipients += M
 
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		log_emote(src, message, voluntary)
 		act = lowertext(act)
 		for (var/mob/M as anything in recipients)
 			M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
@@ -1136,9 +1138,9 @@ TYPEINFO(/mob/living/silicon/robot)
 			var/obj/item/cable_coil/coil = W
 			src.add_fingerprint(user)
 			if(health < max_health)
-				coil.use(1)
-				HealDamage("All", 0, 120)
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
+				if(coil.use(1))
+					HealDamage("All", 0, 120)
+					src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
 			else
 				boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 			src.update_appearance()
@@ -3613,6 +3615,20 @@ TYPEINFO(/mob/living/silicon/robot)
 /mob/living/silicon/robot/remove_pulling()
 	..()
 	src.hud?.update_pulling()
+
+/mob/living/silicon/robot/proc/admin_add_tool()
+	set name = "Add Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_add_tool()
+
+/mob/living/silicon/robot/proc/admin_remove_tool()
+	set name = "Remove Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_remove_tool()
 
 /datum/statusEffect/low_power/robot
 	id = "low_power_robot"
