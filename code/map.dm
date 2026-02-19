@@ -1001,6 +1001,8 @@ var/global/list/mapNames = list(
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
+	listening_post_prefab = /datum/mapPrefab/listening_post/atlas
+
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
