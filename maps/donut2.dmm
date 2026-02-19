@@ -6942,7 +6942,8 @@
 /obj/stool/chair/office/blue{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/pharmacist,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -7034,7 +7035,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aQp" = (
-/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/carpet/blue/fancy/narrow/north,
 /area/station/medical/head)
 "aQs" = (
@@ -26922,7 +26922,7 @@
 "jzx" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/disposalpipe/segment,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -29117,6 +29117,7 @@
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /obj/machinery/light/incandescent,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/treatment)
 "kPs" = (
@@ -34889,7 +34890,7 @@
 /area/station/maintenance/inner/central)
 "nYb" = (
 /obj/table/reinforced/auto,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/item/reagent_containers/dropper{
 	pixel_x = -7;
 	pixel_y = 5
@@ -40345,7 +40346,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/item/device/reagentscanner{
 	pixel_x = -2;
 	pixel_y = 1

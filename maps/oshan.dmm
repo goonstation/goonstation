@@ -2746,7 +2746,7 @@
 /area/station/medical/staff)
 "amj" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -2930,6 +2930,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "ani" = (
@@ -2978,6 +2979,7 @@
 /area/station/medical/medbay/surgery)
 "anq" = (
 /obj/machinery/firealarm/directional/west,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -27953,7 +27955,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/stamp,
 /obj/item/pen,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "faq" = (
@@ -33711,6 +33713,7 @@
 /obj/stool/chair/office/blue{
 	dir = 8
 	},
+/obj/landmark/start/job/pharmacist,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "jTT" = (
@@ -35946,7 +35949,7 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "lVo" = (
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -40604,7 +40607,7 @@
 	dir = 4;
 	name = "Operating Theater"
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"

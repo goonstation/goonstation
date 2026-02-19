@@ -710,13 +710,11 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
 "Gi" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Teleport Pad"
-	},
 /obj/cable/black{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicate_teleporter)

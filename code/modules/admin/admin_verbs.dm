@@ -123,7 +123,7 @@ var/list/admin_verbs = list(
 		/client/proc/POK,
 		/client/proc/POM,
 		/client/proc/show_rules_to_player,
-		/client/proc/view_fingerprints,
+		/client/proc/view_adminprints,
 		/client/proc/cmd_admin_intercom_announce,
 		/client/proc/cmd_admin_intercom_announce_freq,
 		/client/proc/cmd_admin_intercom_help,
@@ -1020,24 +1020,14 @@ var/list/fun_images = list()
 	else
 		M << link("http://wiki.ss13.co/Rules")
 
-/client/proc/view_fingerprints(obj/O as obj in world)
-	set name = "View Object Fingerprints"
+/client/proc/view_adminprints(obj/O as obj in world)
+	set name = "View Admin Forensics"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	if(!O.fingerprints_full || !length(O.fingerprints_full))
-		alert("There are no fingerprints on this object.", null, null, null, null, null)
-		return
-
-	boutput(src, "<b>Hidden Fingerprints on [O]:</b>")
-	for(var/i in O.fingerprints_full)
-		var/list/L = O.fingerprints_full[i]
-		boutput(src, "Key: [L["key"]], real name: [L["real_name"]], time: [L["time"]]")
-
-	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
-	return
+	boutput(src, O.get_adminprints())
 
 /client/proc/respawn_cinematic()
 	set name = "Respawn Cinematic"
@@ -1283,7 +1273,7 @@ var/list/fun_images = list()
 		alert("Thank fuck.")
 
 //Special proc to set up the server for mapping via screenshots
-/client/proc/mapWorld()
+/client/proc/mapWorld(automated = FALSE)
 	set name = "Map World"
 	set desc = "Takes a series of screenshots for mapping"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -1291,9 +1281,11 @@ var/list/fun_images = list()
 	SHOW_VERB_DESC
 
 	//Gotta prevent dummies
+	#ifdef LIVE_SERVER
 	var/confirm = tgui_alert(src.mob, "WARNING: This proc should absolutely not be run on a live server! Make sure you know what you are doing!", "WARNING", list("Cancel", "Proceed"))
 	if(confirm == "Cancel")
 		return
+	#endif
 
 	//Viewport size
 	var/viewport_width = world.maxx / 10
@@ -1301,34 +1293,29 @@ var/list/fun_images = list()
 	src.view = "[viewport_width]x[viewport_height]"
 
 	//Z levels to map
-	var/z
-	var/allZ = 0
-	var/safeAllZ = 0
-	var/inputZ = input(src, "What Z level do you want to map? (10 for all levels, 11 for all except centcom level)", "Z Level", 1) as num
-	if (inputZ < 1)
-		return
-	else if (inputZ == 10)
-		allZ = 1
-	else if (inputZ == 11)
-		safeAllZ = 1
-	else
-		z = inputZ
+	var/z = 1
+	var/allZ = FALSE
+	var/safeAllZ = FALSE
+	if (!automated)
+		z = input(src, "What Z level do you want to map? (10 for all levels, 11 for all except centcom level)", "Z Level", 1) as num
 
-	var/delay
-	var/inputDelay = input(src, "Delay between changing location/taking screenshots. (If unsure, leave as as default)", "Delay", 7) as num
-	if (inputDelay < 1)
-		return
-	else
-		delay = inputDelay
+	if (z == 10)
+		allZ = TRUE
+	else if (z == 11)
+		safeAllZ = TRUE
 
-	var/confirm2 = tgui_alert(src.mob, "Make everyone invisible? (Literally every mob)", "Invisible Mobs?", list("Yes", "No"))
+	var/delay = 7
+	if (!automated)
+		delay = input(src, "Delay between changing location/taking screenshots. (If unsure, leave as as default)", "Delay", 7) as num
+
+	var/confirm2 = automated ? "Yes" : tgui_alert(src.mob, "Make everyone invisible? (Literally every mob)", "Invisible Mobs?", list("Yes", "No"))
 	if (confirm2 == "Yes")
 		//Make everyone invisible so they don't get in the way of screenshots
 		for (var/mob/M in mobs)
 			if (M.ckey)
 				M.alpha = 0
 
-	var/confirm3 = tgui_alert(src.mob, "Max out all power devices? (Prevents lights from going out mid-mapping)", "Max Power?", list("Yes", "No"))
+	var/confirm3 = automated ? "Yes" : tgui_alert(src.mob, "Max out all power devices? (Prevents lights from going out mid-mapping)", "Max Power?", list("Yes", "No"))
 	if (confirm3 == "Yes")
 		//Max out all power (to avoid lights dying mid mapping)
 		for(var/obj/machinery/power/apc/C in machine_registry[MACHINES_POWER])
@@ -1343,7 +1330,7 @@ var/list/fun_images = list()
 			S.UpdateIcon()
 			S.power_change()
 
-	var/confirm4 = tgui_alert(src.mob, "Turn space bright pink? (For post processing/optimizations)", "Pink Background?", list("Yes", "No"))
+	var/confirm4 = automated ? "Yes" : tgui_alert(src.mob, "Turn space bright pink? (For post processing/optimizations)", "Pink Background?", list("Yes", "No"))
 	if (confirm4 == "Yes")
 		//Make every space tile bright pink (for further processing via local image manipulation)
 		for (var/turf/space/S in world)
@@ -1354,23 +1341,23 @@ var/list/fun_images = list()
 				S.color = transparentColor
 				S.underlays -= S.starlight
 
-	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
+	var/confirm5 = automated ? "Yes" : tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")
 		var/atom/plane = src.get_plane(PLANE_LIGHTING)
 		if (plane)
 			plane.alpha = 0
 
-	var/confirm6 = tgui_alert(src.mob, "Disable drop shadowing?", "Dropshadows?", list("Yes", "No"))
+	var/confirm6 = automated ? "Yes" : tgui_alert(src.mob, "Disable drop shadowing?", "Dropshadows?", list("Yes", "No"))
 	if (confirm6 == "Yes")
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
 
-	var/confirm7 = tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
+	var/confirm7 = automated ? "Yes" : tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
 	if (confirm7 == "Yes")
 		src.set_saturation(1)
 		src.set_color(COLOR_MATRIX_IDENTITY, FALSE)
 
-	var/confirm8 = tgui_alert(src.mob, "Disable Global Parallax?", "Disable Global Parallax?", list("Yes", "No"))
+	var/confirm8 = automated ? "Yes" : tgui_alert(src.mob, "Disable Global Parallax?", "Disable Global Parallax?", list("Yes", "No"))
 	if (confirm8 == "Yes")
 		parallax_enabled = !parallax_enabled
 
@@ -1388,7 +1375,7 @@ var/list/fun_images = list()
 	var/start_x = (viewport_width / 2) + 1
 	var/start_y = world.maxy - (viewport_height / 2) + 1
 
-	boutput(src, SPAN_NOTICE("<B>Begining mapping.</B>"))
+	boutput(src, SPAN_ALERT("<b>Begining mapping.</b>"))
 
 	//Map eeeeverything
 	if (allZ || safeAllZ)
@@ -1404,7 +1391,7 @@ var/list/fun_images = list()
 					winset(src, null, "command=\".screenshot auto\"")
 					boutput(src, "Screenshot taken at ([x], [y], [z])")
 					sleep(delay)
-			if (curZ != world.maxz)
+			if (curZ != world.maxz && !automated)
 				var/pause = tgui_alert(src.mob, "Z Level ([curZ]) finished. Organise your screenshot files and press Ok to continue or Cancel to cease mapping.", "Tea break", list("Ok", "Cancel"))
 				if (pause == "Cancel")
 					return
@@ -1417,10 +1404,12 @@ var/list/fun_images = list()
 				src.mob.z = z
 				sleep(delay)
 				winset(src, null, "command=\".screenshot auto\"")
-				boutput(src, "Screenshot taken at ([x], [y], [z])")
+				boutput(src, "Screenshot taken at ([x], [y], [z]) - ([( x - start_x) / viewport_width + 1], [(start_y - y) / viewport_height + 1], [z])")
 				sleep(delay)
 
-	alert("Mapping complete!", "Yay!", "Ok")
+	src.mob.playsound_local_not_inworld('sound/misc/lawnotify.ogg', vol = 100)
+	if (!automated)
+		alert("Mapping complete!", "Yay!", "Ok")
 
 /client/proc/view_cid_list(var/C as text)
 	set name = "View CompID List"
@@ -2160,8 +2149,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.cmd_change_addiction(A)
 		if("View Variables")
 			C.debug_variables(A)
-		if("View Fingerprints")
-			C.view_fingerprints(A)
+		if("View Admin Forensics")
+			C.view_adminprints(A)
 		if("Delete")
 			C.cmd_admin_delete(A)
 		if("Copy Here")

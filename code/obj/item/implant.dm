@@ -2176,6 +2176,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.activated = FALSE
 		..()
 
+/obj/item/implant/confetti
+	var/datum/component/my_comp = null
+
+	implanted(mob/M, mob/I)
+		. = ..()
+		src.my_comp = M.AddComponent(/datum/component/death_confetti)
+
+	on_remove(mob/M)
+		. = ..()
+		src.my_comp?.RemoveComponent()
+		src.my_comp = null
+
 /* ============================================================= */
 /* ------------------------- Implanter ------------------------- */
 /* ============================================================= */
@@ -2367,7 +2379,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "microbomb implanter"
 	icon_state = "implanter1-g"
 	sneaky = TRUE
-	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, an explosion relative to the amount of microbombs in them will occur. Suiciding will cause no explosion."})
+	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, an explosion relative to the amount of microbombs in them will occur. Suiciding will likely cause no explosion, but succumbing while in crit will."})
 
 	New()
 		var/obj/item/implant/revenge/microbomb/newbomb = new/obj/item/implant/revenge/microbomb( src )
@@ -2686,6 +2698,95 @@ TYPEINFO(/obj/item/gun/implanter)
 		my_implant = null
 		tooltip_rebuild = TRUE
 
+ADMIN_INTERACT_PROCS(/obj/item/gun/implanter/infinite, proc/set_implant_type)
+TYPEINFO(/obj/item/gun/implanter/infinite)
+	mats=null
+/obj/item/gun/implanter/infinite
+	name = "implant gun deluxe"
+	desc = "This auto-regenerating implant gun is illegal in several Earth countries. Not that it matters here in space."
+
+	var/implant_typepath = /obj/item/implant/bloodmonitor
+
+	New()
+		. = ..()
+		src.my_implant = new src.implant_typepath(src)
+		if (!current_projectile)
+			set_current_projectile(new/datum/projectile/implanter)
+		var/datum/projectile/implanter/my_datum = current_projectile
+		my_datum.my_implant = my_implant
+		if (ismob(src.loc))
+			my_datum.implant_master = src.loc
+
+	attackby(obj/item/I, mob/user)
+		if (istypes(I, list(/obj/item/implant, /obj/item/implanter, /obj/item/implantcase)))
+			boutput(user, SPAN_ALERT("The implant installed in [src] cannot be removed or replaced!"))
+			return
+		return ..()
+
+	alter_projectile(obj/projectile/P)
+		if (!P || !my_implant)
+			return ..()
+		src.my_implant.set_loc(P)
+
+		src.my_implant = new src.implant_typepath(src)
+		if (!current_projectile)
+			set_current_projectile(new/datum/projectile/implanter)
+		var/datum/projectile/implanter/my_datum = current_projectile
+		my_datum.my_implant = my_implant
+		if (ismob(src.loc))
+			my_datum.implant_master = src.loc
+		src.tooltip_rebuild = TRUE
+
+	proc/set_implant_type()
+		var/new_typepath = tgui_input_list(usr, "Select implant type", "Change Implant", concrete_typesof(/obj/item/implant), src.my_implant ? src.my_implant.type : /obj/item/implant/bloodmonitor)
+		if (!ispath(new_typepath, /obj/item/implant))
+			return
+
+		if (src.my_implant)
+			qdel(src.my_implant)
+			src.my_implant = null
+		src.implant_typepath = new_typepath
+		src.my_implant = new src.implant_typepath(src)
+		if (!current_projectile)
+			set_current_projectile(new/datum/projectile/implanter)
+		var/datum/projectile/implanter/my_datum = current_projectile
+		my_datum.my_implant = my_implant
+		if (ismob(src.loc))
+			my_datum.implant_master = src.loc
+
+/obj/item/gun/implanter/infinite/minigun
+	name = "implant gun deluxe championship edition turbo"
+	desc = "You feel a vague sense of terror just looking at this thing."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	icon_state = "minigun"
+	item_state = "heavy"
+	force = MELEE_DMG_LARGE
+	two_handed = TRUE
+	recoil_strength = 12
+	spread_angle = 15
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD
+	fire_animation = TRUE
+	w_class = W_CLASS_BULKY
+
+	New()
+		AddComponent(/datum/component/holdertargeting/fullauto/ramping, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
+		. = ..()
+
+	setupProperties()
+		..()
+		setProperty("carried_movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
+
+/obj/item/gun/implanter/infinite/minigun/confetti_cannon
+	name = "confetti cannon!!!"
+	desc = "You feel a vague sense of terror just looking at this thing. Honk."
+	implant_typepath = /obj/item/implant/confetti
+
+/obj/item/gun/implanter/infinite/minigun/microbomb_cannon
+	name = "microbomb mass implanter"
+	desc = "You feel the yearning maw of the void grip you tightly. It comes."
+	implant_typepath = /obj/item/implant/revenge/microbomb
+
 /datum/projectile/implanter
 	name = "implant bullet"
 	damage = 5
@@ -2695,6 +2796,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	casing = /obj/item/casing/small
 	impact_image_state = "bullethole-small"
 	shot_number = 1
+	fullauto_valid = TRUE
 	//no_hit_message = 1
 	var/obj/item/implant/my_implant = null
 	var/mob/implant_master = null

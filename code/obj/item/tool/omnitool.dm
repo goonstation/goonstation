@@ -143,6 +143,12 @@
 				src.setItemSpecial(/datum/item_special/simple)
 			if(OMNI_MODE_SOLDERING)
 				src.setItemSpecial(/datum/item_special/simple)
+			if (OMNI_MODE_SPOONING)
+				src.setItemSpecial(/datum/item_special/simple)
+			if (OMNI_MODE_UNCAPPING)
+				src.setItemSpecial(/datum/item_special/simple)
+			if (OMNI_MODE_SAWING)
+				src.setItemSpecial(/datum/item_special/simple)
 
 	proc/pre_attackby(source, atom/target, mob/user)
 		if(src.mode == OMNI_MODE_DECON)
@@ -172,6 +178,9 @@
 			if(OMNI_MODE_WELDING) return "welding"
 			if(OMNI_MODE_DECON) return "deconstruction"
 			if(OMNI_MODE_SOLDERING) return "soldering"
+			if(OMNI_MODE_SPOONING) return "spooning"
+			if(OMNI_MODE_UNCAPPING) return "uncapping"
+			if(OMNI_MODE_SAWING) return "sawing"
 			else return null
 
 	proc/mode_to_type(var/omni_mode)
@@ -185,6 +194,9 @@
 			if(OMNI_MODE_WELDING) return /obj/item/weldingtool
 			if(OMNI_MODE_DECON) return /obj/item/deconstructor
 			if(OMNI_MODE_SOLDERING) return /obj/item/electronics/soldering
+			if(OMNI_MODE_SPOONING) return /obj/item/kitchen/utensil/spoon
+			if(OMNI_MODE_UNCAPPING) return /obj/item/kitchen/utensil
+			if(OMNI_MODE_SAWING) return /obj/item/kitchen/utensil/fork
 			else return null
 
 	//
@@ -299,6 +311,14 @@
 		..()
 		setProperty("conductivity", 0)
 
+/obj/item/tool/omnitool/knockoff
+	name = "Super-Omnifunction Helper"
+	desc = "Multiple tools in one, like an old-fashioned Swiss army knife. A lot like one, actually. They're still making these things?"
+	prefix = "orange-omnitool"
+	modes = list(OMNI_MODE_SCREWING, OMNI_MODE_CUTTING, OMNI_MODE_SNIPPING, OMNI_MODE_SPOONING, OMNI_MODE_SAWING, OMNI_MODE_UNCAPPING)
+	mode = OMNI_MODE_SCREWING
+	switch_delay = 0.5 SECONDS
+
 /obj/item/tool/omnitool/silicon
 	prefix = "silicon-omnitool"
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
@@ -379,6 +399,23 @@ TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 		name = "Welding tool"
 		icon_state = "weld"
 		mode = OMNI_MODE_WELDING
+	soldering
+		name = "Soldering iron"
+		icon_state = "solder"
+		mode = OMNI_MODE_SOLDERING
+	spooning
+		name = "Spoon"
+		icon_state = "spoon"
+		mode = OMNI_MODE_SPOONING
+	uncapping
+		name = "Bottle opener"
+		icon_state = "bottleopener"
+		mode = OMNI_MODE_UNCAPPING
+	sawing
+		name = "Saw"
+		icon_state = "saw"
+		mode = OMNI_MODE_SAWING
+
 
 // Action bar delay for omnitool switching
 /datum/action/bar/icon/omnitool_switch

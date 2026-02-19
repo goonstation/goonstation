@@ -2178,6 +2178,10 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bLP" = (
@@ -2792,6 +2796,7 @@
 /area/station/hallway/primary/north)
 "cmj" = (
 /obj/item/device/radio/intercom/medical,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -3056,6 +3061,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/mapping_helper/access/pharmacy,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "cul" = (
@@ -9473,7 +9479,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "gJs" = (
@@ -10396,7 +10402,7 @@
 /area/station/security/main)
 "hxh" = (
 /obj/stool/chair/office/blue,
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/pharmacist,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "hxn" = (
@@ -10969,7 +10975,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/southeast)
 "hTd" = (
-/obj/disposalpipe/segment/vertical,
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "hTP" = (
@@ -10994,18 +11000,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"hUh" = (
-/obj/machinery/door/airlock/pyro/medical/morgue{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/mapping_helper/access/morgue,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "hUF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/hallway)
@@ -11418,6 +11412,13 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
+"ikd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "ikj" = (
 /obj/machinery/computer3/generic/med_data{
 	dir = 8
@@ -11676,6 +11677,13 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"itb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
 "itg" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -11999,7 +12007,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "iFg" = (
-/obj/storage/secure/closet/medical/chemical,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
@@ -14094,6 +14101,10 @@
 /obj/machinery/door/airlock/pyro/medical/morgue,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/morgue,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "jYU" = (
@@ -20137,6 +20148,9 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/junction/left/east,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "ozn" = (
@@ -20771,7 +20785,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "oYE" = (
@@ -22398,8 +22412,9 @@
 "qeV" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "qfe" = (
@@ -23485,7 +23500,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/storage/secure/closet/medical/medicine,
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "qTd" = (
@@ -23870,11 +23885,8 @@
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/north)
 "rky" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/disposal/small/south,
-/obj/disposalpipe/trunk/east,
+/obj/disposalpipe/trunk/west,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
@@ -32641,10 +32653,7 @@
 	},
 /area/station/security/brig)
 "xpd" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/junction/middle/north,
+/obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "xpv" = (
@@ -32939,6 +32948,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/bathroom)
 "xAG" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "xBa" = (
@@ -73343,8 +73356,8 @@ aoV
 dBJ
 xAG
 jYu
-pYf
-pYf
+dgp
+itb
 ozl
 dgp
 pJZ
@@ -74549,7 +74562,7 @@ gJl
 xmx
 xmx
 xmx
-hUh
+xmx
 xmx
 xmx
 qoW
@@ -75151,7 +75164,7 @@ xmx
 aNf
 rTu
 cYV
-ink
+ikd
 ink
 lvz
 glq

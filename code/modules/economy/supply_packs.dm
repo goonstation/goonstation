@@ -938,7 +938,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_DOCTORATE*5
 	containertype = /obj/storage/secure/crate
 	containername = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
-	access = access_medical_director
+	access = access_pharmacy
 
 /datum/supply_packs/cyborg
 	name = "Cyborg Component Crate"
@@ -1837,6 +1837,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Bathroom Kit"
+
+/datum/supply_packs/complex/sonic_shower
+	name = "Sonic Showerheads"
+	desc = "Two fancy cleaning heads capable of vibrating dirt and grime off of you without the need for water."
+	category = "Basic Materials"
+	frames = list(/obj/machinery/sonic_shower = 2)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate/packing
+	containername = "Sonic Showerheads"
 
 /datum/supply_packs/complex/kitchen_kit
 	name = "Kitchen Kit"

@@ -657,7 +657,7 @@ TYPEINFO(/obj/machinery/door_control)
 	pressed_icon = "antagscanner-u"
 	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
 	requires_power = 0
-	controlmode = CONTROLMODE_OPEN | CONTROLMODE_ACCESS
+	controlmode = CONTROLMODE_OPEN
 
 /obj/machinery/door_control/ex_act(severity)
 	return
@@ -668,11 +668,13 @@ TYPEINFO(/obj/machinery/door_control)
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (istrainedsyndie(user))
 		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
-		if (listening_post.unlocked)
+		var/first_unlock_text
+		if (!listening_post.unlocked)
 			listening_post.first_unlock(user)
+			first_unlock_text = " Facility lockdown lifted."
 		src.toggle(user)
 		if (src.entrance_scanner)
-			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanently unlocked.")
+			src.say("Biometric profile accepted. Welcome, Agent.[first_unlock_text]")
 	else
 		src.say("Invalid biometric profile. Access denied.")
 

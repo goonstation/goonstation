@@ -5571,7 +5571,6 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/medbay/pharmacy)
 "cvs" = (
@@ -13094,10 +13093,9 @@
 /obj/machinery/cashreg,
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 1
+	autoclose = 0
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -13213,7 +13211,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "fSj" = (
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/pharmacist,
 /obj/stool/chair/office{
 	dir = 8
 	},
@@ -14114,11 +14112,10 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/paper_bin,
 /obj/item/pen/pencil,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 1
+	autoclose = 0
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -18667,11 +18664,10 @@
 /area/station/security/checkpoint/arrivals)
 "ixo" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 1
+	autoclose = 0
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -28580,7 +28576,7 @@
 	name = "Surgery"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -29807,11 +29803,10 @@
 "nug" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/disposalpipe/segment,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 1
+	autoclose = 0
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -85061,7 +85056,7 @@ rSz
 rSz
 rSz
 irp
-hyJ
+uAH
 aTU
 cXv
 fjH

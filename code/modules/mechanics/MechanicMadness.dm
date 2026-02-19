@@ -1104,11 +1104,12 @@ TYPEINFO(/obj/item/mechanics)
 
 	attack_hand(mob/user)
 		if(level == UNDERFLOOR && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
-			if(ishuman(user) && user.bioHolder)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
 				LIGHT_UP_HOUSING
 				FLICK("comp_hscan1",src)
 				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
-				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
+				var/sendstr = (send_name ? user.real_name : H.get_fingerprint(ignore_gloves = TRUE))
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
 				boutput(user, SPAN_ALERT("The hand scanner can only be used by humanoids."))
@@ -4482,6 +4483,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	icon='icons/obj/large/96x32.dmi'
 	icon_state = "mechcomp_ledsign"
 	cabinet_banned = TRUE
+	plane = PLANE_OVERFLOOR
 	two_handed = 1     // it's big
 	w_class = W_CLASS_BULKY // too big to fit in a bag
 	pixel_w = -32

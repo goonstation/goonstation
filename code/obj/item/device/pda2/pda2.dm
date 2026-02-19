@@ -229,7 +229,15 @@
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_CRISIS, MGA_CLONER)
+
+	pharmacist
+		name = "Pharmacy PDA"
+		icon_state = "pda-pha"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
+		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_CRISIS, MGA_DEATH, MGA_MEDCRIT)
+		default_muted_mailgroups = list(MGA_SALES)
 
 	security
 		name = "Security PDA"
@@ -265,6 +273,9 @@
 		setup_default_pen = /obj/item/pen/crayon/random
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_FLUID_ENTER
+
+		blue
+			icon_state = "pda-clown-blue"
 
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
