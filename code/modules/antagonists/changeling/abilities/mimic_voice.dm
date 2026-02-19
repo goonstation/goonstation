@@ -19,7 +19,7 @@
 		"Research Director" = "rd",
 		"Medical Director" = "md",
 		"Chief Engineer" = "ce",
-		"Nanotrasen Security Consultant" = "nt",
+		"NanoTrasen Security Consultant" = "nt",
 		"Security" = "sec",
 		"Detective" = "det",
 		"Scientist" = "sci",
@@ -30,7 +30,10 @@
 		"Civilian" = "civ",
 		"Radio Show Host" = "rh",
 		"Mail Courier" = "mail",
-		"Clown" = "clown")
+		"Clown" = "clown",
+		"Blue Clown" = "clown_blue",
+		"Inspector" = "inspector",
+		"Ghost Buster" = "hunter_ghost")
 
 	cast(atom/target)
 		if (..())

@@ -45434,15 +45434,17 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/staff)
 "keB" = (
-/obj/disposalpipe/segment{
+/obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_trainee,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/white,
+/obj/machinery/disposal,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
 /area/station/medical/medbay)
 "keI" = (
 /obj/machinery/disposal/mail/qm/autoname{
@@ -45493,11 +45495,10 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "kfV" = (
-/obj/machinery/computer/chem_requester/medical,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/landmark/start/job/medical_trainee,
+/turf/simulated/floor/bluewhite{
+	dir = 1
 	},
-/turf/simulated/floor/white,
 /area/station/medical/medbay)
 "kgh" = (
 /turf/space,
@@ -48268,10 +48269,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
 "mqz" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -54110,6 +54108,8 @@
 	},
 /area/station/crew_quarters/bar)
 "qxk" = (
+/obj/table/auto,
+/obj/item/storage/box/syringes,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -57685,10 +57685,6 @@
 /obj/item/bandage{
 	pixel_x = 2;
 	pixel_y = -10
-	},
-/obj/item/reagent_containers/iv_drip/saline{
-	pixel_x = -5;
-	pixel_y = 4
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -61659,6 +61655,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
+"vPY" = (
+/obj/table/auto,
+/obj/item/reagent_containers/iv_drip/saline{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "vQq" = (
 /obj/mesh/grille/steel,
 /obj/lattice,
@@ -61884,7 +61888,6 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/storage/box/syringes,
 /obj/item/storage/box/beakerbox{
 	pixel_x = 6;
 	pixel_y = 3
@@ -98683,7 +98686,7 @@ aaw
 aaw
 aaw
 aap
-cjk
+ckG
 mqz
 vHP
 qLE
@@ -98989,7 +98992,7 @@ cjk
 kfV
 dws
 cqB
-hYK
+vPY
 cjk
 vGP
 vGP
