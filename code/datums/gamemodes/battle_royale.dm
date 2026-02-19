@@ -152,6 +152,8 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/deployable_turret/riot)
 				qdel(machine)
+			if (/obj/machinery/computer/transit_shuttle/mining)
+				qdel(machine)
 
 	for_by_tcl(circuitboard, /obj/item/circuitboard)
 		qdel(circuitboard)
@@ -168,6 +170,12 @@ var/global/area/current_battle_spawn = null
 
 	for_by_tcl(obj_vehicle, /obj/vehicle)
 		qdel(obj_vehicle)
+
+	for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
+		if (tether.z == Z_LEVEL_STATION)
+			qdel(tether)
+
+	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, FALSE)
 
 	hide_weapons_everywhere(length(living_battlers))
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
@@ -336,10 +344,13 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/gun/kinetic/airzooka)
 	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
 	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
+	weapon_supplies.Add(/obj/item/gun/kinetic/makarov)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_small)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_huge)
+	weapon_supplies.Add(/obj/item/gun/energy/phaser_gun)
 	weapon_supplies.Add(/obj/item/gun/energy/alastor)
 	weapon_supplies.Add(/obj/item/gun/energy/heavyion)
+	weapon_supplies.Add(/obj/item/gun/energy/resonator)
 	weapon_supplies.Add(/obj/item/bat)
 	weapon_supplies.Add(/obj/item/ratstick)
 	weapon_supplies.Add(/obj/item/saw)
@@ -358,6 +369,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
+	weapon_supplies.Add(/obj/item/razor_blade/barberang)
 
 	var/list/armor_supplies = list()
 	// Feel free to add more!
@@ -390,6 +402,14 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/batman)
 
 	var/list/utility_supplies = list()
+	utility_supplies.Add(/obj/item/barrier/collapsible/security)
+	utility_supplies.Add(/obj/item/barrier/void)
+	utility_supplies.Add(/obj/item/clothing/glasses/thermal/traitor)
+	utility_supplies.Add(/obj/item/clothing/glasses/nightvision)
+	utility_supplies.Add(/obj/item/clothing/glasses/sunglasses)
+	utility_supplies.Add(/obj/item/device/energy_shield/viking)
+	utility_supplies.Add(/obj/item/reagent_containers/patch/synthflesh)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary)
 	// Ranch Eggs
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice)
 	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/plant)

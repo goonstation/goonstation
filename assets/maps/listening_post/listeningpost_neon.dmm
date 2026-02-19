@@ -183,6 +183,11 @@
 /area/listeningpost/syndicate_teleporter)
 "gF" = (
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_x = 25
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "hx" = (
@@ -306,13 +311,10 @@
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "kS" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
 /obj/cable/black{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicate_teleporter)
 "lf" = (
@@ -529,10 +531,8 @@
 /turf/simulated/floor/red,
 /area/listeningpost/vestibule)
 "tB" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Listening Post"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
@@ -550,6 +550,15 @@
 /obj/machinery/cell_charger,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
+"uJ" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/turf/variableTurf/clear,
+/area/listeningpost/shark_tank)
 "vk" = (
 /turf/simulated/floor/stairs/wide/middle,
 /area/listeningpost/syndicate_teleporter)
@@ -2251,7 +2260,7 @@ tB
 Hl
 Hl
 Hl
-UO
+uJ
 UO
 UO
 UO

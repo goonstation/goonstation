@@ -48,7 +48,8 @@
 	G["pronouns"] = H.get_pronouns().name
 
 	G["age"] ="[H.bioHolder.age]"
-	G["fingerprint"] = "[H.bioHolder.fingerprints]"
+	G["fingerprint_right"] = "[H.limbs?.r_arm?.limb_print.id]"
+	G["fingerprint_left"] = "[H.limbs?.l_arm?.limb_print.id]"
 	G["dna"] = H.bioHolder.Uid
 	G["p_stat"] = "Active"
 	G["m_stat"] = "Stable"
@@ -214,7 +215,7 @@
 		H.mind.store_memory("- [S["mi_crim"]]")
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		if (H.mind?.assigned_role == "Clown")
+		if (H.traitHolder?.hasTrait("training_clown"))
 			S["criminal"] = ARREST_STATE_CLOWN
 			S["mi_crim"] = "Clown"
 			H.update_arrest_icon()

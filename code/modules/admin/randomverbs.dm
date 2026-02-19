@@ -338,7 +338,9 @@
 			var/path = text2path(split[i])
 			if(ispath(path, /obj/item/aiModule))
 				var/obj/item/aiModule/module = new path(ticker.ai_law_rack_manager.default_ai_rack)
-				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, TRUE, TRUE)
+				if (module.wonky)
+					module.pixel_x = rand(-2, 2)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, module.can_be_secured, module.can_be_secured)
 				if(istype(module,/obj/item/aiModule/hologram_expansion))
 					var/obj/item/aiModule/hologram_expansion/holo = module
 					ticker.ai_law_rack_manager.default_ai_rack.holo_expansions |= holo.expansion
@@ -460,9 +462,9 @@
 	if(!input)
 		return
 	var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Central Command Update'", "What?", "") as null|text
+	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank '[ALERT_CENTCOM]'", "What?", "") as null|text
 	if(!input3)
-		input3 = "Central Command Update"
+		input3 = ALERT_CENTCOM
 
 	if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 		for_by_tcl(C, /obj/machinery/communications_dish)

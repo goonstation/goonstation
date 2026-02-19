@@ -541,16 +541,16 @@
 	name = "battlestaff";
 	pixel_x = 4
 	},
-/obj/item/barrier{
+/obj/item/barrier/collapsible/security{
 	pixel_x = -8
 	},
-/obj/item/barrier{
+/obj/item/barrier/collapsible/security{
 	pixel_x = -8
 	},
-/obj/item/barrier{
+/obj/item/barrier/collapsible/security{
 	pixel_x = -8
 	},
-/obj/item/barrier{
+/obj/item/barrier/collapsible/security{
 	pixel_x = -8
 	},
 /turf/unsimulated/floor/engine/glow/blue,

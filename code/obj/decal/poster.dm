@@ -938,6 +938,164 @@
 			icon = 'icons/misc/janstuff.dmi'
 			icon_state = "poster_eiffel"
 
+
+		iso
+			name = "\improper ISO 7010 sign"
+			desc = "An informative wall sign conforming to the Interstellar Standards Organisation's technical specifications. If only people listened to them."
+			icon = 'icons/obj/decals/ISO_signs.dmi'
+			icon_state = "warning_action"
+			pixel_y = 32
+
+			prohibited
+				name = "prohibited action sign"
+				icon_state = "prohibited_smoking"
+
+				smoking // P002
+					name = "smoking prohibited sign"
+					icon_state = "prohibited_smoking"
+
+				touch // P010
+					name = "touching prohibited sign"
+					icon_state = "prohibited_touch"
+
+				food // P022
+					name = "food prohibited sign"
+					icon_state = "prohibited_food"
+
+				fire // P003
+					name = "naked flame prohibited sign"
+					icon_state = "prohibited_fire"
+
+			mandatory
+				name = "mandatory action sign"
+				icon_state = "mandatory_action"
+
+				generic // M001
+
+				eyepro // M004 / M007
+					name = "mandatory eye protection sign"
+					icon_state = "mandatory_eyepro"
+
+				earpro // M003
+					name = "mandatory ear protection sign"
+					icon_state = "mandatory_earpro"
+
+				mask // M016
+					name = "mandatory facemask sign"
+					icon_state = "mandatory_mask"
+
+				welding // M019
+					name = "mandatory welding mask sign"
+					icon_state = "mandatory_welding"
+
+				ppe // M010
+					name = "mandatory protective equipment sign"
+					icon_state = "mandatory_ppe"
+
+				catears //M30W
+					name = "mandatory cat ears sign"
+					icon_state = "mandatory_catears"
+
+			warning
+				name = "warning sign"
+				icon_state = "warning_action"
+
+				generic // W001
+
+				radiation // W003
+					name = "radiation warning sign"
+					icon_state = "warning_radiation"
+
+				biological // W009
+					name = "biohazard warning sign"
+					icon_state = "warning_biological"
+
+				laser // W004
+					name = "laser warning sign"
+					icon_state = "warning_laser"
+
+				electric // W012
+					name = "electrical shock warning sign"
+					icon_state = "warning_electric"
+
+				explosion // W002
+					name = "explosion warning sign"
+					icon_state = "warning_explosion"
+
+				toxic // W016
+					name = "toxicity warning sign"
+					icon_state = "warning_toxic"
+
+				flammable // W021
+					name = "flammable material warning sign"
+					icon_state = "warning_flammable"
+
+				corrosive // W023
+					name = "corrosive material warning sign"
+					icon_state = "warning_corrosive"
+
+			safe
+				name = "safe condition sign"
+				icon_state = "safe_medical"
+
+				medical // E003
+					name = "medical aid sign"
+					icon_state = "safe_medical"
+
+				exit
+					name = "exit sign"
+
+					left // E001
+						icon_state = "safe_exit-l"
+
+					right // E002
+						icon_state = "safe_exit-r"
+
+				defib // E010
+					name = "defibrilator sign"
+					icon_state = "safe_defib"
+
+				respirator // E029
+					name = "respirator sign"
+					icon_state = "safe_respirator"
+
+				oxygen // E028
+					name = "oxygen supply sign"
+					icon_state = "safe_oxygen"
+
+				shower // E012
+					name = "emergency shower sign"
+					icon_state = "safe_shower"
+
+				eyewash // E011
+					name = "emergency eyewash sign"
+					icon_state = "safe_eyewash"
+
+				shipboard_general_alarm // E031
+					name = "shipboard general alarm sign"
+					desc = "Are we even on a ship most of the time?"
+					icon_state = "safe_shipboard_general_alarm"
+
+				coffee // yum,
+					name = "coffee sign"
+					icon_state = "safe_coffee"
+
+				water // E015
+					name = "potable water sign"
+					icon_state = "safe_water"
+
+			fire
+				name = "fire protection sign"
+				icon_state = "fire_extinguisher"
+
+				extinguisher // F001
+					name = "fire extinguisher sign"
+					icon_state = "fire_extinguisher"
+
+				helmet // F004
+					name = "fire protection equipment sign"
+					icon_state = "fire_helmet"
+
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
 ///////////////////////////////////////

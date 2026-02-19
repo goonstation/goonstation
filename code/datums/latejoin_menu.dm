@@ -23,42 +23,42 @@ var/datum/latejoin_menu/latejoin_menu = new()
 
 	var/list/command_department = list()
 	command_department["name"] = "Command"
-	command_department["colour"] = TGUI_COLOUR_GREEN
+	command_department["colour"] = /datum/job/command::ui_colour
 	command_department["jobs"] = GET_JOBS(user, /datum/job/command)
 
 	var/list/security_department = list()
 	security_department["name"] = "Security"
-	security_department["colour"] = TGUI_COLOUR_RED
+	security_department["colour"] = /datum/job/security::ui_colour
 	security_department["jobs"] = GET_JOBS(user, /datum/job/security)
 
 	var/list/research_department = list()
 	research_department["name"] = "Research"
-	research_department["colour"] = TGUI_COLOUR_PURPLE
+	research_department["colour"] = /datum/job/research::ui_colour
 	research_department["jobs"] = GET_JOBS(user, /datum/job/research)
 
 	var/list/medical_department = list()
 	medical_department["name"] = "Medical"
-	medical_department["colour"] = TGUI_COLOUR_PINK
+	medical_department["colour"] = /datum/job/medical::ui_colour
 	medical_department["jobs"] = GET_JOBS(user, /datum/job/medical)
 
 	var/list/engineering_department = list()
 	engineering_department["name"] = "Engineering"
-	engineering_department["colour"] = TGUI_COLOUR_ORANGE
+	engineering_department["colour"] = /datum/job/engineering::ui_colour
 	engineering_department["jobs"] = GET_JOBS(user, /datum/job/engineering)
 
 	var/list/civilian_department = list()
 	civilian_department["name"] = "Civilian"
-	civilian_department["colour"] = TGUI_COLOUR_BLUE
+	civilian_department["colour"] = /datum/job/civilian::ui_colour
 	civilian_department["jobs"] = GET_JOBS(user, /datum/job/civilian, /datum/job/daily)
 
 	var/list/silicon_department = list()
 	silicon_department["name"] = "Silicon"
-	silicon_department["colour"] = TGUI_COLOUR_GREY
+	silicon_department["colour"] = /datum/job/civilian/cyborg::ui_colour
 	silicon_department["jobs"] = src.get_silicon_jobs()
 
 	var/list/special_jobs = list()
 	special_jobs["name"] = "Special Jobs"
-	special_jobs["colour"] = TGUI_COLOUR_BLUE
+	special_jobs["colour"] = TGUI_COLOUR_BLUE //NTSC shows first and teal is too far from navy
 	special_jobs["jobs"] = GET_SPECIAL_JOBS(user, /datum/job/daily, /datum/job/special, /datum/job/created)
 
 	.["departments"] = list(

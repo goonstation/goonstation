@@ -147,17 +147,17 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	needs_hands = FALSE
 	var/using = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return TRUE
-		if (using)
-			return TRUE
-		using = TRUE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (src.using)
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		src.using = TRUE
 
 		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path) - owner.organHolder?.stomach?.stomach_contents
-		if (ismob(owner.loc) || istype(owner.loc, /obj/))
-			for (var/atom/A in owner.loc.contents)
+		var/list/items = get_filtered_atoms_in_touch_range(src.owner, mattereater.target_path) - src.owner.organHolder?.stomach?.stomach_contents
+		if (ismob(src.owner.loc) || istype(src.owner.loc, /obj/))
+			for (var/atom/A in src.owner.loc.contents)
 				if (istype(A, mattereater.target_path))
 					items += A
 
@@ -166,123 +166,89 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				items -= item
 
 		if (linked_power.power > 1)
-			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
+			items += get_filtered_atoms_in_touch_range(src.owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
 		if (!length(items))
 			boutput(usr, SPAN_ALERT("You can't find anything nearby to eat."))
-			using = FALSE
-			return
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
 
-		var/obj/the_object = tgui_input_list(owner, "Which item do you want to eat?", "Matter Eater", items)
+		var/obj/the_object = tgui_input_list(src.owner, "Which item do you want to eat?", "Matter Eater", items)
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
-			using = FALSE
-			return TRUE
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
-			owner.show_text(SPAN_ALERT("Man, that thing is long gone, far away, just let it go."))
-			using = FALSE
-			return TRUE
+		if (!(the_object in get_filtered_atoms_in_touch_range(src.owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
+			src.owner.show_text(SPAN_ALERT("Man, that thing is long gone, far away, just let it go."))
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		var/area/cur_area = get_area(owner)
-		var/turf/cur_turf = get_turf(owner)
-		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
-			owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
-			using = FALSE
-			return TRUE
+		var/area/cur_area = get_area(src.owner)
+		var/turf/cur_turf = get_turf(src.owner)
+		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!src.owner.client || !src.owner.client.holder))
+			src.owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		if (misfire)
+			owner.visible_message(SPAN_ALERT("[owner] tries to swallow [the_object] whole and nearly chokes on it."))
+			playsound(owner.loc, 'sound/items/eatfood.ogg', 50, 0)
+			playsound(owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
+			src.using = 0
 
 		if (istype(the_object, /obj/the_server_ingame_whoa))
 			var/obj/the_server_ingame_whoa/the_server = the_object
-			the_server.eaten(owner)
-			using = FALSE
-			return
+			the_server.eaten(src.owner)
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
 		if (istype(the_object, /obj/item/implant))
 			var/obj/item/implant/implant = the_object
 			if (implant.owner)
 				implant.on_remove(implant.owner)
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-
+		if (ishuman(src.owner) && isitem(the_object))
+			var/mob/living/carbon/human/H = src.owner
+			var/obj/item/the_item = the_object
 			// First, restore a little hunger, and heal our organs
-			if (isitem(the_object))
-				var/obj/item/the_item = the_object
-				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-				owner.HealDamage("All", 5, 0)
-				owner.UpdateDamageIcon()
+			H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
+			src.owner.HealDamage("All", 5, 0)
+			src.owner.UpdateDamageIcon()
 
-		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
-			var/obj/item/I = the_object
-			if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
-				I.storage?.hide_hud(owner)
-				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
-				// Organs and body parts have special behaviors we need to account for
-				if (ishuman(owner))
-					var/mob/living/carbon/human/H = owner
-					if (istype(the_object, /obj/item/organ))
-						var/obj/item/organ/organ_obj = the_object
-						if (organ_obj.donor)
-							H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
-					else if (istype(the_object, /obj/item/parts))
-						var/obj/item/parts/part = the_object
-						part.delete()
-						H.hud.update_hands()
-			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
-				owner.visible_message(SPAN_ALERT("[owner] eats [the_object]."))
-				playsound(owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
-				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
-				qdel(the_object)
+		if (QDELETED(the_object))
+			src.using = FALSE
+			return CAST_ATTEMPT_SUCCESS
+		// Finally, ensure that the item is deleted regardless of what it is
+		var/obj/item/I = the_object
+		if(I.Eat(src.owner, src.owner, TRUE)) //eating can return false to indicate it failed
+			I.storage?.hide_hud(src.owner)
+			// Organs and body parts have special behaviors we need to account for
+			if (!handle_organs(the_object))
+				handle_parts(the_object)
+		else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+			src.owner.visible_message(SPAN_ALERT("[src.owner] eats [the_object]."))
+			playsound(src.owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
+			qdel(the_object)
 
+		logTheThing(LOG_COMBAT, src.owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(src.owner)].")
+		src.using = FALSE
+		return CAST_ATTEMPT_SUCCESS
 
+	proc/handle_organs(var/obj/item/organ/object)
+		if (!istype(object) || !ishuman(src.owner))
+			return FALSE
+		var/mob/living/carbon/human/H = src.owner
+		if (object.donor)
+			H.organHolder.drop_organ(object,H) //hide it inside self so it doesn't hang around until the eating is finished
+			return TRUE
+		return FALSE
 
-		using = FALSE
-
-
-
-	cast_misfire()
-		if (..())
-			return 1
-		if (using)
-			return 1
-		using = 1
-
-		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
-		if (ismob(owner.loc) || istype(owner.loc, /obj/))
-			for (var/atom/A in owner.loc.contents)
-				if (istype(A, mattereater.target_path))
-					items += A
-
-		if (linked_power.power > 1)
-			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
-			//So people can still get the meat ending
-
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to eat.")
-			using = 0
-			return
-
-		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_object)
-			using = 0
-			return 1
-
-		var/area/cur_area = get_area(owner)
-		var/turf/cur_turf = get_turf(owner)
-		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
-			owner.show_text(SPAN_ALERT("Man, this place really did a number on your appetite. You can't bring yourself to eat anything here."))
-			using = 0
-			return 1
-
-		if (istype(the_object, /obj/the_server_ingame_whoa))
-			var/obj/the_server_ingame_whoa/the_server = the_object
-			the_server.eaten(owner)
-			using = 0
-			return
-		owner.visible_message(SPAN_ALERT("[owner] tries to swallow [the_object] whole and nearly chokes on it."))
-		playsound(owner.loc, 'sound/items/eatfood.ogg', 50, 0)
-		playsound(owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
-		using = 0
-		return
+	proc/handle_parts(var/obj/item/parts/object)
+		if (!istype(object) || !ishuman(src.owner))
+			return FALSE
+		var/mob/living/carbon/human/H = src.owner
+		object.delete()
+		H.hud.update_hands()
+		return TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -334,6 +300,9 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (istype(owner.loc,/turf/))
+			if (owner.traction == TRACTION_NONE && !owner.has_grip())
+				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 			do_jump(misfire)
 
 		else if (istype(owner.loc,/obj/))
@@ -348,19 +317,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		return CAST_ATTEMPT_SUCCESS
 
 	proc/do_jump(misfire)
+
 		var/jump_tiles = 10 * src.linked_power.power
 		var/pixel_move = 8 * src.linked_power.power
 		var/sleep_time = 1 / src.linked_power.power
-		var/turf/T = src.owner.loc
-		if (istype(T, /turf/space) || T.throw_unlimited || src.owner.no_gravity)
-			var/push_off = FALSE
-			for(var/atom/A in oview(1, T))
-				if (A.stops_space_move)
-					push_off = TRUE
-					break
-			if(!push_off)
-				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> takes a huge leap!"))
 		playsound(src.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
@@ -386,7 +346,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			for(var/i=0, i < jump_tiles, i++)
 				step(src.owner, src.owner.dir)
 				sleep(sleep_time)
-
 			src.owner.layer = prevLayer
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -629,18 +588,18 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Read the minds of others for information."
 	icon_state = "empath"
 	needs_hands = FALSE
-	targeted = 1
+	targeted = TRUE
 
-	cast(atom/target)
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		var/mob/living/carbon/read = null
 		if (iscarbon(target))
 			read = target
 		else if (ismob(read) && !iscarbon(target))
-			boutput(owner, SPAN_ALERT("You can't read the thoughts of [target] as they are too different from you mentally!"))
-			return 1
+			boutput(src.owner, SPAN_ALERT("You can't read the thoughts of [target] as they are too different from you mentally!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		else
 			var/turf/T = get_turf(target)
 			for (var/mob/living/carbon/C in T.contents)
@@ -648,18 +607,26 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				break
 
 		if (!read)
-			boutput(owner, SPAN_ALERT("There's nobody there to read the thoughts of."))
-			return 1
+			boutput(src.owner, SPAN_ALERT("There's nobody there to read the thoughts of."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (read.bioHolder.HasEffect("psy_resist"))
-			boutput(owner, SPAN_ALERT("You can't see into [read.name]'s mind at all!"))
-			return 1
+			boutput(src.owner, SPAN_ALERT("You can't see into [read.name]'s mind at all!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (isdead(read))
-			boutput(owner, SPAN_ALERT("[read.name] is dead and cannot have [his_or_her(read)] mind read."))
-			return
+			boutput(src.owner, SPAN_ALERT("[read.name] is dead and cannot have [his_or_her(read)] mind read."))
+			return CAST_ATTEMPT_SUCCESS
 
-		boutput(owner, SPAN_NOTICE("Mind Reading of [read.name]:</b>"))
+		if (misfire)
+			boutput(read, SPAN_ALERT("You sense <b>[src.owner]</b> trying and failing to read your mind!"))
+			boutput(src.owner, SPAN_ALERT("You are mentally overwhelmed by a huge barrage of worthless data!"))
+			src.owner.emote("scream")
+			src.owner.changeStatus("unconscious", 5 SECONDS)
+			src.owner.changeStatus("stunned", 7 SECONDS)
+			return CAST_ATTEMPT_SUCCESS
+
+		boutput(src.owner, SPAN_NOTICE("Mind Reading of [read.name]:</b>"))
 		var/pain_condition = read.health
 		// lower health means more pain
 		var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
@@ -674,33 +641,33 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		switch(pain_condition)
 			if (81 to INFINITY)
-				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] feels good."))
+				boutput(src.owner, SPAN_NOTICE("<b>Condition</b>: [read.name] feels good."))
 			if (61 to 80)
-				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering mild pain."))
+				boutput(src.owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering mild pain."))
 			if (41 to 60)
-				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering significant pain."))
+				boutput(src.owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering significant pain."))
 			if (21 to 40)
-				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering severe pain."))
+				boutput(src.owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering severe pain."))
 			else
-				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering excruciating pain."))
+				boutput(src.owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering excruciating pain."))
 				thoughts = "haunted by [his_or_her(read)] own mortality"
 
 		switch(read.a_intent)
 			if (INTENT_HELP)
-				boutput(owner, SPAN_NOTICE("<b>Mood</b>: You sense benevolent thoughts from [read.name]."))
+				boutput(src.owner, SPAN_NOTICE("<b>Mood</b>: You sense benevolent thoughts from [read.name]."))
 			if (INTENT_DISARM)
-				boutput(owner, SPAN_NOTICE("<b>Mood</b>: You sense cautious thoughts from [read.name]."))
+				boutput(src.owner, SPAN_NOTICE("<b>Mood</b>: You sense cautious thoughts from [read.name]."))
 			if (INTENT_GRAB)
-				boutput(owner, SPAN_NOTICE("<b>Mood</b>: You sense hostile thoughts from [read.name]."))
+				boutput(src.owner, SPAN_NOTICE("<b>Mood</b>: You sense hostile thoughts from [read.name]."))
 			if (INTENT_HARM)
-				boutput(owner, SPAN_NOTICE("<b>Mood</b>: You sense cruel thoughts from [read.name]."))
+				boutput(src.owner, SPAN_NOTICE("<b>Mood</b>: You sense cruel thoughts from [read.name]."))
 				for(var/mob/living/L in view(7,read))
 					if (L == read)
 						continue
 					thoughts = "thinking about punching [L.name]"
 					break
 			else
-				boutput(owner, SPAN_NOTICE("<b>Mood</b>: You sense strange thoughts from [read.name]."))
+				boutput(src.owner, SPAN_NOTICE("<b>Mood</b>: You sense strange thoughts from [read.name]."))
 
 		var/speech = steal_speech_text(read)
 		if (length(speech))
@@ -709,55 +676,23 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = read
 			if (H.pin)
-				boutput(owner, SPAN_NOTICE("<b>Numbers</b>: You sense the number [H.pin] is important to [H.name]."))
-		boutput(owner, SPAN_NOTICE("<b>Thoughts</b>: [read.name] is currently [thoughts]."))
+				boutput(src.owner, SPAN_NOTICE("<b>Numbers</b>: You sense the number [H.pin] is important to [H.name]."))
+		boutput(src.owner, SPAN_NOTICE("<b>Thoughts</b>: [read.name] is currently [thoughts]."))
 
 		if (read.bioHolder.HasEffect("empath"))
-			boutput(read, SPAN_ALERT("You sense [owner.name] reading your mind."))
+			boutput(read, SPAN_ALERT("You sense [src.owner.name] reading your mind."))
 		else if (read.traitHolder.hasTrait("training_chaplain"))
 			boutput(read, SPAN_ALERT("You sense someone intruding upon your thoughts..."))
 
-	cast_misfire(atom/target)
-		if (..())
-			return 1
-
-		var/mob/living/carbon/read = null
-		if (iscarbon(target))
-			read = target
-		else if (ismob(read) && !iscarbon(target))
-			boutput(owner, SPAN_ALERT("You can't read the thoughts of [target] as they are too different from you mentally!"))
-			return 1
-		else
-			var/turf/T = get_turf(target)
-			for (var/mob/living/carbon/C in T.contents)
-				read = C
-				break
-
-		if (!read)
-			boutput(owner, SPAN_ALERT("There's nobody there to read the thoughts of."))
-			return 1
-
-		if (read.bioHolder.HasEffect("psy_resist"))
-			boutput(owner, SPAN_ALERT("You can't see into [read.name]'s mind at all!"))
-			return 1
-
-		if (isdead(read))
-			boutput(owner, SPAN_ALERT("[read.name] is dead and cannot have [his_or_her(read)] mind read."))
-			return
-
-		boutput(read, SPAN_ALERT("Somehow, you sense <b>[owner]</b> trying and failing to read your mind!"))
-		boutput(owner, SPAN_ALERT("You are mentally overwhelmed by a huge barrage of worthless data!"))
-		owner.emote("scream")
-		owner.changeStatus("unconscious", 5 SECONDS)
-		owner.changeStatus("stunned", 7 SECONDS)
+		return CAST_ATTEMPT_SUCCESS
 
 	/// Mostly stolen from laspgasp() (thanks pali)
 	///
 	/// Grab whatever they're typing from the say/whisper/radio menu, or the command bar. Separate proc so we can return if the target client goes null
 	proc/steal_speech_text(mob/living/carbon/target)
 		var/client/target_client = target.client
-		var/enteredtext = winget(target_client, "mainwindow.input", "text") // grab the text from the input bar
 		if (isnull(target_client)) return
+		var/enteredtext = winget(target_client, "mainwindow.input", "text") // grab the text from the input bar
 		if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
 			enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
 			enteredtext = "saying something like <i>\"[enteredtext]\"</i>, in an old-fashioned way."
@@ -799,34 +734,33 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Wreath yourself in burning flames."
 	icon_state = "immolate"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
-		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+		if (misfire)
+			return src.do_misfire()
+
+		playsound(src.owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 
 		if (linked_power.power > 1)
-			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> erupts into a huge column of flames! Holy shit!"))
-			fireflash_melting(get_turf(owner), 3, 7000, 2000, chemfire = CHEM_FIRE_RED)
+			src.owner.visible_message(SPAN_ALERT("<b>[src.owner.name]</b> erupts into a huge column of flames! Holy shit!"))
+			fireflash_melting(get_turf(src.owner), 3, 7000, 2000, chemfire = CHEM_FIRE_RED)
 		else if (owner.is_heat_resistant())
-			owner.show_message(SPAN_ALERT("Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh."))
-			return
+			src.owner.show_message(SPAN_ALERT("Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh."))
+			return CAST_ATTEMPT_SUCCESS
 		else
-			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
-			owner.set_burning(100)
-		return
+			src.owner.visible_message(SPAN_ALERT("<b>[src.owner.name]</b> suddenly bursts into flames!"))
+			src.owner.set_burning(100)
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire()
-		if (..())
-			return 1
-
-		playsound(owner.loc, 'sound/effects/bamf.ogg', 50, 0)
-		owner.show_message(SPAN_ALERT("You accidentally expunge all heat from your body. Whoops!"))
-		owner.bodytemperature = 0
-
-		return
+	proc/do_misfire()
+		playsound(src.owner.loc, 'sound/effects/bamf.ogg', 50, 0)
+		src.owner.show_message(SPAN_ALERT("You accidentally expunge all heat from your body. Whoops!"))
+		src.owner.bodytemperature = 0
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -851,58 +785,54 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Transform yourself into a liquid state."
 	icon_state = "melt"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
-	cast()
+	cast_genetics(atom/target, misfire)
 		if (..())
-			return TRUE
-		if (istype(owner.loc, /obj/dummy/spell_invis)) // stops biomass manipulation and dimension shift from messing with eachother.
-			boutput(owner, SPAN_ALERT("You can't seem to turn incorporeal here."))
-			return TRUE
-		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
-			if (!linked_power.safety)
-				// If unsynchronized, you don't get to keep anything you have on you.
-				// The original version of this power instead gibbed you instantly, which wasn't very fun,
-				// and ended up as a newbie trap ("This sounds fun! *dead* oh.")
-				// This way it's a nice tradeoff, and you can always just pick things back up
-				boutput(owner, SPAN_ALERT("Everything you were carrying falls away as you dissolve!"))
-				logTheThing(LOG_COMBAT, owner, "dropped all their equipment from unsynchronized power [name] at [log_loc(owner)].")
-				owner.unequip_all()
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (istype(src.owner.loc, /obj/dummy/spell_invis)) // stops biomass manipulation and dimension shift from messing with eachother.
+			boutput(src.owner, SPAN_ALERT("You can't seem to turn incorporeal here."))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!spell_invisibility(owner, 1, 0, 0, 1))
+			return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+		return misfire ? misfire() : regular()
 
-			spell_invisibility(owner, 50)
-			playsound(owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
+	proc/regular()
+		if (!linked_power.safety)
+			// If unsynchronized, you don't get to keep anything you have on you.
+			// The original version of this power instead gibbed you instantly, which wasn't very fun,
+			// and ended up as a newbie trap ("This sounds fun! *dead* oh.")
+			// This way it's a nice tradeoff, and you can always just pick things back up
+			boutput(src.owner, SPAN_ALERT("Everything you were carrying falls away as you dissolve!"))
+			logTheThing(LOG_COMBAT, src.owner, "dropped all their equipment from unsynchronized power [name] at [log_loc(src.owner)].")
+			src.owner.unequip_all()
 
+		spell_invisibility(src.owner, 50)
+		playsound(src.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
+		return CAST_ATTEMPT_SUCCESS
 
-	cast_misfire()
-		if (..())
-			return TRUE
-		if (istype(owner.loc, /obj/dummy/spell_invis))
-			boutput(owner, SPAN_ALERT("You can't seem to turn incorporeal here."))
-			return TRUE
-		// Misfires still transform you, but bad things happen.
+	proc/misfire()
+		if (!linked_power.safety && ishuman(src.owner))
+			// If unsynchronized, you drop a random organ. Hope it's not one of the important ones!
+			var/list/possible_drops = list("heart", "left_lung","right_lung","left_kidney","right_kidney",
+				"liver","spleen","pancreas","stomach","intestines","appendix","butt")
+			var/obj/item/organ/O = src.owner.organHolder?.drop_organ(pick(possible_drops))
+			if (O)
+				logTheThing(LOG_COMBAT, src.owner, "dropped organ [O] due to misfire of unsynchronized power [name] at [log_loc(src.owner)].")
+				boutput(src.owner, SPAN_ALERT("You dissolve... mostly. Oops."))
+		else
+			// If synchronized, you drop a random item you were carrying.
+			// This is a pretty weak downside, but at the same time,
+			// to get here you've managed to synchronize it and paid the stability penalty.
+			// We can afford to be nice.
+			var/obj/item/I = src.owner.unequip_random()
+			if (I)
+				logTheThing(LOG_COMBAT, src.owner, "dropped item [I] due to misfire of unsynchronized Dissolve at [log_loc(src.owner)].")
+				boutput(src.owner, SPAN_ALERT("\The [I] you were carrying falls away as you dissolve!"))
 
-		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
-			if (!linked_power.safety && ishuman(owner))
-				// If unsynchronized, you drop a random organ. Hope it's not one of the important ones!
-				var/list/possible_drops = list("heart", "left_lung","right_lung","left_kidney","right_kidney",
-					"liver","spleen","pancreas","stomach","intestines","appendix","butt")
-				var/obj/item/organ/O = owner.organHolder.drop_organ(pick(possible_drops))
-				if (O)
-					logTheThing(LOG_COMBAT, owner, "dropped organ [O] due to misfire of unsynchronized power [name] at [log_loc(owner)].")
-					boutput(owner, SPAN_ALERT("You dissolve... mostly. Oops."))
-
-			else
-				// If synchronized, you drop a random item you were carrying.
-				// This is a pretty weak downside, but at the same time,
-				// to get here you've managed to synchronize it and paid the stability penalty.
-				// We can afford to be nice.
-				var/obj/item/I = owner.unequip_random()
-				if (I)
-					logTheThing(LOG_COMBAT, owner, "dropped item [I] due to misfire of unsynchronized Dissolve at [log_loc(owner)].")
-					boutput(owner, SPAN_ALERT("\The [I] you were carrying falls away as you dissolve!"))
-
-			spell_invisibility(owner, 50)
-			playsound(owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
+		spell_invisibility(src.owner, 50)
+		playsound(src.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
+		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

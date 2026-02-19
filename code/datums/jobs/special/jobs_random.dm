@@ -18,11 +18,11 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_OSHAN
 	special_spawn_location = null
-	ui_colour = TGUI_COLOUR_BLUE
+	ui_colour = /datum/job/civilian::ui_colour
 	limit = 1
 #elif defined(MAP_OVERRIDE_NADIR)
 	special_spawn_location = null
-	ui_colour = TGUI_COLOUR_BLUE
+	ui_colour = /datum/job/civilian::ui_colour
 	limit = 1
 #else
 	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/medical_specialist
 	name = "Medical Specialist"
-	ui_colour = TGUI_COLOUR_PINK
+	ui_colour = /datum/job/medical::ui_colour
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/inspector
 	name = "Inspector"
 	wages = PAY_IMPORTANT
-	ui_colour = TGUI_COLOUR_NAVY
+	ui_colour = /datum/job/special/nt::ui_colour
 	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
@@ -197,16 +197,17 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (!M)
 			return
 		SPAWN(0)
-			var/morph = null
-			var/list/options = list(/datum/mutantrace/lizard,
-									/datum/mutantrace/skeleton,
-									/datum/mutantrace/ithillid,
-									/datum/mutantrace/martian,
-									/datum/mutantrace/amphibian,
-									/datum/mutantrace/blob,
-									/datum/mutantrace/cow)
+			var/selection = null
+			var/list/options = list(/datum/mutantrace/lizard::name = /datum/mutantrace/lizard,
+									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
+									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
+									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
+									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
+									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
-			morph = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			selection = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			var/datum/mutantrace/morph = options[selection]
 			M.set_mutantrace(morph)
 			if (istype(M.mutantrace, /datum/mutantrace/martian) || istype(M.mutantrace, /datum/mutantrace/blob))
 				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
@@ -356,24 +357,10 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/fishing_rod/basic)
 
 
-/datum/job/special/random/pharmacist
-	name = "Pharmacist"
-	wages = PAY_DOCTORATE
-	ui_colour = TGUI_COLOUR_PINK
-	request_limit = 1 // limited workspace
-	trait_list = list("training_medical")
-	access_string = "Pharmacist"
-	slot_card = /obj/item/card/id/medical
-	slot_belt = list(/obj/item/device/pda2/medical)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
-	slot_suit = list(/obj/item/clothing/suit/labcoat)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/storage/pill_bottle/cyberpunk)
 
 /datum/job/special/random/psychiatrist
 	name = "Psychiatrist"
-	ui_colour = TGUI_COLOUR_PINK
+	ui_colour = /datum/job/medical::ui_colour
 	wages = PAY_DOCTORATE
 	request_limit = 1 // limited workspace
 	trait_list = list("training_therapy")
@@ -475,3 +462,21 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 #endif
+
+/datum/job/special/random/computeroperator
+	name = "Computer Operator"
+	wages = PAY_DOCTORATE
+	access_string = "Computer Operator"
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/misc/casualjeanswb = 1, \
+					/obj/item/clothing/under/misc/casualjeansgrey = 1, \
+					/obj/item/clothing/under/misc/casualjeansblue = 1, \
+					/obj/item/clothing/under/misc/casualjeanskhaki = 1)
+	slot_suit = list(/obj/item/clothing/suit/hoodie/random)
+	slot_belt = list(/obj/item/device/pda2/computeroperator)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_eyes = list(/obj/item/clothing/glasses/packetvision)
+	items_in_backpack = list(/obj/item/luggable_computer/techpersonal)
+	alt_names = list("Cybersecurity Expert", \
+					"IT Specialist", \
+					"Network Technician")

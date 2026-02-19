@@ -50,6 +50,8 @@
 					return
 				src.eyeholes = TRUE
 				block_vision = 0
+				src.c_flags &= ~COVERSEYES
+				src.hides_from_examine &= ~C_GLASSES
 				src.UpdateOverlays(image(src.icon, "eyeholes"), "eyeholes")
 				src.wear_image.overlays += image(src.wear_image_icon, "eyeholes")
 				playsound(src, 'sound/items/Scissor.ogg', 100, TRUE)

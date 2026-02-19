@@ -252,7 +252,6 @@
 			if (holder)
 				holder.del_reagent("lumen")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			var/location = get_turf(holder.my_atom)
 			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
@@ -280,7 +279,6 @@
 			if (holder)
 				holder.del_reagent("pyrosium")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 /*		The smoke reaction now deletes pyrosium (thalmerite) to prevent it from spreading everywhere without blocking delayed smoke reactions - IM
@@ -328,7 +326,6 @@
 				holder.del_reagent("aranesp")
 				holder.del_reagent("booster_enzyme")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 	booster_enzyme
@@ -1264,6 +1261,16 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 		hidden = TRUE
+
+	cocktail_triplewater
+		name = "Triple Water"
+		id = "cocktail_triplewater"
+		result = "cocktail_triplewater"
+		required_reagents = list("water" = 1, "water_holy" = 1, "tonic" = 1)
+		result_amount = 1
+		mix_phrase = "The diffrent water molecules seem to intertwine as the drink increases in density."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
 
 	cocktail_beach
 		name = "Bliss on the Beach"
@@ -4211,7 +4218,8 @@
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
 				s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			else
 				var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -4220,7 +4228,8 @@
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = (created_volume / max(length(holder.covered_cache),1)))
 					s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			return
 
 	metalfoam
@@ -5341,6 +5350,13 @@
 		mix_phrase = "The mixture turns yellowish and emits a loud grumping sound"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
+		var/static/caused_gravity_disturbance = FALSE
+
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			if (!caused_gravity_disturbance && holder.my_atom.z == Z_LEVEL_STATION)
+				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, -1) // alerts ALL tethers, once.
+				caused_gravity_disturbance = TRUE
 
 	flubber
 		name = "Liquified Space Rubber"
