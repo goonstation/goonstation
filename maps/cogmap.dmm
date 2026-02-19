@@ -2552,7 +2552,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/checkpoint/arrivals)
 "akc" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "akf" = (
@@ -2701,7 +2701,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "akR" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -3826,7 +3826,7 @@
 	name = "Catering Hangar"
 	})
 "aqB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -4302,7 +4302,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -5032,7 +5032,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "avz" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -15790,7 +15790,7 @@
 /area/station/janitor/office)
 "bfy" = (
 /obj/reagent_dispensers/watertank,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -25407,7 +25407,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -27282,7 +27282,7 @@
 	name = "CLEAN HANDS SAVE LIVES";
 	pixel_x = 32
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -32420,7 +32420,7 @@
 	},
 /area/station/science/testchamber)
 "csq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -33737,7 +33737,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -33796,7 +33796,7 @@
 	pixel_x = 5;
 	pixel_y = -3
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -38121,7 +38121,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
 "eTE" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -54081,7 +54081,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "qwd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -56579,7 +56579,7 @@
 /turf/space,
 /area/space)
 "slD" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -57076,7 +57076,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "sFD" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -5
 	},
@@ -58723,7 +58723,7 @@
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/maintenance/northeast)
 "tSN" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /obj/machinery/light{
@@ -59663,7 +59663,7 @@
 /area/station/crew_quarters/locker)
 "uue" = (
 /obj/machinery/firealarm/directional/west,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -62913,7 +62913,7 @@
 	pixel_x = 1;
 	pixel_y = 12
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},

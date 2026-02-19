@@ -2500,7 +2500,7 @@
 	})
 "aiE" = (
 /obj/decal/cleanable/rust/jen,
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	name = "rusty sink";
 	dir = 8;
@@ -2841,7 +2841,7 @@
 	})
 "ajN" = (
 /obj/decal/cleanable/rust,
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "rusty sink";
@@ -3259,7 +3259,7 @@
 	ambient_light = "#331111"
 	})
 "alq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 12
 	},
@@ -3279,7 +3279,7 @@
 	name = "Wine Cellar"
 	})
 "alt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 3
 	},
@@ -3406,7 +3406,7 @@
 	ambient_light = "#555533"
 	})
 "alO" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /turf/unsimulated/floor/minitiles,
@@ -9435,7 +9435,7 @@
 	ambient_light = "#555533"
 	})
 "aGM" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/minitiles,
@@ -13015,7 +13015,7 @@
 	name = "SPECTRE Showroom"
 	})
 "aRQ" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A water-filled unit intended for sanitation purposes.";
 	dir = 8;
 	name = "utility sink";
@@ -17319,7 +17319,7 @@
 	ambient_light = "#447f7f"
 	})
 "exV" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 12
 	},
@@ -23657,7 +23657,7 @@
 	name = "Concourse D"
 	})
 "tcp" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	name = "rusty sink";
 	pixel_y = 14
@@ -24219,7 +24219,7 @@
 	ambient_light = "#441111"
 	})
 "ueq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -24292,7 +24292,7 @@
 	})
 "ukb" = (
 /obj/decal/cleanable/rust,
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "rusty sink";

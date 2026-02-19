@@ -339,7 +339,7 @@
 /turf/simulated/floor/sanitary,
 /area/prefab/tunnelsnake)
 "bq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	icon_state = "sink";
 	tag = "icon-sink (NORTH)"

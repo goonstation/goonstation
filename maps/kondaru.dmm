@@ -1838,7 +1838,7 @@
 	},
 /area/station/security/checkpoint/podbay)
 "ahB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/window/cubicle{
@@ -9347,7 +9347,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "aOV" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -12292,7 +12292,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "bcy" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/stool/chair/comfy/barber_chair,
@@ -12455,7 +12455,7 @@
 /area/station/routing/depot)
 "bdp" = (
 /obj/decal/cleanable/dirt,
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "rusty sink"
@@ -13589,7 +13589,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "bjw" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
@@ -13777,7 +13777,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "bkr" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "utility sink"
@@ -13902,7 +13902,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bkV" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 2
@@ -14396,7 +14396,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bnd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/grime,
@@ -14539,7 +14539,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -15667,7 +15667,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /turf/simulated/floor/grass/leafy,
@@ -19570,7 +19570,7 @@
 	},
 /area/station/science/lobby)
 "bKt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/engine{
@@ -21166,7 +21166,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "bQt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/light/small{
@@ -21280,7 +21280,7 @@
 /area/station/maintenance/solar/west)
 "bQP" = (
 /obj/mopbucket,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /turf/simulated/floor/darkblue,
@@ -21518,7 +21518,7 @@
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
 "bRU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -21526,7 +21526,7 @@
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "bRW" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -22057,7 +22057,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "bUo" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/decal/tile_edge/line/black{
@@ -22434,7 +22434,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
 "bWm" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/item/storage/wall{
@@ -22724,7 +22724,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -22733,7 +22733,7 @@
 	},
 /area/station/security/checkpoint/escape)
 "bYu" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -24338,7 +24338,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -25671,7 +25671,7 @@
 /turf/simulated/floor/sanitary,
 /area/research_outpost/indigo_rye)
 "ckK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/item/storage/wall{
@@ -31063,7 +31063,7 @@
 /obj/table/auto,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/item/staple_gun,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -5
 	},
@@ -31510,7 +31510,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/utility)
 "fAl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/light,
@@ -40557,7 +40557,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
 "lAc" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -44288,7 +44288,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/gravity)
 "ohR" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/decal/tile_edge/line/black{
@@ -46026,7 +46026,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -47734,7 +47734,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "qCQ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary/white,
@@ -49171,7 +49171,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
 "rBa" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/decal/tile_edge/line/black{
@@ -50348,7 +50348,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "sxG" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -51243,7 +51243,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "sZS" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -51455,7 +51455,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -52432,7 +52432,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "tRr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -52616,7 +52616,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "tYy" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -56147,7 +56147,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
 "wpN" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/decal/tile_edge/line/black{
@@ -57957,7 +57957,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "xxt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -58132,7 +58132,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "xES" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},

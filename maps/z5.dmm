@@ -4329,7 +4329,7 @@
 /turf/simulated/floor/caution/south,
 /area/mining/refinery)
 "KH" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 1
 	},

@@ -1671,7 +1671,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ahI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -2135,7 +2135,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "ajZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
@@ -2415,7 +2415,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "akW" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4;
 	pixel_y = 3
@@ -2941,7 +2941,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "anj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -3013,7 +3013,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/redwhite,
@@ -4043,7 +4043,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "asl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -4739,7 +4739,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -6366,7 +6366,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aCZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6;
 	pixel_y = 3
@@ -6743,7 +6743,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/restroom)
 "aEC" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -14619,14 +14619,14 @@
 /area/station/crew_quarters/observatory)
 "bsu" = (
 /obj/decal/cleanable/dirt,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bsw" = (
 /obj/item/clothing/head/plunger,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
@@ -18646,7 +18646,7 @@
 	},
 /area/station/quartermaster/refinery)
 "bKF" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -21171,7 +21171,7 @@
 	},
 /area/station/security/hos)
 "bXE" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -21810,7 +21810,7 @@
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "caE" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -21922,7 +21922,7 @@
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "cbh" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -22332,7 +22332,7 @@
 /area/diner/kitchen)
 "ccK" = (
 /obj/decal/cleanable/dirt,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -33579,7 +33579,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 3
@@ -33620,7 +33620,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "jPr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4;
 	pixel_y = 3
@@ -34415,7 +34415,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "kAS" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -35390,7 +35390,7 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
 "luR" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -38280,7 +38280,7 @@
 	name = "Catering Hangar"
 	})
 "nYX" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 2
@@ -41199,7 +41199,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "qER" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/hydro_growlamp,
@@ -43327,7 +43327,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
 "sBQ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -43576,7 +43576,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "sNg" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -43789,7 +43789,7 @@
 /turf/space/fluid/nospawn,
 /area/space)
 "sVt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -44532,7 +44532,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -44986,7 +44986,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "tYd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /obj/decal/tile_edge/line/blue{
@@ -45244,7 +45244,7 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost/chamber)
 "ums" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/wood/two,
@@ -47226,7 +47226,7 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "wfs" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 2

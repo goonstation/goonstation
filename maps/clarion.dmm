@@ -3336,7 +3336,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "aBW" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 1
 	},
@@ -5349,7 +5349,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aSI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 1
 	},
@@ -7354,7 +7354,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "bnD" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -8747,7 +8747,7 @@
 	},
 /area/station/mining/staff_room)
 "byk" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/disposalpipe/segment{
@@ -9434,7 +9434,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -15080,7 +15080,7 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
 "fCa" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /obj/machinery/computer/operating/small{
@@ -16564,7 +16564,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "gDL" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -8
@@ -22957,7 +22957,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "leh" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	pixel_y = -3
 	},
@@ -24652,7 +24652,7 @@
 /obj/machinery/camera/ranch/directional/west{
 	pixel_y = 10
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -25021,7 +25021,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -8
@@ -25305,7 +25305,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "mGK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},
@@ -26755,7 +26755,7 @@
 	},
 /area/station/bridge)
 "nLr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -30444,7 +30444,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "qsX" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -36405,7 +36405,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "uBh" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /turf/simulated/floor/sanitary,
@@ -36680,7 +36680,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/refinery)
 "uNm" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/landmark/pest,
@@ -37449,7 +37449,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -8
@@ -39204,7 +39204,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -5
 	},
@@ -39358,7 +39358,7 @@
 /area/station/hangar/main)
 "wMC" = (
 /obj/machinery/door/window/westleft,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -39628,7 +39628,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 1
 	},
