@@ -57,6 +57,7 @@
 
 // even though the microwave can technically make popcorn just by heating the corn, the code doesn't work well with the microwave mechanics
 /datum/recipe/sequential/popcorn
+	recipe_instructions = list(/datum/recipe_instructions/microwave/default_cook)
 	ingredients = /obj/item/reagent_containers/food/snacks/plant/corn
 	output = /obj/item/reagent_containers/food/snacks/popcorn
 
@@ -64,7 +65,7 @@
 		if (cook_source)
 			cook_source.visible_message(SPAN_ALERT("Something in [cook_source] pops violently!"))
 			playsound(cook_source.loc, 'sound/effects/pop.ogg', 50, 1)
-		..()
+		return ..()
 
 /// microwave-specific version of custard pie.
 /datum/recipe/pie_custard_mw
