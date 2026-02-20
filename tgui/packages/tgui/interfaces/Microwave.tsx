@@ -6,7 +6,7 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { Button, Image, Section, Stack, Modal } from 'tgui-core/components';
+import { Button, Image, Modal, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -78,15 +78,12 @@ export const Microwave = () => {
             </Stack>
           </Stack.Item>
         </Stack>
-
       </Window.Content>
       {!!operating && (
-          <Modal textAlign="center">
-            <Section>
-              Cooking! Please wait...
-            </Section>
-          </Modal>
-        )}
+        <Modal textAlign="center">
+          <Section>Cooking! Please wait...</Section>
+        </Modal>
+      )}
     </Window>
   );
 };
