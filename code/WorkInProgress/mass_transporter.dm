@@ -65,6 +65,7 @@
 	icon_state = "mass_transporter"
 	name = "mass transporter"
 	desc = "A mildly ominous-looking machine capable of simultaneously moving multiple objects over a short distance in space."
+	density = 1
 	anchored = ANCHORED
 	var/image/screen_image
 	var/image/transport_glow
@@ -80,23 +81,25 @@
 
 	New()
 		..()
+		START_TRACKING
 		src.find_link()
 		light = new /datum/light/point
 		light.set_brightness(0.6)
 		light.set_color(1, 0.2, 0)
 		light.attach(src)
 
-		src.screen_image = image('icons/obj/stationobjs.dmi', "mass_transporter_screen", -1)
-		screen_image.plane = PLANE_LIGHTING
+		src.screen_image = image('icons/obj/stationobjs.dmi', "mass_transporter_screen")
+		screen_image.plane = PLANE_OVERLAY_EFFECTS
 		screen_image.blend_mode = BLEND_ADD
-		screen_image.layer = LIGHTING_LAYER_BASE
-		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 		src.AddOverlays(screen_image, "screen_image")
 
-		src.transport_glow = image('icons/obj/stationobjs.dmi', "mass_transporter_glow", -1)
-		transport_glow.plane = PLANE_LIGHTING
+		src.transport_glow = image('icons/obj/stationobjs.dmi', "mass_transporter_glow")
+		transport_glow.plane = PLANE_OVERLAY_EFFECTS
 		transport_glow.blend_mode = BLEND_ADD
-		transport_glow.layer = LIGHTING_LAYER_BASE
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	attack_ai()
 		src.Attackhand()
@@ -113,6 +116,9 @@
 			return
 		if (!linked_computer && !src.find_link())
 			src.visible_message("<b>[src]</b> intones, \"System error. Location data unavailable.\"")
+			return
+		if (!linked_computer.locked_target)
+			src.visible_message("<b>[src]</b> intones, \"System error. No teleport destination set.\"")
 			return
 		src.visible_message("<b>[src]</b> intones, \"Teleportation process beginning. Please remain stationary until teleport completes.\"")
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
@@ -182,6 +188,7 @@
 				if(ismob(AM))
 					var/mob/O = AM
 					O.changeStatus("stunned", 2 SECONDS)
+				use_power(5000)
 				SPAWN(6 DECI SECONDS)
 					do_teleport(AM,offset_target,FALSE,sparks=FALSE)
 
