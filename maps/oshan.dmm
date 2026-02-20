@@ -1457,10 +1457,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"agE" = (
-/obj/machinery/light/incandescent/blueish,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
 "agG" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -1620,10 +1616,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "ahw" = (
-/obj/machinery/light/incandescent/blueish,
 /obj/machinery/conveyor/NS{
 	id = "chapel"
 	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/black,
 /area/station/maintenance/northwest)
 "ahx" = (
@@ -2025,10 +2021,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ajj" = (
-/obj/machinery/light/incandescent/blueish,
 /obj/stool/chair{
 	dir = 1
 	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "ajl" = (
@@ -2170,7 +2166,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
 /obj/item/reagent_containers/syringe,
-/obj/machinery/light/incandescent/blueish,
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "akf" = (
@@ -11642,8 +11638,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "bez" = (
-/obj/machinery/light/incandescent/blueish,
 /obj/storage/closet/coffin/wood,
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "beA" = (
@@ -15315,10 +15311,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "bvn" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
 /obj/machinery/portable_atmospherics/canister/air/large,
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "bvo" = (
@@ -24971,12 +24965,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
-"cOh" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "cOi" = (
 /obj/item/slag_shovel,
 /turf/simulated/floor/shuttlebay{
@@ -30360,12 +30348,6 @@
 	},
 /turf/simulated/floor/stairs/wood,
 /area/station/ranch)
-"gYw" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
 "gYB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31878,9 +31860,7 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "isB" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 8
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "isJ" = (
@@ -32061,9 +32041,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "iCh" = (
@@ -32639,9 +32617,7 @@
 "iYt" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/cereal_box/roach,
-/obj/machinery/light/incandescent/warm/very{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/warm/very,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "iYv" = (
@@ -36787,9 +36763,7 @@
 /area/station/maintenance/north)
 "mJt" = (
 /obj/machinery/shieldgenerator/energy_shield,
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "mJz" = (
@@ -39237,7 +39211,7 @@
 /area/research_outpost)
 "oVp" = (
 /obj/item/rods/steel/fullstack,
-/obj/machinery/light/incandescent/warm/very,
+/obj/machinery/light/small/sticky/warm/very,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "oVt" = (
@@ -40454,8 +40428,8 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "pYG" = (
-/obj/machinery/light/incandescent/blueish,
 /obj/disposalpipe/segment,
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "pZH" = (
@@ -44803,9 +44777,7 @@
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
 "tRo" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "tRt" = (
@@ -47399,9 +47371,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "wrX" = (
@@ -89293,7 +89263,7 @@ ali
 afq
 afq
 afq
-agE
+isB
 afq
 afq
 afq
@@ -95315,7 +95285,7 @@ aqn
 aqn
 nll
 wIW
-agE
+isB
 agA
 aiQ
 agb
@@ -98939,7 +98909,7 @@ aqn
 aqn
 nll
 exn
-agE
+isB
 afx
 akw
 agl
@@ -101358,7 +101328,7 @@ aqn
 qBC
 nll
 cfJ
-cOh
+tRo
 afq
 afq
 ajQ
@@ -101968,7 +101938,7 @@ afq
 afq
 afq
 afq
-gYw
+isB
 afq
 afq
 afq
@@ -101979,7 +101949,7 @@ afq
 afq
 dmS
 afq
-gYw
+isB
 afq
 afq
 xHH
