@@ -249,6 +249,7 @@
 					var/hit_someone = FALSE
 					for (var/mob/M in offset_target)
 						src.teleouch(M,TRUE)
+						hit_someone = TRUE
 					if (hit_someone)
 						playsound(offset_target.loc, 'sound/impact_sounds/taser_hit.ogg', 20)
 
