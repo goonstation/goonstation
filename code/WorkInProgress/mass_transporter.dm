@@ -219,7 +219,7 @@
 			playsound(src.loc, 'sound/machines/interdictor_deactivate.ogg', 15, 0, 0, 1)
 		if(src.transporting_to)
 			src.transporting_to.inbound_in_progress = FALSE
-		src.mobs_being_sent = null
+		src.mobs_being_sent = list()
 
 	proc/teleport_some_nerds(target_transporter)
 		var/turf/dest = get_turf(target_transporter)
