@@ -331,7 +331,7 @@ TYPEINFO(/obj/machinery/sink/piped)
 	return src.reagents.total_volume
 
 /obj/machinery/sink/piped/drain_fluid(datum/reagents/fluid, amount)
-	return fluid.trans_to_direct(src.drainage, amount)
+	return fluid.trans_to_direct(src.drainage, min(amount, src.drainage.maximum_volume - src.drainage.total_volume))
 
 /obj/machinery/sink/piped/New()
 	..()
