@@ -65,8 +65,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
 	New()
-		if(silenced)
-			current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
 		..()
 		src.UpdateIcon()
 
@@ -217,8 +215,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				FLICK(flick_state, src)
 
-		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+		if(..() && user.traction != TRACTION_FULL)
 			user.inertia_dir = get_dir_accurate(target, user)
+			user.inertia_value = 1
 			step(user, user.inertia_dir) // Propel user in opposite direction
 
 	proc/eject_magazine(mob/user)
@@ -696,10 +695,17 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 1
 	recoil_strength = 3
 	icon_recoil_cap = 30
+
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/HP)
 		..()
+
+	//override the shot sound and volume because we have a silencer
+	set_current_projectile(datum/projectile/newProj)
+		. = ..()
+		src.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+		src.current_projectile.shot_volume = 30
 
 /obj/item/gun/kinetic/capella
 	name = "\improper Capella Mk. 8 competition pistol"

@@ -252,7 +252,6 @@
 			if (holder)
 				holder.del_reagent("lumen")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			var/location = get_turf(holder.my_atom)
 			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
@@ -280,7 +279,6 @@
 			if (holder)
 				holder.del_reagent("pyrosium")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 /*		The smoke reaction now deletes pyrosium (thalmerite) to prevent it from spreading everywhere without blocking delayed smoke reactions - IM
@@ -328,7 +326,6 @@
 				holder.del_reagent("aranesp")
 				holder.del_reagent("booster_enzyme")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 	booster_enzyme
@@ -705,6 +702,16 @@
 		result_amount = 1
 		max_temperature = T0C + 100
 		mix_phrase = "The powder dissolves, turning the solution milky."
+
+	barbecue_sauce
+		name = "Barbecue Sauce"
+		id = "barbecue_sauce"
+		required_reagents = list("capsaicin" = 1, "lemonade" = 1, "pepper" = 1, "ketchup" = 1, "grease" = 1, "mustard" = 1)
+		result = "barbecue_sauce"
+		result_amount = 7
+		instant = 0
+		min_temperature = T0C + 50
+		mix_phrase = "The flavor ions attempt to pass through the transitory BBQ stage, but fail. Seems your sauce might be missing something that could make it even more delicious!"
 
 	powder_milk
 		name = "Milk powder"
@@ -1254,6 +1261,16 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 		hidden = TRUE
+
+	cocktail_triplewater
+		name = "Triple Water"
+		id = "cocktail_triplewater"
+		result = "cocktail_triplewater"
+		required_reagents = list("water" = 1, "water_holy" = 1, "tonic" = 1)
+		result_amount = 1
+		mix_phrase = "The diffrent water molecules seem to intertwine as the drink increases in density."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
 
 	cocktail_beach
 		name = "Bliss on the Beach"
@@ -3344,24 +3361,30 @@
 		var/is_currently_exploding = FALSE //so it doesn't explode multiple times during the slight activation delay
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			if(src.is_currently_exploding)
+			if (src.is_currently_exploding)
 				return
+
+			if (istype(holder.my_atom.loc, /obj/disposalholder) || istype(holder.my_atom.loc, /obj/machinery/chemicompiler_stationary))
+				return
+
 			var/turf/T = get_turf(holder.my_atom)
-			if (istype(T) && T.is_lit(0.1) && !istype(holder.my_atom.loc, /obj/disposalholder))
-				var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
-				is_currently_exploding = TRUE
-				shine.set_loc(T)
-				playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
-				SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
-					T = get_turf(holder.my_atom) //may have moved
-					qdel(shine)
-					holder.del_reagent("photophosphide")
-					explosion(holder.my_atom, T, -1,-1,0,1)
-					playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
-					fireflash(T, 0, chemfire = CHEM_FIRE_RED)
-					if(istype(holder.my_atom, /obj))
-						var/obj/container = holder.my_atom
-						container.shatter_chemically(projectiles = TRUE)
+			if (!istype(T) || !T.is_lit(0.1))
+				return
+
+			var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
+			is_currently_exploding = TRUE
+			shine.set_loc(T)
+			playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
+			SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+				T = get_turf(holder.my_atom) //may have moved
+				qdel(shine)
+				holder.del_reagent("photophosphide")
+				explosion(holder.my_atom, T, -1,-1,0,1)
+				playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
+				fireflash(T, 0, chemfire = CHEM_FIRE_RED)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 
 	photophosphide_decay //decays in low amounts
 		name = "Photophosphide Decay"
@@ -4195,7 +4218,8 @@
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
 				s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			else
 				var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -4204,7 +4228,8 @@
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = (created_volume / max(length(holder.covered_cache),1)))
 					s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			return
 
 	metalfoam
@@ -5325,6 +5350,13 @@
 		mix_phrase = "The mixture turns yellowish and emits a loud grumping sound"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
+		var/static/caused_gravity_disturbance = FALSE
+
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			if (!caused_gravity_disturbance && holder.my_atom.z == Z_LEVEL_STATION)
+				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, -1) // alerts ALL tethers, once.
+				caused_gravity_disturbance = TRUE
 
 	flubber
 		name = "Liquified Space Rubber"

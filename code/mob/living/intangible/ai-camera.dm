@@ -120,7 +120,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 			C.apply_keybind("robot_tg")
 
 	process_move(keys)
-		if(keys && src.move_dir && !src.override_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
+		if(keys && src.move_dir && !src.get_active_movement_controller() && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
 			var/mob/living/intangible/aieye/O = src
 			O.set_loc(get_turf(src))
 		. = ..()
@@ -145,7 +145,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 	proc/add_all_statics()
 #ifndef SKIP_CAMERA_COVERAGE
-		if (!src.loc)
+		if (!src.loc || !src.client)
 			return
 		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
 			src.client.images |= T.aiImage
@@ -231,7 +231,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 				if(in_ai_range)
 					O.receive_silicon_hotkey(src)
 				else
-					src.show_text("Your mainframe was unable relay this command that far away!", "red")
+					src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 				return
 
 		//var/inrange = in_interact_range(target, src)

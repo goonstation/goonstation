@@ -1,223 +1,3 @@
-//TODO: Make these not submachines, possibly break out into their own files
-TYPEINFO(/obj/submachine/chef_sink)
-	mats = 12
-
-/obj/submachine/chef_sink
-	name = "kitchen sink"
-	desc = "A water-filled unit intended for cookery purposes."
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "sink"
-	anchored = ANCHORED
-	density = 1
-	deconstruct_flags = DECON_WRENCH | DECON_WELDER
-	flags = NOSPLASH
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/flour))
-			user.show_text("You add water to the flour to make dough!", "blue")
-			if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/flour/semolina))
-				new /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina(src.loc)
-			else
-				new /obj/item/reagent_containers/food/snacks/ingredient/dough(src.loc)
-			qdel (W)
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/rice))
-			user.show_text("You add water to the rice to make sticky rice!", "blue")
-			new /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice(src.loc)
-			qdel(W)
-		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
-			var/fill = W.reagents.maximum_volume
-			if (W.reagents.total_volume >= fill)
-				user.show_text("[W] is too full already.", "red")
-			else
-				fill -= W.reagents.total_volume
-				W.reagents.add_reagent("water", fill)
-				user.show_text("You fill [W] with water.", "blue")
-				playsound(src.loc, 'sound/misc/pourdrink.ogg', 100, 1)
-		else if (istype(W, /obj/item/mop)) // dude whatever
-			var/fill = W.reagents.maximum_volume
-			if (W.reagents.total_volume >= fill)
-				user.show_text("[W] is too wet already.", "red")
-			else
-				fill -= W.reagents.total_volume
-				W.reagents.add_reagent("water", fill)
-				user.show_text("You wet [W].", "blue")
-				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-		else if (istype(W, /obj/item/grab))
-			var/obj/item/grab/GRAB = W
-			if (ismob(GRAB.affecting))
-				if (GRAB.state >= 1 && istype(GRAB.affecting, /mob/living/critter/small_animal))
-					var/mob/M = GRAB.affecting
-					var/mob/A = GRAB.assailant
-					if (BOUNDS_DIST(src.loc, M.loc) > 0)
-						return
-					user.visible_message(SPAN_NOTICE("[A] shoves [M] in the sink and starts to wash them."))
-					M.set_loc(src.loc)
-					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-					actions.start(new/datum/action/bar/private/critterwashing(A,src,M,GRAB),user)
-				else
-					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
-					GRAB.affecting.lastgasp() // --BLUH
-		else if (istype(W, /obj/item/gun/sprayer))
-			var/obj/item/gun/sprayer/sprayer = W
-			sprayer.clogged = FALSE
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			boutput(user, SPAN_NOTICE("You clean out [W]'s nozzle."))
-		else if (W.burning)
-			W.combust_ended()
-		else
-			user.visible_message(SPAN_NOTICE("[user] cleans [W]."))
-			W.clean_forensic() // There's a global proc for this stuff now (Convair880).
-			if (istype(W, /obj/item/device/key/skull))
-				W.icon_state = "skull"
-			if (istype(W, /obj/item/reagent_containers/mender))
-				var/obj/item/reagent_containers/mender/automender = W
-				if(automender.borg)
-					return
-			if (W.reagents && W.is_open_container())
-				W.reagents.clear_reagents()		// avoid null error
-
-	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
-			return src.Attackby(W, user)
-		return ..()
-
-	attack_hand(var/mob/user)
-		src.add_fingerprint(user)
-		user.lastattacked = get_weakref(src)
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if (H.gloves)
-				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-				user.visible_message(SPAN_NOTICE("[user] cleans [his_or_her(user)] gloves."))
-				if (H.sims?.getValue("Hygiene"))
-					user.show_text("If you want to improve your hygiene, you need to remove your gloves first.")
-				H.gloves.clean_forensic() // Ditto (Convair880).
-				H.set_clothing_icon_dirty()
-			else
-				if(H.sims?.getValue("Hygiene"))
-					if (H.sims.getValue("Hygiene") >= SIMS_HYGIENE_THRESHOLD_MESSY)
-						user.visible_message(SPAN_NOTICE("[user] starts washing [his_or_her(user)] hands."))
-						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
-						return ..()
-					else
-						user.show_text("You're too messy to improve your hygiene this way, you need a shower or a bath.", "red")
-				//simpler handwashing if hygiene isn't a concern
-				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-				user.visible_message(SPAN_NOTICE("[user] washes [his_or_her(user)] hands."))
-				H.blood_DNA = null
-				H.blood_type = null
-				H.forensics_blood_color = null
-				H.set_clothing_icon_dirty()
-		..()
-
-/datum/action/bar/private/handwashing
-	duration = 1 SECOND //roughly matches the rate of manual clicking
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	var/mob/living/carbon/human/user
-	var/obj/submachine/chef_sink/sink
-
-	New(usermob,sink)
-		user = usermob
-		src.sink = sink
-		..()
-
-	proc/checkStillValid()
-		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
-			interrupt(INTERRUPT_ALWAYS)
-			return FALSE
-		return TRUE
-
-	onUpdate()
-		checkStillValid()
-		..()
-
-	onStart()
-		..()
-		if(BOUNDS_DIST(user, sink) > 1) user.show_text("You're too far from the sink!")
-		if(user.l_hand || user.r_hand) user.show_text("Both your hands need to be free to wash them!")
-		src.loopStart()
-
-
-	loopStart()
-		..()
-		if(!checkStillValid()) return
-		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-
-	onEnd()
-		if(!checkStillValid())
-			..()
-			return
-
-		var/cleanup_rate = 2
-		if(user.traitHolder.hasTrait("training_medical") || user.traitHolder.hasTrait("training_chef"))
-			cleanup_rate = 3
-		user.sims.affectMotive("Hygiene", cleanup_rate)
-		user.blood_DNA = null
-		user.blood_type = null
-		user.forensics_blood_color = null
-		user.set_clothing_icon_dirty()
-
-		src.onRestart()
-
-	onInterrupt()
-		..()
-
-
-/datum/action/bar/private/critterwashing
-	duration = 7 DECI SECONDS
-	var/mob/living/carbon/human/user
-	var/obj/submachine/chef_sink/sink
-	var/mob/living/critter/small_animal/victim
-	var/obj/item/grab/grab
-	var/datum/aiTask/timed/wandering
-	New(usermob,sink,critter,thegrab)
-		src.user = usermob
-		src.sink = sink
-		src.victim = critter
-		src.grab = thegrab
-		..()
-
-	proc/checkStillValid()
-		if(GET_DIST(victim, sink) > 0 || BOUNDS_DIST(user, sink) > 1 || victim == null || user == null || sink == null || !grab)
-			interrupt(INTERRUPT_ALWAYS)
-			return FALSE
-		return TRUE
-	onStart()
-		if(BOUNDS_DIST(user, sink) > 1) user.show_text("You're too far from the sink!")
-		if (istype(victim, /mob/living/critter/small_animal/cat) && victim.ai?.enabled)
-			victim._ai_patience_count = 0
-			victim.was_harmed(user)
-			victim.visible_message(SPAN_NOTICE("[victim] resists [user]'s attempt to wash them!"))
-			playsound(victim.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
-
-		else if (victim.ai?.enabled && istype(victim.ai.current_task, /datum/aiTask/timed/wander) )
-			victim.ai.wait(5)
-		..()
-
-	loopStart()
-		..()
-		if (!checkStillValid())
-			return
-		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-		if(prob(50))
-			animate_door_squeeze(victim)
-		else
-			animate_smush(victim, 0.65)
-
-
-	onEnd()
-		if(!checkStillValid())
-			..()
-			return
-		victim.blood_DNA = null
-		victim.blood_type = null
-		victim.forensics_blood_color = null
-		victim.set_clothing_icon_dirty()
-
-		src.onRestart()
-
-
 ADMIN_INTERACT_PROCS(/obj/submachine/ice_cream_dispenser, proc/add_flavor)
 TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	mats = 18
@@ -613,6 +393,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/chilifries_alt(src)
 			src.recipes += new /datum/recipe/poutine(src)
 			src.recipes += new /datum/recipe/poutine_alt(src)
+			src.recipes += new /datum/recipe/maghaz(src)
 			src.recipes += new /datum/recipe/fries(src)
 			src.recipes += new /datum/recipe/queso(src)
 			src.recipes += new /datum/recipe/creamofmushroom(src)
@@ -771,6 +552,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/brownie_batch(src)
 			src.recipes += new /datum/recipe/rice_bowl(src)
 			src.recipes += new /datum/recipe/flan(src)
+			src.recipes += new /datum/recipe/yuck(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
@@ -791,14 +573,10 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.cook_food()
 
 	proc/cook_food()
-		var/amount = length(src.contents)
 		var/list/output = list() /// what path / item is (getting) created
 		var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
 		var/bonus = 0 /// correct-cook-time bonus
 		var/recipebonus = 0 /// the ideal amount of cook time for the bonus
-		var/recook = 0
-		var/bad_recipe = FALSE // is the recipe a yuck item
-		var/atom/yucktype = null // this becomes a typepath if a yuck item wants to be made
 
 		// If emagged produce random output.
 		if (emagged)
@@ -820,12 +598,14 @@ TYPEINFO(/obj/submachine/chef_oven)
 			var/datum/recipe/xrecipe = pick(src.recipes)
 			// Bail out to a mess if we didn't get a valid recipe
 			if (!contentsok || !xrecipe.try_get_output(src.contents, output, src))
-				bad_recipe = TRUE
-				yucktype = /obj/item/reagent_containers/food/snacks/yuck
+				for (var/I as anything in output)
+					qdel(I)
+				output.Cut(0, length(output))
+				output += new /obj/item/reagent_containers/food/snacks/yuck()
 			// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
 			recipebonus = 0
 			bonus = -1
-			for (var/atom/movable/I in src.contents)
+			for (var/atom/movable/I as anything in src.contents)
 				qdel(I)
 		else
 			// Non-emagged cooking
@@ -833,68 +613,35 @@ TYPEINFO(/obj/submachine/chef_oven)
 			var/datum/recipe_instructions/cooking/oven/instructions = R?.get_recipe_instructions(RECIPE_ID_OVEN)
 			if (!instructions)
 				instructions = src.default_instructions
-			if (R && R.try_get_output(src.contents, output, src))
+
+			recipebonus = instructions.cookbonus
+			// check for burn first, so we don't have to bother creating then deleting the output
+			if (R && cook_amt >= recipebonus + 5)
+				output += new /obj/item/reagent_containers/food/snacks/yuck/burn()
+				bonus = 0
+			else if (R && R.try_get_output(src.contents, output, src))
 				instructions.output_post_process(src, output, src)
 				// derive the bonus amount from cooking
 				// being off by one in either direction is OK
 				// being off by 5 either burns it or makes it taste like shit
 				// "cookbonus" here is actually "amount of cooking needed for bonus"
-				recipebonus = instructions.cookbonus
 				if (abs(cook_amt - recipebonus) <= 1)
 					// if -1, 0, or 1, you did ok
 					bonus = 1
 				else if (cook_amt <= recipebonus - 5)
 					// severely undercooked
 					bonus = -1
-				else if (cook_amt >= recipebonus + 5)
-					bad_recipe = TRUE
-					// severely overcooked and burnt
-					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
-					bonus = 0
 
-			// the case where there are no valid recipies is handled below in the outer context
-			// (namely it replaces them with yuck)
+		// when there are no valid recipes, the output will be yuck.
 		if (length(output) < 1)
-			yucktype = /obj/item/reagent_containers/food/snacks/yuck
-			bad_recipe = TRUE
-
-		// this only happens if the output is a yuck item, either from an
-		// invalid recipe or otherwise...
-		if (bad_recipe && amount == 1)
-			for (var/obj/item/reagent_containers/food/snacks/F in src)
-				if(F.quality >= 1)
-					continue
-				// @TODO cook_amt == F.quality can never happen here
-				// (cook_amt is the time the oven is set to from 1-10,
-				//  and F.quality has to be 0 or below to get here)
-				recook = 1
-				if (cook_amt == F.quality) F.quality = 1.5
-				else if (cook_amt == F.quality + 1) F.quality = 1
-				else if (cook_amt == F.quality - 1) F.quality = 1
-				else if (cook_amt <= F.quality - 5) F.quality = 0.5
-				else if (cook_amt >= F.quality + 5)
-					yucktype = /obj/item/reagent_containers/food/snacks/yuck/burn
-					bonus = 0
-
-		if (ispath(yucktype))
-			output += new yucktype()
-
-		// this is all stuff relating to re-cooking with yuck items
-		// suitably it is very gross
-		if(recook && bonus !=0)
-			for (var/obj/item/reagent_containers/food/snacks/F in src)
-				if (bonus == 1)
-					if (F.quality != 1)
-						F.quality = 1
-				else if (bonus == -1)
-					if (F.quality > 0.5)
-						F.quality = 0.5
-				if (src.emagged)
-					F.from_emagged_oven = 1
-				F.set_loc(src.loc)
+			output += new /obj/item/reagent_containers/food/snacks/yuck()
 
 		for(var/item in output)
-			src.normal_cooking(item, bonus, recipebonus, cook_amt)
+			var/obj/item/reagent_containers/food/snacks/yuck/yuckitem = item
+			if (istype(yuckitem) && yuckitem.quality < 1)
+				src.yuck_cooking(item, bonus, cook_amt)
+			else
+				src.normal_cooking(item, bonus, recipebonus, cook_amt)
 
 		// done with checking outputs...
 		// change icon back, ding, and remove used ingredients
@@ -903,6 +650,36 @@ TYPEINFO(/obj/submachine/chef_oven)
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 		for (var/atom/movable/I in src.contents)
 			qdel(I)
+
+	proc/food_crime(mob/user, obj/item/reagent_containers/food/food)
+		game_stats.Increment("food_crimes")
+
+	// if the output is a yuck item, it needs some special handling as our dedicated invalid-recipe output.
+	proc/yuck_cooking(var/obj/item/reagent_containers/food/snacks/yuck/F, var/bonus, var/cook_amt)
+		// @TODO cook_amt == F.quality can never happen here
+		// (cook_amt is the time the oven is set to from 1-10,
+		//  and F.quality has to be 0 or below to get here)
+		if (cook_amt == F.quality) F.quality = 1.5
+		else if (cook_amt == F.quality + 1) F.quality = 1
+		else if (cook_amt == F.quality - 1) F.quality = 1
+		else if (cook_amt <= F.quality - 5) F.quality = 0.5
+		else if (cook_amt >= F.quality + 5)
+			if (!istype(F, /obj/item/reagent_containers/food/snacks/yuck/burn))
+				qdel(F)
+				F = new /obj/item/reagent_containers/food/snacks/yuck/burn()
+			bonus = 0
+
+		// this is all stuff relating to re-cooking with yuck items
+		// suitably it is very gross
+		if (bonus == 1)
+			if (F.quality != 1)
+				F.quality = 1
+		else if (bonus == -1 && F.quality > 0.5)
+			F.quality = 0.5
+		if (src.emagged)
+			F.from_emagged_oven = 1
+		src.food_crime(usr, F)
+		F.set_loc(get_turf(src))
 
 	//helper method for normal cooking
 	proc/normal_cooking(var/atom/item, var/bonus, var/recipebonus, var/cook_amt)

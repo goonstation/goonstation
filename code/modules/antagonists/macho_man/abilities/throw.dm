@@ -62,7 +62,7 @@
 							O.pixel_y = -96
 							O.icon = 'icons/effects/214x246.dmi'
 							O.icon_state = "explosion"
-							O.fingerprintslast = holder.owner.key
+							O.add_fingerprint(holder.owner)
 							SPAWN(3.5 SECONDS) qdel(O)
 							explosion(O, H.loc, 1, 2, 3, 4)
 							H.gib()

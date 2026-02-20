@@ -414,7 +414,7 @@
 /area/noGenerate)
 "my" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
@@ -896,7 +896,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Sr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8
 	},
 /turf/simulated/floor/blue,

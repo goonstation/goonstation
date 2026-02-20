@@ -195,12 +195,12 @@ ABSTRACT_TYPE(/obj/item/tank)
 				for_by_tcl(B, /obj/item/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
-						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
+						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5, flash_radiation_multiplier=rad_damage_multiplier)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
-			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
 			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5, flash_radiation_multiplier=rad_damage_multiplier)
 			qdel(src)
@@ -368,8 +368,8 @@ ABSTRACT_TYPE(/obj/item/tank)
 		//we need to add the new icon for the plasma tank
 		parent_assembly.target_item_prefix = "plasma"
 		// we update the contraband now to reflect the newly added tank
-		APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_GUNS, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), singletank_bomb_contraband_level))
-		SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+		APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_CONTRABAND, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), singletank_bomb_contraband_level))
+		SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 
 	/// ----------------------------------------------
 

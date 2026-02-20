@@ -147,6 +147,11 @@
 	qdel(src)
 	return
 
+/obj/item/gift/proc/item_moved(obj/item/item)
+	if (item.loc != src)
+		UnregisterSignal(item, COMSIG_MOVABLE_SET_LOC)
+		qdel(src)
+
 /obj/item/a_gift
 	name = "gift"
 	desc = "I wonder what's inside!?"

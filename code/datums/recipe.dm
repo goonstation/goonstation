@@ -1,25 +1,29 @@
 /**
- * A generic structure for recipes, which interfaces with a list of atoms and matches them against an internal list of ingredients. Also responsible
- * for instantiating the output object.
+ * A generic structure for recipes, which interfaces with a list of atoms and matches them against an internal list of types representing ingredients.
+ * Also responsible for instantiating the appropriate output object.
  *
- * the most performance-critical responsibility of the recipe is the pattern-matching, due to its usage in loops. Everything else can/should be
+ * The most performance-critical responsibility of the recipe is the pattern-matching, due to its usage in loops. Everything else can/should be
  * abstracted away as needed.
  *
- * For example, you might want to have a recipe that works with stacks of items. In that case, it would be unwise to add the logic into the base
- * can_cook_recipe proc, since that would bloat the performance for every other recipe. It would be encouraged to create a recipe subclass for that
- * override behaviour. On the other hand, if you instead wanted a group of recipes that had some shared behaviour such as all results being turned
- * blue after instantiation, it would be better to implement that in a cooking_instructions child or some other abstracted subsystem, so the behaviour
+ * For example, you might want to have a recipe that works with the contents of reagent containers. In that case, it would be unwise to add the logic
+ * into the base can_cook_recipe proc, since that would bloat the performance for every other recipe. It would be encouraged to create a recipe
+ * subclass and then override to account for that behaviour.
+ * On the other hand, if you instead wanted a group of recipes that had some shared behaviour such as all results being turned blue after
+ * instantiation, it would be better to implement that in a cooking_instructions child or some other abstracted subsystem, so the behaviour
  * can be shared regardless of the pattern of ingredients.
  *
- * Other examples of patterns that would warrant a non-unique recipe subclass would be handling items with complex components, states, or working with
- * reagent containers when their contents matter to the recipe.
+ * Other examples of patterns that would warrant a non-unique recipe subclass would be handling items with complex components, states, or relevant
+ * data.
  *
  * The basic usage of this is to first find a recipe that matches the list of ingredients you have, with can_cook_recipe(), and then use the same
  * list to instantiate the output using get_output(). For machine-specific interactions, implement a bespoke recipe_instruction for that machine.
 */
 ABSTRACT_TYPE(/datum/recipe)
 /datum/recipe
-	VAR_PROTECTED/ingredients /// An associative list of [paths = amounts] representing the required ingredients for this recipe
+	VAR_PROTECTED/list/ingredients /// An associative list of [paths = amounts] representing the required ingredients for this recipe
+	VAR_PROTECTED/list/tools /// An associative list of [paths = amounts] representing tools used for this recipe. Any ingredients
+							 /// in the input list which match with these get put into the output list. The intention is that these will not
+							 /// be deleted, but the recipe is not responsible for object deletion so exceptions might exist depending on usage.
 	VAR_PROTECTED/output = null /// what you get from this recipe. This can be a path, a list of paths, or an associative list of [paths = amounts]
 	var/category = "Unsorted" /// category for sorting, use null to hide
 	VAR_PROTECTED/list/variants = null
@@ -29,9 +33,19 @@ ABSTRACT_TYPE(/datum/recipe)
 	VAR_PROTECTED/list/recipe_instructions /// A list of instructions for specific machines that may use this recipe
 
 	New()
-		if (ingredients)
-			for(var/type in ingredients)
-				recipe_length += ingredients[type]
+		// merge tools into ingredients, because as far as the recipe is concerned tools are ingredients
+		if(src.tools)
+			if (!src.ingredients)
+				src.ingredients = list()
+			for(var/key in src.tools)
+				if (key in src.ingredients)
+					src.ingredients[key] += src.tools[key]
+				else
+					src.ingredients[key] = src.tools[key]
+
+		if (src.ingredients)
+			for(var/type in src.ingredients)
+				recipe_length += src.ingredients[type]
 		..()
 
 	/// Can the given list of items be used to make this recipe?
@@ -55,8 +69,6 @@ ABSTRACT_TYPE(/datum/recipe)
 
 	/// Attempts to instantiates a copy of the intended output based on the given list of input and puts it in the 'output' list provided.
 	/// Returns true or false based on success with the given input.
-	/// When overriding this, 'source' and 'user' should only be used for optional extraneous effects, such as sfx, and should be expected to
-	/// often be null. For machine-specific actions or data, use bespoke recipe_instructions instead.
 	proc/try_get_output(list/input, list/output, atom/source = null, mob/user = null )
 		if (!islist(input))
 			stack_trace("Recipe aborting. Input of type list required, received '[string_type_of_anything(input)]' instead.")
@@ -64,11 +76,13 @@ ABSTRACT_TYPE(/datum/recipe)
 		if (!islist(output))
 			stack_trace("Recipe aborting. Output of type list required, received '[string_type_of_anything(output)]' instead.")
 			return FALSE
-		. = get_output(input, output, source, user)
+		. = src.get_output(input, output, source, user)
 
+	/// When overriding this, 'source' and 'user' should only be used for optional extraneous effects, such as sfx, and should be expected to
+	/// often be null. For machine-specific actions or data, use bespoke recipe_instructions instead.
 	proc/get_output(list/input_list, list/output_list, atom/source = null, mob/user = null)
 		PROTECTED_PROC(TRUE)
-		var/output_paths = get_variant(input_list)
+		var/output_paths = src.get_variant(input_list)
 		. = FALSE
 		if(islist(output_paths))
 			for(var/path in output_paths)
@@ -83,9 +97,28 @@ ABSTRACT_TYPE(/datum/recipe)
 		else if(ispath(output_paths))
 			output_list += new output_paths
 			. = TRUE
+
+		src.account_for_tools(input_list, output_list)
+		// recipes that only spit out the tools used are technically useful, and thus valid
+		if (length(output_list))
+			. = TRUE
 		if (!.)
 			// By default, a failure here likely means the recipe has been set up wrong. This isn't necessarily true if this proc gets overriden.
 			stack_trace("Recipe of type [string_type_of_anything(src)] failed with input: [english_list(input_list)].")
+
+	/// Detects any tools present in the input list and adds them to the output list.
+	proc/account_for_tools(list/input, list/output)
+		PROTECTED_PROC(TRUE)
+		if (!tools)
+			return
+		for (var/obj/tool_path as anything in src.tools)
+			var/max_tools = src.tools[tool_path]
+			var/count = 0
+			for(var/ingredient as anything in input)
+				if (istype(ingredient, tool_path))
+					output += ingredient
+					if (++count >= max_tools)
+						break
 
 	proc/get_variant(list/item_list)
 		PROTECTED_PROC(TRUE)
@@ -153,7 +186,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			if (extras)
 				extras += unused
 
-	/// returns whether the given type exists within the recipe's ingredients list
+	/// Returns whether the given type exists within the recipe's ingredients list
 	proc/type_in_ingredients(var/atom/type)
 		return istypes(type, src.ingredients)
 
@@ -179,7 +212,7 @@ ABSTRACT_TYPE(/datum/recipe)
 			out += list(item)
 		return out
 
-	/// Returns an associative list representing the displayable data for the mascot, the single atom that represents the output for this recipe
+	/// Returns an associative list representing the displayable data for the mascot, the single atom that represents the output for this recipe.
 	proc/get_mascot_data(list/item_list)
 		var/atom/mascot = src.get_mascot(item_list)
 		var/amount = islist(src.output) ? src.output[mascot] : 1
@@ -191,7 +224,7 @@ ABSTRACT_TYPE(/datum/recipe)
 		)
 		return item
 
-	/// Returns a single atom path that represents the output for this recipe. By default this will be the first-found path in the ingredient list.
+	/// Returns a single atom path that represents the output for this recipe. By default this will be the first-found path in the output list.
 	/// Although note that associated lists are not necessarily ordered the same as they're added.
 	proc/get_mascot(list/item_list)
 		var/recipe_output

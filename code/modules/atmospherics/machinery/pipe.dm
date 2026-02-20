@@ -104,6 +104,9 @@
 
 /// Ruptures the pipe, with varying levels of leakage.
 /obj/machinery/atmospherics/pipe/proc/rupture(pressure)
+	if(!can_rupture)
+		return // nah, don't feel like it.
+
 	var/new_rupture
 
 	if(pressure && src.fatigue_pressure)
@@ -224,7 +227,7 @@
 
 	var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
 
-	if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > src.effective_fatigue_pressure())
+	if(can_rupture && (!parent || !GET_COOLDOWN(parent, "pipeline_rupture_protection")) && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > src.effective_fatigue_pressure())
 		var/rupture_prob = (pressure_difference - src.effective_fatigue_pressure())/50000
 		if(prob(rupture_prob))
 			rupture(pressure_difference)

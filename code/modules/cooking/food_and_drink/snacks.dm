@@ -1449,7 +1449,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		desc = "A hotdog inside a fried banana bread shell.  Is that even possible?"
 		icon_state = "corndogb"
 		heal_amt = 20
-		food_effects = list("food_sweaty_big")
 
 	brain
 		name = "brain-corndog"
@@ -1519,7 +1518,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				src.desc = "A hotdog...in a banana bread bun.  What."
 				src.heal_amt += 8
 				src.name = "bananadog"
-				food_effects = list("food_sweaty_big","food_all")
+				food_effects = list("food_sweaty","food_all")
 				if(src.herb)
 					src.name = "herbal " + src.name
 			else if (istype(W, /obj/item/reagent_containers/food/snacks/breadslice/brain))
@@ -2942,6 +2941,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	bites_left = 3
 	food_effects = list("food_refreshed","food_warm")
+
+/obj/item/reagent_containers/food/snacks/maghaz
+	name = "maghaz"
+	desc = "Brain served in gravy. There are some almonds in it, not sure where those came from."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "maghaz"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 3
+	heal_amt = 3
+	bites_left = 3
+	initial_volume = 10
+	initial_reagents = "gravy"
+	food_effects = list("food_explosion_resist", "food_hp_up_big", "brain_food_ithillid")
+	meal_time_flags = MEAL_TIME_DINNER
 
 // Dippable food
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)

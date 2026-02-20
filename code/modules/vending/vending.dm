@@ -67,6 +67,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	speech_verb_say = "beeps"
+	provides_grip = TRUE
 
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
@@ -632,8 +633,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if("rename")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(P.unlocked)
-					P.name = params["name"]
+				var/newname = trimtext(params["name"])
+				var/len = length(newname)
+				if(P.unlocked && len > 0 && len <= 128)
+					P.name = newname
 		if("setIcon")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
@@ -1012,12 +1015,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.layer < victim.layer)
 			src.layer = victim.layer+1
 		src.set_loc(vicTurf)
-		random_brute_damage(victim, rand(20,40),1)
+		random_brute_damage(victim, rand(20,40) * vicTurf.get_gforce_fractional(), TRUE)
 	else
 		src.visible_message("<b>[SPAN_ALERT("[src.name] tips over!")]</b>")
 
 	src.power_change()
 	src.anchored = UNANCHORED
+	src.provides_grip = FALSE
+	vicTurf?.grip_atom_count -= 1
 	return
 
 /obj/machinery/vending/set_broken()
@@ -1608,7 +1613,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/lime, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/grones, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/15)
 
 	blue
 		icon_state = "grife"
@@ -1630,7 +1635,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2,10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/15)
 
 /obj/machinery/vending/electronics
 	name = "ElecTek Vendomaticotron"
@@ -1886,6 +1891,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/elective_prosthetics_for_dummies, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/teg_guide, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/gravity_tether, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/horrorcontest, 2, cost=PAY_UNTRAINED/5)
 
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/the_trial, 1, cost=PAY_UNTRAINED/5, hidden=1)
@@ -2068,12 +2074,12 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			boardinstalled = TRUE
 		else if (state == "WIRESINSTALLED")
 			var/obj/item/cable_coil/targetcoil = target
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			targetcoil.use(5)
-			wiresinstalled = TRUE
-			icon_state = "standard-frame-wired"
-			desc = glassdesc
-			boutput(user, SPAN_NOTICE("You add cables to the frame."))
+			if (targetcoil.use(5))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				wiresinstalled = TRUE
+				icon_state = "standard-frame-wired"
+				desc = glassdesc
+				boutput(user, SPAN_NOTICE("You add cables to the frame."))
 		else if (state == "GLASSINSTALLED")
 			var/obj/item/sheet/glass/S = target
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)

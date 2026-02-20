@@ -1294,6 +1294,13 @@ var/global/noir = 0
 				usr.client.cmd_admin_anvilgib(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to anvil gib a dude.")
+		if ("gravitygib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_gravitygib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to gravity gib a duder.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1571,10 +1578,13 @@ var/global/noir = 0
 
 			var/atom/A = locate(href_list["target"])
 
-			if (!A.reagents) // || !target.reagents.total_volume)
+			var/datum/reagents/reagents = A.reagents
+			if (istype(A, /obj/fluid_pipe))
+				var/obj/fluid_pipe/pipe = A
+				reagents = pipe.network.reagents
+			if (!reagents) // || !target.reagents.total_volume)
 				boutput(usr, SPAN_NOTICE("<b>[A] contains no reagents.</b>"))
 				return
-			var/datum/reagents/reagents = A.reagents
 
 			var/pick_id
 			var/pick
@@ -1605,8 +1615,8 @@ var/global/noir = 0
 			if (!amt || amt < 0)
 				return
 
-			if (A.reagents)
-				if (!A.reagents.remove_reagent(pick_id,amt))
+			if (reagents)
+				if (!reagents.remove_reagent(pick_id,amt))
 					boutput(usr, SPAN_ALERT("Failed to remove [amt] units of [pick_id] from [A.name]."))
 					return
 
@@ -3426,14 +3436,14 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=DNA;size=440x410")
 					if("fingerprints")
-						var/dat = "<B>Showing Fingerprints.</B><HR>"
+						var/dat = "<B>Showing Default Fingerprints.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
-								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[H.bioHolder.fingerprints]</td></tr>"
-								else if(!H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
+								if(H.bioHolder.default_fingerprints)
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.default_fingerprints.id]</td></tr>"
+								else if(!H.bioHolder.default_fingerprints)
+									dat += "<tr><td>[H]</td><td>H.bioHolder.default_fingerprints = null</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
@@ -4559,6 +4569,10 @@ var/global/noir = 0
 	var/mob/new_player/M = new()
 
 	M.key = usr.client.key
+	M.adminspawned = 1
+	M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
+	M.client.player.claimed_rewards = list() // reset claimed medal rewards
+	M.mind.purchased_bank_item = null
 
 	usr.remove()
 

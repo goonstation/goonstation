@@ -3,7 +3,7 @@
 
 /datum/listen_module/effect/radio/process(datum/say_message/message)
 	var/obj/item/device/radio/radio = src.parent_tree.listener_parent
-	if (!istype(radio) || radio.bricked)
+	if (!istype(radio) || radio.bricked || radio.emp)
 		return
 
 	var/signal_frequency

@@ -45,6 +45,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 
 		var/mob/living/critter/wraith/plaguerat/P = holder.owner
 
+		if (!isturf(P.loc))
+			boutput(P, SPAN_ALERT("You can't feed while in [istype(P.loc,/obj/dummy/disposalmover) ? "a disposal pipe" : "\the [P.loc]"]."))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
 		for (var/obj/decal/cleanable/C in T)
 			for (var/D in decal_list)
 				if (istype(C, D))

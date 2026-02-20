@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/vice_officer
 	name = "Vice Officer"
-	ui_colour = TGUI_COLOUR_RED
+	ui_colour = /datum/job/security::ui_colour
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Vice Officer"
@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/forensic_technician
 	name = "Forensic Technician"
-	ui_colour = TGUI_COLOUR_RED
+	ui_colour = /datum/job/security::ui_colour
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Forensic Technician"
@@ -107,11 +107,11 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_poc1 = list(/obj/item/device/detective_scanner)
-	items_in_backpack = list(/obj/item/tank/pocket/oxygen)
+	items_in_backpack = list(/obj/item/tank/pocket/oxygen, /obj/item/reagent_containers/glass/vial/silver_nitrate)
 
 /datum/job/special/toxins_researcher
 	name = "Toxins Researcher"
-	ui_colour = TGUI_COLOUR_PURPLE
+	ui_colour = /datum/job/research::ui_colour
 	limit = 0
 	wages = PAY_DOCTORATE
 	trait_list = list("training_scientist")
@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/chemist
 	name = "Chemist"
-	ui_colour = TGUI_COLOUR_PURPLE
+	ui_colour = /datum/job/research::ui_colour
 	limit = 0
 	wages = PAY_DOCTORATE
 	trait_list = "training_scientist"
@@ -138,7 +138,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 /datum/job/special/atmospheric_technician
 	name = "Atmospherish Technician"
-	ui_colour = TGUI_COLOUR_ORANGE
+	ui_colour = /datum/job/engineering::ui_colour
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Atmospheric Technician"
@@ -177,6 +177,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = 0
 	trait_list = list("stowaway")
 	add_to_manifest = FALSE
+	radio_announcement = FALSE
 	low_priority_job = TRUE
 	slot_card = null
 	slot_head = list(\
@@ -283,6 +284,16 @@ ABSTRACT_TYPE(/datum/job/special)
 		. = ..()
 		src.limit = rand(0,3)
 
+#ifdef RP_MODE
+#define STOWAWAY_ALERT "You are not an antagonist. While you are not employed by NanoTrasen, you should still act like a sane person that wants to remain on the station."
+	special_setup(mob/M, no_special_spawn)
+		. = ..()
+		SPAWN(2) //Ghost spawn panel SPAWN(1) jank...
+			if(!M.mind?.is_antagonist())
+				tgui_alert(M, STOWAWAY_ALERT, "You are not an antagonist!")
+#undef STOWAWAY_ALERT
+#endif
+
 /datum/job/special/pirate
 	ui_colour = TGUI_COLOUR_CRIMSON
 	name = "Space Pirate"
@@ -346,7 +357,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_miner")
 	access_string = "Head of Mining"
-	ui_colour = TGUI_COLOUR_GREEN
+	ui_colour = /datum/job/command::ui_colour
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/mining)
@@ -410,6 +421,7 @@ ABSTRACT_TYPE(/datum/job/special)
 
 ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
+	job_category = JOB_DAILY
 	request_limit = 2
 	request_cost = PAY_DOCTORATE*4
 	var/day = ""
@@ -463,6 +475,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	name = "Waiter"
 	wages = PAY_UNTRAINED
 	access_string = "Waiter"
+	slot_belt = list(/obj/item/device/pda2/chef)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
 	slot_suit = list(/obj/item/clothing/suit/wcoat)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -475,7 +488,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily/lawyer
 	day = "Thursday"
 	name = "Lawyer"
-	ui_colour = TGUI_COLOUR_RED
+	ui_colour = /datum/job/security::ui_colour
 	wages = PAY_DOCTORATE
 	access_string = "Lawyer"
 	limit = 4
@@ -509,46 +522,54 @@ ABSTRACT_TYPE(/datum/job/daily)
 		..()
 		if (!M)
 			return
+		SPAWN(0)
+			var/selection = null
+			var/list/options = list(/datum/mutantrace/lizard::name = /datum/mutantrace/lizard,
+									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
+									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
+									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
+									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
+									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
-		var/morph = null
-		if(prob(33))
-			morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
+			selection = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
+			var/datum/mutantrace/morph = options[selection]
 
-		if (morph && (morph == /datum/mutantrace/martian || morph == /datum/mutantrace/blob)) // doesn't wear human clothes
-			M.equip_if_possible(new /obj/item/storage/backpack/empty(src), SLOT_BACK)
-			var/obj/item/backpack = M.back
+			if (morph && (morph == /datum/mutantrace/martian || morph == /datum/mutantrace/blob)) // doesn't wear human clothes
+				M.equip_if_possible(new /obj/item/storage/backpack/empty(src), SLOT_BACK)
+				var/obj/item/backpack = M.back
 
-			var/obj/item/storage/fanny/belt_storage = M.belt
-			if(istype(belt_storage))
-				for(var/obj/item/I in belt_storage.storage.get_contents())
-					belt_storage.storage.transfer_stored_item(I, backpack, TRUE, M)
-			qdel(belt_storage)
+				var/obj/item/storage/fanny/belt_storage = M.belt
+				if(istype(belt_storage))
+					for(var/obj/item/I in belt_storage.storage.get_contents())
+						belt_storage.storage.transfer_stored_item(I, backpack, TRUE, M)
+				qdel(belt_storage)
 
-			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
+				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
 
-			M.stow_in_available(M.l_store, FALSE)
-			M.stow_in_available(M.r_store, FALSE)
+				M.stow_in_available(M.l_store, FALSE)
+				M.stow_in_available(M.r_store, FALSE)
 
-			var/obj/item/shirt = M.get_slot(SLOT_W_UNIFORM)
-			M.drop_from_slot(shirt)
-			qdel(shirt)
+				var/obj/item/shirt = M.get_slot(SLOT_W_UNIFORM)
+				M.drop_from_slot(shirt)
+				qdel(shirt)
 
-			var/obj/item/shoes = M.get_slot(SLOT_SHOES)
-			M.drop_from_slot(shoes)
-			qdel(shoes)
+				var/obj/item/shoes = M.get_slot(SLOT_SHOES)
+				M.drop_from_slot(shoes)
+				qdel(shoes)
 
-		else
-			var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
-			var/obj/item/card/id = locate() in M
-			if (id)
-				L.storage.add_contents(id, M, FALSE)
-			if (M.l_store)
-				M.stow_in_available(M.l_store)
-			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
-			M.equip_if_possible(L, SLOT_WEAR_ID, TRUE)
+			else
+				var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
+				var/obj/item/card/id = locate() in M
+				if (id)
+					L.storage.add_contents(id, M, FALSE)
+				if (M.l_store)
+					M.stow_in_available(M.l_store)
+				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
+				M.equip_if_possible(L, SLOT_WEAR_ID, TRUE)
 
-		if(morph) // now that we've handled weird mutantrace cases, morph them
-			M.set_mutantrace(morph)
+			if(morph) // now that we've handled weird mutantrace cases, morph them
+				M.set_mutantrace(morph)
 
 /datum/job/daily/musician
 	day = "Saturday"
@@ -621,7 +642,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
-		ui_colour = TGUI_COLOUR_NAVY
+		ui_colour = /datum/job/special/nt::ui_colour
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
@@ -664,7 +685,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	syndicate
 		name = "Syndicate Pod Pilot"
-		ui_colour = TGUI_COLOUR_CRIMSON
+		ui_colour = /datum/job/special/syndicate::ui_colour
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE

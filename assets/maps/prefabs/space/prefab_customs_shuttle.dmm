@@ -252,7 +252,7 @@
 /turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "ph" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},

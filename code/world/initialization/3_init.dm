@@ -117,9 +117,6 @@
 	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
-	if (time2text(world.realtime,"DDD") == "Fri")
-		NT |= mentors
-
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
 	load_intraround_eggs()
@@ -231,6 +228,10 @@
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
 	#endif
+
+	UPDATE_TITLE_STATUS("Processing gravity")
+	Z_LOG_DEBUG("World/Init", "Processing gravity...")
+	global.configure_zero_g_areas()
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME

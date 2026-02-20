@@ -31,6 +31,7 @@ ABSTRACT_TYPE(/datum/recipe/burger)
 			var/obj/item/reagent_containers/food/snacks/burger/burgle/burgle = new()
 			possibly_meat.transfer_all_reagents(burgle)
 			output_list += burgle
+			game_stats.Increment("food_crimes")
 			return TRUE
 		else
 			return ..()
@@ -646,7 +647,7 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 			customSandwich.name = "toast"
 			customSandwich.desc = "A slice of toast between two slices of bread. Apparently this counts as a sandwich?"
 			extraSlices--
-			customSandwich.reagents.add_reagent("worcestershire_sauce", 25)
+			customSandwich.reagents.add_reagent("yorkshire_sauce", 25)
 		else if (!fillings.len)
 			customSandwich.name = "wish"
 			customSandwich.desc = "So named because you 'wish' you had something to put between the slices of bread. Ha.  ha.  Ha..."
@@ -1054,6 +1055,12 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/potato = 1)
 	output = /obj/item/reagent_containers/food/snacks/bakedpotato
 
+/datum/recipe/maghaz
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/condiment/gravyboat = 1,
+	/obj/item/organ/brain = 1)
+	output = /obj/item/reagent_containers/food/snacks/maghaz
+
 /datum/recipe/hotdog
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/hotdog)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1)
@@ -1068,7 +1075,8 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/steak/synth,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = /obj/item/reagent_containers/food/snacks/steak/monkey,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep = /obj/item/reagent_containers/food/snacks/steak/sheep,
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/fish_fingers)
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/fish_fingers,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug = /obj/item/cocktail_stuff/eyestalk)
 
 /datum/recipe/steak_ling
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/steak_ling)
@@ -1549,6 +1557,7 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 				batter.custom_item = I
 				I.set_loc(batter)
 				batter.name = "[I:real_name ? I:real_name : I.name] cake batter"
+				input_list -= I
 				for (var/obj/M in input_list)
 					qdel(M)
 
@@ -2079,4 +2088,8 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/raw_flan = 1)
 	output = /obj/item/reagent_containers/food/snacks/flan
 
-
+// Yuck is the generic invalid-recipe output for the oven. This recipe is for making sure the same singular instance of yuck that's put in is spat
+// out again.
+/datum/recipe/yuck
+	tools = list(/obj/item/reagent_containers/food/snacks/yuck = 1)
+	category = null

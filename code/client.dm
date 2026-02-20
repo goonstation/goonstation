@@ -48,9 +48,6 @@
 	var/tg_controls = 0
 	var/tg_layout = null
 
-	var/use_chui = 1
-	var/use_chui_custom_frames = 1
-
 	var/ignore_sound_flags = 0
 
 	var/has_contestwinner_medal = 0
@@ -334,7 +331,7 @@
 			Z_LOG_DEBUG("Client/New", "[src.ckey] - new player crap")
 
 			if (!loaded_savefile)
-				#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+				#ifdef LIVE_SERVER
 				preferences.ShowChoices(src.mob)
 				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
 				boutput(src, SPAN_ALERT("Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!"))
@@ -385,7 +382,7 @@
 
 		#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
 		src.verbs += /client/proc/cmd_rp_rules
-		if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
+		if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs") && global.tgui_process)
 			src.cmd_rp_rules()
 		#endif
 		// End stuff reliant on cloudsaves
@@ -440,15 +437,6 @@
 
 	if(winget(src, "menu.hide_menu", "is-checked") == "true")
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
-
-	if (src.byond_version >= 516)
-		use_chui = FALSE
-		winset(src, "use_chui", "is-checked=false")
-		use_chui_custom_frames = FALSE
-		winset(src, "use_chui_custom_frames", "is-checked=false")
-	else
-		use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
-		use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
 
 	//wow its the future we can choose between 3 fps values omg
 	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
@@ -645,6 +633,9 @@
 
 /client/proc/can_see_mentor_pms()
 	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms
+
+/client/proc/can_play_whitelisted_roles()
+	return NT.Find(src.ckey) || (IS_IT_FRIDAY && src.is_mentor()) || isadmin(src)
 
 var/global/curr_year = null
 var/global/curr_month = null
@@ -990,7 +981,7 @@ var/global/curr_day = null
 
 		if("resourcePreloadComplete")
 			boutput(src, SPAN_NOTICE("<b>Preload completed.</b>"))
-			src.Browse(null, "window=resourcePreload")
+			src << browse(null, "window=resourcePreload")
 			return
 
 		if ("loginnotice_ack")
@@ -1239,32 +1230,6 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "set-wasd-controls"
 	src.do_action("togglewasd")
-
-
-/client/verb/set_chui()
-	set hidden = 1
-	set name = "set-chui"
-	if (byond_version >= 516)
-		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
-		winset(src, "use_chui", "is-checked=false")
-		return
-	if (src.use_chui)
-		src.use_chui = 0
-	else
-		src.use_chui = 1
-
-/client/verb/set_chui_custom_frames()
-	set hidden = 1
-	set name = "set-chui-custom-frames"
-	if (byond_version >= 516)
-		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
-		winset(src, "use_chui_custom_frames", "is-checked=false")
-		return
-	if (src.use_chui_custom_frames)
-		src.use_chui_custom_frames = 0
-	else
-		src.use_chui_custom_frames = 1
-
 
 /client/verb/set_speech_sounds()
 	set hidden = 1

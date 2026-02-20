@@ -51,6 +51,8 @@ toxic - poisons
 
 	has_impact_particles = TRUE
 
+	affected_by_gravity = TRUE
+
 	/// can it ricochet off a wall?
 	var/ricochets = FALSE
 
@@ -86,7 +88,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_22
 	casing = /obj/item/casing/small
 	impact_image_state = "bullethole-small"
-	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
+	no_hit_message = 1 // It's supposed to be a stealth weapon, right (Convair880)?
 	ricochets = TRUE
 
 	a180
@@ -99,7 +101,7 @@ toxic - poisons
 		casing = null
 		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 			if (isliving(hit))
-				if (ON_COOLDOWN(hit, "american180_miss", 3 DECI SECONDS))
+				if (ON_COOLDOWN(hit, "american180_miss", 2 DECI SECONDS))
 					return TRUE
 				else
 					return FALSE
@@ -114,7 +116,7 @@ toxic - poisons
 /datum/projectile/bullet/bullet_22/smartgun
 	shot_sound = 'sound/weapons/smartgun.ogg'
 	shot_volume = 70
-	silentshot = 0
+	no_hit_message = 0
 
 /datum/projectile/bullet/bullet_22/HP
 	damage = 35
@@ -130,7 +132,7 @@ toxic - poisons
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_STAB
 	shot_sound = 'sound/weapons/capella.ogg'
-	silentshot = 0
+	no_hit_message = 0
 	projectile_speed = 96
 	shot_delay = 0.2
 	ricochets = TRUE
@@ -319,7 +321,7 @@ toxic - poisons
 			casing = /obj/item/casing/small
 			shot_sound = 'sound/weapons/tranq_pistol.ogg'
 			shot_volume = 30
-			silentshot = 1
+			no_hit_message = 1
 
 	//haha gannets, fuck you I stole ur shit! - kyle
 	law_giver
@@ -368,7 +370,7 @@ toxic - poisons
 	shot_number = 16
 	shot_delay = 0.07 SECONDS
 	dissipation_delay = 8
-	silentshot = 1
+	no_hit_message = 1
 	slow = 0
 	implanted = null
 
@@ -544,6 +546,13 @@ toxic - poisons
 			shot_volume = 0
 			shoot_reflected_bounce(proj, hit, 4, PROJ_NO_HEADON_BOUNCE)
 			shot_volume = 100
+		else if (proj.reflectcount > 1)
+			var/mob/M = hit
+			var/turf/target = get_edge_target_turf(M, dirflag)
+			M.throw_at(target, 4, 2, throw_type = THROW_GUNIMPACT)
+
+	get_power(obj/projectile/P, atom/A)
+		return P.power + P.reflectcount * 7
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
 	name = "stun bullet"
@@ -599,7 +608,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	damage = 0
 	stun = 2.5 // about 33 shots to down a full-stam person
-	silentshot = TRUE
+	no_hit_message = TRUE
 
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
@@ -616,7 +625,7 @@ toxic - poisons
 	dissipation_delay = 10
 	implanted = "blowdart"
 	shot_sound = 'sound/effects/syringeproj.ogg'
-	silentshot = 1
+	no_hit_message = 1
 	casing = null
 	reagent_payload = "curare"
 	implanted = /obj/item/implant/projectile/body_visible/blowdart
@@ -759,7 +768,7 @@ toxic - poisons
 	icon_state = "birdshot1"
 	hit_ground_chance = 66
 	implanted = null
-	damage = 13
+	damage = 16
 	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
 	dissipation_rate = 4 //spread handles most of this
@@ -963,7 +972,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 	ricochets = TRUE
-	silentshot = TRUE
+	no_hit_message = TRUE
 
 /datum/projectile/bullet/grenade_fragment
 	name = "grenade fragment"
@@ -976,7 +985,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 	ricochets = TRUE
-	silentshot = TRUE
+	no_hit_message = TRUE
 
 /datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
 	name = "buckshot"
@@ -2403,7 +2412,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 			if(clown_tally > 0)
 				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE)
 
-			if (H.job == "Clown" || clown_tally >= 2)
+			if (H.traitHolder?.hasTrait("training_clown") || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)
 				H.throw_at(get_offset_target_turf(H, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2, throw_type = THROW_GUNIMPACT)
 				H.emote("twitch_v")

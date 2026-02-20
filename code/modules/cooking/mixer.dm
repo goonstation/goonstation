@@ -194,13 +194,14 @@ TYPEINFO(/obj/machinery/mixer)
 		var/datum/recipe_instructions/cooking/mixer/instructions = recipe?.get_recipe_instructions(RECIPE_ID_MIXER)
 		if (!instructions)
 			instructions = src.default_instructions
-		if (recipe && recipe.try_get_output(src.contents, output, src))
-			instructions.output_post_process(src.contents, output, src)
+		var/list/content = src.contents.Copy()
+		if (recipe && recipe.try_get_output(content, output, src))
+			instructions.output_post_process(content, output, src)
 
 			for(var/atom/movable/out in output)
 				out.set_loc(get_turf(src))
+				content -= out
 
-			var/list/content = src.contents.Copy()
 			recipe.separate_ingredients(content)
 
 			for (var/obj/item/I in content)

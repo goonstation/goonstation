@@ -51,7 +51,6 @@
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
@@ -65,6 +64,10 @@
 		if(ismob(src.loc))
 			light_dir.light_target = src.loc
 		light_dir.update(0)
+
+	setupProperties()
+		..()
+		setProperty("mining_alerts")
 
 	attack_self(mob/user)
 		src.flashlight_toggle(user, activated_inhand = TRUE)
@@ -512,6 +515,7 @@
 	icon_state = "hardhat0"
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
+	c_flags = null
 	var/on = 0
 	var/datum/component/loctargeting/simple_light/light_dir
 
@@ -654,6 +658,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
 	item_state = "camhat"
+	c_flags = null
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = CAMERA_NETWORK_PUBLIC
@@ -829,6 +834,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	icon_state = "siren0"
 	item_state = "siren"
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
+	c_flags = null
 	var/weeoo_in_progress = 0
 	var/datum/light/light
 
@@ -947,6 +953,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
 		setProperty("space_movespeed", 0.2)
+		setProperty("mining_alerts")
 
 	attack_self(var/mob/user)
 		if(src.has_visor)

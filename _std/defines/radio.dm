@@ -142,9 +142,13 @@ proc/default_frequency_color(freq)
 		R_FREQ_SALVAGER = RADIOCL_SALVAGER,
 		R_FREQ_PIRATE = RADIOCL_SYNDICATE,
 		R_FREQ_WIZARD = RADIOCL_CIVILIAN,
-		R_FREQ_GANG = RADIOCL_SYNDICATE,
 	)
-	return frequencies_to_classes[freq] || RADIOCL_OTHER
+	var/class_to_return = frequencies_to_classes[freq]
+	if(!class_to_return)
+		for (var/datum/gang/gang as anything in global.get_all_gangs())
+			if(freq == gang.gang_frequency)
+				class_to_return = RADIOCL_SYNDICATE
+	return class_to_return || RADIOCL_OTHER
 
 /// A list of radio frequencies and their associated channel names.
 var/list/headset_channel_lookup

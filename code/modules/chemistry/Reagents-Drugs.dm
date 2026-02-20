@@ -22,7 +22,6 @@ datum
 			depletion_rate = 0.6
 			energy_value = 1
 			hunger_value = -0.1
-			bladder_value = -0.1
 			thirst_value = -0.05
 			threshold = THRESHOLD_INIT
 
@@ -184,7 +183,6 @@ datum
 			overdose = 20
 			value = 20 // 10 2 1 3 1 heat explosion :v
 			energy_value = 1.5
-			bladder_value = -0.1
 			hunger_value = -0.05
 			thirst_value = -0.05
 			stun_resist = 60
@@ -312,6 +310,7 @@ datum
 				new /image('icons/effects/hallucinations.dmi', "dragon"),
 				new /image('icons/effects/hallucinations.dmi', "pig"),
 				new /image('icons/effects/hallucinations.dmi', "slime"),
+				new /image('icons/effects/hallucinations.dmi', "shambler"),
 				new /image('icons/misc/critter.dmi', "martianW"),
 			)
 			var/static/list/monkey_names = strings("names/monkey.txt")
@@ -1088,7 +1087,6 @@ datum
 			depletion_rate = 0.2
 			value = 39 // 13c * 3  :v
 			energy_value = 3
-			bladder_value = -0.1
 			hunger_value = -0.3
 			thirst_value = -0.2
 			var/list/flushed_reagents = list("mannitol","synaptizine")
@@ -1169,7 +1167,6 @@ datum
 			depletion_rate = 0.6
 			value = 13 // 9c + 1c + 1c + 1c + heat
 			energy_value = 1.5
-			bladder_value = -0.09
 			hunger_value = -0.09
 			thirst_value = -0.09
 			stun_resist = 50
@@ -1290,7 +1287,6 @@ datum
 					if (K.sims)
 						K.sims.affectMotive("Energy", 2)
 						K.sims.affectMotive("fun", 1)
-						K.sims.affectMotive("Bladder", -0.5)
 						K.sims.affectMotive("Hunger", -1)
 						K.sims.affectMotive("Thirst", -2)
 				var/mob/living/H = M

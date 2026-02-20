@@ -48,13 +48,30 @@ var/global/list/datum/daynight_controller/daynight_controllers = list(AMBIENT_LI
 	proc/calculate_color(tick)
 		return "#888"
 
-	proc/update_color(new_color)
+	proc/update_color(new_color, animation_time=10 SECONDS)
 		if(current_color != new_color)
 			current_color = new_color
 			if(istype(light))
-				animate(light, color=new_color, time=10 SECONDS)
+				animate(light, color=new_color, time=animation_time)
 			if(istype(ambient_screen))
-				animate(ambient_screen, color=new_color, time=10 SECONDS)
+				animate(ambient_screen, color=new_color, time=animation_time)
+
+	proc/manual_animate_colors(list/colors, list/animations_times)
+		src.active = FALSE
+		if(length(colors) && length(animations_times))
+			var/iterations = min(length(colors), length(animations_times))
+			if(istype(light))
+				for(var/i in 1 to iterations)
+					if(i==1)
+						animate(src.light, color=colors[i], time=animations_times[i])
+					else
+						animate(color=colors[i], time=animations_times[i])
+			if(istype(ambient_screen))
+				for(var/i in 1 to iterations)
+					if(i==1)
+						animate(src.ambient_screen, color=colors[i], time=animations_times[i])
+					else
+						animate(color=colors[i], time=animations_times[i])
 
 	proc/generate_color_samples()
 		var/list/colors = list()

@@ -31,13 +31,13 @@
 			if ("ancient")
 				src.payload_reagent = pick("fuel", "goodnanites")
 			if ("martian")
-				src.payload_reagent = pick("water", "viscerite_viscera", "martian_flesh", "hemolymph")
+				src.payload_reagent = pick("water", "viscerite_viscera", "hemolymph")
 			if ("eldritch")
 				src.payload_reagent = pick("blood", "bloodc", "black_goop", "sewage")
 			if ("precursor")
-				src.payload_reagent = pick("ephedrine", "cryostylane") //cryo fluid?
+				src.payload_reagent = pick("ephedrine", "phenol")
 			if ("wizard")
-				src.payload_reagent = pick("reversium", "mugwort", "fliptonium")
+				src.payload_reagent = pick("reversium", "mugwort", "chickensoup")
 		src.payload_amount = rand(100, 3000)
 		src.payload_cooldown = rand(1, 10) SECONDS
 		src.payload_duration = rand(5, 10) * 60 SECONDS

@@ -9,7 +9,7 @@
 	chance_leave = 66
 	chance_arrive = 100
 
-	base_goods_buy = list(
+	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/buford/vennecure,
 			/datum/commodity/trader/buford/megaweed,
@@ -22,7 +22,7 @@
 		TRADER_RARITY_RARE = list()
 	)
 
-	base_goods_sell = list(
+	base_goods_sell = alist(
 		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/buford/powerplant,
 			/datum/commodity/trader/buford/mutriant,

@@ -166,6 +166,33 @@
 	time = 60 SECONDS
 	frame_path = /obj/machinery/lawrack
 
+/******************** Gravity Tether *******************/
+
+/datum/manufacture/mechanics/gravity_tether_station
+	name = "Station Gravity Tether"
+	create = 1
+	time = 60 SECONDS
+	frame_path = /obj/machinery/gravity_tether/station
+	item_requirements = list("metal" = 50,
+							"crystal_dense" = 10,
+							"metal_superdense" = 30,
+							"koshmarite" = 30,
+							"energy_high" = 40,)
+	category = "Machinery"
+
+/datum/manufacture/mechanics/gravity_tether_area
+	name = "Local Gravity Tether"
+	create = 1
+	time = 20 SECONDS
+	frame_path = /obj/machinery/gravity_tether/current_area
+	item_requirements = list("metal" = 20,
+							 "metal_superdense" = 10,
+							 "koshmarite" = 15,
+							 "energy_high" = 10,)
+	category = "Machinery"
+
+
+
 /******************** AI display (temp) *******************/
 
 /datum/manufacture/mechanics/ai_status_display
@@ -485,6 +512,13 @@
 /datum/manufacture/t_scanner
 	name = "T-ray scanner"
 	item_outputs = list(/obj/item/device/t_scanner)
+	create = 1
+	time = 8 SECONDS
+	category = "Tool"
+
+/datum/manufacture/gravity_scanner
+	name = "G-force scanner"
+	item_outputs = list(/obj/item/device/analyzer/gravity_scanner)
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
@@ -996,11 +1030,11 @@
 	category = "Tool"
 
 /datum/manufacture/places_pipes
-	name = "Handheld Pipe Dispencer"
-	item_requirements = list("metal_superdense" = 12,
-							 "crystal_dense" = 6,
-							 "conductive_high" = 6,
-							 "energy_high" = 6)
+	name = "Handheld Pipe Dispenser"
+	item_requirements = list("metal_dense" = 12,
+							 "crystal" = 15,
+							 "conductive_high" = 10,
+							 "energy_high" = 10)
 	item_outputs = list(/obj/item/places_pipes)
 	create = 1
 	time = 90 SECONDS
@@ -1540,6 +1574,16 @@
 	create = 1
 	category = "Component"
 	apply_material = TRUE
+	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
+
+	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+		..()
+		if(istype(A, /obj/item/parts/robot_parts/arm))
+			var/obj/item/parts/robot_parts/arm/new_arm = A
+			if(roboprint)
+				new_arm.limb_print = roboprint
+			else
+				roboprint = new_arm.limb_print
 
 /datum/manufacture/full_cyborg_light
 	name = "Light Cyborg Parts"
@@ -1551,6 +1595,16 @@
 	create = 1
 	category = "Component"
 	apply_material = TRUE
+	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
+
+	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+		..()
+		if(istype(A, /obj/item/parts/robot_parts/arm))
+			var/obj/item/parts/robot_parts/arm/new_arm = A
+			if(roboprint)
+				new_arm.limb_print = roboprint
+			else
+				roboprint = new_arm.limb_print
 
 /datum/manufacture/robo_chest
 	name = "Cyborg Chest"
@@ -2513,6 +2567,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 15 SECONDS
 	category = "Tool"
 
+/datum/manufacture/breach_pouch
+	name = "Mining charge pouch"
+	item_requirements = list("fabric" = 10,
+							 "metal_dense" = 2)
+	item_outputs = list(/obj/item/storage/breach_pouch)
+	create = 1
+	time = 15 SECONDS
+	category = "Clothing"
+
 /datum/manufacture/jetpack
 	name = "Jetpack"
 	item_requirements = list("metal_superdense" = 10,
@@ -2678,6 +2741,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 10 SECONDS
 	category = "Clothing"
 
+/datum/manufacture/backpack_brown
+	name = "Brown Backpack"
+	item_requirements = list("fabric" = 8)
+	item_outputs = list(/obj/item/storage/backpack/empty/brown)
+	create = 1
+	time = 10 SECONDS
+	category = "Clothing"
+
 /datum/manufacture/satchel
 	name = "Satchel"
 	item_requirements = list("fabric" = 8)
@@ -2706,6 +2777,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	name = "Blue Satchel"
 	item_requirements = list("fabric" = 8)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/blue)
+	create = 1
+	time = 10 SECONDS
+	category = "Clothing"
+
+/datum/manufacture/satchel_brown
+	name = "Brown Satchel"
+	item_requirements = list("fabric" = 8)
+	item_outputs = list(/obj/item/storage/backpack/satchel/empty/brown)
 	create = 1
 	time = 10 SECONDS
 	category = "Clothing"
@@ -3439,6 +3518,40 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 60 SECONDS
 	category = "Resource"
 
+ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
+/datum/manufacture/radio_upgrade
+	name = "Station Radio Upgrade (ABSTRACT-YOUSHOULDNTSEEME)"
+	item_requirements = list("conductive" = 9,
+							 "crystal" = 15)
+	item_outputs = list(/obj/item/device/radio_upgrade/station/civilian)
+	create = 1
+	time = 20 SECONDS
+	category = "Tool"
+
+/datum/manufacture/radio_upgrade/command
+	name = "Command Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/command)
+
+/datum/manufacture/radio_upgrade/security
+	name = "Security Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/security)
+
+/datum/manufacture/radio_upgrade/engineering
+	name = "Engineering Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/engineering)
+
+/datum/manufacture/radio_upgrade/research
+	name = "Research Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/research)
+
+/datum/manufacture/radio_upgrade/medical
+	name = "Medical Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/medical)
+
+/datum/manufacture/radio_upgrade/civilian
+	name = "Civilian Radio Upgrade"
+	item_outputs = list(/obj/item/device/radio_upgrade/station/civilian)
+
 /******************** QM CRATES *******************/
 
 /datum/manufacture/crate
@@ -3905,6 +4018,13 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	)
 	create = 1
 	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
+	category = "Clothing"
+
+/datum/manufacture/magnetic_shoes
+	name = "Magnetic Shoes"
+	create = 1
+	item_outputs = list(/obj/item/clothing/shoes/magnetic)
+	time = 6 SECONDS
 	category = "Clothing"
 
 /datum/manufacture/turbine_shaft

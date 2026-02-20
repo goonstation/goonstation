@@ -118,7 +118,7 @@
 		create_toxins()
 			var/datum/reagents/temp_holder = ..()
 			temp_holder.maximum_volume += 15
-			temp_holder.add_reagent("blood", 15, targeting.dna_sting_target)
+			temp_holder.add_reagent("blood", 15, targeting.dna_sting_target.bioHolder)
 			return temp_holder
 
 		New()
@@ -218,7 +218,7 @@
 	copiable = 0
 	lock_holder = FALSE
 	ignore_holder_lock = 1
-	var/datum/bioHolder/dna_sting_target = null
+	var/datum/absorbedIdentity/dna_sting_target = null
 	var/datum/targetable/changeling/sting = null
 	sticky = 1
 

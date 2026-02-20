@@ -61,6 +61,7 @@ Contains:
 	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
+	can_arcplate = FALSE
 
 /obj/item/assembly/New(var/new_location)
 	src.additional_components = list()
@@ -166,9 +167,10 @@ Contains:
 	if(src.expended)
 		//we don't want stuff to happen like e.g. buttbombs triggering 50 more times before being qdel'ed, potentially crashing the server... yeah, that happened
 		return
+	var/last_ckey = src.get_last_ckey()
 	if(src.force_dud == TRUE)
-		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [key_name(src.fingerprintslast)]")
-		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(key_name(last_ckey), "None")]")
+		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")]")
 		return
 	if(src.override_upstream && src.master)
 		//if we should just relay signals, we do so, no matter where they come from
@@ -179,9 +181,9 @@ Contains:
 		for(var/mob/O in hearers(1, src.loc))
 			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 		//Some Admin logging/messaging
-		logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"];[src.get_additional_logging_information(src.last_armer)]")
+		logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")];[src.get_additional_logging_information(src.last_armer)]")
 		if(src.requires_admin_messaging())
-			message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+			message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")]")
 		//now lets blow some shit up
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
@@ -520,9 +522,9 @@ Contains:
 	src.target_item_prefix = null
 	src.chargeable_component = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
@@ -590,9 +592,9 @@ Contains:
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	src.w_class = max(src.w_class, manipulated_item.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	boutput(user, "You attach the [src.name] to the [manipulated_item.name].")
 	//Since we completed the assembly, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
@@ -640,9 +642,9 @@ Contains:
 			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, to_combine_atom)
 	//Last but not least, we update our icon, w_class and name
 	src.w_class = max(src.w_class, manipulated_item.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE

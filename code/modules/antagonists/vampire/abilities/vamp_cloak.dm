@@ -51,23 +51,29 @@
 		if (src.is_active) return
 		boutput(src.owner, SPAN_ALERT("The illusory mist surrounds you..."))
 		src.is_active = TRUE
+		src.owner.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_SHROUDED)
 		animate(src.owner, VAMP_CLOAK_ANIMATION_DELAY, alpha=0)
 		animate(src.mist,VAMP_CLOAK_ANIMATION_DELAY, alpha=255 )
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, 3)
+
 
 		SPAWN(VAMP_CLOAK_ANIMATION_DELAY)
 			src.owner.mouse_opacity = 0
 			src.owner.alpha = 0
 			src.mist.alpha = 255
 			animate_wave(src.mist)
-
+			if (ismob(src.owner))
+				var/mob/M = src.owner
+				M.UpdateName()
 	proc/remove_shroud()
 		if (!src.is_active) return
 		boutput(src.owner, SPAN_ALERT("The light dispells your shroud!"))
 		src.is_active = FALSE
+		src.owner.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_SHROUDED)
 		animate(src.owner, VAMP_CLOAK_ANIMATION_DELAY, alpha = 255)
 		animate(src.mist, VAMP_CLOAK_ANIMATION_DELAY, alpha = 0)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+
 
 		SPAWN(VAMP_CLOAK_ANIMATION_DELAY)
 			src.owner.mouse_opacity = 1
@@ -75,7 +81,9 @@
 			animate_reset(src.mist)
 			src.mist.color = "#666"
 			src.mist.alpha = 0
-
+			if (ismob(src.owner))
+				var/mob/M = src.owner
+				M.UpdateName()
 	OnAdd()
 		src.is_active = FALSE
 		src.mist = new(src.owner)

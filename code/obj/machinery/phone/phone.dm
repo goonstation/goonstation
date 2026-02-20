@@ -180,7 +180,7 @@ TYPEINFO(/obj/machinery/phone)
 		return
 
 	src.handset = new /obj/item/phone_handset(src,user)
-	src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
+	src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1, range=48)
 	user.put_in_hand_or_drop(src.handset)
 	src.answered = TRUE
 

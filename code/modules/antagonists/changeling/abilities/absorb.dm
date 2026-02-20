@@ -241,11 +241,9 @@
 		actions.start(new/datum/action/bar/private/icon/changelingAbsorb(T, src), C)
 		return 0
 
-	proc/addBHData(var/mob/living/T)
+	proc/addBHData(var/mob/living/victim)
 		var/datum/abilityHolder/changeling/C = holder
 		var/mob/ownerMob = holder.owner
-		if (istype(C) && isnull(C.absorbed_dna[T.real_name]))
-			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(T)
-			originalBHolder.CopyOther(T.bioHolder)
-			C.absorbed_dna[T.real_name] = originalBHolder
-			ownerMob.show_message(SPAN_NOTICE("We can now transform into [T.real_name]."), 1)
+		if (istype(C) && isnull(C.absorbed_dna[victim.real_name]))
+			C.absorbed_dna[victim.real_name] = new /datum/absorbedIdentity(victim)
+			ownerMob.show_message(SPAN_NOTICE("We can now transform into [victim.real_name]."), 1)

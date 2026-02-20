@@ -432,7 +432,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
 
 		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
-			payload.oxygen_agent_b += 0.18 * owner.material_amt
+			payload.oxygen_agent_b += 0.5 * owner.material_amt
 			payload.oxygen = 15 * owner.material_amt
 			payload.temperature = T0C //reduced temp is supposeed to represent endothermic reaction
 			air.merge(payload) //add it to the target air
@@ -545,7 +545,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/slippery_attack
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
-		if (isitem(owner) && prob(20) && (owner in attacker.equipped_list()))
+		if (isitem(owner) && prob(20) && (owner in attacker?.equipped_list()))
 			var/obj/item/handled_item = owner
 			boutput(attacker, SPAN_ALERT("[handled_item] slips right out of your hand!"))
 			handled_item.set_loc(attacker.loc)
@@ -623,7 +623,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/obj/item/I = owner
 			I.no_gravity = 1
 			I.AddComponent(/datum/component/loctargeting/no_gravity)
-			animate_levitate(owner)
 		return
 
 // Apply a secondary HSL colorspace matrix.
@@ -870,8 +869,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(mob/living/L, obj/item/I, mult)
 		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
 			return
-		if (istype(L))
-			L.shock(I, src.wattage, "All", 1, FALSE)
+		if (!istype(L))
+			return
+
+		if(istype(I, /obj/item/raw_material/veranium))
+			var/obj/item/raw_material/veranium/ore = I
+			FLICK("ore[ore.icon_stack_value]_shock$$veranium", ore)
+		else if(istype(I, /obj/item/rocko))
+			var/obj/item/rocko/rocko = I
+			var/flick_state = replacetextEx(rocko.icon_state, "$$veranium", "shock$$veranium")
+			FLICK(flick_state, rocko)
+		L.shock(I, src.wattage, "All", 1, FALSE)
 
 /datum/materialProc/arcflash_life
 	var/cd_min

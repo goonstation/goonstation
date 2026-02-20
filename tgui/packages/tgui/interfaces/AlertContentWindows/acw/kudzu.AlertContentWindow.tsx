@@ -10,19 +10,15 @@ import { AlertContentWindow } from '../types';
 const KudzuAlertWindow = () => {
   return (
     <div className="traitor-tips">
-      <h1 className="center">
-        You are a member of the Kudzu hivemind! Not an antagonist!
-      </h1>
+      <h1 className="center">You are a member of the Kudzu hivemind!</h1>
       <img src={resource('images/antagTips/kudzuman.png')} className="center" />
 
+      <h2 className="center">
+        <em>Kudzupeople are Antagonists!</em>
+      </h2>
       <p>
         1. Your new goal is very straightforward, protect and grow the kudzu so
-        that all may enjoy your beauty!
-        <br />
-        <em>
-          Kudzu is non-violent by nature, do not harm humans unless they harm
-          you!
-        </em>
+        that all may enjoy, or be consumed by, your beauty!
       </p>
       <p>
         2. <em>You must stay on kudzu tiles to survive!</em> You have a pool of
@@ -49,12 +45,10 @@ const KudzuAlertWindow = () => {
       </ul>
 
       <p>
-        3. <em>Don&apos;t attack fellow kudzu people!</em> Ideally you
-        shouldn&apos;t be attacking anyone since kudzu is nonviolent, but there
-        are times you must protect yourself. Since other kudzu people are
-        technically part of yourself and the kudzu you should not harm them/you.
-        You can telepathically speak to other kudzu people using the{' '}
-        <em>:kuzdu</em> speech prefix.
+        3. <em>Don&apos;t attack fellow kudzu people!</em>Since other kudzu
+        people are technically part of yourself and the kudzu you should not
+        harm them/you. You can telepathically speak to other kudzu people using
+        the <em>:kuzdu</em> speech prefix.
       </p>
       <p>
         For more information, consult{' '}

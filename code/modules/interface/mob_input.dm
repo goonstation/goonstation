@@ -219,6 +219,6 @@
 		src.client.applied_keybind_styles = list() //Reset currently applied styles
 		build_keybind_styles(src.client)
 		apply_custom_keybinds(src.client)
-		var/datum/movement_controller/controller = src.override_movement_controller
+		var/datum/movement_controller/controller = src.get_active_movement_controller()
 		if (controller)
 			controller.modify_keymap(src.client)

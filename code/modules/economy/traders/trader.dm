@@ -23,7 +23,7 @@
 	var/rarities = list(TRADER_RARITY_COMMON, TRADER_RARITY_UNCOMMON, TRADER_RARITY_RARE)
 	// list to determine how many items per rarity we have
 	// it's cumulative, meaning we will have at least X common, Y uncommon, etc.
-	var/list/amount_of_items_per_rarity = list(
+	var/list/amount_of_items_per_rarity = alist(
 		TRADER_RARITY_COMMON = 3,
 		TRADER_RARITY_UNCOMMON = 2,
 		TRADER_RARITY_RARE = 1,

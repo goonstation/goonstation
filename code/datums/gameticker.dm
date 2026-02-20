@@ -294,6 +294,17 @@ var/global/game_force_started = FALSE
 		participationRecorder.releaseHold()
 		roundManagement.recordUpdate(mode)
 
+#ifdef GENERATE_GOONHUB_MAP
+	SPAWN(3.5 SECONDS)
+		var/client/map_client
+		UNTIL((map_client = locate() in clients), 10 SECONDS)
+		if (isnewplayer(map_client.mob))
+			var/mob/new_player/dude = map_client.mob
+			dude.observe_round()
+			UNTIL(!isnewplayer(map_client.mob), 10 SECONDS)
+		map_client.mapWorld(automated = TRUE)
+#endif
+
 #ifdef BAD_MONKEY_NO_BANANA
 	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
 		qdel(monke)

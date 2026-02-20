@@ -219,6 +219,7 @@
 
 		robotics
 			name = "Robotics PDA"
+			icon_state = "pda-robotics"
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY, MGO_SILICON)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			default_muted_mailgroups = list(MGA_SALES)
@@ -228,7 +229,15 @@
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_CRISIS, MGA_CLONER)
+
+	pharmacist
+		name = "Pharmacy PDA"
+		icon_state = "pda-pha"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
+		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_CRISIS, MGA_DEATH, MGA_MEDCRIT)
+		default_muted_mailgroups = list(MGA_SALES)
 
 	security
 		name = "Security PDA"
@@ -240,7 +249,7 @@
 
 	forensic
 		name = "Forensic PDA"
-		icon_state = "pda-s"
+		icon_state = "pda-forensic"
 		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
@@ -264,6 +273,9 @@
 		setup_default_pen = /obj/item/pen/crayon/random
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_FLUID_ENTER
+
+		blue
+			icon_state = "pda-clown-blue"
 
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
@@ -312,7 +324,7 @@
 
 	mining
 		name = "Mining PDA"
-		icon_state = "pda-q"
+		icon_state = "pda-mining"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
 		mailgroups = list(MGD_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
@@ -325,9 +337,13 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
+		name = "Catering PDA"
+		icon_state = "pda-catering"
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	bartender
+		name = "Bartending PDA"
+		icon_state = "pda-bartender"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
@@ -335,6 +351,9 @@
 		icon_state = "pda-hydro"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
 		mailgroups = list(MGD_BOTANY,MGD_PARTY)
+
+	computeroperator
+		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
 
 	syndicate
 		icon_state = "pda-syn"

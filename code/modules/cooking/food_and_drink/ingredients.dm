@@ -83,21 +83,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		boutput(M, SPAN_ALERT("You can feel it wriggling..."))
 		..()
 
-	attackby(obj/item/W, mob/user)
-		if (!src.eyes_present)
-			user.visible_message(SPAN_NOTICE("You can't possibly cut more than one at a time, company policy."))
-			return
-		if (issnippingtool(W))
-			user.visible_message(SPAN_NOTICE("You snip off an eyestalk. The slug seems unaware."))
-			playsound(src.loc, 'sound/items/Scissor.ogg', 50, TRUE)
-			var/obj/item/eyes = new /obj/item/cocktail_stuff/eyestalk
-			eyes.set_loc(src.loc)
-			src.icon_state = "lesserSlug-eyeless"
-			src.eyes_present = FALSE
-			SPAWN(20 SECONDS)
-				src.icon_state = "lesserSlug"
-				src.eyes_present = TRUE
-
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	name = "fish fillet"
 	desc = "A slab of meat from a fish."
@@ -311,11 +296,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "flour"
 	food_color = "#FFFFFF"
 
+/obj/item/reagent_containers/food/snacks/ingredient/flour/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
+	if (..()) return
+
+	if (reagent_id == "water" && volume >= 15)
+		src.visible_message(SPAN_NOTICE("[src] turns into dough."))
+		new /obj/item/reagent_containers/food/snacks/ingredient/dough(get_turf(src))
+		holder_reagents.remove_reagent("water", 15)
+		qdel(src)
+
 /obj/item/reagent_containers/food/snacks/ingredient/flour/semolina
 	name = "semolina"
 	desc = "Some semolina flour."
 	icon_state = "semolina"
 	food_color = "#FFFFEE"
+
+/obj/item/reagent_containers/food/snacks/ingredient/flour/semolina/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
+	if (..()) return
+
+	if (reagent_id == "water" && volume >= 15)
+		src.visible_message(SPAN_NOTICE("[src] turns into dough."))
+		new /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina(get_turf(src))
+		holder_reagents.remove_reagent("water", 15)
+		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 	name = "rice sprig"
@@ -330,6 +333,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	desc = "Some rice."
 	icon_state = "rice"
 	food_color = "#E3E3E3"
+
+/obj/item/reagent_containers/food/snacks/ingredient/rice/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
+	if (..()) return
+
+	if (reagent_id == "water" && volume > 30)
+		src.visible_message(SPAN_NOTICE("[src] gets sticky."))
+		new /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice(get_turf(src))
+		holder_reagents.remove_reagent("water", 15)
+		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/sugar
 	name = "sugar"
@@ -408,6 +420,8 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	brew_result = list("mead"=20)
 	mat_changename = "honey"
 	default_material = "honey"
+	can_arcplate = FALSE
+
 
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"

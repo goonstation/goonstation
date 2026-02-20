@@ -450,6 +450,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_COMMON
 
+/obj/item/reagent_containers/food/fish/anchovy
+	name = "anchovy"
+	desc = "Great on pizza."
+	icon_state = "anchovy"
+	inhand_color = "#636f85"
+	category = FISH_CATEGORY_OCEAN
+	rarity = ITEM_RARITY_COMMON
+
 /obj/item/reagent_containers/food/fish/barracuda
 	name = "barracuda"
 	desc = "You gonna burn, burn, burn, burn, burn to the wick. Ooh, barracuda, oh, yeah."
