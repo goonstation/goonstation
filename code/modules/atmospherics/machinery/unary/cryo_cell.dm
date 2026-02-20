@@ -17,7 +17,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/datum/light/light
 	var/ARCHIVED(temperature)
 	var/mob/occupant = null //! Mob inside the tube being healed
-	var/obj/item/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
+	var/obj/item/reagent_containers/glass/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
 	var/show_beaker_contents = FALSE
 	var/current_heat_capacity = 50
 	var/occupied_power_use = 500 WATTS //! Additional power usage when the pod is occupied (and on)
@@ -63,11 +63,9 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.use_power(src.occupied_power_use, EQUIP)
 
 	if(src.air_contents)
-		if(src.beaker && istype(beaker, /obj/item/reagent_containers/glass))
+		if(src.beaker)
 			// cryotubes cool people and the chemicals they keep in them
-			var/obj/item/reagent_containers/glass/manipulated_beaker = beaker
-			var/datum/reagents/manipulated_reagents = manipulated_beaker.reagents
-			manipulated_reagents.temperature_reagents(src.air_contents.temperature, exposed_volume = (600 + manipulated_reagents.total_volume * 7.5), change_cap = 30)
+			src.beaker.reagents.temperature_reagents(src.air_contents.temperature, exposed_volume = (600 + src.beaker.reagents.total_volume * 7.5), change_cap = 30)
 		src.ARCHIVED(temperature) = src.air_contents.temperature
 		src.heat_gas_contents()
 		src.expel_gas()
