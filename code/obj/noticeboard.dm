@@ -13,6 +13,49 @@ SET_UP_DIRECTIONALS(/obj/noticeboard, OFFSETS_NOTICEBOARD)
 /obj/noticeboard/ex_act()
 	qdel(src)
 
+/obj/noticeboard/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "NoticeBoard")
+		ui.open()
+
+/obj/noticeboard/ui_data(mob/user)
+	var/list/items = list()
+	for (var/atom/A as anything in src)
+		if (istype(A, /obj/item/paper))
+			items += list(list("item_type" = "paper", "item_name" = A.name, "item_ref" = "\ref[A]"))
+		else if (istype(A, /obj/item/canvas))
+			items += list(list("item_type" = "canvas", "item_name" = A.name, "item_ref" = "\ref[A]"))
+	. = list("items" = items)
+
+/obj/noticeboard/ui_act(action, list/params)
+	. = ..()
+	if (.)
+		return
+	switch (action)
+		if ("view_item")
+			var/obj/item/I = locate(params["selected_item"])
+			if (istype(I, /obj/item/canvas))
+				var/obj/item/canvas/canvas = I
+				canvas.pop_open_a_browser_box(usr)
+			else
+				I.ui_interact(usr)
+			. = TRUE
+		if ("remove_item")
+			var/obj/item/I = locate(params["selected_item"])
+			var/mob/user = usr
+			user.put_in_hand_or_drop(I)
+			I.add_fingerprint(user)
+			src.add_fingerprint(user)
+			src.notices--
+			src.UpdateIcon()
+			. = TRUE
+
+/obj/noticeboard/ui_state(mob/user)
+	. = global.tgui_physical_state
+
+/obj/noticeboard/ui_status(mob/user, datum/ui_state/state)
+	. = min(state.can_use_topic(src, user), global.tgui_not_incapacitated_state.can_use_topic(src, user))
 
 /obj/noticeboard/attackby(var/obj/item/O, var/mob/user)
 	if (istype(O, /obj/item/paper) || istype(O, /obj/item/canvas))
@@ -24,54 +67,20 @@ SET_UP_DIRECTIONALS(/obj/noticeboard, OFFSETS_NOTICEBOARD)
 			src.notices++
 			src.UpdateIcon()
 			boutput(user, SPAN_NOTICE("You pin \the [O] to the noticeboard."))
-			src.updateUsrDialog()
 		else
 			boutput(user, SPAN_ALERT("You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached."))
-
+		tgui_process.update_uis(src)
 
 /obj/noticeboard/update_icon()
 	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 
 /obj/noticeboard/attack_hand(mob/user)
-	var/dat = "<B>Noticeboard</B><BR>"
-	for(var/obj/item/item in src)
-		if(istype(item, /obj/item/paper) || istype(item, /obj/item/canvas))
-			dat += "<A href='byond://?src=\ref[src];read=\ref[item]'>[item]</A> <A href='byond://?src=\ref[src];remove=\ref[item]'>Remove</A><BR>"
-	user.Browse("<HEAD><TITLE>Notices</TITLE></HEAD>[dat]","window=noticeboard")
-	onclose(user, "noticeboard")
+	. = ..()
+	src.ui_interact(user)
 
 /obj/noticeboard/attack_ai(mob/user)
 	src.Attackhand(user)
-
-/obj/noticeboard/Topic(href, href_list)
-	if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
-		return
-	if (is_incapacitated(usr) || usr.restrained())
-		return
-
-	..()
-
-	src.add_dialog(usr)
-	if (href_list["remove"])
-		var/obj/item/I = locate(href_list["remove"])
-		if (I?.loc == src)
-			usr.put_in_hand_or_drop(I)
-			I.add_fingerprint(usr)
-			src.add_fingerprint(usr)
-			src.notices--
-			src.UpdateIcon()
-			src.updateUsrDialog()
-
-	if (href_list["read"])
-		var/obj/item/I = locate(href_list["read"])
-		if (I?.loc == src)
-			if(istype(I, /obj/item/canvas))
-				var/obj/item/canvas/canvas = I
-				canvas.pop_open_a_browser_box(usr)
-			else
-				I.ui_interact(usr)
-
 
 #define PERSISTENT_NOTICEBOARD_VERSION 1
 
