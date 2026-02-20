@@ -381,33 +381,28 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			return
 		var/temp_change = 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
 		src.occupant.changeBodyTemp(temp_change, src.air_contents.temperature, src.air_contents.temperature)
-		// we douse the person if we are running the cryotube under 100 °C, else we burn them alive in the cryotube
-		if(src.air_contents.temperature < T100C)
-			src.occupant.changeStatus("burning", -10 SECONDS)
-		else
+		src.occupant.changeStatus("burning", -10 SECONDS)
+		// we burn them alive in the cryotube if we run it over 100 °C
+
+		if(src.air_contents.temperature > T100C)
 			//let's cook the person, depending on how hot we make our cryotube
-			var/burn_amount = 0
-			var/burn_damage = rand(1,3)
+			var/burn_damage = rand(4,6)
 			var/output_message = "The heat is quite uncomfortable!"
 			switch(src.air_contents.temperature)
 				if((500) to (1500))
-					burn_damage = rand(3,6)
+					burn_damage = rand(6,9)
 					output_message = "It burns!"
 				if((1500) to (5000))
-					burn_damage = rand(5,8)
-					burn_amount = 10
+					burn_damage = rand(7,11)
 					output_message = "Oh god! That burns!"
 				if((5000) to (50000))
-					burn_damage = rand(8,10)
-					burn_amount = 20
+					burn_damage = rand(10,14)
 					output_message = "Why?! This is torment!!"
 				if((50000) to (3000000))
-					burn_damage = rand(10,12)
-					burn_amount = 33
+					burn_damage = rand(12,17)
 					output_message = "Why?! This is torment!!"
 				if((3000000) to (INFINITY)) //yes, that's 3 million. You got to get 5 mol into that tube somehow. The tube expels gas and cools down over time. Engineers, you know what to do
 					burn_damage = 20
-					burn_amount = 33
 					output_message = "This is fine..."
 					if(rand(15))
 						var/mob/mob_to_gib = src.occupant
@@ -417,9 +412,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			src.occupant.TakeDamage("All", 0, burn_damage, 0, DAMAGE_BURN)
 			if(!ON_COOLDOWN(src.occupant, "cryotube_burning", 10 SECONDS))
 				boutput(src.occupant, SPAN_ALERT("[output_message]"))
-			if(burn_amount > 0 && isliving(src.occupant))
-				var/mob/living/target_to_burn = src.occupant
-				target_to_burn.update_burning(burn_amount)
 		var/mob/living/carbon/human/H = null
 		if (ishuman(occupant))
 			H = occupant
