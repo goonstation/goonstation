@@ -48102,6 +48102,9 @@
 	},
 /obj/machinery/rkit,
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/bridge/maru)
 "uUq" = (
@@ -48743,6 +48746,9 @@
 "vhJ" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/bridge/maru)
