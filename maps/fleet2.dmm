@@ -3232,7 +3232,9 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
 /area/station/hallway/primary/north/meridian)
 "bzV" = (
 /obj/machinery/power/apc/autoname_north,
@@ -11313,9 +11315,7 @@
 "eXD" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
+/turf/simulated/floor/industrial,
 /area/station/hallway/primary/south/hammer)
 "eXG" = (
 /obj/machinery/computer/power_monitor{
@@ -39384,7 +39384,7 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grey/side{
+/turf/simulated/floor/bluewhite{
 	dir = 8
 	},
 /area/station/hallway/primary/south/asclepius)
@@ -40935,7 +40935,9 @@
 "saq" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/industrial,
+/turf/simulated/floor/white/side{
+	dir = 8
+	},
 /area/station/hallway/primary/south/asclepius)
 "saD" = (
 /obj/cable{
