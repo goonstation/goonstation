@@ -41,6 +41,7 @@
 	var/list/areaindex = list()
 
 	for_by_tcl(mtp, /obj/machinery/mass_transporter)
+		if (mtp == src.linked_transporter) continue
 		var/turf/T = get_turf(mtp)
 		if (!T)	continue
 		var/dest_name = T.loc.name
@@ -74,10 +75,18 @@
 	///A nearby computer providing targeting data. Must be present for the mass transporter to operate.
 	var/obj/machinery/computer/mass_transport/linked_computer = null
 
-	///Whether a teleport is currently being attempted.
+	///Whether an outbound teleport is currently being attempted.
 	var/teleport_underway = FALSE
 	///Progress to successful teleportation. Three power cycles must successfully complete before transportation.
 	var/teleport_progress = 0
+
+	///Once a teleport begins, the selection of target transporter is loaded in from the mass transport control computer.
+	var/obj/machinery/mass_transporter/transporting_to = null
+	///If another mass transporter is attempting to reach this transporter, it cannot initiate an outbound connection.
+	var/inbound_in_progress = FALSE
+
+	///Mobs must remain still on the pad between cycles two and three or risk damage to life and limb.
+	var/list/mobs_being_sent = list()
 
 	New()
 		..()
@@ -99,7 +108,20 @@
 
 	disposing()
 		STOP_TRACKING
+		if(src.transporting_to)
+			src.transporting_to.inbound_in_progress = FALSE
+		src.transporting_to = null
+		src.linked_computer = null
+		src.mobs_being_sent = null
 		..()
+
+	examine(mob/user)
+		. = ..()
+		if(src.linked_computer && src.linked_computer.locked_target)
+			var/turf/T = get_turf(src.linked_computer.locked_target)
+			if (T)
+				var/dest_name = T.loc.name
+				. += "It's currently set to transport to [dest_name]."
 
 	attack_ai()
 		src.Attackhand()
@@ -114,14 +136,29 @@
 	proc/try_activate()
 		if(status & (BROKEN|NOPOWER))
 			return
-		if (!linked_computer && !src.find_link())
-			src.visible_message("<b>[src]</b> intones, \"System error. Location data unavailable.\"")
-			return
-		if (!linked_computer.locked_target)
-			src.visible_message("<b>[src]</b> intones, \"System error. No teleport destination set.\"")
-			return
-		src.visible_message("<b>[src]</b> intones, \"Teleportation process beginning. Please remain stationary until teleport completes.\"")
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+		if (!src.linked_computer && !src.find_link())
+			src.visible_message(SPAN_ALERT("<b>[src]</b> intones, \"System error. Location data unavailable.\""))
+			return
+		if (src.inbound_in_progress)
+			src.visible_message(SPAN_ALERT("<b>[src] loudly intones, \"NO GO - INBOUND TRANSPORT - CLEAR PAD.\"</b>"))
+			playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
+			return
+
+		var/obj/machinery/power/apc/local_apc = get_local_apc(src)
+		if (!local_apc)
+			src.visible_message(SPAN_ALERT("<b>[src]</b> intones, \"System error. No compatible local energy source.\""))
+			return
+		var/obj/item/cell/apc_cell = local_apc.cell
+		if (!apc_cell || apc_cell.charge < (0.9 * apc_cell.maxcharge))
+			src.visible_message(SPAN_ALERT("<b>[src]</b> intones, \"System error. Area power controller must exceed 90% charge for initialization.\""))
+			return
+
+		if (!linked_computer.locked_target)
+			src.visible_message("<b>[src]</b> intones, \"Unable to initalize transportation - no destination has been set.\"")
+			return
+		src.transporting_to = linked_computer.locked_target
+		src.visible_message("<b>[src]</b> intones, \"Teleportation process beginning. <b>Please remain stationary until teleport completes.</b>\"")
 		src.add_fingerprint(usr)
 		src.initialize_teleport()
 		return
@@ -137,14 +174,21 @@
 
 	process()
 		if (src.teleport_underway)
-			if(status & (BROKEN|NOPOWER))
+			if(status & (BROKEN|NOPOWER) || !src.transporting_to)
 				src.conclude_teleport(FALSE)
-			power_usage = 8000
+			power_usage = 100000
 			src.teleport_progress++
 			if (teleport_progress >= 3)
 				src.conclude_teleport(TRUE)
 			else
-				playsound(src.loc, 'sound/machines/interdictor_operate.ogg', 25, 0, 0, 0.5)
+				playsound(src.loc, 'sound/machines/interdictor_operate.ogg', 15, 0, 0, 0.5)
+				if (!(src.transporting_to.status & (BROKEN|NOPOWER)))
+					playsound(src.transporting_to.loc, 'sound/effects/ship_alert_minor.ogg', 50, 0)
+					if (src.teleport_progress == 2)
+						src.transporting_to.visible_message(SPAN_ALERT("<b>[src] loudly intones, \"CLEAR PAD - TRANSPORT INBOUND.\"</b>"))
+				if (src.teleport_progress == 2)
+					for (var/mob/M in orange(1,src))
+						src.mobs_being_sent[M.name] = "[M.x]-[M.y]"
 		else
 			power_usage = 0
 		..()
@@ -167,11 +211,15 @@
 		src.light.disable()
 		src.ClearSpecificOverlays("transport_glow")
 		src.teleport_underway = FALSE
-		if(completed && linked_computer.locked_target)
-			playsound(src.loc, 'sound/effects/warp1.ogg', 65, 1)
-			src.teleport_some_nerds(linked_computer.locked_target)
+		src.teleport_progress = 0
+		if(completed && src.transporting_to)
+			playsound(src.loc, 'sound/effects/teleport.ogg', 35, 0, 0, 0.7)
+			src.teleport_some_nerds(src.transporting_to)
 		else
-			playsound(src.loc, 'sound/machines/interdictor_deactivate.ogg', 25, 0, 0, 1)
+			playsound(src.loc, 'sound/machines/interdictor_deactivate.ogg', 15, 0, 0, 1)
+		if(src.transporting_to)
+			src.transporting_to.inbound_in_progress = FALSE
+		src.mobs_being_sent = null
 
 	proc/teleport_some_nerds(target_transporter)
 		var/turf/dest = get_turf(target_transporter)
@@ -182,13 +230,16 @@
 			var/destY = dest.y + ydelta
 			var/offset_target = locate(destX,destY,src.z)
 			for(var/atom/movable/AM in T)
-				if(AM.anchored)
+				if(AM.anchored || isitem(AM))
 					continue
 				animate_teleport(AM)
 				if(ismob(AM))
-					var/mob/O = AM
-					O.changeStatus("stunned", 2 SECONDS)
-				use_power(5000)
+					var/mob/morb = AM
+					morb.changeStatus("stunned", 2 SECONDS)
+					var/mobpos = "[morb.x]-[morb.y]"
+					if (!mobs_being_sent[morb.name] || mobs_being_sent[morb.name] != mobpos)
+						src.teleouch(morb)
+				use_power(50000)
 				SPAWN(6 DECI SECONDS)
 					do_teleport(AM,offset_target,FALSE,sparks=FALSE)
 
@@ -203,3 +254,62 @@
 			found = TRUE
 			break
 		return found
+
+	proc/teleouch(var/mob/M)
+		var/ouch_level = 0
+		if(prob(60))
+			ouch_level = 1
+			if(prob(30))
+				ouch_level = 2
+
+		switch (ouch_level)
+			if (0)
+				boutput(M,SPAN_ALERT("You feel a little [prob(50) ? "nauseous" : "woozy"]. Probably ought to stay still on the pad."))
+			if (1)
+				boutput(M,SPAN_ALERT("The teleporter failed to completely compensate for your movement - something hurts..."))
+				M.nauseate(3)
+				M.change_misstep_chance(15)
+				SPAWN(rand(1,4))
+					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10)
+					random_brute_damage(M, 6)
+			if (2)
+				boutput(M,SPAN_ALERT("<B>The teleporter failed to compensate for your movement - you're badly hurt!</B>"))
+				M.nauseate(8)
+				M.take_radiation_dose(0.5 SIEVERTS)
+				M.change_misstep_chance(30)
+				SPAWN(rand(1,4))
+					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10)
+					random_brute_damage(M, rand(6,12))
+					random_burn_damage(M, rand(6,12))
+
+		if (ouch_level == 2 && istype(M,/mob/living/carbon/human) && prob(50)) // about 9% overall chance to hit this
+			var/mob/living/carbon/human/human = M
+			var/dethflavor = pick("suddenly vanishes","tears off in the teleport stream","disappears in a flash","violently disintegrates")
+			var/limb_ripped = FALSE
+			switch(rand(1,4))
+				if(1)
+					if(human.limbs.l_arm)
+						limb_ripped = TRUE
+						human.limbs.l_arm.delete()
+						human.visible_message(SPAN_ALERT("<B>[human]</B>'s arm [dethflavor]!"))
+				if(2)
+					if(human.limbs.r_arm)
+						limb_ripped = TRUE
+						human.limbs.r_arm.delete()
+						human.visible_message(SPAN_ALERT("<B>[human]</B>'s arm [dethflavor]!"))
+				if(3)
+					if(human.limbs.l_leg)
+						limb_ripped = TRUE
+						human.limbs.l_leg.delete()
+						human.visible_message(SPAN_ALERT("<B>[human]</B>'s leg [dethflavor]!"))
+				if(4)
+					if(human.limbs.r_leg)
+						limb_ripped = TRUE
+						human.limbs.r_leg.delete()
+						human.visible_message(SPAN_ALERT("<B>[human]</B>'s leg [dethflavor]!"))
+
+			if(limb_ripped)
+				playsound(human.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
+				human.emote("scream")
+				human.changeStatus("stunned", 5 SECONDS)
+				human.changeStatus("knockdown", 5 SECONDS)

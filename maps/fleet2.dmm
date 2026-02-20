@@ -13368,10 +13368,6 @@
 /area/station/teleporter/meridian)
 "fOh" = (
 /obj/machinery/manufacturer/general,
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = list("brig","customs                checkpoint","bridge","security");
-	name = "mail junction (command sector)"
-	},
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
