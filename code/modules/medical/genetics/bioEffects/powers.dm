@@ -300,6 +300,9 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		if (istype(owner.loc,/turf/))
+			if (owner.traction == TRACTION_NONE && !owner.has_grip())
+				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 			do_jump(misfire)
 
 		else if (istype(owner.loc,/obj/))
@@ -314,19 +317,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		return CAST_ATTEMPT_SUCCESS
 
 	proc/do_jump(misfire)
+
 		var/jump_tiles = 10 * src.linked_power.power
 		var/pixel_move = 8 * src.linked_power.power
 		var/sleep_time = 1 / src.linked_power.power
-		var/turf/T = src.owner.loc
-		if (istype(T, /turf/space) || T.throw_unlimited || src.owner.no_gravity)
-			var/push_off = FALSE
-			for(var/atom/A in oview(1, T))
-				if (A.stops_space_move)
-					push_off = TRUE
-					break
-			if(!push_off)
-				boutput(usr, SPAN_ALERT("Your leg muscles tense, but there's nothing to push off of!"))
-				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		usr.visible_message(SPAN_ALERT("<b>[src.owner]</b> takes a huge leap!"))
 		playsound(src.owner.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
@@ -352,7 +346,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			for(var/i=0, i < jump_tiles, i++)
 				step(src.owner, src.owner.dir)
 				sleep(sleep_time)
-
 			src.owner.layer = prevLayer
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

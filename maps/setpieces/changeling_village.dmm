@@ -371,7 +371,7 @@
 	icon_state = "green"
 	})
 "ho" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	name = "sink"
 	},
@@ -406,7 +406,7 @@
 	pixel_y = 36
 	},
 /obj/machinery/light/small/warm,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 12
@@ -823,7 +823,7 @@
 	dir = 8;
 	pixel_x = -8
 	},
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	name = "sink"
 	},
@@ -959,7 +959,7 @@
 	name = "Cafe et Couette"
 	})
 "uI" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8
 	},
 /turf/simulated/floor/minitiles,
@@ -2628,7 +2628,7 @@
 	icon_state = "red"
 	})
 "ZS" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -12

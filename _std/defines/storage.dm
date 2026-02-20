@@ -21,3 +21,16 @@
 #define STORAGE_NO_HUD_STACK 1
 /// items pulled out are random picked
 #define STORAGE_NO_HUD_RANDOM 2
+
+// check_wclass behaviour defines
+
+/// Default behavior; changes based on the `list/can_hold` variable.
+///
+///If `can_hold` is defined, store items if in `can_hold`, regardless of `max_wclass`. 
+///
+///If `can_hold` is empty/undefined, store items equal or under `max_wclass`.
+#define STORAGE_CHECK_W_CLASS_IGNORE 0
+/// Store items in `can_hold` OR items equal or under `max_wclass`.
+#define STORAGE_CHECK_W_CLASS_INCLUDE 1
+/// Store items that are in the `can_allow` list AND equal or under `max_wclass`.
+#define STORAGE_CHECK_W_CLASS_EXCLUDE 2

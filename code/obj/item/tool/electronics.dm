@@ -315,7 +315,7 @@
 		// can_build is only defined on subtypes of /typeinfo/atom/movable, if other types need can_build implementation add a stub proc and more handling here
 		return TRUE
 	var/typeinfo/atom/movable/AM_typeinfo = type_typeinfo
-	return AM_typeinfo.can_build(T)
+	return AM_typeinfo.can_build(T, src.dir)
 
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
@@ -423,12 +423,16 @@
 		if (user.a_intent == INTENT_HARM)
 			return
 		var/skip_if_fail = FALSE
+		var/scan_result
 		if (isobj(A))
 			var/obj/O = A
 			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
 				return
+			if (O.mechanics_interaction == MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE)
+				scan_result = MECHANICS_ANALYSIS_INCOMPATIBLE
 			skip_if_fail = O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL
-		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user)
+		if (!scan_result)
+			scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user)
 		if (scan_result != MECHANICS_ANALYSIS_SUCCESS && skip_if_fail)
 			return
 		var/scan_output = null

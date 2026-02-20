@@ -592,7 +592,7 @@
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
-	soundproofing = 20
+	soundproofing = SOUNDPROOFING_MUTE
 	spawn_contents = list(/obj/item/sticker/spy = 5,
 	/obj/item/device/camera_viewer/sticker,
 	/obj/item/pinpointer/category/spysticker)

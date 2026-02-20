@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_poc1 = list(/obj/item/device/detective_scanner)
-	items_in_backpack = list(/obj/item/tank/pocket/oxygen)
+	items_in_backpack = list(/obj/item/tank/pocket/oxygen, /obj/item/reagent_containers/glass/vial/silver_nitrate)
 
 /datum/job/special/toxins_researcher
 	name = "Toxins Researcher"
@@ -283,6 +283,16 @@ ABSTRACT_TYPE(/datum/job/special)
 	New()
 		. = ..()
 		src.limit = rand(0,3)
+
+#ifdef RP_MODE
+#define STOWAWAY_ALERT "You are not an antagonist. While you are not employed by NanoTrasen, you should still act like a sane person that wants to remain on the station."
+	special_setup(mob/M, no_special_spawn)
+		. = ..()
+		SPAWN(2) //Ghost spawn panel SPAWN(1) jank...
+			if(!M.mind?.is_antagonist())
+				tgui_alert(M, STOWAWAY_ALERT, "You are not an antagonist!")
+#undef STOWAWAY_ALERT
+#endif
 
 /datum/job/special/pirate
 	ui_colour = TGUI_COLOUR_CRIMSON

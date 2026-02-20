@@ -107,6 +107,7 @@ var/list/engineering_jobs = list(
 var/list/medical_jobs = list(
 	"Medical Director",
 	"Medical Doctor",
+	"Pharmacist",
 	"Roboticist",
 	"Geneticist",
 	"Medical Trainee",
@@ -164,7 +165,6 @@ var/list/medical_gimmicks = list(
 	"Ophthalmic Specialist",
 	"Orthopaedic Specialist",
 	"Otorhinolaryngology Specialist",
-	"Pharmacist",
 	"Plastic Surgeon",
 	"Psychiatrist",
 	"Psychologist",

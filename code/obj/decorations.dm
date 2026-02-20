@@ -49,6 +49,7 @@
 	icon_state = "tree" // changed from 0
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_3
+	provides_grip = TRUE
 
 	pixel_x = -20
 	density = 1

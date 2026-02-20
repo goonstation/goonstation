@@ -213,6 +213,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
 
+	//When the listening post is active, will be unreinforced and syndicate access
 	listeningpost
 		req_access = list(access_impossible)
 

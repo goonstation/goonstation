@@ -91,3 +91,17 @@ ABSTRACT_TYPE(/datum/job/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
 	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
 	wiki_link = "https://wiki.ss13.co/Medical_Assistant"
+
+/datum/job/medical/pharmacist
+	name = "Pharmacist"
+	wages = PAY_DOCTORATE
+	limit = 1 // limited workspace
+	access_string = "Pharmacist"
+	slot_back = list(/obj/item/storage/backpack/pharmacist)
+	slot_belt = list(/obj/item/device/pda2/pharmacist)
+	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_jump = list(/obj/item/clothing/under/rank/pharmacist)
+	slot_suit = list(/obj/item/clothing/suit/labcoat/pharmacist)
+	slot_ears = list(/obj/item/device/radio/headset/pharmacist)
+	slot_eyes = list(/obj/item/clothing/glasses/spectro)
+	items_in_backpack = list(/obj/item/storage/box/beakerbox)

@@ -436,7 +436,7 @@
 /area/station/devzone)
 "hX" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "ia" = (
@@ -734,7 +734,7 @@
 "nB" = (
 /obj/machinery/espresso_machine,
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/drinks/espressocup,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "nF" = (
@@ -876,7 +876,7 @@
 /area/station/devzone)
 "pi" = (
 /obj/machinery/chem_dispenser/alcohol/ultra,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "pE" = (
@@ -1065,7 +1065,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "te" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -4
@@ -2130,7 +2130,7 @@
 /turf/unsimulated/floor/engine/caution/north,
 /area/station/devzone)
 "Mo" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -2240,7 +2240,7 @@
 /area/station/devzone)
 "NU" = (
 /obj/machinery/chem_dispenser/soda,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "Om" = (
@@ -2612,7 +2612,7 @@
 /area/station/devzone)
 "Up" = (
 /obj/table/auto,
-/obj/submachine/chef_sink/chem_sink,
+/obj/machinery/sink/slim,
 /obj/item/kitchen/rollingpin,
 /obj/item/plate,
 /obj/item/kitchen/utensil/knife,

@@ -198,6 +198,23 @@
 					applied = 0
 		return
 
+/datum/bioEffect/shortsighted/temp
+	id = "bad_eyesight_temp"
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = FALSE
+	curable_by_mutadone = FALSE
+	can_reclaim = FALSE
+	can_scramble = FALSE
+	can_research = FALSE
+	can_copy = FALSE
+	can_make_injector = FALSE
+	reclaim_fail = 100
+	reclaim_mats = 0
+	acceptable_in_mutini = FALSE
+	stability_loss = 0
+	effect_group = null
+
 /datum/bioEffect/stupefaction
 	name = "Stupefaction"
 	desc = "Causes damage to the subject's brain structure, occassionally utterly stupefying and stunning them."
@@ -511,6 +528,12 @@
 			boutput(L, SPAN_NOTICE("You feel quite strange. Almost as if you're not supposed to be here."))
 			return
 
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.shoes?.magnetic)
+				boutput(L, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
+				return
+
 		if (probmult(tele_prob))
 			var/list/randomturfs = new/list()
 			for(var/turf/simulated/floor/T in orange(L, 10))
@@ -520,7 +543,7 @@
 				L.emote("hiccup")
 				var/turf/destination = pick(randomturfs)
 				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
-				L.set_loc(pick(destination))
+				L.set_loc(destination)
 
 //////////////
 // Annoying //

@@ -510,12 +510,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
-		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
+		if (!src.traction) //they're floating, move em one space in the opposite direction
 			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
+			src.inertia_value = 1
 			step(src, inertia_dir)
-		if ((istype(I.loc, /turf/space) || I.no_gravity) && ismob(I))
+		if (ismob(I) && !I.traction)
 			var/mob/M = I
 			M.inertia_dir = throw_dir
+			M.inertia_value = 1
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 

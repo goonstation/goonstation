@@ -927,8 +927,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Prosthetic Augmentation Kit"
 
 /datum/supply_packs/restricted_medicine
-	name = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
-	desc = "x1 Omnizine bottle, x1 Perfluorodecalin bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle."
+	name = "Restricted Medicine Shipment (Cardlocked \[Pharmacy])"
+	desc = "x1 Omnizine bottle, x2 Perfluorodecalin bottles, x1 Pentetic Acid bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle."
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/bottle/omnizine,
 					/obj/item/reagent_containers/glass/bottle/pfd = 2,
@@ -937,8 +937,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/glass/bottle/ether)
 	cost = PAY_DOCTORATE*5
 	containertype = /obj/storage/secure/crate
-	containername = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
-	access = access_medical_director
+	containername = "Restricted Medicine Shipment (Cardlocked \[Pharmacy])"
+	access = access_pharmacy
 
 /datum/supply_packs/cyborg
 	name = "Cyborg Component Crate"
@@ -1059,7 +1059,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Blood Bank"
 
 /datum/supply_packs/singularity_generator
-	name = "Singularity Generator Crat (Cardlocked \[Chief Engineer])"
+	name = "Singularity Generator Crate (Cardlocked \[Chief Engineer])"
 	desc = "x1 Extremely Unstable Gravitational Singularity. Stored in a hi-tech jam jar, fired directly at your current location."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/the_singularitygen)
@@ -1540,6 +1540,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
 
+/datum/supply_packs/stationgravitytether
+	name = "Station Gravity Tether ManuDrive Crate"
+	desc = "A single-use ManuDrive for creating a replacement Gravity Tether for your ship or station. Note: Multiple gravity tethers are unsupported."
+	category = "Engineering Department"
+	contains = list(/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse)
+	cost = PAY_IMPORTANT*2
+	containertype = /obj/storage/secure/crate
+	containername = "Station Gravity Tether ManuDrive Crate (Cardlocked \[Heads])"
+	access = access_heads
+
 /datum/supply_packs/pressure_crystals_qt5
 	name = "Pressure Crystal Resupply"
 	desc = "x5 Pressure Crystals. Used in high-energy research."
@@ -1823,10 +1833,19 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	frames = list(/obj/item/storage/toilet = 4,
 					/obj/machinery/shower,
 					/obj/machinery/bathtub,
-					/obj/submachine/chef_sink/chem_sink)
+					/obj/machinery/sink/slim)
 	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Bathroom Kit"
+
+/datum/supply_packs/complex/sonic_shower
+	name = "Sonic Showerheads"
+	desc = "Two fancy cleaning heads capable of vibrating dirt and grime off of you without the need for water."
+	category = "Basic Materials"
+	frames = list(/obj/machinery/sonic_shower = 2)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate/packing
+	containername = "Sonic Showerheads"
 
 /datum/supply_packs/complex/kitchen_kit
 	name = "Kitchen Kit"
@@ -1835,7 +1854,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/storage/secure/closet/fridge)
 	frames = list(/obj/submachine/chef_oven,
 					/obj/machinery/mixer,
-					/obj/submachine/chef_sink,
+					/obj/machinery/sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,
 					/obj/machinery/vending/kitchen,

@@ -101,6 +101,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	density = 1
 	directwired = 1
 	processing_tier = PROCESSING_EIGHTH
+	provides_grip = TRUE
 	var/health = 10
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/obscured = 0
