@@ -3166,10 +3166,9 @@
 	},
 /area/station/engine/core/nuclear)
 "bye" = (
-/obj/machinery/computer/television{
+/obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "public"
+	name = "Television"
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director{
@@ -17358,10 +17357,9 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "hxg" = (
-/obj/machinery/computer/television{
+/obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "public"
+	name = "Television"
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain{
@@ -23516,10 +23514,9 @@
 /turf/simulated/floor/caution/south,
 /area/station/hangar/security)
 "kic" = (
-/obj/machinery/computer/television{
+/obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "public"
+	name = "Television"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/md)
@@ -29260,13 +29257,9 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/dionysus)
 "mOy" = (
-/obj/machinery/camera{
+/obj/machinery/camera/public{
 	c_tag = "The Satyr's Ring";
-	dir = 9;
-	invisibility = 101;
-	name = "Overhead Camera";
-	network = "Zeta";
-	tag = ""
+	pixel_y = -10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -35186,10 +35179,9 @@
 	},
 /area/station/hallway/primary/south/maru)
 "pux" = (
-/obj/machinery/computer/television{
+/obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "public"
+	name = "Television"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
@@ -46464,8 +46456,7 @@
 "uol" = (
 /obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
+	name = "Television"
 	},
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
@@ -47190,10 +47181,9 @@
 /turf/simulated/floor,
 /area/station/mailroom/meridian)
 "uCs" = (
-/obj/machinery/computer/television{
+/obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "public"
+	name = "Television"
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/bridge/customs{
@@ -54472,10 +54462,9 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "xOR" = (
-/obj/machinery/computer/television{
+/obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "public"
+	name = "Television"
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos{
