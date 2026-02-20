@@ -464,12 +464,6 @@ TYPEINFO(/obj/machinery/microwave)
 		var/atom/movable/movablething = thing
 		movablething.set_loc(src)
 
-
-/* //TODO implement end-of-cooking effects into cooking_instructions
-/obj/machinery/microwave/proc/affect_thing_end(var/thing)
-	if (istype(thing, /mob/living/critter/small_animal/slug) && prob(6))
-		src.visible_message(SPAN_NOTICE("Nature is beautiful.")) */
-
 #undef MW_STATE_WORKING
 #undef MW_STATE_BROKEN_1
 #undef MW_STATE_BROKEN_2
