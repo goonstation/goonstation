@@ -245,7 +245,7 @@
 				SPAWN(6 DECI SECONDS)
 					do_teleport(AM,offset_target,FALSE,sparks=FALSE)
 			if (this_turf_teleporting)
-				SPAWN(6 DECI SECONDS)
+				SPAWN(4 DECI SECONDS) //offset a little so you don't run into Yourself
 					playsound(offset_target.loc, 'sound/impact_sounds/taser_hit.ogg', 20)
 					for(var/mob/M in offset_target)
 						src.teleouch(M,TRUE)
