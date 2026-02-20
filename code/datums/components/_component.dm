@@ -219,7 +219,7 @@ var/datum/signal_holder/global_signal_holder
 		var/complexsignal_component_type = signal_type[1]
 		var/datum/component/complexsignal/comp = target.LoadComponent(complexsignal_component_type)
 		var/list/register_args = args.Copy()
-		register_args[2] = signal_type[2] // replacing sig_type_or_types
+		register_args[2] = signal_type // replacing sig_type_or_types
 		register_args[1] = src // comp.register's first argument is the LISTENER not the target
 		comp.register(arglist(register_args))
 		return // exit early since we're done
@@ -271,7 +271,7 @@ var/datum/signal_holder/global_signal_holder
 			var/datum/component/complexsignal/comp = target.GetComponent(complexsignal_component_type)
 			if(isnull(comp))
 				CRASH("Unregistering a complex signal [json_encode(sig)] without its component existing.")
-			comp.unregister(src, sig[2])
+			comp.unregister(src, sig)
 			continue
 		if(!signal_procs[target]?[sig])
 			if(!istext(sig))

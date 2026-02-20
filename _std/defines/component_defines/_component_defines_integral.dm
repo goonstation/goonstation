@@ -26,7 +26,7 @@
 #define LoadComponent(arguments...) _LoadComponent(list(##arguments))
 
 /// Checks if a signal is "complex", i.e. it is handled by adding a special component and registering may have side effects and overhead
-#define IS_COMPLEX_SIGNAL(x) (length(x) == 2 && ispath(x[1], /datum/component/complexsignal))
+#define IS_COMPLEX_SIGNAL(x) ((length(x) >= 2) && ispath(x[1], /datum/component/complexsignal))
 
 /**
 	* Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
