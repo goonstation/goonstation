@@ -2772,9 +2772,7 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
+/turf/simulated/floor/grey,
 /area/station/storage/emergency/tenebrae)
 "bpw" = (
 /obj/machinery/light,
@@ -16296,7 +16294,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/vertical,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/greenblack,
+/turf/simulated/floor,
 /area/station/storage/emergency/asclepius)
 "hal" = (
 /obj/table/wood/auto,
@@ -21777,9 +21775,7 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
+/turf/simulated/floor/grey/side,
 /area/station/storage/emergency/maru)
 "jpY" = (
 /obj/cable{
@@ -33020,7 +33016,9 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/vertical,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/greenblack,
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
 /area/station/storage/emergency/maru)
 "owo" = (
 /obj/cable{
@@ -33039,7 +33037,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/vertical,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/greenblack,
+/turf/simulated/floor,
 /area/station/storage/emergency/tenebrae)
 "oxH" = (
 /obj/stool/bed,
@@ -36635,9 +36633,7 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
+/turf/simulated/floor/grey/side,
 /area/station/storage/emergency/hammer)
 "qcp" = (
 /obj/fitness/speedbag/captain,
@@ -38096,9 +38092,7 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
+/turf/simulated/floor/grey,
 /area/station/storage/emergency/asclepius)
 "qNr" = (
 /obj/machinery/computer3/generic/communications{
@@ -45392,7 +45386,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/teleporter,
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
 /area/station/teleporter)
 "tQs" = (
 /obj/decal/poster/wallsign/stencil/left/e,
@@ -53143,7 +53139,9 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/vertical,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/greenblack,
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
 /area/station/storage/emergency/hammer)
 "xie" = (
 /obj/storage/secure/closet/research/chemical{
