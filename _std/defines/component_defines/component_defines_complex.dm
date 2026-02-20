@@ -15,7 +15,7 @@
 
 	/// When the outermost movable in the `.loc` chain moves to a new turf. (thing, old_turf, new_turf)
 	#define XSIG_MOVABLE_TURF_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_turf_changed", TRUE)
-	/// When the outermost movable in the `.loc` chain moves to a new turf, provided both the old and new turf exist. (thing, old_turf, new_turf)
+	/// When the outermost movable in the `.loc` chain moves to a new turf, provided both the old and new turfs exist. (thing, old_turf, new_turf)
 	#define XSIG_MOVABLE_TURF_CHANGED_SAFE list(/datum/component/complexsignal/outermost_movable, "mov_turf_changed_safe", TRUE)
 	/// When the outermost movable in the `.loc` chain moves from a turf to nullspace. (thing, old_turf)
 	#define XSIG_MOVABLE_TURF_TO_NULLSPACE list(/datum/component/complexsignal/outermost_movable, "mov_turf_to_nullspace", TRUE)
