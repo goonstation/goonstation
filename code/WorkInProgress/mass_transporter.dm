@@ -246,9 +246,11 @@
 					do_teleport(AM,offset_target,FALSE,sparks=FALSE)
 			if (this_turf_teleporting)
 				SPAWN(4 DECI SECONDS) //offset a little so you don't run into Yourself
-					playsound(offset_target.loc, 'sound/impact_sounds/taser_hit.ogg', 20)
-					for(var/mob/M in offset_target)
+					var/hit_someone = FALSE
+					for (var/mob/M in offset_target)
 						src.teleouch(M,TRUE)
+					if (hit_someone)
+						playsound(offset_target.loc, 'sound/impact_sounds/taser_hit.ogg', 20)
 
 
 	proc/find_link()
