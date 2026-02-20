@@ -224,14 +224,16 @@
 	proc/teleport_some_nerds(target_transporter)
 		var/turf/dest = get_turf(target_transporter)
 		for(var/turf/T in orange(1, src))
+			var/this_turf_teleporting = FALSE
 			var/xdelta = T.x - src.x
 			var/destX = dest.x + xdelta
 			var/ydelta = T.y - src.y
 			var/destY = dest.y + ydelta
-			var/offset_target = locate(destX,destY,src.z)
+			var/turf/offset_target = locate(destX,destY,src.z)
 			for(var/atom/movable/AM in T)
 				if(AM.anchored || isitem(AM))
 					continue
+				this_turf_teleporting = TRUE
 				animate_teleport(AM)
 				if(ismob(AM))
 					var/mob/morb = AM
@@ -242,6 +244,12 @@
 				use_power(50000)
 				SPAWN(6 DECI SECONDS)
 					do_teleport(AM,offset_target,FALSE,sparks=FALSE)
+			if (this_turf_teleporting)
+				SPAWN(6 DECI SECONDS)
+					playsound(offset_target.loc, 'sound/impact_sounds/taser_hit.ogg', 20)
+					for(var/mob/M in offset_target)
+						src.teleouch(M,TRUE)
+
 
 	proc/find_link()
 		if(linked_computer)
@@ -255,9 +263,12 @@
 			break
 		return found
 
-	proc/teleouch(var/mob/M)
+	///Inflict damage upon people using the mass transporter improperly (possible when moving on transmission pad, guaranteed if hit by incoming transport).
+	proc/teleouch(var/mob/M,var/telefrag)
 		var/ouch_level = 0
-		if(prob(60))
+		if(telefrag)
+			ouch_level = 2
+		else if(prob(60))
 			ouch_level = 1
 			if(prob(30))
 				ouch_level = 2
@@ -273,12 +284,15 @@
 					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10)
 					random_brute_damage(M, 6)
 			if (2)
-				boutput(M,SPAN_ALERT("<B>The teleporter failed to compensate for your movement - you're badly hurt!</B>"))
+				if(telefrag)
+					boutput(M,SPAN_ALERT("<B>The incoming teleport collides with you - you're badly hurt!</B>"))
+				else
+					boutput(M,SPAN_ALERT("<B>The teleporter failed to compensate for your movement - you're badly hurt!</B>"))
 				M.nauseate(8)
 				M.take_radiation_dose(0.5 SIEVERTS)
 				M.change_misstep_chance(30)
 				SPAWN(rand(1,4))
-					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10)
+					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 20)
 					random_brute_damage(M, rand(6,12))
 					random_burn_damage(M, rand(6,12))
 
