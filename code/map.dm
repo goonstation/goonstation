@@ -973,7 +973,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/fleet2
 	name = "FLEET2"
 	display_name = "Phaethon Fleet"
-	style = "ship"
+	style = "fleet"
 	goonhub_map = "/maps"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
