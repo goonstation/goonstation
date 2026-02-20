@@ -172,6 +172,10 @@
 /area/station/storage/hydroponics)
 "aeu" = (
 /obj/disposalpipe/junction/left/west,
+/obj/decal/tile_edge/floorguide/arrow_e,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -2677,6 +2681,10 @@
 	})
 "bmv" = (
 /obj/disposalpipe/junction/left/west,
+/obj/decal/tile_edge/floorguide/arrow_e,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -11367,6 +11375,10 @@
 /area/station/hallway/primary/central/maru)
 "eZi" = (
 /obj/disposalpipe/junction/left/west,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -33476,6 +33488,10 @@
 /area/station/mailroom/hammer)
 "oIx" = (
 /obj/disposalpipe/junction/left/west,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -44412,6 +44428,10 @@
 	})
 "twS" = (
 /obj/disposalpipe/junction/left/west,
+/obj/decal/tile_edge/floorguide/arrow_e,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -46433,6 +46453,10 @@
 /area/station/medical/medbay/cloner)
 "uof" = (
 /obj/disposalpipe/junction/left/west,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
