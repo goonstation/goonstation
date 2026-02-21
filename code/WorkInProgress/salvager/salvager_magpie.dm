@@ -3,7 +3,7 @@ var/datum/magpie_manager/magpie_man = new
 /datum/magpie_manager
 	var/obj/npc/trader/salvager/magpie
 #if !defined(LIVE_SERVER) && !defined(UNIT_TESTS)
-	var/datum/mapPrefab/allocated/salvager_local/local_prefab = new /datum/mapPrefab/allocated/salvager_local
+	var/datum/mapPrefab/allocated/salvager_local/local_prefab
 #endif
 
 	proc/setup()
