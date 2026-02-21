@@ -3916,13 +3916,6 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/line/blue,
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/mini/oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
-	pixel_y = -4
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/hammer)
 "bNN" = (
@@ -7038,13 +7031,6 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/line/blue,
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/mini/oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
-	pixel_y = -4
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/meridian)
 "cZW" = (
@@ -8803,13 +8789,7 @@
 /area/station/crewquarters/cryotron)
 "dOM" = (
 /obj/machinery/macrofab/emergency_pod{
-	color = "#DDDDDD";
-	createdObject = /obj/machinery/vehicle/miniputt/armed;
-	desc = "A sophisticated machine that fabricates compact transit pods from a nearby reserve of supplies.";
-	dir = 4;
-	fabTime = 150;
-	name = "MiniPutt Fabricator";
-	override_dir = 4
+	dir = 4
 	},
 /obj/machinery/camera/directional/west,
 /turf/simulated/floor/grey/side{
@@ -10418,6 +10398,16 @@
 	dir = 1
 	},
 /area/station/security/equipment)
+"ezl" = (
+/obj/machinery/macrofab{
+	createdObject = /obj/item/tank/mini/oxygen;
+	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
+	name = "Tank Fabricator";
+	pixel_y = -4
+	},
+/obj/decal/tile_edge/line/blue,
+/turf/unsimulated/floor/sanitary,
+/area/station/crewquarters/cryotron)
 "ezC" = (
 /obj/cable{
 	icon_state = "5-10"
@@ -12230,13 +12220,7 @@
 /area/station/mailroom/maru)
 "fnG" = (
 /obj/machinery/macrofab/emergency_pod{
-	color = "#DDDDDD";
-	createdObject = /obj/machinery/vehicle/miniputt/armed;
-	desc = "A sophisticated machine that fabricates compact transit pods from a nearby reserve of supplies.";
-	dir = 4;
-	fabTime = 150;
-	name = "MiniPutt Fabricator";
-	override_dir = 4
+	dir = 4
 	},
 /obj/machinery/camera/directional/west,
 /turf/simulated/floor/grey/side{
@@ -13391,13 +13375,6 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/line/blue,
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/mini/oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
-	pixel_y = -4
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "fKg" = (
@@ -13686,13 +13663,6 @@
 "fRC" = (
 /obj/cable/brown{
 	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/line/blue,
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/mini/oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
-	pixel_y = -4
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/asclepius)
@@ -16298,19 +16268,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grey/side,
 /area/station/hallway/primary/north/maru)
-"gVc" = (
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/line/blue,
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/mini/oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
-	pixel_y = -4
-	},
-/turf/simulated/floor/wood/five,
-/area/station/crew_quarters/dionysus)
 "gVp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21407,16 +21364,10 @@
 /turf/simulated/floor/wood/seven,
 /area/station/bridge/dionysus)
 "jbJ" = (
-/obj/machinery/macrofab/emergency_pod{
-	color = "#DDDDDD";
-	createdObject = /obj/machinery/vehicle/miniputt/armed;
-	desc = "A sophisticated machine that fabricates compact transit pods from a nearby reserve of supplies.";
-	dir = 4;
-	fabTime = 150;
-	name = "MiniPutt Fabricator";
-	override_dir = 4
-	},
 /obj/machinery/camera/directional/west,
+/obj/machinery/macrofab/emergency_pod{
+	dir = 4
+	},
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -28286,18 +28237,7 @@
 /turf/simulated/floor/white,
 /area/station/hallway/primary/south/asclepius)
 "mjh" = (
-/obj/machinery/macrofab/emergency_pod{
-	color = "#DDDDDD";
-	createdObject = /obj/machinery/vehicle/miniputt/indyputt/armed;
-	desc = "A sophisticated machine that fabricates robust industrial pods from a nearby reserve of supplies.";
-	fabTime = 150;
-	name = "IndyPutt Fabricator";
-	override_dir = 4;
-	dir = 8
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 6
-	},
+/turf/simulated/floor/caution/west,
 /area/station/engine/storage)
 "mjk" = (
 /obj/cable{
@@ -31640,13 +31580,7 @@
 /area/station/hallway/primary/north/hammer)
 "nIX" = (
 /obj/machinery/macrofab/emergency_pod{
-	color = "#DDDDDD";
-	createdObject = /obj/machinery/vehicle/miniputt/armed;
-	desc = "A sophisticated machine that fabricates compact transit pods from a nearby reserve of supplies.";
-	dir = 4;
-	fabTime = 150;
-	name = "MiniPutt Fabricator";
-	override_dir = 4
+	dir = 4
 	},
 /obj/machinery/camera/directional/west,
 /turf/simulated/floor/grey/side{
@@ -51431,13 +51365,7 @@
 /area/station/medical/robotics)
 "whZ" = (
 /obj/machinery/macrofab/emergency_pod{
-	color = "#DDDDDD";
-	createdObject = /obj/machinery/vehicle/miniputt/armed;
-	desc = "A sophisticated machine that fabricates compact transit pods from a nearby reserve of supplies.";
-	dir = 4;
-	fabTime = 150;
-	name = "MiniPutt Fabricator";
-	override_dir = 4
+	dir = 4
 	},
 /obj/machinery/camera/directional/west,
 /turf/simulated/floor/grey/side{
@@ -53007,13 +52935,6 @@
 "wQv" = (
 /obj/cable/brown{
 	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/line/blue,
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/mini/oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
-	pixel_y = -4
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
@@ -55421,13 +55342,7 @@
 /area/station/maintenance/disposal/meridian)
 "xTX" = (
 /obj/machinery/macrofab/emergency_pod{
-	color = "#DDDDDD";
-	createdObject = /obj/machinery/vehicle/miniputt/armed;
-	desc = "A sophisticated machine that fabricates compact transit pods from a nearby reserve of supplies.";
-	dir = 4;
-	fabTime = 150;
-	name = "MiniPutt Fabricator";
-	override_dir = 4
+	dir = 4
 	},
 /obj/machinery/camera/directional/west,
 /turf/simulated/floor/grey/side{
@@ -84478,7 +84393,7 @@ fNZ
 ibV
 kUZ
 brK
-kUZ
+ezl
 ibV
 pqQ
 cNq
@@ -115560,7 +115475,7 @@ eBA
 vtn
 vXL
 myF
-gVc
+oRv
 iiU
 oRv
 lTJ
