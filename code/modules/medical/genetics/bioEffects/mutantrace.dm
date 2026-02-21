@@ -72,9 +72,9 @@
 
 	onPowerChange(oldval, newval)
 		if (newval >= 2)
-			src.owner.abilityHolder?.addAbility(/datum/targetable/remove_head)
+			src.owner.abilityHolder?.addAbility(/datum/targetable/geneticsAbility/remove_head)
 		else
-			src.owner.abilityHolder?.removeAbility(/datum/targetable/remove_head)
+			src.owner.abilityHolder?.removeAbility(/datum/targetable/geneticsAbility/remove_head)
 
 #define HEAD_PROMPT_ON "Head on."
 #define HEAD_PROMPT_OFF "HEAD. OFF."
