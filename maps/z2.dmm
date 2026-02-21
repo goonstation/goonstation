@@ -74747,9 +74747,10 @@
 "txa" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
-/obj/decal/cleanable/writing/postit{
-	desc = "TODO: Fix leaky sink in command section.";
-	pixel_y = 26
+/obj/item/sticker/postit{
+	words = "TODO: Fix leaky sink in command section.";
+	pixel_y = 26;
+	icon_state = "postit-writing"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)

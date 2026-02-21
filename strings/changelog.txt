@@ -1,5 +1,7 @@
 
 (t)sat feb 21 26
+(u)LeahTheTech
+(+)Possessed objects now respect item specific click delays.
 (u)glowbold
 (p)25933
 (e)⚖🧛🐁|C-Balance, A-Gamemodes, A-Critters
