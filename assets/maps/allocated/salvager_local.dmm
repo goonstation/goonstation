@@ -646,7 +646,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/salvager)
 "Ly" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	name = "rusty sink"
 	},
