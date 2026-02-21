@@ -3191,22 +3191,22 @@ TYPEINFO(/area/station/engine/substation)
 	station_map_colour = MAPC_COMMAND
 
 	asclepius
-		name = "Asclepius Transit Nexus"
+		name = "Asclepius Telehub (MED)"
 
 	dionysus
-		name = "Dionysus Transit Nexus"
+		name = "Dionysus Telehub (CIV)"
 
 	hammer
-		name = "Hammer Transit Nexus"
+		name = "Hammer Telehub (SEC)"
 
 	maru
-		name = "Maru Transit Nexus"
+		name = "Maru Telehub (ENG)"
 
 	meridian
-		name = "Meridian Transit Nexus"
+		name = "Meridian Telehub (ESCAPE)"
 
 	tenebrae
-		name = "Tenebrae Transit Nexus"
+		name = "Tenebrae Telehub (SCI)"
 
 ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical

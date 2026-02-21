@@ -932,6 +932,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/dionysus)
 "awN" = (
@@ -1657,6 +1661,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
+"aPO" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/engine,
+/area/station/science/testchamber)
 "aQa" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -1854,6 +1862,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest/tenebrae)
 "aTw" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/dionysus)
 "aTz" = (
@@ -2059,6 +2069,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
@@ -2233,12 +2247,23 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/meridian)
 "bcD" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
+"bde" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/station/hangar/asclepius)
 "bdk" = (
 /obj/stool/chair/comfy/barber_chair,
 /obj/submachine/chef_sink/chem_sink{
@@ -3411,6 +3436,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/construction)
 "bDN" = (
@@ -5148,6 +5174,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/brig,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -8899,6 +8929,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
@@ -10147,6 +10181,8 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/substation/asclepius)
 "ewW" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/hammer)
 "exd" = (
@@ -10387,6 +10423,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
@@ -10848,6 +10888,13 @@
 /obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/grey/checker,
 /area/station/hangar/tenebrae)
+"eNJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/station/hangar/meridian)
 "eNS" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4;
@@ -12506,6 +12553,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -14296,6 +14347,20 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"gfM" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
+"gfX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/industrial,
+/area/station/hangar/hammer)
 "gfZ" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -15820,6 +15885,8 @@
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/maintenance/northwest/hammer)
 "gNl" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/asclepius)
 "gNq" = (
@@ -16214,6 +16281,7 @@
 	},
 /obj/mapping_helper/button/area,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/construction)
 "gXH" = (
@@ -17468,6 +17536,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -19451,6 +19523,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/tenebrae)
 "ipE" = (
@@ -19516,18 +19592,22 @@
 "iqC" = (
 /obj/table/auto,
 /obj/item/circular_saw{
-	pixel_y = 3;
+	pixel_y = 5;
 	pixel_x = 1
 	},
 /obj/decal/cleanable/cobweb,
 /obj/machinery/firealarm/directional/north,
 /obj/item/staple_gun{
-	pixel_x = 7;
-	pixel_y = 4
+	pixel_x = 9;
+	pixel_y = -2
 	},
 /obj/item/scalpel{
 	pixel_x = -4;
 	pixel_y = 11
+	},
+/obj/item/bandage{
+	pixel_y = 4;
+	pixel_x = -4
 	},
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
@@ -20061,6 +20141,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
@@ -20946,6 +21030,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/security,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/black/side,
 /area/station/hangar/security)
 "iWL" = (
@@ -23404,6 +23491,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/dionysus)
 "kel" = (
@@ -26227,11 +26318,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets/dionysus)
 "loT" = (
-/obj/random_item_spawner/junk/some,
-/obj/random_item_spawner/tools/some,
+/obj/random_item_spawner/junk/maybe_few,
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/random_item_spawner/tools/maybe_few,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south{
 	name = "Cargo Storeroom"
@@ -26254,6 +26345,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/hammer)
 "lpy" = (
@@ -26467,6 +26562,13 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central/hammer)
+"lvB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/white,
+/area/station/hangar/tenebrae)
 "lvM" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -26880,6 +26982,8 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/bridge/asclepius)
 "lHY" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/maru)
 "lIn" = (
@@ -26888,6 +26992,13 @@
 	dir = 8
 	},
 /area/station/teleporter/asclepius)
+"lIw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/station/hangar/maru)
 "lIy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27478,13 +27589,13 @@
 	},
 /area/station/teleporter/hammer)
 "lWp" = (
-/obj/random_item_spawner/junk/some,
-/obj/random_item_spawner/tools/some,
+/obj/random_item_spawner/junk/maybe_few,
 /obj/machinery/power/apc/autoname_north,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/random_item_spawner/tools/maybe_few,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south{
 	name = "Cargo Storeroom"
@@ -27593,10 +27704,6 @@
 	dir = 4
 	},
 /area/station/security/processing)
-"lYp" = (
-/obj/item/bandage,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "lYq" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -28330,6 +28437,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/tenebrae)
 "moS" = (
@@ -29057,6 +29168,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -29170,6 +29285,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable/brown{
 	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter/maru)
@@ -30288,6 +30407,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/meridian)
 "nmz" = (
@@ -30302,6 +30425,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/security,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -32852,6 +32978,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/hammer)
 "orL" = (
@@ -35468,6 +35598,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/asclepius)
 "pyq" = (
@@ -36011,6 +36145,13 @@
 	},
 /turf/simulated/floor/redwhite,
 /area/station/hallway/primary/central/asclepius)
+"pNJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/station/hallway/primary/central/meridian)
 "pNP" = (
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -36124,6 +36265,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/access/teleporter,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/meridian)
 "pPW" = (
@@ -37455,6 +37600,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "qvu" = (
@@ -37768,6 +37914,17 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
+"qCy" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor/industrial,
+/area/station/hallway/primary/south/hammer)
 "qCM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -37855,6 +38012,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -40432,6 +40593,8 @@
 	name = "Janitorial Antechamber"
 	})
 "rMT" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/tenebrae)
 "rNa" = (
@@ -41159,6 +41322,10 @@
 	dir = 8
 	},
 /area/station/hangar/dionysus)
+"seA" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "seI" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -41374,6 +41541,8 @@
 /turf/space,
 /area/space)
 "siA" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/meridian)
 "siB" = (
@@ -41950,6 +42119,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/security,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main{
 	name = "Security Office"
@@ -42087,7 +42259,7 @@
 /area/station/crew_quarters/maru)
 "sxU" = (
 /obj/machinery/door_control{
-	id = "nadir_nukecore";
+	id = "maru_nukecore";
 	name = "Reactor Core Shielding";
 	pixel_y = 24
 	},
@@ -42156,6 +42328,9 @@
 /obj/machinery/door/airlock/pyro/medical/alt2,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/button/area,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "syW" = (
@@ -42500,6 +42675,13 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/storage)
+"sGf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/station/hangar/dionysus)
 "sGg" = (
 /turf/simulated/wall/auto/jen/green,
 /area/station/hydroponics/bay)
@@ -43261,6 +43443,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal/tenebrae)
+"sXx" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "sXF" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/head/helmet/men{
@@ -47664,6 +47850,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -48138,6 +48328,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/security/main{
 	name = "Security Office"
@@ -49123,6 +49314,10 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
@@ -49263,6 +49458,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
@@ -49856,6 +50055,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/brig,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/processing)
 "vGP" = (
@@ -50451,6 +50653,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/maru)
 "vUP" = (
@@ -53040,6 +53246,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/primary/south/hammer)
 "xdy" = (
@@ -53157,6 +53366,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter/asclepius)
 "xgm" = (
@@ -54704,6 +54917,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/hallway/primary/south/asclepius)
+"xQA" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/black,
+/area/station/science/artifact)
 "xQD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -54760,6 +54977,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/engine/substation/meridian)
 "xRJ" = (
@@ -55463,6 +55681,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -55651,6 +55873,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/medical,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "ymd" = (
@@ -80875,7 +81100,7 @@ kEu
 lJA
 lJA
 lJA
-lJA
+pNJ
 cCZ
 lJA
 lJA
@@ -82445,7 +82670,7 @@ kgt
 vUP
 mkP
 cvr
-cvr
+sXx
 cvr
 wAJ
 vSY
@@ -88722,7 +88947,7 @@ rkM
 rkM
 rkM
 rkM
-rkM
+eNJ
 rkM
 rkM
 rkM
@@ -92908,7 +93133,7 @@ rAM
 fif
 fif
 fif
-enb
+qCy
 fif
 fif
 ujV
@@ -95120,7 +95345,7 @@ aTA
 aTA
 aTA
 aTA
-aTA
+lIw
 aTA
 aTA
 aTA
@@ -101051,7 +101276,7 @@ kgP
 kgP
 kgP
 kgP
-kgP
+gfX
 kgP
 kgP
 kgP
@@ -115041,7 +115266,7 @@ iXR
 iXR
 iyZ
 cAJ
-cAJ
+aPO
 cAJ
 loD
 iXR
@@ -117348,7 +117573,7 @@ vKg
 kLb
 cHM
 aHM
-eUf
+seA
 aHM
 uFu
 jLC
@@ -117969,7 +118194,7 @@ nmz
 cPw
 cud
 aAk
-lYp
+aAk
 aAk
 jlF
 oyp
@@ -118917,7 +119142,7 @@ ais
 ais
 ais
 ais
-ais
+sGf
 ais
 ais
 ais
@@ -119867,7 +120092,7 @@ pQS
 naa
 uCZ
 sHk
-sHk
+gfM
 jgX
 epP
 gvs
@@ -122306,7 +122531,7 @@ iGY
 ipP
 bgX
 qny
-pMr
+xQA
 pMr
 xFa
 ipP
@@ -127429,7 +127654,7 @@ dGp
 dGp
 dGp
 dGp
-dGp
+lvB
 dGp
 dGp
 dGp
@@ -129434,7 +129659,7 @@ ljK
 ljK
 ljK
 ljK
-ljK
+bde
 ljK
 ljK
 ljK

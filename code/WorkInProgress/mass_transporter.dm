@@ -158,7 +158,7 @@
 			src.visible_message("<b>[src]</b> intones, \"Unable to initalize transportation - no destination has been set.\"")
 			return
 		src.transporting_to = linked_computer.locked_target
-		src.visible_message("<b>[src]</b> intones, \"Teleportation process beginning. <b>Please remain stationary until teleport completes.</b>\"")
+		src.visible_message("<b>[src]</b> intones, \"Teleportation process beginning. Please stow personal effects and remain stationary until teleport completes.\"")
 		src.add_fingerprint(usr)
 		src.initialize_teleport()
 		return
