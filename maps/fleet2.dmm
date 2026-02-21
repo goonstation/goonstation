@@ -305,7 +305,9 @@
 	name = "Dionysus Command Center"
 	})
 "ahw" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	},
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
@@ -619,10 +621,6 @@
 /area/station/hallway/primary/south/asclepius)
 "apT" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = 16;
-	pixel_x = -5
-	},
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_y = 16;
 	pixel_x = 6
@@ -1049,16 +1047,13 @@
 /area/station/mailroom/asclepius)
 "aAM" = (
 /obj/table/reinforced/auto,
-/obj/item/device/gps{
-	pixel_x = -3
+/obj/item/device/radio{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = 1
-	},
-/obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = -7
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/grey/corner,
 /area/station/hangar/maru)
@@ -2169,16 +2164,13 @@
 /area/station/crew_quarters/hammer)
 "aZH" = (
 /obj/table/reinforced/auto,
-/obj/item/device/gps{
-	pixel_x = -3
+/obj/item/device/radio{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = 1
-	},
-/obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = -7
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/grey/corner,
 /area/station/hangar/meridian)
@@ -5604,10 +5596,6 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_y = 16;
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = 16;
 	pixel_x = 6
 	},
 /obj/item/shipcomponent/mainweapon/phaser,
@@ -6760,13 +6748,16 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/storage/box/cablesbox{
-	pixel_x = 1;
-	pixel_y = -8
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/cable_coil{
+	pixel_y = -11
+	},
+/obj/item/cable_coil{
+	pixel_y = -7;
+	pixel_x = 1
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -7044,16 +7035,13 @@
 /area/station/science/lab)
 "daa" = (
 /obj/table/reinforced/auto,
-/obj/item/device/gps{
-	pixel_x = -3
+/obj/item/device/radio{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = 1
-	},
-/obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = -7
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/grey/corner,
 /area/station/hangar/dionysus)
@@ -8168,16 +8156,11 @@
 /area/station/maintenance/disposal/asclepius)
 "dzf" = (
 /obj/table/reinforced/auto,
+/obj/item/device/gps{
+	pixel_y = 8
+	},
 /obj/item/storage/toolbox/electrical{
 	pixel_y = -7
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_y = 10;
-	pixel_x = -5
-	},
-/obj/item/crowbar,
-/obj/item/device/multitool{
-	pixel_x = 7
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -8964,16 +8947,13 @@
 /area/station/hallway/secondary/exit)
 "dTj" = (
 /obj/table/reinforced/auto,
-/obj/item/device/gps{
-	pixel_x = -3
+/obj/item/device/radio{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = 1
-	},
-/obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = -7
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/white/side{
 	dir = 9
@@ -9081,9 +9061,10 @@
 /area/station/maintenance/disposal/asclepius)
 "dWb" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/glass/reinforced/fullstack{
-	pixel_x = 2;
-	pixel_y = -3
+/obj/item/sheet/glass/reinforced{
+	amount = 10;
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -13522,7 +13503,9 @@
 /turf/simulated/wall/auto/reinforced/jen/dark2,
 /area/station/teleporter/meridian)
 "fOh" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	},
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
@@ -14467,9 +14450,10 @@
 /area/station/hallway/primary/central/meridian)
 "ggd" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/glass/reinforced/fullstack{
-	pixel_x = 2;
-	pixel_y = -3
+/obj/item/sheet/glass/reinforced{
+	amount = 10;
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -16179,9 +16163,6 @@
 "gST" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility{
-	pixel_y = 7
-	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 13
 	},
@@ -16766,16 +16747,13 @@
 /area/station/hangar/tenebrae)
 "hhc" = (
 /obj/table/reinforced/auto,
-/obj/item/device/gps{
-	pixel_x = -3
+/obj/item/device/radio{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = 1
-	},
-/obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = -7
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/grey/corner,
 /area/station/hangar/asclepius)
@@ -17567,7 +17545,7 @@
 "hxk" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
-	amount = 50;
+	amount = 10;
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -17840,7 +17818,7 @@
 "hDL" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
-	amount = 50;
+	amount = 10;
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -19330,9 +19308,10 @@
 /area/station/crew_quarters/tenebrae)
 "ijp" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/glass/reinforced/fullstack{
-	pixel_x = 2;
-	pixel_y = -3
+/obj/item/sheet/glass/reinforced{
+	amount = 10;
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /turf/simulated/floor/white/side{
 	dir = 8
@@ -21801,10 +21780,6 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_y = 16;
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = 16;
 	pixel_x = 6
 	},
 /obj/item/shipcomponent/mainweapon/phaser,
@@ -24182,16 +24157,11 @@
 /area/station/engine/substation/tenebrae)
 "kql" = (
 /obj/table/reinforced/auto,
+/obj/item/device/gps{
+	pixel_y = 8
+	},
 /obj/item/storage/toolbox/electrical{
 	pixel_y = -7
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_y = 10;
-	pixel_x = -5
-	},
-/obj/item/crowbar,
-/obj/item/device/multitool{
-	pixel_x = 7
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -24542,16 +24512,13 @@
 /area/station/turret_protected/ai)
 "kwT" = (
 /obj/table/reinforced/auto,
-/obj/item/device/gps{
-	pixel_x = -3
+/obj/item/device/radio{
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = 1
-	},
-/obj/item/device/radio{
-	pixel_x = 8;
-	pixel_y = -7
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -24588,9 +24555,10 @@
 /area/station/crew_quarters/hammer)
 "kyH" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/glass/reinforced/fullstack{
-	pixel_x = 2;
-	pixel_y = -3
+/obj/item/sheet/glass/reinforced{
+	amount = 10;
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -24970,7 +24938,9 @@
 	},
 /area/station/science/teleporter)
 "kFM" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	},
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
@@ -25340,7 +25310,7 @@
 "kQX" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
-	amount = 50;
+	amount = 10;
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -25828,7 +25798,7 @@
 "laP" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
-	amount = 50;
+	amount = 10;
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -26770,9 +26740,10 @@
 /area/station/quartermaster/office)
 "lws" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/glass/reinforced/fullstack{
-	pixel_x = 2;
-	pixel_y = -3
+/obj/item/sheet/glass/reinforced{
+	amount = 10;
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -28413,9 +28384,6 @@
 "mmh" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility{
-	pixel_y = 7
-	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 13
 	},
@@ -29325,7 +29293,7 @@
 "mIz" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
-	amount = 50;
+	amount = 10;
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -33383,9 +33351,6 @@
 "oxM" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility{
-	pixel_y = 7
-	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 13
 	},
@@ -34352,10 +34317,6 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_y = 16;
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = 16;
 	pixel_x = 6
 	},
 /obj/item/shipcomponent/mainweapon/phaser,
@@ -34397,10 +34358,6 @@
 /area/station/hallway/primary/central/maru)
 "oWV" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = 16;
-	pixel_x = -5
-	},
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_y = 16;
 	pixel_x = 6
@@ -34994,16 +34951,11 @@
 /area/station/crew_quarters/meridian)
 "piU" = (
 /obj/table/reinforced/auto,
+/obj/item/device/gps{
+	pixel_y = 8
+	},
 /obj/item/storage/toolbox/electrical{
 	pixel_y = -7
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_y = 10;
-	pixel_x = -5
-	},
-/obj/item/crowbar,
-/obj/item/device/multitool{
-	pixel_x = 7
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -37355,7 +37307,7 @@
 /area/station/engine/substation/tenebrae)
 "qmx" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/grey/side{
+/turf/simulated/floor/grey/corner{
 	dir = 8
 	},
 /area/station/hangar/dionysus)
@@ -37392,16 +37344,11 @@
 /area/station/hallway/primary/south/tenebrae)
 "qnq" = (
 /obj/table/reinforced/auto,
+/obj/item/device/gps{
+	pixel_y = 8
+	},
 /obj/item/storage/toolbox/electrical{
 	pixel_y = -7
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_y = 10;
-	pixel_x = -5
-	},
-/obj/item/crowbar,
-/obj/item/device/multitool{
-	pixel_x = 7
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -37816,16 +37763,11 @@
 /area/station/hangar/dionysus)
 "qvJ" = (
 /obj/table/reinforced/auto,
+/obj/item/device/gps{
+	pixel_y = 8
+	},
 /obj/item/storage/toolbox/electrical{
 	pixel_y = -7
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_y = 10;
-	pixel_x = -5
-	},
-/obj/item/crowbar,
-/obj/item/device/multitool{
-	pixel_x = 7
 	},
 /turf/simulated/floor/white/side{
 	dir = 8
@@ -39048,7 +38990,9 @@
 	},
 /area/station/hallway/primary/south/asclepius)
 "qZU" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	},
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
@@ -39170,13 +39114,16 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/storage/box/cablesbox{
-	pixel_x = 1;
-	pixel_y = -8
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/cable_coil{
+	pixel_y = -11
+	},
+/obj/item/cable_coil{
+	pixel_y = -7;
+	pixel_x = 1
 	},
 /turf/simulated/floor/white/side{
 	dir = 8
@@ -40640,9 +40587,6 @@
 "rJy" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility{
-	pixel_y = 7
-	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 13
 	},
@@ -43469,16 +43413,11 @@
 /area/station/hallway/primary/north/tenebrae)
 "sUe" = (
 /obj/table/reinforced/auto,
+/obj/item/device/gps{
+	pixel_y = 8
+	},
 /obj/item/storage/toolbox/electrical{
 	pixel_y = -7
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_y = 10;
-	pixel_x = -5
-	},
-/obj/item/crowbar,
-/obj/item/device/multitool{
-	pixel_x = 7
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -43639,7 +43578,9 @@
 	},
 /area/station/hallway/primary/south/tenebrae)
 "sXd" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	},
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
@@ -44460,7 +44401,9 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "tnQ" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	},
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
@@ -45386,9 +45329,6 @@
 "tFe" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility{
-	pixel_y = 7
-	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 13
 	},
@@ -45999,9 +45939,6 @@
 "tTr" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility{
-	pixel_y = 7
-	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 13
 	},
@@ -47228,7 +47165,7 @@
 "usm" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
-	amount = 50;
+	amount = 10;
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -49456,9 +49393,10 @@
 /area/ghostdrone_factory)
 "vkf" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/glass/reinforced/fullstack{
-	pixel_x = 2;
-	pixel_y = -3
+/obj/item/sheet/glass/reinforced{
+	amount = 10;
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -49931,13 +49869,16 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/storage/box/cablesbox{
-	pixel_x = 1;
-	pixel_y = -8
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/cable_coil{
+	pixel_y = -11
+	},
+/obj/item/cable_coil{
+	pixel_y = -7;
+	pixel_x = 1
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -50022,13 +49963,16 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/storage/box/cablesbox{
-	pixel_x = 1;
-	pixel_y = -8
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/cable_coil{
+	pixel_y = -11
+	},
+/obj/item/cable_coil{
+	pixel_y = -7;
+	pixel_x = 1
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -51783,13 +51727,16 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/storage/box/cablesbox{
-	pixel_x = 1;
-	pixel_y = -8
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/cable_coil{
+	pixel_y = -11
+	},
+/obj/item/cable_coil{
+	pixel_y = -7;
+	pixel_x = 1
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -51831,13 +51778,16 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/storage/box/cablesbox{
-	pixel_x = 1;
-	pixel_y = -8
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/cable_coil{
+	pixel_y = -11
+	},
+/obj/item/cable_coil{
+	pixel_y = -7;
+	pixel_x = 1
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -55823,10 +55773,6 @@
 /area/station/maintenance/southeast/dionysus)
 "yec" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = 16;
-	pixel_x = -5
-	},
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_y = 16;
 	pixel_x = 6
