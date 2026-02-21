@@ -3784,6 +3784,11 @@
 "bKp" = (
 /obj/machinery/light_switch/north,
 /obj/submachine/chef_oven,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21;
+	pixel_x = 10
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bKy" = (
@@ -20892,10 +20897,6 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/white,
 /area/station/hallway/primary/north/asclepius)
-"iRx" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "iRD" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -51905,6 +51906,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/light/small,
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/crew_quarters/cafeteria)
 "wvx" = (
@@ -55333,6 +55335,7 @@
 	dir = 8
 	},
 /obj/landmark/start/job/chef,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "xUk" = (
@@ -110290,7 +110293,7 @@ cmq
 vse
 uIC
 drr
-wsL
+mSk
 xbl
 nhV
 szE
@@ -111497,7 +111500,7 @@ xrV
 lDA
 cGY
 cGY
-iRx
+cGY
 cGY
 cGY
 kEN
