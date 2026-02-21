@@ -334,6 +334,15 @@
 	icon_override = "med"
 	icon_tooltip = "Medical"
 
+/obj/item/device/radio/headset/pharmacist
+	name = "pharmaceutical headset"
+	desc = "One of the most commonly produced headsets by Nanotrasen, despite the comparably low hire rates of pharmacists."
+	icon_state = "pharmacist headset"
+	wear_state = "med headset"
+	secure_frequencies = list("m" = R_FREQ_MEDICAL, "r" = R_FREQ_RESEARCH)
+	icon_override = "pharmacist"
+	icon_tooltip = "Pharmacist"
+
 /obj/item/device/radio/headset/research
 	name = "research headset"
 	desc = "A science headset, for science. Whether directly or by proxy, these are frequently burned, exploded, corroded, dissolved, shot, and teleported, to name a few."
@@ -381,9 +390,16 @@
 /obj/item/device/radio/headset/clown
 	name = "clown's headset"
 	desc = "Anybody using this headset is unlikely to be taken seriously."
+	icon_state = "clown headset"
 	icon_override = "clown"
 	icon_tooltip = "Clown"
 	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
+
+/obj/item/device/radio/headset/clown/blue
+	name = "blue clown's headset"
+	icon_state = "blue clown headset"
+	icon_override = "clown_blue"
+	icon_tooltip = "Blue Clown"
 
 /obj/item/device/radio/headset/ghost_buster
 	name = "\improper Ghost Buster's headset"

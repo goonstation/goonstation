@@ -1099,7 +1099,12 @@ TYPEINFO(/mob)
 
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss=FALSE)
-	hit_twitch(src)
+	if (src.nodamage || QDELETED(src)) return
+
+	if (brute > 0)
+		hit_twitch(src)
+	else if((burn > 0 || tox > 0) && isalive(src) && !src.hasStatus("paralysis"))
+		hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
 
@@ -2473,7 +2478,7 @@ TYPEINFO(/mob)
 				output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
 
 			if (output_target.client)
-				output_target.client.view_fingerprints(OL[IP])
+				output_target.client.view_adminprints(OL[IP])
 
 	return
 #undef REFRESH

@@ -643,7 +643,7 @@
 	icon_closed = "medical_restricted"
 	icon_state = "medical_restricted"
 	spawn_contents = list()
-	req_access = list(access_medical_director)
+	req_access = list(access_pharmacy)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			// let's organize the SHIT outta this closet too! hot damn
@@ -743,7 +743,7 @@
 	name = "pharmacy chemical locker"
 	icon_closed = "medical_chemical"
 	icon_state = "medical_chemical"
-	req_access = list(access_medical_lockers)
+	req_access = list(access_pharmacy)
 
 /* ======================= */
 /* ----- Engineering ----- */

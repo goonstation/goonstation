@@ -305,7 +305,7 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "gc" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/black,
@@ -1156,7 +1156,7 @@
 /turf/space,
 /area/pirate_ship)
 "yl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "It seems a bit busted.";
 	dir = 4;
 	name = "leaky sink";

@@ -408,7 +408,9 @@
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
 	else
-		if(!ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay))
+		var/obj/item/equipped = holder.owner.equipped()
+		var/delay = max(holder.owner.combat_click_delay, equipped.click_delay)
+		if(!ON_COOLDOWN(holder.owner, "livingobj_click_delay", delay))
 			var/atom/movable/thing_to_attack = holder.target
 			if (isobj(thing_to_attack.loc))
 				thing_to_attack = thing_to_attack.loc

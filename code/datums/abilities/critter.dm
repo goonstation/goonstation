@@ -66,8 +66,7 @@
 			object.icon_state = src.icon_state
 
 	proc/incapacitationCheck()
-		var/mob/living/M = holder.owner
-		return M.restrained() || is_incapacitated(M)
+		return is_incapacitated(src.holder.owner)
 
 	castcheck()
 		if (incapacitationCheck())

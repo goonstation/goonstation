@@ -1235,7 +1235,7 @@
 	},
 /area/listeningpost/break_room)
 "Yl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor{
