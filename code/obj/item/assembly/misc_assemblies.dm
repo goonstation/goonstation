@@ -112,6 +112,7 @@ Contains:
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, new_target)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 
 /obj/item/assembly/proc/get_trigger_state(var/affected_assembly)
 	if(src.secured)
@@ -529,6 +530,7 @@ Contains:
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 
 
 ///This proc removes all items attached to the assembly and removes it
@@ -606,6 +608,7 @@ Contains:
 	//Last but not least, we update our icon, w_class and name
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [src.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
 	if(src.requires_admin_messaging())
@@ -647,6 +650,7 @@ Contains:
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 	// Since the assembly was done, return TRUE
 	user.put_in_hand_or_drop(src)
 	return TRUE
