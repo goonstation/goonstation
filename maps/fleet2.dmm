@@ -38749,7 +38749,7 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white/side{
-	dir = 4
+	dir = 8
 	},
 /area/station/hangar/asclepius)
 "qSH" = (
