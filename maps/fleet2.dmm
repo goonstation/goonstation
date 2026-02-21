@@ -519,6 +519,7 @@
 /area/station/engine/core/nuclear)
 "ani" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/light/emergency,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/hammer)
 "anr" = (
@@ -818,6 +819,10 @@
 "auH" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -1446,6 +1451,10 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/bridge/hammer)
 "aIB" = (
@@ -1475,7 +1484,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "aKn" = (
 /obj/cable/brown{
 	icon_state = "1-8"
@@ -1559,6 +1570,7 @@
 "aMt" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor,
 /obj/machinery/meter,
+/obj/machinery/light,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
@@ -1972,7 +1984,9 @@
 	},
 /obj/item/toy/plush/small,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "aVC" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/reinforced/fullstack,
@@ -2530,6 +2544,10 @@
 "biY" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
 	},
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -3191,6 +3209,10 @@
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television"
 	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/black,
 /area/station/science/research_director{
 	name = "Tenebrae Command Center"
@@ -3485,6 +3507,15 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central/dionysus)
+"bED" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/hallway/primary/south/maru)
 "bEO" = (
 /obj/rack,
 /obj/item/extinguisher{
@@ -3602,7 +3633,9 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "bGK" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbay/reception{
@@ -4224,6 +4257,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 1
 	},
@@ -4410,7 +4447,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "bZv" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -4549,6 +4588,15 @@
 	icon_state = "engine_caution_east"
 	},
 /area/station/engine/substation/maru)
+"cbO" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/machinery/light/emergency,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
 "cbV" = (
 /obj/item/storage/wall/fire{
 	dir = 8;
@@ -5956,6 +6004,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -6265,6 +6318,7 @@
 /obj/disposalpipe/trunk/brig{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
 "cKH" = (
@@ -6363,7 +6417,6 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/obj/machinery/light,
 /obj/machinery/flasher/portable,
 /turf/simulated/floor/red/side{
 	dir = 6
@@ -6658,6 +6711,7 @@
 /obj/item_dispenser/icedispenser{
 	pixel_y = 11
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/carpet/green/standard/narrow/nw,
 /area/station/crew_quarters/cafeteria)
 "cTU" = (
@@ -6687,6 +6741,11 @@
 	})
 "cUz" = (
 /obj/machinery/computer/arcade,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "cUB" = (
@@ -7210,7 +7269,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "dft" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -7579,6 +7640,7 @@
 /obj/item/device/radio/intercom/bridge{
 	dir = 8
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/station/bridge/hammer)
 "dny" = (
@@ -8608,6 +8670,10 @@
 	dir = 8
 	},
 /obj/landmark/start/job/security_assistant,
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/primary/south/hammer)
 "dNj" = (
@@ -8893,7 +8959,7 @@
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/black,
 /area/station/engine/gravity{
 	name = "Maru Energetic Systems"
 	})
@@ -9313,13 +9379,23 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "ecP" = (
 /obj/machinery/conveyor/SN{
 	id = "disposal-dionysus"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal/dionysus)
+"ecQ" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/courtroom)
 "edt" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -9347,7 +9423,9 @@
 	pixel_x = 8
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "edU" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/bridge/asclepius)
@@ -9845,7 +9923,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/transport,
-/turf/unsimulated/floor/circuit/vintage,
+/turf/unsimulated/floor/blackwhite{
+	dir = 1
+	},
 /area/station/crewquarters/cryotron)
 "epM" = (
 /obj/stool/chair{
@@ -10806,6 +10886,10 @@
 "eJf" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -11388,6 +11472,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/asclepius)
 "eXf" = (
@@ -11424,7 +11509,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "eYg" = (
 /obj/storage/secure/closet/brig,
 /obj/machinery/power/apc/autoname_west,
@@ -11618,7 +11705,9 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "fci" = (
 /obj/rack,
 /obj/item/sponge,
@@ -11715,7 +11804,9 @@
 	pixel_x = -6
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "fdh" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/recharger,
@@ -11816,14 +11907,6 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
-"ffx" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/black/grime,
-/area/station/security/brig/genpop)
 "ffy" = (
 /obj/storage/crate,
 /obj/item/clothing/head/wig,
@@ -12164,6 +12247,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/meridian)
 "fnZ" = (
@@ -12286,7 +12370,9 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "fqH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12760,7 +12846,9 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "fAV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13330,6 +13418,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/bridge/dionysus)
 "fKZ" = (
+/obj/machinery/light/emergency,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/tenebrae)
 "fLc" = (
@@ -14438,11 +14527,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/meridian)
 "ggE" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/machinery/portableowl/judgementowl,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
@@ -15669,10 +15753,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "gHv" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /obj/table/reinforced/bar/auto,
 /obj/machinery/microwave,
 /turf/simulated/floor/black,
@@ -16184,7 +16264,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
 /area/station/crew_quarters/toilets/hammer)
 "gUl" = (
 /turf/simulated/floor/stairs/wide/other{
@@ -16206,7 +16288,9 @@
 	},
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/blue,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "gUO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16280,6 +16364,11 @@
 	dir = 1
 	},
 /area/station/hangar/meridian)
+"gWx" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/wood,
+/area/station/hallway/primary/central/dionysus)
 "gWF" = (
 /obj/table/wood/auto,
 /obj/machinery/phone{
@@ -16984,7 +17073,9 @@
 	pixel_x = 4
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "hmm" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -17290,6 +17381,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
@@ -17423,7 +17518,9 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "hvQ" = (
 /obj/cable/brown{
 	icon_state = "1-8"
@@ -17495,6 +17592,10 @@
 /obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television"
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain{
@@ -17994,7 +18095,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "hJk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18880,14 +18983,6 @@
 	dir = 4
 	},
 /area/station/hangar/tenebrae)
-"ibe" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "ibg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20444,7 +20539,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical_director,
 /turf/simulated/floor/grey,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "iIz" = (
 /obj/landmark/observer,
 /turf/simulated/floor/grey,
@@ -20605,6 +20702,23 @@
 /area/station/science/research_director{
 	name = "Tenebrae Command Center"
 	})
+"iLy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	name = "Helm Shutters";
+	dir = 9
+	},
+/obj/mapping_helper/button/area,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "iLA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -20709,7 +20823,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
 /area/station/crew_quarters/toilets/asclepius)
 "iOD" = (
 /obj/machinery/shuttle/engine/heater{
@@ -22410,7 +22526,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "jDS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22465,11 +22583,6 @@
 	})
 "jEF" = (
 /obj/machinery/computer3/generic/bank_data,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -22667,10 +22780,6 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/television/small{
 	pixel_y = 8
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge/hammer)
@@ -23521,7 +23630,9 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "kec" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23712,7 +23823,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
 /area/station/crew_quarters/toilets/tenebrae)
 "khN" = (
 /turf/simulated/floor/caution/south,
@@ -23722,8 +23835,14 @@
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television"
 	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "kid" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -23906,6 +24025,10 @@
 "klm" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -24986,7 +25109,9 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "kIt" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -25652,7 +25777,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "kYF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -25744,7 +25871,9 @@
 /obj/item/crowbar,
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "laP" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel{
@@ -25856,6 +25985,10 @@
 "ldh" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
 	},
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -26158,6 +26291,11 @@
 /area/station/maintenance/disposal/asclepius)
 "lkm" = (
 /obj/storage/secure/closet/kitchen,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "lkn" = (
@@ -26417,6 +26555,18 @@
 	dir = 1
 	},
 /area/station/hangar/asclepius)
+"lpY" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
+/area/station/engine/core/nuclear)
 "lqb" = (
 /obj/table/reinforced/auto,
 /obj/item/boardgame/chess,
@@ -26750,19 +26900,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"lAa" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/cable/brown{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/hallway/primary/central/maru)
 "lAe" = (
 /obj/machinery/turret,
 /turf/simulated/floor/darkblue,
@@ -26957,7 +27094,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "lFy" = (
 /obj/submachine/weapon_vendor/fishing/portable,
 /obj/machinery/light/small{
@@ -27064,7 +27203,9 @@
 /area/station/bridge/dionysus)
 "lID" = (
 /turf/simulated/floor/darkblue,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "lIE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -27468,11 +27609,6 @@
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
 /obj/item/hand_labeler,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
@@ -27999,7 +28135,9 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "meK" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/crew_quarters/maru)
@@ -28220,6 +28358,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "mka" = (
@@ -28947,6 +29086,10 @@
 "mze" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -28954,6 +29097,10 @@
 "mzm" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/core/nuclear)
@@ -30001,7 +30148,9 @@
 "naw" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "naN" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -31222,9 +31371,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light/small{
+/obj/machinery/light/emergency{
 	dir = 4;
-	pixel_x = 12
+	pixel_x = 10
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/hammer)
@@ -31346,7 +31495,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/medlab,
-/turf/simulated/floor/blue,
+/turf/simulated/floor/greenblack,
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
@@ -31442,7 +31591,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
 /area/station/crew_quarters/toilets/meridian)
 "nIf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -32074,6 +32225,15 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"nVj" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
 "nVq" = (
 /obj/machinery/light{
 	dir = 1;
@@ -32232,7 +32392,9 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "nZf" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
@@ -32714,6 +32876,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
@@ -33081,6 +33247,10 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/wood,
 /area/station/hallway/primary/south/dionysus)
 "osE" = (
@@ -34386,6 +34556,11 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/primary/central/hammer)
+"oYv" = (
+/obj/machinery/plantpot,
+/obj/machinery/light,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "oYL" = (
 /obj/lattice{
 	dir = 9;
@@ -35464,6 +35639,10 @@
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television"
 	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
 	name = "Maru Command Center"
@@ -36476,6 +36655,10 @@
 "pSt" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/meter,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 8
 	},
@@ -36535,7 +36718,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "pUp" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable/brown{
@@ -36795,6 +36980,11 @@
 "qaI" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/north,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "qaT" = (
@@ -36892,7 +37082,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/darkblue,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "qcW" = (
 /obj/machinery/clothingbooth,
 /turf/simulated/floor/grey/side,
@@ -37125,6 +37317,10 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets/maru)
+"qjN" = (
+/obj/machinery/light/emergency,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/maru)
 "qjY" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/mapping_helper/firedoor_spawn,
@@ -37906,6 +38102,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/fitness)
 "qAO" = (
+/obj/machinery/light/emergency,
 /turf/simulated/floor/engine/caution/corner2,
 /area/station/engine/core/nuclear)
 "qAU" = (
@@ -38378,7 +38575,6 @@
 	name = "Meridian Command Center"
 	})
 "qNs" = (
-/obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -39512,11 +39708,6 @@
 	pixel_y = 32;
 	spawn_contents = list(/obj/item/clothing/glasses/vr/arcade,/obj/item/clothing/glasses/vr/arcade,/obj/item/clothing/glasses/vr/arcade,/obj/item/clothing/glasses/vr/arcade,/obj/item/clothing/glasses/vr/arcade)
 	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "rnZ" = (
@@ -39528,6 +39719,10 @@
 "rox" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -41357,7 +41552,9 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/unsimulated/floor/sanitary,
+/turf/unsimulated/floor/blackwhite{
+	dir = 8
+	},
 /area/station/crewquarters/cryotron)
 "scY" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
@@ -41832,6 +42029,10 @@
 /obj/item/extinguisher,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/caution/north,
 /area/station/science/lab)
 "smW" = (
@@ -43086,7 +43287,9 @@
 /area/station/ai_monitored/armory)
 "sOm" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "sOx" = (
 /obj/stool/chair{
 	dir = 4
@@ -43408,6 +43611,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/station/bridge/hammer)
 "sWa" = (
@@ -44205,6 +44409,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light_switch/east,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/station/bridge/hammer)
 "tkp" = (
@@ -44598,6 +44803,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
+/obj/machinery/light/emergency,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/dionysus)
 "tsE" = (
@@ -44640,7 +44846,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
 /area/station/crew_quarters/toilets/dionysus)
 "tsO" = (
 /turf/simulated/floor,
@@ -45285,6 +45493,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/stairs/medical{
 	dir = 8
 	},
@@ -45460,11 +45672,6 @@
 /obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
 	},
 /turf/simulated/floor/engine/caution/misc,
 /area/station/engine/monitoring{
@@ -46148,7 +46355,6 @@
 /area/space)
 "tZv" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor,
-/obj/machinery/light,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
@@ -46897,6 +47103,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/light/emergency,
 /turf/simulated/floor/black,
 /area/station/bridge/hammer)
 "uoQ" = (
@@ -46950,6 +47157,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/security)
+"upi" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/hallway/primary/south/tenebrae)
 "upy" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/tableware,
@@ -47044,7 +47264,9 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
 /area/station/crew_quarters/toilets/maru)
 "urX" = (
 /obj/table/auto,
@@ -47352,7 +47574,9 @@
 /area/station/hallway/primary/north/hammer)
 "uxZ" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "uyi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47600,6 +47824,10 @@
 /obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television"
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/bridge/customs{
@@ -48646,6 +48874,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central/maru)
+"uYd" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/white/side{
+	dir = 8
+	},
+/area/station/hallway/primary/south/asclepius)
 "uYt" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/camera/directional/south,
@@ -49372,7 +49613,9 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "vmy" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -49996,11 +50239,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/wood,
 /area/station/hallway/primary/south/dionysus)
-"vCx" = (
-/obj/machinery/light/small/floor,
-/obj/disposalpipe/segment/bent/west,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "vCX" = (
 /obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring";
@@ -50135,6 +50373,11 @@
 /area/station/science/artifact)
 "vGn" = (
 /obj/machinery/vending/hydroponics,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -50920,6 +51163,18 @@
 	dir = 8
 	},
 /area/station/storage/emergency/asclepius)
+"vYv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/station/hangar/maru)
 "vYR" = (
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -51099,6 +51354,11 @@
 	pixel_x = -5
 	},
 /obj/item/pen/pencil,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/primary/north/hammer)
 "weO" = (
@@ -51582,6 +51842,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/light,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/courtroom)
 "wrS" = (
@@ -51814,11 +52075,6 @@
 /obj/disposaloutlet/west,
 /obj/disposalpipe/trunk/brig{
 	dir = 4
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
@@ -52315,7 +52571,9 @@
 	},
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/md)
+/area/station/crew_quarters/md{
+	name = "Asclepius Command Center"
+	})
 "wGn" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -53628,6 +53886,10 @@
 "xlz" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -54946,6 +55208,10 @@
 /obj/machinery/computer/television/public{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television"
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos{
@@ -83044,7 +83310,7 @@ rfL
 iWb
 viQ
 jcc
-quK
+lpY
 xqv
 xqv
 xqv
@@ -84262,7 +84528,7 @@ sxU
 vRR
 cCA
 rCm
-eaj
+asa
 ipE
 cDT
 fue
@@ -85162,11 +85428,11 @@ pWy
 tcR
 xqv
 xqv
-aWP
+cbO
 kAF
 miw
 gKp
-cCA
+hbA
 rCm
 cjX
 bnc
@@ -85464,11 +85730,11 @@ xqv
 xqv
 xqv
 xqv
-aWP
+nVj
 kAF
 miw
 gKp
-lAa
+cCA
 rCm
 cjX
 bnc
@@ -87289,7 +87555,7 @@ elJ
 elJ
 elJ
 iFg
-nyM
+bED
 nyM
 nyM
 nyM
@@ -89581,7 +89847,7 @@ fjq
 clw
 naN
 iuS
-ffx
+ngn
 wma
 qaI
 eVA
@@ -90024,7 +90290,7 @@ eJY
 wHD
 aEM
 ajH
-dqj
+qjN
 dOC
 pto
 pto
@@ -91755,7 +92021,7 @@ vcZ
 xAO
 xAO
 xAO
-xAO
+oxZ
 xAO
 xAO
 xAO
@@ -93205,7 +93471,7 @@ fkQ
 csn
 gmQ
 fkQ
-lPC
+ygF
 fHz
 iBS
 cax
@@ -93806,7 +94072,7 @@ uDd
 vCj
 uEp
 ggE
-vCj
+ecQ
 ksW
 fkQ
 ygF
@@ -96638,7 +96904,7 @@ dsP
 bgE
 pWQ
 vcE
-iOj
+vYv
 sES
 aMg
 jOa
@@ -98153,7 +98419,7 @@ bIk
 nYn
 nYn
 nYn
-nYn
+eoQ
 nYn
 xXh
 nYn
@@ -104084,7 +104350,7 @@ hmv
 wzt
 wzt
 wzt
-wzt
+pss
 wzt
 wzt
 wzt
@@ -108370,7 +108636,7 @@ dJR
 xvW
 dIC
 lYt
-lYt
+abp
 cLp
 lFy
 qYI
@@ -108672,7 +108938,7 @@ dJR
 pmJ
 pmJ
 lYt
-abp
+lYt
 cLp
 cLp
 cLp
@@ -108954,7 +109220,7 @@ twZ
 cmq
 eGe
 sSI
-vCx
+loU
 lul
 mSk
 nhV
@@ -109579,7 +109845,7 @@ xvW
 pmJ
 lYt
 lYt
-gAT
+oYv
 sGg
 rmI
 qBD
@@ -110172,8 +110438,8 @@ vhY
 wvs
 jzD
 vEW
-uLj
-gAL
+gWx
+oVd
 qFV
 vGn
 ova
@@ -111626,7 +111892,7 @@ pto
 dsP
 nOu
 miw
-uGJ
+iLy
 kIp
 kYB
 jDK
@@ -112228,7 +112494,7 @@ pto
 jSz
 dRc
 miw
-uGJ
+iLy
 kIp
 bGn
 dfh
@@ -112578,7 +112844,7 @@ vvv
 thi
 jiv
 tXi
-ibe
+cGY
 cGY
 aeK
 duv
@@ -119598,7 +119864,7 @@ qAr
 qAr
 bAi
 xYY
-qAr
+upi
 qAr
 qAr
 qAr
@@ -121950,7 +122216,7 @@ jhm
 xYJ
 xYJ
 xYJ
-xYJ
+vxN
 xYJ
 xYJ
 xYJ
@@ -122206,7 +122472,7 @@ saq
 yfe
 apI
 uHy
-uHy
+uYd
 tDU
 tDU
 tDU
@@ -130462,7 +130728,7 @@ tkW
 pmb
 pmb
 pmb
-pmb
+wWe
 pmb
 pmb
 pmb
@@ -132467,7 +132733,7 @@ dwK
 eqp
 eqp
 eqp
-eqp
+fxQ
 eqp
 eqp
 eqp
