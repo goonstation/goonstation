@@ -1544,6 +1544,13 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal/hammer)
+"aLX" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/tenebrae)
 "aMg" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -2646,6 +2653,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/blind_switch/area/west,
 /turf/simulated/floor/black,
 /area/station/bridge/maru)
 "bly" = (
@@ -3316,6 +3324,9 @@
 /area/station/medical/medbay)
 "bBi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/dionysus)
 "bBn" = (
@@ -8483,7 +8494,7 @@
 /turf/simulated/floor/industrial,
 /area/station/hallway/primary/central/hammer)
 "dLm" = (
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/security{
 	dir = 4
 	},
 /obj/cable{
@@ -8565,6 +8576,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest/meridian)
+"dMg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/asclepius)
 "dMC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9500,6 +9518,13 @@
 /obj/machinery/camera/directional/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast/tenebrae)
+"ehz" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/maru)
 "ehU" = (
 /obj/machinery/power/furnace,
 /obj/cable{
@@ -9654,6 +9679,11 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/grey,
 /area/station/bridge/maru)
 "elf" = (
@@ -10186,9 +10216,8 @@
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/hammer)
 "exd" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -10274,6 +10303,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical_director,
 /turf/simulated/floor/black,
 /area/station/bridge/asclepius)
 "eyK" = (
@@ -11648,6 +11678,11 @@
 	},
 /obj/cable/brown{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/heads,
+/obj/window_blinds/cog2/middle{
+	dir = 4
 	},
 /turf/simulated/floor/grey,
 /area/station/bridge/tenebrae)
@@ -14537,6 +14572,11 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/grey,
 /area/station/bridge/meridian)
 "gjn" = (
@@ -16325,6 +16365,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/blind_switch/area/west,
 /turf/simulated/floor/black,
 /area/station/bridge/meridian)
 "gZe" = (
@@ -17051,6 +17092,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/blind_switch/area/west,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -18220,6 +18262,9 @@
 /area/station/crew_quarters/maru)
 "hOR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/tenebrae)
 "hOX" = (
@@ -22027,6 +22072,9 @@
 	})
 "jtT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/hammer)
 "jtZ" = (
@@ -23561,6 +23609,11 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/wood/seven,
 /area/station/bridge/dionysus)
 "kfZ" = (
@@ -26951,6 +27004,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/heads,
+/obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/grey,
 /area/station/bridge/asclepius)
 "lGK" = (
@@ -27048,9 +27105,8 @@
 	name = "Limoncello Command Center"
 	})
 "lJS" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -27293,6 +27349,9 @@
 /area/station/maintenance/disposal/tenebrae)
 "lOQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/maru)
 "lOY" = (
@@ -29604,6 +29663,9 @@
 /area/station/medical/medbay/treatment1)
 "mSY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/meridian)
 "mSZ" = (
@@ -31031,6 +31093,13 @@
 /obj/machinery/door_control/podbay/security/new_walls/north,
 /turf/simulated/floor/caution/south,
 /area/station/hangar/security)
+"nAG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/dionysus)
 "nAS" = (
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = list("asclepius|med","buoy","dionysus|civ","hammer|sec","limoncello","meridian|escape","tenebrae|sci");
@@ -33284,6 +33353,10 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/hammer)
 "oyw" = (
@@ -42577,6 +42650,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/blind_switch/area/west,
 /turf/simulated/floor/black,
 /area/station/bridge/tenebrae)
 "sEr" = (
@@ -42629,6 +42703,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal/tenebrae)
+"sFv" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/meridian)
 "sFP" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -43041,6 +43122,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/hallway/primary/south/tenebrae)
+"sPI" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge/hammer)
 "sQE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48808,6 +48896,9 @@
 /area/station/hallway/primary/south/maru)
 "ver" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/asclepius)
 "veB" = (
@@ -50749,9 +50840,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal/meridian)
 "vXg" = (
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -73242,7 +73332,7 @@ tNV
 tNV
 tNV
 iGA
-mSY
+sFv
 giK
 mSY
 pPh
@@ -79640,7 +79730,7 @@ iRQ
 mqz
 dFi
 dFi
-lOQ
+ehz
 ekZ
 lOQ
 lJS
@@ -85571,7 +85661,7 @@ ylq
 lQJ
 lQJ
 lQJ
-jtT
+sPI
 oyu
 jtT
 dLm
@@ -103437,7 +103527,7 @@ sRQ
 sRQ
 sRQ
 sRQ
-bBi
+nAG
 kfT
 bBi
 aYh
@@ -111949,7 +112039,7 @@ lxE
 eDA
 eDA
 kjv
-hOR
+aLX
 fcZ
 hOR
 vXg
@@ -113954,7 +114044,7 @@ edU
 edU
 edU
 edU
-ver
+dMg
 lGr
 ver
 exd
