@@ -355,6 +355,7 @@
 	if (!IN_RANGE(src,target,src.interdict_range+5))
 		return
 	src.did_local_interdiction = TRUE
+	return TRUE
 
 ///Specialized radiation storm interdiction proc that allows multiple protections under a single unified cost per process.
 /obj/machinery/interdictor/proc/radstorm_interdict()

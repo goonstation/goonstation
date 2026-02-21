@@ -607,7 +607,8 @@ TYPEINFO(/mob)
 					//spatial interdictor: mitigate biomagnetic discharges
 					if (tmob.hasStatus("spatial_protection"))
 						for_by_tcl(IX, /obj/machinery/interdictor)
-							IX.notify_interdictor(tmob)
+							if(IX.notify_interdictor(tmob))
+								break
 						src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade."))
 						var/atom/source = get_turf(tmob)
 						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
@@ -662,7 +663,8 @@ TYPEINFO(/mob)
 
 					if (tmob.hasStatus("spatial_protection"))
 						for_by_tcl(IX, /obj/machinery/interdictor)
-							IX.notify_interdictor(tmob)
+							if(IX.notify_interdictor(tmob))
+								break
 						src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade."))
 						var/atom/source = get_turf(tmob)
 						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
