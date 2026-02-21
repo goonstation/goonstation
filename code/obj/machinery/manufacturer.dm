@@ -476,9 +476,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/img
 		if (istype(M, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/mech = M
-			img = getItemIcon(mech.frame_path, C = user.client)
+			img = getItemIcon(mech.frame_path)
 		else
-			img = getItemIcon(M.item_outputs[1], C = user.client)
+			img = getItemIcon(M.item_outputs[1])
 
 		var/requirement_data = list()
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)

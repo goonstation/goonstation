@@ -207,10 +207,6 @@
 	build_camera_network()
 	camera_coverage_controller.setup()
 
-	UPDATE_TITLE_STATUS("Preloading client data...")
-	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
-	sendItemIconsToAll()
-
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()

@@ -1594,27 +1594,27 @@
 		for (var/datum/gang_item/consumable/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Equipment</b></font></td></tr>"
 		for (var/datum/gang_item/equipment/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Weapons</b></font></td></tr>"
 		for (var/datum/gang_item/weapon/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Special</b></font></td></tr>"
 		for (var/datum/gang_item/special/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 
