@@ -358,6 +358,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	Internal use only.
  */
 /datum/spatial_hashmap/proc/update_entry(datum/component/complexsignal/outermost_movable/component, turf/old_turf, turf/new_turf)
+	PRIVATE_PROC(TRUE)
 	var/old_x = ceil(old_turf.x / src.cell_size)
 	var/new_x = ceil(new_turf.x / src.cell_size)
 	var/old_y = ceil(old_turf.y / src.cell_size)
@@ -376,6 +377,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	Internal use only.
  */
 /datum/spatial_hashmap/proc/remove_entry(datum/component/complexsignal/outermost_movable/component, turf/old_turf)
+	PRIVATE_PROC(TRUE)
 	if (!old_turf.z || (old_turf.z > src.z_order))
 		return
 
@@ -388,6 +390,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	Internal use only.
  */
 /datum/spatial_hashmap/proc/add_entry(datum/component/complexsignal/outermost_movable/component, turf/new_turf)
+	PRIVATE_PROC(TRUE)
 	if (!new_turf.z || (new_turf.z > src.z_order))
 		return
 
@@ -400,6 +403,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	Internal use only.
  */
 /datum/spatial_hashmap/proc/update_z_order(source, new_z_order)
+	PRIVATE_PROC(TRUE)
 	if (new_z_order <= src.z_order)
 		return
 
