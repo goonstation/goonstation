@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	///Setup guide, formatted as a list of strings describing individual resonator positions and intensities
 	var/list/setup_guide = null
 	///When a harmonic cycle is provided, the siphon and associated hardware will automatically handle its integration and cycling.
-	var/datum/hm_cycle/harmonic_cycle = null
+	var/datum/harmonic_cycle/hm_cycle = null
 
 ABSTRACT_TYPE(/datum/harmonic_cycle)
 ///Certain harmonic siphon extraction targets have requirements that change over time; this datum specifies the precise manner in which they change.
@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 
 	var/x_torque_min = null
 	var/x_torque_max = null
-	var/y_torque_max = null
+	var/y_torque_min = null
 	var/y_torque_max = null
 	var/shear_min = null
 	var/shear_max = null
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	shear = 800
 	sens_window = 1
 	product = /obj/item/raw_material/telecrystal
-	hm_cycle = /datum/harmonic_cycle/telecrystal
+	hm_cycle = new /datum/harmonic_cycle/telecrystal
 
 /datum/harmonic_cycle/telecrystal
 	time_to_shift = 4 MINUTES
