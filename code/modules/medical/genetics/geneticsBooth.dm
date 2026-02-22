@@ -140,21 +140,36 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		if(length(src.offered_genes) && !issilicon(user))
 			. += "You could swipe a sufficiently <b>high-level ID</b> through it to adjust its contents and pricing."
 
+	attack_ai(mob/user)
+		if (src.allowed(user))
+			src.pick_action(user)
+
+	#define BOOTH_ACTION_SELECT "Select Gene"
+	#define BOOTH_ACTION_ADMIM "Admin Panel"
+	proc/pick_action(user)
+		if(length(src.offered_genes) <= 0)
+			boutput(user, SPAN_NOTICE("[src] has no products available for purchase right now."))
+			return
+		switch(tgui_alert(user, "What do you want to do with [src]?", "Select Action", list(BOOTH_ACTION_SELECT, BOOTH_ACTION_ADMIM, "Nothing")))
+			if (BOOTH_ACTION_SELECT)
+				src.show_context_options(user)
+			if (BOOTH_ACTION_ADMIM)
+				src.show_admin_panel(user)
+
+	#undef BOOTH_ACTION_SELECT
+	#undef BOOTH_ACTION_ADMIM
+
 	attack_hand(var/mob/user)
 		if (occupant)
-			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
+			boutput(user, SPAN_NOTICE("[src] is currently occupied. Wait until it's done."))
 			return
-
 		if (status & (NOPOWER | BROKEN))
 			boutput(user, SPAN_ALERT("The gene booth is currently nonfunctional."))
 			return
 		if(length(src.offered_genes))
 			src.show_context_options(user)
 		else
-			user.show_text("[src] has no products available for purchase right now.", "blue")
-			return
-		if(issilicon(user)) // Silicons can't open it with an ID, but they don't often use the gene booth.
-			src.show_admin_panel(user) // ^ Always opening it for them shouldn't be too bad then.
+			boutput(user, SPAN_NOTICE("[src] has no products available for purchase right now."))
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if(src.eject_strength != THROW_THROUGH_WALL)
@@ -177,13 +192,10 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
 	/// Displays the booth's gene selection locking and price adjustment UI.
-	proc/show_admin_panel(mob/user, obj/item/card/id)
+	proc/show_admin_panel(mob/user)
 		if(status & (NOPOWER | BROKEN))
 			return
 		if(!user)
-			return
-		if(istype(id) && !src.allowed(user) && !issilicon(user))
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, 0)
 			return
 
 		if(length(offered_genes))
@@ -200,7 +212,9 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		onclose(user, "genebooth")
 
 	Topic(href, href_list)
-		if (usr.stat)
+		if (!can_act(usr, TRUE) || usr.lying)
+			usr.Browse(null, "window=genebooth")
+			src.remove_dialog(usr)
 			return
 		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			var/datum/geneboothproduct/P
@@ -403,14 +417,13 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 
-	attackby(obj/item/W, mob/user)
-		var/obj/item/card/id/id_card = get_id_card(W)
-		if(length(src.offered_genes) && istype(id_card))
-			src.show_admin_panel(user, id_card)
+	attackby(obj/item/I, mob/user)
+		if(length(src.offered_genes) && src.check_access(I))
+			src.show_admin_panel(user)
 			return
 
 		user.lastattacked = get_weakref(src)
-		letgo_hp -= W.force
+		letgo_hp -= I.force
 		attack_particle(user,src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, pitch = 0.8)
 
