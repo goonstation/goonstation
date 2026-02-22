@@ -26,7 +26,6 @@ TYPEINFO(/obj/item/device/calibrator)
 				if (IN_RANGE(user,a_siphon,40))
 					found_a_siphon = TRUE
 					var/cycles_identified = 0
-					var/obj/machinery/siphon/core = that_siphon
 					boutput(user,SPAN_NOTICE("[src] locates a compatible harmonic field and gathers cyclical data."))
 					for (var/datum/siphon_mineral/M in a_siphon.cyclical_targets)
 						cycles_identified++
@@ -47,7 +46,7 @@ TYPEINFO(/obj/item/device/calibrator)
 						else
 							boutput(user,SPAN_NOTICE("<b>No</b> shear response identified"))
 
-						var/shift_delta = max((mineral.hm_cycle.last_shifted + mineral.hm_cycle.current_shift_length) - TIME,0)
+						var/shift_delta = max((M.hm_cycle.last_shifted + M.hm_cycle.current_shift_length) - TIME,0)
 						boutput(user,SPAN_ALERT("Next shift <b>[shift_delta ? "expected in [shift_delta / SECONDS] seconds" : "IMMINENT"]</b>"))
 
 			if(!found_a_siphon) boutput(user,SPAN_ALERT("[src] can't detect a compatible harmonic field nearby."))
@@ -209,7 +208,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.drawlight = new /obj/overlay/siphonglow()
 		src.vis_contents += drawlight
 		for(var/mineral in concrete_typesof(/datum/siphon_mineral))
-			var/working_mineral = new mineral
+			var/datum/siphon_mineral/working_mineral = new mineral
 			src.can_extract += working_mineral
 			if(working_mineral.hm_cycle)
 				src.cyclical_targets += working_mineral
