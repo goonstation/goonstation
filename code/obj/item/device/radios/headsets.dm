@@ -387,6 +387,9 @@
 	icon_override = "mail"
 	icon_tooltip = "Mail Courier"
 
+TYPEINFO(/obj/item/device/radio/headset/clown)
+	start_listen_modifiers = list(LISTEN_MODIFIER_RADIO, LISTEN_MODIFIER_COMIC_SANS)
+
 /obj/item/device/radio/headset/clown
 	name = "clown's headset"
 	desc = "Anybody using this headset is unlikely to be taken seriously."
