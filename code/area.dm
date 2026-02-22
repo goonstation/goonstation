@@ -4353,6 +4353,15 @@ ABSTRACT_TYPE(/area/mining)
 	icon_state = "green"
 	ambient_light = "#FFFFE6"
 
+	unpowered
+		requires_power = TRUE
+
+	no_default_light
+		ambient_light = null
+
+		unpowered
+			requires_power = TRUE
+
 	gravity_traction_partial
 		gforce_minimum = GFORCE_TRACTION_PARTIAL
 
