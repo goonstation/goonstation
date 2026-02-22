@@ -1,7 +1,7 @@
 /obj/machinery/turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "grey_target_prism"
+	icon_state = "Turret_off"
 	var/raised = 0
 	var/enabled = 1
 	anchored = ANCHORED
@@ -27,7 +27,7 @@
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "turretCover"
+	icon_state = "TurretCover"
 	anchored = ANCHORED
 	layer = OBJ_LAYER+0.5
 	density = 0
@@ -55,20 +55,20 @@
 
 /obj/machinery/turret/power_change()
 	if(status & BROKEN)
-		icon_state = "grey_target_prism"
+		icon_state = "Turret_off"
 	else
 		if( powered() )
 			if (src.enabled)
 				if (src.lasers)
-					icon_state = "orange_target_prism"
+					icon_state = "Turret_lethal"
 				else
-					icon_state = "target_prism"
+					icon_state = "Turret_stun"
 			else
-				icon_state = "grey_target_prism"
+				icon_state = "Turret_off"
 			status &= ~NOPOWER
 		else
 			SPAWN(rand(0, 15))
-				src.icon_state = "grey_target_prism"
+				src.icon_state = "Turret_off"
 				status |= NOPOWER
 
 /obj/machinery/turret/proc/setState(var/enabled, var/lethal)
@@ -181,7 +181,7 @@
 		popping = -1
 		if (src.cover!=null)
 			FLICK("popdown", src.cover)
-			src.cover.icon_state = "turretCover"
+			src.cover.icon_state = "TurretCover"
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
 				invisibility = INVIS_ALWAYS
