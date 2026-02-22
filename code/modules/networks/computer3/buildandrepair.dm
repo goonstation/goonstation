@@ -117,7 +117,7 @@ TYPEINFO(/obj/item/motherboard)
 		onclose(user,"computer")
 		return
 
-	Topic(href, href_list)
+/obj/computer3frame/Topic(href, href_list)
 		if(..())
 			return
 
