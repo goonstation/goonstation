@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | NOSPLASH
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/carbon/human/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -160,6 +160,9 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (src.allowed(user))
 			options.Add(CLONEPOD_ACTION_EJECT_CLONE)
 			options.Add(CLONEPOD_ACTION_AUTOMODE)
+		else
+			options.Add(CLONEPOD_ACTION_EJECT_CLONE + " (unauthorized)")
+			options.Add(CLONEPOD_ACTION_AUTOMODE + " (unauthorized)")
 
 		if (length(options) == 0)
 			return
@@ -169,6 +172,8 @@ TYPEINFO(/obj/machinery/clonepod)
 		var/chosen_option = null
 
 		chosen_option = tgui_input_list(user, "What do you want to do?", "[src]", options, CLONEPOD_ACTION_NOTHING)
+		if (!in_interact_range(src, user))
+			return
 		switch (chosen_option)
 			if(CLONEPOD_ACTION_REMOVE_IV)
 				if (src.drip)
@@ -177,10 +182,12 @@ TYPEINFO(/obj/machinery/clonepod)
 						src.drip = null
 				return
 			if(CLONEPOD_ACTION_EJECT_CLONE)
-				src.eject(user)
+				if (src.allowed(user))
+					src.eject(user)
 				return
 			if(CLONEPOD_ACTION_AUTOMODE)
-				src.toggle_auto(user)
+				if (src.allowed(user))
+					src.toggle_auto(user)
 				return
 			if(CLONEPOD_ACTION_NOTHING)
 				return
@@ -207,10 +214,6 @@ TYPEINFO(/obj/machinery/clonepod)
 				. += "<br>\The [src.drip] is empty."
 		else
 			. += "<br>There is no internal IV drip hooked up."
-
-
-	is_open_container()
-		return FALSE
 
 	update_icon()
 		if (src.portable) // no need here
@@ -764,6 +767,8 @@ TYPEINFO(/obj/machinery/clonepod)
 				if (theReagent)
 					src.meat_level = min(src.meat_level + (theReagent.volume * clonepod_accepted_reagents[reagent_id]), MAXIMUM_MEAT_LEVEL)
 					src.reagents.del_reagent(reagent_id)
+			else
+				src.reagents.del_reagent(reagent_id)
 
 	//Put messages in the connected computer's temp var for display.
 	proc/connected_message(var/message, status)

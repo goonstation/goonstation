@@ -14,6 +14,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	anchored = ANCHORED
 	density = 1
 	power_usage = 100 WATTS
+	flags = FLUID_SUBMERGE | NOSPLASH
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)
@@ -316,6 +317,11 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			else
 				boutput(user, SPAN_ALERT("There is no upgrade card installed."))
 			return
+		else if (istype(I, /obj/item/reagent_containers/glass))
+			return // prevents "unsuitable" message
+		else if (istype(I, /obj/item/card/emag))
+			return // prevents "unsuitable" message
+
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is still running, hold your horses!"))
 			return
@@ -340,32 +346,28 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			user.visible_message("<b>[user]</b> loads [I] into [src].","You load [I] into [src]")
 			return
 
-		else if (istype(I, /obj/item/reagent_containers/glass))
-			return // handled in reagent afterattack
-
-		else if (istype(I, /obj/item/card/emag))
-			return // prevents "unsuitable" message
-
 		else if (isgrab(I))
 			var/obj/item/grab/G = I
-			if (src.grind_level == GRIND_NOTHING)
+			user.lastattacked = get_weakref(src)
+			if (src.grind_level == GRIND_NOTHING) // other grind levels are handled at the end of the `put_in_reclaimer` action bar
 				user.visible_message(SPAN_ALERT("[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!"))
-				return ..()
+				playsound(src, 'sound/machines/bweep.ogg', 40, TRUE, 0.7)
+				return
 
 			if (src.occupant)
 				boutput(user, SPAN_ALERT("There is already somebody in there."))
-
-				return ..()
+				playsound(src, 'sound/machines/bweep.ogg', 40, TRUE, 0.7)
+				return
 
 			if (G?.affecting && !isdead(G.affecting) && (!isnpcmonkey(G.affecting) || G.affecting.client))
 				user.visible_message(SPAN_ALERT("[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!"))
-				return ..()
+				playsound(src, 'sound/machines/bweep.ogg', 40, TRUE, 0.7)
+				return
 
 			src.add_fingerprint(user)
 			actions.start(new /datum/action/bar/icon/put_in_reclaimer(G.affecting, src, G, 50), user)
 
 		boutput(user, SPAN_ALERT("This item is not suitable for [src]."))
-		return
 
 	update_icon(update_grindpaddle=FALSE)
 		if (src.status & BROKEN)
