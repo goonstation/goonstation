@@ -72,6 +72,9 @@ var/global/harddel_count = 0
 					else if(isatom(D))
 						var/atom/A = D
 						logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
+					else if (istype(D, /datum/listen_module/input))
+						var/datum/listen_module/input/input = D
+						logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type]. Listener parent: [input._debug_listener_parent]")
 					else
 						logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type]")
 #ifdef LOG_HARD_DELETE_REFERENCES

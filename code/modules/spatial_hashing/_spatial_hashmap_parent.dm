@@ -344,6 +344,10 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	if (T?.z && (T.z <= src.z_order))
 		var/x = ceil(T.x / src.cell_size)
 		var/y = ceil(T.y / src.cell_size)
+
+		if (!(entry in src.hashmap[T.z][y][x]))
+			logTheThing(LOG_DEBUG, null, "<b>HASHMAP \[[src.name]\]</b>: Failure to remove \[[entry]\], using tracked atom \[[tracked_atom]\] at ([T.x], [T.y], [T.z]), from hashmap cell ([x], [y], [T.z]). Entry not present in cell.")
+
 		src.hashmap[T.z][y][x] -= entry
 
 /**
