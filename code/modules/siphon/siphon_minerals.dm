@@ -261,6 +261,8 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
 
+//shear of 65 or higher should probably do Bad Things unless precisely set.
+
 /datum/siphon_mineral/telecrystal
 	name = "Telecrystal"
 	tick_req = 75
@@ -276,7 +278,6 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	shear_min = 70
 	shear_max = 85
 
-//shear of 65 or higher should probably do Bad Things unless precisely set.
 /datum/siphon_mineral/gold
 	name = "Gold"
 	tick_req = 50

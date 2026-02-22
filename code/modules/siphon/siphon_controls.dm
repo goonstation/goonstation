@@ -488,7 +488,17 @@
 	inexact parameters than others. If this value is listed,<br>
 	<strong>any</strong> resonance parameter may differ by<br>
 	the amount of the listed value without an<br>
-	adverse effect on extraction.<br>"}
+	adverse effect on extraction.<br>
+	<br>
+	<h3>VARIABLE PARAMETERS</h3>
+	Certain materials' extraction parameters do not remain<br>
+	stable indefinitely. For those materials for which this<br>
+	is the case, usage of a harmonic systems calibrator<br>
+	in the hand (not on any particular device) will<br>
+	perform a scan for cyclical harmonic fields in nearby<br>
+	siphon equipment; taking scans across multiple cycles<br>
+	and cross-referencing with the database may help you<br>
+	to identify which target the field correlates to.<br>"}
 
 	user.Browse(HTML, "window=siphonControl_\ref[src];title=Resonance Calibration Database;size=420x500;")
 	onclose(user, "siphonControl_\ref[src]")
@@ -510,17 +520,17 @@
 
 		if(mat.x_torque != null)
 			if(mat.hm_cycle && mat.hm_cycle.x_torque_max)
-				rollingtext += "<strong>VARIABLE LATERAL RESONANCE - USE CALIBRATOR</strong><br>"
+				rollingtext += "<font color=red><strong>VARIABLE LATERAL RESONANCE - USE CALIBRATOR</strong></font><br>"
 			else
 				rollingtext += "<strong>Target Lateral Resonance:</strong> [mat.x_torque]<br>"
 		if(mat.y_torque != null)
 			if(mat.hm_cycle && mat.hm_cycle.y_torque_max)
-				rollingtext += "<strong>VARIABLE VERTICAL RESONANCE - USE CALIBRATOR</strong><br>"
+				rollingtext += "<font color=red><strong>VARIABLE VERTICAL RESONANCE - USE CALIBRATOR</strong></font><br>"
 			else
 				rollingtext += "<strong>Target Vertical Resonance:</strong> [mat.y_torque]<br>"
 		if(mat.shear != null)
 			if(mat.hm_cycle && mat.hm_cycle.shear_max)
-				rollingtext += "<strong>VARIABLE RESONANT SHEAR - USE CALIBRATOR</strong><br>"
+				rollingtext += "<font color=red><strong>VARIABLE RESONANT SHEAR - USE CALIBRATOR</strong></font><br>"
 			else
 				rollingtext += "<strong>Target Resonant Shear:</strong> [mat.shear]<br>"
 

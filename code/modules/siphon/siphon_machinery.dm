@@ -17,39 +17,52 @@ TYPEINFO(/obj/item/device/calibrator)
 	g_amt = 20
 
 	attack_self(mob/user as mob)
-		if (ON_COOLDOWN(src, "harmonic_readout", 1.5 SECONDS))
+		if (ON_COOLDOWN(src, "harmonic_readout", 3 SECONDS))
 			boutput(user,SPAN_ALERT("[src]'s harmonic scan is recharging."))
+			user.playsound_local(src, 'sound/machines/click.ogg', 15, 0)
 			return
 		else
 			var/found_a_siphon = FALSE
 			for_by_tcl(a_siphon, /obj/machinery/siphon/core)
 				if (IN_RANGE(user,a_siphon,40))
+					if(!found_a_siphon) //only do this once, in case for some future reason there is multiple siphon
+						boutput(user,"<b>[src]</b> locates a compatible harmonic field and gathers cyclical data.")
+						user.playsound_local(src, 'sound/machines/scan2.ogg', 25, 0, 0, 0.6)
 					found_a_siphon = TRUE
 					var/cycles_identified = 0
-					boutput(user,SPAN_NOTICE("[src] locates a compatible harmonic field and gathers cyclical data."))
 					for (var/datum/siphon_mineral/M in a_siphon.cyclical_targets)
 						cycles_identified++
-						boutput(user,SPAN_NOTICE("<b>CYCLICAL FIELD READING [cycles_identified]"))
+						boutput(user,"<h4>Cyclical field reading <b>[cycles_identified]<b></h4>")
 
 						if(M.x_torque)
-							boutput(user,SPAN_NOTICE("Lateral resonance peaking at alignment <b>[M.x_torque]</b>"))
+							boutput(user,SPAN_NOTICE("* Lateral resonance peaking at alignment <b>[M.x_torque]</b>"))
 						else
-							boutput(user,SPAN_NOTICE("<b>No</b> lateral resonance component identified"))
+							boutput(user,SPAN_NOTICE("* <b>No</b> lateral resonance component identified"))
 
 						if(M.y_torque)
-							boutput(user,SPAN_NOTICE("Vertical resonance peaking at alignment <b>[M.y_torque]</b>"))
+							boutput(user,SPAN_NOTICE("* Vertical resonance peaking at alignment <b>[M.y_torque]</b>"))
 						else
-							boutput(user,SPAN_NOTICE("<b>No</b> vertical resonance component identified"))
+							boutput(user,SPAN_NOTICE("* <b>No</b> vertical resonance component identified"))
 
 						if(M.shear)
-							boutput(user,SPAN_NOTICE("Field shear response ideal at intensity of <b>[M.shear]</b>"))
+							boutput(user,SPAN_NOTICE("* Field shear response ideal at intensity of <b>[M.shear]</b>"))
 						else
-							boutput(user,SPAN_NOTICE("<b>No</b> shear response identified"))
+							boutput(user,SPAN_NOTICE("* <b>No</b> shear response identified"))
 
 						var/shift_delta = max((M.hm_cycle.last_shifted + M.hm_cycle.current_shift_length) - TIME,0)
-						boutput(user,SPAN_ALERT("Next shift <b>[shift_delta ? "expected in [shift_delta / SECONDS] seconds" : "IMMINENT"]</b>"))
+						if (shift_delta > 150 SECONDS)
+							var/adjusted_time = round(shift_delta / 600,1)
+							boutput(user,SPAN_ALERT("Next resonant shift expected in approximately <b>[adjusted_time] minutes</b>"))
+						else if(shift_delta > 0)
+							var/adjusted_time = round(shift_delta / 10,1)
+							boutput(user,SPAN_ALERT("Next resonant shift expected in approximately <b>[adjusted_time] seconds</b>"))
+						else
+							boutput(user,SPAN_ALERT("Next resonant shift <b>imminent</b>"))
 
-			if(!found_a_siphon) boutput(user,SPAN_ALERT("[src] can't detect a compatible harmonic field nearby."))
+			if(!found_a_siphon)
+				boutput(user,SPAN_ALERT("[src] can't detect a compatible harmonic field nearby."))
+				user.playsound_local(src, 'sound/machines/click.ogg', 15, 0)
+
 			return
 
 
