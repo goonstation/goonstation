@@ -72,7 +72,7 @@ TYPEINFO(/obj/item/motherboard)
 		if (prob(power * 2.5))
 			qdel(src)
 
-	attack_hand(mob/user)
+/obj/computer3frame/attack_hand(mob/user)
 		if(..() || !src.maint_accessible(user))return
 
 		src.add_dialog(user)
