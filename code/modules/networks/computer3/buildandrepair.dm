@@ -123,7 +123,7 @@ TYPEINFO(/obj/item/motherboard)
 
 		src.add_dialog(usr)
 
-		if(src.maint_accessible(usr) && can_act(usr))
+		if(src.maint_accessible(usr) && can_act(usr) && !usr.lying)
 			var/periphID = text2num(href_list["periphID"])
 			if (periphID > 0 && periphID <= length(peripherals))
 				var/obj/item/peripheral/peri = peripherals[periphID]
