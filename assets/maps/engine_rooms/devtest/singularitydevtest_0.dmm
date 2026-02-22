@@ -1,0 +1,725 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"c" = (
+/turf/simulated/floor,
+/area/station/devzone)
+"d" = (
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"f" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/obj/machinery/emitter{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"g" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/machinery/emitter,
+/turf/simulated/floor,
+/area/station/devzone)
+"h" = (
+/obj/cable/brown,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"i" = (
+/obj/machinery/the_singularitygen,
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"k" = (
+/obj/railing/red{
+	dir = 4
+	},
+/obj/railing/red{
+	dir = 8;
+	name = "reinforced staffie-resistant barrier"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"o" = (
+/obj/machinery/power/collector_control,
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable/brown,
+/turf/simulated/floor,
+/area/station/devzone)
+"p" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/brown,
+/obj/machinery/emitter{
+	dir = 1
+	},
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"r" = (
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"s" = (
+/obj/cable/brown{
+	icon_state = "1-8"
+	},
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/obj/cable/brown{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"w" = (
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"x" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
+/obj/cable/brown,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"y" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/obj/cable/brown{
+	icon_state = "2-4"
+	},
+/obj/cable/brown{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"z" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/obj/cable/brown,
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"A" = (
+/obj/railing/red{
+	dir = 1
+	},
+/obj/railing/red{
+	layer = 4
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"B" = (
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/obj/cable/brown{
+	icon_state = "2-4"
+	},
+/obj/cable/brown{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"C" = (
+/obj/machinery/power/collector_control,
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"D" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/obj/cable/brown{
+	icon_state = "1-8"
+	},
+/obj/cable/brown{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"H" = (
+/obj/railing/red{
+	dir = 8;
+	name = "reinforced staffie-resistant barrier"
+	},
+/obj/railing/red{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"J" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"K" = (
+/obj/railing/red{
+	dir = 1
+	},
+/obj/railing/red{
+	layer = 4
+	},
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"M" = (
+/obj/cable/brown{
+	icon_state = "1-8"
+	},
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"N" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
+/obj/machinery/emitter{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"O" = (
+/obj/machinery/power/collector_control,
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor,
+/area/station/devzone)
+"P" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"R" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/cable/brown,
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"S" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
+/obj/cable/brown,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"T" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	dir = null
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"U" = (
+/obj/railing/red,
+/obj/railing/red{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"V" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/engine/glow,
+/area/station/devzone)
+"W" = (
+/obj/cable/brown{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"X" = (
+/obj/machinery/power/collector_array,
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor,
+/area/station/devzone)
+"Y" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor,
+/area/station/devzone)
+"Z" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+Y
+c
+P
+T
+a
+"}
+(3,1,1) = {"
+a
+c
+f
+k
+k
+k
+k
+k
+r
+k
+k
+k
+k
+k
+f
+c
+X
+h
+a
+"}
+(4,1,1) = {"
+a
+g
+R
+J
+J
+J
+J
+J
+y
+J
+J
+J
+J
+J
+z
+p
+o
+M
+a
+"}
+(5,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+X
+M
+a
+"}
+(6,1,1) = {"
+a
+U
+d
+V
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+X
+M
+a
+"}
+(7,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+O
+M
+a
+"}
+(8,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+X
+M
+a
+"}
+(9,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+X
+M
+a
+"}
+(10,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+i
+w
+w
+w
+w
+w
+B
+K
+C
+M
+a
+"}
+(11,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+X
+M
+a
+"}
+(12,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+X
+M
+a
+"}
+(13,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+O
+s
+Z
+"}
+(14,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+X
+s
+Z
+"}
+(15,1,1) = {"
+a
+U
+d
+w
+w
+w
+w
+w
+d
+w
+w
+w
+w
+w
+d
+A
+X
+M
+a
+"}
+(16,1,1) = {"
+a
+g
+x
+J
+J
+J
+J
+J
+D
+J
+J
+J
+J
+J
+S
+p
+o
+M
+a
+"}
+(17,1,1) = {"
+a
+c
+N
+H
+H
+H
+H
+H
+r
+H
+H
+H
+H
+H
+N
+c
+X
+W
+a
+"}
+(18,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

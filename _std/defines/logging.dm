@@ -13,7 +13,6 @@
 #define LOG_GAME "game"				//! Diary only
 #define LOG_MHELP "mhelp"			//! Used for diary too
 #define LOG_OOC "ooc"				//! OOC
-#define LOG_PATHOLOGY "pathology"	//! Unused :^)
 #define LOG_PDAMSG "pdamsg"			//! PDA messaging
 #define LOG_SAY "say"				//! IC Speech
 #define LOG_SPEECH "speech"			//! Ingame logs only, say + whisper

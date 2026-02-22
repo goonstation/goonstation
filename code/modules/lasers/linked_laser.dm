@@ -1,7 +1,8 @@
 /obj/linked_laser
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/lasers/ptl_beam.dmi'
 	icon_state = "ptl_beam"
 	anchored = ANCHORED_ALWAYS
+	layer = ABOVE_OBJ_LAYER //layer over mirrors
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0
@@ -108,7 +109,7 @@
 
 ///Does something block the laser?
 /obj/linked_laser/proc/is_blocking(atom/movable/A)
-	if(!istype(A,/obj/window) && !istype(A,/obj/grille) && !ismob(A) && A.density)
+	if(!istypes(A, list(/obj/window, /obj/mesh/grille, /obj/machinery/containment_field)) && !ismob(A) && A.density)
 		return TRUE
 
 ///Does anything on a turf block the laser?
@@ -175,7 +176,13 @@
 			src.become_endpoint()
 
 ///Something is crossing into or changing density in the next turf in line
-/obj/linked_laser/proc/next_turf_updated()
+/obj/linked_laser/proc/next_turf_updated(loc, mover)
+	if (istype(mover, /obj/linked_laser)) //no, dont car
+		return
 	var/turf/next_turf = get_next_turf()
 	if (turf_check(next_turf))
-		src.extend()
+		src.sink?.exident(src)
+		//in case this is a sink, we need to wait for it to have finished moving before trying to incident on it again
+		//I know SPAWN(0) is cringe but do you really want to see the control logic I'd have to rig up to do this properly?
+		SPAWN(0)
+			src.extend()

@@ -610,7 +610,7 @@ file_save - Save file to local disk."}
 
 				var/datum/computer/file/loadedFile = parse_file_directory(toLoadName,src.holding_folder)
 
-				if (istype(loadedFile))
+				if (istype(loadedFile) && !loadedFile.dont_copy)
 					src.print_text("File loaded.")
 					src.temp_file = loadedFile
 					return
@@ -621,6 +621,9 @@ file_save - Save file to local disk."}
 			if("file_save")
 				if (!src.temp_file)
 					src.print_text("Error: No file to save!")
+					return
+				if (src.temp_file.dont_copy)
+					src.print_text("Error: File is copy-protected.")
 					return
 
 				var/toSaveName = "temp"

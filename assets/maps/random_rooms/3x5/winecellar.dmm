@@ -77,7 +77,7 @@
 /turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "T" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "W" = (

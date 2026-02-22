@@ -3,7 +3,7 @@
 	desc = "A hand-held genetic scanner able to compare a person's DNA with a database of known genes."
 	icon_state = "genetic_analyzer"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
@@ -12,7 +12,7 @@
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 /obj/item/device/analyzer/genetic/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	var/datum/computer/file/genetics_scan/GS = create_new_dna_sample_file(target)
+	var/datum/computer/file/genetics_scan/GS = create_new_dna_sample_file(target, visible_name=TRUE)
 	if (!GS)
 		return
 	user.visible_message(

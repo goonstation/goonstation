@@ -57,11 +57,11 @@
 	var/list/tele_areas = get_teleareas()
 	if (wiz_shuttle)
 		tele_areas |= wiz_shuttle.name
-		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas, theme = "wizard")
 		if(A == wiz_shuttle.name)
 			thearea = wiz_shuttle
 	else
-		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas, theme = "wizard")
 
 	if(abort_if_incapacitated && !can_act(src))
 		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
@@ -142,7 +142,7 @@
 				tele.doCooldown()
 
 		if (3) // Spell-specific stuff.
-			src.say("SCYAR NILA [uppertext(A)]", FALSE, spell.maptext_style, spell.maptext_colors)
+			src.say("SCYAR NILA [uppertext(A)]", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = spell.maptext_style, "maptext_animation_colours" = spell.maptext_colors))
 			if(ishuman(src))
 				var/mob/living/carbon/human/O = src
 				if(istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))

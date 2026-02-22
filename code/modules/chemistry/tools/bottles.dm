@@ -12,7 +12,7 @@
 	initial_volume = 30
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	object_flags = NO_GHOSTCRITTER
 	fluid_overlay_states = 6
 
@@ -250,6 +250,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "cyanide"
 
+/obj/item/reagent_containers/glass/bottle/cytotoxin
+	name = "cytotoxin bottle"
+	desc = "A small bottle of cytotoxin, a potent poison originating from lifeforms around the frontier system."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "cytotoxin"
+
 /obj/item/reagent_containers/glass/bottle/fluorosurfactant
 	name = "fluorosurfactant bottle"
 	desc = "A small bottle of fluorosurfactant, a chemical that foams rapidly when mixed with water."
@@ -291,6 +298,7 @@
 /obj/item/reagent_containers/glass/bottle/chemical/plastic
 	name = "plastic chemical bottle"
 	desc = "A 3D-printed reagent storage bottle."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()
@@ -392,6 +400,17 @@
 	fluid_overlay_states = 0
 	initial_reagents = "formaldehyde"
 
+/* ================================================== */
+/* -------------------- Forensic -------------------- */
+/* ================================================== */
+
+/obj/item/reagent_containers/glass/vial/silver_nitrate
+	name = "vial (silver nitrate)"
+	desc = "A small vial containing silver nitrate, used for revealing partial fingerprints."
+	amount_per_transfer_from_this = 1
+	splash_all_contents = FALSE
+	initial_reagents = "silver_nitrate"
+
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */
@@ -410,11 +429,13 @@
 /obj/item/reagent_containers/glass/bottle/holywater
 	name = "Holy Water"
 	desc = "A small bottle filled with blessed water."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	icon_state = "holy_water"
 	initial_reagents = "water_holy"
 	amount_per_transfer_from_this = 10
-	fluid_overlay_states = 0
+	fluid_overlay_states = 8
+	container_style = "holy_water"
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 /obj/item/reagent_containers/glass/bottle/cleaner
 	name = "cleaner bottle"
@@ -425,3 +446,4 @@
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10
 	fluid_overlay_states = 0
+	default_material = "plastic"

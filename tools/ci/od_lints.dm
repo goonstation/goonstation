@@ -5,7 +5,6 @@
 #pragma UndefineMissingDirective error
 #pragma DefinedMissingParen error
 #pragma ErrorDirective error
-#pragma WarningDirective error
 #pragma MiscapitalizedDirective error
 
 //2000-2999
@@ -23,6 +22,7 @@
 #pragma MissingInterpolatedExpression error
 #pragma AmbiguousResourcePath error
 #pragma SuspiciousSwitchCase error
+#pragma InvalidIndexOperation error
 
 //3000-3999
 #pragma EmptyBlock notice // Set to error when it supports {} blocks

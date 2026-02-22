@@ -61,6 +61,8 @@
 	var/list/stamps = null
 	var/list/form_fields = list()
 	var/field_counter = 1
+	///Some subtypes might want to hide the scrollbar
+	var/scrollbar = TRUE
 
 /obj/item/paper/New()
 	..()
@@ -94,30 +96,38 @@
 	else if (menuchoice == "Read")
 		src.examine(user)
 	else
-		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball", "Cigarette packet"))
+		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet"))
 		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
 			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
+			H.setMaterial(src.material)
 			user.put_in_hand_or_drop(H)
 		else if (fold == "Cigarette packet")
 			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
 			var/obj/item/cigpacket/paperpack/H = new()
+			H.setMaterial(src.material)
 			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
 			if (fold == "Paper plane")
 				user.show_text("You fold the paper into a plane! Neat.", "blue")
 				F = new /obj/item/paper/folded/plane(user)
+
+			else if (fold == "Paper crane")
+				user.show_text("You fold the paper into a crane! Neat.", "blue")
+				F = new /obj/item/paper/folded/crane(user)
 			else
 				user.show_text("You crumple the paper into a ball! Neat.", "blue")
 				F = new /obj/item/paper/folded/ball(user)
 			F.info = src.info
 			F.old_desc = src.desc
+			F.icon_old = src.icon
 			F.old_icon_state = src.icon_state
 			F.stamps = src.stamps
+			F.setMaterial(src.material)
 			user.put_in_hand_or_drop(F)
 
 		qdel(src)
@@ -223,6 +233,7 @@
 		"stamps" = src.stamps,
 		"stampable" = src.stampable,
 		"sealed" = src.sealed,
+		"scrollbar" = src.scrollbar,
 	)
 
 /obj/item/paper/ui_data(mob/user)
@@ -278,7 +289,7 @@
 		var/obj/item/pen/PEN = O
 		. += list(
 			"penFont" = PEN.font,
-			"penColor" = PEN.color,
+			"penColor" = PEN.font_color, // PEN.color uses the color of the object, this uses the font color set by object
 			"editMode" = PAPER_MODE_WRITING,
 			"isCrayon" = FALSE,
 			"stampClass" = "FAKE",
@@ -308,9 +319,6 @@
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
 		if(src.sealed)
 			boutput(user, SPAN_ALERT("You can't write on [src]."))
-			return
-		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
-			boutput(user, SPAN_ALERT("This sheet of paper is full!"))
 			return
 		ui_interact(user)
 		return
@@ -512,15 +520,14 @@
 	desc = "Fancy."
 	var/print_icon = 'icons/effects/sstv.dmi'
 	var/print_icon_state = "sstv_1"
+	sizex = 640 + 0
+	sizey = 480 + 32
+	scrollbar = FALSE
 
 	New()
 		..()
-		src.info = {"<IMG SRC="sstv_cachedimage.png">"}
+		src.info = "<img style='width: 100%; position: absolute; top: 0; left: 0' src='data:image/png;base64,[icon2base64(icon(print_icon,print_icon_state))]'>"
 		return
-
-	examine()
-		usr << browse_rsc(icon(print_icon,print_icon_state), "sstv_cachedimage.png")
-		. = ..()
 
 	satellite
 		print_icon_state = "sstv_2"
@@ -598,16 +605,18 @@
 	bin_type = /obj/item/sticker/postit/artifact_paper
 
 	update()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /obj/item/paper_bin/proc/update()
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	src.icon_state = "paper_bin[(src.amount_left || locate(bin_type, src)) ? "1" : null]"
 	return
 
 /obj/item/paper_bin/mouse_drop(mob/user as mob)
 	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
-		if (!user.put_in_hand(src))
+		if(src.loc == user)
+			user.drop_item(src) // Drop because `put_in_hand(src)` will keep an invisible paper bin in offhand otherwise. I have no idea why.
+		if(!user.put_in_hand(src))
 			return ..()
 
 /obj/item/paper_bin/attack_hand(mob/user)
@@ -616,18 +625,22 @@
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
-		if (src.amount_left >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
-			src.amount_left--
-			var/obj/item/P = new bin_type(src)
-			user.put_in_hand_or_drop(P)
-			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
-				var/obj/item/paper/PA = P
-				PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+		if (user) //Wire: Fix for Cannot read null.loc (user)
+			if (src.amount_left >= 1)
+				src.amount_left--
+				var/obj/item/P = new bin_type(src)
+				user.put_in_hand_or_drop(P)
+				if (rand(1,100) == 13 && istype(P, /obj/item/paper))
+					var/obj/item/paper/PA = P
+					PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+			else
+				return ..()
 	src.update()
 
 /obj/item/paper_bin/attack_self(mob/user as mob)
 	. = ..()
-	src.Attackhand(user)
+	if(src.amount_left > 0) // Dispenses paper when used in hand; something odd happens if there isn't any.
+		src.Attackhand(user)
 
 /obj/item/paper_bin/attackby(obj/item/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P, bin_type))
@@ -671,7 +684,6 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
 	item_state = "stamp"
-	flags = FPRINT | TABLEPASS
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 7
@@ -680,6 +692,7 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1
+	default_material = "synthrubber"
 	var/special_mode = null
 	var/is_reassignable = 1
 	var/assignment = null
@@ -756,6 +769,7 @@
 		name = "\improper captain's rubber stamp"
 		desc = "The Captain's rubber stamp for stamping important documents. Ooh, it's the really fancy National Notary 'Congressional' model with the fine ebony handle."
 		icon_state = "stamp-cap"
+		default_material = "synthrubber_green"
 		special_mode = "Captain"
 		is_reassignable = 0
 		assignment = "stamp-cap"
@@ -763,6 +777,7 @@
 		name = "\improper head of personnel's rubber stamp"
 		desc = "The Head of Personnel's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Continental' models with the kingwood handle."
 		icon_state = "stamp-hop"
+		default_material = "synthrubber_blue"
 		special_mode = "Head of Personnel"
 		is_reassignable = 0
 		assignment = "stamp-hop"
@@ -777,6 +792,7 @@
 		name = "\improper chief engineer's rubber stamp"
 		desc = "The Chief Engineer's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Mary' models with the ironwood handle."
 		icon_state = "stamp-ce"
+		default_material = "synthrubber_yellow"
 		special_mode = "Chief Engineer"
 		is_reassignable = 0
 		assignment = "stamp-ce"
@@ -784,6 +800,7 @@
 		name = "\improper medical director's rubber stamp"
 		desc = "The Medical Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Anne' models with the rosewood handle."
 		icon_state = "stamp-md"
+		default_material = "synthrubber_blue"
 		special_mode = "Medical Director"
 		is_reassignable = 0
 		assignment = "stamp-md"
@@ -791,6 +808,7 @@
 		name = "\improper research director's rubber stamp"
 		desc = "The Research Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. John' models with the purpleheart handle."
 		icon_state = "stamp-rd"
+		default_material = "synthrubber_purple"
 		special_mode = "Research Director"
 		is_reassignable = 0
 		assignment = "stamp-rd"
@@ -798,6 +816,7 @@
 		name = "\improper clown's rubber stamp"
 		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-honk"
+		default_material = "synthrubber_hotpink"
 		special_mode = "Clown"
 		is_reassignable = 0
 		assignment = "stamp-honk"
@@ -805,6 +824,7 @@
 		name = "\improper centcom executive rubber stamp"
 		desc = "Some bureaucrat from Centcom probably lost this. Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle?"
 		icon_state = "stamp-centcom"
+		default_material = "synthrubber_blue"
 		special_mode = "Centcom"
 		is_reassignable = 0
 		assignment = "stamp-centcom"
@@ -812,6 +832,7 @@
 		name = "\improper mime's rubber stamp"
 		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-mime"
+		default_material = "synthrubber_white"
 		special_mode = "Mime"
 		is_reassignable = 0
 		assignment = "stamp-mime"
@@ -819,6 +840,7 @@
 		name = "\improper chaplain's rubber stamp"
 		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the National Notary 'Chesapeake' model in varnished oak."
 		icon_state = "stamp-chap"
+		default_material = "synthrubber_black"
 		special_mode = "Chaplain"
 		is_reassignable = 0
 		assignment = "stamp-chap"
@@ -826,6 +848,7 @@
 		name = "\improper quartermaster's rubber stamp"
 		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on. A classic National Notary 'Eastport' model in oiled black walnut."
 		icon_state = "stamp-qm"
+		default_material = "synthrubber_yellow"
 		special_mode = "Quartermaster"
 		is_reassignable = 0
 		assignment = "stamp-qm"
@@ -868,6 +891,8 @@
 			src.UpdateOverlays(stamp_overlay, "stamps_[i % PAPER_MAX_STAMPS_OVERLAYS]")
 			i++
 		if(src.old_icon_state)
+			if(src.icon_old)
+				src.icon = icon_old
 			src.icon_state = src.old_icon_state
 		else
 			if(src.info)
@@ -880,7 +905,7 @@
 
 /obj/item/paper/folded/examine()
 	if (src.sealed)
-		return list(desc)
+		return list("This is \an [src.name].", desc)
 	else
 		return ..()
 
@@ -890,6 +915,12 @@
 	icon_state = "paperplane"
 	throw_speed = 1
 	throw_spin = 0
+
+/obj/item/paper/folded/crane
+	name = "paper crane"
+	desc = "If you fold a lot of these do you get a wish granted?"
+	icon_state = "papercrane"
+	throw_speed = 1
 
 /obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
 	if(src.throwing && src.sealed)
@@ -950,6 +981,7 @@
 	sealed = TRUE
 	two_handed = TRUE
 	info = ""
+	hitsound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	var/headline = ""
 	var/publisher = ""
 
@@ -962,10 +994,13 @@
 /obj/item/paper/newspaper/New()
 	. = ..()
 	// it picks a random set of info at new, then the printing press overrides it
-	src.publisher = pick_smart_string("newspaper.txt", "publisher")
+	if (!length(src.publisher))
+		src.publisher = pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher]"
-	src.generate_headline()
-	src.generate_article()
+	if (!length(src.headline))
+		src.generate_headline()
+	if (!length(src.info))
+		src.generate_article()
 	src.update_desc()
 
 /obj/item/paper/newspaper/pickup(mob/user)
@@ -1053,3 +1088,12 @@
 			if (9)
 				temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
 	src.info += temporary
+
+/obj/item/paper/newspaper/rolled/centcom_plasma
+	publisher = "Seneca Journal"
+	headline = "Nanotrasen denies responsibility for Seneca Lake plasma contamination"
+	info = {"
+		In a rare personal appearance, Nanotrasen CEO John Nanotrasen today categorically denied his company's involvement in the recent Seneca Lake plasma contamination scare.<br>
+		Levels of FAAE (commonly known as "plasma") in the lakewater have reached 500μg per liter according to an EPA source, prompting the agency to declare a substantial threat to public health.<br>
+		Nanotrasen is the only company in the Seneca area licensed to transport plasma, hundreds of kilograms of which are used in the fuelling of their inter-channel shuttle services every month.
+	"}

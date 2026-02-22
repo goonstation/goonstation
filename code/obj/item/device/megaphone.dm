@@ -12,11 +12,22 @@
 	throw_range = 10
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
+	HELP_MESSAGE_OVERRIDE("Only picks up sound in your <b>active hand</b>.")
 	var/maptext_size = 12 //how big in px it makes your text. lower numbers can make your text smaller
 	var/maptext_color = "#b0e8b3"
 	var/maptext_outline_color = "#043606"
 	/// Amount this modifies your speech loudness by, ranging from -1 to 2
 	var/loudness_mod = 1
+
+	pickup(mob/M)
+		. = ..()
+
+		M.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MEGAPHONE)
+
+	dropped(mob/M)
+		M.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MEGAPHONE)
+
+		. = ..()
 
 	emag_act(var/mob/user)
 		if(src.loudness_mod > 0)

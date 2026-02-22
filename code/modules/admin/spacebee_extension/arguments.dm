@@ -53,3 +53,7 @@
 	regex = new(@{"(?:.|\n)*"})
 	format_help(name)
 		return "[name]..."
+
+/// anything at all until the next space
+/datum/command_argument/until_space
+	regex = new(@{"[^ ]*"})

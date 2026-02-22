@@ -71,7 +71,7 @@
 
 
 /obj/item/gun/russianrevolver/fake357
-	name = "\improper Predator revolver"
+	name = "\improper Revolver" // Automatically copies the real gun name in New()
 	desc = "A slightly shabby looking combat revolver developed by somebody. Uses .357 caliber rounds."
 	force = MELEE_DMG_REVOLVER
 	shotsMax = 1 //griff
@@ -79,6 +79,7 @@
 	var/fakeshots = 0
 
 	New()
+		src.name = /obj/item/gun/kinetic/revolver::name
 		fakeshots = rand(2, 7)
 		set_current_projectile(new/datum/projectile/bullet/revolver_357)
 		..()

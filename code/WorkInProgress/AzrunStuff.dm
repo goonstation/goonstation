@@ -4,14 +4,21 @@
 	desc = "A magical saw-like device for unmaking things. Is that a soldering iron on the back?"
 	default_material = "miracle"
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/deconstructing)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+
+	pre_attackby(source, atom/target, mob/user)
 		if (!isobj(target))
 			return
-		if(istype(target, /obj/item/electronics/frame))
+		if (istype(target, /obj/item/electronics/frame))
 			var/obj/item/electronics/frame/F = target
 			F.deploy(user)
+			return ATTACK_PRE_DONT_ATTACK
 
-		finish_decon(target, user)
+		var/datum/component/deconstructing/decon_comp = src.GetComponent(/datum/component/deconstructing)
+		return decon_comp.finish_decon(target, user, src)
 
 /obj/item/paper/artemis_todo
 	icon = 'icons/obj/electronics.dmi';
@@ -225,6 +232,7 @@
 				boutput(src.owner,SPAN_ALERT("You feel something work its way into your body from \the [src]."))
 
 	on_death()
+		. = ..()
 		if(!online)
 			return
 		if(prob(80))
@@ -252,6 +260,7 @@
 	on_death()
 		if(!online)
 			return
+		. = ..()
 		var/atom/movable/P = locate(/obj/machinery/plantpot/bareplant) in src.owner
 
 		// Uhhh.. just one thanks, don't need a pew pew army growing out of someone
@@ -314,7 +323,7 @@
 /obj/gimmick_obj
 	var/list/gimmick_events
 	var/active_stage
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 
 	New()
 		..()
@@ -704,6 +713,15 @@
 				animate(A, color="#666666", time=10 SECONDS)
 			else
 				animate(A, color="#222222", time=10 SECONDS)
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					if( controller.current_color == "#222222" )
+						controller.manual_animate_colors(list("#666666"), list(10 SECONDS))
+					else
+						controller.manual_animate_colors(list("#222222"), list(10 SECONDS))
 
 	proc/lightning(fadeout=3 SECONDS, flash_color="#ccf")
 		var/obj/ambient/A = locate() in vis_contents
@@ -723,6 +741,20 @@
 			playsound(src, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 			SPAWN(fadeout + (1.5 SECONDS))
 				A.color = old_color
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					var/old_color = controller.current_color
+					var/first_flash_low = "#666666"
+					var/list/L1 = hex_to_rgb_list(old_color)
+					var/list/L2 = hex_to_rgb_list(flash_color)
+					if(!isnull(L1) && !isnull(L2))
+						first_flash_low = rgb(lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8))
+					color_shift_lights(list(flash_color, first_flash_low, flash_color, old_color), list(0.5, 0.75 SECONDS, 0.75, fadeout))
+					SPAWN(fadeout + (1.5 SECONDS))
+						controller.active = TRUE
 
 	proc/color_shift_lights(colors, durations)
 		var/obj/ambient/A = locate() in vis_contents
@@ -733,19 +765,25 @@
 					animate(A, color=colors[i], time=durations[i])
 				else
 					animate(color=colors[i], time=durations[i])
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					controller.manual_animate_colors(colors, durations)
 
 	proc/sunset()
-		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(0, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
+		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(5 SECONDS, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
 
 	proc/sunrise()
-		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
+		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(5 SECONDS, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
 
 	proc/set_color()
 		var/color = input(usr, "Please select ambient light color.", "Color Menu") as color
 		color_shift_lights(list(color), list(3 SECONDS))
 
 
-ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color)
+ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color, proc/lightning)
 
 /proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
 	var/list/nodes = list()
@@ -993,7 +1031,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "bp_security"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	inventory_counter_enabled = 1
 
@@ -1169,6 +1207,164 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 
 
+/obj/effect/status_area
+	name = "status area"
+	layer = EFFECTS_LAYER_BASE
+	var/status_effect = "time_slowed"
+	var/mob/source
+
+	New(turf/loc, mob/target)
+		. = ..()
+		if(target)
+			src.source = target
+
+	proc/check_movable(atom/movable/AM, crossed=TRUE)
+		. = TRUE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if(check_movable(AM, TRUE))
+			AM.changeStatus(status_effect, 20 SECONDS, src)
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		if(check_movable(AM, FALSE))
+			AM.delStatus(status_effect)
+
+/obj/effect/status_area/slow_globe
+	name = "temporal sphere"
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "shockwave"
+	pixel_x = -96
+	pixel_y = -96
+	bound_x = -64
+	bound_y = -64
+	bound_width = 160
+	bound_height = 160
+	status_effect = "time_slowed"
+	var/hue_shift = 0
+	var/sound = 'sound/effects/mag_forcewall.ogg'
+	var/pitch
+
+	New(turf/loc, mob/target)
+		. = ..()
+		if(hue_shift)
+			color = hsv_transform_color_matrix(hue_shift)
+		SafeScale(0.1,0.1)
+		SafeScaleAnim((10/1.4), (10/1.4), anim_time=2 SECONDS, anim_easing=ELASTIC_EASING)
+		SPAWN(2 SECONDS)
+			animate_wave(src, waves=5)
+		playsound(get_turf(src), sound, 25, 1, -1, pitch)
+
+	check_movable(atom/movable/AM, crossed)
+		if(crossed)
+			if(AM != src.source)
+				if(ismob(AM) || AM.throwing || istype(AM, /obj/projectile))
+					. = TRUE
+		else
+			if(ismob(AM) || AM.throwing || istype(AM, /obj/projectile))
+				if(!locate(/obj/effect/status_area/slow_globe) in obounds(AM,0))
+					. = TRUE
+
+
+	strong
+		status_effect = "time_slowed_plus"
+		hue_shift = 60
+
+	reversed
+		status_effect = "time_hasted"
+		hue_shift = 90
+		pitch = -1
+
+
+/datum/statusEffect/time_slowed
+	id = "time_slowed"
+	name = "Slowed"
+	desc = "You are slowed by a temporal anomoly.<br>Movement speed and action speed is reduced."
+	icon_state = "slowed"
+	unique = 1
+	var/howMuch = 10
+	exclusiveGroup = "temporal"
+	movement_modifier = new /datum/movement_modifier/status_slowed
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	move_triggered = TRUE
+	var/atom/status_source
+
+	onAdd(source)
+		. = ..()
+		if(source)
+			status_source = source
+
+		var/atom/movable/AM = owner
+		var/scale_factor = (howMuch/2)
+		if(howMuch<0)
+			scale_factor = -1/scale_factor
+
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + (0.5 SECONDS)
+			movement_modifier.additive_slowdown = howMuch
+
+		else if(istype(AM, /obj/projectile))
+			var/obj/projectile/B = AM
+			B.internal_speed = B.proj_data.projectile_speed / scale_factor
+			B.special_data["slowed"] = TRUE
+
+		if(istype(AM) && AM.throwing)
+			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
+			for(var/datum/thrown_thing/T in existing_throws)
+				T.speed /= scale_factor
+			AM.throw_speed /= scale_factor
+
+	onRemove()
+		. = ..()
+		var/atom/movable/AM = owner
+		var/scale_factor = (howMuch/2)
+		if(howMuch<0)
+			scale_factor = -1/scale_factor
+
+		if (ismob(owner))
+			var/mob/M = owner
+			var/atom/source = locate(/obj/effect/status_area/slow_globe) in obounds(M,0)
+			if(source)
+				M.changeStatus("time_slowed", 10 SECONDS, source)
+		else if(istype(AM, /obj/projectile))
+			var/obj/projectile/B = AM
+			if(B?.special_data && B.special_data["slowed"])
+				B.internal_speed *= scale_factor
+
+		if(istype(AM) && AM.throwing)
+			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
+			for(var/datum/thrown_thing/T in existing_throws)
+				T.speed *= scale_factor
+			AM.throw_speed *= scale_factor
+
+	onUpdate(timePassed)
+		. = ..()
+		if(status_source && QDELETED(status_source))
+			owner.delStatus(id)
+
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + ((howMuch/20) SECONDS)
+
+	move_trigger(mob/user, ev)
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + ((howMuch/20) SECONDS)
+
+	extra
+		name = "Sloooowwwwed"
+		id = "time_slowed_plus"
+		howMuch = 20
+
+	reversed
+		name = "Hastened"
+		id = "time_hasted"
+		howMuch = -5
+
+
+
 /obj/storage/crate/exosuit
 	name = "experimental crate"
 	desc = "A protective equipment case."
@@ -1199,6 +1395,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		..()
 
 	unequipped(var/mob/user)
+		user.remove_ability_holder(/datum/abilityHolder/dancing)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.hud)
@@ -1211,3 +1408,4 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	New(newLoc)
 		..()
 		new /mob/living/carbon/human/normal/assistant(newLoc)
+

@@ -37,17 +37,17 @@
 	else
 
 		dat += {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR>
-		<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR><HR>"}
+		<B>Scanned Card:</B> <A href='byond://?src=\ref[src];card=1'>([src.scan])</A><BR><HR>"}
 		if(src.scan != null)
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if(account)
 				dat += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
-		dat += {"<A href='?src=\ref[src];viewrequests=1'>View Requests</A><BR>
-		<A href='?src=\ref[src];order=1'>Request Items</A><BR>
-		<A href='?src=\ref[src];buypoints=1'>Contribute to Shipping Budget</A><BR>
-		<A href='?action=mach_close&window=computer'>Close</A>"}
-		//<A href='?src=\ref[src];vieworders=1'>View Approved Orders</A><BR><BR> This right here never worked anyway.
+		dat += {"<A href='byond://?src=\ref[src];viewrequests=1'>View Requests</A><BR>
+		<A href='byond://?src=\ref[src];order=1'>Request Items</A><BR>
+		<A href='byond://?src=\ref[src];buypoints=1'>Contribute to Shipping Budget</A><BR>
+		<A href='byond://?action=mach_close&window=computer'>Close</A>"}
+		//<A href='byond://?src=\ref[src];vieworders=1'>View Approved Orders</A><BR><BR> This right here never worked anyway.
 	user.Browse(dat, "title=Supply Request Console;window=computer_[src];size=575x450")
 	onclose(user, "computer_[src]")
 	return
@@ -78,7 +78,7 @@
 	for(var/S in shippingmarket.supply_requests)
 		var/datum/supply_order/SO = S
 		. += "[SO.object.name] requested by [SO.orderedby] from [SO.console_location].<BR>"
-	. += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+	. += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 /obj/machinery/computer/ordercomp/Topic(href, href_list)
 	if(..())
@@ -90,12 +90,14 @@
 	if (href_list["order"])
 		var/datum/db_record/account = null
 		if(src.scan) account = FindBankAccountByName(src.scan.registered)
-		src.temp = "<a name='top' id='top'></a><A href='?src=\ref[src];mainmenu=1'>Main Menu</A> • "
+		src.temp = "<a name='top' id='top'></a><A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A> • "
 		if(account)
 			src.temp += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		else
 			src.temp += "<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>"
 		src.temp += "<B>Please select the Supply Package you would like to request:</B><BR><BR>"
+		src.temp += search_snippet()
+		src.temp += "<BR><BR>"
 		src.temp += {"
 		<style>
 			table {border-collapse: collapse;}
@@ -111,10 +113,45 @@
 																						 1px 1px 0 #000;}
 		</style>
 		<script type="text/javascript">
-			// same-page anchor "a href=#id" links dont work in byond
-			function scroll_to_id(h) {
-				var top = document.getElementById(h).offsetTop;
-				window.scrollTo(0, top);
+			function scroll_to_id(id) {
+				var element = document.getElementById(id);
+				if (element) {
+					var elementTop = element.getBoundingClientRect().top;
+					var currentTop = window.pageYOffset || document.documentElement.scrollTop;
+					var targetTop = elementTop + currentTop;
+
+					// Smooth scroll polyfill for IE11
+					function smoothScrollTo(endX, endY, duration) {
+						var startX = window.scrollX || window.pageXOffset;
+						var startY = window.scrollY || window.pageYOffset;
+						var startTime = new Date().getTime();
+
+						function easeInOutQuad(t, b, c, d) {
+							t /= d / 2;
+							if (t < 1) return c / 2 * t * t + b;
+							t--;
+							return -c / 2 * (t * (t - 2) - 1) + b;
+						}
+
+						function scroll() {
+							var currentTime = new Date().getTime();
+							var time = Math.min(1, ((currentTime - startTime) / duration));
+							var timeFunction = easeInOutQuad(time, 0, 1, 1);
+							window.scrollTo(
+								Math.ceil((timeFunction * (endX - startX)) + startX),
+								Math.ceil((timeFunction * (endY - startY)) + startY)
+							);
+
+							if (Math.abs(window.pageYOffset - endY) > 1) {
+								requestAnimationFrame(scroll);
+							}
+						}
+
+						scroll();
+					}
+
+					smoothScrollTo(0, targetTop, 600); // 600ms for the smooth scroll duration
+				}
 			}
 		</script>
 		"}
@@ -132,7 +169,7 @@
 			for (var/datum/supply_packs/S in qm_supply_cache) //yes I know what this is doing, feel free to make it more perf-friendly
 				if(S.syndicate || S.hidden) continue
 				if (S.category == foundCategory)
-					buy_list += "<tr><td><a href='?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
+					buy_list += "<tr class='supply-package'><td><a href='byond://?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
 				LAGCHECK(LAG_LOW)
 
 			buy_list += "</table></div><a href='#' onclick='scroll_to_id(\"top\"); return false;' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>Back to top</a><hr>"
@@ -140,7 +177,7 @@
 
 		src.temp += "<BR><HR><BR>"
 		src.temp += buy_list
-		src.temp += "<br><A href='?src=\ref[src];mainmenu=1'>Main Menu</A><br>"
+		src.temp += "<br><A href='byond://?src=\ref[src];mainmenu=1'>Main Menu</A><br>"
 
 	else if (href_list["doorder"])
 		var/datum/db_record/account = null
@@ -167,6 +204,7 @@
 						O.address = account["pda_net_id"]
 					O.orderedby = usr.name
 					O.console_location = src.console_location
+					O.used_personal_funds = TRUE
 					var/obj/storage/S = O.create(usr)
 					shippingmarket.receive_crate(S)
 					logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -235,7 +273,7 @@
 					src.scan = null
 			else
 				src.temp = "There is no card scan to log out.<BR>"
-				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+				src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 	else if (href_list["buypoints"])
 
@@ -244,16 +282,16 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if (!account)
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
-							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 			else
 				src.temp = {"<B>Contribute to Shipping Budget</B><BR>
 							<B>Shipping Budget:</b> [wagesystem.shipping_budget] Credits<BR>
 							<B>Credits in Account:</B> [account["current_money"]] Credits<BR><HR>
-							<A href='?src=\ref[src];buy=1'>Make Transaction</A><BR>
-							<A href='?src=\ref[src];mainmenu=1'>Cancel Transfer</A>"}
+							<A href='byond://?src=\ref[src];buy=1'>Make Transaction</A><BR>
+							<A href='byond://?src=\ref[src];mainmenu=1'>Cancel Transfer</A>"}
 		else
 			src.temp = {"You need to swipe an ID card first!<BR>
-						<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
+						<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 
 	else if (href_list["buy"])
 		if (src.scan)
@@ -264,7 +302,7 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if (!account)
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
-							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 			var/transaction = input("How much?", "Shipping Budget", null, null)  as null|num
 			if (account["current_money"] >= transaction && (transaction > 0) && isnum_safe(transaction))
 				account["current_money"] -= transaction
@@ -272,16 +310,16 @@
 				src.temp = "Transaction successful. Thank you for your patronage.<BR>"
 				////// PDA NOTIFY/////
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [transaction] credits transfered to shipping budget from [src.scan.registered].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [transaction] credits transferred to shipping budget from [src.scan.registered].")
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////
-				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+				src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 			else
 				src.temp = {"<B>ERROR:</B> Insufficient funds. Purchase cancelled.<BR>
-							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 		else
 			src.temp = {"<B>ERROR:</B> Login removed mid-transaction. Purchase cancelled.<BR>
-							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 
 	else if (href_list["mainmenu"])
 		src.temp = null

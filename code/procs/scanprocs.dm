@@ -66,7 +66,6 @@
 	var/brain_data = null
 	// var/heart_data = null		//Moving this to organ_data for now. -kyle
 	var/reagent_data = null
-	var/pathogen_data = null
 	var/disease_data = null
 	var/implant_data = null
 	var/organ_data = null
@@ -119,10 +118,10 @@
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff++
 						continue
-					if (I.scan_category == "not_shown")
+					if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
 						continue
-					if (I.scan_category != "syndicate")
-						if (I.scan_category != "unknown")
+					if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
+						if (I.scan_category != IMPLANT_SCAN_CATEGORY_UNKNOWN)
 							implant_list[capitalize(I.name)]++
 						else
 							implant_list["Unknown implant"]++
@@ -148,21 +147,20 @@
 
 		if (ishuman)
 			var/mob/living/carbon/human/H = M
-			if (H.pathogens.len)
-				pathogen_data = SPAN_ALERT("Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.")
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					pathogen_data += "<br>&emsp;[SPAN_ALERT("Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].")]."
-					if (P.in_remission)
-						pathogen_data += "<br>&emsp;&emsp;[SPAN_ALERT("It appears to be in remission.")]."
 
 			if (H.get_organ("brain"))
-				if (H.get_brain_damage() >= 100)
+				if (H.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 					brain_data = SPAN_ALERT("Subject is braindead.")
-				else if (H.get_brain_damage() >= 60)
-					brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-				else if (H.get_brain_damage() >= 10)
-					brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+					brain_data = SPAN_ALERT("Severe brain damage detected. Subject unable to function.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
+					brain_data = SPAN_ALERT("Major brain damage detected. Impaired functioning present.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MODERATE)
+					brain_data = SPAN_ALERT("Moderate brain damage detected. Subject unable to function well.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
+					brain_data = SPAN_ALERT("Minor brain damage detected.")
+				else if (H.get_brain_damage() > 0)
+					brain_data = SPAN_ALERT("Brain synapse function may be disrupted.")
 			else
 				brain_data = SPAN_ALERT("Subject has no brain.")
 
@@ -225,11 +223,11 @@
 				reagent_data = SPAN_NOTICE("Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.")
 
 	if (!ishuman) // vOv
-		if (M.get_brain_damage() >= 100)
+		if (M.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 			brain_data = SPAN_ALERT("Subject is braindead.")
-		else if (M.get_brain_damage() >= 60)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 			brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-		else if (M.get_brain_damage() >= 10)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
 			brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
 
 	if (M.interesting)
@@ -248,7 +246,6 @@
 	[implant_data ? "<br>[implant_data]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
-	[pathogen_data ? "<br>[pathogen_data]" : null]\
 	[disease_data ? "[disease_data]" : null]\
 	[interesting_data ? "<br><i>Historical analysis:</i>[SPAN_NOTICE(" [interesting_data]")]" : null]\
 	"
@@ -259,7 +256,7 @@
 //takes string input, for name in organholder.organ_list and checks if the organholder has anything
 //obfuscate, if true then don't show the exact organ health amount. Minor damage, moderate damage, severe damage, critical damage
 /proc/organ_health_scan(var/input, var/mob/living/carbon/human/H, var/obfuscate = 0)
-	var/obj/item/organ/O = H.organHolder.organ_list[input]
+	var/obj/item/organ/O = H.organHolder?.organ_list[input]
 	if (istype(O))
 		var/damage = O.get_damage()
 		if (obfuscate)
@@ -341,7 +338,7 @@
 		return "<b class='alert'>ERROR: NO SUBJECT DETECTED</b>"
 	if (visible)
 		animate_scanning(M, "#9eee80")
-	if (!ishuman(M))
+	if (!M.has_genetics())
 		return "<b class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</b>"
 	var/mob/living/carbon/human/H = M
 	var/list/data = list()
@@ -372,11 +369,12 @@
 	else if (!length(GP.activeDnaKnown))
 		data += "-- None --"
 
-	if (length(H.cloner_defects.active_cloner_defects))
-		data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
-		for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
-			data += "<b class='alert'>[defect.name]</b>"
-			data += "<i class='alert'>[defect.desc]</i>"
+	if(istype(H))
+		if (length(H.cloner_defects.active_cloner_defects))
+			data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
+			for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
+				data += "<b class='alert'>[defect.name]</b>"
+				data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
 /// Returns the datacore general record, or null if none found
@@ -409,7 +407,7 @@
 		return
 
 	R["bioHolder.bloodType"] = M.bioHolder.bloodType
-	R["cdi_d"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
+	R["cdi"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
 	if (M.ailments.len)
 		R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
 	else
@@ -428,22 +426,6 @@
 	var/brute = round(M.get_brute_damage())
 
 	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
-
-
-// output a health pop-up overhead thing to the client
-/proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
-	if (C.client && !C.client.preferences?.flying_chat_hidden)
-
-		var/image/chat_maptext/chat_text = null
-		var/popup_text = scan_health_generate_text(M)
-
-		chat_text = make_chat_maptext(M, popup_text, force = 1)
-		if(chat_text)
-			chat_text.measure(C.client)
-			for(var/image/chat_maptext/I in C.chat_text.lines)
-				if(I != chat_text)
-					I.bump_up(chat_text.measured_height)
-			chat_text.show_to(C.client)
 
 /proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)
@@ -488,10 +470,16 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/F = A
 		reagents = F.group.reagents
+	else if (istype(A, /obj/item/assembly))
+		var/obj/item/assembly/checked_assembly = A
+		reagents = checked_assembly.get_first_component_reagents()
 	else if (istype(A, /obj/machinery/clonepod))
 		var/obj/machinery/clonepod/P = A
 		if(P.occupant)
 			reagents = P.occupant.reagents
+	else if (istype(A, /obj/fluid_pipe))
+		var/obj/fluid_pipe/P = A
+		reagents = P.network.reagents
 
 	if (reagents)
 		if (length(reagents.reagent_list))
@@ -530,192 +518,35 @@
 
 	return data
 
-// Should make it easier to maintain the detective's scanner and PDA program (Convair880).
-/proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0)
+/proc/get_ethanol_equivalent(mob/user, datum/reagents/R)
+	var/eth_eq = 0
+	var/should_we_output = FALSE //looks bad if we output this when it's just ethanol in there
+	if(!istype(R))
+		return
+	for (var/current_id in R.reagent_list)
+		var/datum/reagent/current_reagent = R.reagent_list[current_id]
+		if (istype(current_reagent, /datum/reagent/fooddrink/alcoholic))
+			var/datum/reagent/fooddrink/alcoholic/alch_reagent = current_reagent
+			eth_eq += alch_reagent.alch_strength * alch_reagent.volume
+			should_we_output = TRUE
+		if (current_reagent.id == "ethanol")
+			eth_eq += current_reagent.volume
+	if (should_we_output == FALSE)
+		eth_eq = 0
+	return eth_eq
+
+/proc/scan_forensic(var/atom/A as turf|obj|mob, visible = FALSE)
+	RETURN_TYPE(/datum/forensic_scan)
 	if (istype(A, /obj/ability_button)) // STOP THAT
 		return
-	var/fingerprint_data = null
-	var/blood_data = null
-	var/forensic_data = null
-	var/glove_data = null
-	var/contraband_data = null
-	var/interesting_data = null
-
 	if (!A)
 		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if(visible)
 		animate_scanning(A, "#b9d689")
+	var/datum/forensic_scan/scan = new(A)
+	return scan
 
-	if (ishuman(A))
-		var/mob/living/carbon/human/H = A
-
-		if (!isnull(H.gloves))
-			var/obj/item/clothing/gloves/WG = H.gloves
-			if (WG.glove_ID && !(WG.no_prints))
-				glove_data += "[WG.glove_ID] ([SPAN_NOTICE("[H]'s worn [WG.name]")])"
-			if (!WG.hide_prints)
-				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
-			else
-				fingerprint_data += "<br>[SPAN_NOTICE("Unable to scan [H]'s fingerprints.")]"
-		else
-			fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
-
-		if (H.gunshot_residue) // Left by firing a kinetic gun.
-			forensic_data += "<br>[SPAN_NOTICE("Gunshot residue found.")]"
-
-		if (H.implant && length(H.implant) > 0)
-			var/wounds = null
-			for (var/obj/item/implant/I in H.implant)
-				if (istype(I, /obj/item/implant/projectile))
-					wounds ++
-			if (wounds)
-				forensic_data += "<br>[SPAN_NOTICE("[wounds] gunshot [wounds == 1 ? "wound" : "wounds"] detected.")]"
-
-		if (H.fingerprints) // Left by grabbing or pulling people.
-			var/list/FFP = H:fingerprints
-			for(var/i in FFP)
-				fingerprint_data += "<br>[SPAN_NOTICE("Foreign fingerprint on [H]:")] [i]"
-
-		if (H.bioHolder.Uid) // For quick reference. Also, attacking somebody only makes their clothes bloody, not the mob (think naked dudes).
-			blood_data += "<br>[SPAN_NOTICE("[H]'s blood DNA:")] [H.bioHolder.Uid]"
-
-		if (H.blood_DNA && isnull(H.gloves)) // Don't magically detect blood through worn gloves.
-			var/list/BH = params2list(H:blood_DNA)
-			for(var/i in BH)
-				blood_data += "<br>[SPAN_NOTICE("Blood on [H]'s hands:")] [i]"
-
-		var/list/gear_to_check = list(H.head, H.wear_mask, H.w_uniform, H.wear_suit, H.belt, H.gloves, H.back)
-		for (var/obj/item/check in gear_to_check)
-			if (check)
-				var/list/BC
-				if (check.blood_DNA)
-					BC = params2list(check.blood_DNA)
-					for(var/i in BC)
-						blood_data += "<br>[SPAN_NOTICE("Blood on worn [check.name]:")] [i]"
-				/*var/trace_blood = check.get_forensic_trace("bDNA")
-				if (trace_blood)
-					BC = params2list(trace_blood)
-					for (var/i in BC)
-						blood_data += "<br>[SPAN_NOTICE("Blood trace on worn [check.name]:")] [i]"
-				*/
-
-		if (H.r_hand && H.r_hand.blood_DNA)
-			var/list/BIR = params2list(H.r_hand.blood_DNA)
-			for(var/i in BIR)
-				blood_data += "<br>[SPAN_NOTICE("Blood on held [H.r_hand.name]:")] [i]"
-
-		if (H.l_hand && H.l_hand.blood_DNA)
-			var/list/BIL = params2list(H.l_hand.blood_DNA)
-			for(var/i in BIL)
-				blood_data += "<br>[SPAN_NOTICE("Blood on held [H.l_hand.name]:")] [i]"
-
-	else
-
-		if (istype(A, /obj/item/parts/human_parts))
-			var/obj/item/parts/human_parts/H = A
-			if (H.original_DNA)
-				blood_data += "<br>[SPAN_NOTICE("[H]'s blood DNA:")] [H.original_DNA]"
-			if (istype(H, /obj/item/parts/human_parts/arm)) // has fringerpints
-				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.original_fprints]"
-
-		else if (istype(A, /obj/item/organ))
-			var/obj/item/organ/O = A
-			if (O.donor_DNA)
-				blood_data += "<br>[SPAN_NOTICE("[O]'s blood DNA:")] [O.donor_DNA]"
-
-		else if (istype(A, /obj/item/clothing/head/butt))
-			var/obj/item/clothing/head/butt/B = A
-			if (B.donor_DNA)
-				blood_data += "<br>[SPAN_NOTICE("[B]'s blood DNA:")] [B.donor_DNA]"
-
-		else if (isobj(A) && A.reagents && A.is_open_container() && A.reagents.has_reagent("blood"))
-			var/datum/reagent/blood/B = A.reagents.reagent_list["blood"]
-			if (B && istype(B.data, /datum/bioHolder))
-				var/datum/bioHolder/BH = B.data
-				if (BH.Uid)
-					blood_data += "<br>[SPAN_NOTICE("Blood DNA inside [A]:")] [BH.Uid]"
-
-		if (A.interesting)
-			if (istype(A, /obj))
-				interesting_data += "<br>[SPAN_NOTICE("[A.interesting]")]"
-			if (istype(A, /turf))
-				interesting_data += "<br>[SPAN_NOTICE("There seems to be more to [A] than meets the eye.")]"
-
-//		if (!A.fingerprints)
-			/*var/list/FP = params2list(A.get_forensic_trace("fprints"))
-			if (FP)
-				for (var/i in FP)
-					fingerprint_data += "<br>[SPAN_NOTICE("[i]")]"
-			else
-				*///fingerprint_data += "<br>[SPAN_NOTICE("Unable to locate any fingerprints.")]"
-//		else
-		if (A.fingerprints)
-			var/list/FP = A:fingerprints
-			for(var/i in FP)
-				fingerprint_data += "<br>[SPAN_NOTICE("[i]")]"
-
-//		if (!A.blood_DNA)
-			/*var/list/DNA = params2list(A.get_forensic_trace("bDNA"))
-			if (DNA)
-				for (var/i in DNA)
-					blood_data += "<br>[SPAN_NOTICE("[i]")]"
-			else
-				*///blood_data += "<br>[SPAN_NOTICE("Unable to locate any blood traces.")]"
-//		else
-		if (A.blood_DNA)
-			var/list/DNA = params2list(A:blood_DNA)
-			for(var/i in DNA)
-				blood_data += "<br>[SPAN_NOTICE("[i]")]"
-
-		if (isitem(A))
-			var/obj/item/I = A
-			var/contra = GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_CONTRABAND) + GET_ATOM_PROPERTY(I,PROP_MOVABLE_VISIBLE_GUNS)
-			if (contra)
-				contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
-
-		if (istype(A, /obj/item/clothing/gloves))
-			var/obj/item/clothing/gloves/G = A
-			if (G.glove_ID)
-				glove_data += "[G.glove_ID] [G.material_prints ? "([G.material_prints])" : null]"
-
-		if (istype(A, /obj))
-			var/obj/O = A
-			if(O.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [O]:")] [O.forensic_ID]"
-
-		if (istype(A, /turf/simulated/wall))
-			var/turf/simulated/wall/W = A
-			if (W.forensic_impacts && islist(W.forensic_impacts) && length(W.forensic_impacts))
-				for(var/i in W.forensic_impacts)
-					forensic_data += "<br>[SPAN_NOTICE("Forensic signature found:")] [i]"
-
-	if (!fingerprint_data) // Just in case, we'd always want to have a readout for these.
-		fingerprint_data = "<br>[SPAN_NOTICE("Unable to locate any fingerprints.")]"
-
-	if (!blood_data)
-		blood_data = "<br>[SPAN_NOTICE("Unable to locate any blood traces.")]"
-
-	// This was the least enjoyable part of the entire exercise. Formatting is nothing but a chore.
-	var/data = "--------------------------------<br>\
-	[SPAN_NOTICE("Forensic analysis of <b>[A]</b>")] [contraband_data ? "[contraband_data]" : null]<br>\
-	<br>\
-	<i>Isolated fingerprints:</i>[fingerprint_data]<br>\
-	<br>\
-	<i>Isolated blood samples:</i>[blood_data]<br>\
-	[forensic_data ? "<br><i>Additional forensic data:</i>[forensic_data]<br>" : null]\
-	[glove_data ? "<br><i>Material analysis:</i>[SPAN_NOTICE(" [glove_data]")]" : null]\
-	[interesting_data ? "<br><i>Energy signature analysis:</i>[SPAN_NOTICE(" [interesting_data]")]" : null]\
-	"
-
-	if (CHECK_LIQUID_CLICK(A))
-		var/turf/T = get_turf(A)
-		if (T.active_liquid)
-			data += scan_forensic(T.active_liquid, visible)
-		if (T.active_airborne_liquid)
-			data += scan_forensic(T.active_airborne_liquid, visible)
-
-	return data
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
 /proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0)
@@ -732,7 +563,7 @@
 	if(visible)
 		animate_scanning(A, "#00a0ff", alpha_hex = "32")
 
-	var/datum/gas_mixture/check_me = A.return_air()
+	var/datum/gas_mixture/check_me = A.return_air(direct = TRUE)
 	var/pressure = null
 	var/total_moles = null
 
@@ -770,9 +601,11 @@
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [round(check_me.temperature)] K<br>\
-			Volume: [check_me.volume] L<br>\
-			[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
+			Temperature: [round(check_me.temperature)] K<br>"
+			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
+			if (!istype(A, /obj/bubble))
+				data += "Volume: [check_me.volume] L<br>"
+			data +=	"[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf
@@ -787,7 +620,7 @@
 	return data
 
 // Yeah, another scan I made into a global proc (Convair880).
-/proc/scan_plant(var/atom/A as turf|obj, var/mob/user as mob, var/visible = 0)
+/proc/scan_plant(var/atom/A as turf|obj, var/mob/user as mob, var/visible = 0, var/show_gene_strain = TRUE)
 	if (!A || !user || !ismob(user))
 		return
 
@@ -838,7 +671,7 @@
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
 		return SPAN_ALERT("Cannot scan.")
 
-	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
+	HYPgeneticanalysis(user, A, P, DNA, show_gene_strain) // Just use the existing proc.
 	return
 
 /proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
@@ -869,3 +702,37 @@
 	record_prog.active2 = SR
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
+
+#define GRAVITY_SCAN_OUTPUT(x, y) ("\The [x] is currently experiencing [y/GFORCE_EARTH_GRAVITY]G.")
+
+/proc/scan_gravity(atom/target, visible=FALSE)
+	var/gforce = null
+	if (!target)
+		return
+
+	if(visible)
+		animate_scanning(target, "#b66393")
+
+	if (istype(target, /turf))
+		var/turf/T = target
+		gforce = T.get_gforce_current()
+	else if (istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		gforce = AM.gforce
+	switch (gforce)
+		if (null)
+			. = SPAN_ALERT("Unable to process gravity of target.")
+		if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
+			. = SPAN_ALERT(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
+			. = SPAN_SUCCESS(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
+			. = SPAN_NOTICE(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
+			. = SPAN_ALERT(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_MOB_HIGH_THRESHOLD to GFORCE_MOB_EXTREME_THRESHOLD)
+			. = SPAN_NOTICE(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_EARTH_GRAVITY to GFORCE_MOB_HIGH_THRESHOLD)
+			. = SPAN_MESSAGE(GRAVITY_SCAN_OUTPUT(target, gforce))
+
+#undef GRAVITY_SCAN_OUTPUT

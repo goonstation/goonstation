@@ -63,3 +63,12 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf/floor)
 		logTheThing(LOG_DEBUG, src, "[identify_object(src)] placed on unbreakable floor [identify_object(T)] at [src.x], [src.y], [src.z].")
 		return
 	T.break_tile()
+
+/obj/mapping_helper/turf/floor/darkener
+	name = "floor fade to black"
+	icon_state = "darkener"
+
+/obj/mapping_helper/turf/floor/darkener/do_on_turf()
+	T.opacity = TRUE
+	var/mutable_appearance/overlay = image('icons/effects/mapeditor.dmi', "darkener", dir=src.dir)
+	T.AddOverlays(overlay, "darkener")

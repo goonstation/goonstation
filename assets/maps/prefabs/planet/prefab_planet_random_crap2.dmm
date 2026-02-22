@@ -56,21 +56,21 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "L" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "M" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "N" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -81,7 +81,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater"
 	},

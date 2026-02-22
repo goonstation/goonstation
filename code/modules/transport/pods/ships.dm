@@ -19,15 +19,8 @@
 
 /obj/machinery/vehicle/recon/New()
 	..()
-	/////////Weapon Setup
-	src.m_w_system = new /obj/item/shipcomponent/mainweapon( src )
-	src.m_w_system.ship = src
-	src.components += src.m_w_system
-	src.m_w_system.activate()
-	////////Secondary System
-	src.sec_system = new /obj/item/shipcomponent/secondary_system/cloak( src )
-	src.sec_system.ship = src
-	src.components += src.sec_system
+	src.install_part(null, new /obj/item/shipcomponent/mainweapon(src), POD_PART_MAIN_WEAPON)
+	src.install_part(null, new /obj/item/shipcomponent/secondary_system/cloak(src), POD_PART_SECONDARY)
 	myhud.update_systems()
 	myhud.update_states()
 	return
@@ -42,9 +35,7 @@
 
 /obj/machinery/vehicle/cargo/New()
 	..()
-	src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
-	src.sec_system.ship = src
-	src.components += src.sec_system
+	src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
 	myhud.update_systems()
 	myhud.update_states()
 	return
@@ -64,13 +55,8 @@
 	New()
 		..()
 		name = "Flying Saucer"
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/UFO( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon/UFO( src )
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
-		src.m_w_system.activate()
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/UFO(src), POD_PART_SECONDARY)
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/UFO(src), POD_PART_MAIN_WEAPON)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -94,7 +80,7 @@
 	health = 125
 	maxhealth = 125
 	weapon_class = 1
-	speed = 0.9
+	speedmod = 1.11
 	var/image/damaged = null
 	var/busted = 0
 
@@ -106,10 +92,7 @@
 	New()
 		..()
 		//Cargo hold
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo/small( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
-
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo/small(src), POD_PART_SECONDARY)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -127,19 +110,13 @@
 
 ////////armed civ putt
 
-obj/machinery/vehicle/miniputt/pilot
+/obj/machinery/vehicle/miniputt/pilot
 	New()
 		. = ..()
-		src.com_system.deactivate()
-		qdel(src.engine)
-		qdel(src.com_system)
-		src.components -= src.engine
-		src.components -= src.com_system
-		src.engine = new /obj/item/shipcomponent/engine/zero(src)
-		src.engine.ship = src
-		src.components += src.engine
-		src.engine.activate()
-		src.com_system = null
+		src.delete_part(POD_PART_COMMS)
+		src.delete_part(POD_PART_ENGINE)
+		src.install_part(null, new /obj/item/shipcomponent/engine/zero(src), POD_PART_ENGINE, TRUE)
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/bad_mining(src), POD_PART_MAIN_WEAPON, FALSE)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -148,10 +125,7 @@ obj/machinery/vehicle/miniputt/pilot
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
-
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon(src), POD_PART_MAIN_WEAPON)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -168,13 +142,8 @@ obj/machinery/vehicle/miniputt/pilot
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
-		src.m_w_system.ship = src
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
-		src.lock.ship = src
-		src.components += src.m_w_system
-		src.components += src.lock
-
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon(src), POD_PART_MAIN_WEAPON)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -186,17 +155,15 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 250
 	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 0.8
+	speedmod = 1.25
 	acid_damage_multiplier = 0
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
-		src.lock.ship = src
-		src.components += src.lock
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -225,7 +192,7 @@ obj/machinery/vehicle/miniputt/pilot
 	health = 250
 	maxhealth = 250
 	armor_score_multiplier = 0.7
-	speed = 0.8
+	speedmod = 1.25
 
 	security
 		init_comms_type = /obj/item/shipcomponent/communications/security
@@ -242,9 +209,7 @@ obj/machinery/vehicle/miniputt/pilot
 
 	New()
 		..()
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon/russian(src)
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/russian(src), POD_PART_MAIN_WEAPON)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -256,15 +221,13 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 0.8
 	health = 275
 	maxhealth = 275
-	speed = 1.3
+	speedmod = 0.77
 	desc = "A smaller version of the I-class industrial pod, the IndyPutt is useful for emergency repair work and small-scale mining operations."
 
 	armed
 		New()
 			..()
-			src.m_w_system = new /obj/item/shipcomponent/mainweapon/foamer(src)
-			src.m_w_system.ship = src
-			src.components += src.m_w_system
+			src.install_part(null, new /obj/item/shipcomponent/mainweapon/foamer(src), POD_PART_MAIN_WEAPON)
 			myhud.update_systems()
 			myhud.update_states()
 			return
@@ -276,7 +239,7 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 1.7
 	health = 400
 	maxhealth = 400
-	speed = 1
+	speedmod = 1
 	desc = "A smaller version of the experimental Y-series of pods."
 
 ////////gold putt
@@ -284,7 +247,7 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "PyriPutt-"
 	icon_state = "putt_gold"
 	armor_score_multiplier = 0.6
-	speed = 0.2
+	speedmod = 5
 	desc = "A light, high-speed MiniPutt with a gold-plated armor installed. Who the hell has this kind of money and this little sense?"
 
 ////////strange putt
@@ -304,7 +267,7 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "putt_raceBlue"
 	health = 150
 	maxhealth = 150
-	speed = 0.8
+	speedmod = 1.25
 	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/miniputt/nt_robust
@@ -314,7 +277,7 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "putt_nt_robust"
 	health = 350
 	maxhealth = 350
-	speed = 0.6
+	speedmod = 1.67
 	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/miniputt/sy_light
@@ -324,7 +287,7 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "putt_raceRed_alt"
 	health = 150
 	maxhealth = 150
-	speed = 0.8
+	speedmod = 1.25
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 /obj/machinery/vehicle/miniputt/sy_robust
@@ -334,7 +297,7 @@ obj/machinery/vehicle/miniputt/pilot
 	icon_state = "putt_sy_robust"
 	health = 350
 	maxhealth = 350
-	speed = 0.6
+	speedmod = 1.67
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 //pod wars end//
 
@@ -409,8 +372,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 		var/obj/O = new /obj/structure/vehicleframe/puttframe( get_turf(user) )
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		qdel(src)
 
 /obj/item/sub/frame_box
@@ -423,8 +385,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		qdel(src)
 
 /obj/structure/vehicleframe/puttframe
@@ -496,46 +457,39 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	var/obj/O
 	if (stage == 10)
 		O = new src.control_type( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		stage -= 2
 	if (stage == 9)
 		stage-- // no parts involved here, this construction step is welding the exterior
 	if (stage == 8)
 		O = new src.armor_type( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
 			src.removeMaterial()
 		stage--
 	if (stage == 7)
 		O = new src.engine_type( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		stage--
 	if (stage == 6)
 		var/obj/item/sheet/steel/M = new ( get_turf(src) )
 		M.amount = src.metal_amt
-		M.fingerprints = src.fingerprints
-		M.fingerprints_full = src.fingerprints_full
+		M.forensic_holder = src.forensic_holder
 		stage--
 	if (stage == 5)
 		O = new src.boards_type( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		stage--
 	if (stage == 4)
 		var/obj/item/cable_coil/cut/C = new ( get_turf(src) )
 		C.amount = src.cable_amt
-		C.fingerprints = src.fingerprints
-		C.fingerprints_full = src.fingerprints_full
+		C.forensic_holder = src.forensic_holder
 		// all other steps were tool applications, no more parts to create
 
 	O = new src.box_type( get_turf(src) )
 	logTheThing(LOG_STATION, usr, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
-	O.fingerprints = src.fingerprints
-	O.fingerprints_full = src.fingerprints_full
+	O.forensic_holder = src.forensic_holder
 	qdel(src)
 
 /*-----------------------------*/
@@ -724,6 +678,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
 
 				var/obj/machinery/vehicle/V = new vehicle_type( src.loc )
+				V.forensic_holder = src.forensic_holder
 				if (src.armor_type == /obj/item/podarmor/armor_custom)
 					V.name = src.vehicle_name
 					V.setMaterial(src.material)
@@ -749,13 +704,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /obj/machinery/vehicle/pod_civ/New()
 	..()
-	src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
-	src.sec_system.ship = src
-	src.components += src.sec_system
-	qdel(src.lights)
-	src.lights = new /obj/item/shipcomponent/pod_lights/pod_2x2
-	src.lights.ship = src
-	src.components += src.lights
+	src.delete_part(POD_PART_LIGHTS)
+	src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
+	src.install_part(null, new /obj/item/shipcomponent/pod_lights/pod_2x2(src), POD_PART_LIGHTS)
 	src.pixel_x = -16
 	src.pixel_y = -16
 	myhud.update_systems()
@@ -814,15 +765,19 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	bound_height = 64
 	view_offset_x = 16
 	view_offset_y = 16
+	speedmod = 0.9
+	allow_muzzle_flash = FALSE
 	//luminosity = 5 // will help with space exploration
 	var/maxboom = 0
 
 	onMaterialChanged()
+		if (src.material)
+			src.speedmod /= (1 / (1 - (src.material.getProperty("electrical") - 5) / 15))
 		..()
 		if(istype(src.material))
 			src.maxhealth = max(75, src.material.getProperty("density") * 40)
 			src.health = maxhealth
-			src.speed = 1 - (src.material.getProperty("electrical") - 5) / 15
+			src.speedmod *= (1 / 1 - (src.material.getProperty("electrical") - 5) / 15)
 		return
 
 	attackby(obj/item/W, mob/living/user)
@@ -832,13 +787,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 	New()
 		..()
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
-		qdel(src.lights)
-		src.lights = new /obj/item/shipcomponent/pod_lights/pod_2x2
-		src.lights.ship = src
-		src.components += src.lights
+		src.delete_part(POD_PART_LIGHTS)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
+		src.install_part(null, new /obj/item/shipcomponent/pod_lights/pod_2x2(src), POD_PART_LIGHTS)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -846,7 +797,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	AmmoPerShot()
 		return 2
 
-	ShootProjectiles(var/mob/user, var/datum/projectile/PROJ, var/shoot_dir)
+	create_projectile(atom/proj_start, mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
 		var/H = (shoot_dir & 3) ? 1 : 0
 		var/V = (shoot_dir & 12) ? 1 : 0
 
@@ -930,7 +881,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				maxboom = 0
 		maxboom = max(severity, maxboom)
 
-
+	install_part(var/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE)
+		if (!part.large_pod_compatible)
+			boutput(user, SPAN_ALERT("This part isn't compatible with pods of this size!"))
+			return
+		return ..()
 
 /obj/machinery/vehicle/pod_smooth/light // standard civilian pods
 	name = "Pod C-"
@@ -944,7 +899,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	desc = "A light, high-speed vehicle pod often used by underground pod racing clubs and people with more money than sense."
 	icon_state = "pod_gold"
 	armor_score_multiplier = 0.4
-	speed = 0.3
+	speedmod = 3.33
 
 /obj/machinery/vehicle/pod_smooth/heavy // pods made with reinforced armor
 	name = "Pod T-"
@@ -953,7 +908,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_mil"
 	health = 500
 	maxhealth = 500
-	speed = 0.9
+	speedmod = 1.11
 
 	security
 		init_comms_type = /obj/item/shipcomponent/communications/security
@@ -965,9 +920,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_synd"
 	health = 500
 	maxhealth = 500
-	speed = 0.9
+	speedmod = 1.11
 	acid_damage_multiplier = 0
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
@@ -983,9 +938,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		..()
 		myhud.update_systems()
 		myhud.update_states()
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
-		src.lock.ship = src
-		src.components += src.lock
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -1007,7 +960,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_pre"
 	health = 800
 	maxhealth = 800
-	speed = 1.2
+	speedmod = 0.83
 
 /obj/machinery/vehicle/pod_smooth/industrial
 	name = "Pod I-"
@@ -1016,7 +969,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_industrial"
 	health = 550
 	maxhealth = 550
-	speed = 1.5
+	speedmod = 0.67
 	capacity = 4
 
 /obj/machinery/vehicle/pod_smooth/industrial/nadir
@@ -1024,12 +977,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	New()
 		..()
 		name += "[pick(" (The Orca)"," (Sea Pig)"," (The Iso-Pod)")]"
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon/rockdrills(src)
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/rockdrills(src), POD_PART_MAIN_WEAPON)
 		myhud.update_systems()
 		myhud.update_states()
-		src.overlays += image('icons/effects/64x64.dmi', "[src.m_w_system.appearanceString]")
 		return
 
 //pod wars ones//
@@ -1040,8 +990,8 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_raceBlue"
 	health = 250
 	maxhealth = 250
-	speed = 0.9
-	init_comms_type = /obj/item/shipcomponent/communications
+	speedmod = 1.11
+	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1050,7 +1000,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_nt_robust"
 	health = 500
 	maxhealth = 500
-	speed = 0.8
+	speedmod = 1.25
 	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/sy_light
@@ -1060,7 +1010,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_raceRed"
 	health = 250
 	maxhealth = 250
-	speed = 0.9
+	speedmod = 1.11
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 /obj/machinery/vehicle/pod_smooth/sy_robust
@@ -1070,7 +1020,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "pod_sy_robust"
 	health = 500
 	maxhealth = 500
-	speed = 0.8
+	speedmod = 1.25
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 //pod wars end//
 
@@ -1394,8 +1344,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
 			logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
-			O.fingerprints = src.fingerprints
-			O.fingerprints_full = src.fingerprints_full
+			O.forensic_holder = src.forensic_holder
 			qdel(src)
 
 /obj/item/pod/paintjob
@@ -1450,7 +1399,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	health = 60
 	maxhealth = 60
 	weapon_class = 1
-	speed = 5
+	speedmod = 0.2
 	var/fail_type = 0
 	var/launched = 0
 	var/steps_moved = 0
@@ -1460,12 +1409,8 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 
 	New()
 		. = ..()
-		src.components -= src.engine
-		qdel(src.engine)
-		src.engine = new /obj/item/shipcomponent/engine/escape(src)
-		src.components += src.engine
-		src.engine.ship = src
-		src.engine.activate()
+		src.delete_part(POD_PART_ENGINE)
+		src.install_part(null, new /obj/item/shipcomponent/engine/escape(src), POD_PART_ENGINE, TRUE)
 
 	finish_board_pod(var/mob/boarder)
 		..()
@@ -1495,7 +1440,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					explosion(src, src.loc, 1, 1, 2, 3)
 					break
 				steps_moved++
-				if(prob((steps_moved-7) * 4 * (1 - SHUTTLE_PERCENT_FROM_STATION)) && !succeeding) // failure becomes more likely as the shuttle gets farther
+				if(prob((steps_moved-7) * 4 * (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT ? (1 - SHUTTLE_PERCENT_FROM_STATION) : 1)) && !succeeding) // failure becomes more likely as the shuttle gets farther
 					fail()
 				if (prob((steps_moved-7) * 6 * SHUTTLE_PERCENT_FROM_STATION))
 					succeed()

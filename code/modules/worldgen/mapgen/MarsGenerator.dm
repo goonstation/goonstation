@@ -138,10 +138,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check(flags)
 
 /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
@@ -183,7 +180,7 @@
 	stone_color = "#c96433"
 	replace_type = /turf/unsimulated/floor/plating/asteroid/mars
 
-	destroy_asteroid(var/dropOre=1)
+	destroy_asteroid(var/dropOre=1, var/mob/user)
 		var/image/ambient_light = src.GetOverlayImage("ambient")
 		var/image/weather = src.GetOverlayImage("weather")
 		..()

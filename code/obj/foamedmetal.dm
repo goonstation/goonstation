@@ -9,8 +9,9 @@
 	anchored = ANCHORED
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
-	flags = FPRINT | CONDUCT | USEDELAY
+	flags = CONDUCT | USEDELAY
 	event_handler_flags = USE_FLUID_ENTER
+	provides_grip = TRUE
 	var/metal = 1		// 1=aluminium, 2=iron
 	gas_impermeable = TRUE
 

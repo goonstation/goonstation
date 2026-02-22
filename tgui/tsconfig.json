@@ -9,13 +9,20 @@
     "jsx": "preserve",
     "lib": ["DOM", "DOM.Iterable", "ESNext", "ScriptHost"],
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "noEmit": true,
+    "noFallthroughCasesInSwitch": true, // |GOONSTATION-ADD|
+    "noImplicitThis": true, // |GOONSTATION-ADD|
+    // "noUncheckedIndexedAccess": true, // |GOONSTATION-ADD| TODO: enable
+    // "noUnusedLocals": true, // |GOONSTATION-ADD| TODO: enable
+    // "noUnusedParameters": true, // |GOONSTATION-ADD| TODO: enable
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    //"strictNullChecks": true,
-    "target": "ES3"
+    "strictBindCallApply": true, // |GOONSTATION-ADD|
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true, // |GOONSTATION-ADD|
+    "target": "ESNext"
   },
   "include": ["./*.d.ts", "./packages"]
 }

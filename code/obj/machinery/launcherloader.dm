@@ -44,11 +44,11 @@
 	proc/activate()
 		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
-		flick("launcher_loader_1",src)
+		FLICK("launcher_loader_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
-				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
+				if(AM.anchored || AM == src || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || isflockmob(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
 					AM.delivery_destination = "Disposals"
 				step(AM,src.dir)
@@ -82,17 +82,22 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isobserver(M) || isintangible(M) || isflockmob(M)) continue
+				if(M == src || M.anchored || HAS_ATOM_PROPERTY(M, PROP_ATOM_FLOATING) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
+		if (A.anchored || HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(A) || istypes(A, list(/obj/projectile, /obj/item/dummy))) return
 		return_if_overlay_or_effect(A)
 		activate()
 
+	attack_hand(mob/user)
+		. = ..()
+		if(.)
+			return
+		activate()
 
 /obj/machinery/launcher_loader/north
 	dir = NORTH
@@ -128,7 +133,7 @@
 
 	proc/get_next_dir()
 		for(var/atom/movable/AM in src.loc)
-			if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
+			if(AM.anchored || AM == src || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || isflockmob(AM)) continue
 			if(AM.delivery_destination)
 				if(destinations.Find(AM.delivery_destination))
 					return destinations[AM.delivery_destination]
@@ -148,13 +153,14 @@
 
 		operating = 1
 
-		flick("amdl_1",src)
+		FLICK("amdl_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
-				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2) || isflockmob(AM2)) continue
+				if(AM2.anchored || AM2 == src || HAS_ATOM_PROPERTY(AM2, PROP_ATOM_FLOATING) || isflockmob(AM2)) continue
 				step(AM2,src.dir)
+				// AM2?.inertia_value = 0 // slides, doesn't push
 
 			driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
 
@@ -177,14 +183,14 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isobserver(M) || isintangible(M) || isflockmob(M)) continue
+				if(M == src || M.anchored || HAS_ATOM_PROPERTY(M, PROP_ATOM_FLOATING) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
+		if (HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(A) || istypes(A, list(/obj/projectile, /obj/item/dummy))) return
 
 		if (!trigger_when_no_match)
 			var/atom/movable/AM = A
@@ -300,16 +306,31 @@
 /obj/machinery/cargo_router/oshan_north
 	trigger_when_no_match = 0
 	New()
-		destinations = list("North" = NORTH, "South" = EAST)
+		destinations = list("North Carousel" = NORTH, "South Carousel" = EAST, "East Carousel" = EAST, "West Carousel" = EAST)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/oshan_south
 	trigger_when_no_match = 0
 	New()
-		destinations = list("South" = SOUTH, "North" = WEST)
+		destinations = list("South Carousel" = SOUTH, "North Carousel" = WEST, "East Carousel" = WEST, "West Carousel" = WEST)
 		default_direction = SOUTH
 		..()
+
+/obj/machinery/cargo_router/oshan_east
+	trigger_when_no_match = 0
+	New()
+		destinations = list("East Carousel" = EAST, "North Carousel" = SOUTH, "South Carousel" = SOUTH, "West Carousel" = SOUTH)
+		default_direction = EAST
+		..()
+
+/obj/machinery/cargo_router/oshan_west
+	trigger_when_no_match = 0
+	New()
+		destinations = list("West Carousel" = WEST, "North Carousel" = NORTH, "South Carousel" = NORTH, "East Carousel" = NORTH)
+		default_direction = WEST
+		..()
+
 
 /obj/machinery/computer/barcode
 	name = "barcode computer"
@@ -442,6 +463,90 @@
 	desc = "Used to print barcode stickers for the off-station merchants."
 	destinations = list("Shipping Market")
 
+/// Silicon-friendly portable barcoder. Does not allow for ID scanning.
+/obj/item/portable_barcoder
+	name = "portable barcoder"
+	desc = "Used to print and attach barcode stickers for shipping."
+	icon = 'icons/obj/delivery.dmi'
+	icon_state = "handheld_barcoder" // TODO: better sprite
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "labeler"
+	/// key-value store of destinations
+	var/list/destinations = list()
+	/// Currently selected destination target
+	var/current_destination_target
+
+	HELP_MESSAGE_OVERRIDE("Use in-hand to set the target destination. Click on an object or mob to apply the barcode.")
+
+/obj/item/portable_barcoder/New()
+	. = ..()
+	START_TRACKING
+	src.update_destinations()
+
+/obj/item/portable_barcoder/disposing()
+	. = ..()
+	STOP_TRACKING
+
+/obj/item/portable_barcoder/proc/update_destinations()
+	src.destinations = list()
+	for (var/destination in global.map_settings.shipping_destinations)
+		src.destinations[destination] = destination
+
+	for (var/datum/trader/T in shippingmarket.active_traders)
+		if (T.hidden)
+			continue
+		src.destinations[T.name] = T.crate_tag
+
+	src.destinations["Third Party"] = "REQ-THIRDPARTY"
+	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+		src.destinations[RC.name] = RC.req_code
+
+/obj/item/portable_barcoder/attack_self(mob/user)
+	src.select_destination(user)
+
+/obj/item/portable_barcoder/attack(mob/target, mob/user, def_zone, is_special, params)
+	return
+
+/obj/item/portable_barcoder/afterattack(atom/target, mob/user, reach, params)
+	if (!istype(target) || isturf(target)) return
+	if ((target.plane == PLANE_HUD && !isitem(target)) || isgrab(target)) return
+	if (BOUNDS_DIST(get_turf(target), get_turf(src)) > 0) return
+	if (target == src.loc && target != user) return
+
+	if (!src.current_destination_target)
+		src.select_destination()
+		if (!src.current_destination_target)
+			boutput(user, SPAN_ALERT("You must select a destination before attaching a barcode!"))
+			return
+	if (ON_COOLDOWN(src, "barcode_print", 1.75 SECONDS))
+		boutput(user, SPAN_NOTICE("\The [src] is spooling a new barcode!"))
+		return
+
+	var/obj/item/sticker/barcode/barcode = new /obj/item/sticker/barcode
+	barcode.name = "Barcode Sticker ([src.current_destination_target])"
+	barcode.destination = src.current_destination_target
+	playsound(src.loc, 'sound/machines/printer_cargo.ogg', 75, 0)
+
+	target:delivery_destination = src.current_destination_target
+	user.visible_message(SPAN_NOTICE("[user] sticks a [barcode.name] on [target]."))
+
+	if(istype(target, /obj/storage/crate))
+		var/obj/storage/crate/C = target
+		C.UpdateIcon()
+	else
+		var/pox = src.pixel_x
+		var/poy = src.pixel_y
+		if (params)
+			if (islist(params) && params["icon-y"] && params["icon-x"])
+				pox = text2num(params["icon-x"]) - 16
+				poy = text2num(params["icon-y"]) - 16
+		barcode.stick_to(target, pox, poy, user)
+
+/obj/item/portable_barcoder/proc/select_destination(mob/user)
+	var/choice = tgui_input_list(user, "Choose a routing destination", "Select Destination", src.destinations)
+	if (!choice) return
+	src.current_destination_target = src.destinations[choice]
+
 /obj/item/sticker/barcode
 	name = "barcode sticker"
 	desc = "A barcode sticker used in the cargo routing system."
@@ -501,14 +606,118 @@
 
 		return
 
-	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
-				BOUNDS_DIST(get_turf(over_object), get_turf(src)) > 0 || \
-				BOUNDS_DIST(usr, get_turf(over_object)) > 0 ||  \
-				BOUNDS_DIST(usr, src) > 0 || \
-				over_object == usr || !istype(over_object, /atom/movable))
-			return ..()
-		var/atom/movable/target = over_object
-		usr.visible_message(SPAN_NOTICE("[usr] sticks a [src.name] on [target]."))
-		target.delivery_destination = destination
-		src.stick_to(target, src.pixel_x, src.pixel_y, usr)
+/obj/machinery/arrivalnotifier
+	name = "arrival notifier"
+	desc = "Notifies relevant departments of a package arrival."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "wirednav" // TODO: Replace; the other object this is tied to is unused currently
+	level = 1		// underfloor
+	layer = UNDERFLOOR_MACHINE
+	anchored = ANCHORED
+	plane = PLANE_NOSHADOW_BELOW
+
+	var/target_destination
+	var/frequency = FREQ_MAIL_CHUTE
+	var/disabled = FALSE
+	var/net_id = null
+	var/list/mailgroups = list()
+
+/obj/machinery/arrivalnotifier/New()
+	. = ..()
+	UnsubscribeProcess()
+
+	if (!src.net_id)
+		src.net_id = generate_net_id(src)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
+	var/turf/T = get_turf(src)
+	if(isturf(T))
+		hide(T.intact)
+
+/obj/machinery/arrivalnotifier/Crossed(atom/movable/AM)
+	. = ..()
+	if (!AM.delivery_destination || !src.target_destination || !length(src.mailgroups))
+		return
+	if (src.has_no_power())
+		return
+	if (AM.delivery_destination == src.target_destination && !ON_COOLDOWN(src, "delivery_notice", 30 SECONDS))
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src
+		signal.data["command"] = "text_message"
+		signal.data["sender_name"] = "DELIVERY-MAILBOT"
+		signal.data["group"] = src.mailgroups + list(MGA_MAIL)
+		signal.data["message"] = "Package arrived at [src.target_destination] router."
+		signal.data["sender"] = src.net_id
+		signal.data["address_1"] = "00000000"
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+/obj/machinery/arrivalnotifier/hide(intact)
+	invisibility = intact ? INVIS_ALWAYS : INVIS_NONE
+	UpdateIcon()
+
+/obj/machinery/arrivalnotifier/update_icon()
+	alpha = invisibility ? 128 : 255
+
+/obj/machinery/arrivalnotifier/airbridge
+	target_destination = "Airbridge"
+/obj/machinery/arrivalnotifier/arrivals
+	target_destination = "Arrivals"
+/obj/machinery/arrivalnotifier/catering
+	target_destination = "Catering"
+	mailgroups = list(MGD_KITCHEN, MGD_BOTANY)
+/obj/machinery/arrivalnotifier/cafeteria
+	target_destination = "Cafeteria"
+	mailgroups = list(MGD_KITCHEN)
+/obj/machinery/arrivalnotifier/disposal
+	target_destination = "Disposal"
+/obj/machinery/arrivalnotifier/disposals
+	target_destination = "Disposals"
+/obj/machinery/arrivalnotifier/eva
+	target_destination = "EVA"
+/obj/machinery/arrivalnotifier/engine
+	target_destination = "Engine"
+	mailgroups = list(MGO_ENGINEER)
+/obj/machinery/arrivalnotifier/engineering
+	target_destination = "Engineering"
+	mailgroups = list(MGO_ENGINEER)
+/obj/machinery/arrivalnotifier/escape
+	target_destination = "Escape"
+/obj/machinery/arrivalnotifier/export
+	target_destination = "Export"
+/obj/machinery/arrivalnotifier/medbay
+	target_destination = "Medbay"
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+/obj/machinery/arrivalnotifier/medsci
+	target_destination = "MedSci"
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE)
+/obj/machinery/arrivalnotifier/mining
+	target_destination = "Mining"
+	mailgroups = list(MGD_MINING)
+/obj/machinery/arrivalnotifier/podbay
+	target_destination = "Pod Bay"
+/obj/machinery/arrivalnotifier/qm
+	target_destination = "QM"
+	mailgroups = list(MGD_CARGO)
+/obj/machinery/arrivalnotifier/research
+	target_destination = "Research"
+	mailgroups = list(MGD_SCIENCE)
+/obj/machinery/arrivalnotifier/security
+	target_destination = "Security"
+	mailgroups = list(MGD_SECURITY)
+/obj/machinery/arrivalnotifier/undeliverable
+	target_destination = "Mail Sorting Room"
+	// mailgroups = list(MGD_CARGO)
+	 // TODO: should this notify on all packages instead?
+
+/obj/machinery/arrivalnotifier/carousel
+/obj/machinery/arrivalnotifier/carousel/north
+	target_destination = "Carousel North"
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+/obj/machinery/arrivalnotifier/carousel/south
+	target_destination = "Carousel South"
+	mailgroups = list(MGD_SECURITY)
+/obj/machinery/arrivalnotifier/carousel/east
+	target_destination = "Carousel East"
+	mailgroups = list(MGO_ENGINEER, MGD_SCIENCE)
+/obj/machinery/arrivalnotifier/carousel/west
+	target_destination = "Carousel West"
+	mailgroups = list(MGD_KITCHEN, MGD_BOTANY)

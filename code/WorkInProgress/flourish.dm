@@ -116,6 +116,15 @@ TYPEINFO(/datum/component/pet)
 /obj/machinery/maptext_junk/timer/proc/reset(var/new_time)
 	time_left = new_time
 
+/obj/machinery/maptext_junk/timer/t10
+	time_left = 10
+
+/obj/machinery/maptext_junk/timer/t30
+	time_left = 30
+
+/obj/machinery/maptext_junk/timer/t60
+	time_left = 60
+
 /obj/machinery/maptext_junk/timer/t120
 	time_left = 120
 
@@ -137,7 +146,7 @@ TYPEINFO(/datum/component/pet)
 
 /obj/item/random_trinket_spawner
 	name = "random trinket spawner"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "itemspawn"
 	density = 0
 	anchored = ANCHORED
@@ -151,6 +160,7 @@ TYPEINFO(/datum/component/pet)
 			var/obj/item/trinket = new T(get_turf(src))
 			var/datum/db_record/R = pick(data_core.general.records)
 			trinket.name = "[R["name"]][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
+			trinket.real_name = trinket.name
 			trinket.quality = rand(5,80)
 			sleep(1 SECOND)
 			qdel(src)
@@ -183,7 +193,7 @@ var/list/possible_lost_items = list(
 
 /obj/item/random_lost_item_spawner
 	name = "random lost item spawner"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "itemspawn"
 	density = 0
 	anchored = ANCHORED

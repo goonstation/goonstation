@@ -16,9 +16,20 @@
 	New(var/mob/living/M)
 		..()
 		if (M)
-			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
-			originalBHolder.CopyOther(M.bioHolder)
-			absorbed_dna = list("[M.name]" = originalBHolder)
+			absorbed_dna = list("[M.name]" = new /datum/absorbedIdentity(M))
+
+	onAttach(mob/to_whom)
+		. = ..()
+		RegisterSignal(to_whom, COMSIG_MOB_DEATH, PROC_REF(on_death), TRUE)
+		to_whom.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
+		to_whom.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
+
+	onRemove(mob/from_who)
+		. = ..()
+
+		if (from_who)
+			from_who.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
+			from_who.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
 
 	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
@@ -48,9 +59,7 @@
 			tailsnake, strangles people and attaches themselves to peoples butts and makes it hard to do stuff */
 
 		else
-			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
-			originalBHolder.CopyOther(M.bioHolder)
-			src.absorbed_dna[M.real_name] = originalBHolder
+			src.absorbed_dna[M.real_name] = new /datum/absorbedIdentity(M)
 
 			if (headspider_override != 1)
 				src.points += M.dna_to_absorb
@@ -94,7 +103,7 @@
 
 		mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
-		mind_to_be_transferred.current.show_antag_popup("changeling_absorb")
+		mind_to_be_transferred.current.show_antag_popup(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		return mind_to_be_transferred.current
 
 	proc/return_control_to_master()
@@ -124,6 +133,68 @@
 			if (isdead(member) || istype(member, /mob/living/critter/changeling) || (member == owner))
 				. += member
 
+	proc/on_death(mob/mobref, gibbed)
+		var/mob/living/carbon/human/body = src.owner
+		if (gibbed || src.points < 10)
+			if (src.points < 10)
+				boutput(body, "You try to release a headspider but don't have enough DNA points (requires 10)!")
+			for (var/mob/living/critter/changeling/spider in src.hivemind)
+				boutput(spider, SPAN_ALERT("Your telepathic link to your master has been destroyed!"))
+				spider.hivemind_owner = 0
+			for (var/mob/dead/target_observer/hivemind_observer/obs in src.hivemind)
+				boutput(obs, SPAN_ALERT("Your telepathic link to your master has been destroyed!"))
+				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
+			if (length(src.hivemind) > 0)
+				boutput(body, "Contact with the hivemind has been lost.")
+			src.hivemind = list()
+			if(src.master != src.temp_controller)
+				src.return_control_to_master()
+
+		else
+			//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
+			body.emote("deathgasp", dead_check = FALSE)
+			body.visible_message(SPAN_ALERT("<B>[body]</B>'s head starts to shift around!"))
+			body.show_text("<b>We begin to grow a headspider...</b>", "blue")
+			var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(body) //we spawn the headspider inside this dude immediately.
+			HS.RegisterSignal(body, COMSIG_PARENT_PRE_DISPOSING, TYPE_PROC_REF(/mob/living/critter/changeling/headspider, remove)) //if this dude gets grindered or cremated or whatever, we go with it
+			body.mind?.transfer_to(HS) //ok we're a headspider now
+			HS.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[src]")
+			HS.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src]")
+			HS.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
+			src.points = max(0, src.points - 10) // This stuff isn't free, you know.
+			HS.changeling = src
+			// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
+			// we don't want to actually give the headspider access to the changeling abilityholder, because that would let it use all the abilities
+			// which leads to bugs and is generally bad. So we remove the HUD from corpsey over here, tell the abilityholder that the headspider owns it,
+			// but we do NOT tell the headspider it has access to the abilities.
+			body.detach_hud(src.hud)
+			src.owner = HS
+			src.reassign_hivemind_target_mob()
+			sleep(20 SECONDS)
+			if (HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
+				return
+			HS.UnregisterSignal(body, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
+			boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
+			HS.set_loc(get_turf(body)) //be free!!!
+			body.visible_message(SPAN_ALERT("<B>[body]</B>'s head detaches, sprouts legs and wanders off looking for food!"))
+			// make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
+			body.remove_ability_holder(/datum/abilityHolder/changeling/)
+
+			if (body.client)
+				body.ghostize()
+				boutput(src.owner, "Something went wrong, and we couldn't transfer you into a handspider! Please adminhelp this.")
+
+			logTheThing(LOG_COMBAT, body, "became a headspider at [log_loc(body)].")
+
+			// unequip head items
+			for (var/obj/item/item in list(body.wear_mask, body.glasses, body.head, body.ears))
+				if (item)
+					body.u_equip(item)
+					item.set_loc(body.loc)
+
+			var/obj/item/organ/head/organ_head = body.organHolder.drop_organ("head")
+			qdel(organ_head)
+
 	onAbilityStat()
 		..()
 		.= list()
@@ -135,6 +206,44 @@
 		..()
 		for(var/mob/dead/target_observer/hivemind_observer/HO in hivemind)
 			src.insert_into_hivemind(HO)
+
+///A stored representation of an absorbed victim, we load their traits as well as their bioholder now
+/datum/absorbedIdentity
+	var/name
+	var/datum/bioHolder/bioHolder
+	var/datum/traitHolder/traitHolder
+
+	New(mob/M)
+		if (M)
+			src.set_up_from(M)
+		. = ..()
+
+	proc/set_up_from(mob/living/carbon/human/victim)
+		//lol this is so nonstandardized I want to cry
+		src.bioHolder = new /datum/bioHolder(victim)
+		src.bioHolder.CopyOther(victim.bioHolder)
+
+		src.traitHolder = new /datum/traitHolder(victim)
+		victim.traitHolder.copy_to(src.traitHolder)
+
+		src.name = victim.real_name
+		victim.UpdateName()
+
+	proc/apply_to(mob/living/carbon/human/human)
+		human.bioHolder.CopyOther(src.bioHolder)
+		src.traitHolder.copy_to(human.traitHolder)
+
+		human.bioHolder.RemoveEffect("husk")
+		human.real_name = src.name
+		if(human.organHolder.head)
+			human.organHolder.head.UpdateIcon()
+		if (human.bioHolder?.mobAppearance?.mutant_race)
+			human.set_mutantrace(human.bioHolder.mobAppearance.mutant_race.type)
+		else
+			human.set_mutantrace(null)
+		human.update_face()
+		human.update_body()
+		human.update_clothing()
 
 // ----------------------------------------
 // Generic abilities that critters may have
@@ -196,3 +305,20 @@
 					.= 1
 				else if (abomination_only && isabomination(H))
 					.= 1
+
+	/// Checks if the mob owner of this ability's holder is a headless skeleton. Warns them if
+	/// they are, and returns TRUE if the warning isn't heeded-- returns FALSE otherwise.
+	proc/headless_skeleton_warning(var/datum/abilityHolder/changeling/changeling_holder = holder)
+		if(!ishuman(changeling_holder.owner))
+			return FALSE
+
+		var/mob/living/carbon/human/skeleton_owner = changeling_holder.owner
+		if(!isskeleton(skeleton_owner))
+			return FALSE
+
+		if(skeleton_owner.organHolder.head)
+			return FALSE
+
+		if(tgui_alert(skeleton_owner, "We currently lack a head. Shifting forms in this state WILL kill us.", "Hesitation", list("Continue Anyways", "Stop")) == "Continue Anyways")
+			return FALSE
+		return TRUE

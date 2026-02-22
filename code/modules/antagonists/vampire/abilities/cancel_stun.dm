@@ -3,6 +3,7 @@
 	desc = "Recover from being stunned. You will take damage in proportion to the amount of stun you dispel."
 	icon_state = "nostun"
 	targeted = 0
+	do_logs = FALSE
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 40

@@ -6,16 +6,17 @@
  * @license ISC
  */
 
+import { LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../../backend';
-import { LabeledList, Section, Stack } from '../../../components';
 import { DockingAllowedButton } from '../DockingAllowedButton';
 import type { CyborgDockingStationData, OccupantData } from '../type';
 import { EyebotStatusView } from './EyebotStatusView';
 import { HumanStatusView } from './HumanStatusView';
 import { RobotStatusView } from './RobotStatusView';
 
-export const OccupantSection = (_props: unknown, context) => {
-  const { act, data } = useBackend<CyborgDockingStationData>(context);
+export const OccupantSection = () => {
+  const { act, data } = useBackend<CyborgDockingStationData>();
   const { cabling, fuel, occupant } = data;
   const hasOccupant = !!occupant?.name;
   const handleEjectOccupant = () => act('occupant-eject');
@@ -52,7 +53,8 @@ interface OccupantSectionContentsProps {
 }
 
 const OccupantSectionContents = (props: OccupantSectionContentsProps) => {
-  const { act, cabling, fuel, occupant, onEjectOccupant, onRenameOccupant } = props;
+  const { act, cabling, fuel, occupant, onEjectOccupant, onRenameOccupant } =
+    props;
   const occupantTypeDescription = occupantTypeDescriptionLens(occupant);
   return (
     <>
@@ -68,15 +70,31 @@ const OccupantSectionContents = (props: OccupantSectionContentsProps) => {
                   tooltip="Change the occupant's designation"
                 />
               )}
-              {<DockingAllowedButton onClick={onEjectOccupant} icon="eject" tooltip="Eject the occupant" />}
+              {
+                <DockingAllowedButton
+                  onClick={onEjectOccupant}
+                  icon="eject"
+                  tooltip="Eject the occupant"
+                />
+              }
             </>
-          }>
+          }
+        >
           {occupant.name}
         </LabeledList.Item>
-        <LabeledList.Item label="Type">{occupantTypeDescription}</LabeledList.Item>
+        <LabeledList.Item label="Type">
+          {occupantTypeDescription}
+        </LabeledList.Item>
       </LabeledList>
       <Section title="Status">
-        {occupant.kind === 'robot' && <RobotStatusView occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
+        {occupant.kind === 'robot' && (
+          <RobotStatusView
+            occupant={occupant}
+            fuel={fuel}
+            cabling={cabling}
+            act={act}
+          />
+        )}
         {occupant.kind === 'human' && <HumanStatusView occupant={occupant} />}
         {occupant.kind === 'eyebot' && <EyebotStatusView occupant={occupant} />}
       </Section>

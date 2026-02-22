@@ -112,6 +112,15 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Afro: Long Stripes"
 				id = "afroSH"
 				random_allowed = FALSE
+			sidepart_afro
+				name = "Afro: Sidepart"
+				id = "sidepart_afro"
+			sidepart_afro_fade
+				name = "Afro: Sidepart Faded"
+				id = "sidepart_afro_fade"
+			sidepart_afro_split
+				name = "Afro: Sidepart Split"
+				id = "sidepart_afro_split"
 			balding
 				name = "Balding"
 				id = "balding"
@@ -227,6 +236,16 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			mohawkS
 				name = "Mohawk: Stripes"
 				id = "mohawkS"
+			puff_mohawk
+				name = "Puff Mohawk"
+				id = "puff_mohawk"
+				gender = MASCULINE | FEMININE
+			puff_mohawk_alternating
+				name = "Puff Mohawk: Alternating"
+				id = "puff_mohawk_alternating"
+			puff_mohawk_fade
+				name = "Puff Mohawk: Faded"
+				id = "puff_mohawk_fade"
 			mysterious
 				name = "Mysterious"
 				id = "mysterious"
@@ -318,30 +337,39 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			salty
 				name = "Salty"
 				id = "salty"
+				gender = MASCULINE | FEMININE
 			wolfcut
 				name = "Wolfcut"
 				id = "wolfcut"
+				gender = MASCULINE | FEMININE
 			brushed
 				name = "Brushed"
 				id = "brushed"
+				gender = MASCULINE | FEMININE
 			walnut
 				name = "Walnut"
 				id = "walnut"
+				gender = MASCULINE | FEMININE
 			mop
 				name = "Mop"
 				id = "mop"
+				gender = MASCULINE | FEMININE
 			acorn
 				name = "Acorn"
 				id = "acorn"
+				gender = MASCULINE | FEMININE
 			curtain
 				name = "Curtain"
 				id = "curtain"
+				gender = MASCULINE | FEMININE
 			scott
 				name = "Scott"
 				id = "scott"
+				gender = MASCULINE | FEMININE
 			curly_bob
 				name = "Curly Bob"
 				id = "curly_bob"
+				gender = MASCULINE | FEMININE
 			curly_bob_fade
 				name = "Curly Bob: Faded"
 				id = "curly_bob_fade"
@@ -349,9 +377,11 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			charming
 				name = "Charming"
 				id = "charming"
+				gender = MASCULINE | FEMININE
 			spoon
 				name = "Spoon"
 				id = "spoon"
+				gender = MASCULINE | FEMININE
 			spoonbangs
 				name = "Bangs: Spoon"
 				id = "spoonbangs"
@@ -359,17 +389,203 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			messy_waves
 				name = "Messy Waves"
 				id = "messy_waves"
+				gender = MASCULINE | FEMININE
 			messy_waves_half
 				name = "Messy Waves: Split"
 				id = "messy_waves_half"
 				random_allowed = FALSE
+			messy_wicks
+				name = "Messy Wicks"
+				id = "messy_wicks"
+				gender = MASCULINE | FEMININE
+			messy_wicks_fade
+				name = "Messy Wicks: Faded"
+				id = "messy_wicks_fade"
+			messy_wicks_split
+				name = "Messy Wicks: Split"
+				id = "messy_wicks_split"
+				random_allowed = FALSE
+			neat_wicks
+				name = "Neat Wicks"
+				id = "neat_wicks"
+				gender = MASCULINE | FEMININE
+			neat_wicks_fade
+				name = "Neat Wicks: Faded"
+				id = "neat_wicks_fade"
+			neat_wicks_split
+				name = "Neat Wicks: Split"
+				id = "neat_wicks_split"
+				random_allowed = FALSE
 			blunt_bob
 				name = "Blunt Bob"
 				id = "blunt_bob"
+				gender = MASCULINE | FEMININE
 
 			jelly
 				name = "Jelly"
 				id = "jelly"
+				gender = MASCULINE | FEMININE
+
+			cockatiel
+				name = "Cockatiel"
+				id = "cockatiel"
+				gender = MASCULINE | FEMININE
+
+			combed_fringe
+				name = "Combed Fringe"
+				id = "combed_fringe"
+				gender = MASCULINE | FEMININE
+
+			slicked_back
+				name = "Slicked Back"
+				id = "slicked_back"
+				gender = MASCULINE | FEMININE
+
+			asym_bob
+				name = "Asymmetrical Bob"
+				id = "asym_bob"
+				gender = MASCULINE | FEMININE
+
+			side_curls
+				name = "Side-Part Curls"
+				id = "side_curls"
+				gender = MASCULINE | FEMININE
+
+			messy_fringe
+				name = "Messy Fringe"
+				id = "messy_fringe"
+				gender = MASCULINE | FEMININE
+
+			aristocrat
+				name = "Aristocrat"
+				id = "aristocrat"
+				gender = MASCULINE | FEMININE
+
+			brushed_bob
+				name = "Brushed Bob"
+				id = "brushed_bob"
+				gender = MASCULINE | FEMININE
+
+			short_shag
+				name = "Short Shag"
+				id = "short_shag"
+				gender = MASCULINE | FEMININE
+
+			luxury_bob
+				name = "Luxurious Bob"
+				id = "luxury_bob"
+				gender = MASCULINE | FEMININE
+
+			wavy_front
+				name = "Wavy Front"
+				id = "wavy_front"
+				gender = MASCULINE | FEMININE
+
+			poofy_bob
+				name = "Poofy Bob"
+				id = "poofy_bob"
+				gender = MASCULINE | FEMININE
+
+			short_dreads
+				name = "Short Dreads"
+				id = "short_dreads"
+				gender = MASCULINE | FEMININE
+
+			shaggy
+				name = "Shaggy"
+				id = "shaggy"
+				gender = MASCULINE | FEMININE
+
+			blunt_pomp
+				name = "Blunt Pompadour"
+				id = "blunt_pomp"
+				gender = MASCULINE | FEMININE
+
+			blunt_pomp_fade
+				name = "Blunt Pompadour: Faded"
+				id = "blunt_pomp_fade"
+				random_allowed = FALSE
+
+			big_pomp
+				name = "Big Pompadour"
+				id = "big_pomp"
+				gender = MASCULINE
+
+			big_pomp_fade
+				name = "Big Pompadour: Faded"
+				id = "big_pomp_fade"
+				random_allowed = FALSE
+
+			duck_ass
+				name = "Ducktail"
+				id = "duck_ass"
+				gender = MASCULINE
+
+			pageboy
+				name = "Pageboy"
+				id = "pageboy"
+				gender = MASCULINE | FEMININE
+
+			pageboy_fade
+				name = "Pageboy: Faded"
+				id = "pageboy_fade"
+				random_allowed = FALSE
+
+			cockatielbang
+				name = "Bangs: Cockatiel"
+				id = "cockatielbang"
+				random_allowed = FALSE
+
+			combedfringebangs
+				name = "Bangs: Combed Fringe"
+				id = "combedfringebangs"
+				random_allowed = FALSE
+
+			longeyebangs
+				name = "Bangs: Eye cover"
+				id = "longeyebangs"
+				random_allowed = FALSE
+
+			wavybang
+				name = "Bangs: Wavy"
+				id = "wavybang"
+				random_allowed = FALSE
+
+			tied_bangs
+				name = "Bangs: Tied"
+				id = "tied_bangs"
+				random_allowed = FALSE
+
+			tied_bangs_long
+				name = "Bangs: Tied Long"
+				id = "tied_bangs_long"
+				random_allowed = FALSE
+
+			bluntsidebang
+				name = "Bangs: Blunt Side"
+				id = "bluntsidebang"
+				random_allowed = FALSE
+
+			emobang
+				name = "Bangs: Emo"
+				id = "emobang"
+				random_allowed = FALSE
+
+			lopsidedbang
+				name = "Bangs: Lopsided"
+				id = "lopsidedbang"
+				random_allowed = FALSE
+
+			curtainbangs
+				name = "Bangs: Curtain"
+				id = "curtainbangs"
+				random_allowed = FALSE
+
+			scorpion_bangs
+				name = "Bangs: Scorpion"
+				id = "scorpion_bangs"
+				random_allowed = FALSE
+
 		long
 			chub2_s
 				name = "Bang: Left"
@@ -411,6 +627,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Bangs: Mysterious"
 				id = "mysterybangs"
 				random_allowed = FALSE
+			vbangs
+				name = "V-Bangs"
+				id = "v_bangs"
+				random_allowed = FALSE
 			bedhead
 				name = "Bedhead"
 				id = "bedhead"
@@ -440,6 +660,17 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			dreadsA
 				name = "Dreadlocks: Alternating"
 				id = "dreadsA"
+				random_allowed = FALSE
+			long_dreads
+				name = "Long Dreadlocks"
+				id = "long_dreads"
+				gender = FEMININE | MASCULINE
+			long_dreads_fade
+				name = "Long Dreadlocks: Faded"
+				id = "long_dreads_fade"
+			long_dreads_split
+				name = "Long Dreadlocks: Split"
+				id = "long_dreads_split"
 				random_allowed = FALSE
 			fabio
 				name = "Fabio"
@@ -471,6 +702,14 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Half-Shaved: Right"
 				id = "halfshavedL"
 				gender = MASCULINE | FEMININE
+			streakbangR
+				name = "Bang: Streak Right"
+				id = "streakbangR"
+				random_allowed = FALSE
+			streakbangL
+				name = "Bang: Streak Left"
+				id = "streakbangL"
+				random_allowed = FALSE
 			kingofrockandroll
 				name = "Kingmetal"
 				id = "king-of-rock-and-roll"
@@ -506,6 +745,33 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Loose Long Braid Over Shoulder"
 				id = "looselongbraidshoulder"
 				gender = FEMININE
+			box_braids
+				name = "Box Braids"
+				id = "box_braids"
+				gender = FEMININE
+			box_braids_beads
+				name = "Box Braids: Beads"
+				id = "box_braids_beads"
+			box_braids_fade
+				name = "Box Braids: Faded"
+				id = "box_braids_fade"
+			box_braids_split
+				name = "Box Braids: Split"
+				id = "box_braids_split"
+				random_allowed = FALSE
+			bubble_braids
+				name = "Bubble Braids"
+				id = "bubble_braids"
+			bubble_braids_beads
+				name = "Bubble Braids: Beads"
+				id = "bubble_braids_beads"
+			bubble_braids_fade
+				name = "Bubble Braids: Faded"
+				id = "bubble_braids_fade"
+			bubble_braids_split
+				name = "Bubble Braids: Split"
+				id = "bubble_braids_split"
+				random_allowed = FALSE
 			longsidepart_s
 				name = "Long Flip"
 				id = "longsidepart_s"
@@ -600,6 +866,85 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			willow_fade
 				name = "Willow: Faded"
 				id = "willow_fade"
+			hime
+				name = "Himecut"
+				id = "hime"
+				gender = FEMININE
+			wild_bedhead
+				name = "Wild Bedhead"
+				id = "wild_bedhead"
+				gender = MASCULINE | FEMININE
+			straight_long
+				name = "Long Straight"
+				id = "straight_long"
+				gender = MASCULINE | FEMININE
+			choppy_long
+				name = "Choppy Long"
+				id = "choppy_long"
+				gender = MASCULINE | FEMININE
+			sway
+				name = "Sway"
+				id = "sway"
+				gender = MASCULINE | FEMININE
+
+			poofy_long
+				name = "Long Poofy"
+				id = "poofy_long"
+				gender = MASCULINE | FEMININE
+			royal_curls
+				name = "Royal Curls"
+				id = "royal_curls"
+				gender = FEMININE
+
+			med_curly
+				name = "Med Curls"
+				id = "med_Curly"
+				gender = MASCULINE | FEMININE
+
+			poofy_wave
+				name = "Poofy Wave"
+				id = "poofy_wave"
+				gender = FEMININE
+
+			longer_curls
+				name = "Longer Curls"
+				id = "longer_curls"
+				gender = MASCULINE | FEMININE
+
+			wild_waves
+				name = "Wild Wave"
+				id = "wild_waves"
+				gender = MASCULINE | FEMININE
+
+			curly_twists
+				name = "Curly Twists"
+				id = "curly_twists"
+				gender = FEMININE
+
+			straightened_long
+				name = "Straightened shoulder-length"
+				id = "straightened_long"
+				gender = MASCULINE | FEMININE
+
+			symm_bob
+				name = "Symmetrical Bob"
+				id = "symm_bob"
+				gender = MASCULINE | FEMININE
+
+			ringlets
+				name = "Ringlets"
+				id = "ringlet"
+				gender = FEMININE
+
+			ringlets_short //yeah, I know, it's so it shows up next to the normal ringlet hairstyle
+				name = "Short Ringlets"
+				id = "ringlet_short"
+				gender = FEMININE
+
+			ringlets_fade
+				name = "Ringlets: Faded"
+				id = "ringlet_fade"
+				random_allowed = FALSE
 		hairup
 			bun
 				name = "Bun"
@@ -726,6 +1071,96 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Wavy Ponytail: Split"
 				id = "wavy_tail_half"
 				random_allowed = FALSE
+			puffball
+				name = "Puffball"
+				id = "puffball"
+			puffball_fade
+				name = "Puffball: Faded"
+				id = "puffball_fade"
+			puffball_split
+				name = "Puffball: Split"
+				id = "puffball_split"
+				random_allowed = FALSE
+
+			crown_braid
+				name = "Crown Braid"
+				id = "crown_braid"
+				gender = FEMININE
+
+			high_bun
+				name = "High Bun"
+				id = "high_bun"
+				gender = FEMININE
+
+			massive_braids
+				name = "Massive Braids"
+				id = "mega_braids"
+				gender = FEMININE
+
+			massive_braids_split
+				name = "Massive Braids: Split"
+				id = "mega_braids_split"
+				random_allowed = FALSE
+
+			chignon
+				name = "Chignon"
+				id = "chignon"
+				gender = FEMININE
+
+			french_twist
+				name = "French Twist"
+				id = "french_twist"
+				gender = FEMININE
+
+			hairpart_highpony
+				name = "Hair Parts: High Ponytail"
+				id = "spud_part"
+				random_allowed = FALSE
+
+			hairpart_wavypony
+				name = "Hair Parts: Wavy Ponytail"
+				id = "wavyponytail_part"
+				random_allowed = FALSE
+
+			hairpart_spikypony
+				name = "Hair Parts: Spiky Ponytail"
+				id = "spikyponytail_part"
+				random_allowed = FALSE
+
+			hairpart_messypony
+				name = "Hair Parts: Messy Ponytail"
+				id = "messyponytail_part"
+				random_allowed = FALSE
+
+			hairpart_pigtails
+				name = "Hair Parts: Pigtails"
+				id = "pig_part"
+				random_allowed = FALSE
+
+			hairpart_doublebuns
+				name = "Hair Part: Double Buns"
+				id = "doublebun_part"
+				random_allowed = FALSE
+
+			hairpart_highbun
+				name = "Hair Part: High Bun"
+				id = "high_bun_part"
+				random_allowed = FALSE
+
+			hairpart_crownbraid
+				name = "Hair Part: Crown Braid"
+				id = "crownbraid_part"
+				random_allowed = FALSE
+
+			scorpion_braid
+				name = "Scorpion Braid"
+				id = "scorpion_braid"
+				gender = FEMININE
+
+			scorpion_braid_alternating
+				name = "Scorpion Braid: Alternating"
+				id = "scorpion_braid_alternating"
+				random_allowed = FALSE
 
 		gimmick
 			afroHA
@@ -740,6 +1175,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			ewave_s
 				name = "Elegant Wave"
 				id = "ewave_s"
+			omegapomp
+				name = "Colossal Pompadour"
+				id = "omegapomp"
 			flames
 				name = "Flame Hair"
 				id = "flames"
@@ -779,6 +1217,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			shitty_beard_stains
 				name = "Shitty Beard Stains"
 				id = "shitty_beard_stains"
+
 	moustache
 		fu
 			name = "Biker"
@@ -810,6 +1249,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		watson
 			name = "Watson"
 			id = "watson"
+
 	beard
 		abe
 			name = "Abe"
@@ -862,10 +1302,12 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		trampstains
 			name = "Tramp: Beard Stains"
 			id = "trampstains"
+
 	sideburns
 		elvis
 			name = "Elvis"
 			id = "elvis"
+
 	eyebrows
 		eyebrows
 			name = "Eyebrows"
@@ -873,6 +1315,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		thufir
 			name = "Huge Eyebrows"
 			id  = "thufir"
+
 	makeup
 		eyeshadow
 			name = "Eyeshadow"
@@ -880,6 +1323,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		lipstick
 			name = "Lipstick"
 			id = "lipstick"
+
 	biological
 		hetcroL
 			name = "Heterochromia: Left"

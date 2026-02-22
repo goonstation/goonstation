@@ -19,7 +19,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | CONDUCT | UNCRUSHABLE
+	flags = TABLEPASS | CONDUCT | UNCRUSHABLE
 
 #define MAX_SCRAP	15000	// maximum content amount of a scrap pile
 

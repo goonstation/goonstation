@@ -10,8 +10,6 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 	var/callbackName = "ehjaxCallback"
 	var/list/allowedProcs = list("/proc/getBanApiFallback",
 								"/proc/getWorldMins",
-								"/datum/chui/proc/debug",
-								"/datum/chui/proc/close",
 								"/datum/chatOutput/proc/doneLoading",
 								"/datum/chatOutput/proc/ping",
 								"/datum/chatOutput/proc/handleContextMenu",
@@ -26,6 +24,10 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 				data = json_encode(data)
 
 			C << output("[data]", "[window]:[callbackName]")
+
+		sendAll(list/targets, window, data)
+			for (var/client/C in targets)
+				src.send(C, window, data)
 
 		/**
 			* Calls a proc from a javascript source and callsback with any data

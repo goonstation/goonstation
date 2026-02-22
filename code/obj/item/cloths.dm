@@ -39,11 +39,13 @@ ABSTRACT_TYPE(/obj/item/cloth)
 /obj/item/cloth/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent != INTENT_HELP)
 		return ..()
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, target, user) & ATTACK_PRE_DONT_ATTACK)
+		return FALSE
 	return TRUE
 
 /obj/item/cloth/New()
 	..()
-	src.create_reagents(10)
+	src.create_reagents(20)
 
 /obj/item/cloth/disposing()
 	..()
@@ -52,9 +54,12 @@ ABSTRACT_TYPE(/obj/item/cloth)
 
 /obj/item/cloth/process_grab(var/mult = 1)
 	..()
-	if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state == GRAB_CHOKE && iscarbon(src.chokehold.affecting))
-		src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult)
-		src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
+	if (chokehold.transfering_chemicals || chokehold.state > GRAB_AGGRESSIVE) // Having more than an aggressive grab will transfer the chemicals anyway
+		if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state >= GRAB_AGGRESSIVE && iscarbon(src.chokehold.affecting))
+			//src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult) // No more ingesting means no stacking damage horribly and instantly
+			src.reagents.trans_to(chokehold.affecting, 2 * mult)
+		else
+			chokehold.transfering_chemicals = FALSE
 
 /obj/item/cloth/is_open_container()
 	.= 1
@@ -86,6 +91,18 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 		user.visible_message(SPAN_NOTICE("[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src]."))
 		playsound(src, 'sound/items/glass_wipe.ogg', 35, TRUE)
 
+/obj/item/cloth/towel/should_suppress_attack(var/object, mob/user)
+	if (istype(object, /obj/table))
+		user.visible_message(SPAN_NOTICE("[user] wipes down [object] with [src]."))
+		return TRUE
+	. = ..()
+
+/obj/item/cloth/towel/should_place_on(obj/target, params)
+	// Don't place on tables unless click-dragged
+	if (istype(target, /obj/table) && islist(params) && !params["dragged"])
+		return FALSE
+	. = ..()
+
 /obj/item/cloth/towel/white
 	name = "white towel"
 	icon_state = "towel_white"
@@ -112,23 +129,12 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	icon_state = "towel_clown"
 	var/hidden_pocket = null // storage components when!
 
-/obj/item/cloth/towel/clown/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	if (target != user || user.mind?.assigned_role != "Clown")
-		return ..()
-	var/mob/living/carbon/human/H = user
-	if (!H.organHolder?.stomach)
-		user.show_message(SPAN_ALERT("You can't seem to swallow!"))
-		return
-	user.visible_message(SPAN_ALERT("[user] rolls [src] into a ball and eats it!"))
-	playsound(user, 'sound/misc/gulp.ogg', 30, TRUE)
-	eat_twitch(user)
-	user.drop_item(src)
-	H.organHolder.stomach.consume(src)
-	SPAWN(1 SECOND)
-		user.emote("burp")
+/obj/item/cloth/towel/clown/New()
+	. = ..()
+	src.AddComponent(/datum/component/swallowable, required_role = "Clown")
 
 /obj/item/cloth/towel/clown/attackby(obj/item/I, mob/user)
-	if (I.w_class != W_CLASS_TINY || user.mind?.assigned_role != "Clown")
+	if (I.w_class != W_CLASS_TINY || !user.traitHolder?.hasTrait("training_clown"))
 		return ..()
 	if (!isnull(hidden_pocket))
 		boutput(user, SPAN_ALERT("You already have an item stored in the towel!"))
@@ -168,6 +174,10 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	name = "bar towel"
 	desc = "About the most massively useful thing a bartender can have."
 	icon_state = "towel_black"
+
+/obj/item/cloth/towel/security
+	name = "security towel"
+	icon_state = "towel_security"
 
 ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 /obj/item/cloth/handkerchief

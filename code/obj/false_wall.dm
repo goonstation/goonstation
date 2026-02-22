@@ -41,8 +41,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			if (src.can_be_auto)
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
 					W.UpdateIcon()
-				for (var/obj/grille/G in orange(1,src))
-					G.UpdateIcon()
+				for (var/obj/mesh/M in orange(1,src))
+					M.UpdateIcon()
 				for (var/obj/window/auto/W in orange(1,src))
 					W.UpdateIcon()
 				for (var/turf/simulated/wall/false_wall/F in orange(1,src))
@@ -169,15 +169,17 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.name = src.material ? "false [src.material.getName()] wall" : "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
 		SPAWN(delay)
+			if (!istype(src, /turf/simulated/wall/false_wall))
+				return // can change type during SPAWN
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			//actually do the opening things
 			src.set_density(0)
-			src.flags &= ~ALWAYS_SOLID_FLUID
+			src.flags &= ~FLUID_DENSE
 			src.gas_impermeable = 0
 			src.pathable = 1
 			src.update_air_properties()
 			src.set_opacity(0)
-			if(!floorintact)
+			if(!src.floorintact)
 				src.setIntact(FALSE)
 				src.levelupdate()
 			update_nearby_tiles()
@@ -191,7 +193,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.name = src.material ? "[src.material.getName()] wall" : "steel wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
-		src.flags |= ALWAYS_SOLID_FLUID
+		src.flags |= FLUID_DENSE
 		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
@@ -201,6 +203,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			else
 				src.set_opacity(1)
 		src.setIntact(TRUE)
+		for(var/obj/decal/cleanable/clean in src)
+			clean.plane = PLANE_FLOOR
 		update_nearby_tiles()
 		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits

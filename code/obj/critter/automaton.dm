@@ -295,7 +295,7 @@ var/global/the_automaton = null
 				SPAN_ALERT("<b>[src]</b> ignores you.  Perhaps it's not time for that?"))
 				return
 
-			if (!istype(W, /obj/item/skull/crystal) || W.icon_state != "skull_crystal")
+			if (!istype(W, /obj/item/skull/omnitraitor) || W.icon_state != "skull_omnitraitor")
 				src.visible_message(SPAN_ALERT("<b>[src]</b> holds [W] out for a moment, staring into its empty face, then hands it back "))
 				return
 
@@ -457,7 +457,7 @@ var/global/the_automaton = null
 						SPAWN(2 SECONDS) if (somesparks) qdel(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
-							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+							tempEffect = drawLineObj(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)
 							qdel(O)

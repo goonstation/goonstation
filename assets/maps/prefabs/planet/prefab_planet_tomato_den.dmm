@@ -68,7 +68,7 @@
 /turf/simulated/floor/grass/random,
 /area/noGenerate)
 "F" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 27
 	},
 /turf/simulated/floor/grass/random,
@@ -98,7 +98,7 @@
 /turf/simulated/floor/grass/random,
 /area/noGenerate)
 "U" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/saw,
 /turf/simulated/floor/grass/random,
 /area/noGenerate)

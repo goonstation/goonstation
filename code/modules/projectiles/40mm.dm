@@ -37,7 +37,8 @@ toxic - poisons
 	color_green = 0
 	color_blue = 0
 	impact_image_state = "bullethole-large"
-
+	has_impact_particles = TRUE
+	affected_by_gravity = TRUE
 
 //Any special things when it hits shit?
 	on_hit(atom/hit)

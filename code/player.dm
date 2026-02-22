@@ -1,3 +1,6 @@
+///Assoc list of ckeys to player datums
+var/global/list/players = list()
+
 /// for client variables and stuff that has to persist between connections
 /datum/player
 	/// the ID of the player as provided by the Goonhub API
@@ -14,6 +17,10 @@
 	var/see_mentor_pms = 1
 	/// to make sure that they cant escape being shamecubed by just reconnecting
 	var/shamecubed = 0
+	/// have we cached player stats from the api
+	var/cached_round_stats = FALSE
+	/// have we fetched round stats from the api?
+	var/fetched_round_stats = FALSE
 	/// how many rounds (total) theyve declared ready and joined, null with to differentiate between not set and no participation
 	VAR_PRIVATE/rounds_participated = null
 	/// how many rounds (rp only) theyve declared ready and joined, null with to differentiate between not set and no participation
@@ -54,35 +61,62 @@
 	var/joined_names = list()
 	/// Antag tokens this person has, null until it's fetched
 	var/antag_tokens = null
+	/// Newbee Tutorial
+	var/datum/tutorial_base/regional/newbee/tutorial = null
+	/// A list of procs to call on the client on next login, used for when you need to guarantee clearing a clientside effect (ie textmode)
+	var/list/login_queue = null
 
-	/// sets up vars, caches player stats, adds by_type list entry for this datum
+	/// starts setup, adds by_type list entry for this datum
 	New(key)
 		..()
 		START_TRACKING
 		src.key = key
 		src.ckey = ckey(key)
+		global.players[src.ckey] = src
 		src.tag = "player-[src.ckey]"
-		src.cloudSaves = new /datum/cloudSaves(src)
-
-		if (ckey(src.key) in mentors)
-			src.mentor = 1
-
-		if (src.key) //just a safety check!
-			src.cache_round_stats()
 		src.last_death_time = world.timeofday
+		src.cloudSaves = new /datum/cloudSaves(src)
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
 		STOP_TRACKING
+		global.players -= src.ckey
 		if (src.client)
 			src.client.player = null
 			src.client = null
 		..()
 
+	///Attempt to guarantee a player ID is loaded from the API, should only be relevant for offline players since auth handles it otherwise
+	proc/fetch_player_id()
+		if (src.id)
+			return
+		//helo yes this is mild API abuse but there isn't a dedicated "get player ID" route so I'm piggybacking on the comp ID one for now
+		var/datum/apiModel/PlayerCompIdsResource/playerCompIds
+		try
+			var/datum/apiRoute/players/compids/get/getPlayerCompIds = new
+			getPlayerCompIds.queryParams = list("ckey" = src.ckey)
+			playerCompIds = apiHandler.queryAPI(getPlayerCompIds)
+
+		catch
+			CRASH("Failed to fetch player ID for ckey [src.ckey]")
+		src.id = playerCompIds.latest_connection.player_id
+
+	/// stuff that should only be done when the client is known to be valid
+	proc/on_client_authenticated()
+		if (src.ckey in mentors)
+			src.mentor = TRUE
+		if (!src.cached_round_stats)
+			src.cache_round_stats()
+		for (var/proc_name in src.login_queue)
+			call(src.client, proc_name)()
+		src.login_queue = null
+		SPAWN(0)
+			src.cloudSaves.fetch()
+
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()
-		if (!roundId || !src.client || src.id) return
-		var/datum/apiModel/Tracked/PlayerResource/playerResponse
+		if (!roundId || !src.client) return
+		var/datum/apiModel/Tracked/Player/playerResponse
 		try
 			var/datum/apiRoute/players/login/playerLogin = new
 			playerLogin.buildBody(
@@ -92,7 +126,8 @@
 				src.client.computer_id,
 				src.client.byond_version,
 				src.client.byond_build,
-				roundId
+				roundId,
+				config.server_id
 			)
 			playerResponse = apiHandler.queryAPI(playerLogin)
 		catch (var/exception/e)
@@ -102,6 +137,7 @@
 			return
 
 		src.id = playerResponse.id
+		assign_goonhub_abilities(src.client.ckey, playerResponse.ToList())
 
 	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()
@@ -110,24 +146,32 @@
 
 	/// blocking version of cache_round_stats, queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats_blocking()
+		if (!src.ckey) return FALSE
+
 		var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 		try
 			var/datum/apiRoute/players/stats/get/getPlayerStats = new
 			getPlayerStats.queryParams = list("ckey" = src.ckey)
 			playerStats = apiHandler.queryAPI(getPlayerStats)
 		catch
+			src.fetched_round_stats = TRUE
 			return FALSE
 
 		src.rounds_participated_rp = text2num(playerStats.played_rp)
 		src.rounds_participated = text2num(playerStats.played) + src.rounds_participated_rp //the API counts these separately, but we want a combined number
-		src.rounds_seen = text2num(playerStats.connected)
 		src.rounds_seen_rp = text2num(playerStats.connected_rp)
-		src.last_seen = playerStats.latest_connection.created_at
+		src.rounds_seen = text2num(playerStats.connected) + src.rounds_seen_rp //the API counts these separately, but we want a combined number
+		src.last_seen = playerStats.latest_connection?.created_at
+		src.cached_round_stats = TRUE
+		src.fetched_round_stats = TRUE
 		return TRUE
 
 	proc/load_antag_tokens()
 		PRIVATE_PROC(TRUE) //call get_antag_tokens
 		. = TRUE
+		#ifdef BONUS_POINTS
+		antag_tokens = 99
+		#else
 		var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 		if (!AT)
 			antag_tokens = src.cloudSaves.getData( "antag_tokens" )
@@ -145,10 +189,11 @@
 		antag_tokens += text2num( src.cloudSaves.getData( "antag_tokens" ) || "0" )
 		if (src.cloudSaves.putData( "antag_tokens", antag_tokens ))
 			AT[ckey] << null
+		#endif
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)
-		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen) || isnull(src.rounds_participated_rp) || isnull(src.rounds_seen_rp) || isnull(src.last_seen))) //if the stats havent been cached yet
+		if (!src.cached_round_stats) //if the stats havent been cached yet
 			if (allow_blocking) // whether or not we are OK with possibly sleeping the thread
 				if (!src.cache_round_stats_blocking())
 					return null
@@ -159,20 +204,20 @@
 
 	/// returns the number of rounds that the player has played by joining in at roundstart
 	proc/get_rounds_participated()
-		if (isnull(src.rounds_participated)) //if the stats havent been cached yet
+		if (!src.cached_round_stats) //if the stats havent been cached yet
 			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated
 
 	proc/get_rounds_participated_rp()
-		if (isnull(src.rounds_participated_rp)) //if the stats havent been cached yet
+		if (!src.cached_round_stats) //if the stats havent been cached yet
 			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated_rp
 
 	/// returns the number of rounds that the player has at least joined the lobby in
 	proc/get_rounds_seen()
-		if (isnull(src.rounds_seen)) //if the stats havent been cached yet
+		if (!src.cached_round_stats) //if the stats havent been cached yet
 			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_seen
@@ -244,26 +289,21 @@
 
 	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/unlock_medal_sync(medal_name, announce=FALSE)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return FALSE
-
-		var/key = src.key
+		if (!medal_name) return FALSE
 		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
-		var/result = world.SetMedal(medal_name, key, config.medal_hub, config.medal_password)
-		if(!result)
-			return FALSE
-		. = TRUE
 
-		// Record this medal to the Goonhub API for further tracking
-		// This will (eventually) replace the byond medals entirely
 		try
 			var/datum/apiRoute/players/medals/add/addMedal = new
 			addMedal.buildBody(src.id || null, src.ckey, medal_name, roundId)
 			apiHandler.queryAPI(addMedal)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
+			if (error.status_code == 409)
+				// player already has that medal
+				return FALSE
 			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>unlock_medal</b> for <b>[medal_name]</b>: [error.message]")
 			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in unlock_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
 
 		var/list/unlocks = list()
 		for(var/A in rewardDB)
@@ -280,64 +320,98 @@
 			for(var/datum/achievementReward/B in unlocks)
 				boutput(src.client, SPAN_MEDAL("<FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>"))
 
+		return TRUE
+
 	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/clear_medal(medal_name)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return null
-		var/success = world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+		if (!medal_name) return FALSE
+		var/datum/apiRoute/players/medals/delete/deleteMedal = new
+		deleteMedal.buildBody(src.id ? src.id : null, src.ckey, medal_name)
 
-		if (success)
-			try
-				var/datum/apiRoute/players/medals/delete/deleteMedal = new
-				deleteMedal.buildBody(src.id || null, src.ckey, medal_name)
-				apiHandler.queryAPI(deleteMedal)
-			catch (var/exception/e)
-				var/datum/apiModel/Error/error = e.name
-				logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>clear_medal</b> for <b>[medal_name]</b>: [error.message]")
-				logTheThing(LOG_DIARY, null, "Medals Error: Error returned in clear_medal for [medal_name]: [error.message]", "debug")
+		try
+			apiHandler.queryAPI(deleteMedal)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>clear_medal</b> for <b>[medal_name]</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in clear_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
 
-		return success
+		return TRUE
 
 	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/has_medal(medal_name)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return
-		return world.GetMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+		if (!medal_name) return FALSE
+		var/datum/apiRoute/players/medals/has/hasMedals = new
+		hasMedals.routeParams = list(src.id ? src.id : src.ckey)
+		hasMedals.queryParams = list("medal" = medal_name)
+		var/datum/apiModel/HasMedalResource/hasMedal
+
+		try
+			hasMedal = apiHandler.queryAPI(hasMedals)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>has_medal</b> for <b>[medal_name]</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in has_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
+
+		return hasMedal.has_medal
 
 	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/get_all_medals()
 		RETURN_TYPE(/list)
-		if (!config || !config.medal_hub || !config.medal_password)
-			return
-		. = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
-		if(isnull(.))
-			return
-		. = params2list(.)
+
+		var/datum/apiRoute/players/medals/get/getMedals = new
+		var/list/filters = list()
+		if (src.id)
+			filters["player_id"] = src.id
+		else
+			filters["ckey"] = src.ckey
+		getMedals.queryParams = list(
+			"filters" = filters,
+			"sort_by" = "medal_title",
+			"descending" = FALSE,
+			"per_page" = 9999
+		)
+		var/datum/apiModel/Paginated/PlayerMedalResourceList/medals
+
+		try
+			medals = apiHandler.queryAPI(getMedals)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>get_all_medals</b> for <b>[src.ckey] ([src.id])</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in get_all_medals for [src.ckey] ([src.id]): [error.message]", "debug")
+			return null
+
+		return medals.ToList()
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
 	RETURN_TYPE(/datum/player)
-	var/datum/player/player = locate("player-[ckey(key)]")
-	return player
+	return global.players[ckey(key)]
 
-/// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections)
-/proc/make_player(key)
+/// returns a reference to a player datum, but it tries to make a new one if it cant an already existing one (this is how it persists between connections).
+/// optional client arg for if you want to associate a client for 'real' players (vs fake clientless players for discord commands).
+/proc/make_player(key, client = null)
 	RETURN_TYPE(/datum/player)
-	var/datum/player/player = find_player(key) // just double check so that we don't get any dupes
+	var/datum/player/player = find_player(key)
 	if (!player)
 		player = new(key)
+	if (!isnull(client))
+		player.client = client
 	return player
 
 /proc/record_player_playtime()
 	var/count = 1
-	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
+	var/list/recorded = list()
+	var/list/playtimes = list() //associative list with the format list("[index]" = list("id" = player_id, "seconds_played" = playtime_in_seconds))
 	for_by_tcl(P, /datum/player)
-		if (!P.ckey)
+		if (!P.id || (P.id in recorded))
 			continue
 		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
 		if (!P.current_playtime)
 			continue
 		playtimes["[count]"] = list("id" = P.id, "seconds_played" = round((P.current_playtime / (1 SECOND)))) //rounds 1/10th seconds to seconds
+		recorded += P.id
 		count++
 
 	try

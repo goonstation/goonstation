@@ -13,6 +13,17 @@
 	always_display_locks = 1
 	throwforce = 50
 	can_flip_bust = 1
+	is_short = TRUE
+
+	Cross(atom/movable/mover) //copy pasted from actual crates because this pathing is AGONY
+		if(istype(mover, /obj/projectile))
+			return 1
+		if(src.is_short && src.open && isliving(mover)) // let people climb onto the crate if the crate is open and against a wall basically
+			var/move_dir = get_dir(mover, src)
+			var/turf/next_turf = get_step(src, move_dir)
+			if(next_turf && !total_cross(next_turf, src))
+				return TRUE
+		return ..()
 
 /obj/storage/secure/crate/weapon
 	desc = "A secure weapons crate."
@@ -22,14 +33,27 @@
 	icon_opened = "weaponcrateopen"
 	icon_closed = "weaponcrate"
 
+	sec_weapons
+	name = "Security Weapons Crate"
+	req_access = list(access_securitylockers)
+	icon_state = "sec_weapons"
+	icon_opened = "sec_weaponsopen"
+	icon_closed = "sec_weapons"
+
 	confiscated_items
 		name = "confiscated items crate"
 		desc = "Secure storage for confiscated contraband."
-		req_access_txt = "2"
+		req_access = list(access_brig)
+		icon_opened = "sec_contrabandopen"
+		icon_closed = "sec_contraband"
+		icon_state = "sec_contraband"
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
+		icon_opened = "sec_armoryopen"
+		icon_closed = "sec_armory"
+		icon_state = "sec_armory"
 
 		tranquilizer
 			name = "tranquilizer crate"
@@ -43,7 +67,7 @@
 
 		shotgun
 			name = "shotgun crate"
-			spawn_contents = list(/obj/item/gun/kinetic/riotgun = 4,\
+			spawn_contents = list(/obj/item/gun/kinetic/pumpweapon/riotgun = 4,\
 			/obj/item/ammo/bullets/abg = 4)
 
 		pod_weapons
@@ -60,9 +84,14 @@
 	icon_opened = "plasmacrateopen"
 	icon_closed = "plasmacrate"
 
+	hazard
+		name = "Hazard Transport Crate"
+		desc = "A secure crate designed for transport of hazardous research materials."
+		req_access = list(access_research)
+
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		anti_biological
 			name = "anti-biological crate"
@@ -77,15 +106,24 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
-/obj/storage/secure/crate/gear/saxitoxin_grenades
+/obj/storage/secure/crate/gear/syndicate
+	name = "unmarked secure crate"
+	desc = "A secure crate. It doesn't seem to be using standard identification hardware."
+	req_access = list(access_syndicate_shuttle)
+
+/obj/storage/secure/crate/gear/syndicate/saxitoxin_grenades
 	name = "nerve agent crate (DANGER)"
-	req_access_txt = "52"
 	spawn_contents = list(/obj/item/reagent_containers/syringe/atropine = 3,\
 	/obj/item/chem_grenade/saxitoxin = 3)
 
+/obj/storage/secure/crate/gear/transfer
+	name = "Secure Transfer Crate"
+	desc = "A secure crate for transferring contraband, and definitely not people.";
+	req_access = list(access_security)
+
 /obj/storage/secure/crate/gear/armory
 	name = "secure weapons crate"
-	req_access = list(access_maxsec)
+	req_access = list(access_armory)
 
 /obj/storage/secure/crate/gear/armory/grenades
 	name = "special grenades crate"
@@ -111,7 +149,9 @@
 	name = "\improper Special Equipment crate"
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2)
+	/obj/item/turret_deployer/riot = 2,
+	/obj/item/gun/energy/stasis,
+	/obj/random_item_spawner/armoryweapon/one)
 
 /obj/storage/secure/crate/gear/armory/equipment/looted
 	spawn_contents = list()
@@ -140,6 +180,10 @@
 					carton.ourEgg.blog += blog
 				return 1
 
+	locked
+		name = "Hydroponics Transfer crate"
+		req_access = list(access_hydro)
+
 /obj/storage/secure/crate/eng
 	name = "Engineering crate"
 	desc = "A yellow crate."
@@ -148,11 +192,15 @@
 	icon_opened = "engcrate-open"
 	icon_closed = "engcrate"
 
+	locked
+		name = "Secure Engineering crate"
+		req_access = list(access_engineering)
+
 	explosives
 		name = "engineering explosive crate"
 		desc = "Contains controlled explosives designed for trench use."
 		req_access = list(access_engineering)
-		spawn_contents = list(/obj/item/pipebomb/bomb/engineering = 6)
+		spawn_contents = list(/obj/item/assembly/timer_ignite_pipebomb/engineering = 6)
 
 	interdictor
 		name = "interdictor fabrication crate"
@@ -179,6 +227,11 @@
 				var/obj/item/paper/book/from_file/interdictor_guide/B5 = new(src)
 				B5.pixel_y = 1
 				return 1
+
+	nuclearfuel
+		name = "Fissile Materials Crate"
+		desc = "Contains the resources required to construct nuclear fuel rods."
+		spawn_contents = list(/obj/item/raw_material/cerenkite = 6)
 
 /obj/storage/secure/crate/medical
 	desc = "A secure medical crate."

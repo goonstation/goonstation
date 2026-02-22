@@ -77,6 +77,7 @@
 			all_origin_names += O.name
 		appearance = artifact_controls.get_origin_from_string(pick(all_origin_names))
 
+	A.artiappear = appearance
 	var/name1 = pick(appearance.adjectives)
 	var/name2 = "thingy"
 	if (isitem(src))
@@ -93,6 +94,8 @@
 	if (isitem(src))
 		var/obj/item/I = src
 		I.item_state = appearance.name
+
+	A.teleportationally_unstable = prob(A.teleportationally_unstable_chance)
 
 	A.fx_image = new
 	A.fx_image.icon = src.icon
@@ -132,7 +135,7 @@
 		trigger_amount--
 		selection = pick(valid_triggers)
 		if (ispath(selection))
-			var/datum/artifact_trigger/AT = new selection
+			var/datum/artifact_trigger/AT = new selection(src)
 			A.triggers += AT
 			valid_triggers -= selection
 
@@ -162,6 +165,16 @@
 	else
 		A.show_fx(src)
 	A.effect_activate(src)
+	for (var/mob/living/L in range(5, src))
+		for(var/datum/objective/objective in L.mind?.objectives)
+			if (istype(objective, /datum/objective/crew/scientist/artifact))
+				var/datum/objective/crew/scientist/artifact/art_obj = objective
+				art_obj.artifacts_activated++
+				break
+			if (istype(objective, /datum/objective/crew/researchdirector/artifact))
+				var/datum/objective/crew/researchdirector/artifact/art_obj = objective
+				art_obj.artifacts_activated++
+				break
 
 /obj/proc/ArtifactDeactivated()
 	if (!src.ArtifactSanityCheck())
@@ -256,7 +269,7 @@
 		var/datum/artifact/activator_key/K = ACT.artifact
 
 		if (K.activated)
-			if (K.universal || A.artitype == K.artitype)
+			if (K.universal || A.artitype == K.activating_origin)
 				if (K.activator && !A.activated)
 					src.ArtifactActivated()
 					if(K.corrupting && length(A.faults) < 10) // there's only so much corrupting you can do ok
@@ -594,9 +607,9 @@
 	if ((target && ismob(target)) && type_of_action == "weapon")
 		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
-		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
+		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [replace_if_false(O.get_last_ckey(), "None")]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
+		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.get_last_ckey())]")
 
 	return

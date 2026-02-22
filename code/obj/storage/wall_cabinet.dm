@@ -7,7 +7,6 @@ TYPEINFO(/obj/item/storage/wall)
 	desc = "It's basically a big box attached to the wall."
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "wall"
-	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
 	force = 8
 	w_class = W_CLASS_BULKY
@@ -16,11 +15,12 @@ TYPEINFO(/obj/item/storage/wall)
 	deconstruct_flags = DECON_SIMPLE
 	burn_possible = FALSE
 	mechanics_type_override = /obj/item/storage/wall
+	slots = 13 // these can't move so I guess we may as well let them store more stuff?
+	max_wclass = W_CLASS_BULKY
 
 	New()
 		..()
-		// these can't move so I guess we may as well let them store more stuff?
-		src.create_storage(/datum/storage/unholdable, slots = 13, max_wclass = W_CLASS_BULKY)
+		src.create_storage(/datum/storage/unholdable, slots = src.slots, max_wclass = src.max_wclass)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -43,9 +43,9 @@ TYPEINFO(/obj/item/storage/wall)
 		if (prob(2))
 			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		for (var/i=rand(2,3), i>0, i--)
-			src.storage.add_contents(new /obj/item/tank/emergency_oxygen(src))
+			src.storage.add_contents(new /obj/item/tank/pocket/oxygen(src))
 			if (prob(40))
-				src.storage.add_contents(new /obj/item/tank/mini_oxygen(src))
+				src.storage.add_contents(new /obj/item/tank/mini/oxygen(src))
 			if (prob(40))
 				src.storage.add_contents(new /obj/item/clothing/mask/breath(src))
 
@@ -210,19 +210,21 @@ TYPEINFO(/obj/item/storage/wall)
 /obj/item/storage/wall/clothingrack
 	name = "clothing rack"
 	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "clothingrack_01"
+	var/base_icon_state = "01"
 	density = 1
 	slots = 7
 	anchored = ANCHORED
-	icon_state = "clothingrack" //They start full so might as well
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
 	update_icon()
 		if (!length(src.storage?.get_contents()))
-			src.icon_state = "clothingrack-empty"
+			src.icon_state = "clothingrack_empty"
 		else
-			src.icon_state = "clothingrack"
+			src.icon_state = "clothingrack_[src.base_icon_state]"
 
 /obj/item/storage/wall/clothingrack/dresses
+	base_icon_state = "dress1"
 	spawn_contents = list(/obj/item/clothing/under/suit/red/dress = 1,
 	/obj/item/clothing/under/suit/purple/dress = 1,
 	/obj/item/clothing/under/gimmick/wedding_dress = 1,
@@ -232,6 +234,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/kilt = 1)
 
 /obj/item/storage/wall/clothingrack/clothes1
+	base_icon_state = "01"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
 	/obj/item/clothing/under/gimmick/sweater = 1,
 	/obj/item/clothing/under/gimmick/mario = 1,
@@ -241,6 +244,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/misc/america = 1)
 
 /obj/item/storage/wall/clothingrack/dresses2
+	base_icon_state = "dress2"
 	spawn_contents = list(/obj/item/clothing/under/misc/dress/hawaiian = 1,
 	/obj/item/clothing/under/misc/dress/red = 1,
 	/obj/item/clothing/suit/dressb = 1,
@@ -250,6 +254,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/anthy = 1)
 
 /obj/item/storage/wall/clothingrack/clothes2
+	base_icon_state = "02"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random = 1,
 	/obj/item/clothing/under/gimmick/toga = 1,
 	/obj/item/clothing/suit/mj_suit = 1,
@@ -259,6 +264,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/suit/greek = 1)
 
 /obj/item/storage/wall/clothingrack/clothes3
+	base_icon_state = "03"
 	spawn_contents = list(/obj/item/clothing/suit/suspenders = 1,
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/misc/barber = 1,
@@ -268,6 +274,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/misc/mail = 1)
 
 /obj/item/storage/wall/clothingrack/clothes4
+	base_icon_state = "04"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/gimmick/dolan = 1,
@@ -277,6 +284,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
 /obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
+	base_icon_state = "05"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
 	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/suit/wintercoat = 1,

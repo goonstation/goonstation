@@ -1,0 +1,13 @@
+.SpeechModuleTree {
+  --section-bg-nested: color-mix(
+    in srgb,
+    var(--section-background),
+    var(--tab-color) 15%
+  );
+  .Section.module {
+    background-color: var(--section-bg-nested);
+  }
+  .Section.module--auxiliary {
+    background-color: color-mix(in srgb, var(--section-bg-nested), orange 5%);
+  }
+}

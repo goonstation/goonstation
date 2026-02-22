@@ -204,7 +204,7 @@
 	},
 /area/prefab/secbot_academy)
 "ib" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	name = "sink"
 	},
@@ -233,7 +233,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/secbot_academy)
 "iR" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 18
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
@@ -280,7 +280,7 @@
 /area/prefab/secbot_academy)
 "lu" = (
 /obj/machinery/light/small/floor,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "lA" = (
@@ -382,7 +382,7 @@
 /area/prefab/secbot_academy)
 "pi" = (
 /obj/table/reinforced/bar/auto,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "printer0";
 	name = "Old Printer";
@@ -391,8 +391,12 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/secbot_academy)
+"pH" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
 "pY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "ql" = (
@@ -434,7 +438,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "te" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -480,7 +484,7 @@
 /turf/simulated/floor/red,
 /area/prefab/secbot_academy)
 "vQ" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 18
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
@@ -563,13 +567,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
-/area/prefab/secbot_academy)
-"Ai" = (
-/obj/item/wrestlingbell{
-	desc = "A bell used to signal the start and end of classes, wait a minute this is just a stolen wrestling bell!";
-	name = "School bell"
-	},
-/turf/simulated/wall/auto/supernorn,
 /area/prefab/secbot_academy)
 "Ar" = (
 /obj/machinery/door/unpowered/wood/stall,
@@ -695,6 +692,13 @@
 /obj/item/paper,
 /obj/item/pen,
 /turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"HB" = (
+/obj/machinery/wrestlingbell{
+	desc = "A bell used to signal the start and end of classes, wait a minute this is just a stolen wrestling bell!";
+	name = "School bell"
+	},
+/turf/simulated/wall/auto/supernorn,
 /area/prefab/secbot_academy)
 "HL" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
@@ -1116,10 +1120,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/noGenerate)
-"YS" = (
-/obj/loudspeaker,
-/turf/simulated/floor/wood/two,
-/area/prefab/secbot_academy)
 "Za" = (
 /obj/decal/tile_edge/stripe{
 	dir = 4
@@ -1570,7 +1570,7 @@ Hf
 IM
 Hf
 IM
-Ai
+HB
 Wc
 SF
 Wc
@@ -1744,7 +1744,7 @@ Uk
 Uk
 Uk
 Ek
-YS
+pH
 XC
 XC
 UO
@@ -1939,7 +1939,7 @@ Uk
 Uk
 Uk
 Ek
-YS
+pH
 XC
 XC
 Bj

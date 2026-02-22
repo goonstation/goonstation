@@ -9,6 +9,7 @@
 	var/dy
 	var/dist_x
 	var/dist_y
+	var/momentum
 	var/range
 	var/target_x
 	var/target_y
@@ -24,6 +25,7 @@
 	var/dist_travelled = 0
 	var/speed_error = 0
 	var/throw_type
+	var/stops_on_mob_hit = TRUE
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
 			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, mob/thrown_by, atom/return_target,
@@ -37,6 +39,7 @@
 		src.dist_x = dist_x
 		src.dist_y = dist_y
 		src.range = range
+		src.momentum = max(min(range, GET_EUCLIDEAN_DIST(thing, target)),0)
 		src.target_x = target_x
 		src.target_y = target_y
 		src.transform_original = transform_original
@@ -48,6 +51,12 @@
 		src.end_throw_callback = end_throw_callback
 		src.user = usr // ew
 		src.throw_type = throw_type
+		if (throw_type & (THROW_PHASE | THROW_NO_CLIP))
+			src.thing.event_handler_flags |= MOVE_NOCLIP
+		if (throw_type & (THROW_ARC))
+			var/arc_height = (params && params["arc_height"]) ? params["arc_height"] : 24
+			var/arc_duration = (params && params["arc_time"]) ? params["arc_time"] / 2 : 1 SECONDS
+			animate(src.thing, pixel_y = arc_height, time = arc_duration, easing=CUBIC_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
 		..()
 
 	proc/get_throw_travelled()
@@ -86,16 +95,13 @@ var/global/datum/controller/throwing/throwing_controller = new
 				break
 			var/turf/T = thing.loc
 			if( !(
-					thr.target && thing.throwing && isturf(T) && \
-						(
-							(
-								(thr.target_x != thing.x || thr.target_y != thing.y ) && \
-								thr.dist_travelled < thr.range
-							) || \
-							T?.throw_unlimited || \
-							thing.throw_unlimited
-						)
-					))
+				thr.target && thing.throwing && isturf(T) && \
+					(
+						thr.momentum > 0 || \
+						T?.get_gforce_current() == GFORCE_GRAVITY_MINIMUM || \
+						thing.throw_unlimited
+					)
+				))
 				end_throwing = TRUE
 				break
 			var/choose_x = thr.error > 0
@@ -105,19 +111,50 @@ var/global/datum/controller/throwing/throwing_controller = new
 				end_throwing = TRUE
 				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
-			if (!thing.Move(next))  // Grayshift: Race condition fix. bump proc calls are delayed past the end of the loop and won't trigger end condition
+			if (thr.throw_type & THROW_THROUGH_WALL)
+				var/busted = FALSE
+				if (istype(next, /turf/simulated/wall))
+					var/turf/simulated/wall/wall = next
+					wall.ReplaceWithFloor()
+					busted = TRUE
+				else
+					for (var/obj/object in next.contents)
+						if (object.density)
+							object.ex_act(1)
+							busted = TRUE
+				if (busted)
+					new /obj/effects/explosion/dangerous(next)
+					end_throwing = FALSE
+					thr.throw_type = THROW_NORMAL
+
+			if (thr.throw_type & (THROW_PHASE | THROW_NO_CLIP) )
+				if ( (thr.throw_type & THROW_PHASE) && thr.get_throw_travelled() > 1)
+					thr.throw_type = THROW_NORMAL
+					thing.event_handler_flags = initial(thing.event_handler_flags)
+				else
+					thing.set_loc(next)
+			else if (!thing.Move(next))  // Grayshift: Race condition fix. bump proc calls are delayed past the end of the loop and won't trigger end condition
 				thr.hitAThing = TRUE // of !throwing on their own, so manually checking if Move failed as end condition
 				end_throwing = TRUE
 				break
+
+			if ((thr.throw_type & (THROW_ARC)) && ( thr.dist_travelled >= (thr.range * 0.5) ) )
+				thr.throw_type &= ~THROW_ARC
+				var/arc_duration = (thr.params && thr.params["arc_time"]) ? thr.params["arc_time"] / 2 : 1 SECONDS
+				animate(thing, pixel_y = 0, time = arc_duration, easing=CUBIC_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
+
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
-			var/hit_thing = thing.hit_check(thr)
+			var/hit_thing = ( thr.throw_type & THROW_NO_CLIP ) ? null : thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
+			thr.momentum -= max(0, T.get_gforce_fractional())
 			if(!thing.throwing || hit_thing)
 				end_throwing = TRUE
 				break
 
 		if(end_throwing)
+			if (thr.throw_type & (THROW_PHASE | THROW_NO_CLIP))
+				thing.event_handler_flags = initial(thing.event_handler_flags)
 			thrown -= thr
 			if(thr.end_throw_callback)
 				if(thr.end_throw_callback.Invoke(thr)) // pass /datum/thrown_thing, return 1 to continue the throw, might be useful!

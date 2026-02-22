@@ -2,6 +2,7 @@
 	id = ROLE_CHANGELING_HIVEMIND_MEMBER
 	display_name = "changeling hivemind member"
 	remove_on_clone = TRUE
+	wiki_link = "https://wiki.ss13.co/Changeling"
 
 	give_equipment()
 		var/datum/abilityHolder/changeling/master_ability_holder = src.master.current.get_ability_holder(/datum/abilityHolder/changeling)
@@ -29,6 +30,9 @@
 
 		hivemind_observer.set_owner(master_ability_holder)
 
+		src.owner.current.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[master_ability_holder]")
+		src.owner.current.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
+
 	remove_equipment()
 		var/mob/dead/target_observer/hivemind_observer/hivemind_observer = src.owner.current
 		var/mob/dead/observer/ghost_mob = src.owner.current.ghostize()
@@ -39,9 +43,9 @@
 		else
 			hivemind_observer.corpse.ghost = ghost_mob
 			ghost_mob.corpse = hivemind_observer.corpse
-
-		hivemind_observer.hivemind_owner.hivemind -= hivemind_observer
-		hivemind_observer.observers -= hivemind_observer
+		if (hivemind_observer.hivemind_owner)
+			hivemind_observer.hivemind_owner.hivemind -= hivemind_observer
+		LAZYLISTREMOVE(hivemind_observer.observers, hivemind_observer)
 		qdel(hivemind_observer)
 
 	announce_objectives()

@@ -1,0 +1,40 @@
+# Remove old directional subtypes.
+/obj/noticeboard/@SUBTYPES/north		: /obj/noticeboard/@SUBTYPES_1{@OLD; dir = 1}
+/obj/noticeboard/@SUBTYPES/south		: /obj/noticeboard/@SUBTYPES_1{@OLD; dir = 2}
+/obj/noticeboard/@SUBTYPES/east			: /obj/noticeboard/@SUBTYPES_1{@OLD; dir = 4}
+/obj/noticeboard/@SUBTYPES/west			: /obj/noticeboard/@SUBTYPES_1{@OLD; dir = 8}
+/obj/noticeboard/@SUBTYPES/directional	: /obj/noticeboard/@SUBTYPES_1{@OLD}
+
+# Repath subtypes.
+/obj/noticeboard/persistent{persistent_id = "bar"}					: /obj/noticeboard/persistent/bar{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "botany"}				: /obj/noticeboard/persistent/botany{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "brig"}					: /obj/noticeboard/persistent/brig{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "cargo"}				: /obj/noticeboard/persistent/cargo{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "chapel"}				: /obj/noticeboard/persistent/chapel{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "crew quarters"}		: /obj/noticeboard/persistent/crew_quarters{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "customs"}				: /obj/noticeboard/persistent/customs{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "detectives office"}	: /obj/noticeboard/persistent/detectives_office{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "engineering"}			: /obj/noticeboard/persistent/engineering{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "information office"}	: /obj/noticeboard/persistent/information_office{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "kitchen"}				: /obj/noticeboard/persistent/kitchen{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "mechanics"}			: /obj/noticeboard/persistent/mechanics{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "medbay"}				: /obj/noticeboard/persistent/medbay{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "research"}				: /obj/noticeboard/persistent/research{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "security"}				: /obj/noticeboard/persistent/security{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "security foyer"}		: /obj/noticeboard/persistent/security_foyer{@OLD; name = @SKIP; persistent_id = @SKIP}
+/obj/noticeboard/persistent{persistent_id = "wizard"}				: /obj/noticeboard/persistent/wizard{@OLD; name = @SKIP; desc = @SKIP; persistent_id = @SKIP}
+
+# Repath and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths multiple times.
+# NORTH
+/obj/noticeboard/@SUBTYPES{dir = @UNSET}	: /temporary_noticeboard_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+/obj/noticeboard/@SUBTYPES{dir = 1}			: /temporary_noticeboard_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+# SOUTH
+/obj/noticeboard/@SUBTYPES{dir = 0}			: /temporary_noticeboard_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+/obj/noticeboard/@SUBTYPES{dir = 2}			: /temporary_noticeboard_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+# EAST
+/obj/noticeboard/@SUBTYPES{dir = 4}			: /temporary_noticeboard_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+# WEST
+/obj/noticeboard/@SUBTYPES{dir = 8}			: /temporary_noticeboard_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+
+# Revert the temporary repaths.
+/temporary_noticeboard_repath/@SUBTYPES : /obj/noticeboard/@SUBTYPES{@OLD}

@@ -12,8 +12,7 @@
 /datum/apiModel/Tracked/PlayerRes/PlayerDataResource/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.key) \
-		|| isnull(src.value) \
+		isnull(src.key)
 	)
 		return FALSE
 

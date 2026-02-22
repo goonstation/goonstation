@@ -7,6 +7,7 @@
 	cooldown = 20 SECONDS
 	special_screen_loc="NORTH,EAST-1"
 	min_req_dist = 10
+	show_tooltip = FALSE
 
 	var/obj/spookMarker/marker = new /obj/spookMarker()		//removed for now
 	var/status = 0
@@ -37,9 +38,8 @@
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
-	cast()
-		if (..())
-			return 1
+	allowcast() // Spooking can be done even while force-manifested
+		return TRUE
 
 	proc/do_spook_ability(var/effect as text)
 		if (effect == 8)

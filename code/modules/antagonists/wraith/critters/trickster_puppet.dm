@@ -5,9 +5,9 @@
 	desc = "A strange shell of a person looking straight ahead with lifeless eyes."
 	density = 1
 	icon_state = "shade"
-	speechverb_say = "says"
-	speechverb_exclaim = "exclaims"
-	speechverb_ask = "asks"
+	speech_verb_say = "says"
+	speech_verb_exclaim = "exclaims"
+	speech_verb_ask = "asks"
 	var/const/life_tick_spacing = 20
 	health_brute = 8
 	health_brute_vuln = 1
@@ -58,7 +58,11 @@
 			if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 				src.hauntBonus += 6
 				if(master != null)
-					AH.possession_points++
+					var/could_possess_before = AH.possession_points >= master.points_to_possess
+					AH.possession_points = min(master.points_to_possess, AH.possession_points + 1)
+					if (!could_possess_before && AH.possession_points >= master.points_to_possess)
+						boutput(src, SPAN_NOTICE(SPAN_BOLD("<font size=+2>Possession is now ready.</font>")))
+						src.playsound_local(src, 'sound/voice/wraith/wraithraise2.ogg', 75)
 
 		if (master != null && master.next_area_change != null)
 			if (master.next_area_change < TIME)
@@ -95,9 +99,27 @@
 			src.mind.transfer_to(master)
 			var/datum/targetable/ability = master_ability_holder.getAbility(/datum/targetable/wraithAbility/haunt)
 			ability.doCooldown()
+
+			for (var/mob/dead/target_observer/observer as anything in src.observers)
+				observer.set_observe_target(src.master)
+
 			src.master = null
+
 		playsound(src, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60, 0)
 		. = ..()
+
+	mouse_drop(mob/M)
+		. = ..()
+		if (M != usr || usr == src || BOUNDS_DIST(usr, src) > 0 || !M.can_strip(src) || isAI(M) || isghostcritter(M) || !isliving(M))
+			return
+		boutput(M, SPAN_ALERT("You try to look further at [src], but your hand passes right through [him_or_her(src)]!"))
+
+	on_pet(mob/user)
+		src.tri_message(user,
+			SPAN_NOTICE("[user] shakes [src], trying to grab [his_or_her(src)] attention!"),
+			SPAN_ALERT("[user] tries to touch you, but [his_or_her(user)] hand passes right through you!"),
+			SPAN_ALERT("Your hand passes right through [src]!")
+		)
 
 	proc/demanifest()
 		if(master != null)

@@ -5,11 +5,6 @@
 		x:block_vision \
 	)
 
-//Put any items that NPCs physically cannot pickup here
-#define IS_NPC_ILLEGAL_ITEM(x) ( \
-		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
-	)
-
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
@@ -239,7 +234,7 @@
 
 		//Why do we WANT to go after this jerk?
 		if(M.client) rating += 20 //We'd rather go after actual non-braindead players
-		if(src.lastattacker == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
+		if(src.lastattacker?.deref() == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
 
 
 		//Why do we NOT want to go after this jerk
@@ -350,13 +345,14 @@
 			if(stop_fight)
 				ai_target = null
 				ai_set_state(AI_PASSIVE)
+				walk(src, null)
 				return
 
 
 			if(iscarbon(ai_target))
 				var/mob/living/carbon/carbon_target = ai_target
 
-				if(src.get_brain_damage() >= 60)
+				if(src.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 					src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
 					return
 
@@ -377,6 +373,10 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
+					else if (src.ai_origin_object && !locate(/obj/item/grab) in src && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
+						src.set_a_intent(INTENT_GRAB)
+						src.ai_attack_target(ai_target, null)
+
 				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src)) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
 					//I can attack someone! =D
 					ai_target_old.Cut()
@@ -403,7 +403,7 @@
 				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot(src) && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					src.throw_item(ai_target, list("npc_throw"))
+					src.adjust_throw(src.throw_item(ai_target, list("npc_throw")))
 
 			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck() && !A?.sanctuary)
 				//I can attack someone! =D
@@ -436,14 +436,32 @@
 
 				if(isgrab(src.r_hand) || isgrab(src.l_hand))
 					var/obj/item/grab/grab = locate(/obj/item/grab) in src
-					grab.Attackhand(src)
+					if (src.ai_origin_object && iscarbon(grab.affecting) && grab.state > GRAB_STRONG)
+						if (istype(src.ai_origin_object, /obj/artifact/cloner))
+							var/obj/artifact/cloner/cloner_art = src.ai_origin_object
+							var/datum/artifact/art_datum = cloner_art.artifact
+							if (!art_datum.activated)
+								if(BOUNDS_DIST(src, src.ai_origin_object))
+									walk_towards(src, src.ai_origin_object)
+									return
+								else // dunk nerd
+									src.ai_origin_object.Attackby(grab, src)
+									if(!grab.disposed && grab.loc == src)
+										src.emote("flip", TRUE)
+									src.ai_set_state(AI_PASSIVE) // dunked
+							else
+								src.emote("flip", TRUE)
+								src.ai_set_state(AI_PASSIVE) // dunked
+					else
+						grab.Attackhand(src)
+
 
 				if(!src.equipped() || prefer_hand)
 					// need to restore this at some point i guess, the "monkeys bite" code is commented out right now
 					//if(src.get_brain_damage() >= 60 && prob(25))
 					//	target.attack_paw(src) // idiots bite
 					//else
-					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
+					if(prob(30) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
 						src.set_a_intent(INTENT_GRAB)
 					src.ai_attack_target(ai_target, null)
 				else // With a weapon
@@ -492,6 +510,7 @@
 
 /mob/living/carbon/human/proc/ai_attack_target(atom/target, obj/item/weapon)
 	var/list/attack_params = list("icon-x"=rand(32), "icon-y"=rand(32), "left"=1)
+	src.set_dir(get_dir(src, target))
 	if(weapon)
 		return src.weapon_attack(target, weapon, 1, attack_params)
 	else
@@ -518,8 +537,11 @@
 				if(length(tables))
 					src.ai_attack_target(pick(tables), grab)
 			if(!grab.disposed && grab.loc == src)
-				src.emote("flip", TRUE)
-
+				if (src.ai_origin_object)
+					if (grab.state < GRAB_AGGRESSIVE)
+						grab.Attackhand(src)
+				else
+					src.emote("flip", TRUE)
 	// swap hands
 	if(src.r_hand && src.l_hand)
 		if(prob(src.hand ? 15 : 4))
@@ -614,7 +636,8 @@
 		var/turf/T = get_turf(src)
 		if(T)
 			SPAWN(0.2 SECONDS) // todo: probably reorder ai_move stuff and remove this spawn, without this they keep hitting themselves
-				src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
+				if (length(list("npc_throw")))
+					src.throw_item(locate(T.x + rand(-5, 5), T.y + rand(-5, 5), T.z), list("npc_throw"))
 
 	// give
 	if(prob(src.hand ? 5 : 1) && src.equipped() && ai_state != AI_ATTACKING)
@@ -810,8 +833,8 @@
 
 	if(pickup && !src.r_hand)
 		src.swap_hand(0)
-		if(src.put_in_hand_or_drop(pickup))
-			src.set_clothing_icon_dirty()
+		pickup.Attackhand(src)
+		src.set_clothing_icon_dirty()
 
 
 /mob/living/carbon/human/proc/ai_avoid(var/turf/T)
@@ -866,8 +889,7 @@
 	else return 0
 
 /mob/living/carbon/human/proc/ai_incapacitated()
-	if(stat || hasStatus(list("stunned", "unconscious", "knockdown")) || !sight_check(1)) return 1
-	else return 0
+	return is_incapacitated(src) || !sight_check(1)
 
 /mob/living/carbon/human/proc/ai_validpath()
 
@@ -954,8 +976,8 @@
 			W.Attackby(src.r_hand, src)
 			acted = 1
 
-		if((locate(/obj/grille) in get_step(src,dir))  && !acted)
-			var/obj/grille/G = (locate(/obj/grille) in get_step(src,dir))
+		if((locate(/obj/mesh/grille) in get_step(src,dir))  && !acted)
+			var/obj/mesh/grille/G = (locate(/obj/mesh/grille) in get_step(src,dir))
 			if(!G.ruined)
 				G.Attackby(src.r_hand, src)
 				acted = 1
@@ -985,4 +1007,3 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
-#undef IS_NPC_ILLEGAL_ITEM

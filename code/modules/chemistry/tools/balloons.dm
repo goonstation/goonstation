@@ -9,7 +9,7 @@
 	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "balloon_white"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = TABLEPASS | OPENCONTAINER
 	rc_flags = 0
 	initial_volume = 40
 	pass_unstable = TRUE
@@ -106,7 +106,7 @@
 		var/mob/living/carbon/human/H = user
 
 		var/list/actions = list()
-		if (user.mind && user.mind.assigned_role == "Clown")
+		if (user.traitHolder?.hasTrait("training_clown"))
 			actions += "Make balloon animal"
 		if (src.reagents.total_volume > 0 || TOTAL_MOLES(src.air) >= BREATH_VOLUME)
 			actions += "Inhale"

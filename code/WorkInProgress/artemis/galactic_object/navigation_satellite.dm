@@ -23,7 +23,7 @@
 
 	New()
 		..()
-		flick("nav_sat_extend",src)
+		FLICK("nav_sat_extend",src)
 
 	/*
 		flags |= HAS_ARTEMIS_SCAN
@@ -47,7 +47,7 @@
 	name = "Equipment Chute"
 	desc = "Loading site for ship equipment."
 	icon = 'icons/obj/large/96x32.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "loader"
 	pixel_x = -32
 
@@ -85,7 +85,7 @@
 					ship.buoy_count++
 					qdel(O)
 					icon_state = "loader"
-					flick("loader_open", src)
+					FLICK("loader_open", src)
 				else
 					boutput(user, SPAN_ALERT("The ship seems to refuse the [O]."))
 			else

@@ -6,9 +6,9 @@ import { BoardgameData } from '../../../utils';
  * Renders help overlay for the board
  */
 
-const GridGuideRenderer = (props, context) => {
-  const { data } = useBackend<BoardgameData>(context);
-  const { mouseCoords, tileSize, isFlipped } = useStates(context);
+const GridGuideRenderer = () => {
+  const { data } = useBackend<BoardgameData>();
+  const { mouseCoords, tileSize, isFlipped } = useStates();
   const { width, height } = data.boardInfo;
 
   const currentUser = data.currentUser;
@@ -32,7 +32,8 @@ const GridGuideRenderer = (props, context) => {
   const yDiff = rectCenterY - py;
   const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 
-  const showArrow = distance > tileSize.width / 2 && distance > tileSize.height / 2;
+  const showArrow =
+    distance > tileSize.width / 2 && distance > tileSize.height / 2;
 
   const xDiffNorm = xDiff / distance;
   const yDiffNorm = yDiff / distance;
@@ -42,10 +43,25 @@ const GridGuideRenderer = (props, context) => {
 
   return (
     <svg className={'boardgame__board-ggrenderer'} width="100%" height="100%">
-      <rect x={rectX} y={rectY} width={tileSize.width} height={tileSize.height} fill="red" fill-opacity="0.4" />
       <rect
-        x={isFlipped ? width * tileSize.width - px - tileSize.width / 2 : px - tileSize.width / 2}
-        y={isFlipped ? height * tileSize.height - py - tileSize.height / 2 : py - tileSize.height / 2}
+        x={rectX}
+        y={rectY}
+        width={tileSize.width}
+        height={tileSize.height}
+        fill="red"
+        fill-opacity="0.4"
+      />
+      <rect
+        x={
+          isFlipped
+            ? width * tileSize.width - px - tileSize.width / 2
+            : px - tileSize.width / 2
+        }
+        y={
+          isFlipped
+            ? height * tileSize.height - py - tileSize.height / 2
+            : py - tileSize.height / 2
+        }
         // Remove 10 from edge
         width={tileSize.width}
         height={tileSize.height}
@@ -71,7 +87,15 @@ const GridGuideRenderer = (props, context) => {
 
 const ArrowHead = () => (
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+    <marker
+      id="arrow"
+      markerWidth="10"
+      markerHeight="10"
+      refX="0"
+      refY="3"
+      orient="auto"
+      markerUnits="strokeWidth"
+    >
       <path d="M0,0 L0,6 L9,3 z" fill="orange" stroke="none" />
     </marker>
   </defs>

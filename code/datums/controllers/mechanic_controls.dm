@@ -95,7 +95,7 @@ var/datum/mechanic_controller/mechanic_controls
 					var/amt = mats_types[req_id]
 					if(isnull(amt))
 						amt = 1
-					var/datum/manufacturing_requirement/R = getRequirement(req_id)
+					var/datum/manufacturing_requirement/R = getManufacturingRequirement(req_id)
 					M.item_requirements[R] = amt
 			else if (mats_number > 0)
 				for(var/tracker = 1, tracker <= mats_number, tracker ++)

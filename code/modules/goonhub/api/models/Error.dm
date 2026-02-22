@@ -3,7 +3,7 @@
 /datum/apiModel/Error
 	var/message	= null // string
 	var/errors	= null // null or list
-	var/status_code = null // null or int
+	var/status_code = 500 // null or int
 
 /datum/apiModel/Error/SetupFromResponse(response)
 	. = ..()

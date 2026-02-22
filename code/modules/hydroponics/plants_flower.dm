@@ -18,7 +18,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower/rose
 	name = "Rose"
 	seedcolor = "#AA2222"
-	crop = /obj/item/plant/flower/rose
+	crop = /obj/item/clothing/head/flower/rose
 	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)
 	mutations = list(/datum/plantmutation/rose/holorose)
 
@@ -33,7 +33,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower/rafflesia
 	name = "Rafflesia"
 	seedcolor = "#A4000F"
-	crop = /obj/item/clothing/head/rafflesia
+	crop = /obj/item/clothing/head/flower/rafflesia
 	growthmode = "weed"
 	starthealth = 40
 	growtime = 50

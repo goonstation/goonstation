@@ -2,6 +2,8 @@
 	id = ROLE_TRAITOR
 	display_name = "traitor"
 	antagonist_icon = "traitor"
+	popup_name_override = "traitorhard" //Will be set to ROLE_TRAITOR once given an uplink
+	wiki_link = "https://wiki.ss13.co/Traitor"
 
 	/// Our initial uplink. This is only used to determine the popup shown to the player, so it isn't too important to track.
 	var/obj/item/uplink/uplink
@@ -9,6 +11,30 @@
 	var/list/datum/syndicate_buylist/purchased_items = list()
 	/// If the traitor got a surplus crate, this list contains info about the items that were inside that crate.
 	var/list/datum/syndicate_buylist/surplus_crate_items = list()
+
+	proc/find_uplink(var/mob/living/carbon/human/H, var/type)
+		if(!ispath(type) || !istype(H))
+			return FALSE
+		var/uplink_source
+		var/loc_string
+		if (istype(H.belt, type))
+			uplink_source = H.belt
+			loc_string = "on your belt"
+		else if (istype(H.wear_id, type))
+			uplink_source = H.wear_id
+			loc_string = "in your ID slot"
+		else if (istype(H.r_store, type))
+			uplink_source = H.r_store
+			loc_string = "in your pocket"
+		else if (istype(H.l_store, type))
+			uplink_source = H.l_store
+			loc_string = "in your pocket"
+		else if (istype(H.ears, type))
+			uplink_source = H.ears
+			loc_string = "on your head"
+		if(!uplink_source || !loc_string)
+			return FALSE
+		return list(uplink_source, loc_string)
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
@@ -24,22 +50,18 @@
 			H.show_antag_popup("traitorhard")
 			return
 
-		// step 1 of uplinkification: find a source! prioritize PDAs, then try headsets
-		if (istype(H.belt, /obj/item/device/pda2) || istype(H.belt, /obj/item/device/radio))
-			uplink_source = H.belt
-			loc_string = "on your belt"
-		else if (istype(H.wear_id, /obj/item/device/pda2))
-			uplink_source = H.wear_id
-			loc_string = "in your ID slot"
-		else if (istype(H.r_store, /obj/item/device/pda2))
-			uplink_source = H.r_store
-			loc_string = "in your pocket"
-		else if (istype(H.l_store, /obj/item/device/pda2))
-			uplink_source = H.l_store
-			loc_string = "in your pocket"
-		else if (istype(H.ears, /obj/item/device/radio))
-			uplink_source = H.ears
-			loc_string = "on your head"
+		var/preferred_uplink = H.client?.preferences.preferred_uplink || PREFERRED_UPLINK_PDA
+		// step 1 of uplinkification: find a source! Prioritize the preferred option, then PDA, then headset, then give up and just spawn one.
+		if(preferred_uplink != PREFERRED_UPLINK_STANDALONE) //Standalone uplink, skip finding pda or headset
+			var/preference_to_type = list(PREFERRED_UPLINK_PDA = /obj/item/device/pda2, PREFERRED_UPLINK_RADIO = /obj/item/device/radio)
+			var/found_uplink_data = src.find_uplink(H, preference_to_type[preferred_uplink])
+			if(!found_uplink_data) // Couldn't find preferred, let's try PDA
+				found_uplink_data = src.find_uplink(H, /obj/item/device/pda2)
+			if(!found_uplink_data) // Uh oh, last try!
+				found_uplink_data = src.find_uplink(H, /obj/item/device/radio)
+			if(found_uplink_data)
+				uplink_source = found_uplink_data[1]
+				loc_string = found_uplink_data[2]
 
 		// step 2 of uplinkification: put the actual uplink into the item, and save info about it to the owner's memory
 		// if we find a valid item source, then we create one
@@ -59,6 +81,9 @@
 				loc_string = "on the ground beneath you"
 			else
 				loc_string = "in [H.back] on your back"
+
+		src.popup_name_override = ROLE_TRAITOR
+
 		uplink.setup(src.owner, uplink_source)
 
 		// step 3 of uplinkification: inform the player about it and store the code in their memory
@@ -94,24 +119,17 @@
 		#endif
 		new objective_set_path(src.owner, src)
 
-	do_popup(override)
-		if (!override) // Display a different popup depending on the type of uplink we got
-			if (!uplink)
-				override = "traitorhard"
-			else
-				override = "traitorpda"
-		..(override)
-
 	get_statistics()
 		var/list/purchased_items = list()
 		for (var/datum/syndicate_buylist/purchased_item as anything in src.purchased_items)
-			var/obj/item_type = initial(purchased_item.item)
-			purchased_items += list(
-				list(
-					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-					"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+			if(length(purchased_item.items) > 0)
+				var/obj/item_type = initial(purchased_item.items[1])
+				purchased_items += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+					)
 				)
-			)
 
 		. = list(
 			list(
@@ -124,13 +142,14 @@
 		var/list/crate_items = list()
 		if (length(src.surplus_crate_items))
 			for (var/datum/syndicate_buylist/crate_item as anything in src.surplus_crate_items)
-				var/obj/item_type = initial(crate_item.item)
-				crate_items += list(
-					list(
-						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-						"name" = "[crate_item.name]",
+				if(length(crate_item.items) > 0)
+					var/obj/item_type = initial(crate_item.items[1])
+					crate_items += list(
+						list(
+							"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+							"name" = "[crate_item.name]",
+						)
 					)
-				)
 
 			. += list(
 				list(

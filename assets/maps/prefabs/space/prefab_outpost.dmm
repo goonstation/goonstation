@@ -43,7 +43,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/mining/miningoutpost)
 "ak" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/sanitary/white,
 /area/mining/miningoutpost)
@@ -107,7 +107,7 @@
 /area/mining/miningoutpost)
 "au" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/mining/miningoutpost)
 "av" = (

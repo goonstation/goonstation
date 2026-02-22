@@ -53,13 +53,14 @@ ABSTRACT_TYPE(/obj/vehicle)
 	remove_air(amount)
 		return src.loc.remove_air(amount)
 
-	return_air()
-		return src.loc.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc.return_air()
 
 	attackby(obj/item/W, mob/user)
 		if(src.rider && src.rider_visible && W.force)
 			W.attack(src.rider, user)
-			user.lastattacked = src // sets click cooldown
+			user.lastattacked = get_weakref(src) // sets click cooldown
 			if (attacks_fast_eject || is_incapacitated(rider))
 				eject_rider()
 			W.visible_message(SPAN_ALERT("[user] swings at [src.rider] with [W]!"))
@@ -124,6 +125,16 @@ ABSTRACT_TYPE(/obj/vehicle)
 						A.ex_act(severity)
 					qdel(src)
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if(src.rider_visible && src.rider)
+			return "[src.rider] is currently riding it."
+
+	Move(NewLoc, direct)
+		. = ..()
+		if(src.rider_visible && src.rider)
+			src.rider.dir = direct
+
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
 		if(thing == src.rider)
@@ -141,7 +152,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	proc/eject_rider(var/crashed, var/selfdismount, var/ejectall = TRUE)
 		if(src.rider)
 			MOVE_OUT_TO_TURF_SAFE(src.rider, src)
-			ClearSpecificOverlays("rider")
+			src.vis_contents -= src.rider
 			ClearSpecificOverlays("booster_image")
 			handle_button_removal()
 			src.rider = null
@@ -149,7 +160,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.eject_other_stuff()
 
 	was_deconstructed_to_frame(mob/user)
-		eject_rider(crashed=FALSE, selfdismount=FALSE, ejectall=TRUE)
+		if (src.rider)
+			eject_rider(crashed=FALSE, selfdismount=FALSE, ejectall=TRUE)
 
 	/// remove the ability buttons from the rider
 	proc/handle_button_removal()
@@ -184,25 +196,21 @@ ABSTRACT_TYPE(/obj/vehicle)
 	// This handles the code that USED to be defined individually in each vehicle's relaymove() proc
 	// all non-machinery vehicles except forklifts and skateboards use this now
 	relaymove(mob/user as mob, dir)
-		// we reset the overlays to null in case the relaymove() call was initiated by a
-		// passenger rather than the driver (we shouldn't have a rider overlay if there is no rider!)
-		src.overlays = null
-
 		if(!src.rider || user != src.rider)
 			return
+		if(src.hasStatus("teleporting"))
+			return
+
+		src.dir = user.dir
 
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 
-		if(src.rider_visible)
-			src.overlays += src.rider
-
 		// You can't move in space without the booster upgrade
 		if (src.booster_upgrade)
-			src.overlays += booster_image
+			src.UpdateOverlays(booster_image, "booster_image")
 		else
-			var/turf/T = get_turf(src)
-
-			if(T.throw_unlimited && istype(T, /turf/space))
+			src.ClearSpecificOverlays("booster_image")
+			if (user.traction == TRACTION_NONE)
 				return
 
 		// Next, we do some simple math to adjust the vehicle's glide_size based on its speed and to compensate for lag
@@ -274,7 +282,7 @@ TYPEINFO(/obj/vehicle/segway)
 	health_max = 30
 	var/weewoo_cycles_remaining = 0 //! Number of light cycles currently left to perform
 	var/initial_weewoo_cycles = 10 //! Number of times our lights cycle with each press of the siren button
-	soundproofing = FALSE
+	soundproofing = SOUNDPROOFING_ON
 	can_eject_items = TRUE
 	var/datum/light/light
 	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
@@ -332,7 +340,7 @@ TYPEINFO(/obj/vehicle/segway)
 		src.underlays += src.image_under
 	else
 		src.icon_state = src.icon_base
-		src.UpdateOverlays(null, "rider")
+		src.vis_contents -= src.rider
 		src.underlays = null
 
 /obj/vehicle/segway/bump(atom/AM as mob|obj|turf)
@@ -550,7 +558,7 @@ TYPEINFO(/obj/vehicle/segway)
 		handle_button_addition()
 	rider.pixel_x = 0
 	rider.pixel_y = 5
-	src.UpdateOverlays(rider, "rider")
+	src.vis_contents += src.rider
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -643,7 +651,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	var/rider_state = 1
 	delay = 4
 	ability_buttons_to_initialize = list(/obj/ability_button/fbuffer_toggle, /obj/ability_button/fbuffer_status)
-	soundproofing = 0
+	soundproofing = SOUNDPROOFING_ON
 	can_eject_items = TRUE
 
 	New()
@@ -689,7 +697,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 		src.underlays += src.image_under
 	else
 		src.icon_state = src.icon_base
-		src.UpdateOverlays(null, "rider")
+		src.vis_contents -= src.rider
 		src.underlays = null
 
 /obj/vehicle/floorbuffer/Move()
@@ -873,8 +881,8 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	if (target.client)
 		handle_button_addition()
 	rider.pixel_x = 0
-	rider.pixel_y = 10
-	src.UpdateOverlays(rider, "rider")
+	rider.pixel_y = 5
+	src.vis_contents += rider
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -976,7 +984,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	rider_visible = 0
 	is_syndicate = 1
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/drop_peel, /obj/ability_button/stopthebus/clowncar)
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 	var/peel_count = 5
 	HELP_MESSAGE_OVERRIDE({"While wearing two or more pieces of clown attire, <b>click drag</b> yourself to the car while next to it to enter it.
@@ -1090,6 +1098,9 @@ TYPEINFO(/obj/vehicle/clowncar)
 	if(mob_target == user && can_act(user))	// if drop self, then climbed in
 		if(rider)
 			return
+		if (user.hasStatus("drunk"))
+			var/mob/living/carbon/human/H = user
+			H.apply_automated_arrest("DUI.", "Drove while inebriated.")
 		mob_target.set_loc(src)
 		rider = mob_target
 		handle_button_addition()
@@ -1324,7 +1335,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 /obj/vehicle/clowncar/cluwne/attackby(var/obj/item/W, var/mob/user)
 	eject_rider()
 	W.attack(rider, user)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 /obj/vehicle/clowncar/cluwne/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 	..(crashed, selfdismount)
@@ -1382,7 +1393,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	desc = "He looks happy... how odd!"
 	icon_state = "segwaycat"
 	layer = MOB_LAYER + 1
-	soundproofing = 0
+	soundproofing = SOUNDPROOFING_ON
 	can_eject_items = TRUE
 
 // Might as well make use of the Garfield sprites (Convair880).
@@ -1476,8 +1487,8 @@ TYPEINFO(/obj/vehicle/clowncar)
 			C.show_message(SPAN_ALERT("<b>[rider] is flung over the [src]'s head!</b>"), 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
+		src.vis_contents -= rider
 		rider = null
-		ClearSpecificOverlays("rider")
 		return
 	if(selfdismount)
 		boutput(rider, SPAN_NOTICE("You dismount from the [src]."))
@@ -1485,8 +1496,8 @@ TYPEINFO(/obj/vehicle/clowncar)
 			if(C == rider)
 				continue
 			C.show_message("<b>[rider]</b> dismounts from the [src].", 1)
+	src.vis_contents -= rider
 	rider = null
-	ClearSpecificOverlays("rider")
 	return
 
 /obj/vehicle/cat/do_special_on_relay(mob/user as mob, dir)
@@ -1516,7 +1527,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	rider = target
 	rider.pixel_x = 0
 	rider.pixel_y = 5
-	src.UpdateOverlays(rider, "rider")
+	src.vis_contents += rider
 	src.icon_state = "[src.icon_state]1"
 
 	for (var/mob/C in AIviewers(src))
@@ -1585,7 +1596,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	var/darkness = FALSE
 	booster_upgrade =1
 	delay = 1
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 
 	New()
 		..()
@@ -1889,7 +1900,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 			O.throw_at(target, 10, 2)
-			if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal) || istype(O, /obj/table) || istype(O, /obj/railing) || istype(O, /obj/rack))
+			if(istype(O, /obj/window) || istype(O, /obj/mesh/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal) || istype(O, /obj/table) || istype(O, /obj/railing) || istype(O, /obj/rack))
 				qdel(O)
 			if(istype(O, /obj/storage))
 				O:pry_open()
@@ -2212,7 +2223,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	var/openpanel = 0			//1 when the back panel is opened
 	var/broken = 0				//1 when the forklift is broken
 	var/light = 0				//1 when the yellow light is on
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	can_eject_items = TRUE
 	var/image/image_light = null
 	var/image/image_panel = null
@@ -2329,15 +2340,15 @@ TYPEINFO(/obj/vehicle/forklift)
 	if (broken)
 		return
 
-	var/turf/T = get_turf(src)
-	if(T.throw_unlimited && istype(T, /turf/space) && !src.booster_upgrade)
+	if(user.traction == TRACTION_NONE && !src.booster_upgrade)
 		return
 
 	//forklift
 	if(src.rider && user == src.rider)
+		src.dir = user.dir
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 		if (!src.booster_upgrade)
-			if(T.throw_unlimited && istype(T, /turf/space))
+			if(user.traction == TRACTION_NONE)
 				return
 		src.glide_size = (32 / td) * world.tick_lag
 		for(var/mob/M in src)
@@ -2382,7 +2393,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		return
 
 	//pick up crates with forklift
-	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && BOUNDS_DIST(A, src) == 0 && src.rider == user && helditems.len != helditems_maximum && !broken)
+	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && BOUNDS_DIST(A, src) == 0 && src.rider == user && helditems.len < (user.traitHolder?.hasTrait("training_quartermaster") ? 2 : 1) * helditems_maximum && !broken)
 		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
@@ -2436,7 +2447,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		return
 
 	var/turf/T = get_turf(src)
-	if(T.throw_unlimited && istype(T, /turf/space))
+	if(istype(T, /turf/space) && !istype(T, /turf/space/fluid))
 		return
 
 	if(length(helditems) >= 1)

@@ -1,4 +1,100 @@
 //GUNS GUNS GUNS
+/datum/projectile/bullet/homing/glatisant
+	name = "\improper Glatisant cluster warhead"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	dissipation_rate = 0
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bullethole-large"
+	damage = 15
+	icon_state = "mininuke"
+	shot_delay = 1 SECONDS
+	min_speed = 24
+	max_speed = 36
+	start_speed = 24
+	max_rotation_rate = 7
+	auto_find_targets = FALSE
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		explosion_new(null, get_turf(hit), 10)
+		for (var/i in -4 to 4)
+			var/obj/projectile/P = initialize_projectile(get_turf(O), new/datum/projectile/bullet/homing/glatisant_submuntitions, O.xo, O.yo, O.shooter)
+			P.rotateDirection(180 + 8*i)
+			P.launch()
+
+/datum/projectile/bullet/homing/glatisant_submuntitions
+	name = "\improper Glatisant submuntition seeker"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	dissipation_rate = 0
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bullethole-small"
+	damage = 20
+	icon_state = "40mm_lethal"
+	shot_volume = 33
+	min_speed = 12
+	max_speed = 24
+	start_speed = 12
+	max_rotation_rate = 16
+	hit_ground_chance = 100
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		explosion_new(null, get_turf(hit), 16)
+
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . && isliving(M) && !isintangible(M)
+
+//much of this shamelessly copy-pasted from the pod-seeker
+/obj/item/gun/kinetic/glatisant
+	name = "\improper Glatisant cluster missile launcher"
+	desc = "A platform for launching high-tech cluster munitions. \"Anderson Para-Munitions\" is printed on the sighting module."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon_state = "missile_launcher" //could use a bespoke sprite but a recolor will do for now rip
+	item_state = "missile_launcher"
+	color = list(1.09141,-0.886668,-0.991788,0.139438,-0.352545,-1.5129,-0.110001,1.06701,2.19351)
+	has_empty_state = TRUE
+	w_class = W_CLASS_BULKY
+	throw_speed = 2
+	throw_range = 4
+	force = MELEE_DMG_LARGE
+	contraband = 8
+	ammo_cats = list(AMMO_ROCKET_ALL)
+	max_ammo_capacity = 1
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	muzzle_flash = "muzzle_flash_launch"
+	default_magazine = /obj/item/ammo/bullets/pod_seeking_missile
+	recoil_strength = 13
+
+	New()
+		ammo = new default_magazine
+		ammo.amount_left = 1
+		set_current_projectile(new /datum/projectile/bullet/homing/glatisant)
+		AddComponent(/datum/component/holdertargeting/smartgun/homing, 1)
+		..()
+
+/obj/item/ammo/bullets/glatisant
+	sname = "\improper Glatisant cluster missile"
+	name = "\improper Glatisant cluster missile"
+	desc = "A high-explosive missile, equipped active seekers and filled with homing submunitions. \"Anderson Para-Munitions\" is stenciled on the side."
+	amount_left = 1
+	max_amount = 1
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "mininuke"
+	ammo_type = new /datum/projectile/bullet/homing/glatisant
+	ammo_cat = AMMO_ROCKET_RPG
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
 /datum/projectile/energy_bolt/taser_beam
 	cost = 0
 	max_range = PROJ_INFINITE_RANGE
@@ -22,7 +118,7 @@
 		var/Px = Sx + sin(P.angle) * dist
 		var/Py = Sy + cos(P.angle) * dist
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
 		for(var/obj/O in affected)
 			O.color = list(1,2.30348,-4.4382,0,0,1.96078,0,-1.3074,3.46173)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
@@ -75,7 +171,7 @@
 		var/Px = Sx + sin(P.angle) * dist
 		var/Py = Sy + cos(P.angle) * dist
 
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
 		for(var/obj/O in affected)
 			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
@@ -99,13 +195,13 @@
 	shot_sound = null
 	hit_mob_sound = null
 	hit_object_sound = null
-	silentshot = TRUE
+	no_hit_message = TRUE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		. = ..()
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			O.alpha = 0
 			O.color = "#ff0000"
@@ -145,7 +241,7 @@
 		. = ..()
 		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
 		var/obj/railgun_trg_dummy/end = new(get_turf(P))
-		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
 		for(var/obj/O in affected)
 			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
 		SPAWN(1 SECOND)
@@ -166,12 +262,12 @@
 
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
-	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
+	desc = "An assault rifle capable of firing single precise bursts. The magazine holders are embossed with \"Anderson Para-Munitions\""
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
@@ -285,10 +381,6 @@
 		ammo.amount_left = 30
 		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
 
-
-/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
-	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
-
 //smart extinguisher
 /obj/item/gun/flamethrower/extinguisher
 	name = "smart fire extinguisher"
@@ -341,7 +433,7 @@
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
-	projectile_speed = 6
+	projectile_speed = 7
 	max_range = 500
 	dissipation_rate = 0
 	damage = 10
@@ -354,10 +446,10 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.25, 32)
+		O.internal_speed = min(O.internal_speed * 1.33, 72)
 
 	get_power(obj/projectile/P, atom/A)
-		return 15 + P.internal_speed
+		return 15 + (P.internal_speed * 0.66)
 
 //desert eagle. The biggest, baddest handgun
 /obj/item/gun/kinetic/deagle
@@ -475,7 +567,7 @@
 	name = "Scroll of Enchantment"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -523,7 +615,7 @@
 		src.rarity = max(src.rarity, round((currentench+incr+1)/2) + 2)
 	else
 		src.rarity = initial(src.rarity)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	src.UpdateName()
 	return currentench + incr
 
@@ -534,7 +626,6 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
-	flags = FPRINT
 	anchored = ANCHORED
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
@@ -642,7 +733,7 @@ TYPEINFO(/obj/item/device/geiger)
 	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
@@ -652,16 +743,47 @@ TYPEINFO(/obj/item/device/geiger)
 	New()
 		. = ..()
 		AddComponent(/datum/component/holdertargeting/geiger)
-		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(change_icon_state))
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(on_geiger_tick))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
+		// geiger counter + assembly-applier -> geiger counter/Applier-Assembly
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
 
-	proc/change_icon_state(source, stage)
-		switch(stage)
-			if(1 to 2)
-				flick("geiger-1", src)
-			if(3 to 4)
-				flick("geiger-2", src)
-			if(5)
-				flick("geiger-3", src)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_get_state(var/manipulated_geiger, var/obj/item/assembly/parent_assembly)
+		return TRUE
+
+	proc/assembly_setup(var/manipulated_geiger, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to apply the component onto the assembly as well
+		parent_assembly.AddComponent(/datum/component/holdertargeting/geiger)
+
+	proc/assembly_removal(var/manipulated_geiger, var/obj/item/assembly/parent_assembly, var/mob/user)
+		//we need to remove the component from the assembly once we remove this
+		parent_assembly.RemoveComponentsOfType(/datum/component/holdertargeting/geiger)
+
+
+/// ----------------------------------------------
+
+
+
+	proc/on_geiger_tick(source, stage)
+		if(src.master && !ON_COOLDOWN(src, "geiger_assembly", 0.5 SECONDS))
+			SPAWN( 0 )
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["message"] = "ACTIVATE"
+				src.master.receive_signal(signal)
+		else
+			switch(stage)
+				if(1 to 2)
+					FLICK("geiger-1", src)
+				if(3 to 4)
+					FLICK("geiger-2", src)
+				if(5)
+					FLICK("geiger-3", src)
 
 
 /obj/decal/fireplace  //for Jan's chrismas event
@@ -701,3 +823,226 @@ TYPEINFO(/obj/item/device/geiger)
 			user.u_equip(src)
 			qdel(src)
 		. = ..()
+
+//vacation satan
+// Come to collect a poor unfortunate soul. Or just have a drink. One or the other
+/mob/living/carbon/human/vacation_satan
+	nodamage = 1
+	anchored = ANCHORED
+	New()
+		..()
+		src.add_ability_holder(/datum/abilityHolder/gimmick)
+		abilityHolder.addAbility(/datum/targetable/gimmick/go2hell)
+		abilityHolder.addAbility(/datum/targetable/gimmick/highway2hell)
+		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
+		abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
+
+		SPAWN(0)
+			abilityHolder.updateButtons()
+			src.gender = "male"
+			src.real_name = "Satan"
+			src.name = "Satan"
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/tourist/max_payne, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/sandal/magic, SLOT_SHOES)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses/tanning, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/storage/fanny, SLOT_BELT)
+			src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/fruity)
+			src.bioHolder.AddEffect("demon_horns", 0, 0, 1)
+			src.bioHolder.AddEffect("hell_fire", 0, 0, 1)
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/fruity
+	rand_pos = FALSE
+	glass_types = list(/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail)
+	whitelist = list("schnapps", "cider", "sangria", "maitai", "planter", "cosmo")
+
+//hey look
+//a time gun
+/datum/projectile/bullet/optio/hitscan/temporal
+	name = "temporal bolt"
+	sname = "temporal bolt"
+	damage = 35
+	shot_sound = 'sound/weapons/railgun.ogg'
+	shot_volume = 50
+	impact_image_state = "bullethole-large"
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			M.do_disorient(30, knockdown = 20, stunned = 20, disorient = 30, remove_stamina_below_zero = 0)
+		..()
+
+/datum/projectile/special/timegun
+	no_hit_message = 1
+	cost = 25
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	projectile_speed = 12800
+	shot_volume = 0
+	var/datum/projectile/followup = new/datum/projectile/bullet/optio/hitscan/temporal
+
+/datum/projectile/special/timegun/theBulletThatShootsTheFuture
+	sname = "the bullet that shoots the future"
+	hit_ground_chance = 100
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		if(ismob(hit))
+			return//no shooting the present nerd
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/list/affected = drawLineObj(start, end, /obj/line_obj/timeshot ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0)
+		var/datum/theBulletThatShootsTheFutureController/controller = new(affected, start, end, P.shooter, P.mob_shooter, followup)
+		for(var/obj/line_obj/timeshot/ts in affected)
+			ts.controller = controller
+
+/datum/projectile/special/timegun/theBulletThatShootsThePast
+	sname = "the bullet that shoots the past"
+	goes_through_mobs = TRUE
+
+
+/obj/line_obj/timeshot
+	invisibility = 101
+	var/datum/theBulletThatShootsTheFutureController/controller
+	var/safe = FALSE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if(ismob(AM) && !safe && AM != controller.shooter && AM != controller.mob_shooter)
+			controller.fire(AM)
+
+/datum/theBulletThatShootsTheFutureController
+	var/list/obj/line_obj/timeshot/lines = list()
+	var/obj/railgun_trg_dummy/start
+	var/obj/railgun_trg_dummy/end
+	var/atom/shooter
+	var/mob/mob_shooter
+	var/startTime
+	var/datum/projectile/followup
+
+	New(lines, start, end, shooter, mob_shooter, proj_data)
+		. = ..()
+		src.lines = lines
+		src.start = start
+		src.end = end
+		src.shooter = shooter
+		src.mob_shooter = mob_shooter
+		src.startTime = TIME
+		src.lines[length(lines)].safe = TRUE
+		src.followup = proj_data
+		SPAWN(10 SECONDS)
+			qdel(src)
+
+	proc/fire()
+		if(TIME > startTime + 1 SECOND)
+			shoot_projectile_ST_pixel_spread(get_turf(start), followup, get_turf(end), alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)) )
+			qdel(src)
+
+	proc/alter_projectile(obj/projectile/P)
+		P.shooter = src.shooter
+		P.mob_shooter = src.mob_shooter
+
+	disposing()
+		. = ..()
+		for(var/obj/line_obj/timeshot/ts in lines)
+			qdel(ts)
+		qdel(start)
+		qdel(end)
+
+
+
+
+/datum/component/afterimage/image_based/timegun/afterimage_type = /obj/afterimage/image_based/timegun
+/datum/component/afterimage/image_based/timegun/var/last_shooter
+/datum/component/afterimage/image_based/timegun/var/last_mob_shooter
+/datum/component/afterimage/image_based/timegun/set_afterimage_args()
+	src.afterimage_args = list(null, owner, src)
+
+/datum/component/afterimage/image_based/timegun/proc/afterimage_hitby_proj(atom/source, obj/projectile/P)
+	var/turf/T = get_turf(source)
+	if(get_turf(parent) == T) //no shooting the present, nerd
+		return
+	src.last_shooter = P.shooter
+	src.last_mob_shooter = P.mob_shooter
+	if(istype(P.proj_data, /datum/projectile/special/timegun/theBulletThatShootsThePast))
+		var/datum/projectile/special/timegun/theBulletThatShootsThePast/p_data = P.proj_data
+		if(ismob(parent))
+			var/mob/M = parent
+			M.flash(3 SECONDS)
+			boutput(M, SPAN_ALERT("<B>You suddenly feel yourself pulled violently back in time!</B>"))
+			M.set_loc(T)
+			M.changeStatus("stunned", 6 SECONDS)
+			elecflash(M, power = 2)
+			playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
+		else if(isobj(parent))
+			var/obj/O = parent
+			O.set_loc(T)
+			elecflash(O, power = 2)
+			playsound(O.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
+		shoot_projectile_ST_pixel_spread(P.orig_turf, p_data.followup, get_turf(source), alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
+
+/datum/component/afterimage/image_based/timegun/proc/alter_projectile(obj/projectile/P)
+	P.shooter = src.last_shooter
+	P.mob_shooter = src.last_mob_shooter
+
+/obj/afterimage/image_based/timegun/New(loc, mob/owner, datum/component/afterimage/image_based/comp)
+	. = ..()
+	comp.RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, TYPE_PROC_REF(/datum/component/afterimage/image_based/timegun, afterimage_hitby_proj))
+
+/obj/afterimage/image_based/timegun/Cross(atom/movable/mover)
+	. = ..()
+	if(istype(mover, /obj/projectile))
+		var/obj/projectile/P = mover
+		if(istype(P.proj_data, /datum/projectile/special/timegun/theBulletThatShootsThePast))
+			return FALSE
+
+
+/datum/component/holdertargeting/windup/timegun/var/mob/echoMob = null
+
+/datum/component/holdertargeting/windup/timegun/do_windup(mob/living/L)
+	. = ..()
+	var/mindist = INFINITY
+	for(var/mob/M in range(3, target))
+		if(isliving(M) && !isintangible(M) && GET_DIST(target, M) < mindist)
+			echoMob = M
+			mindist = GET_DIST(target, M)
+	if(echoMob)
+		echoMob.AddComponent(/datum/component/afterimage/image_based/timegun, 10, 3, src.aimer.mob)
+
+/datum/component/holdertargeting/windup/timegun/end_shootloop(mob/living/user, object, location, control, params)
+	. = ..()
+	echoMob?.RemoveComponentsOfType(/datum/component/afterimage/image_based/timegun)
+	echoMob = null
+
+
+/obj/item/gun/energy/timegun
+	name = "\improper Time Gun"
+	desc = "Hey look! A Time Gun!"
+	w_class = W_CLASS_SMALL
+	icon_state = "optio_1"
+	item_state = "protopistol"
+	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
+	can_swap_cell = 0
+	color = COLOR_MATRIX_INVERSE
+
+	New()
+		set_current_projectile(new/datum/projectile/special/timegun/theBulletThatShootsTheFuture)
+		projectiles = list(current_projectile, new/datum/projectile/special/timegun/theBulletThatShootsThePast)
+		..()
+
+	set_current_projectile(datum/projectile/newProj)
+		. = ..()
+		if(istype(newProj, /datum/projectile/special/timegun/theBulletThatShootsThePast))
+			AddComponent(/datum/component/holdertargeting/windup/timegun, 0.5 SECONDS)
+		else
+			RemoveComponentsOfType(/datum/component/holdertargeting/windup/timegun)
+
+	proc/set_followup_proj(datum/projectile/proj_data)
+		for(var/datum/projectile/special/timegun/ts in src.projectiles)
+			ts.followup = proj_data
+
+/*todo to clean up atom prop define readability (linter does not handle the ##update correctly, and there's no way to sanely unlint this mess afaik)
+#define DEFINE #define
+#define DEFINE_PROP(name, method, update...) DEFINE PROP_##name(x) x(#name, APPLY_ATOM_PROPERTY_##method, REMOVE_ATOM_PROPERTY_##method, ##update)
+*/

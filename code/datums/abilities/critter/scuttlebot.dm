@@ -7,6 +7,7 @@
 	targeted = 1
 	target_anything = 1
 	icon_state = "hatpicture"
+	var/store_pics = TRUE
 	cast(atom/target)
 		if (..())
 			return 1
@@ -98,8 +99,14 @@
 		photo.icon = photo_icon
 
 		var/obj/item/photo/P
-		P = new/obj/item/photo(get_turf(holder.owner), photo, photo_icon, finished_title, finished_detail)
+		var/atom/where = holder.owner
+		if (length(holder.owner?.contents) >= 15 || !src.store_pics)
+			where = get_turf(where)
+		P = new/obj/item/photo(where, photo, photo_icon, finished_title, finished_detail)
 		return isnull(P)
+
+/datum/targetable/critter/takepicture/nostorage
+	store_pics = FALSE
 
 /datum/targetable/critter/flash
 	name = "Blinding flash"
@@ -123,6 +130,7 @@
 	name = "Return to body"
 	desc = "Leave the scuttlebot and return to your body"
 	icon_state = "shutdown"
+	needs_turf = FALSE
 	cast(atom/target)
 		if (..())
 			return 1
@@ -137,6 +145,7 @@
 				holder.owner.ghostize()
 				return 1
 			E.mind.transfer_to(E.controller)
+			E.controller.network_device = null
 			E.controller = null
 		else //In case this ability is put on another mob
 			boutput(holder.owner, SPAN_ALERT("You don't have a body to go back to!"))
@@ -144,6 +153,11 @@
 
 	incapacitationCheck()
 		return FALSE
+
+/datum/targetable/critter/control_owner/mail
+	name = "Return to body"
+	desc = "Leave the P1G3E0N and return to your body"
+	icon_state = "shutdown_mail"
 
 /datum/targetable/critter/scuttle_scan
 	name = "Robotic scan"
@@ -161,4 +175,5 @@
 			return
 
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner]</b> has scanned [target]."))
-		boutput(holder.owner, scan_forensic(target, visible = 1))
+		var/datum/forensic_scan/scan = scan_forensic(target, visible = TRUE)
+		boutput(holder.owner, scan.build_report())

@@ -5,53 +5,85 @@
  * @license ISC
  */
 
-import { Button, Table } from '../../components';
+import { MouseEventHandler } from 'react';
+import { Button, LabeledList } from 'tgui-core/components';
 
-interface VendorCashTableProps {
-  cardname: string,
-  onCardClick: Function,
-  bankMoney: number,
-  cash: number,
-  onCashClick: Function,
+import { asCreditsString } from './stringUtils';
+
+interface VendorCashTableCashAcceptProps {
+  cash: number;
+  rejectCash?: boolean | false;
+  onCashClick: MouseEventHandler;
 }
 
-export const VendorCashTable = (props: VendorCashTableProps) => {
-  const {
-    cardname,
-    onCardClick,
-    bankMoney,
-    cash,
-    onCashClick,
-  } = props;
+interface VendorCashTableCashForbidProps {
+  rejectCash: true;
+}
 
+type VendorCashTableCashProps =
+  | VendorCashTableCashAcceptProps
+  | VendorCashTableCashForbidProps;
+
+interface VendorCashTableCardAcceptProps {
+  bankMoney: number;
+  cardname: string;
+  rejectCard?: false;
+  onCardClick: MouseEventHandler;
+}
+
+interface VendorCashTableCardForbidProps {
+  rejectCard: true;
+}
+
+type VendorCashTableCardProps =
+  | VendorCashTableCardAcceptProps
+  | VendorCashTableCardForbidProps;
+
+type VendorCashTableProps = VendorCashTableCashProps & VendorCashTableCardProps;
+
+export const VendorCashTable = (props: VendorCashTableProps) => {
+  const { rejectCard, rejectCash } = props;
+  if (rejectCard && rejectCash) {
+    return null;
+  }
+  const hasAccount = !rejectCard && !!props.cardname;
+  const hasCash = !rejectCash && props.cash > 0;
   return (
-    <Table font-size="9pt" direction="row" style={{ maxWidth: "100%", "table-layout": "fixed" }} >
-      <Table.Row>
-        <Table.Cell bold>
-          {cardname && (
-            <Button icon="id-card"
-              mr="100%"
-              content={cardname ? cardname : ""}
-              title={cardname ? cardname : ""}
-              onClick={onCardClick}
-              ellipsis
-              maxWidth="100%"
-            />
-          )}
-          {(cardname && bankMoney >= 0) && ("Money on account: " + bankMoney + "⪽")}
-        </Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell bold direction="row">
-          {(cash > 0) && ("Cash: " + cash + "⪽")}
-          {(cash > 0 && cash) && (
-            <Button icon="eject"
-              ml="1%"
-              content={"eject"}
-              onClick={onCashClick} />
-          )}
-        </Table.Cell>
-      </Table.Row>
-    </Table>
+    <LabeledList>
+      {!rejectCard && (
+        <LabeledList.Item
+          label="Account"
+          buttons={
+            hasAccount ? (
+              <Button icon="id-card" onClick={props.onCardClick}>
+                {props.cardname}
+              </Button>
+            ) : (
+              <Button icon="id-card" disabled>
+                Swipe ID Card
+              </Button>
+            )
+          }
+        >
+          {hasAccount ? asCreditsString(props.bankMoney) : 'No card inserted'}
+        </LabeledList.Item>
+      )}
+      {!rejectCash && (
+        <LabeledList.Item
+          label="Cash"
+          buttons={
+            <Button
+              icon="eject"
+              disabled={!hasCash}
+              onClick={props.onCashClick}
+            >
+              Eject
+            </Button>
+          }
+        >
+          {hasCash ? asCreditsString(props.cash) : 'No cash inserted'}
+        </LabeledList.Item>
+      )}
+    </LabeledList>
   );
 };

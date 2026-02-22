@@ -709,7 +709,7 @@
 		var/base_speed = 5
 
 		if(engine)
-			base_speed = (1.5 * engine.speedmod)
+			base_speed = 1.5 // speed modification by equipped engine not implemented - feel free to change
 
 		var/adjustment = (1 - (power_movement / 100)) * base_speed
 		base_speed += adjustment
@@ -848,21 +848,33 @@
 
 	Entered(var/atom/movable/A, atom/oldloc)
 		. = ..()
-		if(!src.is_upper || !ismob(A))
+		if( !ismob(A) || !src.ship)
 			return
 		var/mob/user = A
-		src.ship.subscribe_interior(user)
-		user.set_eye(src.ship)
+
+		// make absolutely SURE they stay synced
+		if (!src.is_upper)
+			src.ship.unsubscribe_interior(user)
+			user.set_eye(null)
+		else
+			src.ship.subscribe_interior(user)
+			user.set_eye(src.ship)
 
 	Exited(atom/movable/A)
 		. = ..()
-		if(!ismob(A))
+		if( !ismob(A) || !src.ship)
 			return
 		if(get_area(A) == src)
 			return
 		var/mob/user = A
-		src.ship.unsubscribe_interior(user)
-		user.set_eye(null)
+
+		// make absolutely SURE they stay synced
+		if (src.is_upper || !istype(get_area(A),/area/cruiser))
+			src.ship.unsubscribe_interior(user)
+			user.set_eye(null)
+		else
+			src.ship.subscribe_interior(user)
+			user.set_eye(src.ship)
 
 /area/cruiser/syndicate/lower
 	name = "Syndicate cruiser interior"
@@ -1303,8 +1315,9 @@
 	remove_air(amount)
 		return src.loc.remove_air(amount)
 
-	return_air()
-		return src.loc.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc.return_air()
 
 	bullet_act(var/obj/projectile/P)
 		for(var/atom/A in src)

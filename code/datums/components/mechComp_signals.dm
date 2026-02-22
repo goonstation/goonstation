@@ -1,6 +1,7 @@
 #define DC_ALL "Disconnect All"
 #define LIST_CONNECTIONS "List Connections"
 #define CONNECT_COMP "Connect Component"
+#define COPY_COMP "Copy Component"
 #define SET_SEND "Set Send-Signal"
 #define TOGGLE_MATCH "Toggle Exact Match"
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
@@ -75,10 +76,16 @@
 */
 
 /datum/component/mechanics_holder
+	/// associative list of atoms to the input they're registered to
+	/// list[atom] = "name of input"
 	var/list/connected_outgoing
+	/// simple list of atoms that are connected (no inputs)
+	/// list[] = [atom, atom, ...]
 	var/list/connected_incoming
 	var/list/inputs
 	var/list/configs
+	///Associative list of atoms to the pair of line images drawn from us to them (there are two so it renders when either end is rendered)
+	var/list/lines
 
 	var/defaultSignal = "1"
 
@@ -89,17 +96,20 @@ TYPEINFO(/datum/component/mechanics_holder)
 	initialization_args = list()
 
 /datum/component/mechanics_holder/Initialize()
-	// associative list of atoms to the input they're registered to
-	// list[atom] = "name of input"
 	src.connected_outgoing = list()
-	// simple list of atoms that are connected (no inputs)
-	// list[] = [atom, atom, ...]
 	src.connected_incoming = list()
 	src.inputs = list()
 	src.configs = list()
+	src.lines = list()
 
 	src.configs.Add(list(DC_ALL, CONNECT_COMP, LIST_CONNECTIONS))
-	..()
+	if(!istype(parent, /obj/item/mechanics))
+		..()
+		return
+
+	var/obj/item/mechanics/mechanical_parent = parent
+	if(mechanical_parent.mechanically_copyable)
+		src.configs.Add(COPY_COMP)
 
 /datum/component/mechanics_holder/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT, PROC_REF(addInput))
@@ -146,6 +156,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 //Delete all connections. (Often caused by DC_ALL user command, and unwrenching MechComp devices.)
 /datum/component/mechanics_holder/proc/WipeConnections()
 	for(var/atom/A in src.connected_incoming)
+		src.removeLines(A)
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RM_OUTGOING, parent)
 	for(var/atom/A in src.connected_outgoing)
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RM_INCOMING, parent)
@@ -176,10 +187,17 @@ TYPEINFO(/datum/component/mechanics_holder)
 	boutput(user, out.Join())
 	return
 
+/datum/component/mechanics_holder/proc/removeLines(atom/A)
+	var/datum/client_image_group/image_group = get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP)
+	for (var/image/line as anything in src.lines[A])
+		image_group.remove_image(line)
+		line.loc = null
+	src.lines -= A
+
 //Remove a device from our list of transitting devices.
 /datum/component/mechanics_holder/proc/removeIncoming(var/comsig_target, var/atom/A)
 	src.connected_incoming.Remove(A)
-	return
+	src.removeLines(A)
 
 //Remove a device from our list of receiving devices.
 /datum/component/mechanics_holder/proc/removeOutgoing(var/comsig_target, var/atom/A)
@@ -297,7 +315,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		boutput(user, SPAN_ALERT("Components need to be within a range of 14 meters to connect."))
 		return
 
-	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
+	var/typesel = tgui_alert(user, "Use [parent] as:", "Connection Type", list("Trigger", "Receiver", "*CANCEL*"))
 	switch(typesel)
 		if("Trigger")
 			SEND_SIGNAL(A, _COMSIG_MECHCOMP_LINK, parent, user)
@@ -349,8 +367,25 @@ TYPEINFO(/datum/component/mechanics_holder)
 	var/pointer_container[1] //A list of size 1, to store the address of the list we want
 	SEND_SIGNAL(trigger, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 	var/list/trg_outgoing = pointer_container[1]
-	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
-	if(selected_input == "*CANCEL*") return
+	var/selected_input = tgui_input_list(user, "Select \"[receiver.name]\" Input", "Input Selection", inputs + "*CANCEL*")
+	if(selected_input == "*CANCEL*")
+		return
+
+	//draw a line for meson lookers
+	var/datum/lineResult/R1 = drawLineImg(get_turf(trigger), get_turf(receiver), "data", null,\
+		trigger.pixel_x, trigger.pixel_y,\
+		receiver.pixel_x, receiver.pixel_y,\
+		getCrossed = 0, mode = LINEMODE_SIMPLE)
+	var/datum/lineResult/R2 = drawLineImg(get_turf(receiver), get_turf(trigger), "data", null,\
+		receiver.pixel_x, receiver.pixel_y,\
+		trigger.pixel_x, trigger.pixel_y,\
+		getCrossed = 0, mode = LINEMODE_SIMPLE_REVERSED)
+	src.lines[trigger] = list(R1.lineImage, R2.lineImage)
+	var/datum/client_image_group/image_group = get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP)
+	for (var/image/line as anything in src.lines[trigger])
+		line.plane = PLANE_OVERLAY_EFFECTS
+		line.alpha = 190
+		image_group.add_image(line)
 
 	trg_outgoing |= receiver //Let's not allow making many of the same connection.
 	trg_outgoing[receiver] = selected_input
@@ -381,6 +416,11 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if(connector)
 		src.link_devices(comsig_target, connector.connectee, user)
 		return TRUE
+	var/datum/component/mechanics_copier/copier = W.GetComponent(/datum/component/mechanics_copier)
+	if(copier && istype(copier.copied, src.parent.type))
+		var/obj/item/mechanics/mechanical_target = src.parent // `Initialize()` has an `istype()` check which should guarantee `src.parent`'s type.
+		mechanical_target.copy_identical_mechcomp(copier.copied, user, W)
+		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
 		if(hacked_door.panel_open)
@@ -389,13 +429,16 @@ TYPEINFO(/datum/component/mechanics_holder)
 		var/obj/machinery/vending/hacked_vendor = comsig_target
 		if(hacked_vendor.panel_open)
 			return
+	//slightly cursed pattern here, maybe factor out into a signal/init var if we add any more of these
+	if (istype(comsig_target, /obj/machinery/shieldgenerator))
+		return
 	if(length(src.configs))
-		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
+		var/selected_config = tgui_input_list(user, "Select a config to modify!", "Config", src.configs)
 		if (!in_interact_range(parent, user)) return TRUE
 		if(selected_config)
 			switch(selected_config)
 				if(SET_SEND)
-					var/inp = input(user,"Please enter Signal:", "Signal setting", defaultSignal) as text
+					var/inp = tgui_input_text(user, "Please enter Signal:", "Signal setting", defaultSignal)
 					if(!in_interact_range(parent, user) || user.stat)
 						return
 					inp = trimtext(strip_html_tags(inp))
@@ -411,6 +454,10 @@ TYPEINFO(/datum/component/mechanics_holder)
 				if(CONNECT_COMP)
 					W.AddComponent(/datum/component/mechanics_connector, src.parent)
 					boutput(user, SPAN_NOTICE("Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!"))
+					return TRUE
+				if(COPY_COMP)
+					W.AddComponent(/datum/component/mechanics_copier, src.parent)
+					boutput(user, SPAN_NOTICE("[W] will now copy settings from the [src.parent] to identical mechanics components! Use [W] in hand to stop copying!"))
 					return TRUE
 				if(LIST_CONNECTIONS)
 					ListConnections(user)
@@ -449,6 +496,40 @@ TYPEINFO(/datum/component/mechanics_holder)
 
 /datum/component/mechanics_connector/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	. = ..()
+
+
+/// Component for pulsing tools that will copy mechcomponents the user clicks on to the specified mechcomponent.
+/// Very much similar to (and ironically copied from) `/datum/component/mechanics_connector`
+/datum/component/mechanics_copier
+	/// A specific mechcomponent, this is the one we will copy onto clicked components.
+	var/atom/copied
+
+/datum/component/mechanics_copier/Initialize(var/datum/component/mechanics_holder/copied_holder)
+	. = ..()
+	if(!ispulsingtool(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	src.copied = copied_holder
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(stop_linking))
+
+	// Our pulsing tool parent gets a help message indicating what mechcomp component it's copying.
+	var/obj/item/item_parent = parent
+	RegisterHelpMessageHandler(item_parent, PROC_REF(get_help_msg))
+
+/datum/component/mechanics_copier/proc/stop_linking(var/obj/item/thing, mob/user)
+	// If our pulsing tool parent is also connecting then let that `stop_linking()` first.
+	if(parent.GetComponent(/datum/component/mechanics_connector))
+		return
+	boutput(user, SPAN_NOTICE("You stop copying with the [parent]."))
+	src.RemoveComponent()
+
+/datum/component/mechanics_copier/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "It is currently copying mechanics component settings from a [copied]."
+
+/datum/component/mechanics_copier/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	UnregisterHelpMessageHandler(parent)
 	. = ..()
 
 #undef MAX_OUTGOING_PER_TICK

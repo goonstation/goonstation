@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	name = "Handspider"
 	desc = "Detach one of your arms and bring it to life using one of the members of your hivemind."
 	icon_state = "handspider"
-	pointCost = 1
+	pointCost = CHANGELING_HANDSPIDER_COST
 	antag_role = ROLE_HANDSPIDER
 
 	available_bodypart()
@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	name = "Eyespider"
 	desc = "Eject one of your eyes as a non-combatant utility form and bring it to life using one of the members of your hivemind."
 	icon_state = "eyespider"
-	pointCost = 0
+	pointCost = CHANGELING_EYESPIDER_COST
 	antag_role = ROLE_EYESPIDER
 
 	available_bodypart()
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	desc = "Detach one of your legs and bring it to life using one of the members of your hivemind."
 	icon_state = "legworm"
 	cooldown = 1200
-	pointCost = 2
+	pointCost = CHANGELING_LEGWORM_COST
 	antag_role = ROLE_LEGWORM
 
 	available_bodypart()
@@ -193,7 +193,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	desc = "You butt fall off and hivemind person become butt"
 	icon_state = "buttcrab"
 	cooldown = 600
-	pointCost = 1
+	pointCost = CHANGELING_BUTTCRAB_COST
 	antag_role = ROLE_BUTTCRAB
 
 	available_bodypart()
@@ -216,36 +216,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 
 		return original_butt
 
-
-/datum/targetable/changeling/hivesay
-	name = "Speak Hivemind"
-	desc = "Speak to your own collected minds telepathically."
-	icon_state = "hivesay"
-	cooldown = 0
-	targeted = 0
-	target_anything = 0
-	human_only = 0
-	can_use_in_container = 1
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	do_logs = FALSE
-	interrupt_action_bars = FALSE
-
-	incapacitationCheck()
-		return 0
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
-		if (!message)
-			return
-		logTheThing(LOG_SAY, holder.owner, "<b>(HIVESAY):</b> [message]")
-		//logTheThing(LOG_DIARY, holder.owner, "(HIVEMIND): [message]", "hivesay")
-		.= holder.owner.say_hive(message, holder)
-
-		return 0
 
 /datum/targetable/changeling/boot
 	name = "Silence Hivemind Member"
@@ -302,7 +272,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 /datum/targetable/changeling/give_control
 	name = "Grant Control to Hivemind Member"
 	desc = "Allow one of the members of the hive mind to control our form."
-	icon_state = "hivesay"
+	icon_state = "givecontrol"
 	cooldown = 0
 	targeted = 0
 	target_anything = 0

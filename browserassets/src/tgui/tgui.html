@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <!-- Inlined metadata -->
+  <meta id="tgui:windowId" content="[tgui:windowId]">
+  <meta id="tgui:strictMode" content="[tgui:strictMode]">
+  <meta id="tgui:byondMajor" content="[tgui:byondMajor]">
+  <meta id="tgui:byondMinor" content="[tgui:byondMinor]">
+
+  <!-- Early setup -->
+  <!-- tgui:helpers -->
+  <!-- tgui:ntos-error -->
+  <!-- tgui:inline-css -->
+</head>
+
+<body style="background-color: var(--color-base)">
+  <!-- tgui:assets -->
+  <!-- tgui:inline-html-start -->
+  <!-- tgui:inline-html -->
+  <!-- tgui:inline-html-end -->
+  <!-- tgui:inline-js -->
+
+  <!-- Root element for tgui interfaces -->
+  <div id="react-root"></div>
+
+  <!-- Fatal error container -->
+  <div id="FatalError" class="FatalError">
+    <!-- prettier-ignore -->
+    <div class="FatalError__logo">
+ ███████████                                       ███████     █████████
+░█░░░███░░░█                                     ███░░░░░███  ███░░░░░███
+░   ░███  ░   ██████  ████████  █████████████   ███     ░░███░███    ░░░
+    ░███     ███░░███░░███░░███░░███░░███░░███ ░███      ░███░░█████████
+    ░███    ░███████  ░███ ░░░  ░███ ░███ ░███ ░███      ░███ ░░░░░░░░███
+    ░███    ░███░░░   ░███      ░███ ░███ ░███ ░░███     ███  ███    ░███
+    █████   ░░██████  █████     █████░███ █████ ░░░███████░  ░░█████████
+   ░░░░░     ░░░░░░  ░░░░░     ░░░░░ ░░░ ░░░░░    ░░░░░░░     ░░░░░░░░░
+    </div>
+    <marquee class="FatalError__header">
+      A fatal exception has occurred in the TermOS TGUI subsystem.
+      The current application will be terminated.
+      Please remain calm. Get to the nearest TermOS workstation
+      and send a copy of the following stack trace to:
+      https://github.com/goonstation/goonstation. Thank you for your cooperation.
+    </marquee>
+    <div id="FatalError__stack" class="FatalError__stack"></div>
+    <div class="FatalError__footer">
+      Copyright 2046-2053 Thinktronic Systems, LTD.
+    </div>
+  </div>
+
+  <noscript>
+    <div class="NoticeBox">
+      <div>Javascript is required in order to use this interface.</div>
+      <div>Please enable Javascript and restart the game.</div>
+    </div>
+  </noscript>
+  <script>
+    // Signal tgui that we're ready to receive updates
+    Byond.sendMessage('ready');
+    // cssVars();
+  </script>
+</body>
+
+</html>

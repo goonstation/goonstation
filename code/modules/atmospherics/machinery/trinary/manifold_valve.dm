@@ -23,14 +23,14 @@
 
 /obj/machinery/atmospherics/trinary/manifold_valve/update_icon(animation)
 	if(animation)
-		flick("valve[src.divert][!src.divert]",src)
+		FLICK("valve[src.divert][!src.divert]",src)
 		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 	else
 		src.icon_state = "manifold_valve[src.divert]"
 
-	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, -180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
-	SET_PIPE_UNDERLAY(src.node2, src.flipped ? turn(src.dir, 90) : turn(src.dir, -90), "medium", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
-	SET_PIPE_UNDERLAY(src.node3, src.dir, "medium", issimplepipe(src.node3) ?  src.node3.color : null, FALSE)
+	update_pipe_underlay(src.node1, turn(src.dir, -180), "medium", FALSE)
+	update_pipe_underlay(src.node2, src.flipped ? turn(src.dir, 90) : turn(src.dir, -90), "medium", FALSE)
+	update_pipe_underlay(src.node3, src.dir, "medium", FALSE)
 
 /obj/machinery/atmospherics/trinary/manifold_valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == src.node1)

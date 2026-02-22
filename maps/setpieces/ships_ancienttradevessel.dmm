@@ -70,7 +70,6 @@
 	color = "#332222";
 	currentgen = 10000;
 	desc = "An alien power source that looks like it could fit in a pod. Huh.";
-	move_speed = 10;
 	name = "Anomalous Engine";
 	portaldelay = 15;
 	powergenerated = 10000;
@@ -115,14 +114,14 @@
 	name = "Strange Vessel"
 	})
 "bI" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/head/helmet/space/nanotrasen/pilot{
@@ -198,7 +197,7 @@
 	name = "Strange Vessel"
 	})
 "dU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -222,10 +221,9 @@
 	name = "Strange Vessel"
 	})
 "dZ" = (
-/obj/npc/trader/random{
+/obj/landmark/spawner/random_trader{
 	icon = 'icons/obj/trader.dmi';
-	icon_state = "bot";
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
+	icon_state = "bot"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins{
@@ -242,25 +240,25 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/soulskull{
-	pixel_y = 9
-	},
 /obj/item/clothing/head/headband/nyan/black{
 	pixel_y = 12
+	},
+/obj/item/mutation_orb/cow_orb{
+	pixel_y = 15
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
 	name = "Power Core"
 	})
 "eR" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -343,14 +341,14 @@
 	name = "Strange Vessel"
 	})
 "hi" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/suit/cultist/hastur,
@@ -406,8 +404,26 @@
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
 	})
+"jf" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient,
+/obj/item/parts/robot_parts/arm/left/ancient{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient{
+	pixel_x = -6
+	},
+/obj/item/parts/robot_parts/head/ancient{
+	pixel_y = 4
+	},
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
 "jh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -460,12 +476,29 @@
 	name = "Strange Vessel"
 	})
 "kM" = (
-/obj/item/paper/businesscard/skulls,
-/turf/unsimulated/iomoon/ancient_floor{
-	icon_state = "ancientfloor2"
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
 	},
-/area/iomoon/robot_ruins{
-	name = "Strange Vessel"
+/obj/fakeobject{
+	density = 1;
+	desc = "It seems to hold objects of interest.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "ancient-4";
+	name = "curio rack"
+	},
+/obj/item/mutation_orb/cat_orb{
+	pixel_y = 15
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins/boss_chamber{
+	name = "Power Core"
 	})
 "kX" = (
 /obj/decal/glow{
@@ -492,14 +525,14 @@
 	name = "Power Core"
 	})
 "lc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/head/that/white{
@@ -521,15 +554,13 @@
 /obj/iomoon_boss/bot_spawner{
 	pixel_y = 3
 	},
-/obj/item/power_stones/Soul{
-	pixel_y = 12
-	},
+/obj/item/parts/robot_parts/head/ancient/guardian,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
 	name = "Power Core"
 	})
 "lt" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird reservoir.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -610,7 +641,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -627,15 +658,23 @@
 	pixel_x = 9;
 	pixel_y = 1
 	},
+/obj/map/light/yellow,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins/boss_chamber{
 	name = "Power Core"
 	})
 "lR" = (
-/obj/spawner/ancient_robot_artifact,
-/obj/item/scrapweapons/weapons/club/plasmaglass,
-/obj/item/scrapweapons/weapons/club/plasmaglass,
 /obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient/stonecutter,
+/obj/item/parts/robot_parts/head/ancient/stonecutter{
+	pixel_y = 5
+	},
+/obj/item/parts/robot_parts/arm/right/ancient/stonecutter{
+	pixel_x = -5
+	},
+/obj/item/parts/robot_parts/arm/left/ancient/stonecutter{
+	pixel_x = 5
+	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
 	name = "Power Core"
@@ -661,7 +700,7 @@
 	name = "Power Core"
 	})
 "mA" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /obj/item/clothing/mask/mummy,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -670,23 +709,27 @@
 	name = "Strange Vessel"
 	})
 "mF" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/toy/plush/small/stress_ball{
-	color = "blue";
-	pixel_y = 9
+/obj/item/parts/robot_parts/chest/ancient/actuator,
+/obj/item/parts/robot_parts/arm/left/ancient/actuator{
+	pixel_x = -7
 	},
+/obj/item/parts/robot_parts/arm/left/ancient/actuator{
+	pixel_x = 7
+	},
+/obj/item/parts/robot_parts/head/ancient/actuator,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
 	name = "Power Core"
 	})
 "mQ" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /obj/item/stamp/classified,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -754,7 +797,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -776,8 +819,17 @@
 	name = "Power Core"
 	})
 "oC" = (
-/mob/living/critter/skeleton/multihat,
 /obj/item/clothing/mask/bandana/nt,
+/obj/fakeobject/skeleton{
+	icon_state = "skeleton_s"
+	},
+/obj/item/halberd,
+/obj/item/clothing/suit/armor{
+	pixel_y = -3
+	},
+/obj/item/clothing/head/helmet/viking{
+	pixel_y = 14
+	},
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
@@ -828,7 +880,7 @@
 /obj/spawner/ancient_robot_artifact,
 /obj/random_item_spawner/junk/lots,
 /obj/item/shipcomponent/mainweapon/UFO{
-	current_projectile = new /datum/projectile/special/inferno;
+	current_projectile = new/datum/projectile/special/inferno;
 	name = "Ancient Blaster"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
@@ -855,7 +907,7 @@
 	name = "Strange Vessel"
 	})
 "pG" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -936,7 +988,7 @@
 	})
 "qD" = (
 /mob/living/critter/robotic/crawler,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1004,14 +1056,24 @@
 	name = "Power Core"
 	})
 "rS" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/staff/thunder,
+/obj/item/implant/artifact/ancient/ancient_good{
+	pixel_y = 12
+	},
+/obj/item/parts/robot_parts/chest/ancient/actuator,
+/obj/item/parts/robot_parts/arm/left/ancient/actuator{
+	pixel_x = -7
+	},
+/obj/item/parts/robot_parts/arm/left/ancient/actuator{
+	pixel_x = 7
+	},
+/obj/item/parts/robot_parts/head/ancient/actuator,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
 	name = "Power Core"
@@ -1098,7 +1160,7 @@
 	name = "Power Core"
 	})
 "sD" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1127,7 +1189,6 @@
 "sJ" = (
 /obj/map/light/dimred,
 /obj/iomoon_puzzle/ancient_robot_door{
-	dir = 2;
 	tag = "ancientship_corridorS"
 	},
 /turf/unsimulated/iomoon/ancient_floor{
@@ -1160,8 +1221,7 @@
 "tk" = (
 /obj/map/light/dimred,
 /obj/iomoon_puzzle/button{
-	id = "ancientship_labN";
-	timer = 3
+	id = "ancientship_labN"
 	},
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor3"
@@ -1282,7 +1342,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -1331,7 +1391,7 @@
 	name = "Strange Vessel"
 	})
 "yU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1356,8 +1416,7 @@
 	})
 "yW" = (
 /obj/iomoon_puzzle/button{
-	id = "ancientship_labS";
-	timer = 3
+	id = "ancientship_labS"
 	},
 /obj/map/light/dimred,
 /turf/unsimulated/iomoon/ancient_floor{
@@ -1367,7 +1426,7 @@
 	name = "Strange Vessel"
 	})
 "zd" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1413,7 +1472,7 @@
 	name = "Strange Vessel"
 	})
 "zp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1430,7 +1489,7 @@
 	name = "Strange Vessel"
 	})
 "zw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1448,7 +1507,7 @@
 	name = "Strange Vessel"
 	})
 "zU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1500,7 +1559,7 @@
 	name = "Strange Vessel"
 	})
 "BP" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1551,7 +1610,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1571,7 +1630,7 @@
 	name = "Strange Vessel"
 	})
 "Dx" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1677,7 +1736,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -1735,7 +1794,7 @@
 	name = "Strange Vessel"
 	})
 "He" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -1762,14 +1821,14 @@
 	name = "Strange Vessel"
 	})
 "HB" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/mask/gas/plague{
@@ -1789,7 +1848,7 @@
 	name = "Strange Vessel"
 	})
 "HY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -1813,8 +1872,9 @@
 /obj/iomoon_boss/bot_spawner{
 	pixel_y = 3
 	},
-/obj/item/power_stones/Time{
-	pixel_y = 11
+/obj/item/toy/plush/small/stress_ball{
+	color = "blue";
+	pixel_y = 9
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
@@ -1966,19 +2026,15 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/soulskull{
-	pixel_y = 9
-	},
-/obj/item/clothing/mask/cigarette/cigar/gold{
-	pixel_x = 7;
-	pixel_y = 5
+/obj/item/mutation_orb/hair_orb{
+	pixel_y = 15
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
@@ -2009,7 +2065,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -2026,6 +2082,7 @@
 	pixel_x = 9;
 	pixel_y = 1
 	},
+/obj/map/light/yellow,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins/boss_chamber{
 	name = "Power Core"
@@ -2051,14 +2108,14 @@
 	name = "Strange Vessel"
 	})
 "LS" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/under/gimmick/kilt,
@@ -2068,6 +2125,10 @@
 /obj/item/stamp/syndicate{
 	pixel_x = -10;
 	pixel_y = -10
+	},
+/obj/item/clothing/mask/cigarette/cigar/gold{
+	pixel_x = 7;
+	pixel_y = 5
 	},
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -2128,14 +2189,14 @@
 	name = "Strange Vessel"
 	})
 "No" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/head/caphat{
@@ -2274,6 +2335,7 @@
 	})
 "Pg" = (
 /obj/marker/supplymarker,
+/obj/item/paper/businesscard/skulls,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
@@ -2283,7 +2345,6 @@
 "Pl" = (
 /obj/map/light/dimred,
 /obj/iomoon_puzzle/ancient_robot_door{
-	dir = 2;
 	tag = "ancientship_martiancages"
 	},
 /turf/unsimulated/iomoon/ancient_floor{
@@ -2355,7 +2416,7 @@
 	name = "Strange Vessel"
 	})
 "PS" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -2494,17 +2555,23 @@
 	name = "Power Core"
 	})
 "Sl" = (
-/obj/spawner/ancient_robot_artifact,
-/obj/item/artifact/instrument,
-/obj/item/scrapweapons/weapons/spear/plasmaglass,
-/obj/item/scrapweapons/weapons/spear/plasmaglass,
 /obj/rack/iomoon,
+/obj/item/parts/robot_parts/head/ancient/stonecutter{
+	pixel_y = 5
+	},
+/obj/item/parts/robot_parts/arm/right/ancient/stonecutter{
+	pixel_x = -5
+	},
+/obj/item/parts/robot_parts/chest/ancient/stonecutter,
+/obj/item/parts/robot_parts/arm/left/ancient/stonecutter{
+	pixel_x = 5
+	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
 	name = "Power Core"
 	})
 "SC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be made of the same material as the walls, except translucent.  Weird.";
@@ -2529,7 +2596,7 @@
 	name = "Strange Vessel"
 	})
 "SU" = (
-/obj/decal/fakeobjects/skeleton/unanchored,
+/obj/fakeobject/skeleton/unanchored,
 /obj/item/cloth/handkerchief/colored/red,
 /obj/item/clothing/head/helmet/space/industrial/syndicate{
 	pixel_x = 11
@@ -2573,7 +2640,7 @@
 	name = "Strange Vessel"
 	})
 "TF" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /obj/random_item_spawner/organs/bloody,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -2667,7 +2734,7 @@
 	name = "Strange Vessel"
 	})
 "Wr" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+/obj/fakeobject/skeleton/decomposed_corpse{
 	icon_state = "body3"
 	},
 /obj/item/paper/xg_tapes,
@@ -2679,14 +2746,14 @@
 	name = "Strange Vessel"
 	})
 "WF" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/suit/hazard/paramedic/armored/para_troop{
@@ -2707,6 +2774,22 @@
 	name = "Strange Vessel"
 	})
 "WX" = (
+/turf/unsimulated/iomoon/ancient_floor{
+	icon_state = "ancientfloor3"
+	},
+/area/iomoon/robot_ruins{
+	name = "Strange Vessel"
+	})
+"Xm" = (
+/obj/rack/iomoon,
+/obj/item/parts/robot_parts/chest/ancient,
+/obj/item/parts/robot_parts/arm/left/ancient{
+	pixel_x = 6
+	},
+/obj/item/parts/robot_parts/arm/right/ancient{
+	pixel_x = -6
+	},
+/obj/item/parts/robot_parts/head/ancient/worker,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor3"
 	},
@@ -2766,20 +2849,20 @@
 	name = "Strange Vessel"
 	})
 "XR" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "specimen rack"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/head/boater_hat{
 	pixel_y = 14
 	},
-/obj/item/plant/flower/rose/holorose,
+/obj/item/clothing/head/flower/rose/holorose/holorose,
 /obj/item/clothing/shoes/tourist{
 	pixel_y = -12
 	},
@@ -2800,7 +2883,7 @@
 	name = "Strange Vessel"
 	})
 "Yb" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A perplexing pillar.";
@@ -2817,6 +2900,7 @@
 	anchored = 1;
 	pixel_y = 1
 	},
+/obj/map/light/purple,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor3"
 	},
@@ -2901,15 +2985,15 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/soulskull{
-	pixel_y = 9
+/obj/item/mutation_orb/fire_orb{
+	pixel_y = 15
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber{
@@ -2952,7 +3036,7 @@
 	name = "Power Core"
 	})
 "Za" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A weird doodad.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -2969,7 +3053,7 @@
 	name = "Strange Vessel"
 	})
 "Zc" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A perplexing pillar.";
@@ -2986,6 +3070,7 @@
 	anchored = 1;
 	pixel_y = 1
 	},
+/obj/map/light/yellow,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
@@ -3035,7 +3120,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A weird doodad.";
@@ -3105,7 +3190,7 @@
 	name = "Strange Vessel"
 	})
 "ZW" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "It seems to hold objects of interest.";
 	icon = 'icons/obj/artifacts/artifacts.dmi';
@@ -3327,7 +3412,7 @@ tN
 tN
 UF
 UF
-zm
+Xm
 lt
 zm
 BP
@@ -3343,7 +3428,7 @@ yz
 BP
 zm
 lt
-zm
+jf
 UF
 UF
 tN
@@ -3793,7 +3878,7 @@ tE
 UF
 WX
 BP
-kM
+Od
 Qc
 SC
 UF
@@ -4003,7 +4088,7 @@ tN
 UF
 iI
 pm
-YA
+kM
 ew
 Dx
 Gu

@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('{{resource("js/tooltip_cache.js")}}');
+      }
+
+      window.addEventListener('message', (messageEvent) => {
+        switch (messageEvent.data.type) {
+          case 'fetch':
+            (async () => {
+              const response = await fetch(
+                messageEvent.data.resource,
+                messageEvent.data.options
+              );
+              messageEvent.source.postMessage(
+                {
+                  response: await response.arrayBuffer(),
+                  error: !response.ok,
+                  status: response.status,
+                },
+                '*'
+              );
+            })();
+            break;
+          default:
+            break;
+        }
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

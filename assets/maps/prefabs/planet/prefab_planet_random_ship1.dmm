@@ -19,7 +19,7 @@
 /turf/unsimulated/floor/plating,
 /area/noGenerate)
 "g" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "i" = (
@@ -51,7 +51,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/noGenerate)
 "L" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -60,7 +60,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -73,7 +73,7 @@
 /turf/unsimulated/floor/plating,
 /area/noGenerate)
 "V" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,

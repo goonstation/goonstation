@@ -85,7 +85,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	// post_signal("supply") // I'm pretty sure this doesn't do anything except create lag every time someone clicks it
 	var/HTML
 
-	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
+	var/header_thing= {"
 		<style type='text/css'>
 			body {
 				font-family: Verdana, sans-serif;
@@ -113,22 +113,11 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				border: 0;
 				}
 		</style>
-	"} : {"
-	<style type='text/css'>
-		/* when chui is on */
-		#topBar {
-			top: 46px;
-			left: 4px;
-			right: 10px;
-			background: #222228;
-			}
-		#qmquickjump { display: none; }
-	</style>
 	"}
 
 	// Always-visible main menu.
 	HTML += {"
-[header_thing_chui_toggle]
+	[header_thing]
 	<title>Quartermaster Console</title>
 	<style type="text/css">
 		.qmtable {
@@ -257,11 +246,46 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 	</style>
 	<script type="text/javascript">
-		// same-page anchor "a href=#id" links dont work in byond
-		// doesn't work for CHUI as it has its own scrolling logic
-		function scroll_to_id(h) {
-			var top = document.getElementById(h).offsetTop;
-			window.scrollTo(0, top);
+		function scroll_to_id(id) {
+			var element = document.getElementById(id);
+			if (element) {
+				var topBarHeight = document.getElementById('topBar').offsetHeight;
+				var elementTop = element.getBoundingClientRect().top;
+				var currentTop = window.pageYOffset || document.documentElement.scrollTop;
+				var targetTop = elementTop + currentTop - topBarHeight;
+
+				// Smooth scroll polyfill for IE11
+				function smoothScrollTo(endX, endY, duration) {
+					var startX = window.scrollX || window.pageXOffset;
+					var startY = window.scrollY || window.pageYOffset;
+					var startTime = new Date().getTime();
+
+					function easeInOutQuad(t, b, c, d) {
+						t /= d / 2;
+						if (t < 1) return c / 2 * t * t + b;
+						t--;
+						return -c / 2 * (t * (t - 2) - 1) + b;
+					}
+
+					function scroll() {
+						var currentTime = new Date().getTime();
+						var time = Math.min(1, ((currentTime - startTime) / duration));
+						var timeFunction = easeInOutQuad(time, 0, 1, 1);
+						window.scrollTo(
+							Math.ceil((timeFunction * (endX - startX)) + startX),
+							Math.ceil((timeFunction * (endY - startY)) + startY)
+						);
+
+						if (Math.abs(window.pageYOffset - endY) > 1) {
+							requestAnimationFrame(scroll);
+						}
+					}
+
+					scroll();
+				}
+
+				smoothScrollTo(0, targetTop, 600); // 600ms for the smooth scroll duration
+			}
 		}
 	</script>
 
@@ -330,6 +354,8 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			if (null, "list")
 
 				. += "<h2>Order Supplies</h2><div style='text-align: center;' id='qmquickjump'>"
+				. += search_snippet("background: #222228; color: #ccc;")
+				. += "<br />"
 				var/ordershit = ""
 				var/catnum = 0
 				if (!global.QM_CategoryList)
@@ -357,13 +383,15 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						if((S.syndicate && !src.hacked) || S.hidden) continue
 						if (S.category == foundCategory)
 							ordershit += {"
-								<tr class='row[rownum % 2]'>
-									<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
-									<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
-								</tr>
-								<tr class='row[rownum % 2]'>
-									<td colspan='2' class='itemdesc'>[S.desc]</td>
-								</tr>
+								<tbody class='supply-package'>
+									<tr class='row[rownum % 2]'>
+										<th class='noborder itemtop'><a href='byond://?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
+										<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
+									</tr>
+									<tr class='row[rownum % 2]'>
+										<td colspan='2' class='itemdesc'>[S.desc]</td>
+									</tr>
+								</tbody>
 								"}
 							rownum++
 						LAGCHECK(LAG_LOW)
@@ -387,10 +415,10 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						O.orderedby = usr.name
 						var/default_comment = ""
 						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-						if (isnull(O.comment))
+						if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
 							shippingmarket.supply_requests += O
 							return .("list") // The user cancelled the order
-						O.comment = html_encode(O.comment)
+						O.comment = html_encode(trimtext(O.comment))
 						wagesystem.shipping_budget -= P.cost
 						if (O.address)
 							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
@@ -426,9 +454,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 							O.orderedby = usr.name
 							var/default_comment = ""
 							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-							if (isnull(O.comment))
+							if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
 								return .("list") // The user cancelled the order
-							O.comment = html_encode(O.comment)
+							O.comment = html_encode(trimtext(O.comment))
 							wagesystem.shipping_budget -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
@@ -811,6 +839,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		if ("print_req")
 			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				if (isnull(RC))
+					boutput(usr, SPAN_ALERT("The requisition contract has expired due to a market update."))
+					return
 				src.print_requisition(RC)
 			else
 				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))
@@ -818,6 +849,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		if ("print_req_barcode")
 			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				if (isnull(RC))
+					boutput(usr, SPAN_ALERT("The requisition contract has expired due to a market update."))
+					return
 				src.print_barcode(RC, RC.req_code)
 			else
 				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))

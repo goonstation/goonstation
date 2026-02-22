@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	var/id = ""
 	/// Min value of this property. Please NOTHING BELOW `1`. It breaks everything.
 	var/min_value = 1
-	/// Max value of this property. May be modified by quality.
+	/// Max value of this property.
 	var/max_value = 9
 	/// What should be considered the "default" value of this property?
 	var/default_value = 5

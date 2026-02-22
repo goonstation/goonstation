@@ -62,9 +62,19 @@
 		var/list/muted_mailgroups = list()
 		/// Whether there's a PDA-report packet-reply-triggered UI update queued
 		var/report_refresh_queued = FALSE
+		/// Whether this is a stupid syndie knockoff PDA with copyright avoiding program names
+		var/knockoff = FALSE
 
 		mess_off //Same as regular but with messaging off
 			message_on = 0
+
+		knockoff
+			name = "ThoughtOS 1.2"
+			note = "Congratulation! You have chosen the ElecTek 5 Personnel Data Actuator!"
+			knockoff = TRUE
+
+			mess_off
+				message_on = 0
 
 		disposing()
 			if (detected_pdas)
@@ -93,18 +103,18 @@
 
 			switch(src.mode)
 				if(MODE_MAINMENU)
-					. += {"<h2>PERSONAL DATA ASSISTANT</h2>
+					. += {"<h2>[src.knockoff ? "PERSONNEL DATA ACTUATOR" : "PERSONAL DATA ASSISTANT"]</h2>
 					Owner: [src.master.owner]<br>
 					Time: [time2text(world.timeofday, "DDD MMM DD, hh:mm:ss")]<br>
 
-					<h4>General Functions</h4>
+					<h4>[src.knockoff ? "Programs for Life!" : "General Functions"]</h4>
 					<ul>
-					<li><a href='byond://?src=\ref[src];mode=[MODE_NOTE]'>Notekeeper</a></li>
+					<li><a href='byond://?src=\ref[src];mode=[MODE_NOTE]'>[src.knockoff ? "Notemaker" : "Notekeeper"]</a></li>
 					<li><a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Messenger</a></li>
 					<li><a href='byond://?src=\ref[src];mode=[MODE_FILEBROWSER]'>File Browser</a></li>
 					</ul>
 
-					<h4>Utilities</h4>
+					<h4>[src.knockoff ? "Auxiliary" : "Utilities"]</h4>
 					<ul>
 					<li><a href='byond://?src=\ref[src];change_backlight_color=1'>Change Backlight Color</a></li>
 					<li><a href='byond://?src=\ref[src];mode=[MODE_ATMOS]'>Atmospheric Scan</a></li>
@@ -124,7 +134,7 @@
 
 				if(MODE_NOTE)
 					//Note Program.  Can save/load note files.
-					. += "<h4>Notekeeper V2.5</h4>"
+					. += "<h4>[src.knockoff ? "Notemaker 1.0" : "Notekeeper V2.5"]</h4>"
 
 					if(!src.note_mode)
 						if ((!isnull(src.master.uplink)) && (src.master.uplink.active))
@@ -155,7 +165,7 @@
 				if(MODE_MESSAGE)
 					//Messenger.  Uses Radio.  Is a messenger.
 					src.master.update_overlay("idle") //Remove existing alerts
-					. += "<h4>SpaceMessenger V4.0.5</h4>"
+					. += "<h4>[src.knockoff ? "StarMessenger 2.6" : "SpaceMessenger V4.0.5"]</h4>"
 
 					if (!src.message_mode)
 
@@ -294,7 +304,7 @@
 
 				if(MODE_GROUPS) // Groups and alerts and their ringtones
 					if(length(src.master.mailgroups))
-						. += "<h4>SpaceMessenger V4.0.5</h4>"
+						. += "<h4>[src.knockoff ? "StarMessenger 2.6" : "SpaceMessenger V4.0.5"]</</h4>"
 						. += "<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Back</a><br>"
 						. += "<h4>Mailgroups</h4><br>"
 						. += "<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a>"
@@ -336,25 +346,25 @@
 							. += "<tr><td>[alert]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
 
 				if(MODE_ADDRESSBOOK) // Specific names sent to us, also ringtones
-					. += "<h4>SpaceMessenger V4.0.5</h4>"
+					. += "<h4>[src.knockoff ? "StarMessenger 2.6" : "SpaceMessenger V4.0.5"]</</h4>"
 					. += "<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Back</a><br>"
 					. += "<h4>Address Book</h4><br>"
 					if(length(src.all_callers) < 1)
 						. += "Address book is empty!"
 					else
 						. += "<table cellspacing=5>"
-						for(var/caller in src.all_callers)
-							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[caller]]'>Block</a>"
-							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[caller]'>Msg</a>"
-							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[caller]'>Send File</a>"
+						for(var/address in src.all_callers)
+							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[address]]'>Block</a>"
+							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[address]'>Msg</a>"
+							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[address]'>Send File</a>"
 							if(!src.master.fileshare_program)
 								sendButton = ""
 							else if(!src.clipboard || src.clipboard?.dont_copy)
 								sendButton = "<strike>Send File</strike>"
-							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[caller]'>Del</a>"
-							if(src.all_callers[caller] in src.blocked_numbers)
-								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[caller]]'>Unblock</a>"
-							. += "<tr><td>[src.all_callers[caller]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
+							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[address]'>Del</a>"
+							if(src.all_callers[address] in src.blocked_numbers)
+								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[address]]'>Unblock</a>"
+							. += "<tr><td>[src.all_callers[address]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
 						. += "</table>"
 					. += "<hr>"
 					. += "<h4>Primary Ringtone</h4><br>"
@@ -412,10 +422,13 @@
 					hotspot_controller.show_map(usr.client)
 
 			else if(href_list["change_backlight_color"])
-				var/new_color = input(usr, "Choose a color", "PDA", src.master.bg_color) as color | null
-				if (new_color)
-					var/list/color_vals = hex_to_rgb_list(new_color);
-					src.master.update_colors(new_color, rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8))
+				if (src.master.locked_bg_color)
+					playsound(src.master, 'sound/machines/click.ogg', 30, FALSE)
+				else
+					var/new_color = input(usr, "Choose a color", "PDA", src.master.bg_color) as color | null
+					if (new_color)
+						var/list/color_vals = hex_to_rgb_list(new_color);
+						src.master.update_colors(new_color, rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8))
 
 			else if(href_list["toggle_departments_list"])
 				expand_departments_list = !expand_departments_list
@@ -562,10 +575,7 @@
 							return
 
 					if("ack")
-						if(src.message_last + 20 > TIME) //Message sending delay
-							return
 						src.CrisisAck(href_list["alert_group"], href_list["caller"], href_list["noreply"])
-						src.master.add_fingerprint(usr)
 						return
 
 					if("rename")
@@ -1188,6 +1198,9 @@
 		/// * caller_id: The PDA ID who called the alert
 		/// * noreply: `noreply` data from alert message signal
 		proc/CrisisAck(group_id, caller_id, noreply)
+			if(src.message_last + 20 > TIME) //Message sending delay
+				return
+			src.master.add_fingerprint(usr)
 			var/message = "ACK: Responding to crisis alert!"
 
 			var/caller_reply = TRUE

@@ -6,4 +6,4 @@
 	path = "/game-admin-ranks"
 	body = list("rank")
 	routeParams = list("gameAdminRank") // integer
-	correct_response = /datum/apiModel/Tracked/GameAdminResource
+	correct_response = /datum/apiModel/GameAdminResource

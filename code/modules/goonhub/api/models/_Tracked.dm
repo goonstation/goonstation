@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked)
 /// Anything with the two timestamp fields inherit from this
 /datum/apiModel/Tracked
 	var/id			= null // integer
-	var/created_at	= null // date-time
+	var/created_at	= null // date-time | null
 	var/updated_at	= null // date-time | null
 
 /datum/apiModel/Tracked/SetupFromResponse(response)
@@ -16,8 +16,7 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked)
 /datum/apiModel/Tracked/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.created_at) \
+		isnull(src.id)
 	)
 		return FALSE
 

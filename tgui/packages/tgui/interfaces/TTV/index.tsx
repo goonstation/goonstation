@@ -1,61 +1,21 @@
 /**
  * @file
  * @copyright 2024
- * @author Romayne (https://github.com/MeggalBozale)
- * @license ISC
+ * @author Romayne (https://github.com/MyNameIsRomayne)
+ * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
+import { Button, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, LabeledList, RoundGauge, Section, Stack } from '../../components';
+import { TankInfo } from '../../components/goonstation/TankInfo';
 import { Window } from '../../layouts';
-import { toTitleCase } from 'common/string';
-import { formatPressure } from '../../format';
 
-export const TankInfo = (_props, context) => {
-  const { act } = useBackend(context);
-  const { tank, tankNum } = _props;
-  let button_eject = <Button width={5} textAlign={"center"} disabled={tank.name===null} icon="eject" onClick={() => act(tankNum === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>;
-  let button_add = <Button width={5} textAlign={"center"} icon="add" onClick={() => act("add_item", { "tank": tankNum })}>Add</Button>;
-  let maxPressure = (tank.maxPressure !== null) ? tank.maxPressure : 999;
+export const TTV = () => {
+  const { act, data } = useBackend<TransferValveParams>();
+  const { opened, tank_one, tank_two } = data;
   return (
-    <Section
-      title={tankNum === 1 ? "Tank One" : "Tank Two"}
-      buttons={tank.name !== null ? button_eject : button_add}
-      height="100%"
-    >
-      <LabeledList>
-        <LabeledList.Item label="Holding">
-          {tank.name !== null ? toTitleCase(tank.name) : "None"}
-        </LabeledList.Item>
-        <LabeledList.Item label="Pressure">
-          <RoundGauge
-            size={1.75}
-            value={tank.pressure !== null ? tank.pressure : 0}
-            minValue={0}
-            maxValue={maxPressure}
-            alertAfter={maxPressure * 0.70}
-            ranges={{
-              "good": [0, maxPressure * 0.70],
-              "average": [maxPressure * 0.70, maxPressure * 0.85],
-              "bad": [maxPressure * 0.85, maxPressure],
-            }}
-            format={formatPressure}
-          />
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
-  );
-};
-
-export const TTV = (_props, context) => {
-  const { act, data } = useBackend<TransferValveParams>(context);
-  const {
-    opened,
-    tank_one,
-    tank_two,
-  } = data;
-  return (
-    <Window width={650} height={170}>
+    <Window width={560} height={175}>
       <Window.Content>
         <Stack>
           <Stack.Item>
@@ -64,18 +24,30 @@ export const TTV = (_props, context) => {
           <Stack.Item>
             <Section title="Valve">
               <Stack vertical textAlign="center">
-                <Stack.Item color={opened ? "red" : "green"}>
-                  Valve is {opened ? "open" : "closed"}
+                <Stack.Item color={opened ? 'red' : 'green'}>
+                  Valve is {opened ? 'open' : 'closed'}
                 </Stack.Item>
                 <Stack.Item>
-                  <Button icon="repeat" onClick={() => act("toggle_valve")}>
+                  <Button icon="repeat" onClick={() => act('toggle_valve')}>
                     Toggle Valve
                   </Button>
                 </Stack.Item>
                 <Stack.Item>
-                  {(data.device === '') ? "No Device " : ''}
-                  {(data.device === '') ? <Button icon="add" onClick={() => act("add_item")}>Add</Button>
-                    : <><Button onClick={() => act("interact_device")}>{data.device}</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
+                  {data.device === '' ? 'No Device ' : ''}
+                  {data.device === '' ? (
+                    <Button icon="add" onClick={() => act('add_item')}>
+                      Add
+                    </Button>
+                  ) : (
+                    <>
+                      <Button onClick={() => act('interact_device')}>
+                        {data.device}
+                      </Button>
+                      <Button icon="eject" onClick={() => act('remove_device')}>
+                        Eject
+                      </Button>
+                    </>
+                  )}
                 </Stack.Item>
               </Stack>
             </Section>

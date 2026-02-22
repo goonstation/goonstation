@@ -37,8 +37,8 @@ Contents:
 /turf/unsimulated/floor/arctic/snow
 	name = "odd snow"
 	desc = "Frozen carbon dioxide. Neat."
-	icon = 'icons/turf/outdoors.dmi'
-	icon_state = "grass_snow"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "ice_snow"
 	carbon_dioxide = 100
 	nitrogen = 0
 	oxygen = 0
@@ -59,7 +59,7 @@ Contents:
 
 	New()
 		..()
-		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6")]"
+		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6","ice7","ice8","ice9","ice10")]"
 
 /turf/unsimulated/floor/arctic/snow/lake
 	name = "frozen lake"
@@ -68,6 +68,13 @@ Contents:
 	icon_state = "poolwaterfloor"
 	fullbright = 0
 
+/turf/unsimulated/floor/auto/arctic_lake
+	name = "frozen lake"
+	desc = "You can see the lake bubbling away under the ice. Neat."
+	icon = 'icons/turf/arctic_lake.dmi'
+	icon_state = "lake"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
+	icon_state_edge = "lake_edge"
 
 /turf/unsimulated/floor/arctic/plating
 	name = "plating"
@@ -83,7 +90,7 @@ Contents:
 /turf/unsimulated/floor/arctic/abyss
 	name = "deep abyss"
 	desc = "You can't see the bottom."
-	icon_state = "void_gray"
+	icon_state = "void_g"
 	carbon_dioxide = 100
 	nitrogen = 0
 	oxygen = 0
@@ -113,6 +120,10 @@ Contents:
 	New()
 		..()
 		icon_state = "[pick("snow_cliff1","snow_cliff2","snow_cliff3","snow_cliff4")]"
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 50,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_ICE)
 
 /turf/unsimulated/floor/arctic/cliff_outsidecorner
 	name = "icy cliff"
@@ -125,25 +136,32 @@ Contents:
 	temperature = 100
 	fullbright = 0
 	can_replace_with_stuff = 1
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 50,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_ICE)
 
 ///////////////////////////////////////////////////////////////WALLS////////////////////////////////////////////////
 
 /turf/unsimulated/wall/arctic/abyss
 	name = "deep abyss"
 	desc = "You can't see the bottom."
-	icon_state = "void_gray"
+	icon_state = "void_g"
 	gas_impermeable = 1
 	opacity = 1
 	density = 1
 	fullbright = 0
+	plane = PLANE_NOSHADOW_BELOW
 
 /turf/unsimulated/wall/arctic/abyss
 	name = "deep abyss"
 	desc = "You can't see the bottom."
-	icon_state = "void_gray"
+	icon_state = "void_g"
 	opacity = 1
 	density = 1
-
+	plane = PLANE_NOSHADOW_BELOW
 
 //this also sucks and needs to be consolidated, just bugtesting right now
 /turf/unsimulated/wall/arctic/abyss/ice

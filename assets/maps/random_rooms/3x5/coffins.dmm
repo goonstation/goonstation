@@ -4,7 +4,7 @@
 /obj/random_item_spawner/shoe/one_or_zero,
 /obj/random_item_spawner/snacks/one_or_zero,
 /obj/random_item_spawner/medicine/one_or_zero,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+/obj/fakeobject/skeleton/decomposed_corpse{
 	icon_state = "body8"
 	},
 /turf/simulated/floor/plating/random,

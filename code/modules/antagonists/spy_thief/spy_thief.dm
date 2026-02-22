@@ -2,6 +2,7 @@
 	id = ROLE_SPY_THIEF
 	display_name = "spy thief"
 	antagonist_icon = "spy_thief"
+	wiki_link = "https://wiki.ss13.co/Spy_Thief"
 
 	/// A list of mutable appearnces of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
 	/// Associative list of string names to mutable appearances
@@ -9,7 +10,7 @@
 	/// A list of buylist datums that this traitor has redeemed using their uplink.
 	///
 	///This tracks items redeemed with any uplink, so if a spy thief steals another spy thief's uplink, redeemed items will show up here too!
-	var/list/redeemed_item_paths = list()
+	var/list/datum/syndicate_buylist/redeemed_items = list()
 
 
 	New()
@@ -104,18 +105,6 @@
 		var/datum/objective_set/objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
 		new objective_set_path(src.owner, src)
 
-	do_popup(override)
-		if (!override)
-			override = "spythief"
-
-		..(override)
-
-	handle_round_end()
-		. = ..()
-
-		if (length(src.stolen_items) >= 7)
-			src.owner.current.unlock_medal("Professional thief", TRUE)
-
 	get_statistics()
 		var/list/stolen_items = list()
 		for (var/item_name in src.stolen_items)
@@ -134,23 +123,24 @@
 			)
 
 		var/list/redeemed_items = list()
-		for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_item_paths)
-			var/obj/item_type = initial(redeemed_entry.item)
-			redeemed_items += list(
-				list(
-					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-					"name" = "[initial(redeemed_entry.name)]",
+		for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_items)
+			if(length(redeemed_entry.items) > 0)
+				var/obj/item_type = initial(redeemed_entry.items[1])
+				redeemed_items += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"name" = "[initial(redeemed_entry.name)]",
+					)
 				)
-			)
 
 		return list(
 			list(
-				"name" = "Stolen Items",
+				"name" = "[length(stolen_items)] Stolen Items",
 				"type" = "itemList",
 				"value" = stolen_items,
 			),
 			list(
-				"name" = "Redeemed Items",
+				"name" = "[length(redeemed_items)] Redeemed Items",
 				"type" = "itemList",
 				"value" = redeemed_items,
 			),

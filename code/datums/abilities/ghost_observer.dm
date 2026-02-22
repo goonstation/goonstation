@@ -55,19 +55,18 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = "spooktober spook points",//src.name,
-				"content" = "[spooktober_GH.points] Points <br>All Points are shared between ghosts. <br>Spinning chairs, flipping, using the ouija board, and farting on people as a ghost generates more points faster.",//(src.desc ? src.desc : null),
-				"theme" = theme
-			))
+		if (usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = "spooktober spook points",
+				content = "[spooktober_GH.points] Points <br>All Points are shared between ghosts. <br>Spinning chairs, flipping, using the ouija board, and farting on people as a ghost generates more points faster.",
+				theme = src.theme
+			)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 #endif
 
@@ -152,7 +151,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.addAbility(/datum/targetable/ghost_observer/reenter_corpse)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_ghosts)
-		if (istype(ticker.mode, /datum/game_mode/gang))
+		src.addAbility(/datum/targetable/ghost_observer/toggle_health)
+		src.addAbility(/datum/targetable/ghost_observer/view_minimap)
+		if (istype(ticker?.mode, /datum/game_mode/gang))
 			src.addAbility(/datum/targetable/ghost_observer/toggle_gang_overlay)
 
 		// src.addAbility(/datum/targetable/ghost_observer/afterlife_Bar)
@@ -291,6 +292,19 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.toggle_ghosts()
 
+/datum/targetable/ghost_observer/toggle_health
+	name = "Toggle Seeing Health"
+	desc = "Toggle seeing health status."
+	icon_state = "toggle-health"
+	targeted = 0
+	cooldown = 0
+
+	cast(atom/target)
+		. = ..()
+		if (holder && istype(holder.owner, /mob/dead/observer))
+			var/mob/dead/observer/ghost = holder.owner
+			ghost.show_health()
+
 /datum/targetable/ghost_observer/toggle_HUD
 	name = "Hide HUD"
 	desc = "Hide all HUD buttons."
@@ -328,7 +342,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	targeted = 0
 	cooldown = 0
 	special_screen_loc = "NORTH,EAST"
-	tooltip_flags = TOOLTIP_LEFT
 	var/displaying_buttons = 0
 
 	New()
@@ -494,7 +507,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (4)
 					new/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon(T)
 				if (5)
-					new/obj/decal/fakeobjects/skeleton/unanchored/summon(T)
+					new/obj/fakeobject/skeleton/unanchored/summon(T)
 				if (6)
 					new/obj/decal/cleanable/vomit/spiders(T)
 

@@ -53,3 +53,11 @@ var/global/datum/poll_manager/poll_manager = new
 				return
 			poll_data[i] = poll
 			break
+
+	proc/get_active_poll_names()
+		. = list()
+		var/current_time = subtractTime(world.realtime, hours = world.timezone)
+		for (var/poll in src.poll_data)
+			if (fromIso8601(poll["expires_at"]) > current_time) //time is hard, hopefully this is sane
+				. += poll["question"]
+

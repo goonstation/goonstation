@@ -19,7 +19,7 @@
 	attackby(obj/item/P, mob/living/user)
 		src._health -= P.force
 		attack_particle(user,src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(prob(20))
@@ -34,7 +34,7 @@
 				next_spawn_check = TIME + rand(20 SECONDS, 25 SECONDS)
 				if (linked_critters < max_critters)
 					var/mob/living/critter/small_animal/mouse/mad/rat_den/M = new /mob/living/critter/small_animal/mouse/mad/rat_den(src.loc)
-					M.faction |= FACTION_WRAITH
+					LAZYLISTADDUNIQUE(M.faction, FACTION_WRAITH)
 					M.linked_den = src
 					linked_critters ++
 

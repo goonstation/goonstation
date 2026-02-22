@@ -6,4 +6,4 @@
 	path = "/game-admins"
 	body = /datum/apiBody/gameadmins/put
 	routeParams = list("gameAdmin") // integer
-	correct_response = /datum/apiModel/Tracked/GameAdminResource
+	correct_response = /datum/apiModel/GameAdminResource

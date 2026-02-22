@@ -60,12 +60,14 @@
 				target.force_laydown_standup()
 				target.change_misstep_chance(25)
 
-			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]strike wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
-
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""][name] wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		else
 			boutput(M, SPAN_ALERT("You can't wrestle the target here!"))
 
 		return 0
+
+	logCast(atom/target)
+		return
 
 /datum/targetable/wrestler/strike/fake
 	fake = 1

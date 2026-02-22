@@ -1,3 +1,10 @@
+TYPEINFO(/mob/living/intangible/blob_overmind)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_BLOBCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_BLOBCHAT)
+
 /mob/living/intangible/blob_overmind
 	name = "blob overmind"
 	real_name = "blob overmind"
@@ -10,38 +17,43 @@
 	blinded = 0
 	anchored = ANCHORED
 	use_stamina = 0
-	mob_flags = SPEECH_BLOB
-	voice_type = null
+	speech_verb_say = list("wobbles", "wibbles", "jiggles", "wiggles", "undulates", "fidgets", "joggles", "twitches", "waggles", "trembles", "quivers")
+	default_speech_output_channel = SAY_CHANNEL_BLOB
 
 	var/datum/tutorial_base/regional/blob/tutorial
-	var/attack_power = 1
-	var/bio_points = 0
-	var/bio_points_max = 1
-	var/bio_points_max_bonus = 7 //starting bio point cap should be 10-12 now, i think. a bit more wiggle room for starter blobs.
-	var/base_gen_rate = 3
-	var/gen_rate_bonus = 0
-	var/gen_rate_used = 0
-	var/evo_points = 0
-	var/next_evo_point = 25
-	var/spread_upgrade = 0
-	var/spread_mitigation = 0
+	var/attack_power = 1 //! Multiplier value for how much the attack ability hurts
+	var/bio_points = 0 //! How much energy is stored to create tiles and do things
+	var/bio_points_max = 1 //! Maximum amount of biopoints that can be stockpiled at a given time, without lipid cells
+	//(starting bio point cap should be 10-12 now, i think. a bit more wiggle room for starter blobs.)
+	var/bio_points_max_bonus = 7 //! Starting bonus to the max. amount of biopoints a blob can have, on top of the usual formula (in Life())
+	var/base_gen_rate = 3 //! The min. amount of biopoints generated each tick or so
+	var/gen_rate_bonus = 0 //! Bonus to the generation rate. from upgrades, blob tiles, etc.
+	var/gen_rate_used = 0 //! Amount of gen rate hogged up by tiles that consume bp -- ectothermids for example
+	var/evo_points = 0 //! Amount of 'evo' points (upgrade points) for upgrading blob abilities
+	var/next_evo_point = 25 //! How many tiles the blob has to spread for the next evolution point. scales over time
+	var/spread_upgrade = 0 //! Number of spread upgrades purchased. reduces cooldown time on spreading
+	// unused currently as everything for this is 0
+	var/spread_mitigation = 0 //! Additional cooldown on further spreads depending on the placement of certain blob tiles.
 	var/list/upgrades = list()
 	var/list/available_upgrades = list()
-	var/viewing_upgrades = 1
-	var/help_mode = 0
+	var/viewing_upgrades = TRUE
+	var/help_mode = FALSE //! Whether or not blob is in 'help mode' viewing help information for abilities and upgrades
 	var/list/abilities = list()
 	var/list/blobs = list()
-	var/started = 0
-	var/starter_buff = 1
-	var/extra_nuclei = 0
-	var/next_extra_nucleus = 100
-	var/multi_spread = 0
-	var/upgrading = 0
+	var/started = FALSE //! Whether blob is pre or post deployment
+	var/starter_buff = TRUE //! Whether to give some assistance for blobs that may need a boost at the start
+	var/extra_nuclei = 0 //! Number of nuclei left to create
+	var/next_extra_nucleus = 100 //! Metric of how many total tiles are placed until next nucleus can be placed. Scales
+	var/multi_spread = 0 //! Keeps track of the cumulative spread chance from the spread upgrade, where 20 is 20% chance for an additional tile
+	// for whatever reason there are a ton of SLEEP and SPAWN calls in the upgrade code so presumably this prevents race conditions or similar
+	var/upgrading = FALSE //! Whether blob is upgrading itself right now
 	var/upgrade_id = 1
-	var/nucleus_reflectivity = 0
+	// helps blobs which are losing to fight back by making the nucleus less of a punching bag. damage reduction tapers off once crew is the one losing
+	var/nucleus_reflectivity = 0 //! Armor resistance on nucleus from 0 to 100%, based off total blob tiles existing. % chance to reflect energy projectiles
 	var/image/nucleus_overlay
-	var/total_placed = 0
-	var/next_pity_point = 100
+	var/total_placed = 0 //! the total amount of tiles placed ever, including even tiles which were destroyed
+	// helps blobs push back when losing
+	var/next_pity_point = 100 //! additional metric to earn evo points based off total tiles ever created vs. total tiles owned. scales
 #ifdef BONUS_POINTS
 	bio_points = 999
 	bio_points_max = 999
@@ -96,6 +108,7 @@
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
@@ -151,6 +164,8 @@
 			 * at 2175 blobs, blob points max will reach about 350. It will begin decreasing sharply after that
 			 * This is a size penalty. Basically if the blob gets too damn big, the crew has some chance of
 			 * fighting it back because it will run out of points.
+			 *
+			 * woah hey instead of looking at math what if there was a graph! wow look here's one --> https://www.desmos.com/calculator/mwwgfb7fwf
 			 */
 			src.bio_points_max = BlobPointsBezierApproximation(round(blobs.len / 5)) + bio_points_max_bonus
 
@@ -320,15 +335,7 @@
 							return
 					src.Move(T)
 
-	say_understands() return 1
 	can_use_hands()	return 0
-
-	say(var/message)
-		return ..(message)
-
-	say_quote(var/text)
-		var/speechverb = pick("wobbles", "wibbles", "jiggles", "wiggles", "undulates", "fidgets", "joggles", "twitches", "waggles", "trembles", "quivers")
-		return "[speechverb], \"[text]\""
 
 	//reset the blob to starting state
 	proc/reset()
@@ -624,6 +631,7 @@
 	var/image/alt_highlight = null
 	var/image/cooldown = null
 	var/image/darkener = null
+	var/list/tooltip_options = list()
 
 	var/atom/movable/screen/pseudo_overlay/point_overlay
 	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
@@ -778,24 +786,25 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder)
+		if (usr.client.tooltips)
 			var/cost = null
-			if (ability)
+			if (ability && (ability.bio_point_cost || ability.cooldown_time))
 				cost = "<BR>Cost: [ability.bio_point_cost] BP<BR>Cooldown: [ability.cooldown_time / 10] s"
-			else if (upgrade)
+			else if (upgrade && upgrade.evo_point_cost)
 				cost = "<BR>Cost: [upgrade.evo_point_cost] EP"
 
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
+			usr.client.tooltips.show(arglist(list(
+				"type" = TOOLTIP_HOVER,
+				"target" = src,
+				"mouse" = params,
 				"title" = "[src.name][cost]",
-				"content" = src.desc ,
+				"content" = src.desc,
 				"theme" = "blob"
-			))
+			) + src.tooltip_options))
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 /mob/living/intangible/blob_overmind/checkContextActions(atom/target)
 	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/

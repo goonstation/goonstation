@@ -63,11 +63,11 @@
 		/obj/item/paper/lunchbox_note)
 
 	food7
-		spawn_contents = list(/obj/item/reagent_containers/food/snacks/swedishmeatball,\
-		/obj/item/reagent_containers/food/snacks/stroopwafel,\
-		/obj/item/reagent_containers/food/snacks/swedish_fish,\
+		spawn_contents = list(/obj/item/reagent_containers/food/snacks/bagel/lox,\
+		/obj/item/reagent_containers/food/snacks/bagel/creamcheese,\
+		/obj/item/reagent_containers/food/snacks/ingredient/cheese,\
+		/obj/item/reagent_containers/food/snacks/plant/apple,\
 		/obj/item/reagent_containers/food/drinks/water,\
-		/obj/item/kitchen/utensil/fork,\
 		/obj/item/paper/lunchbox_note)
 
 	food8
@@ -95,7 +95,7 @@
 		/obj/item/paper/lunchbox_note)
 
 	food11
-		spawn_contents = list(/obj/item/reagent_containers/food/snacks/steak_h,\
+		spawn_contents = list(/obj/item/reagent_containers/food/snacks/steak,\
 		/obj/item/reagent_containers/food/snacks/mashedpotatoes,\
 		/obj/item/reagent_containers/food/snacks/biscuit,\
 		/obj/item/reagent_containers/food/snacks/cookie/oatmeal,\

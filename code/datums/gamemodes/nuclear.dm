@@ -18,7 +18,6 @@ var/global/list/nuke_op_camo_matrix = null
 	var/list/datum/mind/syndicates = list()
 	var/finished = 0
 	var/nuke_detonated = 0 //Has the nuke gone off?
-	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
 	var/minimum_players = 15 // Minimum ready players for the mode
@@ -182,9 +181,6 @@ var/global/list/nuke_op_camo_matrix = null
 		syndicate.special_role = ROLE_NUKEOP
 		possible_syndicates.Remove(syndicate)
 
-	agent_radiofreq = random_radio_frequency()
-	protected_frequencies += agent_radiofreq
-
 	return 1
 
 /datum/game_mode/nuclear/proc/pick_leader()
@@ -195,12 +191,13 @@ var/global/list/nuke_op_camo_matrix = null
 			possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
-	else
-		for(var/datum/mind/mind in syndicates)
-			if(mind.current.client?.preferences?.be_syndicate_commander)
-				possible_leaders += mind
+
+	for(var/datum/mind/mind in syndicates)
+		if(mind.current.client?.preferences?.be_syndicate_commander)
+			possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
+
 	return pick(syndicates)
 
 /datum/game_mode/nuclear/post_setup()
@@ -246,18 +243,14 @@ var/global/list/nuke_op_camo_matrix = null
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	the_bomb.gives_medal = TRUE
 	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
-	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
-
-	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
-		new /obj/storage/closet/syndicate/personal(T)
-	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BOMB])
-	new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
-	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
-		for(var/i = 1 to 5)
-			new /obj/item/breaching_charge/thermite(T)
 
 	for_by_tcl(computer,/obj/machinery/computer/battlecruiser_podbay)
 		auth_computer = computer
+
+	var/list/cairngorm_door_ids = list("cairngorm_podbay", "cairngorm_armory", "cairngorm_medical", "cairngorm_barracks")
+	for_by_tcl(bolter, /obj/machinery/door_control/bolter)
+		if(bolter.id in cairngorm_door_ids)
+			bolter.toggle()
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -405,15 +398,6 @@ var/global/list/nuke_op_camo_matrix = null
 
 /datum/game_mode/nuclear/send_intercept()
 	..(ticker.minds)
-/datum/game_mode/nuclear/proc/random_radio_frequency()
-	. = 0
-	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
-	blacklisted.Add(R_FREQ_BLACKLIST)
-
-	do
-		. = rand(1352, 1439)
-
-	while (. in blacklisted)
 
 /datum/game_mode/nuclear/proc/create_plant_location_markers(var/list/target_locations, var/list/target_location_names)
 	// Find the centres of the plant sites.
@@ -447,7 +431,7 @@ var/global/list/nuke_op_camo_matrix = null
 			target_y = T.y
 
 		var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
-		plant_location.AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[marker_name] Plant Site")
+		plant_location.AddComponent(/datum/component/minimap_marker/minimap, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[marker_name] Plant Site")
 
 /datum/game_mode/nuclear/process()
 	set background = 1
@@ -519,17 +503,7 @@ var/syndicate_name = null
 		if (..(user))
 			return
 
-		var/wins = world.load_intra_round_value("nukie_win")
-		var/losses = world.load_intra_round_value("nukie_loss")
-		if(isnull(wins))
-			wins = 0
-		if(isnull(losses))
-			losses = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
-		onclose(user, "cairngorm_stats_[src]")
-		return
+		tgui_message(user, src.desc, "Mission Memorial", theme = "syndicate")
 
 
 /obj/New()

@@ -5,7 +5,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 	icon_state = "wrench"
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_WRENCHING
 	health = 5
@@ -25,7 +25,7 @@
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (!wrench_surgery(target, user))
+		if (is_special || !wrench_surgery(target, user))
 			return ..()
 
 /obj/item/wrench/gold
@@ -73,6 +73,11 @@
 /obj/item/wrench/orange
 	desc = "A tool used to apply torque to turn nuts and bolts. But orange!"
 	icon_state = "wrench-orange"
+	item_state = "wrench"
+
+/obj/item/wrench/purple
+	desc = "A tool used to apply torque to turn nuts and bolts. Now comes in purple!"
+	icon_state = "wrench-purple"
 	item_state = "wrench"
 
 /obj/item/wrench/green

@@ -1,0 +1,90 @@
+body {
+  background: #121212;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 10px;
+}
+
+a {
+  color: #e0e0e0;
+  text-decoration: none;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  padding: 6px 12px;
+  margin: 2px;
+  display: inline-block;
+  border-radius: 4px;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+  font-size: 10pt;
+}
+
+a:hover {
+  background: #58b4dc;
+  color: #000;
+  border-color: #58b4dc;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 10px 0;
+}
+
+.icon-list,
+.icon-folder-open,
+.icon-cog,
+.icon-wrench,
+.icon-search,
+.icon-caret-right {
+  color: #b0bec5;
+  margin-right: 4px;
+}
+
+/* Scrollable content box styling */
+div[style*='overflow-y: auto'] {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Item links inside scrollable area */
+div[style*='overflow-y: auto'] a {
+  background: transparent;
+  border: none;
+  color: #90caf9;
+  padding: 0;
+  display: inline;
+}
+
+div[style*='overflow-y: auto'] a:hover {
+  color: #58b4dc;
+}
+
+/* Add breathing room between item blocks */
+div[style*='overflow-y: auto'] br + br {
+  margin-bottom: 10px;
+  display: block;
+  content: '';
+}
+
+/* Optional: make "Category" links slightly more buttony */
+div:has(.icon-search) a {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 2px;
+  display: inline-block;
+}
+
+div:has(.icon-search) a:hover {
+  background: #58b4dc;
+  color: #000;
+  border-color: #58b4dc;
+}

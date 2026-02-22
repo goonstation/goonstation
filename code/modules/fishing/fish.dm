@@ -100,11 +100,45 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	rarity = ITEM_RARITY_COMMON
 	// If this is set to true, the fish cannot be turned in for points
 	var/fishing_upload_blacklisted = FALSE
+	var/datum/forensic_id/scent = null
+
+	afterattack(obj/target, mob/user, flag)
+		. = ..()
+		src.apply_scent(target)
+
+	pickup(mob/user)
+		. = ..()
+		src.apply_scent(user)
+
+	dropped(mob/user)
+		. = ..()
+		src.apply_scent(user)
+
+	proc/get_scent_color()
+		switch(category)
+			if(FISH_CATEGORY_FRESHWATER)
+				return "aqua blue"
+			if(FISH_CATEGORY_OCEAN)
+				return "ocean blue"
+			if(FISH_CATEGORY_AQUARIUM)
+				return "clear blue"
+			else
+				return "ocean blue"
+
+	proc/apply_scent(var/atom/target)
+		if(!src.scent)
+			return
+		var/datum/forensic_data/basic/scent_data = new(src.scent, flags = FORENSIC_FAKE)
+		if(target == src)
+			scent_data.time_end = INFINITY
+		target.add_evidence(scent_data, FORENSIC_GROUP_SLEUTH)
 
 /obj/item/reagent_containers/food/fish/New()
 	..()
 	src.setItemSpecial(/datum/item_special/swipe)
 	src.make_reagents()
+	src.scent = register_id(src.get_scent_color())
+	apply_scent(src)
 
 /obj/item/reagent_containers/food/fish/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(user?.bioHolder.HasEffect("clumsy") && prob(50))
@@ -114,6 +148,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	else
 		..()
 		src.slapsound()
+		src.apply_scent(target)
 
 /obj/item/reagent_containers/food/fish/proc/slapsound()
 	playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
@@ -176,6 +211,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_COMMON
 
+	get_scent_color()
+		return "golden yellow"
+
 /obj/item/reagent_containers/food/fish/chub
 	name = "chub"
 	desc = "The sea chub, also known as the rudderfish or the pilot fish. Wait which one is this?"
@@ -191,6 +229,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#1e2030"
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_UNCOMMON
+
+	get_scent_color()
+		return "midnight blue"
 
 /obj/item/reagent_containers/food/fish/dace
 	name = "dace"
@@ -269,6 +310,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_LEGENDARY
 
+	get_scent_color()
+		// An important clue that every pug detective should try and follow.
+		var/color_base = pick("blue","green","yellow","orange","brown","red","pink","purple","grey","magenta","cyan","indigo","scarlet","turquoise")
+		var/color_desc = pick("deadly","ghastly","siren","fishy","feline","cunning","mysterious","alluring","troubling","jewel")
+		return "[color_desc] [color_base]"
+
 /obj/item/reagent_containers/food/fish/tuna
 	name = "bluefin tuna"
 	desc = "Formerly known as the tunny. Delicious but sadly overfished."
@@ -285,6 +332,72 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_COMMON
 
+	get_scent_color()
+		return "seafoam green"
+
+/obj/item/reagent_containers/food/fish/pufferfish
+	name = "pufferfish"
+	desc = "Adorable. Quite poisonous."
+	icon_state = "pufferfish"
+	inhand_color = "#8d754e"
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/pufferfish
+	category = FISH_CATEGORY_AQUARIUM
+	rarity = ITEM_RARITY_UNCOMMON
+
+	New()
+		global.processing_items += src
+		return ..()
+
+	disposing()
+		global.processing_items -= src
+		. = ..()
+
+	process() // the part where the puffed up fish hurts you
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if (src.spikes_protected(H, src))
+				return
+			boutput(H, SPAN_ALERT("YOWCH! You prick yourself on [src]'s spikes! Maybe you should've used gloves..."))
+			random_brute_damage(H, 3)
+			H.setStatusMin("stunned", 2 SECONDS)
+			take_bleeding_damage(H, null, 3, DAMAGE_STAB)
+
+	make_reagents()
+		..() //it still contains fish oil
+		src.reagents.add_reagent("tetrodotoxin",20) // REALLY don't eat raw pufferfish
+
+	onSlice(var/mob/user) // Don't eat pufferfish the staff assistant made
+		if (user.traitHolder?.hasTrait("training_chef"))
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> carefully separates the toxic parts out of the [src]."))
+
+			var/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver/liver =\
+			new /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver(src.loc)
+			if (src.reagents?.total_volume > 0)
+				src.reagents.trans_to(liver, src.reagents.total_volume)
+		else
+			if (prob(25)) // Don't try doing it if you don't know what you're doing
+				boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
+				src.reagents.trans_to(user, 5)
+			else if (prob(30)) // 30% of 75%(slightly more than 22%) chance of still being safe to eat
+				src.reagents.remove_reagent("tetrodotoxin",src.reagents.get_reagent_amount("tetrodotoxin"))
+
+
+	proc/spikes_protected(mob/living/carbon/human/H, obj/fish)
+		if(H.gloves)
+			return TRUE
+		if(H.traitHolder?.hasTrait("training_chef"))
+			return TRUE
+
+		if (H.l_hand == fish)
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
+				return TRUE
+		else if (H.r_hand == fish)
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
+				return TRUE
+		else
+			return TRUE //no pokey if not holdy :salute:
+
+
 /obj/item/reagent_containers/food/fish/flounder
 	name = "flounder"
 	desc = "A flatfish found at the bottom of oceans around the world. It's got it's eyes on you!"
@@ -292,6 +405,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#5c471b"
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_UNCOMMON
+
+	get_scent_color()
+		return "seafoam green"
 
 /obj/item/reagent_containers/food/fish/coelacanth
 	name = "coelacanth"
@@ -311,6 +427,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_UNCOMMON
 
+	get_scent_color()
+		return "seafoam green"
+
 /obj/item/reagent_containers/food/fish/shrimp
 	name = "shrimp"
 	desc = "Shrimple as that."
@@ -320,11 +439,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_UNCOMMON
 
+	get_scent_color()
+		return "shell pink"
+
 /obj/item/reagent_containers/food/fish/sardine
 	name = "sardine"
 	desc = "At home in a can. Good grilled, pickled or smoked. The sardine isn't a fan of this however."
 	icon_state = "sardine"
 	inhand_color = "#618fe4"
+	category = FISH_CATEGORY_OCEAN
+	rarity = ITEM_RARITY_COMMON
+
+/obj/item/reagent_containers/food/fish/anchovy
+	name = "anchovy"
+	desc = "Great on pizza."
+	icon_state = "anchovy"
+	inhand_color = "#636f85"
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_COMMON
 
@@ -355,6 +485,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#ff6601"
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_COMMON
+
+	get_scent_color()
+		return "warm orange"
 
 /obj/item/reagent_containers/food/fish/damselfish
 	name = "damselfish"
@@ -420,6 +553,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_COMMON
 
+	get_scent_color()
+		return "sunshine yellow"
+
 /obj/item/reagent_containers/food/fish/mandarin_fish
 	name = "mandarin fish"
 	desc = "Slow moving reef-dwellers, these extremely colorful fish find it hard to adapt to aquarium life."
@@ -454,6 +590,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#af2323"
 	rarity = ITEM_RARITY_RARE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
+
+	get_scent_color()
+		return "blood red"
 /*
 /obj/item/reagent_containers/food/fish/blood_fish
 	name = "blood fish"
@@ -479,6 +618,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	rarity = ITEM_RARITY_EPIC
 	slice_product = /mob/living/critter/blobman/meat
 
+	get_scent_color()
+		return "blood red"
+
 //void
 /obj/item/reagent_containers/food/fish/void_fish
 	name = "void fish"
@@ -486,6 +628,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	icon_state = "void_fish"
 	inhand_color = "#8f3ed1"
 	rarity = ITEM_RARITY_RARE
+
+	get_scent_color()
+		return "deep purple"
 
 //code
 /obj/item/reagent_containers/food/fish/code_worm
@@ -516,6 +661,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 		else if (prob(40))
 			animate_lag(src, magnitude = 10, loopnum = 1, steps = rand(2, 4))
 
+	get_scent_color()
+		return null
+
 //solarium
 /obj/item/reagent_containers/food/fish/sun_fish
 	name = "literal sun fish"
@@ -526,6 +674,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	New()
 		. = ..()
 		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 180, TRUE)
+
+	get_scent_color()
+		return "sunshine yellow"
 
 //lava moon
 /obj/item/reagent_containers/food/fish/lava_fish
@@ -554,6 +705,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 			playsound(target, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 			target.changeStatus("burning", 2 SECONDS)
 
+	get_scent_color()
+		return "ruby red"
+
 /obj/item/reagent_containers/food/fish/igneous_fish
 	name = "igneous fish"
 	desc = "A fish formed of cooled volcanic magma, neat! Still hot to handle though!"
@@ -561,6 +715,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#380c0c"
 	rarity = ITEM_RARITY_RARE
 
+	get_scent_color()
+		return "ruby red"
 
 //blob
 /obj/item/reagent_containers/food/fish/blobfish
@@ -585,6 +741,9 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/real_goldfish)
 	slice_product = /obj/item/raw_material/gold
 	default_material = "gold"
 
+	get_scent_color()
+		return "golden yellow"
+
 TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	mat_appearances_to_ignore = list("wood")
 
@@ -600,6 +759,9 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 
 	slapsound()
 		playsound(src.loc, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "forest green"
 
 /obj/item/reagent_containers/food/fish/random // used by the Wholetuna Cordata plant
 	New()
@@ -617,3 +779,6 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	slice_product = /obj/item/material_piece/steel
 	default_material = "steel"
 	rarity = ITEM_RARITY_RARE
+
+	get_scent_color()
+		return "dusty grey"

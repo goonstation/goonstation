@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/device/calibrator)
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 5.0
 	w_class = W_CLASS_SMALL
@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 							RSO.shear_overload()
 			else
 				SPAWN(0.1 SECONDS)
-					flick("drill-extract",src.drawlight)
+					FLICK("drill-extract",src.drawlight)
 
 			playsound(src.loc, 'sound/machines/siphon_run.ogg', 50, !extract_progressed) //noise warbles if no progress occurred
 
@@ -379,7 +379,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				if(length(satchel.contents) == satchel.maxitems || !length(src.contents)) incomplete = 0
 				boutput(usr, SPAN_NOTICE("You [incomplete ? "stop" : "finish"] filling \the [satchel]."))
 				satchel.UpdateIcon()
-				satchel.tooltip_rebuild = 1
+				satchel.tooltip_rebuild = TRUE
 				src.update_storage_bar()
 			else
 				boutput(usr, SPAN_NOTICE("\The [satchel] doesn't have any room to accept materials."))
@@ -445,10 +445,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.toggling = TRUE
 		playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 		src.icon_state = "drill-low"
-		flick("drilldrop",src)
+		FLICK("drilldrop",src)
 		SPAWN(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4,src))
 				if (res.status & BROKEN) continue
+				var/turf/T = get_turf(res)
+				if (ON_COOLDOWN(T, "resonator_anti_stack", 1 DECI SECOND)) continue
 				var/xadj = res.x - src.x
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
@@ -476,7 +478,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.clear_siphon_console()
 		SPAWN(1 SECOND)
 			src.icon_state = "drill-high"
-			flick("drillraise",src)
+			FLICK("drillraise",src)
 			SPAWN(3 SECONDS)
 				src.toggling = FALSE
 
@@ -546,6 +548,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	plane = PLANE_OVERLAY_EFFECTS
 
 //section: resonators
+
+#define RESONATOR_CABLE_REPAIR_COST 3
 
 /obj/machinery/siphon/resonator
 	name = "\improper Type-AX siphon resonator"
@@ -630,23 +634,17 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user,"The service panel isn't open.")
 				return
 			if(HAS_FLAG(src.status,BROKEN))
-				if(W.amount >= 3)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 40, 1)
-					boutput(user, "You replace the resonator's damaged wiring.")
-					status &= ~BROKEN
-					src.UpdateIcon()
-					src.update_fx()
-					W.amount -= 3
-					if (W.amount < 1)
-						var/mob/source = user
-						source.u_equip(W)
-						qdel(W)
-					else if(W.inventory_counter)
-						W.inventory_counter.update_number(W.amount)
+				var/obj/item/cable_coil/coil = W
+				if (!coil.use(RESONATOR_CABLE_REPAIR_COST))
+					boutput(user, "You need at least [RESONATOR_CABLE_REPAIR_COST] lengths of wire to repair the damage.")
 					return
-				else
-					boutput(user, "You need at least three lengths of wire to repair the damage.")
-					return
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 40, 1)
+				boutput(user, "You replace the resonator's damaged wiring.")
+				status &= ~BROKEN
+				src.UpdateIcon()
+				src.update_fx()
+				coil.use(RESONATOR_CABLE_REPAIR_COST)
+				return
 			else
 				boutput(user, "The internal wiring doesn't seem to need repair.")
 				return
@@ -661,6 +659,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if(paired_core)
 				src.build_net_update(null,SIGBUILD_REGULAR)
 			return
+
+	overload_act()
+		if (src.status & BROKEN)
+			return FALSE
+		src.shear_overload()
+		return TRUE
 
 	examine()
 		. = ..()
@@ -826,3 +830,5 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		devdat["Maximum Intensity"] = src.max_intensity
 		devdat["Shear Modifier"] = src.shearmod * src.intensity
 		return devdat
+
+#undef RESONATOR_CABLE_REPAIR_COST

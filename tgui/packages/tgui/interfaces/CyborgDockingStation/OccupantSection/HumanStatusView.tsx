@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { LabeledList, ProgressBar } from '../../../components';
+import { LabeledList, ProgressBar } from 'tgui-core/components';
+
 import { OccupantDataHuman } from '../type';
 
 interface HumanStatusViewProps {
@@ -25,7 +26,8 @@ export const HumanStatusView = (props: HumanStatusViewProps) => {
             good: [0.5, Infinity],
             average: [0.25, 0.5],
             bad: [-Infinity, 0.25],
-          }}>
+          }}
+        >
           {Math.floor(((max_health - health) / max_health) * 100)}%
         </ProgressBar>
       </LabeledList.Item>

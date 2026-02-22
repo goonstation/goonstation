@@ -7,8 +7,9 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
-import { useLocalState } from '../../backend';
-import { Button, Input, LabeledList, Section } from '../../components';
+import { useState } from 'react';
+import { Button, Input, LabeledList, Section } from 'tgui-core/components';
+
 import { TeleConsoleData } from './types';
 import { formatCoordinates } from './util';
 
@@ -20,9 +21,16 @@ type BookmarksSectionProps = Pick<TeleConsoleData, 'bookmarks'> & {
   targetCoords: [number, number, number];
 };
 
-export const BookmarksSection = (props: BookmarksSectionProps, context) => {
-  const { bookmarks, maxBookmarks, onAddBookmark, onDeleteBookmark, onRestoreBookmark, targetCoords } = props;
-  const [newBookmarkName, setNewBookmarkName] = useLocalState(context, 'newBookmarkName', '');
+export const BookmarksSection = (props: BookmarksSectionProps) => {
+  const {
+    bookmarks,
+    maxBookmarks,
+    onAddBookmark,
+    onDeleteBookmark,
+    onRestoreBookmark,
+    targetCoords,
+  } = props;
+  const [newBookmarkName, setNewBookmarkName] = useState('');
   const handleAddBookmark = (name: string) => {
     onAddBookmark(name);
     setNewBookmarkName('');
@@ -35,8 +43,18 @@ export const BookmarksSection = (props: BookmarksSectionProps, context) => {
             <LabeledList.Item
               key={bookmark.nameRef}
               label={formatCoordinates(bookmark.x, bookmark.y, bookmark.z)}
-              buttons={<Button icon="trash" color="red" onClick={() => onDeleteBookmark(bookmark.nameRef)} />}>
-              <Button icon="bookmark" onClick={() => onRestoreBookmark(bookmark.nameRef)}>
+              buttons={
+                <Button
+                  icon="trash"
+                  color="red"
+                  onClick={() => onDeleteBookmark(bookmark.nameRef)}
+                />
+              }
+            >
+              <Button
+                icon="bookmark"
+                onClick={() => onRestoreBookmark(bookmark.nameRef)}
+              >
                 {decodeHtmlEntities(bookmark.name)}
               </Button>
             </LabeledList.Item>
@@ -46,13 +64,19 @@ export const BookmarksSection = (props: BookmarksSectionProps, context) => {
           <LabeledList.Item
             key="new"
             label={formatCoordinates(...targetCoords)}
-            buttons={<Button icon="plus" onClick={() => handleAddBookmark(newBookmarkName)} />}>
+            buttons={
+              <Button
+                icon="plus"
+                onClick={() => handleAddBookmark(newBookmarkName)}
+              />
+            }
+          >
             <Input
               width="100%"
               value={newBookmarkName}
-              onInput={(_e, value: string) => setNewBookmarkName(value)}
+              onChange={(value: string) => setNewBookmarkName(value)}
               placeholder="New bookmark"
-              onEnter={(_e, value: string) => handleAddBookmark(value)}
+              onEnter={(value: string) => handleAddBookmark(value)}
               maxLength={32}
             />
           </LabeledList.Item>

@@ -33,7 +33,7 @@
 				src.donor = nholder.donor
 			if (src.donor)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
+				src.name = "[src.donor_name]’s [initial(src.name)]"
 
 	disposing()
 		..()
@@ -67,23 +67,23 @@
 		if (istype(W, /obj/item/parts/robot_parts/leg))
 			var/obj/machinery/bot/skullbot/B
 
-			if (src.icon_state == "skull_crystal" || istype(src, /obj/item/skull/crystal))
-				B = new /obj/machinery/bot/skullbot/crystal(get_turf(user))
+			if (src.icon_state == "skull_omnitraitor" || istype(src, /obj/item/skull/omnitraitor))
+				B = new /obj/machinery/bot/skullbot/omnitraitor(get_turf(user))
 
-			else if (src.icon_state == "skullP" || istype(src, /obj/item/skull/strange))
-				B = new /obj/machinery/bot/skullbot/strange(get_turf(user))
+			else if (src.icon_state == "skull_hunter" || istype(src, /obj/item/skull/hunter))
+				B = new /obj/machinery/bot/skullbot/hunter(get_turf(user))
 
-			else if (src.icon_state == "skull_strange" || istype(src, /obj/item/skull/peculiar))
-				B = new /obj/machinery/bot/skullbot/peculiar(get_turf(user))
+			else if (src.icon_state == "skull_wizard" || istype(src, /obj/item/skull/wizard))
+				B = new /obj/machinery/bot/skullbot/wizard(get_turf(user))
 
-			else if (src.icon_state == "skullA" || istype(src, /obj/item/skull/odd))
-				B = new /obj/machinery/bot/skullbot/odd(get_turf(user))
+			else if (src.icon_state == "skull_changeling" || istype(src, /obj/item/skull/changeling))
+				B = new /obj/machinery/bot/skullbot/changeling(get_turf(user))
 
-			else if (src.icon_state == "skull_noface" || istype(src, /obj/item/skull/noface))
-				B = new /obj/machinery/bot/skullbot/faceless(get_turf(user))
+			else if (src.icon_state == "skull_cluwne" || istype(src, /obj/item/skull/cluwne))
+				B = new /obj/machinery/bot/skullbot/cluwne(get_turf(user))
 
-			else if (src.icon_state == "skull_gold" || istype(src, /obj/item/skull/gold))
-				B = new /obj/machinery/bot/skullbot/gold(get_turf(user))
+			else if (src.icon_state == "skull_macho" || istype(src, /obj/item/skull/macho))
+				B = new /obj/machinery/bot/skullbot/macho(get_turf(user))
 
 			else
 				B = new /obj/machinery/bot/skullbot(get_turf(user))
@@ -100,14 +100,54 @@
 			W.change_stack_amount(-1)
 			user.visible_message("<b>[user]</b> jams a rod into the bottom of [src]. Welp.",\
 			"You jam a rod into the bottom of [src]. Welp.")
-			var/obj/item/reagent_containers/food/drinks/skull_chalice/C = new /obj/item/reagent_containers/food/drinks/skull_chalice(src.loc)
+			var/obj/item/reagent_containers/food/drinks/skull_chalice/C
+
+			if (src.icon_state == "skull_omnitraitor" || istype(src, /obj/item/skull/omnitraitor))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/omnitraitor(src.loc)
+
+			else if (src.icon_state == "skull_hunter" || istype(src, /obj/item/skull/hunter))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/hunter(src.loc)
+
+			else if (src.icon_state == "skull_wizard" || istype(src, /obj/item/skull/wizard))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/wizard(src.loc)
+
+			else if (src.icon_state == "skull_changeling" || istype(src, /obj/item/skull/changeling))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/changeling(src.loc)
+
+			else if (src.icon_state == "skull_cluwne" || istype(src, /obj/item/skull/cluwne))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/cluwne(src.loc)
+
+			else if (src.icon_state == "skull_macho" || istype(src, /obj/item/skull/macho))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/macho(src.loc)
+
+			else if (src.icon_state == "skull_vampire" || istype(src, /obj/item/skull/vampire))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/vampire(src.loc)
+				playsound(user.loc, 'sound/effects/screech_tone.ogg', 50, 1)
+
+			else
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice(src.loc)
 			user.put_in_hand_or_drop(C)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 			qdel(src)
 			return
 
 		if (istool(W, TOOL_SAWING))
 			user.visible_message(SPAN_NOTICE("[user] hollows out [src]."))
-			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
+			var/obj/item/clothing/mask/skull/smask
+
+			if (src.icon_state == "skull_changeling" || istype(src, /obj/item/skull/changeling))
+				smask = new /obj/item/clothing/mask/skull/changeling(src.loc)
+
+			else if (src.icon_state == "skull_vampire" || istype(src, /obj/item/skull/vampire))
+				smask = new /obj/item/clothing/mask/skull/vampire(src.loc)
+
+			else if (src.icon_state == "skull_wizard" || istype(src, /obj/item/skull/wizard))
+				smask = new /obj/item/clothing/mask/skull/wizard(src.loc)
+
+			else if (src.icon_state == "skull" || istype(src, /obj/item/skull)) //Human & all other skulls without a mask sprite
+				smask = new /obj/item/clothing/mask/skull(src.loc)
+
+			user.put_in_hand_or_drop(smask)
 			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 			if (src.key)
@@ -116,10 +156,10 @@
 				SK.visible_message(SPAN_ALERT("<B>A key clatters out of \the [src]!</B>"))
 				src.key = null
 
-			smask.set_loc(get_turf(user))
 			if (src.donor || src.donor_name)
 				smask.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] skull mask"
 				smask.desc = "The hollowed out skull of [src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"]"
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, smask, user)
 			qdel(src)
 			return
 
@@ -128,6 +168,7 @@
 			"You ritualistically plant a candle on [src]. Welp.")
 			var/obj/item/device/light/spirit_candle/C = new /obj/item/device/light/spirit_candle(src.loc)
 			user.put_in_hand_or_drop(C)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 			qdel(W)
 			qdel(src)
 		else
@@ -196,47 +237,53 @@
 		return 0
 
 
-/obj/item/skull/strange // Hunters get this one (Convair880).
+/obj/item/skull/hunter // Hunters get this one (Convair880).
 	name = "strange skull"
 	desc = "This thing is weird."
-	icon_state = "skullP"
+	icon_state = "skull_hunter"
 	value = 5
 
-/obj/item/skull/odd // Changelings.
+/obj/item/skull/changeling // Changelings.
 	name = "odd skull"
 	desc = "What the hell was wrong with this person's FACE?! Were they even human?!"
-	icon_state = "skullA"
+	icon_state = "skull_changeling"
 	value = 4
 	default_material = "viscerite"
 
-/obj/item/skull/peculiar // Wizards.
+/obj/item/skull/wizard // Wizards.
 	name = "peculiar skull"
 	desc = "You feel extremely uncomfortable near this thing."
-	icon_state = "skull_strange"
+	icon_state = "skull_wizard"
 	value = 3
 
-/obj/item/skull/menacing // Vampires.
+/obj/item/skull/vampire // Vampires.
 	name = "menacing skull"
 	desc = "Gives off a threatening aura and also makes a great halloween decoration."
-	icon_state = "skull_menacing"
+	icon_state = "skull_vampire"
 	value = 3
 
-/obj/item/skull/crystal // Omnitraitors.
+/obj/item/skull/omnitraitor // Omnitraitors.
 	name = "crystal skull"
 	desc = "Does this mean there's an alien race with crystal bones somewhere?"
-	icon_state = "skull_crystal"
+	icon_state = "skull_omnitraitor"
 	value = 10
 	default_material = "molitz"
 
-/obj/item/skull/gold // Macho man.
+/obj/item/skull/macho // Macho man.
 	name = "golden skull"
 	desc = "Is this thing solid gold, or just gold-plated? Yeesh."
-	icon_state = "skull_gold"
+	icon_state = "skull_macho"
 	value = 7
 	default_material = "gold"
 
-/obj/item/skull/noface // Cluwnes.
+/obj/item/skull/cluwne // Cluwnes.
 	name = "faceless skull"
 	desc = "Fuck that's creepy."
-	icon_state = "skull_noface"
+	icon_state = "skull_cluwne"
 	value = -1
+
+/obj/item/skull/frog // Amphibians.
+	name = "amphibian skull"
+	desc = "Looks like it... croaked."
+	icon_state = "skull_frog"
+	value = 2

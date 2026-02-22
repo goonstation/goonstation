@@ -1,0 +1,179 @@
+<div id="contextMenu" class="contextMenu" style="display: none">
+  <a href="#" id="ctx_pm">Admin PM</a>
+  <a href="#" id="ctx_smsg">Subtle Msg</a>
+  <a href="#" id="ctx_jump">Jump To</a>
+  <a href="#" id="ctx_get">Get</a>
+  <a href="#" id="ctx_boot">Boot</a>
+  <a href="#" id="ctx_ban">Ban</a>
+  <a href="#" id="ctx_gib">Gib</a>
+  <a href="#" id="ctx_popt">Player Options</a>
+  <a href="#" id="ctx_observe">Observe</a>
+  <a href="#" id="ctx_ghostjump">Teleport To</a>
+</div>
+
+<script type="text/javascript">
+  /* DO NOT USE LINE COMMENTS (//) IN THIS FILE FOR THE LOVE OF GOD */
+
+  opts.menuTypes = {
+    /* Action flags for context menu */ 1: 'pm',
+    2: 'smsg',
+    4: 'boot',
+    8: 'ban',
+    16: 'gib',
+    32: 'popt',
+    64: 'jump',
+    128: 'get',
+    512: 'ghostjump',
+  };
+  opts.contextMenuTarget = null; /* Contains the player mind ref */
+  opts.showMessagesFilters = {
+    /* Contains the current filters. "show: false" filters it out. "match" is all the css classes to filter on. */
+    Admin: { show: true },
+    Combat: { show: true },
+    Radios: { show: true },
+    Speech: { show: true },
+    OOC: { show: true },
+    Misc: { show: true },
+  };
+
+  $contextMenu = $('#contextMenu');
+  $subOptions.append(
+    '<a href="#" class="filterMessagesOpt" id="filterMessagesOpt"><span>Filter Messages</span> <i class="icon-filter"></i></a>'
+  );
+
+  function openContextMenu(flags, target, x, y) {
+    for (var i in opts.menuTypes) {
+      $('#ctx_' + opts.menuTypes[i])[(flags & i) === 0 ? 'hide' : 'show']();
+    }
+    $contextMenu.hide(0, function () {
+      if ($contextMenu.height() + y > $(window).height() - 16) {
+        y -= $contextMenu.height() + 4;
+      }
+      $contextMenu.css({ top: y + 2, left: x + 2 });
+      $contextMenu.slideDown(200);
+    });
+
+    opts.contextMenuTarget = target;
+  }
+
+  function hideContextMenu() {
+    $contextMenu.slideUp(200);
+    opts.contextMenuTarget = null;
+  }
+
+  function executeFilter(type, show) {
+    if (show === undefined) {
+      show = $('#filter_' + type).prop('checked');
+    }
+    opts.showMessagesFilters[type].show = show;
+
+    if (show) {
+      $('#messages').removeClass('filter-' + type);
+    } else {
+      $('#messages').addClass('filter-' + type);
+    }
+  }
+
+  function toggleFilter(type) {
+    if (type === 'showAll' || type === 'hideAll') {
+      let showAll = type === 'showAll';
+
+      $.each(opts.showMessagesFilters, function (key) {
+        $('#filter_' + key).prop('checked', showAll);
+        executeFilter(key, showAll);
+      });
+
+      if (showAll) {
+        output(
+          '<span class="internal boldnshit">Showing <strong>ALL</strong> messages</span>'
+        );
+      } else {
+        output(
+          '<span class="internal boldnshit">Hiding <strong>ALL</strong> messages. Uhhh are you sure about this?</span>'
+        );
+      }
+    } else {
+      executeFilter(type);
+      let showing = opts.showMessagesFilters[type].show;
+      let msg =
+        (showing ? 'Showing' : 'Filtering <strong>OUT</strong>') +
+        ' messages of type <strong>' +
+        type +
+        '</strong>';
+      output('<span class="internal boldnshit">' + msg + '</span>');
+    }
+  }
+
+  $contextMenu.on('mousedown', function (e) {
+    e.preventDefault();
+    var target = $(e.target);
+    var id = target.attr('id');
+    if (!id) {
+      output(
+        '<span class="internal boldnshit">Failed to retrieve context menu command data. Report this bug.</span>'
+      );
+    } else {
+      var command = target.attr('id').substring(4);
+      runByond(
+        'byond://?action=ehjax&type=datum&datum=chatOutput&proc=handleContextMenu&param[command]=' +
+          command +
+          '&param[target]=' +
+          opts.contextMenuTarget
+      );
+    }
+  });
+
+  $messages.on('contextmenu', '.adminHearing .name', function (e) {
+    var $this = $(this);
+    var mind = $this.attr('data-ctx');
+    var flags = $this.closest('.adminHearing').attr('data-ctx');
+    if (mind && flags) {
+      openContextMenu(flags, mind, e.clientX, e.clientY);
+      return false;
+    } else {
+      if (!mind && !flags) {
+        output(
+          '<span class="internal boldnshit">Failed to retrieve context menu option data. Report this bug.</span>'
+        );
+      }
+    }
+  });
+
+  $subOptions.on('click', '#filterMessagesOpt', function (e) {
+    if ($('#filterMessages').is(':visible')) {
+      return;
+    }
+    var content =
+      '<div class="head">Filter Messages</div>' +
+      '<div id="filterMessages" class="filterMessages">';
+    $.each(opts.showMessagesFilters, function (key, val) {
+      content +=
+        '<div><input type="checkbox" data-filter-for="' +
+        key +
+        '" id="filter_' +
+        key +
+        '" ' +
+        (val.show ? 'checked="checked" ' : '') +
+        '/> <label for="filter_' +
+        key +
+        '">' +
+        key +
+        '</label></div>';
+    });
+    content +=
+      '<div><a href="#" id="showAll" data-filter-for="showAll">show All</a> <a href="#" id="hideAll" data-filter-for="hideAll">hide All</a></div>';
+    content += '</div>';
+    createPopup(content, 150);
+  });
+
+  $('body').on(
+    'click',
+    '#filterMessages input, #filterMessages a',
+    function () {
+      var type = $(this).data('filterFor');
+      console.log('hit change event with type: ' + type);
+      toggleFilter(type);
+      $('body,html').scrollTop($messages.outerHeight());
+    }
+  );
+</script>

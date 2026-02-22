@@ -37,7 +37,7 @@
 				var/obj/machinery/clonepod/P = A
 				if(P.occupant)
 					scan_health(P.occupant, 0, 1)
-					scan_health_overhead(P.occupant, usr)
+					DISPLAY_MAPTEXT(P.occupant, list(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, P.occupant)
 					update_medical_record(P.occupant)
 
 			if (!iscarbon(A))
@@ -45,7 +45,7 @@
 			var/mob/living/carbon/C = A
 
 			. = scan_health(C, 0, 1, visible = 1)
-			scan_health_overhead(C, usr)
+			DISPLAY_MAPTEXT(C, list(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, C)
 			update_medical_record(C)
 
 
@@ -57,7 +57,8 @@
 		scan_atom(atom/A as mob|obj|turf|area)
 			if(..())
 				return
-			. = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+			var/datum/forensic_scan/scan = scan_forensic(A, visible = TRUE)
+			. = scan.build_report()
 
 	//Reagent scanning program
 	reagent_scan
@@ -65,9 +66,14 @@
 		size = 6
 
 		scan_atom(atom/A)
+			var/mob/user = usr
 			if (..())
 				return
 			. = scan_reagents(A, visible = TRUE)
+			if (user.traitHolder.hasTrait("training_bartender"))
+				var/eth_eq = get_ethanol_equivalent(user, A.reagents)
+				if (eth_eq)
+					. += "<br> [SPAN_REGULAR("You estimate there's the equivalent of <b>[eth_eq] units of ethanol</b> here.")]"
 
 	//Plant scanner
 	plant_scan
@@ -117,8 +123,9 @@
 				return SPAN_ALERT("Unable to scan.")
 
 			var/datum/computer/file/electronics_scan/theScan = new
-			theScan.scannedName = initial(O.name)
 			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type
+			var/atom/atom_cast = theScan.scannedPath
+			theScan.scannedName = initial(atom_cast.name)
 			var/typeinfo/obj/typeinfo = O.get_typeinfo()
 			theScan.scannedMats = typeinfo.mats
 

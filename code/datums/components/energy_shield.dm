@@ -126,6 +126,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	else
 		playsound(current_user, 'sound/items/miningtool_off.ogg', 25, FALSE, -5, 1.5)
 		boutput(current_user, SPAN_NOTICE("Your energy shield powers down."))
+	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
 
 /datum/component/wearertargeting/energy_shield/proc/toggle()
 	if(active)
@@ -133,18 +134,50 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	else
 		if(SEND_SIGNAL(parent, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
 			src.turn_on()
+			return TRUE
 		else
 			playsound(current_user, "sparks", 75, 1, -1)
 			boutput(current_user, SPAN_ALERT("Your energy shield is depleted!"))
 
 /obj/ability_button/toggle_shield //TODO: percentage inventory-counter for remaining power?
 	name = "Toggle Energy Shield"
-	icon_state = "shieldceon"
+	icon_state = "shieldceoff"
 	desc = "Toggle personal energy shield."
 
 	execute_ability()
 		. = ..()
-		SEND_SIGNAL(the_item, COMSIG_SHIELD_TOGGLE)
+		if(SEND_SIGNAL(the_item, COMSIG_SHIELD_TOGGLE))
+			src.icon_state = "shieldceon"
+		else
+			src.icon_state = "shieldceoff"
+
+	post_attach()
+		RegisterSignal(src.the_item, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		UpdateIcon()
+
+	disposing()
+		UnregisterSignal(src.the_item, COMSIG_UPDATE_ICON)
+		. = ..()
+
+	update_icon(...)
+		. = ..()
+		var/ret = list()
+		var/percent
+		if(SEND_SIGNAL(the_item, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			percent = 100 * ret["charge"] / ret["max_charge"]
+		else
+			percent = 0 //no cell, no charge meter
+		if(percent == 0)
+			src.icon_state = "shieldceoff"
+		var/h_color
+		switch(percent)
+			if (50 to INFINITY)
+				h_color	= "rgb([(100 - percent) / 50 * 255], 255, [(100 - percent) * 0.3])"
+			if (0 to 50)
+				h_color	= "rgb(255, [percent / 50 * 255], 0)"
+			if (-INFINITY to 0)
+				h_color	= "#ffffff"
+		src.maptext = "<span style='color: [h_color];' class='pixel c sh'>[round(percent)]%</span>"
 
 //TODO: Add tooltip/desc info to item
 
@@ -153,8 +186,10 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	. = ..()
 	APPLY_ATOM_PROPERTY(current_user, PROP_MOB_COLDPROT, src, 100)
 	APPLY_ATOM_PROPERTY(current_user, PROP_MOB_HEATPROT, src, 100)
+	APPLY_ATOM_PROPERTY(current_user, PROP_MOB_RADPROT_EXT, src, 100)
 
 /datum/component/wearertargeting/energy_shield/ceshield/turn_off(shatter = FALSE)
 	. = ..()
 	REMOVE_ATOM_PROPERTY(current_user, PROP_MOB_COLDPROT, src)
 	REMOVE_ATOM_PROPERTY(current_user, PROP_MOB_HEATPROT, src)
+	REMOVE_ATOM_PROPERTY(current_user, PROP_MOB_RADPROT_EXT, src)

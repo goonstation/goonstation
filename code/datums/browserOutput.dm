@@ -33,7 +33,7 @@ var/global
 	// like "[LEVEL_MOD]" = FOOBAR_SHITFUCK_FUCKFACE
 	// The byond object tree output gets completely fucked in the ass and generates
 	// broken xml
-	list/contextFlags = list(1 = 0,2 = cFlagsMod,3 = cFlagsSa,4 = 0,5 = 0,6 = cFlagsShitguy,7 = 0,8 = 0)
+	list/contextFlags = list(0,cFlagsMod,cFlagsSa,0,0,cFlagsShitguy,0,0)
 
 	/*
 	8 = LEVEL_HOST
@@ -91,20 +91,22 @@ var/global
 		//For local-testing fallback
 		if (!cdn)
 			var/list/chatResources = list(
-				"browserassets/vendor/js/jquery.min.js",
-				"browserassets/js/errorHandler.js",
-				//"browserassets/vendor/js/array.generics.min.js",
-				//"browserassets/vendor/js/anchorme.js",
-				"browserassets/js/browserOutput.js",
-				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.ttf",
-				"browserassets/css/fonts/fontawesome-webfont.woff",
-				"browserassets/vendor/css/font-awesome.css",
-				"browserassets/css/browserOutput.css"
+				"browserassets/src/vendor/js/jquery.min.js",
+				"browserassets/src/js/errorHandler.js",
+				"browserassets/src/js/browserOutput.js",
+				"browserassets/src/css/fonts/fontawesome-webfont.eot",
+				"browserassets/src/css/fonts/fontawesome-webfont.ttf",
+				"browserassets/src/css/fonts/fontawesome-webfont.woff",
+				"browserassets/src/css/fonts/twemoji.woff2",
+				"browserassets/src/vendor/css/font-awesome.css",
+				"browserassets/src/css/browserOutput.css"
 			)
 			src.owner.loadResourcesFromList(chatResources)
 
-		src.owner << browse(grabResource("html/browserOutput.html"), "window=browseroutput")
+		var/html = grabResource("html/browserOutput.html")
+		html = replacetext(html, "{theme}", src.owner.darkmode ? "theme-dark" : "theme-default")
+		src.owner << browse(html, "window=browseroutput")
+		winshow(src.owner, "browseroutput", TRUE)
 
 		if (src.loadAttempts < 5) //To a max of 5 load attempts
 			SPAWN(20 SECONDS) //20 seconds
@@ -123,13 +125,14 @@ var/global
 	if (src.owner && !src.loaded)
 		src.loaded = 1
 		winset(src.owner, "browseroutput", "is-disabled=false")
-		//if (src.owner.holder)
 		src.loadAdmin()
 		if (src.messageQueue)
 			for (var/list/message in src.messageQueue)
 				boutput(src.owner, message["message"], message["group"])
 		src.messageQueue = null
 		src.sendClientData()
+		SEND_SIGNAL(src.owner, COMSIG_CLIENT_CHAT_LOADED, src)
+
 		/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
 		SPAWN(1 MINUTE) //60 seconds
 			if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
@@ -143,13 +146,14 @@ var/global
 		ehjax.send(src.owner, "browseroutput", url_encode(data))
 
 /datum/chatOutput/proc/changeTheme(theme)
+	if (!src.loaded) return
 	var/data = json_encode(list("changeTheme" = theme))
 	ehjax.send(src.owner, "browseroutput", url_encode(data))
 
 /// Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()
 	//Fix for Cannot read null.ckey (how!?)
-	if (!src.owner) return
+	if (!src.owner || !src.owner.authenticated) return
 
 	//Get dem deets
 	var/list/deets = list("clientData" = list())
@@ -161,7 +165,7 @@ var/global
 
 /// Called by client, sent data to investigate (cookie history so far)
 /datum/chatOutput/proc/analyzeClientData(cookie = "")
-	if (!cookie) return
+	if (!cookie || !src.owner.authenticated) return
 	if (cookie != "none")
 		// Hotfix patch, credit to https://github.com/yogstation13/Yogstation/pull/9951
 		var/regex/json_decode_crasher = regex("^\\s*(\[\\\[\\{\\}\\\]]\\s*){5,}")
@@ -185,8 +189,12 @@ var/global
 			var/list/checkBan = null
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
 				var/list/row = src.connectionHistory[i]
-				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
-					return
+				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"]))
+					// Passed malformed history object
+					continue
+				if (row["ckey"] == src.owner.ckey && row["ip"] == src.owner.address && row["compid"] == src.owner.computer_id)
+					// Skip checking own data (as the player is logged in and thus already passed a ban check)
+					continue
 				checkBan = bansHandler.check(row["ckey"], row["compid"], row["ip"])
 				if (checkBan)
 					found = row
@@ -207,15 +215,16 @@ var/global
 					ircbot.export_async("admin", ircmsg)
 
 				//Add evasion ban details
-				var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
+				var/datum/apiModel/Tracked/Ban/ban = checkBan["ban"]
 				bansHandler.addDetails(
-					ban,
+					ban.id,
 					TRUE,
 					"bot",
 					src.owner.ckey,
 					isnull(found["compid"]) ? null : src.owner.computer_id,
 					isnull(found["ip"]) ? null : src.owner.address
 				)
+				del(src.owner)
 	src.cookieSent = 1
 
 /datum/chatOutput/proc/getContextFlags()
@@ -236,7 +245,7 @@ var/global
 
 /// Called by js client on admin command via context menu
 /datum/chatOutput/proc/handleContextMenu(command, target)
-	if (!src.owner.holder && command != "observe" && command != "teleport") return // oopsy i'm so messy heehee
+	if (!src.owner.holder && command != "observe" && command != "ghostjump") return // oopsy i'm so messy heehee
 	var/datum/mind/targetMind = locate(target)
 	var/mob/targetMob
 	if (targetMind)
@@ -270,13 +279,15 @@ var/global
 			if(src.owner.holder)
 				src.owner.holder.playeropt(targetMob)
 		if ("observe")
+			if(!isadmin(src.owner) && isadmin(targetMob) && !targetMob.client?.player_mode)
+				return // no
 			if (istype(src.owner.mob, /mob/dead/target_observer))
 				var/mob/dead/target_observer/obs = src.owner.mob
 				if (!obs.locked)
 					obs.set_observe_target(targetMob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob:insert_observer(targetMob)
-		if ("teleport")
+		if ("ghostjump")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
 				var/mob/dead/target_observer/obs = src.owner.mob
 				if (!obs.locked)
@@ -293,9 +304,9 @@ var/global
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", data)
 
-/datum/chatOutput/proc/playMusic(url, volume)
+/datum/chatOutput/proc/playMusic(url, volume, fromTopic = FALSE)
 	if (!url || !volume) return
-	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100))
+	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100, "fromTopic" = fromTopic))
 	data = url_encode(data)
 
 	ehjax.send(src.owner, "browseroutput", data)
@@ -342,7 +353,7 @@ var/global
 	return copytext(partial[2], 3, -5)
 
 
-/proc/bicon(obj)
+/proc/bicon(obj, scale = 1)
 
 	var/baseData
 	if (isicon(obj))
@@ -388,8 +399,10 @@ var/global
 				return
 
 			baseData = icon2base64(icon, iconKey)
-
-		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon' src='data:image/png;base64,[baseData]' />"
+		var/pixelation_mode = "image-rendering: pixelated"
+		var/width = scale == 1 ? "" : " width: [world.icon_size * scale]px;"
+		var/height = scale == 1 ? "" :  "height: [world.icon_size * scale]px;"
+		return "<img style='position: relative; left: -1px; bottom: -3px;[width][height] [pixelation_mode]' class='icon' src='data:image/png;base64,[baseData]' />"
 
 /proc/boutput(target = null, message = "", group = "", forceScroll=FALSE)
 	if (isnull(target))
@@ -399,6 +412,8 @@ var/global
 
 	if (target == world)
 		for (var/client/C in clients)
+			if (istype(C.mob, /mob/living/carbon/human/tutorial))
+				continue
 			boutput(C, message, group, forceScroll)
 		return
 
@@ -425,9 +440,7 @@ var/global
 		C = target
 	else if (ismob(target))
 		var/mob/M = target
-		if (M.boutput_relay_mob)
-			boutput(M.boutput_relay_mob, message, group, forceScroll)
-		else if(istype(M, /mob/living/silicon/ai))
+		if(istype(M, /mob/living/silicon/ai))
 			var/mob/living/silicon/ai/AI = M
 			if(AI.deployed_to_eyecam)
 				C = AI.eyecam?.client
@@ -436,6 +449,8 @@ var/global
 	else if (ismind(target) && target:current)
 		C = target:current:client
 	else
+		if (ismobcritter(target) || istype(target, /obj/machinery/bot/)) // These act like clients a lot through logic, and get tons of messages.
+			return
 		CRASH("boutput called with incorrect target [target]")
 
 	if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)

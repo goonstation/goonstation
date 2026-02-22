@@ -1,15 +1,25 @@
-## NPM
-/node_modules
+## NPM garbage
+node_modules
 *.log
 package-lock.json
 
-## Yarn
+## Yarn stuff
 /.pnp.*
 /.yarn/*
-!/.yarn/plugins
 !/.yarn/releases
+!/.yarn/plugins
 !/.yarn/sdks
+!/.yarn/versions
 !/.yarn/lock.yml
 
-# Editor Files
+## Build artifacts |GOONSTATION-CHANGE|
+/../browserassets/src/tgui/.tmp/**/*
+/../browserassets/src/tgui/**/*
+!/../browserassets/src/tgui/*.html
+/coverage
+# |GOONSTATION-CHANGE| We keep our built assets in browserassets
+!/../browserassets/src/tgui/*.js
+!/../browserassets/src/tgui/*.css
+
+# Editor Files |GOONSTATION-ADD| I guess someone uses non-standard tooling :)
 *.idea/*

@@ -24,7 +24,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	var/base_icon = "drain"
 	icon_state = "drain"
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
-	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
+	flags = FLUID_SUBMERGE | NOSPLASH
 	var/clogged = 0 //temporary block
 	var/welded = 0 //permanent block
 	var/drain_min = 2
@@ -127,7 +127,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	icon_state = "channel"
 	name = "channel"
 	desc = "A channel that can restrict liquid flow in one direction."
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	var/required_to_pass = 150 //fluid on the side that my Dir points to will need this amount to be able to cross
 
 	New()
@@ -151,7 +151,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 
 	var/datum/reagents/R
 
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 	New()
 		..()
@@ -282,7 +282,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	process()
 		if(contained) return
 		if (slurping)
-			if (src.reagents.total_volume < bladder)
+			if (src.reagents.total_volume < src.reagents.maximum_volume)
 				var/turf/T = get_turf(src)
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
@@ -305,7 +305,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 				UpdateIcon()
 
 	update_icon()
-		var/amt = round((src.reagents.total_volume / bladder) * 12,1)
+		var/amt = round((src.reagents.total_volume / src.reagents.maximum_volume) * 12,1)
 		icon_state = "[base_icon][amt]"
 
 		var/overlay_istate = "w_off"
@@ -460,11 +460,12 @@ TYPEINFO(/obj/item/sea_ladder)
 	item_state = "sea_ladder"
 	w_class = W_CLASS_NORMAL
 	throwforce = 10
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 9
 	stamina_damage = 30
 	stamina_cost = 20
 	stamina_crit_chance = 6
+	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 
 	New()
@@ -505,6 +506,31 @@ TYPEINFO(/obj/item/sea_ladder)
 		L.og_ladder_item = src
 		L.linked_ladder.og_ladder_item = src
 
+	pickup(mob/user)
+		. = ..()
+		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGED, PROC_REF(turn_around))
+
+	dropped(mob/user)
+		. = ..()
+		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGED)
+
+	proc/turn_around(mob/user, old_dir, new_dir)
+		//have they turned from EW to NS or vice versa? ie not doing a 180
+		if ((old_dir in list(NORTH, SOUTH)) && (new_dir in list(WEST, EAST)) || (old_dir in list(WEST, EAST)) && (new_dir in list(NORTH, SOUTH)))
+			for (var/turf/T in list(get_step(user, new_dir), get_step(user, turn(new_dir, 180))))
+				for (var/mob/living/carbon/human/clown in T)
+					if (clown.clown_tally() < 2) //are they clown enough to get clonked?
+						continue
+					if (clown.lying)
+						continue
+					if (ON_COOLDOWN(clown, "ladder_clonk", 7 SECONDS))
+						continue
+					clown.setStatus("knockdown", 5 SECONDS)
+					random_brute_damage(clown, rand(3, 10))
+					clown.force_laydown_standup()
+					clown.visible_message(SPAN_COMBAT("[user] turns around too quickly and clonks [clown] with [src]!"))
+					playsound(get_turf(clown), src.hitsound, 50, 1)
+
 TYPEINFO(/obj/naval_mine)
 	mats = 16
 
@@ -517,7 +543,6 @@ TYPEINFO(/obj/naval_mine)
 	anchored = UNANCHORED
 
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
-	flags = FPRINT
 
 	var/active = 1
 
@@ -539,7 +564,8 @@ TYPEINFO(/obj/naval_mine)
 
 	proc/boom()
 		if (src.active)
-			logTheThing(LOG_BOMBING, src.fingerprintslast, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			var/last_ckey = src.get_last_ckey()
+			logTheThing(LOG_BOMBING, last_ckey, "A naval mine explodes at [log_loc(src)]. Last touched by [replace_if_false(last_ckey, "None")].")
 			src.blowthefuckup(boom_str)
 
 

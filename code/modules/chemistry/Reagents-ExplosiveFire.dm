@@ -167,15 +167,15 @@ datum
 				var/radius = clamp(volume*0.15, 0, 8)
 				var/list/covered = holder.covered_turf()
 				var/list/affected = list()
+				radius = clamp((volume/covered.len)*0.15, 0, 8)
+				holder?.del_reagent(id)
 				for(var/turf/t in covered)
-					radius = clamp((volume/covered.len)*0.15, 0, 8)
 					affected += fireflash_melting(t, radius, rand(3000, 6000), 500, chemfire = CHEM_FIRE_RED)
 
 				for (var/turf/T in affected)
 					for (var/obj/steel_beams/O in T)
 						O.visible_message(SPAN_ALERT("[O] melts!"))
 						qdel(O)
-				holder?.del_reagent(id)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!holder)
@@ -200,12 +200,17 @@ datum
 			fluid_flags = FLUID_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				var/turf/simulated/A = holder.my_atom
-				if(!istype(A)) return
-
-				if(holder.get_reagent_amount(id) >= 15) //no more thermiting walls with 1u tyvm
-					holder.del_reagent(id)
-					fireflash_melting(A, 0, rand(20000, 25000), 0, TRUE, CHEM_FIRE_DARKRED, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
+				if (!istype(src.holder.my_atom, /obj/decal/cleanable)) //okay I wanted to let this react anywhere but then it tends to blow up when you synthesize it sooo
+					return
+				if(holder.get_reagent_amount(id) < 10) //no more thermiting walls with 1u tyvm
+					return
+				var/turf/T = get_turf(src.holder.my_atom)
+				var/atom/my_atom = src.holder.my_atom
+				holder.del_reagent(id)
+				var/temp = rand(20000, 25000)
+				fireflash_melting(T, 0, temp, 0, TRUE, CHEM_FIRE_DARKRED, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
+				fireflash(T, 0, temp, 0, TRUE, CHEM_FIRE_DARKRED) //another fireflash because the first one gets deleted along with the turf
+				qdel(my_atom)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -221,15 +226,14 @@ datum
 						volume = volume/length(covered)
 					if (volume < 3)
 						return
-					if(!T.reagents)
-						T.create_reagents(volume)
-					else
-						T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+					if (length(covered) == 1 && volume < 10)
+						return
+					var/obj/decal/cleanable/thermite/cleanable = locate() in T
+					if (!cleanable)
+						cleanable = make_cleanable(/obj/decal/cleanable/thermite, T)
+						cleanable.create_reagents(10)
+						cleanable.reagents.add_reagent("thermite", 10, null)
 
-					if(!T.reagents.has_reagent("thermite"))
-						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
-
-					T.reagents.add_reagent("thermite", volume, null)
 					if (length(T.active_hotspots))
 						var/max_temp = T.active_hotspots[1].temperature
 						var/max_vol = T.active_hotspots[1].volume
@@ -589,9 +593,10 @@ datum
 								if(holder.my_atom)
 									holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 									// Added log entries (Convair880).
-									if(holder.my_atom.fingerprintslast || usr?.last_ckey)
-										message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
-									logTheThing(LOG_BOMBING, holder.my_atom.fingerprintslast, "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									var/last_ckey_atom = holder.my_atom.get_last_ckey()
+									if(last_ckey_atom || usr?.last_ckey)
+										message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [key_name(last_ckey_atom)] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									logTheThing(LOG_BOMBING, replace_if_false(last_ckey_atom, "None"), "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [key_name(last_ckey_atom)] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 								else
 									turf.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 									// Added log entries (Convair880).
@@ -621,9 +626,8 @@ datum
 					M.changeStatus("burning", 2 SECONDS * mult)
 				if((M.health > 20) && (prob(33)))
 					M.take_toxin_damage(1 * mult)
-				if(probmult(1))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-					M.vomit(0, null, vomit_message)
+				if(probmult(20))
+					M.nauseate(1)
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
@@ -724,7 +728,8 @@ datum
 			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if (ishuman(M) && raw_volume >= 10)
-					M.gunshot_residue = TRUE
+					var/datum/forensic_data/basic/residue_data = new(register_id("Gunshot residue found."), flags = FORENSIC_REMOVE_CLEANING)
+					M.add_evidence(residue_data, FORENSIC_GROUP_NOTES)
 
 
 		combustible/nitrogentriiodide

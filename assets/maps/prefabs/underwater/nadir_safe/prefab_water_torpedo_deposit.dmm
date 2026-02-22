@@ -31,7 +31,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "fe" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 1;
 	pixel_y = 2
 	},
@@ -48,7 +48,7 @@
 	},
 /area/prefab/torpedo_deposit)
 "gs" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 2
 	},
 /turf/simulated/floor/wood/two{
@@ -63,7 +63,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "il" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -109,7 +109,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /obj/decal/cleanable/oil,
@@ -513,7 +513,7 @@
 /turf/simulated/floor/black,
 /area/prefab/torpedo_deposit)
 "Ns" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 32
 	},
 /turf/simulated/floor/damaged2,

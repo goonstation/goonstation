@@ -6,9 +6,9 @@
 /// Constant for scaling the XP curve.
 #define XP_CONSTANT 0.2
 /// Returns XP required for the given level.
-#define XP_FOR_LEVEL(LV) (((LV/XP_CONSTANT)**2))
-/// Returns the level for the given amount of XP. Recommend rounding it down.
-#define LEVEL_FOR_XP(XP) (XP_CONSTANT * sqrt(XP))
+#define XP_FOR_LEVEL(LV) ((round(LV)/XP_CONSTANT)**2)
+/// Returns the level for the given amount of XP.
+#define LEVEL_FOR_XP(XP) (round(XP_CONSTANT * sqrt(XP)))
 
 /// Defines the range of time that is throttled, see below. Currently very roughly one minute "game time".
 #define XP_THROTTLE_TICKS 600

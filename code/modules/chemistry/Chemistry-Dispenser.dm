@@ -18,8 +18,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
+	provides_grip = TRUE
 	var/icon_base = "dispenser"
-	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -46,7 +47,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 		if(!starting_groups && current_state <= GAME_STATE_PREGAME)
 			var/area/A = get_area(src)
-			if(istype(A,/area/station/medical))
+			if(istype(A,/area/station/medical) && !istype(A, /area/station/medical/asylum))
 				starting_groups = list(/datum/reagent_group/default/potassium_iodide,
 									   /datum/reagent_group/default/styptic,
 								       /datum/reagent_group/default/silver_sulfadiazine)
@@ -93,7 +94,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if (!istype(B, glass_path))
 			var/damage = B.force
 			if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
-				user.lastattacked = src
+				user.lastattacked = get_weakref(src)
 				attack_particle(user,src)
 				hit_twitch(src)
 				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
@@ -114,26 +115,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if (B.current_lid)
 			boutput(user, SPAN_ALERT("You cannot put the [B.name] in the [src.name] while it has a lid on it."))
 			return
-		/*
-		if (isrobot(user))
-			var/the_reagent = input("Which chemical do you want to put in the [glass_name]?", "[dispenser_name] Dispenser", null, null) as null|anything in src.dispensable_reagents
-			if (!the_reagent)
-				return
-			var/amtlimit = B.reagents.maximum_volume - B.reagents.total_volume
-			var/amount = input("How much of it do you want? (1 to [amtlimit])", "[dispenser_name] Dispenser", null, null) as null|num
-			if (isnull(amount) || amount <= 0)
-				return
-			amount = clamp(amount, 0, amtlimit)
-			if (BOUNDS_DIST(src, user) > 0)
-				boutput(user, "You need to move closer to get the chemicals!")
-				return
-			if (status & (NOPOWER|BROKEN))
-				user.show_text("[src] seems to be out of order.", "red")
-				return
-			B.reagents.add_reagent(the_reagent,amount)
-			B.reagents.handle_reactions()
-			return
-		*/
+
 		var/obj/item/reagent_containers/glass/ejected_beaker = null
 		if (src.beaker?.loc == src)
 			ejected_beaker = src.beaker
@@ -142,12 +124,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.beaker.reagents?.handle_reactions()
 			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
-		src.beaker = B
-		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
-		if(!B.cant_drop)
-			user.drop_item()
-			if(!B.qdeled)
-				B.set_loc(src)
+		add_glassware(B, user)
 		if(B.qdeled)
 			B = null
 		else
@@ -155,9 +132,10 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
 				boutput(user, "You add the [glass_name] to the machine!")
-		B.reagents?.handle_reactions()
-		src.UpdateIcon()
-		src.ui_interact(user)
+
+	bullet_act(obj/projectile/P)
+		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+			src.take_damage(P.power * P.proj_data?.ks_ratio)
 
 	ex_act(severity)
 		switch(severity)
@@ -169,10 +147,18 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				SPAWN(0)
 					src.take_damage(150)
 				return
+			if(3)
+				SPAWN(0)
+					src.take_damage(50)
 
 	blob_act(var/power)
 		if (prob(25 * power/20))
 			qdel(src)
+		else
+			src.take_damage(power*5)
+
+	overload_act()
+		return !src.set_broken()
 
 	meteorhit()
 		qdel(src)
@@ -211,7 +197,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.current_account = new_account
 
 	update_icon()
-		if (!beaker)
+		if (src.status & BROKEN)
+			src.icon_state = "[src.icon_base]-broken"
+		else if (!beaker)
 			src.icon_state = src.icon_base
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
@@ -237,8 +225,49 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
+	/// Proc for adding a beaker to a dispenser (`user` optional though necessary if one exists).
+	proc/add_glassware(obj/item/reagent_containers/container, mob/user=null)
+		if(QDELETED(container))
+			return
+
+		if (user)
+			if(BOUNDS_DIST(src, user) > 0)
+				boutput(usr, "[src] is too far away.")
+				return
+
+			if (container.cant_drop && !isrobot(user))
+				boutput(user, "You can't add [src.beaker] to the machine!")
+				return
+
+		var/obj/item/reagent_containers/glass/ejected_beaker = null
+		if (src.beaker?.loc == src)
+			ejected_beaker = src.beaker
+			if (user)
+				user.put_in_hand_or_drop(ejected_beaker)
+			else
+				ejected_beaker.set_loc(src.loc)
+		if(src.beaker) // hotswapping but possibly current beaker is a borg beaker
+			src.beaker.reagents?.handle_reactions()
+			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
+
+		if (!container.cant_drop)
+			user?.drop_item(container)
+			container.set_loc(src)
+		src.beaker = container
+		APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, src)
+		container.reagents?.handle_reactions()
+		src.UpdateIcon()
+		if (user)
+			src.ui_interact(user)
+
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
+		if (damage_amount > 0 && src.health < 300)
+			if (prob(((400-src.health)/400)*100)) // probability of breaking increases with damage taken
+				src.set_broken()
+		if (damage_amount > 50) // additional break roll for high-damage hits
+			if (prob(damage_amount))
+				src.set_broken()
 		if (src.health <= 0)
 			if (beaker)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
@@ -338,16 +367,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					. = TRUE
 				else
 					var/obj/item/reagent_containers/newbeaker = usr.equipped()
-					if (istype(newbeaker, glass_path))
+					if (istype(newbeaker, glass_path) && !newbeaker.incompatible_with_chem_dispensers)
 						if (newbeaker.current_lid)
 							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return
-						if(!newbeaker.cant_drop) // borgs and item arms
-							usr.drop_item()
-							newbeaker.set_loc(src)
-						src.beaker = newbeaker
-						APPLY_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
-						src.UpdateIcon()
+						src.add_glassware(newbeaker, ui.user)
 						. = TRUE
 			if ("remove")
 				if(!beaker)
@@ -443,6 +467,24 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		. = ..()
 		if(src.beaker?.loc != src)
 			src.remove_distant_beaker(force = TRUE)
+
+	set_broken()
+		. = ..()
+		if (.) return
+		if (src.beaker && src.beaker.loc == src)
+			src.beaker.set_loc(src.loc)
+			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
+			src.beaker = null
+		if (src.user_id && src.user_id.loc == src)
+			src.user_id.set_loc(src.loc)
+			src.user_id = null
+
+		AddComponent(/datum/component/equipment_fault/leaky, tool_flags = TOOL_SCREWING | TOOL_WRENCHING, reagent_list = src.dispensable_reagents)
+		src.UpdateIcon()
+
+	power_change()
+		. = ..()
+		src.UpdateIcon()
 
 /obj/machinery/chem_dispenser/chemical
 	New()

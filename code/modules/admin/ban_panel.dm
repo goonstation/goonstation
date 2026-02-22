@@ -11,14 +11,14 @@
 
 /// Admin Ban Panel
 /datum/ban_panel
-	var/datum/apiModel/Paginated/BanResourceList/banResourceList = null
+	var/datum/apiModel/Paginated/BanList/bans = null
 	var/current_tab = BAN_PANEL_TAB_BAN_LIST
 	var/current_page = 1
 	var/per_page = 30
 
 /datum/ban_panel/New()
 	. = ..()
-	src.banResourceList = bansHandler.getAll()
+	src.bans = bansHandler.getAll()
 
 /datum/ban_panel/ui_state(mob/user)
 	return tgui_admin_state.can_use_topic(src, user)
@@ -38,7 +38,7 @@
 	switch (src.current_tab)
 		if (BAN_PANEL_TAB_BAN_LIST)
 			.["ban_list"] = list(
-				"search_response" = src.banResourceList?.ToList()
+				"search_response" = src.bans?.ToList()
 			)
 			.["per_page"] = src.per_page
 
@@ -66,13 +66,13 @@
 			. = TRUE
 
 		if (BAN_PANEL_ACTION_PAGE_PREV)
-			var/prev_page = max(1, (src.banResourceList?.meta["current_page"] || 1) - 1)
+			var/prev_page = max(1, (src.bans?.meta["current_page"] || 1) - 1)
 			src.current_page = prev_page
 			src.refresh_bans()
 			. = TRUE
 
 		if (BAN_PANEL_ACTION_PAGE_NEXT)
-			var/next_page = min(src.banResourceList?.meta["last_page"] || 1, (src.banResourceList?.meta["current_page"] || 1) + 1)
+			var/next_page = min(src.bans?.meta["last_page"] || 1, (src.bans?.meta["current_page"] || 1) + 1)
 			src.current_page = next_page
 			src.refresh_bans()
 			. = TRUE
@@ -100,17 +100,17 @@
 
 /// Remove a ban, given an id
 /datum/ban_panel/proc/removeBan(ban_id)
-	var/datum/apiModel/Tracked/BanResource/the_ban = null
-	for (var/datum/apiModel/Tracked/BanResource/ban in src.banResourceList.data)
+	var/datum/apiModel/Tracked/Ban/the_ban = null
+	for (var/datum/apiModel/Tracked/Ban/ban in src.bans.data)
 		if (num2text(ban.id) == ban_id)
 			the_ban = ban
 			break
 	if (!the_ban)
 		tgui_alert(usr, "Ban couldn't be found! ID: [ban_id]", "Ban Panel Error")
 		return
-	var/ckey = the_ban.original_ban_detail["ckey"]
-	var/cid = the_ban.original_ban_detail["comp_id"]
-	var/ip = the_ban.original_ban_detail["ip"]
+	var/ckey = the_ban.original_ban_detail.ckey
+	var/cid = the_ban.original_ban_detail.comp_id
+	var/ip = the_ban.original_ban_detail.ip
 	var/alert_body = {"
 		Are you sure you want to delete ban [ban_id]?
 		ckey: [ckey || "none"]
@@ -123,7 +123,7 @@
 
 /// Wrapper for /datum/bansHandler/proc/getAll
 /datum/ban_panel/proc/refresh_bans(list/filters, sort_by, descending)
-	src.banResourceList = bansHandler.getAll(
+	src.bans = bansHandler.getAll(
 		filters = filters,
 		sort_by = sort_by,
 		descending = descending,

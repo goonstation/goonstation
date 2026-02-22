@@ -1,4 +1,4 @@
-/obj/decal/fakeobjects/nuclear_reactor_destroyed
+/obj/fakeobject/nuclear_reactor_destroyed
 	name = "Molten Reactor Core"
 	desc = "A molten nuclear reactor core. It's still burning and smoking. Some engineers are gonna get fired for this."
 	icon = 'icons/misc/nuclearreactor.dmi'
@@ -27,10 +27,12 @@
 			src.bonus_rads_4_u()
 
 	proc/bonus_rads_4_u()
+		var/turf/current_loc = get_turf(src)
+		if(!current_loc)
+			return
 		var/datum/gas_mixture/current_gas = new/datum/gas_mixture()
 		current_gas.radgas += 50
 		current_gas.temperature = 1000
-		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 		for(var/i = 1 to 5)
 			shoot_projectile_XY(src, new /datum/projectile/neutron(100), rand(-10,10), rand(-10,10))
@@ -45,7 +47,7 @@
 		. = ..()
 		src._light_turf?.remove_medium_light("reactor_destroyed_light")
 
-/obj/decal/fakeobjects/turbine_destroyed
+/obj/fakeobject/turbine_destroyed
 	name = "Destroyed Gas Turbine"
 	desc = "A large turbine used for generating power using hot gas. It seems to be utterly destroyed."
 	icon = 'icons/obj/large/96x160.dmi'

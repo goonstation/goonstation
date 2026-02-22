@@ -22,8 +22,8 @@
 		executable = 0
 		var/tmp/setup_string = null
 
-		os_call(var/list/call_list, var/datum/computer/file/terminal_program/caller, var/datum/computer/file/file)
-			return (!master || master.status & (NOPOWER|BROKEN) || !caller || !call_list)
+		os_call(var/list/call_list, var/datum/computer/file/terminal_program/caller_prog, var/datum/computer/file/file)
+			return (!master || master.status & (NOPOWER|BROKEN) || !caller_prog || !call_list)
 
 	termapp //Small applications for the "termos" computer3s.
 		name = "blank terminal app"

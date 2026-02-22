@@ -67,7 +67,7 @@
 /area/centcom)
 "iy" = (
 /obj/machinery/sleeper/compact,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7"
@@ -90,7 +90,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "mi" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -143,7 +143,7 @@
 	dir = 8
 	},
 /obj/machinery/light,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -169,7 +169,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "uw" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -222,7 +222,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "DA" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body1";
@@ -317,7 +317,7 @@
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 8
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";

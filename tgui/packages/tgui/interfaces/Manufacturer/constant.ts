@@ -1,8 +1,8 @@
 /**
  * @file
  * @copyright 2024
- * @author Romayne (https://github.com/MeggalBozale)
- * @license ISC
+ * @author Romayne (https://github.com/MyNameIsRomayne)
+ * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
 // Controls the amount of space the settings window takes up.
@@ -24,21 +24,6 @@ export enum AccessLevels {
   DENIED = 0,
   IMPLICIT = 1,
   ALLOWED = 2,
-}
-
-// Controls the size and spacing of blueprint buttons on the main panel.
-export enum BlueprintButtonStyle {
-  Width = 15.5,
-  Height = 5,
-  MarginX = 0.5,
-  MarginY = 0.5,
-}
-
-// Controls the smaller 'settings' and 'info' buttons on the side of each larger button.
-export enum BlueprintMiniButtonStyle {
-  Width = 2,
-  IconSize = 1,
-  Spacing = 0.4,
 }
 
 // Controls the production card styling

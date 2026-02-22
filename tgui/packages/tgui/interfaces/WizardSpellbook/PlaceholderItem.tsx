@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { Button, Section, Stack } from '../../components';
+import { Button, Section, Stack } from 'tgui-core/components';
 
 interface PlaceholderItemProps {
   onClearClick: () => void;

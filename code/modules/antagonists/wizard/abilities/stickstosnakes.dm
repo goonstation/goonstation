@@ -62,7 +62,7 @@
 			return 1 // No cooldown when it fails.
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("STYX TUSNEKS", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("STYX TUSNEKS", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
         //..() uncomment this when we have voice files
 
 		var/mob/living/critter/small_animal/snake/snake = new(stick.loc, stick)
@@ -75,3 +75,6 @@
 		holder.owner.visible_message(SPAN_ALERT("[holder.owner] turns [stick] into [snake]!"))
 		logTheThing(LOG_COMBAT, holder.owner, "casts Sticks to Snakes on [constructTarget(stick,"combat")] turning it into [snake] at [log_loc(snake)].")
 		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)
+
+	logCast(atom/target)
+		return

@@ -16,6 +16,7 @@
 	density = TRUE
 	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	req_access = list(access_mining)
 
 	var/sound_destroyed = 'sound/impact_sounds/Machinery_Break_1.ogg'
 	var/list/datum/ore_cloud_data/ores = list()
@@ -221,15 +222,16 @@
 				src.load_item(R, user)
 				amtload++
 			satchel.UpdateIcon()
-			satchel.tooltip_rebuild = 1
+			satchel.tooltip_rebuild = TRUE
 			if (amtload)
 				boutput(user, SPAN_NOTICE("[amtload] materials loaded from [satchel]!"))
 			else
 				boutput(user, SPAN_ALERT("[satchel] is empty!"))
 		else if (!broken)
-			if (W.hitsound)
-				playsound(src.loc, W.hitsound, 50, 1)
+			user.lastattacked = get_weakref(src)
 			if (W.force)
+				if (W.hitsound)
+					playsound(src.loc, W.hitsound, 50, 1)
 				src.health = max(src.health - randfloat(W.force/1.5, W.force),0)
 
 				attack_particle(user,src)
@@ -335,7 +337,7 @@
 				OCD.amount--
 
 		if(transmit)
-			flick("ore_storage_unit-transmit",src)
+			FLICK("ore_storage_unit-transmit",src)
 			showswirl(eject_location)
 			leaveresidual(eject_location)
 
@@ -383,6 +385,9 @@
 		if (src.is_broken())
 			boutput(user, SPAN_ALERT("The [src] seems to be broken and inoperable!"))
 			return
+		if(!src.allowed(user))
+			boutput(user, SPAN_ALERT("Access Denied."))
+			return
 
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
@@ -423,7 +428,8 @@
 				. = TRUE
 			if("set-default-price")
 				var/price = params["newPrice"]
-				default_price = max(price, 0)
+				if(isnum_safe(price))
+					default_price = max(price, 0)
 				. = TRUE
 			if("toggle-auto-sell")
 				autosell = !autosell
@@ -431,7 +437,8 @@
 			if("set-ore-price")
 				var/ore = params["ore"]
 				var/price = params["newPrice"]
-				update_ore_price(ore, price)
+				if(isnum_safe(price))
+					update_ore_price(ore, price)
 				. = TRUE
 
 #undef ROCKBOX_MAX_HEALTH

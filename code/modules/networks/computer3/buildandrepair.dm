@@ -49,6 +49,7 @@ TYPEINFO(/obj/item/motherboard)
 		max_peripherals = 3
 		metal_given = 3
 		glass_needed = 1
+		object_flags = NO_BLOCK_TABLE
 
 
 	azungarcomputer_upper
@@ -95,6 +96,14 @@ TYPEINFO(/obj/item/motherboard)
 				src.mainboard = P
 				user.drop_item()
 				P.set_loc(src)
+			else if (istype(P, /obj/item/circuitboard) && !mainboard && istype_exact(src,/obj/computer3frame))
+				var/obj/computerframe/new_computer = new(src.loc)
+				new_computer.state = 1
+				new_computer.anchored = src.anchored
+				new_computer.dir = src.dir
+				new_computer.setMaterial(src.material)
+				new_computer.Attackby(P, user)
+				qdel(src)
 			if (isscrewingtool(P) && mainboard)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, SPAN_NOTICE("You screw the mainboard into place."))
@@ -107,8 +116,6 @@ TYPEINFO(/obj/item/motherboard)
 				src.icon_state = "0"
 				mainboard.set_loc(src.loc)
 				src.mainboard = null
-			if (istype(P, /obj/item/circuitboard))
-				boutput(user, SPAN_ALERT("This is the wrong type of frame, it won't fit!"))
 
 		if(2)
 			if (isscrewingtool(P) && mainboard && (!peripherals.len))
@@ -230,13 +237,68 @@ TYPEINFO(/obj/item/motherboard)
 				src.state = 0
 		if(2)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				boutput(user, SPAN_NOTICE("You add cables to the frame."))
-				P.change_stack_amount(-5)
-				src.state = 3
-				src.icon_state = "3"
+				var/obj/item/cable_coil/coil = P
+				if (coil?.use(5))
+					boutput(user, SPAN_NOTICE("You add cables to the frame."))
+					src.state = 3
+					src.icon_state = "3"
 		if(3)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
 				boutput(user, SPAN_NOTICE("You put in the glass panel."))
 				P.change_stack_amount(-glass_needed)
 				src.state = 4
 				src.icon_state = "4"
+
+/obj/computer3frame/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (prob(P.power))
+				switch(state)
+					if(0)
+						new /obj/item/scrap(src.loc)
+						qdel(src)
+					if(1)
+						if(src.mainboard)
+							src.eject_mainboard()
+						else
+							src.anchored = UNANCHORED
+							src.state = 0
+					if(2)
+						if(length(src.peripherals))
+							src.eject_peripherals()
+						else if(src.mainboard)
+							src.eject_mainboard()
+					if(3)
+						if (src.hd)
+							src.hd.set_loc(src)
+							src.hd.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+							src.hd = null
+						else
+							var/obj/item/cable_coil/debris = new /obj/item/cable_coil(src.loc)
+							debris.amount = 1
+							debris.UpdateIcon()
+							debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+							src.state = 2
+							src.icon_state = "2"
+					if(4)
+						var/obj/item/raw_material/shard/glass/debris = new /obj/item/raw_material/shard/glass(src.loc)
+						debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+						src.state = 3
+						src.icon_state = "3"
+
+/obj/computer3frame/proc/eject_mainboard()
+	if(isnull(src.mainboard)) return
+	src.mainboard.set_loc(get_turf(src))
+	src.mainboard.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+	src.mainboard = null
+	src.state = 1
+	src.icon_state = "1"
+
+/obj/computer3frame/proc/eject_peripherals()
+	if (length(src.peripherals) == 0) return
+	for(var/obj/item/peripheral/peripheral in src.peripherals)
+		peripheral.set_loc(get_turf(src))
+		peripheral.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+		src.peripherals.Remove(peripheral)
+		peripheral.uninstalled()

@@ -1,4 +1,4 @@
-INCLUDE_MAP("../wrestlemap.dmm")
+INCLUDE_MAP("../events/wrestlemap.dmm")
 #ifndef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
 INCLUDE_MAP("../z2.dmm")
 INCLUDE_MAP("../z3.dmm")

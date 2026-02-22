@@ -4,18 +4,39 @@
 	name = "Pressure Tank"
 	desc = "A large vessel containing pressurized gas."
 	density = TRUE
+	provides_grip = TRUE
 	var/volume = 1620 //in liters, 0.9 meters by 0.9 meters by 2 meters
 
 /obj/machinery/atmospherics/unary/tank/New()
 	..()
+	src.AddComponent(/datum/component/obj_projectile_damage)
 	src.air_contents.volume = src.volume
 	src.air_contents.temperature = T20C
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, FALSE)
+	update_pipe_underlay(src.node, src.dir, "long", FALSE)
 
+
+/obj/machinery/atmospherics/unary/tank/attackby(obj/item/I, mob/user) //let's just make these breakable for now
+	if (I.force)
+		src.visible_message(SPAN_ALERT("[user] hits \the [src] with \a [I]!"))
+		user.lastattacked = get_weakref(src)
+		attack_particle(user,src)
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+		logTheThing(LOG_STATION, user, "attacks [src] [log_atmos(src)] with [I] at [log_loc(src)].")
+		src.changeHealth(-I.force)
+	..()
+
+/obj/machinery/atmospherics/unary/tank/onDestroy()
+	var/atom/location = src.loc
+	location.assume_air(air_contents)
+	air_contents = null
+	src.gib(location)
+	..()
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide
+	icon = 'icons/obj/atmospherics/tanks/black_pipe_tank.dmi'
 	name = "Pressure Tank (Carbon Dioxide)"
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide/New()
@@ -75,7 +96,7 @@
 // Experiment for improving the usefulness of air hookups. They have twice the capacity of portable
 // canisters and contain 4 times the volume of their default air mixture (Convair880).
 /obj/machinery/atmospherics/unary/tank/air_repressurization
-	icon = 'icons/obj/atmospherics/tanks/whitered_pipe_tank.dmi'
+	icon = 'icons/obj/atmospherics/tanks/white_red_pipe_tank.dmi'
 	name = "High-Pressure Tank (Air)"
 	desc = "Large vessel containing a pressurized air mixture for emergency purposes."
 	volume = 2000

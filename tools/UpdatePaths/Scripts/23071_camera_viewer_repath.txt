@@ -1,0 +1,11 @@
+/obj/machinery/computer/security : /obj/machinery/computer/camera_viewer{@OLD}
+/obj/machinery/computer/security/console_upper : /obj/machinery/computer/camera_viewer/console_upper{@OLD}
+/obj/machinery/computer/security/console_lower : /obj/machinery/computer/camera_viewer/console_lower{@OLD}
+/obj/machinery/computer/security/research : /obj/machinery/computer/camera_viewer{@OLD}
+/obj/machinery/computer/security/telescreen : /obj/machinery/computer/camera_viewer/telescreen{@OLD}
+
+/obj/machinery/computer/security/wooden_tv : /obj/machinery/computer/television{@OLD}
+/obj/machinery/computer/security/wooden_tv/public : /obj/machinery/computer/television/public{@OLD}
+/obj/machinery/computer/security/wooden_tv/cargo : /obj/machinery/computer/television/cargo{@OLD}
+/obj/machinery/computer/security/wooden_tv/small : /obj/machinery/computer/television/small{@OLD}
+/obj/machinery/computer/security/wooden_tv/small/virtual : /obj/machinery/computer/television/small/virtual{@OLD}

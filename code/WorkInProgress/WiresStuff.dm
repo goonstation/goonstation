@@ -5,12 +5,31 @@
 	set hidden = 1
 	ADMIN_ONLY
 
-	for (var/mob/M as anything in mobs)
-		if (M.mind)
-			var/playerId = M.mind.get_player().id
-			if (!playerId)
-				boutput(src, "[M.mind.ckey] has no player ID")
+	var/loopTimes = input(src, "How many loops?") as num
 
+	var/counter = 1
+	while (counter <= loopTimes)
+		SPAWN(0)
+			var/response = wireSendTest()
+			var/msg = "\[[counter]\] - "
+			if (response == "This is a test")
+				msg += "Success"
+			else
+				msg += "Failed"
+			boutput(src, msg)
+		counter++
+
+	boutput(src, "Done!")
+
+/proc/wireSendTest()
+	var/datum/apiModel/Message/message
+	try
+		var/datum/apiRoute/test/getTest = new
+		message = apiHandler.queryAPI(getTest)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		return error.message
+	return message.message
 
 /proc/mapWorldNew(client/C)
 	// future proofing against varied world icon sizes
@@ -155,9 +174,9 @@ var/global/deathConfettiActive = 0
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	speechverb_say = "booms"
-	speechverb_exclaim = "flares"
-	speechverb_ask = "spots"
+	speech_verb_say = "booms"
+	speech_verb_exclaim = "flares"
+	speech_verb_ask = "spots"
 	blood_id = "phlogiston"
 	metabolizes = 0
 	var/datum/light/glow
@@ -235,6 +254,36 @@ var/global/deathConfettiActive = 0
 	else if (!hardRebootFileExists && alert("No hard reboot is queued, would you like to queue one?",, "Yes", "No") == "Yes")
 		file(hardRebootFilePath) << ""
 		logMessage = "queued a server hard reboot"
+
+	else
+		return
+
+	logTheThing(LOG_DEBUG, src, logMessage)
+	logTheThing(LOG_DIARY, src, logMessage, "admin")
+	message_admins("[key_name(src)] [logMessage]")
+
+	var/ircmsg[] = new()
+	ircmsg["key"] = src.key
+	ircmsg["msg"] = logMessage
+	ircbot.export_async("admin", ircmsg)
+
+/client/proc/toggle_server_rebuild()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Toggle Server Rebuild"
+	set desc = "A server rebuild is when the backend server reinitialises the game container"
+
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/logMessage = ""
+
+	if (global.rebuildServerContainer && alert("A server rebuild is already queued, would you like to remove it?",, "Yes", "No") == "Yes")
+		global.rebuildServerContainer = FALSE
+		logMessage = "removed a server rebuild"
+
+	else if (!global.rebuildServerContainer && alert("No server rebuild is queued, would you like to queue one?",, "Yes", "No") == "Yes")
+		global.rebuildServerContainer = TRUE
+		logMessage = "queued a server rebuild"
 
 	else
 		return

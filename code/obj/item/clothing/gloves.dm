@@ -1,6 +1,5 @@
 // NO GLOVES NO LOVES
 
-var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwerk's forensic ID system (Convair880).
 ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves
 	name = "gloves"
@@ -19,14 +18,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/atom/movable/overlay/overl = null
 	var/activeweapon = 0 // Used for gloves that can be toggled to turn into a weapon (example, bladed gloves)
 
-	var/hide_prints = 1 // Seems more efficient to do this with one global proc and a couple of vars (Convair880).
-	var/scramble_prints = 0
-	var/material_prints = null
+	var/material_prints = "unknown fibers"
 	var/no_prints = FALSE // Specifically used so worn gloves cannot be scanned unless removed first
+	var/datum/forensic_id/fibers = null // Stores the glove's forensic fiber ID
+	var/datum/forensic_id/print_mask = null // Partial fingerprint mask. Basically just regular text, but hex values get replaced with fingerprint characters
 
 	var/can_be_charged = 0 // Currently, there are provisions for icon state "yellow" only. You have to update this file and mob_procs.dm if you're wanna use other glove sprites (Convair880).
-	var/glove_ID = null
-
+	var/glove_ID = null //TODO: Remove variable after full-merge + secret update
 	var/crit_override = 0 //overrides user's stamina crit chance, unless the user has some special limb attached
 	var/bonus_crit_chance = 0 //bonus stamina crit chance; used additively in melee_attack_procs if crit_override is 0, otherwise replaces existing crit chance
 	var/stamina_dmg_mult = 0 //used additively in melee_attack_procs
@@ -36,6 +34,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	///which hands is this glove on. So that we don't have a dozen blank iconstate in wear images for rings/etc. that are only on one side
 	var/which_hands = GLOVE_HAS_LEFT | GLOVE_HAS_RIGHT
+
+	/// Glove fingertip color, for coloring some overlays
+	var/fingertip_color = null
 
 	setupProperties()
 		..()
@@ -47,23 +48,12 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	New()
 		..() // your parents miss you
 		flags |= HAS_EQUIP_CLICK
-		SPAWN(2 SECONDS)
-			src.glove_ID = src.CreateID()
-			if (glove_IDs) // fix for Cannot execute null.Add(), maybe??
-				glove_IDs.Add(src.glove_ID)
+		src.set_fibers()
 
 	examine()
 		. = ..()
 		if (src.stunready)
 			. += "It seems to have some wires attached to it.[src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]"
-
-	// reworked this proc a bit so it can't run more than 5 times, just in case
-	CreateID()
-		var/newID = null
-		for (var/i=5, i>0, i--)
-			newID = GenID()
-			if (glove_IDs && newID && !glove_IDs.Find(newID))
-				return newID
 
 	proc/GenID()
 		var/newID = ""
@@ -86,13 +76,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		// I demand satisfaction!
 		if (ismob(target))
 			target.visible_message(
-				"<span><b>[challenger]</b> slaps [target] in the face with the the [src]!</span>",
-				SPAN_ALERT("<b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!")
+				"<span><b>[challenger]</b> slaps [target] in the face with [src]!</span>",
+				SPAN_ALERT("<b>[challenger] slaps you in the face with [src]! [capitalize(he_or_she(challenger))] has offended your honour!")
 			)
 			logTheThing(LOG_COMBAT, challenger, "glove-slapped [constructTarget(target,"combat")]")
 		else
 			target.visible_message(
-				SPAN_ALERT("<b>[challenger]</b> slaps [target] in the face with the [src]!")
+				SPAN_ALERT("<b>[challenger]</b> slaps [target] in the face with [src]!")
 			)
 		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, TRUE)
 
@@ -146,29 +136,83 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		..()
 
-	proc/distort_prints(var/prints as text, var/get_glove_ID = 1) // Ditto (Convair880).
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.fibers)
+			scan.add_text("Glove ID: ([src.fibers.id])")
+		if(src.print_mask)
+			var/mask_text = "Glove pattern: ([FORENSIC_GLOVE_MASK_FINGERLESS]) to ([src.print_mask.id])"
+			scan.add_text(mask_text)
 
-		var/data = null
+	proc/set_fibers()
+		var/glove_fp_mask = src.get_fiber_mask()
+		if(glove_fp_mask)
+			src.print_mask = register_id(glove_fp_mask)
+			var/list/fiber_chars = list("c","f","g","h","i","j","k","r","s","t","v","w","x","y","z")
+			fibers = register_id("[src.material_prints]: [build_id(fiber_chars, 7)]")
 
-		if (!src.hide_prints)
-			data += prints
+	proc/get_fiber_mask()
+		// Fiber masks replace hex values with coresponding fingerprint character positions
+		// Example: abcd-egno-pqrs-uvxy => (...0AF...) => (...ary...)
+		return create_glovemask_bunch(1) // Default: 1/4 chance of match
 
-		else
+	proc/create_glovemask_position() // (...-??y?-...)
+		// Probability: 1/4 chance of match
+		var/rand_bunch = rand(1,4)
+		var/rand_pos = rand(1,4)
+		var/mask = ""
+		for(var/i=1; i<=4; i++)
+			if(i == rand_pos)
+				var/index = (rand_bunch * 4) - 4 + rand_pos - 1
+				mask += uppertext(num2hex(index, 1))
+			else
+				mask += "?"
+		return "...-[mask]-..."
 
-			if (src.scramble_prints)
-				data += corruptText(prints, 20)
+	proc/create_glovemask_bunch(var/reveal_count = 1) // (?-?-...g...-?)
+		// Probability (1): 1/4 chance of match (default glove mask)
+		// Probability (2): 1/15 chance of match (latex gloves)
+		if(reveal_count == 0)
+			return ""
+		else if(reveal_count > 4)
+			return "...Error..."
+		var/list/text_list = list("?","?","?","?")
+		var/list/bunch_list = list(1, 2, 3, 4)
+		for(var/i=1; i<= reveal_count; i++)
+			var/rand_bunch = rand(1, bunch_list.len)
+			var/rand_pos = rand(0,3)
+			var/hex = uppertext(num2hex(((bunch_list[rand_bunch] * 4) - 4 + rand_pos), 1))
+			text_list[bunch_list[rand_bunch]] = "...[hex]..."
+			bunch_list.Cut(rand_bunch, rand_bunch+1)
 
-			else // Seems a bit redundant to return both (Convair880).
+		return "[text_list[1]]-[text_list[2]]-[text_list[3]]-[text_list[4]]"
 
-				if (src.material_prints)
-					data += src.material_prints
-				else
-					data += "unknown fiber material"
+	proc/create_glovemask_order(var/reveal_count = 2) // (...y...g...) or (..y..a..g..)
+		// Probability (2): 1/2 chance of match (better than default)
+		// Probability (3): 1/8 chance of match (insulated gloves)
+		// Probability (4): 1/64 chance of match
+		if(reveal_count < 2)
+			return "...Error..."
+		if(reveal_count > 4)
+			return null
+		var/list/hex_list = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
+		var/list/mask_list = new()
+		for(var/i=1; i<=reveal_count; i++)
+			var/k = rand(1, length(hex_list))
+			mask_list += text2ascii(hex_list[k])
+			hex_list.Cut(k, k+1)
 
-		if (get_glove_ID)
-			data += " (Glove ID: [src.glove_ID])" // Space is required for formatting (Convair880).
+		for(var/i=1; i<= length(mask_list)-1; i++)
+			for(var/k=2; k<= length(mask_list); k++)
+				if(mask_list[i] > mask_list[k])
+					var/temp = mask_list[i]
+					mask_list[i] = mask_list[k]
+					mask_list[k] = temp
 
-		return data
+		var/mask = "..."
+		for(var/i=1; i<=reveal_count; i++)
+			mask += "[ascii2text(mask_list[i])]..."
+		return mask
 
 	proc/special_attack(var/mob/target, var/mob/living/user)
 		boutput(user, "Your gloves do nothing special")
@@ -203,30 +247,41 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.next_click = world.time + user.combat_click_delay
 		return 1
 
+	proc/get_fingertip_color()
+		return src.color || src.fingertip_color
+
 
 /obj/item/clothing/gloves/long // adhara stuff
 	desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
 	name = "cleaning gloves"
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
+	default_material = "synthrubber_yellow"
 	protective_temperature = 550
-	material_prints = "synthetic silicone rubber fibers"
+	material_prints = "synthetic silicone rubber"
+	fingertip_color = "#ffff33"
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.6)
 		setProperty("heatprot", 5)
 		setProperty("chemprot", 15)
 
+	get_fiber_mask()
+		return FORENSIC_GLOVE_MASK_NONE
+
 /obj/item/clothing/gloves/fingerless
 	desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
 	name = "fingerless gloves"
 	icon_state = "fgloves"
 	item_state = "finger-"
-	hide_prints = 0
+	material_prints = "black leather"
 
 	setupProperties()
 		..()
 		setProperty("conductivity", 1)
+
+	get_fiber_mask()
+		return FORENSIC_GLOVE_MASK_FINGERLESS
 
 /obj/item/clothing/gloves/black
 	desc = "These thick leather gloves are fire-resistant."
@@ -234,11 +289,15 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "black"
 	item_state = "bgloves"
 	protective_temperature = 1500
-	material_prints = "black leather fibers"
+	material_prints = "black leather"
+	fingertip_color = "#535353"
 
 	setupProperties()
 		..()
 		setProperty("heatprot", 7)
+
+	get_fiber_mask()
+		return FORENSIC_GLOVE_MASK_NONE
 
 	slasher
 		name = "padded gloves"
@@ -258,14 +317,18 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.visible_message(SPAN_NOTICE("[user] cuts off the fingertips from [src]."))
 		if(src.loc == user)
 			user.u_equip(src)
+		var/obj/item/clothing/gloves/fingerless/cut_gloves = new()
+		cut_gloves.fibers = src.fibers
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, cut_gloves, user)
 		qdel(src)
-		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
+		user.put_in_hand_or_drop(cut_gloves)
 	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
 	name = "cyborg gloves"
 	icon_state = "black"
 	item_state = "r_hands"
+	fingertip_color = "#535353"
 	setupProperties()
 		..()
 		setProperty("conductivity", 1)
@@ -275,12 +338,18 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "latex"
 	item_state = "lgloves"
 	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
+	default_material = "latex"
+	material_amt = 0.5
 	protective_temperature = 310
-	scramble_prints = 1
+	material_prints = "latex rubber"
+	fingertip_color = "#f3f3f3"
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.7)
 		setProperty("chemprot", 15)
+
+	get_fiber_mask()
+		return create_glovemask_bunch(2) // 1/15 chance of match
 
 /obj/item/clothing/gloves/latex/blue
 	color = "#91d5e9"
@@ -299,10 +368,28 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 /obj/item/clothing/gloves/crafted
 	name = "gloves"
-	icon_state = "latex"
-	item_state = "lgloves"
+	icon_state = "custom"
+	item_state = "custom_gloves"
 	desc = "Custom made gloves."
-	scramble_prints = 1
+	material_prints = "custom fibers"
+
+	onMaterialChanged()
+		..()
+		src.set_fibers() // Custom gloves spawn without materials
+
+	get_fiber_mask()
+		if(!src.material)
+			return null
+		var/chem_prot = src.material.getProperty("chemical")
+		if(chem_prot >= 8)
+			return FORENSIC_GLOVE_MASK_NONE
+		if(chem_prot >= 6)
+			return create_glovemask_order(2) // 1/2 chance of match
+		if(chem_prot >= 3)
+			return create_glovemask_position() // 1/4 chance of match
+		if(chem_prot >= 2)
+			return create_glovemask_order(3) // 1/8 chance of match
+		return create_glovemask_bunch(2) // 1/15 chance of match
 
 	insulating
 		onMaterialChanged()
@@ -325,8 +412,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				src.setProperty("heatprot", thermal_insul * 2)
 
 	armored
-		icon_state = "black"
-		item_state = "swat_gl"
+		icon_state = "custom_armored"
+		item_state = "custom_armored"
 
 		onMaterialChanged()
 			..()
@@ -348,16 +435,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			return
 
 /obj/item/clothing/gloves/swat
-	desc = "A pair of Syndicate tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+	desc = "A pair of tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	name = "\improper SWAT gloves"
-	icon_state = "swat_syndie"
-	item_state = "swat_syndie"
+	icon_state = "inspector"
+	item_state = "inspector"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
-
-	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
+	fingertip_color = "#535353"
 
 	setupProperties()
 		..()
@@ -365,15 +449,30 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0.25)
 		setProperty("deflection", 20)
 
+	get_fiber_mask()
+		return create_glovemask_order(2) // 1/2 chance of match
+
+/obj/item/clothing/gloves/swat/syndicate
+	desc = "A pair of Syndicate tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+	name = "\improper SWAT gloves"
+	icon_state = "swat_syndie"
+	item_state = "swat_syndie"
+	fingertip_color = "#b22c20"
+
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-/obj/item/clothing/gloves/swat/knight
+/obj/item/clothing/gloves/swat/syndicate/knight
 	name = "combat gauntlets"
 	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
 	icon_state = "combatgauntlets"
 	item_state = "swat_syndie"
+	fingertip_color = "#343442"
 
 	setupProperties()
 		..()
@@ -383,41 +482,49 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "A pair of NanoTrasen tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
+	fingertip_color = "#2050b2"
 
 /obj/item/clothing/gloves/swat/captain
 	name = "captain's gloves"
 	desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	icon_state = "capgloves"
 	item_state = "capgloves"
+	fingertip_color = "#3fb54f"
 
 	centcomm
 		name = "commander's gloves"
 		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
 		icon_state = "centcomgloves"
 		item_state = "centcomgloves"
+		fingertip_color = "#3c6dc3"
 
 	centcommred
 		name = "commander's gloves"
 		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
 		icon_state = "centcomredgloves"
 		item_state = "centcomredgloves"
+		fingertip_color = "#d73715"
 
 /obj/item/clothing/gloves/stungloves
 	name = "stun gloves"
 	desc = "These gloves are electrically charged."
 	icon_state = "stun"
 	item_state = "stun"
-	material_prints = "insulative fibers, electrically charged"
+	material_prints = "insulative fibers, charged"
 	stunready = 1
 	can_be_charged = 1
 	uses = 10
 	max_uses = 10
+	fingertip_color = "#ffff33"
 	setupProperties()
 		..()
 		setProperty("conductivity", 0)
 	New()
 		..()
 		setSpecialOverride(/datum/item_special/spark/gloves, src)
+
+	get_fiber_mask()
+		return create_glovemask_order(3) // 1/8 chance of match
 
 
 /obj/item/clothing/gloves/yellow
@@ -428,10 +535,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	material_prints = "insulative fibers"
 	can_be_charged = 1
 	max_uses = 4
+	fingertip_color = "#ffff33"
 
 	setupProperties()
 		..()
 		setProperty("conductivity", 0)
+
+	get_fiber_mask()
+		return create_glovemask_order(3) // 1/8 chance of match
 
 	proc/unsulate()
 		src.desc = "Flimsy synthrubber work gloves styled in a drab yellow color. They are not electrically insulated, and provide no protection against any shocks."
@@ -454,11 +565,15 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Big soft gloves used in competitive boxing."
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
-	material_prints = "red leather fibers"
+	material_prints = "red leather"
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35
+	fingertip_color = "#f80000"
 	var/weighted
+
+	get_fiber_mask()
+		return create_glovemask_position() // 1/4 chance of match
 
 	setupProperties()
 		..()
@@ -483,7 +598,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
 		src.punch_damage_modifier += 3
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		qdel(W)
 	else
 		return ..()
@@ -498,7 +613,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	throw_speed = 3
 	throw_range = 6
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = TABLEPASS | NOSHIELD
 
 	New()
 		..()
@@ -509,7 +624,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "transparent gloves"
 	icon_state = "transparent"
 	item_state = "transparent"
-	material_prints = "insulative fibers"
+	material_prints = "black leather"
 	no_prints = TRUE
 	var/deployed = FALSE
 	nodescripition = TRUE
@@ -557,7 +672,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
+
+	get_fiber_mask()
+		return FORENSIC_GLOVE_MASK_NONE
 
 	proc/sheathe_blades_toggle(mob/living/user)
 		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 35, 1, -3)
@@ -610,10 +728,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "power gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
-	material_prints = "insulative fibers and nanomachines"
+	material_prints = "insulative fibers"
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
 	max_uses = 10
 	flags = HAS_EQUIP_CLICK
+	fingertip_color = "#ffff33"
 	HELP_MESSAGE_OVERRIDE({"While standing on a powered wire, click on a tile far away while on <span class='disarm'>disarm</span> intent to non-lethally stun, or on <span class='harm'>harm</span> item to shoot out dangerous lightning. The lightning's power is directly linked to the power in the wire."})
 
 	var/spam_flag = 0
@@ -621,6 +740,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("conductivity", 0)
+
+	get_fiber_mask()
+		return create_glovemask_order(3) // 1/8 chance of match
 
 	proc/use_power(var/amount)
 		var/turf/T = get_turf(src)
@@ -675,7 +797,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			for(var/count=0, count<4, count++)
 
-				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+				var/list/affected = drawLineObj(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				SPAWN(0.6 SECONDS)
 					for(var/obj/O in affected)
@@ -703,6 +825,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 						if("disarm")
 							logTheThing(LOG_COMBAT, user, "disarm-zaps [constructTarget(target_r,"combat")] with power gloves at [log_loc(user)], power = [PN.avail]")
 							target.changeStatus("knockdown", 3 SECONDS)
+							target.changeStatus("implants_disabled", 15 SECONDS)
 							break
 
 				var/list/next = new/list()
@@ -768,11 +891,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Inflatable armbands that don't help you keep afloat at all! At least they look fun."
 	icon_state = "water_wings"
 	item_state = "water_wings"
-	hide_prints = 0
+	material_prints = null
 
 	setupProperties()
 		..()
 		setProperty("conductivity", 1)
+
+	get_fiber_mask()
+		return null
 
 
 //Fun isn't something one considers when coding in ss13, but this did put a smile on my face
@@ -781,6 +907,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "A strange gauntlet made of cogs and brass machinery. It has seven slots along the side."
 	icon_state = "brassgauntlet"
 	item_state = "brassgauntlet"
+	material_prints = "metallic scratches"
 	punch_damage_modifier = 3
 	burn_possible = FALSE
 	cant_self_remove = 1
@@ -792,6 +919,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("conductivity", 1) //it is made of pure metal afterall
+
+	get_fiber_mask()
+		return FORENSIC_GLOVE_MASK_NONE
 
 	attackby(obj/item/power_stones/W, mob/user)
 		if (istype(W, /obj/item/power_stones))
@@ -853,7 +983,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Glimmer glimmer!"
 	icon_state = "princess"
 	item_state = "princess"
-	material_prints = "silk fibres and glitter"
+	material_prints = "silk fibres, glitter"
+	fingertip_color = "#f3f3f3"
 
 	setupProperties()
 		..()

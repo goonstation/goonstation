@@ -1,0 +1,163 @@
+body {
+  background: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+#runtime-wrap {
+  padding-bottom: 10px;
+}
+
+#runtime-wrap button {
+  cursor: pointer;
+}
+
+#runtime-header {
+  background: #1e1e1e;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  min-height: 50px;
+}
+
+#runtime-header .stats {
+  font-size: 1.2em;
+  color: #90caf9;
+}
+
+#runtime-header .refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: 1px solid #333;
+  padding: 6px 14px;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 1em;
+  line-height: 1;
+  height: 100%;
+}
+
+#runtime-header .refresh:hover {
+  background: #333;
+  color: #58b4dc;
+}
+
+#runtime-header .refresh i.icon-refresh {
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+#runtime-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#runtime-list .loading {
+  padding: 10px;
+  font-size: 1.2em;
+  text-align: center;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 0;
+}
+
+#runtime-list .runtime {
+  padding: 3px 5px;
+  background: #1e1e1e;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+
+#runtime-list .runtime:hover {
+  background-color: #58b4dc;
+  color: #000;
+}
+
+#runtime-list > .runtime:not(.runtime-invalid) {
+  cursor: pointer;
+}
+
+#runtime-list .seen,
+#runtime-list .file,
+#runtime-list .line {
+  font-weight: bold;
+  color: #90caf9;
+}
+
+#runtime-list .desc {
+  display: none;
+  font-size: 0.8em;
+  color: #b0bec5;
+}
+
+#runtime-list .usr {
+  display: none;
+  font-size: 0.8em;
+  color: #b0bec5;
+}
+
+#runtime-details {
+  padding: 0 20px;
+}
+
+#runtime-details .control .back {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: #90caf9;
+  font-size: 2.5em;
+  cursor: pointer;
+}
+
+#runtime-details .control .back:hover {
+  color: #58b4dc;
+}
+
+#runtime-details .details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#runtime-details .details table td {
+  border-bottom: 1px dotted #555;
+  padding: 5px;
+}
+
+#runtime-details .details table td:first-child {
+  width: 55px;
+  color: #90caf9;
+}
+
+#runtime-details .details pre {
+  background: #212121;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+  color: #e0e0e0;
+  margin-top: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

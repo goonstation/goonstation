@@ -109,7 +109,7 @@
 /turf/simulated/floor/purple/side,
 /area/dmm_suite/clear_area)
 "N" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /obj/item/clothing/suit/labcoat/science{
 	pixel_y = -4
 	},

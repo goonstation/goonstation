@@ -220,6 +220,9 @@
 				src.chest_item = idk
 				src.chest_item_sewn = 1
 
+TYPEINFO(/mob/living/carbon/human/npc/monkey)
+	start_listen_effects = list(LISTEN_EFFECT_MONKEY)
+
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
 	real_name = "monkey"
@@ -240,7 +243,7 @@
 		..()
 		START_TRACKING
 		if (!src.disposed)
-			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+			src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
 			src.real_name = src.name
@@ -542,33 +545,6 @@
 		theft_target.Attackhand(src)
 		src.set_a_intent(src.ai_default_intent)
 
-	hear_talk(mob/M as mob, messages, heardname, lang_id)
-		if (isalive(src) && messages)
-			if (M.singing)
-				if (M.singing & (BAD_SINGING | LOUD_SINGING))
-					if (prob(20))
-						// monkey is angered by singing
-						spawn(0.5 SECONDS)
-							was_harmed(M)
-							var/singing_modifier = (M.singing & BAD_SINGING) ? "bad" : "loud"
-							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!")
-							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
-					else
-						spawn(0.5 SECONDS)
-							src.visible_message(pick("<B>[name]</B> doesn't seem to like [M]'s singing", \
-							"<B>[name]</B> puts their hands over their ears", \
-							), 1)
-						// monkey merely doesn't like the singing
-							src.say(pick("You human sing worse than a baboon!", \
-							"Me know gorillas with better vocal pitch than you!", \
-							"Monkeys ears too sensitive for this cacophony!", \
-							"You sound like you singing in two keys at same time!", \
-							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
-							if (prob(40))
-								if(!ON_COOLDOWN(src, "monkey_sing_scream", 10 SECONDS))
-									src.emote("scream")
-		..()
-
 	proc/pursuited_by(atom/movable/AM)
 		src.ai_set_state(AI_FLEEING)
 		src.ai_target = AM
@@ -686,7 +662,7 @@
 
 	New()
 		..()
-		SPAWN(1 SECOND)
+		SPAWN(0.5 SECONDS)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, SLOT_SHOES)
 			src.equip_new_if_possible(head, SLOT_HEAD)
@@ -707,6 +683,42 @@
 
 	ai_is_valid_target(mob/M)
 		return isalive(M)
+
+// one angry monke is used as the template, the rest are these spawned once monkey barrel is opened
+/mob/living/carbon/human/npc/monkey/angry/barrel
+
+	New()
+		..()
+		src.equip_new_if_possible(/obj/item/clothing/under/holojumpsuit, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/holosuit, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/mask/holomask, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/holoshoes, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/ears/holoears, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/clothing/gloves/hologloves, SLOT_GLOVES)
+
+	proc/copy_clothes(var/mob/living/carbon/human/npc/monkey/template)
+		var/list/basic_slots = list(SLOT_HEAD, SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_WEAR_MASK, SLOT_SHOES, SLOT_EARS, SLOT_GLOVES)
+		var/obj/item/clothing/holoclothes
+		var/obj/item/clothing/templateclothes
+
+		for (var/slot in basic_slots) // copy icons from the template monkey to this monkey's clothes
+			templateclothes = template.get_slot(slot)
+
+			// give the other monkeys random colour bandanas if player didn't remove the template's bandana
+			if (slot == SLOT_HEAD && istype(template.get_slot(SLOT_HEAD), /obj/item/clothing/head/bandana/))
+				src.equip_new_if_possible(/obj/item/clothing/head/bandana/random_color, SLOT_HEAD)
+			else
+				src.equip_new_if_possible(/obj/item/clothing/head/holohat, SLOT_HEAD)
+
+			if (templateclothes)
+				holoclothes = src.get_slot(slot)
+				holoclothes.icon = templateclothes.icon
+				holoclothes.wear_image_icon = templateclothes.wear_image_icon
+				holoclothes.icon_state = templateclothes.icon_state
+				holoclothes.UpdateIcon()
+			templateclothes = null
+			holoclothes = null
+
 
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea

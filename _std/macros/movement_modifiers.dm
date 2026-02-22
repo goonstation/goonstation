@@ -6,6 +6,7 @@
 		} else { \
 			_L[modifier] = list(source); \
 		} \
+		target.update_movement_modifiers(); \
 	} while (0)
 
 #define REMOVE_MOVEMENT_MODIFIER(target, modifier, sources) \
@@ -17,4 +18,5 @@
 				_L -= modifier \
 			}; \
 		} \
+		target.update_movement_modifiers(); \
 	} while (0)

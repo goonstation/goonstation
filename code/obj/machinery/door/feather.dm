@@ -96,18 +96,18 @@ TYPEINFO(/obj/machinery/door/feather)
 	switch(animation)
 		if("opening")
 			if(src.panel_open)
-				flick("o_[icon_base]c0", src)
+				FLICK("o_[icon_base]c0", src)
 			else
-				flick("[icon_base]c0", src)
+				FLICK("[icon_base]c0", src)
 			icon_state = "[icon_base]0"
 		if("closing")
 			if(src.panel_open)
-				flick("o_[icon_base]c1", src)
+				FLICK("o_[icon_base]c1", src)
 			else
-				flick("[icon_base]c1", src)
+				FLICK("[icon_base]c1", src)
 			icon_state = "[icon_base]1"
 		if("deny")
-			flick("[icon_base]_deny", src)
+			FLICK("[icon_base]_deny", src)
 			playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 50, TRUE, -2)
 
 

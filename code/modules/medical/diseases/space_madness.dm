@@ -12,7 +12,7 @@
 /datum/ailment/disease/space_madness/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
-	if(affected_mob.job == "Clown")
+	if(affected_mob.traitHolder?.hasTrait("training_clown"))
 		if(probmult(6))
 			var/icp = pick("Fuckin' magnets!", "Fuckin' rainbows!", "Magic everywhere...", "Pure motherfuckin' miracles!", "Magic all around you and you don't even know it!")
 			affected_mob.say("[icp]")
@@ -39,7 +39,7 @@
 						else
 							var/monkeys = rand(1,3)
 							for(var/i = 0, i < monkeys, i++)
-								fake_attackEx(affected_mob, 'icons/mob/monkey.dmi', "monkey1", "monkey ([rand(1, 1000)])")
+								fake_attackEx(affected_mob, 'icons/mob/monkey.dmi', "monkey_hallucination", pick_string_autokey("names/monkey.txt"))
 					if(2)
 						var/halluc_state = null
 						var/halluc_name = null
@@ -78,7 +78,7 @@
 						else
 							var/monkeys = rand(1,3)
 							for(var/i = 0, i < monkeys, i++)
-								fake_attackEx(affected_mob, 'icons/mob/monkey.dmi', "monkey1", "monkey ([rand(1, 1000)])")
+								fake_attackEx(affected_mob, 'icons/mob/monkey.dmi', "monkey_hallucination", pick_string_autokey("names/monkey.txt"))
 					if(2)
 						var/halluc_state = null
 						var/halluc_name = null

@@ -1,26 +1,23 @@
 /**
  * @file
  * @copyright 2024
- * @author Romayne (https://github.com/MeggalBozale)
- * @license ISC
+ * @author Romayne (https://github.com/MyNameIsRomayne)
+ * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
 // Modal is made to resemble the modal of SeedFabricator.js
 // Mostly custom code to properly align the modal box with the screen while applying the dimmer to a specific element
 
 import { classes } from 'common/react';
-import { Blink, Flex, Icon } from "../../../components";
+import { Blink, Flex, Icon } from 'tgui-core/components';
 
 type PowerAlertModalProps = {
   width: string | number;
   height: string | number;
-}
+};
 
-export const PowerAlertModal = (props:PowerAlertModalProps) => {
-  const {
-    width,
-    height,
-  } = props;
+export const PowerAlertModal = (props: PowerAlertModalProps) => {
+  const { width, height } = props;
   return (
     <Flex
       width={width}
@@ -37,9 +34,9 @@ export const PowerAlertModal = (props:PowerAlertModalProps) => {
         fontSize={3}
         fontFamily="Courier"
         color="red"
-        className={classes(["Modal"])}
+        className={classes(['Modal'])}
         style={{
-          "z-index": 2,
+          'z-index': 2,
         }}
       >
         <Blink time={500}>

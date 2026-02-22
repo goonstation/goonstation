@@ -5,7 +5,7 @@
 
 	setup()
 		name = "Actions"
-		schedule_interval = 0.5 SECONDS
+		schedule_interval = ACTION_CONTROLLER_INTERVAL
 
 		action_controller = actions
 

@@ -51,7 +51,7 @@
 	src.handler = new
 	src.handler.plane = PLANE_BLACKNESS
 	src.handler.mouse_opacity = 0
-	src.handler.screen_loc = "[src.preview_id]:1,1"
+	src.handler.set_position(src.preview_id, 1, 1)
 	src.viewer?.screen += src.handler
 
 	if (custom_setup)

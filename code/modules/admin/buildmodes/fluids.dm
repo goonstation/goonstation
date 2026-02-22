@@ -23,24 +23,9 @@ Right Mouse Button + Ctrl              = Delete whole group of fluid / smoke<br>
 			return
 
 		// select reagent id
-		var/list/L = list()
-		var/datum/reagent/reagent_type = null
-		var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-		if(searchFor)
-			for(var/R in concrete_typesof(/datum/reagent))
-				if(findtext("[R]", searchFor)) L += R
-		else
-			L = concrete_typesof(/datum/reagent)
+		var/datum/reagent/reagent = pick_reagent(usr)
 
-		if(length(L) == 1)
-			reagent_type = L[1]
-		else if(length(L) > 1)
-			reagent_type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-		else
-			usr.show_text("No reagents matching that name", "red")
-			return
-
-		src.reagent_id = initial(reagent_type.id)
+		src.reagent_id = reagent.id
 		update_button_text("[amount] [reagent_id]")
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)

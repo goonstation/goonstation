@@ -9,14 +9,19 @@
 /obj/storage/crate/wooden,
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
+"aU" = (
+/obj/table/auto,
+/obj/machinery/wrestlingbell,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
 "aY" = (
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
 /area/centcom/outside)
 "bt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -29,7 +34,7 @@
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "bP" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon = 'icons/obj/atmospherics/valve.dmi';
 	icon_state = "valve0-map";
@@ -80,7 +85,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -123,6 +128,10 @@
 "fD" = (
 /turf/simulated/wall/auto/shuttle,
 /area/shuttle/escape/centcom)
+"fQ" = (
+/obj/railing/boxing,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
 "fX" = (
 /turf/unsimulated/floor/arrival{
 	dir = 4
@@ -148,6 +157,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"hj" = (
+/obj/machinery/loudspeaker,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "hv" = (
@@ -182,6 +195,12 @@
 	},
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
+"ie" = (
+/obj/railing/boxing{
+	dir = 8
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
 "ir" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -190,7 +209,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "jf" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 6;
@@ -261,7 +280,7 @@
 /area/shuttle/escape/centcom)
 "lL" = (
 /obj/machinery/atmospherics/unary/portables_connector,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -371,12 +390,6 @@
 	},
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
-"oQ" = (
-/obj/decal/boxingropeenter{
-	dir = 8
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "pd" = (
 /obj/window/crystal/south,
 /turf/simulated/floor/airless/black/grime,
@@ -428,13 +441,6 @@
 /obj/machinery/vending/cola/red,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
-"qI" = (
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/stairs{
-	dir = 1;
-	icon_state = "stairs_middle"
-	},
-/area/shuttle/escape/centcom)
 "qO" = (
 /turf/unsimulated/wall/generic{
 	dir = 4;
@@ -466,7 +472,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "rr" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -589,7 +595,7 @@
 /turf/unsimulated/floor/shiny,
 /area/shuttle/escape/centcom)
 "vN" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -611,10 +617,6 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/turf/unsimulated/floor/wood/three,
-/area/shuttle/escape/centcom)
-"wq" = (
-/obj/loudspeaker,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "wI" = (
@@ -670,11 +672,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
-"ye" = (
-/obj/table/auto,
-/obj/item/wrestlingbell,
-/turf/unsimulated/floor/white,
-/area/shuttle/escape/centcom)
 "yK" = (
 /obj/fitness/weightlifter,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -682,6 +679,13 @@
 	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"yN" = (
+/obj/railing/boxing,
+/turf/unsimulated/floor/stairs{
+	dir = 1;
+	icon_state = "stairs_middle"
+	},
 /area/shuttle/escape/centcom)
 "zm" = (
 /turf/unsimulated/floor/specialroom/gym,
@@ -707,7 +711,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 9;
@@ -716,7 +720,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -742,14 +746,6 @@
 "AA" = (
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"AG" = (
-/obj/machinery/light/small/floor,
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/stairs{
-	dir = 1;
-	icon_state = "Stairs_wide"
-	},
-/area/shuttle/escape/centcom)
 "AM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -770,7 +766,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -802,12 +798,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"BQ" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "CB" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -840,7 +830,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "DB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "pipe";
 	color = "b4b4b4"
@@ -848,7 +838,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Es" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -887,12 +877,20 @@
 	dir = 6
 	},
 /area/centcom)
+"Fc" = (
+/obj/machinery/light/small/floor,
+/obj/railing/boxing,
+/turf/unsimulated/floor/stairs{
+	dir = 1;
+	icon_state = "Stairs2_wide"
+	},
+/area/shuttle/escape/centcom)
 "Fl" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 1;
@@ -952,7 +950,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "GQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -1032,7 +1030,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -1171,6 +1169,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/airless/black/grime,
 /area/shuttle/escape/centcom)
+"Ny" = (
+/obj/machinery/light/small/floor,
+/obj/railing/boxing,
+/turf/unsimulated/floor/stairs{
+	dir = 1;
+	icon_state = "Stairs_wide"
+	},
+/area/shuttle/escape/centcom)
 "NG" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
@@ -1193,7 +1199,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Ol" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
 	dir = 4;
@@ -1211,7 +1217,7 @@
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "OU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "A pipe.";
 	name = "pipe";
 	color = "b4b4b4"
@@ -1226,7 +1232,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Pm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	name = "pipe";
 	color = "b4b4b4"
@@ -1255,7 +1261,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "QF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map";
@@ -1263,14 +1269,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"Ra" = (
-/obj/machinery/light/small/floor,
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/stairs{
-	dir = 1;
-	icon_state = "Stairs2_wide"
-	},
-/area/shuttle/escape/centcom)
 "Rd" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -1299,7 +1297,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
@@ -1313,6 +1311,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"RZ" = (
+/obj/railing/boxing{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
 "Sa" = (
 /obj/stool/chair/blue,
 /turf/unsimulated/floor{
@@ -1320,7 +1324,7 @@
 	},
 /area/centcom)
 "Sn" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1413,7 +1417,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "VQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	name = "pipe";
 	color = "b4b4b4"
@@ -1448,7 +1452,7 @@
 /turf/unsimulated/floor/carpet/green/fancy/edge/south,
 /area/shuttle/escape/centcom)
 "Xm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	name = "pipe";
 	color = "b4b4b4"
@@ -1461,10 +1465,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"Xn" = (
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "Xs" = (
 /obj/fitness/stacklifter,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -1747,7 +1747,7 @@ vQ
 vQ
 qb
 vQ
-wq
+hj
 Oc
 QB
 xF
@@ -1773,7 +1773,7 @@ wT
 gy
 jA
 jA
-oQ
+ie
 jA
 mu
 Oc
@@ -1803,7 +1803,7 @@ eb
 zm
 zm
 eb
-Xn
+fQ
 Tl
 Yu
 Yu
@@ -1826,7 +1826,7 @@ ve
 ve
 Bu
 wT
-Ra
+Fc
 zm
 zm
 zm
@@ -1854,7 +1854,7 @@ xj
 Jb
 wT
 wT
-qI
+yN
 zm
 eb
 eb
@@ -1882,14 +1882,14 @@ op
 Xs
 wT
 wT
-qI
+yN
 zm
 eb
 eb
 zm
 sz
 hY
-ye
+aU
 wI
 bM
 xT
@@ -1910,7 +1910,7 @@ Rh
 sx
 wT
 wT
-AG
+Ny
 zm
 zm
 zm
@@ -1943,7 +1943,7 @@ eb
 zm
 zm
 eb
-Xn
+fQ
 Tl
 Yu
 Yu
@@ -1969,7 +1969,7 @@ wT
 ns
 Fv
 Fv
-BQ
+RZ
 Fv
 IS
 Oc
@@ -1999,7 +1999,7 @@ hR
 hR
 oh
 hR
-wq
+hj
 Oc
 km
 kq

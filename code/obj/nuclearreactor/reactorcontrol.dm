@@ -10,7 +10,7 @@
 	icon_state = "engine"
 	density = TRUE
 	anchored = ANCHORED
-	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine_handle = null
+	var/obj/machinery/reactor_turbine/turbine_handle = null
 	var/list/history
 	var/const/history_max = 50
 
@@ -30,7 +30,7 @@
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/N in powernet.nodes)
-				if(istype(N.master,/obj/machinery/atmospherics/binary/reactor_turbine))
+				if(istype(N.master,/obj/machinery/reactor_turbine))
 					src.turbine_handle = N.master
 					break
 			return
@@ -77,6 +77,7 @@
 			"load" = turbine_handle?.stator_load,
 			"power" = turbine_handle?.lastgen,
 			"volume" = turbine_handle?.flow_rate,
+			"volume_max" = turbine_handle?.flow_rate_max,
 			"history" = src.history,
 			"overspeed" = turbine_handle?.overspeed,
 			"overtemp" = turbine_handle?.overtemp,
@@ -98,7 +99,7 @@
 				logTheThing(LOG_STATION, src, "[src.turbine_handle] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
-				src.turbine_handle.flow_rate = min(max(x,1),10e5)
+				src.turbine_handle.flow_rate = min(max(x,1),src.turbine_handle.flow_rate_max)
 				logTheThing(LOG_STATION, src, "[src.turbine_handle] flow rate configured to [x] by [ui.user]")
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -110,7 +111,7 @@
 	icon_state = "reactor_stats"
 	density = TRUE
 	anchored = ANCHORED
-	var/obj/machinery/atmospherics/binary/nuclear_reactor/reactor_handle = null
+	var/obj/machinery/nuclear_reactor/reactor_handle = null
 
 	process()
 		. = ..()
@@ -119,7 +120,7 @@
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/netlink/N in powernet.nodes)
-				if(istype(N.master,/obj/machinery/atmospherics/binary/nuclear_reactor))
+				if(istype(N.master,/obj/machinery/nuclear_reactor))
 					src.reactor_handle = N.master
 
 

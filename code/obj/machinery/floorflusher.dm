@@ -22,7 +22,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	var/flushing = 0	// true if flushing in progress
 	var/mail_tag = null // mail_tag to apply on next flush
 	var/mail_id = null // id for linking a flusher for mail tagging
-	HELP_MESSAGE_OVERRIDE({"You can use a <b>crowbar</b> to pry it open."})
+	var/emagged = FALSE
+	HELP_MESSAGE_OVERRIDE({"Pry it open with a <b>crowbar</b>.<br>If open, crawl inside with an <b>empty hand</b>."})
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
@@ -92,6 +93,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		..()
 		STOP_TRACKING
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			src.emagged = TRUE
+			boutput(user, SPAN_NOTICE("You short out the locking mechanism on \the [src]."))
+
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
@@ -127,34 +133,39 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 	Crossed(atom/movable/AM)
 		..()
-		//you can fall in if its open
-		if (open == 1)
-			if (isobj(AM))
-				if (AM:anchored) return //can't have hotspots, overlays, etc.
-				var/obj/O = AM
-				src.visible_message("[O] falls into [src].")
-				O.set_loc(src)
-				flush = 1
-				update()
+		//you can only fall in if its open
+		if (open != 1)
+			return
+		return_if_overlay_or_effect(AM)
+		if (istype(AM, /obj/projectile))
+			return
+		if (isobj(AM))
+			if (AM:anchored) return //can't have hotspots, overlays, etc.
+			var/obj/O = AM
+			src.visible_message("[O] falls into [src].")
+			O.set_loc(src)
+			flush = 1
+			update()
 
-			if (isliving(AM))
-				if (AM:anchored) return
-				if (isintangible(AM)) // STOP EATING BLOB OVERMINDS ALSO
-					return
-				var/mob/living/M = AM
-				if (M.buckled)
-					M.buckled = null
-				boutput(M, "You fall into [src].")
-				src.visible_message("[M] falls into [src].")
-				M.set_loc(src)
-				flush = 1
-				update()
+		if (isliving(AM))
+			if (AM:anchored >= ANCHORED_ALWAYS) return
+			if (AM.gforce <= 0) return
+			if (HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING)) // STOP EATING BLOB OVERMINDS ALSO
+				return
+			var/mob/living/M = AM
+			if (M.buckled)
+				M.buckled = null
+			boutput(M, "You fall into [src].")
+			src.visible_message("[M] falls into [src].")
+			M.set_loc(src)
+			flush = 1
+			update()
 
-			if(current_state <= GAME_STATE_PREGAME)
-				SPAWN(0)
-					flush()
-					sleep(1 SECOND)
-					openup()
+		if(current_state <= GAME_STATE_PREGAME)
+			SPAWN(0)
+				flush()
+				sleep(1 SECOND)
+				openup()
 
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
@@ -208,6 +219,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			src.remove_dialog(user)
 			return
 
+		if (can_act(user))
+			boutput(user, SPAN_ALERT("You climb into \the [src]!"))
+			user.set_loc(src)
+			for (var/mob/C in AIviewers(src))
+				if(C == user)
+					continue
+				C.show_message("[user] climbs into \the [src]!", 3)
+			src.flush = TRUE
+			src.update()
 
 	// eject the contents of the unit
 	proc/eject()
@@ -243,7 +263,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
 					nameToCheck = H.face_visible() ? H.real_name : H.name
 					var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
-					if(!isnull(R) && ((R["criminal"] == ARREST_STATE_INCARCERATED) || (R["criminal"] == ARREST_STATE_ARREST)))
+					if(!isnull(R) && ((R["criminal"] == ARREST_STATE_INCARCERATED) || (R["criminal"] == ARREST_STATE_ARREST) || (R["criminal"] == ARREST_STATE_DETAIN)))
 						R["criminal"] = ARREST_STATE_RELEASED
 						H.update_arrest_icon()
 
@@ -272,7 +292,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		if(status & NOPOWER)			// won't charge if no power
 			return
-
+		if (!src.open && src.emagged && prob(10))
+			src.openup()
 		..()
 		if(mode != 1)		// if off or ready, no need to charge
 			return
@@ -320,7 +341,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	proc/openup()
 		open = 1
 		opening = TRUE
-		flick("floorflush_a", src)
+		FLICK("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
 			src.Crossed(AM) // try to flush them
@@ -330,7 +351,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	proc/closeup()
 		open = 0
 		opening = TRUE
-		flick("floorflush_a2", src)
+		FLICK("floorflush_a2", src)
 		src.icon_state = "floorflush_c"
 		SPAWN(0.7 SECONDS)
 			opening = FALSE
@@ -351,7 +372,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		AM.pipe_eject(0)
 		AM?.throw_at(target, 5, 1)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /obj/machinery/floorflusher/industrial

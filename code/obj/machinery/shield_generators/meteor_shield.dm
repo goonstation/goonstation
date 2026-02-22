@@ -1,8 +1,8 @@
 /obj/machinery/shieldgenerator/meteorshield
 	name = "meteor shield generator"
 	desc = "Generates a force field that stops meteors."
-	icon = 'icons/obj/meteor_shield.dmi'
-	icon_state = "shieldgen"
+	icon = 'icons/obj/shield_gen.dmi'
+	icon_state = "meteor_gen"
 	density = FALSE
 
 	nocell
@@ -33,4 +33,4 @@
 		src.anchored = ANCHORED
 		src.active = 1
 		playsound(src.loc, src.sound_on, 50, 1)
-		build_icon()
+		src.update_icon()

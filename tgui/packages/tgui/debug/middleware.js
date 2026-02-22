@@ -4,20 +4,22 @@
  * @license MIT
  */
 
-import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from 'common/keycodes';
-import { globalEvents } from '../events';
-import { acquireHotKey } from '../hotkeys';
-import { openExternalBrowser, toggleDebugLayout, toggleKitchenSink } from './actions';
+import { globalEvents } from 'tgui-core/events';
+import { acquireHotKey } from 'tgui-core/hotkeys';
+import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from 'tgui-core/keycodes';
 
-const relayedTypes = [
-  'backend/update',
-  'chat/message',
-];
+import {
+  openExternalBrowser,
+  toggleDebugLayout,
+  toggleKitchenSink,
+} from './actions';
 
-export const debugMiddleware = store => {
+const relayedTypes = ['backend/update', 'chat/message'];
+
+export function debugMiddleware(store) {
   acquireHotKey(KEY_F11);
   acquireHotKey(KEY_F12);
-  globalEvents.on('keydown', key => {
+  globalEvents.on('keydown', (key) => {
     if (key.code === KEY_F11) {
       store.dispatch(toggleDebugLayout());
     }
@@ -29,39 +31,39 @@ export const debugMiddleware = store => {
       // stack in order for this to be a fatal error.
       setTimeout(() => {
         throw new Error(
-          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle'
-          + ' fucko boingo! The code monkeys at our headquarters are'
-          + ' working VEWY HAWD to fix this!');
+          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle' +
+            ' fucko boingo! The code monkeys at our headquarters are' +
+            ' working VEWY HAWD to fix this!',
+        );
       });
     }
   });
-  return next => action => next(action);
-};
+  return (next) => (action) => next(action);
+}
 
-export const relayMiddleware = store => {
-  const devServer = require('tgui-dev-server/link/client.cjs');
+export function relayMiddleware(store) {
+  const devServer = require('tgui-dev-server/link/client.mjs');
   const externalBrowser = location.search === '?external';
   if (externalBrowser) {
-    devServer.subscribe(msg => {
+    devServer.subscribe((msg) => {
       const { type, payload } = msg;
-      if (type === 'relay' && payload.windowId === window.__windowId__) {
+      if (type === 'relay' && payload.windowId === Byond.windowId) {
         store.dispatch({
           ...payload.action,
           relayed: true,
         });
       }
     });
-  }
-  else {
+  } else {
     acquireHotKey(KEY_F10);
-    globalEvents.on('keydown', key => {
+    globalEvents.on('keydown', (key) => {
       if (key === KEY_F10) {
         store.dispatch(openExternalBrowser());
       }
     });
   }
-  return next => action => {
-    const { type, payload, relayed } = action;
+  return (next) => (action) => {
+    const { type, relayed } = action;
     if (type === openExternalBrowser.type) {
       window.open(location.href + '?external', '_blank');
       return;
@@ -70,11 +72,11 @@ export const relayMiddleware = store => {
       devServer.sendMessage({
         type: 'relay',
         payload: {
-          windowId: window.__windowId__,
+          windowId: Byond.windowId,
           action,
         },
       });
     }
     return next(action);
   };
-};
+}

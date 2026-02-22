@@ -42,12 +42,17 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
+//#define DISABLE_DEVFILE // Don't load things defined in '__build.local.dm'. Use if you have some breaking changes in there or whatnot
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define I_MEAN_ALL_ACCESS // Captain level ID's have EVERY access
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
 //#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
+//#define I_WANNA_BE_THE_JOB "IMCODER" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
+//#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
+//#define NO_PREGAME_HTML // Don't spawn the HTML pregame browser lobby screen
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -66,12 +71,15 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
+//#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
+//#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT // Stops lights from breaking or burning out when spawning or turning on/off
+//#define NO_ANTAG_POPUPS_I_DONT_CARE // Stops antag popups from coming up at the start of every game
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
 //------------- PROFILING OPTIONS -------------//
 
-//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
+// #define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
 
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
@@ -99,6 +107,9 @@ o+`        `-` ``..-:yooos-..----------..`
 // Probably hefty
 //#define QUEUE_STAT_DEBUG
 
+// Enable local authentication using a dummy version of the goonhub authentication process
+//#define TEST_AUTH
+
 // Makes the code crash / log when an abstract type is instantiated.
 // see _stadlib/_types.dm for details
 // #define ABSTRACT_VIOLATION_CRASH
@@ -107,8 +118,8 @@ o+`        `-` ``..-:yooos-..----------..`
 // Makes the delete queue go through every single datum in the game when a hard del happens
 // It gets reported to the debug log. This process takes about 4 minutes per hard deletion
 // (during that time the server will be frozen).
-//#define LOG_HARD_DELETE_REFERENCES
-//#define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+// #define LOG_HARD_DELETE_REFERENCES
+// #define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
@@ -124,7 +135,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CONSTRUCTION // Construction mode
 //#define MAP_OVERRIDE_POD_WARS     // 500x500 Pod Wars map
 //#define MAP_OVERRIDE_EVENT        // Misc. event maps
-//#define MAP_OVERRIDE_PAMGOC       // ilaP yB ,1 pamgoC (pamgoc by pali)
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
@@ -133,30 +143,24 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
-//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
 //#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
+//#define MAP_OVERRIDE_NEON					// Neon by Sord
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
-//#define MAP_OVERRIDE_DESTINY      // NSS Destiny (Originally for RP servers only)
-//#define MAP_OVERRIDE_HORIZON      // NSS Horizon, by Warcrimes
+//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
-//#define MAP_OVERRIDE_TRUNKMAP     // Updated Devstation/Ovary/Trunkmap
-//#define MAP_OVERRIDE_DENSITY      // Density (smallest map)
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
-//#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
-//#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
-//#define MAP_OVERRIDE_ICARUS       // Icarus by Kubius
-//#define MAP_OVERRIDE_GEHENNA      // A WIP map by Warcrimes (DO NOT USE)
 
+//#define GENERATE_GOONHUB_MAP // Generate map screenshots for goonhub map viewer (NOT USED NORMALLY). Use with a map override.
 
 //------------ Unit Test Framework ------------//
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
+//#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions // Only run tests of these types - comma separated list of types
 
 #ifdef CI_RUNTIME_CHECKING
 #define CHECK_MORE_RUNTIMES 1
@@ -176,7 +180,51 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define ENABLE_ARTEMIS // Enables artemis for development
 //#define MIDSUMMER 1
 
-//Don't comment this ty
+//----- Testmerge & Revision Information -----//
+
+/// The literal current commit hash the server is running off of
+#define VCS_REVISION "1"
+/// The literal current author of the commit the server is runing off of
+#define VCS_AUTHOR "bob"
+/// The latest commit on the origin at the time of the server build, for display
+#define ORIGIN_REVISION "1"
+/// The latest commit author on the origin at the time of the server build, for display
+#define ORIGIN_AUTHOR "bob"
+// This exists and is set to a list of PR numbers when testmerges exist - goonstation/goonhub/app/Libraries/GameBuilder/Build.php#L392
+// #define TESTMERGE_PRS list(123, 456)
+
+// The following describe when the server was compiled
+#define BUILD_TIME_TIMEZONE_ALPHA "UTC" // Server is UTC
+#define BUILD_TIME_TIMEZONE_OFFSET 0000
+#define BUILD_TIME_FULL "2009-02-13 18:31:30"
+#define BUILD_TIME_YEAR 2053
+#define BUILD_TIME_MONTH 03
+#define BUILD_TIME_DAY 13
+#define BUILD_TIME_HOUR 18
+#define BUILD_TIME_MINUTE 31
+#define BUILD_TIME_SECOND 30
+#define BUILD_TIME_UNIX 1234567890 // Unix epoch, second precision
+
+// Uncomment and set to a URL with a zip of the RSC to offload RSC sending to an external webserver/CDN.
+//#define PRELOAD_RSC_URL ""
+
+// -- Internal __build.dm stuff --
+#ifdef GENERATE_GOONHUB_MAP
+#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
+#define IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#define I_AM_ABOVE_THE_LAW
+#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+#define BAD_MONKEY_NO_BANANA
+#define CLONING_IS_A_SIN
+#define NO_CRITTERS
+#define NO_RANDOM_ROOMS
+#define NO_RANDOM_EVENTS
+#define NO_SHUTTLE_CALLS
+#define FUCK_OFF_WITH_THE_MAIL
+#define GHOSTDRONES_ON_STRIKE
+#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
+#endif
+
 #ifdef STOP_DISTRACTING_ME
 #define I_AM_ABOVE_THE_LAW
 #define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
@@ -193,6 +241,9 @@ o+`        `-` ``..-:yooos-..----------..`
 #define QUICK_MOB_DELETION
 #define SHUT_UP_ABOUT_MY_PAY
 #define FUCK_OFF_WITH_THE_MAIL
+#define GHOSTDRONES_ON_STRIKE
+#define STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
+#define NO_ANTAG_POPUPS_I_DONT_CARE
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
@@ -203,31 +254,3 @@ o+`        `-` ``..-:yooos-..----------..`
 #define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 #endif
-
-//----- Testmerge & Revision Information -----//
-
-/// The literal current commit hash the server is running off of
-#define VCS_REVISION "1"
-/// The literal current author of the commit the server is runing off of
-#define VCS_AUTHOR "bob"
-/// The latest commit on the origin at the time of the server build, for display
-#define ORIGIN_REVISION "1"
-/// The latest commit author on the origin at the time of the server build, for display
-#define ORIGIN_AUTHOR "bob"
-// This exists and is set to a list of PR numbers when testmerges exist - goonhub-ci/scripts/compile.sh#L104
-// #define TESTMERGE_PRS list(123, 456)
-
-// The following describe when the server was compiled
-#define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
-#define BUILD_TIME_TIMEZONE_OFFSET -0500
-#define BUILD_TIME_FULL "2009-02-13 18:31:30"
-#define BUILD_TIME_YEAR 2053
-#define BUILD_TIME_MONTH 01
-#define BUILD_TIME_DAY 13
-#define BUILD_TIME_HOUR 18
-#define BUILD_TIME_MINUTE 31
-#define BUILD_TIME_SECOND 30
-#define BUILD_TIME_UNIX 1234567890 // Unix epoch, second precision
-
-// Uncomment and set to a URL with a zip of the RSC to offload RSC sending to an external webserver/CDN.
-//#define PRELOAD_RSC_URL ""

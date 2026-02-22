@@ -12,6 +12,8 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
+		if (HAS_ATOM_PROPERTY(src.donor, PROP_MOB_NO_BLOOD_REGEN))
+			return
 		if (donor.blood_volume < 500 && donor.blood_volume > 0) // if we're full or empty, don't bother v
 			if (prob(66))
 				donor.blood_volume += 1 * mult // maybe get a little blood back ^
@@ -55,3 +57,22 @@ TYPEINFO(/obj/item/organ/spleen/cyber)
 	robotic = 1
 	edible = 0
 	created_decal = /obj/decal/cleanable/oil
+
+/obj/item/organ/spleen/amphibian
+	name = "amphibian spleen"
+	desc = "Yep. That sure is a spleen analogue."
+	icon_state = "amphibian_spleen"
+
+/obj/item/organ/spleen/skeleton
+	name = "skeleton pancreas"
+	desc = "Is this a spleen? Because it looks like a lump of bone to you."
+	icon_state = "skeleton_spleen"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/spleen/martian
+	name = "purple knob"
+	desc = "This is a spleen, you think."
+	icon_state = "martian_spleen"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

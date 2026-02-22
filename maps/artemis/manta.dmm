@@ -277,7 +277,7 @@
 	},
 /area/ship/manta)
 "tK" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/manta)
 "vl" = (
@@ -288,12 +288,12 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/manta)
 "vw" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/manta)
 "xq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -312,7 +312,7 @@
 	},
 /area/ship/manta)
 "zG" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -617,7 +617,7 @@
 	},
 /area/ship/manta)
 "Zu" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 1;
 	icon_state = "propulsion"
 	},

@@ -27,13 +27,16 @@ var/image/remote_indicator_off = image('icons/mob/overhead_icons32x48.dmi', "rem
 
 /mob/Login()
 	src.logout_at = null
-	src.ClearSpecificOverlays(OFFLINE_OVERLAY_KEY)
+	src.clear_offline_indicator()
 	. = ..()
 
 /mob/death()
-	src.ClearSpecificOverlays(OFFLINE_OVERLAY_KEY)
+	src.clear_offline_indicator()
 	. = ..()
 
+/mob/proc/clear_offline_indicator()
+	SHOULD_CALL_PARENT(TRUE)
+	src.ClearSpecificOverlays(OFFLINE_OVERLAY_KEY)
 
 /mob/living/create_offline_indicator(force = FALSE)
 	set waitfor = FALSE
@@ -41,7 +44,7 @@ var/image/remote_indicator_off = image('icons/mob/overhead_icons32x48.dmi', "rem
 	// - living
 	// - alive
 	// - has a ckey
-	if (!isalive(src) || src.last_ckey == null)
+	if (!isalive(src) || src.last_ckey == null || src.is_npc)
 		return
 
 	if (!force)
@@ -128,19 +131,21 @@ var/image/remote_indicator_off = image('icons/mob/overhead_icons32x48.dmi', "rem
 	var/logout_check = src.logout_at
 	src.UpdateOverlays(offline_indicator_0m, OFFLINE_OVERLAY_KEY)
 
+#define INVALID_OFFLINE (QDELETED(src) || !isalive(src) || src.is_npc || !src.GetOverlayImage(OFFLINE_OVERLAY_KEY))
+
 	SPAWN(1 MINUTE)
-		if (QDELETED(src) || !isalive(src))
+		if (INVALID_OFFLINE)
 			return
 		// check if they're still logged out after a while and update the overlay
 		if (!src.client && logout_check == src.logout_at)
 			src.UpdateOverlays(offline_indicator_1m, OFFLINE_OVERLAY_KEY)
 
 		SPAWN(4 MINUTES)
-			if (QDELETED(src) || !isalive(src))
+			if (INVALID_OFFLINE)
 				return
 			// check if they're STILL logged out and update the overlay again
 			if (!src.client && logout_check == src.logout_at)
 				src.UpdateOverlays(offline_indicator_5m, OFFLINE_OVERLAY_KEY)
 
-
+#undef INVALID_OFFLINE
 #undef OFFLINE_OVERLAY_KEY

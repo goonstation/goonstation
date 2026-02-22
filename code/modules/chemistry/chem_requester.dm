@@ -62,7 +62,7 @@ var/list/datum/chem_request/chem_requests = list()
 		for (var/id in basic_elements)
 			var/datum/reagent/reagent = reagents_cache[id]
 			chems[lowertext(reagent.name)] = id
-		.["chemicals"] = sortList(chems, /proc/cmp_text_asc)
+		.["chemicals"] = chems
 		.["max_volume"] = src.max_volume
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -72,6 +72,7 @@ var/list/datum/chem_request/chem_requests = list()
 			ui.open()
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		switch (action)
 			if ("reset_id")
 				src.card = null
@@ -176,6 +177,7 @@ var/list/datum/chem_request/chem_requests = list()
 			)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		switch (action)
 			if ("deny")
 				var/datum/chem_request/request = chem_requests["[params["id"]]"]

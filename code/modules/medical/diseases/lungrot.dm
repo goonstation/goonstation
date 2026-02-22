@@ -85,3 +85,4 @@
 		// Once the chance exist we exhale miasma, we give the poor person some messages to warn them for whats about to come
 		if (effective_ailment_stage > 1 && !did_cough && probmult(10) && (!ON_COOLDOWN(affected_mob, "lungrot_message", 25 SECONDS)))
 			boutput(affected_mob, SPAN_ALERT("You feel [pick("a burning sensation in your lungs", "like it's harder to breath", "a fur-like texture on your tongue")]."))
+			affected_mob.organHolder?.damage_organs(tox=2*mult, organs=list("left_lung", "right_lung"))

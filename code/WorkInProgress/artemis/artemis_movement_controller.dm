@@ -73,13 +73,13 @@
 					ship.update_my_stuff()
 
 					if(ship.back)
-						flick("[ship.icon_base]_thruster_back",ship.back)
+						FLICK("[ship.icon_base]_thruster_back",ship.back)
 
 					if(ship.back_right)
-						flick("[ship.icon_base]_thruster_back_r",ship.back_right)
+						FLICK("[ship.icon_base]_thruster_back_r",ship.back_right)
 
 					if(ship.back_left)
-						flick("[ship.icon_base]_thruster_back_l",ship.back_left)
+						FLICK("[ship.icon_base]_thruster_back_l",ship.back_left)
 					ship.engines.use_power(list("sw", "se", "s"), ship.full_throttle)
 
 
@@ -104,9 +104,9 @@
 					ship.update_my_stuff()
 
 					if(ship.front_left)
-						flick("[ship.icon_base]_thruster_front_l",ship.front_left)
+						FLICK("[ship.icon_base]_thruster_front_l",ship.front_left)
 					if(ship.front_right)
-						flick("[ship.icon_base]_thruster_front_r",ship.front_right)
+						FLICK("[ship.icon_base]_thruster_front_r",ship.front_right)
 					ship.engines.use_power(list("nw", "ne"))
 
 					SPAWN(ship.animation_speed)
@@ -130,10 +130,10 @@
 							ship.rotate_ship()
 
 					if(ship.back_left)
-						flick("[ship.icon_base]_thruster_back_l",ship.back_left)
+						FLICK("[ship.icon_base]_thruster_back_l",ship.back_left)
 
 					if(ship.front_right)
-						flick("[ship.icon_base]_thruster_front_r",ship.front_right)
+						FLICK("[ship.icon_base]_thruster_front_r",ship.front_right)
 					ship.engines.use_power(list("ne", "sw"))
 
 					SPAWN(ship.animation_speed)
@@ -157,10 +157,10 @@
 							ship.rotate_ship()
 
 					if(ship.front_left)
-						flick("[ship.icon_base]_thruster_front_l",ship.front_left)
+						FLICK("[ship.icon_base]_thruster_front_l",ship.front_left)
 
 					if(ship.back_right)
-						flick("[ship.icon_base]_thruster_back_r",ship.back_right)
+						FLICK("[ship.icon_base]_thruster_back_r",ship.back_right)
 					ship.engines.use_power(list("nw", "se"))
 
 					SPAWN(ship.animation_speed)
@@ -277,10 +277,10 @@
 							M.rotate_ship()
 
 					if(M.front_left)
-						flick("[M.icon_base]_thruster_front_l",M.front_left)
+						FLICK("[M.icon_base]_thruster_front_l",M.front_left)
 
 					if(M.back_right)
-						flick("[M.icon_base]_thruster_back_r",M.back_right)
+						FLICK("[M.icon_base]_thruster_back_r",M.back_right)
 
 					SPAWN(M.animation_speed)
 						M.rotating = 0

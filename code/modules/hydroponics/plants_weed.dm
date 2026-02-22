@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 
 		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> violently retaliates against [user.name]!"))
 		random_brute_damage(user, 10, 1)//see above
-		if (W && prob(50))
+		if (W && !W.cant_drop && prob(50))
 			boutput(user, SPAN_ALERT("The lasher grabs and smashes your [W]!"))
 			W.dropped(user)
 			qdel(W)
@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 				if (160 to INFINITY)
 					radstrength = 50
 					radrange = 3
-			for (var/mob/living/carbon/M in view(radrange,POT))
+			for (var/mob/living/M in view(radrange,POT))
 				if(!ON_COOLDOWN(M, "radweed_pulse", 2 SECONDS))
 					M.take_radiation_dose(radstrength/30 SIEVERTS)
 			for (var/obj/machinery/plantpot/C in range(radrange,POT))

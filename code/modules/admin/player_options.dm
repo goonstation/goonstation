@@ -24,9 +24,6 @@
 	var/hos = (M.ckey in NT)
 	var/is_admin = M.client?.holder && ! M.client.player_mode
 
-	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
-	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
-
 	var/key_string = "no ckey"
 	var/html_key_string = "<i>no ckey</i>"
 	if (M.key)
@@ -35,14 +32,14 @@
 	else if(M.last_ckey)
 		if (find_player(M.last_ckey)?.client)
 			key_string = "last: [M.last_ckey] / in other mob"
-			html_key_string = "last: [M.last_ckey] <i>/ in <a href='?src=\ref[src];action=refreshoptions;targetckey=[M.last_ckey];'>other mob</a></i>"
+			html_key_string = "last: [M.last_ckey] <i>/ in <a href='byond://?src=\ref[src];action=refreshoptions;targetckey=[M.last_ckey];'>other mob</a></i>"
 		else
 			key_string = "last: [M.last_ckey] / offline"
 			html_key_string = "last: [M.last_ckey] <i>/ offline</i>"
 
 	var/list/dat = list()
 	dat += {"
-	[header_thing_chui_toggle]
+	<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>
 	<title>[M.name] ([key_string]) Options</title>
 	<style>
 		a {
@@ -117,7 +114,7 @@
 	var/number_of_antagonist_roles = ""
 
 	if (M.mind)
-		var/number_of_antagonists = 0
+		var/number_of_antagonists =  0
 		for (var/datum/antagonist/antagonist_role as anything in M.mind.antagonists)
 			var/display_name = "<span class='antag'>[capitalize(antagonist_role.display_name)]</span>"
 			if (antagonist_role.vr)
@@ -127,12 +124,12 @@
 			else
 				number_of_antagonists++
 
-			antagonist_roles += "<a href='?src=\ref[src];target=\ref[antagonist_role];action=viewvars'>[display_name]</a> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[antagonist_role]'>Remove</a><br>"
+			antagonist_roles += "<a href='byond://?src=\ref[src];target=\ref[antagonist_role];action=viewvars'>[display_name]</a> &mdash; <a href='byond://?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[antagonist_role]'>Remove</a><br>"
 
 		if (isnull(antagonist_roles))
 			antagonist_roles += "No antagonist roles present."
 		else
-			antagonist_roles += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
+			antagonist_roles += "<a href='byond://?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 
 		if (number_of_antagonists)
 			if (number_of_antagonists == 1)
@@ -143,13 +140,13 @@
 
 	//General info
 	//  Logs link:
-	//  <a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key];origin=adminplayeropts'>LOGS</a>
+	//  <a href='byond://?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key];origin=adminplayeropts'>LOGS</a>
 	dat += {"
 <div id="topBar">
 	<div id="topOpts">
-		[M.key ? "<a href='?src=\ref[src];action=notes;targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts'>Notes</a> &bull; <a href='[playeropt_link(M, "show_player_stats")]'>Stats</a> &bull;" : ""]
-		<a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
-		<a href='?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
+		[M.key ? "<a href='byond://?src=\ref[src];action=notes;targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts'>Notes</a> &bull; <a href='[playeropt_link(M, "show_player_stats")]'>Stats</a> &bull;" : ""]
+		<a href='byond://?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
+		<a href='byond://?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
 	</div>
 	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""][is_admin ? " <b class='admin'>(Admin)</b>" : ""]
 </div>
@@ -157,7 +154,7 @@
 <div id="mobInfo">
 	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[html_key_string]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
-	[M.ai ? "<a href='?src=\ref[src];target=\ref[M.ai];action=viewvars'>([M.ai.enabled ? "active" : "inactive"] AI)</a>" : ""]
+	[M.ai ? "<a href='byond://?src=\ref[src];target=\ref[M.ai];action=viewvars'>([M.ai.enabled ? "active" : "inactive"] AI)</a>" : ""]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
 	<br>Mob Type: <b>[M.type]</b>[number_of_antagonist_roles]
@@ -171,7 +168,7 @@
 				<div>
 					<div class='l'>Message</div>
 					<div class='r'>
-						<a href='?action=priv_msg&target=[M.ckey]'>PM</a> &bull;
+						<a href='byond://?action=priv_msg&target=[M.ckey]'>PM</a> &bull;
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
@@ -195,17 +192,24 @@
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkhealth")]'>Check</a> &bull;
 						<a href='[playeropt_link(M, "revive")]'>Heal</a> &bull;
+						<a href='[playeropt_link(M, "stabilize")]'>Stabilize</a> &bull;
 						[(isdead(M) || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
+						<a href='[playeropt_link(M, "max_health")]'>Max Health</a>: [M.max_health] &bull;
 						<a href='[playeropt_link(M, "kill")]'>Kill</a>
 					</div>
 					"} : ""]
-					<div class='l'>Reagents<a href='?src=\ref[src];action=secretsfun;type=reagent_help'>*</a></div>
+					<div class='l'>Speech</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "accessspeechtree")]'>Speech Tree</a> &bull;
+						<a href='[playeropt_link(M, "accesslistentree")]'>Listen Tree</a>
+					</div>
+					<div class='l'>Reagents<a href='byond://?src=\ref[src];action=secretsfun;type=reagent_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkreagent")]'>Check</a> &bull;
 						<a href='[playeropt_link(M, "addreagent")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removereagent")]'>Remove</a>
 					</div>
-					<div class='l'>Bioeffects<a href='?src=\ref[src];action=secretsfun;type=bioeffect_help'>*</a></div>
+					<div class='l'>Bioeffects<a href='byond://?src=\ref[src];action=secretsfun;type=bioeffect_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "managebioeffect")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addbioeffect")]'>Add</a> &bull;
@@ -218,7 +222,7 @@
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
 				 	</div>
-					<div class='l'>Traits<a href='?src=\ref[src];action=secretsfun;type=traitlist_help'>*</a></div>
+					<div class='l'>Traits<a href='byond://?src=\ref[src];action=secretsfun;type=traitlist_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "managetraits")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addtrait")]'>Add</a> &bull;
@@ -229,7 +233,7 @@
 						<a href='[playeropt_link(M, "manageobjectives")]'>Manage</a> &bull;
 						<a href='[playeropt_link(M, "addobjective")]'>Add</a>
 				 	</div>
-					<div class='l'>StatusEffects<a href='?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
+					<div class='l'>StatusEffects<a href='byond://?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a> &bull;
 						<a href='[playeropt_link(M, "modifystatuseffect")]'>Modify</a>
@@ -259,12 +263,14 @@
 						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a> &bull;
 						<a href='[playeropt_link(M, "rapture")]'>Rapture</a> &bull;
-						<a href='[playeropt_link(M, "anvilgib")]'>Anvil</a>
+						<a href='[playeropt_link(M, "anvilgib")]'>Anvil</a> &bull;
+						<a href='[playeropt_link(M, "gravitygib")]'>Gravity</a>
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
-						<a href='[playeropt_link(M, "halt")]'>Halt!</a>
+						<a href='[playeropt_link(M, "halt")]'>Halt!</a> &bull;
+						<a href='[playeropt_link(M, "animate")]'>Animate</a>
 					</div>
 				</div>
 			</div>
@@ -369,8 +375,8 @@
 						[jobban_isbanned(M, "Syndicate") ? "<div class='antag'>⚠ This player is antag banned ⚠</div>" : ""]
 						<div class='l'>Options</div>
 						<div class='r'>
-							<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;
-							<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>
+							<a href='byond://?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;
+							<a href='byond://?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>
 						</div>
 
 						<div class='l'>Antag Roles</div>
@@ -417,7 +423,7 @@
 					"}
 
 		//if (!isobserver(M)) //moved from SG level stuff
-		//	dat += " | <a href='?src=\ref[src];action=polymorph;targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts'>Polymorph</a>"
+		//	dat += " | <a href='byond://?src=\ref[src];action=polymorph;targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts'>Polymorph</a>"
 		//dat += "</div>"
 
 	//Coder options

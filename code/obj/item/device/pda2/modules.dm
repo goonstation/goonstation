@@ -288,7 +288,6 @@ TYPEINFO(/obj/item/device/pda_module)
 	desc = "A PDA module that lets you quickly send PDA alerts to the security department."
 	icon_state = "pdamod_alert"
 	setup_use_menu_badge = 1
-	abilities = list(/obj/ability_button/pda_security_alert)
 	var/list/mailgroups = list(MGD_SECURITY)
 
 	return_menu_badge()
@@ -316,26 +315,14 @@ TYPEINFO(/obj/item/device/pda_module)
 		signal.data["sender_name"] = src.host.owner
 		signal.data["group"] = mailgroups + MGA_CRISIS
 		var/area/A = get_area(src.host)
-		signal.data["message"]  = SPAN_ALERT("<b>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!</b>")
+		signal.data["message"]  = "***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
 		signal.data["noreply"] = TRUE
+		signal.data["is_alert"] = TRUE
 		src.host.post_signal(signal)
 
 		if(isliving(user))
 			playsound(src, 'sound/items/security_alert.ogg', 60)
-			var/map_text = null
-			map_text = make_chat_maptext(user, "Emergency alert sent. Please assist this officer.", "color: #D30000; font-size: 6px;", alpha = 215)
-			for (var/mob/O in hearers(user))
-				O.show_message(assoc_maptext = map_text, just_maptext = TRUE)
+			DISPLAY_MAPTEXT(usr, hearers(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/alert, "Emergency alert sent. Please assist this officer.", "#D30000")
 			user.visible_message(SPAN_ALERT("[user] presses a red button on the side of their [src.host]."),
 			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.host]."),
 			SPAN_ALERT("You see [user] press a button on the side of their [src.host]."))
-
-
-/obj/ability_button/pda_security_alert
-	name = "Send Security Alert"
-	icon_state = "alert"
-
-	execute_ability()
-		var/obj/item/device/pda_module/alert/J = the_item
-		if (J.host)
-			J.send_alert(src.the_mob)

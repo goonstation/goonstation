@@ -46,7 +46,7 @@
 /turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "k" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -210,7 +210,7 @@
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "U" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";

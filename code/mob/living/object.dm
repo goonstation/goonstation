@@ -15,7 +15,7 @@
 	density = 0
 	canmove = 1
 	use_stamina = FALSE
-	flags = FPRINT | NO_MOUSEDROP_QOL
+	flags = NO_MOUSEDROP_QOL
 	gender = NEUTER
 
 	blinded = FALSE
@@ -44,6 +44,7 @@
 			src.possessed_item.cant_drop = TRUE
 			src.max_health = 25 * src.possessed_item.w_class
 			src.health = 25 * src.possessed_item.w_class
+			src.combat_click_delay = max(possessed_item.click_delay, possessed_item.combat_click_delay)
 		else
 			if (isobj(possessed_thing))
 				src.dummy = new /obj/item/attackdummy(src)
@@ -183,8 +184,8 @@
 			if (D_ENERGY)
 				src.TakeDamage(null, 0, damage)
 
-		if(!P.proj_data.silentshot)
-			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
+		if(!P.proj_data.no_hit_message)
+			boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	blob_act(var/power)
 		logTheThing(LOG_COMBAT, src, "is hit by a blob")
@@ -306,8 +307,9 @@
 		else
 			return SPAN_ALERT("<B>[src] attacks [T]!</B>")
 
-	return_air()
-		return loc?.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return loc?.return_air()
 
 	assume_air(datum/air_group/giver)
 		return loc?.assume_air(giver)
@@ -375,9 +377,13 @@
 /datum/aiTask/timed/targeted/living_object/get_targets()
 	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
 	for (var/mob/living/carbon/human/H in view(src.target_range, src.holder.owner))
-		if (isalive(H) && !H.nodamage && !H.bioHolder.HasEffect("Revenant"))
+		if (src.valid_target(H))
 			humans += H
 	return humans
+
+/datum/aiTask/timed/targeted/living_object/proc/valid_target(mob/living/carbon/human/H)
+	return istype(H) && isalive(H) && !H.nodamage && !(FACTION_WRAITH in H.faction)
+
 
 /datum/aiTask/timed/targeted/living_object/evaluate() //always attack if we can see a person
 	return length(get_targets()) ? 999 : 0
@@ -386,8 +392,7 @@
 	. = ..()
 	// see if we can find someone
 	var/mob/mobtarget = holder.target
-	ENSURE_TYPE(mobtarget)
-	if (!mobtarget || isdead(mobtarget) || GET_DIST(holder.owner, mobtarget) > 10 || frustration > 8) //slightly higher chase range than acquisition range
+	if (!src.valid_target(mobtarget) || GET_DIST(holder.owner, mobtarget) > 10 || frustration > 8) //slightly higher chase range than acquisition range
 		holder.target = null
 		frustration = 0
 		var/list/possible = get_targets()
@@ -398,11 +403,16 @@
 		holder.owner.move_dir = pick(alldirs)
 		holder.owner.process_move()
 		return
-	src.pre_attack()
+	if (!GET_COOLDOWN(holder.owner, "livingobj_click_delay"))
+		src.pre_attack()
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
 	else
-		holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
+		if(!ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay))
+			var/atom/movable/thing_to_attack = holder.target
+			if (isobj(thing_to_attack.loc))
+				thing_to_attack = thing_to_attack.loc
+			holder.owner.weapon_attack(thing_to_attack, holder.owner.equipped(), TRUE)
 
 /datum/aiTask/timed/targeted/living_object/frustration_check()
 	. = 0
@@ -424,10 +434,12 @@
 	if (!istype(item, /obj/item/attackdummy)) // marginally more performant- don't bother if we're a possessed non item
 		if (istype(item, /obj/item/baton))
 			var/obj/item/baton/bat = item
-			if (is_incapacitated(src.holder.target) || !(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)) // they're down or we're out of juice, let's harm baton
+			// they're down, hiding, or we're out of juice - let's harm baton
+			if (is_incapacitated(src.holder.target) || !isturf(src.holder.target.loc) || !(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 				if (bat.is_active) // uh oh, we're on. turn off
 					spooker.self_interact()
-				spooker.set_a_intent(INTENT_HARM)
+				if (spooker.intent != INTENT_HARM)
+					spooker.set_a_intent(INTENT_HARM)
 				bat.flipped = TRUE
 
 			else // they're up and we have charge, let's try to stun
@@ -438,7 +450,8 @@
 							spooker.self_interact()
 					spooker.self_interact()
 
-				spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
+				if (spooker.intent != INTENT_DISARM)
+					spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
 				bat.flipped = FALSE
 			bat.UpdateIcon()
 
@@ -449,6 +462,20 @@
 			spooker.set_a_intent(INTENT_HARM)
 
 		else if (istype(item, /obj/item/gun))
+			//oough parallel inheritance moment
+			if (istype(item, /obj/item/gun/kinetic/pumpweapon))
+				var/obj/item/gun/kinetic/pumpweapon/pumpweapon = item
+				if (pumpweapon.pump_back)
+					item.AttackSelf(src.holder.owner)
+					//don't pump and shoot in the same AI tick
+					ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay)
+					return
+			else if (istype(item, /obj/item/gun/kinetic/single_action))
+				var/obj/item/gun/kinetic/single_action/single_action = item
+				if (!single_action.hammer_cocked)
+					item.AttackSelf(src.holder.owner)
+					ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay)
+					return
 			var/obj/item/gun/pew = item
 			if (pew.canshoot(holder.owner))
 				spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot

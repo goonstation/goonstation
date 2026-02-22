@@ -51,11 +51,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/ultravision = 0
 	var/tranquilizer_resistance = 0
 	explosion_resistance = 0
+	var/has_genes = FALSE
 
 	var/list/inhands = list()
 	var/list/healthlist = list()
 
-	var/list/implants = list()
 	var/can_implant = TRUE
 
 	var/death_text = null // can use %src%
@@ -132,6 +132,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	burning_image.icon_state = null
 
 	src.old_canmove = src.canmove
+	src.real_name = src.name
 
 	if(!isnull(src.custom_organHolder_type))
 		src.organHolder = new src.custom_organHolder_type(src, custom_brain_type)
@@ -156,6 +157,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		for (var/abil in src.add_abilities)
 			if (ispath(abil))
 				abilityHolder.addAbility(abil)
+
+	if(src.bioHolder)
+		src.bioHolder.genetic_stability = 50
 
 	SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
 		if (abilityHolder)
@@ -187,10 +191,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	equipment.len = 0
 	equipment = null
 
-	for(var/obj/item/I in implants)
+	for(var/obj/item/I in implant)
 		I.dispose()
-	implants.len = 0
-	implants = null
+	implant.len = 0
+	implant = null
 
 	for(var/damage_type in healthlist)
 		var/datum/healthHolder/hh = healthlist[damage_type]
@@ -505,17 +509,19 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				C.changeStatus("knockdown", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
-		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
+			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
+		if (!src.traction) //they're floating, move em one space in the opposite direction
+			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
+			src.inertia_value = 1
 			step(src, inertia_dir)
-		if ((istype(I.loc, /turf/space) || I.no_gravity) && ismob(I))
+		if (ismob(I) && !I.traction)
 			var/mob/M = I
 			M.inertia_dir = throw_dir
+			M.inertia_value = 1
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 
-		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
+		adjust_throw(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src))
 
 		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
@@ -539,6 +545,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/mob/living/living_target = target
 		living_target.give_item()
 		return
+	else if (src.client.check_key(KEY_THROW) && !src.equipped() && BOUNDS_DIST(src, target) <= 0)
+		if (src.auto_pickup_item(target))
+			return
 	else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
 		src.throw_item(target,params)
 		return
@@ -697,7 +706,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (HH && (HH.can_range_attack || HH.can_special_attack()) && HH.limb)
 		HH.limb.attack_range(target, src, params)
 		HH.set_cooldown_overlay()
-		src.lastattacked = src
+		if (HH.limb.use_lastattacked_click_delay)
+			src.lastattacked = get_weakref(src)
 		return TRUE
 	return FALSE
 
@@ -729,29 +739,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			hand_range_attack(target, params)
 			return
 	if (HH.can_attack)
-		if (ismob(target))
-			if (a_intent != INTENT_HELP)
-				SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
-
-			switch (a_intent)
-				if (INTENT_HELP)
-					if (can_help)
-						L.help(target, src)
-				if (INTENT_DISARM)
-					if (can_disarm)
-						L.disarm(target, src)
-				if (INTENT_HARM)
-					if (HH.can_attack)
-						L.harm(target, src)
-				if (INTENT_GRAB)
-					if (HH.can_hold_items && can_grab)
-						L.grab(target, src)
-			HH.set_cooldown_overlay()
-			src.lastattacked = target
-
-		else
-			L.attack_hand(target, src)
-			HH.set_cooldown_overlay()
+		L.attack_hand(target, src)
+		HH.set_cooldown_overlay()
 	else
 		boutput(src, SPAN_ALERT("You cannot attack with your [HH.name]!"))
 
@@ -846,7 +835,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/handHolder/HH = hands[t_hand]
 		if (HH.item || !HH.can_hold_items)
 			return 0
-		if(istype(HH.limb, /datum/limb/small_critter))
+		if(istype(HH.limb, /datum/limb/small_critter) && HH.limb.exempt == FALSE)
 			var/datum/limb/small_critter/L = HH.limb
 			if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 				return 0
@@ -860,7 +849,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/handHolder/HH = hands[active_hand]
 		if (HH.item || !HH.can_hold_items)
 			return 0
-		if(istype(HH.limb, /datum/limb/small_critter))
+		if(istype(HH.limb, /datum/limb/small_critter) && HH.limb.exempt == FALSE)
 			var/datum/limb/small_critter/L = HH.limb
 			if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 				return 0
@@ -885,17 +874,17 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			O.set_loc(src)
 	src.mind?.register_death() // it'd be nice if critters get a time of death too tbh
 	set_density(0)
-	if (src.can_implant)
-		for (var/obj/item/implant/H in src.implants)
-			H.on_death()
-		src.can_implant = 0
+	for (var/obj/item/checked_item in src.contents)
+		SEND_SIGNAL(checked_item, COMSIG_ITEM_ON_OWNER_DEATH, src)
+	src.can_implant = FALSE
+	setdead(src)
 	if (!gibbed)
 		if (src.death_text)
 			src.tokenized_message(src.death_text, null, "red")
 		else
 			src.visible_message(SPAN_ALERT("<b>[src]</b> dies!"))
-		setdead(src)
 		icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead"
+		src.update_body()
 	empty_hands()
 	if (do_drop_equipment)
 		drop_equipment()
@@ -1101,14 +1090,19 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/emote(var/act, var/voluntary = 0)
 	..()
 	var/param = null
-
+	if (src.hasStatus("paralysis"))
+		return //aaaa
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
+	var/maptext_out = 0
 	var/message = specific_emotes(act, param, voluntary)
 	var/m_type = specific_emote_type(act)
+	var/custom = 0 //Sorry, gotta make this for chat groupings.
+
+
 	if (!message)
 		switch (lowertext(act))
 			if ("salute","bow","hug","wave","glare","stare","look","leer","nod")
@@ -1129,28 +1123,36 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 							switch(act)
 								if ("bow","wave","nod")
 									message = "<B>[src]</B> [act]s to [param]."
+									maptext_out = "<I>[act]s to [M]</I>"
 								if ("glare","stare","look","leer")
 									message = "<B>[src]</B> [act]s at [param]."
+									maptext_out = "<I>[act]s at [M]</I>"
 								else
 									message = "<B>[src]</B> [act]s [param]."
+									maptext_out = "<I>[act]s [M]</I>"
 						else
 							switch(act)
 								if ("hug")
 									message = "<B>[src]</b> [act]s itself."
+									maptext_out = "<I>[act]s itself</I>"
 								else
 									message = "<B>[src]</b> [act]s."
+									maptext_out = "<I>[act]s [M]</I>"
 					else
 						message = "<B>[src]</B> struggles to move."
+						maptext_out = "<I>[src] struggles to move</I>"
 					m_type = 1
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				if (src.emote_check(voluntary, 10))
 					message = "<B>[src]</B> [act]s."
+					maptext_out = "<I>[act]s</I>"
 					m_type = 1
 			if ("gasp","cough","laugh","giggle","sigh")
 				// basic hearable single-word emotes
 				if (src.emote_check(voluntary, 10))
 					message = "<B>[src]</B> [act]s."
+					maptext_out = "<I>[act]s</I>"
 					m_type = 2
 			if ("customv")
 				if (!param)
@@ -1158,6 +1160,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					if(!param) return
 				param = html_encode(sanitize(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
+				custom = copytext(param, 1, 10)
 				m_type = 1
 			if ("customh")
 				if (!param)
@@ -1165,12 +1169,16 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					if(!param) return
 				param = html_encode(sanitize(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
+				custom = copytext(param, 1, 10)
 				m_type = 2
 			if ("me")
 				if (!param)
 					return
 				param = html_encode(sanitize(param))
 				message = "<b>[src]</b> [param]"
+				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
+				custom = copytext(param, 1, 10)
 				m_type = 1
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
@@ -1180,38 +1188,29 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					else
 						message = "<b>[src]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
-	if (message)
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message(SPAN_EMOTE("[message]"), m_type)
-		else if (m_type & 2)
-			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_EMOTE("[message]"), m_type)
-		else if (!isturf(src.loc))
-			var/atom/A = src.loc
-			for (var/mob/O in A.contents)
-				O.show_message(SPAN_EMOTE("[message]"), m_type)
 
+	if (!message)
+		return
 
-/mob/living/critter/talk_into_equipment(var/mode, var/message, var/param)
-	switch (mode)
-		if ("left hand")
-			for (var/i = 1, i <= hands.len, i++)
-				var/datum/handHolder/HH = hands[i]
-				if (HH.can_hold_items)
-					if (HH.item)
-						HH.item.talk_into(src, message, param, src.real_name)
-					return
-		if ("right hand")
-			for (var/i = hands.len, i >= 1, i--)
-				var/datum/handHolder/HH = hands[i]
-				if (HH.can_hold_items)
-					if (HH.item)
-						HH.item.talk_into(src, message, param, src.real_name)
-					return
-		else
-			..()
+	var/list/mob/recipients = list()
+	if (m_type & 1)
+		recipients = viewers(src, null)
+
+	else if (m_type & 2)
+		recipients = hearers(src, null)
+
+	else if (!isturf(src.loc))
+		var/atom/A = src.loc
+		for (var/mob/M in A.contents)
+			recipients += M
+
+	log_emote(src, message, voluntary)
+	act = lowertext(act)
+	for (var/mob/M as anything in recipients)
+		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
+	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 /mob/living/critter/update_burning()
 	if (can_burn)
@@ -1283,7 +1282,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/is_heat_resistant()
 	if (!get_health_holder("burn"))
 		return TRUE
-	return FALSE
+	return ..()
 
 /mob/living/critter/ex_act(var/severity)
 	..() // Logs.
@@ -1476,9 +1475,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			src.toggle_throw_mode()
 		if ("walk")
 			if (src.m_intent == "run")
-				src.m_intent = "walk"
+				src.set_m_intent("walk")
 			else
-				src.m_intent = "run"
+				src.set_m_intent("run")
 			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		else
@@ -1508,21 +1507,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		msg = "<span style='color:[mcolor]'>" + msg + "</span>"
 	src.visible_message(msg)
 
-/mob/living/critter/say(var/message)
-	message = copytext(message, 1, MAX_MESSAGE_LEN)
-
-	if (dd_hasprefix(message, "*") || isdead(src))
-		..(message)
-		return
-
-	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
-		if (length(message) >= 2)
-			if (copytext(lowertext(message), 1, 3) == ":s")
-				message = copytext(message, 3)
-				src.robot_talk(message)
-				return
-	..()
-
 /mob/living/critter/blob_act(var/power)
 	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 
@@ -1530,7 +1514,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		return
 
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 
 	var/modifier = power / 20
@@ -1546,7 +1530,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	if (damage > 4.9)
@@ -1576,6 +1560,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		ai.disable()
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
+
+/mob/living/critter/remove_pulling()
+	. = ..()
+	src.hud?.update_pulling()
 
 /mob/living/critter/proc/admincmd_attack()
 	set name = "Start Attacking"
@@ -1609,6 +1597,23 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/can_hold_two_handed()
 	return TRUE // critters can hold two handed items in one hand
 
+/mob/living/critter/get_genetic_traits()
+	if(has_genes)
+		switch(rand(1,10))
+			if(1)
+				. = list(2,0,0)
+			if(2)
+				. = list(1,1,0)
+			if(3 to 4)
+				. = list(0,2,0)
+			if(5 to 7)
+				. = list(0,1,0)
+			else
+				. = list()
+
+/mob/living/critter/has_genetics()
+	return has_genes
+
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
 /mob/living/critter/robotic
@@ -1627,6 +1632,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 
 	/// EMP does 10 brute and 10 burn by default, can be adjusted linearly with emp_vuln
 	emp_act()
@@ -1641,9 +1647,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	can_drink()
 		return FALSE
 
-	vomit()
-		return
-
 	isBlindImmune()
 		return TRUE
 
@@ -1655,3 +1658,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	is_heat_resistant()
 		return TRUE
+
+	nauseate(stacks)
+		return

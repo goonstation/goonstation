@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/decal/fakeobjects/bookcase,
+/obj/fakeobject/bookcase,
 /turf/simulated/floor/wood,
 /area/dmm_suite/clear_area)
 "d" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
@@ -89,7 +89,7 @@
 /turf/simulated/floor/wood,
 /area/dmm_suite/clear_area)
 "I" = (
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	dir = 1
 	},
 /turf/simulated/floor/wood,

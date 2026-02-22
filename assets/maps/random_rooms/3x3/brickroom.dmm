@@ -1,0 +1,88 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/machinery/light/small/floor/broken,
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/machinery/light/small/floor/broken,
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/machinery/light/small/floor/broken,
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/light/small/floor/broken,
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/table/mauxite,
+/obj/item/brick{
+	pixel_y = 9;
+	pixel_x = -7
+	},
+/obj/item/brick{
+	pixel_x = 7
+	},
+/obj/item/brick{
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/obj/item/brick{
+	pixel_x = -7
+	},
+/turf/simulated/floor/industrial,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+w
+A
+a
+"}
+(2,1,1) = {"
+M
+S
+d
+"}
+(3,1,1) = {"
+c
+y
+g
+"}

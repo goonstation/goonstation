@@ -100,16 +100,16 @@ var/list/globalPropList = null
 /obj/item
 	setProperty()
 		. = ..()
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 	delProperty()
 		. = ..()
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 
 /datum/objectProperty
 	var/name = ""
 	var/id = ""
 	var/desc = ""
-	var/tooltipImg = "" //Stored in browserassets\images\tooltips
+	var/tooltipImg = "" //Stored in browserassets\src\images\tooltips
 	var/defaultValue = 1 //Default value. Used to get an idea of what's "normal" for any given property.
 	var/goodDirection = 1 //Dumb name. Tells us which direction the number should grow in for it to be considered "good", 1=positive, -1 negative
 	var/hidden = 0 //does not get printed in item tooltips
@@ -631,7 +631,7 @@ to say if there's demand for that.
 	id = "space_movespeed"
 
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "[propVal] movement delay - 0 when worn in space."
+		return "[propVal] movement delay - 0 when worn in Zero-G."
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
 
 /datum/objectProperty/equipment/movement/fluid //important : delay added to dry land!
@@ -644,5 +644,20 @@ to say if there's demand for that.
 		return "Negates fluid speed penalties.<br>+[propVal] movement delay on dry land."
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
+/datum/objectProperty/equipment/mining_alerts
+	name = "Integrated Mining Assistant"
+	id = "mining_alerts"
+	desc = "IMA is an integrated sensor and alert system that provides notifications for unearthed minerals and hazards."
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "online"
+
+	// no ASSOCIATE_ATOM_PROPERTY because this one is simple, valueless
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_MINING_ALERTS, owner)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MINING_ALERTS, owner)
 
 #undef ASSOCIATE_ATOM_PROPERTY

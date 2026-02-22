@@ -6,3 +6,4 @@
 	routeParams = "ip"
 	queryParams = list("ckey", "round_id")
 	correct_response = /datum/apiModel/VpnCheckResource
+	allow_retry = FALSE

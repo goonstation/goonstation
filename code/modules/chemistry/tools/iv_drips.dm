@@ -13,7 +13,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
+	flags = TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
 	initial_volume = 250//100
@@ -126,9 +126,9 @@
 			return
 
 	attackby(obj/A, mob/user)
-		if (iscuttingtool(A) && !(src.slashed))
+		if ((iscuttingtool(A) || issnippingtool(A)) && !(src.slashed))
 			src.slashed = 1
-			src.desc = "[src.desc] It has been sliced open with a scalpel."
+			src.desc = "[src.desc] It has been sliced open."
 			boutput(user, "You carefully slice [src] open.")
 			return
 		else if (iscuttingtool(A) && (src.slashed))
@@ -199,7 +199,8 @@
 	proc/stop_transfusion()
 		processing_items -= src
 		src.in_use = 0
-		REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
+		if (istype(patient))
+			REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 		src.patient = null
 		if (src.stand)
 			src.stand.UpdateIcon()

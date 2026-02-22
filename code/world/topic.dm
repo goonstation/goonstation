@@ -6,54 +6,45 @@
 	logDiary("TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
-	if (T == "ping")
-		var/x = 1
-		for (var/client/C)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
-				continue
-			x++
-		return x
-	else if(T == "players")
-		var/n = 0
-		for(var/client/C)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
-				continue
-			n++
-		return n
+	if (T == "ping") // returns the total player count
+		return src.total_player_count()
 
-	else if (T == "status")
-		var/list/s = list()
-		s["version"] = game_version
-		s["mode"] = (ticker?.hide_mode) ? "secret" : master_mode
-		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
-		s["ai"] = config.allow_ai
-		s["host"] = host ? host : null
-		s["players"] = list()
-		s["station_name"] = station_name
-		var/shuttle
-		if (emergency_shuttle)
-			if (emergency_shuttle.location == SHUTTLE_LOC_STATION) shuttle = 0 - emergency_shuttle.timeleft()
-			else shuttle = emergency_shuttle.timeleft()
-		else shuttle = "welp"
-		s["shuttle_time"] = shuttle
-		var/elapsed
-		if (current_state < GAME_STATE_FINISHED)
-			if (current_state <= GAME_STATE_PREGAME) elapsed = "pre"
-			else if (current_state > GAME_STATE_PREGAME) elapsed = round(ticker.round_elapsed_ticks / 10)
-		else if (current_state == GAME_STATE_FINISHED) elapsed = "post"
-		else elapsed = "welp"
-		s["elapsed"] = elapsed
-		var/n = 0
-		for(var/client/C in clients)
-			if (C.stealth && !C.fakekey) // stealthed admins don't count
+	else if (T == "who") // returns all currently connected players
+		var/list/players = list()
+		var/count = 0
+		for(var/client/client in clients)
+			if (client.stealth && !client.fakekey) // stealthed admins don't count
 				continue
-			s["player[n]"] = "[ckey((C.stealth || C.alt_key) ? C.fakekey : C.key)]"
-			n++
-		s["players"] = n
-		s["map_name"] = getMapNameFromID(map_setting)
-		s["map_id"] = map_setting
-		return list2params(s)
+			players["player[count]"] = "[ckey((client.stealth || client.alt_key) ? client.fakekey : client.key)]"
+			count++
+		return list2params(players)
+
+	else if (T == "status") // returns a summary of the server's state and configuration
+		var/list/response_body = list()
+		response_body["version"] = game_version
+		response_body["host"] = host
+		response_body["gamestate"] = current_state
+		response_body["respawn"] = abandon_allowed
+		response_body["enter"] = enter_allowed
+		response_body["round_id"] = roundId
+
+		// These can be all be null before current_state >= GAME_STATE_PREGAME
+		if(config)
+			response_body["ai"] = config.allow_ai
+		if(ticker)
+			response_body["mode"] = (ticker.hide_mode) ? "secret" : master_mode
+			response_body["round_duration"] = round(ticker.round_elapsed_ticks / (1 SECOND))
+		if(emergency_shuttle)
+			response_body["shuttle_online"] = emergency_shuttle.online
+			response_body["shuttle_direction"] = emergency_shuttle.direction
+			response_body["shuttle_location"] = emergency_shuttle.location
+			response_body["shuttle_timer"] = emergency_shuttle.timeleft()
+
+		response_body["station_name"] = station_name
+		response_body["map_name"] = getMapNameFromID(map_setting)
+		response_body["map_id"] = map_setting
+		response_body["players"] = src.total_player_count()
+		return list2params(response_body)
 
 	else // Discord bot communication (or callbacks)
 
@@ -175,8 +166,9 @@
 							dir = text2dir(dir)
 
 							if (ishuman(twitch_mob))
-								if (istype(twitch_mob.loc, /turf/space) || twitch_mob.no_gravity) //they're in space, move em one space in the opposite direction
+								if (!twitch_mob.traction != TRACTION_FULL && !twitch_mob.has_grip()) //they're floating, move em one space in the opposite direction
 									twitch_mob.inertia_dir = turn(dir, 180)
+									twitch_mob.inertia_value = 1
 									step(twitch_mob, twitch_mob.inertia_dir)
 
 								twitch_mob.drop_item_throw_dir(dir)
@@ -380,17 +372,17 @@
 				if (nick == "buttbot")
 					for (var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
 						if(B.on)
-							B.speak(msg)
+							B.say(msg)
 					return 1
 
 				//This is important.
 				else if (nick == "HeadSurgeon")
 					for (var/obj/machinery/bot/medbot/head_surgeon/HS in machine_registry[MACHINES_BOTS])
 						if (HS.on)
-							HS.speak(msg)
+							HS.say(msg)
 					for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/HS in world)
 						LAGCHECK(LAG_LOW)
-						HS.speak(msg)
+						HS.say(msg)
 					return 1
 
 				return 0
@@ -530,7 +522,7 @@
 
 				if (M?.client)
 					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord)</b>: [SPAN_MESSAGE("[game_msg]")]"))
-					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 
@@ -541,7 +533,7 @@
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
+									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
 							else
 								boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname]</b>: [SPAN_MESSAGE("[game_msg]")]"))
 
@@ -640,7 +632,7 @@
 				var/address = plist["address"]
 				var/msg = "<br><div style='text-align: center; font-weight: bold;' class='deadsay'>---------------------<br>"
 				msg += "A round just ended on [server]<br>"
-				msg += "<a href='[address]'>Click here to join it</a><br>"
+				msg += "<a href='[address]'>Click here to join the next one!</a><br>"
 				msg += "---------------------</div><br>"
 				for (var/client/C)
 					if (isdead(C.mob))
@@ -735,7 +727,7 @@
 			if ("youtube")
 				if (!plist["data"]) return 0
 
-				play_music_remote(json_decode(plist["data"]))
+				play_music_remote(json_decode(plist["data"]), from_topic = TRUE)
 
 				// trigger cooldown so radio station doesn't interrupt our cool music
 				var/duration = text2num(plist["duration"])
@@ -867,16 +859,16 @@
 				)
 
 				var/datum/player/player = make_player(plist["ckey"])
-				if(isnull(player.last_seen))
+				if(!player.cached_round_stats)
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
-				player.cloudSaves.fetch()
-				for(var/kkey in player.cloudSaves.data)
-					if(kkey in list("admin_preferences", "buildmode"))
+				player?.cloudSaves.fetch()
+				for(var/kkey in player?.cloudSaves.data)
+					if((kkey in list("admin_preferences", "buildmode")) || findtext(kkey, regex(@"^custom_job_\d+$")))
 						continue
-					response[kkey] = player.cloudSaves.data[kkey]
-				response["cloudsaves"] = player.cloudSaves.saves
+					response[kkey] = player?.cloudSaves.data[kkey]
+				response["cloudsaves"] = player?.cloudSaves.saves
 
 				return json_encode(response)
 
@@ -913,7 +905,7 @@
 							var/datum/http_request/request = new()
 							request.prepare(RUSTG_HTTP_METHOD_POST, "[config.irclog_url]/profiler_result", output, "")
 							request.begin_async()
-							UNTIL(request.is_complete())
+							UNTIL(request.is_complete(), 10 SECONDS)
 							response = request.into_response()
 				return 1
 
@@ -960,9 +952,39 @@
 				)
 				return 1
 
-			if("goonhub_auth")
-				var/ckey = plist["ckey"]
-				var/client/C = find_client(ckey)
-				if (C && C.goonhub_auth)
-					C.goonhub_auth.on_auth()
-				return 1
+			if ("mapSwitchDone")
+				if (!plist["map"] || !mapSwitcher.locked) return 0
+
+				var/map = plist["map"]
+				var/ircmsg[] = new()
+				var/msg
+
+				var/attemptedMap = mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current
+				if (map == "FAILED")
+					msg = "Compilation of [attemptedMap] failed! Falling back to previous setting of [mapSwitcher.nextPrior ? mapSwitcher.nextPrior : mapSwitcher.current]"
+				else
+					msg = "Compilation of [attemptedMap] succeeded!"
+
+				logTheThing(LOG_ADMIN, null, msg)
+				logTheThing(LOG_DIARY, null, msg, "admin")
+				message_admins(msg)
+				ircmsg["msg"] = msg
+
+				mapSwitcher.unlock(map)
+				return ircbot.response(ircmsg)
+
+			if ("auth_callback")
+				var/preauth_ckey = plist["preauth_ckey"]
+				var/data = plist["data"]
+
+				for (var/client/C in pre_auth_clients)
+					if (C.ckey == preauth_ckey)
+						if (istype(C.client_auth_provider, /datum/client_auth_provider/goonhub))
+							var/datum/client_auth_provider/goonhub/provider = C.client_auth_provider
+							provider.on_auth(data)
+							return TRUE
+
+				var/msg = "Failed to find pre-auth client for [preauth_ckey] during auth callback"
+				logTheThing(LOG_ADMIN, null, msg)
+				logTheThing(LOG_DIARY, null, msg, "admin")
+				return FALSE

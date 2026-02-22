@@ -5,9 +5,10 @@
  * @license MIT
  */
 
- @use '.././colors.scss';
+@use '../colors';
+@use '../functions' as *;
 
- .cashreg__ {
+.cashreg__ {
   &ownerbutton,
   &pay,
   &tip {
@@ -25,7 +26,9 @@
   }
 
   &amount:hover {
-    background-color: lighten(colors.$blue, colors.$fg-lightness)
+    background-color: hsl(
+      from var(--color-bluek) h s calc(l + var(--adjust-hover))
+    );
   }
 
   &table {

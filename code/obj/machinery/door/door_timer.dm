@@ -1,10 +1,15 @@
+TYPEINFO(/obj/machinery/door_timer)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/door_timer
 	name = "Door Timer"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doortimer0"
 	desc = "A remote control switch for a door."
-	req_access = list(access_security)
+	req_access = list(access_brig)
 	anchored = ANCHORED
+	speech_verb_say = "beeps"
+
 	var/id = null
 	var/time = 30
 	var/timing = FALSE
@@ -33,12 +38,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	solitary2
@@ -47,12 +56,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	solitary3
@@ -61,12 +74,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	solitary4
@@ -75,12 +92,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	minibrig
@@ -89,12 +110,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	minibrig2
@@ -103,12 +128,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	minibrig3
@@ -117,12 +146,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	genpop
@@ -131,12 +164,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	genpop_n
@@ -145,12 +182,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	genpop_s
@@ -159,12 +200,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 /obj/machinery/door_timer/examine()
@@ -219,7 +264,7 @@
 	if (src.status & (NOPOWER|BROKEN))
 		return
 
-	src.obj_speak("Time expired. Unlocking...")
+	src.say("Time expired. Unlocking...")
 
 	for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 		if (!IN_RANGE(M, src, 30))
@@ -241,6 +286,7 @@
 		if (B.id == src.id && B.our_timer == src)
 			if (B.locked)
 				B.locked = 0
+				B.open()
 				B.UpdateIcon()
 				B.visible_message(SPAN_NOTICE("[B.name] unlocks automatically."))
 
@@ -311,7 +357,7 @@
 				// the timer is starting
 				// set the last time to now
 				src.last_tick = TIME
-				src.obj_speak("Timer set to [src.get_time_left()].")
+				src.say("Timer set to [src.get_time_left()].")
 				for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 					if (!IN_RANGE(M, src, 10))
 						continue
@@ -320,7 +366,7 @@
 						break
 			else
 				// the timer is being turned off
-				src.obj_speak("Timer cancelled.")
+				src.say("Timer cancelled.")
 				for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 					if (!IN_RANGE(M, src, 10))
 						continue
@@ -385,3 +431,23 @@
 			SPAWN(5 SECONDS)
 				icon_state = "doortimer0"
 			icon_state = "doortimer2"
+
+/obj/machinery/door_timer/north
+	name = "N Door Timer"
+	dir = NORTH
+	pixel_y = 24
+
+/obj/machinery/door_timer/east
+	name = "E Door Timer"
+	dir = EAST
+	pixel_x = 22
+
+/obj/machinery/door_timer/south
+	name = "S Door Timer"
+	dir = SOUTH
+	pixel_y = -19
+
+/obj/machinery/door_timer/west
+	name = "W Door Timer"
+	dir = WEST
+	pixel_x = -22

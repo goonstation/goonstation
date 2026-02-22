@@ -13,16 +13,16 @@
 /obj/item/stamped_bullion,
 /obj/item/stamped_bullion,
 /obj/item/stamped_bullion,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "D" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	pixel_y = -9
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "J" = (
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 
 (1,1,1) = {"

@@ -27,3 +27,7 @@
 #define ACTIONSTATE_FINISH 32
 /// Will not finish unless interrupted.
 #define ACTIONSTATE_INFINITE 64
+
+#define SHOWOFF_COOLDOWN 2 SECONDS
+
+#define ACTION_CONTROLLER_INTERVAL 0.5 SECONDS

@@ -1,4 +1,3 @@
-#define is_dead_or_ghost_role(M) (isdead(M) || (isVRghost(M) || isghostcritter(M) || inafterlife(M) || isghostdrone(M)))
 #define get_job(mind) ((!mind.assigned_role || (mind.assigned_role == "MODE")) ? null : "[mind.assigned_role]")
 
 /**

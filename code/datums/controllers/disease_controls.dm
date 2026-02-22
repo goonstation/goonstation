@@ -13,6 +13,7 @@ var/datum/disease_controller/disease_controls
 			standard_diseases += A
 
 /proc/get_disease_from_path(var/disease_path)
+	RETURN_TYPE(/datum/ailment)
 	if (!ispath(disease_path))
 		logTheThing(LOG_DEBUG, null, "<b>Disease:</b> Attempt to find schematic with null path")
 		return null
@@ -26,6 +27,7 @@ var/datum/disease_controller/disease_controls
 	return null
 
 /proc/get_disease_from_name(var/disease_name)
+	RETURN_TYPE(/datum/ailment)
 	if (!istext(disease_name))
 		logTheThing(LOG_DEBUG, null, "<b>Disease:</b> Attempt to find disease with non-string")
 		return null

@@ -16,26 +16,23 @@
 		.= list()
 		.["Points:"] = round(src.points)
 		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
-		if(istype(owner, /mob/living/intangible/wraith/wraith_trickster) || istype(owner, /mob/living/critter/wraith/trickster_puppet))
-			.["Possess:"] = round(src.possession_points)
+		var/mob/living/intangible/wraith/wraith_trickster/W
+		if (istype(owner, /mob/living/intangible/wraith/wraith_trickster))
+			W = owner
+		else if (istype(owner, /mob/living/critter/wraith/trickster_puppet))
+			var/mob/living/critter/wraith/trickster_puppet/TP = owner
+			W = TP.master
+		if (W != null)
+			if (src.possession_points >= W.points_to_possess)
+				.["Possess:"] = "<font color=#88ff88>READY</font>"
+			else
+				.["Possess:"] = "[round(src.possession_points)]/[W.points_to_possess]"
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
 	secs_offset_y = 7
-
-	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			if (!istype(owner, /datum/targetable/wraithAbility/spook))
-				var/theme = src.owner.theme
-
-				usr.client.tooltipHolder.showHover(src, list(
-					"params" = params,
-					"title" = src.name,
-					"content" = (src.desc ? src.desc : null),
-					"theme" = theme
-				))
 
 /datum/targetable/wraithAbility
 	icon = 'icons/mob/wraith_ui.dmi'
@@ -47,6 +44,7 @@
 	preferred_holder_type = /datum/abilityHolder/wraith
 	ignore_holder_lock = 1 //So we can still do things while our summons are coming
 	theme = "wraith"
+	show_tooltip = FALSE
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
 	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
@@ -60,21 +58,41 @@
 		B.desc = src.desc
 		src.object = B
 
+	allowcast()
+		var/mob/living/intangible/wraith/W = holder.owner
+		if (istype(W) && W.forced_manifest)
+			return
+		return ..()
+
 	cast(atom/target)
-		if (!holder || !holder.owner)
-			return 1
 		. = ..()
-		if (ispoltergeist(holder.owner))
-			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
+		if (ispoltergeist(src.holder.owner))
+			var/mob/living/intangible/wraith/poltergeist/P = src.holder.owner
 			if (src.min_req_dist <= P.power_well_dist)
-				boutput(holder.owner, SPAN_ALERT("You must be within [min_req_dist] tiles from a well of power to perform this task."))
-				return 1
-		if (istype(holder.owner, /mob/living/intangible/wraith))
-			var/mob/living/intangible/wraith/W = holder.owner
+				boutput(src.holder.owner, SPAN_ALERT("You must be within [min_req_dist] tiles from a well of power to perform this task."))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (iswraith(src.holder.owner))
+			var/mob/living/intangible/wraith/W = src.holder.owner
 			if (W.forced_manifest == TRUE)
 				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
-				return 1
-		return 0
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (!target)
+			return CAST_ATTEMPT_SUCCESS
+		var/list/turfs = raytrace(src.holder.owner, target)
+		for (var/turf/T as anything in turfs)
+			var/obj/decal/cleanable/saltpile/salt = locate() in T
+			if (salt)
+				if (!ON_COOLDOWN(T, "wraith_ability_block", 2 SECONDS))
+					salt.add_filter("wraith_ability_block", 1, outline_filter(2, "#000"))
+					animate(salt.filters[length(salt.filters)], alpha = 0, time = 0)
+					animate(alpha = 255, time = 0.5 SECONDS)
+					animate(alpha = 0, time = 0.5 SECONDS)
+					SPAWN(1 SECOND)
+						salt.remove_filter("wraith_ability_block")
+					playsound(T, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+					boutput(src.holder.owner, SPAN_ALERT("That [SPAN_BOLD(pick("DISGUSTING", "FEARFUL", "PURE", "HOLY"))] salt blocks your power."), "wraith_ability_fail")
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return CAST_ATTEMPT_SUCCESS
 
 	doCooldown()
 		if (!holder)
@@ -104,6 +122,7 @@
 	cooldown = 0
 	helpable = 0
 	special_screen_loc = "SOUTH,EAST"
+	tooltip_options = list("align" = TOOLTIP_TOP | TOOLTIP_RIGHT)
 
 	cast(atom/target)
 		if (..())
@@ -119,36 +138,6 @@
 			boutput(holder.owner, SPAN_NOTICE("Alternatively, you can click with your middle mouse button to use the ability on your current tile."))
 		src.object.icon_state = "help[holder.help_mode]"
 		holder.updateButtons()
-
-/datum/targetable/wraithAbility/toggle_deadchat
-	name = "Toggle deadchat"
-	desc = "Silences or re-enables the whispers of the dead."
-	icon_state = "hide_chat"
-	targeted = 0
-	cooldown = 0
-	pointCost = 0
-	do_logs = FALSE
-	interrupt_action_bars = FALSE
-
-	cast(mob/target)
-		if (!holder)
-			return TRUE
-
-		var/mob/living/intangible/wraith/W = holder.owner
-
-		if (!W)
-			return TRUE
-
-		. = ..()
-		//hearghosts is checked in deadsay.dm and chatprocs.dm
-		W.hearghosts = !W.hearghosts
-		if (W.hearghosts)
-			src.icon_state = "hide_chat"
-			boutput(W, SPAN_NOTICE("Now listening to the dead again."))
-		else
-			src.icon_state = "show_chat"
-			boutput(W, SPAN_NOTICE("No longer listening to the dead."))
-		return FALSE
 
 /obj/spookMarker
 	name = "Spooky Marker"

@@ -25,6 +25,9 @@
 	window_pass = 0
 	projectile_speed = 20
 
+	has_impact_particles = TRUE
+	energy_particles_override = TRUE
+
 	var/turf/target = null
 	var/failchance = 5
 

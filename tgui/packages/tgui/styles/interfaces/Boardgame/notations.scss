@@ -1,4 +1,5 @@
-@import './setup.scss';
+@use 'sass:map';
+@use './setup';
 
 // The notation border around the board
 
@@ -7,15 +8,15 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  z-index: map-get($boardgame-layers, 'notations');
+  z-index: map.get(setup.$boardgame-layers, 'notations');
 
   &-horizontal {
-    height: $notations-size;
-    padding-left: $notations-size;
-    padding-right: $notations-size;
+    height: setup.$notations-size;
+    padding-left: setup.$notations-size;
+    padding-right: setup.$notations-size;
   }
   &-vertical {
-    width: $notations-size;
+    width: setup.$notations-size;
     flex-direction: column;
   }
   &-number,

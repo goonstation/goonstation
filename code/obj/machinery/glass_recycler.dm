@@ -52,7 +52,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	density = 0
 	var/glass_amt = 5
 	var/list/product_list = list()
-	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = NOSPLASH | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
@@ -134,7 +134,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			user.visible_message(SPAN_NOTICE("[user] inserts [W] into [src]."))
 			user.u_equip(W)
 			qdel(W)
-			ui_interact(user)
+			tgui_process.update_uis(src)
 			var/sound = pick('sound/impact_sounds/Glass_Shatter_1.ogg', 'sound/impact_sounds/Glass_Shatter_2.ogg', 'sound/impact_sounds/Glass_Shatter_3.ogg')
 			playsound(src.loc, sound, 40, 0, 0.1)
 			return TRUE
@@ -164,6 +164,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("cocktail", /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail, 1)
 		product_list += new /datum/glass_product("flute", /obj/item/reagent_containers/food/drinks/drinkingglass/flute, 1)
 		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
+		product_list += new /datum/glass_product("pint", /obj/item/reagent_containers/food/drinks/drinkingglass/pint, 1)
 
 	proc/create(var/type, mob/user)
 		var/datum/glass_product/target_product = null
@@ -253,6 +254,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("shot", /obj/item/reagent_containers/food/drinks/drinkingglass/shot, 1)
 		product_list += new /datum/glass_product("wine", /obj/item/reagent_containers/food/drinks/drinkingglass/wine, 1)
 		product_list += new /datum/glass_product("cocktail", /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail, 1)
+		product_list += new /datum/glass_product("pint", /obj/item/reagent_containers/food/drinks/drinkingglass/pint, 1)
 		product_list += new /datum/glass_product("flute", /obj/item/reagent_containers/food/drinks/drinkingglass/flute, 1)
 		product_list += new /datum/glass_product("drinkbottle", /obj/item/reagent_containers/food/drinks/bottle/soda, 2)
 		product_list += new /datum/glass_product("longbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/long, 2)

@@ -1,7 +1,7 @@
 /datum/component/battleroyale_death
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-TYPEINFO(/datum/component/cell_holder)
+TYPEINFO(/datum/component/battleroyale_death)
 	initialization_args = list()
 
 /datum/component/battleroyale_death/Initialize()

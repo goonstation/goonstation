@@ -60,7 +60,7 @@
 		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
 		if (lucky_dude.add_subordinate_antagonist(ROLE_HARBINGER_SUMMON, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "harbinger summon", src.holder.owner)
-			message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
+			message_admins("[key_name(lucky_dude)] respawned as a harbinger summon for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 		qdel(marker)
 		W.spawn_marker = null
