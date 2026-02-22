@@ -16,6 +16,43 @@ TYPEINFO(/obj/item/device/calibrator)
 	m_amt = 50
 	g_amt = 20
 
+	attack_self(mob/user as mob)
+		if (ON_COOLDOWN(src, "harmonic_readout", 1.5 SECONDS))
+			boutput(user,SPAN_ALERT("[src]'s harmonic scan is recharging."))
+			return
+		else
+			var/found_a_siphon = FALSE
+			for_by_tcl(a_siphon, /obj/machinery/siphon/core)
+				if (IN_RANGE(user,a_siphon,40))
+					found_a_siphon = TRUE
+					var/cycles_identified = 0
+					var/obj/machinery/siphon/core = that_siphon
+					boutput(user,SPAN_NOTICE("[src] locates a compatible harmonic field and gathers cyclical data."))
+					for (var/datum/siphon_mineral/M in a_siphon.cyclical_targets)
+						cycles_identified++
+						boutput(user,SPAN_NOTICE("<b>CYCLICAL FIELD READING [cycles_identified]"))
+
+						if(M.x_torque)
+							boutput(user,SPAN_NOTICE("Lateral resonance peaking at alignment <b>[M.x_torque]</b>"))
+						else
+							boutput(user,SPAN_NOTICE("<b>No</b> lateral resonance component identified"))
+
+						if(M.y_torque)
+							boutput(user,SPAN_NOTICE("Vertical resonance peaking at alignment <b>[M.y_torque]</b>"))
+						else
+							boutput(user,SPAN_NOTICE("<b>No</b> vertical resonance component identified"))
+
+						if(M.shear)
+							boutput(user,SPAN_NOTICE("Field shear response ideal at intensity of <b>[M.shear]</b>"))
+						else
+							boutput(user,SPAN_NOTICE("<b>No</b> shear response identified"))
+
+						var/shift_delta = max((mineral.hm_cycle.last_shifted + mineral.hm_cycle.current_shift_length) - TIME,0)
+						boutput(user,SPAN_ALERT("Next shift <b>[shift_delta ? "expected in [shift_delta / SECONDS] seconds" : "IMMINENT"]</b>"))
+
+			if(!found_a_siphon) boutput(user,SPAN_ALERT("[src] can't detect a compatible harmonic field nearby."))
+			return
+
 
 
 //now the main event
@@ -133,6 +170,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/list/resonators = list()
 	///list of possible siphon targets for the siphon
 	var/list/can_extract = list()
+	///siphon targets whose parameters can vary get their own "short list"
+	var/list/cyclical_targets = list()
 	///progress in extraction, incremented each process by total intensity of resonators; consumption varies by material. also known as EEU
 	var/extract_ticks = 0
 	///extract tick overload state, set during process; if tick consumption is missing or insufficient, tick buildup causes blowouts
@@ -164,12 +203,16 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		..()
+		START_TRACKING
 		src.beamlight = new /obj/overlay/siphonglow()
 		src.vis_contents += beamlight
 		src.drawlight = new /obj/overlay/siphonglow()
 		src.vis_contents += drawlight
 		for(var/mineral in concrete_typesof(/datum/siphon_mineral))
-			src.can_extract += new mineral
+			var/working_mineral = new mineral
+			src.can_extract += working_mineral
+			if(working_mineral.hm_cycle)
+				src.cyclical_targets += working_mineral
 
 	ex_act(severity)
 		if(severity > 1.0)
@@ -177,6 +220,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		..()
 
 	disposing()
+		STOP_TRACKING
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
 			LAGCHECK(LAG_LOW)
 			res.paired_core = null
@@ -193,6 +237,21 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			. += " It's holding [quant] units of material."
 
 	process(var/mult)
+		//Handle any variation on our cyclical extraction targets, regardless of power
+		for(var/datum/siphon_mineral/mineral in src.cyclical_targets)
+			var/shift_delta = (mineral.hm_cycle.last_shifted + mineral.hm_cycle.current_shift_length) - TIME
+			if(shift_delta < 0)
+				if(mineral.hm_cycle.x_torque_max != null)
+					mineral.x_torque = rand(mineral.hm_cycle.x_torque_min,mineral.hm_cycle.x_torque_max)
+				if(mineral.hm_cycle.y_torque_max != null)
+					mineral.y_torque = rand(mineral.hm_cycle.y_torque_min,mineral.hm_cycle.y_torque_max)
+				if(mineral.hm_cycle.shear_max != null)
+					mineral.shear = rand(mineral.hm_cycle.shear_min,mineral.hm_cycle.shear_max)
+				mineral.hm_cycle.current_shift_length = mineral.hm_cycle.time_to_shift
+				if(mineral.hm_cycle.extra_time_variability)
+					mineral.hm_cycle.current_shift_length += rand(0,mineral.hm_cycle.extra_time_variability)
+				mineral.hm_cycle.last_shifted = TIME
+
 		if (status & NOPOWER)
 			return
 		total_draw = 200

@@ -507,12 +507,23 @@
 			continue
 		rollingtext += "<h2>[mat.name]</h2>"
 		rollingtext += "<strong>EEU per Extraction:</strong> [mat.tick_req]<br>"
+
 		if(mat.x_torque != null)
-			rollingtext += "<strong>Target Lateral Resonance:</strong> [mat.x_torque]<br>"
+			if(mat.hm_cycle && mat.hm_cycle.x_torque_max)
+				rollingtext += "<strong>VARIABLE LATERAL RESONANCE - USE CALIBRATOR</strong><br>"
+			else
+				rollingtext += "<strong>Target Lateral Resonance:</strong> [mat.x_torque]<br>"
 		if(mat.y_torque != null)
-			rollingtext += "<strong>Target Vertical Resonance:</strong> [mat.y_torque]<br>"
+			if(mat.hm_cycle && mat.hm_cycle.y_torque_max)
+				rollingtext += "<strong>VARIABLE VERTICAL RESONANCE - USE CALIBRATOR</strong><br>"
+			else
+				rollingtext += "<strong>Target Vertical Resonance:</strong> [mat.y_torque]<br>"
 		if(mat.shear != null)
-			rollingtext += "<strong>Target Resonant Shear:</strong> [mat.shear]<br>"
+			if(mat.hm_cycle && mat.hm_cycle.shear_max)
+				rollingtext += "<strong>VARIABLE RESONANT SHEAR - USE CALIBRATOR</strong><br>"
+			else
+				rollingtext += "<strong>Target Resonant Shear:</strong> [mat.shear]<br>"
+
 		rollingtext += "<strong>Sensitivity Margin:</strong> [mat.sens_window]<br>"
 		if(mat.setup_guide)
 			rollingtext += "<br><strong>Reference Configuration</strong><br>"
