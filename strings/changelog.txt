@@ -1,4 +1,30 @@
 
+(t)sun feb 22 26
+(u)Lord_Earthfire
+(p)25716
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)Stains of any kind won't magically vanish on assemblies while being manipulated.
+(u)bork and Pirate-Rob
+(p)25984
+(e)🎨|C-Sprites
+(*)Resprites all the gene/ability icons! Sprites by Pirate-Rob!
+(u)QuiteLiterallyAnything
+(p)25443
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The gene booth's locking and price adjustment menu now only appears when the booth is hit with an ID.
+(u)Pirate-Rob
+(p)25982
+(e)🎨|C-Sprites
+(+)Electronics now have in-hand icons.
+(t)sat feb 21 26
+(u)LeahTheTech
+(+)Possessed objects now respect item specific click delays.
+(u)glowbold
+(p)25933
+(e)⚖🧛🐁|C-Balance, A-Gamemodes, A-Critters
+(*)Dead bodies and the paralyzed only twitch if physically hit.
+(*)Changeling "Regenerative Stasis" ability acts as dead for hit-twitches.
+(+)Changeling "Regenerative Stasis" ability prevents forced emotes while faking death.
 (t)thu feb 19 26
 (u)cringe
 (p)25961

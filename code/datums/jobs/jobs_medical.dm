@@ -105,3 +105,4 @@ ABSTRACT_TYPE(/datum/job/medical)
 	slot_ears = list(/obj/item/device/radio/headset/pharmacist)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
 	items_in_backpack = list(/obj/item/storage/box/beakerbox)
+	wiki_link = "https://wiki.ss13.co/Pharmacist"

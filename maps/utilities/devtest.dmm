@@ -312,6 +312,7 @@
 /obj/landmark/antagonist/operative/commander,
 /obj/landmark/antagonist/pirate/captain,
 /obj/landmark/antagonist/pirate/first_mate,
+/obj/landmark/antagonist/blob,
 /turf/unsimulated/floor/blue,
 /area/station/devzone)
 "gF" = (
