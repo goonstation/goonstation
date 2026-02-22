@@ -1549,7 +1549,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"], FALSE)
 					return TRUE
 				else
 					return FALSE
