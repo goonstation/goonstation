@@ -202,7 +202,7 @@ TYPEINFO(/obj/item/baton)
 				JOB_XP(victim, "Clown", 3)
 
 			else
-				logTheThing(LOG_DEBUG, user, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+				logTheThing(LOG_DEBUG, user, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 				return
 
 		// Target setup. User might not be a mob (Beepsky), but the victim needs to be one.
@@ -511,7 +511,7 @@ TYPEINFO(/obj/item/baton/ntso)
 				src.force = 1
 				boutput(user, SPAN_NOTICE("The [src.name] is now closed."))
 			else
-				logTheThing(LOG_DEBUG, user, "Extendable stun baton ([src.type]) set_state() was called with an invalid argument ([state]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+				logTheThing(LOG_DEBUG, user, "Extendable stun baton ([src.type]) set_state() was called with an invalid argument ([state]), aborting. Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 
 		SPAWN(0)
 		src.UpdateIcon()

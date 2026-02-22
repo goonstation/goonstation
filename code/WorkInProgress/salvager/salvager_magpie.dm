@@ -2,9 +2,613 @@
 var/datum/magpie_manager/magpie_man = new
 /datum/magpie_manager
 	var/obj/npc/trader/salvager/magpie
+#if !defined(LIVE_SERVER) && !defined(UNIT_TESTS)
+	var/datum/mapPrefab/allocated/salvager_local/local_prefab
+#endif
 
 	proc/setup()
 		src.magpie = locate("M4GP13")
+
+		#if !defined(LIVE_SERVER) && !defined(UNIT_TESTS) // don't load the map prefab on live, it's only used for testing
+		if( !magpie_man.magpie )
+			src.local_prefab = get_singleton(/datum/mapPrefab/allocated/salvager_local).load()
+			src.magpie = locate("M4GP13")
+		#endif
+
+
+/obj/salvager_cryotron
+	name = "industrial cryogenic sleep unit"
+	desc = "The terminus of an aging underfloor cryogenic storage complex."
+	anchored = ANCHORED
+	density = 1
+	icon = 'icons/obj/large/32x64.dmi'
+
+	icon_state = "cryo_close"
+	event_handler_flags = IMMUNE_SINGULARITY
+	var/list/folks_to_spawn = list()
+	var/busy = FALSE
+	var/obj/npc/trader/salvager/magpie
+#ifdef RP_MODE
+	var/starting_currency = 1800
+#else
+	var/starting_currency = 2500
+#endif
+
+	New()
+		..()
+		START_TRACKING
+		processing_items += src
+		UpdateParticles(new /particles/cryo_mist, "mist")
+
+	proc/process()
+		if(!busy)
+			spawn_next_person()
+		if(TIME - busy > 20 SECONDS)
+			busy = FALSE
+
+	//Return 1 if there is another person to spawn afterward
+	proc/spawn_next_person()
+		busy = TIME
+		SPAWN(0)
+			var/welcomed = FALSE
+			var/particles/E = src.GetParticles("mist")
+			if(length(contents))
+				icon_state = "cryo_open"
+				E.spawning = 0.2
+				// Dispense in wall?  Throw... down?
+				var/atom/movable/AM = pick(contents)
+
+				if(ismob(AM) || iscritter(AM))
+					//Sweet Smoke Effects
+					sleep(1.5 SECONDS)
+					AM.set_loc(get_turf(src))
+					E.spawning = 0.3
+					sleep(0.5 SECONDS)
+					step(AM,SOUTH)
+
+					// Welcome Them!
+					if(!magpie)
+						magpie = locate() in orange(5,src)
+					var/fun_word = pick("scrap", "material", "shineys", "baubles", "items of value", "electronics", "trinkets")
+					var/speak_name = AM.name
+					if(ismob(AM))
+						var/mob/M = AM
+						speak_name = M.real_name
+						var/currency_mod = 0
+						if(world.time > 5 MINUTES)
+							currency_mod = (world.time / (1 MINUTE)) * 95
+
+						magpie.barter_customers[magpie.barter_lookup(M)] = starting_currency + currency_mod + rand(5,50)
+					magpie.say("Welcome [speak_name], please bring me back some [fun_word]!")
+
+					welcomed = TRUE
+				else
+					// Throw them their gear!
+					sleep(0.5 SECONDS)
+					AM.set_loc(get_turf(src))
+					AM.throw_at(get_offset_target_turf(src.loc, 0, -5), rand(2,5), 1)
+
+				//Close Door...
+				sleep(0.5 SECONDS)
+				E.spawning = 0
+				icon_state = "cryo_close"
+			if(welcomed)
+				sleep(5 SECONDS)
+				busy = FALSE
+			else
+				busy = FALSE
+
+/particles/cryo_mist
+	width = 100    // 500 x 500 image to cover a moderately sized map
+	height = 100
+	count = 5   // 2500 particles
+	spawning = 0
+	bound1 = list(-32, -64, 0)
+	bound2 = list(32, 64, 10)
+	lifespan = 10  // live for 60s max
+	fade = 5
+	fadein = 8
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "mistcloud1"
+	position = generator("box", list(-5,-5,0), list(5,-10,0))
+	velocity = generator("box", list(-1,0,0), list(1,-1,0))
+
+
+/obj/machinery/macrofab/salvager
+#ifdef UNDERWATER_MAP
+	name = "Sub Fabricator"
+	createdObject = /obj/machinery/vehicle/tank/minisub/salvsub
+#else
+	name = "Pod Fabricator"
+	createdObject = /obj/machinery/vehicle/miniputt/armed/salvager
+#endif
+	desc = "A sophisticated machine that fabricates vehicles from a nearby reserve of supplies."
+
+
+	itemName = "salvager pod"
+	sound_volume = 15
+
+	attack_hand(var/mob/user)
+		if(user.mind?.get_antagonist(ROLE_SALVAGER))
+			..()
+		else
+			boutput(user, SPAN_ALERT("This machine's design makes no sense to you, you can't figure out how to use it!"))
+
+
+
+/obj/machinery/r_door_control/salvager
+	id = "hangar_salvager"
+	access_type = POD_ACCESS_SALVAGER
+
+/obj/landmark/salvager_spawn
+	name = LANDMARK_SALVAGER
+
+/obj/landmark/salvager_tele
+	name = LANDMARK_SALVAGER_TELEPORTER
+
+
+/obj/landmark/salvager_beacon
+	name = LANDMARK_SALVAGER_BEACON
+
+// MAGPIE Equipment
+/obj/machinery/vehicle/miniputt/armed/salvager
+	desc = "A repeatedly rebuilt and refitted pod.  Looks like it has seen some things."
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
+	init_comms_type = /obj/item/shipcomponent/communications/salvager
+
+	health = 250
+	maxhealth = 250
+	armor_score_multiplier = 0.7
+	speedmod = 1.18
+
+	New()
+		..()
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
+		myhud.update_systems()
+		myhud.update_states()
+
+/datum/manufacture/pod/armor_light/salvager
+	name = "Salvager Pod Armor"
+	item_requirements = list("metal_dense" = 30,
+							 "conductive" = 20)
+	item_outputs = list(/obj/item/podarmor/salvager)
+	create = 1
+	time = 20 SECONDS
+	category = "Component"
+
+/obj/item/podarmor/salvager
+	name = "Salvager Pod Armor"
+	desc = "Exterior plating for vehicle pods."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager,
+						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub )
+
+/datum/manufacture/communications/salvager
+	name = "Salvager Communication Array"
+	item_requirements = list("metal_dense" = 10, "conductive" = 20)
+	item_outputs = list(/obj/item/shipcomponent/communications/salvager)
+	time = 12 SECONDS
+	create = 1
+	category = "Resource"
+
+/obj/item/shipcomponent/communications/salvager
+	name = "Salvager Communication Array"
+	desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
+	color = "#91681c"
+	access_type = list(POD_ACCESS_SALVAGER)
+
+	go_home()
+		var/escape_planet
+#ifdef UNDERWATER_MAP
+		escape_planet = !isrestrictedz(ship.z)
+#else
+		escape_planet = !isnull(station_repair.station_generator) && (ship.z == Z_LEVEL_STATION)
+#endif
+
+		if(!escape_planet)
+			return
+
+		var/turf/target = get_home_turf()
+		if(!src.active)
+			boutput(usr, "[ship.ship_message("Sensors inactive! Unable to calculate trajectory!")]")
+			return TRUE
+		if(!target)
+			boutput(usr, "[ship.ship_message("Sensor error! Unable to calculate trajectory!")]")
+			return TRUE
+
+		var/obj/item/shipcomponent/engine/engine_part = ship.get_part(POD_PART_ENGINE)
+		if(!engine_part)
+			boutput(usr, "[ship.ship_message("Engines missing! Unable to calculate trajectory!")]")
+		if(engine_part.active)
+			if(engine_part.ready)
+				//brake the pod, we must stop to calculate warp trajectory.
+				if (istype(ship.movement_controller, /datum/movement_controller/pod))
+					var/datum/movement_controller/pod/MCP = ship.movement_controller
+					if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
+						boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity to calculate trajectory to destination!")]")
+						playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+						return TRUE
+				else if (istype(ship.movement_controller, /datum/movement_controller/tank))
+					var/datum/movement_controller/tank/MCT = ship.movement_controller
+					if (MCT.input_x != 0 || MCT.input_y != 0)
+						boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate trajectory destination!")]")
+						playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+						return TRUE
+
+
+				engine_part.warp_autopilot = 1
+				boutput(usr, "[ship.ship_message("Charging engines for escape velocity! Overriding manual control!")]")
+
+				var/health_perc = ship.health_percentage
+				ship.going_home = FALSE
+				sleep(5 SECONDS)
+
+				if(ship.health_percentage < (health_perc - 30))
+					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
+				else if(src.active)
+					var/old_color = ship.color
+					animate_teleport(ship)
+					sleep(0.8 SECONDS)
+					ship.set_loc(target)
+					ship.color = old_color // revert color from teleport color-shift
+				else
+					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Loss of systems!")]")
+
+				engine_part.ready = 0
+				engine_part.warp_autopilot = 0
+				engine_part.ready()
+			else
+				boutput(usr, "[ship.ship_message("Engine recharging! Unable to minimize trajectory error!")]")
+		else
+			boutput(usr, "[ship.ship_message("Engines inactive! Unable to calculate trajectory!")]")
+
+		return TRUE
+
+	get_home_turf()
+		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
+			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
+
+/obj/item/robot_foodsynthesizer/salvager
+	desc = "An old food synthesizer. It seems to rusted onto the table?"
+	anchored = ANCHORED
+
+	New()
+		. = ..()
+		src.vend_this = "Burger"
+
+	attack_hand(mob/user)
+		src.attack_self(user)
+		for(var/obj/item/reagent_containers/food/snacks/burger/synthburger/B in src.loc)
+			B.setStatus("acid", 10 SECONDS)
+
+/obj/marker/salvager_teleport
+	icon_state = "X"
+	icon = 'icons/misc/mark.dmi'
+	name = "Salvager Teleport Marker"
+	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED
+	opacity = 0
+
+	Crossed(atom/movable/AM)
+		. = ..()
+
+		if(ismob(AM))
+			var/mob/M = AM
+
+			if(M.mind?.get_antagonist(ROLE_SALVAGER))
+				if(length(landmarks[LANDMARK_SALVAGER_TELEPORTER]))
+					SPAWN(0.5 SECONDS)
+						if(src.loc == M.loc)
+							actions.start(new /datum/action/bar/private/salvager_tele(M, null), M)
+				else
+					boutput(M, SPAN_ALERT("Something is wrong..."))
+
+
+/obj/machinery/door/poddoor/pyro/podbay_autoclose/salvager
+	name = "external blast door"
+	id = "hangar_salvager"
+	dir = EAST
+
+/obj/warp_beacon/salvager
+	name = "Magpie"
+	icon_state = "beacon_synd"
+	encrypted = POD_ACCESS_SALVAGER
+
+
+/obj/machinery/manufacturer/uniform/salvager
+	name = "uniform manufacturer"
+	supplemental_desc = "This one can create a wide variety of one-size-fits-all jumpsuits, as well as backpacks and radio headsets."
+	accept_blueprints = TRUE
+	available = list(/datum/manufacture/shoes,
+		/datum/manufacture/shoes_brown,
+		/datum/manufacture/shoes_white,
+		/datum/manufacture/civilian_headset,
+		/datum/manufacture/jumpsuit_assistant,
+		/datum/manufacture/jumpsuit_pink,
+		/datum/manufacture/jumpsuit_red,
+		/datum/manufacture/jumpsuit_orange,
+		/datum/manufacture/jumpsuit_yellow,
+		/datum/manufacture/jumpsuit_green,
+		/datum/manufacture/jumpsuit_blue,
+		/datum/manufacture/jumpsuit_purple,
+		/datum/manufacture/jumpsuit_black,
+		/datum/manufacture/jumpsuit,
+		/datum/manufacture/jumpsuit_white,
+		/datum/manufacture/jumpsuit_brown,
+		/datum/manufacture/hat_black,
+		/datum/manufacture/hat_white,
+		/datum/manufacture/hat_pink,
+		/datum/manufacture/hat_red,
+		/datum/manufacture/hat_yellow,
+		/datum/manufacture/hat_orange,
+		/datum/manufacture/hat_green,
+		/datum/manufacture/hat_blue,
+		/datum/manufacture/hat_purple,
+		/datum/manufacture/backpack,
+		/datum/manufacture/backpack_red,
+		/datum/manufacture/backpack_green,
+		/datum/manufacture/backpack_blue,
+		/datum/manufacture/satchel,
+		/datum/manufacture/satchel_red,
+		/datum/manufacture/satchel_green,
+		/datum/manufacture/satchel_blue)
+
+	hidden = list(/datum/manufacture/breathmask,
+		/datum/manufacture/patch,
+		/datum/manufacture/towel,
+		/datum/manufacture/handkerchief)
+
+/obj/salvager_putt_spawner
+	name = "syndiputt spawner"
+	icon = 'icons/obj/ship.dmi'
+	icon_state = "syndi_mini_spawn"
+	New()
+		..()
+#ifdef UNDERWATER_MAP
+		new/obj/machinery/vehicle/tank/minisub/salvsub(src.loc)
+#else
+		new/obj/machinery/vehicle/miniputt/armed/salvager(src.loc)
+#endif
+		qdel(src)
+
+/obj/machinery/vehicle/tank/minisub/salvsub
+	body_type = "minisub"
+	icon_state = "whitesub_body"
+	health = 150
+	maxhealth = 150
+	acid_damage_multiplier = 0.5
+	init_comms_type = /obj/item/shipcomponent/communications/salvager
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
+
+	New()
+		..()
+		name = "salvager minisub"
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/taser(src), POD_PART_MAIN_WEAPON)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
+
+
+
+/obj/machinery/manufacturer/hangar/magpie
+	name = "ship component fabricator"
+	supplemental_desc = "This one produces modules for space pods or minisubs."
+	free_resources = list(
+		/obj/item/material_piece/mauxite = 10,
+		/obj/item/material_piece/pharosium = 10,
+		/obj/item/material_piece/molitz = 10,
+	)
+	available = list(
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/sub/preassembeled_parts,
+#else
+		/datum/manufacture/putt/preassembeled_parts,
+		/datum/manufacture/pod/weapon/ltlaser,
+#endif
+		/datum/manufacture/engine,
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/pod/armor_light,
+		/datum/manufacture/pod/armor_industrial,
+		/datum/manufacture/pod/armor_light/salvager,
+		/datum/manufacture/cargohold,
+		/datum/manufacture/communications/salvager,
+		/datum/manufacture/pod/weapon/mining,
+		/datum/manufacture/pod/weapon/mining/drill,
+		/datum/manufacture/engine2,
+		/datum/manufacture/pod/lock,
+		/datum/manufacture/beaconkit
+	)
+
+
+/obj/minimap/salvager
+	name = "Station Map"
+	map_path = /datum/minimap/area_map
+	map_type = MAP_SYNDICATE
+
+	///A semi-transparent minimap marker used to communicate where the marker will be placed on the minimap.
+	var/datum/minimap_marker/marker_silhouette
+
+	Click(location, control, params)
+		var/list/param_list = params2list(params)
+		var/datum/minimap/area_map/minimap = map
+		if ("left" in param_list)
+			// Convert from screen (x, y) to map (x, y) coordinates.
+			var/x = round((text2num(param_list["icon-x"]) - minimap.minimap_render.pixel_x) / (minimap.zoom_coefficient * minimap.map_scale))
+			var/y = round((text2num(param_list["icon-y"]) - minimap.minimap_render.pixel_y) / (minimap.zoom_coefficient * minimap.map_scale))
+			var/turf/clicked = locate(x, y, map.z_level)
+
+			if(src.marker_silhouette)
+				minimap.remove_minimap_marker(src.marker_silhouette.target)
+				marker_silhouette = null
+			if (!src.marker_silhouette)
+				minimap.create_minimap_marker(clicked, 'icons/obj/minimap/minimap_markers.dmi', "crosshair")
+				src.marker_silhouette = minimap.minimap_markers[clicked]
+				src.marker_silhouette.marker.alpha = 175
+
+			src.marker_silhouette.target = clicked
+			minimap.set_marker_position(src.marker_silhouette, src.marker_silhouette.target.x, src.marker_silhouette.target.y, map.z_level)
+
+			var/list/turf/safe_turfs = list()
+
+			var/obj/machinery/salvager_pod_launcher/L = src.loc
+			for(var/turf/T in range(L.turf_spread, clicked))
+				if(L?.safe_turf(T))
+					safe_turfs += T
+			if(length(safe_turfs) < L.minimum_safe_turfs)
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 30, 0)
+				boutput(usr, "You must select a location near the perimeter of the station. The missile pods will not pierce the station.")
+				SPAWN(0.2 SECONDS)
+					minimap.remove_minimap_marker(src.marker_silhouette.target)
+			else
+				playsound(src.loc, 'sound/machines/ping.ogg', 30, 0)
+
+/obj/machinery/salvager_pod_launcher
+	name = "Pod Launcher Control Console"
+	icon = 'icons/obj/computerpanel.dmi'
+	icon_state = "dwaine2"
+	var/turf_spread = 3
+	var/minimum_safe_turfs = 5
+	var/launch_delay = 10 SECONDS
+	var/reload_time = 5 MINUTES
+	density = 1
+	anchored = TRUE
+
+	var/initial_notify_complete = FALSE
+	var/landing_area
+	var/obj/minimap/salvager/station_map //shouldn't be AI for testing
+	var/atom/movable/minimap_ui_handler/minimap_ui
+
+	New()
+		. = ..()
+		station_map = new(src)
+		station_map.map_type = MAP_SYNDICATE // NEED OTHER THINGY
+		minimum_safe_turfs = min(minimum_safe_turfs, round(turf_spread*turf_spread*0.6))
+
+	attack_hand(mob/user)
+		if(..())
+			return
+
+		landing_area = station_map.marker_silhouette?.target
+
+		if(!src.landing_area)
+			minimap_ui = new(src, "ai_map", src.station_map, "Station Map", "ntos")
+			minimap_ui.ui_interact(user)
+		else
+			var/choice = input(user, "Would you like to reset your area, or Launch to the pod?") in list("Reset", "Launch", "Cancel")
+			switch(choice)
+				if("Reset")
+					station_map.map?.remove_minimap_marker(landing_area)
+					qdel(station_map.marker_silhouette)
+					station_map.marker_silhouette = null
+					minimap_ui = new(src, "ai_map", src.station_map, "Station Map", "ntos")
+					minimap_ui.ui_interact(user)
+					return
+				if("Launch")
+					var/list/chosen_mobs = list()
+					var/area/A = get_area(src)
+					for(var/mob/living/carbon/found_mob in A.contents)
+						chosen_mobs += found_mob
+					var/confirmation = input(user, "Are you sure you would like to deploy? [length(chosen_mobs) <= 1 ? "You're currently alone!" : "You have [length(chosen_mobs)]" ]") in list("Yes", "No")
+					if(doors_ready())
+						if(confirmation == "Yes")
+							var/confirmation2 = input(user, "Are you EXTREMELY sure? There's no coming back!") in list("Yes", "No")
+							if(confirmation2 == "Yes")
+								send_to_pod(user)
+							else
+								return
+						else
+							return
+					else
+						playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 30, 0)
+						src.visible_message("[src] flashes: \"Door Ajar!\"")
+						return
+				if("Cancel")
+					return
+
+	proc/doors_ready()
+		var/area/A = get_area(src)
+		. = TRUE
+		for(var/obj/machinery/door/airlock/door in A.machines)
+			. &&= (!door.operating && door.density && !door.locked)
+
+	proc/lock_doors(lock)
+		var/ready = TRUE
+		var/obj/machinery/door/airlock/door
+		var/list/obj/machinery/door/airlock/doors = list()
+		var/area/A = get_area(src)
+		for(door in A.machines)
+			if(lock)
+				ready &&= (!door.operating && door.density)
+			doors += door
+		if(ready)
+			for(door in doors)
+				door.locked = lock
+		var/obj/machinery/light/e_light = locate("salvager_pods_avail")
+		if(e_light)
+			if(lock)
+				e_light.light.disable()
+			else
+				e_light.light.enable()
+
+	proc/send_to_pod(mob/user)
+		if( !in_interact_range(user, src) || !doors_ready() )
+			return
+		var/list/mob/living/launched_mobs = list()
+		var/area/A = get_area(src)
+		lock_doors(TRUE)
+		var/rand_time = src.launch_delay + rand(0 SECONDS, 5 SECONDS)
+		for(var/mob/living/carbon/found_mob in A.contents)
+			launched_mobs += found_mob
+
+		for(var/mob/living/L in launched_mobs)
+			shake_camera(L, rand_time*2, 8, 0.4)
+			var/atom/target = get_edge_target_turf(L, pick(alldirs))
+			if(target && !L.buckled)
+				L.throw_at(target, 3, 1)
+				L.changeStatus("stunned", 2 SECONDS)
+				L.changeStatus("knockdown", 2 SECONDS)
+
+		sleep(rand_time / 2)
+		if((istype(ticker.mode, /datum/game_mode/salvager) && !initial_notify_complete) || prob(80))
+			command_alert("Our sensors have detected an incoming pod is headed towards the [station_or_ship()], a response would be advised.", "Central Command Alert", 'sound/misc/announcement_1.ogg')
+			initial_notify_complete = TRUE
+		sleep(rand_time / 2)
+		send_pods(launched_mobs)
+		sleep(src.reload_time)
+		lock_doors(FALSE)
+
+	proc/safe_turf(var/turf/T)
+		var/spacemove
+		if(istype(T, /turf/space))
+			spacemove = TRUE
+			for (var/atom/A in oview(1,T))
+				if (A.stops_space_move && !isfloor(A))
+					spacemove = FALSE
+					break
+		else
+			var/area/A = get_area(T)
+			spacemove = !istype(A, /area/space)
+		return !spacemove
+
+	proc/send_pods(var/list/mob/living/launched_mobs)
+		var/list/turf/possible_turfs = list()
+		if(src.landing_area)
+			for(var/turf/T in range(turf_spread, src.landing_area))
+				if(safe_turf(T))
+					possible_turfs += T
+		for(var/mob/living/carbon/C in launched_mobs)
+			var/turf/picked_turf = pick(possible_turfs)
+			var/obj/arrival_missile/missile = launch_with_missile(C, picked_turf, null, "arrival_missile_synd", TRUE)
+			logTheThing(LOG_DEBUG, null, "Salvager Pod: [C] fired at [log_loc(picked_turf)]. [log_loc(src.landing_area)] was target.")
+			missile.color = list(0.961409,0.696086,-0.162516,0.0174579,0.685104,0.0735192,0.471909,0.123506,1.39666)
+
+			possible_turfs -= picked_turf
+			if(!length(possible_turfs))
+				for(var/turf/T in range(turf_spread, src.landing_area))
+					if(safe_turf(T))
+						possible_turfs += T
+		command_alert("A [length(launched_mobs) > 1 ? "group of [length(launched_mobs)] personnel missiles have" : "single personnel missile has"] been spotted heading towards the station, be prepared for contact.","Central Command Alert", 'sound/misc/announcement_1.ogg')
+
 
 
 TYPEINFO(/obj/npc/trader/salvager)

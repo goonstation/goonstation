@@ -881,7 +881,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "dn" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 18
 	},
 /turf/simulated/floor,
@@ -2391,7 +2391,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/brightwell)
 "iN" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -3006,7 +3006,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/bar)
 "ll" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 18
 	},
 /turf/simulated/floor/yellow,
@@ -4003,7 +4003,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/pod_wars/spacejunk/nancy)
 "oB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -5026,7 +5026,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "st" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	pixel_y = -4
 	},
@@ -5524,7 +5524,7 @@
 	},
 /area/pod_wars/team2/hangar)
 "un" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 10
 	},
@@ -7124,7 +7124,7 @@
 	},
 /area/pod_wars/team2/hangar)
 "Ab" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 18
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
@@ -8378,7 +8378,7 @@
 /turf/space,
 /area/space)
 "En" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 10
 	},
@@ -9863,7 +9863,7 @@
 	pixel_x = 10;
 	pixel_y = 9
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -10087,7 +10087,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "Kt" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	density = 0;
 	dir = 8;
 	name = "utility sink";
@@ -10333,7 +10333,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/storageA)
 "Lj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -11390,7 +11390,7 @@
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/porthall)
 "Pq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 10
 	},
@@ -12038,7 +12038,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "RP" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 18
 	},
 /turf/simulated/floor/sanitary,
@@ -13302,7 +13302,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "Wp" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	density = 0;
 	dir = 8;
 	name = "utility sink";

@@ -32,7 +32,7 @@
 "B" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/decal/cleanable/water,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /obj/machinery/light/small/broken{

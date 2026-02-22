@@ -112,6 +112,7 @@ Contains:
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, new_target)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 
 /obj/item/assembly/proc/get_trigger_state(var/affected_assembly)
 	if(src.secured)
@@ -167,9 +168,10 @@ Contains:
 	if(src.expended)
 		//we don't want stuff to happen like e.g. buttbombs triggering 50 more times before being qdel'ed, potentially crashing the server... yeah, that happened
 		return
+	var/last_ckey = src.get_last_ckey()
 	if(src.force_dud == TRUE)
-		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [key_name(src.fingerprintslast)]")
-		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(key_name(last_ckey), "None")]")
+		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")]")
 		return
 	if(src.override_upstream && src.master)
 		//if we should just relay signals, we do so, no matter where they come from
@@ -180,9 +182,9 @@ Contains:
 		for(var/mob/O in hearers(1, src.loc))
 			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 		//Some Admin logging/messaging
-		logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"];[src.get_additional_logging_information(src.last_armer)]")
+		logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")];[src.get_additional_logging_information(src.last_armer)]")
 		if(src.requires_admin_messaging())
-			message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+			message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")]")
 		//now lets blow some shit up
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
@@ -528,6 +530,7 @@ Contains:
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 
 
 ///This proc removes all items attached to the assembly and removes it
@@ -605,6 +608,7 @@ Contains:
 	//Last but not least, we update our icon, w_class and name
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [src.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
 	if(src.requires_admin_messaging())
@@ -646,6 +650,7 @@ Contains:
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 	// Since the assembly was done, return TRUE
 	user.put_in_hand_or_drop(src)
 	return TRUE

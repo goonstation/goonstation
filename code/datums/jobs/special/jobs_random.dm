@@ -357,20 +357,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/fishing_rod/basic)
 
 
-/datum/job/special/random/pharmacist
-	name = "Pharmacist"
-	wages = PAY_DOCTORATE
-	ui_colour = /datum/job/medical::ui_colour
-	request_limit = 1 // limited workspace
-	trait_list = list("training_medical")
-	access_string = "Pharmacist"
-	slot_card = /obj/item/card/id/medical
-	slot_belt = list(/obj/item/device/pda2/medical)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
-	slot_suit = list(/obj/item/clothing/suit/labcoat)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/storage/pill_bottle/cyberpunk)
 
 /datum/job/special/random/psychiatrist
 	name = "Psychiatrist"

@@ -918,10 +918,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		src.was_harmed(thr.user, AM)
 
 /mob/living/critter/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
-	if (brute > 0 || burn > 0 || tox > 0)
-		hit_twitch(src)
-	if (nodamage)
+	if (src.nodamage || QDELETED(src))
 		return
+
+	if (brute > 0)
+		hit_twitch(src)
+	else if((burn > 0 || tox > 0) && isalive(src) && !src.hasStatus("paralysis"))
+		hit_twitch(src)
+
 	var/datum/healthHolder/Br = get_health_holder("brute")
 	if (Br)
 		Br.TakeDamage(brute)

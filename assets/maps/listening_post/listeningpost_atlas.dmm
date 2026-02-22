@@ -895,7 +895,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "Lt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /obj/machinery/power/apc/autoname_east/hardened,

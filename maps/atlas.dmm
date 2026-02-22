@@ -1838,20 +1838,6 @@
 /obj/machinery/r_door_control/podbay/mainpod1,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
-"aji" = (
-/obj/surgery_tray,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/biohazard_bags,
-/obj/item/hand_labeler,
-/obj/item/body_bag,
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/random_item_spawner/desk_stuff/one,
-/obj/submachine/chef_sink/chem_sink{
-	dir = 1;
-	pixel_y = -3
-	},
-/turf/simulated/floor/black,
-/area/station/medical/morgue)
 "ajk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -3756,14 +3742,6 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/cloner)
-"awW" = (
-/obj/submachine/chef_sink/chem_sink{
-	desc = "A water-filled unit intended for hand-washing purposes.";
-	dir = 4;
-	pixel_x = -4
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/medbay/surgery)
 "awX" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -7437,15 +7415,6 @@
 /obj/machinery/r_door_control/podbay/mining,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
-"aWm" = (
-/obj/stool/chair/office/blue{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/turf/simulated/floor/darkblue,
-/area/station/medical/morgue)
 "aWo" = (
 /obj/shrub,
 /obj/machinery/alarm{
@@ -8491,6 +8460,15 @@
 "bMn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bar)
+"bMM" = (
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/darkblue,
+/area/station/medical/morgue)
 "bNY" = (
 /obj/machinery/firealarm/directional/north,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -8774,6 +8752,13 @@
 "cpN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/hangar)
+"cqq" = (
+/obj/machinery/drainage,
+/obj/machinery/sink/slim{
+	pixel_y = 14
+	},
+/turf/simulated/floor/sanitary,
+/area/station/security/brig)
 "crc" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/hop)
@@ -9102,13 +9087,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"cVo" = (
-/obj/machinery/drainage,
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 14
-	},
-/turf/simulated/floor/sanitary,
-/area/station/security/brig)
 "cVy" = (
 /obj/machinery/phone/wall{
 	pixel_x = -23;
@@ -10620,6 +10598,14 @@
 	dir = 4
 	},
 /area/station/solar/north)
+"fii" = (
+/obj/machinery/sink/slim{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/medbay/surgery)
 "fiL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11680,6 +11666,17 @@
 	dir = 10
 	},
 /area/station/engine/ptl)
+"gUb" = (
+/obj/machinery/sink/slim{
+	dir = 8;
+	pixel_x = 8
+	},
+/obj/machinery/floorflusher/solitary,
+/obj/disposalpipe/trunk/brig{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
 "gUu" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -12847,6 +12844,16 @@
 /obj/machinery/navbeacon/mule/bridge_north/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"iEG" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/sink/slim{
+	pixel_y = 15
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "iFd" = (
 /obj/machinery/computer/supplycomp{
 	dir = 8
@@ -14251,17 +14258,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"kqZ" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 8
-	},
-/obj/machinery/floorflusher/solitary,
-/obj/disposalpipe/trunk/brig{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/station/security/brig/solitary)
 "krp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14427,6 +14423,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"kKA" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/sink/slim{
+	pixel_y = 15
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "kKI" = (
 /obj/stool/chair/office/purple{
 	dir = 4
@@ -15385,15 +15390,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"lZK" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 15
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "mah" = (
 /obj/mapping_helper/access/research_foyer,
 /obj/machinery/door/airlock/pyro/glass/sci{
@@ -16150,13 +16146,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/cafeteria)
-"nat" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 5
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/bar)
 "naC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16997,16 +16986,6 @@
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
-"olj" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 15
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "omc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -18380,6 +18359,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"qMV" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/railing/orange/reinforced,
+/obj/machinery/sink/slim{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "qOn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19998,6 +19989,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"tle" = (
+/obj/machinery/sink/slim{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/white/side{
+	dir = 8
+	},
+/area/station/crew_quarters/kitchen)
 "tmb" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20172,6 +20172,20 @@
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
+"tze" = (
+/obj/surgery_tray,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/biohazard_bags,
+/obj/item/hand_labeler,
+/obj/item/body_bag,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/random_item_spawner/desk_stuff/one,
+/obj/machinery/sink/slim{
+	dir = 1;
+	pixel_y = -3
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "tzn" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating/random,
@@ -21650,15 +21664,6 @@
 	dir = 10
 	},
 /area/station/engine/engineering/ce)
-"vyf" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 5
-	},
-/turf/simulated/floor/white/side{
-	dir = 8
-	},
-/area/station/crew_quarters/kitchen)
 "vyC" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/access/medical,
@@ -21773,18 +21778,6 @@
 /obj/machinery/vehicle/pod_smooth,
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
-"vKl" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/obj/railing/orange/reinforced,
-/obj/submachine/chef_sink/chem_sink{
-	desc = "A water-filled unit intended for hand-washing purposes.";
-	dir = 4;
-	pixel_x = -4
-	},
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "vKz" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/railing/orange/reinforced{
@@ -21964,6 +21957,13 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge/customs)
+"vYR" = (
+/obj/machinery/sink/slim{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "vZk" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -68809,7 +68809,7 @@ oVw
 xOW
 aDi
 aGZ
-vKl
+qMV
 aDi
 tYx
 aGk
@@ -71806,7 +71806,7 @@ vNM
 eSH
 uyb
 nZX
-nat
+vYR
 kzp
 azA
 atp
@@ -72140,7 +72140,7 @@ aIY
 aGV
 ajn
 afp
-aji
+tze
 acZ
 aaa
 aaa
@@ -72424,7 +72424,7 @@ avY
 amI
 eGO
 azg
-awW
+fii
 avY
 ung
 aFy
@@ -73045,7 +73045,7 @@ oUl
 aWL
 aKm
 ahp
-aWm
+bMM
 sUU
 acZ
 aaa
@@ -73915,7 +73915,7 @@ agV
 rCX
 jcY
 fps
-vyf
+tle
 nxa
 tbR
 wKr
@@ -74523,7 +74523,7 @@ tzd
 vKB
 cso
 kUo
-cVo
+cqq
 hMh
 hte
 fdL
@@ -76038,7 +76038,7 @@ kpd
 uvf
 xWJ
 vCe
-kqZ
+gUb
 mCP
 nII
 aua
@@ -80279,7 +80279,7 @@ azt
 aAh
 aAX
 azf
-lZK
+kKA
 azr
 dfp
 ayi
@@ -80883,7 +80883,7 @@ azv
 xBH
 aWK
 azf
-olj
+iEG
 boC
 sSu
 ayi
