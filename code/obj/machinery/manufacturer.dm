@@ -2122,24 +2122,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			SPAWN(0.1 SECONDS)
 				MA.begin_work(TRUE)
 
-/// Pre-build the icons for things manufacturers make
-/proc/build_manufacturer_icons()
-	for (var/datum/manufacture/P as anything in concrete_typesof(/datum/manufacture, FALSE))
-		if (ispath(P, /datum/manufacture/mechanics))
-			var/datum/manufacture/mechanics/M = P
-			if (!initial(M.frame_path))
-				continue
-			getItemIcon(initial(M.frame_path))
-
-		else
-			// temporarily create this so we can get the list from it
-			// i tried very hard to use initial() here and got nowhere,
-			// but the fact it's a list seems to not really go well with it
-			// maybe someone else can get it to work.
-			var/datum/manufacture/I = new P
-			if (I && length(I.item_outputs) && I.item_outputs[1])
-				getItemIcon(I.item_outputs[1])
-
 #undef MAX_QUEUE_LENGTH
 #undef DISMANTLE_NONE
 #undef DISMANTLE_PLATING_BOLTS

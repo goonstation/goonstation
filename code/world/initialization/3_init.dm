@@ -134,7 +134,6 @@
 	build_reagent_cache()
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
-	build_manufacturer_icons()
 	build_clothingbooth_caches()
 	initialize_biomes()
 
