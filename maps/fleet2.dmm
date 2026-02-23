@@ -2270,13 +2270,13 @@
 /obj/machinery/door/airlock/gannets/glass{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	dir = 8;
 	pixel_x = 20
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter/meridian)
@@ -4361,9 +4361,6 @@
 /turf/simulated/floor/white,
 /area/station/hallway/primary/south/asclepius)
 "bXI" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 4
 	},
@@ -4720,9 +4717,6 @@
 /turf/simulated/floor/grey/corner,
 /area/station/storage/emergency/hammer)
 "cel" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/black/side,
 /area/station/teleporter/tenebrae)
 "ceq" = (
@@ -5003,9 +4997,6 @@
 /turf/simulated/floor/grey/side,
 /area/station/security/brig/solitary2)
 "cjM" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/purpleblack,
 /area/station/teleporter/tenebrae)
 "cjW" = (
@@ -5203,9 +5194,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal/maru)
 "coh" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 4
 	},
@@ -6477,9 +6465,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal/asclepius)
 "cOz" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/computer/mass_transport,
 /turf/simulated/floor/black/side,
 /area/station/teleporter/maru)
@@ -7365,9 +7350,6 @@
 /turf/simulated/floor/white/side,
 /area/station/hangar/tenebrae)
 "dhz" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/computer/mass_transport,
 /turf/simulated/floor/black/side,
 /area/station/teleporter/asclepius)
@@ -7678,9 +7660,6 @@
 "dob" = (
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black/side,
@@ -9365,9 +9344,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/decal/tile_edge/floorguide/arrow_e{
 	dir = 4
 	},
@@ -9587,9 +9563,6 @@
 "ehc" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/decal/tile_edge/floorguide/arrow_e{
 	dir = 4
@@ -10243,9 +10216,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/decal/tile_edge/floorguide/arrow_e{
 	dir = 4
 	},
@@ -10744,9 +10714,6 @@
 /turf/simulated/floor/grey/side,
 /area/station/science/bot_storage)
 "eFy" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/computer/mass_transport,
 /turf/simulated/floor/black/side,
 /area/station/teleporter/tenebrae)
@@ -12611,9 +12578,6 @@
 	},
 /area/station/engine/ptl)
 "fvr" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 4
 	},
@@ -12671,9 +12635,6 @@
 "fww" = (
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black/side,
@@ -13209,6 +13170,9 @@
 	dir = 8;
 	icon_state = "line3"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/teleporter/meridian)
 "fGa" = (
@@ -13232,9 +13196,6 @@
 "fGw" = (
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black/side,
@@ -13678,9 +13639,6 @@
 	},
 /area/station/hallway/primary/north/meridian)
 "fQP" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/computer/mass_transport,
 /turf/simulated/floor/black/side,
 /area/station/teleporter/meridian)
@@ -13693,9 +13651,6 @@
 /turf/simulated/floor/white/side,
 /area/station/hallway/primary/north/tenebrae)
 "fRz" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 4
 	},
@@ -13880,9 +13835,6 @@
 	},
 /area/station/medical/medbay)
 "fUi" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/black/side,
 /area/station/teleporter/dionysus)
 "fUm" = (
@@ -13911,9 +13863,6 @@
 	},
 /area/mining/magnet)
 "fUq" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/black/side,
 /area/station/teleporter/meridian)
 "fUr" = (
@@ -13977,9 +13926,6 @@
 "fVa" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/decal/tile_edge/floorguide/arrow_e{
 	dir = 4
@@ -14693,9 +14639,6 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/asclepius)
 "gjp" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -16768,9 +16711,6 @@
 "hgp" = (
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black/side,
@@ -19626,6 +19566,9 @@
 	dir = 8;
 	icon_state = "line3"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/teleporter/meridian)
 "ipf" = (
@@ -20086,9 +20029,6 @@
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/dionysus)
 "ixY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -23635,20 +23575,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest/hammer)
-"kef" = (
-/obj/machinery/door/airlock/gannets/glass{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	dir = 8;
-	pixel_x = 20
-	},
-/turf/simulated/floor/black,
-/area/station/teleporter/dionysus)
 "kel" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/jen/dark2,
@@ -26774,9 +26700,6 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/asclepius)
 "lvA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 4
 	},
@@ -27918,7 +27841,7 @@
 /area/station/security/processing)
 "lYq" = (
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -28087,9 +28010,6 @@
 	},
 /area/station/storage/emergency/hammer)
 "mdr" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/yellowblack,
 /area/station/teleporter/maru)
 "mdK" = (
@@ -28395,14 +28315,6 @@
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
-"mky" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/teleporter/tenebrae)
 "mkK" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/space,
@@ -28631,20 +28543,6 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/bridge/asclepius)
-"moF" = (
-/obj/machinery/door/airlock/gannets/glass{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	dir = 8;
-	pixel_x = 20
-	},
-/turf/simulated/floor/black,
-/area/station/teleporter/tenebrae)
 "moS" = (
 /obj/cable/brown{
 	icon_state = "1-8"
@@ -30540,9 +30438,6 @@
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/maintenance/disposal/hammer)
 "niI" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/greenblack,
 /area/station/teleporter/dionysus)
 "niJ" = (
@@ -32922,14 +32817,6 @@
 /obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
-"olp" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/teleporter/dionysus)
 "olq" = (
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/south/hammer)
@@ -32971,14 +32858,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/bridge/meridian)
-"omb" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/teleporter/maru)
 "omn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33218,20 +33097,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal/tenebrae)
-"orp" = (
-/obj/machinery/door/airlock/gannets/glass{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	dir = 8;
-	pixel_x = 20
-	},
-/turf/simulated/floor/black,
-/area/station/teleporter/hammer)
 "orL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -36163,9 +36028,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/tenebrae)
 "pHk" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/computer/mass_transport,
 /turf/simulated/floor/black/side,
 /area/station/teleporter/hammer)
@@ -38345,9 +38207,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black/side,
 /area/station/teleporter/dionysus)
@@ -38460,9 +38319,6 @@
 	name = "Limoncello Pod Bay"
 	})
 "qKW" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -40433,11 +40289,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/decal/tile_edge/floorguide/arrow_w{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/central/meridian)
@@ -42256,9 +42112,6 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hangar/maru)
 "ssD" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/black/side,
 /area/station/teleporter/asclepius)
 "ssH" = (
@@ -42737,9 +42590,6 @@
 "sBM" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/decal/tile_edge/floorguide/arrow_e{
 	dir = 4
@@ -44923,9 +44773,6 @@
 	},
 /area/station/hallway/primary/central/meridian)
 "tuc" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/computer/mass_transport,
 /turf/simulated/floor/black/side,
 /area/station/teleporter/dionysus)
@@ -45720,6 +45567,12 @@
 /obj/item/paper_bin,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/courtroom)
+"tNe" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/teleporter/meridian)
 "tNh" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
@@ -46949,14 +46802,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/primary/south/hammer)
-"ukh" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/teleporter/asclepius)
 "ukz" = (
 /obj/rack/organized/techstorage_med,
 /turf/simulated/floor/grey/blackgrime/other,
@@ -50540,12 +50385,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"vKf" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/teleporter/hammer)
 "vKg" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 2
@@ -51011,9 +50850,6 @@
 "vUK" = (
 /obj/machinery/door/airlock/gannets/glass{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
@@ -52175,12 +52011,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
-"wwP" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/teleporter/asclepius)
 "wxc" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -53307,9 +53137,6 @@
 /turf/simulated/floor/red,
 /area/station/construction)
 "wUE" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/black/side,
 /area/station/teleporter/maru)
 "wUW" = (
@@ -53737,20 +53564,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/treatment1)
-"xfR" = (
-/obj/machinery/door/airlock/gannets/glass{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	dir = 8;
-	pixel_x = 20
-	},
-/turf/simulated/floor/black,
-/area/station/teleporter/asclepius)
 "xgm" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/engine/substation/asclepius)
@@ -53940,9 +53753,6 @@
 	},
 /area/station/hallway/primary/north/asclepius)
 "xlP" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -54056,9 +53866,6 @@
 /turf/simulated/floor/industrial,
 /area/station/hallway/primary/south/hammer)
 "xoa" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/black/side,
 /area/station/teleporter/hammer)
 "xoi" = (
@@ -54285,9 +54092,6 @@
 	},
 /area/station/maintenance/southeast/hammer)
 "xtV" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -55602,9 +55406,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/mailroom/dionysus)
 "xYq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -55652,14 +55453,6 @@
 /obj/item/storage/box/mousetraps,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast/tenebrae)
-"xYX" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/teleporter/hammer)
 "xYY" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -55771,10 +55564,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black/side,
 /area/station/teleporter/meridian)
 "yaZ" = (
@@ -83595,7 +83388,7 @@ gnx
 biE
 mJj
 fQP
-rmA
+tNe
 eCO
 rmA
 lfR
@@ -89389,7 +89182,7 @@ lMA
 cVm
 sce
 wUE
-omb
+aBq
 aBq
 aBq
 pJJ
@@ -94716,7 +94509,7 @@ lNq
 kFn
 qEC
 qEC
-orp
+lpw
 qaZ
 lpw
 qEC
@@ -95018,7 +94811,7 @@ mDZ
 agj
 qEC
 jlp
-vKf
+fxo
 fxo
 fxo
 jQJ
@@ -95320,7 +95113,7 @@ mDZ
 kFn
 qaZ
 xoa
-xYX
+lVV
 lVV
 lVV
 qoi
@@ -112582,7 +112375,7 @@ eJm
 jXl
 bMn
 bMn
-kef
+awM
 fdq
 awM
 bMn
@@ -113186,7 +112979,7 @@ eJm
 jXl
 fdq
 fUi
-olp
+iyT
 iyT
 iyT
 aDe
@@ -121094,7 +120887,7 @@ aUK
 xYF
 vKL
 vKL
-moF
+ipD
 jrk
 ipD
 vKL
@@ -121698,7 +121491,7 @@ aUK
 qpG
 jrk
 cel
-mky
+pUB
 pUB
 pUB
 wVG
@@ -123099,7 +122892,7 @@ gzj
 xlM
 pSS
 pSS
-xfR
+pyk
 rFj
 pyk
 pSS
@@ -123401,7 +123194,7 @@ gzj
 kfZ
 pSS
 quD
-wwP
+nww
 nww
 nww
 vtN
@@ -123703,7 +123496,7 @@ gzj
 jyx
 rFj
 ssD
-ukh
+wSo
 wSo
 wSo
 bfi
