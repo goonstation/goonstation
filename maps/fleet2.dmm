@@ -4179,6 +4179,15 @@
 /area/station/security/main{
 	name = "Security Office"
 	})
+"bTT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/security/brig/genpop)
 "bTW" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -8488,6 +8497,9 @@
 /obj/item/decoration/ashtray{
 	pixel_x = -10;
 	pixel_y = -2
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
@@ -28615,9 +28627,6 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Executive Bathroom"
 	},
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable/brown{
 	icon_state = "5-10"
@@ -36246,6 +36255,13 @@
 "pMC" = (
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/substation/maru)
+"pMW" = (
+/obj/stool,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/security/brig/genpop)
 "pNE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39871,6 +39887,12 @@
 /area/station/engine/engineering/ce{
 	name = "Maru Command Center"
 	})
+"ruE" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/security/brig/genpop)
 "rvb" = (
 /obj/cable/brown{
 	icon_state = "2-4"
@@ -40622,6 +40644,7 @@
 	name = "General Population Visitation";
 	opacity = 0
 	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
 "rKN" = (
@@ -89370,9 +89393,9 @@ fjq
 fjq
 fjq
 cvy
-uCw
-ngn
-dgp
+bTT
+ruE
+pMW
 dIB
 rKl
 eFh
