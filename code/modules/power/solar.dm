@@ -139,6 +139,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	aisat
 		id = "aisat"
 
+
 /obj/machinery/power/solar/New()
 	..()
 	SPAWN(1 SECOND)
