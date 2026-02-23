@@ -50,19 +50,6 @@ TYPEINFO(/obj/machinery/power/tracker)
 		id = "zeta"
 	aisat
 		id = "aisat"
-	asclepius
-		id = "asclepius_solar"
-	dionysus
-		id = "dionysus_solar"
-	hammer
-		id = "hammer_solar"
-	maru
-		id = "maru_solar"
-	meridian
-		id = "meridian_solar"
-	tenebrae
-		id = "tenebrae_solar"
-
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -151,19 +138,6 @@ TYPEINFO(/obj/machinery/power/solar)
 		id = "zeta"
 	aisat
 		id = "aisat"
-	asclepius
-		id = "asclepius_solar"
-	dionysus
-		id = "dionysus_solar"
-	hammer
-		id = "hammer_solar"
-	maru
-		id = "maru_solar"
-	meridian
-		id = "meridian_solar"
-	tenebrae
-		id = "tenebrae_solar"
-
 
 /obj/machinery/power/solar/New()
 	..()
@@ -318,18 +292,6 @@ TYPEINFO(/obj/machinery/power/solar)
 		solar_id = "zeta"
 	aisat
 		solar_id = "aisat"
-	asclepius
-		id = "asclepius_solar"
-	dionysus
-		id = "dionysus_solar"
-	hammer
-		id = "hammer_solar"
-	maru
-		id = "maru_solar"
-	meridian
-		id = "meridian_solar"
-	tenebrae
-		id = "tenebrae_solar"
 
 /obj/machinery/computer/solar_control/New()
 	..()
