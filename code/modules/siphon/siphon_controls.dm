@@ -516,7 +516,7 @@
 	perform a scan for cyclical harmonic fields in nearby<br>
 	siphon equipment; taking scans across multiple cycles<br>
 	and cross-referencing with the database may help you<br>
-	to identify which target the field correlates to.<br>
+	to devise a methodology for extraction.<br>
 	<br>
 	Typical use does <strong>not</strong> require familiarization with<br>
 	the reharmonization process or associated targets.<br>
