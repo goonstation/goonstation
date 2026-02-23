@@ -1210,7 +1210,7 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 
 	return_badge()
 		// label text, icon, contents
-		. = list("label" = "Disk","icon" = "rom","contents" = src.disk)
+		. = list("label" = "Disk","icon" = "save","contents" = src.disk)
 
 	uninstalled()
 		src.disk?.set_loc(src)
