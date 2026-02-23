@@ -8861,7 +8861,7 @@
 /turf/simulated/floor/red/corner,
 /area/station/hallway/primary/south)
 "cQg" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -9693,7 +9693,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	pixel_x = -3
 	},
@@ -11962,7 +11962,7 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/ai)
 "fai" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "utility sink"
@@ -12073,7 +12073,7 @@
 	},
 /area/station/bridge)
 "fcE" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -12805,7 +12805,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "fDO" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -14036,7 +14036,7 @@
 /obj/item/storage/toilet{
 	dir = 8
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -14432,7 +14432,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "gOS" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -21111,7 +21111,7 @@
 	},
 /area/ghostdrone_factory)
 "lMN" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -21792,7 +21792,7 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/captain)
 "mhX" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -22656,7 +22656,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "mUU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -24080,7 +24080,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "nQB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -24298,7 +24298,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "nZa" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8;
 	pixel_x = 3
 	},
@@ -31182,7 +31182,7 @@
 	},
 /area/station/chapel/sanctuary)
 "scW" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -33717,7 +33717,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "tEA" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -35042,7 +35042,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -39170,7 +39170,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "xrz" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},

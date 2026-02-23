@@ -527,7 +527,7 @@
 	},
 /area/station/science/chemistry)
 "afi" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 4
 	},
@@ -1380,7 +1380,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "akI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 4
 	},
@@ -3951,7 +3951,7 @@
 	},
 /area/station/hangar/main)
 "aze" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -7104,7 +7104,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/maintenance/west)
 "aQF" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/sanitary/white,
@@ -7927,7 +7927,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "aVs" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -8197,7 +8197,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aWQ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for custodial purposes.";
 	dir = 4;
 	name = "custodial sink";
@@ -15898,7 +15898,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "cUs" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
@@ -17998,7 +17998,7 @@
 	},
 /area/station/solar/west)
 "ejp" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 4
 	},
@@ -18161,7 +18161,7 @@
 /area/station/maintenance/northwest)
 "eod" = (
 /obj/machinery/light/incandescent,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 4
 	},
@@ -19317,7 +19317,7 @@
 	},
 /area/station/hallway/primary/south)
 "eWz" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -20597,7 +20597,7 @@
 	},
 /area/shuttle/research/outpost)
 "fLF" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -22409,7 +22409,7 @@
 /area/station/turret_protected/ai_upload)
 "gQV" = (
 /obj/railing/orange/reinforced,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -9
 	},
@@ -22444,7 +22444,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "gSB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -23761,7 +23761,7 @@
 /turf/simulated/floor,
 /area/station/engine/storage)
 "hKE" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	pixel_y = -1
 	},
@@ -27286,7 +27286,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "jJL" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grime,
@@ -28296,7 +28296,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
 "krO" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent,
@@ -30036,7 +30036,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "lrh" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grime,
@@ -34112,7 +34112,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/purple/side{
@@ -35872,7 +35872,7 @@
 	},
 /area/station/solar/aisat)
 "ouj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -37981,7 +37981,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "pCU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -9
 	},
@@ -39223,7 +39223,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "qoU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -39471,7 +39471,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},
@@ -43932,7 +43932,7 @@
 /obj/machinery/disposal/small/east{
 	pixel_x = -8
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /obj/disposalpipe/trunk{
@@ -51440,7 +51440,7 @@
 	},
 /area/station/science/hall)
 "xzS" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/grass/leafy,

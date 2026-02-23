@@ -1852,7 +1852,7 @@
 /obj/item/body_bag,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
 /obj/random_item_spawner/desk_stuff/one,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	pixel_y = -3
 	},
@@ -3763,7 +3763,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/cloner)
 "awW" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -4
@@ -9111,7 +9111,7 @@
 /area/station/maintenance/southwest)
 "cVo" = (
 /obj/machinery/drainage,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 14
 	},
 /turf/simulated/floor/sanitary,
@@ -14259,7 +14259,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "kqZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -15396,7 +15396,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary,
@@ -16158,7 +16158,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "nat" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},
@@ -17009,7 +17009,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary,
@@ -21651,7 +21651,7 @@
 	},
 /area/station/engine/engineering/ce)
 "vyf" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},
@@ -21778,7 +21778,7 @@
 	dir = 1
 	},
 /obj/railing/orange/reinforced,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -4

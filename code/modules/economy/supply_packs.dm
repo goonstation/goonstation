@@ -927,8 +927,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Prosthetic Augmentation Kit"
 
 /datum/supply_packs/restricted_medicine
-	name = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
-	desc = "x1 Omnizine bottle, x1 Perfluorodecalin bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle."
+	name = "Restricted Medicine Shipment (Cardlocked \[Pharmacy])"
+	desc = "x1 Omnizine bottle, x2 Perfluorodecalin bottles, x1 Pentetic Acid bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle."
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/bottle/omnizine,
 					/obj/item/reagent_containers/glass/bottle/pfd = 2,
@@ -937,7 +937,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/glass/bottle/ether)
 	cost = PAY_DOCTORATE*5
 	containertype = /obj/storage/secure/crate
-	containername = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
+	containername = "Restricted Medicine Shipment (Cardlocked \[Pharmacy])"
 	access = access_pharmacy
 
 /datum/supply_packs/cyborg
@@ -1833,10 +1833,19 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	frames = list(/obj/item/storage/toilet = 4,
 					/obj/machinery/shower,
 					/obj/machinery/bathtub,
-					/obj/submachine/chef_sink/chem_sink)
+					/obj/machinery/sink/slim)
 	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Bathroom Kit"
+
+/datum/supply_packs/complex/sonic_shower
+	name = "Sonic Showerheads"
+	desc = "Two fancy cleaning heads capable of vibrating dirt and grime off of you without the need for water."
+	category = "Basic Materials"
+	frames = list(/obj/machinery/sonic_shower = 2)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate/packing
+	containername = "Sonic Showerheads"
 
 /datum/supply_packs/complex/kitchen_kit
 	name = "Kitchen Kit"
@@ -1845,7 +1854,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/storage/secure/closet/fridge)
 	frames = list(/obj/submachine/chef_oven,
 					/obj/machinery/mixer,
-					/obj/submachine/chef_sink,
+					/obj/machinery/sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,
 					/obj/machinery/vending/kitchen,

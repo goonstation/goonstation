@@ -1,5 +1,68 @@
 
+(t)sun feb 22 26
+(u)Lord_Earthfire
+(p)25716
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)Stains of any kind won't magically vanish on assemblies while being manipulated.
+(u)bork and Pirate-Rob
+(p)25984
+(e)🎨|C-Sprites
+(*)Resprites all the gene/ability icons! Sprites by Pirate-Rob!
+(u)QuiteLiterallyAnything
+(p)25443
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The gene booth's locking and price adjustment menu now only appears when the booth is hit with an ID.
+(u)Pirate-Rob
+(p)25982
+(e)🎨|C-Sprites
+(+)Electronics now have in-hand icons.
+(t)sat feb 21 26
+(u)LeahTheTech
+(+)Possessed objects now respect item specific click delays.
+(u)glowbold
+(p)25933
+(e)⚖🧛🐁|C-Balance, A-Gamemodes, A-Critters
+(*)Dead bodies and the paralyzed only twitch if physically hit.
+(*)Changeling "Regenerative Stasis" ability acts as dead for hit-twitches.
+(+)Changeling "Regenerative Stasis" ability prevents forced emotes while faking death.
+(t)thu feb 19 26
+(u)cringe
+(p)25961
+(e)🆕🗺🔎⚗⚙🍝📨|C-Feature, A-Mapping, C-Code-Quality, A-Chemistry, A-Internal, A-Catering, A-Logistics
+(+)There is now a plumbed variant of the sink, to be added to maps. Sinks actually touch reagents on you now.
+(u)cringe
+(p)25814
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)There is now a shower and bath compatible with liquid pipes. to be added to maps.
+(u)Egregorious
+(p)25180
+(e)🔎⚙🍝|C-Code-Quality, A-Internal, A-Catering
+(*)Recipes used by the oven and mixer have been internally reworked. Please report any changes in behaviour, nothing should be different.
+(u)Kubius
+(p)25957
+(e)⚖|C-Balance
+(+)Increased the baseline payout range of prototypist requisitions (800-1400 > 3600-5350).
+(u)Cheekybrdy
+(p)25953
+(e)🎨|C-Sprites
+(+)Big Pharmacist now has their own custom backpacks, satchels, winter coats and PDAs. Pharmacists can now be copied by the chameleon outfit.
+(u)JORJ949
+(p)25943
+(e)🎨💊|C-Sprites, A-Medical
+(+)The pharmacist now has their own headset with access to the medical and research lines.
 (t)wed feb 18 26
+(u)Kubius
+(p)25762
+(e)🆕🎨📦📨|C-Feature, C-Sprites, A-Game-Objects, A-Logistics
+(+)The Prototypist requisition that previously rewarded sonic showerheads (which are now in the regular purchase pool with a less hostile noise) will now give you several 6-in-1 multifunction tools.
+(u)JORJ949
+(p)25930
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Airlocks autoclosing is now only disabled if the AI wire was cut, rather than if AI control was disabled. This means airlocks with AI control disabled by default such as Armory, Arrivals and Syndicate will still autoclose.
+(u)JORJ949
+(p)25737
+(e)💅📄📦🧑‍✈️|C-QoL, A-UI, A-Game-Objects, A-Command
+(*)ID Computers now have a button next to the job to set the access on the ID to the job name on the ID. Cannot be used to add accesses the computer does not have in its list of allowed accesses (E.g. setting it to HoS won't add armory or hos office access, but will add all other HoS accesses).
 (u)JORJ949
 (p)25914
 (e)🎨🎩|C-Sprites, A-Clothing

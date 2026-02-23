@@ -1789,7 +1789,7 @@
 /turf/simulated/floor/grime,
 /area/heated_pool)
 "bwk" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -2309,7 +2309,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "bPj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
@@ -5315,7 +5315,7 @@
 /area/station/engine/storage)
 "dTQ" = (
 /obj/decal/cleanable/dirt,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -6761,7 +6761,7 @@
 	},
 /area/research_outpost)
 "eSL" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -7547,7 +7547,7 @@
 	},
 /area/shuttle/sea_elevator_room)
 "frZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -7760,7 +7760,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "fzP" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/random_item_spawner/gross/one_or_zero,
@@ -8298,7 +8298,7 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer/no_teleblock)
 "fVV" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -8638,7 +8638,7 @@
 /area/station/hallway/primary/central)
 "gfg" = (
 /obj/machinery/computer/operating/small,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -8692,7 +8692,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "ghu" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
@@ -8877,7 +8877,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "gmJ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 4
 	},
@@ -10411,7 +10411,7 @@
 	},
 /area/space)
 "hxY" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /obj/random_item_spawner/gross/one_or_zero,
@@ -11585,7 +11585,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
 "iqI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/cable{
@@ -13346,7 +13346,7 @@
 	pixel_y = 11
 	},
 /obj/table/auto,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -14673,7 +14673,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "kyD" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -15670,7 +15670,7 @@
 /obj/machinery/light_switch/west{
 	pixel_x = -30
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -17289,7 +17289,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "mnu" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -20053,7 +20053,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "otO" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 4
 	},
@@ -20737,7 +20737,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "oXq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -23248,7 +23248,7 @@
 	},
 /area/station/security/processing)
 "qLd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
@@ -23504,7 +23504,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "qTd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -29575,7 +29575,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "vmH" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/red/checker,
@@ -30939,7 +30939,7 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "wdz" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/grass/random,
@@ -33245,7 +33245,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "xMj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},

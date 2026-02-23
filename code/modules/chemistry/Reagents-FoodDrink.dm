@@ -41,14 +41,14 @@ datum
 					M.HealDamage("All", 1 * mult, 1 * mult)
 
 				var/datum/db_record/bilked = data_core.bank.find_record("name", M.real_name)
-				if(!isnull(src.counter))
-					bilk_ratio = 1
-				else
-					bilk_ratio = 0.1
-				if(bilked["current_money"] > 0)
-					bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
-				..()
-				return
+				if (istype(bilked))
+					if(!isnull(src.counter))
+						bilk_ratio = 1
+					else
+						bilk_ratio = 0.1
+					if(bilked["current_money"] > 0)
+						bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
+				. = ..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)

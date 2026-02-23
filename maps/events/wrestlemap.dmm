@@ -309,7 +309,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /obj/landmark/start/job/assistant,
@@ -1648,7 +1648,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "aHK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -6081,7 +6081,7 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "cIb" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -7238,7 +7238,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "dmK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /obj/machinery/camera/directional/north{
@@ -8043,7 +8043,7 @@
 /turf/simulated/shuttle/wall/cockpit,
 /area/shuttle/arrival/station)
 "dBi" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /obj/disposalpipe/segment/morgue{
@@ -10264,7 +10264,7 @@
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge/luxury_seating)
 "exZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -10506,7 +10506,7 @@
 /turf/simulated/floor/orange,
 /area/station/engine/storage)
 "eEb" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	tag = "icon-sink (NORTH)"
 	},
@@ -11889,7 +11889,7 @@
 	},
 /area/station/hallway/primary/south)
 "fnd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -15539,7 +15539,7 @@
 	},
 /area/station/security/processing)
 "gXP" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -19552,7 +19552,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "iPR" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -28995,7 +28995,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -29545,7 +29545,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/west)
 "noT" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -32803,7 +32803,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
 "oJQ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -34500,7 +34500,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/redwhite{
@@ -35175,7 +35175,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "pRj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -38704,7 +38704,7 @@
 /turf/space,
 /area/space)
 "rzi" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -38747,7 +38747,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "rzx" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -40187,7 +40187,7 @@
 /turf/simulated/floor/white/grime,
 /area/station/bridge)
 "smR" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -46144,7 +46144,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = -10
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -46430,7 +46430,7 @@
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "vgl" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8
 	},
 /obj/item/device/radio/intercom/catering{
@@ -49603,7 +49603,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary/white,
@@ -50620,7 +50620,7 @@
 	name = "Security Lobby"
 	})
 "wXj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8
 	},
 /turf/simulated/floor/purpleblack{
@@ -52570,7 +52570,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
 "xRd" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8
 	},
 /turf/simulated/floor/white/grime,

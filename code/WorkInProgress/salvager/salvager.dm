@@ -404,6 +404,49 @@
 		if(..())
 			ARC.use_fuel(fuel_cost)
 
+/obj/item/device/pda2/salvager
+	owner = "John Doe"
+	registered = "Unknown"
+	setup_system_os_path = /datum/computer/file/pda_program/os/main_os/knockoff/mess_off
+	setup_default_cartridge = /obj/item/disk/data/cartridge/salvager
+
+	New()
+		..()
+		owner = random_name(prob(51))
+
+/obj/item/disk/data/cartridge/salvager
+	name = "\improper Modified Space Parts & Vendors cartridge"
+	desc = "Perfect for the Salvager on the go!"
+	icon_state = "cart-qm"
+	color = "#53513d"
+
+	New()
+		..()
+		src.root.add_file( new /datum/computer/file/pda_program/scan/magpie_scan(src))
+		src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
+		src.read_only = 1
+
+
+/datum/computer/file/pda_program/scan/magpie_scan
+	name = "Magpie Scan"
+	size = 10
+
+	scan_atom(atom/A as mob|obj|turf|area)
+		var/scan_time = 2.5 SECONDS
+		if(ON_COOLDOWN(master, "scanning", scan_time * 3.5))
+			return
+
+		if (..() || !(istype(A,/obj/item) || istype(A,/obj/machinery)))
+			return
+
+		if(!magpie_man.magpie)
+			CRASH("M4GP13 NOT FOUND")
+
+		animate_scanning(A, . ? "#FFFF00" : "#ff4400", scan_time)
+		sleep(scan_time)
+		. = SPAN_NOTICE("M4GP13 Salvage and Barter System: \"[magpie_man.magpie.appraise_text(A)]\"")
+
+
 /obj/item/storage/box/salvager_frame_compartment
 	name = "electronics frame compartment"
 	desc = "A special compartment designed to neatly and safely store deconstructed electronics and machinery frames."
@@ -677,174 +720,9 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
 	secure_frequencies = list("z" = R_FREQ_SALVAGER)
 
-/obj/salvager_putt_spawner
-	name = "syndiputt spawner"
-	icon = 'icons/obj/ship.dmi'
-	icon_state = "syndi_mini_spawn"
-	New()
-		..()
-#ifdef UNDERWATER_MAP
-		new/obj/machinery/vehicle/tank/minisub/salvsub(src.loc)
-#else
-		new/obj/machinery/vehicle/miniputt/armed/salvager(src.loc)
-#endif
-		qdel(src)
-
-/obj/machinery/vehicle/tank/minisub/salvsub
-	body_type = "minisub"
-	icon_state = "whitesub_body"
-	health = 150
-	maxhealth = 150
-	acid_damage_multiplier = 0.5
-	init_comms_type = /obj/item/shipcomponent/communications/salvager
-	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
-
-	New()
-		..()
-		name = "salvager minisub"
-		src.install_part(null, new /obj/item/shipcomponent/mainweapon/taser(src), POD_PART_MAIN_WEAPON)
-		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
-		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
-
-// MAGPIE Equipment
-/obj/machinery/vehicle/miniputt/armed/salvager
-	desc = "A repeatedly rebuilt and refitted pod.  Looks like it has seen some things."
-	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
-	init_comms_type = /obj/item/shipcomponent/communications/salvager
-
-	health = 250
-	maxhealth = 250
-	armor_score_multiplier = 0.7
-	speedmod = 1.18
-
-	New()
-		..()
-		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
-		myhud.update_systems()
-		myhud.update_states()
-
-/datum/manufacture/pod/armor_light/salvager
-	name = "Salvager Pod Armor"
-	item_requirements = list("metal_dense" = 30,
-							 "conductive" = 20)
-	item_outputs = list(/obj/item/podarmor/salvager)
-	create = 1
-	time = 20 SECONDS
-	category = "Component"
-
-/obj/item/podarmor/salvager
-	name = "Salvager Pod Armor"
-	desc = "Exterior plating for vehicle pods."
-	icon = 'icons/obj/electronics.dmi'
-	icon_state = "dbox"
-	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager,
-						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub )
-
-/obj/item/shipcomponent/communications/salvager
-	name = "Salvager Communication Array"
-	desc = "A rats nest of cables and extra parts fashioned into a shipboard communicator."
-	color = "#91681c"
-	access_type = list(POD_ACCESS_SALVAGER)
-
-	go_home()
-		var/escape_planet
-#ifdef UNDERWATER_MAP
-		escape_planet = !isrestrictedz(ship.z)
-#else
-		escape_planet = !isnull(station_repair.station_generator) && (ship.z == Z_LEVEL_STATION)
-#endif
-
-		if(!escape_planet)
-			return
-
-		var/turf/target = get_home_turf()
-		if(!src.active)
-			boutput(usr, "[ship.ship_message("Sensors inactive! Unable to calculate trajectory!")]")
-			return TRUE
-		if(!target)
-			boutput(usr, "[ship.ship_message("Sensor error! Unable to calculate trajectory!")]")
-			return TRUE
-
-		var/obj/item/shipcomponent/engine/engine_part = ship.get_part(POD_PART_ENGINE)
-		if(!engine_part)
-			boutput(usr, "[ship.ship_message("Engines missing! Unable to calculate trajectory!")]")
-		if(engine_part.active)
-			if(engine_part.ready)
-				//brake the pod, we must stop to calculate warp trajectory.
-				if (istype(ship.movement_controller, /datum/movement_controller/pod))
-					var/datum/movement_controller/pod/MCP = ship.movement_controller
-					if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
-						boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity to calculate trajectory to destination!")]")
-						playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
-						return TRUE
-				else if (istype(ship.movement_controller, /datum/movement_controller/tank))
-					var/datum/movement_controller/tank/MCT = ship.movement_controller
-					if (MCT.input_x != 0 || MCT.input_y != 0)
-						boutput(usr, "[ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate trajectory destination!")]")
-						playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
-						return TRUE
-
-
-				engine_part.warp_autopilot = 1
-				boutput(usr, "[ship.ship_message("Charging engines for escape velocity! Overriding manual control!")]")
-
-				var/health_perc = ship.health_percentage
-				ship.going_home = FALSE
-				sleep(5 SECONDS)
-
-				if(ship.health_percentage < (health_perc - 30))
-					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
-				else if(src.active)
-					var/old_color = ship.color
-					animate_teleport(ship)
-					sleep(0.8 SECONDS)
-					ship.set_loc(target)
-					ship.color = old_color // revert color from teleport color-shift
-				else
-					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Loss of systems!")]")
-
-				engine_part.ready = 0
-				engine_part.warp_autopilot = 0
-				engine_part.ready()
-			else
-				boutput(usr, "[ship.ship_message("Engine recharging! Unable to minimize trajectory error!")]")
-		else
-			boutput(usr, "[ship.ship_message("Engines inactive! Unable to calculate trajectory!")]")
-
-		return TRUE
-
-	get_home_turf()
-		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
-			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
-
-
-/obj/marker/salvager_teleport
-	icon_state = "X"
-	icon = 'icons/misc/mark.dmi'
-	name = "Salvager Teleport Marker"
-	invisibility = INVIS_ALWAYS
-	anchored = ANCHORED
-	opacity = 0
-
-	Crossed(atom/movable/AM)
-		. = ..()
-
-		if(ismob(AM))
-			var/mob/M = AM
-
-			if(M.mind?.get_antagonist(ROLE_SALVAGER))
-				if(length(landmarks[LANDMARK_SALVAGER_TELEPORTER]))
-					SPAWN(0.5 SECONDS)
-						if(src.loc == M.loc)
-							actions.start(new /datum/action/bar/private/salvager_tele(M, null), M)
-				else
-					boutput(M, SPAN_ALERT("Something is wrong..."))
-
 
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
-/obj/salvager_cryotron
-/obj/item/salvager_hand_tele
 /obj/item/device/pda2/salvager
 
