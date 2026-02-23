@@ -11,7 +11,6 @@ TYPEINFO(/obj/item/motherboard)
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 	var/created_name = null //If defined, result computer will have this name.
-	var/integrated_floppy = 1 //Does the resulting computer have a built-in disk drive?
 
 /obj/computer3frame
 	density = 1
@@ -201,7 +200,6 @@ TYPEINFO(/obj/item/motherboard)
 				C.icon_state = src.created_icon_state
 				C.setup_frame_type = src.type
 				if(mainboard.created_name) C.name = mainboard.created_name
-				if(mainboard.integrated_floppy) C.setup_has_internal_disk = 1
 				//qdel(mainboard)
 				mainboard.dispose()
 				if(hd)

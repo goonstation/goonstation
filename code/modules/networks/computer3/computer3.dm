@@ -15,14 +15,12 @@
 	var/datum/computer/file/terminal_program/active_program
 	var/datum/computer/file/terminal_program/host_program //active is set to this when the normal active quits, if available
 	var/list/processing_programs = list()
-	var/obj/item/disk/data/floppy/diskette = null
 	var/list/peripherals = list()
 	var/restarting = 0 //Are we currently restarting the system?
 	var/datum/light/light
 
 	//Does it spawn with a card scanner? (It should, the main os needs one of these now.)
 	var/setup_idscan_path = null
-	var/setup_has_internal_disk = 0 //Do we use that magic disk drive that has no peripheral attached?
 	var/setup_drive_size = 64
 	var/setup_drive_type = null //Use this path for the hd
 	var/setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!
@@ -353,14 +351,6 @@
 	. = list(
 		"ckey" = user.ckey,
 	)
-	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
-		. += list("peripherals" = list(list(
-		"icon" = "save",
-		"card" = "internal",
-		"color" = src.diskette,
-		"contents" = src.diskette,
-		"label" = "Disk",
-		)))
 	for (var/i in 1 to length(src.peripherals)) // originally i had all this stuff in static data, but the buttons didnt update.
 		var/obj/item/peripheral/periph = src.peripherals[i]
 		if(periph.setup_has_badge)
@@ -376,7 +366,7 @@
 	. = list(
 		"displayHTML" = src.temp, // display data
 		"TermActive" = src.active_program, // is the terminal running or restarting
-		"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
+		"fdisk" = null, // I can't do tgui stuff yet, I hope this isn't visible on the window
 		"windowName" = src.name,
 		"user" = user,
 		"fontColor" = src.setup_font_color, // display monochrome values
@@ -444,79 +434,69 @@
 				src.updateUsrDialog()
 		if("buttonPressed")
 			var/obj/item/I = usr.equipped() // how the old code did it
-			if(params["card"] == "internal") // the hacky magic floppy disk reader
-				if(src.diskette)
-					//Ai/cyborgs cannot press a physical button from a room away.
+			//What type of drive are we?
+			if (findtext(params["card"], "/obj/item/peripheral/card_scanner"))
+				//A card drive!
+				var/obj/item/peripheral/card_scanner/dv = src.peripherals[params["index"]]
+				if(dv.authid)
+					usr.put_in_hand_or_eject(dv.authid)
+					dv.authid = null
+				else if(istype(I, /obj/item/card/id))
+					usr.drop_item()
+					I.loc = src
+					dv.authid = I
+				update_static_data(usr)
+
+			else if (findtext(params["card"], "/obj/item/peripheral/drive"))
+				//A disk drive!
+				var/obj/item/peripheral/drive/dv = src.peripherals[params["index"]]
+				if(dv.disk)
+					//Ai/cyborgs cannot press a physical button from a room away. But imagine they could...
 					if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
 						boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 						return
 					for(var/datum/computer/file/terminal_program/P in src.processing_programs)
-						P.disk_ejected(src.diskette)
-					usr.put_in_hand_or_eject(src.diskette)
-					src.diskette= null
-				else if(istype(I,/obj/item/disk/data/floppy))
+						P.disk_ejected(dv.disk)
+					usr.put_in_hand_or_eject(dv.disk)
+					dv.disk = null
+				else if(istype(I, dv.setup_disk_type))
 					usr.drop_item()
 					I.loc = src
-					src.diskette = I
+					dv.disk = I
 				update_static_data(usr)
-			else
-				//What type of drive are we?
-				if (findtext(params["card"], "/obj/item/peripheral/card_scanner"))
-					//A card drive!
-					var/obj/item/peripheral/card_scanner/dv = src.peripherals[params["index"]]
-					if(dv.authid)
-						usr.put_in_hand_or_eject(dv.authid)
-						dv.authid = null
-					else if(istype(I, /obj/item/card/id))
-						usr.drop_item()
-						I.loc = src
-						dv.authid = I
-					update_static_data(usr)
+			else if (findtext(params["card"], "/obj/item/peripheral/cheget_key"))
+				var/obj/item/peripheral/cheget_key/cheget_key = src.peripherals[params["index"]]
+				if (cheget_key.inserted_key)
+					usr.put_in_hand_or_eject(cheget_key.inserted_key)
+					cheget_key.inserted_key = null
+					boutput(usr, SPAN_NOTICE("You turn the key and pull it out of the lock. The green light turns off."))
+					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
+					SPAWN(1 SECOND)
+						if(!cheget_key.inserted_key)
+							src.visible_message(SPAN_ALERT("[src] emits a dour boop and a small red light flickers on."))
+							playsound(src.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
+							var/datum/signal/deauthSignal = get_free_signal()
+							deauthSignal.data = list("authcode"="\ref[src]")
+							cheget_key.send_command("key_deauth", deauthSignal)
 
-				else if (findtext(params["card"], "/obj/item/peripheral/drive"))
-					//A disk drive!
-					var/obj/item/peripheral/drive/dv = src.peripherals[params["index"]]
-					if(dv.disk)
-						usr.put_in_hand_or_eject(dv.disk)
-						dv.disk = null
-					else if(istype(I, dv.setup_disk_type))
-						usr.drop_item()
-						I.loc = src
-						dv.disk = I
-					update_static_data(usr)
-				else if (findtext(params["card"], "/obj/item/peripheral/cheget_key"))
-					var/obj/item/peripheral/cheget_key/cheget_key = src.peripherals[params["index"]]
-					if (cheget_key.inserted_key)
-						usr.put_in_hand_or_eject(cheget_key.inserted_key)
-						cheget_key.inserted_key = null
-						boutput(usr, SPAN_NOTICE("You turn the key and pull it out of the lock. The green light turns off."))
-						playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
-						SPAWN(1 SECOND)
-							if(!cheget_key.inserted_key)
-								src.visible_message(SPAN_ALERT("[src] emits a dour boop and a small red light flickers on."))
-								playsound(src.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
-								var/datum/signal/deauthSignal = get_free_signal()
-								deauthSignal.data = list("authcode"="\ref[src]")
-								cheget_key.send_command("key_deauth", deauthSignal)
-
-					else if(istype(I, /obj/item/device/key/cheget))
-						usr.drop_item()
-						I.loc = src
-						cheget_key.inserted_key = I
-						boutput(usr, SPAN_NOTICE("You insert the key and turn it."))
-						playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
-						SPAWN(1 SECOND)
-							if(cheget_key.inserted_key)
-								src.visible_message(SPAN_ALERT("[src] emits a satisfied boop and a little green light comes on."))
-								playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
-								var/datum/signal/authSignal = get_free_signal()
-								authSignal.data = list("authcode"="\ref[I]")
-								cheget_key.send_command("key_auth", authSignal)
-					else if(istype(I, /obj/item/device/key))
-						boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
-						src.visible_message(SPAN_ALERT("[src] emits a grumpy boop."))
-						playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
-					update_static_data(usr)
+				else if(istype(I, /obj/item/device/key/cheget))
+					usr.drop_item()
+					I.loc = src
+					cheget_key.inserted_key = I
+					boutput(usr, SPAN_NOTICE("You insert the key and turn it."))
+					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
+					SPAWN(1 SECOND)
+						if(cheget_key.inserted_key)
+							src.visible_message(SPAN_ALERT("[src] emits a satisfied boop and a little green light comes on."))
+							playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
+							var/datum/signal/authSignal = get_free_signal()
+							authSignal.data = list("authcode"="\ref[I]")
+							cheget_key.send_command("key_auth", authSignal)
+				else if(istype(I, /obj/item/device/key))
+					boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
+					src.visible_message(SPAN_ALERT("[src] emits a grumpy boop."))
+					playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
+				update_static_data(usr)
 	. = TRUE
 
 /obj/machinery/computer3/updateUsrDialog()
@@ -561,6 +541,7 @@
 				src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer3/attackby(obj/item/W, mob/user)
+	/*
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 		if ((!src.diskette) && src.setup_has_internal_disk)
 			user.drop_item()
@@ -573,8 +554,8 @@
 			boutput(user, SPAN_ALERT("There's already a disk inside!"))
 		else if(!src.setup_has_internal_disk)
 			boutput(user, SPAN_ALERT("There's no visible peripheral device to insert the disk into!"))
-
-	else if (isscrewingtool(W))
+	*/
+	if (isscrewingtool(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
@@ -632,10 +613,6 @@
 		A.peripherals.Add(C)
 		C.uninstalled()
 
-	if(src.diskette)
-		src.diskette.set_loc(src.loc)
-		src.diskette = null
-
 	if(src.hd)
 		src.hd.set_loc(A)
 		A.hd = src.hd
@@ -643,7 +620,6 @@
 
 	A.mainboard = new /obj/item/motherboard(A)
 	A.mainboard.created_name = src.name
-	A.mainboard.integrated_floppy = src.setup_has_internal_disk
 
 
 	A.anchored = ANCHORED
@@ -703,11 +679,6 @@
 		if (hd.loc == src)
 			hd.dispose()
 		hd = null
-
-	if (diskette)
-		if (diskette.loc == src)
-			diskette.dispose()
-		diskette = null
 
 	if (peripherals)
 		for (var/obj/P in peripherals)
@@ -836,15 +807,6 @@
 				src.active_program.initialize()
 
 		else
-			if(src.diskette && src.diskette.root)
-				var/datum/computer/file/terminal_program/os/newos = locate(/datum/computer/file/terminal_program/os) in src.diskette.root.contents
-
-				if(newos && istype(newos))
-					src.temp_add += "Booting from diskette...<br>"
-					src.run_program(newos)
-				else
-					src.temp_add += "<font color=red>Non-system disk or disk error.</font><br>"
-
 			if(!src.host_program && src.hd && src.hd.root)
 				var/datum/computer/file/terminal_program/os/newos = locate(/datum/computer/file/terminal_program/os) in src.hd.root.contents
 
@@ -857,16 +819,18 @@
 			if(!src.host_program)
 				var/success = 0
 				for(var/obj/item/disk/data/D in src)
-					if(D == src.hd || D == src.diskette)
+					if(D == src.hd)
 						continue
 
 					var/datum/computer/file/terminal_program/os/newos = locate() in D.root.contents
 
-					if(istype(newos))
-						src.temp_add += "Booting from peripheral disk...<br>"
+					if(newos && istype(newos))
+						src.temp_add += "Booting from diskette...<br>"
 						success = 1
 						src.run_program(newos)
 						break
+					else
+						src.temp_add += "<font color=red>Non-system disk or disk error.</font><br>"
 
 				if(!success)
 					src.temp_add += "<font color=red>ERR - BOOT FAILURE</font><br>"
@@ -882,15 +846,11 @@
 	if (src.hd)
 		cloneComp.hd = src.hd.clone()
 
-	if (src.diskette)
-		cloneComp.diskette = src.diskette.clone()
-
 	cloneComp.setup_starting_peripheral1 = src.setup_starting_peripheral1
 	cloneComp.setup_starting_peripheral2 = src.setup_starting_peripheral2
 
 	cloneComp.setup_starting_os = null
 	cloneComp.setup_idscan_path = src.setup_idscan_path
-	cloneComp.setup_has_internal_disk = src.setup_has_internal_disk
 
 	cloneComp.setup_font_color = src.setup_font_color
 	cloneComp.setup_bg_color = src.setup_bg_color
@@ -1005,6 +965,7 @@
 		return
 
 	attackby(obj/item/W, mob/user)
+		/*
 		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 			if ((!src.diskette) && src.setup_has_internal_disk)
 				user.drop_item()
@@ -1016,8 +977,9 @@
 				boutput(user, SPAN_ALERT("There's already a disk inside!"))
 			else if(!src.setup_has_internal_disk)
 				boutput(user, SPAN_ALERT("There's no visible peripheral device to insert the disk into!"))
+		*/
 
-		else if (ispryingtool(W))
+		if (ispryingtool(W))
 			if(!src.cell)
 				boutput(user, SPAN_ALERT("There is no energy cell inserted!"))
 				return
