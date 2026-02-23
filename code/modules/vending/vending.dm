@@ -1768,12 +1768,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		//product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 4)
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/card_scanner, 8)
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/powernet_card, 4)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive, 8)
 
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/cart_reader, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/prize_vendor, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/radio, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/tape_reader, rand(1, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/videocard, rand(1, 6), hidden=1)
 
 //cogwerks- adding a floppy disk vendor
 /obj/machinery/vending/floppy
