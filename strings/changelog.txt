@@ -1,4 +1,16 @@
-
+(t)fri sep 12 25
+(u)LeahTheTech
+(+)EMPing an AI core now has a 50% chance to eject them back to their mainframe or forcefully enable text mode for 15 seconds.
+(t)wed sep 10 25
+(u)EmeraldCrow
+(p)24619
+(e)🎨|C-Sprites
+(+)Adds figurines for ovaiggy (Sachie Blunt) and ithebinman (The Mucus Man). Go visit your local figurine dispenser today!
+(t)tue sep 09 25
+(u)cringe
+(p)24624
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)wall igniters now accept mechcomp igniting
 (t)sun sep 07 25
 (u)glowbold
 (p)24594

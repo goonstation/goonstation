@@ -126,7 +126,8 @@ var/global/datum/apiHandler/apiHandler
 		var/headers = list(
 			"Accept" = "application/json",
 			"Content-Type" = "application/json",
-			"Authorization" = config.goonhub_api_token
+			"Authorization" = config.goonhub_api_token,
+			"X-Server-Id" = config.server_id,
 		)
 
 		src.lazy_waiting_counter++

@@ -760,7 +760,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "training_chaplain"
 
 	var/faith = FAITH_STARTING
-	///multiplier for faith gain only - faith losses ignore this
+	/// multiplier for faith gain only - faith losses ignore this
 	var/faith_mult = 1
 
 	New()
@@ -1379,6 +1379,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	onAdd(mob/living/owner)
 		if (istype(owner))
 			owner.remove_lifeprocess(/datum/lifeprocess/faith)
+		// If they're a chaplain, reduce their faith gain rate
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 0.2
 

@@ -44127,7 +44127,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
-/obj/mapping_helper/access/medlab,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/plating/jen,
 /area/station/medical/dome)
 "nKY" = (
