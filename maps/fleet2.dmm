@@ -32868,6 +32868,10 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/bridge/meridian)
+"olO" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/cloner)
 "omn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48238,9 +48242,6 @@
 /area/station/hallway/secondary/central{
 	name = "Limoncello Primary Zone"
 	})
-"uNX" = (
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/cloner)
 "uOC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
@@ -121097,7 +121098,7 @@ wAx
 kXi
 tDR
 fPj
-fHX
+olO
 srj
 ovY
 svS
@@ -121399,7 +121400,7 @@ ffc
 uob
 qMd
 lon
-uNX
+fHX
 sfy
 cAH
 kVi
