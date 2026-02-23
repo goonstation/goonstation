@@ -12954,6 +12954,16 @@
 	dir = 1
 	},
 /area/station/medical/morgue)
+"fBX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/industrial,
+/area/station/hallway/primary/south/hammer)
 "fCa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32705,9 +32715,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/surgery)
-"ogR" = (
-/turf/space,
-/area/station/garden/owlery)
 "ohc" = (
 /obj/disposaloutlet/transit,
 /obj/disposalpipe/trunk/mail/east,
@@ -93845,7 +93852,7 @@ dNB
 qrA
 qrA
 xdv
-qrA
+fBX
 qrA
 qrA
 vEx
@@ -96859,7 +96866,7 @@ qEC
 dTC
 enA
 ihU
-ogR
+kcV
 kcV
 fhZ
 kcV
