@@ -75,6 +75,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	items_in_backpack = list(/obj/item/baguette, /obj/item/instrument/whistle/janitor)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Mime"
+	email_group = MGD_CIVILIAN
 
 /datum/job/special/vice_officer
 	name = "Vice Officer"
@@ -93,6 +94,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security)
 	wiki_link = "https://wiki.ss13.co/Part-Time_Vice_Officer"
+	email_group = MGD_SECURITY
 
 /datum/job/special/forensic_technician
 	name = "Forensic Technician"
@@ -108,6 +110,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_poc1 = list(/obj/item/device/detective_scanner)
 	items_in_backpack = list(/obj/item/tank/pocket/oxygen, /obj/item/reagent_containers/glass/vial/silver_nitrate)
+	email_group = MGD_SECURITY
 
 /datum/job/special/toxins_researcher
 	name = "Toxins Researcher"
@@ -122,6 +125,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_mask = list(/obj/item/clothing/mask/gas)
 	slot_lhan = list(/obj/item/tank/air)
 	slot_ears = list(/obj/item/device/radio/headset/research)
+	email_group = MGD_RESEARCH
 
 /datum/job/special/chemist
 	name = "Chemist"
@@ -135,6 +139,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_ears = list(/obj/item/device/radio/headset/research)
 	wiki_link = "https://wiki.ss13.co/Chemist"
+	email_group = MGD_RESEARCH
 
 /datum/job/special/atmospheric_technician
 	name = "Atmospherish Technician"
@@ -151,6 +156,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	items_in_backpack = list(/obj/item/tank/mini/oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
+	email_group = MGD_ENGINEER
 
 /datum/job/special/comm_officer
 	name = "Communications Officer"
@@ -170,6 +176,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_poc1 = list(/obj/item/pen/fancy)
 	slot_head = list(/obj/item/clothing/head/sea_captain/comm_officer_hat)
 	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/device/flash)
+	email_group = MGD_COMMAND
 
 /datum/job/special/stowaway
 	name = "Stowaway"
@@ -366,6 +373,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
 	items_in_backpack = list(/obj/item/tank/pocket/oxygen,/obj/item/crowbar)
+	email_group = MGD_SUPPLY
 
 /datum/job/special/machoman
 	name = "Macho Man"
@@ -424,6 +432,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	job_category = JOB_DAILY
 	request_limit = 2
 	request_cost = PAY_DOCTORATE*4
+	email_group = MGD_CIVILIAN
 	var/day = ""
 /datum/job/daily/boxer
 	day = "Sunday"
@@ -484,6 +493,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	slot_poc1 = list(/obj/item/cloth/towel/white)
 	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
 	wiki_link = "https://wiki.ss13.co/Jobs#Job_of_the_Day" // no wiki page yet
+	email_group = MGD_CIVILIAN
 
 /datum/job/daily/lawyer
 	day = "Thursday"
@@ -517,6 +527,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	slot_rhan = list(/obj/item/storage/photo_album)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Tourist"
+	email_group = null
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -767,6 +778,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
+	email_group = MGD_MEDICAL
 
 /datum/job/special/performer
 	name = "Performer"
@@ -778,6 +790,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_foot = list(/obj/item/clothing/shoes/dress_shoes)
 	slot_belt = list(/obj/item/device/pda2)
 	items_in_backpack = list(/obj/item/storage/box/box_o_laughs, /obj/item/item_box/assorted/stickers/stickers_limited, /obj/item/currency/spacecash/twothousandfivehundred)
+	email_group = MGD_CIVILIAN
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -799,6 +812,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_back = list(/obj/item/quiver/leather/stocked)
 	slot_belt = list(/obj/item/storage/belt/crossbow)
 	slot_poc1 = list(/obj/item/storage/werewolf_hunter_pouch)
+	email_group = MGD_CIVILIAN
 
 	items_in_belt = list(
 		/obj/item/dagger/silver,

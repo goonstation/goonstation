@@ -14,6 +14,8 @@
 	var/bolted = TRUE
 	/// Can't be broken open with melee
 	var/reinforced = FALSE
+	/// Logging var
+	var/was_unbolted = FALSE
 	var/obj/particle/attack/attack_particle
 
 	New()
@@ -111,6 +113,8 @@
 
 	proc/toggle_bolts(var/mob/user)
 		user.visible_message("<b>[user]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+		if (src.bolted && src.was_unbolted)
+			logTheThing(LOG_STATION, user, "was the first player to unbolt [src] from the ground at [log_loc(src)]")
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
 		logTheThing(LOG_STATION, user, "[src.anchored ? "unanchored" : "anchored"] [log_object(src)] at [log_loc(src)]")

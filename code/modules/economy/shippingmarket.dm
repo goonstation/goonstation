@@ -418,7 +418,7 @@
 				artifact_resupply_amount -= art_amount
 				// message
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([art_amount] objects)")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGD_RESEARCH), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([art_amount] objects)")
 				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 				// make crate
 				var/obj/storage/crate/artcrate = new /obj/storage/crate()
@@ -448,7 +448,7 @@
 				message += "Analysis was incorrect. Misidentified traits: [pap.lastAnalysisErrors]."
 		else
 			message += "Artifact was not analyzed."
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGD_RESEARCH, MGA_SALES), "sender"="00000000", "message"=message)
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	// Returns value of whatever the list of objects would sell for
@@ -540,7 +540,7 @@
 			src.pressure_crystal_sales["[pc.pressure]"] = value
 			var/datum/signal/pdaSignal = get_free_signal() // tell sciv
 			var/message = "Notification: [value] credits earned from outgoing pressure crystal at [pc.pressure] kiloblast. "
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"=message)
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_RESEARCH), "sender"="00000000", "message"=message)
 			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 		return value
@@ -617,7 +617,7 @@
 					var/datum/signal/pdaSignal = get_free_signal()
 					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."
 					if(delivery_code == "REQ-THIRDPARTY") returnmsg = "Notification: Third-party delivery requires physical requisition sheet. Returning as sent."
-					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 					return
@@ -644,10 +644,10 @@
 			wagesystem.shipping_budget += share_NT
 			account["current_money"] += share_seller
 			logTheThing(LOG_STATION, null, "Cargo sale split [share_seller] credits to [scan.registered], whoever that is.")
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
@@ -668,7 +668,7 @@
 			pending_crates.Add(shipped_thing)
 
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
 			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 #else
@@ -699,7 +699,7 @@
 		shipped_thing.set_loc(spawnpoint)
 
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])

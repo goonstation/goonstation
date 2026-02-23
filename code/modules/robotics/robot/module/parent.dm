@@ -16,7 +16,7 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	var/included_tools = /datum/robot/module_tool_creator/recursive/module/common
 	var/included_cosmetic = null
 	var/radio_type = null
-	var/list/mailgroups = list(MGO_SILICON, MGD_PARTY)
+	var/list/mailgroups = list(MGD_SILICON, MGD_PARTY)
 	var/list/alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
 
 /obj/item/robot_module/New()
