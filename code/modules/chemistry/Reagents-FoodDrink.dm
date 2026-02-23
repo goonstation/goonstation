@@ -3051,6 +3051,23 @@ datum
 				M.reagents.add_reagent("salt", 1.25 * src.calculate_depletion_rate(M, mult))
 				..()
 
+		fooddrink/garum
+			name = "garum"
+			id = "garum"
+			description = "A fermented fish sauce that the ancient Romans were massive fans of."
+			reagent_state = LIQUID
+			fluid_r = 104
+			fluid_g = 44
+			fluid_b = 28
+			transparency = 250
+			taste = list("fishy","Umami")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("salt", 0.75 * src.calculate_depletion_rate(M, mult))
+				M.reagents.add_reagent("fishoil", 0.75 * src.calculate_depletion_rate(M, mult))
+				..()
+
+
 		fooddrink/porktonium
 			name = "porktonium"
 			id = "porktonium"
