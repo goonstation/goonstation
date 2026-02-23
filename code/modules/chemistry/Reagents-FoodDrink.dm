@@ -3057,9 +3057,9 @@ datum
 				..()
 
 		fooddrink/garum
-			name = "garum"
-			id = "garum"
-			description = "A fermented fish sauce that the ancient Romans were massive fans of."
+			name = "fish sauce"
+			id = "fish_sauce"
+			description = "A sauce made by fermenting fish in salt, staple in East Asian cuisine."
 			reagent_state = LIQUID
 			fluid_r = 104
 			fluid_g = 44
