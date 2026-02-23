@@ -140,18 +140,18 @@
 		H.mind.store_memory("You've committed the following crimes before arriving on the station:")
 		H.mind.store_memory("- [S["mi_crim"]]")
 		H.mind.store_memory("- [S["ma_crim"]]")
-	else
-		if (H.traitHolder?.hasTrait("training_clown"))
-			S["criminal"] = ARREST_STATE_CLOWN
-			S["mi_crim"] = "Clown"
-			H.update_arrest_icon()
-		else
-			S["criminal"] = ARREST_STATE_NONE
-			S["mi_crim"] = "None"
 
-		S["mi_crim_d"] = "No minor crime convictions."
-		S["ma_crim"] = "None"
-		S["ma_crim_d"] = "No major crime convictions."
+	if (H.traitHolder?.hasTrait("training_clown"))
+		S["criminal"] = ARREST_STATE_CLOWN
+		S["mi_crim"] = "Clown"
+		H.update_arrest_icon()
+	else
+		S["criminal"] = ARREST_STATE_NONE
+		S["mi_crim"] = "None"
+
+	S["mi_crim_d"] = "No minor crime convictions."
+	S["ma_crim"] = "None"
+	S["ma_crim_d"] = "No major crime convictions."
 
 	S["sec_flag"] = "None"
 
