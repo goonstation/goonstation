@@ -1028,7 +1028,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 	setup_starting_os = /datum/computer/file/terminal_program/os/cheget
 	temp = ""
 	setup_idscan_path = null
-	setup_has_internal_disk = 0
+	//setup_has_internal_disk = 0
 	setup_starting_peripheral1 = /obj/item/peripheral/cheget_key
 	setup_starting_peripheral2 = /obj/item/peripheral/cheget_key
 

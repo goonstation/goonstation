@@ -46,7 +46,7 @@
 		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
 		setup_idscan_path = /obj/item/peripheral/card_scanner
-		setup_has_internal_disk = 1
+		//setup_has_internal_disk = 1
 
 		personal
 			name = "Personal Computer"
@@ -244,7 +244,7 @@
 		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
 		setup_idscan_path = /obj/item/peripheral/card_scanner
-		setup_has_internal_disk = 1
+		//setup_has_internal_disk = 1
 		setup_starting_peripheral1 = /obj/item/peripheral/network/omni
 		setup_starting_peripheral2 = /obj/item/peripheral/cell_monitor
 		setup_drive_size = 32
