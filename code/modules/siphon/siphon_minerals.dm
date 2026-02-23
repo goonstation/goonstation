@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 ABSTRACT_TYPE(/datum/harmonic_cycle)
 ///Certain harmonic siphon extraction targets have requirements that change over time; this datum specifies the precise manner in which they change.
 /datum/harmonic_cycle
-	///The minimum time that each cycle persists.
+	///The minimum time in each cycle before "reharmonization", the randomization of specified parameters.
 	var/time_to_shift = 5 MINUTES
 	///Additional persistence time that can be added on randomly with each cycle.
 	var/extra_time_variability = null
@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
 
-//shear of 65 or higher should probably do Bad Things unless precisely set.
+//variable materials
 
 /datum/siphon_mineral/telecrystal
 	name = "Telecrystal"
@@ -276,7 +276,43 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	time_to_shift = 4 MINUTES
 	extra_time_variability = 70 SECONDS
 	shear_min = 70
-	shear_max = 85
+	shear_max = 98
+
+/datum/siphon_mineral/veranium
+	name = "Veranium"
+	tick_req = 110
+	x_torque = 0
+	y_torque = -13
+	shear = 0
+	sens_window = 2
+	product = /obj/item/raw_material/veranium
+	hm_cycle = new /datum/harmonic_cycle/veranium
+
+/datum/harmonic_cycle/veranium
+	time_to_shift = 6 MINUTES
+	extra_time_variability = 50 SECONDS
+	x_torque_min = -61
+	x_torque_max = 61
+	y_torque_min = -19
+	y_torque_max = -13
+
+/datum/siphon_mineral/yuranite
+	name = "Yuranite"
+	tick_req = 120
+	x_torque = 0
+	y_torque = -111
+	shear = 130
+	sens_window = 5
+	product = /obj/item/raw_material/yuranite
+	hm_cycle = new /datum/harmonic_cycle/yuranite
+
+/datum/harmonic_cycle/yuranite
+	time_to_shift = 1 MINUTES
+	extra_time_variability = 12 SECONDS
+	y_torque_min = -70
+	y_torque_max = -110
+
+//high shear special zone
 
 /datum/siphon_mineral/gold
 	name = "Gold"

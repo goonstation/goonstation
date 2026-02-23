@@ -25,39 +25,39 @@ TYPEINFO(/obj/item/device/calibrator)
 			var/found_a_siphon = FALSE
 			for_by_tcl(a_siphon, /obj/machinery/siphon/core)
 				if (IN_RANGE(user,a_siphon,40))
-					if(!found_a_siphon) //only do this once, in case for some future reason there is multiple siphon
-						boutput(user,"<b>[src]</b> locates a compatible harmonic field and gathers cyclical data.")
+					if(a_siphon.field_dilation)
+						boutput(user,SPAN_ALERT("<b>ADVISORY: FIELD DILATION DETECTED</b>"))
+						boutput(user,SPAN_SUBTLE("Provided estimates are adjusted for dilation. Accuracy may be diminished."))
+					else if(!found_a_siphon) //do this once if we haven't done it already; skip it if we have a dilation warning
+						boutput(user,"<b>[src]</b> scans the local harmonic field.")
 						user.playsound_local(src, 'sound/machines/scan2.ogg', 25, 0, 0, 0.6)
 					found_a_siphon = TRUE
 					var/cycles_identified = 0
 					for (var/datum/siphon_mineral/M in a_siphon.cyclical_targets)
 						cycles_identified++
-						boutput(user,"<h4>Cyclical field reading <b>[cycles_identified]<b></h4>")
 
-						if(M.x_torque)
-							boutput(user,SPAN_NOTICE("* Lateral resonance peaking at alignment <b>[M.x_torque]</b>"))
-						else
-							boutput(user,SPAN_NOTICE("* <b>No</b> lateral resonance component identified"))
+						var/lateral_text = "<b>No</b> lateral axis response"
+						var/vertical_text = "<b>No</b> vertical axis response"
+						if(M.x_torque) lateral_text = "Lateral peak at <b>[M.x_torque]</b>"
+						if(M.y_torque) vertical_text = "Vertical peak at <b>[M.y_torque]</b>"
 
-						if(M.y_torque)
-							boutput(user,SPAN_NOTICE("* Vertical resonance peaking at alignment <b>[M.y_torque]</b>"))
-						else
-							boutput(user,SPAN_NOTICE("* <b>No</b> vertical resonance component identified"))
-
+						var/shear_string = SPAN_NOTICE("<b>No</b> shear response identified")
 						if(M.shear)
-							boutput(user,SPAN_NOTICE("* Field shear response ideal at intensity of <b>[M.shear]</b>"))
-						else
-							boutput(user,SPAN_NOTICE("* <b>No</b> shear response identified"))
-
+							shear_string = SPAN_NOTICE("Field cohesion optimal at <b>[M.shear]</b> shear")
+						var/time_string = SPAN_ALERT("Reharmonization <b>imminent</b>")
 						var/shift_delta = max((M.hm_cycle.last_shifted + M.hm_cycle.current_shift_length) - TIME,0)
+						if (a_siphon.field_dilation)
+							var/dilation_factor = 1 - (1 / (1 + 0.001 * a_siphon.field_dilation))
+							shift_delta = shift_delta + (shift_delta * dilation_factor)
 						if (shift_delta > 150 SECONDS)
 							var/adjusted_time = round(shift_delta / 600,1)
-							boutput(user,SPAN_ALERT("Next resonant shift expected in approximately <b>[adjusted_time] minutes</b>"))
+							time_string = SPAN_ALERT("Reharmonization in approx. <b>[adjusted_time] minutes</b>")
 						else if(shift_delta > 0)
 							var/adjusted_time = round(shift_delta / 10,1)
-							boutput(user,SPAN_ALERT("Next resonant shift expected in approximately <b>[adjusted_time] seconds</b>"))
-						else
-							boutput(user,SPAN_ALERT("Next resonant shift <b>imminent</b>"))
+							time_string = SPAN_ALERT("Reharmonization in approx. <b>[adjusted_time] seconds</b>")
+
+						boutput(user,SPAN_NOTICE("<b>READING [cycles_identified]</b> | [lateral_text] | [vertical_text]"))
+						boutput(user,"[shear_string] | [time_string]")
 
 			if(!found_a_siphon)
 				boutput(user,SPAN_ALERT("[src] can't detect a compatible harmonic field nearby."))
@@ -196,6 +196,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/y_torque = 0
 	var/shear = 0
 
+	///field dilation factor - for cyclical siphon targets. extends the "lifespan" before they cycle
+	var/field_dilation = 0
+
 	///total intensity of all connected resonators; increases power draw and production progress per tick
 	var/resofactor = 0
 
@@ -249,9 +252,21 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			. += " It's holding [quant] units of material."
 
 	process(var/mult)
-		//Handle any variation on our cyclical extraction targets, regardless of power
+		if (status & NOPOWER)
+			return
+		total_draw = 200
+		var/doing_dilation = FALSE
+		//Handle any cyclical targets we've got, reharmonizing them if it's time to do so
 		for(var/datum/siphon_mineral/mineral in src.cyclical_targets)
+			if(src.field_dilation)
+ 				//if we have a dilation source, move the "last shifted" time forwards
+				doing_dilation = TRUE
+				var/our_delta = TIME - src.last_process
+				var/dilation_factor = 1 - (1 / (1 + 0.001 * src.field_dilation)) //1 dilation is 0.1%, 100% strength provides a 50% refund
+				mineral.hm_cycle.last_shifted += floor(our_delta * dilation_factor)
+
 			var/shift_delta = (mineral.hm_cycle.last_shifted + mineral.hm_cycle.current_shift_length) - TIME
+
 			if(shift_delta < 0)
 				if(mineral.hm_cycle.x_torque_max != null)
 					mineral.x_torque = rand(mineral.hm_cycle.x_torque_min,mineral.hm_cycle.x_torque_max)
@@ -264,9 +279,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					mineral.hm_cycle.current_shift_length += rand(0,mineral.hm_cycle.extra_time_variability)
 				mineral.hm_cycle.last_shifted = TIME
 
-		if (status & NOPOWER)
-			return
-		total_draw = 200
+		if(src.mode == "low" && doing_dilation) //a continual draw is necessary to maintain field dilation
+			total_draw += min(800,0.2 * src.field_dilation) * src.resofactor
 		if(src.mode == "active")
 			total_draw += 800 * src.resofactor
 			src.extract_ticks += src.resofactor
@@ -536,6 +550,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	proc/disengage_drill()
 		if(src.toggling || src.mode == "high") return
+		src.field_dilation = 0
 		src.extract_ticks = 0
 		src.toggling = TRUE
 		src.changemode("high")
@@ -558,6 +573,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.x_torque = 0
 		src.y_torque = 0
 		src.resofactor = 0
+		src.field_dilation = 0
 		var/xt_absolute //total absolute x torque in this pass, used for shear calculation
 		var/yt_absolute //total absolute y torque in this pass, used for shear calculation
 		var/shear_adjust = 0 //rolling counter for special shear adjustments from individual resonators
@@ -571,6 +587,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.y_torque += y_torqueup
 			yt_absolute += abs(y_torqueup)
 			if(res.shearmod) shear_adjust += res.shearmod * res.intensity
+			if(res.field_dilation) src.field_dilation += res.field_dilation * res.intensity
 
 		src.shear = max(0,(xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque)) + shear_adjust)
 
@@ -603,6 +620,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		devdat["Lateral Resonance"] = src.x_torque
 		devdat["Vertical Resonance"] = src.y_torque
 		devdat["Shear Value"] = src.shear
+		if(src.field_dilation) //don't even add the field if people aren't engaging with the advanced mechanics
+			var/round_readout = floor(src.field_dilation * 0.1)
+			var/round_readout_B = src.field_dilation % 10
+			devdat["Field Dilation"] = "[round_readout].[round_readout_B]%"
 		return devdat
 
 	proc/clear_siphon_console()
@@ -639,6 +660,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/wrenched = FALSE
 	///true when front panel is open (done for repairs; operating resonator while its front panel is open can end poorly)
 	var/panelopen = FALSE
+	///dangerous resonator; will always fail catastrophically if it receives a power surge
+	var/always_catastrophic = FALSE
 
 	///intensity scalar from 0 to max (4 for base model), increasing power draw and resonance strength
 	var/intensity = 1
@@ -650,6 +673,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/y_torque = 0
 	///modifier to total shear value AFTER regular shear calculation; can change dynamically as long as it's set before calibrate_resonance
 	var/shearmod = 0
+	///modifier for cycle time of the variable-parameter extraction targets - 1 is "one percent strength"
+	var/field_dilation = 0
 	///glowy light, should vary in intensity based on resonator power level
 	var/datum/light/light
 	///formatted coordinates for reporting to central console
@@ -766,7 +791,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.disengage_lock()
 		else //disengage lock includes fx update of its own
 			src.update_fx()
-		if(catastrophic)
+		if(catastrophic || src.always_catastrophic)
 			src.visible_message(SPAN_ALERT("[src] explodes!"))
 			new /obj/effects/explosion(src.loc)
 			playsound(src, 'sound/effects/Explosion1.ogg', 50, TRUE)
@@ -841,7 +866,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			resactive.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(resactive, "locked", 0, 1)
 			if(src.intensity > 0)
-				src.light.set_brightness(0.15 * src.intensity)
+				src.light.set_brightness(0.3 * (src.intensity / src.max_intensity) + 0.05 * src.intensity)
 				src.light.enable()
 			else
 				src.light.disable()
@@ -883,7 +908,6 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	name = "\improper Type-SM siphon resonator"
 	desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
 	icon_state = "stab-closed"
-	density = 1
 	regular_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
 	wrenched_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon. It's been manually secured to the floor."
 	max_intensity = 3
@@ -900,6 +924,37 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		devdat["Intensity"] = src.intensity
 		devdat["Maximum Intensity"] = src.max_intensity
 		devdat["Shear Modifier"] = src.shearmod * src.intensity
+		return devdat
+
+//field dilation resonator, slows down cycle time and wreaks havoc on the lateral and vertical resonance
+/obj/machinery/siphon/resonator/field_dilation
+	name = "\improper Type-FQ siphon resonator"
+	desc = "A prototype field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
+	icon_state = "fq-closed"
+	regular_desc = "A prototype field-emitting device used to delay resonant-field reharmonization. Something about it seems ominous."
+	wrenched_desc = "A prototype field-emitting device used to delay resonant-field reharmonization. It's been manually secured to the floor."
+	field_dilation = 6
+	max_intensity = 7
+	resclass = "fq"
+	netname = "RES_FQ"
+	always_catastrophic = TRUE
+
+	torque_init(var/xadj,var/yadj)
+		//lateral torque is 5 at point blank, decreasing by 2 per distance (can intentionally invert)
+		//vertical torque is 1 at point blank, INCREASING by 1 per distance
+		src.x_torque = sign(xadj) * 7 - (2 * xadj)
+		src.y_torque = yadj
+
+	build_readouts()
+		var/list/devdat = list()
+		devdat["Device Position"] = src.formatted_coords
+		devdat["Intensity"] = src.intensity
+		devdat["Maximum Intensity"] = src.max_intensity
+		var/round_readout = floor(src.field_dilation * src.intensity * 0.1)
+		var/round_readout_B = (src.field_dilation * src.intensity) % 10
+		devdat["Field Dilation"] = "[round_readout].[round_readout_B]%"
+		devdat["Lateral Resonance"] = src.x_torque * src.intensity
+		devdat["Vertical Resonance"] = src.y_torque * src.intensity
 		return devdat
 
 #undef RESONATOR_CABLE_REPAIR_COST
