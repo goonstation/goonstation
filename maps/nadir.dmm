@@ -48206,6 +48206,10 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/item/paper/manufacturer_blueprint/resonator_type_fq{
+	pixel_x = -5;
+	pixel_y = 2
+	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "vuc" = (
