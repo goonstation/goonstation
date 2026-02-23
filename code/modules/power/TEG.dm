@@ -1417,20 +1417,15 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 			if (TEG_SEMI_STATE_DISCONNECTED)
 				if (the_tool != null)
-					the_tool.amount -= 4
-					if(the_tool.amount <= 0)
-						qdel(the_tool)
-					else if(istype(the_tool, /obj/item/cable_coil))
-						var/obj/item/cable_coil/C = the_tool
-						C.UpdateIcon()
-
-					generator.semiconductor_state = TEG_SEMI_STATE_CONNECTED
-					boutput(owner, SPAN_NOTICE("You wire up the semicondoctor to \the [generator]."))
-					logTheThing(LOG_STATION, owner, "fixed the TEG by re-wiring the semiconductor.")
-					playsound(generator, 'sound/items/Deconstruct.ogg', 80, TRUE)
-					generator.semiconductor_repair = "The semiconductor has been wired in but has excess cable that must be removed."
-					generator.status &= ~BROKEN // SEMICONDUCTOR RECONNECTED IT UNBROKEN
-					generator.UpdateIcon()
+					var/obj/item/cable_coil/coil = the_tool
+					if (coil.use(4))
+						generator.semiconductor_state = TEG_SEMI_STATE_CONNECTED
+						boutput(owner, SPAN_NOTICE("You wire up the semicondoctor to \the [generator]."))
+						logTheThing(LOG_STATION, owner, "fixed the TEG by re-wiring the semiconductor.")
+						playsound(generator, 'sound/items/Deconstruct.ogg', 80, TRUE)
+						generator.semiconductor_repair = "The semiconductor has been wired in but has excess cable that must be removed."
+						generator.status &= ~BROKEN // SEMICONDUCTOR RECONNECTED IT UNBROKEN
+						generator.UpdateIcon()
 
 			if (TEG_SEMI_STATE_CONNECTED)
 				generator.semiconductor_state = TEG_SEMI_STATE_UNSCREWED

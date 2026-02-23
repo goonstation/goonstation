@@ -1574,6 +1574,16 @@
 	create = 1
 	category = "Component"
 	apply_material = TRUE
+	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
+
+	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+		..()
+		if(istype(A, /obj/item/parts/robot_parts/arm))
+			var/obj/item/parts/robot_parts/arm/new_arm = A
+			if(roboprint)
+				new_arm.limb_print = roboprint
+			else
+				roboprint = new_arm.limb_print
 
 /datum/manufacture/full_cyborg_light
 	name = "Light Cyborg Parts"
@@ -1585,6 +1595,16 @@
 	create = 1
 	category = "Component"
 	apply_material = TRUE
+	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
+
+	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+		..()
+		if(istype(A, /obj/item/parts/robot_parts/arm))
+			var/obj/item/parts/robot_parts/arm/new_arm = A
+			if(roboprint)
+				new_arm.limb_print = roboprint
+			else
+				roboprint = new_arm.limb_print
 
 /datum/manufacture/robo_chest
 	name = "Cyborg Chest"
@@ -2546,6 +2566,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 15 SECONDS
 	category = "Tool"
+
+/datum/manufacture/breach_pouch
+	name = "Mining charge pouch"
+	item_requirements = list("fabric" = 10,
+							 "metal_dense" = 2)
+	item_outputs = list(/obj/item/storage/breach_pouch)
+	create = 1
+	time = 15 SECONDS
+	category = "Clothing"
 
 /datum/manufacture/jetpack
 	name = "Jetpack"

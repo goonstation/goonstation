@@ -22,7 +22,6 @@
 	roundManagement = new()
 	participationRecorder = new()
 	antagWeighter = new()
-	if (!chui) chui = new()
 
 	station_name() // generate station name and set it
 

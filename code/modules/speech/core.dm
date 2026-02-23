@@ -31,7 +31,7 @@ TYPEINFO(/atom)
 	/// Whether this atom should allow messages to pass from its loc to its contents and vice versa.
 	var/open_to_sound = TRUE
 	/// Determines how greatly this atom affects the styling of a message spoken inside of it. See `LISTEN_INPUT_EARS`.
-	var/soundproofing = 5
+	var/soundproofing = SOUNDPROOFING_INSIDE
 
 	// Speech Output Variables:
 	/// The default channel that this atom will attempt to send unprefixed say messages to.

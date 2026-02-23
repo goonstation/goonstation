@@ -501,8 +501,6 @@ TYPEINFO(/obj/item/interdictor_board)
 		if (canbuild)
 			boutput(user, SPAN_NOTICE("You empty the box of parts onto the floor."))
 			var/obj/frame = new /obj/interdictor_frame( get_turf(user) )
-			frame.fingerprints = src.fingerprints
-			frame.fingerprints_full = src.fingerprints_full
 			frame.forensic_holder = src.forensic_holder
 			qdel(src)
 
@@ -680,20 +678,13 @@ TYPEINFO(/obj/item/interdictor_board)
 			itdr.desc = "A semi-complete frame for a spatial interdictor. Its power cell compartment is empty."
 			return
 		if (itdr.state == 4) //all components > all components and wired
-			itdr.state = 5
-			itdr.icon_state = "interframe-5"
-			boutput(owner, SPAN_NOTICE("You finish wiring together the interdictor's systems."))
-			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, TRUE)
-
-			the_tool.amount -= 4
-			if (the_tool.amount < 1)
-				var/mob/source = owner
-				source.u_equip(the_tool)
-				qdel(the_tool)
-			else if(the_tool.inventory_counter)
-				the_tool.inventory_counter.update_number(the_tool.amount)
-
-			itdr.desc = "A nearly-complete frame for a spatial interdictor. Its wire terminals haven't been secured."
+			var/obj/item/cable_coil/coil = the_tool
+			if (coil.use(4))
+				itdr.state = 5
+				itdr.icon_state = "interframe-5"
+				boutput(owner, SPAN_NOTICE("You finish wiring together the interdictor's systems."))
+				playsound(itdr, 'sound/items/Deconstruct.ogg', 40, TRUE)
+				itdr.desc = "A nearly-complete frame for a spatial interdictor. Its wire terminals haven't been secured."
 			return
 		if (itdr.state == 5) //all components and wired > all components and secured
 			itdr.state = 6

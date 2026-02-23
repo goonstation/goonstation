@@ -41,14 +41,14 @@ datum
 					M.HealDamage("All", 1 * mult, 1 * mult)
 
 				var/datum/db_record/bilked = data_core.bank.find_record("name", M.real_name)
-				if(!isnull(src.counter))
-					bilk_ratio = 1
-				else
-					bilk_ratio = 0.1
-				if(bilked["current_money"] > 0)
-					bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
-				..()
-				return
+				if (istype(bilked))
+					if(!isnull(src.counter))
+						bilk_ratio = 1
+					else
+						bilk_ratio = 0.1
+					if(bilked["current_money"] > 0)
+						bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
+				. = ..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
@@ -857,6 +857,11 @@ datum
 					if (isrestrictedz(mob_turf?.z))
 						boutput(M, SPAN_NOTICE("You feel strange. Almost a sense of guilt."))
 						return
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.shoes?.magnetic)
+							boutput(H, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
+							return
 					var/telerange = 10
 					elecflash(M,power=2)
 					var/list/randomturfs = new/list()

@@ -1,4 +1,199 @@
 
+(t)sun feb 22 26
+(u)Lord_Earthfire
+(p)25716
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)Stains of any kind won't magically vanish on assemblies while being manipulated.
+(u)bork and Pirate-Rob
+(p)25984
+(e)🎨|C-Sprites
+(*)Resprites all the gene/ability icons! Sprites by Pirate-Rob!
+(u)QuiteLiterallyAnything
+(p)25443
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The gene booth's locking and price adjustment menu now only appears when the booth is hit with an ID.
+(u)Pirate-Rob
+(p)25982
+(e)🎨|C-Sprites
+(+)Electronics now have in-hand icons.
+(t)sat feb 21 26
+(u)LeahTheTech
+(+)Possessed objects now respect item specific click delays.
+(u)glowbold
+(p)25933
+(e)⚖🧛🐁|C-Balance, A-Gamemodes, A-Critters
+(*)Dead bodies and the paralyzed only twitch if physically hit.
+(*)Changeling "Regenerative Stasis" ability acts as dead for hit-twitches.
+(+)Changeling "Regenerative Stasis" ability prevents forced emotes while faking death.
+(t)thu feb 19 26
+(u)cringe
+(p)25961
+(e)🆕🗺🔎⚗⚙🍝📨|C-Feature, A-Mapping, C-Code-Quality, A-Chemistry, A-Internal, A-Catering, A-Logistics
+(+)There is now a plumbed variant of the sink, to be added to maps. Sinks actually touch reagents on you now.
+(u)cringe
+(p)25814
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)There is now a shower and bath compatible with liquid pipes. to be added to maps.
+(u)Egregorious
+(p)25180
+(e)🔎⚙🍝|C-Code-Quality, A-Internal, A-Catering
+(*)Recipes used by the oven and mixer have been internally reworked. Please report any changes in behaviour, nothing should be different.
+(u)Kubius
+(p)25957
+(e)⚖|C-Balance
+(+)Increased the baseline payout range of prototypist requisitions (800-1400 > 3600-5350).
+(u)Cheekybrdy
+(p)25953
+(e)🎨|C-Sprites
+(+)Big Pharmacist now has their own custom backpacks, satchels, winter coats and PDAs. Pharmacists can now be copied by the chameleon outfit.
+(u)JORJ949
+(p)25943
+(e)🎨💊|C-Sprites, A-Medical
+(+)The pharmacist now has their own headset with access to the medical and research lines.
+(t)wed feb 18 26
+(u)Kubius
+(p)25762
+(e)🆕🎨📦📨|C-Feature, C-Sprites, A-Game-Objects, A-Logistics
+(+)The Prototypist requisition that previously rewarded sonic showerheads (which are now in the regular purchase pool with a less hostile noise) will now give you several 6-in-1 multifunction tools.
+(u)JORJ949
+(p)25930
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Airlocks autoclosing is now only disabled if the AI wire was cut, rather than if AI control was disabled. This means airlocks with AI control disabled by default such as Armory, Arrivals and Syndicate will still autoclose.
+(u)JORJ949
+(p)25737
+(e)💅📄📦🧑‍✈️|C-QoL, A-UI, A-Game-Objects, A-Command
+(*)ID Computers now have a button next to the job to set the access on the ID to the job name on the ID. Cannot be used to add accesses the computer does not have in its list of allowed accesses (E.g. setting it to HoS won't add armory or hos office access, but will add all other HoS accesses).
+(u)JORJ949
+(p)25914
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)The clown's headset now has its own icon and the blue clown has more blue versions of the clown's gear.
+(u)LeahTheTech
+(+)Pharmacists now have access to all doctor and chemistry related traitor items.
+(t)tue feb 17 26
+(u)LorrMaster
+(p)24879
+(e)🔄🚨⚗🤖🍝🔬💡🚗👮🛠️|C-Rework, A-Admin, A-Chemistry, A-Silicons, A-Catering, A-Science, A-Station-Systems, A-Vehicles, A-Security, A-Engineering
+(*)Fingerprints have been rewritten and are now based on the current arm(s) instead of the mob themselves.
+(*)Partial fingerprints can be revealed using silver nitrate, varies depending on the type of glove.
+(+)A bottle of silver nitrate can be found in forensics carts.
+(u)Sord
+(p)25932
+(e)🗺🎨💊📨|A-Mapping, C-Sprites, A-Medical, A-Logistics
+(*)New permanent medical job: Pharmacist
+(+)Pharmacist gets access to the restricted medicine locker and crate, locker moved out of mdir office
+(+)Medical doctors no longer have pharmacy access
+(t)mon feb 16 26
+(u)Ikea
+(p)25903
+(e)💅💊|C-QoL, A-Medical
+(+)IV bags can now be sliced open with snipping tools such as wirecutters or scissors.
+(u)TheGeneralJay
+(p)25863
+(e)🗺💅|A-Mapping, C-QoL
+(+)Clarion's morgue has been given a makeover.
+(t)sun feb 15 26
+(u)Cheekybrdy
+(p)25908
+(e)🧛|A-Gamemodes
+(+)BR has more azone loot available in it.
+(u)JORJ949
+(p)25878
+(e)🗺⚖🧛|A-Mapping, C-Balance, A-Gamemodes
+(*)The listening post is no longer accessless once opened. Instead the doors become syndicate access and destroyable.
+(t)sat feb 14 26
+(u)Lord_Earthfire
+(p)25896
+(e)⚖🧱|C-Balance, A-Materials
+(+)The output of agent b of molitz beta crystals was increased by around 150%.
+(u)glowbold
+(p)25822
+(e)🆕🗺⚖🔄💊🔨🚗|C-Feature, A-Mapping, C-Balance, C-Rework, A-Medical, A-Player-Actions, A-Vehicles
+(+)You can escape from being buried alive by moving and flipping.
+(t)fri feb 13 26
+(u)Smallsandman
+(p)25410
+(e)🗺|A-Mapping
+(*)Redesigned oshan labs interrogation room.
+(u)CelineTheYeen
+(p)25381
+(e)🗺|A-Mapping
+(+)The North East maintenance tunnels on Oshan have been redesigned.
+(u)Sord
+(+)The syndicate trash cart and hotdog cart can now be escaped within the first 5 seconds.
+(+)Both syndicate carts now take 10 seconds to kill and are much more loud about it
+(u)Sord
+(p)25891
+(e)🗺❗|A-Mapping, E-FUCK
+(*)Remapped a large amount of disposal/mail/transport pipes on Oshan. Bug report if any mail pipes don't correctly route mail.
+(u)QuiteLiterallyAnything
+(p)25414
+(e)🆕💅🛠️|C-Feature, C-QoL, A-Engineering
+(*)MechComp devices can now have their settings copied to others of the same type via the menu they display when hit with a multitool.
+(t)thu feb 12 26
+(u)Ikea
+(p)25757
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)The bucket hat, flat cap, poncho and shirt, blue hawaiian shirt's, and the dirty vest have been removed from the security clothing vendor. The bucket hat is now in the fish gear vendor and the rest and the max payne hawaiian shirt are in the clothing booth. There is a new sec themed Hawaiian shirt in the sec clothing vendor.
+(u)Ribbie & Telareti
+(p)25619
+(e)🎨|C-Sprites
+(*)Added three new hairs: Scorpion Braids, Scorpion Braids: Alternating, Bangs: Scorpion.
+(u)LorrMaster
+(p)25645
+(e)🆕🧱|C-Feature, A-Materials
+(+)A bunch of items that should be made of rubber now use synthrubber as their default material.
+(u)Smallsandman
+(p)25887
+(e)🗺|A-Mapping
+(*)Added krimpus to Kondaru, No longer is she on vacation (or missing).
+(u)Smallsandman
+(p)25325
+(e)🗺|A-Mapping
+(*)Moves Oshan Laboratories Evidence room.
+(u)SkinChangerDev
+(p)25725
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Added a new gimmick job, the Computer Operator, along with an associated PDA and Laptop
+(u)Chasu
+(p)25720
+(e)💅⚗|C-QoL, A-Chemistry
+(+)The ChemiCompiler will now say its text output out loud
+(u)TDHooligan
+(p)25745
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)You can now be hit by 5 razorbill bullets a second, up from 3.
+(u)TheGeneralJay
+(p)25801
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)Traitor and sleeper agent preferences have been separated.
+(+)Sleeper preferences will take priority when a sleeper event is called, but will fall back on traitor preferences if there are no available sleeper candidates.
+(t)tue feb 10 26
+(u)Cheekybrdy
+(p)25840
+(e)🗺💡|A-Mapping, A-Station-Systems
+(+)Cog1's gravity tether is now in the engineering hangar.
+(u)glowbold
+(p)25872
+(e)⚗🔬🚗|A-Chemistry, A-Science, A-Vehicles
+(*)Magnet boots are more resistant to teleportation. This is both a buff and a nerf.
+(t)sun feb 08 26
+(u)JORJ949
+(p)25795
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Electromagnetic cards can now be emagged to make them return like boomerangs when thrown.
+(u)cringe
+(p)25800
+(e)🎨🔧📦|C-Sprites, A-Tooling, A-Game-Objects
+(+)adds supply and waste fluid pipes. not in any map currently.
+(t)fri feb 06 26
+(u)Ribbie
+(p)25677
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)No more observing yourself.
+(u)Ikea
+(p)25772
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(*)Mining charge pouches can now be printed from the mining fabricator
 (t)thu feb 05 26
 (u)glowbold & c
 (p)25091

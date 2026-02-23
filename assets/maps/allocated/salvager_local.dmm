@@ -1,0 +1,2036 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"aO" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/item/tank/jetpack{
+	pixel_x = 5;
+	pixel_y = 15
+	},
+/obj/item/tank/jetpack{
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"bU" = (
+/obj/decal/cleanable/robot_debris/gib,
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"cl" = (
+/obj/landmark/salvager_spawn,
+/turf/unsimulated/floor/industrial,
+/area/salvager)
+"ev" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/machinery/light/emergencyflashing{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager/pod)
+"eE" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/small/sticky/cool{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"eZ" = (
+/obj/landmark/salvager_spawn,
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"gd" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/salvager)
+"gA" = (
+/obj/decal/poster/wallsign/stencil/left/m{
+	pixel_y = 40
+	},
+/obj/decal/poster/wallsign/stencil/right/a{
+	pixel_y = 40
+	},
+/obj/machinery/microwave{
+	dirty = 1;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"hc" = (
+/obj/newmeteor/small,
+/turf/space,
+/area/salvager_space)
+"he" = (
+/obj/machinery/light/small/sticky/cool{
+	dir = 8;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"hz" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/brute{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/item_box/medical_patches/styptic{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"hC" = (
+/obj/table/round/auto,
+/obj/item/robot_foodsynthesizer/salvager{
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"hF" = (
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "salvager-pod";
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/industrial,
+/area/salvager)
+"hP" = (
+/turf/unsimulated/floor/plating,
+/area/salvager/pod)
+"iO" = (
+/obj/machinery/light/small/floor/cool/very,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"iQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/machinery/r_door_control/salvager{
+	pixel_x = -22
+	},
+/obj/salvager_putt_spawner,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"jd" = (
+/obj/table/auto,
+/obj/machinery/light/small/sticky/cool{
+	dir = 1
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/item_box/medical_patches/mini_synthflesh{
+	pixel_x = 12;
+	pixel_y = 8
+	},
+/obj/item/item_box/medical_patches/mini_synthflesh{
+	pixel_x = 18
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/item_box/medical_patches/styptic{
+	pixel_x = -10;
+	pixel_y = 2
+	},
+/obj/item/item_box/medical_patches/styptic{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"jj" = (
+/obj/table/round/auto,
+/obj/machinery/coffeemaker{
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"jk" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/bottle/antirad{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/bottle/ethanol{
+	pixel_x = 5;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/bottle/ether{
+	pixel_x = -2
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"jx" = (
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"jJ" = (
+/obj/machinery/light/small/sticky/cool{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"kc" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"kq" = (
+/obj/table/auto,
+/obj/item/deployer/barricade/barbed/wire,
+/obj/item/breaching_hammer,
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"lh" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"lu" = (
+/obj/machinery/light/small/sticky/cool{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"lT" = (
+/obj/marker/supplymarker,
+/obj/machinery/light/small/floor/broken,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"lU" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/salvager_putt_spawner,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"lY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"mq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/table/round/auto,
+/obj/item/shipcomponent/communications/salvager{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/shipcomponent/communications/salvager,
+/obj/random_item_spawner/tools/maybe_few,
+/obj/item/cable_coil/brown,
+/obj/machinery/light/small/sticky/cool{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"nq" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/obj/singularity.dmi';
+	icon_state = "TheSingMain";
+	name = "cloaking field"
+	},
+/area/salvager_space)
+"nN" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/salvager_space)
+"pk" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"pC" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/bottle/ammonia{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/bottle/eyedrops{
+	pixel_x = -3;
+	pixel_y = 2;
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/syringe/insulin{
+	rand_pos = 1
+	},
+/obj/machinery/light/small/sticky/cool{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"pP" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 4
+	},
+/area/salvager)
+"qe" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 5
+	},
+/area/salvager)
+"qR" = (
+/obj/storage/crate,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"qT" = (
+/obj/npc/trader/salvager,
+/turf/unsimulated/floor/engine/caution/misc{
+	dir = 8
+	},
+/area/salvager)
+"rl" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/item/tank/jetpack{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/tank/jetpack{
+	pixel_y = 3
+	},
+/obj/item/tank/jetpack{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"sE" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/obj/machinery/light/emergencyflashing,
+/turf/unsimulated/floor/plating,
+/area/salvager/pod)
+"sG" = (
+/obj/decal/cleanable/dirt/dirt2{
+	dir = 8
+	},
+/obj/machinery/manufacturer/uniform/salvager,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"sI" = (
+/obj/item/storage/wall/emergency{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"sO" = (
+/obj/table/auto,
+/obj/machinery/defib_mount,
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"sQ" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/salvager_space)
+"tw" = (
+/obj/fakeobject/airmonitor_broken{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"ty" = (
+/obj/landmark/salvager_spawn,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"tS" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/fakeobject/shuttleengine{
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/salvager)
+"uW" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	has_panel = 0;
+	id = "pod_outer"
+	},
+/turf/unsimulated/floor/industrial,
+/area/salvager/pod)
+"vc" = (
+/obj/machinery/salvager_pod_launcher{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager/pod)
+"vk" = (
+/turf/unsimulated/floor/industrial,
+/area/salvager/pod)
+"vE" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/salvager_space)
+"vG" = (
+/turf/space,
+/area/space)
+"wZ" = (
+/obj/machinery/manufacturer/gas,
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"xH" = (
+/obj/machinery/light/small/floor/cool/very,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"xR" = (
+/obj/forcefield/meteorshield{
+	opacity = 1
+	},
+/turf/space,
+/area/salvager_space)
+"xW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/machinery/light/small/sticky/cool{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"ys" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"yU" = (
+/obj/table/auto,
+/obj/item/chem_grenade/metalfoam{
+	pixel_y = 18;
+	pixel_x = 7
+	},
+/obj/item/storage/grenade_pouch/metal_foam{
+	pixel_x = -4;
+	pixel_y = 14
+	},
+/obj/item/storage/grenade_pouch/metal_foam{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"zx" = (
+/turf/unsimulated/floor/industrial,
+/area/salvager)
+"zD" = (
+/turf/unsimulated/floor/engine/caution/misc{
+	dir = 4
+	},
+/area/salvager)
+"Aq" = (
+/turf/unsimulated/floor/stairs,
+/area/salvager)
+"Bt" = (
+/obj/table/auto,
+/obj/machinery/light/small/sticky/cool{
+	dir = 1
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/item_box/medical_patches/mini_synthflesh{
+	pixel_x = 12;
+	pixel_y = 8
+	},
+/obj/item/item_box/medical_patches/mini_synthflesh{
+	pixel_x = 16
+	},
+/obj/item/item_box/medical_patches/styptic{
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"BL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/salvager_putt_spawner,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"BR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/salvager_putt_spawner,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"Cn" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	has_panel = 0
+	},
+/turf/unsimulated/floor/industrial,
+/area/salvager)
+"CC" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/manufacturer/general{
+	free_resources = list()
+	},
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"CX" = (
+/obj/table/auto,
+/obj/item/rods/steel/fullstack{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/device/flash{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/device/flash{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/device/flash{
+	pixel_x = 4
+	},
+/obj/item/device/flash{
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Dm" = (
+/obj/item/tank/pocket/extended/oxygen{
+	rand_pos = 1
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	rand_pos = 1
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	rand_pos = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"DJ" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/salvager_space)
+"Eo" = (
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"EA" = (
+/obj/machinery/light/small/sticky/cool{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/stencil/right/p{
+	pixel_y = 40
+	},
+/obj/decal/poster/wallsign/stencil/left/g{
+	pixel_y = 40
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"FB" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/salvager_putt_spawner,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"Gs" = (
+/obj/table/auto,
+/obj/item/bandage{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/random_item_spawner/med_tool/maybe_few,
+/obj/item/storage/box/syringes{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/storage/box/morphineinjectors{
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"GB" = (
+/obj/machinery/light/small/floor/broken,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"GW" = (
+/obj/mesh/grille/steel,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Hj" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/salvager_space)
+"Hx" = (
+/obj/machinery/light/small/sticky/cool,
+/obj/mesh/grille/steel,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"HF" = (
+/obj/stool/bed,
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"IU" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 5
+	},
+/area/salvager)
+"Jt" = (
+/obj/machinery/dispenser,
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"JN" = (
+/obj/newmeteor{
+	opacity = 1
+	},
+/turf/space,
+/area/salvager_space)
+"JX" = (
+/obj/machinery/light/small/sticky/cool{
+	dir = 8
+	},
+/obj/fakeobject/tallsmes,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Kr" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"Li" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/salvager_space)
+"Lj" = (
+/obj/decal/poster/wallsign/stencil/right/e{
+	pixel_y = 40
+	},
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_y = 40
+	},
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"Ly" = (
+/obj/machinery/sink/slim{
+	dir = 1;
+	name = "rusty sink"
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Mc" = (
+/obj/fakeobject/shuttlethruster{
+	dir = 4
+	},
+/turf/space,
+/area/salvager_space)
+"Mx" = (
+/obj/machinery/r_door_control/salvager{
+	pixel_x = 22
+	},
+/turf/space,
+/area/salvager_space)
+"Ne" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager/pod)
+"Nh" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Nv" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/salvager_space)
+"NB" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/item/storage/wall/emergency{
+	pixel_x = 26
+	},
+/obj/machinery/macrofab/salvager{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"NZ" = (
+/turf/cordon,
+/area/cordon)
+"Oj" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"Pb" = (
+/obj/salvager_putt_spawner,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"Pn" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/turf/unsimulated/floor/plating,
+/area/salvager/pod)
+"Pq" = (
+/turf/space,
+/area/salvager_space)
+"Ps" = (
+/obj/machinery/light/small/sticky/cool{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"PW" = (
+/obj/landmark/salvager_beacon,
+/turf/space,
+/area/salvager_space)
+"PY" = (
+/obj/stool/bed,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"Qo" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	has_panel = 0;
+	id = "pod_inner"
+	},
+/turf/unsimulated/floor/industrial,
+/area/salvager/pod)
+"QW" = (
+/obj/table/auto,
+/obj/item/salvager{
+	pixel_y = -14
+	},
+/obj/machinery/light/small/sticky/cool{
+	dir = 8
+	},
+/obj/item/gun/kinetic/slamgun{
+	pixel_y = -1
+	},
+/obj/item/gun/kinetic/slamgun{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Ta" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/machinery/manufacturer/hangar/magpie,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"Tf" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/item/raw_material/scrap_metal{
+	desc = "Broken pieces of shuttle docking equipment. Someone must have taken off in a real hurry.";
+	name = "broken dock parts"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"Tg" = (
+/obj/item/circuitboard/teleporter,
+/obj/ai_core_frame,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Tm" = (
+/obj/forcefield/meteorshield,
+/turf/space,
+/area/salvager_space)
+"TP" = (
+/obj/machinery/portable_reclaimer,
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"Ue" = (
+/turf/unsimulated/floor/plating,
+/area/salvager/medbay)
+"Ux" = (
+/obj/fakeobject/teleport_pad{
+	name = "prototype receiver pad"
+	},
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/obj/decal/cleanable/oil/streak,
+/obj/landmark/salvager_tele,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"VA" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light/small/sticky/cool,
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/glass/reinforced/fullstack,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"VK" = (
+/obj/mesh/grille/steel/broken,
+/obj/random_item_spawner/tools/maybe_few,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"VZ" = (
+/obj/newmeteor,
+/turf/space,
+/area/salvager_space)
+"WF" = (
+/obj/table/round/auto,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/drinks/paper_cup{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/paper_cup{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/turf/unsimulated/floor/plating/random,
+/area/salvager)
+"Xt" = (
+/obj/ladder{
+	id = "salvager-pod"
+	},
+/obj/decal/poster/wallsign/hazard_caution{
+	pixel_y = 31
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 4;
+	tag = "salvager_pods_avail"
+	},
+/turf/unsimulated/floor/industrial,
+/area/salvager)
+"XL" = (
+/obj/item/tank/pocket/extended/oxygen{
+	rand_pos = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Yd" = (
+/obj/table/auto,
+/obj/item/ammo/bullets/pipeshot/scrap{
+	pixel_x = -2;
+	pixel_y = 16
+	},
+/obj/item/ammo/bullets/pipeshot/scrap{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/ammo/bullets/pipeshot/scrap{
+	pixel_x = 1;
+	pixel_y = 13
+	},
+/obj/item/ammo/bullets/abg{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/ammo/bullets/abg{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/ammo/bullets/abg{
+	pixel_y = -11;
+	pixel_x = -4
+	},
+/obj/item/ammo/bullets/abg{
+	pixel_x = 4;
+	pixel_y = -13
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"YH" = (
+/obj/machinery/door/poddoor/pyro/podbay_autoclose/salvager,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"YT" = (
+/obj/machinery/drainage/big,
+/obj/machinery/shower,
+/turf/unsimulated/floor/plating,
+/area/salvager)
+"Zf" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/machinery/portable_reclaimer,
+/turf/unsimulated/floor/shuttlebay,
+/area/salvager)
+"ZE" = (
+/obj/salvager_cryotron,
+/turf/unsimulated/floor/industrial,
+/area/salvager)
+"ZL" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/fakeobject{
+	icon = 'icons/obj/ship.dmi';
+	icon_state = "beacon_synd";
+	name = "Magpie"
+	},
+/turf/space,
+/area/salvager_space)
+"ZT" = (
+/obj/table/auto,
+/obj/item/ammo/bullets/bullet_22{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/ammo/bullets/bullet_22{
+	pixel_x = 11
+	},
+/obj/item/ammo/bullets/bullet_22/faith{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/ammo/bullets/nine_mm_NATO{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/ammo/bullets/nine_mm_NATO,
+/obj/item/ammo/bullets/nine_mm_NATO{
+	pixel_x = -7
+	},
+/obj/item/ammo/bullets/nine_mm_NATO{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/gun/kinetic/zipgun{
+	pixel_x = -14;
+	pixel_y = 6
+	},
+/obj/item/gun/kinetic/zipgun{
+	pixel_x = -8
+	},
+/obj/item/gun/kinetic/zipgun{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/turf/unsimulated/floor/plating,
+/area/salvager)
+
+(1,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+"}
+(2,1,1) = {"
+NZ
+gd
+gd
+gd
+gd
+gd
+NZ
+NZ
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+NZ
+"}
+(3,1,1) = {"
+NZ
+gd
+hP
+vc
+hP
+gd
+NZ
+NZ
+nq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+PW
+Pq
+PW
+Pq
+PW
+Pq
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(4,1,1) = {"
+NZ
+gd
+Pn
+vk
+Ne
+gd
+NZ
+NZ
+nq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Hj
+Pq
+Hj
+Pq
+Hj
+Pq
+ZL
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(5,1,1) = {"
+NZ
+gd
+ev
+vk
+sE
+gd
+NZ
+NZ
+nq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Nv
+Pq
+Nv
+Pq
+Nv
+Pq
+Li
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(6,1,1) = {"
+NZ
+gd
+Pn
+vk
+Ne
+gd
+NZ
+NZ
+nq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Mc
+Mc
+Mc
+Pq
+Pq
+Pq
+sQ
+DJ
+nN
+DJ
+vE
+Mx
+Li
+Mc
+Mc
+Mc
+nq
+NZ
+"}
+(7,1,1) = {"
+NZ
+gd
+hP
+vk
+hP
+gd
+NZ
+NZ
+nq
+Pq
+Pq
+Pq
+Pq
+gd
+gd
+tS
+tS
+tS
+gd
+gd
+gd
+YH
+YH
+YH
+YH
+YH
+gd
+gd
+tS
+tS
+tS
+nq
+NZ
+"}
+(8,1,1) = {"
+NZ
+gd
+gd
+Qo
+gd
+gd
+NZ
+NZ
+nq
+Pq
+Pq
+Pq
+Pq
+gd
+gd
+gd
+gd
+gd
+gd
+xW
+iQ
+Tf
+ys
+BL
+ys
+ys
+BR
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(9,1,1) = {"
+NZ
+gd
+gd
+uW
+gd
+gd
+NZ
+NZ
+nq
+Pq
+Mc
+Mc
+Pq
+gd
+kq
+Yd
+QW
+CX
+gd
+aO
+Pb
+Oj
+xH
+Oj
+xH
+Oj
+lU
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(10,1,1) = {"
+NZ
+gd
+hF
+zx
+eE
+gd
+NZ
+NZ
+nq
+gd
+tS
+tS
+gd
+gd
+ZT
+jx
+Eo
+Eo
+gd
+rl
+Oj
+Oj
+Oj
+Oj
+Oj
+Oj
+Kr
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(11,1,1) = {"
+NZ
+gd
+gd
+gd
+gd
+gd
+NZ
+NZ
+nq
+gd
+gd
+gd
+gd
+gd
+jd
+jx
+jx
+Eo
+gd
+mq
+Oj
+Oj
+GB
+Oj
+GB
+Oj
+VA
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(12,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+nq
+gd
+gd
+Nh
+aj
+gd
+hz
+yU
+jx
+Eo
+gd
+Ta
+lY
+FB
+NB
+pk
+lY
+lY
+Zf
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(13,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+nq
+gd
+jJ
+XL
+Dm
+gd
+gd
+gd
+gd
+Cn
+gd
+gd
+Xt
+gd
+gd
+gd
+Cn
+gd
+gd
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(14,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+nq
+gd
+Jt
+jx
+jx
+gd
+gd
+hC
+lu
+Eo
+YT
+gd
+gd
+gd
+gA
+Eo
+Eo
+gd
+gd
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(15,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+nq
+gd
+wZ
+jx
+jx
+gd
+gd
+sI
+Eo
+Eo
+Ly
+gd
+gd
+gd
+EA
+Eo
+Eo
+gd
+gd
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(16,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+nq
+gd
+gd
+gd
+Cn
+gd
+gd
+Eo
+ty
+Eo
+Eo
+gd
+gd
+gd
+Lj
+jx
+Eo
+gd
+gd
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(17,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+nq
+Pq
+gd
+jx
+jx
+eZ
+Eo
+Eo
+Eo
+Eo
+jx
+he
+ty
+Eo
+Eo
+jx
+iO
+gd
+gd
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(18,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+nq
+Pq
+gd
+gd
+Cn
+gd
+gd
+gd
+pP
+IU
+IU
+qe
+gd
+gd
+gd
+WF
+jj
+gd
+gd
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(19,1,1) = {"
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+nq
+Pq
+gd
+JX
+jx
+lh
+gd
+ZE
+zx
+Eo
+jx
+Eo
+sG
+gd
+gd
+gd
+gd
+gd
+gd
+gd
+gd
+gd
+gd
+nq
+NZ
+"}
+(20,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Tm
+gd
+Eo
+bU
+jx
+gd
+gd
+tw
+lT
+qR
+iO
+jx
+gd
+pC
+jk
+Ue
+gd
+Pq
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(21,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Tm
+gd
+GW
+VK
+Hx
+gd
+gd
+jJ
+qT
+TP
+Eo
+jx
+Aq
+Ps
+Ue
+HF
+gd
+Pq
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(22,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Tm
+gd
+Tg
+Ux
+Eo
+gd
+ZE
+cl
+zD
+jx
+Eo
+CC
+gd
+Bt
+Ue
+sO
+gd
+Pq
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(23,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Tm
+gd
+gd
+gd
+gd
+gd
+gd
+jx
+jx
+jx
+jx
+jx
+gd
+Gs
+Ue
+PY
+gd
+Pq
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(24,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Tm
+Pq
+Pq
+Pq
+Pq
+Pq
+gd
+kc
+kc
+kc
+kc
+gd
+gd
+gd
+gd
+gd
+gd
+Pq
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(25,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Tm
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Tm
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(26,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Tm
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+xR
+JN
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(27,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Tm
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(28,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+VZ
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(29,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+Pq
+Pq
+VZ
+Pq
+Pq
+Pq
+Pq
+hc
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+Pq
+nq
+NZ
+"}
+(30,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+nq
+NZ
+"}
+(31,1,1) = {"
+vG
+vG
+vG
+vG
+vG
+vG
+vG
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+NZ
+"}

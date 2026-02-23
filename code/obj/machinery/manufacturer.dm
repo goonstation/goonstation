@@ -1007,12 +1007,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
 				else
-					C.use(1)
-					src.take_damage(-10)
-					user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if (src.health >= 50)
-						boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
+					if(C.use(1))
+						src.take_damage(-10)
+						user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						if (src.health >= 50)
+							boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 
 		// Handling for tools (wrench, dismantle/reconstruct/load)
 		else if (iswrenchingtool(W))
@@ -1072,13 +1072,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		// Handling for cable coils (reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == DISMANTLE_WIRES)
-			user.visible_message("<b>[user]</b> adds cabling to [src].")
-			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
 			var/obj/item/cable_coil/C = W
-			C.use(1)
-			src.check_power_status()
-			src.shock(user,100)
-			src.build_icon()
+			if(C.use(1))
+				user.visible_message("<b>[user]</b> adds cabling to [src].")
+				src.dismantle_stage = DISMANTLE_PLATING_SHEETS
+				src.check_power_status()
+				src.shock(user,100)
+				src.build_icon()
 
 		// Handling for inserting manudrives
 		else if (istype(W,/obj/item/disk/data/floppy/manudrive))

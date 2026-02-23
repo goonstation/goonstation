@@ -30,7 +30,8 @@
 /area/dmm_suite/clear_area)
 "p" = (
 /obj/railing/orange{
-	dir = 1
+	dir = 1;
+	broken = 1
 	},
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
@@ -97,7 +98,9 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "W" = (
-/obj/railing/orange,
+/obj/railing/orange{
+	broken = 1
+	},
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)

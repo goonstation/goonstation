@@ -557,7 +557,7 @@
 /turf/simulated/floor/wood/four,
 /area/prefab/candy_shop)
 "RU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},

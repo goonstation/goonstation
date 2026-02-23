@@ -528,6 +528,12 @@
 			boutput(L, SPAN_NOTICE("You feel quite strange. Almost as if you're not supposed to be here."))
 			return
 
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.shoes?.magnetic)
+				boutput(L, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
+				return
+
 		if (probmult(tele_prob))
 			var/list/randomturfs = new/list()
 			for(var/turf/simulated/floor/T in orange(L, 10))
@@ -537,7 +543,7 @@
 				L.emote("hiccup")
 				var/turf/destination = pick(randomturfs)
 				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
-				L.set_loc(pick(destination))
+				L.set_loc(destination)
 
 //////////////
 // Annoying //
@@ -627,6 +633,7 @@
 	name = "Paranoia"
 	desc = "Causes the subject to become easily startled."
 	id = "screamer"
+	icon_state = "hallucination"
 	msgGain = "They're gonna get you!!!!!"
 	msgLose = "You calm down."
 	emote_type = "scream"
@@ -916,6 +923,7 @@
 	desc = "This function of this gene is not well-researched."
 	researched_desc = "This gene has random, unpredictable effects on the subject."
 	id = "randomeffects"
+	icon_state = "booster_q"
 	occur_in_genepools = 0
 	probability = 0
 	scanner_visibility = 0

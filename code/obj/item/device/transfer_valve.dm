@@ -65,7 +65,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		if(istype(item, /obj/item/tank) || istype(item, /obj/item/clothing/head/butt))
 			src.attach_tank(user)
-		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/infra) || istype(item, /obj/item/device/prox_sensor))
+		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/prox_sensor))
 			if(attached_device)
 				boutput(user, SPAN_ALERT("There is already an device attached to the valve, remove it first!"))
 				return
@@ -96,11 +96,9 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				return
 
 			var/obj/item/cable_coil/coil = item
-			if (coil.amount < 2)
+			if(!coil.use(2))
 				boutput(user, SPAN_ALERT("You do not have enough cable to produce two straps! (2 units required)"))
 				return
-			coil.use(2)
-
 			c_flags |= ONBACK
 			boutput(user, SPAN_NOTICE("You attach two loops of [item] to the transfer valve!"))
 			UpdateIcon()
@@ -356,8 +354,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			else
 				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE, pitch=-1)
 			if(valve_open && force_dud)
-				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
-				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.get_last_ckey())]")
+				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 				return
 
 			if(valve_open && (istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt))) //lol
@@ -412,8 +410,9 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
 				if(!A.dont_log_combat)
-					logTheThing(LOG_BOMBING, null, "TTV tank transfer valve bomb opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
-					message_admins("TTV tank transfer valve bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					var/last_ckey = src.get_last_ckey()
+					logTheThing(LOG_BOMBING, null, "TTV tank transfer valve bomb opened in [log_loc(bombturf)]. Last touched by [replace_if_false(last_ckey, "None")]")
+					message_admins("TTV tank transfer valve bomb valve opened in [log_loc(bombturf)]. Last touched by [replace_if_false(last_ckey, "None")]")
 
 				var/datum/gas_mixture/temp
 

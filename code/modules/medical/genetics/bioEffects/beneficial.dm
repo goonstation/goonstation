@@ -309,6 +309,7 @@
 	msgGain = "Your mind feels closed."
 	msgLose = "You feel oddly exposed."
 	degrade_to = "screamer"
+	icon_state = "meta_neural"
 
 /////////////
 // Healing //
@@ -424,7 +425,7 @@
 	var/remove_per_tick = 3.3
 	stability_loss = 10
 	degrade_to = "toxification"
-	icon_state  = "tox_res"
+	icon_state  = "anti_tox"
 
 	OnAdd()
 		. = ..()
@@ -842,7 +843,7 @@
 	lockedDiff = 3
 	lockedTries = 8
 	stability_loss = 5
-	icon_state  = "strong"
+	icon_state  = "fit"
 	effect_group = "fit"
 
 	OnAdd()
@@ -889,9 +890,10 @@
 ///////////////////////////
 
 /datum/bioEffect/claws
-	name = "Manusclavis felidunguus"
+	name = "Manusclavis Felidunguus"
 	desc = "Subject arms change into a more animalistic form over time."
 	id = "claws"
+	icon_state = "armadillo"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your arms start to feel strange and clumsy."
@@ -920,6 +922,7 @@
 	name = "Manuschela Crustaceaformis"
 	desc = "Subject's arm changes into a pincer."
 	id = "claws_pincer"
+	icon_state ="big_meaty_claws"
 	msgGain = "You feel like your arms are oddly firm."
 	msgLose = "You are once again feel comfortable with your arms."
 
@@ -942,6 +945,7 @@
 	name = "Chitinoarmis Durescutis "
 	desc = "Subject skin develops into a hardened carapace."
 	id = "carapace"
+	icon_state = "armadillo2"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel your skin harden."
@@ -972,6 +976,7 @@
 	name = "Lateral Undulation"
 	desc = "Subject muscles develop the ability to perform a serpentine locomation."
 	id = "slither"
+	icon_state = "undulation"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you could propel yourself on your belly with a good wiggle."
@@ -994,6 +999,7 @@
 	name = "Lipid Stores"
 	desc = "Subject gains the ability to improve the nourishment available from their lipid stores."
 	id = "camel_fat"
+	icon_state = "lipid"
 	probability = 10
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you can store away some food and drink for later."
@@ -1149,8 +1155,9 @@
 
 /datum/bioEffect/skitter
 	id = "skitter"
-	name = "Insectoid locomotion"
+	name = "Insectoid Locomotion"
 	desc = "The subject is capable of skittering across the floor like a bug."
+	icon_state = "locomotion"
 	occur_in_genepools = 0
 
 	OnAdd()
@@ -1208,8 +1215,9 @@
 
 /datum/bioEffect/plasma_metabolism
 	id = "plasma_metabolism"
-	name = "Plasma metabolism"
+	name = "Plasma Metabolism"
 	desc = "The subject's body is capable of metabolising solid and liquid forms of plasma into electric charge."
+	icon_state = "plasma_metabolism"
 	occur_in_genepools = FALSE
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel a sudden hunger for plasma..."
