@@ -50,7 +50,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		if(!meatsource)
 			return
 		src.subjectname = meatsource.disfigured ? "Unknown" : meatsource.real_name
-		src.subjectjob = "Stowaway"
+		src.subjectjob = "Unknown"
 		if (meatsource?.mind?.assigned_role)
 			src.subjectjob = meatsource.mind.assigned_role
 		else if (meatsource?.ghost?.mind?.assigned_role)

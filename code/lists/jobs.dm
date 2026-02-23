@@ -177,7 +177,6 @@ var/list/service_gimmicks = list(
 	"Sous-Chef",
 	"Waiter",
 	"Life Coach",
-	"Stowaway",
 	"Hall Monitor",
 )
 
