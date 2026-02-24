@@ -1154,13 +1154,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "handshake"
 	points = -1
 
-/datum/trait/jailbird
-	name = "Jailbird"
-	desc = "You have a criminal record and are currently on the run!"
-	id = "jailbird"
-	icon_state = "jail"
-	points = -1
-
 /datum/trait/clericalerror
 	name = "Clerical Error"
 	desc = "The name on your starting ID is misspelled."
