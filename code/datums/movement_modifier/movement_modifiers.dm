@@ -281,13 +281,13 @@
 	var/mob/living/carbon/human/H = user
 
 	if (istype(H) && H.limbs)
-		if (!H.limbs.l_leg)
+		if (!H.limbs.is_limb_functional("l_leg"))
 			missing_legs++
-		if (!H.limbs.r_leg)
+		if (!H.limbs.is_limb_functional("r_leg"))
 			missing_legs++
-		if (!H.limbs.l_arm)
+		if (!H.limbs.is_limb_functional("l_arm"))
 			missing_arms++
-		if (!H.limbs.r_arm)
+		if (!H.limbs.is_limb_functional("r_arm"))
 			missing_arms++
 
 	if (user.lying)

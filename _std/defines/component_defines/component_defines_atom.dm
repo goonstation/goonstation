@@ -177,6 +177,10 @@
 	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
 	/// Send out to every item directly in and on the person on no-suicide-death
 	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
+	/// Send out to the item whenever it is attached to a human as a limb (target, human_attached_to)
+	#define COMSIG_LIMB_ATTACHED_TO_HUMAN "itm_limb_attached_to_human"
+	/// Send out to the item whenever it is inserted into an limb (target, limb_inserted_into)
+	#define COMSIG_ITEM_SET_AS_LIMB "itm_item_set_as_limb"
 	/// After an item is altered by being removed and replaced with another item, sent shortly before being removed. The original is not always
 	/// deleted but instead treated as if it were a part of the new item, see assemblies. (item or list of items produced by conversion, user)
 	#define COMSIG_ITEM_CONVERTED "itm_converted"
@@ -305,6 +309,9 @@
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----
+		/// When an limb is lost (target, limb_lost)
+		#define COMSIG_HUMAN_LOST_LIMB "human_lost_limb"
+
 
 // ---- cross server message signals
 	/// Sent when a server sync response is received

@@ -403,6 +403,12 @@
 			if("r_leg")
 				. = r_leg
 
+
+	//checks if the item is functional
+	proc/is_limb_functional(var/zone)
+		var/obj/found_object = src.get_limb(zone)
+		return (found_object && !found_object.hasStatus("numb"))
+
 	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1, var/no_drop = FALSE)
 		if (!target || !new_type || !src.holder)
 			return 0
@@ -1267,9 +1273,7 @@
 		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
-	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
-		return 1
-	if (src.hasStatus("numb_l_arm") && src.hasStatus("numb_r_arm"))
+	if (src.limbs && !src.limbs.is_limb_functional("l_arm") && !src.limbs.is_limb_functional("r_arm"))
 		return 1
 
 	/*if (src.limbs && (src.hand ? !src.limbs.l_arm:can_hold_items : !src.limbs.r_arm:can_hold_items)) // this was fucking stupid and broke item limbs, I mean really, how do you restrain someone whos arm is a goddamn CHAINSAW
@@ -1493,11 +1497,11 @@
 
 /mob/living/carbon/human/can_hold_two_handed()
 	. = ..()
-	if (src.r_hand || src.l_hand || src.hasStatus("numb_l_arm") || src.hasStatus("numb_r_arm"))
+	if (src.r_hand || src.l_hand)
 		return FALSE
-	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+	if (src.limbs && (!src.limbs.is_limb_functional("l_arm") || !src.limbs.is_limb_functional("r_arm")))
 		return FALSE
-	if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
+	if (src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item) || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
 		return FALSE
 	return TRUE
 
@@ -1537,7 +1541,7 @@
 				return TRUE
 		else
 			if (hand)
-				if (!src.l_hand && !src.hasStatus("numb_l_arm"))
+				if (!src.l_hand && src.limbs.is_limb_functional("l_arm"))
 					if (I == src.r_hand && I.cant_self_remove)
 						return FALSE
 					if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
@@ -1554,7 +1558,7 @@
 				else
 					return FALSE
 			else
-				if (!src.r_hand && !src.hasStatus("numb_r_arm"))
+				if (!src.r_hand && src.limbs.is_limb_functional("r_arm"))
 					if (I == src.l_hand && I.cant_self_remove)
 						return FALSE
 					if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
@@ -1792,7 +1796,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (SLOT_L_HAND)
-			if (src.limbs.l_arm && !src.hasStatus("numb_l_arm"))
+			if (src.limbs.is_limb_functional("l_arm"))
 				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
@@ -1805,7 +1809,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 						return FALSE
 				return TRUE
 		if (SLOT_R_HAND)
-			if (src.limbs.r_arm && !src.hasStatus("numb_r_arm"))
+			if (src.limbs.is_limb_functional("r_arm"))
 				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
@@ -3035,10 +3039,10 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/missing_legs = 0
 	var/missing_arms = 0
 	if (src.limbs)
-		if (!src.limbs.l_leg || src.hasStatus("numb_l_leg")) missing_legs++
-		if (!src.limbs.r_leg || src.hasStatus("numb_r_leg")) missing_legs++
-		if (!src.limbs.l_arm || src.hasStatus("numb_l_arm")) missing_arms++
-		if (!src.limbs.r_arm || src.hasStatus("numb_r_arm")) missing_arms++
+		if (!src.limbs.is_limb_functional("r_leg")) missing_legs++
+		if (!src.limbs.is_limb_functional("l_leg")) missing_legs++
+		if (!src.limbs.is_limb_functional("l_arm")) missing_arms++
+		if (!src.limbs.is_limb_functional("r_arm")) missing_arms++
 	if (src.lying || GET_COOLDOWN(src, "unlying_speed_cheesy"))
 		missing_legs = 2
 	else if (src.shoes && src.shoes.chained)
