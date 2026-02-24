@@ -16,7 +16,9 @@
 		var/list/map_check_result = map_check.run_check()
 		if (length(map_check_result))
 			success = FALSE
-			log_text += "\n\n" + map_check.check_name + "\n"
+
+			// The use of a ZWSP (U+200B) enforces empty lines when the output is viewed from GitHub.
+			log_text += "\n​\n# " + map_check.check_name + "\n"
 			log_text += map_check_result.Join("\n")
 
 	if (!success)
