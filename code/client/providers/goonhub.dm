@@ -94,6 +94,15 @@
 		src.on_error("Failed to verify your account. Please reconnect and try again.")
 		return
 
+	//so I have a theory
+	//Byond has a nasty habit of not deleting clients immediately on the game closing (worse if it's an improper disconnect)
+	//what if all our issues are due to the key we're trying to assign to already being logged in on a stale client that has yet to del?
+	for (var/client/C as anything in global.clients)
+		if (C.key == verification["key"])
+			del(C)
+			logTheThing(LOG_DEBUG, src.owner, "During goonhub auth, client [src.owner] requested key [C.key], which is already in use by client [C]. Assuming the old one is a stale client and deleting.")
+			break
+
 	src.pending_success_message = TRUE
 	src.owner.verbs -= list(/client/proc/open_goonhub_auth)
 
@@ -118,6 +127,9 @@
 	if (isnewplayer(src.owner.mob))
 		src.owner.mob.key = src.owner.client_auth_intent.key
 		src.owner.mob.name = src.owner.client_auth_intent.key
+		if (!src.owner.mob.mind)
+			src.owner.mob.mind = new(src.owner.mob)
+
 		src.owner.mob.mind.key = src.owner.client_auth_intent.key
 		src.owner.mob.mind.ckey = src.owner.client_auth_intent.ckey
 		src.owner.mob.mind.displayed_key = src.owner.client_auth_intent.key

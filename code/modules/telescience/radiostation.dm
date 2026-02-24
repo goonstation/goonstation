@@ -363,7 +363,7 @@
 				user.client.play_music_radio(record_inside.song, html_encode(record_name))
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [record_name].", "group" = MGA_RADIO)
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [inserted_record.record_name] ([record_name]).", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 #ifdef UNDERWATER_MAP
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
@@ -646,6 +646,11 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 	New()
 		..()
+#ifdef NIGHTSHADE
+		//apparently second reality has copyright issues, not allowed on streamer servers
+		qdel(src)
+		return
+#endif
 		var/image/overlay = new /image(src.icon, "record_3")
 		overlay.color = list(1.5, 0, 0, 0, 0, 0, 0, 0, 0) // very red
 		src.UpdateOverlays(overlay, "recordlabel")
@@ -772,6 +777,12 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	add_overlay = 0
 	icon_state = "record_fruit"
 	song = 'sound/radio_station/music/honkmas.ogg'
+
+/obj/item/record/lay_egg_is_true
+	desc = "This egg seems to be laid particularly TRUE!!!"
+	add_overlay = 0
+	icon_state = "record_duck"
+	song = 'sound/radio_station/music/lay_egg_is_true.ogg'
 
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0

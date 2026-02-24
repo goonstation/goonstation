@@ -156,7 +156,7 @@
 			"Add Reagents",\
 			"Check Reagents",\
 			"View Variables",\
-			"View Fingerprints",\
+			"View Admin Forensics",\
 			"Delete",\
 			"Possess",\
 			"Create Poster",\
@@ -178,6 +178,7 @@
 			"Manage Traits",\
 			"Add Reagents",\
 			"Check Reagents",\
+			"Adjust Addictions",\
 			"View Variables",\
 			"Get Thing",\
 			"Follow Thing",\
@@ -210,7 +211,7 @@
 			"Get Telesci Coords",\
 
 			"View Variables",\
-			"View Fingerprints",\
+			"View Admin Forensics",\
 			"Delete",\
 			"Create Poster",\
 			"Set Material",\

@@ -35,6 +35,8 @@ TYPEINFO(/mob/living/silicon)
 	speech_verb_say = "states"
 	speech_verb_ask = "queries"
 	speech_verb_exclaim = "declares"
+	speech_verb_stammer = "states"
+	speech_verb_gasp = "states"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	say_language = LANGUAGE_ENGLISH
 	speech_bubble_icon_sing = "noterobot"
@@ -168,7 +170,7 @@ TYPEINFO(/mob/living/silicon)
 		usr.show_text("Unable to interface with door due to unknown interference.", "red")
 		return
 	if(isAI(src) && door_loc?.z == get_z(z) )
-		usr.show_text("Your mainframe was unable relay this command that far away!", "red")
+		usr.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if (istype(our_door, /obj/machinery/door/airlock/))
@@ -469,7 +471,7 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 /proc/borgify_name(var/start_name = "Robot")
@@ -820,10 +822,22 @@ var/global/list/module_editors = list()
 		if (src.duration <= 0)
 			src.do_killswitch()
 
+	proc/owner_is_immune()
+		var/mob/living/silicon/robot/borg = src.owner
+		if (istype(borg) && borg.syndicate)
+			return TRUE
+		return FALSE
+
+	//Returns TRUE if the kill should be completed, FALSE if the owner was immune to killswitching.
 	proc/do_killswitch()
 		if (ismob(src.owner))
 			var/mob/M = src.owner
-			if (M.client)
+			if (owner_is_immune())
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b><i> But you were immune! </i>"))
+				logTheThing(LOG_COMBAT, M, "would have died to the killswitch, but they were immune.")
+				return FALSE
+			else
 				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
 				playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
 				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
+				return TRUE

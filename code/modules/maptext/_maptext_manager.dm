@@ -8,7 +8,7 @@
 
 
 /**
- *	Maptext manager `atom/movable`s govern displaying maptext over single parent atom. To this end, they track the outermost movable
+ *	Maptext manager `/atom/movable`s govern displaying maptext over single parent atom. To this end, they track the outermost movable
  *	of the parent atom, and relocate to the outermost loc if possible. To display maptext to a client, the list of maptext holders
  *	indexed by their associated clients is queried for the maptext holder associated with that client, and instructed to add a line.
  */
@@ -17,11 +17,11 @@
 	mouse_opacity = 0
 
 	/// The atom that this maptext manager belongs to.
-	var/atom/parent
+	var/atom/parent = null
 	/// Whether this maptext manager is registered to the `XSIG_OUTERMOST_MOVABLE_CHANGED` complex signal.
 	var/registered = FALSE
 	/// A list of maptext holders belonging to this maptext manager, indexed by their associated clients.
-	var/list/atom/movable/maptext_holder/maptext_holders_by_client
+	var/list/atom/movable/maptext_holder/maptext_holders_by_client = null
 
 /atom/movable/maptext_manager/New(atom/parent)
 	. = ..()
@@ -84,3 +84,5 @@
 		new_outermost = new_outermost.loc
 
 	new_outermost.vis_contents += src
+	src.pixel_x = new_outermost.maptext_manager_x
+	src.pixel_y = new_outermost.maptext_manager_y

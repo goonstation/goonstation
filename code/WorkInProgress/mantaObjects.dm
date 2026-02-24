@@ -710,6 +710,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS
+	default_material = "plastic"
 	stamina_damage = 15
 	stamina_cost = 8
 	stamina_crit_chance = 10
@@ -1346,7 +1347,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 /area/supply/sell_point/manta
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		addManta(Obj)
@@ -1449,7 +1450,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /area/wrecknsspolaris/outside
 	name = "Ouside the Wreck"
 	icon_state = "blue"
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 
 /area/wrecknsspolaris/outside/teleport
 	name = "Outer Wreck (with teleport)"
@@ -1573,6 +1574,14 @@ var/obj/manta_speed_lever/mantaLever = null
 		name = "dank abyss"
 		desc = "The smell rising from it somehow permeates the surrounding water."
 		falltarget = LANDMARK_FALL_MARJ
+
+		pitwall
+			icon_state = "pit_wall"
+
+	cult
+		name = "ominious abyss"
+		desc = "The water below vibrates with a tension, as though it was raging."
+		falltarget = LANDMARK_FALL_CULTIST
 
 		pitwall
 			icon_state = "pit_wall"

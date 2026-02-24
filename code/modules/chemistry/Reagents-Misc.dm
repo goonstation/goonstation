@@ -36,12 +36,7 @@ datum
 			proc/explode(var/list/covered_turf, expl_reason)
 				var/turf/T = pick(covered_turf)
 				message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [log_loc(T)].")
-				var/context = "???"
-				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprints_full
-					var/list/fh = holder.my_atom.fingerprints_full
-
-					if (length(fh)) //Wire: Fix for: bad text or out of bounds
-						context = "Fingerprints: [jointext(fh, "")]"
+				var/context = holder.my_atom.get_adminprints()
 
 				logTheThing(LOG_COMBAT, usr, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [log_loc(T)]. Context: [context].")
 				explosion_new(usr, T, (12.5 * min(volume, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
@@ -111,6 +106,20 @@ datum
 			transparency = 255
 			// silver salts are toxic
 			overdose = 10
+
+			reaction_turf(var/turf/T, var/volume)
+				. = ..()
+				if(volume < 1)
+					return
+				OVERRIDE_COOLDOWN(T, "forensic_silver_nitrate", 30 SECONDS)
+				holder.remove_reagent(src.id, 1)
+
+			reaction_obj(var/obj/O, var/volume)
+				. = ..()
+				if(volume < 1)
+					return
+				OVERRIDE_COOLDOWN(O, "forensic_silver_nitrate", 30 SECONDS)
+				holder.remove_reagent(src.id, 1)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
@@ -239,11 +248,11 @@ datum
 					M.take_toxin_damage(1 * mult)
 				if (probmult(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
 				if (probmult(8)) boutput(M, SPAN_NOTICE("You feel [pick("really buff", "on top of the world","like you're made of steel", "energized", "invigorated", "full of energy")]!"))
-				if (prob(5))
+				if (probmult(5))
 					boutput(M, SPAN_ALERT("You cannot breathe!"))
-					M.setStatusMin("stunned", 2 SECONDS * mult)
-					M.take_oxygen_deprivation(15 * mult)
-					M.losebreath += (1 * mult)
+					M.setStatus("slowed", 3 SECONDS)
+					M.take_oxygen_deprivation(15)
+					M.losebreath += (1)
 				..()
 				return
 
@@ -835,7 +844,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(-1, 60 SECONDS, rgb(116,226,73))
+					simulated_target.wetify(-1, 60 SECONDS, rgb(164,188,98))
 
 		glue
 			name = "space glue"
@@ -3220,7 +3229,7 @@ datum
 				*/
 				var/datum/plant/growing = P.current
 				var/datum/plantgenes/DNA = P.plantgenes
-				growth_tick.cropsize_bonus += 0.24
+				growth_tick.cropsize_bonus += 0.74
 				if (DNA.harvests > 1)
 					growth_tick.harvests_bonus -= 0.24
 				if (growing.isgrass && P.growth > 2)
@@ -3243,7 +3252,7 @@ datum
 				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
 				if (DNA.cropsize > 1)
-					growth_tick.cropsize_bonus -= 0.24
+					growth_tick.cropsize_bonus -= 0.5
 
 		///////////////////////////
 		/// BODILY FLUIDS /////////
@@ -3443,9 +3452,53 @@ datum
 			hygiene_value = -5
 			viscosity = 0.5
 			fluid_flags = FLUID_STACKING_BANNED
+			taste = "dirty"
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.health_change += 0.66
+			// Compost now actually tastes like shit! Ew!
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (method == INGEST)
+					// People with synth leg can absorb shit with no consequences. Disgusting.
+					var/mob/living/carbon/human/H = M
+					if(istype(H) && (H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+						boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened!","You feel good.")))
+					else
+						// if not synth leg
+						boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
+						SPAWN(1 SECOND)
+							if(!isdead(M) && volume >= 1)
+								M.vomit(0, null, SPAN_ALERT("[M] pukes violently!"))
+				else
+					var/mob/living/carbon/human/H = M
+					// nothing bad happens with synthlegs
+					if(!(H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+						var/output_message = "This smells like shit! What the fuck?!"
+						if (prob(50) && !(H.wear_mask?.c_flags & COVERSMOUTH))
+							output_message += " Shit! Some got into your mouth!"
+							var/amt = min(volume/100,1)
+							src.holder.remove_reagent("poo",amt)
+							M.reagents.add_reagent("poo",amt)
+							src.reaction_mob(M,INGEST,amt,null,amt)
+						boutput(M, SPAN_ALERT(output_message))
+				return
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				var/mob/living/carbon/human/H = M
+				if(istype(H) && (H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+					H.take_toxin_damage(-0.25 * mult)
+				else
+					if (isliving(M) && probmult(0.75))
+						var/mob/living/L = M
+						L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+					if (probmult(7))
+						M.emote(pick("twitch","drool","moan"))
+						M.take_toxin_damage(1 * mult)
+						M.nauseate(2)
+				..()
+				return
 
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"

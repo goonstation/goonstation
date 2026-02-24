@@ -61,6 +61,6 @@
 
 	cast(atom/target)
 		. = ..()
-		src.holder.owner.mind?.get_player()?.tutorial?.Advance(TRUE)
-		src.holder.owner.reagents.clear_reagents()
-		src.holder.owner.stabilize()
+		src.holder.owner?.mind?.get_player()?.tutorial?.Advance(TRUE)
+		src.holder.owner?.reagents.clear_reagents()
+		src.holder.owner?.stabilize()

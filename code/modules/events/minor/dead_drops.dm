@@ -15,8 +15,7 @@
 
 		var/found = FALSE
 		for (var/datum/mind/M in ticker.mode?.traitors + ticker.mode?.Agimmicks)
-			var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
-			if(SA && isnull(SA.dead_drop) && !isdead(M.current))
+			if (src.eligible(M))
 				found = TRUE
 				break
 
@@ -24,6 +23,10 @@
 			. = ..()
 		else
 			. = FALSE
+
+	proc/eligible(datum/mind/M)
+		var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
+		return SA && isnull(SA.dead_drop) && !isdead(M.current) && SA.did_equip
 
 	admin_call(var/source)
 		if (..())
@@ -59,8 +62,7 @@
 
 		sleepers = list()
 		for (var/datum/mind/M in ticker.mode.traitors + ticker.mode.Agimmicks)
-			var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
-			if(SA && isnull(SA.dead_drop) && !isdead(M.current))
+			if (src.eligible(M))
 				src.sleepers += M
 
 		SPAWN(0)
@@ -311,7 +313,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 				/obj/item/gun/kinetic/pistol=25,
 				/obj/item/radiojammer=25,
 				/obj/item/tool/omnitool=10,
-				/obj/item/device/flash/turbo=5,
+				/obj/item/assembly/flash_cell=5,
 				/obj/item/handcuffs/guardbot=5
 				)
 
@@ -339,7 +341,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 	items_max = 5
 	items = list(/obj/item/card/id/syndicate=100,
 			/obj/item/gun/kinetic/pistol=25,
-			/obj/item/device/flash/turbo=5
+			/obj/item/assembly/flash_cell=5
 			)
 
 

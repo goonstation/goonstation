@@ -545,3 +545,18 @@ datum
 			fluid_b = 40
 			transparency = 50
 			disease = /datum/ailment/disease/leprosy
+
+		disease/explodingheadjuice
+			name = "juice that makes your head explode"
+			id = "explodingheadjuice"
+			description = "A liquid with an incredibly apt name."
+			reagent_state = LIQUID
+			taste = "like berries"
+			fluid_r = 205
+			fluid_g = 0
+			fluid_b = 75
+			transparency = 180
+			disease = /datum/ailment/disease/exploding_head_syndrome
+			minimum_to_infect = 4
+
+

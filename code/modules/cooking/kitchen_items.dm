@@ -201,6 +201,8 @@ TRAYS
 	force = 1
 	throwforce = 1
 	w_class = W_CLASS_TINY
+	default_material = "plastic"
+	material_amt = 0.5
 
 	New()
 		..()
@@ -231,6 +233,8 @@ TRAYS
 	force = 1
 	throwforce = 1
 	w_class = W_CLASS_TINY
+	default_material = "plastic"
+	material_amt = 0.5
 
 	New()
 		..()
@@ -261,6 +265,8 @@ TRAYS
 	force = 1
 	throwforce = 1
 	w_class = W_CLASS_TINY
+	default_material = "plastic"
+	material_amt = 0.5
 
 	New()
 		..()
@@ -290,6 +296,8 @@ TRAYS
 	desc = "These don't look very clean..."
 	icon_state = "plasticpackage"
 	w_class = W_CLASS_TINY
+	default_material = "plastic"
+	material_amt = 1.5
 	var/list/messages = list("The packaging decides to not open at this time. How rude.", "The plastic is just too strong for your fumbly fingers!", "Almost open! Wait...Nevermind.", "Almost there.....")
 
 	attack_self(mob/user as mob)
@@ -450,46 +458,6 @@ TRAYS
 		name = "donut box"
 		desc = "A box for containing and transporting \"dough-nuts\", a popular ethnic food."
 
-	egg_box
-		name = "egg carton"
-		desc = "A carton that holds a bunch of eggs. What kind of eggs? What grade are they? Are the eggs from space? Space chicken eggs?"
-		icon_state = "eggbox"
-		count = 12
-		max_count = 12
-		box_type = "eggbox"
-		contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
-		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
-		contained_food_name = "egg"
-
-		rancher
-			count = 4
-
-			//BR variants
-			void
-				name = "nebulous carton"
-				desc = "A egg carton with purple eggs, a label mentions squeezing and vulnerability."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple
-			wizard
-				name = "magical carton"
-				desc = "A oddly mystical egg carton, there is a wizard using a spell on the top."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard
-			snow
-				name = "cold carton"
-				desc = "This carton chills your hands to hold it, a slipping warning is printed on the back."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/snow
-			plant
-				name = "overgrown carton"
-				desc = "Vines try to nudge out of this carton, it has a picture of the sun on it."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant
-			mime
-				name = "monochrome carton"
-				desc = "This monochrome box shows a mime making a stop motion with their hands."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime
-			knight
-				name = "chivalrous carton"
-				desc = "This plate-mailed carton has a shield printed onto it."
-				contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight
-
 	lollipop
 		name = "lollipop bowl"
 		desc = "A little bowl of lollipops, totally healthy in every way! They're medicinal, after all!"
@@ -607,7 +575,8 @@ TRAYS
 	desc = "It's like a frisbee, but more dangerous!"
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "plate"
-	item_state = "zippo"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "plate"
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 8
@@ -642,6 +611,8 @@ TRAYS
 	var/plate_stacked = FALSE
 	/// Can this smash someone on the head?
 	var/can_headsmash = TRUE
+	/// Sets the iconstring to this, if an item is on the plate
+	var/loaded_icon_state = "plate_1"
 
 	New()
 		..()
@@ -674,6 +645,21 @@ TRAYS
 					for (var/obj/item/food_maybe in src.loc)
 						// This will fail for non-edibles so we can just blindfire the proc at everything
 						src.add_contents(food_maybe)
+
+	proc/update_inhand_icon()
+		if(!src.loaded_icon_state)
+			return
+		if(!length(src.contents))
+			src.item_state = initial(src.item_state)
+		else
+			src.item_state = src.loaded_icon_state
+		if(ismob(src.loc))
+			var/mob/potential_user = src.loc
+			potential_user.update_inhands()
+
+	update_icon()
+		..()
+		src.update_inhand_icon()
 
 	proc/check_height(obj/item/plate/other) //we go down and then we go up because plates are bidirectional like that
 		. = 1
@@ -930,13 +916,13 @@ TYPEINFO(/obj/item/plate/pizza_box)
 	icon_state = "pizzabox"
 	pickup_sfx = 0 // to avoid using plate SFX
 	w_class = W_CLASS_BULKY
-	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "pizza_box"
 	is_plate = FALSE
 	max_space = 6
 	space_left = 6
 	can_headsmash = FALSE
 	default_material = "cardboard"
+	loaded_icon_state = null
 	var/open = FALSE
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
@@ -1079,7 +1065,7 @@ TYPEINFO(/obj/item/plate/pizza_box)
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	proc/update_inhand_icon()
+	update_inhand_icon()
 		var/weighted_num = round(length(contents) / 5) //6 inhand sprites, 30 possible foods on the tray
 		if(!length(src.contents))
 			src.item_state = "tray"
@@ -1101,9 +1087,6 @@ TYPEINFO(/obj/item/plate/pizza_box)
 			else
 				src.item_state = "tray_6"
 
-	update_icon()
-		..()
-		src.update_inhand_icon()
 
 	get_desc()
 		. = ..()
@@ -1145,6 +1128,7 @@ TYPEINFO(/obj/item/plate/pizza_box)
 	hit_sound = "step_lattice"
 	can_headsmash = FALSE // no unbreakable smashing tool for you!
 	stackable = FALSE // and no stacking them on plates!
+	loaded_icon_state = null
 
 	New()
 		. = ..()

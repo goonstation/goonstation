@@ -1,0 +1,66 @@
+# Change of default variables.
+/obj/machinery/camera/@SUBTYPES{name = "autoname - SS13"}	: /obj/machinery/camera/@SUBTYPES{@OLD; name = @SKIP}
+/obj/machinery/camera/@SUBTYPES{name = "autoname  - SS13"}	: /obj/machinery/camera/@SUBTYPES{@OLD; name = @SKIP}
+/obj/machinery/camera/mining{name = "autoname - Mining"}	: /obj/machinery/camera/mining{@OLD; name = @SKIP}
+/obj/machinery/camera/mining{name = "autoname -  Mining"}	: /obj/machinery/camera/mining{@OLD; name = @SKIP}
+/obj/machinery/camera/@SUBTYPES{c_tag = "autotag"}			: /obj/machinery/camera/@SUBTYPES{@OLD; c_tag = @SKIP}
+/obj/machinery/camera/@SUBTYPES{tag = @ANY}					: /obj/machinery/camera/@SUBTYPES{@OLD; tag = @SKIP}
+
+# Repath subtypes.
+/obj/machinery/camera/auto				: /obj/machinery/camera{@OLD}
+/obj/machinery/camera/auto/alt			: /obj/machinery/camera{@OLD}
+/obj/machinery/camera/auto/cargo		: /obj/machinery/camera/cargo{@OLD}
+/obj/machinery/camera/auto/public		: /obj/machinery/camera/public{@OLD}
+/obj/machinery/camera/auto/ranch		: /obj/machinery/camera/ranch{@OLD}
+/obj/machinery/camera/auto/science		: /obj/machinery/camera/science{@OLD}
+/obj/machinery/camera/auto/vspace		: /obj/machinery/camera/vspace{@OLD}
+/obj/machinery/camera{name = "sensor"}	: /obj/machinery/camera/watchful_eye{@OLD; name = @SKIP; network = @SKIP}
+
+# Temporarily repath subtypes that shouldn't be affected by the main repath.
+/obj/machinery/camera/@SUBTYPES/directional/@SUBTYPES	: /temporary_directional_repath/@SUBTYPES{@OLD}
+/obj/machinery/camera/vspace/@SUBTYPES					: /temporary_vspace_repath/@SUBTYPES{@OLD}
+/obj/machinery/camera/public/@SUBTYPES					: /temporary_public_repath/@SUBTYPES{@OLD}
+/obj/machinery/camera/television/@SUBTYPES				: /temporary_tv_repath/@SUBTYPES{@OLD}
+
+# Repath and flip directions, and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths multiple times.
+# NORTH
+/obj/machinery/camera/@SUBTYPES{dir = 1; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = @ADD:-10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 1; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = -10; pixel_y = @SKIP}
+# SOUTH
+/obj/machinery/camera/@SUBTYPES{dir = @UNSET; pixel_x = @ANY}	: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @ADD:-10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = @UNSET; pixel_x = @UNSET}	: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = -10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 0; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @ADD:-10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 0; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = -10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 2; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @ADD:-10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 2; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = -10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 3; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @ADD:-10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 3; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = -10; pixel_y = @SKIP}
+# EAST
+/obj/machinery/camera/@SUBTYPES{dir = 4; pixel_y = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @ADD:10}
+/obj/machinery/camera/@SUBTYPES{dir = 4; pixel_y = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = 10}
+# WEST
+/obj/machinery/camera/@SUBTYPES{dir = 8; pixel_y = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @ADD:10}
+/obj/machinery/camera/@SUBTYPES{dir = 8; pixel_y = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = 10}
+# NORTHWEST
+/obj/machinery/camera/@SUBTYPES{dir = 9; pixel_y = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @ADD:-10}
+/obj/machinery/camera/@SUBTYPES{dir = 9; pixel_y = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = -10}
+# NORTHEAST
+/obj/machinery/camera/@SUBTYPES{dir = 5; pixel_y = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @ADD:-10}
+/obj/machinery/camera/@SUBTYPES{dir = 5; pixel_y = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = -10}
+# SOUTHEAST
+/obj/machinery/camera/@SUBTYPES{dir = 6; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = @ADD:10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 6; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_x = 10; pixel_y = @SKIP}
+# SOUTHWEST
+/obj/machinery/camera/@SUBTYPES{dir = 10; pixel_x = @ANY}		: /temporary_camera_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = @ADD:10; pixel_y = @SKIP}
+/obj/machinery/camera/@SUBTYPES{dir = 10; pixel_x = @UNSET}		: /temporary_camera_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_x = 10; pixel_y = @SKIP}
+
+# Revert the temporary repaths.
+/temporary_camera_repath/@SUBTYPES		: /obj/machinery/camera/@SUBTYPES{@OLD}
+/temporary_directional_repath/@SUBTYPES	: /obj/machinery/camera/@SUBTYPES{@OLD}
+/temporary_vspace_repath/@SUBTYPES		: /obj/machinery/camera/vspace/@SUBTYPES{@OLD}
+/temporary_public_repath/@SUBTYPES		: /obj/machinery/camera/public/@SUBTYPES{@OLD}
+/temporary_tv_repath/@SUBTYPES			: /obj/machinery/camera/television/@SUBTYPES{@OLD}
+
+# Ensure non-directional cameras aren't subtyped as directional.
+/obj/machinery/camera/public/directional/@SUBTYPES : /obj/machinery/camera/public{@OLD}
+/obj/machinery/camera/vspace/directional/@SUBTYPES : /obj/machinery/camera/vspace{@OLD}

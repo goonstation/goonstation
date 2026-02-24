@@ -40,7 +40,10 @@
 #define HAS_NBGG					(1 << 7)
 /// if an atom/movable is in the crusher (so conveyors don't push it around)
 #define BEING_CRUSHERED				(1 << 8)
-
+/// if an atom/movable is currently using the drifting animation
+#define DRIFT_ANIMATION				(1 << 9)
+/// In the gravity controller
+#define GRAVITY_SUBSCRIBER			(1 << 10)
 
 // event_handler_flags
 /// Atom implements EnteredFluid() call in some way.
@@ -64,16 +67,18 @@
 #define IMMUNE_MINERAL_MAGNET		(1 << 11)
 
 
-//THROW flags (what kind of throw, we can have ddifferent kinds of throws ok)
-#define THROW_NORMAL	(1 << 0)
-#define THROW_CHAIRFLIP (1 << 1)
-#define THROW_GUNIMPACT (1 << 2)
-#define THROW_SLIP		(1 << 3)
-#define THROW_PEEL_SLIP	(1 << 4)
-#define THROW_BASEBALL  (1 << 5) // throw that doesn't stun into walls.
-#define THROW_THROUGH_WALL (1 << 6) //throw that will blow through one wall/other dense object before becoming a normal throw again
-#define THROW_GIB 		(1 << 7) //!gibs thrown mob on end (use with care)
-#define THROW_PHASE		(1 << 8) //! throw has phasing through walls for two tiles. For white holes
+//THROW flags (what kind of throw, we can have different kinds of throws ok)
+#define THROW_NORMAL		(1 << 0)
+#define THROW_CHAIRFLIP		(1 << 1)
+#define THROW_GUNIMPACT		(1 << 2)
+#define THROW_SLIP			(1 << 3)
+#define THROW_PEEL_SLIP		(1 << 4)
+#define THROW_BASEBALL		(1 << 5) //! throw that doesn't stun into walls.
+#define THROW_THROUGH_WALL	(1 << 6) //! throw that will blow through one wall/other dense object before becoming a normal throw again
+#define THROW_GIB			(1 << 7) //! gibs thrown mob on end (use with care)
+#define THROW_PHASE			(1 << 8) //! throw has phasing through walls for two tiles. For white holes
+#define THROW_NO_CLIP		(1 << 9) //! throw has phasing through walls without a tile limit
+#define THROW_ARC			(1 << 10)//! throw in an arc, like from a catapult or something
 
 //For serialization purposes
 #define DESERIALIZE_ERROR				(0 << 0)

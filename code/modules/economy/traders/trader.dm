@@ -23,7 +23,7 @@
 	var/rarities = list(TRADER_RARITY_COMMON, TRADER_RARITY_UNCOMMON, TRADER_RARITY_RARE)
 	// list to determine how many items per rarity we have
 	// it's cumulative, meaning we will have at least X common, Y uncommon, etc.
-	var/list/amount_of_items_per_rarity = list(
+	var/list/amount_of_items_per_rarity = alist(
 		TRADER_RARITY_COMMON = 3,
 		TRADER_RARITY_UNCOMMON = 2,
 		TRADER_RARITY_RARE = 1,
@@ -213,7 +213,7 @@
 		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
 		src.currently_selling = 0 //At this point the shopping cart has been processed
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 		shippingmarket.receive_crate(S)
 

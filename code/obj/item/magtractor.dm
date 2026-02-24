@@ -1,6 +1,6 @@
 
 TYPEINFO(/obj/item/magtractor)
-	mats = 12
+	mats = 0
 
 /obj/item/magtractor
 	name = "magtractor"

@@ -48,7 +48,8 @@
 	G["pronouns"] = H.get_pronouns().name
 
 	G["age"] ="[H.bioHolder.age]"
-	G["fingerprint"] = "[H.bioHolder.fingerprints]"
+	G["fingerprint_right"] = "[H.limbs?.r_arm?.limb_print.id]"
+	G["fingerprint_left"] = "[H.limbs?.l_arm?.limb_print.id]"
 	G["dna"] = H.bioHolder.Uid
 	G["p_stat"] = "Active"
 	G["m_stat"] = "Stable"
@@ -214,7 +215,7 @@
 		H.mind.store_memory("- [S["mi_crim"]]")
 		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		if (H.mind?.assigned_role == "Clown")
+		if (H.traitHolder?.hasTrait("training_clown"))
 			S["criminal"] = ARREST_STATE_CLOWN
 			S["mi_crim"] = "Clown"
 			H.update_arrest_icon()
@@ -254,12 +255,7 @@
 	src.bank.add_record(B)
 	wagesystem.payroll_stipend += B["wage"] * 1.1
 
-	//Add email group
-	if ("[H.mind.assigned_role]" in job_mailgroup_list)
-		var/mailgroup = job_mailgroup_list["[H.mind.assigned_role]"]
-		if (!mailgroup)
-			return
-
+	if (J?.email_group)
 		var/username = format_username(H.real_name)
 		if (!src.mainframe || !src.mainframe.hd || !(src.mainframe.hd in src.mainframe))
 			for (var/obj/machinery/networked/mainframe/newMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
@@ -270,7 +266,7 @@
 					src.mainframe = newMainframe
 					break
 
-		if (src.mainframe && src.mainframe.hd && src.mainframe.hd.root) //ZeWaka: Fix for null.root
+		if (src.mainframe?.hd?.root) //ZeWaka: Fix for null.root
 			for (var/datum/computer/folder/folder in src.mainframe.hd.root.contents)
 				if (ckey(folder.name) == "etc")
 					for (var/datum/computer/folder/folder2 in folder.contents)
@@ -283,12 +279,12 @@
 									break
 
 								for (var/mailgroupEntry in groups.fields)
-									if (dd_hasprefix(mailgroupEntry, "[mailgroup]:"))
+									if (dd_hasprefix(mailgroupEntry, "[J.email_group]:"))
 										groups.fields -= mailgroupEntry
 										groups.fields += "[mailgroupEntry][username],"
 										break
 
-								groups.fields += "[mailgroup]:[username],"
+								groups.fields += "[J.email_group]:[username],"
 								break
 
 						break

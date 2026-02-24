@@ -35,6 +35,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/has_crush = TRUE //flagged to true when the door has a secret admirer. also if the var == 1 then the door does have the ability to crush items.
 	var/close_trys = 0
 	var/autoclose_delay = 15 SECONDS
+	var/autoclose_timer = 0
 
 	var/health = 400
 	var/health_max = 400
@@ -618,8 +619,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			src.operating = 0
 
 /obj/machinery/door/proc/opened()
-	if(autoclose)
+	if(!autoclose)
+		return
+
+	// Create a local copy of the autoclose timer to detect changes if it has changed outside this proc
+	src.autoclose_timer = TIME
+	var/lcl_autoclose = src.autoclose_timer
+
+	while(autoclose && !density && !QDELETED(src))
 		sleep(src.autoclose_delay)
+
+		if(lcl_autoclose != src.autoclose_timer) //newer open command received,  don't autoclose
+			break
+
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
 		else

@@ -42,8 +42,8 @@ TYPEINFO(/obj/item/device/radio)
 	var/list/secure_frequencies = null
 	/// The colour that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single colour may be defined for all channels to use that colour. Overrides `secure_classes`.
 	var/list/secure_colors = list()
-	/// The CSS class that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single class may be defined for all channels to use that style. Overridden by `secure_colors`.
-	var/list/secure_classes = list(RADIOCL_STANDARD)
+	/// The overriding CSS classes that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a class under the index "all" may be defined for all undefined channels to use that style (e.g. secure_classes = list("all" = RADIOCL_SYNDICATE)). Overridden by `secure_colors`.
+	var/list/secure_classes = list()
 
 	// Additional Message Styling Variables:
 	/// If set, this is radio icon that this radio should display on sent messages. See the `browserassets/images/radio_icons` folder.
@@ -94,6 +94,10 @@ TYPEINFO(/obj/item/device/radio)
 	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
 	/// The build status of this radio, determining whether it can be attached to other objects, and other objects attached to it.
 	var/b_stat = FALSE
+	/// The radio has malfunctioned due to an EMP
+	var/emp = FALSE
+	/// The message that should be displayed when attempting to use a radio that is under the effects of an EMP.
+	var/emp_msg = "The radio buzzes softly. Hopefully it kicks back on soon."
 
 /obj/item/device/radio/New()
 	. = ..()
@@ -173,6 +177,10 @@ TYPEINFO(/obj/item/device/radio)
 /obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
 	if (src.bricked)
 		user.show_text(src.bricked_msg, "red")
+		return
+
+	if (src.emp)
+		user.show_text(src.emp_msg, "red")
 		return
 
 	ui = tgui_process.try_update_ui(user, src, ui)

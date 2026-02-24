@@ -316,14 +316,12 @@
 	access = list(access_owlerymaint)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/item/card/id/owlsecurity
 	icon_state = "id_sec"
 	access = list(access_owlerysec)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/item/card/id/owlgold
 	name = "identification card"
@@ -333,7 +331,6 @@
 	access = list(access_owlerycommand, access_owlerysec, access_owlerymaint)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/fakeobject/bustedpod
 	name = "Busted Escape Pod"
@@ -1413,8 +1410,6 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		/////////////////////////////////////////////////////////
 
 		greeting= {"Hey there kid! Welcome to the gift shop. Im Greg, Professor Hootens loveable assistant! And this little fella on my hand is Howard the Hooter, say "Hi" Howard!."}
-
-		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
 		sell_dialogue = "Howards lost some of his eggs, can you find them all?."
 

@@ -1,0 +1,47 @@
+@use '../colors';
+
+.ColorSection {
+  --color-section-title: var(--section-background);
+  --color-section-title-color: var(--section-title-color);
+  --color-section-separator-color: var(--section-separator-color);
+  color: var(--color-section-title-color);
+  background-color: unset;
+}
+
+.ColorSection .Section__title {
+  background-color: var(--color-section-title);
+  border-bottom: var(--section-separator-thickness) solid
+    var(--color-section-separator-color);
+}
+
+.ColorSection .Section__titleText {
+  color: var(--color-section-title-color);
+}
+
+.ColorSection .Section__rest {
+  background-color: var(--section-background);
+}
+
+@each $color-name, $color-value in colors.$color-map {
+  .ColorSection--color--#{$color-name} {
+    --color-section-base-color: hsl(
+      from #{$color-value} h s calc(l - var(--adjust-color))
+    );
+
+    --color-section-title: oklch(
+      from var(--color-section-base-color) calc(l * 0.825) calc(c * 0.75) h
+    );
+
+    @if $color-name == 'black' {
+      --color-section-separator-color: var(--color-white);
+    } @else {
+      --color-section-separator-color: var(--color-section-base-color);
+    }
+
+    @each $color in colors.$low-contrast-color-map {
+      @if $color-name == $color {
+        --color-section-title-color: var(--color-black);
+      }
+    }
+  }
+}

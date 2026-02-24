@@ -95,6 +95,8 @@
 		var/obj/item/I = src
 		I.item_state = appearance.name
 
+	A.teleportationally_unstable = prob(A.teleportationally_unstable_chance)
+
 	A.fx_image = new
 	A.fx_image.icon = src.icon
 	A.fx_image.icon_state = src.icon_state + "fx"
@@ -605,9 +607,9 @@
 	if ((target && ismob(target)) && type_of_action == "weapon")
 		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
-		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
+		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [replace_if_false(O.get_last_ckey(), "None")]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
+		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.get_last_ckey())]")
 
 	return

@@ -4,4 +4,4 @@
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/bans"
 	queryParams = list("filters", "sort_by", "descending", "page", "per_page") // object, string, string, int, int
-	correct_response = /datum/apiModel/Paginated/BanResourceList
+	correct_response = /datum/apiModel/Paginated/BanList

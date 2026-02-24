@@ -14,6 +14,7 @@
 	dir = SOUTH
 	custom_suicide = 1
 	material_amt = 0.1
+	provides_grip = TRUE
 	var/broken = 0
 	var/is_reinforced = 0
 	var/can_reinforce = TRUE
@@ -98,6 +99,8 @@
 		..()
 		if(src.is_reinforced)
 			src.flags |= FLUID_DENSE
+		if(src.broken) // Map varedit broken
+			src.railing_break(src)
 		layerify()
 
 	Turn()
@@ -111,6 +114,9 @@
 			return 1
 		if (O.throwing)
 			return 1
+		if (istype(src, /obj/railing/boxing))
+			if (src.dir == SOUTH) // incase you chairflip yourself next to an entrance rope
+				return 0
 		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
@@ -128,6 +134,8 @@
 		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W as obj, mob/user)
+		if (istype(src, /obj/railing/boxing))
+			return
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_DISASSEMBLE, 3 SECONDS), user)
@@ -267,7 +275,7 @@
 
 	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
-		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape)
+		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape,)
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner

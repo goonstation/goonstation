@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
 	c_flags = ONBELT
+	can_arcplate = FALSE // Not sure if this is needed, but I'm playing it safe for now until further testing
 	var/skin_tone = "#FFFFFF"
 	/// which part of the person or robot suit does it go on???????
 	var/slot = null
@@ -98,12 +99,17 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/random_limb_blacklisted = FALSE
 	/// Can break cuffs/shackles instantly if both limbs have this set. Has to be this high because limb pathing is a fuck.
 	var/breaks_cuffs = FALSE
+	/// Fingerprints / footprints
+	var/datum/forensic_id/limb_print = null
 
 	New(atom/new_holder)
 		..()
 		if(istype(new_holder, /mob/living))
 			src.holder = new_holder
 		src.limb_data = new src.limb_type(src)
+		var/limb_id = get_limb_print()
+		if(limb_id)
+			limb_print = register_id(limb_id)
 		if (holder && movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
@@ -131,6 +137,13 @@ ABSTRACT_TYPE(/obj/item/parts)
 			bones.dispose()
 
 		..()
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		..()
+		if(!src.limb_print)
+			return
+		if(slot == "r_arm" || slot == "l_arm")
+			scan.add_text("Arm's fingerprint: [src.limb_print.id]")
 
 	//just get rid of it. don't put it on the floor, don't show a message
 	proc/delete()
@@ -180,7 +193,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		object.set_loc(src.holder.loc)
 
 		//https://forum.ss13.co/showthread.php?tid=1774
-		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
+		//object.name = "[src.holder.real_name]’s [initial(object.name)]"
 		object.add_fingerprint(src.holder)
 
 		if(show_message) holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] falls off!"))
@@ -235,7 +248,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		object.set_loc(src.holder.loc)
 
 		//https://forum.ss13.co/showthread.php?tid=1774
-		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
+		//object.name = "[src.holder.real_name]’s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
 		if (setDir)
@@ -388,6 +401,9 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if (src.skintoned)
 			return src.skin_tone
 		return src.fingertip_color
+
+	proc/get_limb_print()
+		return null
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination

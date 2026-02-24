@@ -58,8 +58,12 @@ Contains:
 	var/qdel_on_tear_apart = FALSE //! set this to TRUE for applier who needs multiple spawns to do their effect before eliminating itself (because for some reason smokebombs need it, ugh)
 	var/mob/last_armer = null //! for tracking/logging of who armed the assembly
 	var/obj/item/chargeable_component = null //! if one of the components of the assembly can be charged, it will be referenced here. Use this if you want the assembly to be reachargeable.
+	var/obj/item/attacking_component = null //! if a component of this assembly is set to this, the component will override the attack behaviour of this assembly
+	var/saved_icon_path = null //! this is used to check if the assembly needs to grab a new icon from assembly_icons. It saves the last string generated while checking grab_icon()
+	var/static/list/assembly_icons = list() //! This list stores all icons the assemblies generate. this is used so multiple assemblies don't need to work with overlays or do a whole lot of icon operations. They key to save the icons is generated in generate_icon_string() and saved on the object in saved_icon_path
 	flags = TABLEPASS | CONDUCT | NOSPLASH
 	item_function_flags = OBVIOUS_INTERACTION_BAR
+	can_arcplate = FALSE
 
 /obj/item/assembly/New(var/new_location)
 	src.additional_components = list()
@@ -73,6 +77,7 @@ Contains:
 	RegisterSignal(src, COMSIG_CELL_CHARGE, PROC_REF(do_charge))
 	RegisterSignal(src, COMSIG_CELL_TRY_SWAP, PROC_REF(try_cell_swap))
 	RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(do_cell_swap))
+	RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(on_geiger_tick))
 	..()
 
 /obj/item/assembly/proc/set_up_new(var/mob/user, var/obj/item/new_trigger, var/obj/item/new_applier, var/obj/item/new_target)
@@ -109,6 +114,7 @@ Contains:
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, src, user, new_target)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 
 /obj/item/assembly/proc/get_trigger_state(var/affected_assembly)
 	if(src.secured)
@@ -148,6 +154,10 @@ Contains:
 	//we relay the signal to the trigger, in case of mousetraps
 	SEND_SIGNAL(src.trigger, COMSIG_MOVABLE_FLOOR_REVEALED, revealed_turf)
 
+/obj/item/assembly/proc/on_geiger_tick(var/affected_assembly, var/stage)
+	//we relay the signal to the trigger, in case of geiger counter
+	SEND_SIGNAL(src.trigger, COMSIG_MOB_GEIGER_TICK, stage)
+
 /obj/item/assembly/proc/on_storage_interaction(var/affected_assembly, var/mob/user)
 	//we relay the signal to the trigger, in case of mousetraps
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_STORAGE_INTERACTION, user)
@@ -160,9 +170,10 @@ Contains:
 	if(src.expended)
 		//we don't want stuff to happen like e.g. buttbombs triggering 50 more times before being qdel'ed, potentially crashing the server... yeah, that happened
 		return
+	var/last_ckey = src.get_last_ckey()
 	if(src.force_dud == TRUE)
-		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [key_name(src.fingerprintslast)]")
-		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(key_name(last_ckey), "None")]")
+		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")]")
 		return
 	if(src.override_upstream && src.master)
 		//if we should just relay signals, we do so, no matter where they come from
@@ -173,9 +184,9 @@ Contains:
 		for(var/mob/O in hearers(1, src.loc))
 			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 		//Some Admin logging/messaging
-		logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"];[src.get_additional_logging_information(src.last_armer)]")
+		logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")];[src.get_additional_logging_information(src.last_armer)]")
 		if(src.requires_admin_messaging())
-			message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+			message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [replace_if_false(last_ckey, "None")]")
 		//now lets blow some shit up
 		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
@@ -226,6 +237,52 @@ Contains:
 
 ///------ ------------------------------------------ ---------
 
+///------ Procs to handle attacking_component  ---------
+
+/obj/item/assembly/attack(var/mob/target, var/mob/user, var/def_zone, var/is_special = FALSE, var/params = null)
+	if(src.attacking_component && src.secured)
+		//if we have an attack-overriding component and this assembly is secured, we just relay the proc to the component
+		//if the attack-override-component doesn't return true
+		if(!SEND_SIGNAL(src.attacking_component, COMSIG_ITEM_ASSEMBLY_ON_ATTACK_OVERRIDE, src, target, user, def_zone, is_special, params))
+			//we now do the attack override. Else, we return false
+			if(SEND_SIGNAL(src.attacking_component, COMSIG_ITEM_ASSEMBLY_DO_ATTACK_OVERRIDE, src, target, user, def_zone, is_special, params))
+				// We need to handle some after_attack-stuff here.
+				user.lastattacked = get_weakref(target)
+				target.lastattacker = get_weakref(user)
+				target.lastattackertime = world.time
+				return
+		else
+			return
+	. = ..()
+
+///This Proc makes the targe the attacking_component, overriding most of the attack-related behaviour of the assembly
+///This won't attack attack specials so people can add their own to handle assembly-weapons
+/obj/item/assembly/proc/set_attacking_component(var/obj/item/target)
+	if(src.attacking_component)
+		//if there is already one, we remove it
+		src.remove_attacking_component()
+	//we check here for target, so it is able to use make_attacking_component(null) to just call remove_attacking_component() when needed
+	if(target)
+		src.attacking_component = target
+		src.force = target.force
+		src.throwforce = target.throwforce
+		src.stamina_damage = target.stamina_damage
+		src.stamina_cost = target.stamina_cost
+		src.click_delay = target.click_delay
+		if(target.flags & ATTACK_SELF_DELAY)
+			src.flags |= ATTACK_SELF_DELAY
+
+///This proc returns most attack-related behaviour back to what it was
+/obj/item/assembly/proc/remove_attacking_component()
+	src.attacking_component = null
+	src.force = initial(src.force)
+	src.throwforce = initial(src.throwforce)
+	src.stamina_damage = initial(src.stamina_damage)
+	src.stamina_cost = initial(src.stamina_cost)
+	src.flags &= ~ATTACK_SELF_DELAY
+	src.click_delay = initial(src.click_delay)
+
+///------ ------------------------------------------ ---------
 
 ///------ Proc to transfer impulses/events onto the main components ---------
 /obj/item/assembly/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled)
@@ -314,6 +371,7 @@ Contains:
 	src.additional_components = null
 	src.last_armer = null
 	src.chargeable_component = null
+	src.attacking_component = null
 	..()
 
 /obj/item/assembly/attack_self(mob/user)
@@ -335,38 +393,78 @@ Contains:
 	src.add_fingerprint(user)
 	return
 
+///------ ------------------------------------------ ---------
+
+///------ Procs to handle icon generation of assemblies ---------
+
+
+/// This proc returns an icon that can be slapped onto the assembly. It is used to create the icon for assembly_icons
+/obj/item/assembly/proc/generate_icon()
+	var/overlay_offset = 0 //how many pixels we want to move the overlays
+	var/new_icon_path = 'icons/obj/items/assemblies.dmi'
+	var/new_icon_state = "trigger_[src.trigger_icon_prefix]"
+	if(src.target && !src.target_item_prefix && !src.target_overlay_invisible)
+		new_icon_path = src.target.icon
+		new_icon_state = src.target.icon_state
+		overlay_offset += 5
+	var/icon/output_icon = icon(icon = new_icon_path,icon_state = new_icon_state)
+	if(src.target_item_prefix && !src.target_overlay_invisible)
+		var/icon/temp_icon_target = icon(icon = 'icons/obj/items/assemblies.dmi',icon_state = "target_[src.target_item_prefix]")
+		output_icon.Blend(temp_icon_target, ICON_OVERLAY, y = 1 + overlay_offset + src.icon_base_offset)
+	if(src.applier_icon_prefix)
+		var/icon/temp_icon_applier = icon(icon = 'icons/obj/items/assemblies.dmi',icon_state = "applier_[src.applier_icon_prefix]")
+		output_icon.Blend(temp_icon_applier, ICON_OVERLAY, y = 1 + overlay_offset + src.icon_base_offset)
+	//So the applier gets rendered over every other component, we add it here as an overlay
+	var/icon/temp_icon_trigger = icon(icon = 'icons/obj/items/assemblies.dmi',icon_state = "trigger_[src.trigger_icon_prefix]")
+	output_icon.Blend(temp_icon_trigger, ICON_OVERLAY, y = 1 + overlay_offset + src.icon_base_offset)
+	//last, but not least, we generate the cables for the underlay
+	if(!src.secured)
+		var/icon/temp_image_cables = icon(icon = 'icons/obj/items/assemblies.dmi',icon_state = "assembly_unsecured")
+		output_icon.Blend(temp_image_cables, ICON_UNDERLAY, y = 1 + overlay_offset + src.icon_base_offset)
+	// Now with the icon done, we can return it
+	return output_icon
+
+/// This proc returns an string that is used to save and grab the icon from the static icon list
+/obj/item/assembly/proc/generate_icon_string()
+	var/output_string = "trigger_[src.trigger_icon_prefix]_applier_[src.applier_icon_prefix]"
+	if(src.target && !src.target_overlay_invisible)
+		if(src.target_item_prefix)
+			output_string += "_target_[src.target_item_prefix]"
+		else
+			output_string += "_target_[src.target.icon_state]"
+	if(!src.secured)
+		output_string += "_unsecured"
+	return output_string
+
+/// This proc accesses assembly_controls to check for a new icon. If it returns true, we have updated the assemblies icon
+/obj/item/assembly/proc/grab_icon()
+	//we generate a new icon string to check if we need to update the icon
+	var/potentially_new_icon = src.generate_icon_string()
+	if(potentially_new_icon == src.saved_icon_path)
+		//if the icon path is what we have saved, nothing needs to be done and we can return here
+		return FALSE
+	// now, we check if an icon exists on assembly_icons. If it doesn't, we need to generate it and add it to the list
+	if(!src.assembly_icons[potentially_new_icon])
+		src.assembly_icons[potentially_new_icon] = src.generate_icon()
+	// now, either the icon did exist in the static list, or we added it. in both cases, we set the icon to the icon from the list, save the new string and return true
+	src.icon = src.assembly_icons[potentially_new_icon]
+	src.saved_icon_path = potentially_new_icon
+	return TRUE
+
+
+
 /obj/item/assembly/update_icon()
 	var/overlay_offset = 0 //how many pixels we want to move the overlays
-	src.overlays = null
-	src.underlays = null
+	src.grab_icon()
 	if(src.target && !src.target_item_prefix && !src.target_overlay_invisible)
-		//If the target doesn't add it's own special icon state
-		src.icon = src.target.icon
-		src.icon_state = src.target.icon_state
+		//With this icon, we need to add some offset to the other overlays
 		overlay_offset += 5
-	else
-		src.icon = initial(src.icon)
-		src.icon_state = "trigger_[src.trigger_icon_prefix]"
-		if(src.target_item_prefix && !src.target_overlay_invisible)
-			var/image/temp_image_target = image('icons/obj/items/assemblies.dmi', src, "target_[src.target_item_prefix]")
-			temp_image_target.pixel_y += overlay_offset + src.icon_base_offset
-			src.overlays += temp_image_target
-	if(src.applier_icon_prefix)
-		var/image/temp_image_applier = image('icons/obj/items/assemblies.dmi', src, "applier_[src.applier_icon_prefix]")
-		temp_image_applier.pixel_y += overlay_offset + src.icon_base_offset
-		src.overlays += temp_image_applier
+	// additional components add and remove overlays. In that case, we need to check them accordingly
 	if (src.additional_components)
 		for(var/obj/item/iterated_component in src.additional_components)
 			//if we have any additional components, we send them a signal to see if they add overlays to the assembly.
 			SEND_SIGNAL(iterated_component,COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS , src, overlay_offset)
-	//So the applier gets rendered over every other component, we add it here as an overlay
-	var/image/temp_image_trigger = image('icons/obj/items/assemblies.dmi', src, "trigger_[src.trigger_icon_prefix]")
-	temp_image_trigger.pixel_y += overlay_offset + src.icon_base_offset
-	src.overlays += temp_image_trigger
-	if(!src.secured)
-		var/image/temp_image_cables = image('icons/obj/items/assemblies.dmi', src, "assembly_unsecured")
-		temp_image_cables.pixel_y += overlay_offset + src.icon_base_offset
-		src.underlays += temp_image_cables
+///------ ------------------------------------------ ---------
 
 
 /obj/item/assembly/get_help_message(dist, mob/user)
@@ -386,7 +484,7 @@ Contains:
 		component_names = "[component_names]/[initial(src.target.name)]"
 	src.name = "[name_prefix(null, 1)][component_names]-[initial(src.name)][name_suffix(null, 1)]"
 
-/obj/item/assembly/examine()
+/obj/item/assembly/examine(var/mob/user)
 	. = ..()
 	if(src.chargeable_component)
 		var/charge_list = list()
@@ -394,6 +492,8 @@ Contains:
 			. += SPAN_ALERT("No power cell installed in [src.chargeable_component].")
 		else
 			. += "The power cell in [src.chargeable_component] has [charge_list["charge"]]/[charge_list["max_charge"]] PUs left!"
+	for (var/obj/item/checked_item in list(src.target, src.applier, src.trigger))
+		. += checked_item.assembly_get_part_examine_message(user, src)
 
 
 /obj/item/assembly/attackby(obj/item/used_object, mob/user)
@@ -465,13 +565,14 @@ Contains:
 	src.target_item_prefix = null
 	src.chargeable_component = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src.trigger,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(src.applier,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 
 
 ///This proc removes all items attached to the assembly and removes it
@@ -486,21 +587,36 @@ Contains:
 	if(ismob(src.loc))
 		var/mob/handling_user = src.loc
 		handling_user.u_equip(src)
+	var/list/items_removed = list()
 	for(var/obj/item/removed_item in items_to_remove)
 		SEND_SIGNAL(removed_item, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, src, null)
 		removed_item.master = null
 		if(!removed_item.qdeled && !removed_item.disposed)
 			removed_item.set_loc(target_turf)
+			items_removed.Add(removed_item)
 		if(removed_item in src.additional_components)
 			src.additional_components -= removed_item
 	src.trigger = null
 	src.applier = null
 	src.target = null
+	src.remove_attacking_component()
 	src.chargeable_component = null
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, items_removed)
 	qdel(src)
 
 
 /// misc. Assembly-procs --------------------------------
+
+/// This proc returns a string that corresponds to the place the target item is in the assembly. This is used for finding the proper sprites.
+/obj/item/assembly/proc/get_category_string(var/obj/item/target)
+	if(src.trigger == target)
+		return "trigger"
+	if(src.applier == target)
+		return "applier"
+	if(src.target == target)
+		return "target"
+	if(target in src.additional_components)
+		return "comp"
 
 /obj/item/assembly/proc/add_target_item(var/atom/to_combine_atom, var/mob/user)
 	if(src.target)
@@ -520,9 +636,9 @@ Contains:
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	src.w_class = max(src.w_class, manipulated_item.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	boutput(user, "You attach the [src.name] to the [manipulated_item.name].")
 	//Since we completed the assembly, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
@@ -534,6 +650,7 @@ Contains:
 	//Last but not least, we update our icon, w_class and name
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [src.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
 	if(src.requires_admin_messaging())
@@ -570,11 +687,12 @@ Contains:
 			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, to_combine_atom)
 	//Last but not least, we update our icon, w_class and name
 	src.w_class = max(src.w_class, manipulated_item.w_class)
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
-	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_CONTRABAND)))
+	APPLY_ATOM_PROPERTY(src, PROP_MOVABLE_VISIBLE_GUNS, src, max(GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS), GET_ATOM_PROPERTY(manipulated_item,PROP_MOVABLE_VISIBLE_GUNS)))
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 	src.UpdateIcon()
 	src.UpdateName()
+	src.tooltip_rebuild = TRUE
 	// Since the assembly was done, return TRUE
 	user.put_in_hand_or_drop(src)
 	return TRUE
@@ -852,6 +970,21 @@ Contains:
 /obj/item/assembly/timer_ignite_pipebomb/mini_syndicate
 	icon_state = "Pipe_Wired_Syndicate"
 	pipebomb_path = /obj/item/pipebomb/bomb/miniature_syndicate
+
+
+
+/////////////////////////////////////////////////// flash/cell assemblies ////////////////////////////////////
+
+/obj/item/assembly/flash_cell
+	secured = TRUE
+	var/new_cell_charge = 7500
+
+/obj/item/assembly/flash_cell/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/device/flash(src)
+	var/obj/item/cell/new_applier = new /obj/item/cell(src)
+	new_applier.charge = src.new_cell_charge
+	src.set_up_new(null, new_trigger, new_applier)
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
 

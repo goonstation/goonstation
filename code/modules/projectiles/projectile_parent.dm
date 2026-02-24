@@ -81,6 +81,21 @@
 	/// For precalculated projectiles, how far along the `crossing` list have we reached
 	var/curr_t = 0
 
+	/// Used to override the speed from the projectile datum so we can have WEIRD and DANGEROUS non-static speeds (see gyrojet)
+	/// Only works with non-precalc projectiles obviously.
+	var/internal_speed = null
+
+	/// Safety check var to make sure we do some kind of sane "collide and die" behaviour if setup fails due to bad input params (0 speed etc.)
+	var/was_setup = 0
+
+	/// X position of the projectile impact, used for particles and bullet impacts
+	var/impact_x = null
+	/// y position of the projectile impact, used for particles and bullet impacts
+	var/impact_y = FALSE
+
+	/// Simulate standard atmos for any mobs inside
+	var/has_atmosphere = FALSE
+
 	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
 
 	/// Reflection normal on the current tile (NORTH if projectile came from the north, etc.)
@@ -99,16 +114,11 @@
 	/// Yeah this sucks. TODO remove. I don't care bring the bug back so we can actually fix it
 	var/is_processing = FALSE //MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 
-	var/internal_speed = null // experimental    THANKS VERY INFORMATIVE   TODO: ask yass how this works
-
 	/// Arbitrary projectile data. Currently only used to hold an object that a projectile is seeking for a singular type. TODO remove
 	var/data = 0
 
 	/// Number of impassable atoms this projectile can pierce. Decremented on pierce. Can probably be axed in favor of the component. TODO remove
 	var/pierces_left = 0
-
-	/// TODO axe this after testing. Used very infrequently, looks redundant
-	var/was_setup = 0
 
 	/// Below stuff but also this is dumb and only used for frost bats and I don't even know why it's used there. TODO remove
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
@@ -118,14 +128,6 @@
 
 	/// Turf of the called_target during projectile initialization
 	var/turf/called_target_turf
-
-	/// X position of the projectile impact, used for particles and bullet impacts
-	var/impact_x = null
-	/// y position of the projectile impact, used for particles and bullet impacts
-	var/impact_y = FALSE
-
-	/// Simulate standard atmos for any mobs inside
-	var/has_atmosphere = FALSE
 
 	disposing()
 		special_data = null
@@ -210,7 +212,7 @@
 			return
 
 		//determine where exactly the bullet hit the atom and spawn particles
-		calculate_impact_particles(src, A)
+		calculate_impact_particles(src, A, ground_hit=FALSE)
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_OBJ_PROJ_COLLIDE, A)
 		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src, src.impact_x, src.impact_y)
 		if(QDELETED(src)) //maybe a signal proc QDELETED(src) us
@@ -447,7 +449,8 @@
 			die()
 			return
 
-		var/turf/curr_turf = loc
+		var/turf/curr_turf = get_turf(src)
+
 		//delta wx, how far in pixels(?) the projectile should move this step
 		var/dwx
 		var/dwy
@@ -455,15 +458,23 @@
 			dwx = src.internal_speed * src.xo
 			dwy = src.internal_speed * src.yo
 			curr_t++
-			src.travelled += src.internal_speed
+			if (src.proj_data.affected_by_gravity)
+				src.travelled += src.internal_speed * (curr_turf ? curr_turf.get_gforce_fractional() : 1)
+			else
+				src.travelled += src.internal_speed
 		else
 			dwx = src.proj_data.projectile_speed * src.xo
 			dwy = src.proj_data.projectile_speed * src.yo
 			curr_t++
-			src.travelled += src.proj_data.projectile_speed
+			if (src.proj_data.affected_by_gravity)
+				src.travelled += src.proj_data.projectile_speed * (curr_turf ? curr_turf.get_gforce_fractional() : 1)
+			else
+				src.travelled += src.proj_data.projectile_speed
 
 		// The bullet would be expired/decayed.
 		if (src.travelled >= src.max_range * 32)
+			if (isfloor(curr_turf))
+				calculate_impact_particles(src, curr_turf, ground_hit=TRUE)
 			proj_data.on_max_range_die(src)
 			die()
 			return
@@ -483,6 +494,8 @@
 					i--
 				else
 					break
+			if (length(crossing) == 1)
+				proj_data.precalculated = FALSE
 
 
 		if (proj_data.precalculated)
@@ -588,7 +601,7 @@
 			return GM
 		..()
 
-	proc/calculate_impact_particles(obj/projectile/shot, atom/hit)
+	proc/calculate_impact_particles(obj/projectile/shot, atom/hit, ground_hit=FALSE)
 		var/datum/projectile/shotdata = shot.proj_data
 
 		// Apply offset based on dir. The side we want to put holes on is opposite the dir of the bullet
@@ -637,7 +650,7 @@
 		var/new_x = (impact_offset_x + x_distance)*abs(sin(impact_normal)) + (16-impact_final_height)*cos(impact_normal)
 		var/new_y = (impact_offset_y + y_distance)*abs(cos(impact_normal)) + (16-impact_final_height)*sin(impact_normal)
 
-		shotdata.spawn_impact_particles(hit, shot, new_x, new_y)
+		shotdata.spawn_impact_particles(hit, shot, new_x, new_y, ground_hit)
 		src.impact_x = new_x
 		src.impact_y = new_y
 		return
@@ -686,10 +699,12 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/always_hits_structures = FALSE //always hits doors and girders
 	var/window_pass = 0          // Can we pass windows
 	var/obj/projectile/master = null // The projectile obj that we're associated with
-	var/silentshot = 0           // Standard hit message upon bullet_act.
+	var/no_hit_message = 0       // Standard hit message upon bullet_act.
+	var/sound_los = FALSE        //! Does the sound effect strictly respect LoS (for silenced weapons)
 	var/implanted                // Path of "bullet" left behind in the mob on successful hit
 	var/disruption = 0           // planned thing to deal with pod electronics / etc
 	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
+	var/affected_by_gravity = FALSE	 // If a projectile should go shorter or further based on turf G-forces
 
 	var/datum/material/material = null
 
@@ -739,6 +754,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/has_impact_particles = FALSE
 	/// Override var used for special projectiles, set to true if it should use energy impact particles
 	var/energy_particles_override = FALSE
+	/// Prevent this projectile from damaging the law rack (won't affect explosions caused by the projectile)
+	var/law_rack_safe = FALSE
 
 	var/static/effect_amount = 0
 
@@ -869,7 +886,7 @@ ABSTRACT_TYPE(/datum/projectile)
 			src.impact_image_state = P.impact_image_state
 
 		// Spawn some particles if we hit something solid that isnt a human or a silicon
-		spawn_impact_particles(atom/hit, var/obj/projectile/O, x, y)
+		spawn_impact_particles(atom/hit, var/obj/projectile/O, x, y, ground_hit=FALSE)
 			if (!src.has_impact_particles || ismob(hit))
 				return
 			if (effect_amount >= 200)
@@ -893,27 +910,32 @@ ABSTRACT_TYPE(/datum/projectile)
 				if (T?.active_liquid)
 					if(T.active_liquid.last_depth_level > 3)
 						underwater = TRUE
+			var/impact_dir_x = -O.xo
+			var/impact_dir_y = -O.yo
+			if (ground_hit)
+				impact_dir_x = 0
+				impact_dir_y = 0.5
 			if (kinetic_particles && !src.energy_particles_override)
 				var/new_impact_icon = hit.impact_icon
 				var/new_impact_icon_state = hit.impact_icon_state
 				//Bullet impacts create dust of the color of the hit thing
 				var/avrg_color = hit.get_average_color(TRUE)
-				new /obj/effects/impact_gunshot/dust(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color, new_impact_icon, new_impact_icon_state)
+				new /obj/effects/impact_gunshot/dust(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage, avrg_color, new_impact_icon, new_impact_icon_state)
 				if (underwater)
-					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 				else
-					new /obj/effects/impact_gunshot/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
-					new /obj/effects/impact_gunshot/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_gunshot/sparks(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
+					new /obj/effects/impact_gunshot/smoke(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 			else
 				//Energy impacts create sparks of the color of the projectile
 				var/avrg_color = O.get_average_color(TRUE)
-				new /obj/effects/impact_energy/projectile_sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage, avrg_color)
+				new /obj/effects/impact_energy/projectile_sparks(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage, avrg_color)
 				if (underwater)
-					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_gunshot/bubble(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 				else
-					new /obj/effects/impact_energy/sparks(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+					new /obj/effects/impact_energy/sparks(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 					if (damage >= 30)
-						new /obj/effects/impact_energy/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
+						new /obj/effects/impact_energy/smoke(get_turf(hit), x, y, impact_dir_x, impact_dir_y, damage)
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
@@ -1056,7 +1078,8 @@ ABSTRACT_TYPE(/datum/projectile)
 		if (narrator_mode) // yeah sorry I don't have a good way of getting rid of this one
 			playsound(sound_source, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
-			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange, pitch = DATA.shot_pitch == 1 ? null : DATA.shot_pitch)
+			var/flags = DATA.sound_los ? SOUND_DO_LOS : 0
+			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange, pitch = DATA.shot_pitch == 1 ? null : DATA.shot_pitch, flags = flags)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))

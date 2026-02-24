@@ -689,8 +689,8 @@ TYPEINFO(/obj/machinery/transception_pad)
 					if("send")
 						src.attempt_transceive()
 					if("receive")
-						var/sigindex = signal.data["data"]
-						if(isnum_safe(sigindex))
+						var/sigindex = text2num_safe(signal.data["data"])
+						if (isnum_safe(sigindex))
 							src.attempt_transceive(sigindex)
 
 

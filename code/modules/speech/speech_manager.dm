@@ -160,10 +160,11 @@ var/global/datum/speech_manager/SpeechManager = new()
 /datum/speech_manager/proc/TruncatePrefix(prefix_id)
 	var/original_prefix = prefix_id
 	var/module_id
-
+	var/frustration = 0
 	// Attempt to locate a speech prefix module ID that matches the prefix ID, with each iteration using a shorter prefix ID.
 	// This results in a prefix ID of ":3a" returning the module ID for ":3". Equally, ":g" -> ":", ";nonsense" -> ";", etc.
 	while (length(prefix_id))
+		frustration++
 		module_id = src.prefix_id_cache[prefix_id]
 
 		if (module_id)
@@ -172,8 +173,11 @@ var/global/datum/speech_manager/SpeechManager = new()
 				src.prefix_id_cache[original_prefix] = module_id
 
 			break
-
 		prefix_id = copytext(prefix_id, 1, length(prefix_id))
+		if (frustration > 100)
+			message_admins("TruncatePrefix crashout triggered with original prefix [original_prefix] by usr [key_name(usr)]. This may be an attempt to crash the server!!")
+			logTheThing(LOG_DEBUG, "TruncatePrefix crashout triggered with original prefix [original_prefix] by usr [key_name(usr)]")
+			return ""
 
 	return prefix_id
 

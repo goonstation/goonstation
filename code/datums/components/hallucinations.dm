@@ -46,6 +46,15 @@ TYPEINFO(/datum/component/hallucination/random_image_override)
 		ARG_INFO("visible_creation", DATA_INPUT_BOOL, "Should the displayed image appear in line of sight?", TRUE),
 	)
 
+TYPEINFO(/datum/component/hallucination/distant_explosion)
+	initialization_args = list(
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
+		ARG_INFO("explosion_prob", DATA_INPUT_NUM, "probability of a fake explosion per mob life tick", 15),
+		ARG_INFO("cooldown_time", DATA_INPUT_NUM, "minimum time between fake explosions in deciseconds", 7 SECONDS),
+		ARG_INFO("shake_duration", DATA_INPUT_NUM, "how long the screen shake lasts in deciseconds", 8),
+		ARG_INFO("shake_strength", DATA_INPUT_NUM, "how much screenshaking should occur", 24),
+		ARG_INFO("sound_volume", DATA_INPUT_NUM, "volume of the fake explosion sound", 70),
+	)
 
 //#########################################################
 //                HALLUCINATION COMPONENTS
@@ -371,6 +380,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	UnregisterFromParent()
 		UnregisterSignal(src.parent, COMSIG_ITEM_PICKUP)
 		UnregisterSignal(src.parent, COMSIG_ITEM_DROPPED)
+		src.viewer_client.images -= src.current_image
 
 	proc/on_pickup_drop()
 		SPAWN(0)
@@ -435,6 +445,45 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		return TRUE //only one of these please, just reset timeout
 
 //#########################################################
+//                    DISTANT EXPLOSION
+//#########################################################
+
+///Fake distant explosion and shake
+/datum/component/hallucination/distant_explosion
+	var/explosion_prob = 15
+	var/cooldown_time = 7 SECONDS
+	var/shake_duration = 8
+	var/shake_strength = 24
+	var/sound_volume = 70
+
+	var/boom_cooldown = 0 //! Stored timestamp after which we can trigger a new boom
+
+	Initialize(timeout, explosion_prob = 15, cooldown_time = 7 SECONDS, shake_duration = 8, shake_strength = 24, sound_volume = 70)
+		. = ..()
+		if(. == COMPONENT_INCOMPATIBLE)
+			return .
+		src.explosion_prob = explosion_prob
+		src.cooldown_time = cooldown_time
+		src.shake_duration = shake_duration
+		src.shake_strength = shake_strength
+		src.sound_volume = sound_volume
+
+		src.boom_cooldown = world.time
+
+	do_mob_tick(mob, mult)
+		. = ..()
+		if (world.time < boom_cooldown)
+			return
+		if(probmult(explosion_prob))
+			boom_cooldown = world.time + src.boom_cooldown
+			shake_camera(mob, src.shake_duration, src.shake_strength)
+			parent_mob.playsound_local(parent_mob.loc, explosions.distant_sound, src.sound_volume, 0)
+
+	CheckDupeComponent(timeout)
+		..()
+		return TRUE // do not stack these
+
+//#########################################################
 //                    SUPPORTING CAST
 //#########################################################
 
@@ -493,7 +542,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		get_name()
 			return pick("pig", "DAT FUKKEN PIG")
 	spider
-		fake_icon_state = "big_spide"
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "spider"
 		get_name()
 			return pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 	slime
@@ -516,6 +566,47 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	buttcrab
 		fake_icon_state = "buttcrab"
 		should_attack = FALSE
+
+	headspider
+		fake_icon_state = "headspider"
+		var/frustration = 0
+		var/last_loc
+
+		New(location, target)
+			// try to spawn out of sight
+			var/list/turf/potential_spawns = list()
+			for(var/turf/T in (orange(target, 7) - oview(target, 7)))
+				if (isfloor(T))
+					potential_spawns += T
+			if (length(potential_spawns))
+				src.set_loc(pick(potential_spawns))
+			. = ..()
+
+		process()
+			if (!src.my_target)
+				qdel(src)
+				return
+			if(src.stop_processing)
+				return
+			if (BOUNDS_DIST(src, src.my_target) > 0)
+				step_towards(src, src.my_target)
+				if (src.loc == last_loc)
+					frustration++
+				last_loc = src.loc
+				if (frustration > 10)
+					src.set_loc(get_step_towards(src, src.my_target))
+					frustration = 0
+			else
+				if (prob(70))
+					boutput(src.my_target, ("<font color='#FF0000'><B>\The [src]</B> crawls down [src.my_target.name]'s throat!</font>"))
+					src.my_target.playsound_local(src.my_target, 'sound/misc/headspiderability.ogg', 60)
+					src.my_target.setStatusMin("unconscious", 5 SECONDS)
+					qdel(src)
+
+			if (prob(10)) step_away(src,my_target,2)
+			SPAWN(0.3 SECONDS)
+				src.process()
+
 	bat
 		fake_icon_state = "bat"
 		get_name()

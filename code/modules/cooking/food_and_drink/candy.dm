@@ -54,6 +54,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 
 /obj/item/reagent_containers/food/snacks/candy/candy_cane
 	name = "candy cane"
+	crunchy = TRUE
 	desc = "Holiday treat and aid to limping gingerbread men everywhere."
 	real_name = "candy cane"
 	icon = 'icons/misc/xmas.dmi'
@@ -259,6 +260,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop
 	name = "lollipop"
+	crunchy = TRUE
 	desc = "How many licks does it take to get to the center? No one knows, they just bite the things."
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "lpop-0"
@@ -429,6 +431,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/reagent_containers/food/snacks/candy/candyheart
 	name = "candy heart"
+	crunchy = TRUE
 	desc = "Can you find the perfect phrase for that special someone?"
 	icon_state = "heart"
 	bites_left = 1
@@ -534,9 +537,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 		unwrapped = 1
 		user.visible_message(SPAN_EMOTE("[user] unwraps the Hetz's Cups."), "You unwrap the Hetz's Cups.")
 		var/turf/T = get_turf(user)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
+		var/list/cuts = list()
+		cuts.Add(new /obj/item/reagent_containers/food/snacks/candy/pbcup(T))
+		cuts.Add(new /obj/item/reagent_containers/food/snacks/candy/pbcup(T))
+		cuts.Add(new /obj/item/reagent_containers/food/snacks/candy/pbcup(T))
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, cuts, user)
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/caramel
@@ -553,6 +558,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 /obj/item/reagent_containers/food/snacks/candy/hard_candy
 	name = "hard candy"
+	crunchy = TRUE
 	desc = "A piece of hard candy."
 	real_name = "hard candy"
 	icon_state = "hardcandy-nowrap"
@@ -588,6 +594,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 			src.reagents.trans_to(A, 5)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(A)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, A, user)
 			qdel(src)
 			qdel(W)
 		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
@@ -609,13 +616,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
 			if(istype(W,/obj/item/stick)) W.amount--
 			if(!W.amount) qdel(W)
-
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, newcandy, user)
 			qdel(src)
 		else
 			..()
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard
 	name = "wrapped hard candy"
+	crunchy = TRUE //probably not necessary here since i don't think you can normally eat it while it's wrapped but matter eater exists so whatever
 	desc = "A piece of wrapped hard candy."
 	real_name = "hard candy"
 	icon_state = "hardcandy"
@@ -642,6 +650,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 /obj/item/reagent_containers/food/snacks/candy/rock_candy
 	name = "rock candy"
+	crunchy = TRUE
 	desc = "Rock candy on a stick. Hard as a rock, hopefully doesn't taste like one."
 	real_name = "rock candy"
 	icon_state = "rockcandy-0"
@@ -674,6 +683,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 /obj/item/reagent_containers/food/snacks/candy/swirl_lollipop
 	name = "swirly lollipop"
+	crunchy = TRUE
 	desc = "A giant colorful lollipop in the shape of a swirl."
 	real_name = "swirly lollipop"
 	icon_state = "lpop-rainbow"
@@ -771,14 +781,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 				user.visible_message("[src] disintegrates, falling apart into individual strands and sugar dust!", "[src] disintegrates through your fingers, what remains of its strands falling onto the floor.")
 				var/turf/T = get_turf(user)
 				var/diminished_reagents = max(1, round(src.reagents.total_volume / 6)) // less reagent content for failing
+				var/list/cuts = list()
 				for (var/i=0, i<pick(1,2,3), i++)
 					var/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut/A = new /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut(T)
+					cuts.Add(A)
 					A.reagents.clear_reagents()
 					src.reagents.trans_to(A, diminished_reagents)
 					A.folds = src.folds
 					A.desc = src.desc
 					A.eat_message = src.eat_message
 					A.food_effects = src.food_effects
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, cuts, user)
 				qdel(src)
 				return
 		else

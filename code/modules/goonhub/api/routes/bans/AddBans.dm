@@ -4,7 +4,7 @@
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/bans"
 	body = /datum/apiBody/bans/add
-	correct_response = /datum/apiModel/Tracked/BanResource
+	correct_response = /datum/apiModel/Tracked/Ban
 
 	buildBody(
 		game_admin_ckey,

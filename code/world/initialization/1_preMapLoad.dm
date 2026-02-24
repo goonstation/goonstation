@@ -92,7 +92,6 @@
 	cdn = config.cdn
 	cdnManifest = loadCdnManifest()
 	disableResourceCache = config.disableResourceCache
-	chui = new()
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 		Z_LOG_DEBUG("Preload", "Loading local browserassets...")
 		loadAllLocalResources("browserassets/src/")
@@ -124,9 +123,6 @@
 
 	Z_LOG_DEBUG("Preload", "Generating access name lookup") // ^^
 	generate_access_name_lookup()
-
-	// no log because this is functionally instant
-	global_signal_holder = new
 
 	Z_LOG_DEBUG("Preload", "Loading saved gamemode...")
 	world.load_mode()

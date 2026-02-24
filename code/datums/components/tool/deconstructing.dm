@@ -8,18 +8,20 @@ TYPEINFO(/datum/component/deconstructing)
 /datum/component/deconstructing
 	var/base_duration = 2 SECONDS
 	var/complexity_mult = 1 //! How much complexity affects deconstruction time
+	var/contextLayout
 
 	Initialize(baseDuration=2 SECONDS, complexityMult=1)
 		..()
 		src.base_duration = baseDuration
 		src.complexity_mult = complexityMult
+		src.contextLayout = new/datum/contextLayout/flexdefault()
 
 	///
 	proc/finish_decon(atom/target, mob/user, atom/deconstructor)
 		if (!isobj(target))
 			return
 		var/obj/O = target
-		if(!O.can_deconstruct(user))
+		if (!O.can_deconstruct(user))
 			return
 		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -57,7 +59,12 @@ TYPEINFO(/datum/component/deconstructing)
 			var/decon_time = (decon_complexity * 2.5 SECONDS * src.complexity_mult) + src.base_duration
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,decon_tool,decon_time), user)
 		else
-			user.showContextActions(O.decon_contexts, O)
+			if (istype(O, /obj/item/storage/secure/ssafe)) //checks if secure safes are unlocked before attempting to deconstruct them.
+				var/obj/item/storage/secure/safe = target
+				if (safe.locked)
+					boutput(user, SPAN_ALERT("You cannot deconstruct [target] while it is locked."))
+					return ATTACK_PRE_DONT_ATTACK
+			user.showContextActions(O.decon_contexts, O, src.contextLayout)
 			boutput(user, SPAN_ALERT("You need to use some tools on [target] before it can be deconstructed."))
 		return ATTACK_PRE_DONT_ATTACK
 

@@ -389,6 +389,25 @@
 		icon_state = "celery"
 		edible = 1
 
+	eyestalk
+		name = "slug eyestalk"
+		desc = "A favourite cocktail adornment of cultured ogres."
+		icon_state = "eyestalk1"
+		edible = 1
+		appearance_flags = KEEP_TOGETHER
+		var/second_stalk = FALSE // you get two! :D
+
+		New()
+			..()
+			// I'd make more than 2 states, but due to byond jank they need to have a lot of frames instead of using frame delays.
+			// Figured that might cause marginally more lag/bloat if more were added just for animation de-syncing when making lots.
+			src.icon_state = "eyestalk[pick(1,2)]"
+			SPAWN(0)
+				if (!src.second_stalk)
+					var/obj/item/cocktail_stuff/eyestalk/new_stalk = new /obj/item/cocktail_stuff/eyestalk
+					new_stalk.second_stalk = TRUE // don't inf loop us
+					new_stalk.set_loc(get_turf(src))
+
 // idk where to put this so here
 /obj/item/straw
 	name = "drinking straw"

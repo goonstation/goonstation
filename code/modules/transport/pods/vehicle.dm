@@ -5,7 +5,7 @@
 	density = 1
 	flags = USEDELAY
 	anchored = ANCHORED
-	stops_space_move = 1
+	provides_grip = TRUE
 	status = REQ_PHYSICAL_ACCESS
 	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
@@ -76,6 +76,9 @@
 
 		. = ..()
 		START_TRACKING
+		// pods control own drift
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 
 
 	remove_air(amount as num)
@@ -182,7 +185,15 @@
 				return
 
 		if (istype(W, /obj/item/tank/plasma))
-			src.open_parts_panel(user)
+			if(src.fueltank || !src.atmostank)
+				src.open_parts_panel(user)
+			else
+				logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
+				boutput(usr, SPAN_NOTICE("You attach the [W.name] to [src.name]'s fuel supply valve."))
+				user.drop_item()
+				W.set_loc(src)
+				src.fueltank = W
+				src.myhud?.update_fuel()
 			return
 
 		..()
@@ -232,11 +243,13 @@
 		part.deactivate(give_message)
 		part.ship_uninstall()
 		part.ship = null
-		part.set_loc(get_turf(src))
-		if(user)
-			user.put_in_hand_or_drop(part)
 		src.installed_parts[slot] = null
-		return part
+
+		if (!QDELETED(part))
+			part.set_loc(get_turf(src))
+			if(user)
+				user.put_in_hand_or_drop(part)
+			return part
 
 	/// Don't know which slot a part is in? Use this.
 	proc/find_part_slot(var/obj/item/shipcomponent/part)
@@ -750,9 +763,7 @@
 		if (movement_controller)
 			movement_controller.dispose()
 
-		myhud.detach_all_clients()
-		myhud.master = null
-		myhud = null
+		QDEL_NULL(src.myhud)
 
 		if (pilot)
 			pilot = null
@@ -945,7 +956,7 @@
 	if (ejectee.client)
 		ejectee.detach_hud(myhud)
 
-	ejectee.override_movement_controller = null
+	ejectee.remove_movement_controller(src.movement_controller)
 
 	src.passengers--
 
@@ -1060,7 +1071,7 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
-	M.override_movement_controller = src.movement_controller
+	M.add_movement_controller(src.movement_controller)
 	M.reset_keymap()
 	M.recheck_keys()
 	if(!src.pilot && (!ismobcritter(boarder) || (isadmin(boarder) && !M.client.player_mode)))

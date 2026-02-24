@@ -132,7 +132,6 @@
 		#endif
 		/obj/item/device/t_scanner,
 		/obj/item/lamp_manufacturer,
-		/obj/item/atmosporter,
 		/obj/item/electronics/soldering,
 		/obj/item/electronics/scanner,
 		/obj/item/blueprint_marker,
@@ -166,6 +165,7 @@
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/dropper,
+		/obj/item/triage_tagger,
 	)
 
 // miner. quartermaster.

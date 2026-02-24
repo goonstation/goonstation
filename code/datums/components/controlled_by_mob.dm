@@ -19,7 +19,7 @@ TYPEINFO(/datum/component/controlled_by_mob)
 	var/obj/O = parent
 	src.controlling_mob = controlling_mob
 	src.movement_controller = new/datum/movement_controller/obj_control(O)
-	src.controlling_mob.override_movement_controller = src.movement_controller
+	src.controlling_mob.add_movement_controller(src.movement_controller)
 
 /datum/component/controlled_by_mob/proc/change_mob(mob/new_mob)
 	src.kick_out_mob()
@@ -33,7 +33,7 @@ TYPEINFO(/datum/component/controlled_by_mob)
 		APPLY_ATOM_PROPERTY(src.controlling_mob,PROP_MOB_REBREATHING,src)
 	else
 		src.controlling_mob.client.eye = O
-	src.controlling_mob.override_movement_controller = src.movement_controller
+	src.controlling_mob.add_movement_controller(src.movement_controller)
 	controlling_mob.reset_keymap()
 
 /datum/component/controlled_by_mob/proc/kick_out_mob()
@@ -44,7 +44,7 @@ TYPEINFO(/datum/component/controlled_by_mob)
 			REMOVE_ATOM_PROPERTY(src.controlling_mob,PROP_MOB_REBREATHING,src)
 		else
 			controlling_mob.client.eye = controlling_mob
-		src.controlling_mob.override_movement_controller = null
+		src.controlling_mob.remove_movement_controller(src.movement_controller)
 		controlling_mob.reset_keymap()
 
 /datum/component/controlled_by_mob/RegisterWithParent()

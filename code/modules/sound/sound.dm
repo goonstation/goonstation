@@ -174,7 +174,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
-	for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
+	for (var/client/C as anything in global.client_hashmap.fast_manhattan(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
 		var/mob/M = C.mob
 		if (!C)
 			continue
@@ -232,6 +232,12 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 			//boutput(world, "for client [C] updating volume [storedVolume] to [ourvolume] for channel [channel]")
 
 			EARLY_CONTINUE_IF_QUIET(ourvolume)
+
+			//potentially expensive, do not use for commonly played sounds
+			if (flags & SOUND_DO_LOS)
+				//we return to dumb Byond builtins
+				if (!(M in hearers(MAX_SOUND_RANGE, source)))
+					continue
 
 			//sadly, we must generate
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
@@ -532,6 +538,7 @@ var/global/number_of_sound_generated = 0
 			if ("step_heavyboots") soundin = pick(sounds_step_heavyboots)
 			if ("step_military") soundin = pick(sounds_step_military)
 			if ("step_snow") soundin = pick(sounds_step_snow)
+			if ("chute_insert") soundin = pick(sounds_chute_insert)
 
 	if(islist(soundin))
 		soundin = pick(soundin)
@@ -750,6 +757,7 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/sounds_warp = list(sound('sound/effects/warp1.ogg'),sound('sound/effects/warp2.ogg'))
 /var/global/list/sounds_engine = list(sound('sound/machines/tractor_running2.ogg'),sound('sound/machines/tractor_running3.ogg'))
 /var/global/list/sounds_keyboard = list(sound('sound/machines/keyboard1.ogg'),sound('sound/machines/keyboard2.ogg'),sound('sound/machines/keyboard3.ogg'))
+/var/global/list/sounds_chute_insert = list(sound('sound/effects/chute_place_1.ogg'),sound('sound/effects/chute_place_2.ogg'),sound('sound/effects/chute_place_3.ogg'),sound('sound/effects/chute_place_4.ogg'))
 
 /var/global/list/sounds_enginegrump = list(sound('sound/machines/engine_grump1.ogg'),sound('sound/machines/engine_grump2.ogg'),sound('sound/machines/engine_grump3.ogg'),sound('sound/machines/engine_grump4.ogg'))
 
@@ -780,6 +788,12 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/ambience_computer = list(sound('sound/ambience/station/Machinery_Computers1.ogg'),sound('sound/ambience/station/Machinery_Computers2.ogg'),sound('sound/ambience/station/Machinery_Computers3.ogg'))
 /var/global/list/ambience_atmospherics = list(sound('sound/ambience/loop/Wind_Low.ogg'))
 /var/global/list/ambience_engine = list(sound('sound/ambience/loop/Wind_Low.ogg'))
+/var/global/list/ambience_gravity = list(
+		sound('sound/ambience/station/underwater/sub_ambi2.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi3.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi4.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi6.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi8.ogg'))
 
 /var/global/list/ghostly_sounds = list('sound/effects/ghostambi1.ogg', 'sound/effects/ghostambi2.ogg', 'sound/effects/ghostbreath.ogg', 'sound/effects/ghostlaugh.ogg', 'sound/effects/ghostvoice.ogg')
 
@@ -815,6 +829,7 @@ proc/narrator_mode_sound_file(sound_file)
 		"pug" = sound('sound/misc/talk/pug.ogg'),	"pug!" = sound('sound/misc/talk/pug_exclaim.ogg'),"pug?" = sound('sound/misc/talk/pug_ask.ogg'), \
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
+		"monkey" = sound('sound/misc/talk/monkey.ogg'),	"monkey!" = sound ('sound/misc/talk/monkey_exclaim.ogg'),"monkey?" = sound('sound/misc/talk/monkey_ask.ogg'), \
 		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
 		"cyborg_distorted" = sound('sound/misc/talk/cyborg_distorted.ogg'),	"cyborg_distorted!" = sound('sound/misc/talk/cyborg_exclaim_distorted.ogg'),"cyborg_distorted?" = sound('sound/misc/talk/cyborg_ask_distorted.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\

@@ -35,9 +35,9 @@
 		src.status |= NOPOWER
 
 	src.icon_state = "[(src.status & NOPOWER)?("off"):("on")]"
-	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, -180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
-	SET_PIPE_UNDERLAY(src.node2, src.flipped ? turn(src.dir, 90) : turn(src.dir, -90), "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
-	SET_PIPE_UNDERLAY(src.node3, src.dir, "long", issimplepipe(src.node3) ?  src.node3.color : null, FALSE)
+	update_pipe_underlay(src.node1, turn(src.dir, -180), "long", FALSE)
+	update_pipe_underlay(src.node2, src.flipped ? turn(src.dir, 90) : turn(src.dir, -90), "long", FALSE)
+	update_pipe_underlay(src.node3, src.dir, "long", FALSE)
 
 /obj/machinery/atmospherics/trinary/retrofilter/attack_hand(mob/user)
 	if(..())
@@ -260,10 +260,10 @@
 		if(!do_after(user, 10 SECONDS))
 			return
 
-		C.use(4)
-		src.hacked = TRUE
-		src.locked = FALSE
-		src.update_overlays()
+		if(C.use(4))
+			src.hacked = TRUE
+			src.locked = FALSE
+			src.update_overlays()
 		return
 
 	else if (issnippingtool(W) && hacked)

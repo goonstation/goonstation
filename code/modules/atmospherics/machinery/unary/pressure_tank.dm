@@ -4,6 +4,7 @@
 	name = "Pressure Tank"
 	desc = "A large vessel containing pressurized gas."
 	density = TRUE
+	provides_grip = TRUE
 	var/volume = 1620 //in liters, 0.9 meters by 0.9 meters by 2 meters
 
 /obj/machinery/atmospherics/unary/tank/New()
@@ -13,7 +14,7 @@
 	src.air_contents.temperature = T20C
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
-	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, FALSE)
+	update_pipe_underlay(src.node, src.dir, "long", FALSE)
 
 
 /obj/machinery/atmospherics/unary/tank/attackby(obj/item/I, mob/user) //let's just make these breakable for now

@@ -1,6 +1,7 @@
 ABSTRACT_TYPE(/datum/job/special/syndicate)
 /datum/job/special/syndicate
-	linkcolor = SYNDICATE_LINK_COLOR
+	ui_colour = TGUI_COLOUR_CRIMSON
+	job_category = JOB_SYNDICATE
 	limit = 0
 	wages = 0
 	name = "YOU SHOULDN'T SEE ME OPERATIVE"
@@ -9,6 +10,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 	add_to_manifest = FALSE
 	//Always a generic antagonist, don't allow normal antag roles.
 	can_roll_antag = FALSE
+	var/antag_role = ROLE_SYNDICATE_AGENT
 
 	slot_back = list(/obj/item/storage/backpack/syndie)
 	slot_jump = list(/obj/item/clothing/under/misc/syndicate)
@@ -24,11 +26,14 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, src.name, source = ANTAGONIST_SOURCE_ADMIN)
 		SPAWN(0) //Let the ID actually spawn
 			var/obj/item/card/id/ID = M.get_id()
 			if(istype(ID))
 				ID.icon_state = "id_syndie" //Syndie ID normally starts with basic sprite
+				ID.keep_icon = TRUE
+		SPAWN(2) //Ghost respawn panel has a SPAWN(1) that clears all antag roles. Apply specialist role if no other role was picked
+			if(!M.mind?.is_antagonist())
+				M.mind?.add_generic_antagonist(src.antag_role, src.name, source = ANTAGONIST_SOURCE_ADMIN)
 
 /datum/job/special/syndicate/weak
 	name = "Junior Syndicate Operative"
@@ -53,6 +58,18 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_back = list(/obj/item/storage/backpack/syndie/tactical)
 	slot_lhan = list(/obj/item/remote/syndicate_teleporter) //To get off the cairngorm with
 	slot_rhan = list(/obj/item/tank/jetpack/syndicate) //To get off the listening post with
+
+/datum/job/special/syndicate/specialist/commander
+	name = "Syndicate Commander"
+	antag_role = ROLE_SYNDICATE_COMMANDER
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat)
+	slot_poc1 = list(/obj/item/pinpointer/disk)
+	slot_ears = list(/obj/item/device/radio/headset/syndicate/leader)
+	slot_belt = list(/obj/item/swords_sheaths/nukeop)
+	slot_card = /obj/item/card/id/syndicate/commander
+	items_in_backpack = list(/obj/item/storage/box/capella,
+							/obj/item/dagger/syndicate)
 
 /datum/job/special/syndicate/specialist/demo
 	name = "Syndicate Grenadier"

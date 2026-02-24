@@ -126,13 +126,25 @@
 	get_desc(dist, mob/user)
 		return null
 
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user, silent = FALSE)
+		if (istype(W, /obj/item/magnifying_glass))
+			boutput(user, SPAN_NOTICE("You angle the light through the magnifying glass towards the ants."))
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(burn_ants), list(user, W), W.icon, W.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			return
+
 		..(W, user)
 		SPAWN(1 SECOND)
 			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
+
+	proc/burn_ants(mob/user, obj/item/P)
+		boutput(user, SPAN_NOTICE("You burn the ants to a crisp."))
+		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, TRUE)
+		animate_little_spark(src)
+		make_cleanable(/obj/decal/cleanable/ash, src.loc)
+		qdel(src)
 
 /obj/reagent_dispensers/cleanable/spiders
 	name = "spiders"
@@ -227,6 +239,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "coolerbase"
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
+	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	capacity = 500
 	_health = 250
 	_max_health = 250
@@ -432,36 +445,46 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 /obj/reagent_dispensers/chemicalbarrel
 	name = "chemical barrel"
-	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
-	icon = 'icons/obj/objects.dmi'
+	desc = "For storing medical chemicals and less savory things."
+	icon = 'icons/obj/chemical_barrel.dmi'
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
 	rc_flags = RC_SCALE | RC_SPECTRO | RC_VISIBLE
 	flags = FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	HELP_MESSAGE_OVERRIDE({"\
+		Click the barrel with an <b>empty hand</b> to flip the barrel's funnel into a spout or vice versa. \
+		Use a <b>reagent container</b> to add/remove reagents from the barrel, depending on the funnel/spout. \
+		Use a <b>pen</b> to add a label to the barrel. \
+		Use a <b>wrench</b> to open or close the barrel's lid. \
+		Click and drag the barrel to a <b>CheMaster 3000</b> to allow the CheMaster to draw from the barrel's contents.\
+	"})
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
-	var/image/fluid_image = null
 	var/image/lid_image = null
 	var/image/spout_image = null
 	var/obj/machinery/chem_master/linked_machine = null
+	var/obj/machinery/fluid_machinery/unary/input/port = null
 
 	New()
-		..()
+		. = ..()
+
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = 'icons/obj/chemical_barrel.dmi', \
+			reagent_overlay_icon_state = "barrel", \
+			reagent_overlay_states = 9, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)
 		src.UpdateIcon()
 
-	update_icon()
-		var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 9 + 1), 1, 9))
-		if (!src.fluid_image)
-			src.fluid_image = image(src.icon)
-		if (src.reagents && src.reagents.total_volume)
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.fluid_image.icon_state = "fluid-barrel-[fluid_state]"
+	get_help_message(dist, mob/user)
+		if (port)
+			. = "Connected to a fluid port. Use a <b>screwdriver</b> to disconnect it."
 		else
-			fluid_image.icon_state = "fluid-barrel-0"
-		src.UpdateOverlays(src.fluid_image, "fluid")
+			. = "Can be connected to a fluid port with a <b>screwdriver</b>."
 
+	update_icon()
 		if (!src.lid_image)
 			src.lid_image = image(src.icon)
 			src.lid_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
@@ -469,7 +492,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.lid_image.icon_state = "[base_icon_state]-lid"
 			src.UpdateOverlays(src.lid_image, "lid")
 		else
-			src.lid_image.layer = src.fluid_image.layer + 0.1
+			src.lid_image.layer = FLOAT_LAYER
 			src.lid_image.icon_state = null
 			src.UpdateOverlays(null, "lid")
 
@@ -537,7 +560,32 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.set_open_container(!src.is_open_container())
 			UpdateIcon()
 			return
+		if (isscrewingtool(W))
+			if (src.port)
+				logTheThing(LOG_STATION, user, "has disconnected \the [src] [log_reagents(src)] from the port at [log_loc(src)].")
+				src.port.connectedcontainer = null
+				src.port = null
+				src.anchored = UNANCHORED
+				boutput(user, SPAN_NOTICE("You disconnect [src.name] from the port."))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			else
+				var/obj/machinery/fluid_machinery/unary/input/possible_port = locate(/obj/machinery/fluid_machinery/unary/input) in loc
+				if(possible_port)
+					if (possible_port.connectedcontainer)
+						boutput(user, SPAN_NOTICE("Something is already connected to this port!"))
+						return
 
+					src.port = possible_port
+					possible_port.connectedcontainer = src
+					src.anchored = ANCHORED
+					add_fingerprint(user)
+					logTheThing(LOG_STATION, user, "has connected \the [src] [log_reagents(src)] to the port at [log_loc(src)].")
+					boutput(user, SPAN_NOTICE("You connect [src.name] to the port."))
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+				else
+					boutput(user, SPAN_NOTICE("There's nothing to connect to."))
+			return
 		. = ..()
 
 	mouse_drop(atom/over_object, src_location, over_location)
@@ -587,6 +635,9 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		return TRUE
 
 	disposing()
+		if (src.port)
+			src.port.connectedcontainer = null
+			src.port = null
 		src.linked_machine?.eject_beaker(null)
 		. = ..()
 

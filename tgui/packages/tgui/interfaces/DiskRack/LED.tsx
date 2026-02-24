@@ -1,4 +1,11 @@
-import { BooleanLike, classes } from 'common/react';
+/**
+ * @file
+ * @copyright 2025
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @license MIT
+ */
+
+import { type BooleanLike, classes } from 'common/react';
 import { Box } from 'tgui-core/components';
 
 interface LedProps {

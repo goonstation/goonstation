@@ -1,4 +1,11 @@
-import { BooleanLike } from 'common/react';
+/**
+ * @file
+ * @copyright 2025
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @license MIT
+ */
+
+import type { BooleanLike } from 'common/react';
 
 export interface DiskRackData {
   disks: Disk[];
@@ -10,9 +17,3 @@ export interface Disk {
   color: string;
   light: BooleanLike;
 }
-
-export type DiskButtonProps = {
-  index?: number;
-  diskName?: string;
-  diskColor?: string;
-};

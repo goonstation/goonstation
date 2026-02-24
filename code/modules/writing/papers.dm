@@ -445,6 +445,59 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "postit-writing"
 	info ={"Congaline"}
 
+/obj/item/paper/cultbase_skeptic
+	name = "hastily scrawn note"
+	icon_state = "paper"
+	info = {"I've finally gotten a pen and paper together, they don't want us initiates documenting anything.<br>
+	The leader in charge of us initiates has told us simply to "experiment with the doctrine", and seems to be hiding something behind his dresser. I hear odd noises at night,<br>
+	screams going straight into my head. With everyone getting acting stranger everyday hopefully this air will get me far enough to create<br>
+	a distress call. If you see this note and aren't one of them, <i>GO THE OTHER WAY<i>."}
+
+/obj/item/paper/cultbase_observations
+	name = "ritual progress notes"
+	icon_state = "paper"
+	info = {"The initiates have tried textbook methods to commune with the deep using the plasmacoral as a amplifier. <br>
+	Limited success in operations of this scale, although there has been slight reactions from subject D-01 during initiate <br>
+	sermons, more data needed."}
+
+/obj/item/paper/cultbase_initiate_leader
+	name = "Update: Initiate Training"
+	icon_state = "paper"
+	info = {"The initiates are getting rowdy, the only successful ritual that they've improvised is from the one that's now <br>
+	bolted themself in the freezer. Food is getting tight here, with one of the initiates throwing food in anger. I need to keep a eye on that one. <br>
+	Operations in the back are going well though, although I think that one is catching on."}
+
+/obj/item/paper/cultbase_acolyte_notes
+	name = "The state of the Deep."
+	icon_state = "paper"
+	info = {"The leaders have been misguided, they rave and rant about their new calling, like a rabid dog on a straining chain.<br>
+	One of them went crazy and ran out into the sea in the ritual site for our section, the rest of them went into lockdown in their private wing.<br>
+	We're going to break in after this through the wall in the bathroom quarters, should go right in."}
+
+/obj/item/paper/cultbase_boardroom
+	name = "Board Room Notes"
+	icon_state = "paper"
+	info = {"The meeting with REDACTED was more complicated then usual, they put their stuff in the coolers, I gave them the blood samples of the members.<br>
+	Its absurd, they have more interest on their drug then the divine being literally outside, well if they keep supplies coming in I guess I'll manage."}
+
+/obj/item/paper/cultbase_leader_ramblings
+	name = "Truth."
+	icon_state = "paper"
+	info = {"It calls, it is our divine avatar of the waking dream. I can't grasp its meaning, it yearns... it desires. We must gather its power to uproot this corporate war. <br>
+	We must create a condition, a ultimatium, the weak of our people must be culled, tested. <i> I'm going to enjoy this! <i>"}
+
+/obj/item/paper/cultbase_creature_notes
+	name = "Observations and topics of investigation."
+	icon_state = "paper"
+	info = {"Subject appears to be held effectively within this particular frequency of sonar waves. Form appears to be semi-corporal, and appears to be otherwise entirely invisible to all kinds of vision or sensors. <br>
+	Strongest concentration of manifestions appear to be related to the concentration of plasma reactions near the liquid containing the subject. From this information I hypothesise that these creatures are only <br>
+	visible here due to the presence of plasmacoral in the region granting the conditions for their seen presence."}
+
+/obj/item/paper/cultbase_backscratcher
+	name = "We can't use it so I am."
+	icon_state = "paper"
+	info = {"This thing is too good as a backscratcher, I'm keeping it until you get the power source for its main use. -M"}
+
 /obj/item/paper/telecrystal_update
 	name = "email printout"
 	info = {"
@@ -730,6 +783,94 @@ Only trained personnel should operate station systems. Follow all procedures car
 	only at the Museum of Lunar History!<br><br><br><br><br><hr>
 	Printed by Aurora Lithographics<hr></font>"}
 
+/obj/item/paper/postcard/shelterfrogking //by SnugglyCactus
+	name = "\"Remember Who You Are\""
+	desc ="A postcard with an iconic scene from... The Shelterfrog King? Huh?"
+	icon_state = "postcard-shelter-king"
+	info = {"<i>Remember who you are.</i>
+	<br><br>
+	The Shelterfrog King - Remember Who You Are<br>
+	National Notary Supply Corporation<br>
+	Image #25222"}
+
+/obj/item/paper/postcard/cowbee //by Whele
+	name = "\"Ride 'Em, Cowbee!\""
+	desc = "A postcard featuring a rugged-looking cowpoke in front of a gorgeous sunset. An obligatory cactus stands tall in the center."
+	icon_state = "postcard-cowbee"
+	info = {"Ride 'Em, Cowbee!<br>
+	National Notary Supply Corporation<br>
+	Image #25216"}
+
+/obj/item/paper/postcard/believe //by Scientifically
+	name ="\"Believe\""
+	desc = "A postcard showing a painting of a UFO above a forest, with the caption \"Believe\"."
+	icon_state = "postcard-believe"
+	info = {"Ancient aliens, it's all true,<br>
+	I'm an expert just like you!
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/postcard/silicongreeting //by Mailman T
+	name = "\"A Silicon Greeting\""
+	desc = "A postcard with some cyborgs. It has a message on the back written in binary."
+	icon_state = "postcard-silicon-greeting"
+	info = {"<font face='Courier New'>1001110 1101001 1100011 1100101 100000
+			1100010 1101001 1101110 1100001 1110010 1111001 100000 1100011
+			1101111 1101110 1110110 1100101 1110010 1110100 1100101 1110010</font>"}
+
+/obj/item/paper/postcard/thundrando //by Shiiba
+	name = "\"Greetings from Thundrando!\""
+	desc = "...Thundrando? What kind of name is that?"
+	icon_state = "postcard-thundrando"
+	info = {"<font color='#1A378D'>Greetings from Thundrando!</font>"}
+
+/obj/item/paper/postcard/pumpkinpatch //by IncendiaryCrocs
+	name = "pumpkin patch postcard"
+	desc = {"A postcard with some spooky pumpkins, set against a night sky.
+			The back contains a sinister letter, written as if from their point of view."}
+	icon_state = "postcard-pumpkin-patch"
+	info = {"Wishing you many terrifying honks.<br><br>
+	Many Disgraces,<br>
+	The Pumpkin Patch
+	<br><br>
+	Pumpkins #13<br>
+	National Notary Supply Corporation<br>
+	Image #25234"}
+
+/obj/item/paper/postcard/chicago //by Frank_Stein
+	name = "Chicago postcard"
+	desc = "A postcard showing the city of Chicago on Earth, most of it blocked out by a big hot dog. The back has a terrible tourist slogan."
+	icon_state = "postcard-chicago"
+	info = {"<font face='Comic Sans MS'>Visit Chicago! Try the hot dogs!</font>
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/postcard/sadcrab //by Elskrises
+	name = "\"Greetings from the Rave Beach.\""
+	desc = {"An image of the amazing Rave Beach. It even has an adorable crab playing a violin! Wait, is that crab crying?
+			The back of the card has a message in messy, shaky writing."}
+	icon_state = "postcard-sad-crab"
+	info = {"<font face='Brush Script MT' size=4>Cherish your happiest memories.</font>"}
+
+/obj/item/paper/postcard/spacequebec //by Gamb1t
+	name = "\"De Magnifique Vacances!\""
+	desc = {"A postcard featuring a pair of mountains by a lake on the chilly planet Mundus.
+			The back features images of frontier vacationers hiking, camping, and skiing."}
+	icon_state = "postcard-space-quebec"
+	info = {"Visit beautiful Space Quebec!
+	<br><br>
+	"De Magnifique Vacances!"<br>
+	National Notary Supply Corporation<br>
+	Image #25204"}
+
+/obj/item/paper/postcard/pyramid //by RubberRats
+	name = "New Memphis postcard"
+	desc = "A postcard with a ground-view photograph of the BonkTek Consortium's massive pyramid-shaped shopping center on the planet Fatuus."
+	icon_state = "postcard-pyramid"
+	info = {"<font face='Arial'>Greetings from New Memphis, home of the BonkTek Pyramid!
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
@@ -838,14 +979,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Needless to say, I'm not a fan.<br>
 	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
 	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
-
-//is this a bit extra? Yeess but I wanted it on a random table okay!
-proc/spawn_kitchen_note()
-	for_by_tcl(table, /obj/table)
-		if (istype(get_area(table), /area/station/crew_quarters/kitchen) && prob(50))
-			var/type = pick(concrete_typesof(/obj/item/paper/recipe) - /obj/item/paper/recipe)
-			new type(get_turf(table))
-			return
 
 /obj/item/paper/recipe/tandoori
 	name = "stained recipe clipping"
@@ -1444,8 +1577,6 @@ proc/spawn_kitchen_note()
 		pixel_y = rand(-8, 8)
 		info = PAPER_IMAGE_RENDER("images/arts/xg_tapes.png")
 
-#undef IMAGE_OFFSET_X
-#undef IMAGE_OFFSET_Y
 
 /obj/item/paper/wanderpoem
 	name = "A freshly written poem"
@@ -1625,3 +1756,28 @@ proc/spawn_kitchen_note()
 	name = "stern note"
 	info = {"so um. i spent all of our money that we were told not to spend, only after reading our leadership's note. we are so fucked. anyways, i
 	went out for a short bit and will be back in a day's time.<br><br>no, you are the one who is fucked. i'm out of here."}
+
+/obj/item/paper/hair_fall
+	name = "hairstyle flyer"
+	icon_state = "hair_fall"
+	desc = "The latest frontier hairstyle fashion for fall 2053."
+
+	sizex = 1213 + IMAGE_OFFSET_X
+	sizey = 762 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
+
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/hairstyles_fall.png")
+
+/obj/item/paper/motel_noise_complaint
+	name = "customer complaint"
+	desc = "This looks written hastily."
+	icon_state = "thermal_paper"
+	info = {"
+	I couldn't sleep! Shut the ice maker off at <u>NIGHT</u> when people <u>SLEEP</u>. Management refused to move me out of room 1 - 0/10 would not return!
+	"}
+
+#undef IMAGE_OFFSET_X
+#undef IMAGE_OFFSET_Y

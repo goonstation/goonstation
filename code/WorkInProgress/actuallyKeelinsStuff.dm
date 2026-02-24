@@ -1332,6 +1332,7 @@ Returns:
 	desc = "An ancient solution to the ancient problem of wanting to stab somebody, but not wanting them to be able to stab you back."
 	force = 10
 	throwforce = 20
+	contraband = 4
 	color = "#ffffff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "spear"
@@ -2183,11 +2184,6 @@ Returns:
 	ex_act()
 		return
 
-/proc/gobuzz()
-	if(buzztile)
-		usr.set_loc(buzztile)
-	return
-
 /obj/item/beamtest
 	desc = "beamtest thingamobob"
 	name = "beamtest thingamobob"
@@ -2861,6 +2857,10 @@ Returns:
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
 			if(ismob(AM))
+				if (ishuman(AM))
+					var/mob/living/carbon/human/H = AM
+					if(H.shoes?.magnetic)
+						return
 				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
 			if (istype(AM, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
 				var/obj/critter/gunbot/drone/drone = AM

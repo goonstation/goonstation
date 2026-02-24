@@ -65,12 +65,12 @@
 /obj/item/device/panicbutton/medicalalert //really just adding this for the hop version but hey maybe medical wants to hand out medical life alert buttons for the funny
 	name = "medical alert button"
 	desc = "A big red button that alerts the station Medical team that there's a crisis at your location."
-	alert_group = list(MGD_MEDBAY, MGA_CRISIS)
+	alert_group = list(MGD_MEDICAL, MGA_CRISIS)
 
 /obj/item/device/panicbutton/medicalalert/hop
 	name = "life alert button"
 	desc = "For when you've got a REAL BIG problem and want EVERYONE to know about it."
-	alert_group = list(MGD_PARTY, MGD_MEDBAY, MGD_SECURITY, MGD_COMMAND, MGA_CRISIS) // lol. lmao, even
+	alert_group = list(MGD_PARTY, MGD_MEDICAL, MGD_SECURITY, MGD_COMMAND, MGA_CRISIS) // lol. lmao, even
 
 /obj/item/storage/box/panic_buttons
 	name = "box of panic buttons"
@@ -216,7 +216,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "Greyhold Mercenary Operative"
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]’s ID Card ([C.assignment])"
 
 		update_clothing()
 

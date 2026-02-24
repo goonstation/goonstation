@@ -867,7 +867,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			animate(E, alpha=0, time=2 SECONDS)
 			playsound(T, 'sound/weapons/flashbang.ogg', 15, TRUE)
 
-		E.fingerprintslast = src.fingerprintslast
+		src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 		qdel(src)
 		return
 
@@ -906,7 +906,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 			playsound(T, 'sound/effects/Explosion2.ogg', 100, TRUE)
 			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
-			E.fingerprintslast = src.fingerprintslast
+			src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 
 		qdel(src)
 		return
@@ -1057,7 +1057,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		playsound(src.loc, sound_explode, 45, 1)
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src))
-		E.fingerprintslast = src.fingerprintslast
+		src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 
 		invisibility = INVIS_ALWAYS_ISH
 		SPAWN(15 SECONDS)
@@ -1175,6 +1175,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
+			if (isnukeop(M)) continue
 			src.dress_up(M)
 		..()
 
@@ -1850,6 +1851,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
 	duration_put = 0.5 SECONDS //crime
+	can_arcplate = FALSE
 
 /obj/item/pipebomb/frame
 	name = "pipe frame"
@@ -1929,7 +1931,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		user.u_equip(src)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
+		logTheThing(LOG_STATION, user, "crafts a zipgun at [log_loc(user)]")
 		user.put_in_hand_or_drop(new_gun)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_gun, user)
 		qdel(to_combine_atom)
 		qdel(src)
 
@@ -1941,7 +1945,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			user.u_equip(to_combine_atom)
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+			logTheThing(LOG_STATION, user, "crafts a slamgun at [log_loc(user)]")
 			user.put_in_hand_or_drop(S)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, S, user)
 			qdel(to_combine_atom)
 			qdel(src)
 			// Since the assembly was done, return TRUE
@@ -2047,7 +2053,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				qdel(src.reagents)
 				//make the hulls
 				boutput(user, SPAN_NOTICE("You add some propellant to the hulls."))
-				new /obj/item/pipehulls(get_turf(src))
+				var/pipehulls = new /obj/item/pipehulls(get_turf(src))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, pipehulls, user)
 				qdel(src)
 		// Since the assembly was done, return TRUE
 		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
@@ -2061,11 +2068,13 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			var/turf/target_turf = get_turf(src)
 			var/obj/item/pipebomb/bomb/complete_bomb = new /obj/item/pipebomb/bomb(target_turf)
 			complete_bomb.strength = src.strength
+			logTheThing(LOG_STATION, user, "crafts a pipe bomb at [log_loc(user)], power: [complete_bomb.strength], modifiers: [length(src.item_mods) ? english_list(src.item_mods) : "none"]")
 			if (src.material)
 				complete_bomb.setMaterial(src.material)
 			//add properties from item mods to the finished pipe bomb
 			complete_bomb.set_up_special_ingredients(src.item_mods)
 			user.u_equip(src)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, complete_bomb, user)
 			qdel(src)
 			used_cables.change_stack_amount(-3)
 			user.put_in_hand_or_drop(complete_bomb)

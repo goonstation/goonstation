@@ -49,10 +49,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	if(state == WELDED)
 		if(!src.locked)
 			if(src.active >= 1)
-	//			src.active = 0
-	//			icon_state = "Field_Gen"
 				boutput(user, "You are unable to turn off the field generator, wait till it powers down.")
-	//			src.cleanup()
 			else
 				set_active(1)
 				icon_state = "Field_Gen +a"
@@ -383,12 +380,6 @@ TYPEINFO(/obj/machinery/field_generator)
 	if(sigcommand == "activate" && !src.active)
 		src.set_active(1)
 		icon_state = "Field_Gen +a"
-
-	if(sigcommand == "deactivate" && src.active)
-		src.set_active(0)
-		icon_state = "Field_Gen"
-
-	return
 
 /obj/machinery/field_generator/activated
 	Varedit_start = TRUE

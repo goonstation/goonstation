@@ -9,7 +9,6 @@
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf", "flubber", "martian", "blob")
 	wear_layer = MOB_HEAD_LAYER2
-	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
@@ -83,6 +82,8 @@ proc/filter_trait_hats(var/type)
 	item_state = "bgloves"
 
 /obj/item/clothing/head/serpico
+	name = "bucket hat"
+	desc = "Weirdly tall."
 	icon_state = "serpico"
 	item_state = "serpico"
 
@@ -90,11 +91,10 @@ proc/filter_trait_hats(var/type)
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	hides_from_examine = C_EARS
 
 	desc = "This hood protects you from harmful biological contaminants."
-	seal_hair = 1
 
 	setupProperties()
 		..()
@@ -112,6 +112,16 @@ proc/filter_trait_hats(var/type)
 	icon_state = "bio_jani"
 	item_state = "bio_jani"
 
+/obj/item/clothing/head/bio_hood/rd
+	name = "research director's bio hood"
+	desc = "This hood protects you from harmful biological contaminants."
+	icon_state = "bio_rd"
+	item_state = "bio_rd"
+
+	setupProperties()
+		..()
+		delProperty("movespeed")
+
 /obj/item/clothing/head/bio_hood/nt
 	name = "NT bio hood"
 	icon_state = "ntbiohood"
@@ -123,10 +133,9 @@ proc/filter_trait_hats(var/type)
 	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	desc = "Helps protect from vacuum for a short period of time."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
-	seal_hair = 1
 	acid_survival_time = 3 MINUTES
 
 	setupProperties()
@@ -144,10 +153,9 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	hides_from_examine = C_EARS
 	desc = "Asbestos, right near your face. Perfect!"
-	seal_hair = 1
 
 	setupProperties()
 		..()
@@ -411,11 +419,11 @@ TYPEINFO(/obj/item/clothing/head/det_hat/gadget)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
 		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] DetGadget hat into a spiffy scuttlebot!</b>"))
-		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		user.drop_item()
+		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src), user)
 		if (src.inspector == TRUE)
 			S.make_inspector()
 		S.linked_hat = src
-		user.drop_item()
 		src.set_loc(S)
 		user.update_inhands()
 		return
@@ -727,7 +735,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "A green hood, full of magic, wonder, cromulence, and maybe a spider or two."
 	icon_state = "wizardgreen"
 	item_state = "wizardgreen"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/wizard/witch
 	name = "witch hat"
@@ -741,7 +749,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
 	see_face = FALSE
-	seal_hair = 1
+	c_flags = COVERSHAIR
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 /obj/item/clothing/head/wizard/traveller
@@ -1349,9 +1357,11 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
+			var/obj/item/cable_coil/coil = W
+			if (!coil.use(1))
+				return
 			boutput(user, SPAN_NOTICE("You attach the wires to the [src.name]."))
 			src.stunready = 1
-			W:amount--
 			return
 
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
@@ -1435,16 +1445,15 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "A nurse hat from the past."
 	icon_state = "traditionalnursehat"
 	item_state = "traditionalnursehat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/chemhood
 	name = "chemical protection hood"
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
 	icon_state = "chemhood"
 	item_state = "chemhood"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE | COVERSHAIR
 	hides_from_examine = C_EARS
-	seal_hair = 1
 	acid_survival_time = 8 MINUTES
 
 	setupProperties()
@@ -1458,7 +1467,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "The hat of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/party
 	name = "party hat"
@@ -2306,7 +2315,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/elephanthat)
 	desc = "For a more bull-headed approach."
 	icon_state = "minotaur"
 	item_state = "minotaur"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 TYPEINFO(/obj/item/clothing/head/mushroomcap)
 	random_subtypes = list(
@@ -2505,21 +2514,21 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	desc = "A visor with teal spikes dragging behind the mask, vaguely reminiscent of an extinct alien race."
 	icon_state = "weirdohat"
 	item_state = "weirdohat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/lighthat
 	name = "light mitre"
 	desc = "A golden mitre pointing tall, proudly touting the strength of its faith and its light"
 	icon_state = "lighthat"
 	item_state = "lighthat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/bushhat
 	name = "druid mask"
 	desc = "Flowers, grass, and other flora completely cover the face of this mask. You can almost hear the roar of earthen creatures calling from inside the shrubbery"
 	icon_state = "bushhat"
 	item_state = "bushhat"
-	seal_hair = 1
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/rabbithat
 	name = "Rabbit Costume Hat"
@@ -2529,7 +2538,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "rabbithat"
 	item_state = "rabbithat"
-	seal_hair = TRUE
+	c_flags = COVERSHAIR
 
 // Mx Blorbo's lovable visage.
 
@@ -2541,7 +2550,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "blorbohat"
 	item_state = "blorbohat"
-	seal_hair = TRUE
+	c_flags = COVERSHAIR
 
 /obj/item/clothing/head/chompskyhat
 	name = "Gnome hat"
@@ -2556,3 +2565,142 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 		..()
 		if(ON_COOLDOWN(src, "gnome giggle",15 SECONDS)) return
 		playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 100, 1)
+
+// HIJABS
+ABSTRACT_TYPE(/obj/item/clothing/head/hijab)
+obj/item/clothing/head/hijab
+	name = "hijab"
+	desc = ""
+	icon_state = "hijab-black"
+	item_state = "hijab-black"
+	w_class = W_CLASS_TINY
+	c_flags = COVERSHAIR
+
+	black
+		name = "black hijab"
+		icon_state = "hijab-black"
+		item_state = "hijab-black"
+
+	darkblue
+		name = "dark blue hijab"
+		icon_state = "hijab-dblue"
+		item_state = "hijab-dblue"
+
+	lightblue
+		name = "light blue hijab"
+		icon_state = "hijab-lblue"
+		item_state = "hijab-lblue"
+
+	green
+		name = "green hijab"
+		icon_state = "hijab-green"
+		item_state = "hijab-green"
+
+	yellow
+		name = "yellow hijab"
+		icon_state = "hijab-yellow"
+		item_state = "hijab-yellow"
+
+	orange
+		name = "orange hijab"
+		icon_state = "hijab-orange"
+		item_state = "hijab-orange"
+
+	brown
+		name = "brown hijab"
+		icon_state = "hijab-brown"
+		item_state = "hijab-brown"
+
+	red
+		name = "red hijab"
+		icon_state = "hijab-red"
+		item_state = "hijab-red"
+
+	pink
+		name = "pink hijab"
+		icon_state = "hijab-pink"
+		item_state = "hijab-pink"
+
+	purple
+		name = "purple hijab"
+		icon_state = "hijab-purple"
+		item_state = "hijab-purple"
+
+	white
+		name = "white hijab"
+		icon_state = "hijab-white"
+		item_state = "hijab-white"
+
+	flower
+		name = "flower hijab"
+		icon_state = "hijab-flower"
+		item_state = "hijab-flower"
+
+	zigzag
+		name = "zigzag hijab"
+		icon_state = "hijab-zigzag"
+		item_state = "hijab-zigzag"
+
+//HEADSCARVES
+ABSTRACT_TYPE(/obj/item/clothing/head/headscarf)
+obj/item/clothing/head/headscarf
+	name = "headscarf"
+	desc = ""
+	icon_state = "headscarf-black"
+	item_state = "headscarf-black"
+	w_class = W_CLASS_TINY
+
+	black
+		name = "black headscarf"
+		icon_state = "headscarf-black"
+		item_state = "headscarf-black"
+
+	purple
+		name = "purple headscarf"
+		icon_state = "headscarf-purple"
+		item_state = "headscarf-purple"
+
+	darkblue
+		name = "dark blue headscarf"
+		icon_state = "headscarf-dblue"
+		item_state = "headscarf-dblue"
+
+	lightblue
+		name = "light blue headscarf"
+		icon_state = "headscarf-lblue"
+		item_state = "headscarf-lblue"
+
+	green
+		name = "green headscarf"
+		icon_state = "headscarf-green"
+		item_state = "headscarf-green"
+
+	yellow
+		name = "yellow headscarf"
+		icon_state = "headscarf-yellow"
+		item_state = "headscarf-yellow"
+
+	orange
+		name = "orange headscarf"
+		icon_state = "headscarf-orange"
+		item_state = "headscarf-orange"
+
+	brown
+		name = "brown headscarf"
+		icon_state = "headscarf-brown"
+		item_state = "headscarf-brown"
+
+	pink
+		name = "pink headscarf"
+		icon_state = "headscarf-pink"
+		item_state = "headscarf-pink"
+
+	red
+		name = "red headscarf"
+		icon_state = "headscarf-red"
+		item_state = "headscarf-red"
+
+	white
+		name = "white headscarf"
+		icon_state = "headscarf-white"
+		item_state = "headscarf-white"

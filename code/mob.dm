@@ -9,7 +9,7 @@ TYPEINFO(/mob)
 	density = 1
 	layer = MOB_LAYER
 	animate_movement = 2
-	soundproofing = 10
+	soundproofing = SOUNDPROOFING_MUFFLED
 
 	flags = FLUID_SUBMERGE
 
@@ -202,7 +202,7 @@ TYPEINFO(/mob)
 
 	var/last_cubed = 0
 
-	var/datum/movement_controller/override_movement_controller = null
+	var/list/movement_controller_list = list()
 
 	var/dir_locked = FALSE
 
@@ -455,7 +455,7 @@ TYPEINFO(/mob)
 		// Guests that get deleted, is how
 		// stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
 	if(isclient(src.client) && isnull(src.client?.tg_layout))
-		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
+		src.client?.tg_layout = winget(src.client, "menu.tg_layout", "is-checked") == "true" // winget sleeps :{
 	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
@@ -741,6 +741,8 @@ TYPEINFO(/mob)
 						return
 
 				src.set_loc(newloc)
+				tmob.inertia_value = 1
+				tmob.inertia_dir = get_dir(newloc, oldloc)
 				tmob.set_loc(oldloc)
 
 				if(tmob.buckled)
@@ -771,6 +773,7 @@ TYPEINFO(/mob)
 		var/old_loc = src.loc
 		AM.animate_movement = SYNC_STEPS
 		AM.glide_size = src.glide_size
+		AM.inertia_value = 1
 		step(AM, t)
 
 		if (isliving(AM))
@@ -1096,7 +1099,12 @@ TYPEINFO(/mob)
 
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss=FALSE)
-	hit_twitch(src)
+	if (src.nodamage || QDELETED(src)) return
+
+	if (brute > 0)
+		hit_twitch(src)
+	else if((burn > 0 || tox > 0) && isalive(src) && !src.hasStatus("paralysis"))
+		hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
 
@@ -1234,10 +1242,15 @@ TYPEINFO(/mob)
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey && !src.mind?.get_player()?.dnr)
+	if(src.ckey && !src.mind?.get_player()?.joined_observer)
+		#ifdef RP_MODE // you can always respawn (into a new character) on RP
 		respawn_controller.subscribeNewRespawnee(src.ckey)
+		#else
+		if(!src.mind?.get_player()?.dnr)
+			respawn_controller.subscribeNewRespawnee(src.ckey)
+		#endif
 	// stop piloting pods or whatever
-	src.override_movement_controller = null
+	src.movement_controller_list = list()
 	// stop pulling shit!!
 	src.remove_pulling()
 
@@ -1642,7 +1655,7 @@ TYPEINFO(/mob)
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
-	if (!P || !P.proj_data || !P.proj_data.silentshot)
+	if (!P || !P.proj_data || !P.proj_data.no_hit_message)
 		boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -2329,6 +2342,49 @@ TYPEINFO(/mob)
 		if(shadow)
 			qdel(shadow)
 
+/mob/proc/gravitygib()
+	logTheThing(LOG_COMBAT, src, "is gravity-gibbed at [log_loc(src)].")
+	src.transforming = TRUE
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "gravitygib")
+	src.anchored = ANCHORED_ALWAYS
+	if (ishuman(src))
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_2.ogg', 50, TRUE)
+	animate_squish_flat(src)
+	SPAWN (10)
+		if (QDELETED(src))
+			return
+		src.unequip_all()
+		var/list/ejectables = src.list_ejectables()
+		for(var/obj/item/organ/organ in ejectables)
+			if(organ.donor == src)
+				organ.on_removal()
+		var/turf/T = get_turf(src)
+		if (T)
+			for(var/obj/O in ejectables)
+				O.set_loc(T)
+			if (ishuman(src))
+				src.visible_message(SPAN_ALERT("The overwhelming gravity crushes [src] into a fine red paste!"))
+				var/mob/living/carbon/human/H = src
+				for (var/i in 1 to 3)
+					var/obj/decal/cleanable/blood/gibs/core/gib = make_cleanable(/obj/decal/cleanable/blood/gibs/core, T)
+					gib.blood_DNA = blood_DNA
+					gib.blood_type = blood_type
+					if(H.blood_id) gib.sample_reagent = H.blood_id
+			else if (issilicon(src))
+				src.visible_message(SPAN_ALERT("The overwhelming gravity crushes [src] into a pile of bits!"))
+				playsound(T, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, TRUE)
+				make_cleanable(/obj/decal/cleanable/oil, T)
+				make_cleanable(/obj/decal/cleanable/robot_debris/limb, T)
+				make_cleanable(/obj/decal/cleanable/robot_debris, T)
+		for(var/obj/item/implant/I in src) qdel(I)
+		src.death()
+		if (src.client)
+			var/mob/dead/observer/newmob = ghostize()
+			if (newmob) newmob.corpse = null
+
+		qdel(src)
+
+
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
@@ -2422,7 +2478,7 @@ TYPEINFO(/mob)
 				output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
 
 			if (output_target.client)
-				output_target.client.view_fingerprints(OL[IP])
+				output_target.client.view_adminprints(OL[IP])
 
 	return
 #undef REFRESH
@@ -2800,6 +2856,10 @@ TYPEINFO(/mob)
 //	return radiation
 
 /mob/UpdateName()
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+		src.update_name_tag("")
+		return
 	if (src.real_name)
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 	else
@@ -2826,8 +2886,6 @@ TYPEINFO(/mob)
 	return mobs
 
 /mob/get_examine_tag(mob/examiner)
-	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
-		return null
 	return src.name_tag
 
 /mob/proc/protected_from_space()
@@ -2996,9 +3054,10 @@ TYPEINFO(/mob)
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
-		if ((istype(src.loc, /turf/space) || src.no_gravity) && ismob(source))
+		if (src.traction != TRACTION_FULL && ismob(source))
 			var/mob/M = source
 			src.inertia_dir = M.inertia_dir
+			src.inertia_value = 1
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
@@ -3367,7 +3426,7 @@ TYPEINFO(/mob)
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as null|anything in items
+		var/atom/A = tgui_input_list(src, "What do you want to pick up?", "", items, start_with_search = TRUE)
 		if (A)
 			src.client?.Click(A, get_turf(A))
 
@@ -3389,7 +3448,7 @@ TYPEINFO(/mob)
 /mob/MouseEntered(location, control, params)
 	var/mob/M = usr
 	M.atom_hovered_over = src
-	if(M.client.check_key(KEY_EXAMINE))
+	if(M.client.check_key(KEY_EXAMINE) && (HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) || GET_DIST(src, M) <= MAX_NAMETAG_RANGE))
 		var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
 		hover_tag?.show_images(M.client, FALSE, TRUE)
 
@@ -3510,3 +3569,27 @@ TYPEINFO(/mob)
 
 /mob/proc/frostburn_temp()
 	return src.base_body_temp - (src.temp_tolerance * 4)
+
+/// If the mob can be affected by addictions, this will add the value to every addiction's meter on the next life tick and immediately return the
+/// total value of the cache. The cache will be reset during the tick regardless of whether or not the mob has active addictions.
+/mob/proc/try_affect_all_addictions(var/value)
+	return FALSE
+
+/mob/proc/add_movement_controller(datum/movement_controller/movement_controller)
+	src.movement_controller_list.Add(movement_controller)
+
+/mob/proc/remove_movement_controller(datum/movement_controller/movement_controller = null)
+	if (!movement_controller)
+		src.movement_controller_list = list()
+		return
+
+	src.movement_controller_list.Remove(movement_controller)
+
+/mob/proc/get_active_movement_controller()
+	if (!length(src.movement_controller_list))
+		return null
+	return src.movement_controller_list[length(src.movement_controller_list)]
+
+
+
+

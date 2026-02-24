@@ -30,7 +30,7 @@
 			T.colorize_tail(liz.bioHolder.mobAppearance)
 		liz?.bioHolder?.mobAppearance.UpdateMob()
 
-/datum/abilityHolder/lizard
+/datum/abilityHolder/mutantrace/lizard
 	topBarRendered = 1
 	points = 0
 	regenRate = 0	// eat some kidneys or something
@@ -42,7 +42,7 @@
 	cooldown = 0
 	last_cast = 0
 	targeted = 0
-	preferred_holder_type = /datum/abilityHolder/lizard
+	preferred_holder_type = /datum/abilityHolder/mutantrace/lizard
 	var/mob/living/carbon/human/L
 
 	onAttach(datum/abilityHolder/H)
@@ -107,7 +107,7 @@
 			AHs.customizations["hair_bottom"].color = col3
 			AHs.customizations["hair_middle"].color = col1
 			AHs.customizations["hair_top"].color = col2
-			AHs.s_tone = AHs.customizations["hair_bottom"].color
+			AHs.s_tone = fix_colors(AHs.customizations["hair_bottom"].color)
 
 			L.visible_message(SPAN_NOTICE("<b>[L.name]</b> changes colors!"))
 			L.update_lizard_parts()
@@ -173,7 +173,7 @@
 		switch(region)
 			if (1)
 				AHliz.customizations["hair_bottom"].color = color
-				AHliz.s_tone = color
+				AHliz.s_tone = fix_colors(color)
 				spot = "skin"
 			if (2)
 				AHliz.customizations["hair_middle"].color = color

@@ -80,6 +80,7 @@
 		else
 			src.desc = "A [src.pname] pill bottle. There [totalpills==1? "is [totalpills] pill." : "are [totalpills] pills." ]"
 			src.inventory_counter.update_number(totalpills)
+		src.tooltip_rebuild = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/pill))

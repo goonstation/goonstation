@@ -121,8 +121,6 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
 	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
-	//var/list/connected_shells = list()
-	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
 	var/printalerts = 1
 	//Comm over powernet stuff
@@ -206,7 +204,8 @@ or don't if it uses a custom topopen overlay
 		"pumpkin" = "The casing is made out of a pumpkin. Spooky!",
 		"crt" = "The core appears to be a... CRT television. Huh.",
 		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octagonal prism at all, it's just a cube!",
-		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
+		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors.",
+		"regal" = "The core appears to be made out of a thick gold and green metal. Very fancy."
 	)
 
 	var/datum/ai_camera_tracker/tracker = null
@@ -529,10 +528,10 @@ or don't if it uses a custom topopen overlay
 		var/obj/item/cable_coil/coil = W
 		src.add_fingerprint(user)
 		if(src.fireloss)
-			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-			coil.use(1)
-			src.HealDamage(null, 0, 15)
-			src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
+			if(coil.use(1))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+				src.HealDamage(null, 0, 15)
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
 		else boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 
 	else if (istype(get_id_card(W), /obj/item/card/id))
@@ -605,18 +604,6 @@ or don't if it uses a custom topopen overlay
 					src.mind.assigned_role = "AI"
 				SPAWN(0)
 					src.choose_name(3)
-
-	else if (istype(W, /obj/item/roboupgrade/ai/))
-		if (src.dismantle_stage >= 2 && src.dismantle_stage < 4)
-			var/obj/item/roboupgrade/ai/R = W
-			user.visible_message(SPAN_ALERT("<b>[user.name]</b> inserts [R] into [src.name]."))
-			user.drop_item()
-			R.set_loc(src)
-			R.slot_in(src)
-		else if (src.dismantle_stage == 4 || isdead(src))
-			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be pointless."))
-		else
-			boutput(user, SPAN_ALERT("You need to open the AI's chassis cover to insert this. Unlock it with a card and then pry it open."))
 
 	else if (istype(W, /obj/item/clothing/mask/moustache/))
 		if (src.moustache_mode == 0)
@@ -744,8 +731,6 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
 
-	if (src.dismantle_stage >= 2 && length(src.installed_modules) > 0)
-		actions += "Remove a module"
 	if (src.dismantle_stage == 3)
 		actions += "Remove CPU Unit"
 	if (src.dismantle_stage < 4 && isdead(src))
@@ -761,13 +746,6 @@ or don't if it uses a custom topopen overlay
 
 			if ("Restart AI")
 				src.try_rebooting_it(user)
-
-			if ("Remove a module")
-				if (istype(src.installed_modules[1],/obj/item/roboupgrade/ai/))
-					var/obj/item/roboupgrade/ai/A = src.installed_modules[1]
-					A.slot_out(src)
-					user.put_in_hand_or_drop(A)
-					src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [A] from [src]."))
 	else
 		switch(user.a_intent)
 			if(INTENT_HELP)
@@ -1389,7 +1367,7 @@ or don't if it uses a custom topopen overlay
 		for (var/mob/M in A.contents)
 			recipients += M
 
-	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	log_emote(src, message, voluntary)
 	act = lowertext(act)
 	for (var/mob/M as anything in recipients)
 		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
@@ -1413,8 +1391,10 @@ or don't if it uses a custom topopen overlay
 	if (src.sleeping) src.sleeping = 0
 	src.delStatus("knockdown")
 
+#define AI_CHARGE_RATE 10
 /mob/living/silicon/ai/use_power()
 	..()
+	var/mult = (max(tick_spacing, TIME - last_life_tick) / tick_spacing)
 	var/turf/T = get_turf(src)
 	if (T)
 		var/area/A = T.loc
@@ -1427,13 +1407,13 @@ or don't if it uses a custom topopen overlay
 	switch(src.power_mode)
 		if (0)
 			if (istype(src.cell,/obj/item/cell/) && src.cell.charge < src.cell.maxcharge)
-				src.cell.charge = min(src.cell.charge + 5,src.cell.maxcharge)
+				src.cell.charge = min(src.cell.charge + (AI_CHARGE_RATE * mult),src.cell.maxcharge)
 				if (src.cell.charge >= 100 && isdead(src) && try_rebooting_it())
 					src.show_text("<b>ALERT: Internal power cell has regained sufficient charge to operate. Rebooting...</b>", "blue")
 		if (1)
 			if (istype(src.cell,/obj/item/cell/))
 				if (src.cell.charge > 5)
-					src.cell.use(5)
+					src.cell.use(AI_CHARGE_RATE * mult)
 				else if (!isdead(src))
 					src.cell.charge = 0
 					src.show_text("<b>ALERT: Internal battery expired. Shutting down to prevent system damage.</b>", "red")
@@ -1481,6 +1461,7 @@ or don't if it uses a custom topopen overlay
 					src.aiRestorePowerRoutine = 1
 			else
 				src.aiRestorePowerRoutine = 0
+#undef AI_CHARGE_RATE
 
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
@@ -1587,7 +1568,7 @@ or don't if it uses a custom topopen overlay
 	set name = "View Crew Manifest"
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 	var/target = src
 	if(src.deployed_to_eyecam)
@@ -1946,7 +1927,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -1974,7 +1955,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -2000,7 +1981,7 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		message_mob.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -2290,7 +2271,7 @@ or don't if it uses a custom topopen overlay
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_split"), "top")
 		else if(coreSkin == "nt" || coreSkin == "industrial" || coreSkin == "lgun")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_uneven"), "top")
-		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "mauxite")
+		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "regal" || coreSkin == "mauxite")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_bulky"), "top")
 		else
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_[coreSkin]"), "top")
@@ -2498,7 +2479,7 @@ proc/get_mobs_trackable_by_AI()
 		return
 
 	if(get_z(src) != Z_LEVEL_STATION)
-		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if(last_announcement + announcement_cooldown > world.time)
@@ -2580,7 +2561,7 @@ proc/get_mobs_trackable_by_AI()
 	. = ..()
 	src.camera.c_tag = src.real_name
 	src.eyecam.UpdateName()
-	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
 // For if an AI needs to disconnect, make their core a latejoin one
@@ -2883,6 +2864,7 @@ proc/get_mobs_trackable_by_AI()
 
 	do_killswitch()
 		. = ..()
-		src.ai.brain.take_damage(20, 20)
-		src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
-		src.ai.eject_brain()
+		if (.)
+			src.ai.brain.take_damage(20, 20)
+			src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
+			src.ai.eject_brain()

@@ -13,6 +13,7 @@
 	stamina_damage = 1
 	stamina_cost = 7
 	stamina_crit_chance = 1
+	default_material = "plastic"
 	var/bladecolor = "G"
 	var/sound_attackM1 = 'sound/weapons/male_toyattack.ogg'
 	var/sound_attackM2 = 'sound/weapons/male_toyattack2.ogg'
@@ -119,7 +120,7 @@
 /obj/item/toy/diploma/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if (H.mind && H.mind.assigned_role == "Clown")
+		if (H.mind && H.traitHolder?.hasTrait("training_clown"))
 			if (target == user)
 				src.AttackSelf(user) //Showoff...
 				return
@@ -296,6 +297,7 @@ ADMIN_INTERACT_PROCS(/obj/item/rubberduck, proc/quack, proc/evil_quack)
 	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
+	default_material = "synthrubber_yellow"
 
 /obj/item/rubberduck/attack_self(mob/user as mob)
 	if (!ON_COOLDOWN(src,"quack",2 SECONDS))

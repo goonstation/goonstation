@@ -53,6 +53,7 @@
 		F["[profileNum]_PDAcolor"] << src.PDAcolor
 		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
 		F["[profileNum]_use_satchel"] << src.use_satchel
+		F["[profileNum]_preferred_uplink"] << src.preferred_uplink
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -88,6 +89,7 @@
 		F["[profileNum]_job_prefs_3"] << src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] << src.jobs_unwanted
 		F["[profileNum]_be_traitor"] << src.be_traitor
+		F["[profileNum]_be_sleeper_agent"] << src.be_sleeper_agent
 		F["[profileNum]_be_syndicate"] << src.be_syndicate
 		F["[profileNum]_be_syndicate_commander"] << src.be_syndicate_commander
 		F["[profileNum]_be_spy"] << src.be_spy
@@ -223,6 +225,7 @@
 		F["[profileNum]_PDAcolor"] >> src.PDAcolor
 		F["[profileNum]_pda_ringtone_index"] >> src.pda_ringtone_index
 		F["[profileNum]_use_satchel"] >> src.use_satchel
+		F["[profileNum]_preferred_uplink"] >> src.preferred_uplink
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -284,6 +287,7 @@
 		F["[profileNum]_job_prefs_3"] >> src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] >> src.jobs_unwanted
 		F["[profileNum]_be_traitor"] >> src.be_traitor
+		F["[profileNum]_be_sleeper_agent"] >> src.be_sleeper_agent
 		F["[profileNum]_be_syndicate"] >> src.be_syndicate
 		F["[profileNum]_be_syndicate_commander"] >> src.be_syndicate_commander
 		F["[profileNum]_be_spy"] >> src.be_spy

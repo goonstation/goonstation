@@ -385,7 +385,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese,
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/item/reagent_containers/food/drinks/milk/rancid,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/storage/secure/closet/fridge/kitchen{
 	locked = 0
 	},
@@ -479,7 +479,7 @@
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
 "rO" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -783,7 +783,7 @@
 /area/shuttle/sea_elevator)
 "Av" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},

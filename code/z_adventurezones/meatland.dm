@@ -1120,7 +1120,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 				qdel(O)
 
 				src.visible_message(SPAN_ALERT("Something pops out of [src]!"))
-				new /obj/item/skull/crystal(get_turf(src))
+				new /obj/item/skull/omnitraitor(get_turf(src))
 
 			else
 				boutput(user, SPAN_ALERT("It doesn't fit.  Dang."))

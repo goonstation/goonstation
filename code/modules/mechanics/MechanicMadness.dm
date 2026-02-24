@@ -15,13 +15,22 @@
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
+
+TYPEINFO(/obj/item/storage/mechanics/housing_large)
+	mats = list("bohrum" = 100,
+				"conductive" = 50)
+
+TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
+	mats = list("bohrum" = 80,
+				"conductive_high" = 40)
+
 /obj/item/storage/mechanics // generic
 	name="Generic MechComp Housing"
 	desc="You should not bee seeing this! Call 1-800-CODER or just crusher it"
 	icon='icons/misc/mechanicsExpansion.dmi'
 	can_hold=list(/obj/item/mechanics, /obj/item/device/gps)
 	var/list/users = list() // le chumps who have opened the housing
-	deconstruct_flags = DECON_NONE //nope, so much nope.
+	deconstruct_flags = DECON_NONE
 	slots=1
 	var/num_f_icons = 0 // how many fill icons i have
 	var/light_time=0
@@ -227,6 +236,7 @@
 	get_desc()
 		.+="[src.welded ? " It is welded shut." : ""][src.open ? " Its cover has been opened." : ""]\
 		[src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
+
 	housing_large // chonker
 		can_be_welded = TRUE
 		can_be_anchored = ANCHORED
@@ -316,6 +326,7 @@
 #undef MAX_CONTAINER_LIGHT_TIME
 #undef CABINET_CAPACITY
 #undef HANDHELD_CAPACITY
+
 /obj/item/mechanics/trigger/trigger // stolen code from the Button
 	name = "Device Trigger"
 	desc = "This component is the integral button of a device frame. It cannot be removed from the device. Can be used by clicking on the device when the device's cover is closed"
@@ -326,6 +337,7 @@
 	anchored= ANCHORED
 	level=1
 	w_class = W_CLASS_BULKY
+	mechanically_copyable = FALSE // Anticipatory adjustment for a possible unit test.
 
 	New()
 		..()
@@ -333,6 +345,9 @@
 
 	attackby(obj/item/W, mob/user)
 		if(iswrenchingtool(W)) // prevent unanchoring
+			return FALSE
+		if(istype(W, /obj/item/storage/mechanics/housing_handheld))
+			src.attack_hand()
 			return FALSE
 		. = ..()
 
@@ -399,6 +414,10 @@ TYPEINFO(/obj/item/mechanics)
 	var/list/particle_list
 	var/mob/owner = null
 	var/process_fast = FALSE //Process will be called at 2.8s intervals instead of 0.4
+	/// Indicates if the component can have its setting's copied to another of the same type.
+	var/mechanically_copyable = TRUE
+
+	HELP_MESSAGE_OVERRIDE({""}) // Empty, handled by `get_help_message()` proc.
 
 	New()
 		particle_list = new/list()
@@ -406,6 +425,10 @@ TYPEINFO(/obj/item/mechanics)
 		processing_mechanics |= src
 		return ..()
 
+	get_help_message()
+		. = ..()
+		if(src.mechanically_copyable)
+			. += "You can copy this component's settings to another of the same type with a <b>multitool</b>!"
 
 	disposing()
 		processing_mechanics.Remove(src)
@@ -434,8 +457,17 @@ TYPEINFO(/obj/item/mechanics)
 			RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_owner))
 			owner = user
 
+		/// Individually defined for each subtype. Called when this object is hit by a multitool
+		/// bearing a copying component. Copies the configuration/settings of `copied_mechcomp`.
+		copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker, atom/copying_medium)
+			var/datum/component/mechanics_holder/holder = src.GetComponent(/datum/component/mechanics_holder)
+			if("Set Send-Signal" in holder.configs) // <-- I assume copying the define for this string from 'mechComp_signals.dm' would be worse.
+				var/datum/component/mechanics_holder/copied_holder = copied_mechcomp.GetComponent(/datum/component/mechanics_holder)
+				holder.defaultSignal = copied_holder.defaultSignal
 
-
+			src.tooltip_rebuild = TRUE
+			logTheThing(LOG_STATION, attacker, "copies the settings of [log_object(copied_mechcomp)] [log_loc(copied_mechcomp)] to a [log_object(src)] [log_loc(src)].")
+			boutput(attacker, SPAN_NOTICE("You've copied settings from [copying_medium] to the [src]."))
 
 	process()
 		if(level == OVERFLOOR || under_floor)
@@ -466,6 +498,71 @@ TYPEINFO(/obj/item/mechanics)
 	proc/rotate()
 		src.set_dir(turn(src.dir, -90))
 
+	proc/check_wrenching_conditions(var/mob/user)
+		//We need only to check conditions when the object is non-wrenched. Because else it can always be loosened
+		if(src.level == OVERFLOOR)
+			if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
+				boutput(user, SPAN_ALERT("[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work."))
+				return FALSE
+			if (IN_CABINET && istype(src, /obj/item/mechanics/movement))
+				var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+				if (cabinet.amount_of_prevent_move_comps > 0)
+					boutput(user, SPAN_ALERT("[src] is not allowed since an anchored component is preventing cabinet movement."))
+					return FALSE
+			if(IN_CABINET && src.cabinet_banned)
+				boutput(user,SPAN_ALERT("[src] is not allowed in component housings."))
+				return FALSE
+			if(!IN_CABINET && src.cabinet_only)
+				boutput(user,SPAN_ALERT("[src] is not allowed outside of component housings."))
+				return FALSE
+		return TRUE
+
+
+	proc/wrench_action(var/mob/user, var/obj/item/used_wrench)
+		// we need to check if the component didn't moved during our action bar and all other conditions are still true
+		if (!in_interact_range(src, user) || !can_act(user) || !src.check_wrenching_conditions(user))
+			return
+		switch(level)
+			if(UNDERFLOOR) //Level 1 = wrenched into place
+				boutput(user, "You detach the [src] from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
+				logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+				level = OVERFLOOR
+				anchored = UNANCHORED
+				if (src.cabinet_prevent_move && IN_CABINET)
+					var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+					cabinet.amount_of_prevent_move_comps--
+				clear_owner()
+				loosen()
+				if(src.material && src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					user.visible_message(SPAN_NOTICE("[src] breaks under the strain of the operation."))
+					var/turf/target_turf = get_turf(src)
+					var/obj/item/raw_material/shard/new_shard = new /obj/item/raw_material/shard(target_turf)
+					new_shard.setMaterial(src.material)
+					playsound(target_turf, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
+					qdel(src)
+			if(OVERFLOOR) //Level 2 = loose
+				if (IN_CABINET && src.cabinet_prevent_move)
+					var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+					cabinet.amount_of_prevent_move_comps++
+					if (cabinet.amount_of_prevent_move_comps == 1 && cabinet.unanchor_movement_comps() > 0)
+						boutput(user, SPAN_ALERT("The cabinet unanchored all movement components!"))
+				boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
+				logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+				level = UNDERFLOOR
+				anchored = ANCHORED
+				set_owner(user)
+				secure()
+		var/turf/T = src.loc
+		if(isturf(T))
+			hide(T.intact)
+		else
+			hide()
+		if (!src.dont_disconnect_on_change)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+		if(src && !QDELETED(src))
+			src.material_trigger_when_attacked(used_wrench, user, 1)
+		return TRUE
+
 	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			if (can_rotate)
@@ -475,60 +572,25 @@ TYPEINFO(/obj/item/mechanics)
 					boutput(user, "You must unsecure the [src] in order to rotate it.")
 			return TRUE
 		else if(iswrenchingtool(W))
-			switch(level)
-				if(UNDERFLOOR) //Level 1 = wrenched into place
-					boutput(user, "You detach the [src] from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
-					level = OVERFLOOR
-					anchored = UNANCHORED
-					if (src.cabinet_prevent_move && IN_CABINET)
-						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
-						cabinet.amount_of_prevent_move_comps--
-					clear_owner()
-					loosen()
-				if(OVERFLOOR) //Level 2 = loose
-					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
-						boutput(user, SPAN_ALERT("[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work."))
-						return FALSE
-					if (IN_CABINET && istype(src, /obj/item/mechanics/movement))
-						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
-						if (cabinet.amount_of_prevent_move_comps > 0)
-							boutput(user, SPAN_ALERT("[src] is not allowed since an anchored component is preventing cabinet movement."))
-							return
-					if(IN_CABINET && src.cabinet_banned)
-						boutput(user,SPAN_ALERT("[src] is not allowed in component housings."))
-						return
-					if(!IN_CABINET && src.cabinet_only)
-						boutput(user,SPAN_ALERT("[src] is not allowed outside of component housings."))
-						return
-					if(src.one_per_tile)
-						for(var/obj/item/mechanics/Z in src.loc)
-							if (Z.type == src.type && Z.level == UNDERFLOOR)
-								boutput(user,SPAN_ALERT("No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile."))
-								return
-					if(anchored)
-						boutput(user,SPAN_ALERT("[src] is already attached to something somehow."))
-						return
-					if (IN_CABINET && src.cabinet_prevent_move)
-						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
-						cabinet.amount_of_prevent_move_comps++
-						if (cabinet.amount_of_prevent_move_comps == 1 && cabinet.unanchor_movement_comps() > 0)
-							boutput(user, SPAN_ALERT("The cabinet unanchored all movement components!"))
-					boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
-					level = UNDERFLOOR
-					anchored = ANCHORED
-					set_owner(user)
-					secure()
-
-			var/turf/T = src.loc
-			if(isturf(T))
-				hide(T.intact)
+			if(src.material && src.material.getProperty("density") > 0)
+				if(!src.check_wrenching_conditions(user))
+					//we need to check the wrenching conditions manually here, else you get an action bar even though the action actually doesn't work
+					return TRUE
+				//work time calculation, 0.8 seconds per density, half when you have training, half for wrenching in, double for crystal material since loosening it breaks it.
+				var/work_time = src.material.getProperty("density") * 0.8 SECONDS
+				if(src.level == OVERFLOOR)
+					work_time *= 0.5
+				if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					work_time *= 2
+				if(user.traitHolder && (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer")))
+					work_time *= 0.5
+				// now, let's keep the result in reasonable values, even if you are untrained and should have no business working with this
+				work_time = clamp(work_time, 1 SECONDS, 10 SECONDS)
+				//now we set the action bar in motion
+				user.visible_message(SPAN_NOTICE("[user] begins tampering with [src]."))
+				SETUP_GENERIC_ACTIONBAR(user, src, work_time, PROC_REF(wrench_action), list(user, W), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				hide()
-
-			if (!src.dont_disconnect_on_change)
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+				src.wrench_action(user)
 			return TRUE
 		return ..()
 
@@ -571,6 +633,7 @@ TYPEINFO(/obj/item/mechanics)
 	icon_state = "comp_money"
 	density = 0
 	cooldown_time = 1 SECOND
+	mechanically_copyable = FALSE
 	var/price = 100
 	var/code = null
 	var/collected = 0
@@ -719,7 +782,7 @@ TYPEINFO(/obj/item/mechanics)
 	icon_state = "comp_flush"
 	cooldown_time = 2 SECONDS
 	cabinet_banned = TRUE
-
+	mechanically_copyable = FALSE
 
 	var/obj/disposalpipe/trunk/trunk = null
 	var/datum/gas_mixture/air_contents
@@ -842,6 +905,11 @@ TYPEINFO(/obj/item/mechanics)
 		boutput(user, "String set to [paper_name]")
 		return TRUE
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/thprint/copied_printer = copied_mechcomp
+		src.paper_name = copied_printer.paper_name
+
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
@@ -883,6 +951,12 @@ TYPEINFO(/obj/item/mechanics)
 		thermal_only = !thermal_only
 		boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
 		return TRUE
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/pscan/copied_scanner = copied_mechcomp
+		src.del_paper = copied_scanner.del_paper
+		src.thermal_only = copied_scanner.thermal_only
 
 	attackby(obj/item/W, mob/user)
 		if(..(W, user))
@@ -942,8 +1016,6 @@ TYPEINFO(/obj/item/mechanics)
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = FALSE
-	var/sendstr = "1"
-
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggle))
@@ -965,6 +1037,12 @@ TYPEINFO(/obj/item/mechanics)
 			loosen()
 		else
 			secure()
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/triplaser/copied_laser = copied_mechcomp
+		src.range = copied_laser.range
+
 	loosen()
 		active = FALSE
 		for(var/beam in beamobjs)
@@ -1019,13 +1097,19 @@ TYPEINFO(/obj/item/mechanics)
 		boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
 		return TRUE
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/hscan/copied_scanner = copied_mechcomp
+		src.send_name = copied_scanner.send_name
+
 	attack_hand(mob/user)
 		if(level == UNDERFLOOR && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
-			if(ishuman(user) && user.bioHolder)
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
 				LIGHT_UP_HOUSING
 				FLICK("comp_hscan1",src)
 				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
-				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
+				var/sendstr = (send_name ? user.real_name : H.get_fingerprint(ignore_gloves = TRUE))
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
 				boutput(user, SPAN_ALERT("The hand scanner can only be used by humanoids."))
@@ -1051,6 +1135,7 @@ TYPEINFO(/obj/item/mechanics)
 	can_rotate = 1
 	var/active = FALSE
 	event_handler_flags = USE_FLUID_ENTER
+	mechanically_copyable = FALSE
 
 	New()
 		..()
@@ -1157,6 +1242,11 @@ TYPEINFO(/obj/item/mechanics)
 		boutput(user, "Power set to [inp]")
 		return TRUE
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/zapper/copied_zapper = copied_mechcomp
+		src.zap_power = copied_zapper.zap_power
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_zap"
 
@@ -1218,6 +1308,12 @@ TYPEINFO(/obj/item/mechanics)
 					SEND_SIGNAL(src,transmissionStyle,input)
 					icon_state = "[under_floor ? "u":""]comp_wait"
 					active = FALSE
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/pausecomp/copied_pause = copied_mechcomp
+		src.delay = copied_pause.delay
+		src.changesig = copied_pause.changesig
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_wait"
@@ -1286,6 +1382,11 @@ TYPEINFO(/obj/item/mechanics)
 		SPAWN(timeframe)
 			inp2 = FALSE
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/andcomp/copied_and = copied_mechcomp
+		src.timeframe = copied_and.timeframe
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_and"
 
@@ -1325,6 +1426,11 @@ TYPEINFO(/obj/item/mechanics)
 		if(level == UNDERFLOOR && input.signal == triggerSignal)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/orcomp/copied_or = copied_mechcomp
+		src.triggerSignal = copied_or.triggerSignal
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_or"
@@ -1371,6 +1477,11 @@ TYPEINFO(/obj/item/mechanics)
 			if(triggerSignal in converted)
 				input.signal = converted[triggerSignal]
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/wifisplit/copied_splitter = copied_mechcomp
+		src.triggerSignal = copied_splitter.triggerSignal
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_split"
@@ -1474,6 +1585,13 @@ TYPEINFO(/obj/item/mechanics)
 			input.signal = mod
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/regreplace/copied_regreplace = copied_mechcomp
+		src.expressionpatt = copied_regreplace.expressionpatt
+		src.expressionrepl = copied_regreplace.expressionrepl
+		src.expressionflag = copied_regreplace.expressionflag
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
 
@@ -1553,6 +1671,14 @@ TYPEINFO(/obj/item/mechanics)
 				input.signal = R.match
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/regfind/copied_regfind = copied_mechcomp
+		src.expressionpatt = copied_regfind.expressionpatt
+		src.replacesignal = copied_regfind.replacesignal
+		src.expressionflag = copied_regfind.expressionflag
+		src.expressionTT =("[expressionpatt]/[expressionflag]")
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_regfind"
 
@@ -1619,6 +1745,13 @@ TYPEINFO(/obj/item/mechanics)
 			return
 		triggerSignal = input.signal
 		tooltip_rebuild = TRUE
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/sigcheckcomp/copied_sigcheck = copied_mechcomp
+		src.not = copied_sigcheck.not
+		src.changesig = copied_sigcheck.changesig
+		src.triggerSignal = copied_sigcheck.triggerSignal
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_check"
@@ -1707,6 +1840,12 @@ TYPEINFO(/obj/item/mechanics)
 			if (text_found)
 				return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Signal validated, let it pass
 		return TRUE //Signal invalid, halt it
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/dispatchcomp/copied_dispatch = copied_mechcomp
+		src.exact_match = copied_dispatch.exact_match
+		src.single_output = copied_dispatch.single_output
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_disp"
@@ -1806,6 +1945,12 @@ TYPEINFO(/obj/item/mechanics)
 		buffer = ""
 		tooltip_rebuild = TRUE
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/sigbuilder/copied_sigbuilder = copied_mechcomp
+		src.bstr = copied_sigbuilder.bstr
+		src.astr = copied_sigbuilder.astr
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_builder"
 
@@ -1838,6 +1983,11 @@ TYPEINFO(/obj/item/mechanics)
 		FLICK("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		SPAWN(0) SEND_SIGNAL(src,transmissionStyle,input)
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/relaycomp/copied_relay = copied_mechcomp
+		src.changesig = copied_relay.changesig
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_relay"
@@ -2019,6 +2169,14 @@ TYPEINFO(/obj/item/mechanics)
 			FLICK("[under_floor ? "u":""]comp_buffer1", src)
 			var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 			SPAWN(0) SEND_SIGNAL(src,transmissionStyle,signal)
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/buffercomp/copied_buffer = copied_mechcomp
+		setModel(copied_buffer.buffer_string)
+		src.cooldown_time = copied_buffer.cooldown_time
+		src.buffer_size = copied_buffer.buffer_size
+		src.changesig = copied_buffer.changesig
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_buffer"
@@ -2284,6 +2442,17 @@ TYPEINFO(/obj/item/mechanics)
 		frequency = new_frequency
 		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/wificomp/copied_wifi = copied_mechcomp
+		src.range = copied_wifi.range
+		src.forward_all = copied_wifi.forward_all
+
+		set_frequency(copied_wifi.frequency)
+		if(only_directed != copied_wifi.only_directed)
+			src.only_directed = !only_directed
+			get_radio_connection_by_id(src, "main").update_all_hearing(!only_directed)
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_radiosig"
 
@@ -2524,6 +2693,15 @@ TYPEINFO(/obj/item/mechanics)
 		if(previous(input))
 			sendCurrent(input)
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/selectcomp/copied_selector = copied_mechcomp
+		src.signals = copied_selector.signals
+		src.current_index = copied_selector.current_index
+		src.announce = copied_selector.announce
+		src.random = copied_selector.random
+		src.allowDuplicates = copied_selector.allowDuplicates
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_selector"
 
@@ -2622,6 +2800,12 @@ TYPEINFO(/obj/item/mechanics)
 		input.signal = (on ? signal_on : signal_off)
 		SPAWN(0)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/togglecomp/copied_toggle = copied_mechcomp
+		src.signal_on = copied_toggle.signal_on
+		src.signal_off = copied_toggle.signal_off
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_toggle[on ? "1":""]"
@@ -2742,6 +2926,17 @@ TYPEINFO(/obj/item/mechanics)
 			input.signal = "to=[targetTeleID]&error=no destinations found"
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/telecomp/copied_tele = copied_mechcomp
+		src.teleID = copied_tele.teleID
+
+		if(send_only != copied_tele.send_only) // Copied from `toggleSendOnly()` to avoid user output.
+			send_only = !send_only
+			if(send_only)
+				src.AddOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay"), "sendonly")
+			else
+				src.ClearSpecificOverlays("sendonly")
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
@@ -2759,6 +2954,7 @@ TYPEINFO(/obj/item/mechanics)
 	var/selcolor = "#FFFFFF"
 	var/datum/light/light
 	color = "#AAAAAA"
+	mechanically_copyable = FALSE // Ironically, making a simple LED copyable might require its own PR.
 
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Current Color: [selcolor].")]"
@@ -2863,6 +3059,11 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 		boutput(user, "Show-Source now [add_sender ? "on":"off"]")
 		return TRUE
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/miccomp/copied_mic = copied_mechcomp
+		src.add_sender = copied_mic.add_sender
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_mic"
 
@@ -2925,6 +3126,11 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.content]")
 		animate_flash_color_fill(src, "#00FF00", 2, 2)
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/radioscanner/copied_scanner = copied_mechcomp
+		src.set_frequency(copied_scanner.frequency)
+
 	update_icon()
 		icon_state = "[under_floor ? "u" : ""]comp_radioscanner"
 
@@ -2933,6 +3139,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 	desc = ""
 	icon_state = "comp_synth"
 	cooldown_time = 2 SECONDS
+	mechanically_copyable = FALSE
 
 	New()
 		..()
@@ -2955,21 +3162,38 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 	desc = ""
 	icon_state = "comp_pressure"
 	var/tmp/limiter = 0
+	var/changesig = FALSE
 	cabinet_banned = TRUE // non-functional
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
+
+	get_desc()
+		. += "<br>[SPAN_NOTICE("Replace Signal is [changesig ? "on.":"off."]")]"
+
+	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
+		changesig = !changesig
+		boutput(user, "Signal changing now [changesig ? "on":"off"]")
+		return TRUE
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || istype(AM, /obj/item/dummy) || AM.traction == TRACTION_NONE)
 			return
 		return_if_overlay_or_effect(AM)
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return
 		LIGHT_UP_HOUSING
 		limiter = ticker.round_elapsed_ticks + 10
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+		var/transmission_style = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_SIGNAL
+		var/output = changesig ? null : "[AM.name]"
+		SEND_SIGNAL(src, transmission_style, output)
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/trigger/pressureSensor/copied_sensor = copied_mechcomp
+		src.changesig = copied_sensor.changesig
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_pressure"
@@ -3217,6 +3441,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				user.drop_item()
 				src.set_loc(target)
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/trigger/buttonPanel/copied_panel = copied_mechcomp
+		src.active_buttons = copied_panel.active_buttons
+
 	update_icon()
 		icon_state = icon_up
 
@@ -3228,6 +3457,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	density = 0
 	can_rotate = 1
 	cooldown_time = 1 SECOND
+	mechanically_copyable = FALSE
 	var/obj/item/gun/Gun = null
 	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower, /obj/item/gun/reagent, /obj/item/gun/paintball)
 	cabinet_banned = TRUE // non-functional thankfully
@@ -3311,6 +3541,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	icon_state = "comp_gun2"
 	density = 0
 	compatible_guns = list(/obj/item/gun/energy)
+	mechanically_copyable = FALSE
 	var/charging = 0
 
 	get_desc()
@@ -3377,6 +3608,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	desc = ""
 	icon_state = "comp_instrument"
 	density = 0
+	mechanically_copyable = FALSE
 	var/obj/item/instrument = null
 	var/pitchUnlocked = 0 // varedit this to 1 to permit really goofy pitch values!
 	var/delay = 10
@@ -3605,6 +3837,15 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = round(.)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/math/copied_math = copied_mechcomp
+		src.A = copied_math.A
+		src.B = copied_math.B
+		src.mode = copied_math.mode
+		src.autoEval = copied_math.autoEval
+		src.floorResults = copied_math.floorResults
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_arith"
 
@@ -3704,6 +3945,13 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		. = currentValue
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/counter/copied_counter = copied_mechcomp
+		src.change = copied_counter.change
+		src.currentValue = copied_counter.currentValue
+		src.startingValue = copied_counter.startingValue
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_counter"
 
@@ -3772,6 +4020,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				src.divisor = 1 HOUR
 		tooltip_rebuild = TRUE
 		return TRUE
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/clock/copied_clock = copied_mechcomp
+		src.divisor = copied_clock.divisor
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_clock"
@@ -3922,6 +4175,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			// I don't care about checking for values below -1 here,
 			// because anything below 0 is effectively infinite
 			repeatCount = input_num
+
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/interval_timer/copied_intervaler = copied_mechcomp
+		src.intervalLength = copied_intervaler.intervalLength
+		src.repeatCount = copied_intervaler.repeatCount
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_clock"
@@ -4086,6 +4345,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		boutput(user, "Associations map cleared")
 		return TRUE
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/association/copied_associater = copied_mechcomp
+		src.mode = copied_associater.mode
+		src.map = copied_associater.map
+
 	update_icon()
 		icon_state = "[under_floor ? "u" : ""]comp_ass"
 
@@ -4206,6 +4471,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		src.display_letter = new_letter
 		src.icon_state = new_icon_state
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/screen/copied_screen = copied_mechcomp
+		src.color = copied_screen.color
+		src.letter_index = copied_screen.letter_index
 
 /obj/item/mechanics/message_sign
 	name = "message sign component"
@@ -4213,6 +4483,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	icon='icons/obj/large/96x32.dmi'
 	icon_state = "mechcomp_ledsign"
 	cabinet_banned = TRUE
+	plane = PLANE_OVERFLOOR
 	two_handed = 1     // it's big
 	w_class = W_CLASS_BULKY // too big to fit in a bag
 	pixel_w = -32
@@ -4356,6 +4627,15 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/display()
 		src.maptext = "<span class='[display_horizontal] [display_vertical] [display_font]' style='[display_font_size ? "font-size: [display_font_size]px; " : ""]color: [display_color];'>[display_text]</span>"
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/message_sign/copied_sign = copied_mechcomp
+		src.display_text = copied_sign.display_text
+		src.display_color = copied_sign.display_color
+		src.display_horizontal = copied_sign.display_horizontal
+		src.display_vertical = copied_sign.display_vertical
+		src.display_font = copied_sign.display_font
+		src.display_font_size = copied_sign.display_font_size
 
 
 
@@ -4472,6 +4752,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		boutput(user, "You set the movement delay set to [inp].")
 		return TRUE
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/movement/copied_mover = copied_mechcomp
+		src.move_lag = copied_mover.move_lag
+
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_move"
 
@@ -4499,6 +4784,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	var/tmp/updating = FALSE
 
 	pixel_point = TRUE
+	mechanically_copyable = FALSE
 
 	New()
 		..()
@@ -4682,6 +4968,14 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		input.signal = text
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 
+	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)
+		. = ..()
+		var/obj/item/mechanics/textmanip/copied_manipulator = copied_mechcomp
+		src.uppertext_mode = copied_manipulator.uppertext_mode
+		src.text_limit = copied_manipulator.text_limit
+		src.trim_text = copied_manipulator.trim_text
+		src.cap_first = copied_manipulator.cap_first
+
 
 /obj/item/mechanics/bomb
 	// this thing is a buggy piece of shit and is A D M I N - O N L Y
@@ -4692,6 +4986,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	icon_state = "bomb_disarmed"
 	cabinet_banned = TRUE
 	dont_disconnect_on_change = TRUE
+	mechanically_copyable = FALSE
 
 	var/arm_code = null
 	var/is_armed = FALSE
@@ -4795,6 +5090,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	name = "hangman game component"
 	desc = "Imagine having to use a bunch of components to emulate this. Nobody would do that. Nobody."
 	icon_state = "hangman"
+	mechanically_copyable = FALSE // I foresee no practical use for copying this.
 
 	var/puzzle = null /// original puzzle string
 	var/puzzle_filtered = null /// alphabetical-only version of the puzzle

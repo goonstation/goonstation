@@ -174,3 +174,5 @@
 /mob/living/carbon/get_oxygen_deprivation()
 	return src.oxyloss
 
+/mob/living/carbon/try_affect_all_addictions(var/value)
+	return src.reagents?.addiction_cache += value

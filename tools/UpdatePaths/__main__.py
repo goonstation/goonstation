@@ -35,6 +35,7 @@ Old paths properties:
     property = @ANY - will apply the rule when the property is mapedited, regardless of its value.
 """
 
+# won't get secret for some reason, add /+secret to the end and run again
 default_map_directory = "../.."
 
 default_map_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), default_map_directory)

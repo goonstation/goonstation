@@ -49,7 +49,7 @@
 
 /datum/observe_menu/ui_static_data(mob/user)
 	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
-	var/DNRSet = user.mind?.get_player()?.dnr
+	var/DNRSet = user.mind?.get_player()?.dnr || isadminghost(user)
 
 	var/list/uidata = list()
 	var/list/namecounts = list()

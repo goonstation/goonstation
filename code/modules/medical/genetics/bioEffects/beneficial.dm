@@ -309,6 +309,7 @@
 	msgGain = "Your mind feels closed."
 	msgLose = "You feel oddly exposed."
 	degrade_to = "screamer"
+	icon_state = "meta_neural"
 
 /////////////
 // Healing //
@@ -424,7 +425,7 @@
 	var/remove_per_tick = 3.3
 	stability_loss = 10
 	degrade_to = "toxification"
-	icon_state  = "tox_res"
+	icon_state  = "anti_tox"
 
 	OnAdd()
 		. = ..()
@@ -460,20 +461,28 @@
 	lockedTries = 6
 	stability_loss = 5
 	icon_state  = "haze"
-	isBad = 1
 
 	OnAdd()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, src.power)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 	OnRemove()
 		. = ..()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, newval)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
@@ -483,7 +492,6 @@
 	probability = 99
 	stability_loss = 5
 	icon_state  = "dead"
-	isBad = 1
 
 /datum/bioEffect/noir
 	name = "Noir"
@@ -664,10 +672,6 @@
 				HAH.customizations["hair_middle"].color = HAH.customizations["hair_middle"].color_original
 				HAH.customizations["hair_top"].color = HAH.customizations["hair_top"].color_original
 				HAH.s_tone = HAH.s_tone_original
-				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
-					HAH.customizations["hair_bottom"].color = fix_colors(HAH.customizations["hair_bottom"].color)
-					HAH.customizations["hair_middle"].color = fix_colors(HAH.customizations["hair_middle"].color)
-					HAH.customizations["hair_top"].color = fix_colors(HAH.customizations["hair_top"].color)
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 
@@ -772,7 +776,7 @@
 	lockedTries = 8
 	stability_loss = 15
 	degrade_to = "bad_eyesight"
-	icon_state  = "eye"
+	icon_state  = "eye_night"
 
 	OnAdd()
 		. = ..()
@@ -837,7 +841,7 @@
 	lockedDiff = 3
 	lockedTries = 8
 	stability_loss = 5
-	icon_state  = "strong"
+	icon_state  = "fit"
 	effect_group = "fit"
 
 	OnAdd()
@@ -884,9 +888,10 @@
 ///////////////////////////
 
 /datum/bioEffect/claws
-	name = "Manusclavis felidunguus"
+	name = "Manusclavis Felidunguus"
 	desc = "Subject arms change into a more animalistic form over time."
 	id = "claws"
+	icon_state = "armadillo"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your arms start to feel strange and clumsy."
@@ -915,6 +920,7 @@
 	name = "Manuschela Crustaceaformis"
 	desc = "Subject's arm changes into a pincer."
 	id = "claws_pincer"
+	icon_state ="big_meaty_claws"
 	msgGain = "You feel like your arms are oddly firm."
 	msgLose = "You are once again feel comfortable with your arms."
 
@@ -937,6 +943,7 @@
 	name = "Chitinoarmis Durescutis "
 	desc = "Subject skin develops into a hardened carapace."
 	id = "carapace"
+	icon_state = "armadillo2"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel your skin harden."
@@ -967,6 +974,7 @@
 	name = "Lateral Undulation"
 	desc = "Subject muscles develop the ability to perform a serpentine locomation."
 	id = "slither"
+	icon_state = "undulation"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you could propel yourself on your belly with a good wiggle."
@@ -989,6 +997,7 @@
 	name = "Lipid Stores"
 	desc = "Subject gains the ability to improve the nourishment available from their lipid stores."
 	id = "camel_fat"
+	icon_state = "lipid"
 	probability = 10
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you can store away some food and drink for later."
@@ -1119,9 +1128,9 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/M = owner
 			if (M.AH_we_spawned_with)
-				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_bottom"].color)
-				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_middle"].color)
-				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_top"].color)
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= M.AH_we_spawned_with.customizations["hair_bottom"].color
+				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= M.AH_we_spawned_with.customizations["hair_middle"].color
+				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= M.AH_we_spawned_with.customizations["hair_top"].color
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style 			= M.AH_we_spawned_with.customizations["hair_bottom"].style
 				M.bioHolder.mobAppearance.customizations["hair_middle"].style 			= M.AH_we_spawned_with.customizations["hair_middle"].style
 				M.bioHolder.mobAppearance.customizations["hair_top"].style 			= M.AH_we_spawned_with.customizations["hair_top"].style
@@ -1144,8 +1153,9 @@
 
 /datum/bioEffect/skitter
 	id = "skitter"
-	name = "Insectoid locomotion"
+	name = "Insectoid Locomotion"
 	desc = "The subject is capable of skittering across the floor like a bug."
+	icon_state = "locomotion"
 	occur_in_genepools = 0
 
 	OnAdd()
@@ -1159,7 +1169,7 @@
 		if (!isturf(src.owner.loc))
 			return
 		var/turf/T = get_turf(src.owner)
-		if (!istype(T) || T.throw_unlimited)
+		if (!istype(T) || src.owner.traction == TRACTION_NONE)
 			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return
@@ -1203,8 +1213,9 @@
 
 /datum/bioEffect/plasma_metabolism
 	id = "plasma_metabolism"
-	name = "Plasma metabolism"
+	name = "Plasma Metabolism"
 	desc = "The subject's body is capable of metabolising solid and liquid forms of plasma into electric charge."
+	icon_state = "plasma_metabolism"
 	occur_in_genepools = FALSE
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel a sudden hunger for plasma..."

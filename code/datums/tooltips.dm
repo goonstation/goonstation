@@ -265,7 +265,7 @@
 			viewY = (text2num(viewSizes[2]) - 1) / 2
 		return alist("x" = viewX, "y" = viewY)
 
-	proc/setMouseWithoutParams(list/clientView, list/iconSize)
+	proc/setMouseWithoutParams(alist/clientView, alist/iconSize)
 		PRIVATE_PROC(TRUE)
 		var/atom/refTarget = src.target.deref()
 		#ifndef SPACEMAN_DMM // pixloc var def broken

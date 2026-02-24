@@ -160,7 +160,7 @@
 	signal.source = src
 	signal.data["command"] = "text_message"
 	signal.data["sender_name"] = "ENGINE-MAILBOT"
-	signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
+	signal.data["group"] = list(MGD_ENGINEER, MGA_ENGINE)
 	signal.data["message"] = msg
 	signal.data["sender"] = "00000000"
 	signal.data["address_1"] = "00000000"
@@ -434,6 +434,8 @@
 			if (istype(A, /obj/blob))
 				var/obj/blob/blob = A
 				blob.take_damage(min(100, round(melt_prob/2)), damtype = "laser")
+			else if (istype(A, /obj/machinery/gravity_tether))
+				A.ex_act(melt_prob > 40 ? 1 : melt_prob > 20 ? 2 : 3, null, melt_prob / 4)
 			else if (prob(melt_prob))
 				if (istype(A, /obj/geode))
 					A.ex_act(melt_prob > 20 ? 1 : 3, null, melt_prob / 4) //lazy severity because it doesn't really matter here

@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/igniter)
 	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBELT
 	tool_flags = TOOL_ASSEMBLY_APPLIER
-	item_state = "electronic"
+	item_state = "assembly"
 	m_amt = 100
 	throwforce = 5
 	w_class = W_CLASS_TINY
@@ -25,6 +25,7 @@ TYPEINFO(/obj/item/device/igniter)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS, PROC_REF(assembly_overlay_addition))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
 
 /obj/item/device/igniter/disposing()
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
@@ -34,6 +35,9 @@ TYPEINFO(/obj/item/device/igniter)
 
 /// ----------- Trigger/Applier-Assembly-Related Procs -----------
 
+/obj/item/device/igniter/proc/assembly_removal(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, overlay_offset)
+	if(src in parent_assembly.additional_components)
+		parent_assembly.ClearSpecificOverlays("igniter_canbomb")
 
 /obj/item/device/igniter/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
 	if(!parent_assembly.target)
@@ -48,6 +52,7 @@ TYPEINFO(/obj/item/device/igniter)
 			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
 			var/obj/item/pipebomb/bomb/manipulated_pipebomb = assembly_target
 			manipulated_pipebomb.do_explode()
+			SEND_SIGNAL(parent_assembly, COMSIG_ITEM_CONVERTED, manipulated_pipebomb)
 			qdel(parent_assembly)
 			return
 		if(istype(assembly_target, /obj/item/reagent_containers/glass/beaker))
@@ -58,11 +63,13 @@ TYPEINFO(/obj/item/device/igniter)
 		if(istype(assembly_target, /obj/item/tank/plasma))
 			var/obj/item/tank/plasma/manipulated_plasma_tank = assembly_target
 			manipulated_plasma_tank.ignite()
+			SEND_SIGNAL(parent_assembly, COMSIG_ITEM_CONVERTED, manipulated_plasma_tank)
 			qdel(parent_assembly)
 			return
 		if(istype(assembly_target, /obj/item/clothing/head/butt))
 			var/obj/item/clothing/head/butt/manipulated_butt = assembly_target
 			manipulated_butt.explode_butt()
+			SEND_SIGNAL(parent_assembly, COMSIG_ITEM_CONVERTED, manipulated_butt)
 			qdel(parent_assembly)
 			return
 
@@ -77,7 +84,8 @@ TYPEINFO(/obj/item/device/igniter)
 
 /obj/item/device/igniter/proc/assembly_overlay_addition(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/passed_overlay_offset)
 	if(parent_assembly.special_construction_identifier == "canbomb")
-		parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
+		var/image/temp_image = image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
+		parent_assembly.AddOverlays(temp_image, "igniter_canbomb")
 /// ----------------------------------------------
 
 

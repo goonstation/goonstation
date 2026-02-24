@@ -102,6 +102,33 @@ icon
 		Higher value means brighter color
  */
 
+/// Use another icon as a cut-out for the original icon
+proc/GetMaskedIcon(var/icon/original, var/icon/mask_base)
+	RETURN_TYPE(/icon)
+	var/icon/mask = icon(mask_base)
+	mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)
+	mask.Blend(original, ICON_MULTIPLY)
+	return mask
+
+proc/GetTexturedIcon(var/icon/I, var/texture)
+	RETURN_TYPE(/icon)
+	if(isfile(I))
+		I = icon(I) // Management needs you to find the difference between these two icons: "It's the same icon." - Byond
+	if(!I || !texture)
+		return null
+
+	var/icon_height = I.Height()
+	var/icon_width = I.Width()
+	var/icon/tex
+	if(icon_height <= 32 && icon_width <= 32)
+		tex = icon('icons/effects/atom_textures_32.dmi', texture)
+	else if(icon_height <= 64 && icon_width <= 64)
+		tex = icon('icons/effects/atom_textures_64.dmi', texture)
+	else
+		return null
+
+	return GetMaskedIcon(tex, I)
+
 proc/ReadRGB(rgb)
 	if(!rgb) return
 

@@ -477,6 +477,9 @@
 		var/obj/machinery/clonepod/P = A
 		if(P.occupant)
 			reagents = P.occupant.reagents
+	else if (istype(A, /obj/fluid_pipe))
+		var/obj/fluid_pipe/P = A
+		reagents = P.network.reagents
 
 	if (reagents)
 		if (length(reagents.reagent_list))
@@ -617,7 +620,7 @@
 	return data
 
 // Yeah, another scan I made into a global proc (Convair880).
-/proc/scan_plant(var/atom/A as turf|obj, var/mob/user as mob, var/visible = 0)
+/proc/scan_plant(var/atom/A as turf|obj, var/mob/user as mob, var/visible = 0, var/show_gene_strain = TRUE)
 	if (!A || !user || !ismob(user))
 		return
 
@@ -668,7 +671,7 @@
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
 		return SPAN_ALERT("Cannot scan.")
 
-	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
+	HYPgeneticanalysis(user, A, P, DNA, show_gene_strain) // Just use the existing proc.
 	return
 
 /proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
@@ -699,3 +702,37 @@
 	record_prog.active2 = SR
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
+
+#define GRAVITY_SCAN_OUTPUT(x, y) ("\The [x] is currently experiencing [y/GFORCE_EARTH_GRAVITY]G.")
+
+/proc/scan_gravity(atom/target, visible=FALSE)
+	var/gforce = null
+	if (!target)
+		return
+
+	if(visible)
+		animate_scanning(target, "#b66393")
+
+	if (istype(target, /turf))
+		var/turf/T = target
+		gforce = T.get_gforce_current()
+	else if (istype(target, /atom/movable))
+		var/atom/movable/AM = target
+		gforce = AM.gforce
+	switch (gforce)
+		if (null)
+			. = SPAN_ALERT("Unable to process gravity of target.")
+		if (-INFINITY to GFORCE_GRAVITY_MINIMUM)
+			. = SPAN_ALERT(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_MOB_REGULAR_THRESHOLD to GFORCE_EARTH_GRAVITY)
+			. = SPAN_SUCCESS(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_GRAVITY_MINIMUM to GFORCE_MOB_REGULAR_THRESHOLD)
+			. = SPAN_NOTICE(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_MOB_EXTREME_THRESHOLD to INFINITY)
+			. = SPAN_ALERT(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_MOB_HIGH_THRESHOLD to GFORCE_MOB_EXTREME_THRESHOLD)
+			. = SPAN_NOTICE(GRAVITY_SCAN_OUTPUT(target, gforce))
+		if (GFORCE_EARTH_GRAVITY to GFORCE_MOB_HIGH_THRESHOLD)
+			. = SPAN_MESSAGE(GRAVITY_SCAN_OUTPUT(target, gforce))
+
+#undef GRAVITY_SCAN_OUTPUT

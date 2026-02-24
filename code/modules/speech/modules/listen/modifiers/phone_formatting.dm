@@ -12,8 +12,13 @@
 	if (!istype(handset))
 		return
 
+	// If held, the handset must be in the speaker's active hand to receive the message.
+	if (ismob(handset.loc) && (astype(message.original_speaker, /mob)?.equipped() != handset))
+		return NO_MESSAGE
+
 	message.flags |= SAYFLAG_NO_MAPTEXT
 	message.flags &= ~(SAYFLAG_WHISPER | SAYFLAG_NO_SAY_VERB)
+	message.heard_range = 0
 	message.output_module_channel = SAY_CHANNEL_OUTLOUD
 	message.atom_listeners_override = null
 	message.atom_listeners_to_be_excluded = null

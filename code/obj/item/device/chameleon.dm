@@ -4,7 +4,7 @@
 	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = ANCHORED
-	soundproofing = -1
+	soundproofing = SOUNDPROOFING_NOT_ON
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
@@ -73,7 +73,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon_state = "shield0"
 	flags = TABLEPASS | CONDUCT | EXTRADELAY | SUPPRESSATTACK
 	c_flags = ONBELT
-	item_state = "electronic"
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
@@ -139,7 +139,7 @@ TYPEINFO(/obj/item/device/chameleon)
 			if(!testIcon) //weird edgecases
 				return
 
-			if (!cham)
+			if (!cham || src.cham.qdeled || src.cham.disposed)
 				cham = new(src)
 				cham.master = src
 
@@ -163,6 +163,12 @@ TYPEINFO(/obj/item/device/chameleon)
 		if (!anim)
 			anim = new(src)
 
+		if (!src.cham || src.cham.qdeled || src.cham.disposed) //Stop sending people to nullspace after the dummy is destroyed >:(
+			boutput(user, SPAN_ALERT("[src] detects an error in its projection registry and performs an emergency factory reset!"))
+			src.disrupt()
+			src.cham = null
+			src.can_use = FALSE //Go scan something to get a new dummy object
+			return
 		if (active) //active_dummy)
 			active = 0
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)

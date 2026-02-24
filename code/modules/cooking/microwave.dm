@@ -37,6 +37,8 @@ TYPEINFO(/obj/machinery/microwave)
 	var/humanmeat_name = ""
 	/// Stored job of human meat for cooked recipe
 	var/humanmeat_job = ""
+	/// The slug within
+	var/obj/item/slug
 	/// Microwave is currently running
 	var/operating = FALSE
 	/// If dirty the microwave cannot be used until cleaned
@@ -48,7 +50,7 @@ TYPEINFO(/obj/machinery/microwave)
 	/// List of the recipes the microwave will check
 	var/list/available_recipes = list()
 	/// The current recipe being cooked
-	var/datum/recipe/cooked_recipe = null
+	var/datum/recipe_m/cooked_recipe = null
 	/// The item to create when finished cooking
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null
 	/// Single non food item that can be added to the microwave
@@ -90,20 +92,20 @@ TYPEINFO(/obj/machinery/microwave)
 /// After making the recipe in datums\recipes.dm, add it in here!
 /obj/machinery/microwave/New()
 	..()
-	src.available_recipes += new /datum/recipe/donut(src)
-	src.available_recipes += new /datum/recipe/synthburger(src)
-	src.available_recipes += new /datum/recipe/monkeyburger(src)
-	src.available_recipes += new /datum/recipe/humanburger(src)
-	src.available_recipes += new /datum/recipe/waffles(src)
-	src.available_recipes += new /datum/recipe/brainburger(src)
-	src.available_recipes += new /datum/recipe/meatball(src)
-	src.available_recipes += new /datum/recipe/buttburger(src)
-	src.available_recipes += new /datum/recipe/roburger(src)
-	src.available_recipes += new /datum/recipe/heartburger(src)
-	src.available_recipes += new /datum/recipe/donkpocket(src)
-	src.available_recipes += new /datum/recipe/donkpocket_warm(src)
-	src.available_recipes += new /datum/recipe/pie(src)
-	src.available_recipes += new /datum/recipe/popcorn(src)
+	src.available_recipes += new /datum/recipe_m/donut(src)
+	src.available_recipes += new /datum/recipe_m/synthburger(src)
+	src.available_recipes += new /datum/recipe_m/monkeyburger(src)
+	src.available_recipes += new /datum/recipe_m/humanburger(src)
+	src.available_recipes += new /datum/recipe_m/waffles(src)
+	src.available_recipes += new /datum/recipe_m/brainburger(src)
+	src.available_recipes += new /datum/recipe_m/meatball(src)
+	src.available_recipes += new /datum/recipe_m/buttburger(src)
+	src.available_recipes += new /datum/recipe_m/roburger(src)
+	src.available_recipes += new /datum/recipe_m/heartburger(src)
+	src.available_recipes += new /datum/recipe_m/donkpocket(src)
+	src.available_recipes += new /datum/recipe_m/donkpocket_warm(src)
+	src.available_recipes += new /datum/recipe_m/pie(src)
+	src.available_recipes += new /datum/recipe_m/popcorn(src)
 	UnsubscribeProcess()
 
 /**
@@ -112,6 +114,9 @@ TYPEINFO(/obj/machinery/microwave)
 
 /obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	if(src.operating)
+		return
+	if (src.slug)
+		src.visible_message(SPAN_NOTICE("Looks like a slug is taking up all the room."))
 		return
 	if(src.microwave_state > 0)
 		if (isscrewingtool(O) && src.microwave_state == MW_STATE_BROKEN_2)
@@ -173,6 +178,14 @@ TYPEINFO(/obj/machinery/microwave)
 			src.humanmeat_amount++
 			user.u_equip(O)
 			O.set_loc(src)
+	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug))
+		if (length(src.contents) < 1)
+			src.visible_message(SPAN_NOTICE("[user] carefully places the lesser slug inside the microwave."))
+			src.slug = O
+			user.u_equip(O)
+			O.set_loc(src)
+		else
+			src.visible_message(SPAN_NOTICE("Not enough room inside for a poor slug."))
 	else if (istype(O, /obj/item/reagent_containers/food/snacks/donkpocket_w))
 		// Band-aid fix. The microwave code could really use an overhaul (Convair880).
 		user.show_text("Syndicate donk pockets don't have to be heated.", "red")
@@ -321,7 +334,10 @@ TYPEINFO(/obj/machinery/microwave)
 		for(var/obj/item/dice/d in src.contents)
 			d.set_loc(get_turf(src))
 		return
-	for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
+	if(src.slug)
+		src.cook(MW_COOK_DIRTY)
+		return
+	for(var/datum/recipe_m/R in src.available_recipes) //Look through the recipe list we made above
 		if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.synthmeat_amount == R.synthmeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount) // Check if it's an accepted recipe
 			if(R.extra_item == null || (src.extra_item && src.extra_item.type == R.extra_item)) // Just in case the recipe doesn't have an extra item in it
 				src.cooked_recipe = R
@@ -401,15 +417,28 @@ TYPEINFO(/obj/machinery/microwave)
 			SPAWN(4 SECONDS)
 				if(isnull(src))
 					return
+				if (src.slug)
+					src.visible_message(SPAN_NOTICE("The slug is expanding..."))
+					qdel(src.slug)
+					icon_state = "mwbloody2"
+				else
+					icon_state = "mwbloody1"
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-				icon_state = "mwbloody1"
+
 			SPAWN(8	SECONDS)
 				if(isnull(src))
 					return
 				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				src.visible_message(SPAN_ALERT("The microwave gets covered in muck!"))
 				src.dirty = TRUE
-				src.icon_state = "mwbloody"
+				if (src.slug)
+					src.icon_state = "mwbloodyS"
+					var/mob/adultSlug = new /mob/living/critter/small_animal/slug
+					if (prob(6))
+						src.visible_message(SPAN_NOTICE("Nature is beautiful."))
+					adultSlug.set_loc(get_turf(src))
+				else
+					src.icon_state = "mwbloody"
 				src.clean_up()
 		if(MW_COOK_EMPTY)
 			SPAWN(8 SECONDS)
@@ -463,6 +492,7 @@ TYPEINFO(/obj/machinery/microwave)
 	src.synthmeat_amount = 0
 	src.monkeymeat_amount = 0
 	src.donkpocket_amount = 0
+	src.slug = null
 	src.humanmeat_name = ""
 	src.humanmeat_job = ""
 	src.extra_item = null

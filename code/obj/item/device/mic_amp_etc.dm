@@ -8,6 +8,7 @@ TYPEINFO(/obj/item/device/microphone)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
+	HELP_MESSAGE_OVERRIDE("Turn on or off by <b>using in-hand</b>.<br>Only picks up sound in your <b>active hand</b>.")
 
 	var/max_font = 8
 	var/font_amp = 4

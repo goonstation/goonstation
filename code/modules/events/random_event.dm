@@ -139,7 +139,7 @@ TYPEINFO(/datum/random_event)
 
 	var/typeinfo/datum/random_event/RE = get_type_typeinfo(src.event.type)
 	switch(action)
-		if("modify_value")
+		if("modify_value", "modify_list_value")
 			for(var/customization in RE.initialization_args)
 				if(params["name"]==customization[EVENT_INFO_NAME] \
 				&& params["type"]==customization[EVENT_INFO_TYPE] \

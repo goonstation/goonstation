@@ -1,6 +1,6 @@
 // A terrible post-human cloud of murder.
 TYPEINFO(/mob/living/critter/aberration)
-	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_VOID)
 
 /mob/living/critter/aberration
 	name = "transposed particle field"
@@ -47,6 +47,7 @@ TYPEINFO(/mob/living/critter/aberration)
 		remove_lifeprocess(/datum/lifeprocess/stuns_lying)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
+		remove_lifeprocess(/datum/lifeprocess/gravity)
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT, src, 100)

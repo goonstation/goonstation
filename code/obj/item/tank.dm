@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 				// Thank goodness there's a lot of them! (With maxcap values you can get around 5.6 mols fallout in here tops, which is ~80 neutrons)
 				var/neutrons_to_emit = 10 * ceil( sqrt( src.air_contents.radgas * range ) )
 				for(var/i = 1 to neutrons_to_emit)
-					shoot_projectile_XY(src, new /datum/projectile/neutron(), rand(-10,10), rand(-10,10))
+					shoot_projectile_XY(get_turf(src), new /datum/projectile/neutron(), rand(-10,10), rand(-10,10))
 				// Do some flash radiation so that the mobs just out of the gib range still get messed up bad
 				// Based off neutrons_to_emit in a way, but to be a multiplier value between 0 and 2
 				rad_damage_multiplier = 2 * clamp(neutrons_to_emit / 100, 0, 1)
@@ -195,12 +195,12 @@ ABSTRACT_TYPE(/obj/item/tank)
 				for_by_tcl(B, /obj/item/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
-						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
+						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5, flash_radiation_multiplier=rad_damage_multiplier)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
-			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
 			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5, flash_radiation_multiplier=rad_damage_multiplier)
 			qdel(src)
@@ -368,8 +368,8 @@ ABSTRACT_TYPE(/obj/item/tank)
 		//we need to add the new icon for the plasma tank
 		parent_assembly.target_item_prefix = "plasma"
 		// we update the contraband now to reflect the newly added tank
-		APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_GUNS, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), singletank_bomb_contraband_level))
-		SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
+		APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_CONTRABAND, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), singletank_bomb_contraband_level))
+		SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 
 	/// ----------------------------------------------
 

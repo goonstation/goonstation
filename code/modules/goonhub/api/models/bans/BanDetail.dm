@@ -31,14 +31,11 @@
 
 /datum/apiModel/Tracked/BanDetail/ToList()
 	. = ..()
-	.["id"] = src.id
 	.["ban_id"] = src.ban_id
 	.["ckey"] = src.ckey
 	.["comp_id"] = src.comp_id
 	.["ip"] = src.ip
 	.["player_id"] = src.player_id
-	.["created_at"] = src.created_at
-	.["updated_at"] = src.updated_at
 	.["deleted_at"] = src.deleted_at
 	.["original_ban_detail"] = src.original_ban_detail
 	if (src.original_ban_detail)

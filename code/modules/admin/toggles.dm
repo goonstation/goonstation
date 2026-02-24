@@ -45,7 +45,6 @@ var/list/server_toggles_tab_verbs = list(
 /datum/admins/proc/toggle_pull_slowing,
 /datum/admins/proc/togglepowerdebug,
 /client/proc/admin_toggle_nightmode,
-/client/proc/toggle_camera_network_reciprocity,
 /datum/admins/proc/toggle_radio_audio,
 /datum/admins/proc/toggle_remote_music_announcements,
 )
@@ -319,6 +318,12 @@ client/proc/toggle_ghost_respawns()
 			src.cmd_admin_disable()
 
 		boutput(usr, SPAN_NOTICE("Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]"))
+
+	if(isdead(usr))
+		if (isadminghost(usr))
+			get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
+		else
+			get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
 
 	logTheThing(LOG_ADMIN, usr, "has set player mode to [(player_mode ? "On" : "Off")]")
 	logTheThing(LOG_DIARY, usr, "has set player mode to [(player_mode ? "On" : "Off")]", "admin")

@@ -2,7 +2,7 @@
 	name = "secure locker"
 	desc = "A card-locked storage locker."
 	object_flags = NO_GHOSTCRITTER
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
 	p_class = 3
 	open_sound = 'sound/misc/locker_open.ogg'
@@ -14,6 +14,8 @@
 	var/bolted = TRUE
 	/// Can't be broken open with melee
 	var/reinforced = FALSE
+	/// Logging var
+	var/was_unbolted = FALSE
 	var/obj/particle/attack/attack_particle
 
 	New()
@@ -111,6 +113,8 @@
 
 	proc/toggle_bolts(var/mob/user)
 		user.visible_message("<b>[user]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+		if (src.bolted && src.was_unbolted)
+			logTheThing(LOG_STATION, user, "was the first player to unbolt [src] from the ground at [log_loc(src)]")
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
 		logTheThing(LOG_STATION, user, "[src.anchored ? "unanchored" : "anchored"] [log_object(src)] at [log_loc(src)]")
@@ -211,7 +215,7 @@
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-	/obj/item/barrier,
+	/obj/item/barrier/collapsible/security,
 	/obj/item/device/pda2/hos,
 	/obj/item/circuitboard/card/security,
 	/obj/item/circuitboard/announcement/security)
@@ -257,7 +261,9 @@
 	/obj/item/places_pipes/research,
 	/obj/item/rcd_ammo/big,
 	/obj/item/circuitboard/card/research,
-	/obj/item/circuitboard/announcement/research)
+	/obj/item/circuitboard/announcement/research,
+	/obj/item/clothing/suit/hazard/bio_suit/rd,
+	/obj/item/clothing/head/bio_hood/rd)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -300,6 +306,7 @@
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
 		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
 		/obj/item/stamp/ce,
@@ -319,14 +326,16 @@
 		/obj/item/circuitboard/announcement/engineering,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
+	#elif defined(MAP_OVERRIDE_NEON)
+		/obj/item/clothing/shoes/stomp_boots,
 	#endif
 	#ifdef UNDERWATER_MAP
 		/obj/item/clothing/suit/space/diving/engineering,
 		/obj/item/clothing/head/helmet/space/engineer/diving,
 		/obj/item/clothing/shoes/flippers
 	#else
-		/obj/item/clothing/suit/space/light/engineer,
-		/obj/item/clothing/head/helmet/space/light/engineer,
+		/obj/item/clothing/suit/space/light/chiefengineer,
+		/obj/item/clothing/head/helmet/space/light/chiefengineer,
 	#endif
 	)
 
@@ -377,7 +386,7 @@
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
-	/obj/item/barrier)
+	/obj/item/barrier/collapsible/security)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -394,7 +403,7 @@
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
-	/obj/item/barrier)
+	/obj/item/barrier/collapsible/security)
 
 	make_my_stuff()
 		..()
@@ -638,7 +647,7 @@
 	icon_closed = "medical_restricted"
 	icon_state = "medical_restricted"
 	spawn_contents = list()
-	req_access = list(access_medical_director)
+	req_access = list(access_pharmacy)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			// let's organize the SHIT outta this closet too! hot damn
@@ -738,7 +747,7 @@
 	name = "pharmacy chemical locker"
 	icon_closed = "medical_chemical"
 	icon_state = "medical_chemical"
-	req_access = list(access_medical_lockers)
+	req_access = list(access_pharmacy)
 
 /* ======================= */
 /* ----- Engineering ----- */
@@ -813,7 +822,7 @@
 	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/backpack/engineering,
-	/obj/item/breaching_charge/mining/light = 3,
+	/obj/item/storage/breach_pouch/filled,
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
@@ -860,7 +869,7 @@
 	icon_closed = "secure_green"
 	icon_opened = "secure_green-open"
 	spawn_contents = list(/obj/item/storage/box/clothing/botanist,
-	/obj/item/plantanalyzer,
+	/obj/item/clothing/glasses/phyto,
 	/obj/item/device/reagentscanner,
 	/obj/item/reagent_containers/glass/wateringcan,
 	/obj/item/paper/book/from_file/hydroponicsguide,
@@ -882,9 +891,10 @@
 	/obj/item/satchel/hydro,\
 	/obj/item/reagent_containers/glass/wateringcan,\
 	/obj/item/sponge,\
-	/obj/item/kitchen/food_box/egg_box/rancher,
-	/obj/item/storage/box/knitting,
-	/obj/item/storage/box/nametags)
+	/obj/item/kitchen/egg_box/rancher,\
+	/obj/item/storage/box/knitting,\
+	/obj/item/storage/box/nametags,\
+	/obj/item/kitchen/egg_box/empty)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
@@ -966,8 +976,8 @@
 			bc2.pixel_x = 3
 			p.pixel_x = 3
 
-			var/obj/item/kitchen/food_box/egg_box/e1 = new(src)
-			var/obj/item/kitchen/food_box/egg_box/e2 = new(src)
+			var/obj/item/kitchen/egg_box/e1 = new(src)
+			var/obj/item/kitchen/egg_box/e2 = new(src)
 			e1.pixel_y = -4
 			e2.pixel_y = -4
 
@@ -1088,3 +1098,11 @@
 	/obj/item/clothing/head/wig = 2,
 	/obj/item/scissors,
 	/obj/item/razor_blade)
+
+// NT official branded lockers
+/obj/storage/secure/closet/command/nanotrasen
+	name = "NanoTrasen Locker"
+	req_access = list(access_centcom)
+	reinforced = TRUE
+	icon_state = "nanotrasen"
+	icon_closed = "nanotrasen"

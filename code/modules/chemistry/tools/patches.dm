@@ -698,23 +698,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	var/image/fluid_image
 
 	New()
-		..()
-		UpdateIcon()
+		. = ..()
 
-	update_icon()
-		if (reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 4), 1, 4))
-			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/chemical.dmi', "mender-refill-fluid-4", -1)
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.fluid_image.icon_state = "mender-refill-fluid-[fluid_state]"
-			src.UpdateOverlays(src.fluid_image, "fluid")
-
-		else
-			src.ClearSpecificOverlays("fluid")
-
-		signal_event("icon_updated")
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = 'icons/obj/chemical.dmi', \
+			reagent_overlay_icon_state = "mender-refill", \
+			reagent_overlay_states = 4, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)
 
 	proc/do_refill(var/obj/item/reagent_containers/mender, var/mob/user)
 		if (src?.reagents.total_volume > 0)

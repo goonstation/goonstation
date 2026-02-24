@@ -795,7 +795,6 @@
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
-	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
@@ -845,7 +844,8 @@
 	/obj/item/tank/pocket/oxygen,
 	/obj/item/tank/mini/oxygen,
 	/obj/item/weldingtool,
-	/obj/item/wrench)
+	/obj/item/wrench,
+	/obj/item/ammo/power_cell/aa)
 
 	one
 		amt2spawn = 1
@@ -1349,7 +1349,8 @@
 		/obj/item/clothing/under/gimmick/jcdenton,
 		/obj/item/clothing/under/misc/mobster,
 		/obj/item/clothing/under/misc/mobster/alt,
-		/obj/item/clothing/under/gimmick/guybrush)
+		/obj/item/clothing/under/gimmick/guybrush,
+		/obj/item/clothing/suit/gimmick/nightgown)
 
 	one
 		amt2spawn = 1
@@ -1421,7 +1422,8 @@
 						/obj/item/paper_mask,
 						/obj/item/clothing/mask/kitsune,
 						/obj/item/clothing/head/minotaurmask,
-						/obj/item/clothing/mask/tengu)
+						/obj/item/clothing/mask/tengu,
+						/obj/item/clothing/mask/phantom)
 
 	one
 		amt2spawn = 1
@@ -1909,7 +1911,8 @@
 	icon_state = "rand_gun"
 	amt2spawn = 1
 
-	items2spawn = list(/obj/item/gun/energy/stasis,
+	items2spawn = list(/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun_jr,
 	/obj/item/gun/energy/phaser_huge)
@@ -2380,7 +2383,6 @@
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
-	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,

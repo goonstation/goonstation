@@ -23,7 +23,7 @@
 	hit_ground_chance = 10
 	//Can we pass windows
 	window_pass = 0
-	silentshot = 1
+	no_hit_message = 1
 	var/firer = "unknown"
 	var/obj/item/gun/energy/pickpocket/linkedGun = null
 	var/targetZone = null

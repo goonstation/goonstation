@@ -99,7 +99,7 @@
 	goes_through_walls = 0
 	//goes_through_mobs = 1
 	auto_find_targets = 0
-	silentshot = 1
+	no_hit_message = 1
 	pierces = 0
 	max_range = 6
 	shot_sound = null

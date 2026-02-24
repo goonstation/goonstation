@@ -37,6 +37,7 @@ var/list/removed_jobs = list(
 
 	var/be_traitor = FALSE
 	var/be_syndicate = FALSE
+	var/be_sleeper_agent = FALSE
 	var/be_syndicate_commander = FALSE
 	var/be_spy = FALSE
 	var/be_gangleader = FALSE
@@ -74,6 +75,7 @@ var/list/removed_jobs = list(
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
 	var/use_satchel //Automatically convert backpack to satchel?
+	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -252,6 +254,7 @@ var/list/removed_jobs = list(
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
 			"useSatchel" = src.use_satchel,
+			"preferredUplink" = src.preferred_uplink,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -272,6 +275,7 @@ var/list/removed_jobs = list(
 
 			"antagonistPreferences" = list(
 				ROLE_TRAITOR = src.be_traitor,
+				ROLE_SLEEPER_AGENT = src.be_sleeper_agent,
 				ROLE_NUKEOP = src.be_syndicate,
 				ROLE_NUKEOP_COMMANDER = src.be_syndicate_commander,
 				ROLE_SPY_THIEF = src.be_spy,
@@ -540,6 +544,16 @@ var/list/removed_jobs = list(
 
 			if ("toggle-satchel")
 				src.use_satchel = !src.use_satchel
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-uplink")
+				if (isnull(src.preferred_uplink) || src.preferred_uplink == PREFERRED_UPLINK_STANDALONE)
+					src.preferred_uplink = PREFERRED_UPLINK_PDA
+				else if (src.preferred_uplink == PREFERRED_UPLINK_PDA)
+					src.preferred_uplink = PREFERRED_UPLINK_RADIO
+				else
+					src.preferred_uplink = PREFERRED_UPLINK_STANDALONE
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1109,6 +1123,7 @@ var/list/removed_jobs = list(
 				src.use_click_buffer = FALSE
 				src.help_text_in_examine = TRUE
 				src.be_traitor = FALSE
+				src.be_sleeper_agent = FALSE
 				src.be_syndicate = FALSE
 				src.be_syndicate_commander = FALSE
 				src.be_spy = FALSE
@@ -1282,7 +1297,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
+			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1297,7 +1312,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
+			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1324,7 +1339,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
+			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1409,20 +1424,6 @@ var/list/removed_jobs = list(
 			"low" = src.jobs_low_priority,
 			"unwanted" = src.jobs_unwanted,
 		)
-		// TGUI buttons don't like non-standard colours.
-		// I hate this implementation, but I'm not adding a second colour variable to jobs.
-		var/alist/colour_map = list(
-			"#0FF" = "teal",
-			"#0C0" = "green",
-			"#F00" = "red",
-			"#90F" = "purple",
-			"#F9F" = "pink",
-			"#F90" = "orange",
-			"#09F" = "blue",
-			"#999" = "grey",
-			"#3348ff" = "blue",
-			"#800" = "red",
-		)
 		for (var/category as anything in jobs_by_category)
 			for (var/job as anything in jobs_by_category[category])
 				var/datum/job/job_datum = global.find_job_in_controller_by_string(job)
@@ -1431,7 +1432,7 @@ var/list/removed_jobs = list(
 
 				job_static_data[job_datum.name] ||= list()
 				job_static_data[job_datum.name]["disabled"] = FALSE
-				job_static_data[job_datum.name]["colour"] = colour_map[job_datum.linkcolor] || "blue"
+				job_static_data[job_datum.name]["colour"] = job_datum.ui_colour
 				job_static_data[job_datum.name]["wiki_link"] = job_datum.wiki_link
 				job_static_data[job_datum.name]["required"] = job_datum.cant_allocate_unwanted
 
@@ -1441,7 +1442,7 @@ var/list/removed_jobs = list(
 					reason_tooltip = "You have been banned from playing this job."
 				else if (job_datum.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					reason_tooltip = "This job requires the <i>\"Unlike the director, I went to college\"</i> medal, which you do not possess."
-				else if (job_datum.requires_whitelist && !global.NT.Find(user.ckey))
+				else if (job_datum.requires_whitelist && !user.client.can_play_whitelisted_roles())
 					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may also play this job on Fridays."
 				else if (!job_datum.has_rounds_needed(user.client?.player))
 					var/played_rounds = user.client.player.get_rounds_participated()
@@ -1729,6 +1730,8 @@ var/list/removed_jobs = list(
 			src.AH.u_color = "#FEFEFE"
 		if (src.AH.s_tone == null || src.AH.s_tone == "#FFFFFF" || src.AH.s_tone == "#ffffff")
 			src.AH.s_tone = "#FEFEFE"
+		if (!src.preferred_uplink)
+			src.preferred_uplink = PREFERRED_UPLINK_PDA
 
 	proc/keybind_prefs_updated(var/client/C)
 		if (!isclient(C))

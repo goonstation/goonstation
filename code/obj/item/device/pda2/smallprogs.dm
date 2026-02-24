@@ -561,8 +561,8 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
-	var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
-	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
+	var/obj/machinery/reactor_turbine/nuke_turbine
+	var/obj/machinery/nuclear_reactor/nuke_reactor
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
@@ -584,8 +584,8 @@ Code:
 			circ2 = generator.circ2
 
 		//NUKE
-		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
-		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
+		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/reactor_turbine)
+		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/nuclear_reactor)
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
@@ -835,12 +835,12 @@ Code:
 		var/alert_sound
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
-				mailgroup = MGD_MEDBAY
+				mailgroup = MGD_MEDICAL
 				alert_color = "#337296"
 				alert_title = "Medical"
 				alert_sound = 'sound/items/medical_alert.ogg'
 			if (2)
-				mailgroup = MGO_ENGINEER
+				mailgroup = MGD_ENGINEER
 				alert_color = "#a8732b"
 				alert_title = "Engineering"
 				alert_sound = 'sound/items/engineering_alert.ogg'
@@ -850,7 +850,7 @@ Code:
 				alert_title = "Security"
 				alert_sound = 'sound/items/security_alert.ogg'
 			if (4 to INFINITY)
-				mailgroup = MGO_JANITOR
+				mailgroup = MGT_JANITOR
 				alert_color = "#993399"
 				alert_title = "Janitor"
 				alert_sound = 'sound/items/janitor_alert.ogg'
@@ -1298,7 +1298,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 			//////////////////

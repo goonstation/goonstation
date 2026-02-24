@@ -260,7 +260,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						boutput(ui.user, SPAN_ALERT("No viable seeds found in [I]."))
 					else
 						boutput(ui.user, SPAN_NOTICE("Extracted [give] seeds from [I]."))
-						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give)
+						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give, allele_override = TRUE)
 						if (!src.output_externally)
 							src.seeds.Add(S)
 						else

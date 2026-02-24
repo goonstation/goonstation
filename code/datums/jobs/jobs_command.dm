@@ -2,13 +2,14 @@
 
 ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
-	linkcolor = COMMAND_LINK_COLOR
+	ui_colour = TGUI_COLOUR_GREEN
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	job_category = JOB_COMMAND
 	unique = TRUE
 	world_announce_priority = ANNOUNCE_ORDER_HEADS
+	email_group = MGD_COMMAND
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -25,7 +26,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
 	world_announce_priority = ANNOUNCE_ORDER_CAPTAIN
-	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	receives_implants = list(/obj/item/implant/health/security/anti_mindhack/command)
 	wiki_link = "https://wiki.ss13.co/Captain"
 
 	slot_card = /obj/item/card/id/gold
@@ -96,7 +97,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 	badge = /obj/item/clothing/suit/security_badge
 	show_in_id_comp = FALSE
-	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	receives_implants = list(/obj/item/implant/health/security/anti_mindhack/command)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
 

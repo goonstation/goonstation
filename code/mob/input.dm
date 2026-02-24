@@ -10,7 +10,7 @@
 /mob/var/movement_last_progress = 0 //! The progress of the move the mob was at when it was last modified. between 0-1
 
 /mob/hotkey(name)
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		return controller.hotkey(src, name)
 	return ..()
@@ -27,7 +27,7 @@
 				for (var/atom/A as anything in src.get_tracked_examine_atoms())
 					hover_tag = A.get_examine_tag(src)
 					hover_tag?.show_images(src.client, TRUE, FALSE)
-			if (src.atom_hovered_over)
+			if (src.atom_hovered_over && (GET_DIST(src.atom_hovered_over, src) <= MAX_NAMETAG_RANGE))
 				var/atom/A = src.atom_hovered_over
 				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
 				hover_tag?.show_images(src.client, FALSE, TRUE)
@@ -42,7 +42,7 @@
 				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
 				hover_tag?.show_images(src.client, FALSE, FALSE)
 
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		controller.keys_changed(src, keys, changed)
 		return
@@ -103,7 +103,7 @@
 
 /mob/proc/process_move(keys)
 	set waitfor = 0
-	var/datum/movement_controller/controller = src.override_movement_controller
+	var/datum/movement_controller/controller = src.get_active_movement_controller()
 	if (controller)
 		return controller.process_move(src, keys)
 
@@ -193,14 +193,8 @@
 				var/glide = (world.icon_size / ceil(delay / world.tick_lag)) //* (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH))
 
 				var/spacemove = 0
-				if (src.no_gravity || (old_loc.throw_unlimited && !src.is_spacefaring()) )
-
+				if (src.traction == TRACTION_NONE && !src.has_grip())
 					spacemove = 1
-					for (var/atom/A in oview(1,src))
-						if (A.stops_space_move && (!src.no_gravity || !isfloor(A)))
-							spacemove = 0
-							break
-
 				if (spacemove)
 					if (istype(src.back, /obj/item/tank/jetpack))
 						var/obj/item/tank/jetpack/J = src.back
@@ -266,6 +260,7 @@
 						src.force_laydown_standup()
 
 					if (do_step)
+						src.inertia_value = 1
 						step(src, move_dir)
 						if (src.loc != old_loc)
 							OnMove()
@@ -296,52 +291,17 @@
 
 						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
 							if (!src?.client?.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
-								//just fall over in place when in space (to prevent zooming)
-								var/turf/current_turf = get_turf(src)
-								if (!(istype(current_turf, /turf/space)))
+								//just fall over in place without traction (to prevent zooming)
+								if (src.traction != TRACTION_NONE)
 									src.throw_at(get_step(src, move_dir), 1, 1)
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()
 								src.emote("wheeze")
 								boutput(src, SPAN_ALERT("You flop over, too winded to continue running!"))
 
-						var/list/pulling = list()
-						if (src.pulling)
-							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
-								src.remove_pulling()
-							else
-								var/can_pull = TRUE
-								if (ismob(src.pulling))
-									var/mob/M = src.pulling
-									for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
-										if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > GRAB_PASSIVE)
-											can_pull = FALSE
-											src.remove_pulling()
-											break
-								if (can_pull)
-									pulling += src.pulling
-						for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-							var/can_pull = TRUE
-							if (G.affecting)
-								for(var/obj/item/grab/grab_grabbed_by in G.affecting.grabbed_by)
-									if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > G.state)
-										can_pull = FALSE
-										break
-								if (can_pull)
-									pulling += G.affecting
-
-						for (var/atom/movable/A in pulling)
-							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
-								continue
-							if (A == src || A == pushing)
-								continue
-							if (!isturf(A.loc) || A.anchored)
-								continue // whoops
-							A.animate_movement = SYNC_STEPS
-							A.glide_size = glide
-							step(A, get_dir(A, old_loc))
-							A.glide_size = glide
-							A.OnMove(src)
+						var/list/chain = list()
+						chain.Add(src)
+						src.do_pulling(old_loc, glide, chain)
 			else
 				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
 					src.set_dir(move_dir)
@@ -362,3 +322,49 @@
 						return
 					src.last_resist = world.time + 20
 					G.do_resist()
+
+/mob/proc/do_pulling(var/turf/old_loc, var/glide, var/list/chain)
+	var/list/pulling = list()
+	if (src.pulling)
+		if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+			src.remove_pulling()
+		else
+			var/can_pull = TRUE
+			if (ismob(src.pulling))
+				var/mob/M = src.pulling
+				for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
+					if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > GRAB_PASSIVE)
+						can_pull = FALSE
+						src.remove_pulling()
+						break
+			if (can_pull)
+				pulling += src.pulling
+	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+		var/can_pull = TRUE
+		if (G.affecting)
+			for(var/obj/item/grab/grab_grabbed_by in G.affecting.grabbed_by)
+				if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > G.state)
+					can_pull = FALSE
+					break
+			if (can_pull)
+				pulling += G.affecting
+
+	for (var/atom/movable/A in pulling)
+		if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+			continue
+		if (A == src || A == pushing)
+			continue
+		if (!isturf(A.loc) || A.anchored)
+			continue // whoops
+		if (chain.Find(A))
+			continue // no loops
+		A.animate_movement = SLIDE_STEPS
+		A.glide_size = glide
+		var/turf/pulled_old_loc = A.loc
+		step(A, get_dir(A, old_loc))
+		A.OnMove(src)
+		if (istype(A, /mob/))
+			chain.Add(A)
+			var/mob/M = A
+			M.pushing = null
+			M.do_pulling(pulled_old_loc, glide, chain)

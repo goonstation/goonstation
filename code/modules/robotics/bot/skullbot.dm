@@ -70,30 +70,30 @@ TYPEINFO(/obj/machinery/bot/skullbot)
 		qdel(src)
 		return
 
-/obj/machinery/bot/skullbot/crystal
+/obj/machinery/bot/skullbot/omnitraitor
 	name = "crystal skullbot"
-	icon_state = "skullbot-crystal"
+	icon_state = "skullbot_omnitraitor"
 
-/obj/machinery/bot/skullbot/strange
+/obj/machinery/bot/skullbot/hunter
 	name = "strange skullbot"
-	icon_state = "skullbot-P"
+	icon_state = "skullbot_hunter"
 
-/obj/machinery/bot/skullbot/peculiar
+/obj/machinery/bot/skullbot/wizard
 	name = "peculiar skullbot"
-	icon_state = "skullbot-strange"
+	icon_state = "skullbot_wizard"
 
-/obj/machinery/bot/skullbot/odd
+/obj/machinery/bot/skullbot/changeling
 	name = "odd skullbot"
-	icon_state = "skullbot-A"
+	icon_state = "skullbot_changeling"
 
-/obj/machinery/bot/skullbot/faceless
+/obj/machinery/bot/skullbot/cluwne
 	name = "faceless skullbot"
-	icon_state = "skullbot-noface"
+	icon_state = "skullbot_cluwne"
 
-/obj/machinery/bot/skullbot/gold
+/obj/machinery/bot/skullbot/macho
 	name = "golden skullbot"
-	icon_state = "skullbot-gold"
+	icon_state = "skullbot_macho"
 
 /obj/machinery/bot/skullbot/ominous
 	name = "ominous skullbot"
-	icon_state = "skullbot-ominous"
+	icon_state = "skullbot_ominous"

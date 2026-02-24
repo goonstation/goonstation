@@ -183,6 +183,11 @@
 /area/listeningpost/syndicate_teleporter)
 "gF" = (
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_x = 25
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "hx" = (
@@ -225,7 +230,7 @@
 	icon_state = "4-8"
 	},
 /turf/variableTurf/clear,
-/area/space)
+/area/listeningpost/shark_tank)
 "iB" = (
 /obj/decal/tile_edge/line/red{
 	dir = 6;
@@ -306,13 +311,10 @@
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "kS" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
 /obj/cable/black{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicate_teleporter)
 "lf" = (
@@ -529,10 +531,8 @@
 /turf/simulated/floor/red,
 /area/listeningpost/vestibule)
 "tB" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Listening Post"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
@@ -550,6 +550,15 @@
 /obj/machinery/cell_charger,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
+"uJ" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/turf/variableTurf/clear,
+/area/listeningpost/shark_tank)
 "vk" = (
 /turf/simulated/floor/stairs/wide/middle,
 /area/listeningpost/syndicate_teleporter)
@@ -854,11 +863,9 @@
 	},
 /area/listeningpost/general)
 "Jp" = (
-/obj/critter/gunbot/drone/gunshark{
-	aggressive = 0
-	},
+/obj/critter/gunbot/drone/gunshark/listening_post,
 /turf/variableTurf/clear,
-/area/space)
+/area/listeningpost/shark_tank)
 "Kg" = (
 /obj/decal/tile_edge/line/red{
 	dir = 6;
@@ -1093,7 +1100,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Tv" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor,
@@ -1150,6 +1157,9 @@
 	},
 /turf/simulated/floor,
 /area/listeningpost/barracks)
+"UO" = (
+/turf/variableTurf/clear,
+/area/listeningpost/shark_tank)
 "Vh" = (
 /obj/decal/tile_edge/line/red{
 	dir = 6;
@@ -1952,7 +1962,7 @@ kR
 Qk
 ZM
 CI
-CV
+UO
 yd
 yd
 HQ
@@ -1986,8 +1996,8 @@ Yw
 fC
 Yw
 iZ
-CV
-CV
+UO
+UO
 yd
 yd
 yd
@@ -2016,12 +2026,12 @@ nh
 yc
 sL
 ry
-CV
+UO
 ic
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
 yd
 yd
 yd
@@ -2050,11 +2060,11 @@ cV
 sY
 sL
 ry
-CV
+UO
 ic
-CV
-CV
-CV
+UO
+UO
+UO
 yd
 yd
 yd
@@ -2084,12 +2094,12 @@ zc
 zc
 EK
 ry
-CV
+UO
 ic
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
 yd
 yd
 yd
@@ -2118,15 +2128,15 @@ Yw
 Yw
 Yw
 iZ
-CV
+UO
 ic
-CV
-CV
-CV
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
+UO
+UO
+UO
 yd
 "}
 (24,1,1) = {"
@@ -2148,19 +2158,19 @@ xD
 Wk
 hx
 Jf
-CV
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
+UO
 ic
-CV
-CV
-CV
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
+UO
+UO
+UO
 yd
 "}
 (25,1,1) = {"
@@ -2182,19 +2192,19 @@ kn
 YM
 hx
 Jf
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
 Lu
 bS
 Lu
-CV
-CV
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
+UO
+UO
 yd
 "}
 (26,1,1) = {"
@@ -2216,18 +2226,18 @@ OJ
 TF
 zH
 Jf
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
 Lu
 Nc
 Lu
-CV
+UO
 Jp
-CV
-CV
-CV
+UO
+UO
+UO
 yd
 yd
 "}
@@ -2250,15 +2260,15 @@ tB
 Hl
 Hl
 Hl
-CV
-CV
-CV
-CV
+uJ
+UO
+UO
+UO
 Lu
 Lu
 Lu
-CV
-CV
+UO
+UO
 yd
 yd
 yd
@@ -2284,15 +2294,15 @@ XJ
 qX
 gF
 IZ
-CV
-CV
-CV
+UO
+UO
+UO
 Jp
-CV
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
+UO
 yd
 yd
 yd
@@ -2318,14 +2328,14 @@ Hl
 Hl
 Hl
 Hl
-CV
-CV
-CV
-CV
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
+UO
+UO
+UO
+UO
 yd
 yd
 yd
@@ -2351,15 +2361,15 @@ MX
 yd
 yd
 HQ
-CV
-CV
-CV
-CV
-CV
-CV
-CV
-CV
-CV
+UO
+UO
+UO
+UO
+UO
+UO
+UO
+UO
+UO
 yd
 yd
 yd
@@ -2388,12 +2398,12 @@ yd
 yd
 yd
 HQ
-CV
-CV
-CV
+UO
+UO
+UO
 yd
 HQ
-CV
+UO
 yd
 yd
 yd

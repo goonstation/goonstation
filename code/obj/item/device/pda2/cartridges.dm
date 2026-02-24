@@ -24,7 +24,6 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	desc = "A data cartridge for PDAs."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "cart-blank"
-	item_state = "electronic"
 	file_amount = 32
 	title = "ROM Cart"
 
@@ -40,7 +39,6 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
@@ -83,7 +81,6 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
@@ -204,7 +201,6 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 
 		New()
 			..()
-			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/secrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))

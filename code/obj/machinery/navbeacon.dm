@@ -11,7 +11,7 @@ TYPEINFO(/obj/machinery/navbeacon)
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
-	layer = 2.5 // TODO layer whatever
+	layer = UNDERFLOOR_MACHINE
 	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -348,7 +348,7 @@ TYPEINFO(/obj/machinery/wirenav)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "wirednav"//-f"
 	level = 1		// underfloor
-	layer = OBJ_LAYER
+	layer = UNDERFLOOR_MACHINE
 	anchored = ANCHORED
 	var/nav_tag = null
 	var/net_id = null

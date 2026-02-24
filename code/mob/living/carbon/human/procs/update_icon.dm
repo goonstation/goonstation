@@ -273,7 +273,7 @@
 		src.wear_suit.wear_image.color = src.wear_suit.color
 		src.wear_suit.wear_image.alpha = src.wear_suit.alpha
 
-		if (src.organHolder?.tail) update_tail_clothing(wear_state)
+		if (src.organHolder?.tail) update_tail_clothing(wear_state, src.wear_suit)
 
 		src.AddOverlays(src.wear_suit.wear_image, "wear_suit")
 
@@ -503,9 +503,18 @@
 		src.remove_pulling()
 		var/image/handcuff_img = SafeGetOverlayImage("handcuffs", 'icons/mob/mob.dmi', "handcuff1", MOB_HANDCUFF_LAYER)
 		handcuff_img.pixel_y = hand_offset
+		if(src.handcuffs)
+			handcuff_img.color = src.handcuffs.color
+			handcuff_img.alpha = src.handcuffs.alpha
+			handcuff_img.filters = src.handcuffs.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.handcuffs)
 		src.AddOverlays(handcuff_img, "handcuffs")
+		if (src.handcuffs.worn_material_texture_image)
+			src.handcuffs.worn_material_texture_image.layer = src.handcuffs.wear_image.layer + 0.1
+			src.AddOverlays(src.handcuffs.worn_material_texture_image, "material_handcuffs")
+		else
+			src.ClearSpecificOverlays("material_handcuffs")
 	else
-		src.ClearSpecificOverlays("handcuffs")
+		src.ClearSpecificOverlays("handcuffs", "material_handcuffs")
 
 /mob/living/carbon/human/proc/update_implants()
 	for (var/I in implant_images)
@@ -520,7 +529,7 @@
 #undef wear_sanity_check
 #undef inhand_sanity_check
 
-/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state)
+/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state, var/obj/item/tail_clothing)
 	src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
 	src.tail_standing.overlays.len = 0
 	src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
@@ -532,8 +541,18 @@
 		var/tail_overrides = get_icon_states(our_tail.clothing_image_icon)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
 			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
+			if(tail_clothing)
+				human_tail_image.color = tail_clothing.color
+				human_tail_image.alpha = tail_clothing.alpha
+				human_tail_image.filters = tail_clothing.filters.Copy() + src.mutantrace?.apply_clothing_filters(tail_clothing)
 			src.tail_standing.overlays += human_tail_image
 			src.tail_standing_oversuit.overlays += human_tail_image
+			if(tail_clothing.worn_material_texture_image)
+				// If the original object has a material texture, apply it
+				var/icon/masked_tail_tex = GetTexturedIcon(human_tail_image.icon, tail_clothing.material.getTexture())
+				var/image/tail_tex_image = image(masked_tail_tex, icon_state)
+				tail_tex_image.layer = human_tail_image.layer + 0.1
+				src.tail_standing_oversuit.overlays += tail_tex_image
 			src.update_tail_overlays()
 			return
 
@@ -561,8 +580,8 @@
 	ClearSpecificOverlays(TRUE, "hair_one", "hair_two", "hair_three", "hair_special_one", "hair_special_two", "hair_special_three")
 
 	var/obj/item/clothing/suit/back_clothing = src.back // typed version of back to check hair sealage; might not be clothing, we check type below
-	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) \
-						|| (src.wear_suit && src.wear_suit.body_parts_covered & HEAD) || (istype(back_clothing) && back_clothing.over_hair))
+	var/seal_hair = ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || (src.head && src.head.c_flags & COVERSHAIR) \
+						|| (istype(back_clothing) && back_clothing.c_flags & COVERSHAIR))
 	var/hooded = (src.wear_suit && src.wear_suit.hooded)
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
@@ -740,7 +759,7 @@
 	UpdateOverlays(i_l_hand, "i_l_hand")
 
 /mob/living/carbon/human/proc/update_hair_layer()
-	if ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) || (src.wear_suit && src.wear_suit.body_parts_covered & HEAD))
+	if ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || (src.head && src.head.c_flags & COVERSHAIR))
 		src.image_cust_one?.layer = MOB_HAIR_LAYER1
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1
@@ -751,6 +770,21 @@
 
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
+
+/// takes one of CUST_1, CUST_2, CUST_3 and returns the corrected colour for that part
+/mob/living/carbon/human/proc/get_body_custom_color(slot)
+	switch(slot)
+		if(CUST_1)
+			. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
+		if(CUST_2)
+			. = src.bioHolder.mobAppearance.customizations["hair_middle"].color
+		if(CUST_3)
+			. = src.bioHolder.mobAppearance.customizations["hair_top"].color
+		else
+			return "#FFFFFF"
+	if (src.mutantrace?.mutant_appearance_flags & FIX_COLORS)
+		return fix_colors(.)
+	return .
 
 /mob/living/carbon/human/update_body(force = FALSE)
 	..()
@@ -830,28 +864,12 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				// all this shit goes on the torso anyway
 				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
 					human_image = image(AHOLD.mob_detail_1_icon, AHOLD.mob_detail_1_state, MOB_BODYDETAIL_LAYER1)
-					switch(AHOLD.mob_detail_1_color_ref)
-						if(CUST_1)
-							human_image.color = AHOLD.customizations["hair_bottom"].color
-						if(CUST_2)
-							human_image.color = AHOLD.customizations["hair_middle"].color
-						if(CUST_3)
-							human_image.color = AHOLD.customizations["hair_top"].color
-						else
-							human_image.color = "#FFFFFF"
+					human_image.color = src.get_body_custom_color(AHOLD.mob_detail_1_color_ref)
 					src.body_standing.overlays += human_image
 
 				if(AHOLD.mob_appearance_flags & HAS_OVERSUIT_DETAILS)	// need more oversuits? Make more of these!
 					human_detail_image = image(AHOLD.mob_oversuit_1_icon, AHOLD.mob_oversuit_1_state, layer = MOB_OVERSUIT_LAYER1)
-					switch(AHOLD.mob_oversuit_1_color_ref)
-						if(CUST_1)
-							human_detail_image.color = AHOLD.customizations["hair_bottom"].color
-						if(CUST_2)
-							human_detail_image.color = AHOLD.customizations["hair_middle"].color
-						if(CUST_3)
-							human_detail_image.color = AHOLD.customizations["hair_top"].color
-						else
-							human_detail_image.color = "#FFFFFF"
+					human_image.color = src.get_body_custom_color(AHOLD.mob_detail_1_color_ref)
 					src.detail_standing_oversuit.overlays += human_detail_image
 					AddOverlays(src.detail_standing_oversuit, "detail_oversuit")
 				else // ^^ up here because peoples' bodies turn invisible if it down there with the rest of em
@@ -882,7 +900,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 				human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
 				src.body_standing.overlays += human_decomp_image
-
 			if (src.limbs)
 				src.limbs.reset_stone()
 

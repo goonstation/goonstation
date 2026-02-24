@@ -31,7 +31,7 @@ TYPEINFO(/atom)
 	/// Whether this atom should allow messages to pass from its loc to its contents and vice versa.
 	var/open_to_sound = TRUE
 	/// Determines how greatly this atom affects the styling of a message spoken inside of it. See `LISTEN_INPUT_EARS`.
-	var/soundproofing = 5
+	var/soundproofing = SOUNDPROOFING_INSIDE
 
 	// Speech Output Variables:
 	/// The default channel that this atom will attempt to send unprefixed say messages to.
@@ -76,6 +76,12 @@ TYPEINFO(/atom)
 	var/speech_bubble_icon_sing = "note"
 	/// The default speech bubble for sung phrases that were either sung loudly or poorly.
 	var/speech_bubble_icon_sing_bad = "notebad"
+
+	// Maptext Variables:
+	/// The `pixel_x` value that any maptext managers present in this atom's `vis_contents` should use.
+	var/maptext_manager_x = 0
+	/// The `pixel_y` value that any maptext managers present in this atom's `vis_contents` should use.
+	var/maptext_manager_y = 0
 
 /atom/New()
 	if (length(src.get_typeinfo().start_listen_inputs))

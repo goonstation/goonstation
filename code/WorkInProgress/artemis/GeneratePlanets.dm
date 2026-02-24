@@ -175,14 +175,25 @@ DEFINE_PLANET(indigo, "Indigo")
 
 /datum/planetData
 	var/name
-	var/image/ambient_light
+	var/obj/ambient/ambient_light
 	var/datum/map_generator/generator
 
-	New(name, light, generator)
+	New(name, obj/ambient/light, datum/map_generator/generator)
 		. = ..()
 		src.name = name
 		src.ambient_light = light
 		src.generator = generator
+		var/datum/daynight_controller/terrainify/DC = new
+		DC.light = light
+		DC.color1 = light.color
+		DC.current_color = light.color
+
+		var/list_name = name
+		var/i = 0
+		while(list_name in daynight_controllers)
+			list_name = "[name]_[i++]"
+		daynight_controllers[list_name] = DC
+		daynight_controllers[list_name].light = light
 
 /datum/planetManager
 	var/list/datum/allocated_region/regions = list()
@@ -200,6 +211,7 @@ DEFINE_PLANET(indigo, "Indigo")
 					var/datum/planetData/planet = regions[region]
 					if(planet)
 						planet.generator.generate_terrain(list(T), reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
+						T.vis_contents |= planet.ambient_light
 						T.AddOverlays(planet.ambient_light, "ambient")
 						return TRUE
 
@@ -287,14 +299,15 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			generator.lag_check(mapgen_flags)
 
 	//Lighten' Up the Place
-	var/image/ambient_light = new /image/ambient
+
+	var/obj/ambient/ambient_light = new
 	if(!color)
 		ambient_light.color = "#888888"
 	else
 		ambient_light.color = color
 
 	for(T in turfs)
-		T.AddOverlays(ambient_light, "ambient")
+		T.vis_contents |= ambient_light
 		LAGCHECK(LAG_LOW)
 
 	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
@@ -327,7 +340,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 							space_turfs -= T
 					generator.generate_terrain(space_turfs, reuse_seed=TRUE)
 					for(T in space_turfs)
-						T.AddOverlays(ambient_light, "ambient")
+						T.vis_contents |= ambient_light
 						generator.lag_check(mapgen_flags)
 
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")

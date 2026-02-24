@@ -147,6 +147,16 @@
 			W.on_toggle_hood()
 		..()
 
+/obj/ability_button/tuck_cycle
+	name = "Change shirt style"
+	icon_state = "shirt-half_tuck"
+
+	execute_ability()
+		var/obj/item/clothing/under/misc/collar_shirt/W = the_item
+		if (istype(W, /obj/item/clothing/under/misc/collar_shirt))
+			W.AttackSelf(the_mob)
+		..()
+
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
 	icon_state = "magbootson"
@@ -993,6 +1003,9 @@
 	icon_state = "scope_off"
 
 	execute_ability()
+		if (!(the_item in the_mob.equipped_list()))
+			boutput(the_mob, SPAN_NOTICE("You can't toggle the scope if you aren't holding [the_item]!"))
+			return
 		var/datum/component/holdertargeting/sniper_scope/scope = the_item.GetComponent(/datum/component/holdertargeting/sniper_scope)
 		SEND_SIGNAL(the_item, COMSIG_SCOPE_ENABLED, the_mob, !scope.enabled)
 		if (scope.enabled)

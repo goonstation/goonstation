@@ -237,7 +237,7 @@ TYPEINFO(/turf/simulated/wall)
 	return
 
 /turf/simulated/wall/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti)  || istype(W, /obj/item/gang_flyer))
+	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti))
 		return
 
 	if (istype(W, /obj/item/pen))
@@ -336,7 +336,7 @@ TYPEINFO(/turf/simulated/wall)
 		return
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti) || istype(W, /obj/item/gang_flyer))
+	if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti))
 		return
 
 	if (istype(W, /obj/item/pen))

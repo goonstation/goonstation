@@ -29,12 +29,15 @@
 	src.unlock()
 	src.bootup_sequence(user)
 
-/// Unlock all sleeper sleeper access doors
+/// Unsecure all sleeper access doors
 /datum/listening_post/proc/unlock()
-	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
-		if (M.id == "Sleeper_Access")
-			M.req_access = null
-			M.req_access_txt = null
+	for (var/obj/machinery/door/airlock/door in by_type[/obj/machinery/door])
+		if (door.id == "Sleeper_Access")
+			door.req_access = list(access_syndicate_shuttle)
+			door.explosion_resistance = /obj/machinery/door/airlock::explosion_resistance
+			door.cant_emag = FALSE
+			door.hardened = FALSE
+			door.cant_hack = TRUE //No longer hardened, but still want to force engineers to smash it down
 
 /// The bootup sequence sound and light toggling effects
 /datum/listening_post/proc/bootup_sequence(mob/user)
@@ -68,10 +71,12 @@
 
 /// debugging proc to reset post to locked/shut down state
 /datum/listening_post/proc/reset_post()
-	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
-		if (M.id == "Sleeper_Access")
-			M.req_access = initial(M.req_access)
-			M.req_access_txt = initial(M.req_access_txt)
+	for (var/obj/machinery/door/airlock/door in by_type[/obj/machinery/door])
+		if (door.id == "Sleeper_Access")
+			door.req_access = list(access_impossible)
+			door.explosion_resistance = initial(door.explosion_resistance)
+			door.cant_emag = initial(door.cant_emag)
+			door.hardened = initial(door.hardened)
 
 	for (var/area/listeningpost/post_area in src.unlock_pattern)
 		post_area.lightswitch = FALSE
@@ -212,3 +217,35 @@ proc/load_listening_post()
 	name = "Syndicate Teleporter"
 	icon_state = "teleporter"
 	requires_power = 0
+
+/area/listeningpost/shark_tank
+	name = "Listening Post Shark Tank"
+	icon_state = "hangar"
+	requires_power = FALSE
+	unlocks_post = FALSE
+
+/obj/critter/gunbot/drone/gunshark/listening_post
+	name = "Trained Syndicate Gun Shark"
+
+	select_target(var/atom/newtarget)
+		if(!valid_target(newtarget))
+			return
+		. = ..(newtarget)
+
+	ai_think()
+		if(src.target && !valid_target(src.target))
+			src.target = null
+			src.last_found = world.time
+			src.frustration = 0
+			src.task = "thinking"
+			walk_to(src,0)
+		. = ..()
+
+	proc/valid_target(var/atom/target)
+		if(!istype(get_area(target), /area/listeningpost/shark_tank))
+			return FALSE
+		if(istrainedsyndie(target))
+			return FALSE
+		return TRUE
+
+

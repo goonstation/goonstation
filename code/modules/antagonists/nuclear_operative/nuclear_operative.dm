@@ -133,7 +133,7 @@
 				purchases += list(
 					list(
 						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-						"name" = "[purchased_item[1].name]", // Dont include TC cost bc commander uplink doesnt use TC
+						"name" = "[purchased_item.name]", // Dont include TC cost bc commander uplink doesnt use TC
 					)
 				)
 

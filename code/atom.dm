@@ -40,13 +40,17 @@ TYPEINFO(/atom)
 	var/pixel_point = FALSE
 
 	var/interesting = ""
-	var/stops_space_move = 0
+	/// Atom provides grip to neighboring tiles in zero-G
+	var/provides_grip = FALSE
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
 
 	proc/RawClick(location,control,params)
 		return
+
+	/// Use this if you want people to be able to open the inventory of contained mobs
+	var/open_inv_within = FALSE
 
 	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
 	var/gas_impermeable = FALSE
@@ -77,7 +81,6 @@ TYPEINFO(/atom)
 	var/list/name_suffixes = null
 	var/num_allowed_prefixes = 10
 	var/num_allowed_suffixes = 5
-	var/image/worn_material_texture_image = null
 
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
@@ -189,7 +192,6 @@ TYPEINFO(/atom)
 		if (temp_flags & (HAS_BAD_SMOKE))
 			ClearBadsmokeRefs(src)
 
-		fingerprints_full = null
 		tag = null
 		src.forensic_holder = null
 
@@ -477,7 +479,7 @@ TYPEINFO(/atom/movable)
 
 	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
 	/// if an object type can be built somewhere, before instantiating the object itself.
-	proc/can_build(turf/T)
+	proc/can_build(turf/T, direction)
 		return TRUE
 
 /atom/movable
@@ -521,7 +523,7 @@ TYPEINFO(/atom/movable)
 /atom/movable/New()
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+	if (typeinfo.mats && !(src.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED))
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
@@ -535,6 +537,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -547,6 +552,10 @@ TYPEINFO(/atom/movable)
 /atom/movable/disposing()
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
+	if (temp_flags & DRIFT_ANIMATION)
+		StopDriftFloat(src)
+	if (temp_flags & GRAVITY_SUBSCRIBER)
+		UnsubscribeGravity(src)
 
 	src.attached_objs?.Cut()
 	src.attached_objs = null
@@ -652,11 +661,17 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in old_locs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in old_locs)
+				covered_turf.grip_atom_count -= 1
 	if(isturf(src.loc))
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -768,7 +783,11 @@ TYPEINFO(/atom/movable)
 	if(special_description)
 		return list(special_description)
 
-	. = list("This is \an [src.name].")
+	var/name_to_use = src.name
+	if (isliving(src) && !isobserver(user) && !isintangible(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_EXAMINE_ALL_NAMES) && dist > MAX_NAMETAG_RANGE)
+		. = list("This is someone.")
+	else
+		. = list("This is \an [name_to_use].")
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
@@ -858,6 +877,7 @@ TYPEINFO(/atom/movable)
 	PROTECTED_PROC(TRUE)
 	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
+	W.material_on_attack_use(user, src)
 	src.material_trigger_when_attacked(W, user, 1)
 	if (silent)
 		return
@@ -867,97 +887,20 @@ TYPEINFO(/atom/movable)
 		hits = "\the [self.real_name]"
 	user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
 
-//This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
+/// Note: Texture is only applied if the object is 64x64 or smaller
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
 	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
 	src.UpdateOverlays(I, key)
 
-	if(isitem(src) && key == "material")
-		worn_material_texture_image = isnull(texture) ? null : getTexturedWornImage(src, texture, blendMode)
-	return
-
-/proc/getTexturedIcon(var/atom/A, var/texture = "damaged")//, var/key = "texture")
+/proc/getTexturedImage(var/atom/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)
 	if (!A)
 		return
-	var/icon/tex = null
-
-	//Try to find an appropriately sized icon.
-	if(istype(A, /atom/movable))
-		var/atom/movable/M = A
-		if(A.texture_size == 32 || ((M.bound_height == 32 && M.bound_width == 32) && !A.texture_size))
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-		else if(A.texture_size == 64 || ((M.bound_height == 64 && M.bound_width == 64) && !A.texture_size))
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-	else if (isicon(A))
-		var/icon/I = A
-		if(I.Height() > 32)
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-	else
-		if(A.texture_size == 32)
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-		else if(A.texture_size == 64)
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-
-	var/icon/mask = null
-	mask = new(isicon(A) ? A : A.icon)
-	mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)
-	mask.Blend(tex, ICON_MULTIPLY)
-	//mask is now a cut-out of the texture shaped like the object.
-	return mask
-
-/proc/getTexturedImage(var/atom/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)//, var/key = "texture")
-	if (!A)
+	var/mask = GetTexturedIcon(A.icon, texture) // mask is a cut-out of the texture shaped like the object.
+	if(!mask)
 		return
-	var/mask = getTexturedIcon(A, texture)
-	//mask is now a cut-out of the texture shaped like the object.
 	var/image/finished = image(mask,"")
 	finished.blend_mode = blendMode
 	return finished
-
-/proc/getTexturedWornImage(var/obj/item/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)
-	if (!A)
-		return
-	var/icon/tex = null
-
-	//Try to find an appropriately sized icon.
-	if(istype(A, /atom/movable))
-		var/atom/movable/M = A
-		if(A.texture_size == 32 || ((M.bound_height == 32 && M.bound_width == 32) && !A.texture_size))
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-		else if(A.texture_size == 64 || ((M.bound_height == 64 && M.bound_width == 64) && !A.texture_size))
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-	else if (isicon(A))
-		var/icon/I = A
-		if(I.Height() > 32)
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-	else
-		if(A.texture_size == 32)
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-		else if(A.texture_size == 64)
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-
-	if (A?.wear_image) //Wire: Fix for: Cannot read null.icon
-		var/icon/mask = null
-		mask = icon(A.wear_image.icon, A.wear_image.icon_state)
-		mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)
-		mask.Blend(tex, ICON_MULTIPLY)
-		var/image/finished = image(mask,"")
-		finished.blend_mode = blendMode
-		return finished
-
-	return null
 
 /// Override mouse_drop instead of this. Call this instead of mouse_drop, but you probably shouldn't!
 /atom/MouseDrop(atom/over_object, src_location, over_location, src_control, over_control, params)
@@ -1102,6 +1045,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in oldlocs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in oldlocs)
+				covered_turf.grip_atom_count -= 1
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -1117,6 +1063,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)
@@ -1373,7 +1322,7 @@ TYPEINFO(/atom/movable)
 	else
 		G.icon_state = "[gift_type]-[style]"
 	G.gift = src
-
+	G.RegisterSignal(G.gift, COMSIG_MOVABLE_SET_LOC, TYPE_PROC_REF(/obj/item/gift, item_moved))
 	return G
 
 /atom/onVarChanged(variable, oldval, newval)
@@ -1391,6 +1340,10 @@ TYPEINFO(/atom/movable)
 		if("icon_state")
 			src.icon_state = oldval
 			src.set_icon_state(newval)
+		if("open_to_sound") //otherwise it doesn't update properly
+			for (var/atom/movable/AM in src)
+				AM.outermost_listener_tracker?.update_outermost_listener()
+
 
 /atom/movable/proc/is_that_in_this(atom/movable/target)
 	if (target.loc == src)
