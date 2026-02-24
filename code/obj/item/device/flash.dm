@@ -16,7 +16,7 @@ TYPEINFO(/obj/item/device/flash)
 	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
-	item_state = "electronic"
+	item_state = "flash"
 
 	var/status = 1 // Bulb still functional?
 	var/use = 0 // Times the flash has been used.
