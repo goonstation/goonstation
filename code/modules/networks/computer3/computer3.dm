@@ -20,14 +20,12 @@
 	var/datum/light/light
 
 	//Does it spawn with a card scanner? (It should, the main os needs one of these now.)
-	var/setup_idscan_path = null
 	var/setup_drive_size = 64
 	var/setup_drive_type = null //Use this path for the hd
 	var/setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!
 	var/setup_starting_program = null //This program will start out installed on the drive (can be a path or a list of paths)
 	var/setup_starting_os = null //This program will start out installed AND AS ACTIVE PROGRAM
-	var/setup_starting_peripheral1 = null //Please note that the user cannot install more than 3.
-	var/setup_starting_peripheral2 = null //And the os tends to need that third one for the card reader
+	var/list/setup_starting_peripherals = list(/obj/item/peripheral/card_scanner)
 	var/setup_os_string = null
 	var/setup_font_color = "#19A319"
 	var/setup_bg_color = "#1B1E1B"
@@ -45,16 +43,20 @@
 	generic //Generic computer, standard os and card scanner
 		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
-		setup_idscan_path = /obj/item/peripheral/card_scanner
-		//setup_has_internal_disk = 1
+		setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive)
 
 		personal
 			name = "Personal Computer"
 			icon_state = "old"
 			base_icon_state = "old"
 			setup_frame_type = /obj/computer3frame/desktop
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
-			setup_starting_peripheral2 = /obj/item/peripheral/sound_card
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card/terminal,
+				/obj/item/peripheral/sound_card)
 			setup_starting_program = /datum/computer/file/terminal_program/email
 			object_flags = NO_BLOCK_TABLE
 
@@ -67,8 +69,11 @@
 			name = "Medical computer"
 			icon_state = "datamed"
 			base_icon_state = "datamed"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/printer
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/printer)
 			setup_starting_program = /datum/computer/file/terminal_program/medical_records
 
 
@@ -89,8 +94,11 @@
 			name = "Security computer"
 			icon_state = "datasec"
 			base_icon_state = "datasec"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
 			setup_starting_program = /datum/computer/file/terminal_program/secure_records
 
 			console_upper
@@ -106,8 +114,11 @@
 			name = "Bank computer"
 			icon_state = "databank"
 			base_icon_state = "databank"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/printer
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/printer)
 			setup_starting_program = /datum/computer/file/terminal_program/bank_records
 
 			console_upper
@@ -124,8 +135,11 @@
 			icon_state = "personnel_management"
 			base_icon_state = "personnel_management"
 			setup_drive_size = 80
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
 			setup_starting_program = list(
 				/datum/computer/file/terminal_program/bank_records,
 				/datum/computer/file/terminal_program/secure_records,
@@ -136,8 +150,11 @@
 			name = "Communications Console"
 			icon_state = "comm"
 			setup_starting_program = list(/datum/computer/file/terminal_program/communications, /datum/computer/file/terminal_program/job_controls)
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/status
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/network/radio/locked/status)
 			setup_drive_size = 80
 
 			console_upper
@@ -161,8 +178,11 @@
 			base_icon_state = "engine"
 
 			setup_starting_program = /datum/computer/file/terminal_program/engine_control
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
 			setup_drive_size = 48
 
 			console_upper
@@ -183,7 +203,7 @@
 
 		radio
 			name = "wireless computer"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/radio
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/drive,/obj/item/peripheral/network/radio)
 
 	terminal //Terminal computer, stripped down with less cards.
 		name = "Terminal"
@@ -205,7 +225,7 @@
 		network
 			name = "Network Terminal"
 			//Terminal frames can only hold two cards please don't add more here
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/network/powernet_card/terminal)
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -218,8 +238,7 @@
 
 		zeta
 			name = "DWAINE Terminal"
-			setup_idscan_path = /obj/item/peripheral/card_scanner
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/network/powernet_card/terminal)
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -243,10 +262,7 @@
 
 		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
-		setup_idscan_path = /obj/item/peripheral/card_scanner
-		//setup_has_internal_disk = 1
-		setup_starting_peripheral1 = /obj/item/peripheral/network/omni
-		setup_starting_peripheral2 = /obj/item/peripheral/cell_monitor
+		setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/drive,/obj/item/peripheral/network/omni,/obj/item/peripheral/cell_monitor)
 		setup_drive_size = 32
 
 		var/obj/item/cell/cell //We have limited power! Immersion!!
@@ -264,8 +280,7 @@
 			desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 			icon_state = "oldlap"
 			base_icon_state = "oldlap"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/omni
-			setup_starting_peripheral2 = /obj/item/peripheral/sound_card
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/network/omni,/obj/item/peripheral/sound_card)
 
 
 /obj/machinery/computer3/New()
@@ -290,15 +305,10 @@
 
 	SPAWN(0.4 SECONDS)
 		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
-			if(ispath(src.setup_starting_peripheral1))
-				new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
-			if(ispath(src.setup_starting_peripheral2))
-				new src.setup_starting_peripheral2(src)
-
-
-			if(src.setup_idscan_path)
-				new src.setup_idscan_path(src)
+			for(var/peripheral in src.setup_starting_peripherals)
+				if(ispath(peripheral))
+					new peripheral(src)//Peripherals add themselves automatically if spawned inside a computer3
 
 			if(!hd && (setup_drive_size > 0))
 				if(src.setup_drive_type)
@@ -846,11 +856,9 @@
 	if (src.hd)
 		cloneComp.hd = src.hd.clone()
 
-	cloneComp.setup_starting_peripheral1 = src.setup_starting_peripheral1
-	cloneComp.setup_starting_peripheral2 = src.setup_starting_peripheral2
+	cloneComp.setup_starting_peripherals = src.setup_starting_peripherals
 
 	cloneComp.setup_starting_os = null
-	cloneComp.setup_idscan_path = src.setup_idscan_path
 
 	cloneComp.setup_font_color = src.setup_font_color
 	cloneComp.setup_bg_color = src.setup_bg_color
@@ -1076,6 +1084,12 @@
 	icon_state = "oldlap"
 	base_icon_state = "oldlap"
 	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
+	setup_starting_peripherals = list(
+		/obj/item/peripheral/card_scanner,
+		/obj/item/peripheral/drive,
+		/obj/item/peripheral/drive,
+		/obj/item/peripheral/network/omni,
+		/obj/item/peripheral/cell_monitor)
 
 	undeploy()
 		if(!src.case)
