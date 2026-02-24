@@ -206,7 +206,7 @@
 		else
 			src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
 	else if (prob(numb_chance) && !shielded) // a middle ground between a fully lost limb and no effect
-		src.numb_limb(30 SECONDS)
+		src.numb_limb(duration = 30 SECONDS, stack_duration = TRUE)
 
 	switch (power)
 		if (-INFINITY to 0) //blocked
