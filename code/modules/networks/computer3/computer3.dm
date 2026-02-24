@@ -551,20 +551,31 @@
 				src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer3/attackby(obj/item/W, mob/user)
-	/*
+
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
-		if ((!src.diskette) && src.setup_has_internal_disk)
+		var/drive_count = 0
+		var/obj/item/peripheral/drive/drive = null
+		for(var/obj/item/peripheral/P in src.peripherals)
+			var/obj/item/peripheral/drive/PD = P
+			if(istype(PD, /obj/item/peripheral/drive))
+				drive_count++
+				if(!PD.disk)
+					drive = PD
+					break
+		if (drive)
 			user.drop_item()
 			W.set_loc(src)
-			src.diskette = W
+			drive.disk = W
 			boutput(user, "You insert [W].")
 			update_static_data(usr)
 			return
-		else if(src.diskette)
+		else if(drive_count <= 0)
+			boutput(user, SPAN_ALERT("There's no drive to insert the disk into!"))
+		else if(drive_count <= 1)
 			boutput(user, SPAN_ALERT("There's already a disk inside!"))
-		else if(!src.setup_has_internal_disk)
-			boutput(user, SPAN_ALERT("There's no visible peripheral device to insert the disk into!"))
-	*/
+		else if(drive_count > 1)
+			boutput(user, SPAN_ALERT("There are no empty drives!"))
+
 	if (isscrewingtool(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
@@ -973,19 +984,29 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		/*
-		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
-			if ((!src.diskette) && src.setup_has_internal_disk)
+		if (istype(W, /obj/item/disk/data/floppy)) //I think this function calls it's parent already, is this even needed?
+			var/drive_count = 0
+			var/obj/item/peripheral/drive/drive = null
+			for(var/obj/item/peripheral/P in src.peripherals)
+				var/obj/item/peripheral/drive/PD = P
+				if(istype(PD, /obj/item/peripheral/drive))
+					drive_count++
+					if(!PD.disk)
+						drive = PD
+						break
+			if (drive)
 				user.drop_item()
 				W.set_loc(src)
-				src.diskette = W
+				drive.disk = W
 				boutput(user, "You insert [W].")
 				update_static_data(usr)
-			else if(src.diskette)
+				return
+			else if(drive_count <= 0)
+				boutput(user, SPAN_ALERT("There's no drive to insert the disk into!"))
+			else if(drive_count <= 1)
 				boutput(user, SPAN_ALERT("There's already a disk inside!"))
-			else if(!src.setup_has_internal_disk)
-				boutput(user, SPAN_ALERT("There's no visible peripheral device to insert the disk into!"))
-		*/
+			else if(drive_count > 1)
+				boutput(user, SPAN_ALERT("There are no empty drives!"))
 
 		if (ispryingtool(W))
 			if(!src.cell)
