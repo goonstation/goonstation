@@ -3180,20 +3180,28 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		. += 1
 
 ///Numb one or more limbs without stacking status effects or targeting limbs that don't exist
-/mob/living/carbon/human/proc/numb_limb(duration, count=1, random=TRUE, list/target_limbs=list("l_arm", "l_leg", "r_arm", "r_leg"),)
-	if(!src.limbs)
-		return // no limb datum
-	var/list/obj/item/parts/limbs_to_numb = list()
+///A count of 0 tries to stun all limbs in target_limbs
+/mob/living/carbon/human/proc/numb_limb(duration, count = 0, random = TRUE, stack_duration = FALSE, list/target_limbs = list("l_arm", "l_leg", "r_arm", "r_leg"),)
+	if(!src.limbs || count < 0)
+		return // no limb datum or no limbs_count to stun
+	//let's generate our list now
+	var/list/limbs_to_numb = target_limbs
+	//we kick out each index that has no limb in it
 	for(var/target in target_limbs)
-		var/obj/item/parts/limb = src.limbs.vars[target]
-		if(istype(limb))
-			limbs_to_numb += limb
+		if(!src.limbs.get_limb(target))
+			target_limbs -= target
 	if(!length(limbs_to_numb))
 		return // no limbs
 	if(random)
 		shuffle_list(limbs_to_numb)
-	for (var/i in 1 to min(count, length(limbs_to_numb)))
-		src.setStatusMin("numb_[limbs_to_numb[i].slot]", duration)
+	var/amount_targets = length(limbs_to_numb)
+	if (count > 0)
+		amount_targets = min(count, amount_targets)
+	for (var/iterator in 1 to amount_targets)
+		if(stack_duration)
+			src.limbs.get_limb(limbs_to_numb[iterator]).changeStatus("numb", duration)
+		else
+			src.limbs.get_limb(limbs_to_numb[iterator]).setStatusMin("numb", duration)
 
 /mob/living/carbon/human/get_chem_depletion_multiplier()
 	. = ..()
