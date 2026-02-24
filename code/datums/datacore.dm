@@ -127,34 +127,19 @@
 	else
 		S["notes"] = sec_note
 
-		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
-		if(S["notes"] == "No notes.")
-			S["notes"] = randomNote
-		else
-			S["notes"] += " [randomNote]"
-
-		boutput(H, SPAN_NOTICE("You are currently on the run because you've committed the following crimes:"))
-		boutput(H, SPAN_NOTICE("- [S["mi_crim"]]"))
-		boutput(H, SPAN_NOTICE("- [S["ma_crim"]]"))
-
-		H.mind.store_memory("You've committed the following crimes before arriving on the station:")
-		H.mind.store_memory("- [S["mi_crim"]]")
-		H.mind.store_memory("- [S["ma_crim"]]")
+	if (H.traitHolder?.hasTrait("training_clown"))
+		S["criminal"] = ARREST_STATE_CLOWN
+		S["mi_crim"] = "Clown"
+		H.update_arrest_icon()
 	else
-		if (H.traitHolder?.hasTrait("training_clown"))
-			S["criminal"] = ARREST_STATE_CLOWN
-			S["mi_crim"] = "Clown"
-			H.update_arrest_icon()
-		else
-			S["criminal"] = ARREST_STATE_NONE
-			S["mi_crim"] = "None"
+		S["criminal"] = ARREST_STATE_NONE
+		S["mi_crim"] = "None"
 
-		S["mi_crim_d"] = "No minor crime convictions."
-		S["ma_crim"] = "None"
-		S["ma_crim_d"] = "No major crime convictions."
+	S["mi_crim_d"] = "No minor crime convictions."
+	S["ma_crim"] = "None"
+	S["ma_crim_d"] = "No major crime convictions."
 
 	S["sec_flag"] = "None"
-
 
 	B["current_money"] = 100
 	B["pda_net_id"] = pda_net_id
