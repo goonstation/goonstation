@@ -20458,10 +20458,10 @@
 	},
 /area/station/mining/magnet)
 "bzR" = (
-/obj/storage/crate,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
+/obj/cable{
+	icon_state = "1-2"
 	},
+/turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "bzS" = (
 /obj/machinery/ore_cloud_storage_container,
@@ -21315,6 +21315,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/storage/crate,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bEB" = (
@@ -25927,8 +25928,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/portable_reclaimer,
 /obj/decal/stripe_delivery,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bWl" = (
@@ -27407,17 +27408,20 @@
 	},
 /area/station/mining/staff_room)
 "cbz" = (
-/obj/item/slag_shovel,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "cbB" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
+/obj/storage/crate,
+/obj/item/slag_shovel,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
 	},
-/turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "cbD" = (
 /obj/machinery/mass_driver{
@@ -27801,7 +27805,7 @@
 /obj/machinery/computer/magnet{
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "ccL" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -28190,7 +28194,7 @@
 /area/station/mining/staff_room)
 "cdU" = (
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
@@ -29229,8 +29233,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/nanofab/mining,
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/nanofab/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -30457,8 +30461,17 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "clJ" = (
-/obj/storage/crate,
-/turf/simulated/floor/plating/airless,
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/mining,
+/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "clK" = (
 /obj/table/auto,
@@ -34854,13 +34867,11 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cIT" = (
-/obj/machinery/portable_reclaimer,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -10
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
@@ -35812,6 +35823,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
+/obj/storage/crate,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "dtA" = (
@@ -39266,6 +39278,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"fDL" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/mining/magnet)
 "fDN" = (
 /obj/machinery/disposal/brig,
 /obj/disposalpipe/trunk/brig{
@@ -46505,12 +46529,11 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "kSE" = (
-/obj/machinery/arc_electroplater{
-	dir = 4
+/obj/cable{
+	icon_state = "2-4"
 	},
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
@@ -49793,6 +49816,12 @@
 	dir = 1
 	},
 /area/station/crew_quarters/supplylobby)
+"nqU" = (
+/obj/machinery/nanofab/mining,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/mining/magnet)
 "nre" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -56362,6 +56391,16 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
+"sdS" = (
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/obj/machinery/arc_electroplater{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/station/mining/magnet)
 "sdX" = (
 /obj/disposalpipe/segment/transport,
 /obj/item/device/radio/intercom/security{
@@ -57543,17 +57582,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "sRd" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
 	},
-/obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/access/mining,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "sRe" = (
 /obj/mesh/grille/steel,
@@ -57899,11 +57931,11 @@
 	},
 /area/space)
 "tiD" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 15
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -60504,6 +60536,17 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"uZd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/portable_reclaimer,
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/turf/simulated/floor/grime,
+/area/station/mining/magnet)
 "uZB" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -62725,13 +62768,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "wzw" = (
-/obj/machinery/nanofab/refining,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
+/obj/machinery/computer/telescope{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
@@ -128926,12 +128974,12 @@ adC
 adC
 adC
 adC
-adC
-adC
-adC
-adC
-aag
-qsh
+bWm
+bWm
+bWn
+bWn
+bWm
+fDL
 tXI
 aap
 suF
@@ -129225,13 +129273,13 @@ adC
 adC
 adC
 adC
-adC
-adC
-adC
-bWm
 bWm
 bWn
 bWn
+caa
+uZd
+ccF
+sdS
 bWm
 qsh
 tXI
@@ -129527,16 +129575,16 @@ adC
 adC
 adC
 adC
-bWm
 bWn
-bWn
-caa
+bzQ
+sRd
+nqU
 cIT
-ccF
+bzR
 kSE
-bWm
-qsh
-tXI
+clJ
+laI
+kWw
 cea
 cea
 clI
@@ -129830,15 +129878,15 @@ adC
 adC
 adC
 bWn
-bzQ
-bzR
-bzR
+cbB
+bXr
+bXr
 cbz
 cdX
 cdU
-sRd
-laI
-kWw
+bWm
+hRT
+qsh
 ePM
 bDF
 dtu
@@ -130135,11 +130183,11 @@ bWn
 bXr
 bXr
 cab
-cbB
+cbz
 bzS
 bzU
 bWm
-qsh
+fDL
 qsh
 bDg
 bEq
@@ -130437,7 +130485,7 @@ bWn
 bXr
 bXr
 bXr
-cbB
+cbz
 cdX
 cdW
 bWm
@@ -130739,7 +130787,7 @@ bWn
 bXr
 bXr
 bXr
-cbB
+cbz
 ccJ
 cdX
 xTB
@@ -130747,7 +130795,7 @@ qsh
 qsh
 cea
 cea
-clJ
+cea
 bWn
 adC
 adC
@@ -131347,7 +131395,7 @@ bWm
 bWn
 bWn
 bWm
-hRT
+fDL
 qsh
 bWm
 bWn
