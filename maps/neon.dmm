@@ -807,7 +807,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aEM" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/north{
+	pixel_x = -6
+	},
+/obj/blind_switch/area/north{
+	pixel_x = 6
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/radiostation/bedroom)
 "aEU" = (
@@ -3713,6 +3718,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "cSD" = (
@@ -6946,6 +6952,7 @@
 "faA" = (
 /obj/machinery/genetics_scanner,
 /obj/machinery/light_switch/east,
+/obj/blind_switch/east,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -14137,6 +14144,7 @@
 /area/station/maintenance/inner/north)
 "jZY" = (
 /obj/reagent_dispensers/fueltank,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "kaO" = (
@@ -26598,15 +26606,11 @@
 /obj/machinery/computer/genetics{
 	dir = 4
 	},
-/obj/fakeobject{
-	icon = 'icons/obj/power.dmi';
-	icon_state = "blind1";
-	pixel_y = -24;
-	name = "busted blind switch";
-	desc = "Looks busted from overuse...";
-	anchored = 1
-	},
 /obj/item/cloneModule/genepowermodule,
+/obj/blind_switch/area/south{
+	working = 0;
+	on = 1
+	},
 /turf/simulated/floor/green/side{
 	dir = 10
 	},

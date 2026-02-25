@@ -10133,6 +10133,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southeast)
+"bVe" = (
+/obj/storage/closet/radiation,
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/yellow,
+/area/station/engine/inner)
 "bVq" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -17441,7 +17446,6 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/obj/machinery/light/runway_light/delay3,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -19897,7 +19901,6 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/obj/machinery/light/runway_light/delay3,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -78826,7 +78829,7 @@ fyI
 bFz
 kEQ
 buJ
-buJ
+bVe
 wvn
 aGI
 lHu

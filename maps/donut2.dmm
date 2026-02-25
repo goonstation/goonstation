@@ -46728,6 +46728,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"uBE" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "uBR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -94948,7 +94952,7 @@ ogh
 edr
 cGj
 bnk
-sgA
+uBE
 tVH
 cGj
 aaa

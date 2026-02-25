@@ -3652,6 +3652,7 @@
 /area/station/science/research_director)
 "aqr" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqs" = (
@@ -40818,6 +40819,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/camera/directional/east,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -42198,7 +42200,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/camera/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
