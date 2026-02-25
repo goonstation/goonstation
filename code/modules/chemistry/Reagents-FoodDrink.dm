@@ -3065,7 +3065,7 @@ datum
 			fluid_g = 44
 			fluid_b = 28
 			transparency = 250
-			taste = list("fishy","Umami")
+			taste = list("fishy", "umami")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.reagents.add_reagent("salt", 0.75 * src.calculate_depletion_rate(M, mult))
