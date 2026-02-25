@@ -742,21 +742,21 @@
 	proc/update_hands()
 		if(QDELETED(master))
 			return
+		src.lhand.ClearSpecificOverlays("hand_stun_overlay")
 		if (master.limbs && !master.limbs.l_arm)
 			lhand.icon_state = "handl[master.hand]d"
 		else
-			if (master.limbs && master.hasStatus("numb_l_arm"))
-				lhand.icon_state = "handl[master.hand]s"
-			else
-				lhand.icon_state = "handl[master.hand]"
+			lhand.icon_state = "handl[master.hand]"
+			if(src.master.limbs && src.master.limbs.l_arm)
+				SEND_SIGNAL(src.master.limbs.l_arm, COMSIG_ITEM_ARM_IS_HUD_UPDATED, src.master, src.lhand, "l_arm")
 
+		src.rhand.ClearSpecificOverlays("hand_stun_overlay")
 		if (master.limbs && !master.limbs.r_arm)
 			rhand.icon_state = "handr[!master.hand]d"
 		else
-			if (master.limbs && master.hasStatus("numb_r_arm"))
-				rhand.icon_state = "handr[!master.hand]s"
-			else
-				rhand.icon_state = "handr[!master.hand]"
+			rhand.icon_state = "handr[!master.hand]"
+			if(src.master.limbs && src.master.limbs.r_arm)
+				SEND_SIGNAL(src.master.limbs.r_arm, COMSIG_ITEM_ARM_IS_HUD_UPDATED, src.master, src.rhand, "r_arm")
 
 	proc/update_stats()
 		var/newDesc = ""

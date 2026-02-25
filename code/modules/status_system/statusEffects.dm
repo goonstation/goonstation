@@ -2268,6 +2268,8 @@
 			if(istype(src.owner, /obj/item/parts))
 				//we're a limb, we need to listen to being attached to the mob
 				RegisterSignal(src.owner, COMSIG_LIMB_ATTACHED_TO_HUMAN, PROC_REF(on_part_addition))
+				//we also need to listen to the person having their arms updated, in case we need to stun them
+				RegisterSignal(src.owner, COMSIG_ITEM_ARM_IS_HUD_UPDATED, PROC_REF(on_arm_hud_update))
 			else
 				//we are an item. We need to listen to being inserted into a limb.... limb code is cursed
 				RegisterSignal(src.owner, COMSIG_ITEM_SET_AS_LIMB, PROC_REF(on_item_set_as_limb))
@@ -2283,6 +2285,10 @@
 
 	onRemove(var/passed_on)
 		. = ..(passed_on)
+		UnregisterSignal(src.owner, COMSIG_HUMAN_LOST_LIMB)
+		UnregisterSignal(src.owner, COMSIG_ITEM_SET_AS_LIMB)
+		UnregisterSignal(src.owner, COMSIG_LIMB_ATTACHED_TO_HUMAN)
+		UnregisterSignal(src.owner, COMSIG_ITEM_ARM_IS_HUD_UPDATED)
 		if(!passed_on)
 			src.try_relay_status(-1) // a duration of 0 is infinite
 
@@ -2308,6 +2314,10 @@
 	proc/on_part_addition(var/obj/added_object, var/mob/living/carbon/human/affected_human)
 		//well, we were attached to someone. Make sure we stay stunned.
 		src.try_relay_status(src.duration)
+
+	proc/on_arm_hud_update(var/obj/item/parts/checked_limb, var/mob/living/carbon/human/affected_human, var/atom/movable/screen/hud/affected_hud, var/zone)
+		if(zone == checked_limb.slot)
+			affected_hud.AddOverlays(image(affected_hud.icon, affected_hud, "hand_stun"), "hand_stun_overlay")
 
 	proc/try_relay_status(var/duration)
 		//here, we dot he opposite: if the owner had the status added, we need to apply it to the corresponding part as well
@@ -2335,56 +2345,59 @@
 						affected_part.holder.delStatus(numb_body_part_list[affected_part.slot], TRUE)
 				return TRUE
 
-/datum/statusEffect/numb/r_arm
+/datum/statusEffect/numb/arm
+	id = "numb_arm"
+	name = "Numb Arm Parent"
+	icon_state = "numb_r_arm"
+	desc = "You should not see this"
+
+	onAdd(var/passed_on)
+		. = ..(passed_on)
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/effect_owner = src.owner
+			if(src.affected_zone == "r_arm")
+				effect_owner.drop_from_slot(effect_owner.r_hand)
+			else
+				effect_owner.drop_from_slot(effect_owner.l_hand)
+			SPAWN(0)
+				effect_owner.hud.update_hands()
+
+	onRemove(var/passed_on)
+		. = ..(passed_on)
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/effect_owner = src.owner
+			effect_owner.hud.update_hands()
+
+
+/datum/statusEffect/numb/arm/r_arm
 	id = "numb_r_arm"
 	name = "Numb Right Arm"
 	icon_state = "numb_r_arm"
 	desc = "You can't seem to feel or move your right arm!"
 	affected_zone = "r_arm"
 
-	onAdd(var/passed_on)
-		. = ..(passed_on)
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/effect_owner = src.owner
-			effect_owner.drop_from_slot(effect_owner.r_hand)
-			SPAWN(0)
-				effect_owner.hud.update_hands()
-
-	onRemove(var/passed_on)
-		. = ..(passed_on)
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/effect_owner = src.owner
-			effect_owner.hud.update_hands()
-
-/datum/statusEffect/numb/l_arm
+/datum/statusEffect/numb/arm/l_arm
 	id = "numb_l_arm"
 	name = "Numb Left Arm"
 	icon_state = "numb_l_arm"
 	desc = "You can't seem to feel or move your left arm!"
 	affected_zone = "l_arm"
 
-	onAdd(var/passed_on)
-		. = ..(passed_on)
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/effect_owner = src.owner
-			effect_owner.drop_from_slot(effect_owner.l_hand)
-			SPAWN(0)
-				effect_owner.hud.update_hands()
+/// I am aware that we don't need this parent right now, but for inheritance sake it should be in here
+/datum/statusEffect/numb/leg
+	id = "numb_leg"
+	name = "Numb LEG Parent"
+	icon_state = "numb_r_leg"
+	desc = "You should not see this"
 
-	onRemove(var/passed_on)
-		. = ..(passed_on)
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/effect_owner = src.owner
-			effect_owner.hud.update_hands()
-
-/datum/statusEffect/numb/r_leg
+/datum/statusEffect/numb/leg/r_leg
 	id = "numb_r_leg"
 	name = "Numb Right Leg"
 	icon_state = "numb_r_leg"
 	desc = "You can't seem to feel or move your right leg!"
 	affected_zone = "r_leg"
 
-/datum/statusEffect/numb/l_leg
+/datum/statusEffect/numb/leg/l_leg
 	id = "numb_l_leg"
 	name = "Numb Left Leg"
 	icon_state = "numb_l_leg"
