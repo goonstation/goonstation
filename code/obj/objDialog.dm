@@ -148,16 +148,3 @@ var/global/list/objects_using_dialogs
 				else
 					src.remove_dialog(C.mob)
 		AutoUpdateAI(src)
-
-
-
-/obj/npc/trader/updateUsrDialog()
-	if (length(clients_operating))
-		for(var/client/C in clients_operating)
-			if (C.mob)
-				if (BOUNDS_DIST(C.mob, src) == 0)
-					src.openTrade(C.mob)
-				else if (issilicon(C.mob) || isAI(C.mob))
-					src.openTrade(C.mob)
-				else
-					src.remove_dialog(C.mob)

@@ -14,7 +14,7 @@
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	pressure_resistance = 10
-	item_state = "electronic"
+	item_state = "electronics"
 	flags = TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
@@ -567,7 +567,7 @@
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_ENGINEER, MGA_RKIT)
+		newsignal.data["group"] = list(MGD_ENGINEER, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 

@@ -1286,10 +1286,6 @@
 /turf/simulated/floor/airless/black,
 /area/station/turret_protected/AIbaseoutside)
 "aeK" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -1944,13 +1940,6 @@
 /obj/stool,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
-"ahc" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/solar/small_backup2)
 "ahd" = (
 /obj/machinery/light/runway_light,
 /obj/lattice{
@@ -2691,7 +2680,6 @@
 /area/station/turret_protected/ai_upload_foyer)
 "ajz" = (
 /obj/storage/crate,
-/obj/machinery/light/small,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/solar/small_backup2)
 "ajA" = (
@@ -7176,6 +7164,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating/scorched,
 /area/station/storage/hydroponics)
 "axC" = (
@@ -25067,9 +25056,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/blind_switch/area{
-	pixel_x = -24
-	},
 /obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
@@ -26289,6 +26275,12 @@
 "bGu" = (
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 3
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -4
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -31036,6 +31028,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/purple,
 /area/station/teleporter)
 "bUB" = (
@@ -31645,6 +31638,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/space_heater,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
 "bWx" = (
@@ -39657,6 +39651,7 @@
 	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
 	name = "Old Beret"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "cwS" = (
@@ -55002,6 +54997,7 @@
 /area/space)
 "gTd" = (
 /mob/living/critter/small_animal/cockroach,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
 "gTO" = (
@@ -58314,7 +58310,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/firealarm/directional/north{
+	pixel_x = 5
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -6;
+	pixel_y = 27
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/escape)
 "jCA" = (
@@ -68148,6 +68150,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -69385,7 +69388,13 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/firealarm/directional/north{
+	pixel_x = 4
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -6;
+	pixel_y = 27
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/arrivals)
 "sSF" = (
@@ -70934,6 +70943,7 @@
 	name = "Freezer - Spare Parts"
 	},
 /obj/random_item_spawner/organs/one_to_three,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
 /area/station/medical/maintenance)
 "uoZ" = (
@@ -73311,6 +73321,10 @@
 /obj/item/wrench,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
+"wHO" = (
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "wIl" = (
 /obj/machinery/firealarm/directional/north,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -115166,7 +115180,7 @@ bYg
 bZv
 bZv
 cbO
-cbO
+wHO
 cdz
 bZv
 eKu
@@ -136834,7 +136848,7 @@ aea
 aea
 afy
 afw
-ahc
+afw
 afx
 aiu
 aea
@@ -141395,11 +141409,11 @@ aEs
 aaa
 aaa
 aam
-aUG
+aTj
 sSn
 aXy
 aZk
-aUG
+aTj
 aaI
 aaa
 aaa
@@ -142056,11 +142070,11 @@ aaa
 aaa
 aaa
 aam
-cmx
+cmw
 jCy
 cpS
 crF
-cmx
+cmw
 aaI
 aaa
 aaa

@@ -1828,7 +1828,7 @@
 				has_gang_headwear = TRUE
 			else if(istype(I, /obj/item/device/radio/headset))
 				var/obj/item/device/radio/headset/headset = I
-				if (istype(headset.wiretap, /obj/item/device/radio_upgrade/gang))
+				if (istype(headset.current_upgrade, /obj/item/device/radio_upgrade/gang))
 					has_gang_headset = TRUE
 
 		if(!has_gang_uniform)
@@ -1870,7 +1870,7 @@
 				else
 					user.put_in_hand_or_drop(headset)
 
-			if (headset.wiretap)
+			if (headset.current_upgrade)
 				headset.remove_radio_upgrade()
 			headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/gang(frequency = src.gang.gang_frequency))
 

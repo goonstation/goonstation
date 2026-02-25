@@ -156,17 +156,17 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = MGD_KITCHEN
+		mailgroup = MGT_CATERING
 		message = 1
 	bar
 		name = "Bar"
 		mail_tag = "bar"
-		mailgroup = MGD_KITCHEN
+		mailgroup = MGT_CATERING
 		message = 1
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = MGD_BOTANY
+		mailgroup = MGT_HYDROPONICS
 		message = 1
 	security
 		name = "Security"
@@ -192,27 +192,27 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = MGD_SPIRITUALAFFAIRS
+		mailgroup = MGT_SPIRITUALAFFAIRS
 		message = 1
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEER
 		message = 1
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEER
 		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGD_MINING
+		mailgroup = MGT_MINING
 		message = 1
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = MGD_CARGO
+		mailgroup = MGT_CARGO
 		message = 1
 
 		refinery
@@ -222,7 +222,7 @@
 	research
 		name = "Research"
 		mail_tag = "research"
-		mailgroup = MGD_SCIENCE
+		mailgroup = MGD_RESEARCH
 		message = 1
 
 		telescience
@@ -238,20 +238,17 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = MGD_MEDBAY
-		mailgroup2 = MGD_MEDRESEACH
+		mailgroup = MGD_MEDICAL
 		message = 1
 
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = MGD_MEDRESEACH
-			mailgroup2 = null
+			mailgroup = MGT_ROBOTICS
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = MGD_MEDRESEACH
-			mailgroup2 = null
+			mailgroup = MGT_GENETICS
 		pathology
 			name = "Pathology"
 			mail_tag = "pathology"
@@ -366,7 +363,7 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = MGD_KITCHEN
+		mailgroup = MGT_CATERING
 		message = 1
 
 		north
@@ -382,7 +379,7 @@
 	bar
 		name = "Bar"
 		mail_tag = "bar"
-		mailgroup = MGD_KITCHEN
+		mailgroup = MGT_CATERING
 		message = 1
 
 		north
@@ -398,7 +395,7 @@
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = MGD_BOTANY
+		mailgroup = MGT_HYDROPONICS
 		message = 1
 
 		north
@@ -474,7 +471,7 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = MGD_SPIRITUALAFFAIRS
+		mailgroup = MGT_SPIRITUALAFFAIRS
 		message = 1
 
 		north
@@ -490,7 +487,7 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEER
 		message = 1
 
 		north
@@ -506,7 +503,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEER
 		message = 1
 
 		north
@@ -522,7 +519,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGD_MINING
+		mailgroup = MGT_MINING
 		message = 1
 
 		north
@@ -538,7 +535,7 @@
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = MGD_CARGO
+		mailgroup = MGT_CARGO
 		message = 1
 
 		north
@@ -568,7 +565,7 @@
 	research
 		name = "Research"
 		mail_tag = "research"
-		mailgroup = MGD_SCIENCE
+		mailgroup = MGD_RESEARCH
 		message = 1
 
 		north
@@ -626,8 +623,7 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = MGD_MEDBAY
-		mailgroup2 = MGD_MEDRESEACH
+		mailgroup = MGD_MEDICAL
 		message = 1
 
 		north
@@ -643,8 +639,7 @@
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = MGD_MEDRESEACH
-			mailgroup2 = null
+			mailgroup = MGT_ROBOTICS
 
 			north
 				dir = NORTH
@@ -659,8 +654,7 @@
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = MGD_MEDRESEACH
-			mailgroup2 = null
+			mailgroup = MGT_GENETICS
 
 			north
 				dir = NORTH
@@ -994,7 +988,7 @@
 	repressure_speed = 0.5
 	name = "QM"
 	mail_tag = "QM"
-	mailgroup = MGD_CARGO
+	mailgroup = MGT_CARGO
 	message = 1
 	icon_style = "qm_mail"
 	light_style = "qm_mailchute"

@@ -25,7 +25,7 @@ TYPEINFO(/obj/item/peripheral)
 	icon = 'icons/obj/module.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	item_state = "electronics"
 	w_class = W_CLASS_SMALL
 	var/obj/machinery/computer3/host
 	var/id = null

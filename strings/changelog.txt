@@ -1,5 +1,34 @@
 
+(t)mon feb 23 26
+(u)Kanthes
+(p)25978
+(e)🆕💊|C-Feature, A-Medical
+(+)Empowered Ossification allows you to remove your head without tools. Just pop it off!
+(u)Cheekybrdy
+(p)25655
+(e)🎨🏅🧛|C-Sprites, A-Medal, A-Gamemodes
+(+)Added new medals (no rewards) for winning Battle Royale, Pod Wars and Football.
+(u)JORJ949
+(p)25810
+(e)🔄📄🧛📨|C-Rework, A-UI, A-Gamemodes, A-Logistics
+(*)NPC Traders are now in TGUI. Report any bugs you find with this fancy new window.
 (t)sun feb 22 26
+(u)glowbold
+(*)PDA messaging app has been reorganized. Please report any bugs! More details in minor notes
+(+)PDAs automatically scan for other PDAs to message when first used in-hand.
+(+)SpaceMessenger keeps your most recent contacts at the top of the Direct Messages tab, and all groups in the Groups tab.
+(u)Lord_Earthfire
+(p)25716
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)Stains of any kind won't magically vanish on assemblies while being manipulated.
+(u)bork and Pirate-Rob
+(p)25984
+(e)🎨|C-Sprites
+(*)Resprites all the gene/ability icons! Sprites by Pirate-Rob!
+(u)QuiteLiterallyAnything
+(p)25443
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The gene booth's locking and price adjustment menu now only appears when the booth is hit with an ID.
 (u)Pirate-Rob
 (p)25982
 (e)🎨|C-Sprites

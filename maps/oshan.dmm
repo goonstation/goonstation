@@ -4719,6 +4719,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
 "avh" = (
@@ -6750,6 +6751,7 @@
 	pixel_y = 5
 	},
 /obj/item/spraybottle,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "aEE" = (
@@ -19946,6 +19948,7 @@
 /obj/table/auto,
 /obj/item/sponge,
 /obj/item/paper_bin,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
 "bRS" = (
@@ -25725,6 +25728,10 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"dxn" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/darkpurple,
+/area/station/crew_quarters/data)
 "dxt" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/access/kitchen,
@@ -25971,6 +25978,11 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"dFu" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "dHa" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
@@ -32345,6 +32357,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/station/security/brig)
 "iPa" = (
@@ -32793,8 +32806,7 @@
 "jfG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
-	dir = 10;
-	id = "genetics"
+	dir = 10
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
@@ -35121,6 +35133,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
+"llr" = (
+/obj/machinery/light_switch/west,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "llv" = (
 /obj/landmark/pest,
 /obj/cable{
@@ -37920,6 +37936,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/security,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light/incandescent/greenish,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "nJC" = (
@@ -38581,6 +38598,7 @@
 	},
 /obj/machinery/light/incandescent/cool,
 /obj/landmark/start/job/medical_trainee,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/blue/corner{
 	dir = 8
 	},
@@ -41312,7 +41330,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "qNK" = (
@@ -44527,6 +44545,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "tFi" = (
@@ -98918,7 +98937,7 @@ agj
 agj
 agj
 bbA
-mMZ
+dFu
 aob
 akQ
 aly
@@ -107715,7 +107734,7 @@ ayO
 beG
 beK
 beN
-beI
+dxn
 beY
 beM
 aey
@@ -133642,7 +133661,7 @@ vbc
 eYr
 dBL
 wxZ
-aTq
+llr
 nsC
 bcV
 bdl

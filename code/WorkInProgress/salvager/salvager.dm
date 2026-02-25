@@ -586,7 +586,8 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	desc = "A questionable portable teleportation device that is coupled to a specific location."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "hand_tele_s"
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throwforce = 5
 	health = 5
 	w_class = W_CLASS_SMALL
