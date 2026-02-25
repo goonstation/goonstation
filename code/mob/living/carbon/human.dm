@@ -2525,8 +2525,15 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/obj/item/parts/arm = null
 	if (limbs) //Wire: fix for null.r_arm and null.l_arm
 		arm = hand ? limbs.l_arm : limbs.r_arm // I'm so sorry I couldent kill all this shitcode at once
-	if (arm)
+	if (arm && !arm.hasStatus("numb"))
 		arm.limb_data.attack_hand(target, src, can_reach(src, target), params, location, control)
+
+/mob/living/carbon/human/weapon_attack(atom/target, obj/item/W, reach, params)
+	//don't ignore limb stuns by using a weapon, please
+	if (src.limbs && !src.limbs.is_limb_functional(src.hand ? "l_arm" : "r_arm"))
+		return
+	. = ..()
+
 
 /mob/living/carbon/human/hand_range_attack(atom/target, params, location, control, origParams)
 	//This looks bad but it really isn't anymore. <3

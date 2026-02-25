@@ -748,7 +748,7 @@
 		else
 			lhand.icon_state = "handl[master.hand]"
 			if(src.master.limbs && src.master.limbs.l_arm)
-				SEND_SIGNAL(src.master.limbs.l_arm, COMSIG_ITEM_ARM_IS_HUD_UPDATED, src.master, src.lhand, "l_arm")
+				SEND_SIGNAL(src.master, COMSIG_HUMAN_ARM_IS_HUD_UPDATED, src.lhand, "l_arm")
 
 		src.rhand.ClearSpecificOverlays("hand_stun_overlay")
 		if (master.limbs && !master.limbs.r_arm)
@@ -756,7 +756,7 @@
 		else
 			rhand.icon_state = "handr[!master.hand]"
 			if(src.master.limbs && src.master.limbs.r_arm)
-				SEND_SIGNAL(src.master.limbs.r_arm, COMSIG_ITEM_ARM_IS_HUD_UPDATED, src.master, src.rhand, "r_arm")
+				SEND_SIGNAL(src.master, COMSIG_HUMAN_ARM_IS_HUD_UPDATED, src.rhand, "r_arm")
 
 	proc/update_stats()
 		var/newDesc = ""

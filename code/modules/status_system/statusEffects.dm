@@ -2268,8 +2268,6 @@
 			if(istype(src.owner, /obj/item/parts))
 				//we're a limb, we need to listen to being attached to the mob
 				RegisterSignal(src.owner, COMSIG_LIMB_ATTACHED_TO_HUMAN, PROC_REF(on_part_addition))
-				//we also need to listen to the person having their arms updated, in case we need to stun them
-				RegisterSignal(src.owner, COMSIG_ITEM_ARM_IS_HUD_UPDATED, PROC_REF(on_arm_hud_update))
 			else
 				//we are an item. We need to listen to being inserted into a limb.... limb code is cursed
 				RegisterSignal(src.owner, COMSIG_ITEM_SET_AS_LIMB, PROC_REF(on_item_set_as_limb))
@@ -2288,7 +2286,6 @@
 		UnregisterSignal(src.owner, COMSIG_HUMAN_LOST_LIMB)
 		UnregisterSignal(src.owner, COMSIG_ITEM_SET_AS_LIMB)
 		UnregisterSignal(src.owner, COMSIG_LIMB_ATTACHED_TO_HUMAN)
-		UnregisterSignal(src.owner, COMSIG_ITEM_ARM_IS_HUD_UPDATED)
 		if(!passed_on)
 			src.try_relay_status(-1) // a duration of 0 is infinite
 
@@ -2314,10 +2311,6 @@
 	proc/on_part_addition(var/obj/added_object, var/mob/living/carbon/human/affected_human)
 		//well, we were attached to someone. Make sure we stay stunned.
 		src.try_relay_status(src.duration)
-
-	proc/on_arm_hud_update(var/obj/item/parts/checked_limb, var/mob/living/carbon/human/affected_human, var/atom/movable/screen/hud/affected_hud, var/zone)
-		if(zone == checked_limb.slot)
-			affected_hud.AddOverlays(image(affected_hud.icon, affected_hud, "hand_stun"), "hand_stun_overlay")
 
 	proc/try_relay_status(var/duration)
 		//here, we dot he opposite: if the owner had the status added, we need to apply it to the corresponding part as well
@@ -2354,6 +2347,8 @@
 	onAdd(var/passed_on)
 		. = ..(passed_on)
 		if (ishuman(src.owner))
+			//need to listen to the person having their arms updated, in case we need to stun them
+			RegisterSignal(src.owner, COMSIG_HUMAN_ARM_IS_HUD_UPDATED, PROC_REF(on_arm_hud_update))
 			var/mob/living/carbon/human/effect_owner = src.owner
 			if(src.affected_zone == "r_arm")
 				effect_owner.drop_from_slot(effect_owner.r_hand)
@@ -2364,9 +2359,14 @@
 
 	onRemove(var/passed_on)
 		. = ..(passed_on)
+		UnregisterSignal(src.owner, COMSIG_HUMAN_ARM_IS_HUD_UPDATED)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/effect_owner = src.owner
 			effect_owner.hud.update_hands()
+
+	proc/on_arm_hud_update(var/mob/living/carbon/human/affected_human, var/atom/movable/screen/hud/affected_hud, var/zone)
+		if(zone == src.affected_zone)
+			affected_hud.AddOverlays(image(affected_hud.icon, affected_hud, "hand_stun"), "hand_stun_overlay")
 
 
 /datum/statusEffect/numb/arm/r_arm

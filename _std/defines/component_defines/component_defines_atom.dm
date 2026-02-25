@@ -181,8 +181,6 @@
 	#define COMSIG_LIMB_ATTACHED_TO_HUMAN "itm_limb_attached_to_human"
 	/// Send out to the item whenever it is inserted into an limb (target, limb_inserted_into)
 	#define COMSIG_ITEM_SET_AS_LIMB "itm_item_set_as_limb"
-	/// Send out to a arm-limb whenever update_hands() is called (target, hud_owner, hud_element, zone)
-	#define COMSIG_ITEM_ARM_IS_HUD_UPDATED "itm_arm_is_hud_updated"
 	/// After an item is altered by being removed and replaced with another item, sent shortly before being removed. The original is not always
 	/// deleted but instead treated as if it were a part of the new item, see assemblies. (item or list of items produced by conversion, user)
 	#define COMSIG_ITEM_CONVERTED "itm_converted"
@@ -313,6 +311,8 @@
 // ---- human signals ----
 		/// When an limb is lost (target, limb_lost)
 		#define COMSIG_HUMAN_LOST_LIMB "human_lost_limb"
+		/// Send out to a human whenever their update_hands() is called (hud_owner, hud_element, zone)
+		#define COMSIG_HUMAN_ARM_IS_HUD_UPDATED "itm_arm_is_hud_updated"
 
 
 // ---- cross server message signals
