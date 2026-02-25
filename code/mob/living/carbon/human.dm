@@ -3188,7 +3188,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 ///Numb one or more limbs without stacking status effects or targeting limbs that don't exist
 ///A count of 0 tries to stun all limbs in target_limbs
-/mob/living/carbon/human/proc/numb_limb(var/duration = 1 SECOND, var/count = 1, var/random = TRUE, var/stack_duration = FALSE, var/ignore_numbed_limbs = FALSE, var/list/target_limbs = numb_body_part_list)
+/mob/living/carbon/human/proc/numb_limb(var/duration = 1 SECOND, var/count = 1, var/random = TRUE, var/stack_duration = FALSE, var/ignore_numbed_limbs = FALSE, var/list/target_limbs = list("l_arm", "r_arm", "l_leg", "r_leg"))
 	if(!src.limbs || count < 0)
 		return // no limb datum or no limbs_count to stun
 	//let's generate our list now
