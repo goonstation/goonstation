@@ -74267,7 +74267,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "tbp" = (
-/obj/table/reinforced/auto,
+/obj/machinery/vending/murderbox_armory,
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
 "tbw" = (
