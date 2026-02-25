@@ -3056,7 +3056,7 @@ datum
 				M.reagents.add_reagent("salt", 1.25 * src.calculate_depletion_rate(M, mult))
 				..()
 
-		fooddrink/garum
+		fooddrink/fish_sauce
 			name = "fish sauce"
 			id = "fish_sauce"
 			description = "A sauce made by fermenting fish in salt, staple in East Asian cuisine."
