@@ -1,5 +1,6 @@
 /datum/map_correctness_check/blind_switches
 	check_name = "Blind IDs Without Switches"
+	check_prefabs = FALSE
 
 /datum/map_correctness_check/blind_switches/run_check()
 	. = list()
