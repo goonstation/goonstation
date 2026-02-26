@@ -44,7 +44,7 @@
 	power_usage = 250
 
 	generic //Generic computer, standard os and card scanner
-		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
 		setup_idscan_path = /obj/item/peripheral/card_scanner
 		setup_has_internal_disk = 1
@@ -241,13 +241,12 @@
 		icon_state = "bcase"
 		base_icon_state = "bcase"
 
-		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
 		setup_idscan_path = /obj/item/peripheral/card_scanner
 		setup_has_internal_disk = 1
 		setup_starting_peripheral1 = /obj/item/peripheral/network/omni
 		setup_starting_peripheral2 = /obj/item/peripheral/cell_monitor
-		setup_drive_type = /obj/item/disk/data/fixed_disk/hd32
 
 		var/obj/item/cell/cell //We have limited power! Immersion!!
 		var/setup_charge_maximum = 15000
@@ -1110,7 +1109,7 @@
 	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
 	icon_state = "oldlap"
 	base_icon_state = "oldlap"
-	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd128/techcomputer3
 
 	undeploy()
 		if(!src.case)

@@ -1,9 +1,9 @@
 /obj/item/disk/data/fixed_disk
 	name = "storage drive"
-	icon_state = "harddisk"
+	icon_state = "harddisk64"
 	title = "Storage Drive"
-	file_amount = 80
-	var/max_file_amount = 80
+	file_amount = 64
+	var/max_file_amount = 64
 	var/case_open = FALSE
 
 	HELP_MESSAGE_OVERRIDE({"Use a <b>screwdriver</b> to open the case, allowing you to do the following:
@@ -23,6 +23,7 @@
 	hd16
 		file_amount = 16
 		max_file_amount = 16
+		icon_state = "harddisk16"
 		name = "storage drive"
 		desc = "An old harddrive from a now-defunct company."
 
@@ -110,7 +111,7 @@
 		boutput(user, "The case is closed, open it with a screwdriver first to flip the write-protect switch!")
 
 //A fixed disk with some structure already set up for the main os I guess
-/obj/item/disk/data/fixed_disk/computer3
+/obj/item/disk/data/fixed_disk/hd64/computer3
 	New()
 		. = ..()
 		//First off, create the directory for logging stuff
@@ -131,7 +132,7 @@
 			newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
 
 //A computer disk with the hottest software, for nerds
-/obj/item/disk/data/fixed_disk/techcomputer3
+/obj/item/disk/data/fixed_disk/hd128/techcomputer3
 	New()
 		. = ..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )

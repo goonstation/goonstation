@@ -1764,7 +1764,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/motherboard, 8)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk, 8)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd32, 8) //Shoddy drives free!
 		//product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 4)
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/card_scanner, 8)
 		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/powernet_card, 4)
@@ -1801,12 +1801,15 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/terminal_os, 6, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/network_progs, 4, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/medical_progs, 2, cost=PAY_TRADESMAN/2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/diskbox, rand(2,3), cost=PAY_UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd64, 8, cost=PAY_TRADESMAN) //Good drives not free!
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/security_progs, 2, cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/bank_progs, 2, cost=PAY_TRADESMAN, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/communications, 2, cost=PAY_TRADESMAN, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/diskbox, rand(2,3), cost=PAY_UNTRAINED/2)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd96, 2, cost=PAY_TRADESMAN*2, hidden=1) //Super drives super not free!
+
 
 
 /obj/machinery/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
