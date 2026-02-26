@@ -31,6 +31,7 @@
 		max_file_amount = 32
 		icon_state = "harddisk32"
 		name = "storage drive-'Memtronic-32F'"
+		title = "MT32F Drive"
 		desc = "A first generation Thinktronics harddrive, from an era when files were still small. It makes a terrible sound while in use."
 
 	hd64
@@ -38,6 +39,7 @@
 		max_file_amount = 64
 		icon_state = "harddisk64"
 		name = "storage drive-'Memtronic-64F'"
+		title = "MT64F Drive"
 		desc = "A second generation Thinktronics harddrive. Despite being older tech, it's by far the most common model in circulation due to its cost."
 
 	hd96
@@ -45,6 +47,7 @@
 		max_file_amount = 128 //The rumours are true!!
 		icon_state = "harddisk96"
 		name = "storage drive-'Memtronic-96F'"
+		title = "MT96F Drive"
 		desc = "The latest mid-range entry in the Thinktronics brand of harddrives. Released alongside the Memtronic-128F, it's rumoured this drive has the same storage capacity as the 128F, but is intentionally gimped to save on production costs."
 
 	hd128
@@ -52,6 +55,7 @@
 		max_file_amount = 128
 		icon_state = "harddisk128"
 		name = "storage drive-'Memtronic-128F'"
+		title = "MT128F Drive"
 		desc = "The latest high-range entry in the Thinktronics brand of harddrives. Expensive but bleeding edge file storage technology right at your fingertips."
 
 /obj/item/disk/data/fixed_disk/examine()

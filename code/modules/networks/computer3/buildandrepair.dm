@@ -197,7 +197,6 @@ TYPEINFO(/obj/item/motherboard)
 				var/obj/machinery/computer3/C= new src.computer_type( src.loc )
 				C.set_dir(src.dir)
 				if(src.material) C.setMaterial(src.material)
-				C.setup_drive_size = 0
 				C.icon_state = src.created_icon_state
 				C.setup_frame_type = src.type
 				if(mainboard.created_name) C.name = mainboard.created_name
