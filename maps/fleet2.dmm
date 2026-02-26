@@ -4891,13 +4891,13 @@
 /turf/simulated/wall/auto/reinforced/jen/dark2,
 /area/station/hallway/secondary/exit)
 "chU" = (
-/obj/stool/chair/blue{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/stool/chair/blue{
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -7891,9 +7891,22 @@
 /area/station/crew_quarters/hammer)
 "dtO" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/brain,
-/obj/item/crowbar,
+/obj/item/storage/firstaid/brain{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/crowbar{
+	pixel_y = 6
+	},
 /obj/machinery/firealarm/directional/west,
+/obj/item/storage/box/diskbox{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/hand_labeler{
+	pixel_y = -3;
+	pixel_x = 1
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
