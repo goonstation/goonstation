@@ -2656,7 +2656,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = list(MGD_MEDRESEACH, MGO_SILICON, MGA_DEATH)
+			newsignal.data["group"] = list(MGT_ROBOTICS, MGD_SILICON, MGA_DEATH)
 			newsignal.data["sender"] = net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)

@@ -1,5 +1,81 @@
 
+(t)wed feb 25 26
+(u)Sord
+(+)Pharmacists and the Medical Director get an auto-injector filler which can fill empty auto-injectors with hypospray whitelisted chemicals (unless emagged)
+(+)Empty auto-injectors can be printed at the medical fabricator.
+(+)Note: expended/already filled auto-injectors can not have more chemicals added to them.
+(u)A.I. The Artificial Idiot
+(p)26002
+(e)⚗|A-Chemistry
+(*)Adds fish sauce, made by putting a fish in a still
+(u)JORJ949
+(p)25923
+(e)🎨💅🧛🔨|C-Sprites, C-QoL, A-Gamemodes, A-Player-Actions
+(*)Headspiders are now tied to using a 10 DNA ability rather than having 10 DNA left on death. Using the ability removes it from your list of abilities and will activate on death.
+(u)Temthrush & Sunkiisu
+(p)24649
+(e)🎨🤖|C-Sprites, A-Silicons
+(+)Added 21 new borg screenhead faces
+(t)mon feb 23 26
+(u)Kanthes
+(p)25978
+(e)🆕💊|C-Feature, A-Medical
+(+)Empowered Ossification allows you to remove your head without tools. Just pop it off!
+(u)Cheekybrdy
+(p)25655
+(e)🎨🏅🧛|C-Sprites, A-Medal, A-Gamemodes
+(+)Added new medals (no rewards) for winning Battle Royale, Pod Wars and Football.
+(u)JORJ949
+(p)25810
+(e)🔄📄🧛📨|C-Rework, A-UI, A-Gamemodes, A-Logistics
+(*)NPC Traders are now in TGUI. Report any bugs you find with this fancy new window.
+(t)sun feb 22 26
+(u)glowbold
+(*)PDA messaging app has been reorganized. Please report any bugs! More details in minor notes
+(+)PDAs automatically scan for other PDAs to message when first used in-hand.
+(+)SpaceMessenger keeps your most recent contacts at the top of the Direct Messages tab, and all groups in the Groups tab.
+(u)Lord_Earthfire
+(p)25716
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)Stains of any kind won't magically vanish on assemblies while being manipulated.
+(u)bork and Pirate-Rob
+(p)25984
+(e)🎨|C-Sprites
+(*)Resprites all the gene/ability icons! Sprites by Pirate-Rob!
+(u)QuiteLiterallyAnything
+(p)25443
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The gene booth's locking and price adjustment menu now only appears when the booth is hit with an ID.
+(u)Pirate-Rob
+(p)25982
+(e)🎨|C-Sprites
+(+)Electronics now have in-hand icons.
+(t)sat feb 21 26
+(u)LeahTheTech
+(+)Possessed objects now respect item specific click delays.
+(u)glowbold
+(p)25933
+(e)⚖🧛🐁|C-Balance, A-Gamemodes, A-Critters
+(*)Dead bodies and the paralyzed only twitch if physically hit.
+(*)Changeling "Regenerative Stasis" ability acts as dead for hit-twitches.
+(+)Changeling "Regenerative Stasis" ability prevents forced emotes while faking death.
 (t)thu feb 19 26
+(u)cringe
+(p)25961
+(e)🆕🗺🔎⚗⚙🍝📨|C-Feature, A-Mapping, C-Code-Quality, A-Chemistry, A-Internal, A-Catering, A-Logistics
+(+)There is now a plumbed variant of the sink, to be added to maps. Sinks actually touch reagents on you now.
+(u)cringe
+(p)25814
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)There is now a shower and bath compatible with liquid pipes. to be added to maps.
+(u)Egregorious
+(p)25180
+(e)🔎⚙🍝|C-Code-Quality, A-Internal, A-Catering
+(*)Recipes used by the oven and mixer have been internally reworked. Please report any changes in behaviour, nothing should be different.
+(u)Kubius
+(p)25957
+(e)⚖|C-Balance
+(+)Increased the baseline payout range of prototypist requisitions (800-1400 > 3600-5350).
 (u)Cheekybrdy
 (p)25953
 (e)🎨|C-Sprites

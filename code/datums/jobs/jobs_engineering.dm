@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	ui_colour = TGUI_COLOUR_ORANGE
 	slot_card = /obj/item/card/id/engineering
 	job_category = JOB_ENGINEERING
+	email_group = MGD_ENGINEER
 
 /datum/job/engineering/engineer
 	name = "Engineer"
@@ -79,6 +80,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/quartermaster)
 	slot_poc2 = list(/obj/item/device/appraisal)
 	wiki_link = "https://wiki.ss13.co/Quartermaster"
+	email_group = MGD_SUPPLY
 
 /datum/job/engineering/miner
 	name = "Miner"
@@ -113,3 +115,4 @@ ABSTRACT_TYPE(/datum/job/engineering)
 							/obj/item/paper/book/from_file/pocketguide/mining)
 	#endif
 	wiki_link = "https://wiki.ss13.co/Miner"
+	email_group = MGD_SUPPLY

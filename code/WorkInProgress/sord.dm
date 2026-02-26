@@ -65,12 +65,12 @@
 /obj/item/device/panicbutton/medicalalert //really just adding this for the hop version but hey maybe medical wants to hand out medical life alert buttons for the funny
 	name = "medical alert button"
 	desc = "A big red button that alerts the station Medical team that there's a crisis at your location."
-	alert_group = list(MGD_MEDBAY, MGA_CRISIS)
+	alert_group = list(MGD_MEDICAL, MGA_CRISIS)
 
 /obj/item/device/panicbutton/medicalalert/hop
 	name = "life alert button"
 	desc = "For when you've got a REAL BIG problem and want EVERYONE to know about it."
-	alert_group = list(MGD_PARTY, MGD_MEDBAY, MGD_SECURITY, MGD_COMMAND, MGA_CRISIS) // lol. lmao, even
+	alert_group = list(MGD_PARTY, MGD_MEDICAL, MGD_SECURITY, MGD_COMMAND, MGA_CRISIS) // lol. lmao, even
 
 /obj/item/storage/box/panic_buttons
 	name = "box of panic buttons"
@@ -667,3 +667,166 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
 		set_current_projectile(new/datum/projectile/bullet/rifle_3006)
 		AddComponent(/datum/component/holdertargeting/windup, 0.5 SECONDS)
 		..()
+
+// auto injector refiller, move to different file at some point. or dont, im not your/my own boss
+
+TYPEINFO(/obj/item/reagent_containers/injector_filler)
+	mats = list(metal = 10,
+				crystal = 10,
+				conductive_high = 10)
+
+/obj/item/reagent_containers/injector_filler
+	name = "auto-injector filler"
+	desc = "A specialized tool designed to fill empty auto-injectors with approved chemicals."
+	icon = 'icons/obj/chemical.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
+	item_state = "syringe_0"
+	icon_state = "injector_filler0"
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH | ACCEPTS_MOUSEDROP_REAGENTS
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	amount_per_transfer_from_this = 10
+	var/image/fluid_image
+	var/list/whitelist = list()
+	var/safe = 1
+
+
+	New()
+		..()
+		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
+			src.whitelist = chem_whitelist
+
+	update_icon()
+		if (src.reagents.total_volume)
+			src.icon_state = "injector_filler1"
+			src.name = "auto-injector filler ([src.reagents.get_master_reagent_name()])"
+			if (!src.fluid_image)
+				src.fluid_image = image(src.icon, "injector_fillerover", -1)
+			src.fluid_image.color = src.reagents.get_master_color()
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.icon_state = "injector_filler0"
+			src.name = "auto-injector filler"
+			src.UpdateOverlays(null, "fluid")
+		signal_event("icon_updated")
+
+	attack_self(mob/user)
+		if(src.reagents.total_volume > 0)
+			var/confirm = tgui_alert(user, "Empty [src] of all reagents?", "Empty?", list("Yes", "No"))
+
+			if(confirm == "Yes")
+				src.reagents.clear_reagents()
+
+		else
+			..()
+
+	on_reagent_change(add)
+		..()
+		if (src.safe && add)
+			check_whitelist(src, src.whitelist)
+		src.UpdateIcon()
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (!safe)
+			return 0
+		if (user)
+			user.show_text("[src]'s safeties have been disabled.", "red")
+		safe = 0
+		var/image/magged = image(src.icon, "injector_fillermag", layer = FLOAT_LAYER)
+		src.UpdateOverlays(magged, "emagged")
+		return 1
+
+	demag(var/mob/user)
+		if (safe)
+			return 0
+		if (user)
+			user.show_text("[src]'s safeties have been reactivated.", "blue")
+		safe = 1
+		src.UpdateOverlays(null, "emagged")
+		src.UpdateIcon()
+		return 1
+
+/obj/item/reagent_containers/injector_filler/emagged
+	New()
+		..()
+		src.emag_act()
+
+/datum/targetable/recall_item // shamelessly stolen from cyalume knight
+	name = "Recall Item"
+	desc = "Guide your linked item towards yourself. Use the ability with anything in your hand(s) to link said item(s)."
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "cknight_return_sword"
+	targeted = 0
+	cooldown = 6 SECONDS
+	pointCost = 0
+	var/obj/item/myitem = null
+
+	onAttach(datum/abilityHolder/holder)
+		..(holder)
+
+		if(istype(holder.owner, /mob/living/carbon/human))
+			var/mob/living/carbon/human/my_mob = holder.owner
+			src.myitem = my_mob.my_item
+		else
+			src.myitem = locate() in holder.owner
+
+		if(!src.myitem)
+			boutput(holder.owner, SPAN_ALERT("You don't have any linked item(s) to recall. Use the ability with any item(s) in your hand(s) to link the item(s)!"))
+			return 1
+
+	disposing()
+		myitem = null
+		..()
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/mob/living/my_mob = holder.owner
+		if(!src.myitem)
+			boutput(my_mob, SPAN_ALERT("Your item appears to have been banished from the physical realm!"))
+			var/obj/item/R = my_mob.find_type_in_hand(/obj/item, "right") // same with grabs
+			var/obj/item/L = my_mob.find_type_in_hand(/obj/item, "left") // same for the other hand
+			if (R)
+				src.myitem = R
+				if (istype(my_mob, /mob/living/carbon/human))
+					var/mob/living/carbon/human/dumbass = my_mob
+					dumbass.my_item = R
+			else if (L)
+				src.myitem = L
+				if (istype(my_mob, /mob/living/carbon/human))
+					var/mob/living/carbon/human/dumbass = my_mob
+					dumbass.my_item = L
+
+			if (src.myitem)
+				boutput(my_mob, SPAN_NOTICE("You have claimed [src.myitem] as your own! You'll be able to call it back to you!"))
+			return 1
+
+		my_mob.visible_message(SPAN_ALERT("<b>[holder.owner] raises [his_or_her(src.holder.owner)] hand into the air wide open!</b>"))
+		playsound(myitem, 'sound/effects/gust.ogg', 70, TRUE)
+
+		if (ismob(myitem.loc))
+			if(myitem.loc == my_mob)
+				boutput(holder.owner, SPAN_ALERT("You're already holding your [myitem]!"))
+				return 1
+			else
+				var/mob/HH = myitem.loc
+				HH.visible_message(SPAN_ALERT("[myitem] somehow escapes [HH]'s grasp!"), SPAN_ALERT("The [myitem] somehow escapes your grasp!"))
+				HH.u_equip(myitem)
+				myitem.set_loc(get_turf(HH))
+		if (myitem.stored)
+			var/atom/previous_storage = myitem.stored.linked_item
+			myitem.stored.transfer_stored_item(myitem, get_turf(myitem))
+			myitem.visible_message(SPAN_ALERT("[myitem] somehow escapes the [previous_storage] that it was inside of!"))
+
+		// assuming no super weird things happened, the myitem should be on the ground at this point
+		for(var/i=0, i<100, i++)
+			step_to(myitem, my_mob)
+			if (BOUNDS_DIST(myitem, my_mob) == 0)
+				playsound(my_mob, 'sound/effects/throw.ogg', 50, TRUE)
+				myitem.set_loc(get_turf(my_mob))
+				if (my_mob.put_in_hand(myitem))
+					my_mob.visible_message(SPAN_ALERT("<b>[my_mob] catches the [myitem]!</b>"))
+				else
+					my_mob.visible_message(SPAN_ALERT("<b>[myitem] lands at [my_mob]'s feet!</b>"))
+				i=100
+			sleep(0.1 SECONDS)

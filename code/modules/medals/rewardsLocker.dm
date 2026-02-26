@@ -1218,7 +1218,6 @@
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a welding helmet in your hands."))
 			return
 
-
 // Reward management stuff
 
 /datum/achievementReward/contributor

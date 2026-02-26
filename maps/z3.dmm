@@ -376,7 +376,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abu" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 10
 	},
@@ -1032,7 +1032,7 @@
 	},
 /area/space_hive)
 "adl" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/item/kitchen/utensil/spoon,
 /turf/unsimulated/floor/honeyblocks/corner{
 	dir = 8
@@ -3129,7 +3129,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "apl" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
@@ -3165,7 +3165,7 @@
 	icon_state = "gangtag17";
 	pixel_x = 28
 	},
-/obj/submachine/chef_sink/chem_sink,
+/obj/machinery/sink/slim,
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
@@ -4842,7 +4842,7 @@
 /turf/simulated/floor/white,
 /area/buddyfactory)
 "aws" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -5521,7 +5521,7 @@
 /obj/machinery/light/worn{
 	dir = 1
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -8962,7 +8962,7 @@
 /turf/simulated/floor/circuit/vintage,
 /area/derelict_ai_sat)
 "aRi" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /turf/simulated/floor/sanitary,
 /area/h7/crew)
 "aRj" = (
@@ -9663,7 +9663,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/white/grime,
@@ -10555,7 +10555,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -15536,7 +15536,7 @@
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
 "cbI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8
 	},
 /obj/securearea{
@@ -16329,7 +16329,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "dYc" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/freezer,
@@ -17297,7 +17297,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "gvz" = (
@@ -18679,7 +18679,7 @@
 /turf/simulated/floor,
 /area/radiostation/hallway)
 "jKA" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/item/seed/cannabis,
@@ -20992,7 +20992,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "pfi" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -5
@@ -21434,7 +21434,7 @@
 /turf/simulated/floor,
 /area/diner/dining)
 "qdj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},
@@ -21965,7 +21965,7 @@
 /turf/simulated/floor/yellow/checker,
 /area/diner/arcade)
 "rsU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/specialroom/freezer,

@@ -19,6 +19,7 @@
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/manipulated_injection = FALSE //! is this injector being tampered with and being unuseable for injecting people?
+	var/can_fill = FALSE //Can this injector be filled with new chemicals; unless it's created empty this should be false
 
 	New()
 		..()
@@ -34,6 +35,9 @@
 		src.UpdateIcon()
 
 	update_icon()
+		if (src.can_fill) //dont want it to show the expended version when spawned empty
+			src.icon_state = "emerg_inj-[src.label]"
+			return
 		if (src.reagents.total_volume)
 			src.icon_state = "emerg_inj-[src.label]"
 		else
@@ -55,9 +59,41 @@
 		if(!src.manipulated_injection && !src.empty)
 			. += " You can use a <b>knife</b> to sabotage the injector."
 
+	attackby(var/obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers))
+			try_fill(W, user)
+			return
+		..()
+
+	proc/try_fill(var/obj/item/W, mob/user)
+		if(!src.can_fill || src.empty)
+			boutput(user, SPAN_ALERT("[src] can't be refilled!"))
+			return
+
+		if(istype(W, /obj/item/reagent_containers/injector_filler))
+			if(W.reagents.total_volume > 0)
+				src.can_fill = FALSE
+				src.empty = FALSE
+				W.reagents.trans_to(src, src.initial_volume)
+				user.visible_message(SPAN_ALERT("[user] transfer chemicals from [W] to [src]."),\
+				SPAN_ALERT("You transfer chemicals from [W] to [src]. [src]'s filling port closes."))
+				playsound(W, 'sound/items/mender_refill_juice.ogg', 40, FALSE)
+				src.UpdateIcon()
+				src.desc = "A small syringe-like thing that automatically injects its contents into someone. This one is filled with a custom solution."
+			else
+				boutput(user, SPAN_ALERT("[W] is empty!"))
+				return
+
+		else
+			boutput(user, SPAN_ALERT("[src] has a proprietary filling port and may only be filled with a pharmacist's <b>auto-injector filler</b>."))
+			return
+
 	proc/try_injection(mob/user, mob/target)
 		if (src.empty || !src.reagents)
 			boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
+			return
+		if (src.can_fill)
+			boutput(user, SPAN_ALERT("There's nothing to inject, [src] needs to be filled with a pharmacist's <b>auto-injector filler</b>!"))
 			return
 		if (iscarbon(target) || ismobcritter(target) || target.reagents)
 			if (src.manipulated_injection)
@@ -97,6 +133,43 @@
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
+
+/obj/item/reagent_containers/emergency_injector/empty
+	name = "emergency auto-injector"
+	desc = "An empty auto-injector with a proprietary injection port. Can be refilled with a pharmacist's <b>auto-injector filler</b>."
+	can_fill = TRUE
+
+	orange
+		label = "orange"
+		icon_state = "emerg_inj-orange" //icon state needs to be set here or the manufacturer wont use the correct icon
+
+	red
+		label = "red"
+		icon_state = "emerg_inj-red"
+
+	blue
+		label = "blue"
+		icon_state = "emerg_inj-blue"
+
+	green
+		label = "green"
+		icon_state = "emerg_inj-green"
+
+	yellow
+		label = "yellow"
+		icon_state = "emerg_inj-yellow"
+
+	purple
+		label = "purple"
+		icon_state = "emerg_inj-purple"
+
+	black
+		label = "black"
+		icon_state = "emerg_inj-black"
+
+	white
+		label = "white"
+		icon_state = "emerg_inj-white"
 
 /obj/item/reagent_containers/emergency_injector/epinephrine
 	name = "emergency auto-injector (epinephrine)"

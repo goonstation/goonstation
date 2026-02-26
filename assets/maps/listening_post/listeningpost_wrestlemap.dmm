@@ -425,7 +425,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/listeningpost/comm_dish)
 "Cc" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,

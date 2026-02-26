@@ -153,6 +153,8 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 	var/trample_cooldown = 4 SECONDS
 
+	var/my_item = null //is this worth it? who knows. for recall_item ability
+
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
 	"pale", "blush", "scratch", "stretch", /*"fart", */"smile")

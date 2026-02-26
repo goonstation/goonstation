@@ -572,9 +572,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #define GOAL_MANUFACTURE 2
 #define GOAL_REFINEMENT 3
 
-//Prototypist contract; payout in cash is notably lower than usual on purpose, since you get "paid in items"
+//Prototypist contract; raw payout relative to effort is lower than usual, but you'll get a special item reward as partial barter
 /datum/req_contract/scientific/prototypist
-	payout = PAY_DOCTORATE
+	payout = PAY_DOCTORATE * 6
 	weight = 180
 
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
@@ -587,7 +587,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 	New()
 		src.name = pick(namevary)
-		src.payout += rand(0,80) * 10
+		src.payout += rand(0,35) * 50
 
 		///Identifier of the "prototypist", using defines set up above; associated with what category of product is being developed by the client.
 		var/prototypist_id = rand(1,NUM_PROTOTYPISTS)
