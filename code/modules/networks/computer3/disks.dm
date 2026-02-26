@@ -159,7 +159,7 @@
 
 /obj/item/disk/data/floppy/examine()
 	. = ..()
-	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
+	. += "<b>The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 /obj/item/disk/data/floppy/demo
 	name = "data disk - 'Farmer Jeff'"
