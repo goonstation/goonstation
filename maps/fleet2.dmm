@@ -92,6 +92,12 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/fitness)
+"aco" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest/maru)
 "acU" = (
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/asclepius)
@@ -511,12 +517,11 @@
 /turf/simulated/floor/yellowblack,
 /area/station/bridge/maru)
 "amx" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/obj/machinery/meter,
 /obj/cable/orange{
 	icon_state = "4-10"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
@@ -3737,7 +3742,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "0-10"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -4773,6 +4778,16 @@
 "cfi" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/engine/storage)
+"cfs" = (
+/obj/item/storage/wall/emergency{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest/maru)
 "cfE" = (
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/bluewhite{
@@ -6249,6 +6264,7 @@
 	})
 "cIo" = (
 /obj/machinery/centrifuge_nuclear,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "cIr" = (
@@ -9414,9 +9430,6 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/central/maru)
 "edN" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest/maru)
@@ -11064,8 +11077,8 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -12124,6 +12137,9 @@
 	},
 /obj/cable/orange{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-5"
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
@@ -13975,6 +13991,13 @@
 	dir = 1
 	},
 /area/station/medical/medbooth)
+"fUM" = (
+/obj/cable/orange{
+	icon_state = "5-10"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "fUV" = (
 /turf/simulated/floor/white,
 /area/station/hallway/primary/south/tenebrae)
@@ -17765,12 +17788,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/hammer)
 "hzO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/storage/wall/emergency{
-	dir = 1;
-	pixel_y = 32
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest/maru)
@@ -21607,9 +21626,6 @@
 	name = "Dionysus Command Center"
 	})
 "jgt" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/item/storage/wall/emergency{
 	dir = 1;
 	pixel_y = 32
@@ -23438,6 +23454,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
@@ -23900,6 +23917,9 @@
 	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
+/obj/cable{
+	icon_state = "0-10"
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -24594,9 +24614,6 @@
 /obj/machinery/light/small,
 /obj/cable{
 	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest/maru)
@@ -27657,6 +27674,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/engine/ptl)
 "lVc" = (
@@ -29164,6 +29184,15 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/bridge/tenebrae)
+"mBX" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/obj/machinery/meter,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
+/area/station/engine/core/nuclear)
 "mCz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/depot{
@@ -29433,9 +29462,6 @@
 /area/station/teleporter/maru)
 "mLl" = (
 /obj/machinery/camera/directional/south,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest/maru)
 "mLq" = (
@@ -32578,6 +32604,13 @@
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/crew_quarters/hammer)
+"oeH" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/atmospherics/unary/vent,
+/turf/space,
+/area/space)
 "oeV" = (
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/plating/random,
@@ -32703,17 +32736,15 @@
 	},
 /area/station/storage/emergency/asclepius)
 "ohK" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "purge valve"
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
+/obj/cable{
+	icon_state = "1-8"
 	},
+/turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "ohS" = (
 /obj/machinery/computer/power_monitor{
@@ -34374,8 +34405,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "oXi" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/maintenance/northwest/maru)
@@ -35703,14 +35734,12 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "pxg" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
+/obj/machinery/atmospherics/binary/valve{
+	name = "purge valve";
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/misc{
 	dir = 6
-	},
-/obj/cable{
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 9
 	},
 /area/station/engine/core/nuclear)
 "pxC" = (
@@ -40942,6 +40971,11 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/sauna)
+"rPU" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest/maru)
 "rQh" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -46127,12 +46161,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/engine/ptl)
-"tUY" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest/maru)
 "tVb" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -46595,12 +46623,11 @@
 	name = "Meridian Command Center"
 	})
 "ufp" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 9
-	},
 /obj/cable/orange{
 	icon_state = "5-6"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
@@ -48546,7 +48573,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "uTg" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/core/nuclear)
 "uTm" = (
@@ -49357,8 +49384,8 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/maintenance/northwest/maru)
@@ -49996,6 +50023,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge/hammer)
+"vzI" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/space,
+/area/space)
 "vAb" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/oilcan{
@@ -51516,6 +51551,13 @@
 	dir = 6
 	},
 /area/station/mailroom/meridian)
+"wlQ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "wma" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/cable{
@@ -53328,6 +53370,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central/tenebrae)
+"wXG" = (
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
+/area/station/engine/core/nuclear)
 "wXI" = (
 /turf/simulated/wall/auto/jen/dark2,
 /area/station/chapel/office)
@@ -82013,7 +82060,7 @@ pto
 pto
 iWb
 jgt
-tUY
+nmN
 edN
 pvw
 aSj
@@ -82311,9 +82358,9 @@ pto
 pto
 pto
 pto
-pto
-xnR
-iWb
+oeH
+vzI
+rPU
 hzO
 jcc
 jcc
@@ -82616,7 +82663,7 @@ pto
 pto
 iWb
 iWb
-qts
+cfs
 jcc
 jZd
 ioJ
@@ -82918,7 +82965,7 @@ pto
 pto
 oyk
 jHO
-qts
+aco
 jcc
 xOC
 xqv
@@ -84127,7 +84174,7 @@ xSE
 hUr
 poe
 pxg
-byb
+wXG
 ufp
 tpp
 lQX
@@ -84428,9 +84475,9 @@ pse
 tNS
 hUr
 bJP
-quK
-dJh
-xqv
+mBX
+fUM
+wlQ
 rCY
 vAd
 rcU
