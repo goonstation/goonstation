@@ -1762,6 +1762,7 @@
 #include "code\modules\networks\computer3\communication.dm"
 #include "code\modules\networks\computer3\computer3.dm"
 #include "code\modules\networks\computer3\disks.dm"
+#include "code\modules\networks\computer3\harddrives.dm"
 #include "code\modules\networks\computer3\emailclient.dm"
 #include "code\modules\networks\computer3\engine.dm"
 #include "code\modules\networks\computer3\job_controls.dm"
