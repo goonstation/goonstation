@@ -1331,7 +1331,7 @@
 /turf/simulated/floor/wood,
 /area/station/hallway/primary/south/dionysus)
 "aGt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -2288,7 +2288,7 @@
 /area/station/hangar/asclepius)
 "bdk" = (
 /obj/stool/chair/comfy/barber_chair,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/wood,
@@ -3143,7 +3143,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bwr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary/white,
@@ -5520,7 +5520,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/meridian)
 "cvc" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary/white,
@@ -5555,7 +5555,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "cvA" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/floorflusher/solitary2,
@@ -6171,7 +6171,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "cHe" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /obj/cable{
@@ -7754,7 +7754,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "dqa" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -8132,7 +8132,7 @@
 	},
 /area/station/mailroom/dionysus)
 "dyv" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -11125,7 +11125,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central/meridian)
 "eOR" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -14013,7 +14013,7 @@
 	name = "Limoncello Primary Zone"
 	})
 "fVq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary/white,
@@ -14212,7 +14212,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/fitness)
 "fYY" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -14374,7 +14374,7 @@
 /turf/simulated/floor,
 /area/ghostdrone_factory)
 "gbV" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/light/small/floor,
@@ -16138,7 +16138,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/engine/substation/tenebrae)
 "gQh" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/floorflusher/solitary,
@@ -16167,7 +16167,7 @@
 /turf/simulated/wall/auto/reinforced/jen/green,
 /area/station/maintenance/disposal/dionysus)
 "gQQ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -16356,7 +16356,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/crew_quarters/jazz)
 "gVI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -20351,7 +20351,7 @@
 	},
 /area/station/storage/emergency/maru)
 "iEe" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary/white,
@@ -20933,7 +20933,7 @@
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/maintenance/southeast/hammer)
 "iQg" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -22294,7 +22294,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/construction)
 "jwK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/light/small/floor,
@@ -22565,7 +22565,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast/tenebrae)
 "jEe" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/light/small/floor,
@@ -24220,7 +24220,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal/dionysus)
 "kpd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -26632,7 +26632,7 @@
 /turf/simulated/floor/wood/five,
 /area/station/crew_quarters/dionysus)
 "lqZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/cable{
@@ -28864,7 +28864,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/engine/substation/meridian)
 "msW" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/green/side{
@@ -29122,7 +29122,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "mzN" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/light/small/floor,
@@ -29278,7 +29278,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/bridge/meridian)
 "mFl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/grime,
@@ -30161,7 +30161,7 @@
 	name = "Asclepius Command Center"
 	})
 "naN" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -30467,7 +30467,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "nhr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -31038,7 +31038,7 @@
 /obj/mapping_helper/button/pair{
 	dir = 9
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -32699,7 +32699,7 @@
 	},
 /area/station/crew_quarters/meridian)
 "ogt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -33177,7 +33177,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "oqM" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -33516,7 +33516,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/maru)
 "oyE" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/item/storage/wall/emergency{
@@ -33752,7 +33752,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "oFj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/light/small/floor,
@@ -34725,7 +34725,7 @@
 	icon_state = "line1";
 	dir = 4
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
@@ -37762,7 +37762,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "qui" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -39540,7 +39540,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "rlC" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary/white,
@@ -40891,7 +40891,7 @@
 /turf/simulated/wall/auto/reinforced/jen/purple,
 /area/station/engine/substation/tenebrae)
 "rMC" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /obj/stool/chair{
@@ -41102,7 +41102,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/beepsky)
 "rRY" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/light/small/floor,
@@ -42260,7 +42260,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbay/pharmacy)
 "srq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary/white,
@@ -44542,7 +44542,7 @@
 	name = "Nuclear Control Room"
 	})
 "tma" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -45419,7 +45419,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/fitness)
 "tBK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -49226,7 +49226,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/hammer)
 "veL" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /obj/machinery/drainage,
@@ -51615,7 +51615,7 @@
 	},
 /area/station/hangar/dionysus)
 "wjY" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -52197,7 +52197,7 @@
 	},
 /area/station/hangar/tenebrae)
 "wwL" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -52666,7 +52666,7 @@
 	},
 /area/station/hallway/primary/central/tenebrae)
 "wHh" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	name = "lab sink"
 	},
@@ -52944,7 +52944,7 @@
 	},
 /area/station/hallway/primary/central/tenebrae)
 "wOb" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
