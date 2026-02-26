@@ -5760,6 +5760,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "cAB" = (
@@ -7053,6 +7056,10 @@
 	bank_id = "Mixer"
 	},
 /obj/machinery/camera/directional/north,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -45577,9 +45584,13 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/turretid{
-	pixel_y = 24
+	pixel_y = 24;
+	pixel_x = 6
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/north{
+	pixel_x = -7
+	},
 /turf/simulated/floor/grey,
 /area/station/turret_protected/Zeta)
 "tLw" = (
@@ -45948,6 +45959,7 @@
 /obj/item/reagent_containers/food/drinks/tea{
 	pixel_y = 9
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
