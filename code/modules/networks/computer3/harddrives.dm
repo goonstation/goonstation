@@ -70,7 +70,8 @@
 /obj/item/disk/data/fixed_disk/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W))
 		case_open = !case_open
-		icon_state = "harddisk"+(max_file_amount >= 32 ? "[max_file_amount]" : "")+ (case_open ? "_open" : "") //I hate tenerary operators
+		var/hdsize = max_file_amount <= 128 ? max_file_amount : 128
+		icon_state = "harddisk"+(hdsize >= 32 ? "[hdsize]" : "")+ (case_open ? "_open" : "") //I hate tenerary operators
 		boutput(user, "You [case_open ? "open" : "close"] the case of the [src].")
 	else if (ispulsingtool(W))
 		if(case_open)
