@@ -29,7 +29,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			src.icon_from_thing = tgui_input_list(usr, "Upload an image, set it from an icon or clear?", "Choose", list("Upload", "Icon Ref", "Clear"))
 			switch (src.icon_from_thing)
 				if ("Upload")
-					src.icon_from_thing = null
+					src.image = null
 					src.image = input(usr, "Upload an image:","File Uploader - Downsize your images to fit on the screen, local testing helps!", null) as null|icon
 				if ("Clear")
 					src.image = null
@@ -37,7 +37,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 					return
 				if ("Icon Ref")
 					src.image = null
-					src.icon_from_thing = get_one_match(input("Type path", "Type path", "[src.spawnpath]"), /atom)
+					src.image = get_one_match(input("Type path", "Type path", "[src.spawnpath]"), /atom)
 			src.alphainput = tgui_input_number(usr, "Enter an alpha level.", "Alpha", 255, 255, 0)
 			if (src.image)
 				logTheThing(LOG_ADMIN, usr, "uploaded an image [src.image] to use with Fly Object Overhead buildmode")
@@ -103,19 +103,16 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		send_pilot(start,new_dir)
 
 	proc/send_pilot(var/turf/startloc,var/direction=EAST)
-		var/mob/image_pilot/pilot = new /mob/image_pilot()
+		var/obj/image_pilot/pilot = new /obj/image_pilot()
 		var/speedinput = src.move_delay
 		var/pathinput = src.spawnpath
 		var/pathamountinput = src.spawnamount
 		var/turf/target_locinput = src.target_loc
-		if (src.icon_from_thing)
-			pilot.icon = src.icon_from_thing.icon
-			pilot.icon_state = src.icon_from_thing.icon_state
 		pilot.image_overlay = src.image
 		pilot.attached_sound = src.audio
 		pilot.alpha = 0
 		pilot.set_loc(startloc)
-		animate(pilot, transform = matrix(), alpha = src.alphainput, time = 1.5 SECONDS)
+		animate(pilot, transform = matrix(), alpha = src.alphainput, time = 0.8 SECONDS)
 
 		if (src.audio_choice == "Global loop" && src.audio)
 			pilot.loopsound = TRUE
@@ -157,7 +154,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			if ("Run away")
 				SPAWN(3 SECONDS)
 					direction = turn(direction, 180)
-					sprint_particle(pilot, pilot.loc)
+					new/obj/particle/attack/sprint(pilot.loc)
 					playsound(pilot.loc, 'sound/effects/sprint_puff.ogg', 30, 1)
 					while (pilot.loc)
 						move_forward(pilot, direction)
@@ -177,7 +174,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 					pilot.ClearAllOverlays()
 					qdel(pilot)
 
-	proc/move_forward(var/mob/image_pilot/pilot, var/direction, var/speed=1)
+	proc/move_forward(var/obj/image_pilot/pilot, var/direction, var/speed=1)
 		var/glide = 0 // this system seems to desync sometimes, not a huge issue it seems to add a bit of variety to the way they move
 		glide = (32 / speed) * world.tick_lag
 		pilot.glide_size = glide
@@ -191,12 +188,11 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		pilot.glide_size = glide
 		pilot.animate_movement = SLIDE_STEPS
 
-/mob/image_pilot
+/obj/image_pilot
 	name = ""
 	desc = ""
 	anchored = ANCHORED
 	density = 0
-	nodamage = 1
 	layer = 104 // AAAAAAAAA
 	flags = KEEP_TOGETHER
 	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
@@ -217,7 +213,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		src.attached_sound = null
 		var/sound/stopsound = sound(null, wait = 0, channel=1020)
 		world << stopsound
-		for (var/mob/image_pilot/pilotobj in world)
+		for (var/obj/image_pilot/pilotobj in world)
 			if (pilotobj.loopsound)
 				pilotobj.play()
 		..()
