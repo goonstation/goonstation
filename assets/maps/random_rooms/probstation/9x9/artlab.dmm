@@ -1,0 +1,520 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/grey,
+/area/space)
+"c" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"d" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"e" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"f" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 6
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"g" = (
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"h" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"i" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"k" = (
+/obj/machinery/networked/test_apparatus/electrobox,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"l" = (
+/obj/machinery/networked/test_apparatus/pitching_machine,
+/obj/machinery/power/data_terminal,
+/obj/decal/poster/wallsign/iso/warning,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"m" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"n" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"o" = (
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/grey,
+/area/space)
+"p" = (
+/turf/simulated/wall/auto/jen/purple,
+/area/space)
+"q" = (
+/turf/simulated/floor/grey,
+/area/space)
+"r" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"s" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 5
+	},
+/obj/machinery/light/incandescent/harsh{
+	nostick = 1
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"t" = (
+/obj/machinery/networked/test_apparatus/xraymachine,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"u" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/access/artlab,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"v" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 5
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"w" = (
+/obj/machinery/computer3/terminal/zeta,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"x" = (
+/obj/machinery/door_control{
+	id = "artlab";
+	name = "Artifact Lab Blast Doors";
+	pixel_y = 26
+	},
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/grey,
+/area/space)
+"y" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"z" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0;
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"A" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"B" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"C" = (
+/obj/machinery/light/incandescent/harsh{
+	nostick = 1
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"D" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/grey,
+/area/space)
+"E" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"F" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"G" = (
+/obj/machinery/firealarm/directional/west,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"H" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 6
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"I" = (
+/obj/machinery/networked/test_apparatus/impact_pad,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"J" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/grey,
+/area/space)
+"K" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/space)
+"L" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"M" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"O" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"P" = (
+/obj/table/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/hand_labeler{
+	pixel_x = -1
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"Q" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/grey,
+/area/space)
+"R" = (
+/obj/submachine/cargopad/artlab,
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/paper{
+	name = "emergency ejection contingency plan";
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"S" = (
+/obj/table/auto,
+/obj/item/storage/box/tapebox{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/obj/item/paper_bin/artifact_paper{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"T" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"U" = (
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/obj/landmark/start/job/scientist,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"V" = (
+/obj/machinery/networked/test_apparatus/heater,
+/obj/landmark/spawner/artifact,
+/obj/machinery/light/incandescent/harsh{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"W" = (
+/obj/machinery/camera/directional/south,
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"X" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/access/artlab,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"Y" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/access/artlab,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/space)
+"Z" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 5
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/turf/simulated/floor/grey,
+/area/space)
+
+(1,1,1) = {"
+p
+p
+p
+p
+X
+z
+z
+z
+p
+"}
+(2,1,1) = {"
+p
+S
+B
+G
+T
+f
+r
+v
+p
+"}
+(3,1,1) = {"
+p
+w
+U
+g
+K
+o
+k
+C
+p
+"}
+(4,1,1) = {"
+p
+n
+T
+R
+K
+H
+M
+Z
+p
+"}
+(5,1,1) = {"
+u
+E
+K
+K
+K
+x
+t
+e
+Y
+"}
+(6,1,1) = {"
+p
+Q
+P
+V
+a
+c
+h
+W
+p
+"}
+(7,1,1) = {"
+p
+F
+y
+L
+i
+O
+m
+s
+p
+"}
+(8,1,1) = {"
+p
+l
+d
+D
+A
+q
+I
+J
+p
+"}
+(9,1,1) = {"
+p
+p
+p
+p
+X
+z
+z
+z
+p
+"}
