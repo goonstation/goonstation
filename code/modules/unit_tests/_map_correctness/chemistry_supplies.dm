@@ -28,3 +28,6 @@
 	if(!basic_supplies) . += "No basic supply lab counter"
 	if(!aux_supplies) . += "No auxiliary supply lab counter"
 	if(!orbital_shaker) . += "No orbital shaker"
+
+SET_UP_CI_TRACKING(/obj/table/reinforced/chemistry/auto)
+SET_UP_CI_TRACKING(/obj/machinery/chem_shaker)
