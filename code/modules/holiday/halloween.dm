@@ -224,9 +224,9 @@
 	name = "Dr. Jam's Console"
 	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
 	setup_starting_peripheral2 = /obj/item/peripheral/printer
-	setup_drive_type = /obj/item/disk/data/fixed_disk/hjam_rdrive
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd32/hjam_rdrive
 
-/obj/item/disk/data/fixed_disk/hjam_rdrive
+/obj/item/disk/data/fixed_disk/hd32/hjam_rdrive
 	title = "HJam_HDD"
 
 	New()
