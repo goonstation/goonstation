@@ -18,11 +18,11 @@
 	var/turf/T = get_next_turf()
 	if (!T || istype(T, /turf/unsimulated/wall/trench)) //edge of z_level or oshan trench
 		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
-		if (seller.incident(src))
-			src.sink = seller
-	var/power = src.source.laser_power()
+		if (seller.laser_sink_comp.incident(src))
+			src.sink = seller.laser_sink_comp
+	var/prop_power = src.source.laser_power() * src.power
 	src.update_source_power()
-	if(istype(src.loc, /turf/simulated/floor) && prob(power/1 MEGA WATT))
+	if(istype(src.loc, /turf/simulated/floor) && prob(prop_power/(1 MEGA WATT)))
 		src.loc:burn_tile()
 
 	for (var/mob/living/L in src.loc)
@@ -54,7 +54,7 @@
 	if (QDELETED(src))
 		return
 	if (isliving(AM) && !isintangible(AM))
-		if (!src.source.burn_living(AM, src.source.laser_power())) //burn_living() returns 1 if they are gibbed, 0 otherwise
+		if (!src.source.burn_living(AM, src.source.laser_power() * src.power)) //burn_living() returns 1 if they are gibbed, 0 otherwise
 			source.affecting_mobs |= AM
 
 /obj/linked_laser/ptl/Uncrossed(var/atom/movable/AM)
@@ -64,7 +64,7 @@
 
 /obj/linked_laser/ptl/proc/burn_all_living_contents()
 	for(var/mob/living/L in src.loc)
-		if(src.source.burn_living(L,src.source.laser_power()) && source) //returns 1 if they were gibbed
+		if(src.source.burn_living(L, src.source.laser_power() * src.power) && source) //returns 1 if they were gibbed
 			source.affecting_mobs -= L
 
 /obj/linked_laser/ptl/become_endpoint()

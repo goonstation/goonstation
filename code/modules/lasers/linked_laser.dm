@@ -15,8 +15,8 @@
 	var/turf/current_turf = null
 	///Are we at the very end of the beam, and so watching to see if the next turf becomes free
 	var/is_endpoint = FALSE
-	///A laser sink we're pointing into (null on most beams)
-	var/obj/laser_sink/sink = null
+	///A laser sink component we're pointing into (null on most beams)
+	var/datum/component/laser_sink/sink = null
 	///Relative laser power, modified by splitters etc.
 	var/power = 1
 
@@ -44,10 +44,10 @@
 		blocked = TRUE
 	else
 		for (var/obj/object in next_turf)
-			if (istype(object, /obj/laser_sink))
-				var/obj/laser_sink/sink = object
-				if (sink.incident(src))
-					src.sink = sink
+			var/datum/component/laser_sink/sink_comp = object.GetComponent(/datum/component/laser_sink)
+			if (sink_comp)
+				if (sink_comp.incident(src))
+					src.sink = sink_comp
 			if (src.is_blocking(object))
 				blocked = TRUE
 				break
@@ -124,13 +124,15 @@
 ///NB: the parent is allowed to qdel src here, so child types should handle being qdeled in Crossed
 /obj/linked_laser/Crossed(atom/movable/A)
 	..()
-	if (istype(A, /obj/laser_sink) && src.previous)
-		var/turf/T = get_turf(src)
-		//we need this to happen after the crossing atom has finished moving otherwise mirrors will delete their own laser obj
-		SPAWN(0)
-			if (!QDELETED(src.previous) && get_turf(A) == T) //check that the sink hasn't moved during our SPAWN
-				src.previous.sink = A
-				src.previous.sink.incident(src.previous)
+	if (src.previous)
+		var/datum/component/laser_sink/sink_comp = A.GetComponent(/datum/component/laser_sink)
+		if (sink_comp)
+			var/turf/T = get_turf(src)
+			//we need this to happen after the crossing atom has finished moving otherwise mirrors will delete their own laser obj
+			SPAWN(0)
+				if (!QDELETED(src.previous) && get_turf(A) == T) //check that the sink hasn't moved during our SPAWN
+					src.previous.sink = sink_comp
+					src.previous.sink.incident(src.previous)
 	if (src.is_blocking(A))
 		qdel(src)
 
