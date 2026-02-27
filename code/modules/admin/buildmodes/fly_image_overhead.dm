@@ -206,19 +206,27 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			var/image/ship
 			ship = image(icon=src.image_overlay, loc=src, layer = EFFECTS_LAYER_4)
 			AddOverlays(ship, "ship")
-			if (src.loopsound)
+			if (src.check_for_pilots())
 				play()
 
 	disposing()
-		src.attached_sound = null
-		var/sound/stopsound = sound(null, wait = 0, channel=1020)
-		world << stopsound
-		for (var/obj/image_pilot/pilotobj in world)
-			if (pilotobj.loopsound)
-				pilotobj.play()
+		if (src.check_for_pilots())
+			var/sound/stopsound = sound(null, wait = TRUE, channel=1020)
+			world << stopsound
 		..()
 
 	proc/play()
 		if (src.loc && !QDELETED(src))
 			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
 			world << src.attached_sound
+
+	proc/check_for_pilots()
+		var/list/pilotlist = list()
+		for (var/obj/image_pilot/spawned_pilot in world)
+			pilotlist += spawned_pilot
+
+		if (pilotlist.len == 1)
+			if (pilotlist.Find(src))
+				return TRUE
+		else
+			return FALSE
