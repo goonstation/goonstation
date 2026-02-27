@@ -21717,7 +21717,7 @@
 /obj/item/peripheral/printer,
 /obj/item/peripheral/network/radio/locked,
 /obj/item/peripheral/drive/cart_reader,
-/obj/item/disk/data/fixed_disk,
+/obj/item/disk/data/fixed_disk/hd64,
 /obj/item/disk/data/cartridge/diagnostics{
 	pixel_x = 4;
 	pixel_y = -2

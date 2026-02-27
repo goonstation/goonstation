@@ -51807,7 +51807,7 @@
 	pixel_x = -9;
 	pixel_y = 5
 	},
-/obj/item/disk/data/fixed_disk{
+/obj/item/disk/data/fixed_disk/hd64{
 	pixel_x = 14;
 	pixel_y = 4
 	},
