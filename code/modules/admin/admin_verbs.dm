@@ -456,6 +456,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_extra_verbs,
 		/client/proc/toggle_numbers_station_messages,
 
+		/client/proc/cmd_prune_hashmaps,
 		/client/proc/ticklag,
 		/client/proc/cmd_debug_vox,
 		/client/proc/check_gang_scores,
