@@ -32,7 +32,7 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	item_state = "electronics"
 	var/computertype = null
 	var/powernet = null
 	/// Custom data saved to the on-board memory chip from its computer type

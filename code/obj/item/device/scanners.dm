@@ -21,7 +21,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 	var/on = FALSE
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
-	item_state = "electronic"
+	item_state = "accessgun"
 	m_amt = 50
 	g_amt = 20
 	var/scan_range = 3
@@ -200,7 +200,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "fs"
 	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
-	item_state = "electronic"
+	item_state = "accessgun"
 	flags = TABLEPASS | CONDUCT | SUPPRESSATTACK
 	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
@@ -1042,7 +1042,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	name = "security TicketWriter 2000"
 	desc = "A device used to issue tickets from the security department."
 	icon_state = "ticketwriter"
-	item_state = "electronic"
+	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 
 	flags = TABLEPASS | CONDUCT
@@ -1119,7 +1119,7 @@ TYPEINFO(/obj/item/device/appraisal)
 	w_class = W_CLASS_SMALL
 	m_amt = 150
 	icon_state = "CargoA"
-	item_state = "electronic"
+	item_state = "accessgun"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return

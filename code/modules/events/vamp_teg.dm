@@ -185,7 +185,7 @@
 		signal.source = src.generator
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = "ENGINE-MAILBOT"
-		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
+		signal.data["group"] = list(MGD_ENGINEER, MGA_ENGINE)
 		signal.data["message"] = "Notice: [event_string]"
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"

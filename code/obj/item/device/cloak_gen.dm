@@ -119,7 +119,7 @@ TYPEINFO(/obj/item/cloak_gen)
 	desc = "A remote control for a cloaking field generator."
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
+	item_state = "accessgun"
 	is_syndicate = 1
 	w_class = W_CLASS_SMALL
 	var/obj/item/cloak_gen/my_gen = null

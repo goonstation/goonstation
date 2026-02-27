@@ -1816,7 +1816,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	desc = "A remote control that allows you to change an entire set of chameleon clothes, all at once."
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to change the appearance of all chameleon clothing.
 							Right click on a piece of chameleon clothing and use <b>"Change appearance"</b> to change the appearance of that specific piece.

@@ -1524,6 +1524,78 @@
 	time = 3 SECONDS
 	category = "Resource"
 
+/datum/manufacture/empty_autoinjector
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/orange
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/orange)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/red
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/red)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/blue
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/blue)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/green
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/green)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/yellow
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/yellow)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/purple
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/purple)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/black
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/black)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/white
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/white)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
 #ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/
 
