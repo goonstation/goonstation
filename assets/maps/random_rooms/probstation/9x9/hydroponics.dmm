@@ -1,0 +1,342 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/space)
+"c" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
+/turf/simulated/floor,
+/area/space)
+"d" = (
+/obj/submachine/chem_extractor,
+/turf/simulated/floor,
+/area/space)
+"f" = (
+/turf/simulated/wall/auto/jen,
+/area/space)
+"i" = (
+/turf/simulated/floor/grass/random,
+/area/space)
+"m" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/table/auto,
+/obj/machinery/coffeemaker/botany,
+/turf/simulated/floor/grass/random,
+/area/space)
+"o" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/grass/random,
+/area/space)
+"q" = (
+/obj/submachine/seed_manipulator,
+/turf/simulated/floor,
+/area/space)
+"r" = (
+/obj/stool/chair/couch/green{
+	dir = 10
+	},
+/obj/landmark/start/job/botanist,
+/turf/simulated/floor,
+/area/space)
+"s" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/space)
+"t" = (
+/obj/stool/chair/green{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/space)
+"u" = (
+/obj/stool/chair/couch/green{
+	dir = 9
+	},
+/obj/landmark/start/job/botanist,
+/turf/simulated/floor,
+/area/space)
+"v" = (
+/obj/storage/secure/closet/civilian/hydro,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor,
+/area/space)
+"w" = (
+/turf/simulated/floor/stairs/wide/middle,
+/area/space)
+"x" = (
+/obj/reagent_dispensers/watertank/big,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/space)
+"y" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/stairs/wide/green/other,
+/area/space)
+"z" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
+/turf/simulated/floor,
+/area/space)
+"A" = (
+/obj/stool/chair/couch/green{
+	dir = 5
+	},
+/obj/landmark/start/job/botanist,
+/obj/machinery/phone/wall{
+	pixel_x = 25;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/space)
+"B" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/grass/random,
+/area/space)
+"C" = (
+/obj/shrub{
+	dir = 1
+	},
+/turf/simulated/floor/grass/random,
+/area/space)
+"E" = (
+/obj/storage/secure/closet/civilian/hydro,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space)
+"F" = (
+/obj/reagent_dispensers/compostbin,
+/turf/simulated/floor/stairs/wide/green,
+/area/space)
+"H" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/grass/random,
+/area/space)
+"I" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/submachine/cargopad/hydroponic,
+/turf/simulated/floor,
+/area/space)
+"K" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/grass/random,
+/area/space)
+"L" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs/wide/middle,
+/area/space)
+"P" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/space)
+"R" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
+/area/space)
+"S" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/space)
+"T" = (
+/obj/submachine/seed_vendor,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space)
+"U" = (
+/obj/machinery/vending/hydroponics,
+/turf/simulated/floor,
+/area/space)
+"V" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
+/turf/simulated/floor,
+/area/space)
+"W" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/random,
+/area/space)
+"X" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/space)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grass/random,
+/area/space)
+"Z" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/grass/random,
+/area/space)
+
+(1,1,1) = {"
+f
+f
+f
+f
+z
+f
+a
+a
+f
+"}
+(2,1,1) = {"
+f
+v
+x
+F
+W
+Z
+K
+B
+a
+"}
+(3,1,1) = {"
+f
+E
+I
+L
+S
+i
+B
+H
+a
+"}
+(4,1,1) = {"
+f
+d
+t
+w
+i
+i
+B
+B
+f
+"}
+(5,1,1) = {"
+V
+X
+s
+L
+m
+Y
+Y
+Y
+V
+"}
+(6,1,1) = {"
+f
+q
+u
+w
+W
+i
+B
+B
+f
+"}
+(7,1,1) = {"
+f
+T
+r
+w
+P
+i
+B
+H
+a
+"}
+(8,1,1) = {"
+f
+U
+A
+y
+W
+C
+R
+o
+a
+"}
+(9,1,1) = {"
+f
+f
+f
+f
+c
+f
+a
+a
+f
+"}
