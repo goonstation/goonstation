@@ -9,6 +9,7 @@
 	HELP_MESSAGE_OVERRIDE({"Use a <b>screwdriver</b> to open the case, allowing you to do the following:
 		Use in-hand to toggle the write protect switch.
 		Zap with a <b>multitool</b> to wipe the disk."})
+		//Help intentionally does not mention the fact you can repair/tamper with circuitry since it's meant to be a neat hidden feature.
 
 	clone()
 		var/obj/item/disk/data/fixed_disk/D = ..()
