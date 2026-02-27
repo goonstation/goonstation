@@ -190,3 +190,75 @@ proc/end_sentence(sentence, punctuation = ".")
 	if (sentence_end_regex.Find(sentence))
 		return sentence
 	return sentence + punctuation
+
+/// Replace all instances of a char, with consecutive chars all replaced only once (Ex: "?xxx?xx?x?" => "?y?y?y?"). Useful for parsing.
+proc/text_replace_repeat(var/text, var/target_char, var/replacement)
+	var/new_text = ""
+	var/is_repeat = FALSE
+	for(var/i in 1 to length(text))
+		var/char = copytext(text, i, i+1)
+		if(char == target_char)
+			if(is_repeat)
+				continue
+			new_text += replacement
+			is_repeat = TRUE
+		else
+			new_text += char
+			is_repeat = FALSE
+	return new_text
+
+/// Return true if the text contains any of the specified characters.
+proc/contains_chars(var/text, var/list/other_chars, var/include_nums = FALSE, var/include_letters = FALSE)
+	for(var/i in 1 to length(text))
+		var/input_char = copytext(text, i, i+1)
+		if(include_nums && text2num_safe(input_char))
+			return TRUE
+		if(include_letters && (is_uppercase_letter(input_char) || is_lowercase_letter(input_char)))
+			return TRUE
+		if(other_chars)
+			for(var/char in other_chars)
+				if(input_char == char)
+					return TRUE
+	return FALSE
+
+/// Remove any characters in the text that are not listed
+proc/limit_chars(var/text, var/list/other_chars, var/include_nums = FALSE, var/include_letters = FALSE)
+	var/new_text = ""
+	for(var/i in 1 to length(text))
+		var/input_char = copytext(text, i, i+1)
+		if(include_nums && text2num_safe(input_char))
+			new_text += input_char
+		else if(include_letters && (is_uppercase_letter(input_char) || is_lowercase_letter(input_char)))
+			new_text += input_char
+		else
+			for(var/char in other_chars)
+				if(input_char == char)
+					new_text += input_char
+					break
+	return new_text
+
+/// Checks if the two text strings are equal, but ignore a specific character
+proc/text_equals_partial(var/textA, var/textB, var/ignore_char = "?")
+	if(length(textA) != length(textB))
+		return FALSE
+	for(var/i in 1 to length(textA))
+		var/charA = copytext(textA, i, i+1)
+		var/charB = copytext(textB, i, i+1)
+		if(charA != ignore_char && charB != ignore_char && charA != charB)
+			return FALSE
+	return TRUE
+
+/// Return true if the text contained in needles appears in haystack in the same order
+proc/findtextEx_ordered(var/haystack, var/list/needles)
+	if(length(needles) == 0)
+		return TRUE
+	if(length(needles) == 1)
+		return findtextEx(haystack, needles[1])
+	var/list/needle_index = list()
+	needle_index += findtextEx(haystack, needles[1])
+	for(var/i in 2 to length(needles))
+		needle_index += findtextEx(haystack, needles[i], needle_index[i-1] + length(needles[i-1]))
+	for(var/pos in needle_index)
+		if(pos == 0)
+			return FALSE
+	return TRUE

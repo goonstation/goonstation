@@ -146,13 +146,9 @@ export default (env = {}, argv) => {
               issuer: /\.(s)?css$/,
               type: 'asset/inline',
               generator: {
-                encoding: 'base64',
-                transformation: {
-                  transformer: (content) => {
-                    return Buffer.from(
-                      content.toString().replace(/\r\n/g, '\n'),
-                    );
-                  },
+                dataUrl: (content) => {
+                  const normalized = content.toString().replace(/\r\n/g, '\n');
+                  return `data:image/svg+xml;base64,${Buffer.from(normalized).toString('base64')}`;
                 },
               },
             },
@@ -160,13 +156,6 @@ export default (env = {}, argv) => {
               type: 'asset/resource',
               generator: {
                 filename: 'assets/[name][ext]',
-                transformation: {
-                  transformer: (content) => {
-                    return Buffer.from(
-                      content.toString().replace(/\r\n/g, '\n'),
-                    );
-                  },
-                },
               },
             },
           ],

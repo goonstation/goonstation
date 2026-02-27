@@ -233,6 +233,14 @@ export const IDComputer = () => {
                             {(target_rank && target_rank.trim()) ||
                               'Unassigned'}
                           </Button>
+                          <Button
+                            icon="id-card"
+                            color="green"
+                            tooltip="Set Access to Assignment"
+                            onClick={() =>
+                              act('assign', { assign: target_rank })
+                            }
+                          />
                         </LabeledList.Item>
                       </LabeledList>
                     </Stack.Item>

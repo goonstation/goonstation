@@ -64,7 +64,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 	icon_state = "white"
 	icon_closed = "white"
 	spawn_contents = list(/obj/item/clothing/under/color/white{pixel_x = 0; pixel_y = -3} = 4,
-	/obj/item/clothing/shoes/brown{pixel_x = 0; pixel_y = -12} = 4,
+	/obj/item/clothing/shoes/white{pixel_x = 0; pixel_y = -12} = 4,
 	/obj/item/clothing/head/white{pixel_x = 0; pixel_y = 8} = 2)
 
 /obj/storage/closet/wardrobe/pink

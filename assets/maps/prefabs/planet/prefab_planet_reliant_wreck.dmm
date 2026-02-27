@@ -31,7 +31,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "fr" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	density = 0;
 	dir = 8;
 	name = "utility sink";

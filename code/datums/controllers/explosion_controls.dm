@@ -19,12 +19,9 @@ var/datum/explosion_controller/explosions
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
-			var/fprint = null
-			if(istype(source))
-				fprint = source.fingerprintslast
 			while(!istype(A, /turf))
 				if(!istype(A, /mob) && A != source)
-					A.ex_act(severity, fprint, power, E)
+					A.ex_act(severity, source.get_last_ckey(), power, E)
 				A = A.loc
 		if (!istype(epicenter, /turf))
 			epicenter = get_turf(epicenter)
@@ -173,7 +170,7 @@ var/datum/explosion_controller/explosions
 	var/turf_safe
 	var/range_cutoff_fraction
 	var/flash_radiation_multiplier //! Number (0-1) related to power which determines how devastating the radioactive component of the explosion is, at all
-	var/last_touched = "*null*"
+	var/last_touched = "None"
 
 	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation_multiplier=0)
 		..()
@@ -200,15 +197,16 @@ var/datum/explosion_controller/explosions
 				if (src.turf_safe)
 					log_attributes += "turf-safe"
 					radioactive_power_info = " and radioactive power [src.flash_radiation_multiplier] "
-				var/logmsg = "Explosion [length(log_attributes) > 0 ? "([jointext(log_attributes, ",")]) " : ""]with power [power][radioactive_power_info] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+				var/last_ckey_source = source.get_last_ckey()
+				var/logmsg = "Explosion [length(log_attributes) > 0 ? "([jointext(log_attributes, ",")]) " : ""]with power [power][radioactive_power_info] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(last_ckey_source)] (usr: [ismob(user) ? key_name(user) : user])"
 				var/mob/M = null
 				if(ismob(user))
 					M = user
-				if(power > 10 && (source?.fingerprintslast || M?.last_ckey) && !istype(A, /area/mining/magnet) && !istype(source, /obj/machinery/vehicle/escape_pod))
+				if(power > 10 && (last_ckey_source || M?.last_ckey) && !istype(A, /area/mining/magnet) && !istype(source, /obj/machinery/vehicle/escape_pod))
 					message_admins(logmsg)
-				if (source?.fingerprintslast)
-					logTheThing(LOG_BOMBING, source.fingerprintslast, logmsg)
-					logTheThing(LOG_DIARY, source.fingerprintslast, logmsg, "combat")
+				if (last_ckey_source)
+					logTheThing(LOG_BOMBING, last_ckey_source, logmsg)
+					logTheThing(LOG_DIARY, last_ckey_source, logmsg, "combat")
 				else
 					logTheThing(LOG_BOMBING, user, logmsg)
 					logTheThing(LOG_DIARY, user, logmsg, "combat")
@@ -230,8 +228,8 @@ var/datum/explosion_controller/explosions
 
 		var/radius = round(sqrt(power), 1) * brisance * range_cutoff_fraction
 
-		if (istype(source)) // Cannot read null.fingerprintslast
-			last_touched = source.fingerprintslast
+		if (istype(source)) // Cannot read null.get_last_ckey()
+			src.last_touched = source.get_last_ckey()
 
 		var/list/nodes = list()
 		var/list/blame = list()

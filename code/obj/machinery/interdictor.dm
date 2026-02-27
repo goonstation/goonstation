@@ -452,7 +452,7 @@ TYPEINFO(/obj/item/interdictor_board)
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdict-board"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	health = 6
 	w_class = W_CLASS_TINY
 	flags = TABLEPASS | CONDUCT
@@ -501,8 +501,6 @@ TYPEINFO(/obj/item/interdictor_board)
 		if (canbuild)
 			boutput(user, SPAN_NOTICE("You empty the box of parts onto the floor."))
 			var/obj/frame = new /obj/interdictor_frame( get_turf(user) )
-			frame.fingerprints = src.fingerprints
-			frame.fingerprints_full = src.fingerprints_full
 			frame.forensic_holder = src.forensic_holder
 			qdel(src)
 

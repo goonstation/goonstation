@@ -205,7 +205,8 @@
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2,
-		/obj/item/material_piece/cloth/cottonfabric = 2)
+		/obj/item/material_piece/cloth/cottonfabric = 2,
+		/obj/item/material_piece/cobryl = 2)
 	available = list(
 		/datum/manufacture/scalpel,
 		/datum/manufacture/circular_saw,
@@ -224,6 +225,14 @@
 		/datum/manufacture/mender,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
+		/datum/manufacture/empty_autoinjector/orange,
+		/datum/manufacture/empty_autoinjector/red,
+		/datum/manufacture/empty_autoinjector/blue,
+		/datum/manufacture/empty_autoinjector/green,
+		/datum/manufacture/empty_autoinjector/yellow,
+		/datum/manufacture/empty_autoinjector/purple,
+		/datum/manufacture/empty_autoinjector/black,
+		/datum/manufacture/empty_autoinjector/white,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,
@@ -248,6 +257,9 @@
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/empty_kit,
+		/datum/manufacture/chembarrel,
+		/datum/manufacture/chembarrel/yellow,
+		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
