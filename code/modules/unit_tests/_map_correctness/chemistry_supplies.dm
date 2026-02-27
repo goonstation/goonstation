@@ -7,6 +7,15 @@
 	var/basic_supplies = FALSE
 	var/aux_supplies = FALSE
 	var/orbital_shaker = FALSE
+	var/chem_department_present = FALSE
+
+	var/list/area/station/areas = global.get_accessible_station_areas()
+	for (var/area_name in areas)
+		var/area/station/A = areas[area_name]
+		if (istype(A, /area/station/science/chemistry))
+			chem_department_present = TRUE
+			break
+	if(!chem_department_present) return
 
 	for_by_tcl(table, /obj/table/reinforced/chemistry/auto)
 		var/area/A = get_area(table)
