@@ -22,6 +22,14 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/ai_upload,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
+"j" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "k" = (
@@ -34,6 +42,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
+"l" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
 "n" = (
 /obj/machinery/door/airlock/pyro/command{
 	req_access = null
@@ -41,6 +56,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "o" = (
@@ -121,6 +137,11 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
+"C" = (
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
 "E" = (
 /obj/machinery/turret{
 	dir = 6
@@ -129,6 +150,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
+"H" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "I" = (
 /obj/cable,
@@ -154,9 +182,6 @@
 "L" = (
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/wall/auto/reinforced/jen/blue,
@@ -241,17 +266,17 @@
 
 (1,1,1) = {"
 a
-I
+j
 I
 I
 u
 I
 I
-I
+C
 a
 "}
 (2,1,1) = {"
-k
+l
 a
 a
 a
@@ -317,7 +342,7 @@ a
 k
 "}
 (8,1,1) = {"
-k
+H
 a
 a
 a
@@ -325,16 +350,16 @@ f
 a
 a
 a
-k
+H
 "}
 (9,1,1) = {"
 a
-I
+j
 I
 I
 W
 I
 I
-I
+C
 a
 "}

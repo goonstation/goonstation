@@ -72,6 +72,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/access/cargo,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/plating,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -112,6 +114,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/cargo,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -127,6 +133,8 @@
 	})
 "S" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/access/cargo,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/plating,
 /area/station/engine/inner{
 	name = "Transception Array Control"
