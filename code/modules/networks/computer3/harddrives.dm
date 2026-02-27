@@ -23,7 +23,7 @@
 	hd16
 		file_amount = 16
 		max_file_amount = 16
-		icon_state = "harddisk16"
+		icon_state = "harddisk"
 		name = "storage drive"
 		desc = "An old harddrive from a now-defunct company."
 
@@ -62,10 +62,10 @@
 /obj/item/disk/data/fixed_disk/examine()
 	. = ..()
 	if(case_open)
-		. += "<b>The case is open, explosing the internal circuitry."
+		. += "<b>The case is open, exposing the internal circuitry."
 		. += "<b>The write-protect switch is set to [src.read_only ? "protected" : "unprotected"]."
 		if(max_file_amount > file_amount)
-			. += "<b>The soldering looks tampered with."
+			. += "<b>The circuit looks tampered with."
 
 /obj/item/disk/data/fixed_disk/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W))
