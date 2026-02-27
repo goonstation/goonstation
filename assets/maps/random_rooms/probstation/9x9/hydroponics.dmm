@@ -2,7 +2,7 @@
 "a" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/hydroponics/bay)
 "c" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -13,17 +13,17 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hydro,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "d" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "f" = (
 /turf/simulated/wall/auto/jen,
-/area/space)
+/area/station/hydroponics/bay)
 "i" = (
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "m" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -34,25 +34,25 @@
 /obj/table/auto,
 /obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "o" = (
 /obj/machinery/plantpot{
 	anchored = 1
 	},
 /obj/machinery/camera/directional/east,
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "q" = (
 /obj/submachine/seed_manipulator,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "r" = (
 /obj/stool/chair/couch/green{
 	dir = 10
 	},
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "s" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -61,7 +61,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "t" = (
 /obj/stool/chair/green{
 	dir = 1
@@ -70,22 +70,22 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "u" = (
 /obj/stool/chair/couch/green{
 	dir = 9
 	},
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "v" = (
 /obj/storage/secure/closet/civilian/hydro,
 /obj/machinery/camera/directional/north,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "w" = (
 /turf/simulated/floor/stairs/wide/middle,
-/area/space)
+/area/station/hydroponics/bay)
 "x" = (
 /obj/reagent_dispensers/watertank/big,
 /obj/machinery/power/apc/autoname_west,
@@ -93,11 +93,11 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "y" = (
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/stairs/wide/green/other,
-/area/space)
+/area/station/hydroponics/bay)
 "z" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 8
@@ -108,7 +108,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hydro,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "A" = (
 /obj/stool/chair/couch/green{
 	dir = 5
@@ -119,34 +119,34 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "B" = (
 /obj/machinery/plantpot{
 	anchored = 1
 	},
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "C" = (
 /obj/shrub{
 	dir = 1
 	},
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "E" = (
 /obj/storage/secure/closet/civilian/hydro,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "F" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/stairs/wide/green,
-/area/space)
+/area/station/hydroponics/bay)
 "H" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "I" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -156,7 +156,7 @@
 	},
 /obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "K" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -165,20 +165,20 @@
 	dir = 8
 	},
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "L" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/stairs/wide/middle,
-/area/space)
+/area/station/hydroponics/bay)
 "P" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "R" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -187,25 +187,25 @@
 	dir = 4
 	},
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "S" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "T" = (
 /obj/submachine/seed_vendor,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "U" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "V" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/cable{
@@ -214,32 +214,32 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hydro,
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "W" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "X" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/hydroponics/bay)
 "Y" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 "Z" = (
 /obj/shrub{
 	dir = 6
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/grass/random,
-/area/space)
+/area/station/hydroponics/bay)
 
 (1,1,1) = {"
 f

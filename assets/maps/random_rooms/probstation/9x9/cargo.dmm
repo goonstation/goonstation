@@ -6,15 +6,21 @@
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "b" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "c" = (
 /turf/simulated/floor/engine/caution/west,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "d" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -23,7 +29,9 @@
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "e" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -35,7 +43,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "f" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 8
@@ -46,20 +56,28 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "h" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "i" = (
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/engine/caution/corner,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "j" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "n" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -67,34 +85,46 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "o" = (
 /obj/machinery/computer/supplycomp,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "p" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "q" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/corner,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "r" = (
 /turf/simulated/floor/engine/caution/south,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "s" = (
 /obj/machinery/computer/barcode/qm/no_belthell,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "t" = (
 /obj/landmark/start/job/quartermaster,
 /obj/machinery/power/apc/autoname_east,
@@ -102,10 +132,14 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "x" = (
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "z" = (
 /obj/machinery/transception_pad,
 /obj/cable{
@@ -115,7 +149,9 @@
 /turf/simulated/floor/engine/caution/misc{
 	dir = 6
 	},
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "B" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/cargo,
@@ -124,7 +160,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "C" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -132,10 +170,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/cashreg,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "E" = (
 /turf/simulated/wall/auto/jen/yellow,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "F" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -147,29 +189,39 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "G" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "H" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine/caution/east,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "I" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "L" = (
 /obj/machinery/computer/transception,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "M" = (
 /obj/machinery/transception_pad,
 /obj/cable{
@@ -178,7 +230,9 @@
 /turf/simulated/floor/engine/caution/misc{
 	dir = 6
 	},
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "N" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -187,42 +241,58 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "O" = (
 /obj/stool/chair/office/yellow,
 /obj/landmark/start/job/quartermaster,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "P" = (
 /obj/machinery/manufacturer/qm,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "R" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /obj/item/cargotele,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "S" = (
 /obj/submachine/cargopad/qm,
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "V" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "W" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "X" = (
 /turf/simulated/floor/engine/caution/north,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "Y" = (
 /obj/stool/chair/office/yellow{
 	dir = 1
@@ -232,7 +302,9 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "Z" = (
 /obj/landmark/start/job/quartermaster,
 /obj/machinery/phone/wall{
@@ -240,7 +312,9 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 
 (1,1,1) = {"
 E
