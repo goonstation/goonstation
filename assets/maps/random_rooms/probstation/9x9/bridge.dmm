@@ -131,6 +131,7 @@
 	opacity = 0;
 	id = "bridge"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "m" = (
@@ -160,6 +161,7 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "p" = (
@@ -185,6 +187,9 @@
 	opacity = 0
 	},
 /obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "r" = (
@@ -197,6 +202,9 @@
 	opacity = 0
 	},
 /obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "s" = (
@@ -212,6 +220,21 @@
 /area/station/bridge)
 "t" = (
 /turf/simulated/floor/black,
+/area/station/bridge)
+"u" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	layer = 4;
+	opacity = 0
+	},
+/obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/station/bridge)
 "v" = (
 /obj/table/auto,
@@ -270,6 +293,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/greenblack{
 	dir = 9
 	},
@@ -290,6 +314,7 @@
 	id = "bridge"
 	},
 /obj/mapping_helper/access/heads,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "D" = (
@@ -328,9 +353,30 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/blind_switch/area/east{
+	pixel_y = -4
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = 6
+	},
 /turf/simulated/floor/greenblack{
 	dir = 5
 	},
+/area/station/bridge)
+"H" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	layer = 4;
+	opacity = 0
+	},
+/obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
 /area/station/bridge)
 "I" = (
 /obj/cable{
@@ -360,6 +406,21 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/bridge)
+"M" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	layer = 4;
+	opacity = 0
+	},
+/obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
 /area/station/bridge)
 "N" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
@@ -467,10 +528,10 @@
 (1,1,1) = {"
 A
 A
-r
+u
 r
 l
-r
+u
 r
 A
 A
@@ -556,10 +617,10 @@ A
 A
 A
 q
-r
+H
 C
-r
-r
+M
+H
 A
 A
 "}

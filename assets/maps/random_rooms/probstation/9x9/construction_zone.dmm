@@ -26,6 +26,10 @@
 /obj/item/clothing/head/constructioncone,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
+"k" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
 "l" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33,6 +37,7 @@
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "m" = (
@@ -47,6 +52,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "r" = (
@@ -67,6 +73,16 @@
 /area/station/hallway/secondary/construction)
 "A" = (
 /obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"E" = (
+/obj/blind_switch/area/east,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"H" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "I" = (
@@ -90,6 +106,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
+"M" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
 "O" = (
 /obj/machinery/door/airlock/pyro/glass{
 	id = "const_zone"
@@ -97,6 +118,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "P" = (
@@ -106,6 +128,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"Q" = (
+/obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "R" = (
@@ -125,6 +151,11 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"W" = (
+/obj/item/clothing/head/constructioncone,
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "Y" = (
@@ -151,14 +182,14 @@ a
 w
 j
 S
-j
+W
 w
 m
-A
+H
 "}
 (3,1,1) = {"
 r
-a
+k
 a
 e
 R
@@ -176,7 +207,7 @@ J
 a
 a
 h
-A
+M
 "}
 (5,1,1) = {"
 o
@@ -198,7 +229,7 @@ a
 U
 a
 j
-A
+H
 "}
 (7,1,1) = {"
 r
@@ -215,12 +246,12 @@ A
 r
 j
 w
-a
+Q
 S
 a
 w
-a
-A
+E
+M
 "}
 (9,1,1) = {"
 r

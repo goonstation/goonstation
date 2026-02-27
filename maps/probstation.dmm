@@ -325,7 +325,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "KY" = (
-/obj/machinery/door/airlock/pyro/maintenance{
+/obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
