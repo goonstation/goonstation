@@ -87,3 +87,8 @@ proc/buildRandomRooms()
 	d2_artlab_5x15
 		size = "5x15"
 		additional_tags = list("d2_artlab")
+
+	probstation
+		size = "9x9"
+		icon = 'icons/effects/mapeditor/9x9tiles.dmi'
+		additional_tags = list("probstation")

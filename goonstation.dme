@@ -2944,6 +2944,7 @@
 #include "code\turf\turf_drawbridge.dm"
 #include "code\turf\turf_flock.dm"
 #include "code\turf\walls.dm"
+#include "code\WorkInProgress\__development.local.dm"
 #include "code\WorkInProgress\AbilityItem.dm"
 #include "code\WorkInProgress\actuallyKeelinsStuff.dm"
 #include "code\WorkInProgress\aloe_stuff_public.dm"
@@ -3073,6 +3074,7 @@
 #include "code\z_dmm_suite\writer.dm"
 #include "interface\skin.dmf"
 #include "maps\config\map.dm"
+#include "maps\config\probstation.dm"
 // END_INCLUDE
 
 #ifdef SECRETS_ENABLED
