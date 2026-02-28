@@ -259,7 +259,9 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/space,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
 /area/station/crew_quarters/kitchen)
 "O" = (
 /obj/cable{
