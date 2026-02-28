@@ -1,0 +1,513 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/pharmacy,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/cashreg,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"b" = (
+/obj/landmark/start/job/medical_trainee,
+/turf/simulated/floor/white/checker,
+/area/space)
+"c" = (
+/obj/storage/secure/closet/research/chemical/pharmacy,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"d" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"e" = (
+/obj/submachine/chem_extractor,
+/obj/machinery/camera/directional/east,
+/obj/item/device/radio/intercom/medical,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"f" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"g" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"h" = (
+/obj/machinery/chem_heater,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"i" = (
+/obj/machinery/manufacturer/medical,
+/obj/machinery/light_switch/west,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/item/device/radio/intercom/medical{
+	dir = 1
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"j" = (
+/obj/stool/chair/office/blue,
+/obj/landmark/start/job/pharmacist,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"k" = (
+/turf/simulated/wall/auto/jen/blue,
+/area/space)
+"l" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/white/checker,
+/area/space)
+"m" = (
+/obj/table/auto,
+/obj/item/storage/box/stma_kit{
+	pixel_x = -5
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = 5
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/robodefibrillator,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"n" = (
+/obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"o" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/phone/wall{
+	pixel_x = 28;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"p" = (
+/obj/machinery/door/airlock/pyro/medical/alt2,
+/obj/mapping_helper/access/medlocker,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"q" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/space)
+"r" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/space)
+"t" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/mapping_helper/access/medlocker,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"u" = (
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/white/checker,
+/area/space)
+"v" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"w" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"x" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"y" = (
+/obj/machinery/chem_master,
+/obj/machinery/light_switch/south,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"z" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"B" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/white/checker,
+/area/space)
+"C" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"D" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/space)
+"E" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"F" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"G" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/white/checker,
+/area/space)
+"I" = (
+/obj/machinery/door/airlock/pyro/medical/alt2,
+/obj/mapping_helper/access/pharmacy,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"J" = (
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"K" = (
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"L" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/mapping_helper/access/pharmacy,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"M" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"N" = (
+/obj/rack,
+/obj/item/storage/belt/medical{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/storage/belt/medical{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/hazard/paramedic{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hazard/paramedic{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/robodefibrillator,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/space)
+"O" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/space)
+"P" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Q" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"R" = (
+/obj/storage/cart/medcart/crash,
+/obj/item_dispenser/latex_gloves,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/white/checker,
+/area/space)
+"S" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/mapping_helper/access/pharmacy,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"U" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"V" = (
+/turf/simulated/floor/white/checker,
+/area/space)
+"X" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/white/checker,
+/area/space)
+"Y" = (
+/obj/cabinet/chemistry,
+/turf/simulated/floor/specialroom/medbay,
+/area/space)
+"Z" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/storage/secure/closet/medical/medkit,
+/turf/simulated/floor/white/checker,
+/area/space)
+
+(1,1,1) = {"
+k
+k
+P
+q
+t
+q
+r
+k
+k
+"}
+(2,1,1) = {"
+k
+R
+V
+b
+M
+X
+u
+i
+k
+"}
+(3,1,1) = {"
+k
+Z
+m
+N
+g
+l
+v
+G
+k
+"}
+(4,1,1) = {"
+k
+P
+q
+q
+S
+O
+M
+B
+k
+"}
+(5,1,1) = {"
+I
+E
+z
+F
+K
+D
+f
+x
+p
+"}
+(6,1,1) = {"
+k
+Y
+K
+C
+K
+Q
+L
+r
+k
+"}
+(7,1,1) = {"
+k
+h
+E
+U
+w
+n
+d
+y
+k
+"}
+(8,1,1) = {"
+k
+e
+J
+c
+C
+K
+j
+o
+k
+"}
+(9,1,1) = {"
+k
+k
+P
+q
+a
+q
+r
+k
+k
+"}

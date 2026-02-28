@@ -3466,6 +3466,10 @@ ABSTRACT_TYPE(/area/station/science)
 	icon_state = "telelab"
 	station_map_colour = MAPC_TELESCI
 
+/area/station/science/teleporter/foyer
+	name = "Science Teleporter Foyer"
+	icon_state = "purple"
+
 /area/station/science/research_director
 	name = "Research Director's Office"
 	icon_state = "toxlab"
