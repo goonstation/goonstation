@@ -3073,7 +3073,6 @@
 #include "code\z_dmm_suite\writer.dm"
 #include "interface\skin.dmf"
 #include "maps\config\map.dm"
-#include "maps\config\probstation.dm"
 // END_INCLUDE
 
 #ifdef SECRETS_ENABLED
