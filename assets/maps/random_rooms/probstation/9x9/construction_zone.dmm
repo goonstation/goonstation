@@ -9,6 +9,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
+"d" = (
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
 "e" = (
 /obj/cable{
 	icon_state = "2-6"
@@ -248,7 +252,7 @@ j
 w
 Q
 S
-a
+d
 w
 E
 M

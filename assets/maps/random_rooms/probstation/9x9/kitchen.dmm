@@ -72,13 +72,15 @@
 	},
 /area/station/crew_quarters/kitchen)
 "k" = (
-/obj/mapping_helper/access/kitchen,
 /obj/machinery/door/airlock/pyro/alt,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/space,
+/obj/mapping_helper/access/kitchen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
 /area/station/crew_quarters/kitchen)
 "l" = (
 /obj/machinery/vending/kitchen,
@@ -276,10 +278,12 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "S" = (
-/obj/mapping_helper/access/kitchen,
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/firedoor_spawn,
-/turf/space,
+/obj/mapping_helper/access/kitchen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
 /area/station/crew_quarters/kitchen)
 "T" = (
 /obj/table/reinforced/auto,

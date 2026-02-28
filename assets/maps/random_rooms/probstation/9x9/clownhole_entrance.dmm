@@ -18,6 +18,14 @@
 	},
 /turf/simulated/floor/carpet/clowncarpet,
 /area/station/crew_quarters/clown)
+"c" = (
+/obj/machinery/camera/directional/east,
+/turf/space,
+/area/station/crew_quarters/clown)
+"d" = (
+/obj/machinery/camera/directional/west,
+/turf/space,
+/area/station/crew_quarters/clown)
 "r" = (
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/clown)
@@ -87,7 +95,7 @@ Q
 L
 Q
 Q
-Q
+d
 r
 "}
 (3,1,1) = {"
@@ -147,7 +155,7 @@ r
 "}
 (8,1,1) = {"
 r
-Q
+c
 Q
 Q
 L

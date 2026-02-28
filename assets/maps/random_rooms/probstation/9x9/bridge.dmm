@@ -195,6 +195,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/camera/directional/north{
+	pixel_x = 18
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -239,6 +242,7 @@
 	dir = 4
 	},
 /obj/landmark/start/job/head_of_security,
+/obj/machinery/camera/directional/south,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge)
 "y" = (
