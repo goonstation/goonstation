@@ -163,7 +163,7 @@
 	dir = 1;
 	pixel_y = 24
 	},
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "dB" = (
 /turf/simulated/wall/auto/jen,
@@ -216,7 +216,7 @@
 /area/station/hallway/primary/west)
 "ez" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/airless/minitiles,
+/turf/simulated/floor/minitiles,
 /area/station/hallway/primary/east)
 "eF" = (
 /turf/simulated/wall/auto/jen/green,
@@ -488,7 +488,7 @@
 /area/station/maintenance/inner/se)
 "kS" = (
 /obj/machinery/vending/air_vendor,
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "kV" = (
 /obj/machinery/light/incandescent/netural{
@@ -530,7 +530,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "lR" = (
 /obj/reagent_dispensers/foamtank,
@@ -627,14 +627,14 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "nM" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/south)
 "nX" = (
-/turf/simulated/floor/airless/stairs/dark/wide{
+/turf/simulated/floor/stairs/dark/wide{
 	dir = 6
 	},
 /area/station/hallway/primary/east)
@@ -697,7 +697,7 @@
 /area/station/crew_quarters/garden)
 "pa" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/airless/stairs/wide/other,
+/turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/east)
 "pn" = (
 /obj/shrub{
@@ -824,7 +824,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "qL" = (
-/turf/simulated/floor/airless/minitiles,
+/turf/simulated/floor/minitiles,
 /area/station/hallway/primary/east)
 "qN" = (
 /turf/simulated/floor/stairs/medical/wide/other{
@@ -940,7 +940,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/turf/simulated/floor/airless/minitiles,
+/turf/simulated/floor/minitiles,
 /area/station/hallway/primary/east)
 "sC" = (
 /obj/landmark/random_room/size3x5,
@@ -959,10 +959,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
 "sK" = (
-/turf/simulated/floor/airless/stairs/dark/wide,
+/turf/simulated/floor/stairs/dark/wide,
 /area/station/hallway/primary/east)
 "sV" = (
-/turf/simulated/floor/airless/stairs/wide,
+/turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/east)
 "tf" = (
 /obj/machinery/vending/cigarette,
@@ -1101,7 +1101,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "wt" = (
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "wy" = (
 /turf/simulated/floor/arrival,
@@ -1250,7 +1250,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "zy" = (
-/turf/simulated/floor/airless/stairs/wide/other,
+/turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/south)
 "zJ" = (
 /obj/landmark/random_room/size3x3,
@@ -1379,7 +1379,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
 "Cp" = (
-/turf/simulated/floor/airless/orange/corner{
+/turf/simulated/floor/orange/corner{
 	dir = 8
 	},
 /area/station/hallway/primary/north)
@@ -1668,7 +1668,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/stairs/wide/middle,
+/turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/primary/east)
 "IJ" = (
 /obj/cable{
@@ -1775,14 +1775,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/stairs/wide,
+/turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/south)
 "KL" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hallway/primary/southeast)
 "KM" = (
 /obj/railing,
-/turf/simulated/floor/airless/black,
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "KY" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -1818,7 +1818,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/stairs/dark/wide{
+/turf/simulated/floor/stairs/dark/wide{
 	dir = 4
 	},
 /area/station/hallway/primary/north)
@@ -1860,7 +1860,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "Mv" = (
-/turf/simulated/floor/airless/orange/side,
+/turf/simulated/floor/orange/side,
 /area/station/hallway/primary/north)
 "Mz" = (
 /obj/machinery/light/incandescent/netural{
@@ -1978,7 +1978,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/minitiles,
+/turf/simulated/floor/minitiles,
 /area/station/hallway/primary/east)
 "PT" = (
 /obj/cable{
@@ -2055,13 +2055,13 @@
 /turf/simulated/wall/auto/jen,
 /area/station/hallway/primary/west)
 "Sj" = (
-/turf/simulated/floor/airless/stairs/dark/wide{
+/turf/simulated/floor/stairs/dark/wide{
 	dir = 5
 	},
 /area/station/hallway/primary/north)
 "Sq" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/airless/orange/corner,
+/turf/simulated/floor/orange/corner,
 /area/station/hallway/primary/north)
 "SC" = (
 /obj/cable{
