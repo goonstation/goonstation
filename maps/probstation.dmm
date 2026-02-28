@@ -58,9 +58,9 @@
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/hallway/primary/north)
 "bn" = (
-/obj/random_item_spawner/gross_with_junk/one,
+/obj/storage/closet/fire,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/sw)
+/area/station/maintenance/inner/ne)
 "bq" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -70,13 +70,9 @@
 	},
 /area/station/crew_quarters/garden)
 "bI" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 24
-	},
-/obj/random_item_spawner/gross_with_junk/one,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/ne)
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/carpet/grime,
+/area/station/maintenance/south)
 "bN" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/access/maint,
@@ -182,10 +178,6 @@
 	dir = 6
 	},
 /area/station/maintenance/inner/nw)
-"dW" = (
-/obj/decal/cleanable/dirt/dirt4,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "dZ" = (
 /obj/decal/stage_edge/alt,
 /obj/shrub{
@@ -294,13 +286,18 @@
 	},
 /area/station/hallway/secondary/south)
 "gP" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
+"hb" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/random_item_spawner/gross/one,
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/ne)
-"hb" = (
-/obj/machinery/fluid_canister,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/sw)
+/area/station/maintenance/south)
 "hd" = (
 /obj/item/instrument/large/piano/grand,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
@@ -319,12 +316,9 @@
 /turf/simulated/floor/green/side,
 /area/station/crew_quarters/garden)
 "hD" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
+/obj/storage/closet/fire,
 /turf/simulated/floor/plating,
-/area/station/maintenance/south)
+/area/station/maintenance/inner/nw)
 "hF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -407,13 +401,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
 "ju" = (
-/obj/storage/closet/fire,
+/obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/ne)
-"jv" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/nw)
+/area/station/maintenance/south)
 "jK" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -528,14 +518,7 @@
 	},
 /turf/simulated/floor/airless/black,
 /area/station/hallway/primary/east)
-"lR" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/random_item_spawner/gross_with_junk/one,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/ne)
-"lY" = (
+"mi" = (
 /obj/table/reinforced/auto,
 /obj/item/cigpacket/nicofree{
 	pixel_x = 7;
@@ -553,26 +536,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/south)
-"mi" = (
-/obj/machinery/vending/snack,
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 24
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/maintenance/south)
 "mn" = (
 /obj/decal/stage_edge,
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
-/area/station/maintenance/inner/nw)
-"mA" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/random_item_spawner/gross_with_junk/one,
-/turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "mC" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -621,12 +588,26 @@
 "nq" = (
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/hallway/primary/north)
+"ns" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/random_item_spawner/gross_with_junk/one,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "nt" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
 /area/station/crew_quarters/garden)
+"nD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/random_item_spawner/gross_with_junk/one,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "nG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -723,18 +704,14 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/station/maintenance/inner/nw)
-"pE" = (
-/obj/random_item_spawner/gross_with_junk/one,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/nw)
 "pF" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "pG" = (
-/obj/storage/closet/fire,
+/obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/nw)
+/area/station/maintenance/inner/sw)
 "pH" = (
 /obj/item/cigbutt{
 	pixel_x = 4;
@@ -760,12 +737,9 @@
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/hallway/primary/north)
 "pR" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/random_item_spawner/gross_with_junk/one,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/nw)
+/area/station/maintenance/southwest)
 "pT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -773,27 +747,21 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "pU" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 24
 	},
-/obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/ne)
+/area/station/maintenance/southwest)
 "qk" = (
 /turf/simulated/floor/stairs/medical/wide{
 	dir = 8
 	},
 /area/station/hallway/secondary/south)
 "ql" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 24
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/southeast)
+/obj/storage/closet/fire,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
 "qq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -822,9 +790,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "qF" = (
-/obj/reagent_dispensers/fueltank,
+/obj/structure/girder,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/ne)
+/area/station/maintenance/south)
 "qK" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -888,6 +856,10 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"rY" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/se)
 "sb" = (
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -958,9 +930,9 @@
 	},
 /area/station/hallway/secondary/south)
 "sF" = (
-/obj/random_item_spawner/gross_with_junk/one,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/se)
+/area/station/maintenance/inner/nw)
 "sK" = (
 /turf/simulated/floor/airless/stairs/dark/wide,
 /area/station/hallway/primary/east)
@@ -987,13 +959,9 @@
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/hallway/primary/north)
 "tU" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/carpet/grime,
-/area/station/maintenance/south)
+/obj/random_item_spawner/gross_with_junk/one,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
 "ul" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1023,9 +991,13 @@
 /turf/simulated/floor,
 /area/station/maintenance/inner/nw)
 "uS" = (
-/obj/storage/closet/fire,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/sw)
+/area/station/maintenance/inner/nw)
 "uT" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -1056,6 +1028,12 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"vz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/southeast)
 "vM" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -1091,10 +1069,6 @@
 "wy" = (
 /turf/simulated/floor/arrival,
 /area/station/hallway/primary/southeast)
-"wF" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "wK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1167,15 +1141,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "yp" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "3"
-	},
-/area/station/maintenance/south)
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
 "yy" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
@@ -1184,9 +1152,9 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "yL" = (
-/obj/reagent_dispensers/foamtank,
+/obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
+/area/station/maintenance/inner/ne)
 "yP" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -1241,16 +1209,18 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "zy" = (
 /turf/simulated/floor/airless/stairs/wide/other,
 /area/station/hallway/primary/south)
 "zJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
+/area/station/maintenance/inner/nw)
 "zK" = (
 /turf/simulated/floor/stairs/wood2/wide,
 /area/station/maintenance/inner/nw)
@@ -1353,10 +1323,20 @@
 	icon_state = "wooden"
 	},
 /area/station/hallway/primary/north)
+"BL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/southeast)
 "BO" = (
-/obj/reagent_dispensers/watertank,
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/ne)
+/area/station/maintenance/inner/sw)
 "BP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1390,9 +1370,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
 "Db" = (
-/obj/random_item_spawner/gross_with_junk/one,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/south)
+/area/station/maintenance/inner/ne)
 "Dc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1411,9 +1391,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/south)
 "DL" = (
-/obj/storage/closet/emergency,
+/obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/sw)
+/area/station/maintenance/southwest)
 "DM" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -1440,10 +1420,6 @@
 "EA" = (
 /turf/simulated/floor/stairs/wood2/wide,
 /area/station/hallway/primary/north)
-"ED" = (
-/obj/machinery/vending/cola/blue,
-/turf/simulated/floor/carpet/grime,
-/area/station/maintenance/south)
 "EP" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -1486,9 +1462,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
 "FD" = (
-/obj/reagent_dispensers/fueltank,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/se)
+/area/station/maintenance/inner/ne)
+"FI" = (
+/obj/random_item_spawner/gross_with_junk/one,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "FN" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
@@ -1505,15 +1489,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "Gk" = (
-/obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/ne)
-"Gl" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
-/turf/simulated/floor,
-/area/station/maintenance/south)
+/obj/random_item_spawner/gross_with_junk/one,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/se)
+"Gl" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/se)
 "Gw" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -1524,21 +1510,17 @@
 /turf/simulated/floor,
 /area/station/maintenance/inner/nw)
 "GK" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
+/obj/machinery/vending/snack,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
 	},
-/obj/random_item_spawner/gross/one,
-/obj/random_item_spawner/gross_with_junk/one,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/south)
 "GX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/random_item_spawner/gross_with_junk/one,
+/obj/storage/closet/fire,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/sw)
+/area/station/maintenance/south)
 "Ha" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
@@ -1600,10 +1582,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
+/turf/simulated/wall/false_wall{
+	color = "";
+	icon = 'icons/turf/walls/jen.dmi';
+	icon_state = "3"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "HV" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -1637,11 +1620,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/southeast)
-"If" = (
-/obj/storage/closet/coffin/wood,
-/obj/decal/cleanable/blood/splatter,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/sw)
 "Ik" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -1846,6 +1824,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"Mu" = (
+/obj/machinery/fluid_canister,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
 "Mv" = (
 /turf/simulated/floor/airless/orange/side,
 /area/station/hallway/primary/north)
@@ -1857,7 +1839,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "MD" = (
-/obj/reagent_dispensers/fueltank,
+/obj/storage/closet/coffin/wood,
+/obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "MM" = (
@@ -1982,7 +1965,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "QD" = (
-/turf/simulated/floor,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "QI" = (
 /obj/cable{
@@ -2005,10 +1994,6 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hallway/primary/east)
-"Rk" = (
-/obj/storage/closet/fire,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "Ru" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
@@ -2020,6 +2005,11 @@
 "RY" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hallway/primary/west)
+"Sd" = (
+/obj/random_item_spawner/gross_with_junk/one,
+/obj/random_item_spawner/gross_with_junk/one,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "Sj" = (
 /turf/simulated/floor/airless/stairs/dark/wide{
 	dir = 5
@@ -2039,12 +2029,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "SV" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 24
+/obj/cable{
+	icon_state = "4-8"
 	},
+/obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
+/area/station/maintenance/inner/sw)
 "SZ" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -2108,9 +2098,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "UB" = (
-/obj/random_item_spawner/gross/one,
+/obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/south)
+/area/station/maintenance/inner/se)
 "UJ" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -2150,6 +2140,14 @@
 "VN" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
+"VQ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/carpet/grime,
+/area/station/maintenance/south)
 "Wc" = (
 /turf/simulated/floor/green/corner{
 	dir = 1
@@ -2232,16 +2230,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "Xf" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/random_item_spawner/gross_with_junk/one,
+/obj/random_item_spawner/gross/one,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/se)
+/area/station/maintenance/south)
 "Xk" = (
-/obj/structure/girder,
-/turf/simulated/floor/plating,
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/south)
 "Xr" = (
 /obj/cable{
@@ -2256,8 +2257,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
 "Yh" = (
-/obj/random_item_spawner/gross_with_junk/one,
-/obj/random_item_spawner/gross_with_junk/one,
+/obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
 "Yn" = (
@@ -2279,11 +2279,9 @@
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/hallway/primary/north)
 "Yx" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/southeast)
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "Yz" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -2295,17 +2293,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
-"YW" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/decal/cleanable/dirt/dirt4,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/maintenance/south)
 "Ze" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/plating,
@@ -2313,10 +2300,6 @@
 "Zf" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
-"Zm" = (
-/obj/storage/closet/fire,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/se)
 "Zp" = (
 /turf/simulated/floor/stairs/medical/wide/middle{
 	dir = 8
@@ -2346,6 +2329,14 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"ZK" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "ZN" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -41778,9 +41769,9 @@ By
 By
 By
 By
-If
-DL
-hb
+MD
+BO
+Mu
 vq
 vq
 vq
@@ -41800,8 +41791,8 @@ DV
 DV
 DV
 DV
-yL
-zJ
+pR
+FI
 DV
 Gw
 Gw
@@ -42080,28 +42071,28 @@ By
 By
 By
 By
-bn
+pG
 Ha
 Ha
 Ha
 Ha
 Ha
-bn
-Ha
-Ha
-Ha
-Na
-Ha
-Ha
+pG
 Ha
 Ha
 Ha
 Na
-zJ
+Ha
+Ha
+Ha
+Ha
+Ha
+Na
+FI
 Gw
 Gw
 WN
-zJ
+FI
 Gw
 Gw
 tw
@@ -42382,7 +42373,7 @@ By
 By
 By
 By
-bn
+pG
 Ha
 Ha
 Ha
@@ -42391,7 +42382,7 @@ yj
 Ha
 Ha
 Ha
-MD
+yp
 vq
 Ha
 Ha
@@ -42661,7 +42652,7 @@ Zf
 Zf
 Zf
 Fq
-pE
+tU
 BP
 By
 By
@@ -43270,7 +43261,7 @@ SZ
 wK
 DM
 so
-pR
+zJ
 Kq
 Zf
 Zf
@@ -43313,7 +43304,7 @@ By
 By
 By
 By
-SV
+pU
 DV
 Qp
 By
@@ -43556,8 +43547,8 @@ Hu
 sD
 sD
 IZ
-pG
-pE
+hD
+tU
 Zf
 Zf
 Zf
@@ -43919,7 +43910,7 @@ By
 By
 Lv
 DV
-wF
+DL
 By
 By
 By
@@ -44168,7 +44159,7 @@ By
 By
 By
 By
-pE
+tU
 Zf
 By
 By
@@ -44194,7 +44185,7 @@ By
 By
 By
 By
-GX
+SV
 Ha
 By
 By
@@ -44219,7 +44210,7 @@ By
 By
 By
 By
-zJ
+FI
 Gw
 Gw
 By
@@ -44521,7 +44512,7 @@ By
 By
 By
 By
-zJ
+FI
 Gw
 Gw
 By
@@ -44772,7 +44763,7 @@ By
 By
 By
 By
-pE
+tU
 Zf
 By
 By
@@ -45405,7 +45396,7 @@ By
 Ud
 Ha
 Ha
-bn
+pG
 vq
 Kw
 xk
@@ -45689,7 +45680,7 @@ By
 By
 By
 By
-jv
+sF
 gJ
 fL
 en
@@ -46282,12 +46273,12 @@ By
 By
 By
 By
-pE
+tU
 Zf
 Zf
 Zf
 Zf
-mA
+uS
 SZ
 wK
 wK
@@ -46301,13 +46292,13 @@ vu
 hp
 No
 No
-uS
+ql
 Ha
 Wx
 Ha
 Ha
 Ha
-bn
+pG
 Na
 Ha
 Ha
@@ -46604,7 +46595,7 @@ kn
 Pq
 No
 No
-bn
+pG
 Wx
 Ha
 Ha
@@ -47547,7 +47538,7 @@ By
 By
 By
 By
-Db
+ju
 fZ
 By
 By
@@ -47849,7 +47840,7 @@ By
 By
 By
 By
-Db
+ju
 fZ
 By
 By
@@ -48423,7 +48414,7 @@ sv
 sv
 sC
 dB
-Zm
+rY
 sv
 sv
 jt
@@ -48441,7 +48432,7 @@ By
 By
 Zx
 NT
-Db
+ju
 fZ
 fZ
 By
@@ -48744,9 +48735,9 @@ By
 NT
 NT
 NT
-Db
+ju
 aX
-Xk
+qF
 mC
 AS
 Uo
@@ -48757,12 +48748,12 @@ NT
 NT
 NT
 NT
-Db
-Rk
+ju
+GX
 fZ
-ql
-Yx
-Yx
+BL
+vz
+vz
 KL
 By
 By
@@ -49041,7 +49032,7 @@ qy
 Uf
 NT
 NT
-UB
+Xf
 pF
 NT
 HG
@@ -49049,18 +49040,18 @@ Uo
 Uo
 jT
 NT
-Db
+ju
 Uf
 qy
-GK
-Db
-Xk
+hb
+ju
+qF
 NT
-Db
+ju
 NT
 NT
 NT
-dW
+gP
 Ja
 uC
 uC
@@ -49320,7 +49311,7 @@ Wd
 Wd
 Wd
 fE
-sF
+UB
 sv
 dB
 dB
@@ -49345,7 +49336,7 @@ By
 By
 By
 zS
-Db
+ju
 Uf
 NT
 By
@@ -49360,7 +49351,7 @@ zS
 ok
 ok
 ok
-tU
+VQ
 fZ
 fZ
 fZ
@@ -49629,7 +49620,7 @@ Br
 sv
 sv
 sv
-Xf
+Gk
 sv
 sv
 Yn
@@ -49649,7 +49640,7 @@ By
 By
 Gf
 Uf
-Db
+ju
 By
 By
 By
@@ -49659,10 +49650,10 @@ By
 By
 By
 By
+GK
+bI
+Xk
 mi
-ED
-YW
-lY
 fZ
 uC
 uC
@@ -49950,7 +49941,7 @@ By
 By
 By
 fZ
-HO
+QD
 fZ
 By
 By
@@ -50226,7 +50217,7 @@ Wd
 Wd
 Wd
 fE
-sF
+UB
 sv
 sv
 By
@@ -50530,7 +50521,7 @@ Wd
 fE
 sv
 sv
-FD
+Gl
 By
 By
 By
@@ -50799,9 +50790,9 @@ By
 By
 By
 LT
-BO
+Yh
 VN
-gP
+yL
 By
 By
 By
@@ -50811,8 +50802,8 @@ By
 By
 By
 By
-gP
-gP
+yL
+yL
 VN
 cz
 Dc
@@ -51113,7 +51104,7 @@ By
 By
 By
 By
-bI
+FD
 VN
 VN
 VN
@@ -51459,7 +51450,7 @@ By
 By
 By
 By
-Db
+ju
 NT
 NT
 By
@@ -51705,7 +51696,7 @@ By
 By
 By
 LT
-gP
+yL
 VN
 VN
 By
@@ -51719,7 +51710,7 @@ By
 By
 Dc
 cZ
-qF
+Yx
 By
 By
 By
@@ -52054,23 +52045,23 @@ AP
 AP
 AP
 fZ
-Db
+ju
 qy
 NT
 NT
 NT
 NT
 NT
-Db
+ju
 qy
 NT
 pH
 uo
 jo
-QD
-QD
-QD
-Gl
+NT
+NT
+NT
+Uf
 fZ
 xn
 uC
@@ -52340,7 +52331,7 @@ Wd
 Wd
 Wd
 fE
-sF
+UB
 sv
 sv
 By
@@ -52357,11 +52348,11 @@ AP
 AP
 fZ
 NT
-Db
+ju
 NT
-Db
+ju
 NT
-hD
+zx
 NT
 NT
 NT
@@ -52372,7 +52363,7 @@ fZ
 fZ
 fZ
 fZ
-yp
+HO
 fZ
 uC
 uC
@@ -52625,7 +52616,7 @@ By
 By
 VN
 jg
-lR
+ns
 By
 By
 By
@@ -52667,7 +52658,7 @@ fZ
 fZ
 fZ
 fZ
-fZ
+Fi
 fZ
 fZ
 fZ
@@ -52927,7 +52918,7 @@ By
 By
 LT
 VN
-Yh
+Sd
 By
 By
 By
@@ -52938,7 +52929,7 @@ By
 By
 By
 dw
-gP
+yL
 LT
 Wd
 Wd
@@ -52952,7 +52943,7 @@ sv
 sv
 sv
 Yn
-sF
+UB
 sv
 sv
 jt
@@ -53262,8 +53253,8 @@ uC
 uC
 uC
 fZ
-zx
-Db
+ZK
+ju
 fZ
 xn
 uC
@@ -53519,7 +53510,7 @@ By
 By
 LT
 VN
-gP
+yL
 VN
 vN
 VN
@@ -53830,7 +53821,7 @@ VN
 VN
 VN
 LT
-ju
+bn
 VN
 VN
 VN
@@ -53852,7 +53843,7 @@ Wd
 lJ
 dB
 sv
-sF
+UB
 By
 By
 By
@@ -54137,7 +54128,7 @@ LT
 VN
 VN
 CV
-Gk
+Db
 LT
 VN
 VN
@@ -54436,7 +54427,7 @@ By
 By
 By
 LT
-gP
+yL
 VN
 VN
 VN
@@ -54747,7 +54738,7 @@ VN
 VN
 VN
 LT
-pU
+nD
 VN
 LT
 qX
@@ -55662,7 +55653,7 @@ Wd
 Wd
 Wd
 dB
-sF
+UB
 sv
 dB
 By
