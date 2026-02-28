@@ -42,10 +42,12 @@
 	},
 /area/station/ai_monitored/armory)
 "f" = (
-/obj/deployable_turret/riot/active{
-	dir = 4
-	},
 /obj/machinery/camera/directional/west,
+/obj/machinery/turret{
+	dir = 4;
+	name = "armory turret"
+	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -306,7 +308,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "N" = (
 /obj/cable{
@@ -344,6 +346,9 @@
 	icon_state = "1-2"
 	},
 /obj/storage/secure/crate/weapon/armory/shotgun,
+/obj/machinery/turretid/armory{
+	pixel_y = 24
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
