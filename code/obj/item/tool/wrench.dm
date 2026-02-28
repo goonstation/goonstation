@@ -1,3 +1,5 @@
+TYPEINFO(/obj/item/wrench)
+	mats = list("metal" = 1)
 /obj/item/wrench
 	name = "wrench"
 	desc = "A tool used to apply torque to turn nuts and bolts."

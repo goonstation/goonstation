@@ -43,6 +43,10 @@ TYPEINFO(/obj/item/device/light/flashlight)
 
 ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 
+TYPEINFO(/obj/item/device/light/flashlight)
+	mats = list("metal" = 1,
+				"conductive" = 1,
+				"crystal" = 1)
 /obj/item/device/light/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
@@ -132,6 +136,10 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 
 ADMIN_INTERACT_PROCS(/obj/item/device/light/lantern, proc/toggle)
 
+TYPEINFO(/obj/item/device/light/lantern)
+	mats = list("metal" = 1,
+				"conductive" = 1,
+				"crystal" = 1)
 /obj/item/device/light/lantern
 	name = "lantern"
 	desc = "An electric lantern for lighting up the area close by."

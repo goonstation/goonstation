@@ -645,6 +645,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 
 /* -------------------- Harmonica -------------------- */
 
+TYPEINFO(/obj/item/instrument/harmonica)
+	mats = list("metal" = 1)
 /obj/item/instrument/harmonica
 	name = "harmonica"
 	desc = "A cheap pocket instrument, good for helping time to pass."
@@ -746,6 +748,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			user.AddComponent(/datum/component/bot_command/janitor, bots, src.commandtime)
 /* -------------------- Vuvuzela -------------------- */
 
+TYPEINFO(/obj/item/instrument/vuvuzela)
+	mats = list("any" = 1)
 /obj/item/instrument/vuvuzela
 	name = "vuvuzela"
 	desc = "A loud horn made popular at soccer games-BZZZZZZZZZZZZZZZZZZZZZZZZZZZ"

@@ -1,3 +1,5 @@
+TYPEINFO(/obj/item/crowbar)
+	mats = list("metal" = 1)
 /obj/item/crowbar
 	name = "crowbar"
 	desc = "A tool used as a lever to pry objects."

@@ -1,3 +1,5 @@
+TYPEINFO(/obj/item/wirecutters)
+	mats = list("metal" = 1)
 /obj/item/wirecutters
 	name = "wirecutters"
 	desc = "A tool used to cut wires and bars of metal."

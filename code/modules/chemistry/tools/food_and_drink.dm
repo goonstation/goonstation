@@ -1168,6 +1168,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				take_bleeding_damage(user, user, damage)
 			qdel(src)
 
+TYPEINFO(/obj/item/reagent_containers/food/drinks/bottle/soda)
+	mats = list("crystal" = 1)
 /obj/item/reagent_containers/food/drinks/bottle/soda //for soda bottles and bottles from the glass recycler specifically
 	fluid_underlay_shows_volume = TRUE
 

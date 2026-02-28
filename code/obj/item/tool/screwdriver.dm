@@ -1,3 +1,5 @@
+TYPEINFO(/obj/item/screwdriver)
+	mats = list("metal" = 1)
 /obj/item/screwdriver
 	name = "screwdriver"
 	desc = "A tool used to turn slotted screws and other slotted objects."
