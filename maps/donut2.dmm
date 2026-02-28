@@ -670,6 +670,7 @@
 "afZ" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light/incandescent,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -18584,6 +18585,7 @@
 	name = "Margaritaville Margarita Dispenser"
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
@@ -27352,6 +27354,7 @@
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/light/small/sticky,
 /obj/machinery/light_switch/west,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
@@ -38163,6 +38166,7 @@
 	},
 /obj/decal/cleanable/dirt/dirt2,
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "pCY" = (
@@ -41010,6 +41014,7 @@
 /area/station/crew_quarters/fitness)
 "rlR" = (
 /obj/machinery/chem_dispenser/chef,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "rlV" = (
@@ -45269,6 +45274,7 @@
 /obj/drink_rack/cup{
 	pixel_y = -23
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "tKd" = (
@@ -46188,6 +46194,7 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
 "ukm" = (
@@ -46267,6 +46274,7 @@
 	dir = 1
 	},
 /obj/machinery/light/incandescent,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "umq" = (
@@ -46707,6 +46715,7 @@
 /obj/item/device/radio/intercom/science{
 	dir = 8
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -50544,6 +50553,7 @@
 	c_tag = "Chemistry";
 	pixel_y = 10
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
