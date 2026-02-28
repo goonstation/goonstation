@@ -2563,6 +2563,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "yellow"
 	sound_environment = 4
 
+/area/station/crew_quarters/aquarium
+	name = "Aquarium"
+	icon_state = "blue"
+	sound_environment = 4
+
 /area/station/crew_quarters/arcade/dungeon
 	name = "Nerd Dungeon"
 	icon_state = "purple"

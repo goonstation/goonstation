@@ -3,19 +3,19 @@
 /obj/table/auto,
 /obj/machinery/recharger,
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "c" = (
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 10
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "d" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 4
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "e" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24,16 +24,16 @@
 	dir = 1
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "f" = (
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 6
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "g" = (
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "h" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42,7 +42,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "i" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -57,7 +57,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "k" = (
 /obj/machinery/networked/test_apparatus/electrobox,
 /obj/machinery/power/data_terminal,
@@ -65,7 +65,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "l" = (
 /obj/machinery/networked/test_apparatus/pitching_machine,
 /obj/machinery/power/data_terminal,
@@ -74,7 +74,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "m" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -86,30 +86,30 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "n" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /obj/machinery/camera/directional/north,
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "o" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "p" = (
 /turf/simulated/wall/auto/jen/purple,
-/area/space)
+/area/station/science/artifact)
 "q" = (
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "r" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "s" = (
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 5
@@ -118,7 +118,7 @@
 	nostick = 1
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "t" = (
 /obj/machinery/networked/test_apparatus/xraymachine,
 /obj/machinery/power/data_terminal,
@@ -132,26 +132,26 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "u" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access/artlab,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "v" = (
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 5
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "w" = (
 /obj/machinery/computer3/terminal/zeta,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "x" = (
 /obj/machinery/door_control{
 	id = "artlab";
@@ -160,7 +160,7 @@
 	},
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "y" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -172,7 +172,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "z" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -183,13 +183,13 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/science/artifact)
 "A" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "B" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 8
@@ -198,7 +198,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "C" = (
 /obj/machinery/light/incandescent/harsh{
 	nostick = 1
@@ -207,11 +207,11 @@
 	dir = 1
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "D" = (
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "E" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -220,7 +220,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "F" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -236,14 +236,14 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "G" = (
 /obj/machinery/firealarm/directional/west,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "H" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
@@ -255,7 +255,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "I" = (
 /obj/machinery/networked/test_apparatus/impact_pad,
 /obj/machinery/power/data_terminal,
@@ -263,18 +263,18 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "J" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "K" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/science/artifact)
 "L" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -286,7 +286,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "M" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -298,7 +298,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "O" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -307,7 +307,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "P" = (
 /obj/table/auto,
 /obj/item/pinpointer/category/artifacts/safe{
@@ -318,14 +318,14 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "Q" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "R" = (
 /obj/submachine/cargopad/artlab,
 /obj/item/cargotele{
@@ -338,7 +338,7 @@
 	pixel_y = -2
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "S" = (
 /obj/table/auto,
 /obj/item/storage/box/tapebox{
@@ -354,13 +354,13 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "T" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "U" = (
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -373,7 +373,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "V" = (
 /obj/machinery/networked/test_apparatus/heater,
 /obj/landmark/spawner/artifact,
@@ -381,14 +381,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "W" = (
 /obj/machinery/camera/directional/south,
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 9
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 "X" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -399,7 +399,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "Y" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access/artlab,
@@ -408,7 +408,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/space)
+/area/station/science/artifact)
 "Z" = (
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 5
@@ -417,7 +417,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/grey,
-/area/space)
+/area/station/science/artifact)
 
 (1,1,1) = {"
 p

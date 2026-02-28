@@ -6,7 +6,7 @@
 	},
 /obj/sea_plant/tubesponge/small,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "d" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -16,7 +16,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "k" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -24,7 +24,7 @@
 	},
 /mob/living/critter/small_animal/large_jellyfish/grabby,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "m" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -34,7 +34,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "q" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -42,7 +42,7 @@
 	},
 /obj/sea_plant/seaweed,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "r" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -52,7 +52,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "t" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -60,7 +60,7 @@
 	},
 /obj/sea_plant/bulbous,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "v" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -68,7 +68,7 @@
 	},
 /obj/sea_plant/kelp,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "y" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -76,7 +76,7 @@
 	},
 /mob/living/critter/aquatic/fish/nautilus,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "z" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -84,18 +84,18 @@
 	},
 /obj/item/inner_tube/random,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "C" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "D" = (
 /obj/fluid_spawner{
 	amount = 200;
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "G" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -106,7 +106,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "H" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -122,7 +122,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "M" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -138,7 +138,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "N" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -153,7 +153,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "O" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -161,7 +161,7 @@
 	},
 /mob/living/critter/aquatic/fish/jellyfish,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "R" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -172,7 +172,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "S" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/forcefield/energyshield/perma/doorlink,
@@ -181,10 +181,10 @@
 	},
 /obj/cable,
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "V" = (
 /turf/simulated/wall/auto/jen,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "X" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -195,7 +195,7 @@
 	name = "Oscar"
 	},
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "Y" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/forcefield/energyshield/perma/doorlink,
@@ -204,7 +204,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor,
-/area/space)
+/area/station/crew_quarters/aquarium)
 "Z" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -212,7 +212,7 @@
 	},
 /obj/sea_plant/tubesponge,
 /turf/simulated/floor/sand,
-/area/space)
+/area/station/crew_quarters/aquarium)
 
 (1,1,1) = {"
 V
