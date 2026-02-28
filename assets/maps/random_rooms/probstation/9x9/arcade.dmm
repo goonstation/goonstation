@@ -1,0 +1,337 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/space)
+"c" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"d" = (
+/obj/submachine/claw_machine,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/space)
+"e" = (
+/obj/machinery/camera/directional/east,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"h" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"i" = (
+/obj/machinery/computer/arcade{
+	icon_state = "arcadeb";
+	status = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"j" = (
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"k" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"l" = (
+/obj/item/screwdriver{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/wrench{
+	pixel_x = 4
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"m" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"n" = (
+/turf/simulated/wall/auto/jen,
+/area/space)
+"o" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/space)
+"q" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"s" = (
+/obj/machinery/camera/directional/west,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"t" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"v" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/space)
+"x" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"y" = (
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"A" = (
+/obj/machinery/computer/tetris,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/space)
+"B" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"C" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/space)
+"D" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"E" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/space)
+"F" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"G" = (
+/obj/machinery/vending/capsule,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"I" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"J" = (
+/obj/item/cable_coil/cut/small,
+/obj/decal/cleanable/oil,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"K" = (
+/obj/machinery/vending/cards,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"L" = (
+/obj/machinery/firealarm/directional/west,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"M" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"O" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/space)
+"P" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"Q" = (
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/space)
+"R" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"S" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"T" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/space)
+"U" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/space)
+"W" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"Y" = (
+/obj/table/round/auto,
+/obj/item/clothing/glasses/vr/arcade{
+	pixel_y = 9
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"Z" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+
+(1,1,1) = {"
+n
+n
+n
+n
+D
+n
+n
+n
+n
+"}
+(2,1,1) = {"
+n
+i
+l
+L
+t
+s
+j
+c
+n
+"}
+(3,1,1) = {"
+n
+J
+B
+v
+T
+C
+B
+Z
+n
+"}
+(4,1,1) = {"
+n
+F
+B
+U
+d
+O
+B
+y
+n
+"}
+(5,1,1) = {"
+R
+W
+q
+U
+Q
+O
+h
+I
+R
+"}
+(6,1,1) = {"
+n
+S
+B
+U
+A
+O
+y
+y
+n
+"}
+(7,1,1) = {"
+n
+k
+B
+E
+o
+a
+y
+Z
+n
+"}
+(8,1,1) = {"
+n
+K
+m
+e
+M
+Y
+x
+G
+n
+"}
+(9,1,1) = {"
+n
+n
+n
+n
+P
+n
+n
+n
+n
+"}
