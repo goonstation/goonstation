@@ -66,6 +66,7 @@
 /area/station/security/hos)
 "i" = (
 /obj/storage/secure/closet/command/hos,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "j" = (
@@ -177,7 +178,10 @@
 /obj/machinery/computer/card/department/security{
 	dir = 4
 	},
-/obj/machinery/light/incandescent/netural,
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/hos)
 "x" = (
@@ -220,7 +224,6 @@
 /area/station/security/hos)
 "D" = (
 /obj/storage/secure/crate/gear/armory/grenades,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -338,7 +341,6 @@
 	icon_state = "1-2"
 	},
 /obj/storage/secure/crate/weapon/armory/shotgun,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -387,9 +389,12 @@
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/door_control/bolter/new_walls/east,
 /obj/mapping_helper/button/area,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/security/hos)
 "Z" = (
