@@ -1,0 +1,434 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/secure/closet/brig_automatic/solitary,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"b" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/cell_block_control)
+"c" = (
+/obj/machinery/camera/directional/west,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"d" = (
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal/personel_alt,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"e" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/flasher/solitary2/new_walls/west,
+/obj/disposalpipe/segment/brig{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"f" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/brig,
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/brig/solitary)
+"g" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/door_timer/solitary/new_walls/north{
+	dir = 2;
+	pixel_x = -7
+	},
+/obj/machinery/door_timer/solitary2/new_walls/north{
+	pixel_x = 8;
+	dir = 2
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/cell_block_control)
+"h" = (
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/brig/solitary)
+"i" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/floorflusher/solitary2,
+/obj/disposalpipe/trunk/brig{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"j" = (
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/brig/cell_block_control)
+"k" = (
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"l" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/solitary2)
+"p" = (
+/turf/simulated/floor/black,
+/area/station/security/brig/cell_block_control)
+"q" = (
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"r" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/security/alt,
+/obj/mapping_helper/access/brig,
+/turf/simulated/floor/plating,
+/area/station/security/brig/cell_block_control)
+"s" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/security/brig/cell_block_control)
+"t" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/black,
+/area/station/security/brig/cell_block_control)
+"u" = (
+/obj/machinery/door/airlock/pyro/glass/security,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/mapping_helper/access/brig,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"v" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"w" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/floorflusher/solitary,
+/obj/disposalpipe/trunk/brig{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"x" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/flasher/solitary/new_walls/east,
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"y" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/solitary)
+"z" = (
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"A" = (
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal/personel_alt,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"D" = (
+/obj/machinery/door/airlock/pyro/glass/security,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/mapping_helper/access/brig,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"E" = (
+/obj/item/clothing/suit/bedsheet/orange,
+/obj/stool/bed,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"G" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/brig/solitary2)
+"H" = (
+/obj/storage/secure/crate/weapon/confiscated_items,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/brig/cell_block_control)
+"I" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"J" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/brig/solitary)
+"L" = (
+/obj/storage/closet/wardrobe/orange,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/brig/cell_block_control)
+"M" = (
+/obj/submachine/poster_creator{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/brig/cell_block_control)
+"O" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/cell_block_control)
+"P" = (
+/obj/storage/secure/closet/brig_automatic/solitary2,
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary2)
+"Q" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/junction/middle/north,
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/brig/solitary)
+"S" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/trunk/brig,
+/obj/disposaloutlet/north,
+/turf/simulated/floor/circuit/red,
+/area/station/security/brig/solitary)
+"T" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/solitary)
+"U" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/cell_block_control)
+"V" = (
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/brig/solitary2)
+"W" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/cell_block_control)
+"Y" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/cell_block_control)
+"Z" = (
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/brig/cell_block_control)
+
+(1,1,1) = {"
+h
+h
+h
+h
+J
+Z
+Z
+Z
+Z
+"}
+(2,1,1) = {"
+h
+d
+c
+a
+y
+H
+L
+L
+Z
+"}
+(3,1,1) = {"
+h
+E
+T
+q
+y
+W
+p
+p
+Z
+"}
+(4,1,1) = {"
+h
+h
+x
+w
+D
+O
+p
+t
+Z
+"}
+(5,1,1) = {"
+S
+f
+Q
+h
+h
+g
+U
+U
+r
+"}
+(6,1,1) = {"
+V
+V
+e
+i
+u
+Y
+p
+p
+Z
+"}
+(7,1,1) = {"
+V
+A
+I
+k
+l
+b
+p
+p
+Z
+"}
+(8,1,1) = {"
+V
+v
+z
+P
+l
+s
+M
+j
+Z
+"}
+(9,1,1) = {"
+V
+V
+V
+V
+G
+Z
+Z
+Z
+Z
+"}
