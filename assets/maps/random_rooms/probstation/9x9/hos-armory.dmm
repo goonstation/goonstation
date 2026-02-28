@@ -160,6 +160,7 @@
 	icon_state = "1-8"
 	},
 /obj/random_item_spawner/armory_phasers,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -176,6 +177,7 @@
 /obj/machinery/computer/card/department/security{
 	dir = 4
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/seven,
 /area/station/security/hos)
 "x" = (
@@ -195,6 +197,7 @@
 /area/station/ai_monitored/armory)
 "z" = (
 /obj/random_item_spawner/armory_goggle_supplies,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -260,15 +263,16 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/security/hos)
 "J" = (
-/obj/machinery/light_switch/east{
-	pixel_y = 3
-	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
 /area/station/security/secwing)
 "K" = (
 /obj/storage/cart/forensic/bomb_disposal,
+/obj/machinery/light_switch/east{
+	pixel_y = 3
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -355,6 +359,7 @@
 /area/station/security/secwing)
 "T" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},

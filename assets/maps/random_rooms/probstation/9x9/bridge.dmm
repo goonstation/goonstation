@@ -115,25 +115,6 @@
 /obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/black,
 /area/station/bridge)
-"l" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
-	},
-/obj/mapping_helper/access/heads,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	layer = 4;
-	opacity = 0;
-	id = "bridge"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/bridge)
 "m" = (
 /obj/table/wood/round/auto,
 /obj/machinery/coffeemaker/command,
@@ -152,16 +133,16 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/access/heads,
+/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 1;
 	icon_state = "pdoor0";
 	layer = 4;
-	opacity = 0
+	opacity = 0;
+	id = "bridge"
 	},
-/obj/mapping_helper/access/heads,
-/obj/mapping_helper/button/area,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "p" = (
@@ -302,9 +283,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
@@ -313,8 +291,10 @@
 	opacity = 0;
 	id = "bridge"
 	},
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 8
+	},
 /obj/mapping_helper/access/heads,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "D" = (
@@ -530,7 +510,7 @@ A
 A
 u
 r
-l
+C
 u
 r
 A
