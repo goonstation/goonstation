@@ -1,0 +1,323 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/carpet/clowncarpet,
+/area/station/crew_quarters/clown)
+"b" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/station/crew_quarters/clown)
+"e" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/neon/auto,
+/obj/item/instrument/bikehorn{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/snacks/pie/cream{
+	pixel_x = 2
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = -10
+	},
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 8
+	},
+/area/station/crew_quarters/clown)
+"h" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/station/crew_quarters/clown)
+"j" = (
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/station/crew_quarters/clown)
+"k" = (
+/obj/stool/chair/comfy/sleek{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 4
+	},
+/area/station/crew_quarters/clown)
+"l" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark1,
+/area/station/crew_quarters/clown)
+"m" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/captain,
+/obj/landmark/start/job/clown,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 4
+	},
+/area/station/crew_quarters/clown)
+"o" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/reagent_dispensers/heliumtank,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 9
+	},
+/area/station/crew_quarters/clown)
+"r" = (
+/obj/stool/chair/syndicate{
+	dir = 4
+	},
+/obj/npc/trader/exclown,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 10
+	},
+/area/station/crew_quarters/clown)
+"t" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/station/crew_quarters/clown)
+"w" = (
+/obj/table/neon/auto,
+/obj/item/clothing/mask/clown_nose{
+	pixel_y = 9;
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/cigarette/cigar/gold,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -6;
+	pixel_y = 15
+	},
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/station/crew_quarters/clown)
+"A" = (
+/obj/machinery/phone/unlisted,
+/obj/table/neon/auto,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 8
+	},
+/area/station/crew_quarters/clown)
+"E" = (
+/obj/blind_switch/area/east,
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/station/crew_quarters/clown)
+"H" = (
+/obj/machinery/computer/announcement/clown,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 5
+	},
+/area/station/crew_quarters/clown)
+"I" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/station/crew_quarters/clown)
+"J" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/station/crew_quarters/clown)
+"L" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 4
+	},
+/area/station/crew_quarters/clown)
+"M" = (
+/turf/simulated/wall/auto/reinforced/jen/dark1,
+/area/station/crew_quarters/clown)
+"O" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/jen/dark1,
+/area/station/crew_quarters/clown)
+"P" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/station/crew_quarters/clown)
+"Q" = (
+/obj/machinery/light/incandescent/purpleish,
+/obj/marker/supplymarker,
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/station/crew_quarters/clown)
+"R" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/table/neon/auto,
+/obj/item/peripheral/videocard{
+	pixel_y = 5
+	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/obj/item/storage/goodybag{
+	pixel_x = -3;
+	pixel_y = -7
+	},
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 8
+	},
+/area/station/crew_quarters/clown)
+"S" = (
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/station/crew_quarters/clown)
+"U" = (
+/obj/storage/crate/clown,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 6
+	},
+/area/station/crew_quarters/clown)
+"W" = (
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/station/crew_quarters/clown)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/ladder{
+	id = "clowntainment";
+	icon_state = "ladder_wall";
+	pixel_y = 20
+	},
+/obj/item/bananapeel,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/station/crew_quarters/clown)
+
+(1,1,1) = {"
+M
+M
+M
+M
+l
+M
+M
+M
+M
+"}
+(2,1,1) = {"
+M
+S
+S
+S
+h
+S
+S
+S
+M
+"}
+(3,1,1) = {"
+M
+S
+o
+e
+R
+A
+r
+S
+M
+"}
+(4,1,1) = {"
+M
+S
+j
+a
+J
+a
+Q
+S
+M
+"}
+(5,1,1) = {"
+O
+P
+Y
+t
+b
+t
+I
+P
+O
+"}
+(6,1,1) = {"
+M
+S
+w
+a
+J
+a
+W
+S
+M
+"}
+(7,1,1) = {"
+M
+S
+H
+k
+L
+m
+U
+S
+M
+"}
+(8,1,1) = {"
+M
+S
+S
+S
+h
+S
+S
+E
+M
+"}
+(9,1,1) = {"
+M
+M
+M
+M
+l
+M
+M
+M
+M
+"}

@@ -1,0 +1,169 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light/small/floor/purpleish,
+/obj/ladder{
+	id = "clowntainment"
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/station/crew_quarters/clown)
+"r" = (
+/turf/simulated/wall/auto/jen,
+/area/station/crew_quarters/clown)
+"t" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
+"J" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
+"L" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/crew_quarters/clown)
+"Q" = (
+/turf/space,
+/area/station/crew_quarters/clown)
+"U" = (
+/turf/simulated/wall/auto/jen/purple,
+/area/station/crew_quarters/clown)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/crew_quarters/clown)
+
+(1,1,1) = {"
+r
+r
+r
+r
+J
+r
+r
+r
+r
+"}
+(2,1,1) = {"
+r
+Q
+Q
+Q
+L
+Q
+Q
+Q
+r
+"}
+(3,1,1) = {"
+r
+Q
+Q
+Q
+L
+Q
+Q
+Q
+r
+"}
+(4,1,1) = {"
+r
+Q
+Q
+U
+J
+U
+Q
+Q
+r
+"}
+(5,1,1) = {"
+t
+Y
+Y
+t
+b
+t
+Y
+Y
+t
+"}
+(6,1,1) = {"
+r
+Q
+Q
+U
+J
+U
+Q
+Q
+r
+"}
+(7,1,1) = {"
+r
+Q
+Q
+Q
+L
+Q
+Q
+Q
+r
+"}
+(8,1,1) = {"
+r
+Q
+Q
+Q
+L
+Q
+Q
+Q
+r
+"}
+(9,1,1) = {"
+r
+r
+r
+r
+J
+r
+r
+r
+r
+"}
