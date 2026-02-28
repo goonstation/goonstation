@@ -349,6 +349,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"hS" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "hW" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -521,9 +525,12 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"lH" = (
+/turf/simulated/floor/black/side,
+/area/station/hallway/primary/east)
 "lJ" = (
 /obj/stool/bench/blue/auto,
-/turf/simulated/floor,
+/turf/simulated/floor/blue/side,
 /area/station/hallway/primary/east)
 "lQ" = (
 /obj/machinery/light/incandescent/netural{
@@ -561,6 +568,11 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"mF" = (
+/turf/simulated/floor/black/side{
+	dir = 6
+	},
+/area/station/hallway/primary/east)
 "mH" = (
 /turf/simulated/floor/darkblue/side{
 	dir = 4
@@ -575,7 +587,7 @@
 	},
 /area/station/hallway/primary/north)
 "mP" = (
-/obj/landmark/random_room/size3x3,
+/obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
 "mS" = (
@@ -756,6 +768,9 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
+"pM" = (
+/turf/simulated/floor/blue/side,
+/area/station/hallway/primary/east)
 "pN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -885,6 +900,19 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"rV" = (
+/obj/table/sleek/auto,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch,
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_y = 15;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 15;
+	pixel_x = 6
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "sb" = (
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -958,6 +986,15 @@
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
+"sH" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor/black/side{
+	dir = 10
+	},
+/area/station/hallway/primary/east)
 "sK" = (
 /turf/simulated/floor/stairs/dark/wide,
 /area/station/hallway/primary/east)
@@ -1180,10 +1217,6 @@
 /area/station/maintenance/inner/sw)
 "yp" = (
 /obj/machinery/vending/snack,
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 24
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/south)
 "yy" = (
@@ -1383,6 +1416,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
+"Cr" = (
+/obj/stool/chair/black{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "CG" = (
 /obj/stool/chair{
 	dir = 8
@@ -1980,6 +2019,15 @@
 	},
 /turf/simulated/floor/minitiles,
 /area/station/hallway/primary/east)
+"PN" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/bolter,
+/obj/mapping_helper/airlock/welder,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "PT" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -2049,7 +2097,7 @@
 /area/station/hallway/primary/west)
 "RK" = (
 /obj/machinery/vending/medical_public,
-/turf/simulated/floor,
+/turf/simulated/floor/blue/side,
 /area/station/hallway/primary/east)
 "RY" = (
 /turf/simulated/wall/auto/jen,
@@ -46085,7 +46133,7 @@ Ip
 Ip
 Ip
 hn
-Ip
+hS
 By
 By
 By
@@ -47001,7 +47049,7 @@ By
 By
 By
 By
-fZ
+PN
 fZ
 By
 By
@@ -53605,7 +53653,7 @@ LT
 Wd
 Wd
 Wd
-Wd
+pM
 jt
 sv
 sv
@@ -54498,11 +54546,11 @@ sF
 VN
 VN
 VN
-vN
+LT
 VN
 VN
 VN
-vN
+LT
 Ya
 Dc
 QI
@@ -54797,20 +54845,20 @@ By
 By
 LT
 LT
-LT
-LT
-LT
-LT
 VN
 VN
 VN
-LT
+vN
+VN
+VN
+VN
+vN
 QD
 VN
 LT
 qX
 LT
-AY
+sH
 Wd
 Wd
 dB
@@ -55098,21 +55146,21 @@ By
 By
 By
 By
-By
-By
-By
-By
+lh
+lh
+lh
+lh
 LT
-LT
-LT
-LT
+VN
+VN
+VN
 LT
 WO
 VN
 LT
-Wd
-Wd
-Wd
+Cr
+wt
+lH
 Wd
 Wd
 dB
@@ -55404,17 +55452,17 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-zS
-Wd
+LT
+VN
+VN
+VN
+LT
+WO
+VN
+LT
+rV
+wt
+lH
 Wd
 Wd
 dB
@@ -55706,6 +55754,7 @@ By
 By
 By
 By
+LT
 By
 By
 By
@@ -55714,9 +55763,8 @@ By
 By
 By
 By
-By
-By
-Wd
+zS
+mF
 Wd
 Wd
 dB
@@ -56623,7 +56671,7 @@ By
 By
 By
 Wd
-fW
+Wd
 Wd
 Wd
 Wd
@@ -56924,8 +56972,8 @@ By
 By
 By
 By
-fE
-fE
+Wd
+fW
 fE
 fE
 fE
@@ -57226,9 +57274,9 @@ By
 By
 By
 By
-By
-By
-By
+fE
+fE
+fE
 By
 By
 By
