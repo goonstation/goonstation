@@ -686,15 +686,8 @@ proc/GetBioeffectResearchLevelFromGlobalListByID(var/id)
 	else
 		. = 0
 
-// TODO: make anything that updates stability use this proc
 /// Updates host stability by summing up stability of each gene, and host's base stability
 /datum/bioHolder/proc/calculateStability()
-
-	// go through each bioeffect and calculate its stability modifier
-	// sum those up
-	// add to base stability
-	// set stability to that figure
-
 	if (!isnull(src.forced_stability))
 		src.genetic_stability = src.forced_stability
 		return
