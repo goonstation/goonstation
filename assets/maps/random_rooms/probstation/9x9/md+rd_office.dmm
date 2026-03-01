@@ -6,6 +6,7 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/medical_director,
 /obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/three,
 /area/station/medical/head)
 "dV" = (
@@ -17,6 +18,7 @@
 /area/station/medical/head)
 "eH" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -33,11 +35,18 @@
 /obj/machinery/phone/wall{
 	pixel_x = 24
 	},
+/obj/machinery/camera/directional/east{
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/medical/head)
 "fz" = (
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/head)
@@ -128,6 +137,7 @@
 /area/station/medical/head)
 "pN" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/wood/three,
 /area/station/medical/head)
 "qd" = (
@@ -188,6 +198,7 @@
 	},
 /obj/mapping_helper/access/research_director,
 /obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -276,6 +287,7 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/research_director,
 /obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -413,8 +425,12 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/crew_quarters/hor)
 "PO" = (
+/obj/machinery/power/apc/autoname_south,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/station/crew_quarters/hor)
@@ -450,6 +466,9 @@
 /obj/machinery/phone/wall{
 	pixel_x = -24
 	},
+/obj/machinery/camera/directional/west{
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/station/crew_quarters/hor)
 "SW" = (
@@ -461,6 +480,7 @@
 	},
 /obj/mapping_helper/access/medical_director,
 /obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/three,
 /area/station/medical/head)
 "SX" = (

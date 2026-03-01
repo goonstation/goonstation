@@ -78,6 +78,12 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
+"l" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/engine/caution/south,
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "n" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -90,6 +96,7 @@
 	})
 "o" = (
 /obj/machinery/computer/supplycomp,
+/obj/machinery/camera/directional/north,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
@@ -346,7 +353,7 @@ r
 I
 X
 M
-r
+l
 E
 "}
 (4,1,1) = {"

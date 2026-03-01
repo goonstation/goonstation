@@ -214,7 +214,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/jazz)
 "J" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "L" = (

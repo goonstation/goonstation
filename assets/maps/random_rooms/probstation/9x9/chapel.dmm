@@ -132,6 +132,7 @@
 	},
 /area/station/chapel/sanctuary)
 "u" = (
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
