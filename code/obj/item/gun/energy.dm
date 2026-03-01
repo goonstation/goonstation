@@ -1478,6 +1478,15 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		if (user.mind.is_antagonist())
 			. += SPAN_ALERT("<b>It doesn't seem to like you...</b>")
 
+	pickup(mob/user)
+		. = ..()
+		if(isVRghost(user))
+			src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
+
+	dropped(mob/user)
+		. = ..()
+		src.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_DEADCHAT)
+
 	attack_hand(mob/user)
 		if (!owner_prints)
 			src.assign_name(user)
