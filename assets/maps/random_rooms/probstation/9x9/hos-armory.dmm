@@ -257,6 +257,9 @@
 	pixel_y = 7;
 	pixel_x = 5
 	},
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 28
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/hos)
 "G" = (
