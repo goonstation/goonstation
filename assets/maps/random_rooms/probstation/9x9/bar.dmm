@@ -61,7 +61,7 @@
 	},
 /obj/mapping_helper/access/bar,
 /obj/mapping_helper/firedoor_spawn,
-/turf/space,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "l" = (
 /obj/stool/chair/comfy/purple,
