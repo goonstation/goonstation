@@ -23,7 +23,7 @@
 	move_triggered = 1
 	flags = TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500

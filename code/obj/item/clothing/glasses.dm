@@ -400,7 +400,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"

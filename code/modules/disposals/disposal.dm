@@ -1159,7 +1159,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	weldable = FALSE
 	var/is_doing_stuff = FALSE
 	HELP_MESSAGE_OVERRIDE("The disciplinary loaf processor cannot be detached by welding.")

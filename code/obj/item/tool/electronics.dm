@@ -120,7 +120,7 @@
 /obj/item/electronics/frame
 	name = "frame"
 	icon_state = "frame"
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
+	analyser_flags = ANALYSER_BLACKLIST
 	var/store_type = null
 	var/secured = 0
 	var/viewstat = 0
@@ -400,7 +400,7 @@
 	var/viewstat = 0
 
 	syndicate
-		is_syndicate = TRUE
+		analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	New()
 		. = ..()
@@ -415,40 +415,49 @@
 			. += " None"
 			return
 		for (var/obj/item_type as anything in src.scanned)
-			if (initial(item_type.is_syndicate))
+			if (initial(item_type.analyser_flags) & ANALYSER_SYNDIE_ONLY)
 				continue
 			. += "<br>-" + "\proper[initial(item_type.name)]"
 
 	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
 		if (user.a_intent == INTENT_HARM)
 			return
+
 		var/skip_if_fail = FALSE
 		var/scan_result
+
 		if (isobj(A))
 			var/obj/O = A
-			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
-				return
-			if (O.mechanics_interaction == MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE)
-				scan_result = MECHANICS_ANALYSIS_INCOMPATIBLE
-			skip_if_fail = O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL
+			if(!(O.analyser_flags & ANALYSER_ALLOWED))
+				if(O.analyser_flags & ANALYSER_FAILFEEDBACK)
+					scan_result = MECHANICS_ANALYSIS_INCOMPATIBLE
+				else
+					return
+
+			skip_if_fail = O.analyser_flags & ANALYSER_SKIP_IF_FAIL
+
 		if (!scan_result)
 			scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user)
+
 		if (scan_result != MECHANICS_ANALYSIS_SUCCESS && skip_if_fail)
 			return
+
 		var/scan_output = null
 		switch (scan_result)
+			if (MECHANICS_ANALYSIS_INCOMPATIBLE) //Send signal also returns 0 if analysis comp doesn't exist but MECHANICS_ANALYSIS_INCOMPATIBLE == 0
+				scan_output = SPAN_ALERT("The structure of \the [A] is not compatible with [parent_item].")
 			if (MECHANICS_ANALYSIS_SUCCESS)
-				scan_output = SPAN_NOTICE("Item scan successful.")
+				scan_output = SPAN_NOTICE("[A] scanned successful.")
 				playsound(A.loc, 'sound/machines/tone_beep.ogg', 30, FALSE)
-			if (MECHANICS_ANALYSIS_INCOMPATIBLE, 0) // 0 is returned by SEND_SIGNAL if the component is not present, so we use it here too
-				scan_output = SPAN_ALERT("The structure of [A] is not compatible with [parent_item].")
 			if (MECHANICS_ANALYSIS_ALREADY_SCANNED)
-				scan_output = SPAN_ALERT("You have already scanned this type of object.")
+				scan_output = SPAN_ALERT("You have already scanned \an [A].")
+
 		if (!isnull(scan_output))
 			// this is technically sleight of hand, since the effects of scanning are only shown after the scan is actually done
-			// doing this is a lot cleaner, though, than displaying some or all of the messages if the target has MECHANICS_INTERACTION_SKIP_IF_FAIL
+			// doing this is a lot cleaner, though, than displaying some or all of the messages if the target has ANALYSER_SKIP_IF_FAIL
 			do_scan_effects(A, user)
 			boutput(user, scan_output)
+
 		return TRUE
 
 	proc/do_scan_effects(atom/target, mob/user)
@@ -468,7 +477,8 @@
 	icon_state = "rkit"
 	anchored = ANCHORED
 	density = 1
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
+	analyser_flags = ANALYSER_BLACKLIST
+
 	//var/datum/electronics/electronics_items/link = null
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
 

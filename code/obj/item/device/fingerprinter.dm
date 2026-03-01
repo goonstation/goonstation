@@ -8,7 +8,7 @@
 	desc = "A grey-market tool used for scanning fingerprints on things and putting them onto other things. \
 			Hooks into the station database for information about fingerprint owners." // (this is a lie)
 	icon_state = "reagentscan" // slightly sneaky. slightly.
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	w_class = W_CLASS_TINY
 	/// List of prints currently scanned into the device.
 	var/datum/forensic_holder/scanned_evidence = new()

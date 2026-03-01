@@ -20,7 +20,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	var/time = 30
 	var/last_tick = null
 	var/mob/activator = null // For logging purposes.
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	var/bhole = 1
 
 /obj/machinery/the_singularitybomb/attackby(obj/item/W, mob/user)

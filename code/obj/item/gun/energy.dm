@@ -438,7 +438,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
@@ -645,7 +645,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	item_state = "bike_horn"
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	uses_charge_overlay = TRUE
 	charge_icon_state = "vuvuzela"
 
@@ -670,7 +670,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	custom_cell_max_capacity = 100 //endless crab
 
 	New()
@@ -1297,7 +1297,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	silenced = 1
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100
@@ -1407,7 +1407,7 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1747,7 +1747,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	silenced = 1
 	custom_cell_max_capacity = 100
 
@@ -1771,7 +1771,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	silenced = 1
 	custom_cell_max_capacity = 100
 

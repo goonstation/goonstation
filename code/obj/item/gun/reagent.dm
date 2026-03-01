@@ -126,7 +126,7 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 	force = 4
 	contraband = 3
 	add_residue = 1 // Does this gun add gunshot residue when fired? These syringes are probably propelled by CO2 or something, but whatever (Convair880).
-	is_syndicate = 0 // Gonna let mechanics scan these, even without the syndicate scanner. THIS MAY BE A BAD IDEA.
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY // Gonna let mechanics scan these, even without the syndicate scanner. THIS MAY BE A BAD IDEA.
 	capacity = 90
 	projectile_reagents = 1
 	dump_reagents_on_turf = 1

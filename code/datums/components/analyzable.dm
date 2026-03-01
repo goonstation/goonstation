@@ -16,7 +16,7 @@ TYPEINFO(/datum/component/analyzable)
 	. = ..()
 	if (ismovable(parent))
 		var/atom/movable/O = parent
-		if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
+		if(!(O.analyser_flags & ANALYSER_ALLOWED))
 			return COMPONENT_INCOMPATIBLE
 	else
 		return COMPONENT_INCOMPATIBLE
@@ -31,13 +31,21 @@ TYPEINFO(/datum/component/analyzable)
 	// if this item doesn't have mats defined or was constructed or
 	// attempting to scan a syndicate item and this is a normal scanner
 	var/typeinfo/obj/typeinfo = parent_atom.get_typeinfo()
-	if (isnull(typeinfo.mats) || typeinfo.mats == 0 || (parent_atom.is_syndicate && !I.is_syndicate) || parent_atom.mechanics_interaction == MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE)
+	if (isnull(typeinfo.mats) || typeinfo.mats == 0) //If no mats are defined it's sort of hard to manufacture lol
 		return MECHANICS_ANALYSIS_INCOMPATIBLE
+
+	if(((parent_atom.analyser_flags & ANALYSER_SYNDIE_ONLY) && !(I.analyser_flags & ANALYSER_SYNDIE_ONLY))) //Some can only be scanned by syndie scanners
+		return MECHANICS_ANALYSIS_INCOMPATIBLE
+
+	if(!(parent_atom.analyser_flags & ANALYSER_ALLOWED)) //Item isn't allowed? ban he
+		return MECHANICS_ANALYSIS_INCOMPATIBLE
+
 	var/obj/item/electronics/scanner/S = I
 	if (istype(S))
 		if (S.scanned.Find(src.result_type))
 			return MECHANICS_ANALYSIS_ALREADY_SCANNED
 		S.scanned += src.result_type
+
 	return MECHANICS_ANALYSIS_SUCCESS
 
 /datum/component/analyzer/UnregisterFromParent()

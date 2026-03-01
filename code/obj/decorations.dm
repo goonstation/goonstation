@@ -427,7 +427,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	mats = 2
 /obj/shrub/syndicateplant
 	var/net_id
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.", "Is that an antenna?")
 
 	New()

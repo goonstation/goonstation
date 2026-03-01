@@ -1025,7 +1025,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	blocked_from_petasusaphilic = TRUE
 
 	setupProperties()

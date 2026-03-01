@@ -10,7 +10,7 @@ TYPEINFO(/obj/item/mine)
 	layer = OBJ_LAYER
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	event_handler_flags = USE_FLUID_ENTER
 	var/suppress_flavourtext = FALSE
 	var/armed = FALSE
@@ -288,7 +288,7 @@ TYPEINFO(/obj/item/mine/gibs)
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "meatmine"
 	suppress_flavourtext = TRUE
-	is_syndicate = FALSE
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 
 	armed
 		armed = TRUE

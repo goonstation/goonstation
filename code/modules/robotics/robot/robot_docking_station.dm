@@ -441,7 +441,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 /obj/machinery/recharge_station/syndicate
 	conversion_chamber = 1
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	anchored = UNANCHORED
 	p_class = 1.5
 	SYNDICATE_STEALTH_DESCRIPTION("It is full of sharp instruments designed to tear open human flesh.", null)

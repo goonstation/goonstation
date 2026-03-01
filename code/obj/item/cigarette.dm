@@ -1365,7 +1365,7 @@
 	col_r = 0.298
 	col_g = 0.658
 	col_b = 0
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	reagent_expose_temp = 20000
 	enviromental_expose_temp = 3500
 

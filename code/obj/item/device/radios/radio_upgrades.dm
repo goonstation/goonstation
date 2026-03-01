@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 	icon = 'icons/obj/items/radio_upgrades.dmi'
 	icon_state = "wiretap"
 	w_class = W_CLASS_TINY
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	var/secure_frequencies = list()
 	var/secure_classes = list()
 
@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/obj/item/device/radio_upgrade/station)
 	name = "youshouldntseeme radio upgrade"
 	desc = "The abstract version of the station radio upgrade, you shouldn't be seeing this."
 	icon_state = "civilian"
-	is_syndicate = FALSE
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	secure_frequencies = list()
 
 /obj/item/device/radio_upgrade/station/command

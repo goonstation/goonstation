@@ -177,7 +177,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 10 // absolutely illegal
 	w_class = W_CLASS_NORMAL
 	hitsound = 'sound/voice/farts/fart7.ogg'

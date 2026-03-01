@@ -209,7 +209,7 @@
 			if (istype(src.corpse.ears, /obj/item/device/radio/headset))
 				var/obj/item/device/radio/headset/headset = src.corpse.ears
 				headset.bricked = TRUE
-				headset.mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED // No getting smart
+				headset.analyser_flags = ANALYSER_BLACKLIST // No getting smart
 
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)

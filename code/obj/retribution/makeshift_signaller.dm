@@ -79,7 +79,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 	var/metadata = 0
 	var/was_emagged = FALSE
 	var/is_exploding = FALSE
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	desc = "This device has a menacing aura around it. It requires 8 nodes of metadata to properly send and encrypt it's signal."
 	contraband = 5
 

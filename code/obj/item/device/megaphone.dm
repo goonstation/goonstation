@@ -41,7 +41,7 @@
 	desc = "The ultimate tool in authority assertion. Highly illegal, highly effective."
 	icon_state = "megaphone_syndie"
 	item_state = "megaphone_syndie"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	maptext_size = 24
 	maptext_color = "#510F22"
 	maptext_outline_color = "#130C1F"

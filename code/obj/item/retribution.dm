@@ -8,7 +8,7 @@
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 5
 
 TYPEINFO(/obj/item/syndicate_destruction_system)
@@ -29,7 +29,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 	w_class = W_CLASS_SMALL	//Becomes 5.0 when the core is inserted.
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING  | TOOL_CHOPPING | TOOL_SAWING
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 10
 	two_handed = 1
 	stamina_damage = 5

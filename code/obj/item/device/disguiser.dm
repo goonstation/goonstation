@@ -12,7 +12,7 @@ TYPEINFO(/obj/item/device/disguiser)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	var/datum/appearanceHolder/oldAH = new
 	var/anti_spam = 1 // In relation to world time.
 	var/active = 0

@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/obj/machinery/crusher)
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
 	anchored = ANCHORED_ALWAYS
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	power_usage = 500
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER

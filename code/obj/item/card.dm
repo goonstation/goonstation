@@ -35,7 +35,7 @@ TYPEINFO(/obj/item/card/emag)
 	item_state = "card-id"
 	flags = TABLEPASS | SUPPRESSATTACK
 	layer = 6.0 // TODO fix layer
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 6
 
 	afterattack(var/atom/A, var/mob/user)

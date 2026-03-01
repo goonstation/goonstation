@@ -1051,7 +1051,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
 	deconstruct_flags = DECON_NONE
-	is_syndicate = 1 //^ Agreed
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //^ Agreed
 
 	New()
 		..()

@@ -273,7 +273,7 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 	name = "circuit board (syndicate announcement computer)"
 	computertype = /obj/machinery/computer/announcement/syndicate
 	icon_state = "circuit_security"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 TYPEINFO(/obj/item/circuitboard/announcement/clown)
 	mats = null
