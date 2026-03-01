@@ -1028,7 +1028,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	interesting = "It kinda stinks now..."
 	c_flags = SPACEWEAR // can't take it off, so may as well make it spaceworthy
 	contraband = 10 //let's set off some alarms, boys
-	is_syndicate = 1 //no easy replication thanks
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //no easy replication thanks
 	cant_self_remove = 1
 	item_function_flags = IMMUNE_TO_ACID //shouldn't be able to just melt the Syndicate Hat.
 	var/datum/component/loctargeting/sm_light/light_c

@@ -2297,7 +2297,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 	icon_state = "tool_generic"
 	w_class = W_CLASS_SMALL
 	var/tool_id = "MOD"
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	ammofab
 		name = "BulletBuddy ammo fabrication kit"

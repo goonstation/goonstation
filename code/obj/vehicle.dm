@@ -640,7 +640,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	desc = "A snazzy ridable floor buffer with a holding tank for cleaning agents."
 	icon_state = "floorbuffer"
 	layer = MOB_LAYER + 1
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	health = 80
 	health_max = 80
 	var/low_reagents_warning = 0
@@ -982,7 +982,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	var/antispam = 0
 	var/moving = 0
 	rider_visible = 0
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/drop_peel, /obj/ability_button/stopthebus/clowncar)
 	soundproofing = SOUNDPROOFING_INSIDE
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
@@ -1587,7 +1587,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	var/badmin_moving_state = "badminbus2"
 	var/badmin_nonmoving_state = "badminbus"
 	var/antispam = 0
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sealed_cabin = 1
 	rider_visible = 0
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn, /obj/ability_button/stopthebus, /obj/ability_button/togglespook)

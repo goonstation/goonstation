@@ -31,7 +31,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
-	is_syndicate = FALSE
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "banana"
 	item_state = "banana"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
@@ -344,7 +344,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -412,7 +412,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -478,7 +478,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 2 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "smoke1"
 	var/datum/effects/system/bad_smoke_spread/smoke
@@ -551,7 +551,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	is_syndicate = FALSE
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/pindrop.ogg'
 	icon_state_armed = "fragnade1"
 	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
@@ -630,7 +630,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	is_syndicate = FALSE
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/pindrop.ogg'
 	launcher_damage = 30
 
@@ -665,7 +665,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/effects/screech.ogg'
 	icon_state_armed = "sonic1"
 
@@ -750,7 +750,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	alt_det_time = 3 SECONDS
 	icon_state = "emp"
 	item_state = "emp"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "emp1"
 
@@ -879,7 +879,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	alt_det_time = 6 SECONDS
 	icon_state = "moustache"
 	item_state = "flashbang"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "moustache1"
 	launcher_damage = 10

@@ -26,7 +26,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	speech_verb_stammer = "states"
 	speech_verb_exclaim = "declares"
 	speech_verb_ask = "queries"
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged

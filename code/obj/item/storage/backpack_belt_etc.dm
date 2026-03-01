@@ -1218,7 +1218,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	contraband = 8
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
 	HELP_MESSAGE_OVERRIDE({"In addition to granting the wearer wrestler abilities, it also gives them the wrestler passives detailed "} + EXTERNAL_LINK("https://wiki.ss13.co/Wrestler#Passives", "here") + ".")
@@ -1242,7 +1242,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling/fake)
 	name = "fake wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
 	contraband = 0
-	is_syndicate = 0
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	fake = 1
 
 // I dunno where else to put these vOv

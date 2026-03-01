@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	is_syndicate = FALSE
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	can_arcplate = FALSE
 
 /* Scrap weapon parts/in construction states */

@@ -273,7 +273,7 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_state = "id_pinoff"
 	var/mob/owner = null
 	hudarrow_color = "#ffffff"
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
 
 	attack_self(mob/user)

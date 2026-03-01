@@ -512,10 +512,8 @@ TYPEINFO(/atom/movable)
 	var/always_slow_pull = FALSE
 
 	// Enables mobs and objs to be mechscannable
-	/// Can this only be scanned with a syndicate mech scanner?
-	var/is_syndicate = FALSE
 	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
-	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+	var/analyser_flags = ANALYSER_ALLOWED | ANALYSER_FAILFEEDBACK
 	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
 	var/mechanics_type_override = null
 
@@ -523,7 +521,7 @@ TYPEINFO(/atom/movable)
 /atom/movable/New()
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	if (typeinfo.mats && !(src.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED))
+	if (typeinfo.mats && (src.analyser_flags & ANALYSER_ALLOWED))
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet

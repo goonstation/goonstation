@@ -5,7 +5,7 @@
 	icon_state = "laser"
 	force = 5
 	artifact = 1
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mat_changename = 0
 	mat_changedesc = 0
 

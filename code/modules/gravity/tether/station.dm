@@ -23,7 +23,7 @@ TYPEINFO(/obj/machinery/gravity_tether/station)
 	passive_wattage_per_g_quantum = 75 WATTS
 	uses_area_power = TRUE
 	locked = TRUE
-	mechanics_interaction = MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/gravity_tether/station/New()
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."

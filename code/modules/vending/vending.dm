@@ -1542,7 +1542,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	light_r =1
 	light_g = 0.8
 	light_b = 0.9
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	create_products(restocked)
 		..()
@@ -3463,7 +3463,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	acceptcard = FALSE
 	pay = FALSE
 	can_fall = FALSE
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	create_products(restocked)
 		..()

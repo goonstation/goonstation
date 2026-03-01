@@ -17,7 +17,7 @@ TYPEINFO(/obj/critter/gunbot)
 	atcritter = 1
 	firevuln = 0.5
 	brutevuln = 1
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	deconstruct_flags = DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	seek_target()

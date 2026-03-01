@@ -7,7 +7,7 @@
 	icon_state = "barrel"
 	throwforce = 50
 	p_class = 3
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	density = 1
 	open_inv_within = TRUE
 	var/mob/living/carbon/human/npc/monkey/angry/template_monkey // spawns first, copies clothing icons to spawned monkeys
@@ -58,7 +58,7 @@
 	icon_state = "barrel_signaller"
 	w_class = W_CLASS_TINY
 	var/obj/monkey_barrel/my_barrel = null
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	attack_self()
 		if (isliving(usr))

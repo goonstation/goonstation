@@ -27,7 +27,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 
 	is_dangerous = TRUE
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	issawfly = TRUE //used to tell the sawfly remote if it can or can't detonate() the grenade
 	contraband = 2
 	overlays = null
@@ -83,7 +83,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	icon_state_armed = "clusterflyA1"
 	payload = /mob/living/critter/robotic/sawfly/ai_controlled
 	is_dangerous = TRUE
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	issawfly = TRUE
 	contraband = 5
 
@@ -106,7 +106,7 @@ TYPEINFO(/obj/item/remote/sawflyremote)
 
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
-	is_syndicate = TRUE
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})
 

@@ -483,7 +483,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	equipped(mob/user, slot)
 		. = ..()

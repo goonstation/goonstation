@@ -7,7 +7,7 @@
 	icon_state = "ocular_implanter-full"
 	desc = "A worrying looking medical device for automated eye implants, this model is for SecHUDs. The suction cup fills you with dread."
 	w_class = W_CLASS_SMALL
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	var/implant = /obj/item/organ/eye/cyber/sechud
 	var/implants_available = EYE_LEFT | EYE_RIGHT
 	var/list/parts_to_remove = list()

@@ -20,7 +20,7 @@ TYPEINFO_NEW(/obj/table)
 	layer = OBJ_LAYER-0.1
 	provides_grip = TRUE
 	mat_changename = 1
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null

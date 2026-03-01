@@ -153,7 +153,7 @@ TYPEINFO(/obj/item/saw/syndie)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = 'sound/machines/chainsaw_red.ogg'

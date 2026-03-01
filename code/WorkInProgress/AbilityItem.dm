@@ -880,7 +880,7 @@
 	plane = PLANE_HUD
 	anchored = ANCHORED
 	flags = NOSPLASH
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
+	analyser_flags = ANALYSER_BLACKLIST //Everything has a story and I want to know why a vague concept such as an an ability button had to be blacklisted from scanning??
 
 	var/cooldown = 0
 	var/last_use_time = 0

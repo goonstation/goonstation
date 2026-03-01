@@ -113,14 +113,27 @@
 				return SPAN_ALERT("Messaging must be enabled to communicate with engineering kit.")
 			var/obj/O = A
 			var/mob/user = usr
-			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
-				return
-			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user)
-			if (scan_result != MECHANICS_ANALYSIS_SUCCESS && O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL)
+			var/scan_result
+
+			if(!(O.analyser_flags & ANALYSER_ALLOWED))
+				if(O.analyser_flags & ANALYSER_FAILFEEDBACK)
+					scan_result = MECHANICS_ANALYSIS_INCOMPATIBLE
+				else
+					return
+
+			if (!scan_result)
+				scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user)
+
+			if (scan_result != MECHANICS_ANALYSIS_SUCCESS && (O.analyser_flags & ANALYSER_SKIP_IF_FAIL))
 				return
 			animate_scanning(A, "#FFFF00")
-			if (!scan_result || scan_result == MECHANICS_ANALYSIS_INCOMPATIBLE)
-				return SPAN_ALERT("Unable to scan.")
+			switch (scan_result)
+				if (MECHANICS_ANALYSIS_INCOMPATIBLE) //Send signal also returns 0 if analysis comp doesn't exist but MECHANICS_ANALYSIS_INCOMPATIBLE == 0
+					return SPAN_ALERT("The structure of \the [A] is not compatible.")
+				if (MECHANICS_ANALYSIS_SUCCESS)
+					playsound(A.loc, 'sound/machines/tone_beep.ogg', 30, FALSE) //Beep :)
+				if (MECHANICS_ANALYSIS_ALREADY_SCANNED) //I know this isn't possible for pda scanning but it might come up in the future so better to account for it.
+					return SPAN_ALERT("You have already scanned \an [A].")
 
 			var/datum/computer/file/electronics_scan/theScan = new
 			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type

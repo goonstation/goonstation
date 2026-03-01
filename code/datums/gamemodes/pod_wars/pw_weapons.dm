@@ -358,7 +358,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	org_det_time = 30
 	alt_det_time = 60
 	item_state = "fragnade"
-	is_syndicate = 0
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "energy_stinger1"
 	var/datum/projectile/custom_projectile_type = /datum/projectile/laser/blaster/blast
@@ -402,7 +402,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	org_det_time = 30
 	alt_det_time = 60
 	item_state = "fragnade"
-	is_syndicate = 0
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "concussion1"
 

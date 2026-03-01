@@ -92,7 +92,7 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
 	icon_tag = "nt"
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	associated_turret = /obj/deployable_turret/riot
 	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 

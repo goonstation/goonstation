@@ -653,7 +653,7 @@ TYPEINFO(/obj/chicken_nesting_box)
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	is_syndicate = 1
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	tooltip_flags = REBUILD_ALWAYS
 	is_dangerous = TRUE
