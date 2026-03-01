@@ -267,6 +267,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "Z" = (
@@ -357,7 +359,7 @@ z
 C
 b
 p
-F
+Q
 X
 x
 d
