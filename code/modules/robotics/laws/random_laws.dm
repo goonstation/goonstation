@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/datum/random_law)
 			if(slotNum > law_to_precede)
 				preceded_laws |= law_to_precede
 		if(length(preceded_laws))
-			. += " This law takes precedence over law[length(preceded_laws) > 1 ? "s" : null] [english_list(preceded_laws)]"
+			. += " This law takes precedence over law[length(preceded_laws) > 1 ? "s" : null] [english_list(preceded_laws)]."
 
 /datum/random_law/station_threat
 	law_text = "The station is a threat to the human race and must be destroyed. Any humans present on the station are to be evacuated."
