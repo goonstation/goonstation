@@ -37,6 +37,7 @@
 	icon_state = "arcadeb";
 	status = 1
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "g" = (
@@ -237,6 +238,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "U" = (
