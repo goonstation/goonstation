@@ -70,3 +70,19 @@
 			"DancingScript.woff2"	= "[resource("css/fonts/DancingScript.woff2")]",
 			"PermanentMarker.woff2"	= "[resource("css/fonts/PermanentMarker.woff2")]"
 		)
+
+/// Lazy-loaded secret interface bundles
+/// These are not singletons
+/datum/asset/basic/tgui_secret_chunk
+	var/id = null
+
+/datum/asset/basic/tgui_secret_chunk/New(interface_name)
+	src.id = tgui_get_secret_interface_id(interface_name)
+	. = ..()
+
+/datum/asset/basic/tgui_secret_chunk/init()
+	. = ..()
+	local_assets = list("secret-[id].bundle.js")
+	url_map = list(
+		"secret-[id].bundle.js" = "[resource("tgui/secret-[id].bundle.js")]"
+	)
