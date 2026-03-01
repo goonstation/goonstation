@@ -20,15 +20,14 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aB" = (
-/obj/machinery/computer/airbr{
-	pixel_y = 33;
-	id = "southhall";
-	starts_established = 1
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
-/turf/simulated/floor/stairs/medical/wide/other{
-	dir = 8
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 4
 	},
-/area/station/hallway/secondary/south)
+/turf/simulated/floor/white,
+/area/station/hallway/primary/southeast)
 "aJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -69,6 +68,14 @@
 	dir = 1
 	},
 /area/station/crew_quarters/garden)
+"by" = (
+/turf/simulated/floor/black/side{
+	dir = 6
+	},
+/area/station/hallway/primary/east)
+"bG" = (
+/turf/simulated/floor/blue/side,
+/area/station/hallway/primary/east)
 "bI" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -109,6 +116,12 @@
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
+"cB" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/blue/side{
+	dir = 10
+	},
+/area/station/hallway/primary/west)
 "cK" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -178,15 +191,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "dN" = (
-/turf/simulated/floor/stairs/wood2/wide{
-	dir = 6
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/mapping_helper/access/maint,
+/obj/cable{
+	icon_state = "1-2"
 	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "dW" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/turf/simulated/floor/stairs/medical/wide{
 	dir = 8
 	},
-/turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "dZ" = (
 /obj/decal/stage_edge/alt,
@@ -202,6 +217,13 @@
 "eh" = (
 /turf/simulated/wall/false_wall,
 /area/station/maintenance/inner/sw)
+"ej" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "em" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -224,6 +246,23 @@
 "eN" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hallway/primary/south)
+"eS" = (
+/obj/reagent_dispensers/watertank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
+"eU" = (
+/obj/table/sleek/auto,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch,
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_y = 15;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 15;
+	pixel_x = 6
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "eW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -232,6 +271,11 @@
 	dir = 4
 	},
 /area/station/crew_quarters/garden)
+"fd" = (
+/turf/simulated/floor/darkpurple/side{
+	dir = 4
+	},
+/area/station/hallway/primary/west)
 "fE" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hallway/primary/east)
@@ -266,17 +310,21 @@
 	},
 /turf/space,
 /area/station/hallway/secondary/south)
+"gd" = (
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
 "gi" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/bridge/united_command{
 	name = "Map Control Center"
 	})
 "gA" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/stool/chair/blue{
+	dir = 8
 	},
-/turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/turf/simulated/floor/blue/side,
+/area/station/hallway/primary/west)
 "gH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -349,10 +397,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
-"hS" = (
-/obj/machinery/vending/cola/blue,
-/turf/simulated/floor,
-/area/station/hallway/secondary/south)
 "hW" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -384,6 +428,10 @@
 	dir = 4
 	},
 /area/station/crew_quarters/garden)
+"iN" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/station/hallway/primary/southeast)
 "iW" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
@@ -442,11 +490,12 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
 "jV" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/area/station/hallway/primary/west)
 "jW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -525,9 +574,6 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"lH" = (
-/turf/simulated/floor/black/side,
-/area/station/hallway/primary/east)
 "lJ" = (
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/blue/side,
@@ -550,6 +596,10 @@
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"mc" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
 "mi" = (
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
@@ -558,7 +608,7 @@
 /obj/decal/stage_edge,
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/area/station/hallway/primary/north)
 "mA" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -568,11 +618,6 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"mF" = (
-/turf/simulated/floor/black/side{
-	dir = 6
-	},
-/area/station/hallway/primary/east)
 "mH" = (
 /turf/simulated/floor/darkblue/side{
 	dir = 4
@@ -721,7 +766,7 @@
 /obj/decal/stage_edge,
 /obj/machinery/vending/pda,
 /turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/area/station/hallway/primary/north)
 "pt" = (
 /obj/shrub{
 	dir = 1
@@ -732,9 +777,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/turf/space,
+/area/space)
 "pE" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -768,9 +812,13 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
-"pM" = (
-/turf/simulated/floor/blue/side,
-/area/station/hallway/primary/east)
+"pL" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "pN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -791,11 +839,20 @@
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
-"qk" = (
-/turf/simulated/floor/stairs/medical/wide{
-	dir = 8
+"pX" = (
+/obj/random_item_spawner/gross_with_junk/one,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
-/area/station/hallway/secondary/south)
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
+"qk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/northwest)
 "ql" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -859,6 +916,13 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
+"rh" = (
+/obj/random_item_spawner/gross_with_junk/one,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
 "rl" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -871,6 +935,11 @@
 	},
 /turf/simulated/floor/darkblue/side,
 /area/station/crew_quarters/garden)
+"ry" = (
+/turf/simulated/floor/blue/corner{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "rA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -900,19 +969,13 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
-"rV" = (
-/obj/table/sleek/auto,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch,
-/obj/item/reagent_containers/food/snacks/plant/apple{
-	pixel_y = 15;
-	pixel_x = -5
+"rP" = (
+/obj/random_item_spawner/gross_with_junk/one,
+/obj/cable{
+	icon_state = "4-8"
 	},
-/obj/item/reagent_containers/food/drinks/water{
-	pixel_y = 15;
-	pixel_x = 6
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
 "sb" = (
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -986,15 +1049,6 @@
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
-"sH" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 24
-	},
-/turf/simulated/floor/black/side{
-	dir = 10
-	},
-/area/station/hallway/primary/east)
 "sK" = (
 /turf/simulated/floor/stairs/dark/wide,
 /area/station/hallway/primary/east)
@@ -1020,6 +1074,23 @@
 /obj/mic_stand,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/hallway/primary/north)
+"tJ" = (
+/obj/machinery/vending/cigarette,
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/darkpurple/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/west)
+"tO" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/northwest)
 "tU" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -1055,7 +1126,7 @@
 /obj/decal/stage_edge,
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/area/station/hallway/primary/north)
 "uS" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -1290,12 +1361,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "zK" = (
-/turf/simulated/floor/stairs/wood2/wide,
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "zS" = (
 /obj/landmark/random_room/probstation,
 /turf/space,
 /area/space)
+"zX" = (
+/turf/simulated/floor/stairs/medical/wide/middle{
+	dir = 8
+	},
+/area/station/hallway/primary/southeast)
 "Aa" = (
 /obj/shrub{
 	dir = 1
@@ -1308,11 +1385,18 @@
 	},
 /area/station/hallway/primary/southeast)
 "Ak" = (
-/obj/cable{
-	icon_state = "2-8"
+/turf/simulated/wall/false_wall{
+	color = "";
+	icon = 'icons/turf/walls/jen.dmi';
+	icon_state = "3"
 	},
-/turf/simulated/floor,
 /area/station/maintenance/inner/nw)
+"As" = (
+/obj/stool/chair/black{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "Ax" = (
 /obj/shrub{
 	dir = 8
@@ -1332,6 +1416,24 @@
 	dir = 6
 	},
 /area/station/hallway/primary/north)
+"AK" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 15;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "AP" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -1404,6 +1506,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
+"BY" = (
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
+"Ca" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor,
+/area/station/hallway/primary/northwest)
 "Cg" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -1416,12 +1529,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
-"Cr" = (
-/obj/stool/chair/black{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "CG" = (
 /obj/stool/chair{
 	dir = 8
@@ -1579,11 +1686,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "GH" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/turf/simulated/wall/auto/jen,
+/area/station/hallway/primary/northwest)
 "GK" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -1721,7 +1825,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/area/station/hallway/primary/north)
 "IU" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -1756,12 +1860,20 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
+"JS" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "JV" = (
 /turf/space,
 /area/station/hallway/secondary/south)
 "Kh" = (
-/turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/obj/random_item_spawner/gross_with_junk/one,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
 "Kq" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -1823,6 +1935,10 @@
 /obj/railing,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"KN" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "KY" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -1896,8 +2012,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
+/turf/space,
+/area/space)
 "Mv" = (
 /turf/simulated/floor/orange/side,
 /area/station/hallway/primary/north)
@@ -1929,13 +2045,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"NC" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "NT" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "NU" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/sw)
 "NX" = (
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/hallway/primary/north)
@@ -1952,6 +2072,15 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"Ol" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/bolter,
+/obj/mapping_helper/airlock/welder,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "Om" = (
 /turf/simulated/floor/darkblue/side,
 /area/station/hallway/primary/east)
@@ -2019,15 +2148,6 @@
 	},
 /turf/simulated/floor/minitiles,
 /area/station/hallway/primary/east)
-"PN" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/mapping_helper/airlock/bolter,
-/obj/mapping_helper/airlock/welder,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "PT" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -2076,7 +2196,7 @@
 /obj/decal/stage_edge,
 /obj/machinery/loudspeaker,
 /turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/area/station/hallway/primary/north)
 "QN" = (
 /turf/simulated/floor/arrival/corner,
 /area/station/hallway/primary/southeast)
@@ -2095,6 +2215,15 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"RA" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
 "RK" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/blue/side,
@@ -2107,6 +2236,9 @@
 	dir = 5
 	},
 /area/station/hallway/primary/north)
+"Sl" = (
+/turf/simulated/floor/black/side,
+/area/station/hallway/primary/east)
 "Sq" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/orange/corner,
@@ -2120,6 +2252,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"SM" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/station/hallway/primary/northwest)
 "SV" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating,
@@ -2158,17 +2294,18 @@
 	dir = 8
 	},
 /area/station/crew_quarters/garden)
+"TH" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
 "TV" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
+/turf/space,
+/area/space)
 "Ua" = (
-/obj/mapping_helper/wingrille_spawn/auto,
+/obj/landmark/random_room/size3x5,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "Ud" = (
@@ -2219,6 +2356,15 @@
 	dir = 4
 	},
 /area/station/crew_quarters/garden)
+"Uz" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor/black/side{
+	dir = 10
+	},
+/area/station/hallway/primary/east)
 "UB" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -2234,6 +2380,14 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"Vh" = (
+/obj/stool/chair/purple{
+	dir = 4
+	},
+/turf/simulated/floor/darkpurple/side{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "Vt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -2284,11 +2438,11 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "Wk" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 8;
-	pixel_x = -12
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
 	},
-/turf/simulated/floor,
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "Wm" = (
 /obj/landmark/random_room/size3x5,
@@ -2308,9 +2462,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/south)
 "WJ" = (
-/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
-/area/station/maintenance/inner/nw)
+/area/station/hallway/primary/northwest)
 "WN" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -2344,14 +2497,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "Xf" = (
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/machinery/computer/airbr{
+	pixel_y = 33;
+	id = "southhall";
+	starts_established = 1
+	},
+/turf/simulated/floor/stairs/medical/wide/other{
 	dir = 8
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 24
-	},
-/turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "Xr" = (
 /obj/cable{
@@ -2378,6 +2531,23 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"XK" = (
+/turf/simulated/floor/darkpurple/side{
+	dir = 5
+	},
+/area/station/hallway/primary/west)
+"XO" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
+"XX" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
 "Ya" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -2397,6 +2567,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
+"Yr" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/nw)
 "Yw" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -2432,10 +2608,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "Zp" = (
-/turf/simulated/floor/stairs/medical/wide/middle{
-	dir = 8
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
-/area/station/hallway/secondary/south)
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "Zx" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -2444,6 +2621,17 @@
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"ZA" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/northwest)
+"ZF" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "ZK" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -34018,7 +34206,7 @@ By
 By
 By
 By
-By
+zS
 By
 By
 By
@@ -35211,13 +35399,13 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
+Mi
+TV
+TV
+TV
+TV
+TV
+TV
 By
 By
 By
@@ -35513,7 +35701,7 @@ By
 By
 By
 By
-By
+px
 By
 By
 By
@@ -35819,7 +36007,7 @@ By
 By
 By
 By
-By
+zS
 By
 By
 By
@@ -36411,6 +36599,10 @@ By
 By
 By
 By
+GH
+GH
+GH
+GH
 By
 By
 By
@@ -36420,6 +36612,8 @@ By
 By
 By
 By
+RY
+RY
 By
 By
 By
@@ -36429,6 +36623,8 @@ By
 By
 By
 By
+RY
+RY
 By
 By
 By
@@ -36437,15 +36633,7 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+zS
 By
 By
 By
@@ -36710,6 +36898,13 @@ By
 By
 By
 By
+GH
+GH
+GH
+GH
+WJ
+tO
+WJ
 By
 By
 By
@@ -36719,26 +36914,19 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+th
+yy
+yy
+yy
+yy
+yy
+th
+yy
+yy
+NC
+yy
+yy
+Ru
 By
 By
 By
@@ -37012,6 +37200,13 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+WJ
+WJ
+WJ
 By
 By
 By
@@ -37021,26 +37216,19 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+yy
+yy
+yy
+yy
+yy
+yy
+yy
+yy
+yy
+NC
+yy
+yy
+yy
 By
 By
 By
@@ -37314,6 +37502,13 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+WJ
+WJ
+WJ
 By
 By
 By
@@ -37323,26 +37518,19 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+yy
+yy
+yy
+jV
+yy
+yy
+yy
+yy
+yy
+NC
+yy
+yy
+yy
 By
 By
 By
@@ -37616,6 +37804,13 @@ By
 By
 By
 By
+GH
+ZA
+WJ
+WJ
+IZ
+IZ
+IZ
 By
 By
 By
@@ -37625,6 +37820,7 @@ By
 By
 By
 By
+Wk
 By
 By
 By
@@ -37633,18 +37829,10 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+zS
+yy
+yy
+yy
 By
 By
 By
@@ -37918,6 +38106,13 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+IZ
+eS
+TH
 By
 By
 By
@@ -37927,6 +38122,7 @@ By
 By
 By
 By
+Zf
 By
 By
 By
@@ -37936,17 +38132,9 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+wd
+yy
+yy
 By
 By
 By
@@ -38220,6 +38408,13 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+IZ
+Hs
+Zf
 By
 By
 By
@@ -38229,6 +38424,7 @@ By
 By
 By
 By
+Zf
 By
 By
 By
@@ -38238,17 +38434,9 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+yy
+yy
+yy
 By
 By
 By
@@ -38522,6 +38710,23 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+IZ
+Zf
+Zf
+Zf
+IZ
+Zf
+Zf
+BP
+Zf
+Ua
+IZ
+pX
+Zf
 By
 By
 By
@@ -38531,26 +38736,9 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+yy
+yy
+Ru
 By
 By
 By
@@ -38824,6 +39012,23 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+IZ
+yP
+Hs
+Zf
+Fq
+Zf
+Zf
+BP
+Zf
+Zf
+Fq
+Zf
+Zf
 By
 By
 By
@@ -38833,26 +39038,9 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+yy
+yy
+yy
 By
 By
 By
@@ -39126,6 +39314,23 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+SM
+IZ
+Zf
+Zf
+Zf
+IZ
+Zf
+Zf
+BP
+Zf
+Zf
+IZ
+zK
+Zf
 By
 By
 By
@@ -39135,33 +39340,16 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+XK
+yy
+yy
+AK
+cB
+vq
+Ha
+Wx
+BY
+vq
 By
 By
 By
@@ -39428,6 +39616,23 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+IZ
+Zf
+Zf
+By
+By
+By
+By
+By
+By
+By
+By
+zS
+Zf
 By
 By
 By
@@ -39437,6 +39642,21 @@ By
 By
 By
 By
+Vh
+yy
+yy
+yy
+gA
+vq
+Ha
+Wx
+Ha
+vq
+vq
+vq
+vq
+vq
+vq
 By
 By
 By
@@ -39446,39 +39666,7 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+zS
 By
 By
 By
@@ -39730,6 +39918,13 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+IZ
+Zf
+Zf
 By
 By
 By
@@ -39739,6 +39934,7 @@ By
 By
 By
 By
+Hs
 By
 By
 By
@@ -39748,30 +39944,22 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+tJ
+fd
+yy
+yy
+ry
+Og
+Ha
+Wx
+Ha
+bn
+Ha
+XO
+XX
+NU
+vq
+vq
 By
 By
 By
@@ -40032,6 +40220,13 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+IZ
+IZ
+Wk
 By
 By
 By
@@ -40041,6 +40236,7 @@ By
 By
 By
 By
+Hs
 By
 By
 By
@@ -40050,30 +40246,22 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+IZ
+IZ
+yy
+yy
+Ru
+vq
+Ha
+Wx
+gd
+Ha
+Ha
+Ha
+Ha
+bn
+Ha
+pE
 By
 By
 By
@@ -40334,6 +40522,13 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+WJ
+tO
+WJ
 By
 By
 By
@@ -40343,39 +40538,32 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+wK
+dF
+wK
+wK
+wK
+Kq
+Zf
+Zf
+Hs
+Zf
+Zf
+QA
+yy
+yy
+yy
+vq
+Ha
+Wx
+gd
+Ha
+bn
+Ha
+Ha
+Ha
+Ha
+Ha
 By
 By
 By
@@ -40636,6 +40824,13 @@ By
 By
 By
 By
+GH
+ZA
+WJ
+WJ
+WJ
+WJ
+WJ
 By
 By
 By
@@ -40645,28 +40840,9 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-zS
-RY
-RY
-RY
+Zf
+BP
+Zf
 By
 By
 By
@@ -40676,8 +40852,20 @@ By
 By
 By
 zS
+yy
+yy
+yy
 By
 By
+By
+By
+By
+By
+By
+By
+zS
+Ha
+Ha
 By
 By
 By
@@ -40938,6 +41126,13 @@ By
 By
 By
 By
+GH
+GH
+WJ
+WJ
+WJ
+WJ
+WJ
 By
 By
 By
@@ -40947,16 +41142,9 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+Zf
+BP
+Hs
 By
 By
 By
@@ -40978,8 +41166,8 @@ By
 By
 By
 By
-By
-By
+WY
+bn
 By
 By
 By
@@ -41241,6 +41429,12 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+WJ
+IZ
+Wk
 By
 By
 By
@@ -41250,15 +41444,9 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+Hs
+BP
+Zf
 By
 By
 By
@@ -41280,8 +41468,8 @@ By
 By
 By
 By
-By
-By
+Ha
+Ha
 By
 By
 By
@@ -41543,6 +41731,12 @@ By
 By
 By
 By
+GH
+WJ
+WJ
+SM
+IZ
+Zf
 By
 By
 By
@@ -41552,15 +41746,9 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
-By
-By
-By
-By
+Zf
+BP
+Zf
 By
 By
 By
@@ -41583,16 +41771,16 @@ By
 By
 By
 vq
-vq
-vq
-vq
+OC
 By
 By
 By
 By
 By
 By
-vq
+By
+By
+By
 vq
 vq
 vq
@@ -41845,11 +42033,15 @@ By
 By
 By
 By
-uZ
-uZ
-uZ
-uZ
-uZ
+GH
+WJ
+WJ
+WJ
+IZ
+Zf
+By
+By
+By
 By
 By
 By
@@ -41857,12 +42049,8 @@ By
 By
 By
 IZ
-IZ
-IZ
-IZ
-IZ
-By
-By
+BP
+Zf
 By
 By
 By
@@ -41885,16 +42073,16 @@ By
 By
 By
 bn
-Yx
-jv
-vq
-vq
-vq
-vq
-vq
-vq
-vq
-vq
+Ha
+By
+By
+By
+By
+By
+By
+By
+By
+By
 Ha
 Ha
 Ha
@@ -42147,23 +42335,23 @@ By
 By
 By
 By
-uZ
-sD
-sD
-sD
-uZ
-By
-By
-By
+GH
+WJ
+WJ
+WJ
 IZ
-IZ
-IZ
+Hs
+Zf
+Zf
+Fq
+Hs
+Zf
 IZ
 Zf
 Zf
 sf
 IZ
-IZ
+BP
 IZ
 By
 By
@@ -42186,13 +42374,13 @@ By
 By
 By
 By
+jv
 Ha
 Ha
 Ha
 Ha
 Ha
-Ha
-bn
+Kh
 Ha
 Ha
 Ha
@@ -42222,11 +42410,11 @@ By
 By
 By
 By
-By
-By
-By
-By
-By
+FT
+FT
+FT
+FT
+FT
 By
 By
 By
@@ -42449,23 +42637,23 @@ By
 By
 By
 By
-uZ
-Hu
-sD
-sD
-uZ
-By
-By
-By
+GH
+ZA
+WJ
+WJ
+IZ
 IZ
 Zf
 Zf
 IZ
+Ak
+IZ
+IZ
 Zf
 Zf
 Zf
 IZ
-Zf
+BP
 kd
 By
 By
@@ -42488,13 +42676,13 @@ By
 By
 By
 By
-bn
+Yx
 Ha
 Ha
 Ha
 Ha
 yj
-Ha
+Wx
 Ha
 Ha
 mA
@@ -42751,14 +42939,14 @@ By
 By
 By
 By
-uZ
-sD
-sD
-sD
-uZ
-By
-By
-By
+GH
+WJ
+WJ
+WJ
+WJ
+IZ
+Hs
+mc
 IZ
 Zf
 Zf
@@ -42767,7 +42955,7 @@ Zf
 Zf
 Zf
 Fq
-Hs
+rP
 BP
 By
 By
@@ -42829,7 +43017,7 @@ By
 By
 Ip
 Ip
-Ip
+ZF
 FT
 By
 By
@@ -43053,11 +43241,11 @@ By
 By
 By
 By
-uZ
-sD
-sD
-sD
-IZ
+GH
+WJ
+WJ
+WJ
+WJ
 IZ
 IZ
 IZ
@@ -43069,7 +43257,7 @@ Zf
 Zf
 Zf
 IZ
-Zf
+BP
 BP
 By
 By
@@ -43355,24 +43543,24 @@ By
 By
 By
 By
-uZ
-sD
-sD
-sD
-QA
-Zf
-Zf
-Zf
-Zf
-Zf
-Zf
-IZ
-Zf
+GH
+Ca
+qk
+qk
+qk
+dN
+wK
+wK
+Yr
 Zf
 Zf
 IZ
 Zf
+Zf
+Zf
+IZ
 SZ
+RA
 wK
 DM
 so
@@ -43657,15 +43845,15 @@ By
 By
 By
 By
-uZ
-Hu
-sD
-sD
+GH
+ZA
+WJ
+WJ
+WJ
 IZ
 UB
-Hs
 Zf
-Zf
+BP
 Zf
 Zf
 IZ
@@ -43960,9 +44148,9 @@ By
 By
 By
 uZ
-sD
-sD
-sD
+Zp
+Zp
+Zp
 By
 By
 By
@@ -44035,7 +44223,7 @@ By
 By
 By
 By
-Ip
+pL
 Ip
 Ip
 FT
@@ -44641,7 +44829,7 @@ By
 By
 Ip
 Ip
-Ip
+ZF
 FT
 By
 By
@@ -44878,8 +45066,8 @@ By
 By
 By
 By
-Hs
-Zf
+rh
+wK
 By
 By
 By
@@ -45180,7 +45368,7 @@ By
 By
 By
 By
-Zf
+Kq
 Zf
 By
 By
@@ -45224,7 +45412,7 @@ eN
 eN
 FT
 jU
-Cg
+Ip
 Ip
 pN
 Ip
@@ -45835,6 +46023,7 @@ Ip
 Ip
 Ip
 Ip
+ej
 Ip
 Ip
 Ip
@@ -45847,8 +46036,7 @@ Ip
 Ip
 Ip
 Ip
-Ip
-Ip
+ZF
 FT
 By
 By
@@ -46130,10 +46318,10 @@ AP
 AP
 ie
 Ip
-Ip
+ej
 Ip
 hn
-hS
+JS
 By
 By
 By
@@ -46143,10 +46331,10 @@ By
 By
 By
 zS
-NU
-NU
-NU
-NU
+km
+km
+km
+km
 FT
 gL
 sE
@@ -46685,10 +46873,10 @@ sD
 oc
 sD
 sD
-ul
-Kh
-Wk
-Kh
+sD
+sD
+oc
+sD
 QA
 Zf
 Zf
@@ -46981,16 +47169,16 @@ uZ
 sD
 sD
 sD
-Mi
-LI
-LI
-LI
-LI
-LI
-TV
-gA
-gA
-GH
+sD
+sD
+sD
+sD
+sD
+sD
+sD
+sD
+sD
+sD
 By
 By
 By
@@ -47049,7 +47237,7 @@ By
 By
 By
 By
-PN
+Ol
 fZ
 By
 By
@@ -47290,9 +47478,9 @@ By
 zS
 Yz
 Yz
-Ua
-Kh
-px
+Yz
+sD
+qE
 By
 By
 By
@@ -47593,8 +47781,8 @@ By
 Yw
 NX
 ps
-Kh
-jV
+sD
+sD
 By
 By
 By
@@ -47895,8 +48083,8 @@ By
 hd
 jd
 uH
-Kh
-jV
+sD
+sD
 By
 By
 By
@@ -47961,7 +48149,7 @@ By
 By
 gb
 JV
-Bw
+JV
 JV
 gb
 By
@@ -48197,8 +48385,8 @@ By
 nq
 bh
 mn
-Kh
-Ak
+sD
+sD
 By
 By
 By
@@ -48261,11 +48449,11 @@ Ey
 fZ
 By
 By
-FT
-jK
-km
-jK
-FT
+gb
+JV
+Bw
+JV
+gb
 By
 By
 By
@@ -48499,8 +48687,8 @@ By
 dl
 ty
 IO
-Kh
-Kh
+sD
+sD
 By
 By
 By
@@ -48563,11 +48751,11 @@ NT
 fZ
 fZ
 fZ
-FT
+KL
 aB
-Zp
-qk
-FT
+IU
+aB
+KL
 By
 By
 By
@@ -48801,8 +48989,8 @@ By
 nq
 bh
 QJ
-Kh
-WJ
+sD
+qE
 By
 By
 By
@@ -48865,9 +49053,9 @@ NT
 NT
 ju
 Gl
-fZ
+KL
 Xf
-dW
+zX
 dW
 KL
 By
@@ -49102,9 +49290,9 @@ By
 By
 nq
 bh
-zK
-Kh
-Kh
+EA
+sD
+sD
 By
 By
 By
@@ -49170,7 +49358,7 @@ Db
 Ja
 uC
 uC
-uC
+iN
 KL
 By
 By
@@ -49404,9 +49592,9 @@ By
 By
 kV
 pP
-dN
-Kh
-Kh
+AC
+sD
+sD
 By
 By
 By
@@ -49770,7 +49958,7 @@ vz
 Ue
 DL
 fZ
-uC
+YM
 uC
 uC
 uC
@@ -50378,7 +50566,7 @@ uC
 uC
 uC
 uC
-uC
+vM
 KL
 By
 By
@@ -50907,7 +51095,7 @@ By
 LT
 Ug
 VN
-sF
+KN
 By
 By
 By
@@ -51209,7 +51397,7 @@ By
 LT
 VN
 VN
-VN
+sF
 By
 By
 By
@@ -53653,7 +53841,7 @@ LT
 Wd
 Wd
 Wd
-pM
+bG
 jt
 sv
 sv
@@ -54858,7 +55046,7 @@ VN
 LT
 qX
 LT
-sH
+Uz
 Wd
 Wd
 dB
@@ -55158,9 +55346,9 @@ LT
 WO
 VN
 LT
-Cr
+As
 wt
-lH
+Sl
 Wd
 Wd
 dB
@@ -55460,9 +55648,9 @@ LT
 WO
 VN
 LT
-rV
+eU
 wt
-lH
+Sl
 Wd
 Wd
 dB
@@ -55764,7 +55952,7 @@ By
 By
 By
 zS
-mF
+by
 Wd
 Wd
 dB
