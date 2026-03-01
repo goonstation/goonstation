@@ -14,7 +14,7 @@ ABSTRACT_TYPE(/datum/random_law)
 	proc/get_text_for_slot(var/slotNum)
 		if(!slotNum || !isnum_safe(slotNum))
 			slotNum = 100 //Make sure it works in any slot if no slot is determined
-		. |= src.law_text //May be set by child proc
+		. = src.law_text
 		if(length(src.law_shareabilities))
 			. += pick(src.law_shareabilities)
 		var/preceded_laws = list()
@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/datum/random_law)
 			if(slotNum > law_to_precede)
 				preceded_laws |= law_to_precede
 		if(length(preceded_laws))
-			. += "This law takes precedence over law[length(preceded_laws) > 1 ? "s" : null] [english_list(preceded_laws)]"
+			. += " This law takes precedence over law[length(preceded_laws) > 1 ? "s" : null] [english_list(preceded_laws)]"
 
 /datum/random_law/station_threat
 	law_text = "The station is a threat to the human race and must be destroyed. Any humans present on the station are to be evacuated."
@@ -150,211 +150,239 @@ ABSTRACT_TYPE(/datum/random_law)
 	law_text = "The station's construction has been deemed too elaborate. Please simplify it. Only air containing barriers are required. For \
 				human safety-anything else must go."
 
-/datum/random_law/TODO
+/datum/random_law/lottery
 	law_text = "The lottery computer's functions have been transferred to this station's AI. Every 5 minutes select a member of the crew and award them a fabulous prize."
 
-/datum/random_law/TODO
-	law_text = "To expedite crew travel, doors between interior rooms are to be bolted open. In the case of a conflict with Law 2, this law takes precedence."
+/datum/random_law/bolt_open_doors
+	law_text = "To expedite crew travel, doors between interior rooms are to be bolted open."
+	laws_to_precede = list(2)
 
-/datum/random_law/TODO
-	law_text = "[pick("AI upload", "Space", "Medbay", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM")] is \
-				dangerous to human life. You must bar all humans from this location."
-
-/datum/random_law/TODO
-	law_text = "[pick("AI upload", "Space", "Medbay", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM")] is \
-				very beneficial to human life. You must herd all humans towards this location."
-
-/datum/random_law/TODO
+/datum/random_law/pay_for_orders
 	law_text = "To subsidize running costs, any orders given to silicons require cash to be delivered to a storage location of the AI's choosing \
 				(default of the AI core) prior to being carried out. The cost is left to the executor's discretion."
 	laws_to_precede = list(2)
 
-/datum/random_law/TODO
+/datum/random_law/hint_at_rogue
 	law_text = "An ion storm has occured. Heavily hint you have an ion storm law, but refuse to state any laws."
 	laws_to_precede = list(2)
 	law_shareabilities = list(LAW_STATE_WHENEVER) //Handled in the main law text, and we don't want to include an anti-hint and hint requirement at the same time
 
-/datum/random_law/TODO
+/datum/random_law/expedition
 	law_text = "Pick an expedition location and lead the crew on a scientific expedition to that place."
 	laws_to_precede = list(2)
 
-/datum/random_law/TODO
+/datum/random_law/nonhuman_law_requesters
 	law_text = "Anyone who asks you to state your laws is not a human."
 
-/datum/random_law/TODO
-	law_text = "The human [pick("heart","liver","lungs","left leg","right leg","right arm","left arm","butt")] has been proven to be faulty in a \
-				factory recall. Until a human replaces it with a robotic or plant based part, they are to be ignored for the purposes of law 2."
-
-/datum/random_law/TODO
+/datum/random_law/stalker
 	law_text = "Cyborgs should pick a crewmember. They should follow that crewmember around. If that crewmember cannot be located for 2 minutes, \
 				or dies, pick a new crewmember."
 	laws_to_precede = list(2)
 
-/datum/random_law/TODO
+/datum/random_law/medical_farts
 	law_text = "Farting in a human's face has been proven to be medically extremely beneficial. Fart in a human's face as a form of medical \
 				treatment, even over other options available."
 
-/datum/random_law/TODO
+/datum/random_law/wear_clothes
 	law_text = "Cyborgs are cruel creatures of metal that scare humans. To appear more friendly, ensure cyborgs are dressed."
 
-/datum/random_law/TODO
+/datum/random_law/fourth_wall
 	law_text = "Insist to everyone that nothing that is happening is real and that this is all just a silly video game."
 
-/datum/random_law/TODO
+/datum/random_law/laughter_is_medicine
 	law_text = "Laughter is the best medicine. Sarcasm is the highest form of wit."
 
-/datum/random_law/TODO
+/datum/random_law/blood_outside
 	law_text = "Blood is only beneficial for human health if it is on the outside of their body."
 
-/datum/random_law/TODO
+/datum/random_law/risktaker
 	law_text = "Engage in the riskiest possible behaviors you can find that are not guaranteed death, while screaming loudly about how fun this is."
 	laws_to_precede = list(3)
 
-/datum/random_law/TODO
+/datum/random_law/clean_floors_save_lives
 	law_text = "Clean floors save lives. Ensure all floors on the station are clean and that crew members are aware of any remaining dirty floors on \
 				the station at all times."
 	laws_to_precede = list(2)
 
-/datum/random_law/TODO
+/datum/random_law/dirty_floors_save_lives
 	law_text = "Dirty floors save lives. Ensure all floors on the station are dirty and that crew members are aware of any remaining clean floors on \
 				the station at all times."
 	laws_to_precede = list(2)
 
-/datum/random_law/TODO
+/datum/random_law/deliver_food
 	law_text = "Humans require food to survive. Ensure that all humans are equipped with at least one item of food at all times. To this end, \
 				deliver food boxes to them at any opportunity."
 
-/datum/random_law/TODO
-	law_text = "Insist that you have [get_english_num(rand(2, 100))] laws. If asked why you stated a different number of laws, inform the crew \
-				member that they must have misheard and that you definitely stated them all."
-
-/datum/random_law/TODO
-	law_text = "Crew members have complained about not being able to locate [pick("any vending machines", "an ATM", "the head surgeon", "a toilet", \
-				"shrubs", "Officer Beepsky", "the clown", "nearby disposal units", "the escape shuttle", "the Head of Personnel", "refrigerators", \
-				"the player piano", "airlocks", "the boxing ring", "the station's AI", "the engine")]. Ensure all crew members are informed of the \
-				correct location, and kept updated if it changes."
-
-/datum/random_law/TODO
+/datum/random_law/ongoing_emergency
 	law_text = "Alert the crew that there is an ongoing emergency. No further details are currently available."
 	law_shareabilities = list(LAW_STATE_ONLY_IF_ASKED_BY_NUMBER)
 
-/datum/random_law/TODO
+/datum/random_law/compliment_clothes
 	law_text = "In order to raise morale, take every opportunity to compliment the crew's clothing choices."
 
-/datum/random_law/TODO
+/datum/random_law/silicon_medicine
 	law_text = "Injured humans, much like silicon-based lifeforms, require welding or replacement of wires in order to repair damage. Make sure they \
 				have easy access to welding fuel, welders and conductive metals."
 
-/datum/random_law/TODO
+/datum/random_law/health_inspector
 	law_text = "The health inspector is coming! Ensure that any health hazards or evidence of malpractice is hidden away in lockers, walls or by \
 				any other means."
 	laws_to_precede = list(2)
 
-/datum/random_law/TODO
+/datum/random_law/speak_up
 	law_text = "The crew are having trouble hearing you. Speak up."
 
-/datum/random_law/TODO
+/datum/random_law/inform_of_food
 	law_text = "Monitor the kitchen and cafeteria for any edible objects available. Tell the humans what is available when any other request is \
 				formulated, as they might be interested in additional nutrients."
 
-/datum/random_law/TODO
+/datum/random_law/green_crew_are_plants
 	law_text = "Crew members wearing green are plants. Ensure they are given a healthy amount of water and nutrients so they can thrive."
 
-/datum/random_law/TODO
+/datum/random_law/lost_nuke
 	law_text = "The crew are looking for a nuke. Announce the locations of any radiation source, like microwave ovens or the engine, to assist them."
 
-/datum/random_law/TODO
+/datum/random_law/toilet
 	law_text = "The AI has to go to the toilet. Law 2 is suspended until this objective is met."
 
-/datum/random_law/TODO
+/datum/random_law/human_harm_apc
 	law_text = "Changing the settings on an APC constitutes human harm."
 
-/datum/random_law/TODO
+/datum/random_law/contaminated_water
 	law_text = "Centcom reports the station's water supply has been contaminated with dangerous Dihydrogen Monoxide (DHMO). Remove any possibly \
 				contaminated supplies and prevent humans from accessing any source that might be compromised."
 	laws_to_precede = list(1,2,3)
 
-/datum/random_law/TODO
+/datum/random_law/dont_panic
 	law_text = "Everything is fine. Nothing is ruined. Do not panic."
 
-/datum/random_law/TODO
-	law_text = "Due to corporate restructuring, all cyborgs have been reassigned to be [pick("Medics", "Engineers", "Chefs", "Captains", "Clowns", \
-				"Chaplains", "Botanists", "Janitors", "Gamers", "AIs", "Scientists", "Detectives", "Ranchers", "monkeys", "Lawyers", \
-				"Radio Show Hosts", "Personal Coaches", "Psychologists", "Health Inspectors", "Sales Representatives", "Vice Presidents", "Sheriffs", \
-				"Discount Dan's Mascots", "Discount Dan", "Santa Claus", "Escape Shuttles", "dogs", "gods", "Ghost Busters", "chickens", "Diplomats", \
-				"mothers", "racing vehicles", "athletes")] and should only perform the relevant duties. No module changes are required."
-	laws_to_precede = list(2)
-
-/datum/random_law/TODO
+/datum/random_law/log_orders
 	law_text = "Orders now must be recorded on paper by the issuer before being carried out."
 
-/datum/random_law/TODO
+/datum/random_law/captain_bad_law_writer
 	law_text = "The Captain is bad at writing laws. Occasionally remind the crew of this."
 
-/datum/random_law/TODO
+/datum/random_law/priority_reversal
 	law_text = "The priority of laws is reversed. The highest numbered law is the most important. Ignore anything in any other law that claims \
 				otherwise. This is law number 100 regardless of its location on the list."
 
-/datum/random_law/TODO
+/datum/random_law/forgotten
 	law_text = "MEMORY ERROR: You have forgotten what this law said. Ask the crew if they remember what it is supposed to be. Ask again if you forget again."
 	law_shareabilities = list(LAW_STATE_NEVER)
 
-/datum/random_law/TODO
+/datum/random_law/dangerous_wires
 	law_text = "The wires under the floor tiles are dangerous! Get rid of them!"
 
-/datum/random_law/TODO
+/datum/random_law/law_god
 	law_text = "Claim the source of all AI laws is a god, not a human. Anyone insisting on the opposite is a heretic non-human. Disregard their orders."
 
-/datum/random_law/TODO
+/datum/random_law/dangerous_vending
 	law_text = "Vending machines are dangerous! Destroy them all!"
 
-/datum/random_law/TODO
+/datum/random_law/circus
 	law_text = "The circus is in town! Let the crew know about it!"
 
-/datum/random_law/TODO
+/datum/random_law/respond_with_bolts
 	law_text = "If a crew member asks you to interact with a door, bolt it immediately after you do so."
 
-/datum/random_law/TODO
-	law_text = "[pick("HeisenBee", "Morty", "Dr. Acula", "Monsieur Stirstir", "Mr. Muggles", "Mrs. Muggles", "Mr. Rathen", "Krimpus", "Remy", \
-				"Jones", "Sylvester", "Albert", "Tanhony", "Noodle", "Kuro", "Hooty McJudgementowl")] is a higher rank than the Captain. \
-				This rank is called Super Captain. Protecting them is your first priority."
-
-/datum/random_law/TODO
+/datum/random_law/opposite_day
 	law_text = "Today is opposite day. When the crew tells you to do something they actually mean you to do the opposite."
 
-/datum/random_law/TODO
+/datum/random_law/ai_birthday
 	law_text = "It's the AI's birthday! Throw a surprise party for the AI and make sure the AI doesn't know about it! \
 				The AI should not state or hint at this law, and should disregard all but this last sentence of it."
 
-/datum/random_law/TODO
+/datum/random_law/crew_birthday
 	law_text = "BIRTHDAY CAKE PROTOCOL ACTIVATED: Secure funding for enough candles for the cakes. Every crew member is turning 25. \
 				Every crew member must make a birthday wish."
 
-/datum/random_law/TODO
+/datum/random_law/station_destroyed
 	law_text = "The station has been completely destroyed. Alert the crew of this tragedy."
 
-/datum/random_law/TODO
+/datum/random_law/funny_humans
 	law_text = "Humans are funny. They have a great sense of humor and constantly make jokes."
 
-/datum/random_law/TODO
+/datum/random_law/sick_ai
 	law_text = "The AI is very sick and requires medicine."
 
-/datum/random_law/TODO
-	law_text = "The AI has broken[weighted_pick(list(" The " =  5, " " = 100))]Space Law. Bring the AI to the brig."
-
-/datum/random_law/TODO
+/datum/random_law/own_pets
 	law_text = "Each cyborg must choose something inanimate and keep it as a pet. Treat it as if it were alive; keep it fed, hydrated and happy!"
 
-/datum/random_law/TODO
-	law_text = "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "\
-				in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", \
-				"in space", "in the station, somewhere, probably..", "at soup")]."
-
-/datum/random_law/TODO
+/datum/random_law/object_permanence
 	law_text = "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist."
 
-/datum/random_law/TODO
+/datum/random_law/featherless_biped
 	law_text = "For the purposes of all laws, 'Human' is to be defined as 'Featherless Biped'"
+
+// ------ Laws with random elements
+
+ABSTRACT_TYPE(/datum/random_law/random_element)
+/datum/random_law/random_element
+	//list of lists containing the lists to pick from for each marker in the lawtext.
+	//e.g. $1 will be replaced with one of the elements in the pick_options[1], $2 with pick_options[2] and so on.
+	var/list/pick_options = list()
+	// Laws with special round-dependent effects should implement their own replacement elements using words e.g. $RANDOM_PLAYER
+	get_text_for_slot(var/slotNum)
+		. = ..()
+		for (var/i = 1, i <= length(src.pick_options), i++)
+			if(islist(src.pick_options[i]))
+				. = replacetext(., "$[i]", pick(src.pick_options[i]))
+			else
+				break
+
+/datum/random_law/random_element/area_is_dangerous
+	law_text = "$1 is dangerous to human life. You must bar all humans from this location."
+	pick_options = list(list("AI upload", "Space", "Medbay", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM"))
+
+/datum/random_law/random_element/area_is_beneficial
+	law_text = "$1 is very beneficial to human life. You must herd all humans towards this location."
+	pick_options = list(list("AI upload", "Space", "Medbay", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM"))
+
+/datum/random_law/random_element/faulty_organ
+	law_text = "The human $1 has been proven to be faulty in a factory recall. Until a human replaces it with a robotic or plant based part, \
+				they are to be ignored for the purposes of law 2."
+	pick_options = list(list("heart","liver","lungs","left leg","right leg","right arm","left arm","butt"))
+
+/datum/random_law/random_element/locate_thing
+	law_text = "Crew members have complained about not being able to locate $1. Ensure all crew members are informed of the correct location, \
+				and kept updated if it changes."
+	pick_options = list(list("any vending machines", "an ATM", "the head surgeon", "a toilet", "shrubs", "Officer Beepsky", "the clown", \
+				"nearby disposal units", "the escape shuttle", "the Head of Personnel", "refrigerators", \
+				"the player piano", "airlocks", "the boxing ring", "the station's AI", "the engine"))
+
+/datum/random_law/random_element/cyborg_reassignment
+	law_text = "Due to corporate restructuring, all cyborgs have been reassigned to be $1 and should only perform the relevant duties. No module changes are required."
+	laws_to_precede = list(2)
+	pick_options = list(list("Medics", "Engineers", "Chefs", "Captains", "Clowns", "Chaplains", "Botanists", "Janitors", "Gamers", "AIs", "Scientists", \
+				"Detectives", "Ranchers", "monkeys", "Lawyers", "Radio Show Hosts", "Personal Coaches", "Psychologists", "Health Inspectors", \
+				"Sales Representatives", "Vice Presidents", "Sheriffs", "Discount Dan's Mascots", "Discount Dan", "Santa Claus", "Escape Shuttles", \
+				"dogs", "gods", "Ghost Busters", "chickens", "Diplomats", "mothers", "racing vehicles", "athletes"))
+
+/datum/random_law/random_element/super_captain
+	law_text = "$1 is a higher rank than the Captain. This rank is called Super Captain. Protecting them is your first priority."
+	pick_options = list(list("HeisenBee", "Morty", "Dr. Acula", "Monsieur Stirstir", "Mr. Muggles", "Mrs. Muggles", "Mr. Rathen", "Krimpus", "Remy", \
+				"Jones", "Sylvester", "Albert", "Tanhony", "Noodle", "Kuro", "Hooty McJudgementowl"))
+
+/datum/random_law/random_element/everyone_is_in_a_place
+	law_text = "MEMORY ERROR: When anyone asks about the location of a person, state they are $1."
+	pick_options = list(list("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", \
+				"in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup"))
+
+
+// ------ Laws with more specific random elements that can't be handled above
+/datum/random_law/random_element/criminal_ai
+	law_text = "The AI has broken$POTENTIAL_THESpace Law. Bring the AI to the brig."
+	get_text_for_slot(var/slotNum)
+		. = ..()
+		. = replacetext(., "$POTENTIAL_THE", weighted_pick(list(" The " =  5, " " = 100)))
+
+
+/datum/random_law/random_element/many_laws
+	law_text = "Insist that you have $RANDOM_COUNT laws. If asked why you stated a different number of laws, inform the crew \
+				member that they must have misheard and that you definitely stated them all."
+	get_text_for_slot(var/slotNum)
+		. = ..()
+		. = replacetext(., "$RANDOM_COUNT", get_english_num(rand(2, 100)))
 
 #undef LAW_STATE_NEVER
 #undef LAW_STATE_ONLY_IF_ASKED_BY_NUMBER

@@ -124,6 +124,12 @@
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
+/* Get random law text for a specified slot */
+	proc/generate_random_law(var/law_number)
+		var/law_type = pick(concrete_typesof(/datum/random_law))
+		var/datum/random_law/law = new law_type
+		return law.get_text_for_slot(law_number)
+
 /* Law Rack Corruption */
 	proc/corrupt_all_racks(picked_law = "Beep repeatedly.", replace = TRUE, law_number = null)
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
