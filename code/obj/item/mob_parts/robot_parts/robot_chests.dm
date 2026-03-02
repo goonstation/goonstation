@@ -42,10 +42,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 					return
 				else
 					var/obj/item/cable_coil/coil = W
-					coil.use(1)
-					src.wires = 1
-					boutput(user, SPAN_NOTICE("You insert some wire."))
-					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+					if (coil.use(1))
+						src.wires = TRUE
+						boutput(user, SPAN_NOTICE("You insert some wire."))
+						playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 		else if (iswrenchingtool(W))
 			if(!src.cell)

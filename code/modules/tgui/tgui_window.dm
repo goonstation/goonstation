@@ -379,7 +379,7 @@
 		var/datum/asset/spritesheet/spritesheet = asset
 		send_message("asset/stylesheet", spritesheet.css_filename())
 	*/
-	send_raw_message("asset/mappings", asset.get_associated_urls())
+	send_message("asset/mappings", asset.get_associated_urls())
 
 
 /**

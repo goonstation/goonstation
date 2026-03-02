@@ -115,26 +115,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if (B.current_lid)
 			boutput(user, SPAN_ALERT("You cannot put the [B.name] in the [src.name] while it has a lid on it."))
 			return
-		/*
-		if (isrobot(user))
-			var/the_reagent = input("Which chemical do you want to put in the [glass_name]?", "[dispenser_name] Dispenser", null, null) as null|anything in src.dispensable_reagents
-			if (!the_reagent)
-				return
-			var/amtlimit = B.reagents.maximum_volume - B.reagents.total_volume
-			var/amount = input("How much of it do you want? (1 to [amtlimit])", "[dispenser_name] Dispenser", null, null) as null|num
-			if (isnull(amount) || amount <= 0)
-				return
-			amount = clamp(amount, 0, amtlimit)
-			if (BOUNDS_DIST(src, user) > 0)
-				boutput(user, "You need to move closer to get the chemicals!")
-				return
-			if (status & (NOPOWER|BROKEN))
-				user.show_text("[src] seems to be out of order.", "red")
-				return
-			B.reagents.add_reagent(the_reagent,amount)
-			B.reagents.handle_reactions()
-			return
-		*/
+
 		var/obj/item/reagent_containers/glass/ejected_beaker = null
 		if (src.beaker?.loc == src)
 			ejected_beaker = src.beaker
@@ -143,12 +124,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.beaker.reagents?.handle_reactions()
 			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
-		src.beaker = B
-		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
-		if(!B.cant_drop)
-			user.drop_item()
-			if(!B.qdeled)
-				B.set_loc(src)
+		add_glassware(B, user)
 		if(B.qdeled)
 			B = null
 		else
@@ -156,9 +132,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
 				boutput(user, "You add the [glass_name] to the machine!")
-		B.reagents?.handle_reactions()
-		src.UpdateIcon()
-		src.ui_interact(user)
 
 	bullet_act(obj/projectile/P)
 		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
@@ -251,6 +224,41 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		else
 			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
+
+	/// Proc for adding a beaker to a dispenser (`user` optional though necessary if one exists).
+	proc/add_glassware(obj/item/reagent_containers/container, mob/user=null)
+		if(QDELETED(container))
+			return
+
+		if (user)
+			if(BOUNDS_DIST(src, user) > 0)
+				boutput(usr, "[src] is too far away.")
+				return
+
+			if (container.cant_drop && !isrobot(user))
+				boutput(user, "You can't add [src.beaker] to the machine!")
+				return
+
+		var/obj/item/reagent_containers/glass/ejected_beaker = null
+		if (src.beaker?.loc == src)
+			ejected_beaker = src.beaker
+			if (user)
+				user.put_in_hand_or_drop(ejected_beaker)
+			else
+				ejected_beaker.set_loc(src.loc)
+		if(src.beaker) // hotswapping but possibly current beaker is a borg beaker
+			src.beaker.reagents?.handle_reactions()
+			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
+
+		if (!container.cant_drop)
+			user?.drop_item(container)
+			container.set_loc(src)
+		src.beaker = container
+		APPLY_ATOM_PROPERTY(container, PROP_ITEM_IN_CHEM_DISPENSER, src)
+		container.reagents?.handle_reactions()
+		src.UpdateIcon()
+		if (user)
+			src.ui_interact(user)
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
@@ -363,12 +371,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 						if (newbeaker.current_lid)
 							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return
-						if(!newbeaker.cant_drop) // borgs and item arms
-							usr.drop_item()
-							newbeaker.set_loc(src)
-						src.beaker = newbeaker
-						APPLY_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
-						src.UpdateIcon()
+						src.add_glassware(newbeaker, ui.user)
 						. = TRUE
 			if ("remove")
 				if(!beaker)

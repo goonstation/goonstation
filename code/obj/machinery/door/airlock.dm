@@ -886,7 +886,7 @@ var/global/list/cycling_airlocks = list()
 	return 0
 
 /obj/machinery/door/airlock/autoclose()
-	if (src.aiControlDisabled != 1)
+	if (!src.isWireCut(AIRLOCK_WIRE_AI_CONTROL))
 		if(!src.welded)
 			close(0, 1)
 		else

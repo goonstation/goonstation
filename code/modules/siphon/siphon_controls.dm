@@ -183,7 +183,7 @@
 	var/HTML
 
 	///if it works, don't break it?
-	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
+	var/header_thing = {"
 		<style type='text/css'>
 			body {
 				font-family: Verdana, sans-serif;
@@ -205,14 +205,10 @@
 				border: 0;
 				}
 		</style>
-	"} : {"
-	<style type='text/css'>
-		/* when chui is on apparently do nothing, cargo cult moment */
-	</style>
 	"}
 
 	HTML += {"
-	[header_thing_chui_toggle]
+	[header_thing]
 	<title>Siphon Systems Control</title>
 	<style type="text/css">
 		h1, h2, h3, h4, h5, h6 {
@@ -355,7 +351,7 @@
 	src.add_dialog(user)
 	var/HTML
 
-	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
+	var/header_thing = {"
 		<style type='text/css'>
 			body {
 				font-family: Verdana, sans-serif;
@@ -377,14 +373,10 @@
 				border: 0;
 				}
 		</style>
-	"} : {"
-	<style type='text/css'>
-		/* when chui is on apparently do nothing, cargo cult moment */
-	</style>
 	"}
 
 	HTML += {"
-	[header_thing_chui_toggle]
+	[header_thing]
 	<title>Resonance Calibration Database</title>
 	<style type="text/css">
 		h1, h2, h3, h4, h5, h6 {

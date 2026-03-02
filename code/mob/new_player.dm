@@ -43,7 +43,9 @@ TYPEINFO(/mob/new_player)
 		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+		#ifndef GENERATE_GOONHUB_MAP
 		src.ready_play = TRUE
+		#endif
 	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
@@ -697,40 +699,44 @@ TYPEINFO(/mob/new_player)
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Join the round as an observer? You will be unable to respawn for the duration of the round.", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
-			if(!src.client) return
-			var/mob/dead/observer/observer = new(src)
-			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
-				src.client.using_antag_token = 0
-				src.show_text("Token refunded, your new total is [src.client.antag_tokens].", "red")
-			src.spawning = 1
+		#ifndef GENERATE_GOONHUB_MAP
+		if(tgui_alert(src, "Join the round as an observer? You will be unable to respawn for the duration of the round.", "Player Setup", list("Yes", "No"), 30 SECONDS) != "Yes")
+			return
+		#endif
 
-			close_spawn_windows()
-			boutput(src, SPAN_NOTICE("Now teleporting."))
-			logTheThing(LOG_DEBUG, src, "observes.")
-			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-			if (ASLoc)
-				observer.set_loc(ASLoc)
+		if(!src.client) return
+		var/mob/dead/observer/observer = new(src)
+		if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
+			src.client.using_antag_token = 0
+			src.show_text("Token refunded, your new total is [src.client.antag_tokens].", "red")
+		src.spawning = 1
 
-			observer.observe_round = 1
-			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
-				client.preferences.randomize_name()
-			observer.real_name = client.preferences.real_name
-			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
-			observer.gender = observer.bioHolder.mobAppearance.gender
-			observer.UpdateName()
-			observer.apply_looks_of(client)
+		close_spawn_windows()
+		boutput(src, SPAN_NOTICE("Now teleporting."))
+		logTheThing(LOG_DEBUG, src, "observes.")
+		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+		if (ASLoc)
+			observer.set_loc(ASLoc)
 
-			if(!src.mind) src.mind = new(src)
-			ticker.minds |= src.mind
-			src.mind.get_player()?.joined_observer = TRUE
-			src.mind.transfer_to(observer)
-			if(observer?.client)
-				observer.client.loadResources()
+		observer.observe_round = 1
+		if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
+			client.preferences.randomize_name()
+		observer.real_name = client.preferences.real_name
+		observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
+		observer.gender = observer.bioHolder.mobAppearance.gender
+		observer.UpdateName()
+		observer.apply_looks_of(client)
 
-			respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
+		if(!src.mind) src.mind = new(src)
+		ticker.minds |= src.mind
+		src.mind.get_player()?.joined_observer = TRUE
+		src.mind.transfer_to(observer)
+		if(observer?.client)
+			observer.client.loadResources()
 
-			qdel(src)
+		respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
+
+		qdel(src)
 
 #ifdef TWITCH_BOT_ALLOWED
 	proc/try_force_into_bill() //try to put the twitch mob into shittbill

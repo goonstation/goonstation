@@ -1,7 +1,7 @@
 TYPEINFO(/obj/machinery/gravity_tether)
 	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
-
+ADMIN_INTERACT_PROCS(/obj/machinery/gravity_tether, proc/admin_change_intensity, proc/admin_set_state, proc/admin_cause_fault)
 ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 /obj/machinery/gravity_tether
 	name = "gravity tether"
@@ -388,3 +388,111 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 
 /// Shake the camera of those affected by the change
 /obj/machinery/gravity_tether/proc/shake_affected()
+
+/// Admin proc to directly change intensity
+/obj/machinery/gravity_tether/proc/admin_change_intensity()
+	set name = "Change Intensity"
+
+	// TODO: Hacky copy/paste from `attack_hand` et al; need to refactor common bits
+
+	var/new_intensity = tgui_input_number(usr, "Running at [src.gforce_intensity/100]G. Change intensity?", "Gravity Tether", src.gforce_intensity/100, round_input=FALSE)
+	if (isnull(new_intensity))
+		return
+	new_intensity *= 100
+	if (new_intensity == src.gforce_intensity)
+		boutput(usr, SPAN_NOTICE("Tether already set to [new_intensity/100]G!"))
+		return
+
+	var/delay = tgui_input_number(usr, "How long before doing the change (in seconds)?", "Time Delay (Seconds)", 60, min_value=0, round_input=FALSE)
+	if (isnull(delay) || !isnum(delay))
+		return
+
+	// HACK FRAUD
+	if (istype(src, /obj/machinery/gravity_tether/station))
+		switch(tgui_alert(usr, "Anonunce changing to [new_intensity/100]G?", "Change Announcement", list("Yes", "No", "Cancel")))
+			if ("Yes")
+				command_alert("The [station_or_ship()]-wide gravity tether will begin shifting to [new_intensity/100]G in [time_to_text(delay SECONDS)].", "Gravity Change Warning", alert_origin = ALERT_STATION)
+			if ("No")
+				;
+			if ("Cancel")
+				return
+			if (null)
+				return
+
+	src.change_begin_time = TIME + (delay SECONDS)
+	src.processing_state = TETHER_PROCESSING_PENDING
+	src.target_intensity = new_intensity
+
+	if (delay > 0)
+		playsound(src.loc, 'sound/effects/mantamoving.ogg', 50, 1)
+
+	src.update_ma_bat()
+	src.update_ma_status()
+	src.update_ma_screen()
+	src.update_ma_dials()
+	src.UpdateIcon()
+
+/// Admin proc to directly change intensity
+/obj/machinery/gravity_tether/proc/admin_set_state()
+	set name = "Set Operating State"
+
+	var/list/choices = list("Fix", "Break", "Lock", "Unlock", "Off", "No Change")
+	var/new_state = tgui_input_list(usr, "New tether operating state?", "Operating State", choices, "No Change")
+
+	if (isnull(new_state) || new_state == "No Change")
+		return
+
+	switch(new_state)
+		if ("Fix")
+			src.set_fixed()
+		if ("Break")
+			src.set_broken()
+		if ("Lock")
+			src.locked = TRUE
+			src.update_ma_tamper()
+			src.update_ma_screen()
+			src.UpdateIcon()
+		if ("Unlock")
+			src.locked = FALSE
+			src.update_ma_tamper()
+			src.update_ma_screen()
+			src.UpdateIcon()
+		if ("Off")
+			if (src.processing_state == TETHER_PROCESSING_PENDING)
+				src.finish_gravity_change()
+			src.change_intensity(0)
+
+// Admin proc to directly cause a tether fault in an associated area
+/obj/machinery/gravity_tether/proc/admin_cause_fault()
+	set name = "Trigger Fault"
+
+	if (!length(src.target_area_refs))
+		boutput(usr, SPAN_ALERT("CANNOT CAUSE FAULT: Tether has no target areas! (You can spawn `/obj/anomaly/gravitational` instead!)"))
+		return
+
+	var/list/choices = list("Minor", "Major", "Extreme", "No Fault")
+	var/fault_level = tgui_input_list(usr, "What level fault?", "Fault Level", choices, "No Fault")
+	if (fault_level == "No Fault")
+		return
+
+	var/area/target_area = pick(src.target_area_refs)
+	if (!istype(target_area))
+		return
+
+	var/list/turfs = get_area_turfs(target_area, TRUE)
+	if (!length(turfs))
+		turfs = get_area_turfs(target_area, FALSE)
+		if (!length(turfs))
+			return
+	var/obj/anomaly/gravitational/fault_anom = null
+
+	switch (fault_level)
+		if ("Minor")
+			fault_anom = new /obj/anomaly/gravitational/minor(pick(turfs))
+		if ("Major")
+			fault_anom = new /obj/anomaly/gravitational/major(pick(turfs))
+		if ("Extreme")
+			fault_anom = new /obj/anomaly/gravitational/extreme(pick(turfs))
+
+	if (istype(fault_anom))
+		message_admins("New gravity fault spawning at [log_loc(fault_anom)]!")

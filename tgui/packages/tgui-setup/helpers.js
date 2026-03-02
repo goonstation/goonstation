@@ -119,9 +119,6 @@
   };
 
   Byond.callAsync = function (path, params) {
-    if (!window.Promise) {
-      throw new Error('Async calls require API level of ES2015 or later.');
-    }
     var index = Byond.__callbacks__.length;
     var promise = new window.Promise(function (resolve) {
       Byond.__callbacks__.push(resolve);

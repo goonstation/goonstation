@@ -42,6 +42,7 @@ var/global/datum/datalogger/game_stats
 		stats["hydro_produce"] = 0
 		stats["mail_opened"] = 0
 		stats["mail_fraud"] = 0
+		stats["food_crimes"] = 0
 	proc
 		Increment(var/p)
 			if(!(p in stats))

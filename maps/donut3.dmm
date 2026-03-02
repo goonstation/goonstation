@@ -270,7 +270,6 @@
 	},
 /area/station/medical/head)
 "abT" = (
-/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue3"
@@ -827,9 +826,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "ajW" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -1271,6 +1268,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
 "aqc" = (
@@ -2012,6 +2010,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "aBa" = (
@@ -2511,9 +2510,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "aJh" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -3368,7 +3365,7 @@
 /area/station/security/checkpoint/escape)
 "aWF" = (
 /obj/machinery/light/small/sticky/harsh,
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -3587,15 +3584,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"baJ" = (
-/obj/machinery/light/small/sticky{
-	dir = 1
-	},
-/obj/railing/orange{
-	dir = 8
-	},
-/turf/simulated/floor/airless/plating/jen,
-/area/station/turret_protected/AIbaseoutside)
 "baK" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
@@ -3886,7 +3874,7 @@
 	},
 /area/shuttle/asylum/medbay)
 "beH" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	name = "utility sink";
 	pixel_y = 7
@@ -4004,7 +3992,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "bgV" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for custodial purposes.";
 	dir = 1;
 	name = "custodial sink"
@@ -4798,9 +4786,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "buH" = (
 /obj/reagent_dispensers/fueltank,
 /obj/decal/stripe_caution,
@@ -4959,9 +4945,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "bwB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -5228,9 +5212,7 @@
 /obj/decal/mule/beacon,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "bAd" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
@@ -6580,11 +6562,9 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "bYk" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -6853,6 +6833,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "cbx" = (
@@ -7965,9 +7946,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "cpS" = (
 /obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/blueblack{
@@ -9860,9 +9839,7 @@
 /obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "cTE" = (
 /obj/railing/orange{
 	dir = 1
@@ -10164,7 +10141,12 @@
 "cZn" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
-/obj/blind_switch/area/west,
+/obj/blind_switch/area/west{
+	pixel_y = -6
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = 5
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -11740,6 +11722,7 @@
 	detector_id = "AI Core";
 	dir = 1
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "dCu" = (
@@ -11844,7 +11827,7 @@
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "dDz" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
@@ -13137,9 +13120,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "dWY" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -13161,6 +13142,7 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "dXs" = (
@@ -14020,9 +14002,7 @@
 /area/station/medical/research)
 "elM" = (
 /turf/simulated/wall/auto/jen/yellow,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "elQ" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
@@ -14475,7 +14455,7 @@
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
 "etM" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6;
 	pixel_y = 3
@@ -15015,6 +14995,7 @@
 "eEs" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -16177,7 +16158,7 @@
 	},
 /area/station/chapel/sanctuary)
 "eYB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 6
 	},
 /obj/decal/poster/wallsign/chsl{
@@ -17085,6 +17066,12 @@
 	dir = 5
 	},
 /area/station/chapel/funeral_parlor)
+"fmz" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
+/area/station/engine/gravity)
 "fmA" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
@@ -18621,9 +18608,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "fLf" = (
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -20218,7 +20203,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "glz" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/cable{
@@ -20821,7 +20806,7 @@
 	pixel_y = 24
 	},
 /obj/surgery_tray,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},
@@ -21772,12 +21757,11 @@
 	pixel_x = -5;
 	pixel_y = -6
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "gLM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -22559,7 +22543,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "gYi" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -23492,6 +23476,10 @@
 "hmI" = (
 /turf/simulated/wall/auto/reinforced/jen/purple,
 /area/station/crew_quarters/hor)
+"hmV" = (
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/plating/jen,
+/area/station/security/beepsky)
 "hnh" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -23690,9 +23678,6 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/machinery/light/small/sticky{
-	dir = 1
-	},
 /obj/railing/orange{
 	dir = 4
 	},
@@ -23833,7 +23818,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for custodial purposes.";
 	dir = 4;
 	name = "custodial sink";
@@ -25608,7 +25593,7 @@
 	},
 /area/station/science/lobby)
 "hXY" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/netural,
@@ -30750,9 +30735,7 @@
 /obj/mesh/grille/steel,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "jCd" = (
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/wood/two,
@@ -31147,6 +31130,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary2)
 "jHN" = (
@@ -32294,9 +32278,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "jYB" = (
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersB)
@@ -35160,7 +35142,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -6;
 	pixel_y = 1
@@ -36199,7 +36181,7 @@
 "lom" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/machinery/cashreg{
 	pixel_x = -4;
 	pixel_y = -1
@@ -37899,7 +37881,7 @@
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/asylum/medbay)
 "lMP" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /obj/decal/cleanable/dirt,
@@ -40699,7 +40681,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "mFQ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -41379,6 +41361,13 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/west)
+"mSG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload_foyer)
 "mSK" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -41389,7 +41378,7 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "mSO" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -41468,6 +41457,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "mUu" = (
@@ -41909,9 +41899,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "naU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42124,9 +42112,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "nfb" = (
 /obj/decal/stripe_delivery,
 /obj/cable{
@@ -42876,9 +42862,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "npV" = (
 /obj/decal/poster/wallsign/medbay_right{
 	pixel_y = 33
@@ -43291,9 +43275,7 @@
 /obj/stool,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "nxu" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/wreckage{
@@ -43313,9 +43295,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "nxC" = (
 /obj/storage/closet/coffin/wood,
 /obj/disposalpipe/segment/transport{
@@ -43809,6 +43789,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "purple2"
@@ -44061,9 +44042,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "nKB" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mesh/catwalk/jen,
@@ -44135,9 +44114,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "nLL" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -45172,7 +45149,7 @@
 /obj/item/clothing/glasses/spectro{
 	pixel_x = -3
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"
@@ -45934,6 +45911,7 @@
 /obj/storage/crate,
 /obj/item/storage/box/costume/mime,
 /obj/random_item_spawner/snacks/two,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/science/testchamber/bombchamber)
 "onh" = (
@@ -47341,7 +47319,7 @@
 "oJm" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -9
 	},
@@ -47879,7 +47857,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbooth)
 "oSc" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 11
 	},
 /obj/decal/cleanable/dirt,
@@ -48061,12 +48039,10 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "oUK" = (
-/obj/table/auto,
-/obj/random_item_spawner/medicine/few,
-/obj/random_item_spawner/med_tool/few,
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "oUM" = (
@@ -49995,6 +49971,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
 "pAD" = (
@@ -50421,7 +50398,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -51462,6 +51439,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "pXs" = (
@@ -53288,7 +53266,7 @@
 	},
 /area/station/crew_quarters/hor)
 "qCj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 9;
 	pixel_y = -2
@@ -53644,7 +53622,7 @@
 	},
 /area/station/science/teleporter)
 "qJk" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "It seems a bit busted.";
 	dir = 4;
 	name = "leaky sink";
@@ -53703,7 +53681,7 @@
 /turf/space,
 /area/space)
 "qJL" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -9
 	},
@@ -54276,6 +54254,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "qSx" = (
@@ -55030,6 +55009,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary2)
 "rcW" = (
@@ -55916,13 +55896,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/hallway/primary/south)
-"rsF" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/window_blinds/cog2/middle{
-	dir = 10
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/dome)
 "rsK" = (
 /obj/machinery/sleeper/compact,
 /obj/machinery/light/incandescent/netural,
@@ -56046,9 +56019,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "rul" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -56317,6 +56288,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/pharmacist,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -57240,6 +57212,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "rNI" = (
@@ -57860,7 +57833,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/engineering)
 "rWC" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "rusty sink"
@@ -58539,7 +58512,7 @@
 	dir = 9;
 	icon_state = "check1"
 	},
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -58686,7 +58659,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/fitness)
 "sjT" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8;
 	pixel_y = 3
 	},
@@ -59079,7 +59052,6 @@
 	id = "solitarycell";
 	pixel_y = -24
 	},
-/obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -61315,9 +61287,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/jen,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "sZM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/jen,
@@ -61684,9 +61654,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "tgi" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
@@ -63078,15 +63046,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
-"tCP" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small/sticky{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/jen,
-/area/station/turret_protected/AIbaseoutside)
 "tCU" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/disposal/small{
@@ -65084,7 +65043,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "ugx" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -9
 	},
@@ -65519,9 +65478,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "uqE" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
@@ -65647,9 +65604,7 @@
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "usI" = (
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
@@ -65736,7 +65691,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "uty" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/disposal/small{
@@ -65788,10 +65743,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/escape)
 "utX" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -66078,6 +66034,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "uyF" = (
@@ -67236,9 +67193,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "uQz" = (
 /obj/decal/tile_edge/line/white{
 	dir = 6;
@@ -69167,9 +69122,7 @@
 "vry" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "vrD" = (
 /obj/decal/mule/beacon,
 /obj/machinery/vending/medical_public,
@@ -69405,9 +69358,7 @@
 /obj/decal/cleanable/rust/jen,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/jen,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "vwI" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass,
@@ -70501,9 +70452,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "vNW" = (
 /obj/storage/crate{
 	desc = "Wow! Crate may or may not still contain bottles.";
@@ -70886,9 +70835,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "vSm" = (
 /obj/disposalpipe/segment{
 	name = "factory pipe"
@@ -71791,7 +71738,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "whN" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 11
 	},
 /obj/cable{
@@ -71949,7 +71896,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -72832,7 +72779,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/maintenance/inner/sw)
 "wwj" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8
 	},
 /obj/machinery/light/small/sticky,
@@ -73718,9 +73665,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "wIy" = (
 /obj/rack,
 /obj/item/tank/air,
@@ -74086,7 +74031,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "wNv" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -74259,9 +74204,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "wPT" = (
 /obj/machinery/computer/supplycomp{
 	dir = 4
@@ -74433,7 +74376,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "wTH" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
@@ -76662,7 +76605,6 @@
 	id = "solitarycell";
 	pixel_y = -24
 	},
-/obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -76695,6 +76637,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/landmark/pest,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
 "xzE" = (
@@ -77050,7 +76993,7 @@
 /turf/simulated/floor/sand,
 /area/station/engine/engineering/ce)
 "xEK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -77415,6 +77358,7 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "xLg" = (
@@ -78634,9 +78578,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/storage/auxillary{
-	name = "Tool Storage"
-	})
+/area/station/storage/tools)
 "yaK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -107351,7 +107293,7 @@ vSW
 rvX
 gTo
 nkl
-tqH
+hmV
 fhO
 cqA
 ehA
@@ -120059,7 +120001,7 @@ ojB
 nTl
 mMG
 wvB
-baJ
+kaL
 kaL
 psF
 peL
@@ -120365,7 +120307,7 @@ jBX
 jBX
 jBX
 kWN
-tCP
+jBX
 svG
 sUC
 nkb
@@ -130960,7 +130902,7 @@ jIk
 ttr
 xhC
 uuy
-rsF
+tNF
 bYU
 xUP
 mAl
@@ -136403,7 +136345,7 @@ eTF
 eTF
 csm
 ouW
-uwc
+mSG
 lje
 avI
 yaq
@@ -145735,7 +145677,7 @@ iMF
 pqF
 xzt
 mBH
-sIx
+fmz
 uZE
 wCE
 sxm

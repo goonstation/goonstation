@@ -608,10 +608,10 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		else if (istype(W,/obj/item/cable_coil/))
 			boutput(user, SPAN_NOTICE("You attach the cable to the mask. Looks like you can wear it now."))
 			var/obj/item/cable_coil/C = W
-			C.use(1)
+			if(!C.use(1))
+				return
 			var/obj/item/clothing/mask/paper/M = new /obj/item/clothing/mask/paper(src.loc)
 			user.put_in_hand_or_drop(M)
-			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
 			if (src.color)
 				M.color = src.color
 			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, M, user)

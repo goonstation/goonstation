@@ -432,7 +432,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
 
 		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
-			payload.oxygen_agent_b += 0.18 * owner.material_amt
+			payload.oxygen_agent_b += 0.5 * owner.material_amt
 			payload.oxygen = 15 * owner.material_amt
 			payload.temperature = T0C //reduced temp is supposeed to represent endothermic reaction
 			air.merge(payload) //add it to the target air

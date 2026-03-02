@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/device/gps)
 	name = "space GPS"
 	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
 	icon_state = "gps-off"
-	item_state = "electronic"
+	item_state = "accessgun"
 	var/allowtrack = 1 // defaults to on so people know where you are (sort of!)
 	var/serial = "4200" // shouldnt show up as this
 	var/identifier = "NT13" // four characters max plz

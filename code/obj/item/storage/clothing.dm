@@ -187,7 +187,7 @@
 	/obj/item/clothing/suit/labcoat/robotics,\
 	/obj/item/clothing/suit/wintercoat/robotics,\
 	/obj/item/device/radio/headset/medical,\
-	/obj/item/device/pda2/medical/robotics,\
+	/obj/item/device/pda2/robotics,\
 	/obj/item/clothing/gloves/latex)
 
 // Research Equipment
@@ -267,7 +267,7 @@
 
 /obj/item/storage/box/costume
 	icon_state = "costume"
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/clothing/under)
 
 /obj/item/storage/box/costume/clown

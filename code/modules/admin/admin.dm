@@ -3436,14 +3436,14 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=DNA;size=440x410")
 					if("fingerprints")
-						var/dat = "<B>Showing Fingerprints.</B><HR>"
+						var/dat = "<B>Showing Default Fingerprints.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
-								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[H.bioHolder.fingerprints]</td></tr>"
-								else if(!H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
+								if(H.bioHolder.default_fingerprints)
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.default_fingerprints.id]</td></tr>"
+								else if(!H.bioHolder.default_fingerprints)
+									dat += "<tr><td>[H]</td><td>H.bioHolder.default_fingerprints = null</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")

@@ -5,7 +5,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/dmm_suite/clear_area)
 "c" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/machinery/light{
 	dir = 1;
 	tag = "icon-tube1 (NORTH)"
