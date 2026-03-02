@@ -1318,6 +1318,7 @@
 #include "code\modules\events\minor\transmission.dm"
 #include "code\modules\events\start\critter_infestation.dm"
 #include "code\modules\events\start\viscera_cleanup.dm"
+#include "code\modules\events\start\food_poisoning.dm"
 #include "code\modules\fishing\fish.dm"
 #include "code\modules\fishing\fishing_gear.dm"
 #include "code\modules\fishing\fishing_lootpools.dm"
