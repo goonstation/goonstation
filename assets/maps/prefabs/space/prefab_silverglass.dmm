@@ -477,7 +477,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/silverglass)
 "pB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -1229,7 +1229,7 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},

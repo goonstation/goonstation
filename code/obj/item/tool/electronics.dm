@@ -14,7 +14,7 @@
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	pressure_resistance = 10
-	item_state = "electronic"
+	item_state = "electronics"
 	flags = TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
@@ -315,7 +315,7 @@
 		// can_build is only defined on subtypes of /typeinfo/atom/movable, if other types need can_build implementation add a stub proc and more handling here
 		return TRUE
 	var/typeinfo/atom/movable/AM_typeinfo = type_typeinfo
-	return AM_typeinfo.can_build(T)
+	return AM_typeinfo.can_build(T, src.dir)
 
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
@@ -567,7 +567,7 @@
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_ENGINEER, MGA_RKIT)
+		newsignal.data["group"] = list(MGD_ENGINEER, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
@@ -797,7 +797,7 @@
 			has_item_mats = !!item.item_mats,
 			blueprint_available = !!item.blueprint,
 			locked = item.locked,
-			imagePath = getItemIcon(item.item_type, C = user.client),
+			imagePath = getItemIcon(item.item_type),
 			ref = ref(item),
 		)))
 

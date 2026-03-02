@@ -10,8 +10,6 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 	var/callbackName = "ehjaxCallback"
 	var/list/allowedProcs = list("/proc/getBanApiFallback",
 								"/proc/getWorldMins",
-								"/datum/chui/proc/debug",
-								"/datum/chui/proc/close",
 								"/datum/chatOutput/proc/doneLoading",
 								"/datum/chatOutput/proc/ping",
 								"/datum/chatOutput/proc/handleContextMenu",
