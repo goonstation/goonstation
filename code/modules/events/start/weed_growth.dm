@@ -13,11 +13,10 @@
 			var/area/A = get_area(P)
 			if (!istype(A, /area/station))
 				return
-			message_admins(SPAN_INTERNAL("[src.name] event occured at [get_area(P)](Source: [source])."))
-			var/weed_chance = rand(1,10)
-			if(weed_chance == 10)
+			var/weed_chance = rand(1,8)
+			if(weed_chance == 8)
 				var/datum/plant/current_planttype = null
-				var/datum/plantgenes/current_plantgenes = P.plantgenes
+				var/datum/plantgenes/current_plantgenes = new /datum/plantgenes(P)
 				var/weed_type = rand(0,8)
 				if(weed_type == 0)
 					current_planttype = /datum/plant/weed/fungus
