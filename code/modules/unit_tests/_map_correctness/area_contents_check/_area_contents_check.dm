@@ -4,6 +4,7 @@
 
 ABSTRACT_TYPE(/datum/map_correctness_check/area_contents)
 /datum/map_correctness_check/area_contents
+	check_prefabs = FALSE
 	/**
 	 *	The areas that should be checked for the expected contents. All subtypes of target areas are also considered. \
 	 *	The union of the contents of the target areas (and their subtypes) is checked, so the check can be thought of as
