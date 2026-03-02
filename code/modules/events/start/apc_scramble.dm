@@ -22,17 +22,17 @@
 				var/apc_diceroll = rand(1,4)
 				switch(apc_diceroll)
 					if (1)
-						apc.lighting = 0
+						A.lighting = 0
 					if (2)
-						apc.equipment = 0
+						A.equipment = 0
 					if (3)
-						apc.environ = 0
+						A.environ = 0
 					if (4)
-						apc.environ = 0
-						apc.equipment = 0
-						apc.lighting = 0
-				logTheThing(LOG_STATION, null, "APC Scramble interfered with [apc.name] at [log_loc(apc)].")
-				apc.update()
-				apc.UpdateIcon()
+						A.environ = 0
+						A.equipment = 0
+						A.lighting = 0
+				logTheThing(LOG_STATION, null, "APC Scramble interfered with [A.name] at [log_loc(apc)].")
+				A.update()
+				A.UpdateIcon()
 
 
