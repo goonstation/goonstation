@@ -2,7 +2,7 @@
 	name = "Fly Image Overhead"
 	desc = {"***********************************************************<br>
 Upload an image and/or audio and have it fly to target turf then play an ending effect.
-Protip: tinker with this on a local first so you know what you're doing.<br>
+Protip: tinker with this on a local first so you know what you're doing. Images are best around 100-200 pixels wide and long.<br>
 RMB on buildmode button                = Set image and ending effect<br>
 Ctrl + RMB on buildmode button         = Set audio<br>
 Alt + Right mouse button               = Set optional obj/mob spawns<br>
@@ -17,6 +17,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	var/turf/target_loc
 	var/audio
 	var/audio_choice = "Once"
+	var/plane_choice = FALSE
 	var/dir_input = "Random"
 	var/end_effect = "Leave zlevel"
 	var/spawnpath
@@ -42,6 +43,8 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			if (src.image)
 				logTheThing(LOG_ADMIN, usr, "uploaded an image [src.image] to use with Fly Object Overhead buildmode")
 			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list("Leave zlevel", "Explode", "Fade away", "Run away"))
+			src.plane_choice = tgui_input_list(usr, "Layer above blackness?", "Blackness layer", list(TRUE, FALSE))
+
 		if (ctrl)
 			src.audio_choice = tgui_input_list(usr, "Loop sound globally or play once on arrival?", "Choose", list("Global loop", "Once", "Clear"))
 			if (src.audio_choice == "Clear")
@@ -116,6 +119,11 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 
 		if (src.audio_choice == "Global loop" && src.audio)
 			pilot.loopsound = TRUE
+
+		if (src.plane_choice)
+			pilot.plane = PLANE_ABOVE_BLACKNESS
+		else
+			pilot.plane = PLANE_DEFAULT
 
 		if (direction == WEST || direction == EAST)
 			while (pilot.x != target_locinput.x)
