@@ -63269,6 +63269,7 @@
 	dir = 4
 	},
 /mob/living/critter/small_animal/crab/responsive,
+/obj/decal/poster/wallsign/iso/mandatory/catears,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
 "kCF" = (

@@ -4,7 +4,10 @@ setlocal
 if defined HOOKS_INCLUDE_TGUI (
 	goto :skipTguiPrompt
 )
-set /p tguiChoice=Do you want to install TGUI hooks (requires Node.js)? (Y/N):
+
+for /F "delims=" %%A in ('echo prompt $E^| cmd') do set "ESC=%%A"
+
+set /p tguiChoice=Do you want to install TGUI hooks %ESC%[1m(REQUIRES Node.js)%ESC%[0m? (Y/N):
 if /i "%tguiChoice%"=="Y" (
 	set "HOOKS_INCLUDE_TGUI=1"
 ) else (
