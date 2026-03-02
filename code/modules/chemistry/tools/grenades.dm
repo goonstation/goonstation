@@ -499,7 +499,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang)
 
 
 TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/chem_grenade/flashbang/revolution //convertssss
 

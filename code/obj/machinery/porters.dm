@@ -713,7 +713,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 //////////////////////////////////////// Port-a-NanoMed ///////////////////////////////////////////
 
 TYPEINFO(/obj/machinery/vending/port_a_nanomed)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/vending/port_a_nanomed
 	name = "Port-A-NanoMed"
@@ -818,7 +818,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 
 //DIRTY DIRTY PLAYERS
 TYPEINFO(/obj/submachine/laundry_machine/portable)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"

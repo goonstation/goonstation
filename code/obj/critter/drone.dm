@@ -5,7 +5,7 @@ TYPEINFO(/obj/critter/gunbot/drone)
 				"conductive_high" = 12,
 				"dense" = 6)
 TYPEINFO(/obj/critter/gunbot/drone/glitchdrone)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 TYPEINFO(/obj/critter/gunbot/drone/heavydrone)
 	mats = list("energy_high" = 10,
@@ -69,7 +69,7 @@ TYPEINFO(/obj/critter/gunbot/drone/aciddrone)
 				"conductive_high" = 15,
 				"dense" = 10)
 TYPEINFO(/obj/critter/gunbot/drone/helldrone)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/critter/gunbot/drone
 	name = "Syndicate Drone"
@@ -1014,7 +1014,7 @@ ABSTRACT_TYPE(/obj/gunbotdrone_spawner)
 						   /obj/critter/gunbot/drone/assdrone = 50)
 
 TYPEINFO(/obj/critter/gunbot/drone/iridium)
-	mats = null //no
+	analyser_flags = ANALYSER_BLACKLIST //no
 
 /obj/critter/gunbot/drone/iridium // the worstest jerk, even worse than the previous worst jerk.
 	name = "Y-Class Battledrone"

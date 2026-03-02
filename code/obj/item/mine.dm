@@ -280,8 +280,7 @@ TYPEINFO(/obj/item/mine)
 		explosion(src, src.loc, 0, 1, 2, 3)
 
 TYPEINFO(/obj/item/mine/gibs)
-	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/mine/gibs
 	name = "pustule"

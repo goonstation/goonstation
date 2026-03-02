@@ -390,7 +390,7 @@ TYPEINFO(/obj/item/pinpointer/idtracker)
 			return TRUE
 
 TYPEINFO(/obj/item/pinpointer/secweapons)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"

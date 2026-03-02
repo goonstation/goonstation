@@ -417,7 +417,7 @@ TYPEINFO(/obj/item/sword)
 	bladecolor = "Pi"
 
 TYPEINFO(/obj/item/sword/pink/angel)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/sword/pink/angel
 	name = "The Nyasaber"
 	desc = "A strange colour of saber, for a sith. You sense the dark side of the nya within it..."

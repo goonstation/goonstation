@@ -2021,7 +2021,7 @@ TYPEINFO(/obj/item/machineboard)
 	icon_state = "player-module"
 
 TYPEINFO(/obj/item/machineboard/vending/monkeys)
-	mats = 0 //No!!
+	analyser_flags = ANALYSER_BLACKLIST //No!!
 
 /obj/item/machineboard/vending/monkeys
 	name = "Valuchimp module"
@@ -2557,7 +2557,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		update_desc()
 
 TYPEINFO(/obj/machinery/vending/monkey)
-	mats = 0 // >:I
+	analyser_flags = ANALYSER_BLACKLIST // >:I
 
 /obj/machinery/vending/monkey
 	name = "ValuChimp"
@@ -2898,7 +2898,7 @@ TYPEINFO(/obj/machinery/vending/hydroponics/mean_solarium_bullshit)
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
 
 TYPEINFO(/obj/machinery/vending/chem)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, SPEECH_MODIFIER_ACCENT_VOID)
 
 /obj/machinery/vending/chem

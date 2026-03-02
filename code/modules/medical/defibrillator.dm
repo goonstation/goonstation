@@ -261,7 +261,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 
 TYPEINFO(/obj/item/robodefibrillator/makeshift)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/robodefibrillator/makeshift
 	name = "shoddy-looking makeshift defibrillator"
 	desc = "It might restart your heart, I guess, or it might barbeque your insides."
@@ -301,7 +301,7 @@ TYPEINFO(/obj/item/robodefibrillator/makeshift)
 		return TRUE
 
 TYPEINFO(/obj/item/robodefibrillator/cyborg)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/robodefibrillator/cyborg
 	cost = DEFIB_CHARGE_LARGE_CELL_COST
 
@@ -319,7 +319,7 @@ TYPEINFO(/obj/item/robodefibrillator/cyborg)
 		return TRUE
 
 TYPEINFO(/obj/item/robodefibrillator/mounted)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/robodefibrillator/mounted
 	icon_state = "defib-mounted-off"
 	icon_base = "defib-mounted"
@@ -346,7 +346,7 @@ TYPEINFO(/obj/item/robodefibrillator/mounted)
 		..()
 
 TYPEINFO(/obj/item/robodefibrillator/recharging)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/robodefibrillator/recharging
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 

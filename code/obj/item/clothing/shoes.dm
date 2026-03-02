@@ -267,7 +267,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		return TRUE
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.

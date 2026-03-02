@@ -218,7 +218,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 ////////////////////////////////////// Antique laser gun
 TYPEINFO(/obj/item/gun/energy/antique)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/gun/energy/antique
 	HELP_MESSAGE_OVERRIDE("You can use a <b>screwdriver</b> to open or close the maintenance panel. While the panel is open, you can insert lens and small coil to upgrade the weapon.")
 	name = "antique laser gun"
@@ -544,7 +544,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/egun_jr
 	name = "energy gun junior"
@@ -761,7 +761,7 @@ TYPEINFO(/obj/item/gun/energy/crabgun)
 
 ///////////////////////////////////////Telegun
 TYPEINFO(/obj/item/gun/energy/teleport)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/teleport
 	name = "teleport gun"
@@ -896,7 +896,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 
 ///////////////////////////////////////Ghost Gun
 TYPEINFO(/obj/item/gun/energy/ghost)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/ghost
 	name = "ectoplasmic destabilizer"
@@ -919,7 +919,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 
 ///////////////////////////////////////Particle Blasters
 TYPEINFO(/obj/item/gun/energy/blaster_pistol)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/blaster_pistol
 	name = "GRF Zap-Pistole"
@@ -984,7 +984,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 			src.overlays += icon('icons/obj/items/gun_mod.dmi',converter_mod.overlay_name)*/
 
 TYPEINFO(/obj/item/gun/energy/blaster_smg)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/blaster_smg
 	name = "GRF Zap-Maschine"
@@ -1058,7 +1058,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 ///////////modular components - putting them here so it's easier to work on for now////////
 /*
 TYPEINFO(/obj/item/gun_parts)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun_parts
 	name = "gun parts"
@@ -1254,7 +1254,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun)
 	charge_icon_state = "wavegun"
 
 TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/plasma_gun/hunter
 	name = "Hunter's plasma rifle"
@@ -2075,7 +2075,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 #define HEAT_REMOVED_PER_PROCESS 30
 #define FIRE_THRESHOLD 125
 TYPEINFO(/obj/item/gun/energy/makeshift)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/makeshift
 	name = "makeshift laser rifle"
@@ -2428,7 +2428,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 
 TYPEINFO(/obj/item/gun/energy/lasershotgun)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/gun/energy/lasershotgun
 	name = "Mod. 77 'Nosaxa'"
 	cell_type = /obj/item/ammo/power_cell/high_power

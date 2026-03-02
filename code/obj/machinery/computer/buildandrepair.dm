@@ -221,7 +221,7 @@ TYPEINFO(/obj/item/circuitboard)
 	computertype = /obj/machinery/computer/announcement/station
 
 TYPEINFO(/obj/item/circuitboard/announcement/bridge)
-	mats = 0 //no spamming arrival messages please
+	analyser_flags = ANALYSER_BLACKLIST //no spamming arrival messages please
 
 /obj/item/circuitboard/announcement/bridge
 	name = "circuit board (bridge/arrival announcement computer)"
@@ -278,7 +278,7 @@ TYPEINFO(/obj/item/circuitboard/announcement/syndicate)
 	icon_state = "circuit_security"
 
 TYPEINFO(/obj/item/circuitboard/announcement/clown)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/circuitboard/announcement/clown
 	name = "circuit board (clown announcement computer)"
 	computertype = /obj/machinery/computer/announcement/clown

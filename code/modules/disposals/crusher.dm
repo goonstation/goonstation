@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/obj/machinery/crusher)
 		src.Crossed(AM)
 
 TYPEINFO(/obj/machinery/crusher/instant)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/machinery/crusher/instant
 /obj/machinery/crusher/instant/start_crushing(atom/movable/AM)
 	src.finish_crushing(AM)

@@ -1,5 +1,5 @@
 TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 	start_listen_inputs = null
 
 /obj/item/device/radio/nukie_studio_monitor

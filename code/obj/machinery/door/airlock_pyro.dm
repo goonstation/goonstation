@@ -41,7 +41,7 @@
 
 // -------- Centcom
 TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/pyro/command/centcom
 	req_access = list(access_centcom)
@@ -59,7 +59,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
 
 // -------- Syndicate Command
 TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/pyro/command/syndicate
 	req_access = list(access_syndicate_commander)
@@ -186,7 +186,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	operation_time = 10
 
 TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/pyro/reinforced
 	name = "reinforced external airlock"
@@ -235,7 +235,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	visible = 0
 
 TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/pyro/glass/reinforced
 	name = "reinforced glass airlock"

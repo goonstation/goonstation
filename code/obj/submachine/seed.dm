@@ -913,7 +913,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 
 
 TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/submachine/seed_manipulator/kudzu
 	name = "KudzuMaster V1"
