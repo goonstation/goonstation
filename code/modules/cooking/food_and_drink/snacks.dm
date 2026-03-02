@@ -3185,3 +3185,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	initial_reagents = list("sugar" = 10, "vanilla" = 10)
 	food_effects = list("food_energized")
 	meal_time_flags = MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/pigblanket
+	name = "pig in a blanket"
+	desc = "A small hotdog wrapped in a pastry."
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
+	icon_state = "pigblanket"
+	bites_left = 2
+	heal_amt = 1
+	food_effects = list("food_sweaty")
+	meal_time_flags = MEAL_TIME_SNACK

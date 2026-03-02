@@ -2093,3 +2093,8 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 /datum/recipe/yuck
 	tools = list(/obj/item/reagent_containers/food/snacks/yuck = 1)
 	category = null
+
+/datum/recipe/pigblanket
+	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/pigblanket)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_strip = 1, /obj/item/reagent_containers/food/snacks/hotdog_half =1)
+	output = /obj/item/reagent_containers/food/snacks/pigblanket
