@@ -1,0 +1,38 @@
+/datum/random_event/start/viscera
+	name = "Viscera Cleanup"
+	customization_available = 0
+	required_elapsed_round_time = 0
+
+	admin_call(var/source)
+		if (..())
+			return
+
+	event_effect(var/source)
+		..()
+
+		var/list/turfs
+		var/turf/T
+		var/i
+		var/list/area/stationAreas = get_accessible_station_areas()
+		var/obj/machinery/power/apc/A
+		for(i in 1 to rand(0,15))
+			var/area/SA = stationAreas[pick(stationAreas)]
+			A = locate(/obj/machinery/power/apc/) in SA?.machines
+			if(istype(A))
+				var/apc_diceroll = rand(1,4)
+				switch(apc_diceroll)
+					if (1)
+						apc.lighting = 0
+					if (2)
+						apc.equipment = 0
+					if (3)
+						apc.environ = 0
+					if (4)
+						apc.environ = 0
+						apc.equipment = 0
+						apc.lighting = 0
+				logTheThing(LOG_STATION, null, "APC Scramble interfered with [apc.name] at [log_loc(apc)].")
+				apc.update()
+				apc.UpdateIcon()
+
+
