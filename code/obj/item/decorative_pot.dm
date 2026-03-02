@@ -1,4 +1,5 @@
 TYPEINFO(/obj/decorative_pot)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("any" = 1)
 /obj/decorative_pot
 		name = "plant pot"

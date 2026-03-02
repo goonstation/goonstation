@@ -731,6 +731,7 @@ TYPEINFO(/obj/item/heat_dowsing)
 #define VENT_GENFACTOR 300
 
 TYPEINFO(/obj/item/vent_capture_unbuilt)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/vent_capture_unbuilt
@@ -1064,6 +1065,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 			src.cell = null
 
 TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 20
 
 /obj/item/clothing/shoes/stomp_boots

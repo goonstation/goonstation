@@ -3,6 +3,7 @@
 */
 
 TYPEINFO(/obj/item/rcd/construction)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 100,
 				"crystal_dense" = 50,
 				"conductive_high" = 50,

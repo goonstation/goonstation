@@ -2030,6 +2030,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 // the disposal outlet machine
 
 TYPEINFO(/obj/disposaloutlet)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/disposaloutlet

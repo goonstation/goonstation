@@ -1,6 +1,7 @@
 ////// Reagent Extractor
 
 TYPEINFO(/obj/submachine/chem_extractor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/submachine/chem_extractor

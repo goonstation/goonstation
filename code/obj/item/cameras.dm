@@ -12,6 +12,7 @@
 	return ..()
 
 TYPEINFO(/obj/item/camera)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 15
 
 TYPEINFO(/obj/item/camera/large)
@@ -178,6 +179,7 @@ TYPEINFO(/obj/item/camera/large)
 		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
 
 TYPEINFO(/obj/item/camera_film)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 10
 
 TYPEINFO(/obj/item/camera_film/large)

@@ -8,6 +8,7 @@ AI MODULES
 
 ABSTRACT_TYPE(/obj/item/aiModule)
 TYPEINFO(/obj/item/aiModule)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/item/aiModule

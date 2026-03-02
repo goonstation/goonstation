@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/gun/energy)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 32
 
 /obj/item/gun/energy

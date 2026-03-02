@@ -22,6 +22,7 @@
 
 ABSTRACT_TYPE(/obj/item/circuitboard)
 TYPEINFO(/obj/item/circuitboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/circuitboard

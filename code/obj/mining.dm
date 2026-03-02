@@ -1989,6 +1989,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 15,
 				"conductive" = 8,
 				"claretine" = 10,
@@ -2202,6 +2203,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 #define SILICON_POWER_COST_MOD 10
 
 TYPEINFO(/obj/item/cargotele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/cargotele
@@ -2720,6 +2722,7 @@ TYPEINFO(/obj/item/cargotele)
 var/global/datum/cargo_pad_manager/cargo_pad_manager
 
 TYPEINFO(/obj/submachine/cargopad)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
 
 /obj/submachine/cargopad
@@ -2836,6 +2839,7 @@ TYPEINFO(/obj/submachine/cargopad)
 // satchels -> obj/item/satchel.dm
 
 TYPEINFO(/obj/item/ore_scoop)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/ore_scoop

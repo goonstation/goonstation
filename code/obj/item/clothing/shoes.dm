@@ -196,6 +196,7 @@
 	icon_state = "pink"
 
 TYPEINFO(/obj/item/clothing/shoes/magnetic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 4,
 			"conductive" = 8,
 			"fabric" = 3,
@@ -285,6 +286,7 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 10,
 				"energy_high" = 10)
@@ -453,6 +455,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
 TYPEINFO(/obj/item/clothing/shoes/moon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 2
 
 /obj/item/clothing/shoes/moon

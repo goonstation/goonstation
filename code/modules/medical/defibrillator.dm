@@ -7,6 +7,7 @@
 // TODO: common abstract parent to split power cell / cell using defibs; requires large code & map repathing
 
 TYPEINFO(/obj/item/robodefibrillator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 10,
 				"conductive" = 15,
 				"crystal" = 5,)

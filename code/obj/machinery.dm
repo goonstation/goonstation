@@ -6,7 +6,7 @@
  *
  *
  */
-////TYPEINFO: obj/item/storage HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
+////TYPEINFO: THIS HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'

@@ -588,6 +588,7 @@
 /* -------------------- Dramatic Bike Horn -------------------- */
 
 TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 2
 
 /obj/item/instrument/bikehorn/dramatic

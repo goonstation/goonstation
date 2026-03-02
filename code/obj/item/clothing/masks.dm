@@ -283,6 +283,7 @@ TYPEINFO(/obj/item/voice_changer)
 	permanent = TRUE
 
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12	// 2x voice changer cost. It's complicated ok
 
 /obj/item/clothing/mask/monkey_translator

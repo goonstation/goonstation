@@ -2,6 +2,7 @@
 var/sword_summoned_before = FALSE
 
 TYPEINFO(/obj/item/makeshift_signaller_frame)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/makeshift_signaller_frame

@@ -268,6 +268,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 // SECURE BRIEFCASE
 
 TYPEINFO(/obj/item/storage/secure/sbriefcase)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/storage/secure/sbriefcase
@@ -287,6 +288,7 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	can_hold = list(/obj/item/stamped_bullion)
 
 TYPEINFO(/obj/item/storage/secure/ssafe)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 	manufactured_type = /obj/item/storage/secure/ssafe //For subtypes
 

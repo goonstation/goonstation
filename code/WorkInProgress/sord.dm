@@ -672,6 +672,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
 // auto injector refiller, move to different file at some point. or dont, im not your/my own boss
 
 TYPEINFO(/obj/item/reagent_containers/injector_filler)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list(metal = 10,
 				crystal = 10,
 				conductive_high = 10)

@@ -444,6 +444,7 @@
 //can be manufactured by installing /obj/item/disk/data/floppy/manudrive/interdictor_parts
 
 TYPEINFO(/obj/item/interdictor_board)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/interdictor_board

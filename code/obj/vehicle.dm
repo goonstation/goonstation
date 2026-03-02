@@ -267,6 +267,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 //////////////////////////////////////////////////////////// Segway ///////////////////////////////////////////
 
 TYPEINFO(/obj/vehicle/segway)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 #define SEGWAY_STATE_RIDDEN 1
@@ -2209,6 +2210,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 //////////////////////////////////////////////////////////////// Forklift //////////////////////////
 
 TYPEINFO(/obj/vehicle/forklift)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/vehicle/forklift

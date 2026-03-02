@@ -2000,6 +2000,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 
 TYPEINFO(/obj/item/machineboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 2
 
 /obj/item/machineboard

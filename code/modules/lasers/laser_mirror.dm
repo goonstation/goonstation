@@ -3,6 +3,7 @@
 #define SW_NE 1
 
 TYPEINFO(/obj/laser_sink/mirror)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("metal" = 10,
 				"crystal" = 10,
 				"reflective" = 30)
