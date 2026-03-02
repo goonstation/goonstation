@@ -67,13 +67,17 @@
 
 // ---- laser sink ----
 
-/// Sent to a parent when a laser connects to it (laser) - return COMPONENT_LASER_BLOCKED to reject
+/// Sent to an object when a laser hits it (laser)
 #define COMSIG_LASER_INCIDENT "laser_incident"
-/// Sent to a parent when a laser disconnects from it (laser)
+/// Sent to a sink's parent when a laser successfully connects to it (laser) - return COMPONENT_LASER_BLOCKED to reject connection
+#define COMSIG_LASER_CONNECTED "laser_connected"
+/// Sent to an object when a laser stops hitting it (laser)
 #define COMSIG_LASER_EXIDENT "laser_exident"
+/// Sent to a sink's parent when a laser disconnects from it (laser)
+#define COMSIG_LASER_DISCONNECTED "laser_disconnected"
 /// Sent to a parent when laser traversal is requested (proc_to_call)
 #define COMSIG_LASER_TRAVERSE "laser_traverse"
-/// Return flag for COMSIG_LASER_INCIDENT: reject the laser
+/// Return flag for COMSIG_LASER_CONNECTED: reject the laser
 #define COMPONENT_LASER_BLOCKED (1<<0)
 
 // ---- machinery ----

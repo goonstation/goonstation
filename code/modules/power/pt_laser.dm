@@ -393,7 +393,7 @@
 
 	firing = TRUE
 	UpdateIcon(1)
-	src.laser = new(T, src.emagged ? turn(src.dir, 180) : src.dir)
+	src.laser = new(T, src.emagged ? turn(src.dir, 180) : src.dir, src)
 	src.laser.source = src
 	src.laser.try_propagate()
 
@@ -647,8 +647,8 @@
 
 /obj/laser_sink/ptl_seller/New()
 	..()
-	RegisterSignal(src, COMSIG_LASER_INCIDENT, PROC_REF(on_laser_incident))
-	RegisterSignal(src, COMSIG_LASER_EXIDENT, PROC_REF(on_laser_exident))
+	RegisterSignal(src, COMSIG_LASER_CONNECTED, PROC_REF(on_laser_incident))
+	RegisterSignal(src, COMSIG_LASER_DISCONNECTED, PROC_REF(on_laser_exident))
 
 /obj/laser_sink/ptl_seller/proc/on_laser_incident(datum/source, obj/linked_laser/ptl/laser)
 	if (!istype(laser)) //we only care about PTL lasers

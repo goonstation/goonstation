@@ -3235,7 +3235,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/turf/beamTurf = get_step(src, src.dir)
 				if (!istype(beamTurf) || beamTurf.density)
 					return 0
-				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir)
+				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir, src)
 				src.beam.master = src
 				src.beam.try_propagate()
 			else

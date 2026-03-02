@@ -22,8 +22,8 @@ TYPEINFO(/obj/laser_sink/mirror)
 
 /obj/laser_sink/mirror/New()
 	..()
-	RegisterSignal(src, COMSIG_LASER_INCIDENT, PROC_REF(on_laser_incident))
-	RegisterSignal(src, COMSIG_LASER_EXIDENT, PROC_REF(on_laser_exident))
+	RegisterSignal(src, COMSIG_LASER_CONNECTED, PROC_REF(on_laser_incident))
+	RegisterSignal(src, COMSIG_LASER_DISCONNECTED, PROC_REF(on_laser_exident))
 	RegisterSignal(src, COMSIG_LASER_TRAVERSE, PROC_REF(on_laser_traverse))
 
 //todo: componentize anchoring behaviour
@@ -44,13 +44,13 @@ TYPEINFO(/obj/laser_sink/mirror)
 /obj/laser_sink/mirror/proc/rotate()
 	if (ON_COOLDOWN(src, "rotate", 1 SECOND)) //this is probably a good idea
 		return
-	var/list/saved = src.laser_sink_comp.in_lasers.Copy()
-	for (var/obj/linked_laser/laser in saved)
-		src.laser_sink_comp.exident(laser)
+	var/list/saved_lasers = src.laser_sink_comp.in_lasers.Copy()
+	for (var/obj/linked_laser/laser in saved_lasers)
+		SEND_SIGNAL(src, COMSIG_LASER_EXIDENT, laser)
 	src.facing = 1 - src.facing
 	src.icon_state = "laser_mirror[src.facing]"
-	for (var/obj/linked_laser/laser in saved)
-		src.laser_sink_comp.incident(laser)
+	for (var/obj/linked_laser/laser in saved_lasers)
+		SEND_SIGNAL(src, COMSIG_LASER_INCIDENT, laser)
 
 /obj/laser_sink/mirror/proc/get_reflected_dir(dir)
 	//very stupid angle maths
@@ -70,6 +70,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 /obj/laser_sink/mirror/proc/on_laser_incident(datum/source, obj/linked_laser/laser)
 	var/obj/linked_laser/out = laser.copy_laser(get_turf(src), src.get_reflected_dir(laser.dir))
 	laser.next = out
+	out.previous = laser
 	out.try_propagate()
 	out.icon_state = out.get_corner_icon_state(src.facing)
 	//perspective occlusion check, should the mirror be rendered "in front" of the laser
