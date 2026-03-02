@@ -384,6 +384,7 @@
 #endif
 
 TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 15
 
 /obj/item/disk/data/floppy/read_only/authentication

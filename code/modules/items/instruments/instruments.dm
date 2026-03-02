@@ -588,6 +588,7 @@
 /* -------------------- Dramatic Bike Horn -------------------- */
 
 TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 2
 
 /obj/item/instrument/bikehorn/dramatic
@@ -646,6 +647,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 /* -------------------- Harmonica -------------------- */
 
 TYPEINFO(/obj/item/instrument/harmonica)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("metal" = 1)
 /obj/item/instrument/harmonica
 	name = "harmonica"
@@ -749,6 +751,7 @@ TYPEINFO(/obj/item/instrument/harmonica)
 /* -------------------- Vuvuzela -------------------- */
 
 TYPEINFO(/obj/item/instrument/vuvuzela)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("any" = 1)
 /obj/item/instrument/vuvuzela
 	name = "vuvuzela"

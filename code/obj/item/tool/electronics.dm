@@ -399,6 +399,7 @@ TYPEINFO(/obj/item/electronics/frame)
 	pressure_resistance = 50
 	var/list/scanned = list()
 	var/viewstat = 0
+	var/scannable_tags = DEVICE_ANALYZER_ALLOWED_TAGS
 
 	New()
 		. = ..()
@@ -435,7 +436,7 @@ TYPEINFO(/obj/item/electronics/frame)
 
 
 /obj/item/electronics/scanner/syndicate
-	scannable_tags = ANALYSER_ALL | ANALYSER_SYNDIE_ONLY //We allow anything we can scan including syndie items
+	scannable_tags = DEVICE_ANALYZER_ALLOWED_TAGS | ANALYSER_SYNDIE_ONLY //We allow anything we can scan including syndie items
 
 ////////////////////////////////////////////////////////////////no
 TYPEINFO(/obj/machinery/rkit)

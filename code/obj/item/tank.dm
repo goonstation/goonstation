@@ -459,6 +459,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 // ==== JETPACKS ====
 
 TYPEINFO(/obj/item/tank/jetpack)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 16
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"

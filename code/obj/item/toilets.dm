@@ -4,6 +4,7 @@ TOILET
 */
 
 TYPEINFO(/obj/item/storage/toilet)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 5
 
 /obj/item/storage/toilet

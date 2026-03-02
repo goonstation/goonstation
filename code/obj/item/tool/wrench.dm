@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/wrench)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("metal" = 1)
 /obj/item/wrench
 	name = "wrench"

@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item/remote)
 
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
 TYPEINFO(/obj/item/remote/porter)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/remote/porter
@@ -225,6 +226,7 @@ TYPEINFO(/obj/item/remote/porter)
 
 // I suppose this device would be sorta useless with tele-block checks?
 TYPEINFO(/obj/item/remote/porter/port_a_sci)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"conductive" = 5,
 				"telecrystal" = 10)

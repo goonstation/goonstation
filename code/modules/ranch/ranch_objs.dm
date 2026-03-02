@@ -14,6 +14,7 @@ TODO:
 // Incubator
 
 TYPEINFO(/obj/submachine/chicken_incubator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/chicken_incubator
@@ -175,6 +176,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 // Feed Grinder
 
 TYPEINFO(/obj/submachine/ranch_feed_grinder)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/ranch_feed_grinder
@@ -605,6 +607,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 // Chicken Nesting Box
 
 TYPEINFO(/obj/chicken_nesting_box)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/chicken_nesting_box

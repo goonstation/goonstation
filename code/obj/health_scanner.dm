@@ -1,5 +1,6 @@
 
 TYPEINFO(/obj/health_scanner)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("conductive" = 5,
 				"crystal" = 2)
 /obj/health_scanner

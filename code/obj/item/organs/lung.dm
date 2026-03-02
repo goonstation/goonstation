@@ -174,6 +174,7 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 TYPEINFO(/obj/item/organ/lung/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/lung/cyber

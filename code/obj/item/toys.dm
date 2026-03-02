@@ -215,6 +215,7 @@ TYPEINFO(/obj/item/toy/cellphone)
 	desc = "You shouldn't see this, I exist for typechecks"
 
 TYPEINFO(/obj/item/toy/handheld)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 2
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 

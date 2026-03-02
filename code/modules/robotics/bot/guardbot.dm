@@ -4156,6 +4156,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
  */
 
 TYPEINFO(/obj/item/guardbot_core)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/guardbot_core
@@ -4189,6 +4190,7 @@ TYPEINFO(/obj/item/guardbot_core)
 			..()
 
 TYPEINFO(/obj/item/guardbot_frame)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 5
 
 /obj/item/guardbot_frame

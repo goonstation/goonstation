@@ -1,4 +1,5 @@
 TYPEINFO(/obj/submachine/seed_manipulator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/submachine/seed_manipulator
@@ -672,6 +673,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			src.updateUsrDialog()
 
 TYPEINFO(/obj/submachine/seed_vendor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/submachine/seed_vendor

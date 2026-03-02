@@ -1719,6 +1719,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		..()
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
 				"conductive_high" = 10,

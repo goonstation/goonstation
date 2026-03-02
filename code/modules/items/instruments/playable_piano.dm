@@ -6,6 +6,7 @@
 	w_class = W_CLASS_TINY
 
 TYPEINFO(/obj/player_piano)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 20
 
 /obj/player_piano //this is the big boy im pretty sure all this code is garbage

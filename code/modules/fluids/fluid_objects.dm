@@ -450,6 +450,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 
 
 TYPEINFO(/obj/item/sea_ladder)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 7
 
 /obj/item/sea_ladder
@@ -532,6 +533,7 @@ TYPEINFO(/obj/item/sea_ladder)
 					playsound(get_turf(clown), src.hitsound, 50, 1)
 
 TYPEINFO(/obj/naval_mine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 16
 
 /obj/naval_mine

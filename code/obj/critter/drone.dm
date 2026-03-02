@@ -1,4 +1,5 @@
 TYPEINFO(/obj/critter/gunbot/drone)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("energy" = 5,
 				"metal_dense" = 12,
 				"conductive_high" = 12,

@@ -495,6 +495,9 @@ TYPEINFO(/obj/machinery)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_MACHINERY
 TYPEINFO(/obj/item/storage)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
+TYPEINFO(/obj/item/disk)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = 8
 
 
 /atom/movable

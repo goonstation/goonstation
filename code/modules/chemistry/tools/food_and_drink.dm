@@ -1169,6 +1169,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			qdel(src)
 
 TYPEINFO(/obj/item/reagent_containers/food/drinks/bottle/soda)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("crystal" = 1)
 /obj/item/reagent_containers/food/drinks/bottle/soda //for soda bottles and bottles from the glass recycler specifically
 	fluid_underlay_shows_volume = TRUE

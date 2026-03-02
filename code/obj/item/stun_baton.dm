@@ -5,6 +5,7 @@
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
 TYPEINFO(/obj/item/baton)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 10,
 				"conductive_high" = 10)
 /obj/item/baton

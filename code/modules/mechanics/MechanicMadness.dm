@@ -17,10 +17,12 @@
 //
 
 TYPEINFO(/obj/item/storage/mechanics/housing_large)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("bohrum" = 100,
 				"conductive" = 50)
 
 TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("bohrum" = 80,
 				"conductive_high" = 40)
 

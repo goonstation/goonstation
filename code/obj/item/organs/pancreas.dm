@@ -45,6 +45,7 @@
 		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
 
 TYPEINFO(/obj/item/organ/pancreas/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/pancreas/cyber

@@ -1,5 +1,6 @@
 ///////////////////////////////////////PW Blasters
 TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 0
 
 /obj/item/gun/energy/blaster_pod_wars

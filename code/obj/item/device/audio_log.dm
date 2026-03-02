@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/audio_tape)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = 3
 
 /obj/item/audio_tape

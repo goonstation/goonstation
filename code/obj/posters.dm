@@ -418,6 +418,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	icon_state = "wall_poster_nt-rip2"
 
 TYPEINFO(/obj/submachine/poster_creator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/submachine/poster_creator

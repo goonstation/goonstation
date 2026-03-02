@@ -2156,6 +2156,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 //Lesbian Hat
 
 TYPEINFO(/obj/item/clothing/head/lesbian_hat)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list("fabric" = 5,
 				"honey" = 5)
 /obj/item/clothing/head/lesbian_hat

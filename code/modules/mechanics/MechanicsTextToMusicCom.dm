@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/mechanics/text_to_music)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
 	mats = list(
 		"metal"      = 10,
 		"conductive" = 5,

@@ -773,6 +773,7 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("bamboo" = 3,
 				"metal" = 10)
 /obj/item/handheld_vacuum

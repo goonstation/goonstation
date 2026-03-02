@@ -16,6 +16,7 @@
 		return
 
 TYPEINFO(/obj/item/rcd/material/cardboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("crystal_dense" = 10,
 				"energy_high" = 10,
 				"cardboard" = 30)

@@ -227,6 +227,7 @@
 
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 11
 
 /obj/item/fish_portal

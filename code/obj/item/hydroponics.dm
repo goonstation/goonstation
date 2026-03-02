@@ -11,6 +11,7 @@
 //////////////////////////////////////////////// Chainsaw ////////////////////////////////////
 
 TYPEINFO(/obj/item/saw)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/item/saw
@@ -339,6 +340,7 @@ TYPEINFO(/obj/item/saw/syndie)
 	icon = 'icons/effects/VR.dmi'
 
 TYPEINFO(/obj/item/saw/elimbinator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/item/saw/elimbinator
@@ -391,6 +393,7 @@ TYPEINFO(/obj/item/saw/elimbinator)
 ////////////////////////////////////// Plant analyzer //////////////////////////////////////
 
 TYPEINFO(/obj/item/plantanalyzer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/plantanalyzer
