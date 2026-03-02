@@ -14,10 +14,10 @@
 		var/area/SA = stationAreas[pick(stationAreas)]
 		for(var/turf/T in get_area_turfs(SA.type, TRUE))
 			var/floor_chance = rand(0,5)
-			message_admins(SPAN_INTERNAL("[src.name] event occured at [SA](Source: [source])."))
 			for(var/turf/simulated/floor/F in T)
 				if(floor_chance)
 					if (locate(/obj/item/reagent_containers/food/snacks/ingredient/egg/century) in F.hidden_contents)
 						return
 					else
 						F.pry_tile()
+		message_admins(SPAN_INTERNAL("[src.name] event occured at [SA](Source: [source])."))
