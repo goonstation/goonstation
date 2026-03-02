@@ -10,12 +10,13 @@
 	event_effect(var/source)
 		..()
 
-		var/list/turfs
 		var/area/A
-
-		A = pick(var/area in childrentypesof(area/station))
-		turfs = get_area_turfs(A)
+		A = pick(var/area childrentypesof(/area/station))
+		for(var/turf/T in get_area_turfs(A.type, TRUE))
 			var/floor_chance = rand(0,5)
-			for(var/turf/simulated/floor/F in turfs)
-				if(!/obj/item/reagent_containers/food/snacks/ingredient/egg/century) in floor.hidden_contents
-					F.pry_tile()
+			for(var/turf/simulated/floor/F in T)
+				if(!floor_chance)
+					if (!locate(/obj/item/reagent_containers/food/snacks/ingredient/egg/century) in F.hidden_contents)
+						return
+					else
+						F.pry_tile()
