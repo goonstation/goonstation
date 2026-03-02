@@ -12,10 +12,11 @@
 
 		var/list/area/stationAreas = get_accessible_station_areas()
 		var/area/SA = stationAreas[pick(stationAreas)]
-		for(var/turf/T in get_area_turfs(SA.type, TRUE))
-			var/floor_chance = rand(0,5)
-			for(var/turf/simulated/floor/F in T)
-				if(floor_chance)
+		for(var/turf/T in get_area_turfs(SA, TRUE))
+			if (istype(T, /turf/simulated/floor))
+				var/turf/floor/simulated/floor/F = T
+				var/floor_chance = rand(0,5)
+				if(floor_chance < 5)
 					if (locate(/obj/item/reagent_containers/food/snacks/ingredient/egg/century) in F.hidden_contents)
 						return
 					else
