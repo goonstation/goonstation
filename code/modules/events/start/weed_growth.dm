@@ -17,7 +17,7 @@
 			if(weed_chance == 8)
 				var/datum/plant/current_planttype = null
 				var/datum/plantgenes/current_plantgenes = new /datum/plantgenes(P)
-				var/weed_type = rand(0,8)
+				var/weed_type = rand(0,9)
 				if(weed_type == 0)
 					current_planttype = /datum/plant/weed/fungus
 				else if (weed_type == 1)
@@ -34,6 +34,8 @@
 					current_planttype = /datum/plant/flower/rafflesia
 				else if (weed_type == 7)
 					current_planttype = /datum/plant/artifact/pukeplant
+				else if (weed_type == 8)
+					current_planttype = /datum/plant/artifact/creeper
 				else
 					current_planttype = /datum/plant/artifact/peeker
 				//we create a new seed now
