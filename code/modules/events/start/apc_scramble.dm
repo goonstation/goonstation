@@ -1,5 +1,5 @@
-/datum/random_event/start/viscera
-	name = "Viscera Cleanup"
+/datum/random_event/start/apc_scramble
+	name = "APC Scramble"
 	customization_available = 0
 	required_elapsed_round_time = 0
 
