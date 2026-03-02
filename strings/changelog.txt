@@ -1,4 +1,9 @@
 
+(t)sun mar 01 26
+(u)glowbold
+(p)26018
+(e)💡💪|A-Station-Systems, A-Traits
+(*)Jailbird trait has been removed.
 (t)sat feb 28 26
 (u)LeahTheTech
 (p)26052
