@@ -29,7 +29,7 @@
 						A.environ = 0
 						A.equipment = 0
 						A.lighting = 0
-				logTheThing(LOG_STATION, null, "APC Scramble interfered with [A.name] at [log_loc(apc)].")
+				logTheThing(LOG_STATION, null, "APC Scramble interfered with [A.name] at [log_loc(A)].")
 				A.update()
 				A.UpdateIcon()
 
