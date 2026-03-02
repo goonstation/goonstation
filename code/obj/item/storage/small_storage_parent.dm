@@ -2,8 +2,7 @@
 // haine wuz here and tore this file to bits!!!  f u we can have things in their own files and we SHOULD
 // rather than EVERYTHING BEING IN HALLOWEEN.DM AND KEELINSSTUFF.DM OKAY THINGS CAN BE IN OTHER FILES
 
-TYPEINFO(/obj/item/storage)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
+////TYPEINFO: obj/item/storage HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/items/storage.dmi'

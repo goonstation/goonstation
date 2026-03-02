@@ -89,7 +89,6 @@
 		name = "Device Analyzer"
 		size = 16
 		var/last_address = "02000000"
-		var/scannable_tags = ANALYSER_DEVICE | ANALYSER_MACHINERY
 
 		on_set_scan(obj/item/device/pda2/pda)
 			pda.AddComponent(
@@ -115,7 +114,7 @@
 
 			var/mob/user = usr
 			var/datum/computer/file/electronics_scan/theScan = new
-			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user, scannable_tags, list(), theScan)
+			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user, DEVICE_ANALYZER_ALLOWED_TAGS, list(), theScan)
 
 			if(scan_result == ANALYSIS_SIGNAL_SUCCESS)
 				if (!isnull(theScan.scannedPath))

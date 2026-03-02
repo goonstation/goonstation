@@ -397,7 +397,6 @@ TYPEINFO(/obj/item/electronics/frame)
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 50
-	var/scannable_tags = ANALYSER_DEVICE | ANALYSER_MACHINERY
 	var/list/scanned = list()
 	var/viewstat = 0
 
@@ -424,7 +423,7 @@ TYPEINFO(/obj/item/electronics/frame)
 			return
 
 		var/datum/computer/file/electronics_scan/theScan = new
-		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, scannable_tags, scanned, theScan)
+		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, DEVICE_ANALYZER_ALLOWED_TAGS, scanned, theScan)
 
 		if(scan_result == ANALYSIS_SIGNAL_SUCCESS)
 			if (!isnull(theScan.scannedPath))

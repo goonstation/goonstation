@@ -41,7 +41,7 @@ TYPEINFO(/datum/component/analyzable)
 		scan_result = MECHANICS_ANALYSIS_IMPOSSIBLE
 	else if(((typeinfo.analyser_flags & ANALYSER_SYNDIE_ONLY) && !(scannable_tags & ANALYSER_SYNDIE_ONLY))) //Some can only be scanned by syndie scanners
 		scan_result = MECHANICS_ANALYSIS_ILLEGAL
-	else if(typeinfo.analyser_flags & scannable_tags <= 0)
+	else if((typeinfo.analyser_flags & scannable_tags) <= 0)
 		scan_result = MECHANICS_ANALYSIS_INCOMPATIBLE
 	else if(scanned.Find(src.result_type))
 		scan_result = MECHANICS_ANALYSIS_ALREADY_SCANNED

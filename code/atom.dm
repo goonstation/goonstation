@@ -472,6 +472,8 @@ TYPEINFO(/atom)
 	master = null
 	..()
 
+
+
 TYPEINFO(/atom/movable)
 	/// A key-value list of match property or material IDs and an amount required to construct the item
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
@@ -484,6 +486,16 @@ TYPEINFO(/atom/movable)
 	/// if an object type can be built somewhere, before instantiating the object itself.
 	proc/can_build(turf/T, direction)
 		return TRUE
+
+
+//Wow why are these TYPEINFOs here? Because parent_type:: depends on file load order :))))
+TYPEINFO(/obj/item/device)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_DEVICE
+TYPEINFO(/obj/machinery)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_MACHINERY
+TYPEINFO(/obj/item/storage)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
+
 
 /atom/movable
 	layer = OBJ_LAYER

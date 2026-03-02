@@ -1209,7 +1209,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /* -------------------- Wrestling Belt -------------------- */
 
 TYPEINFO(/obj/item/storage/belt/wrestling)
-	analyser_flags = ANALYSER_ALLOWED | ANALYSER_FAILFEEDBACK | ANALYSER_SYNDIE_ONLY //For whatever reason, inhereting tags from parent crashes game
+	analyser_flags =  parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
 				"hauntium" = 20)
@@ -1234,7 +1234,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 			user.remove_wrestle_powers(src.fake)
 
 TYPEINFO(/obj/item/storage/belt/wrestling/fake)
-	analyser_flags = ANALYSER_ALLOWED | ANALYSER_FAILFEEDBACK | ANALYSER_SYNDIE_ONLY //For whatever reason, inhereting tags from parent crashes game
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //For whatever reason, inhereting tags from parent crashes game
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
 				"fabric" = 5

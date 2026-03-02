@@ -1,8 +1,7 @@
 ///Analyser bitflags obviously use powers of two
 
-//Just for nicety
-#define ANALYSER_BLACKLIST 0 //Fails
 
+#define ANALYSER_BLACKLIST 0 //Just for nicety, use this to unset all flags so scanning always fails silently.
 //Scan options
 #define ANALYSER_ALLOWED 2**0 //Allows this item to be scanned.
 #define ANALYSER_ALL 2**0 //Syntaxic sugar, just allows a scanner to scan anything that is allowed.
@@ -11,10 +10,14 @@
 #define ANALYSER_SYNDIE_ONLY 2**3 //Only syndicate analysers can scan this item
 
 //Major Categories
-#define ANALYSER_DEVICE 2**4
-#define ANALYSER_MACHINERY 2**5
+#define ANALYSER_DEVICE 2**4 //Anything that inherets from device
+#define ANALYSER_MACHINERY 2**5 //Anything that inherets from machinery
+#define ANALYSER_ELECTRONIC 2**6 //Anything electronic
+#define ANALYSER_LEGACY 2**7 //Anything the Device Analyzer used to be able to scan but doesn't fit into the above catagories
 //etc
 
+
+#define DEVICE_ANALYZER_ALLOWED_TAGS ANALYSER_DEVICE | ANALYSER_MACHINERY | ANALYSER_ELECTRONIC | ANALYSER_LEGACY
 
 /// The atom cannot be scanned by the scanner, due to lacking materials or being blacklisted.
 #define MECHANICS_ANALYSIS_IMPOSSIBLE 0
