@@ -3056,6 +3056,23 @@ datum
 				M.reagents.add_reagent("salt", 1.25 * src.calculate_depletion_rate(M, mult))
 				..()
 
+		fooddrink/fish_sauce
+			name = "fish sauce"
+			id = "fish_sauce"
+			description = "A sauce made by fermenting fish in salt, staple in East Asian cuisine."
+			reagent_state = LIQUID
+			fluid_r = 104
+			fluid_g = 44
+			fluid_b = 28
+			transparency = 250
+			taste = list("fishy", "umami")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("salt", 0.75 * src.calculate_depletion_rate(M, mult))
+				M.reagents.add_reagent("fishoil", 0.75 * src.calculate_depletion_rate(M, mult))
+				..()
+
+
 		fooddrink/porktonium
 			name = "porktonium"
 			id = "porktonium"

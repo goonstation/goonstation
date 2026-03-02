@@ -449,111 +449,123 @@ ABSTRACT_TYPE(/obj/item/record/random)
 	song = 'sound/radio_station/music/dance_on_a_space_volcano.ogg'
 
 /obj/item/record/random/adventure_1
-	name = "record - \"adventure track #1\""
-	record_name = "adventure track #1"
+	name = "record - \"Adventure Track #1\""
+	record_name = "Adventure Track #1"
 	song = "sound/radio_station/music/adventure_1.mod"
 
 /obj/item/record/random/adventure_2
-	name = "record - \"adventure track #2\""
-	record_name = "adventure track #2"
+	name = "record - \"Adventure Track #2\""
+	record_name = "Adventure Track #2"
 	song = "sound/radio_station/music/adventure_2.s3m"
 
 /obj/item/record/random/adventure_3
-	name = "record - \"adventure track #3\""
-	record_name = "adventure track #3"
+	name = "record - \"Adventure Track #3\""
+	record_name = "Adventure Track #3"
 	song = 'sound/radio_station/music/adventure_3.ogg'
 
 /obj/item/record/random/adventure_4
-	name = "record - \"adventure track #4\""
-	record_name = "adventure track #4"
+	name = "record - \"Adventure Track #4\""
+	record_name = "Adventure Track #4"
 	song = 'sound/radio_station/music/adventure_4.ogg'
 
 /obj/item/record/random/adventure_5
-	name = "record - \"adventure track #5\""
-	record_name = "adventure track #5"
+	name = "record - \"Adventure Track #5\""
+	record_name = "Adventure Track #5"
 	song = 'sound/radio_station/music/adventure_5.ogg'
 
 /obj/item/record/random/adventure_6
-	name = "record - \"adventure track #6\""
-	record_name = "adventure track #6"
+	name = "record - \"Adventure Track #6\""
+	record_name = "Adventure Track #6"
 	song = "sound/radio_station/music/adventure_6.mod"
 
 /obj/item/record/random/upbeat_1
-	name = "record - \"upbeat track #1\""
-	record_name = "upbeat track #1"
+	name = "record - \"Upbeat Track #1\""
+	record_name = "Upbeat Track #1"
 	song = 'sound/radio_station/music/upbeat_1.ogg'
 
 /obj/item/record/random/upbeat_2
-	name = "record - \"upbeat track #2\""
-	record_name = "upbeat track #2"
+	name = "record - \"Upbeat Track #2\""
+	record_name = "Upbeat Track #2"
 	song = 'sound/radio_station/music/upbeat_2.ogg'
 
 /obj/item/record/random/chill_1
-	name = "record - \"chill track #1\""
-	record_name = "chill track #1"
+	name = "record - \"Chill Track #1\""
+	record_name = "Chill Track #1"
 	song = 'sound/radio_station/music/chill_1.ogg'
 
 /obj/item/record/random/chill_2
-	name = "record - \"chill track #2\""
-	record_name = "chill track #2"
+	name = "record - \"Chill Track #2\""
+	record_name = "Chill Track #2"
 	song = 'sound/radio_station/music/chill_2.ogg'
 
 /obj/item/record/random/chill_3
-	name = "record - \"chill track #3\""
-	record_name = "chill track #3"
+	name = "record - \"Chill Track #3\""
+	record_name = "Chill Track #3"
 	song = 'sound/radio_station/music/chill_3.ogg'
 
 /obj/item/record/random/chill_4
-	name = "record - \"chill track #4\""
-	record_name = "chill track #4"
+	name = "record - \"Chill Track #4\""
+	record_name = "Chill Track #4"
 	song = 'sound/radio_station/music/chill_4.ogg'
 
 /obj/item/record/random/january
-	record_name = "january"
+	name = "record - \"January\""
+	record_name = "January"
 	song = "sound/radio_station/music/january.xm"
 
 /obj/item/record/random/february
-	record_name = "february"
+	name = "record - \"February\""
+	record_name = "February"
 	song = "sound/radio_station/music/february.xm"
 
 /obj/item/record/random/march
-	record_name = "march"
+	name = "record - \"March\""
+	record_name = "March"
 	song = "sound/radio_station/music/march.xm"
 
 /obj/item/record/random/april
-	record_name = "april"
+	name = "record - \"April\""
+	record_name = "April"
 	song = "sound/radio_station/music/april.xm"
 
 /obj/item/record/random/may
-	record_name = "may"
+	name = "record - \"May\""
+	record_name = "May"
 	song = "sound/radio_station/music/may.xm"
 
 /obj/item/record/random/june
-	record_name = "june"
+	name = "record - \"June\""
+	record_name = "June"
 	song = "sound/radio_station/music/june.xm"
 
 /obj/item/record/random/july
-	record_name = "july"
+	name = "record - \"July\""
+	record_name = "July"
 	song = "sound/radio_station/music/july.xm"
 
 /obj/item/record/random/august
-	record_name = "august"
+	name = "record - \"August\""
+	record_name = "August"
 	song = "sound/radio_station/music/august.xm"
 
 /obj/item/record/random/september
-	record_name = "september"
+	name = "record - \"September\""
+	record_name = "September"
 	song = "sound/radio_station/music/september.xm"
 
 /obj/item/record/random/october
-	record_name = "october"
+	name = "record - \"October\""
+	record_name = "October"
 	song = "sound/radio_station/music/october.xm"
 
 /obj/item/record/random/november
-	record_name = "november"
+	name = "record - \"November\""
+	record_name = "November"
 	song = "sound/radio_station/music/november.xm"
 
 /obj/item/record/random/december
-	record_name = "december"
+	name = "record - \"December\""
+	record_name = "December"
 	song = "sound/radio_station/music/december.xm"
 
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
@@ -628,8 +640,8 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	song = 'sound/radio_station/music/riverdancer.ogg'
 
 /obj/item/record/random/key_lime
-	name = "record - \"key_lime #1\""
-	record_name = "key lime #1"
+	name = "record - \"Key Lime #1\""
+	record_name = "Key Lime #1"
 	song = 'sound/radio_station/music/key_lime.ogg'
 	add_overlay = FALSE
 
@@ -715,22 +727,27 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 		src.desc += {" A record from the Aquario and Not Tom Mixtape, looks pretty old!"}
 
 /obj/item/record/random/notaquario/beaches
+	name = "record - \"Beaches\""
 	record_name = "Beaches"
 	song = 'sound/radio_station/music/beaches.ogg'
 
 /obj/item/record/random/notaquario/graveyard
+	name = "record - \"Graveyard\""
 	record_name = "Graveyard"
 	song = 'sound/radio_station/music/graveyard.ogg'
 
 /obj/item/record/random/notaquario/floaty
-	record_name = "I'm Floaty In Space But Thats Ok"
+	name = "record - \"I'm Floaty In Space But That's Ok\""
+	record_name = "I'm Floaty In Space But That's Ok"
 	song = 'sound/radio_station/music/floaty.ogg'
 
 /obj/item/record/random/notaquario/repose
+	name = "record - \"Repose\""
 	record_name = "Repose"
 	song = 'sound/radio_station/music/repose.ogg'
 
 /obj/item/record/random/notaquario/biodome
+	name = "record - \"Biodome\""
 	record_name = "Biodome"
 	song = 'sound/radio_station/music/biodome.ogg'
 

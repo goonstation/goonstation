@@ -797,7 +797,7 @@
 			has_item_mats = !!item.item_mats,
 			blueprint_available = !!item.blueprint,
 			locked = item.locked,
-			imagePath = getItemIcon(item.item_type, C = user.client),
+			imagePath = getItemIcon(item.item_type),
 			ref = ref(item),
 		)))
 

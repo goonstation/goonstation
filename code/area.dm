@@ -2834,7 +2834,7 @@ ABSTRACT_TYPE(/area/station/engine)
 	icon_state = "yellow"
 
 /area/station/engine/core/nuclear
-	name = "Nuclear reactor room"
+	name = "Nuclear Reactor Core"
 
 /area/station/engine/storage
 	name = "Engineering Storage"

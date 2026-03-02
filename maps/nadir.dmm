@@ -3402,6 +3402,7 @@
 /obj/stool/chair/red{
 	dir = 1
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/security/secwing)
 "bxL" = (
@@ -10573,6 +10574,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"ePp" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
 "ePt" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/light{
@@ -10776,6 +10783,10 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
+"eTC" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "eTI" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -12896,6 +12907,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"fNS" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "fNY" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -15308,6 +15330,7 @@
 	pixel_x = 4;
 	pixel_y = -1
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -16071,6 +16094,7 @@
 	},
 /obj/decal/stripe_caution,
 /obj/machinery/flasher/portable,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -20170,6 +20194,9 @@
 "iMR" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black{
 	icon_state = "respect6"
@@ -37469,6 +37496,7 @@
 /obj/disposalpipe/trunk/brig{
 	dir = 1
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "qrV" = (
@@ -40185,8 +40213,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "rKw" = (
-/obj/item/device/radio/intercom/security,
 /obj/storage/closet/wardrobe/orange,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -41563,6 +41593,7 @@
 /obj/disposalpipe/trunk/brig{
 	dir = 1
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "ssA" = (
@@ -41719,6 +41750,7 @@
 "svm" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/revimp_kit,
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -43543,6 +43575,14 @@
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
 	})
+"tkB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "tkJ" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -44572,6 +44612,7 @@
 	pixel_x = -9;
 	pixel_y = 17
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
@@ -45712,6 +45753,7 @@
 /area/station/hallway/secondary/exit)
 "ujK" = (
 /obj/storage/secure/closet/engineering/mining,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/yellowblack,
 /area/station/mining/staff_room)
 "ujY" = (
@@ -47177,10 +47219,15 @@
 	},
 /obj/machinery/door_control{
 	id = "market";
-	pixel_y = 24
+	pixel_y = 24;
+	pixel_x = 3
 	},
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -7;
+	pixel_y = 23
 	},
 /turf/simulated/floor/grey/side{
 	dir = 9
@@ -48482,6 +48529,7 @@
 /area/station/maintenance/disposal)
 "vzZ" = (
 /obj/machinery/manufacturer/hangar,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -51155,6 +51203,7 @@
 "wNu" = (
 /obj/machinery/disposal/cart_port,
 /obj/disposalpipe/trunk/west,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/supply)
 "wNv" = (
@@ -51176,6 +51225,15 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"wNH" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/black/grime,
+/area/station/security/brig/genpop)
 "wNM" = (
 /turf/simulated/floor/carpet/purple/fancy/innercorner/omni,
 /area/station/chapel/sanctuary)
@@ -86875,7 +86933,7 @@ vuA
 ssd
 iPb
 jdm
-gcO
+eTC
 ioV
 tAC
 rDo
@@ -91427,7 +91485,7 @@ gFm
 hoh
 qvr
 dcw
-gFm
+wNH
 ida
 mni
 mjp
@@ -93845,7 +93903,7 @@ mHH
 vJk
 vJk
 vJk
-mHH
+fNS
 rKw
 iMR
 jDG
@@ -94147,7 +94205,7 @@ mHH
 uvS
 wdX
 rKK
-mHH
+tkB
 fkw
 jsd
 nOV
@@ -111339,7 +111397,7 @@ lDM
 wuw
 xDg
 ijc
-ijc
+ePp
 mOL
 dfm
 tAt

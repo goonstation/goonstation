@@ -153,6 +153,8 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 	var/trample_cooldown = 4 SECONDS
 
+	var/my_item = null //is this worth it? who knows. for recall_item ability
+
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
 	"pale", "blush", "scratch", "stretch", /*"fart", */"smile")
@@ -3314,8 +3316,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		if(criminal == ARREST_STATE_ARREST || criminal == ARREST_STATE_DETAIN || criminal == ARREST_STATE_SUSPECT || criminal == ARREST_STATE_PAROLE || criminal == ARREST_STATE_INCARCERATED || criminal == ARREST_STATE_RELEASED || \
 				criminal == ARREST_STATE_CLOWN)
 			arrestState = criminal
-	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
-		arrestState = ARREST_STATE_ARREST
 	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
 		var/obj/item/implant/counterrev/implant = locate() in src.implant
 		if (implant?.online)

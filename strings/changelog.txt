@@ -1,4 +1,47 @@
 
+(t)sun mar 01 26
+(u)glowbold
+(p)26018
+(e)💡💪|A-Station-Systems, A-Traits
+(*)Jailbird trait has been removed.
+(t)sat feb 28 26
+(u)LeahTheTech
+(p)26052
+(e)🧛🌠|A-Gamemodes, A-Events
+(+)Neon broken event objectives have been tweaked slightly to ensure there is always conflict.
+(t)fri feb 27 26
+(u)JORJ949
+(p)26031
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The VR murderbox now has a vending machine containing weapons found in the Armory. Plus the Lawbringer, Detective's guns and clock 180.
+(t)thu feb 26 26
+(u)JORJ949
+(p)26020
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)Manufacturers now have a permanent red blinking light when hacked via wires to show their expanded inventory or speed options.
+(u)Sord
+(+)The Pharmacist's auto injector filler can now hold atropine, calomel, diphenhydramine, filgrastim, heparin, morphine, and proconvertin on top of the normal chemical whitelist.
+(u)bork
+(p)25988
+(e)🔬|A-Science
+(+)Records now all display their names in the same format.
+(t)wed feb 25 26
+(u)Sord
+(+)Pharmacists and the Medical Director get an auto-injector filler which can fill empty auto-injectors with hypospray whitelisted chemicals (unless emagged)
+(+)Empty auto-injectors can be printed at the medical fabricator.
+(+)Note: expended/already filled auto-injectors can not have more chemicals added to them.
+(u)A.I. The Artificial Idiot
+(p)26002
+(e)⚗|A-Chemistry
+(*)Adds fish sauce, made by putting a fish in a still
+(u)JORJ949
+(p)25923
+(e)🎨💅🧛🔨|C-Sprites, C-QoL, A-Gamemodes, A-Player-Actions
+(*)Headspiders are now tied to using a 10 DNA ability rather than having 10 DNA left on death. Using the ability removes it from your list of abilities and will activate on death.
+(u)Temthrush & Sunkiisu
+(p)24649
+(e)🎨🤖|C-Sprites, A-Silicons
+(+)Added 21 new borg screenhead faces
 (t)mon feb 23 26
 (u)Kanthes
 (p)25978

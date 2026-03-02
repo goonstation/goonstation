@@ -105,5 +105,5 @@ ABSTRACT_TYPE(/datum/job/medical)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/pharmacist)
 	slot_ears = list(/obj/item/device/radio/headset/pharmacist)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
-	items_in_backpack = list(/obj/item/storage/box/beakerbox)
+	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/reagent_containers/injector_filler)
 	wiki_link = "https://wiki.ss13.co/Pharmacist"

@@ -16,8 +16,9 @@ TYPEINFO(/obj/item/device/flash)
 	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "flashbang"
+	//no inhands, flash is a little sneaky
+	inhand_image_icon = null
+	item_state = null
 
 	var/status = 1 // Bulb still functional?
 	var/use = 0 // Times the flash has been used.
