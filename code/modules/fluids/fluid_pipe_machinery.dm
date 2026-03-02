@@ -109,7 +109,8 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 		var/amount = min(rand(src.drain_min, src.drain_max), src.network.reagents.maximum_volume - src.network.reagents.total_volume)/T.active_liquid.group.amt_per_tile
 		if(amount > 0) // rounding errors can make it go very very slightly below zero
 			T.active_liquid.group.drain(T.active_liquid, amount, src.network)
-			playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
+			if(T.active_liquid?.group?.amt_per_tile <= 1000) // To stop audio strain, the "gurgling" on larger tanks now serves as a warning
+				playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
 
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump
 	name = "inlet drain"
