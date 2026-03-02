@@ -74,6 +74,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /obj/machinery/plantpot/New()
 	..()
+	START_TRACKING
 	src.plantgenes = new /datum/plantgenes(src)
 	src.create_reagents(src.tanksize)
 	// The plantpot can store 400 reagents in total, we want a bit more than the max water
@@ -835,6 +836,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.name = "dead " + src.name
 
 /obj/machinery/plantpot/disposing()
+	STOP_TRACKING
 	qdel(src.current_tick)
 	src.current_tick = null
 	. = ..()
