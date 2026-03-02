@@ -484,7 +484,8 @@
 		if(back in M.client?.images)
 			M.client.images -= back
 
-
+TYPEINFO(/obj/artemis/arjuna)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/artemis/arjuna
 	name = "Arjuna-"
 	desc = "Arjuna"
@@ -498,7 +499,6 @@
 	vel_angle = 180
 	has_back = 0
 	bottom_x_offset = null
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	New()
 		..()

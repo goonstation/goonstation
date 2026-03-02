@@ -1,4 +1,5 @@
 TYPEINFO(/obj/machinery/crusher)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 20
 
 ABSTRACT_TYPE(/obj/machinery/crusher)
@@ -11,7 +12,6 @@ ABSTRACT_TYPE(/obj/machinery/crusher)
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
 	anchored = ANCHORED_ALWAYS
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	power_usage = 500
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER

@@ -424,10 +424,11 @@
 
 //It'll show up on multitools
 TYPEINFO(/obj/shrub/syndicateplant)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 2
 /obj/shrub/syndicateplant
 	var/net_id
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+
 	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.", "Is that an antenna?")
 
 	New()

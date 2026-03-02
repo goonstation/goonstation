@@ -18,6 +18,7 @@
 
 /// Cyalume saber/esword, famed traitor item
 TYPEINFO(/obj/item/sword)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_extreme" = 10)
@@ -43,7 +44,6 @@ TYPEINFO(/obj/item/sword)
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -1200,6 +1200,8 @@ TYPEINFO(/obj/item/bat)
 
 /////////////////////////////////////////////////// Swords ////////////////////////////////////////////
 //You probably want to spawn the sheath in instead of this.
+TYPEINFO(/obj/item/swords)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/swords
 	name = "youshouldntseeme sword"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1215,7 +1217,6 @@ TYPEINFO(/obj/item/bat)
 	contraband = 4
 	attack_verbs = "slashes"
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	leaves_slash_wound = TRUE
 	var/delimb_prob = 1
 	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
@@ -1519,6 +1520,8 @@ TYPEINFO(/obj/item/swords/captain)
 				user.death()
 
 
+TYPEINFO(/obj/item/swords_sheaths)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/swords_sheaths //blegh, keeping naming consistent
 	name = "youshouldntseemieum sheath"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1538,7 +1541,6 @@ TYPEINFO(/obj/item/swords/captain)
 	var/ih_sheathed_state = "sheathedhand"
 	var/ih_sheath_state = "sheathhand"
 	var/sword_path = /obj/item/swords
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	New()
 		..()

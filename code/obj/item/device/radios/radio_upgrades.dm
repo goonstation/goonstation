@@ -1,5 +1,6 @@
 ABSTRACT_TYPE(/obj/item/device/radio_upgrade)
 TYPEINFO(/obj/item/device/radio_upgrade)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 12
 
 /obj/item/device/radio_upgrade
@@ -8,7 +9,6 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 	icon = 'icons/obj/items/radio_upgrades.dmi'
 	icon_state = "wiretap"
 	w_class = W_CLASS_TINY
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	var/secure_frequencies = list()
 	var/secure_classes = list()
 
@@ -68,11 +68,12 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 		secure_frequencies = list("n" = R_FREQ_NANOTRASEN)
 
 ABSTRACT_TYPE(/obj/item/device/radio_upgrade/station)
+TYPEINFO(/obj/item/device/radio_upgrade/station)
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 /obj/item/device/radio_upgrade/station
 	name = "youshouldntseeme radio upgrade"
 	desc = "The abstract version of the station radio upgrade, you shouldn't be seeing this."
 	icon_state = "civilian"
-	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	secure_frequencies = list()
 
 /obj/item/device/radio_upgrade/station/command

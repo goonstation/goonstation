@@ -1017,6 +1017,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		src.remove_visor(user)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 5,
 				"conductive_high" = 5,
 				"crystal_dense" = 5)
@@ -1025,7 +1026,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	blocked_from_petasusaphilic = TRUE
 
 	setupProperties()

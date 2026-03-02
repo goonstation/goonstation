@@ -1,4 +1,5 @@
 TYPEINFO(/mob/living/critter/robotic/gunbot)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6)
@@ -26,7 +27,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	speech_verb_stammer = "states"
 	speech_verb_exclaim = "declares"
 	speech_verb_ask = "queries"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged

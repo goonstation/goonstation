@@ -476,6 +476,8 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	icon_state = "cowboy"
 	compatible_species = list("human", "cow")
 
+TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
@@ -483,7 +485,6 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	equipped(mob/user, slot)
 		. = ..()

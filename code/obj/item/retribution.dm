@@ -1,3 +1,5 @@
+TYPEINFO(/obj/item/sword_core)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/sword_core
 	name = "SWORD core"
 	desc = "An incredibly advanced power core created by the Syndicate."
@@ -8,10 +10,10 @@
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 5
 
 TYPEINFO(/obj/item/syndicate_destruction_system)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 18
 
 /obj/item/syndicate_destruction_system
@@ -29,7 +31,6 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 	w_class = W_CLASS_SMALL	//Becomes 5.0 when the core is inserted.
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING  | TOOL_CHOPPING | TOOL_SAWING
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 10
 	two_handed = 1
 	stamina_damage = 5

@@ -1531,6 +1531,8 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
 
+TYPEINFO(/obj/machinery/vending/security_ammo)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"
 	desc = "A restricted vendor stocked with various riot-suppressive ammunitions."
@@ -1542,7 +1544,6 @@ TYPEINFO(/obj/machinery/vending/medical)
 	light_r =1
 	light_g = 0.8
 	light_b = 0.9
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	create_products(restocked)
 		..()
@@ -2709,8 +2710,9 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		if (prob(25))
 			product_list += new/datum/data/vending_product(/obj/item/seed/alien, 1, hidden=1)
 
+TYPEINFO(/obj/machinery/vending/hydroponics/mean_solarium_bullshit)
+	manufactured_type = /obj/machinery/vending/hydroponics //Nice try
 /obj/machinery/vending/hydroponics/mean_solarium_bullshit
-	mechanics_type_override = /obj/machinery/vending/hydroponics
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/device/key/cheget,1, 954, 1)
@@ -3454,6 +3456,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/gang_machete, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/swords/katana/reverse, 1, infinite=TRUE)
 
+TYPEINFO(/obj/machinery/vending/murderbox_armory)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/machinery/vending/murderbox_armory
 	name = "RIOT.DM" //The armory computer file
 	desc = "A vendor stocked with various riot-suppressive ammunitions. Perfect for taking down cybercrime."
@@ -3463,7 +3467,6 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	acceptcard = FALSE
 	pay = FALSE
 	can_fall = FALSE
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	create_products(restocked)
 		..()

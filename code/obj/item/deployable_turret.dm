@@ -81,6 +81,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		..()
 
 TYPEINFO(/obj/item/turret_deployer/riot)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("insulated" = 10,
 				"conductive" = 10,
 				"crystal" = 3,
@@ -92,7 +93,6 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
 	icon_tag = "nt"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	associated_turret = /obj/deployable_turret/riot
 	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 

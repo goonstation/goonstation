@@ -445,6 +445,7 @@ proc/filter_carrier_pets(var/type)
 /* -------------------- Jones -------------------- */
 
 TYPEINFO(/mob/living/critter/small_animal/cat/jones)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("viscerite" = 25)
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
@@ -456,7 +457,6 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_burn = 30
 	is_annoying = TRUE
 	is_pet = 2
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	player_can_spawn_with_pet = FALSE
 	var/swiped = 0
 

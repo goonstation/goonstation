@@ -135,6 +135,7 @@ TYPEINFO(/obj/item/saw)
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 TYPEINFO(/obj/item/saw/syndie)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 25,
 				"conductive" = 5,
 				"energy_high" = 5)
@@ -153,7 +154,6 @@ TYPEINFO(/obj/item/saw/syndie)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = 'sound/machines/chainsaw_red.ogg'

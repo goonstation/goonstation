@@ -268,12 +268,13 @@ TYPEINFO(/obj/item/pinpointer)
 	target_criteria = /obj/gold_bee
 	hudarrow_color = "#e1940d"
 
+TYPEINFO(/obj/item/pinpointer/idtracker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
 	icon_state = "id_pinoff"
 	var/mob/owner = null
 	hudarrow_color = "#ffffff"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
 
 	attack_self(mob/user)

@@ -164,6 +164,8 @@
 		impact_image_effect(ie_type, hit)
 		return
 
+TYPEINFO(/obj/item/swords/sord)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"
@@ -177,7 +179,6 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 10 // absolutely illegal
 	w_class = W_CLASS_NORMAL
 	hitsound = 'sound/voice/farts/fart7.ogg'

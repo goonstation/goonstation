@@ -31,7 +31,6 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
-	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -161,13 +160,15 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
+TYPEINFO(/obj/item/old_grenade/spawner)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/old_grenade/spawner
 	desc = "It is set to detonate in 3 seconds."
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
@@ -228,6 +229,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
+TYPEINFO(/obj/item/old_grenade/thing_thrower)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/thing_thrower
 	desc = "It is set to detonate in 3 seconds."
 	name = "banana grenade"
@@ -236,7 +239,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "banana"
 	item_state = "banana"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
@@ -334,6 +336,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	count = 12
 
 TYPEINFO(/obj/item/old_grenade/graviton)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 12
 
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
@@ -344,7 +347,6 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -402,6 +404,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 		return
 
 TYPEINFO(/obj/item/old_grenade/singularity)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 12
 
 /obj/item/old_grenade/singularity
@@ -412,7 +415,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -470,6 +472,9 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			icon_state = "Field_Gen +a"
 		qdel(src)
 
+TYPEINFO(/obj/item/old_grenade/smoke)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+
 /obj/item/old_grenade/smoke
 	desc = "It is set to detonate in 2 seconds."
 	name = "smoke grenade"
@@ -478,7 +483,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 2 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "smoke1"
 	var/datum/effects/system/bad_smoke_spread/smoke
@@ -551,7 +555,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/pindrop.ogg'
 	icon_state_armed = "fragnade1"
 	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
@@ -630,7 +633,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/pindrop.ogg'
 	launcher_damage = 30
 
@@ -657,6 +659,8 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/sonic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/sonic
 	name = "sonic grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -665,7 +669,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/effects/screech.ogg'
 	icon_state_armed = "sonic1"
 
@@ -742,6 +745,8 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		out.pellets_to_fire = src.pellets_to_fire
 		return out
 
+TYPEINFO(/obj/item/old_grenade/emp)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
 	name = "emp grenade"
@@ -750,7 +755,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	alt_det_time = 3 SECONDS
 	icon_state = "emp"
 	item_state = "emp"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "emp1"
 
@@ -871,6 +875,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/moustache)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/moustache
 	name = "moustache grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -879,7 +885,6 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	alt_det_time = 6 SECONDS
 	icon_state = "moustache"
 	item_state = "flashbang"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "moustache1"
 	launcher_damage = 10

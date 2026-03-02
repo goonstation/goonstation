@@ -871,6 +871,8 @@
 		the_mob.item_abilities = list()
 
 //HEY this should be moved over to use /atom/movable/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
+TYPEINFO(/obj/ability_button)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/ability_button
 	name = "baseButton"
 	desc = ""
@@ -880,7 +882,6 @@
 	plane = PLANE_HUD
 	anchored = ANCHORED
 	flags = NOSPLASH
-	analyser_flags = ANALYSER_BLACKLIST //Everything has a story and I want to know why a vague concept such as an an ability button had to be blacklisted from scanning??
 
 	var/cooldown = 0
 	var/last_use_time = 0

@@ -422,6 +422,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 
 ///////////////////////////////////////Rad Crossbow
 TYPEINFO(/obj/item/gun/energy/crossbow)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
@@ -438,7 +439,6 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
@@ -636,6 +636,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 ////////////////////////////////////VUVUV
 TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
@@ -645,7 +646,6 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	item_state = "bike_horn"
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	uses_charge_overlay = TRUE
 	charge_icon_state = "vuvuzela"
 
@@ -655,6 +655,8 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 		..()
 
 //////////////////////////////////////Crabgun
+TYPEINFO(/obj/item/gun/energy/crabgun)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/gun/energy/crabgun
 	name = "a strange crab"
 	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
@@ -670,7 +672,6 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	custom_cell_max_capacity = 100 //endless crab
 
 	New()
@@ -1281,6 +1282,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 TYPEINFO(/obj/item/gun/energy/pickpocket)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
@@ -1297,7 +1299,6 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	silenced = 1
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100
@@ -1392,6 +1393,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 TYPEINFO(/obj/item/gun/energy/alastor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 15,
 				"conductive_high" = 10,
 				"energy_high" = 10)
@@ -1407,7 +1409,6 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1731,6 +1732,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 ///////////////////////////////////////Wasp Gun
 TYPEINFO(/obj/item/gun/energy/wasp)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
@@ -1747,7 +1749,6 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	silenced = 1
 	custom_cell_max_capacity = 100
 
@@ -1758,6 +1759,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 
 ///Crossbow that fires irradiating neutron projectiles like the nuclear reactor
 ///DEBUG ITEM - don't actually use this for things. Unless you really want to, or it might be funny.
+TYPEINFO(/obj/item/gun/energy/neutron)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/gun/energy/neutron
 	name = "mini neutron-crossbow"
 	desc = "A weapon that fires irradiating neutrons. Because it makes sense that a crossbow can fire subatomic particles at relativistic speeds."
@@ -1771,7 +1774,6 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	silenced = 1
 	custom_cell_max_capacity = 100
 

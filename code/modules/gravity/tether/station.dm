@@ -4,6 +4,7 @@
 var/global/station_tether_gforce = 0
 
 TYPEINFO(/obj/machinery/gravity_tether/station)
+	analyser_flags = ANALYSER_BLACKLIST
 	mats = list("metal" = 50,
 				"crystal_dense" = 50,
 				"metal_superdense" = 40,
@@ -23,7 +24,6 @@ TYPEINFO(/obj/machinery/gravity_tether/station)
 	passive_wattage_per_g_quantum = 75 WATTS
 	uses_area_power = TRUE
 	locked = TRUE
-	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/gravity_tether/station/New()
 	src.desc += " This one appears to control gravity on the entire [station_or_ship()]."

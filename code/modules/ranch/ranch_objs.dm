@@ -645,6 +645,8 @@ TYPEINFO(/obj/chicken_nesting_box)
 
 		. = ..()
 
+TYPEINFO(/obj/item/old_grenade/chicken)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/chicken
 	name = "Chicken Grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -653,7 +655,6 @@ TYPEINFO(/obj/chicken_nesting_box)
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	tooltip_flags = REBUILD_ALWAYS
 	is_dangerous = TRUE

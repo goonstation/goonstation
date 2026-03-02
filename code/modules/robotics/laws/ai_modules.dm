@@ -394,10 +394,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 
 /* Disguised */
 
+TYPEINFO(/obj/item/aiModule/freeform/disguised)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/aiModule/freeform/disguised
 	name = "AI Law Module - 'Disguised'"
 	highlight_color = rgb(0, 167, 1, 255)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+
 
 /******************** Random ********************/
 
