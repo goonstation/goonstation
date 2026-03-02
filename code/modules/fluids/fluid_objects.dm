@@ -203,8 +203,10 @@ TYPEINFO(/obj/machinery/drainage/big)
 					reagent_id = "chlorine"
 				if (50 to 74)
 					reagent_id = "seawater"
-				if (75 to 90)
+				if (75 to 89)
 					reagent_id = "sodawater"
+				if (90)
+					reagent_id = "weedkiller"
 				if (91)
 					reagent_id = "tonic"
 				if (92)
