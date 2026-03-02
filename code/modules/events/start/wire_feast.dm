@@ -12,11 +12,11 @@
 
 		var/i
 		for(i in 1 to rand(0,450))
-			var/area/SA = /area/station/maintenance
+			var/area/SA = /area/station/hallway/primary // Just need to grab a powernet
 			var/obj/machinery/power/apc/PC = SA.area_apc
 			var/datum/powernet/PN = PC.powernet
 			for(var/obj/cable/C in PN.cables)
-				if(C.loc == !SA)
+				if(C.loc == !/area/station/maintenance)
 					return
 				if (istype(C, /obj/cable))
 					message_admins(SPAN_INTERNAL("[src.name] event occured at [C] in [SA](Source: [source])."))
