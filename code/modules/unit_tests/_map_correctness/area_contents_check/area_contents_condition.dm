@@ -1,6 +1,8 @@
 /datum/area_contents_condition
-	var/output = ""
+	/// The arguments passed to this condition on instantiation.
 	var/list/arguments = null
+	/// The output string of this condition, indicating expected and found instance counts.
+	var/output = "Empty output. This shouldn't happen!"
 
 /datum/area_contents_condition/New(...)
 	src.arguments = args.Copy()
