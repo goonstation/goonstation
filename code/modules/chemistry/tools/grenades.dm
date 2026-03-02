@@ -219,6 +219,7 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 // If it's not, the foam resp. smoke reaction occurs prematurely without carrying the target reagents with them.
 
 TYPEINFO(/obj/item/chem_grenade/custom)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 4,
 				"energy" = 2)
 /obj/item/chem_grenade/custom
@@ -227,7 +228,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	desc = "A kit for the construction of a chemical grenade. Use it in hand to begin assembling it."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state_armed = "grenade-chem-armed"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	/// maximum beaker size when assemblying beaker into custom grenades
 	var/custom_grenade_max_beaker_volume = 50
 	/// the stage of the current assembly
@@ -467,6 +467,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.beakers += B2
 
 TYPEINFO(/obj/item/chem_grenade/flashbang)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/chem_grenade/flashbang
@@ -475,7 +476,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "flashbang"
 	icon_state_armed = "flashbang1"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	is_dangerous = FALSE
 
 /obj/item/chem_grenade/flashbang/New()

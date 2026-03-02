@@ -394,13 +394,14 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
 		return
 
+TYPEINFO(/obj/item/clothing/glasses/thermal/traitor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark. They sort of hurt your eyes to look through."
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"

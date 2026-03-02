@@ -2,12 +2,13 @@
 #define EYE_RIGHT 2
 #define EYE_BOTH 4
 
+TYPEINFO(/obj/item/device/ocular_implanter)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/device/ocular_implanter
 	name = "Ocular Implanter (SecHUD)"
 	icon_state = "ocular_implanter-full"
 	desc = "A worrying looking medical device for automated eye implants, this model is for SecHUDs. The suction cup fills you with dread."
 	w_class = W_CLASS_SMALL
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	var/implant = /obj/item/organ/eye/cyber/sechud
 	var/implants_available = EYE_LEFT | EYE_RIGHT
 	var/list/parts_to_remove = list()

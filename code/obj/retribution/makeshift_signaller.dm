@@ -64,6 +64,7 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 		return
 
 TYPEINFO(/obj/item/makeshift_syndicate_signaller)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 4
 
 /obj/item/makeshift_syndicate_signaller
@@ -79,7 +80,6 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 	var/metadata = 0
 	var/was_emagged = FALSE
 	var/is_exploding = FALSE
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	desc = "This device has a menacing aura around it. It requires 8 nodes of metadata to properly send and encrypt it's signal."
 	contraband = 5
 

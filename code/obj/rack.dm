@@ -1,3 +1,5 @@
+TYPEINFO(/obj/rack)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 /obj/rack
 	name = "rack"
 	icon = 'icons/obj/objects.dmi'
@@ -8,7 +10,6 @@
 	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 	material_amt = 0.1
 
 	proc/rackbreak()

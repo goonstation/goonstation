@@ -7,6 +7,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	mats = list("metal" = 1,
 				"conductive" = 1,
 				"crystal" = 1)
+	manufactured_type = /obj/machinery/conveyor/built
 }
 
 /obj/machinery/conveyor
@@ -24,7 +25,6 @@ TYPEINFO(/obj/machinery/conveyor) {
 	layer = 2
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	machine_registry_idx = MACHINES_CONVEYORS
-	mechanics_type_override = /obj/machinery/conveyor/built
 	HELP_MESSAGE_OVERRIDE("")
 	/// The direction the conveyor is going to. 1 if running forward, -1 if backwards, 0 if off
 	var/operating = CONVEYOR_STOPPED
@@ -905,6 +905,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	mats = list("metal" = 10,
 				"conductive" = 10,
 				"crystal" = 10)
+	manufactured_type = /obj/machinery/conveyor_switch/built
 }
 
 /// the conveyor control switch
@@ -912,7 +913,6 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
-	mechanics_type_override = /obj/machinery/conveyor_switch/built
 	icon_state = "switch-off"
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// current direction setting

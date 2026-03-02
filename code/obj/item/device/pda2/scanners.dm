@@ -89,6 +89,7 @@
 		name = "Device Analyzer"
 		size = 16
 		var/last_address = "02000000"
+		var/scannable_tags = ANALYSER_DEVICE | ANALYSER_MACHINERY
 
 		on_set_scan(obj/item/device/pda2/pda)
 			pda.AddComponent(
@@ -111,46 +112,26 @@
 				return
 			if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
 				return SPAN_ALERT("Messaging must be enabled to communicate with engineering kit.")
-			var/obj/O = A
+
 			var/mob/user = usr
-			var/scan_result
-
-			if(!(O.analyser_flags & ANALYSER_ALLOWED))
-				if(O.analyser_flags & ANALYSER_FAILFEEDBACK)
-					scan_result = MECHANICS_ANALYSIS_INCOMPATIBLE
-				else
-					return
-
-			if (!scan_result)
-				scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user)
-
-			if (scan_result != MECHANICS_ANALYSIS_SUCCESS && (O.analyser_flags & ANALYSER_SKIP_IF_FAIL))
-				return
-			animate_scanning(A, "#FFFF00")
-			switch (scan_result)
-				if (MECHANICS_ANALYSIS_INCOMPATIBLE) //Send signal also returns 0 if analysis comp doesn't exist but MECHANICS_ANALYSIS_INCOMPATIBLE == 0
-					return SPAN_ALERT("The structure of \the [A] is not compatible.")
-				if (MECHANICS_ANALYSIS_SUCCESS)
-					playsound(A.loc, 'sound/machines/tone_beep.ogg', 30, FALSE) //Beep :)
-				if (MECHANICS_ANALYSIS_ALREADY_SCANNED) //I know this isn't possible for pda scanning but it might come up in the future so better to account for it.
-					return SPAN_ALERT("You have already scanned \an [A].")
-
 			var/datum/computer/file/electronics_scan/theScan = new
-			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type
-			var/atom/atom_cast = theScan.scannedPath
-			theScan.scannedName = initial(atom_cast.name)
-			var/typeinfo/obj/typeinfo = O.get_typeinfo()
-			theScan.scannedMats = typeinfo.mats
+			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user, scannable_tags, list(), theScan)
 
-			var/datum/signal/signal = get_free_signal()
-			signal.source = src.master
-			signal.transmission_method = 1
+			if(scan_result == ANALYSIS_SIGNAL_SUCCESS)
+				if (!isnull(theScan.scannedPath))
+					var/datum/signal/signal = get_free_signal()
+					signal.source = src.master
+					signal.transmission_method = 1
 
-			signal.data["address_tag"] = "TRANSRKIT"
-			signal.data["command"] = "add"
+					signal.data["address_tag"] = "TRANSRKIT"
+					signal.data["command"] = "add"
 
-			signal.data_file = theScan
-			post_signal(signal, "ruckkit")
+					signal.data_file = theScan
+					post_signal(signal, "ruckkit")
+			else if(scan_result == ANALYSIS_SIGNAL_SKIPPED)
+				return
+			return
+
 
 	medrecord_scan
 		name = "MedTrak Scanner"

@@ -117,10 +117,11 @@
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////no
+TYPEINFO(/obj/item/electronics/frame)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/electronics/frame
 	name = "frame"
 	icon_state = "frame"
-	analyser_flags = ANALYSER_BLACKLIST
 	var/store_type = null
 	var/secured = 0
 	var/viewstat = 0
@@ -396,11 +397,9 @@
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 50
+	var/scannable_tags = ANALYSER_DEVICE | ANALYSER_MACHINERY
 	var/list/scanned = list()
 	var/viewstat = 0
-
-	syndicate
-		analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	New()
 		. = ..()
@@ -415,7 +414,8 @@
 			. += " None"
 			return
 		for (var/obj/item_type as anything in src.scanned)
-			if (initial(item_type.analyser_flags) & ANALYSER_SYNDIE_ONLY)
+			var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
+			if (typeinfo.analyser_flags & ANALYSER_SYNDIE_ONLY)
 				continue
 			. += "<br>-" + "\proper[initial(item_type.name)]"
 
@@ -423,53 +423,24 @@
 		if (user.a_intent == INTENT_HARM)
 			return
 
-		var/skip_if_fail = FALSE
-		var/scan_result
+		var/datum/computer/file/electronics_scan/theScan = new
+		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, scannable_tags, scanned, theScan)
 
-		if (isobj(A))
-			var/obj/O = A
-			if(!(O.analyser_flags & ANALYSER_ALLOWED))
-				if(O.analyser_flags & ANALYSER_FAILFEEDBACK)
-					scan_result = MECHANICS_ANALYSIS_INCOMPATIBLE
-				else
-					return
-
-			skip_if_fail = O.analyser_flags & ANALYSER_SKIP_IF_FAIL
-
-		if (!scan_result)
-			scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user)
-
-		if (scan_result != MECHANICS_ANALYSIS_SUCCESS && skip_if_fail)
+		if(scan_result == ANALYSIS_SIGNAL_SUCCESS)
+			if (!isnull(theScan.scannedPath))
+				src.scanned += theScan.scannedPath
+		else if(scan_result == ANALYSIS_SIGNAL_SKIPPED)
 			return
-
-		var/scan_output = null
-		switch (scan_result)
-			if (MECHANICS_ANALYSIS_INCOMPATIBLE) //Send signal also returns 0 if analysis comp doesn't exist but MECHANICS_ANALYSIS_INCOMPATIBLE == 0
-				scan_output = SPAN_ALERT("The structure of \the [A] is not compatible with [parent_item].")
-			if (MECHANICS_ANALYSIS_SUCCESS)
-				scan_output = SPAN_NOTICE("[A] scanned successful.")
-				playsound(A.loc, 'sound/machines/tone_beep.ogg', 30, FALSE)
-			if (MECHANICS_ANALYSIS_ALREADY_SCANNED)
-				scan_output = SPAN_ALERT("You have already scanned \an [A].")
-
-		if (!isnull(scan_output))
-			// this is technically sleight of hand, since the effects of scanning are only shown after the scan is actually done
-			// doing this is a lot cleaner, though, than displaying some or all of the messages if the target has ANALYSER_SKIP_IF_FAIL
-			do_scan_effects(A, user)
-			boutput(user, scan_output)
 
 		return TRUE
 
-	proc/do_scan_effects(atom/target, mob/user)
-		// more often than not, this will display for objects, but we include a message to scanned mobs just for consistency's sake
-		user.tri_message(target,
-			SPAN_NOTICE("[user] scans [user == target ? himself_or_herself(user) : target] with [src]."), \
-			SPAN_NOTICE("You run [src] over [user == target ? "yourself" : target]..."), \
-			SPAN_NOTICE("[user] waves [src] at you. You feel [pick("funny", "weird", "odd", "strange", "off")].")
-		)
-		animate_scanning(target, "#FFFF00")
+
+/obj/item/electronics/scanner/syndicate
+	scannable_tags = ANALYSER_ALL | ANALYSER_SYNDIE_ONLY //We allow anything we can scan including syndie items
 
 ////////////////////////////////////////////////////////////////no
+TYPEINFO(/obj/machinery/rkit)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/machinery/rkit
 	name = "ruckingenur kit"
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
@@ -477,7 +448,6 @@
 	icon_state = "rkit"
 	anchored = ANCHORED
 	density = 1
-	analyser_flags = ANALYSER_BLACKLIST
 
 	//var/datum/electronics/electronics_items/link = null
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)

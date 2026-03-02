@@ -469,6 +469,7 @@ TYPEINFO(/obj/item/fish_portal)
 	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 15,
 				"wood" = 5,
 				"energy_high" = 5,
@@ -488,7 +489,6 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	throw_speed = 1
 	throw_range = 5
 	contraband = 4
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	tooltip_flags = REBUILD_DIST
 	var/obj/item/syndie_lure/lure = null
 	/// delay between tossing or reeling or etc

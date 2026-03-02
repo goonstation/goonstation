@@ -1693,13 +1693,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 15,
 				"crystal_dense" = 5)
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	contraband = 3
 	icon_state = "indusred"
 	item_state = "indusred"

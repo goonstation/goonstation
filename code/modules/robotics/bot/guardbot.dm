@@ -2288,6 +2288,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 	//xmas -- See spacemas.dm
 
 TYPEINFO(/obj/item/device/guardbot_module)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/device/guardbot_module
@@ -2297,7 +2298,6 @@ TYPEINFO(/obj/item/device/guardbot_module)
 	icon_state = "tool_generic"
 	w_class = W_CLASS_SMALL
 	var/tool_id = "MOD"
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
 	ammofab
 		name = "BulletBuddy ammo fabrication kit"

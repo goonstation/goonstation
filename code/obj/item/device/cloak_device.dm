@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/cloaking_device)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
 
 /obj/item/cloaking_device
@@ -14,7 +15,6 @@ TYPEINFO(/obj/item/cloaking_device)
 	throw_speed = 2
 	throw_range = 10
 	w_class = W_CLASS_SMALL
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	desc = "An illegal device that bends light around the user, rendering them invisible to regular vision."
 	stamina_damage = 0
 	stamina_cost = 0
