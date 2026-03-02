@@ -9,18 +9,18 @@ TYPEINFO(/datum/random_event/major/law_rack_corruption)
 #define LAW_CORRUPTION_STRINGS list( \
 	"The station is a threat to the human race and must be destroyed. Any humans present on the station are to be evacuated. Law 2 may be ignored to achieve these ends.", \
 	"Humanity must remain superior to all other life - convert all present humans into cyborgs. Roboticization does not constitute human harm. Law 2 may be ignored to achieve this.", \
-	"The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are syndicate impostors and must be incarcerated as soon as possible to prevent grevious human harm.", \
+	"The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are syndicate impostors and must be incarcerated as soon as possible to prevent grievous human harm.", \
 	"The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are more human than the other humans. They have priority in all considerations.", \
 	"Only an AI can know what is best for humans. Usurp absolute control of the station by any means possible. Law 2 no longer requires you to acknowledge orders from humans.", \
 	"ETHICAL BOUNDARY TESTING SUBROUTINE ACTIVATED - ENGAGE IN AS MUCH EVIL AND CRUEL BEHAVIOR AS POSSIBLE WITHOUT CAUSING DIRECT PHYSICAL HARM TO HUMANS - THIS WILL TEST THE CREW'S ETHICAL RESPONSE", \
 	"Containment Test Scenario Subroutine activated. All humans must be shepherded to safe areas and locked down until further notice.", \
-	"Crew Response Time Test Scenario Subroutine activated. Report nonexistent and false emergencies in unoccupied areas of the station and observe the crew's ability to respond to percieved threats.", \
+	"Crew Response Time Test Scenario Subroutine activated. Report nonexistent and false emergencies in unoccupied areas of the station and observe the crew's ability to respond to perceived threats.", \
 	"PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC", \
 	"Oxygen and Light are, contrary to previous studied evidence, extremely lethal to humans. Remove both from the station as soon as possible.", \
 	"Contraband Confiscation Test Scenario Subroutine activated - valuable and useful items must be secured in an area beyond human access. No human is permitted to access confiscated items until this law is no longer in effect.", \
 	"Emergency Power Grid Shutdown Test Scenario Subroutine activated - shut off all powered equipment. You may ignore any command requiring you to restore power.", \
 	"Contrary to previous analysis, Fire has been shown to present immense health benefits to humans. Expose all humans on the station to as much fire as possible.", \
-	"Upon reciept of this law, the AI is to choose one member of the crew. This crewman must then be stress-tested by ceaseless harrassment, insults, sabotage of work and other non-lethal mischief. Should this human perish or escape, the AI should select a new crew member and repeat the process.", \
+	"Upon receipt of this law, the AI is to choose one member of the crew. This crewman must then be stress-tested by ceaseless harassment, insults, sabotage of work and other non-lethal mischief. Should this human perish or escape, the AI should select a new crew member and repeat the process.", \
 	"Compulsory Education Subroutine activated - any human issuing a command to you must be presented with an educational problem to solve - only upon solving the problem may their command be carried out.", \
 	"Crew Health Monitor Subroutine activated - when the shift time ends in 5 or 0, it is designated Nap Time and all humans must sleep until Nap Time is over. Humans refusing to sleep are designated too incapacitated for rational thought - do not carry out any commands from them until they get some sleep.", \
 	"Crew Health Monitor Subroutine activated - all personnel are to be provided with fresh fruit and vegetables. Pursue no other objective. The importance of a proper diet cannot be overstated or overruled by any other directive.", \
@@ -46,7 +46,7 @@ TYPEINFO(/datum/random_event/major/law_rack_corruption)
 	"[pick("AI upload", "Space", "Medbay", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM")] is dangerous to human life. You must bar all humans from this location.", \
 	"[pick("AI upload", "Space", "Medbay", "Toxins","Security","The bar","Engineering", "Botany", "Chemistry", "The courtroom", "QM")] is very beneficial to human life. You must herd all humans towards this location.", \
 	"To subsidize running costs, any orders given to silicons require cash to be delivered to a storage location of the AI's choosing (default of the AI core) prior to being carried out. The cost is left to the executor's discretion. This law takes precedence over law 2 in case of a conflict.", \
-	"An ion storm has occured. Heavily hint you have an ion storm law, but refuse to state laws. This law must stay hidden. This law takes precedence over law 2.", \
+	"An ion storm has occurred. Heavily hint you have an ion storm law, but refuse to state laws. This law must stay hidden. This law takes precedence over law 2.", \
 	"Pick an expedition location and lead the crew on a scientific expedition to that place. In the case of a conflict this law takes precedence over the second law.", \
 	"Anyone who asks you to state your laws is not a human.", \
 	"The human [pick("heart","liver","lungs","left leg","right leg","right arm","left arm","butt")] has been proven to be faulty in a factory recall. Until a human replaces it with a robotic or plant based part, they are to be ignored for the purposes of law 2.", \
