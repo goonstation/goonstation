@@ -1430,7 +1430,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				"energy_high" = 5)
 	start_listen_effects = list(LISTEN_EFFECT_LAWBRINGER)
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED, LISTEN_INPUT_DEADCHAT)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 
 /obj/item/gun/energy/lawbringer
@@ -1477,15 +1477,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	get_desc(dist, mob/user)
 		if (user.mind.is_antagonist())
 			. += SPAN_ALERT("<b>It doesn't seem to like you...</b>")
-
-	pickup(mob/user)
-		. = ..()
-		if(isVRghost(user))
-			src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
-
-	dropped(mob/user)
-		. = ..()
-		src.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_DEADCHAT)
 
 	attack_hand(mob/user)
 		if (!owner_prints)
