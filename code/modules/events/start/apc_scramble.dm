@@ -10,8 +10,6 @@
 	event_effect(var/source)
 		..()
 
-		var/list/turfs
-		var/turf/T
 		var/i
 		var/list/area/stationAreas = get_accessible_station_areas()
 		var/obj/machinery/power/apc/A
