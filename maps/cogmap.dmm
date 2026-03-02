@@ -2445,26 +2445,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
-"akN" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
-"akQ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/showers)
-"akR" = (
-/obj/machinery/sink/slim{
-	pixel_y = 8
-	},
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/showers)
 "akS" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood,
@@ -36456,14 +36436,6 @@
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/active,
 /turf/simulated/floor/plating,
 /area/station/janitor/reservior)
-"fQh" = (
-/obj/fluid_pipe/straight/supply{
-	dir = 4
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 1
-	},
-/area/station/science/chemistry)
 "fQe" = (
 /mob/living/carbon/human/npc/monkey,
 /obj/machinery/light_switch/west{
@@ -36473,6 +36445,14 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
+"fQh" = (
+/obj/fluid_pipe/straight/supply{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/station/science/chemistry)
 "fQF" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -39043,6 +39023,10 @@
 	dir = 4
 	},
 /area/station/mining/magnet)
+"hod" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "hoq" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -39057,10 +39041,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
-"hod" = (
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "hoV" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/cola{
@@ -41202,6 +41182,7 @@
 /obj/item/reagent_containers/glass/plumbing/dispenser/plumbing{
 	pixel_y = 8
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/plating,
 /area/station/janitor/plumbing)
 "iCD" = (
@@ -56457,6 +56438,11 @@
 /obj/fluid_pipe/straight/supply,
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/arrivals)
+"reR" = (
+/obj/machinery/turret,
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "reW" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
@@ -56477,11 +56463,6 @@
 	name = "test chamber plating"
 	},
 /area/station/science/testchamber)
-"reR" = (
-/obj/machinery/turret,
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "rfl" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -63132,15 +63113,6 @@
 "uMC" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
-"uNi" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Meat Locker"
-	},
-/obj/mapping_helper/access/kitchen,
-/obj/decal/poster/wallsign/iso/warning/biological,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen/freezer)
 "uNH" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -67097,6 +67069,7 @@
 /obj/machinery/sink/piped/slim{
 	pixel_y = 8
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "xce" = (
