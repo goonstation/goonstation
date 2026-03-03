@@ -15,5 +15,4 @@
 		Artifact_Spawn(T)
 		var/damage_amt = rand(50, 75)
 		for(var/obj/artifact/A in T)
-			A.associated_datum.ArtifactDevelopFault(100)
 			A.ArtifactTakeDamage(damage_amt)
