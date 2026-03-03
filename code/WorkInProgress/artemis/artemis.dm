@@ -173,7 +173,8 @@
 				src.ship_marker = T
 
 #ifdef ARTEMIS_LINK_AT_ROUNDSTART
-		if(!(analyser_flags & ANALYSER_SYNDIE_ONLY)) && !special_places.Find(src.name))
+		var/typeinfo/obj/typeinfo = src.get_typeinfo()
+		if(!(typeinfo.analyser_flags & ANALYSER_SYNDIE_ONLY)) && !special_places.Find(src.name))
 			special_places.Add(src.name)
 #endif
 
