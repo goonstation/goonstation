@@ -350,6 +350,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/cloner)
+"Z" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/cloner)
 
 (1,1,1) = {"
 W
@@ -363,7 +367,7 @@ X
 X
 "}
 (2,1,1) = {"
-W
+F
 n
 P
 F
@@ -371,10 +375,10 @@ c
 E
 Y
 o
-X
+Z
 "}
 (3,1,1) = {"
-W
+S
 T
 M
 q
@@ -382,7 +386,7 @@ r
 g
 a
 w
-X
+Z
 "}
 (4,1,1) = {"
 W
@@ -418,7 +422,7 @@ j
 X
 "}
 (7,1,1) = {"
-W
+F
 e
 H
 q
@@ -426,10 +430,10 @@ r
 y
 G
 V
-X
+Z
 "}
 (8,1,1) = {"
-W
+S
 N
 h
 S
@@ -437,7 +441,7 @@ r
 z
 U
 l
-X
+Z
 "}
 (9,1,1) = {"
 W
