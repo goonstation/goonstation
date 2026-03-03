@@ -484,7 +484,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	src.set_dir(pick(alldirs))
 	if(firearm)
 		src.forensic_ID = firearm.forensic_ID
-		src.fired_by = firearm.name
+		//Only include the default name of the gun, some special names set randomly in new are confusing and labels shouldnt be readable
+		src.fired_by = initial(firearm.name)
 
 /obj/item/casing/get_desc(dist, mob/user)
 	. = ..()
