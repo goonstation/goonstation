@@ -133,12 +133,10 @@ MATERIAL
 
 	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
-			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
+			var/splitnum = tgui_input_number(user, "How many sheets do you want to take from the stack?", "Stack of [src.amount]", 1, src.amount - 1, 1, round_input = TRUE)
+			if (!in_interact_range(src, user) || !splitnum)
 				return
-			splitnum = round(clamp(splitnum, 0, src.amount))
-			if(amount == 0)
-				return
+			splitnum = clamp(splitnum, 0, src.amount - 1)
 			var/obj/item/sheet/new_stack = split_stack(splitnum)
 			if (!istype(new_stack))
 				boutput(user, SPAN_ALERT("Invalid entry, try again."))
@@ -655,11 +653,10 @@ MATERIAL
 
 	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
-			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
-
-			if (!in_interact_range(src, user) || !isnum_safe(splitnum)) //no walking away
+			var/splitnum = tgui_input_number(user, "How many rods do you want to take from the stack?", "Stack of [src.amount]", 1, src.amount - 1, 1, round_input = TRUE)
+			if (!in_interact_range(src, user) || !splitnum)
 				return
-
+			splitnum = clamp(splitnum, 0, src.amount - 1)
 			var/obj/item/rods/new_stack = split_stack(splitnum)
 			if (!istype(new_stack))
 				boutput(user, SPAN_ALERT("Invalid entry, try again."))

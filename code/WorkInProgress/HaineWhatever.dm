@@ -463,15 +463,14 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			..(I, user)
 
 	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = src.amount == 2 ? 1 : round(input("How many [src.real_name]s do you want to take from the stack?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, SPAN_ALERT("You wish!"))
-					return
-				src.change_stack_amount(0 - amt)
-				var/obj/item/dice/coin/poker_chip/P = new src.type(user.loc)
-				P.Attackhand(user)
+		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src && src.amount > 1)
+			var/amt = tgui_input_number(user, "How many [src.real_name]s do you want to take from the stack?", "[src.real_name]s stack", 1, src.amount - 1, 1, round_input = TRUE)
+			if (!amt || src.loc != user || user.equipped())
+				return
+			amt = clamp(amt, 0, src.amount - 1)
+			src.change_stack_amount(0 - amt)
+			var/obj/item/dice/coin/poker_chip/P = new src.type(user.loc)
+			P.Attackhand(user)
 		else
 			..(user)
 

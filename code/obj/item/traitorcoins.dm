@@ -21,10 +21,10 @@
 
 	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
-			var/splitnum = round(input("How many [src] do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
-				boutput(user, SPAN_ALERT("Invalid entry, try again."))
+			var/splitnum = tgui_input_number(user, "How many [src] do you want to take from the stack?", "Stack of [src.amount]", 1, src.amount - 1, 1, round_input = TRUE)
+			if (!splitnum)
 				return
+			splitnum = clamp(splitnum, 0, src.amount - 1)
 			if (!src.loc || BOUNDS_DIST(src, user) > 0)
 				return
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)

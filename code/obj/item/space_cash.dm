@@ -68,13 +68,12 @@
 
 	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much [display_name] do you want to take from the stack?") as null|num)
-			if (isnum_safe(amt) && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, SPAN_ALERT("You wish!"))
-					return
-				var/young_money = split_stack(amt)
-				user.put_in_hand_or_drop(young_money)
+			var/amt = tgui_input_number(user, "How much [display_name] do you want to take from the stack?", "[src.display_name] stack", 1, src.amount - 1, 1, round_input = TRUE)
+			if (!amt || src.loc != user || user.equipped())
+				return
+			amt = clamp(amt, 0, src.amount - 1)
+			var/young_money = split_stack(amt)
+			user.put_in_hand_or_drop(young_money)
 		else
 			..(user)
 
@@ -226,13 +225,10 @@
 
 	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (isnum_safe(amt))
-				if (amt > src.amount || amt < 1)
-					boutput(user, SPAN_ALERT("You wish!"))
-					return
-
-				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+			var/amt = tgui_input_number(user, "How much cash do you want to take from the stack?", "Cash stack", 1, src.amount - 1, 1, round_input = TRUE)
+			if (!amt)
+				return
+			boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 		else
 			..()
 
