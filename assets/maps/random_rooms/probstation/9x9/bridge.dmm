@@ -299,6 +299,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/heads,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "D" = (

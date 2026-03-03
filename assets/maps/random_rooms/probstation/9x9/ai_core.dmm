@@ -107,6 +107,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "n" = (
@@ -140,6 +141,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"s" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "u" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
@@ -148,6 +153,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "w" = (
@@ -164,6 +170,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
+"A" = (
+/obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "B" = (
@@ -343,7 +353,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
+/area/station/turret_protected/ai)
+"Z" = (
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 
 (1,1,1) = {"
@@ -363,7 +378,7 @@ k
 a
 a
 g
-a
+Z
 a
 c
 F
@@ -427,9 +442,9 @@ F
 F
 J
 a
-a
+s
 y
-a
+A
 a
 w
 F

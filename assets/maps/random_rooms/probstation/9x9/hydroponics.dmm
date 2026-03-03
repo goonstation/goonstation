@@ -16,6 +16,7 @@
 /area/station/hydroponics/bay)
 "d" = (
 /obj/submachine/chem_extractor,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "f" = (

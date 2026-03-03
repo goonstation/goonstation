@@ -324,6 +324,7 @@
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_y = 9
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 

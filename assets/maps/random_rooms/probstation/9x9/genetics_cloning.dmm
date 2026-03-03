@@ -12,16 +12,6 @@
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/black,
 /area/station/medical/research)
-"c" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/cloner)
 "e" = (
 /obj/machinery/computer/genetics,
 /obj/item/cloneModule/genepowermodule,
@@ -82,6 +72,15 @@
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
+/area/station/medical/medbay/cloner)
+"m" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "n" = (
 /obj/machinery/genetics_scanner,
@@ -371,7 +370,7 @@ F
 n
 P
 F
-c
+m
 E
 Y
 o

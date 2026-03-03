@@ -232,6 +232,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "V" = (
@@ -243,6 +244,7 @@
 /area/station/crew_quarters/pool)
 "X" = (
 /obj/pool/perspective{
+	density = 0;
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},

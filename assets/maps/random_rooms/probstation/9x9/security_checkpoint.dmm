@@ -1,0 +1,592 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aQ" = (
+/obj/machinery/flasher/minibrig/new_walls/south,
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"bj" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint)
+"br" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint)
+"cx" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"cy" = (
+/obj/machinery/light/incandescent/warm,
+/obj/vehicle/tug/security,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint)
+"dg" = (
+/obj/machinery/door/airlock/pyro/glass/security,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint)
+"ev" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/door_timer/minibrig/new_walls/south,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint)
+"eF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"eN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"fb" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -15
+	},
+/obj/landmark/start/job/security_assistant,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint)
+"ge" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/reagent_containers/food/drinks/water,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint)
+"ic" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"iu" = (
+/obj/storage/secure/crate/weapon/confiscated_items,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint)
+"lj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/red/side{
+	dir = 5
+	},
+/area/station/security/checkpoint)
+"lt" = (
+/obj/machinery/sink/slim{
+	pixel_y = 12
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"lB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"lG" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint)
+"mw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/jen/red,
+/area/station/security/checkpoint)
+"mz" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/left{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"qv" = (
+/obj/machinery/computer/card{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint)
+"qM" = (
+/obj/storage/secure/closet/brig_automatic/minibrig,
+/obj/machinery/phone/wall{
+	pixel_y = -22;
+	name = "minibrig";
+	phone_id = "security checkpoint minibrig"
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint)
+"sp" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/camera/directional/west{
+	pixel_y = 6
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -6
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint)
+"sv" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"sM" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	name = "Mini-Brig"
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/mapping_helper/access/brig,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint)
+"tv" = (
+/obj/machinery/camera/directional/south,
+/obj/machinery/firealarm/directional/east,
+/obj/storage/secure/crate/weapon/confiscated_items,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint)
+"ue" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"uu" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint)
+"vT" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"Eg" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"Ev" = (
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint)
+"GW" = (
+/turf/simulated/wall/auto/reinforced/jen/red,
+/area/station/security/checkpoint)
+"Ix" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/submachine/weapon_vendor/security,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
+/area/station/security/checkpoint)
+"IZ" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"JT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/phone/wall{
+	pixel_y = -22;
+	pixel_x = 6
+	},
+/obj/blind_switch/area/south{
+	pixel_x = -6
+	},
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/checkpoint)
+"JV" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"Ko" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"Ku" = (
+/obj/storage/secure/closet/security/equipment,
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint)
+"KG" = (
+/obj/item/storage/toilet{
+	dir = 4;
+	tag = ""
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint)
+"LK" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"Nq" = (
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"Qy" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/stool/chair/office/red{
+	dir = 1
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint)
+"QH" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"SH" = (
+/obj/table/reinforced/auto,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/printer{
+	name = "Printer - Escape Checkpoint";
+	pixel_y = 5;
+	print_id = "EscapeCheckpoint"
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint)
+"SR" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/disposalpipe/trunk/west,
+/obj/disposaloutlet/north{
+	pixel_y = 12
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"SZ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"TD" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/reinforced/auto,
+/obj/item/folder,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint)
+"TW" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint)
+"UX" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint)
+"Vf" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/right{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"VL" = (
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint)
+"Wh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint)
+"Wo" = (
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4;
+	tag = ""
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/firealarm/directional/west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/station/security/checkpoint)
+"XC" = (
+/obj/machinery/floorflusher/minibrig,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor,
+/area/station/security/checkpoint)
+"Yr" = (
+/obj/table/reinforced/auto,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint)
+
+(1,1,1) = {"
+GW
+GW
+GW
+GW
+Eg
+GW
+GW
+GW
+GW
+"}
+(2,1,1) = {"
+mz
+Wo
+sp
+TD
+JT
+GW
+KG
+qM
+GW
+"}
+(3,1,1) = {"
+Yr
+Qy
+eF
+ic
+ev
+GW
+lt
+cx
+GW
+"}
+(4,1,1) = {"
+br
+TW
+JV
+Ko
+bj
+sM
+XC
+aQ
+GW
+"}
+(5,1,1) = {"
+SR
+qv
+eF
+IZ
+Ev
+SZ
+ge
+fb
+mw
+"}
+(6,1,1) = {"
+vT
+SH
+Nq
+eN
+Wh
+sv
+lB
+LK
+GW
+"}
+(7,1,1) = {"
+vT
+lG
+eF
+QH
+UX
+dg
+VL
+cy
+GW
+"}
+(8,1,1) = {"
+Vf
+Ix
+Ku
+uu
+lj
+ue
+iu
+tv
+GW
+"}
+(9,1,1) = {"
+GW
+GW
+GW
+GW
+Eg
+GW
+GW
+GW
+GW
+"}
