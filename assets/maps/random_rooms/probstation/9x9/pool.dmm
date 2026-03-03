@@ -243,6 +243,7 @@
 /area/station/crew_quarters/pool)
 "X" = (
 /obj/pool/perspective{
+	density = 0;
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
