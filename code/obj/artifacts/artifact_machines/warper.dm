@@ -1,9 +1,10 @@
-/obj/machinery/artifact/warper
+/obj/artifact/warper
 	name = "artifact warper"
 	associated_datum = /datum/artifact/warper
+	processes = TRUE
 
 /datum/artifact/warper
-	associated_object = /obj/machinery/artifact/warper
+	associated_object = /obj/artifact/warper
 	type_name = "Warper"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 365
@@ -28,8 +29,15 @@
 		if (!wormholer)
 			teleport_range = rand(2,8) //latest: funny is kil
 
+	effect_activate(obj/O)
+		if (..())
+			return
+		ON_COOLDOWN(O, "warp_activate", 4 SECONDS) // approx machinery tick rate
+
 	effect_process(var/obj/O)
 		if (..())
+			return
+		if (ON_COOLDOWN(O, "warp_activate", 4 SECONDS))
 			return
 		if (inrestrictedz(O)) // AZONE puzzle speedrun %Any
 			O.ArtifactDeactivated()

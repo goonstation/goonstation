@@ -1,6 +1,7 @@
-/obj/machinery/artifact/wellspring
+/obj/artifact/wellspring
 	name = "wellspring"
 	associated_datum = /datum/artifact/wellspring
+	processes = TRUE
 
 	New()
 		..()
@@ -8,7 +9,7 @@
 
 
 /datum/artifact/wellspring
-	associated_object = /obj/machinery/artifact/wellspring
+	associated_object = /obj/artifact/wellspring
 	type_size = ARTIFACT_SIZE_LARGE
 
 	type_name = "Wellspring"

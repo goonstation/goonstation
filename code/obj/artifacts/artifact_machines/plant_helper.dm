@@ -1,9 +1,10 @@
-/obj/machinery/artifact/plant_helper
+/obj/artifact/plant_helper
 	name = "artifact plant_helper"
 	associated_datum = /datum/artifact/plant_helper
+	processes = TRUE
 
 /datum/artifact/plant_helper
-	associated_object = /obj/machinery/artifact/plant_helper
+	associated_object = /obj/artifact/plant_helper
 	type_name = "Plant Enhancer"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
@@ -41,8 +42,15 @@
 			src.helpers.Add("weedkiller")
 			src.helpers.Add("mutation")
 
+	effect_activate(obj/O)
+		if (..())
+			return
+		ON_COOLDOWN(O, "help_plants", 4 SECONDS) // approx machinery tick rate
+
 	effect_process(var/obj/O)
 		if (..())
+			return
+		if (ON_COOLDOWN(O, "help_plants", 4 SECONDS))
 			return
 		for (var/obj/machinery/plantpot/P in range(O,src.field_radius))
 			var/r = 0

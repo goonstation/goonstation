@@ -11,6 +11,8 @@
 	mat_changename = 0
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
+	/// subscribes to artifact process schedule
+	var/processes = FALSE
 
 	New(var/loc, var/forceartiorigin)
 		..()
@@ -21,8 +23,13 @@
 		SPAWN(0)
 			src.ArtifactSetup()
 
+		if (src.processes)
+			START_TRACKING_CAT(TR_CAT_PROCESSED_ARTIFACTS)
+
 	disposing()
 		artifact_controls.artifacts -= src
+		if (src.processes)
+			STOP_TRACKING_CAT(TR_CAT_PROCESSED_ARTIFACTS)
 		..()
 
 	UpdateName()
@@ -106,113 +113,11 @@
 		src.ArtifactTakeDamage(rand(5,20))
 		boutput(user, SPAN_ALERT("It seems to be a bit more damaged!"))
 
-/obj/machinery/artifact
-	name = "artifact large art piece"
-	icon = 'icons/obj/artifacts/artifacts.dmi'
-	icon_state = "wizard-1" // it's technically pointless to set this but it makes it easier to find in the dreammaker tree
-	opacity = 0
-	density = 1
-	anchored = UNANCHORED
-	artifact = 1
-	mat_changename = 0
-	mat_changedesc = 0
-	var/associated_datum = /datum/artifact/art
-
-	New(var/loc, var/forceartiorigin)
-		..()
-		var/datum/artifact/AS = new src.associated_datum(src)
-		if (forceartiorigin)
-			AS.validtypes = list("[forceartiorigin]")
-		src.artifact = AS
-
-		SPAWN(0)
-			src.ArtifactSetup()
-
-	disposing()
-		artifact_controls.artifacts -= src
-		..()
-
-	examine()
-		. = list("You have no idea what this thing is!")
-		if (!src.ArtifactSanityCheck())
-			return
-		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-			. += SPAN_ARTHINT(A.examine_hint)
-
-	UpdateName()
-		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
-
-	process()
-		..()
-		if (!src.ArtifactSanityCheck())
-			return
+	proc/process()
 		var/datum/artifact/A = src.artifact
 
 		if (A.activated)
 			A.effect_process(src)
-
-	attack_hand(mob/user)
-		src.ArtifactTouched(user)
-		return
-
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
-
-	attackby(obj/item/W, mob/user)
-		if (src.Artifact_attackby(W,user))
-			..()
-
-	meteorhit(obj/O as obj)
-		src.ArtifactStimulus("force", 60)
-		..()
-
-	ex_act(severity)
-		switch(severity)
-			if(1)
-				src.ArtifactStimulus("force", 200)
-				src.ArtifactStimulus("heat", 500)
-			if(2)
-				src.ArtifactStimulus("force", 75)
-				src.ArtifactStimulus("heat", 450)
-			if(3)
-				src.ArtifactStimulus("force", 25)
-				src.ArtifactStimulus("heat", 380)
-		return
-
-	reagent_act(reagent_id,volume)
-		if (..())
-			return
-		src.Artifact_reagent_act(reagent_id, volume)
-		return
-
-	emp_act()
-		src.Artifact_emp_act()
-
-	blob_act(var/power)
-		src.Artifact_blob_act(power)
-
-	bullet_act(var/obj/projectile/P)
-		switch (P.proj_data.damage_type)
-			if(D_KINETIC,D_PIERCING,D_SLASHING)
-				src.ArtifactStimulus("force", P.power)
-				if (istype(src.loc,/turf/))
-					for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
-						I.impactpad_senseforce_shot(src, P)
-			if(D_ENERGY)
-				src.ArtifactStimulus("elec", P.power * 10)
-			if(D_BURNING)
-				src.ArtifactStimulus("heat", 310 + (P.power * 5))
-			if(D_RADIOACTIVE)
-				src.ArtifactStimulus("radiate", P.power)
-		..()
-
-	hitby(atom/movable/M, datum/thrown_thing/thr)
-		if (isitem(M))
-			var/obj/item/ITM = M
-			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
-				I.impactpad_senseforce(src, ITM)
-		..()
 
 /obj/item/artifact
 	name = "artifact small art piece"

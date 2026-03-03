@@ -1,10 +1,10 @@
-/obj/machinery/artifact/emoter
+/obj/artifact/emoter
 	name = "artifact emote field"
 	associated_datum = /datum/artifact/emoter
-	processing_tier = PROCESSING_QUARTER
+	processes = TRUE
 
 /datum/artifact/emoter
-	associated_object = /obj/machinery/artifact/emoter
+	associated_object = /obj/artifact/emoter
 	type_name = "Emote-stimulation Field" //this was brown note originally
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350

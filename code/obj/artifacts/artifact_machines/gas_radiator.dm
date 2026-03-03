@@ -1,10 +1,11 @@
-/obj/machinery/artifact/gas_radiator
+/obj/artifact/gas_radiator
 	name = "artifact gas radiator"
 	associated_datum = /datum/artifact/gas_radiator
 	pressure_resistance = 1000 * ONE_ATMOSPHERE // please do not move
+	processes = TRUE
 
 /datum/artifact/gas_radiator
-	associated_object = /obj/machinery/artifact/gas_radiator
+	associated_object = /obj/artifact/gas_radiator
 	type_name = "Gas Radiator"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
@@ -91,9 +92,12 @@
 		if(..())
 			return
 		ArtifactLogs(usr, null, O, "activated", "making it radiate [temp_text] ([gas_temp - T0C]&deg;C) [gas_type]", 1)
+		ON_COOLDOWN(O, "gas_radiate", 4 SECONDS)  // approx machinery tick rate
 
 	effect_process(var/obj/O)
 		if (..())
+			return
+		if (ON_COOLDOWN(O, "gas_radiate", 4 SECONDS))
 			return
 		if(src.gas_amount_current < src.gas_amount)
 			src.gas_amount_current = min(src.gas_amount_current + src.gas_amount_growth, src.gas_amount)

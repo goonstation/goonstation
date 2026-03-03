@@ -1,11 +1,12 @@
-/obj/machinery/artifact/bio_damage_field_generator
+/obj/artifact/bio_damage_field_generator
 	name = "artifact bio damage field generator"
 	associated_datum = /datum/artifact/bio_damage_field_generator
+	processes = TRUE
 
 #define ART_HEALING 0
 #define ART_HARMING 1
 /datum/artifact/bio_damage_field_generator
-	associated_object = /obj/machinery/artifact/bio_damage_field_generator
+	associated_object = /obj/artifact/bio_damage_field_generator
 	type_name = "Healing/Damaging Aura"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
@@ -37,8 +38,15 @@
 		if (src.field_type && src.artitype.name == "eldritch")
 			src.field_strength *= 2
 
+	effect_activate(obj/O)
+		if (..())
+			return
+		ON_COOLDOWN(O, "heal_pulse", 4 SECONDS) // approx machinery tick rate
+
 	effect_process(var/obj/O)
 		if (..())
+			return
+		if (ON_COOLDOWN(O, "heal_pulse", 4 SECONDS))
 			return
 		for (var/mob/living/carbon/M in range(O,src.field_radius))
 			if (src.field_type == ART_HARMING)

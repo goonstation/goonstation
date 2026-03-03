@@ -195,6 +195,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_SPY_STICKERS_REGULAR "spysticker_regular"
 #define TR_CAT_SPY_STICKERS_DET "spysticker_det"
 #define TR_CAT_ARTIFACTS "artifacts"
+#define TR_CAT_PROCESSED_ARTIFACTS "processed_artifacts"
 #define TR_CAT_NUKE_OP_STYLE "nukie_style_items" //Items that follow the nuke op color scheme and are generally associated with ops. For recoloring!
 #define TR_CAT_HUNTER_GEAR "hunter_gear"
 #define TR_CAT_FLOCK_STRUCTURE "flock_structure"

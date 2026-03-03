@@ -1,6 +1,7 @@
-/obj/machinery/artifact/gravity_well_generator
+/obj/artifact/gravity_well_generator
 	name = "artifact gravity well generator"
 	associated_datum = /datum/artifact/gravity_well_generator
+	processes = TRUE
 
 	New()
 		..()
@@ -22,7 +23,7 @@
 		FLICK("pulse",src)
 
 /datum/artifact/gravity_well_generator
-	associated_object = /obj/machinery/artifact/gravity_well_generator
+	associated_object = /obj/artifact/gravity_well_generator
 	type_name = "Gravity Well"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
@@ -56,6 +57,7 @@
 	effect_activate(obj/O)
 		. = ..()
 		O.vis_contents += lense
+		ON_COOLDOWN(O, "grav_pulse", 4 SECONDS) // approx machinery tick rate
 
 	effect_deactivate(obj/O)
 		. = ..()
@@ -64,7 +66,8 @@
 	effect_process(var/obj/O)
 		if (..())
 			return
-
+		if (ON_COOLDOWN(O, "grav_pulse", 4 SECONDS))
+			return
 		lense.pulse()
 
 		for(var/turf/T in orange(src.field_radius,get_turf(O)))

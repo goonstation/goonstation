@@ -1,9 +1,9 @@
-/obj/machinery/artifact/robot
+/obj/artifact/robot
 	name = "drone"
 	associated_datum = /datum/artifact/robot
 
 /datum/artifact/robot
-	associated_object = /obj/machinery/artifact/robot
+	associated_object = /obj/artifact/robot
 	type_name = "Drone"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
@@ -89,7 +89,7 @@
 
 /mob/living/critter/robotic/artifact
 	name = "bizarre machine" //this should always be overridden by parent artifact appearance, but just in case
-	var/obj/machinery/artifact/robot/parent_artifact
+	var/obj/artifact/robot/parent_artifact
 	can_throw = FALSE
 	can_grab = FALSE
 	can_disarm = FALSE
@@ -99,7 +99,7 @@
 	health_burn = 10
 	health_burn_vuln = 0.2
 
-	New(loc, var/obj/machinery/artifact/robot/parent, var/aitype)
+	New(loc, var/obj/artifact/robot/parent, var/aitype)
 		if(!istype(parent))
 			throw EXCEPTION("Tried to create an artifact robot without a parent artifact!")
 		if(!ispath(aitype))

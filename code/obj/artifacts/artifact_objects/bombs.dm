@@ -42,6 +42,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	effect_activate(var/obj/O)
 		if (..())
 			return
+		ON_COOLDOWN(O, "bomb_process", 4 SECONDS) // approx machinery tick rate
 		var/turf/T = get_turf(O)
 		src.detonation_time = TIME + src.explode_delay
 		if(recharge_delay && ON_COOLDOWN(O, "bomb_cooldown", recharge_delay))
@@ -68,7 +69,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	effect_process(var/obj/O)
 		if(..())
 			return
-		if(!src.activated)
+		if (ON_COOLDOWN(O, "bomb_process", 4 SECONDS))
 			return
 		var/turf/T = get_turf(O)
 		if(alarm_during)
@@ -127,7 +128,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 // regular explosives
 
-/obj/machinery/artifact/bomb
+/obj/artifact/bomb
 	name = "artifact bomb"
 	associated_datum = /datum/artifact/bomb/explosive
 
@@ -141,7 +142,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 
 /datum/artifact/bomb/explosive
-	associated_object = /obj/machinery/artifact/bomb
+	associated_object = /obj/artifact/bomb
 	type_name = "Bomb (explosive)"
 	rarity_weight = 200
 	var/exp_deva = 1
@@ -165,12 +166,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		O.ArtifactDestroyed()
 
-/obj/machinery/artifact/bomb/devastating
+/obj/artifact/bomb/devastating
 	name = "artifact devastating bomb"
 	associated_datum = /datum/artifact/bomb/explosive/devastating
 
 /datum/artifact/bomb/explosive/devastating
-	associated_object = /obj/machinery/artifact/bomb/devastating
+	associated_object = /obj/artifact/bomb/devastating
 	type_name = "Bomb (explosive, devastating)"
 	rarity_weight = 90
 	doAlert = 1
@@ -186,12 +187,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 // black hole bomb
 
-/obj/machinery/artifact/bomb/blackhole
+/obj/artifact/bomb/blackhole
 	name = "artifact black hole bomb"
 	associated_datum = /datum/artifact/bomb/blackhole
 
 /datum/artifact/bomb/blackhole
-	associated_object = /obj/machinery/artifact/bomb/blackhole
+	associated_object = /obj/artifact/bomb/blackhole
 	type_name = "Bomb (black hole)"
 	rarity_weight = 90
 	react_xray = list(12,75,30,11,"ULTRADENSE")
@@ -220,7 +221,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 #define CHEMBOMB_FLUIDY 3
 
 
-/obj/machinery/artifact/bomb/chemical
+/obj/artifact/bomb/chemical
 	name = "artifact chemical bomb"
 	associated_datum = /datum/artifact/bomb/chemical
 
@@ -229,7 +230,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.create_reagents(rand(100,1000))
 
 /datum/artifact/bomb/chemical
-	associated_object = /obj/machinery/artifact/bomb/chemical
+	associated_object = /obj/artifact/bomb/chemical
 	type_name = "Bomb (chemical)"
 	rarity_weight = 350
 	explode_delay = 0
@@ -352,7 +353,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 #define MAKE_HUMAN_MATERIAL 1
 #define MAKE_HUMAN_STATUE 2
 
-/obj/machinery/artifact/bomb/transmute
+/obj/artifact/bomb/transmute
 	name = "artifact matter transmutation bomb"
 	associated_datum = /datum/artifact/bomb/transmute
 
@@ -364,7 +365,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		boutput(user, "\The [O] turn\s into [A.mat.getName()]!")
 
 /datum/artifact/bomb/transmute
-	associated_object = /obj/machinery/artifact/bomb/transmute
+	associated_object = /obj/artifact/bomb/transmute
 	type_name = "Bomb (material transmutation)"
 	validtypes = list("wizard","eldritch","martian","ancient","precursor")
 	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
@@ -551,12 +552,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 // radioactive bomb
 
-/obj/machinery/artifact/bomb/radioactive
+/obj/artifact/bomb/radioactive
 	name = "artifact radioactive bomb"
 	associated_datum = /datum/artifact/bomb/radioactive
 
 /datum/artifact/bomb/radioactive
-	associated_object = /obj/machinery/artifact/bomb/radioactive
+	associated_object = /obj/artifact/bomb/radioactive
 	type_name = "Bomb (radioactive)"
 	rarity_weight = 90
 	react_xray = list(12,75,30,11,"SHIELDED")
@@ -587,6 +588,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	effect_process(var/obj/O)
 		if(..())
 			return
+		if (ON_COOLDOWN(O, "bomb_process", 4 SECONDS))
+			return
 		if(src.blewUp)
 			if(!ON_COOLDOWN(O, "nuclear_fallout", src.nuclear_fallout_cooldown))
 				var/turf/location = get_turf(O)
@@ -600,7 +603,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 // biological bomb
 
-/obj/machinery/artifact/bomb/biological
+/obj/artifact/bomb/biological
 
 	name = "artifact biological bomb"
 	associated_datum = /datum/artifact/bomb/biological
@@ -610,7 +613,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.create_reagents(rand(10,50))
 
 /datum/artifact/bomb/biological
-	associated_object = /obj/machinery/artifact/bomb/biological
+	associated_object = /obj/artifact/bomb/biological
 	type_name = "Bomb (biological)"
 	rarity_weight = 90
 	explode_delay = 0

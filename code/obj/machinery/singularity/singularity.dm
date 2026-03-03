@@ -233,8 +233,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			continue
 
 		var/sign = -1 //default to pull
-		if (istype(magnet, /obj/machinery/artifact))
-			var/obj/machinery/artifact/artifact = magnet
+		if (istype(magnet, /obj/artifact))
+			var/obj/artifact/artifact = magnet
 			var/datum/artifact/gravity_well_generator/artifact_datum = artifact.artifact
 			if (istype(artifact_datum) && !artifact_datum.activated)
 				continue

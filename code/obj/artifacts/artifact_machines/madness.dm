@@ -1,10 +1,10 @@
-/obj/machinery/artifact/madness
+/obj/artifact/madness
 	name = "psycho-stimulator field"
 	associated_datum = /datum/artifact/madness
-	processing_tier = PROCESSING_QUARTER
+	processes = TRUE
 
 /datum/artifact/madness
-	associated_object = /obj/machinery/artifact/madness
+	associated_object = /obj/artifact/madness
 	type_name = "Psycho-stimulator Field"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350

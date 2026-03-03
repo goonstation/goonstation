@@ -1,4 +1,4 @@
-/obj/machinery/artifact/power_gen
+/obj/artifact/power_gen
 	name = "artifact power generator"
 	associated_datum = /datum/artifact/power_gen
 	var/datum/light/light
@@ -11,7 +11,7 @@
 		light.attach(src)
 
 /datum/artifact/power_gen
-	associated_object = /obj/machinery/artifact/power_gen
+	associated_object = /obj/artifact/power_gen
 	type_name = "Power Generator"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 90
@@ -56,7 +56,7 @@
 					boutput(user, "[O] connects itself to the cable. Weird.")
 					playsound(O, 'sound/effects/ship_charge.ogg', 75, TRUE)
 					logTheThing(LOG_STATION, user, "connected power generator artifact [O] at [log_loc(O)].")
-					var/obj/machinery/artifact/power_gen/L = O
+					var/obj/artifact/power_gen/L = O
 					if (L.light)
 						L.light.enable()
 			else
@@ -68,12 +68,19 @@
 			boutput(user, "[O] disconnects itself from the cable.")
 			playsound(O, 'sound/effects/shielddown2.ogg', 75, TRUE, 0, 2)
 			logTheThing(LOG_STATION, user, "discconnected power generator artifact [O] at [log_loc(O)].")
-			var/obj/machinery/artifact/power_gen/L = O
+			var/obj/artifact/power_gen/L = O
 			if (L.light)
 				L.light.disable()
 
+	effect_activate(obj/O)
+		if (..())
+			return
+		ON_COOLDOWN(O, "gen_process", 4 SECONDS) // approx machinery tick rate
+
 	effect_process(var/obj/O)
 		if (..())
+			return
+		if (ON_COOLDOWN(O, "gen_process", 4 SECONDS))
 			return
 		if(attached)
 			var/datum/powernet/PN = attached.get_powernet()

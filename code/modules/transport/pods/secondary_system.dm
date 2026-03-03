@@ -146,7 +146,6 @@
 	/// What itempaths will this cargo hold accept?
 	var/list/acceptable = list(/obj/storage/crate,
 	/obj/storage/secure/crate,
-	/obj/machinery/artifact,
 	/obj/artifact,
 	/obj/mopbucket,
 	/obj/beacon_deployer,

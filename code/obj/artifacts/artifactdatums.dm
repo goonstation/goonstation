@@ -281,7 +281,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	armor_ignored = 0.66
 	hit_ground_chance = 90
 	window_pass = 0
-	var/obj/machinery/artifact/turret/turretArt = null
+	var/obj/artifact/turret/turretArt = null
 
 	on_hit(atom/hit)
 		if(turretArt && istype(hit, /mob/living/))

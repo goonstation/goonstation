@@ -2,7 +2,7 @@
 #define STATUS_PROCESSING_BODY 1
 #define STATUS_READY 2
 
-/obj/machinery/artifact/food_processor
+/obj/artifact/food_processor
 	name = "artifact food processor"
 	associated_datum = /datum/artifact/food_processor
 
@@ -27,7 +27,7 @@
 		return
 
 /datum/artifact/food_processor
-	associated_object = /obj/machinery/artifact/food_processor
+	associated_object = /obj/artifact/food_processor
 	type_name = "Food Processor"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350

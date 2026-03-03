@@ -1,6 +1,7 @@
-/obj/machinery/artifact/turret
+/obj/artifact/turret
 	name = "artifact turret"
 	associated_datum = /datum/artifact/turret
+	processes = TRUE
 
 	ArtifactDestroyed()
 		var/datum/artifact/turret/A = src.artifact
@@ -9,7 +10,7 @@
 
 
 /datum/artifact/turret
-	associated_object = /obj/machinery/artifact/turret
+	associated_object = /obj/artifact/turret
 	type_name = "Turret"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
@@ -50,8 +51,15 @@
 			if (!src.friend || src.capricious)
 				src.friend = user
 
+	effect_activate(obj/O)
+		if (..())
+			return
+		ON_COOLDOWN(O, "turret_process", 4 SECONDS) // approx machinery tick rate
+
 	effect_process(var/obj/O)
 		if (..())
+			return
+		if (ON_COOLDOWN(O, "turret_process", 4 SECONDS))
 			return
 		var/turf/T = get_turf(O)
 		if (!current_target)
