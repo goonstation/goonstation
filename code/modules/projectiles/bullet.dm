@@ -51,6 +51,8 @@ toxic - poisons
 
 	has_impact_particles = TRUE
 
+	affected_by_gravity = TRUE
+
 	/// can it ricochet off a wall?
 	var/ricochets = FALSE
 
@@ -99,7 +101,7 @@ toxic - poisons
 		casing = null
 		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 			if (isliving(hit))
-				if (ON_COOLDOWN(hit, "american180_miss", 3 DECI SECONDS))
+				if (ON_COOLDOWN(hit, "american180_miss", 2 DECI SECONDS))
 					return TRUE
 				else
 					return FALSE
@@ -766,7 +768,7 @@ toxic - poisons
 	icon_state = "birdshot1"
 	hit_ground_chance = 66
 	implanted = null
-	damage = 13
+	damage = 16
 	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
 	dissipation_rate = 4 //spread handles most of this

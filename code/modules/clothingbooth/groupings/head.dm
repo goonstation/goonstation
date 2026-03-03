@@ -283,6 +283,8 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 		/datum/clothingbooth_grouping_tag/season/winter,
 	)
+/datum/clothingbooth_grouping/flatcap
+	item_paths = list(/datum/clothingbooth_item/head/flatcap)
 
 /datum/clothingbooth_grouping/hijab
 	name = "Hijab"

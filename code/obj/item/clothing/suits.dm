@@ -345,9 +345,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 
 		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		src.armor()
-		if(!src.fingerprints)
-			src.fingerprints = list()
-		src.fingerprints |= W.fingerprints
+		W.forensic_holder.copy_to(src.forensic_holder)
 		qdel(W)
 
 		if (ismob(src.loc))
@@ -724,6 +722,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			. = "Your most prized lab coat; it took all your life savings to get it designed and tailored just for you."
 		else
 			. = "A bunch of purple glitter and cheap plastic glued together in a sad attempt to make a stylish lab coat."
+
+/obj/item/clothing/suit/labcoat/pharmacist
+	name = "pharmacist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pharmacist."
+	icon_state = "PHlabcoat"
+	item_state = "PHlabcoat"
+	coat_style = "PHlabcoat"
+
+	april_fools
+		icon_state = "PHlabcoat-alt"
+		item_state = "PHlabcoat-alt"
+		coat_style = "PHlabcoat-alt"
 
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
@@ -1913,6 +1923,12 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "wintercoat-genetics"
 	item_state = "wintercoat-genetics"
 	coat_style = "wintercoat-genetics"
+
+/obj/item/clothing/suit/wintercoat/pharmacist
+	name = "pharmacist winter coat"
+	icon_state = "wintercoat-pharma"
+	item_state = "wintercoat-pharma"
+	coat_style = "wintercoat-pharma"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"

@@ -492,3 +492,9 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	adminLogHtml = replacetext(adminLogHtml, "<!-- TABLE GOES HERE -->", str_dat)
 
 	return adminLogHtml
+
+//Emotes are logged in many different places, and changing them all whenever you want to change emote logging is :/
+/proc/log_emote(source, message, voluntary = FALSE)
+	if(!source || !message)
+		return
+	logTheThing(LOG_SAY, source, "EMOTE[voluntary ? "(voluntary)" : ""]: [message] [log_loc(source)]")

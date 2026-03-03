@@ -361,6 +361,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if (src.mob)
 			src.mob.set_face_icon_dirty()
 			src.mob.set_body_icon_dirty()
+			src.mob.update_burning_icon()
 
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(src.mob, movement_modifier, src.type)

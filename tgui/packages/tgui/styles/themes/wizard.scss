@@ -1,0 +1,40 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ * Modified 15/1/2026 from flock to wizard by JORJ949 (https://github.com/JORJ949)
+ */
+
+.theme-wizard:root {
+  // Vars
+  --wizard: #8c14aa;
+
+  // Base
+  --color-base: color-mix(in srgb, var(--wizard), black 55%);
+
+  // Layouts
+  --titlebar-background: color-mix(in srgb, var(--wizard), black 25%);
+
+  // Components
+  --button-background-default: var(--wizard);
+  --button-color-transparent: rgba(227, 240, 255, 0.75);
+
+  --progress-bar-fill: var(--wizard);
+  --progress-bar-background: rgba(0, 0, 0, 0.5);
+
+  .Layout__content {
+    background-image: none;
+  }
+
+  // Text colours
+  --wizard-text-important: #51d7f8;
+  em {
+    color: var(--wizard-text-important);
+  }
+  //The darkened text can be a little hard to read
+  p {
+    color: var(--color-text);
+  }
+  h1 {
+    color: var(--color-text);
+  }
+}

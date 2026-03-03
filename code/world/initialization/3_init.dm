@@ -229,6 +229,10 @@
 		global.region_allocator.add_z_level()
 	#endif
 
+	UPDATE_TITLE_STATUS("Processing gravity")
+	Z_LOG_DEBUG("World/Init", "Processing gravity...")
+	global.configure_zero_g_areas()
+
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")

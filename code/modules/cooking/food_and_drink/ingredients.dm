@@ -296,11 +296,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "flour"
 	food_color = "#FFFFFF"
 
+/obj/item/reagent_containers/food/snacks/ingredient/flour/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
+	if (..()) return
+
+	if (reagent_id == "water" && volume >= 15)
+		src.visible_message(SPAN_NOTICE("[src] turns into dough."))
+		new /obj/item/reagent_containers/food/snacks/ingredient/dough(get_turf(src))
+		holder_reagents.remove_reagent("water", 15)
+		qdel(src)
+
 /obj/item/reagent_containers/food/snacks/ingredient/flour/semolina
 	name = "semolina"
 	desc = "Some semolina flour."
 	icon_state = "semolina"
 	food_color = "#FFFFEE"
+
+/obj/item/reagent_containers/food/snacks/ingredient/flour/semolina/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
+	if (..()) return
+
+	if (reagent_id == "water" && volume >= 15)
+		src.visible_message(SPAN_NOTICE("[src] turns into dough."))
+		new /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina(get_turf(src))
+		holder_reagents.remove_reagent("water", 15)
+		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 	name = "rice sprig"
@@ -315,6 +333,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	desc = "Some rice."
 	icon_state = "rice"
 	food_color = "#E3E3E3"
+
+/obj/item/reagent_containers/food/snacks/ingredient/rice/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
+	if (..()) return
+
+	if (reagent_id == "water" && volume > 30)
+		src.visible_message(SPAN_NOTICE("[src] gets sticky."))
+		new /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice(get_turf(src))
+		holder_reagents.remove_reagent("water", 15)
+		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/sugar
 	name = "sugar"

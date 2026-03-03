@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "window"
 	desc = "A window."
 	density = 1
-	stops_space_move = 1
+	provides_grip = TRUE
 	dir = NORTHEAST //full tile
 	flags = USEDELAY | ON_BORDER | FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
@@ -389,7 +389,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		if (src && src.health <= 2 && !reinforcement)
 			src.anchored = UNANCHORED
-			src.stops_space_move = 0
+			src.provides_grip = FALSE
+			var/turf/T = get_turf(src)
+			T?.grip_atom_count -= 1
 			step(src, get_dir(AM, src))
 		..()
 		return
@@ -489,7 +491,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				user.show_text("You have [state == 1 ? "unfastened the window from" : "fastened the window to"] the frame.", "blue")
 			else
 				src.anchored = !(src.anchored)
-				src.stops_space_move = !(src.stops_space_move)
+				src.provides_grip = !(src.provides_grip)
+				var/turf/T = get_turf(src)
+				T?.grip_atom_count += src.provides_grip ? 1 : -1
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
 				logTheThing(LOG_STATION, user, "[src.anchored ? "anchored" : "unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
@@ -1012,7 +1016,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
-			src.stops_space_move = !(src.stops_space_move)
+			src.provides_grip = !(src.provides_grip)
+			var/turf/T = get_turf(src)
+			T?.grip_atom_count += src.provides_grip ? 1 : -1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened [src] to the floor." : "You have unfastened [src].")
 			return

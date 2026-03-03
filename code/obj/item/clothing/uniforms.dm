@@ -535,6 +535,16 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
 
+/obj/item/clothing/under/rank/pharmacist
+	name = "pharmacist's jumpsuit"
+	desc = "Proves you know how to make chemicals explode and/or heal people."
+	icon_state = "pharmacist"
+	item_state = "pharmacist"
+
+	april_fools
+		icon_state = "pharmacist-alt"
+		item_state = "pharmacist-alt"
+
 /obj/item/clothing/under/rank/pathologist
 	name = "pathologist's jumpsuit"
 	desc = "Scientifically proven to block up to 99% of pathogens."
@@ -542,8 +552,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	item_state = "pathology"
 
 	april_fools
-		icon_state = "medical-alt"
-		item_state = "medical-alt"
+		icon_state = "pharmacist-alt"
+		item_state = "pharmacist-alt"
 
 // Engineering
 
@@ -2188,6 +2198,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/hawaiian_shirt)
 	name = "pink hawaiian shirt"
 	icon_state = "floral-pink"
 	item_state = "floral-pink"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/sec
+	name = "security hawaiian shirt"
+	icon_state = "floral-sec"
+	item_state = "floral-sec"
 
 // New chaplain stuff
 

@@ -50,7 +50,7 @@ TYPEINFO(/obj/machinery/microwave)
 	/// List of the recipes the microwave will check
 	var/list/available_recipes = list()
 	/// The current recipe being cooked
-	var/datum/recipe/cooked_recipe = null
+	var/datum/recipe_m/cooked_recipe = null
 	/// The item to create when finished cooking
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null
 	/// Single non food item that can be added to the microwave
@@ -92,20 +92,20 @@ TYPEINFO(/obj/machinery/microwave)
 /// After making the recipe in datums\recipes.dm, add it in here!
 /obj/machinery/microwave/New()
 	..()
-	src.available_recipes += new /datum/recipe/donut(src)
-	src.available_recipes += new /datum/recipe/synthburger(src)
-	src.available_recipes += new /datum/recipe/monkeyburger(src)
-	src.available_recipes += new /datum/recipe/humanburger(src)
-	src.available_recipes += new /datum/recipe/waffles(src)
-	src.available_recipes += new /datum/recipe/brainburger(src)
-	src.available_recipes += new /datum/recipe/meatball(src)
-	src.available_recipes += new /datum/recipe/buttburger(src)
-	src.available_recipes += new /datum/recipe/roburger(src)
-	src.available_recipes += new /datum/recipe/heartburger(src)
-	src.available_recipes += new /datum/recipe/donkpocket(src)
-	src.available_recipes += new /datum/recipe/donkpocket_warm(src)
-	src.available_recipes += new /datum/recipe/pie(src)
-	src.available_recipes += new /datum/recipe/popcorn(src)
+	src.available_recipes += new /datum/recipe_m/donut(src)
+	src.available_recipes += new /datum/recipe_m/synthburger(src)
+	src.available_recipes += new /datum/recipe_m/monkeyburger(src)
+	src.available_recipes += new /datum/recipe_m/humanburger(src)
+	src.available_recipes += new /datum/recipe_m/waffles(src)
+	src.available_recipes += new /datum/recipe_m/brainburger(src)
+	src.available_recipes += new /datum/recipe_m/meatball(src)
+	src.available_recipes += new /datum/recipe_m/buttburger(src)
+	src.available_recipes += new /datum/recipe_m/roburger(src)
+	src.available_recipes += new /datum/recipe_m/heartburger(src)
+	src.available_recipes += new /datum/recipe_m/donkpocket(src)
+	src.available_recipes += new /datum/recipe_m/donkpocket_warm(src)
+	src.available_recipes += new /datum/recipe_m/pie(src)
+	src.available_recipes += new /datum/recipe_m/popcorn(src)
 	UnsubscribeProcess()
 
 /**
@@ -337,7 +337,7 @@ TYPEINFO(/obj/machinery/microwave)
 	if(src.slug)
 		src.cook(MW_COOK_DIRTY)
 		return
-	for(var/datum/recipe/R in src.available_recipes) //Look through the recipe list we made above
+	for(var/datum/recipe_m/R in src.available_recipes) //Look through the recipe list we made above
 		if(src.egg_amount == R.egg_amount && src.flour_amount == R.flour_amount && src.monkeymeat_amount == R.monkeymeat_amount && src.synthmeat_amount == R.synthmeat_amount && src.humanmeat_amount == R.humanmeat_amount && src.donkpocket_amount == R.donkpocket_amount) // Check if it's an accepted recipe
 			if(R.extra_item == null || (src.extra_item && src.extra_item.type == R.extra_item)) // Just in case the recipe doesn't have an extra item in it
 				src.cooked_recipe = R

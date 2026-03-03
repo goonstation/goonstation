@@ -1771,5 +1771,13 @@ Only trained personnel should operate station systems. Follow all procedures car
 		..()
 		info = PAPER_IMAGE_RENDER("images/arts/hairstyles_fall.png")
 
+/obj/item/paper/motel_noise_complaint
+	name = "customer complaint"
+	desc = "This looks written hastily."
+	icon_state = "thermal_paper"
+	info = {"
+	I couldn't sleep! Shut the ice maker off at <u>NIGHT</u> when people <u>SLEEP</u>. Management refused to move me out of room 1 - 0/10 would not return!
+	"}
+
 #undef IMAGE_OFFSET_X
 #undef IMAGE_OFFSET_Y

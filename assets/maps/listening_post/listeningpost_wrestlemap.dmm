@@ -115,6 +115,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost/landing_bay)
+"eD" = (
+/obj/machinery/gravity_tether/multi_area/listening_post,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "eY" = (
 /obj/table/auto,
 /obj/item/reagent_containers/bath_bomb,
@@ -274,6 +278,10 @@
 	icon_state = "gym_mat"
 	},
 /area/listeningpost/syndicate_teleporter)
+"nY" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "oz" = (
 /obj/cable/orange,
 /obj/machinery/power/furnace{
@@ -370,14 +378,11 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/syndicate_teleporter)
 "ww" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
-	id = "Sleeper_Access";
-	name = "Listening Post"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
 "wU" = (
@@ -404,6 +409,9 @@
 "zz" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/break_room)
+"zY" = (
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "Be" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -417,7 +425,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/listeningpost/comm_dish)
 "Cc" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
@@ -714,7 +722,6 @@
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
-/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Um" = (
@@ -1596,12 +1603,12 @@ Cn
 Cn
 Cn
 RR
-RR
-RR
-RR
+eD
+nY
+zY
 RR
 Cn
-OR
+Cn
 OR
 OR
 OR
@@ -1629,11 +1636,11 @@ OR
 OR
 Cn
 Cn
-Cn
-Cn
-Cn
-Cn
-Cn
+RR
+RR
+RR
+RR
+RR
 Cn
 OR
 OR
@@ -1662,13 +1669,13 @@ OR
 OR
 OR
 OR
-OR
 Cn
 Cn
 Cn
 Cn
 Cn
-OR
+Cn
+Cn
 OR
 OR
 Cn

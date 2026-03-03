@@ -17,8 +17,13 @@
 	if (src.hasStatus("paralysis"))
 		return //pls stop emoting :((
 
-	if (voluntary && (src.hasStatus("unconscious") || isunconscious(src)))
-		return
+	if (voluntary)
+		if (src.hasStatus("unconscious") || isunconscious(src))
+			return
+	else if (ischangeling(src))
+		var/datum/abilityHolder/changeling/C = src.get_ability_holder(/datum/abilityHolder/changeling)
+		if (C?.in_fakedeath)
+			return
 
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
@@ -268,9 +273,11 @@
 							if (istype(T, /turf/space))
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
+									src.inertia_value = 1
 									step(src, inertia_dir)
 									SPAWN(1 DECI SECOND)
 										src.inertia_dir = src.dir
+										src.inertia_value = 1
 										step(src, inertia_dir)
 							else
 								if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
@@ -2328,7 +2335,7 @@
 		for (var/mob/M in A.contents)
 			recipients += M
 
-	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	log_emote(src, message, voluntary)
 	act = lowertext(act)
 	for (var/mob/M as anything in recipients)
 		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")

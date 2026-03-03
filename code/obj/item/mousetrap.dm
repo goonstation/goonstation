@@ -321,6 +321,7 @@
 		src.frame.master = src
 		// mousetrap roller + wrench -> disassembly
 		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassemble), FALSE)
+		src.tooltip_rebuild = TRUE
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)

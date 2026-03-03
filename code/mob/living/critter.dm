@@ -510,12 +510,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
-		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
+		if (!src.traction) //they're floating, move em one space in the opposite direction
 			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
+			src.inertia_value = 1
 			step(src, inertia_dir)
-		if ((istype(I.loc, /turf/space) || I.no_gravity) && ismob(I))
+		if (ismob(I) && !I.traction)
 			var/mob/M = I
 			M.inertia_dir = throw_dir
+			M.inertia_value = 1
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 
@@ -916,10 +918,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		src.was_harmed(thr.user, AM)
 
 /mob/living/critter/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
-	if (brute > 0 || burn > 0 || tox > 0)
-		hit_twitch(src)
-	if (nodamage)
+	if (src.nodamage || QDELETED(src))
 		return
+
+	if (brute > 0)
+		hit_twitch(src)
+	else if((burn > 0 || tox > 0) && isalive(src) && !src.hasStatus("paralysis"))
+		hit_twitch(src)
+
 	var/datum/healthHolder/Br = get_health_holder("brute")
 	if (Br)
 		Br.TakeDamage(brute)
@@ -1202,7 +1208,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		for (var/mob/M in A.contents)
 			recipients += M
 
-	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	log_emote(src, message, voluntary)
 	act = lowertext(act)
 	for (var/mob/M as anything in recipients)
 		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")

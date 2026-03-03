@@ -16,6 +16,7 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
 	var/has_material = TRUE
@@ -1544,7 +1545,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "synthrubber"
+	default_material = "synthrubber_green"
 	can_dig = TRUE
 
 	#ifdef SEASON_WINTER

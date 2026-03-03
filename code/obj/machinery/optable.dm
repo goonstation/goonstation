@@ -11,6 +11,7 @@ TYPEINFO(/obj/machinery/optable)
 	density = 1
 	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
+	provides_grip = TRUE
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0
 

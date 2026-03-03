@@ -310,7 +310,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		var/datum/reagents/target_reagents = target.reagents
 		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
-		if(amount <= 0) return
+		amount = round(amount, CHEM_EPSILON)
+		if(amount <= CHEM_EPSILON) return
 
 		if (do_fluid_react && issimulatedturf(target))
 			var/turf/simulated/T = target
@@ -871,6 +872,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/remove_reagent(var/reagent, var/amount, var/update_total = 1, var/reagents_change = 1)
 
 		if(!isnum(amount)) return 1
+		amount = round(amount, CHEM_EPSILON)
 
 		if (istype(reagent, /datum/reagent))
 			CRASH("Attempt to remove reagent by ref")
@@ -880,7 +882,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(current_reagent)
 			current_reagent.volume -= amount
 			current_reagent.check_threshold()
-			if(current_reagent.volume <= 0 && (reagents_change || update_total))
+			if(current_reagent.volume <= CHEM_EPSILON && (reagents_change || update_total))
 				del_reagent(reagent)
 
 			if (update_total)
@@ -892,7 +894,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	// removed a check if reagent_list existed here in the interest of performance
 	// if this happens again try to figure out why the fuck reagent_list would go null
-	proc/has_reagent(var/reagent, var/amount=0)
+	proc/has_reagent(var/reagent, var/amount=CHEM_EPSILON)
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
 
@@ -902,7 +904,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				return TRUE
 		return FALSE
 
-	proc/has_active_reaction(var/reaction_id, var/amount=0)
+	proc/has_active_reaction(var/reaction_id, var/amount=CHEM_EPSILON)
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if(C.id == reaction_id)
 				return C && C.result_amount >= amount
@@ -1206,7 +1208,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		var/turf/T = length(covered) ? covered[1] : 0
 		var/mob/our_user = null
-		var/our_fingerprints = null
+		var/last_ckey = "None"
 
 		// Sadly, we don't automatically get a mob reference under most circumstances.
 		// If there's an existing lookup proc and/or better solution, I haven't found it yet.
@@ -1218,20 +1220,20 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				our_user = my_atom.loc
 			else
 				our_user = usr
-				if (my_atom.fingerprintslast) // Our container. You don't necessarily have to pick it up to transfer stuff.
-					our_fingerprints = my_atom.fingerprintslast
-				else if (my_atom.loc.fingerprintslast) // Backpacks etc.
-					our_fingerprints = my_atom.loc.fingerprintslast
+				if (my_atom.get_last_ckey()) // Our container. You don't necessarily have to pick it up to transfer stuff.
+					last_ckey = my_atom.get_last_ckey()
+				else if (my_atom.loc.get_last_ckey()) // Backpacks etc.
+					last_ckey = my_atom.loc.get_last_ckey()
 
-		//DEBUG_MESSAGE("Heat-triggered smoke powder reaction: our user is [our_user ? "[our_user]" : "*null*"].[our_fingerprints ? " Fingerprints: [our_fingerprints]" : ""]")
+		//DEBUG_MESSAGE("Heat-triggered smoke powder reaction: our user is [our_user ? "[our_user]" : "*null*"].[last_ckey]")
 		if (our_user && ismob(our_user))
 			logTheThing(LOG_CHEMISTRY, our_user, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].")
 			if(istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
 				message_admins("[key_name(our_user)] caused a smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"].")
 		else
-			logTheThing(LOG_CHEMISTRY, our_user, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
-			if(our_fingerprints && istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
-				message_admins("Smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"]. Container last touched by: [key_name(our_fingerprints)].")
+			logTheThing(LOG_CHEMISTRY, our_user, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"]. Container last touched by: [replace_if_false(last_ckey, "None")]")
+			if(last_ckey && istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
+				message_admins("Smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"]. Container last touched by: [key_name(last_ckey)].")
 
 		if (classic)
 			classic_smoke_reaction(src, min(round(volume / 5), 4), location = my_atom ? get_turf(my_atom) : 0)

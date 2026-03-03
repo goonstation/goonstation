@@ -82,6 +82,8 @@ proc/filter_trait_hats(var/type)
 	item_state = "bgloves"
 
 /obj/item/clothing/head/serpico
+	name = "bucket hat"
+	desc = "Weirdly tall."
 	icon_state = "serpico"
 	item_state = "serpico"
 
@@ -1355,9 +1357,11 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
+			var/obj/item/cable_coil/coil = W
+			if (!coil.use(1))
+				return
 			boutput(user, SPAN_NOTICE("You attach the wires to the [src.name]."))
 			src.stunready = 1
-			W:amount--
 			return
 
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
@@ -2695,7 +2699,7 @@ obj/item/clothing/head/headscarf
 		name = "red headscarf"
 		icon_state = "headscarf-red"
 		item_state = "headscarf-red"
-		
+
 	white
 		name = "white headscarf"
 		icon_state = "headscarf-white"

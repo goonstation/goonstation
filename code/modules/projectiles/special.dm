@@ -814,6 +814,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		src.eye_glider.anchored = ANCHORED_ALWAYS
 		APPLY_ATOM_PROPERTY(P, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(P, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 		for (var/mob/M in P.contents)
 			if(M.client)
 				M.client.eye = src.eye_glider
@@ -1211,6 +1212,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
 	has_impact_particles = FALSE
+	affected_by_gravity = TRUE
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -1239,6 +1241,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	implanted= null
 	casing = null
 	impact_image_state = null
+	affected_by_gravity = TRUE
 	var/typetospawn = null
 	var/hit_sound = null
 	///Do we get our icon from typetospawn?

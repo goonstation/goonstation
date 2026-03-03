@@ -296,8 +296,9 @@
 	var/has_space_pushback = TRUE
 
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
+		if((..() && user.traction != TRACTION_FULL) && src.has_space_pushback)
 			user.inertia_dir = get_dir_accurate(target, user)
+			user.inertia_value = 1
 			step(user, user.inertia_dir)
 
 	arm38

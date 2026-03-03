@@ -593,9 +593,10 @@ datum
 								if(holder.my_atom)
 									holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 									// Added log entries (Convair880).
-									if(holder.my_atom.fingerprintslast || usr?.last_ckey)
-										message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
-									logTheThing(LOG_BOMBING, holder.my_atom.fingerprintslast, "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									var/last_ckey_atom = holder.my_atom.get_last_ckey()
+									if(last_ckey_atom || usr?.last_ckey)
+										message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [key_name(last_ckey_atom)] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									logTheThing(LOG_BOMBING, replace_if_false(last_ckey_atom, "None"), "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [key_name(last_ckey_atom)] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 								else
 									turf.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 									// Added log entries (Convair880).

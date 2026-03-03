@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	job_category = JOB_COMMAND
 	unique = TRUE
 	world_announce_priority = ANNOUNCE_ORDER_HEADS
+	email_group = MGD_COMMAND
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()

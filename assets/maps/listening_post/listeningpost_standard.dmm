@@ -134,7 +134,7 @@
 	},
 /area/listeningpost/tech_room)
 "ho" = (
-/obj/storage/crate/furnacefuel,
+/obj/machinery/gravity_tether/multi_area/listening_post,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "ht" = (
@@ -400,7 +400,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost/tech_room)
 "tU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 2
@@ -603,6 +603,7 @@
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Ds" = (
@@ -709,13 +710,11 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
 "Gi" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Teleport Pad"
-	},
 /obj/cable/black{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicate_teleporter)

@@ -85,7 +85,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	// post_signal("supply") // I'm pretty sure this doesn't do anything except create lag every time someone clicks it
 	var/HTML
 
-	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
+	var/header_thing= {"
 		<style type='text/css'>
 			body {
 				font-family: Verdana, sans-serif;
@@ -113,22 +113,11 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				border: 0;
 				}
 		</style>
-	"} : {"
-	<style type='text/css'>
-		/* when chui is on */
-		#topBar {
-			top: 46px;
-			left: 4px;
-			right: 10px;
-			background: #222228;
-			}
-		#qmquickjump { display: none; }
-	</style>
 	"}
 
 	// Always-visible main menu.
 	HTML += {"
-[header_thing_chui_toggle]
+	[header_thing]
 	<title>Quartermaster Console</title>
 	<style type="text/css">
 		.qmtable {

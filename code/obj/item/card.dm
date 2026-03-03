@@ -52,6 +52,17 @@ TYPEINFO(/obj/item/card/emag)
 			return
 		hit_atom.emag_act(thr.user, src)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		if(!src.throw_return)
+			boutput(user, SPAN_ALERT("You run [E] over [src], causing an internal magnetisim feedback loop!"))
+			src.throw_return = TRUE
+			return
+
+	demag(mob/user)
+		. = ..()
+		src.throw_return = FALSE
+
 /obj/item/card/emag/attack_self(mob/user as mob)
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return

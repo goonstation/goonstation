@@ -450,10 +450,11 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 				src.state = STATE_UNANCHORED
 		if(STATE_HAS_BOARD)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				boutput(user, SPAN_NOTICE("You add cables to the frame."))
-				P.change_stack_amount(-5)
-				src.state = STATE_HAS_CABLES
-				src.icon_state = "3"
+				var/obj/item/cable_coil/coil = P
+				if (coil?.use(5))
+					boutput(user, SPAN_NOTICE("You add cables to the frame."))
+					src.state = STATE_HAS_CABLES
+					src.icon_state = "3"
 		if(STATE_HAS_CABLES)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
 				boutput(user, SPAN_NOTICE("You put in the glass panel."))

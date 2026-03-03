@@ -66,7 +66,7 @@
 	desc = "Sick ... ollie ... bro...llie"
 	icon_state = "skateboard0"
 	layer = MOB_LAYER + 1
-	soundproofing = 0
+	soundproofing = SOUNDPROOFING_ON
 	can_eject_items = TRUE
 	var/sickness = 0
 	var/speed_delay = 5

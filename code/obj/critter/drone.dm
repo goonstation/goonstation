@@ -129,6 +129,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	New()
 		..()
 		name = "Drone SC-[rand(1,999)]"
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 		START_TRACKING
 
 	disposing()

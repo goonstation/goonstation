@@ -1564,6 +1564,7 @@
 			food.take_a_bite(consumer, mob_owner)
 		else
 			drink.take_a_drink(consumer, mob_owner)
+		consumer.lastgasp()
 
 /datum/action/bar/icon/syringe
 	duration = 3 SECONDS

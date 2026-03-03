@@ -57,11 +57,11 @@
 	var/list/tele_areas = get_teleareas()
 	if (wiz_shuttle)
 		tele_areas |= wiz_shuttle.name
-		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas, theme = "wizard")
 		if(A == wiz_shuttle.name)
 			thearea = wiz_shuttle
 	else
-		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas, theme = "wizard")
 
 	if(abort_if_incapacitated && !can_act(src))
 		boutput(src, SPAN_ALERT("Not when you're incapacitated."))

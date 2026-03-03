@@ -18,7 +18,7 @@ TYPEINFO_NEW(/obj/table)
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	mat_changename = 1
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	material_amt = 0.2

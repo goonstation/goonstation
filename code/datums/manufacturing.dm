@@ -166,6 +166,33 @@
 	time = 60 SECONDS
 	frame_path = /obj/machinery/lawrack
 
+/******************** Gravity Tether *******************/
+
+/datum/manufacture/mechanics/gravity_tether_station
+	name = "Station Gravity Tether"
+	create = 1
+	time = 60 SECONDS
+	frame_path = /obj/machinery/gravity_tether/station
+	item_requirements = list("metal" = 50,
+							"crystal_dense" = 10,
+							"metal_superdense" = 30,
+							"koshmarite" = 30,
+							"energy_high" = 40,)
+	category = "Machinery"
+
+/datum/manufacture/mechanics/gravity_tether_area
+	name = "Local Gravity Tether"
+	create = 1
+	time = 20 SECONDS
+	frame_path = /obj/machinery/gravity_tether/current_area
+	item_requirements = list("metal" = 20,
+							 "metal_superdense" = 10,
+							 "koshmarite" = 15,
+							 "energy_high" = 10,)
+	category = "Machinery"
+
+
+
 /******************** AI display (temp) *******************/
 
 /datum/manufacture/mechanics/ai_status_display
@@ -485,6 +512,13 @@
 /datum/manufacture/t_scanner
 	name = "T-ray scanner"
 	item_outputs = list(/obj/item/device/t_scanner)
+	create = 1
+	time = 8 SECONDS
+	category = "Tool"
+
+/datum/manufacture/gravity_scanner
+	name = "G-force scanner"
+	item_outputs = list(/obj/item/device/analyzer/gravity_scanner)
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
@@ -1540,6 +1574,16 @@
 	create = 1
 	category = "Component"
 	apply_material = TRUE
+	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
+
+	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+		..()
+		if(istype(A, /obj/item/parts/robot_parts/arm))
+			var/obj/item/parts/robot_parts/arm/new_arm = A
+			if(roboprint)
+				new_arm.limb_print = roboprint
+			else
+				roboprint = new_arm.limb_print
 
 /datum/manufacture/full_cyborg_light
 	name = "Light Cyborg Parts"
@@ -1551,6 +1595,16 @@
 	create = 1
 	category = "Component"
 	apply_material = TRUE
+	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
+
+	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
+		..()
+		if(istype(A, /obj/item/parts/robot_parts/arm))
+			var/obj/item/parts/robot_parts/arm/new_arm = A
+			if(roboprint)
+				new_arm.limb_print = roboprint
+			else
+				roboprint = new_arm.limb_print
 
 /datum/manufacture/robo_chest
 	name = "Cyborg Chest"
@@ -2512,6 +2566,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 15 SECONDS
 	category = "Tool"
+
+/datum/manufacture/breach_pouch
+	name = "Mining charge pouch"
+	item_requirements = list("fabric" = 10,
+							 "metal_dense" = 2)
+	item_outputs = list(/obj/item/storage/breach_pouch)
+	create = 1
+	time = 15 SECONDS
+	category = "Clothing"
 
 /datum/manufacture/jetpack
 	name = "Jetpack"
@@ -3955,6 +4018,13 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	)
 	create = 1
 	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
+	category = "Clothing"
+
+/datum/manufacture/magnetic_shoes
+	name = "Magnetic Shoes"
+	create = 1
+	item_outputs = list(/obj/item/clothing/shoes/magnetic)
+	time = 6 SECONDS
 	category = "Clothing"
 
 /datum/manufacture/turbine_shaft

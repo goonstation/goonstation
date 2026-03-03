@@ -4,7 +4,7 @@
 	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = ANCHORED
-	soundproofing = -1
+	soundproofing = SOUNDPROOFING_NOT_ON
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 

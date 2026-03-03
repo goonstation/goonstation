@@ -157,7 +157,7 @@
 			return TRUE
 
 		// People who have been on the ship the whole time, or who aren't on the ship, shouldn't be announced.
-		if (person.traitHolder.getTraitWithCategory("background"))
+		if (person.traitHolder.getTraitWithCategory("spawn scenario"))
 			return TRUE
 
 		var/job = person.mind.assigned_role
