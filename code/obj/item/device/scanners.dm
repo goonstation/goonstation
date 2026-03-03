@@ -850,8 +850,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				R["pronouns"] = target.get_pronouns().name
 				R["age"] = target.bioHolder.age
 				if (!target.gloves?.print_mask)
-					R["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print]"
-					R["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print]"
+					R["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print.id]"
+					R["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print.id]"
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"
 				src.active1 = R
@@ -872,11 +872,11 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				src.active1["fingerprint_left"] = "Unknown"
 			else
 				if(target.limbs?.r_arm?.limb_print)
-					src.active1["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print]"
+					src.active1["fingerprint_right"] = "[target.limbs?.r_arm?.limb_print.id]"
 				else
 					src.active1["fingerprint_right"] = "None"
 				if(target.limbs?.l_arm?.limb_print)
-					src.active1["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print]"
+					src.active1["fingerprint_left"] = "[target.limbs?.l_arm?.limb_print.id]"
 				else
 					src.active1["fingerprint_right"] = "None"
 			src.active1["p_stat"] = "Active"
