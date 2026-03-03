@@ -16,4 +16,5 @@
 					to_eat.cut(null,to_eat.loc)
 					var/mouse_chance = rand(1, 10)
 					if(mouse_chance > 7)
-						var/mob/living/critter/small_animal/mouse/dead/M = new /mob/living/critter/small_animal/mouse/dead(to_eat.loc)
+						message_admins("A mouse was supposed to spawn at [get_turf(to_eat)]!")
+						var/mob/living/critter/small_animal/mouse/dead = new /mob/living/critter/small_animal/mouse(to_eat.loc)
