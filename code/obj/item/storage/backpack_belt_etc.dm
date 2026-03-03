@@ -1247,7 +1247,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling/fake)
 
 // I dunno where else to put these vOv
 TYPEINFO(/obj/item/inner_tube)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY //Something tells me these have never been scanned
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER //Something tells me these have never been scanned
 	mats = 5 // I dunno???
 
 /obj/item/inner_tube

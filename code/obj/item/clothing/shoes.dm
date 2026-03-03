@@ -455,7 +455,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
 TYPEINFO(/obj/item/clothing/shoes/moon)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 2
 
 /obj/item/clothing/shoes/moon

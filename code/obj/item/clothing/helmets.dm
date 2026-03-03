@@ -920,7 +920,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 		setProperty("disorient_resist_eye", 15)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 7
 
 /obj/item/clothing/head/helmet/space/industrial
@@ -1045,7 +1045,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 		..()
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
 				"conductive_high" = 10,
@@ -1070,7 +1070,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/item/clothing/head/helmet/space/mining_combat

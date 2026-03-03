@@ -10,7 +10,7 @@ PIPE BOMBS + CONSTRUCTION
 ////////////////////////////// Old-style grenades ///////////////////////////////////////
 
 TYPEINFO(/obj/item/old_grenade)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 6
 
 ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)

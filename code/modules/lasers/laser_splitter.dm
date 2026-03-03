@@ -1,5 +1,5 @@
 TYPEINFO(/obj/laser_sink/splitter)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal" = 20,
 				"crystal_dense" = 20,
 				"reflective" = 30)

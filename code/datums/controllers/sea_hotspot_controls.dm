@@ -1065,7 +1065,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 			src.cell = null
 
 TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 20
 
 /obj/item/clothing/shoes/stomp_boots

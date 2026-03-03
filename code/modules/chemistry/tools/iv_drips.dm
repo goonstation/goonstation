@@ -227,7 +227,7 @@
 /* ================================================== */
 
 TYPEINFO(/obj/iv_stand)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/iv_stand

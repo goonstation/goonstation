@@ -1569,7 +1569,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			return ..()
 
 TYPEINFO(/obj/item/space_thing)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY //??? I have no idea
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER //??? I have no idea
 	mats = 50
 
 /obj/item/space_thing

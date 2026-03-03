@@ -1,5 +1,5 @@
 TYPEINFO(/obj/item/gun/reagent)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 16
 
 /obj/item/gun/reagent

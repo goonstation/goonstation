@@ -1,6 +1,6 @@
 
 TYPEINFO(/obj/item/storage/wall)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 8
 	manufactured_type = /obj/item/storage/wall //For subtypes
 

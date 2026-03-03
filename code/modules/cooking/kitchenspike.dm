@@ -1,5 +1,5 @@
 TYPEINFO(/obj/kitchenspike)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/kitchenspike

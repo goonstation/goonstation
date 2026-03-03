@@ -1125,7 +1125,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
 TYPEINFO(/obj/item/bat)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("wood" = 8)
 /obj/item/bat
 	name = "Baseball Bat"
@@ -1325,7 +1325,7 @@ TYPEINFO(/obj/item/swords)
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"fabric" = 5)
 /obj/item/swords/katana
@@ -1418,7 +1418,7 @@ TYPEINFO(/obj/item/swords/katana)
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
 TYPEINFO(/obj/item/swords/captain)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_LEGACY
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_dense" = 15)
 /obj/item/swords/captain
 	icon_state = "cap_sword"
