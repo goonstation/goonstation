@@ -10,16 +10,13 @@
 	event_effect(var/source)
 		..()
 
-		var/i
-		for(i in 1 to rand(0,450))
-			var/area/SA = /area/station/hallway/primary // Just need to grab a powernet
-			var/obj/machinery/power/apc/PC = SA.area_apc
-			var/datum/powernet/PN = PC.powernet
-			for(var/obj/cable/C in PN.cables)
-				if(C.loc == !/area/station/maintenance)
-					return
-				if (istype(C, /obj/cable))
-					message_admins(SPAN_INTERNAL("[src.name] event occured at [C] in [SA](Source: [source])."))
-					var/floor_chance = rand(0,5)
-					if(floor_chance < 5)
-						C.cut(null,C.loc)
+		for (var/area/station/maintenance/place in global.get_accessible_station_areas())
+			message_admins(SPAN_INTERNAL("[src.name] event occured at [place](Source: [source])."))
+			for (var/obj/cable/to_eat in place)
+				message_admins(SPAN_INTERNAL("[src.name] event occured at [to_eat](Source: [source])."))
+				var/eat_chance = rand(1,90)
+				if(eat_chance == 1)
+					to_eat.cut(null,to_eat.loc)
+					var/mob/living/critter/small_animal/mouse/M = new /mob/living/critter/small_animal/mouse(to_eat.loc)
+					M.health = 0
+					M.death()
