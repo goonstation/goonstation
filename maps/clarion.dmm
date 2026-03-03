@@ -21509,7 +21509,6 @@
 /area/station/hallway/primary/southeast)
 "kcn" = (
 /obj/random_item_spawner/armory_phasers,
-/obj/machinery/power/apc/autoname_east,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
