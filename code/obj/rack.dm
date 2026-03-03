@@ -234,10 +234,11 @@
 		/obj/item/circuitboard/powermonitor_smes,
 	)
 
-/// Includes the transception array board, for maps with transception cargo fulfillment
+/// Includes the transception array & control board, for maps with transception cargo fulfillment
 /obj/rack/organized/techstorage_eng/transception
 	New()
 		src.items_to_spawn += /obj/item/circuitboard/transception
+		src.items_to_spawn += /obj/item/circuitboard/transception_control
 		. = ..()
 
 /// Technical Storage circuit board rack for medical/science/misc
