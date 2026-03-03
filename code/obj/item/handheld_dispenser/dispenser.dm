@@ -720,3 +720,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/trinary)
 /obj/item/places_pipes/research
 	icon_state = "hpd-place-r"
 	department_postfix = "-r"
+
+/obj/item/places_pipes/civilian
+	icon_state = "hpd-place-c"
+	department_postfix = "-c"

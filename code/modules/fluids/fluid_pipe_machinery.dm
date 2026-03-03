@@ -109,7 +109,8 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 		var/amount = min(rand(src.drain_min, src.drain_max), src.network.reagents.maximum_volume - src.network.reagents.total_volume)/T.active_liquid.group.amt_per_tile
 		if(amount > 0) // rounding errors can make it go very very slightly below zero
 			T.active_liquid.group.drain(T.active_liquid, amount, src.network)
-			playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
+			if(T.active_liquid?.group?.amt_per_tile <= 1000) // To stop audio strain, the "gurgling" on larger tanks now serves as a warning
+				playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
 
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump
 	name = "inlet drain"
@@ -231,6 +232,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	//me when i steal code :3
 	var/list/connected_containers //! the containers currently connected to the condenser
 	var/max_amount_of_containers = 4
+
 
 /obj/machinery/fluid_machinery/unary/dripper/proc/try_adding_container(var/obj/container, var/mob/user)
 	if (!isturf(container.loc)) //if the condenser or container isn't on the floor you cannot hook it up
@@ -642,6 +644,27 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 	var/pullrate = 200
 	var/obj/item/reagent_containers/glass/beaker
 	var/default_reagent = null
+
+/obj/machinery/fluid_machinery/trinary/filter/New()
+	..()
+	if(default_reagent)
+		src.beaker = new /obj/item/reagent_containers/glass/vial/plastic
+		src.beaker.reagents.add_reagent(default_reagent, 5)
+		src.UpdateIcon()
+
+/obj/machinery/fluid_machinery/trinary/filter/disposing()
+	src.beaker.set_loc(src.loc)
+	src.beaker = null
+	..()
+
+/obj/machinery/fluid_machinery/trinary/filter/water
+	default_reagent = "water"
+	icon_state = "filter1"
+
+	New()
+		..()
+		src.beaker.name = "Water Calibration Vial"
+		src.beaker.desc = "This one vial is used to configure what goes out the waste system into the water system. Should NOT be in the wrong hands."
 
 /obj/machinery/fluid_machinery/trinary/filter/New()
 	..()

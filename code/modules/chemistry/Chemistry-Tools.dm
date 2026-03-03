@@ -1050,6 +1050,16 @@ proc/ui_describe_reagents(atom/A)
 	Flow rate and chemical fabricated can be adjusted either in your hand, or with a <b>screwdriver</b>.
 	To pick this up, click and drag it onto your person."})
 
+	var/exclusive = 0 //For things only capable of supply one reagent e.g. water
+	var/exclusive_reagent = null
+
+	plumbing
+		name = "Backup Water Synthesiser"
+		desc = "Capable of producing a pathetic amount of water, its what Nanotransen could afford for a water supplier due to budget cuts."
+		exclusive = 1
+		exclusive_reagent = "water"
+
+
 
 	get_desc()
 		. = " It is set to dispense [flow_rate] units of [reagent_to_fabricate]."
@@ -1133,9 +1143,13 @@ proc/ui_describe_reagents(atom/A)
 		src.UpdateOverlays(src.fabricating_overlay, "overlay")
 
 	proc/adjust_flow_rate(mob/user)
-		var/reagent = tgui_input_list(user,"Set desired reagent", "Set reagent", basic_elements, reagent_to_fabricate)
-		if (reagent == null)
-			return
+		var/reagent = exclusive_reagent // Basically a null declaration for the standard dispenser
+		if(exclusive)
+			boutput(user, SPAN_NOTICE("[src] sets itself onto [exclusive_reagent] mode. Looks like its only capable of making [exclusive_reagent]."))
+		else
+			reagent = tgui_input_list(user,"Set desired reagent", "Set reagent", basic_elements, reagent_to_fabricate)
+			if (reagent == null)
+				return
 		var/number = tgui_input_number(user,"Set fabrication volume, in units", "Set fabrication rate (1-5)",flow_rate,5,1,FALSE,TRUE)
 		if (reagent && (reagent in basic_elements) && reagent_to_fabricate != reagent)
 			reagent_to_fabricate = reagent
