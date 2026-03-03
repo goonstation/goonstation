@@ -1887,6 +1887,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		return 1
 
 	engineer
+		name = "SPES-6"
 		ammobag_magazines = list(/obj/item/ammo/bullets/a12/weak, /obj/item/ammo/bullets/a12)
 		New()
 			..()
