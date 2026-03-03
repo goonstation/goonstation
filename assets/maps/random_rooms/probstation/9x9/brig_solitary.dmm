@@ -89,6 +89,7 @@
 /obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -101,6 +102,7 @@
 /obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -138,6 +140,7 @@
 	},
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/brig,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/security/brig/cell_block_control)
 "t" = (
@@ -256,6 +259,7 @@
 "J" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary2)
 "K" = (
@@ -353,6 +357,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "Z" = (

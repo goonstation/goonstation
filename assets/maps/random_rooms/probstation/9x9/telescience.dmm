@@ -507,6 +507,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/simulated/floor,
 /area/station/science/teleporter/foyer)
 "TB" = (
@@ -547,6 +548,7 @@
 /area/station/science/teleporter/foyer)
 "XN" = (
 /obj/storage/crate/adventure,
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},

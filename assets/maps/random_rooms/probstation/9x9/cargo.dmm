@@ -225,6 +225,7 @@
 	})
 "L" = (
 /obj/machinery/computer/transception,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"

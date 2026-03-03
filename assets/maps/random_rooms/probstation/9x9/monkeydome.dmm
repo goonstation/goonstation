@@ -166,6 +166,11 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
+"M" = (
+/obj/fakeobject/palmtree,
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "N" = (
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
@@ -312,7 +317,7 @@ e
 e
 w
 N
-b
+M
 W
 R
 z

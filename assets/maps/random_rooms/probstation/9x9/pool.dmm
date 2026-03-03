@@ -232,6 +232,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "V" = (

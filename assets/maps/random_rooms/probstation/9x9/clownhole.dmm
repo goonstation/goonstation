@@ -146,6 +146,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/purpleish,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 4
 	},
