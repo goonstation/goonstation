@@ -341,23 +341,26 @@ TYPEINFO(/obj/item/baton)
 		if (!src.emagged)
 			boutput(user, SPAN_ALERT("You jam [E] into [src]'s charging port."))
 			src.emagged = TRUE
-			src.is_active = FALSE
-			src.process_charges(-INFINITY)
 			playsound(src, "sparks", 75, 1, -1)
+			src.desc = "For some reason you can't figure out how to recharge this thing."
+			var/datum/component/cell_holder/CH = GetComponent(/datum/component/cell_holder)
 			if (src.name == "extendable stun baton")
 				src.name = pick("extendable batong","extensible stong baton","extensive stun batong")
+				if (CH?.cell)
+					var/datum/component/power_cell/PCC = CH.cell.GetComponent(/datum/component/power_cell)
+					if (PCC)
+						PCC.recharge_rate = 0
 			else if (src.name == "stun cane")
 				src.name = "long batong"
+				if (CH?.cell)
+					var/datum/component/power_cell/PCC = CH.cell.GetComponent(/datum/component/power_cell)
+					if (PCC)
+						PCC.recharge_rate = 0
 			else
 				src.name = pick("batong","stong baton","stung baton","stun batong")
-				src.desc = "For some reason you can't figure out how to recharge this thing."
-				var/datum/component/cell_holder/CH = GetComponent(/datum/component/cell_holder)
-				if (CH) // Can never be charged again
+				if (CH)
 					CH.can_be_recharged = FALSE
 					CH.swappable_cell = FALSE
-					return
-			src.UpdateIcon()
-			user.update_inhands()
 			return TRUE
 		return FALSE
 
