@@ -39,6 +39,9 @@
 "h" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "i" = (
@@ -51,6 +54,9 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
@@ -223,7 +229,7 @@
 /area/station/crew_quarters/jazz)
 "M" = (
 /obj/landmark/start/job/bartender,
-/obj/machinery/light/small/floor/warm,
+/obj/machinery/light/small/floor/netural,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -296,7 +302,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "X" = (
-/obj/machinery/light/small/floor/warm,
+/obj/machinery/light/small/floor/netural,
 /obj/cable{
 	icon_state = "4-8"
 	},
