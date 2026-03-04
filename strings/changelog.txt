@@ -1,4 +1,9 @@
 
+(t)wed mar 04 26
+(u)Lord_Earthfire
+(p)25912
+(e)💡|A-Station-Systems
+(+)The TEG warning lights should be somewhat more consistent when working under very high load.
 (t)sun mar 01 26
 (u)glowbold
 (p)26018
