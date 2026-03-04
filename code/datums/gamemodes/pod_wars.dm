@@ -584,11 +584,15 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		loser = team_NT
 
 	if(winner == team_NT) //putting this in a seperate code block for cleanliness
+		for(var/datum/mind/mind in team_NT.members)
+			mind.current.unlock_medal("Fame and Fartuna", TRUE)
 		var/value = world.load_intra_round_value("nt_win")
 		if(isnull(value))
 			value = 0
 		world.save_intra_round_value("nt_win", value + 1)
 	else if(winner == team_SY)
+		for(var/datum/mind/mind in team_SY.members)
+			mind.current.unlock_medal("Fame and Fartuna", TRUE)
 		var/value = world.load_intra_round_value("sy_win")
 		if(isnull(value))
 			value = 0
@@ -1010,7 +1014,7 @@ proc/setup_pw_crate_lists()
 		/obj/item/shipcomponent/mainweapon/taser = 3, /obj/item/shipcomponent/mainweapon/laser/short = 3,/obj/item/ammo/power_cell/high_power = 5,
 		/obj/item/material_piece/steel{amount=10} = 1, /obj/item/material_piece/copper{amount=10} = 1, /obj/item/material_piece/glass{amount=10} = 1)
 
-	pw_rewards_tier2 = list(/obj/item/tank/jetpack = 1, /obj/item/old_grenade/smoke = 2,/obj/item/chem_grenade/flashbang = 2, /obj/item/barrier = 1,
+	pw_rewards_tier2 = list(/obj/item/tank/jetpack = 1, /obj/item/old_grenade/smoke = 2,/obj/item/chem_grenade/flashbang = 2, /obj/item/barrier/collapsible/security = 1,
 		/obj/item/old_grenade/emp = 3, /obj/item/sword/discount = 4, /obj/item/storage/firstaid/crit = 1, /obj/item/fireaxe = 1, /obj/item/dagger/specialist = 2,
 		/obj/item/shipcomponent/mainweapon/mining = 2, /obj/item/shipcomponent/mainweapon/laser = 4, /obj/item/shipcomponent/mainweapon/disruptor_light = 4,/obj/item/ammo/power_cell/higher_power = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_standard = 3,
 		/obj/item/material_piece/cerenkite{amount=5} = 1, /obj/item/material_piece/claretine{amount=5} = 1, /obj/item/material_piece/bohrum{amount=10} = 1, /obj/item/material_piece/plasmastone{amount=10} = 1, /obj/item/material_piece/uqill{amount=10} = 1, /obj/item/material_piece/telecrystal{amount=10})

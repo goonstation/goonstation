@@ -1093,7 +1093,7 @@
 /obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = 0;
 	pixel_y = 0
@@ -3492,7 +3492,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/manufacturer/engineering,
+/obj/machinery/gravity_tether/station,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "xq" = (
@@ -3570,7 +3570,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "xZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -5353,7 +5353,7 @@
 /area/station/security/brig)
 "KO" = (
 /obj/railing/orange/reinforced,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -9
 	},
@@ -5965,7 +5965,7 @@
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/crew_quarters/garden/sunlight)
 "Pg" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -5973,7 +5973,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "Pm" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -6448,7 +6448,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Ty" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "TI" = (
@@ -7335,6 +7335,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
+"YZ" = (
+/obj/machinery/manufacturer/engineering,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "Za" = (
 /obj/mesh/catwalk,
 /obj/machinery/turret,
@@ -51990,8 +51994,8 @@ Pf
 sR
 sc
 xp
+YZ
 ei
-tn
 sV
 tn
 oN

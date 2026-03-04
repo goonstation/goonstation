@@ -1294,6 +1294,13 @@ var/global/noir = 0
 				usr.client.cmd_admin_anvilgib(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to anvil gib a dude.")
+		if ("gravitygib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_gravitygib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to gravity gib a duder.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -3429,14 +3436,14 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=DNA;size=440x410")
 					if("fingerprints")
-						var/dat = "<B>Showing Fingerprints.</B><HR>"
+						var/dat = "<B>Showing Default Fingerprints.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
-								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[H.bioHolder.fingerprints]</td></tr>"
-								else if(!H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
+								if(H.bioHolder.default_fingerprints)
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.default_fingerprints.id]</td></tr>"
+								else if(!H.bioHolder.default_fingerprints)
+									dat += "<tr><td>[H]</td><td>H.bioHolder.default_fingerprints = null</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")

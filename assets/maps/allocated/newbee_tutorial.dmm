@@ -73,7 +73,9 @@
 /area/tutorial/newbee/room_13)
 "cR" = (
 /obj/disposalpipe/segment/vertical,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "cT" = (
@@ -126,7 +128,9 @@
 /area/tutorial/newbee/room_7)
 "fm" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "fK" = (
@@ -186,7 +190,7 @@
 /turf/unsimulated/floor,
 /area/tutorial/newbee/room_2)
 "gI" = (
-/obj/cable/auto,
+/obj/cable,
 /turf/unsimulated/floor/bluegreen,
 /area/tutorial/newbee/room_9)
 "gL" = (
@@ -200,7 +204,9 @@
 /area/tutorial/newbee/room_4)
 "hn" = (
 /obj/disposalpipe/segment/bent/south,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "ho" = (
@@ -223,7 +229,9 @@
 	autoclose_delay = 75
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "iv" = (
@@ -245,6 +253,9 @@
 "iR" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "iZ" = (
@@ -259,7 +270,9 @@
 /area/tutorial/newbee/room_5)
 "jH" = (
 /obj/decal/cleanable/dirt,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "2-5"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "jJ" = (
@@ -273,7 +286,9 @@
 	},
 /area/tutorial/newbee/room_12)
 "kH" = (
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "kK" = (
@@ -314,6 +329,9 @@
 /area/tutorial/newbee/room_13)
 "mP" = (
 /obj/machinery/light/small/frostedred,
+/obj/cable{
+	icon_state = "5-8"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "mS" = (
@@ -412,7 +430,9 @@
 /area/tutorial/newbee/room_10)
 "pn" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/unsimulated/floor/white,
 /area/tutorial/newbee/room_7)
 "po" = (
@@ -465,7 +485,9 @@
 "rt" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/vertical,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "ry" = (
@@ -474,7 +496,9 @@
 /area/tutorial/newbee/room_9)
 "rH" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "5-8"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "so" = (
@@ -509,7 +533,9 @@
 /area/tutorial/newbee/room_4)
 "tR" = (
 /obj/decal/cleanable/dirt/dirt3,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "tY" = (
@@ -748,6 +774,12 @@
 	dir = 5
 	},
 /area/tutorial/newbee/room_4)
+"Dy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "DI" = (
 /turf/unsimulated/floor/arrival{
 	dir = 4
@@ -803,6 +835,12 @@
 	dir = 5
 	},
 /area/tutorial/newbee/room_1)
+"Fx" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "FM" = (
 /turf/unsimulated/floor/arrival{
 	dir = 6
@@ -904,6 +942,12 @@
 	},
 /turf/unsimulated/floor/honeyblocks,
 /area/tutorial/newbee/room_16)
+"Ke" = (
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "Kk" = (
 /turf/unsimulated/floor/red/side{
 	dir = 5
@@ -914,7 +958,9 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	autoclose_delay = 75
 	},
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_9)
 "Kz" = (
@@ -978,6 +1024,12 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/bluegreen/side,
 /area/tutorial/newbee/room_9)
+"MH" = (
+/obj/cable{
+	icon_state = "4-10"
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "Nr" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/escape{
@@ -1239,16 +1291,30 @@
 	dir = 4
 	},
 /area/tutorial/newbee/room_15)
+"Yv" = (
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "Yy" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/greenblack{
 	dir = 1
 	},
 /area/tutorial/newbee/room_11)
+"YE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "YH" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/disposalpipe/segment/vertical,
-/obj/cable/auto,
+/obj/cable{
+	icon_state = "1-10"
+	},
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "YZ" = (
@@ -2020,7 +2086,7 @@ wD
 Bv
 TN
 jH
-kH
+Fx
 TN
 pd
 TN
@@ -2037,13 +2103,13 @@ NO
 NO
 wD
 iR
-kH
+Yv
 pd
 wD
 TN
-kH
+MH
 wD
-kH
+YE
 Bv
 TN
 TN
@@ -2064,9 +2130,9 @@ wD
 wD
 wD
 TN
-kH
+Ke
 wD
-kH
+YE
 wD
 wD
 wD
@@ -2089,7 +2155,7 @@ cR
 YH
 WA
 wD
-kH
+YE
 wD
 TN
 kH
@@ -2112,9 +2178,9 @@ wD
 wD
 cT
 wD
-kH
+YE
 wD
-kH
+TN
 mP
 wD
 MD
@@ -2136,8 +2202,8 @@ hy
 AK
 wD
 tR
-kH
-kH
+Dy
+Yv
 ld
 wD
 oX

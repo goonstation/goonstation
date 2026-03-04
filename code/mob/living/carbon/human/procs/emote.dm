@@ -17,8 +17,13 @@
 	if (src.hasStatus("paralysis"))
 		return //pls stop emoting :((
 
-	if (voluntary && (src.hasStatus("unconscious") || isunconscious(src)))
-		return
+	if (voluntary)
+		if (src.hasStatus("unconscious") || isunconscious(src))
+			return
+	else if (ischangeling(src))
+		var/datum/abilityHolder/changeling/C = src.get_ability_holder(/datum/abilityHolder/changeling)
+		if (C?.in_fakedeath)
+			return
 
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
@@ -268,9 +273,11 @@
 							if (istype(T, /turf/space))
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
+									src.inertia_value = 1
 									step(src, inertia_dir)
 									SPAWN(1 DECI SECOND)
 										src.inertia_dir = src.dir
+										src.inertia_value = 1
 										step(src, inertia_dir)
 							else
 								if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
@@ -859,7 +866,7 @@
 					if (istype(I, /obj/item/cloth/handkerchief))
 						message = "<b>[src]</b> [act]s into [I]."
 						maptext_out = "<I>[act]s into [I]</I>"
-					else if (act == "sneeze" && prob(1) && (src.mind?.assigned_role == "Clown" || src.reagents.has_reagent("honky_tonic")))
+					else if (act == "sneeze" && prob(1) && (src.traitHolder?.hasTrait("training_clown") || src.reagents.has_reagent("honky_tonic")))
 						message = "<b>[src]</b> sneezes out a handkerchief!"
 						maptext_out = "<I>sneezes out a handkerchief!</I>"
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
@@ -994,8 +1001,13 @@
 				if (!src.restrained())
 					var/obj/item/thing = src.equipped()
 					if (thing)
-						message = "<b>[src]</b> raises [thing]."
-						maptext_out = "<I>raises [thing]</I>"
+						if (isgrab(thing))
+							var/obj/item/grab/G = thing
+							message = "<b>[src]</b> raises [(G.affecting && G.state >= GRAB_AGGRESSIVE) ? G.affecting : "a hand"]."
+							maptext_out = "<I>raises [(G.affecting && G.state >= GRAB_AGGRESSIVE) ? G.affecting : "a hand"]</i>"
+						else
+							message = "<b>[src]</b> raises [thing]."
+							maptext_out = "<I>raises [thing]</I>"
 					else
 						message = "<b>[src]</b> raises a hand."
 						maptext_out = "<I>raises a hand</I>"
@@ -2248,7 +2260,7 @@
 										dab_id.dabbed_on_count++
 
 						if(get_dabbed_on == 0)
-							if (src.mind && src.mind.assigned_role == "Clown")
+							if (src.traitHolder?.hasTrait("training_clown"))
 								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody [his_or_her(src)] dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before", "shows everyone how they dab in the circus")]!!!"
 							else
 								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody [his_or_her(src)] dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before")]!!!"
@@ -2323,7 +2335,7 @@
 		for (var/mob/M in A.contents)
 			recipients += M
 
-	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	log_emote(src, message, voluntary)
 	act = lowertext(act)
 	for (var/mob/M as anything in recipients)
 		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
@@ -2478,3 +2490,21 @@
 			for(var/obj/O in view(range, get_turf(src)))
 				targets += O
 	return targets
+
+///only clowns and the useless know the true art of dabbing
+proc/can_dab(mob/user)
+	if (user.traitHolder?.hasTrait("training_clown"))
+		return TRUE
+	if (user.mind && (user.mind.assigned_role in list("Staff Assistant", "Captain")))
+		return TRUE
+	if (istraitor(user) || isconspirator(user) || isnukeop(user) || isnukeopgunbot(user))
+		return TRUE
+	if (user.reagents && (user.reagents.has_reagent("puredabs") || user.reagents.has_reagent("extremedabs")))
+		return TRUE
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	var/obj/item/I = get_id_card(H.wear_id)
+	if (istype(H.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license))
+		return TRUE
+	return FALSE

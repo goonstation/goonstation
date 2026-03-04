@@ -6,7 +6,8 @@
 // PLEASE JUST MAKE A MESS OF make_my_stuff() INSTEAD
 // CALL YOUR PARENTS
 
-#define RELAYMOVE_DELAY 1 SECOND
+/// The percentage of a storage object's health below which it will only return one sheet on deconstruction.
+#define STORAGE_UNSALVAGEABLE_THRESHOLD 0
 
 ABSTRACT_TYPE(/obj/storage)
 ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
@@ -22,6 +23,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	p_class = 2.5
 	layer = STORAGE_LAYER
+	material_amt = 0.2 // All storage containers are worth two sheets by default. (The default for atoms is ten!)
 	var/intact_frame = 1 //Variable to create crates and fridges which cannot be closed anymore.
 	var/secure = 0
 	var/personal = 0
@@ -52,7 +54,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
 	var/datum/db_record/account = null
-	var/last_relaymove_time
 	var/is_short = 0 // can you not stand in it?  ie, crates?
 	var/crunches_contents = 0 // for the syndicate trashcart & hotdog stand
 	var/crunches_deliciously = 0 // :I
@@ -216,9 +217,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			return
 		if (src.hasStatus("teleporting"))
 			return
-		if (world.time < (src.last_relaymove_time + RELAYMOVE_DELAY))
+		if(ON_COOLDOWN(src, "relaymove", DEFAULT_INTERNAL_RELAYMOVE_DELAY))
 			return
-		src.last_relaymove_time = world.time
 
 		if (istype(get_turf(src), /turf/space) || !get_turf(src))
 			if (!istype(get_turf(src), /turf/space/fluid))
@@ -404,13 +404,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		. = ..()
 		if(isnull(src.material))
 			return
-		var/found_negative = (src.material.getID() == "negativematter")
-		if(!found_negative)
-			for(var/datum/material/parent_mat in src.material.getParentMaterials())
-				if(parent_mat.getID() == "negativematter")
-					found_negative = TRUE
-					break
-		if(found_negative)
+		if(contains_negative_matter(src))
 			src.AddComponent(/datum/component/extradimensional_storage/storage)
 
 	proc/pry_open(var/mob/user)
@@ -781,7 +775,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
 			spawn_contents = null
 
-		var/newloc = get_turf(src)
+		var/newloc = src.loc
 		vis_controller?.show()
 		for (var/obj/O in src)
 			if (!(O in vis_controller?.vis_items))
@@ -849,13 +843,31 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 
 		if (M.ckey && (M.ckey == owner_ckey))
 			return
-		src.locked = TRUE
+
 		M.show_text("Is it getting... smaller in here?", "red")
-		SPAWN(5 SECONDS)
+		playsound(src.loc, 'sound/machines/hydraulic.ogg', 50, 1)
+		src.visible_message(SPAN_ALERT("[src] whirrs loudly!."))
+
+		SPAWN(5 SECONDS) // give unstunned people a chance to escape
+			if (src.open) // but also slam it shut on them if they open it and are still on the ground. owned, idiot
+				src.close()
+			src.locked = TRUE
+			src.visible_message(SPAN_ALERT("[src] locks shut and whirrs horrifyingly!"))
 			if (M in src.contents)
+				if (!isdead(M))
+					M.emote("scream")
+				M.TakeDamage("chest", 150) //let's potentially trigger a health alert if someone is about to be murdered
+				M.show_text("<b>Oh fuck this is getting CRAMPED!</b>", "red")
+				bleed(M, 100, 5)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/machines/hydraulic.ogg', 50, 1)
+
+		SPAWN(10 SECONDS)
+			if (M in src.contents)
+				playsound(src.loc, 'sound/machines/hydraulic.ogg', 50, 1)
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 				M.show_text("<b>OH JESUS CHRIST</b>", "red")
-				bleed(M, 500, 5)
+				bleed(M, 400, 5)
 				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
 				var/mob/living/carbon/cube/meatcube = M.make_cube(null, rand(10,15), get_turf(src))
 				if (src.crunches_deliciously)
@@ -870,6 +882,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 						I.set_loc(src)
 
 			src.locked = FALSE
+			src.visible_message(SPAN_ALERT("[src] unlocks."))
 
 	// Added (Convair880).
 	proc/log_me(var/mob/user, var/mob/occupant, var/action = "")
@@ -1019,6 +1032,11 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		owner.visible_message(SPAN_NOTICE("[owner] takes apart [the_storage]."))
 		the_storage.dump_contents(owner)
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
+		if(the_storage.material_amt)
+			if(the_storage._health > (the_storage._max_health * STORAGE_UNSALVAGEABLE_THRESHOLD))
+				I.amount = floor(the_storage.material_amt / 0.1) // <-- Sheets normally cost 0.1; I don't believe it's defined anywhere.
+			else
+				boutput(owner, SPAN_ALERT("Some of [the_storage]'s material was unsalvageable."))
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)
 		else
@@ -1159,4 +1177,4 @@ TYPEINFO_NEW(/obj/storage/secure)
 				user.show_text("You repair the lock on [src].", "blue")
 			return 1
 
-#undef RELAYMOVE_DELAY
+#undef STORAGE_UNSALVAGEABLE_THRESHOLD

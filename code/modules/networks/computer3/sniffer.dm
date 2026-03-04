@@ -4,7 +4,7 @@
 	name = "Packet Sniffer"
 	desc = "An electronic device designed to intercept network transmissions."
 	icon_state = "sniffer0"
-	item_state = "electronic"
+	item_state = "electronics"
 	w_class = W_CLASS_BULKY
 	rand_pos = 0
 	var/mode = 0

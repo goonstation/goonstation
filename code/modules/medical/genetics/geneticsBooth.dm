@@ -51,6 +51,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
 	speech_verb_say = "beeps"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	HELP_MESSAGE_OVERRIDE({""})
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
@@ -134,20 +135,41 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		UpdateIcon()
 		..()
 
+	get_help_message(dist, mob/user)
+		. = ..()
+		if(length(src.offered_genes) && !issilicon(user))
+			. += "You could swipe a sufficiently <b>high-level ID</b> through it to adjust its contents and pricing."
+
+	attack_ai(mob/user)
+		if (src.allowed(user))
+			src.pick_action(user)
+
+	#define BOOTH_ACTION_SELECT "Select Gene"
+	#define BOOTH_ACTION_ADMIM "Admin Panel"
+	proc/pick_action(user)
+		if(length(src.offered_genes) <= 0)
+			boutput(user, SPAN_NOTICE("[src] has no products available for purchase right now."))
+			return
+		switch(tgui_alert(user, "What do you want to do with [src]?", "Select Action", list(BOOTH_ACTION_SELECT, BOOTH_ACTION_ADMIM, "Nothing")))
+			if (BOOTH_ACTION_SELECT)
+				src.show_context_options(user)
+			if (BOOTH_ACTION_ADMIM)
+				src.show_admin_panel(user)
+
+	#undef BOOTH_ACTION_SELECT
+	#undef BOOTH_ACTION_ADMIM
 
 	attack_hand(var/mob/user)
 		if (occupant)
-			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
+			boutput(user, SPAN_NOTICE("[src] is currently occupied. Wait until it's done."))
 			return
-
 		if (status & (NOPOWER | BROKEN))
 			boutput(user, SPAN_ALERT("The gene booth is currently nonfunctional."))
 			return
 		if(length(src.offered_genes))
 			src.show_context_options(user)
-			src.show_admin_panel(user)
 		else
-			user.show_text("[src] has no products available for purchase right now.", "blue")
+			boutput(user, SPAN_NOTICE("[src] has no products available for purchase right now."))
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if(src.eject_strength != THROW_THROUGH_WALL)
@@ -169,23 +191,30 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	proc/show_context_options(var/mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
+	/// Displays the booth's gene selection locking and price adjustment UI.
 	proc/show_admin_panel(mob/user)
-		if(user && src.allowed(user))
-			if(length(offered_genes))
-				. = ""
-				for (var/datum/geneboothproduct/P as() in offered_genes)
-					. += "<u>[P.name]</u><small> "
-					. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
-					. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+		if(status & (NOPOWER | BROKEN))
+			return
+		if(!user)
+			return
 
-			else
-				. += "[src] has no products available for purchase right now."
-			src.add_dialog(user)
-			user.Browse("<HEAD><TITLE>Genebooth Administrative Control Panel</TITLE></HEAD><TT>[.]</TT>", "window=genebooth")
-			onclose(user, "genebooth")
+		if(length(offered_genes))
+			. = ""
+			for (var/datum/geneboothproduct/P as() in offered_genes)
+				. += "<u>[P.name]</u><small> "
+				. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
+				. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+
+		else
+			. += "[src] has no products available for purchase right now."
+		src.add_dialog(user)
+		user.Browse("<HEAD><TITLE>Genebooth Administrative Control Panel</TITLE></HEAD><TT>[.]</TT>", "window=genebooth")
+		onclose(user, "genebooth")
 
 	Topic(href, href_list)
-		if (usr.stat)
+		if (!can_act(usr, TRUE) || usr.lying)
+			usr.Browse(null, "window=genebooth")
+			src.remove_dialog(usr)
 			return
 		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			var/datum/geneboothproduct/P
@@ -329,7 +358,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		if (split_with)
 			string += "Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGT_GENETICS, MGA_SALES), "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 		//playsound BEEP BEEEEEEEEEEP
@@ -339,7 +368,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGT_GENETICS, MGA_SALES), "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 	Cross(var/mob/M)
@@ -388,9 +417,13 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/I, mob/user)
+		if(length(src.offered_genes) && src.check_access(I))
+			src.show_admin_panel(user)
+			return
+
 		user.lastattacked = get_weakref(src)
-		letgo_hp -= W.force
+		letgo_hp -= I.force
 		attack_particle(user,src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, pitch = 0.8)
 

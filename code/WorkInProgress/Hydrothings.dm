@@ -1411,8 +1411,6 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 		greeting= {"Hey there kid! Welcome to the gift shop. Im Greg, Professor Hootens loveable assistant! And this little fella on my hand is Howard the Hooter, say "Hi" Howard!."}
 
-		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
-
 		sell_dialogue = "Howards lost some of his eggs, can you find them all?."
 
 		buy_dialogue = "Are you interested in some Owl accessories?"

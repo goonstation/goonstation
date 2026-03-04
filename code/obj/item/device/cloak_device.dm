@@ -8,7 +8,8 @@ TYPEINFO(/obj/item/cloaking_device)
 	var/base_icon_state = "shield"
 	var/active = 0
 	flags = TABLEPASS | CONDUCT | NOSHIELD
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 10

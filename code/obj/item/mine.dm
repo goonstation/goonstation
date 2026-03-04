@@ -194,7 +194,7 @@ TYPEINFO(/obj/item/mine)
 		if (!src || !istype(src))
 			return
 		var/logtarget = (T && ismob(T) ? T : null)
-		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 
 /obj/item/mine/radiation
 	name = "radiation land mine"

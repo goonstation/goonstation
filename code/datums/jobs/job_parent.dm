@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/request_limit = 0 //!Maximum total `limit` via RoleControl request function
 	var/request_cost = null //!Cost to open an additional slot using RoleControl
 	var/player_requested = FALSE //! Flag if currently requested via RoleControl
-
+	var/email_group = null //! Which email workgroup does this role belong to
 
 
 	New()
