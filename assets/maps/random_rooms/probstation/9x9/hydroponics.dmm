@@ -131,6 +131,10 @@
 /obj/shrub{
 	dir = 1
 	},
+/obj/drink_rack/mug{
+	pixel_x = 28;
+	pixel_y = 3
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "E" = (
