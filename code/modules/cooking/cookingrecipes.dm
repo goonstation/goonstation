@@ -25,6 +25,8 @@ ABSTRACT_TYPE(/datum/recipe/burger)
 	category = "Burgers"
 
 	get_output(var/list/input_list, var/list/output_list)
+		if (length(ingredients) < 2)
+			return ..()
 		//this is dumb and assumes the second thing is always the meat but it usually is so :iiam:
 		var/obj/item/possibly_meat = locate(ingredients[2]) in input_list
 		if (possibly_meat?.reagents?.get_reagent_amount("crime") >= 5)
