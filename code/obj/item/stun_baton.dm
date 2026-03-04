@@ -31,6 +31,7 @@ TYPEINFO(/obj/item/baton)
 	var/item_off = "baton-D"
 	var/flick_baton_active = "baton_active"
 	var/wait_cycle = 0 // Update sprite periodically if we're using a self-charging cell.
+	var/emagged = FALSE
 
 	var/cell_type = /obj/item/ammo/power_cell/med_power // Type of cell to spawn by default.
 	var/from_frame_cell_type = /obj/item/ammo/power_cell //type of cell to spawn when mechscanned
@@ -335,6 +336,32 @@ TYPEINFO(/obj/item/baton)
 			src.UpdateIcon()
 			user.update_inhands()
 		..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			boutput(user, SPAN_ALERT("You jam [E] into [src]'s charging port."))
+			src.emagged = TRUE
+			src.is_active = FALSE
+			src.process_charges(-INFINITY)
+			playsound(src, "sparks", 75, 1, -1)
+			if (src.name == "extendable stun baton")
+				src.name = pick("extendable batong","extensible stong baton","extensive stun batong")
+			else if (src.name == "stun cane")
+				src.name = "long batong"
+			else
+				src.name = pick("batong","stong baton","stung baton","stun batong")
+				src.desc = "For some reason you can't figure out how to recharge this thing."
+				var/datum/component/cell_holder/CH = GetComponent(/datum/component/cell_holder)
+				if (CH) // Can never be charged again
+					CH.can_be_recharged = FALSE
+					CH.swappable_cell = FALSE
+					return
+			src.UpdateIcon()
+			user.update_inhands()
+			return TRUE
+		return FALSE
+
+
 
 /////////////////////////////////////////////// Subtypes //////////////////////////////////////////////////////
 
