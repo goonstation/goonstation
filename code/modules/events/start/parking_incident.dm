@@ -30,7 +30,7 @@
 			real_maint_areas -= trouble_zone
 
 			for(var/turf/T in get_area_turfs(trouble_zone, TRUE))
-				if(!istype(T,/turf/simulated/floor))
+				if(!istype(T,/turf/simulated/floor/plating))
 					continue
 
 				var/turf_ineligible = FALSE
