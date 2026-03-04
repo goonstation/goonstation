@@ -1378,6 +1378,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "apT" = (
@@ -13391,6 +13392,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "eqq" = (
@@ -17702,7 +17704,7 @@
 /obj/disposalpipe/segment,
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -18120,7 +18122,7 @@
 /area/station/crew_quarters/cafeteria)
 "hNt" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "hNA" = (
@@ -21651,7 +21653,6 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/espressocup,
 /obj/item/clothing/head/helmet/space/santahat{
 	pixel_x = 12;
 	pixel_y = 13
@@ -21659,6 +21660,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "kiu" = (
@@ -30028,6 +30030,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/chem_dispenser/alcohol/bar,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/caution/west,
 /area/station/crew_quarters/bar)
 "qcy" = (
@@ -40180,6 +40183,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/crew_quarters/bar)
 "xoG" = (
@@ -41134,11 +41138,11 @@
 "xZx" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light_switch/north{
 	pixel_x = -10;
 	pixel_y = 28
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
