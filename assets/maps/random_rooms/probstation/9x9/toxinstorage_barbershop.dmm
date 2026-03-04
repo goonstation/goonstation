@@ -2,13 +2,13 @@
 "a" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "b" = (
 /obj/barber_pole{
 	pixel_x = 10
 	},
 /turf/simulated/wall/auto/jen,
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "c" = (
 /obj/item/clothing/head/wig,
 /obj/item/dye_bottle,
@@ -26,7 +26,7 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "e" = (
 /obj/stool/chair/comfy/barber_chair{
 	dir = 8
@@ -34,7 +34,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "f" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49,7 +49,7 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "g" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -58,16 +58,16 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "h" = (
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "i" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "k" = (
 /obj/table/auto,
 /obj/item/razor_blade{
@@ -80,13 +80,13 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "l" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "n" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	name = "Fire Cuts"
@@ -98,7 +98,7 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "o" = (
 /obj/stool/chair/comfy/barber_chair,
 /obj/decal/tile_edge/line/black{
@@ -108,14 +108,14 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "p" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "q" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 4
@@ -126,17 +126,17 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "r" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "s" = (
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "t" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active,
 /obj/decal/tile_edge/line/black{
@@ -146,12 +146,12 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "v" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "w" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
@@ -161,30 +161,35 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "x" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "y" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "z" = (
 /turf/simulated/wall/auto/reinforced/jen/purple,
-/area/space)
+/area/station/science/storage)
+"A" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
 "B" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "C" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "D" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -200,27 +205,31 @@
 	dir = 10;
 	icon_state = "fred2"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "E" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
+"F" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
 "G" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "H" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "I" = (
 /obj/machinery/firealarm/directional/north,
 /obj/cable{
@@ -233,7 +242,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "J" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/access/tox_storage,
@@ -242,7 +251,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "K" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -250,24 +259,24 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "L" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "M" = (
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "N" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "O" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
@@ -279,14 +288,14 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "P" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "Q" = (
 /obj/table/auto,
 /obj/item/dye_bottle{
@@ -298,17 +307,17 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "R" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/black/grime,
-/area/space)
+/area/station/science/storage)
 "T" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /turf/simulated/wall/auto/jen,
-/area/space)
+/area/station/science/storage)
 "U" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -316,7 +325,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "V" = (
 /obj/machinery/sink/slim{
 	dir = 4;
@@ -329,12 +338,12 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "W" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "X" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -346,16 +355,16 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
-/area/space)
+/area/station/crew_quarters/barber_shop)
 "Y" = (
 /turf/simulated/wall/auto/jen,
-/area/space)
+/area/station/science/storage)
 "Z" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/jen,
-/area/space)
+/area/station/science/storage)
 
 (1,1,1) = {"
 z
@@ -381,8 +390,8 @@ z
 "}
 (3,1,1) = {"
 z
-x
-x
+A
+A
 h
 w
 l
@@ -420,7 +429,7 @@ t
 O
 Y
 r
-s
+F
 z
 "}
 (7,1,1) = {"
