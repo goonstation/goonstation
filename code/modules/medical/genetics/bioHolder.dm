@@ -457,7 +457,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 					newEffect.timeLeft = rand(20, 60)
 					newEffect.degrade_after = TRUE
 
-				src.calculateStability()
+				if(newEffect.stability_loss)
+					src.calculateStability()
 
 			if(owner)
 				OutputGainOrLoseMsg(newEffect, TRUE)
@@ -504,7 +505,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 				BE.timeLeft = rand(20, 60)
 				BE.degrade_after = TRUE
 
-			src.calculateStability()
+			if(BE.stability_loss)
+				src.calculateStability()
 
 		OutputGainOrLoseMsg(BE, TRUE)
 		mobAppearance.UpdateMob()
@@ -537,7 +539,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
 
 		. = effects.Remove(effect.id)
-		if (!was_natural)
+		if (!was_natural && effect.stability_loss)
 			src.calculateStability()
 
 	///ignoreMagic means "do not remove magical bioeffects"
