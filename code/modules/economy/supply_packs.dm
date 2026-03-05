@@ -1278,7 +1278,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/head/headband/nyan/leopard = 1,
 					/obj/item/clothing/head/headband/nyan/snowleopard = 1,
 					/obj/item/clothing/head/headband/bee = 2,
-					/obj/item/clothing/head/headband/nyan/random = 1)
+					/obj/item/clothing/head/headband/nyan/random = 1,
+					/obj/item/clothing/head/headband/woof/random = 1)
 	containertype = /obj/storage/crate/packing
 	containername = "Bows and Bands Box"
 

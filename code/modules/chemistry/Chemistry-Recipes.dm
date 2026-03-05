@@ -3978,6 +3978,18 @@
 			var/turf/location = pick(holder.covered_turf())
 			location.fluid_react_single("miasma", created_volume, airborne = 1)
 
+	parazamine
+		name = "parazamine"
+		id = "parazamine"
+		result = "parazamine"
+		required_reagents = list("space_fungus" = 0.1, "cryoxadone" = 1, "atropine" = 1)
+		instant = 0
+		reaction_speed = 2
+		result_amount = 2
+		max_temperature = (T0C - 25)
+		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+		mix_phrase = "The particles of fungus begin to slowly dissolve in the cold solution."
+
 	lungrot
 		name = "lungrot"
 		id = "lungrot"
