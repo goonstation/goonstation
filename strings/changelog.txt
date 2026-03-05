@@ -1,5 +1,9 @@
 
 (t)thu mar 05 26
+(u)Nexusuxen
+(p)26077
+(e)🚨🐁|A-Admin, A-Critters
+(+)Genetic stability should behave more consistently now; having no mutations should ALWAYS result in having 100 stability. Report any issues relating to stability.
 (u)NibChocolateeny
 (p)26078
 (e)🌱|A-Hydroponics
