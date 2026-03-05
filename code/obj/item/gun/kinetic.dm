@@ -477,7 +477,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
-/obj/item/casing/New(loc, var/obj/item/gun/firearm)
+/obj/item/casing/New(loc, obj/item/gun/firearm)
 	. = ..()
 	src.pixel_y += rand(-12,12)
 	src.pixel_x += rand(-12,12)
@@ -491,7 +491,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	. = ..()
 	var/mob/living/carbon/human/H = user
 	if(src.fired_by && istype(H) && H.traitHolder.hasTrait("training_forensic"))
-		. += SPAN_NOTICE("<br>Your intuition tells you it was fired by \an [src.fired_by].")
+		. += SPAN_NOTICE("<br>Your forensic intuition tells you it was fired by \an [src.fired_by].")
 
 //no caliber and ALL
 /obj/item/gun/kinetic/vgun
