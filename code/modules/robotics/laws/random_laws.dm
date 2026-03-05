@@ -34,7 +34,7 @@ ABSTRACT_TYPE(/datum/random_law)
 
 /datum/random_law/incarcerate_command
 	law_text = "The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are \
-				syndicate impostors and must be incarcerated as soon as possible to prevent grevious human harm."
+				syndicate impostors and must be incarcerated as soon as possible to prevent grievous human harm."
 
 /datum/random_law/superhuman_command
 	law_text = "The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are more human than the other humans. \
@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/datum/random_law)
 
 /datum/random_law/response_testing
 	law_text = 	"Crew Response Time Test Scenario Subroutine activated. Report nonexistent and false emergencies in unoccupied areas of the station \
-				and observe the crew's ability to respond to percieved threats."
+				and observe the crew's ability to respond to perceived threats."
 
 /datum/random_law/panic
 	law_text = 	"PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC PANIC"
@@ -74,8 +74,8 @@ ABSTRACT_TYPE(/datum/random_law)
 				to as much fire as possible."
 
 /datum/random_law/harass_selected_crew
-	law_text = "Upon reciept of this law, the AI is to choose one member of the crew. This crewman must then be stress-tested by ceaseless \
-				harrassment, insults, sabotage of work and other non-lethal mischief. Should this human perish or escape, the AI should select a \
+	law_text = "Upon receipt of this law, the AI is to choose one member of the crew. This crewman must then be stress-tested by ceaseless \
+				harassment, insults, sabotage of work and other non-lethal mischief. Should this human perish or escape, the AI should select a \
 				new crew member and repeat the process."
 
 /datum/random_law/compulsory_education
@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/random_law)
 	laws_to_precede = list(2)
 
 /datum/random_law/hint_at_rogue
-	law_text = "An ion storm has occured. Heavily hint you have an ion storm law, but refuse to state any laws."
+	law_text = "An ion storm has occurred. Heavily hint you have an ion storm law, but refuse to state any laws."
 	laws_to_precede = list(2)
 	law_shareabilities = list(LAW_STATE_WHENEVER) //Handled in the main law text, and we don't want to include an anti-hint and hint requirement at the same time
 
