@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/area_contents_condition)
 /datum/area_contents_condition
 	/// The arguments passed to this condition on instantiation.
 	var/list/arguments = null
