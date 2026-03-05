@@ -1,32 +1,29 @@
-// Mail Groups (by Department)
-// These have buttons to contact them in the messaging app on the PDA.
+// Mail Groups (by Department/Team)
+// PDA Type determines which of these groups they recieve messages for
 // Apart from Party Line, they cannot be joined or left.
 #define MGD_PARTY "Party Line" //Is the clown the head of the Party department?
 #define MGD_COMMAND "command"
 #define MGD_SECURITY "security"
-#define MGD_MEDBAY "medbay"
-#define MGD_MEDRESEACH "medresearch"
-#define MGD_SCIENCE "science"
-#define MGD_CARGO "cargo"
-#define MGD_STATIONREPAIR "stationrepair"
-#define MGD_BOTANY "botany"
-#define MGD_KITCHEN "kitchen"
-#define MGD_SPIRITUALAFFAIRS "spiritualaffairs"
-#define MGD_MINING "mining"
+#define MGD_MEDICAL "medical"
+#define MGD_RESEARCH "research"
+#define MGD_ENGINEER "engineer"
+#define MGD_SUPPLY "supply"
+#define MGD_CIVILIAN "civilian"
+#define MGD_SILICON "silicon"
 
-// Mail Groups (Other)
-// These cannot be joined or left.
-#define MGO_STAFF "staff"
-#define MGO_AI "ai"
-#define MGO_SILICON "silicon"
-#define MGO_JANITOR "janitor"
-#define MGO_ENGINEER "engineer"
+#define MGT_ROBOTICS "robotics"
+#define MGT_GENETICS "genetics"
+#define MGT_CARGO "cargo"
+#define MGT_MINING "mining"
+#define MGT_CATERING "catering" // chef/bartender
+#define MGT_HYDROPONICS "hydroponics" // botany/rancher
+#define MGT_JANITOR "janitor"
+#define MGT_SPIRITUALAFFAIRS "spiritualaffairs" // chaplain (and X-hunters)
+#define MGT_AI "ai" // AIs. Plural. Because robotics got bored.
 
 // Mail Groups (Alerts)
-// These cannot be joined, and no PDAs start in them.
-// However, they can be muted.
-
-#define MGA_MAIL "Snail Mail Alert"
+// These cannot be joined, but can be muted.
+#define MGA_MAIL "Delivery Alert"
 #define MGA_CHECKPOINT "Checkpoint Alert"
 #define MGA_ARREST "Arrest Alert"
 #define MGA_DEATH "Death Alert"

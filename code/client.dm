@@ -389,7 +389,6 @@
 
 	// Put stuff that sleeps here
 	SPAWN(0)
-		if (global.browse_item_initial_done) sendItemIcons(src)
 		ircbot.event("login", src.key)
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 		src.setJoinDate()

@@ -313,6 +313,7 @@
 /area/prefab/sea_sketch)
 "br" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/grime,
 /area/prefab/sea_sketch)
 "bs" = (

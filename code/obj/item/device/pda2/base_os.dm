@@ -5,7 +5,7 @@
 #define MODE_FILEBROWSER 3
 #define MODE_ATMOS 4
 #define MODE_GROUPS 5
-#define MODE_ADDRESSBOOK 6
+#define MODE_MESSAGE_HISTORY 6
 #define MODE_MODULECONFIG 999
 
 /datum/computer/file/pda_program/os
@@ -95,6 +95,27 @@
 			//boutput(world, "[command_list["command"]]")
 			return
 
+		/// Pings for other PDAs for show in the messenger app
+		proc/get_other_pdas()
+			if(src.message_on)
+				src.detected_pdas = list()
+				src.master.pdasay_autocomplete = list()
+				var/datum/signal/signal = get_free_signal()
+				signal.data["command"] = "report_pda"
+				src.post_signal(signal)
+
+		/// returns a consistent header for the messagging sub-feature
+		proc/return_messaging_header(selected_tab)
+			. = "<h4>[src.knockoff ? "StarMessenger 2.6b" : "SpaceMessenger V4.1.1"]</h4>"
+			. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> |
+					<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
+					<a href='byond://?src=\ref[src];input=tone'>Set Ring Message</a><br>"}
+			. += {"
+			<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Direct Messages</a> |
+			<a href='byond://?src=\ref[src];mode=[MODE_GROUPS]'>Groups / Alerts</a> |
+			<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE_HISTORY]'>Message History</a>
+			<hr>"}
+
 		return_text()
 			if(..())
 				return
@@ -119,17 +140,14 @@
 					<li><a href='byond://?src=\ref[src];change_backlight_color=1'>Change Backlight Color</a></li>
 					<li><a href='byond://?src=\ref[src];mode=[MODE_ATMOS]'>Atmospheric Scan</a></li>
 					<li>Scanner: [src.master.scan_program ? "<a href='byond://?src=\ref[src];scanner=1'>[src.master.scan_program.name]</a>" : "None loaded"]</li>"}
-#ifdef UNDERWATER_MAP
+					#ifdef UNDERWATER_MAP
 					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Trench Map</a></li>"
-#else
+					#else
 					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Mining Map</a></li>"
-#endif
+					#endif
 
 					if(src.master.module)
-						if(src.master.module.setup_allow_os_config)
-							. += "<li><a href='byond://?src=\ref[src];mode=[MODE_MODULECONFIG]'>Module Config</a></li>"
-
-						if(src.master.module.setup_use_menu_badge)
+						if(src.master.module.setup_use_menu_badge) // they all do...
 							. += "<li>[src.master.module.return_menu_badge()]</li>"
 
 				if(MODE_NOTE)
@@ -164,68 +182,75 @@
 
 				if(MODE_MESSAGE)
 					//Messenger.  Uses Radio.  Is a messenger.
-					src.master.update_overlay("idle") //Remove existing alerts
-					. += "<h4>[src.knockoff ? "StarMessenger 2.6" : "SpaceMessenger V4.0.5"]</h4>"
 
-					if (!src.message_mode)
+					. += src.return_messaging_header(MODE_MESSAGE)
 
-						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> |
-						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
-						<a href='byond://?src=\ref[src];input=tone'>Set Ring Message</a><br>
-						<a href='byond://?src=\ref[src];message_mode=1'>Message History</a> |
-						<a href='byond://?src=\ref[src];mode=[MODE_GROUPS]'>Groups</a> |
-						<a href='byond://?src=\ref[src];mode=[MODE_ADDRESSBOOK]'>Address Book</a><br>
-
-						<font size=2><a href='byond://?src=\ref[src];message_func=scan'>Scan</a></font><br>
-						<b>Detected PDAs</b><br>"}
-
-						if (!src.message_on)
-							. += "Please turn on Send/Receive to use the scan function."
+					if (!src.message_on)
+						. += "<h4>Disconnected</h4><hr>"
+						. += "Send / Receive must be on to use Direct Messages!"
+					else
+						. += "<h4>Recent Contacts</h4><hr>"
+						if(length(src.all_callers) < 1)
+							. += "No recent contacts!<br>"
 						else
-							. += "<ul>"
-							var/count = 0
-							if(expand_departments_list)
-								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
-								for (var/department_id in page_departments)
-									. += "<li><a href='byond://?src=\ref[src];input=message;target=[page_departments[department_id]];department=1'>DEPT-[department_id]</a></li>"
-							else
-								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Expand DEPT list*</a>"
-
-							var/pdaOwnerNames = list()
-							for (var/P_id in src.detected_pdas)
-								var/P_name = src.detected_pdas[P_id]
-								if (!P_name)
-									src.detected_pdas -= P_id
+							. += "<table cellspacing=5>"
+							for(var/address in src.all_callers)
+								if(src.all_callers[address] in src.blocked_numbers)
 									continue
-								else if (P_id == src.master.net_id) //I guess this can happen if somebody copies the system file.
-									src.detected_pdas -= P_id
-									continue
-								pdaOwnerNames += P_name
-								pdaOwnerNames[P_name] = P_id
-							sortList(pdaOwnerNames, /proc/cmp_text_asc)
-							for (var/P_name in pdaOwnerNames)
-								var/P_id = pdaOwnerNames[P_name]
+								var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[address]]'>Block</a>"
+								var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[address]'>Msg</a>"
+								var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[address]'>Send File</a>"
+								if(!src.master.fileshare_program)
+									sendButton = ""
+								else if(!src.clipboard || src.clipboard?.dont_copy)
+									sendButton = "<strike>Send File</strike>"
+								var/delButton = "<a href='byond://?src=\ref[src];delAddress=[address]'>Del</a>"
 
-								. += {"<li><a href='byond://?src=\ref[src];input=message;target=[P_id]'>PDA-[P_name]</a>
-								 (<a href='byond://?src=\ref[src];input=send_file;target=[P_id]'>*Send File*</a>)
+								. += "<tr><td>[src.all_callers[address]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
+							. += "</table>"
 
+						. += "<br><h4>Other Users | <a href='byond://?src=\ref[src];message_func=scan'>(re-scan)</a></h4><hr>"
+						. += "<ul>"
+						var/count = 0
+						var/pdaOwnerNames = list()
+						for (var/P_id in src.detected_pdas)
+							var/P_name = src.detected_pdas[P_id]
+							if (!P_name)
+								src.detected_pdas -= P_id
+								continue
+							else if (P_id == src.master.net_id) //I guess this can happen if somebody copies the system file.
+								src.detected_pdas -= P_id
+								continue
+							pdaOwnerNames += P_name
+							pdaOwnerNames[P_name] = P_id
+						sortList(pdaOwnerNames, /proc/cmp_text_asc)
+						for (var/P_name in pdaOwnerNames)
+							var/P_id = pdaOwnerNames[P_name]
+							. += {"<li><a href='byond://?src=\ref[src];input=message;target=[P_id]'>PDA-[P_name]</a>
+								(<a href='byond://?src=\ref[src];input=send_file;target=[P_id]'>*Send File*</a>)
+							</li>"}
+							count++
 
-								</li>"}
-								count++
-							. += "</ul>"
+						if (count == 0)
+							. += "<li>None detected</li>"
+						. += "</ul>"
 
-							if (count == 0 && !length(page_departments))
-								. += "None detected.<br>"
+						. += "<br><h4>Blocked Users</h4><hr>"
+						. += "<ul>"
+						if (length(src.blocked_numbers))
+							for(var/address in src.all_callers)
+								if(src.all_callers[address] in src.blocked_numbers)
+									. += {"<li><a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[address]]'>[src.all_callers[address]]</a></li>"}
+						else
+							. += "<li>None detected</li>"
+						. += "</ul>"
 
-					else if (src.message_mode == 1)
-						. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear</a> |
-						<a href='byond://?src=\ref[src];message_mode=0'>Back</a><br>
-
-						<h4>Messages</h4>"}
-
-						. += src.message_note
-						. += "<br>"
-
+				if(MODE_MESSAGE_HISTORY)
+					src.master.update_overlay("idle") //Remove existing alerts
+					. += src.return_messaging_header(MODE_MESSAGE_HISTORY)
+					. += "<h4>Message History</h4><hr>"
+					. += {"<a href='byond://?src=\ref[src];message_func=clear'>Clear History</a><br>"}
+					. += src.message_note
 				if(MODE_FILEBROWSER)
 					//File Browser.
 					//To-do(?): Setting "favorite" programs to access straight from main menu
@@ -303,13 +328,11 @@
 					. += "<br>"
 
 				if(MODE_GROUPS) // Groups and alerts and their ringtones
+					. += src.return_messaging_header(MODE_GROUPS)
 					if(length(src.master.mailgroups))
-						. += "<h4>[src.knockoff ? "StarMessenger 2.6" : "SpaceMessenger V4.0.5"]</</h4>"
-						. += "<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Back</a><br>"
-						. += "<h4>Mailgroups</h4><br>"
+						. += "<h4>My Groups</h4><hr>"
 						. += "<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a>"
 						. += "<table cellspacing=5>"
-
 						for(var/mailgrp in src.master.mailgroups)
 							var/datum/ringtone/rt = null
 							var/rtButton = "Default"
@@ -330,10 +353,21 @@
 								leaveButton = ""
 							. += "<tr><td>[mailgrp]</td><td>[rtButton]</td><td>[msgButton]</td><td>[sendButton]</td><td>[muteButton]</td><td>[leaveButton]</td></tr>"
 						. += "</table>"
-						. += "<hr><br>"
-						. += "<h4>Alert Settings</h4>"
-						. += "<table cellspacing=5>"
 
+						. += "<br><h4>Work Groups</h4><hr>"
+						if(expand_departments_list)
+							. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse Work Groups list*</a>"
+							. += "<ul>"
+							for (var/department_id in global.page_departments)
+								. += "<li><a href='byond://?src=\ref[src];input=message;target=[global.page_departments[department_id]];department=1'>DEPT-[department_id]</a></li>"
+							for (var/team_id in global.page_teams)
+								. += "<li><a href='byond://?src=\ref[src];input=message;target=[global.page_teams[team_id]];department=1'>TEAM-[team_id]</a></li>"
+							. += "</ul>"
+						else
+							. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Expand Work Groups list*</a>"
+
+						. += "<br><h4>Alert Settings</h4><hr>"
+						. += "<table cellspacing=5>"
 						for(var/alert in src.master.alertgroups)
 							var/datum/ringtone/rt = null
 							var/rtButton = "Default"
@@ -344,38 +378,16 @@
 							if(alert in src.muted_mailgroups)
 								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[alert]'>Unmute</a>"
 							. += "<tr><td>[alert]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
-
-				if(MODE_ADDRESSBOOK) // Specific names sent to us, also ringtones
-					. += "<h4>[src.knockoff ? "StarMessenger 2.6" : "SpaceMessenger V4.0.5"]</</h4>"
-					. += "<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Back</a><br>"
-					. += "<h4>Address Book</h4><br>"
-					if(length(src.all_callers) < 1)
-						. += "Address book is empty!"
-					else
-						. += "<table cellspacing=5>"
-						for(var/address in src.all_callers)
-							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[address]]'>Block</a>"
-							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[address]'>Msg</a>"
-							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[address]'>Send File</a>"
-							if(!src.master.fileshare_program)
-								sendButton = ""
-							else if(!src.clipboard || src.clipboard?.dont_copy)
-								sendButton = "<strike>Send File</strike>"
-							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[address]'>Del</a>"
-							if(src.all_callers[address] in src.blocked_numbers)
-								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[address]]'>Unblock</a>"
-							. += "<tr><td>[src.all_callers[address]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
 						. += "</table>"
-					. += "<hr>"
-					. += "<h4>Primary Ringtone</h4><br>"
+
+					else
+						. += "<h4>ERROR</h4><hr>"
+						. += "No groups detected!"
+
+					. += "<br><h4>Primary Ringtone</h4><hr>"
 					. += "<table cellspacing=5>"
 					. += "<tr><td>[src.master.r_tone ? "[src.master.r_tone.name]</td><td><a href='byond://?src=\ref[src];delTone=1'>Reset</a></td></tr>" : "</td><td>-ERR-</td></tr>"]"
 					. += "</table>"
-
-
-				if(MODE_MODULECONFIG) // Nothing seems to use this, but just in case
-					. += "<h4>Module Configuration</h4><br>"
-					. += "ERROR: No error."
 
 		Topic(href, href_list)
 			if(..())
@@ -626,13 +638,7 @@
 					if("clear")
 						src.message_note = null
 					if("scan")
-						if(src.message_on)
-							src.detected_pdas = list()
-							src.master.pdasay_autocomplete = list()
-							var/datum/signal/signal = get_free_signal()
-							signal.data["command"] = "report_pda"
-							//signal.data["sender"] = src.master.net_id
-							src.post_signal(signal)
+						src.get_other_pdas()
 					if("accfile")
 						if(src.message_on)
 							var/datum/signal/newsignal = get_free_signal()
@@ -1240,5 +1246,4 @@
 #undef MODE_FILEBROWSER
 #undef MODE_ATMOS
 #undef MODE_GROUPS
-#undef MODE_ADDRESSBOOK
-#undef MODE_MODULECONFIG
+#undef MODE_MESSAGE_HISTORY

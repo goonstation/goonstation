@@ -56,7 +56,7 @@
 		if (ishuman(holder.owner))
 			H = holder.owner
 
-
+		var/headset_was_comic = FALSE
 		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
@@ -65,6 +65,13 @@
 					var/radio_override = headset_icon_labels[radio_tooltip]
 					headset.icon_override = radio_override
 					headset.icon_tooltip = radio_tooltip
+					headset_was_comic = headset.ensure_listen_tree().GetModifierByID(LISTEN_MODIFIER_COMIC_SANS)
+					//This is heavily jank but I'm not aware of anything better without a complete refactor of this ability
+					if((radio_tooltip == "Clown" || radio_tooltip == "Blue Clown") && !headset_was_comic)
+						headset.ensure_listen_tree().AddListenModifier(LISTEN_MODIFIER_COMIC_SANS)
+					else if(headset_was_comic)
+						headset.ensure_listen_tree().RemoveListenModifier(LISTEN_MODIFIER_COMIC_SANS)
+						headset_was_comic = TRUE
 
 		logTheThing(LOG_SAY, holder.owner, "[mimic_message] (<b>Mimicing ([constructTarget(mimic_name,"say")])</b>)")
 		var/original_name = holder.owner.real_name
@@ -77,5 +84,9 @@
 			if (headset.icon_override)
 				headset.icon_override = initial(headset.icon_override)
 				headset.icon_tooltip = initial(headset.icon_tooltip)
+				if(!headset_was_comic)
+					headset.ensure_listen_tree().RemoveListenModifier(LISTEN_MODIFIER_COMIC_SANS)
+				else
+					headset.ensure_listen_tree().AddListenModifier(LISTEN_MODIFIER_COMIC_SANS)
 
 		return 0

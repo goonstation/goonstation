@@ -231,6 +231,7 @@
 /area/pod_wars/spacejunk/restaurant)
 "aN" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "aP" = (
@@ -1620,6 +1621,7 @@
 /area/pod_wars/spacejunk/uvb67/crew)
 "fS" = (
 /obj/machinery/chem_dispenser/alcohol/bar,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "fT" = (
@@ -3161,6 +3163,7 @@
 /area/pod_wars/team1/equipmentroom)
 "lK" = (
 /obj/machinery/chem_dispenser/medical,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
@@ -4184,8 +4187,8 @@
 /area/pod_wars/spacejunk/reliant)
 "pi" = (
 /obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/machinery/light/incandescent/netural,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "pj" = (
@@ -5895,7 +5898,7 @@
 /area/pod_wars/spacejunk/reliant)
 "vL" = (
 /obj/machinery/chem_dispenser/soda,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "vM" = (
@@ -6202,6 +6205,7 @@
 "wK" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/chem_dispenser/medical/fortuna,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "wL" = (
@@ -9853,6 +9857,7 @@
 "JB" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/light/incandescent/netural,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "JC" = (
@@ -9884,6 +9889,7 @@
 /area/pod_wars/team2/medbay)
 "JH" = (
 /obj/machinery/chem_dispenser/medical,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/bluewhite{
 	dir = 8
 	},
@@ -12130,7 +12136,7 @@
 /area/pod_wars/team2/bar)
 "Sf" = (
 /obj/machinery/chem_dispenser/alcohol,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "Sg" = (
