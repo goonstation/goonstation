@@ -75,6 +75,7 @@
 				src.can_fill = FALSE
 				src.empty = FALSE
 				W.reagents.trans_to(src, src.initial_volume)
+				logTheThing(LOG_CHEMISTRY, user, "fills [src] with [W] [log_reagents(src)]")
 				user.visible_message(SPAN_ALERT("[user] transfer chemicals from [W] to [src]."),\
 				SPAN_ALERT("You transfer chemicals from [W] to [src]. [src]'s filling port closes."))
 				playsound(W, 'sound/items/mender_refill_juice.ogg', 40, FALSE)
