@@ -12276,6 +12276,7 @@
 	pixel_y = 12
 	},
 /obj/blind_switch/area/east,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -15147,6 +15148,7 @@
 /area/station/maintenance/northwest/asclepius)
 "grn" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -31377,6 +31379,7 @@
 "nDL" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/firealarm/directional/west,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -37693,7 +37696,7 @@
 /area/station/teleporter/tenebrae)
 "quh" = (
 /obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "qui" = (
@@ -45533,6 +45536,7 @@
 /obj/item/storage/wall{
 	pixel_y = 32
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "tIy" = (
