@@ -269,6 +269,46 @@ datum
 				..()
 				return
 
+		harmful/parazamine
+			name = "parazamine"
+			id = "parazamine"
+			description = "A neurotoxin that paralyses it's victim's lungs, causing asphyxiation."
+			fluid_r = 188
+			fluid_g = 188
+			fluid_b = 95
+			transparency = 65
+			depletion_rate = 0.2
+			/// how much cycles this has been in the target's system.
+			var/cycles = 0
+
+			on_mob_life(var/mob/affected_mob, var/mult = 1)
+				src.cycles += mult
+				//let's give the victim a slight warning that something is off.
+				if (src.cycles < 6 && probmult(10) && (!ON_COOLDOWN(affected_mob, "parazamine_warning", 10 SECONDS)))
+					boutput(affected_mob, SPAN_NOTICE("You feel [pick("a tug on your lungs", "a sensation of dread", "your feet seize up for a moment")]."))
+				if (src.cycles >= 6)
+					// a warning that shit's about to go down
+					if(affected_mob.losebreath < 4 && (!ON_COOLDOWN(affected_mob, "parazamine_asphyxiation_message", 60 SECONDS)))
+						boutput(affected_mob, SPAN_ALERT("You cannot breathe!"))
+						affected_mob.setStatusMin("knockdown", 2 SECONDS * mult)
+						affected_mob.emote("gasp")
+					// After the 10th cycle, you cannot breath, period.
+					affected_mob.losebreath = max(6, affected_mob.losebreath)
+					affected_mob.take_oxygen_deprivation(rand(2,3) * mult)
+					// some additional effects while you are asphyxiating
+					if(probmult(15) && (!ON_COOLDOWN(affected_mob, "parazamine_drowsy", 10 SECONDS)))
+						boutput(affected_mob, SPAN_ALERT("You feel weak and drowsy."))
+						affected_mob.setStatus("drowsy", 12 SECONDS)
+					if(src.cycles >= 15 && probmult(12))
+						if((!ON_COOLDOWN(affected_mob, "parazamine_misstep_message", 10 SECONDS)))
+							boutput(affected_mob, SPAN_ALERT("It's getting harder and harder to concentrate."))
+							if(affected_mob.get_brain_damage() <= BRAIN_DAMAGE_MODERATE)
+								affected_mob.take_brain_damage(5)
+						affected_mob.change_misstep_chance(30)
+				..()
+				return
+
+
 		harmful/cyanide
 			name = "cyanide"
 			id = "cyanide"
