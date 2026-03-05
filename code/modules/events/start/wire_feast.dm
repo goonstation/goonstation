@@ -16,5 +16,5 @@
 					if(eat_chance == 1)
 						var/mouse_chance = rand(1, 10)
 						if(mouse_chance >= 7)
-							new /mob/living/critter/small_animal/mouse/dead(C.loc)
+							new /mob/living/critter/small_animal/mouse/mad(C.loc)
 						C.cut(null,C.loc)
