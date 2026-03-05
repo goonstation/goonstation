@@ -111,6 +111,10 @@
 	name = "Type-SM Resonator"
 	blueprint = /datum/manufacture/resonator_type_sm
 
+/obj/item/paper/manufacturer_blueprint/resonator_type_fq
+	name = "Type-FQ Resonator"
+	blueprint = /datum/manufacture/resonator_type_fq
+
 
 /// This is a special item that breaks apart into blueprints for the machines needed to build/repair a cloner.
 /obj/item/cloner_blueprints_folder
