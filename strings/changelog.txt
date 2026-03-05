@@ -1,6 +1,10 @@
 
 (t)thu mar 05 26
 (u)Lord_Earthfire
+(p)25944
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Added asphyxiation inducing poison, parazamine. The recipe is (1) Atropine + (1) Cryoxadone + (0.1) space fungus @ 258K -> (2) Parazamine
+(u)Lord_Earthfire
 (p)25945
 (e)🆕⚗|C-Feature, A-Chemistry
 (+)Cryotubes will adjust the temperature of chemicals inserted into them to the temperature of the cryotube
