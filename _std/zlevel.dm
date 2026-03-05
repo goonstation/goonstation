@@ -69,17 +69,17 @@ proc/init_zlevel_datums()
 	for(var/datum/zlevel/manipulated_zlevel in global.zlevels)
 		var/name_to_set = "Unknown"
 		switch(manipulated_zlevel.z)
-			if (1)
+			if (Z_LEVEL_STATION)
 				name_to_set = "[capitalize(station_or_ship())]"
-			if (2)
+			if (Z_LEVEL_ADVENTURE)
 				name_to_set = "Restricted"
-			if (3)
+			if (Z_LEVEL_DEBRIS)
 				#ifdef UNDERWATER_MAP
 				name_to_set = "Debris Field"
 				#else
 				name_to_set = "Deep Trench"
 				#endif
-			if (5)
+			if (Z_LEVEL_MINING)
 				#ifdef UNDERWATER_MAP
 				name_to_set =  "Trench"
 				#else
