@@ -123,9 +123,9 @@
 	name = "stasis rifle"
 	icon = 'icons/obj/items/guns/energy48x32.dmi'
 	icon_state = "stasis"
-	item_state = "rifle"
+	item_state = "stasis"
 	charge_icon_state = "stasis"
-	force = 1
+	force = MELEE_DMG_RIFLE
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "An experimental weapon that produces a cohesive electrical charge designed to hold a target in place for a limited time."
 	muzzle_flash = "muzzle_flash_bluezap"
@@ -138,7 +138,7 @@
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/stasis)
 		projectiles = list(current_projectile)
-		AddComponent(/datum/component/holdertargeting/windup, 2 SECONDS)
+		AddComponent(/datum/component/holdertargeting/windup, 1.5 SECONDS)
 		..()
 
 /datum/projectile/energy_bolt/stasis
@@ -688,12 +688,14 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 	var/image/fluid_image
 	var/list/whitelist = list()
 	var/safe = 1
+	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine")
 
 
 	New()
 		..()
 		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
+			src.whitelist += src.additional_whitelist
 
 	update_icon()
 		if (src.reagents.total_volume)
@@ -714,7 +716,10 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 			var/confirm = tgui_alert(user, "Empty [src] of all reagents?", "Empty?", list("Yes", "No"))
 
 			if(confirm == "Yes")
+				logTheThing(LOG_CHEMISTRY, user, "dumps all the chemicals out of [src] [log_reagents(src)]")
+				boutput(user, SPAN_ALERT("You dump out all of the chemicals from [src]"))
 				src.reagents.clear_reagents()
+
 
 		else
 			..()

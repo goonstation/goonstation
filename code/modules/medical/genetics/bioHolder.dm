@@ -28,6 +28,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/datum/forensic_id/default_fingerprints = null
 
+	///If true, bioeffects won't actually be applied to the owner (used for when we want to store a separate bioholder, ie changelings)
+	var/inactive = FALSE
+
 	New(var/mob/owneri)
 		owner = owneri
 		Uid = CreateUid()
@@ -122,7 +125,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.owner = null
 		E.holder = null
 		E.activated_from_pool = 0
-		E.OnRemove()
+		if (!src.inactive)
+			E.OnRemove()
 
 		src.OutputGainOrLoseMsg(E, FALSE)
 
@@ -153,7 +157,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.owner = owner
 		E.holder = src
 		E.activated_from_pool = 1
-		E.OnAdd()
+		if (!src.inactive)
+			E.OnAdd()
 
 		OutputGainOrLoseMsg(E, TRUE)
 
@@ -439,7 +444,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
 			newEffect.holder = src
-			if(owner)
+			if(owner && !src.inactive)
 				newEffect.OnAdd()
 
 			if (do_stability)
@@ -487,7 +492,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		effects[BE.id] = BE
 		BE.owner = owner
 		BE.holder = src
-		BE.OnAdd()
+		if (!src.inactive)
+			BE.OnAdd()
 
 		if (do_stability)
 			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability+10, 0, 100), 100, 0.5)))
@@ -516,7 +522,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return 0
 
 	proc/RemoveEffectInstance(var/datum/bioEffect/effect)
-		effect.OnRemove()
+		if (!src.inactive)
+			effect.OnRemove()
 		if (!effect.activated_from_pool)
 			src.genetic_stability += effect.stability_loss
 			src.genetic_stability = max(0,src.genetic_stability)

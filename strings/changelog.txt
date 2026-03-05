@@ -1,4 +1,39 @@
 
+(t)wed mar 04 26
+(u)QuiteLiterallyAnything
+(p)26066
+(e)🆕🗺💅⚗|C-Feature, A-Mapping, C-QoL, A-Chemistry
+(+)Beakers now appear directly inside most chemical dispensers at round start.
+(u)Lord_Earthfire
+(p)25912
+(e)💡|A-Station-Systems
+(+)The TEG warning lights should be somewhat more consistent when working under very high load.
+(t)sun mar 01 26
+(u)glowbold
+(p)26018
+(e)💡💪|A-Station-Systems, A-Traits
+(*)Jailbird trait has been removed.
+(t)sat feb 28 26
+(u)LeahTheTech
+(p)26052
+(e)🧛🌠|A-Gamemodes, A-Events
+(+)Neon broken event objectives have been tweaked slightly to ensure there is always conflict.
+(t)fri feb 27 26
+(u)JORJ949
+(p)26031
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The VR murderbox now has a vending machine containing weapons found in the Armory. Plus the Lawbringer, Detective's guns and clock 180.
+(t)thu feb 26 26
+(u)JORJ949
+(p)26020
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)Manufacturers now have a permanent red blinking light when hacked via wires to show their expanded inventory or speed options.
+(u)Sord
+(+)The Pharmacist's auto injector filler can now hold atropine, calomel, diphenhydramine, filgrastim, heparin, morphine, and proconvertin on top of the normal chemical whitelist.
+(u)bork
+(p)25988
+(e)🔬|A-Science
+(+)Records now all display their names in the same format.
 (t)wed feb 25 26
 (u)Sord
 (+)Pharmacists and the Medical Director get an auto-injector filler which can fill empty auto-injectors with hypospray whitelisted chemicals (unless emagged)

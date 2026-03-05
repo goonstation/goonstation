@@ -297,7 +297,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	food_color = "#FFFFFF"
 
 /obj/item/reagent_containers/food/snacks/ingredient/flour/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
-	if (..()) return
+	if (!istext(reagent_id) || !isnum(volume) || volume < 1) return
 
 	if (reagent_id == "water" && volume >= 15)
 		src.visible_message(SPAN_NOTICE("[src] turns into dough."))
@@ -312,10 +312,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	food_color = "#FFFFEE"
 
 /obj/item/reagent_containers/food/snacks/ingredient/flour/semolina/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
-	if (..()) return
+	if (!istext(reagent_id) || !isnum(volume) || volume < 1) return
 
 	if (reagent_id == "water" && volume >= 15)
-		src.visible_message(SPAN_NOTICE("[src] turns into dough."))
+		src.visible_message(SPAN_NOTICE("[src] turns into semolina dough."))
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina(get_turf(src))
 		holder_reagents.remove_reagent("water", 15)
 		qdel(src)
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient/rice/reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
 	if (..()) return
 
-	if (reagent_id == "water" && volume > 30)
+	if (reagent_id == "water" && volume >= 15)
 		src.visible_message(SPAN_NOTICE("[src] gets sticky."))
 		new /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice(get_turf(src))
 		holder_reagents.remove_reagent("water", 15)
