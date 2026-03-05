@@ -1,5 +1,9 @@
 
 (t)thu mar 05 26
+(u)Kubius
+(p)26003
+(e)🆕🗺🎨📦🔬📨|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Science, A-Logistics
+(*)Nadir's Harmonic Siphon has 3 new resources with shifting requirements, and a new resonator the Research Director can print that helps out with them.
 (u)bork and tofumutt
 (p)25987
 (e)🎨📨|C-Sprites, A-Logistics
