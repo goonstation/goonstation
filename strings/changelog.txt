@@ -1,5 +1,9 @@
 
 (t)thu mar 05 26
+(u)NibChocolateeny
+(p)26071
+(e)🪲💪|C-Bug, A-Traits
+(+)Touch-shy individuals no longer have the superpower of shoving people to the ground when touched while lying down. They will panic via emotes instead.
 (u)Kubius
 (p)26061
 (e)|
