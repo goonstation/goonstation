@@ -74,8 +74,8 @@
 					boutput(human_owner, SPAN_ALERT("You feel your insides [pick("squirm", "shift", "wiggle", "float")] uncomfortably in low-gravity."), "grav-life")
 					human_owner.nauseate(1)
 				if (2) // stamina sap
-					if (human_owner.traction == TRACTION_FULL)
-						return // unless you're on solid footing
+					if (human_owner.traction == TRACTION_FULL || human_owner.buckled)
+						return // unless you're on solid footing or buckled in
 					if (istype(human_owner.back, /obj/item/tank/jetpack))
 						var/obj/item/tank/jetpack/J = human_owner.back
 						if(J.allow_thrust(0.01, human_owner))

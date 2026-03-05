@@ -51,6 +51,7 @@
 /// Associative list of role defines and their respective client preferences.
 var/list/roles_to_prefs = list(
 	ROLE_TRAITOR = "be_traitor",
+	ROLE_SLEEPER_AGENT = "be_sleeper_agent",
 	ROLE_SPY_THIEF = "be_spy",
 	ROLE_NUKEOP = "be_syndicate",
 	ROLE_NUKEOP_COMMANDER = "be_syndicate_commander",

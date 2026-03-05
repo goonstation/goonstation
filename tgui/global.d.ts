@@ -203,10 +203,6 @@ interface Window {
   __store__: Store<unknown, AnyAction>;
   __augmentStack__: (store: Store) => StackAugmentor;
 
-  // IE IndexedDB stuff.
-  msIndexedDB: IDBFactory;
-  msIDBTransaction: IDBTransaction;
-
   // 516 byondstorage API.
   hubStorage: Storage;
   domainStorage: Storage;

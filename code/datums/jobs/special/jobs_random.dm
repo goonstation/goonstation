@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	job_category = JOB_RANDOM
 	request_limit = 2
 	request_cost = PAY_IMPORTANT*4
+	email_group = MGD_CIVILIAN
 
 	New()
 		..()
@@ -55,6 +56,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_suit = list(/obj/item/clothing/suit/apron)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	wiki_link = "https://wiki.ss13.co/Chef"
+	email_group = MGD_CIVILIAN
 
 /datum/job/special/random/hall_monitor
 	name = "Hall Monitor"
@@ -115,6 +117,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		"Thoracic Specialist",
 		"Vascular Specialist",
 	)
+	email_group = MGD_MEDICAL
 
 /datum/job/special/random/vip
 	name = "VIP"
@@ -163,6 +166,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_rhan = list(/obj/item/device/ticket_writer)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
+	email_group = MGD_COMMAND
 
 	get_default_miranda()
 		return "You have been found to be in breach of Nanotrasen corporate regulation [rand(1,100)][pick(uppercase_letters)]. You are allowed a grace period of 5 minutes to correct this infringement before you may be subjected to disciplinary action including but not limited to: strongly worded tickets, reduction in pay, and being buried in paperwork for the next [rand(10,20)] standard shifts."
@@ -224,6 +228,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	change_name_on_spawn = TRUE
 	starting_mutantrace = /datum/mutantrace/monkey
 	wiki_link = "https://wiki.ss13.co/Monkey"
+	email_group = null
 
 /datum/job/special/random/union
 	name = "Union Rep"
@@ -327,6 +332,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/reagent_containers/food/snacks/beefood, /obj/item/reagent_containers/food/snacks/beefood)
 	alt_names = list("Apiculturist", "Apiarist")
+	email_group = MGD_CIVILIAN
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	faction = list(FACTION_BOTANY)
@@ -355,22 +361,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/fishing_rod/basic)
+	email_group = MGD_CIVILIAN
 
-
-/datum/job/special/random/pharmacist
-	name = "Pharmacist"
-	wages = PAY_DOCTORATE
-	ui_colour = /datum/job/medical::ui_colour
-	request_limit = 1 // limited workspace
-	trait_list = list("training_medical")
-	access_string = "Pharmacist"
-	slot_card = /obj/item/card/id/medical
-	slot_belt = list(/obj/item/device/pda2/medical)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
-	slot_suit = list(/obj/item/clothing/suit/labcoat)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/storage/pill_bottle/cyberpunk)
 
 /datum/job/special/random/psychiatrist
 	name = "Psychiatrist"
@@ -390,6 +382,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/bottle/gin)
 	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp, /obj/item/storage/firstaid/mental)
 	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
+	email_group = MGD_MEDICAL
 
 /datum/job/special/random/artist
 	name = "Artist"
@@ -476,3 +469,21 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 #endif
+
+/datum/job/special/random/computeroperator
+	name = "Computer Operator"
+	wages = PAY_DOCTORATE
+	access_string = "Computer Operator"
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/misc/casualjeanswb = 1, \
+					/obj/item/clothing/under/misc/casualjeansgrey = 1, \
+					/obj/item/clothing/under/misc/casualjeansblue = 1, \
+					/obj/item/clothing/under/misc/casualjeanskhaki = 1)
+	slot_suit = list(/obj/item/clothing/suit/hoodie/random)
+	slot_belt = list(/obj/item/device/pda2/computeroperator)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_eyes = list(/obj/item/clothing/glasses/packetvision)
+	items_in_backpack = list(/obj/item/luggable_computer/techpersonal)
+	alt_names = list("Cybersecurity Expert", \
+					"IT Specialist", \
+					"Network Technician")

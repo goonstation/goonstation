@@ -40,11 +40,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/botanist
 	name = "Botanist"
-	#ifdef MAP_OVERRIDE_DONUT3
-	limit = 7
-	#else
 	limit = 5
-	#endif
 	wages = PAY_TRADESMAN
 	access_string = "Botanist"
 	slot_belt = list(/obj/item/device/pda2/botanist)
@@ -184,6 +180,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	uses_character_profile = FALSE
 	show_in_id_comp = FALSE
 	wiki_link = "https://wiki.ss13.co/Artificial_Intelligence"
+	email_group = MGD_SILICON
+	rounds_needed_to_play = ROUNDS_MIN_SECASS
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -206,6 +204,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	uses_character_profile = FALSE
 	show_in_id_comp = FALSE
 	wiki_link = "https://wiki.ss13.co/Cyborg"
+	email_group = MGD_SILICON
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

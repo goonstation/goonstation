@@ -357,20 +357,14 @@
 			beacon.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
 			return
 		if (beacon.state == 2)
-			beacon.state = 3
-			beacon.icon_state = "beaconunit"
-			boutput(owner, SPAN_NOTICE("You finish wiring together the beacon's electronics."))
-			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, TRUE)
+			var/obj/item/cable_coil/coil = the_tool
+			if (coil.use(1))
+				beacon.state = 3
+				beacon.icon_state = "beaconunit"
+				boutput(owner, SPAN_NOTICE("You finish wiring together the beacon's electronics."))
+				playsound(beacon, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
-			the_tool.amount -= 1
-			if (the_tool.amount < 1)
-				var/mob/source = owner
-				source.u_equip(the_tool)
-				qdel(the_tool)
-			else if(the_tool.inventory_counter)
-				the_tool.inventory_counter.update_number(the_tool.amount)
-
-			beacon.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
+				beacon.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
 			return
 		if (beacon.state == 3)
 			boutput(owner, SPAN_NOTICE("You solder the wiring into place, completing the beacon. It's now ready to deploy with a wrench."))

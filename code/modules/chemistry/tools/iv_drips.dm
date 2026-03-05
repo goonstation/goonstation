@@ -126,9 +126,9 @@
 			return
 
 	attackby(obj/A, mob/user)
-		if (iscuttingtool(A) && !(src.slashed))
+		if ((iscuttingtool(A) || issnippingtool(A)) && !(src.slashed))
 			src.slashed = 1
-			src.desc = "[src.desc] It has been sliced open with a scalpel."
+			src.desc = "[src.desc] It has been sliced open."
 			boutput(user, "You carefully slice [src] open.")
 			return
 		else if (iscuttingtool(A) && (src.slashed))

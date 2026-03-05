@@ -172,6 +172,10 @@ var/global/list/job_start_locations = list()
 	name = "Roboticist"
 	icon_state = "roboticist"
 
+/obj/landmark/start/job/pharmacist
+	name = "Pharmacist"
+	icon_state = "pharmacist"
+
 /obj/landmark/start/job/scientist
 	name = "Scientist"
 	icon_state = "scientist"

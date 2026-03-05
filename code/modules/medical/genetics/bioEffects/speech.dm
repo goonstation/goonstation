@@ -599,6 +599,7 @@
 	name = "Frontal Gyrus Alteration Type-😃"
 	desc = "Makes the 💬 center of the 🧑's 🧠 to use pictograms in 🗣."
 	id = "emoji"
+	icon_state = "emoji2"
 	probability = 1
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = TRUE
@@ -617,6 +618,7 @@
 	name = "Frontal Gyrus Alteration Type-🤪"
 	desc = "💬🧑🧠🗣"
 	id = "emojionly"
+	icon_state = "emoji1"
 	probability = 0.2
 	msgGain = "🧑⬅🗨🤪"
 	msgLose = "You don't feel like talking only in pictograms anymore."
