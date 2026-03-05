@@ -1,5 +1,9 @@
 
 (t)thu mar 05 26
+(u)NibChocolateeny
+(p)26078
+(e)🌱|A-Hydroponics
+(+)Recent studies from NT's botanists reveal that plasmaglass-producing organisms are faster-growing and have higher yields than was previously assumed.
 (u)Kubius
 (p)26003
 (e)🆕🗺🎨📦🔬📨|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Science, A-Logistics
