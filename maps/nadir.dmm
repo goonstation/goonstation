@@ -2875,6 +2875,17 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/paper/manufacturer_blueprint/resonator_type_fq{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "TYPE-FQ - FIELD QUANTIZER<br>WARNING: PROTOTYPE<br>Provides field dilation, with secondary consequence to axial resonances (see database)<br>Maximum 7 intensity";
+	name = "printed card";
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
 "boV" = (
@@ -48187,6 +48198,13 @@
 /obj/item/paper/manufacturer_blueprint/resonator_type_fq{
 	pixel_x = -5;
 	pixel_y = 4
+	},
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "TYPE-FQ - FIELD QUANTIZER<br>WARNING: PROTOTYPE<br>Provides field dilation, with secondary consequence to axial resonances (see database)<br>Maximum 7 intensity";
+	name = "printed card";
+	pixel_x = -6;
+	pixel_y = -4
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
