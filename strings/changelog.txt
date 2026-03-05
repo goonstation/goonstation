@@ -1,5 +1,10 @@
 
 (t)thu mar 05 26
+(u)Lord_Earthfire
+(p)25945
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Cryotubes will adjust the temperature of chemicals inserted into them to the temperature of the cryotube
+(+)Chemicals inserted into cryotubes cannot burn/frostburn their occupants anymore
 (u)Ikea
 (p)25924
 (e)🆕📦|C-Feature, A-Game-Objects
