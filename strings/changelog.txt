@@ -1,5 +1,9 @@
 
 (t)thu mar 05 26
+(u)Kubius
+(p)26061
+(e)|
+(*)Barcodes can once again be click-dragged onto large storages (while they're closed).
 (u)Nexusuxen
 (p)26077
 (e)🚨🐁|A-Admin, A-Critters
