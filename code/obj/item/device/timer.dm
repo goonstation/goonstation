@@ -4,7 +4,7 @@ TYPEINFO(/obj/item/device/timer)
 /obj/item/device/timer
 	name = "timer"
 	icon_state = "timer0"
-	item_state = "electronic"
+	item_state = "assembly"
 	var/timing = 0
 	var/time = 5 SECONDS
 	var/last_tick = 0

@@ -1457,10 +1457,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"agE" = (
-/obj/machinery/light/incandescent/blueish,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
 "agG" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -1620,10 +1616,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "ahw" = (
-/obj/machinery/light/incandescent/blueish,
 /obj/machinery/conveyor/NS{
 	id = "chapel"
 	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/black,
 /area/station/maintenance/northwest)
 "ahx" = (
@@ -1671,7 +1667,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ahI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -2025,10 +2021,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ajj" = (
-/obj/machinery/light/incandescent/blueish,
 /obj/stool/chair{
 	dir = 1
 	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "ajl" = (
@@ -2135,7 +2131,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "ajZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
@@ -2170,7 +2166,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
 /obj/item/reagent_containers/syringe,
-/obj/machinery/light/incandescent/blueish,
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "akf" = (
@@ -2415,7 +2411,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "akW" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4;
 	pixel_y = 3
@@ -2941,7 +2937,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "anj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -3013,7 +3009,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/redwhite,
@@ -3656,6 +3652,7 @@
 /area/station/science/research_director)
 "aqr" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aqs" = (
@@ -4043,7 +4040,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "asl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -4723,6 +4720,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
 "avh" = (
@@ -4739,7 +4737,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/sanitary,
@@ -6366,7 +6364,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aCZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6;
 	pixel_y = 3
@@ -6743,7 +6741,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/restroom)
 "aEC" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -6754,6 +6752,7 @@
 	pixel_y = 5
 	},
 /obj/item/spraybottle,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "aEE" = (
@@ -7534,10 +7533,10 @@
 /area/station/science/chemistry)
 "aHW" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = -28
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aIb" = (
@@ -11642,8 +11641,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "bez" = (
-/obj/machinery/light/incandescent/blueish,
 /obj/storage/closet/coffin/wood,
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "beA" = (
@@ -13110,6 +13109,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet/blue/decal/innercross,
 /area/station/crew_quarters/bar)
 "blv" = (
@@ -13220,12 +13220,16 @@
 /area/station/crew_quarters/kitchen)
 "blT" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/clothing/glasses/spectro,
+/obj/item/clothing/glasses/spectro{
+	pixel_x = -6;
+	pixel_y = 12
+	},
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet/blue/fancy/narrow/sw,
 /area/station/crew_quarters/bar)
 "blU" = (
@@ -14619,14 +14623,14 @@
 /area/station/crew_quarters/observatory)
 "bsu" = (
 /obj/decal/cleanable/dirt,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bsw" = (
 /obj/item/clothing/head/plunger,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary,
@@ -15315,10 +15319,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "bvn" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
 /obj/machinery/portable_atmospherics/canister/air/large,
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "bvo" = (
@@ -18646,7 +18648,7 @@
 	},
 /area/station/quartermaster/refinery)
 "bKF" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -19952,6 +19954,7 @@
 /obj/table/auto,
 /obj/item/sponge,
 /obj/item/paper_bin,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/restroom)
 "bRS" = (
@@ -21171,7 +21174,7 @@
 	},
 /area/station/security/hos)
 "bXE" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -21810,7 +21813,7 @@
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "caE" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -21922,7 +21925,7 @@
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "cbh" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -22145,6 +22148,7 @@
 /area/diner/kitchen)
 "cca" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ccc" = (
@@ -22332,7 +22336,7 @@
 /area/diner/kitchen)
 "ccK" = (
 /obj/decal/cleanable/dirt,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -24554,6 +24558,7 @@
 /area/station/science/lobby)
 "cyx" = (
 /obj/machinery/chem_dispenser/chef,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "cyT" = (
@@ -24971,12 +24976,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
-"cOh" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "cOi" = (
 /obj/item/slag_shovel,
 /turf/simulated/floor/shuttlebay{
@@ -25737,6 +25736,10 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"dxn" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/darkpurple,
+/area/station/crew_quarters/data)
 "dxt" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/access/kitchen,
@@ -25983,6 +25986,11 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"dFu" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "dHa" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
@@ -26392,13 +26400,13 @@
 /area/station/janitor/office)
 "dVj" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
 	},
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "dVN" = (
@@ -30312,6 +30320,7 @@
 /area/station/security/main)
 "gVI" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet/blue/decal/innercross,
 /area/station/crew_quarters/bar)
 "gVN" = (
@@ -30360,12 +30369,6 @@
 	},
 /turf/simulated/floor/stairs/wood,
 /area/station/ranch)
-"gYw" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
 "gYB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31878,9 +31881,7 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "isB" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 8
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "isJ" = (
@@ -32061,9 +32062,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "iCh" = (
@@ -32367,6 +32366,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/station/security/brig)
 "iPa" = (
@@ -32639,9 +32639,7 @@
 "iYt" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/cereal_box/roach,
-/obj/machinery/light/incandescent/warm/very{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/warm/very,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "iYv" = (
@@ -32817,8 +32815,7 @@
 "jfG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
-	dir = 10;
-	id = "genetics"
+	dir = 10
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
@@ -32923,6 +32920,7 @@
 /obj/machinery/espresso_machine{
 	pixel_y = 4
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "jll" = (
@@ -33579,7 +33577,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 3
@@ -33620,7 +33618,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "jPr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4;
 	pixel_y = 3
@@ -34415,7 +34413,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "kAS" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -35145,6 +35143,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
+"llr" = (
+/obj/machinery/light_switch/west,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "llv" = (
 /obj/landmark/pest,
 /obj/cable{
@@ -35390,7 +35392,7 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
 "luR" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -36787,9 +36789,7 @@
 /area/station/maintenance/north)
 "mJt" = (
 /obj/machinery/shieldgenerator/energy_shield,
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "mJz" = (
@@ -37946,6 +37946,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/security,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light/incandescent/greenish,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "nJC" = (
@@ -38280,7 +38281,7 @@
 	name = "Catering Hangar"
 	})
 "nYX" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 2
@@ -38607,6 +38608,7 @@
 	},
 /obj/machinery/light/incandescent/cool,
 /obj/landmark/start/job/medical_trainee,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/blue/corner{
 	dir = 8
 	},
@@ -39237,7 +39239,7 @@
 /area/research_outpost)
 "oVp" = (
 /obj/item/rods/steel/fullstack,
-/obj/machinery/light/incandescent/warm/very,
+/obj/machinery/light/small/sticky/warm/very,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "oVt" = (
@@ -40454,8 +40456,8 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "pYG" = (
-/obj/machinery/light/incandescent/blueish,
 /obj/disposalpipe/segment,
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "pZH" = (
@@ -40826,6 +40828,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/camera/directional/east,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -41199,7 +41202,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "qER" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/hydro_growlamp,
@@ -41338,7 +41341,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "qNK" = (
@@ -42206,7 +42209,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/camera/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -43327,7 +43330,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
 "sBQ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -43576,7 +43579,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "sNg" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -43789,7 +43792,7 @@
 /turf/space/fluid/nospawn,
 /area/space)
 "sVt" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -44532,7 +44535,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -4
 	},
@@ -44553,6 +44556,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "tFi" = (
@@ -44803,9 +44807,7 @@
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
 "tRo" = (
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "tRt" = (
@@ -44986,7 +44988,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "tYd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /obj/decal/tile_edge/line/blue{
@@ -45058,6 +45060,7 @@
 "uay" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "ubx" = (
@@ -45244,7 +45247,7 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost/chamber)
 "ums" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/wood/two,
@@ -47226,7 +47229,7 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "wfs" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 2
@@ -47399,9 +47402,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
+/obj/machinery/light/small/sticky/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "wrX" = (
@@ -89293,7 +89294,7 @@ ali
 afq
 afq
 afq
-agE
+isB
 afq
 afq
 afq
@@ -95315,7 +95316,7 @@ aqn
 aqn
 nll
 wIW
-agE
+isB
 agA
 aiQ
 agb
@@ -98939,7 +98940,7 @@ aqn
 aqn
 nll
 exn
-agE
+isB
 afx
 akw
 agl
@@ -98948,7 +98949,7 @@ agj
 agj
 agj
 bbA
-mMZ
+dFu
 aob
 akQ
 aly
@@ -101358,7 +101359,7 @@ aqn
 qBC
 nll
 cfJ
-cOh
+tRo
 afq
 afq
 ajQ
@@ -101968,7 +101969,7 @@ afq
 afq
 afq
 afq
-gYw
+isB
 afq
 afq
 afq
@@ -101979,7 +101980,7 @@ afq
 afq
 dmS
 afq
-gYw
+isB
 afq
 afq
 xHH
@@ -107745,7 +107746,7 @@ ayO
 beG
 beK
 beN
-beI
+dxn
 beY
 beM
 aey
@@ -133672,7 +133673,7 @@ vbc
 eYr
 dBL
 wxZ
-aTq
+llr
 nsC
 bcV
 bdl

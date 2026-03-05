@@ -28,8 +28,10 @@
 		..()
 		if (islist(src.random_icons) && length(src.random_icons))
 			src.icon_state = pick(src.random_icons)
-		pixel_y = rand(-8, 8)
-		pixel_x = rand(-8, 8)
+		if (pixel_y == 0)
+			pixel_y = rand(-8, 8)
+		if (pixel_x == 9)
+			pixel_x = rand(-8, 8)
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
@@ -136,6 +138,10 @@
 	get_desc()
 		. = "<br>[SPAN_NOTICE("It says:")]<br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
+	New()
+		. = ..()
+		src.set_writing_icon(src.words)
+
 	attack_hand(mob/user)
 		user.lastattacked = get_weakref(user)
 		if (src.attached)
@@ -190,14 +196,7 @@
 				return
 			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
-			if (src.icon_state == initial(src.icon_state))
-				var/search_t = lowertext(t)
-				if (copytext(search_t, -1) == "?")
-					src.icon_state = "postit-quest"
-				else if (copytext(search_t, -1) == "!")
-					src.icon_state = "postit-excl"
-				else
-					src.icon_state = "postit-writing"
+			src.set_writing_icon(t)
 			src.words += "[src.words ? "<br>" : ""][t]"
 			tooltip_rebuild = TRUE
 			pen.in_use = 0
@@ -261,6 +260,18 @@
 		if(src.attached && src.loc != src.attached)
 			remove_from_attached(do_loc = FALSE)
 
+	proc/set_writing_icon(text)
+		if (src.icon_state != initial(src.icon_state))
+			return
+		if (length(text) < 1)
+			return
+		var/search_t = lowertext(text)
+		if (copytext(search_t, -1) == "?")
+			src.icon_state = "postit-quest"
+		else if (copytext(search_t, -1) == "!")
+			src.icon_state = "postit-excl"
+		else
+			src.icon_state = "postit-writing"
 
 /obj/item/sticker/gold_star
 	name = "gold star sticker"

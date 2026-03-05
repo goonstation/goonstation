@@ -2085,7 +2085,7 @@ proc/alert_all_ghosts(atom/target, message)
 				else
 					atom_names["nameless [thing.type]"] = thing
 		if (length(atom_names))
-			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atom_names)
+			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atom_names, banned_chars = list("`"))
 			if (isnull(A))
 				return
 		if(istext(A))
@@ -2121,7 +2121,7 @@ proc/alert_all_ghosts(atom/target, message)
 	if (length(type_procs))
 		title += " ([length(type_procs)] custom)"
 
-	var/choice = tgui_input_list(src, title, "[A]", verbs, start_with_search=FALSE)
+	var/choice = tgui_input_list(src, title, "[A]", verbs, start_with_search=FALSE, banned_chars = list("`"))
 
 	var/client/C = src.client
 	if (choice in type_procs)

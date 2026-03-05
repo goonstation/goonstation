@@ -312,6 +312,7 @@
 /obj/landmark/antagonist/operative/commander,
 /obj/landmark/antagonist/pirate/captain,
 /obj/landmark/antagonist/pirate/first_mate,
+/obj/landmark/antagonist/blob,
 /turf/unsimulated/floor/blue,
 /area/station/devzone)
 "gF" = (
@@ -1065,7 +1066,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "te" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -4
@@ -2130,7 +2131,7 @@
 /turf/unsimulated/floor/engine/caution/north,
 /area/station/devzone)
 "Mo" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -2612,7 +2613,7 @@
 /area/station/devzone)
 "Up" = (
 /obj/table/auto,
-/obj/submachine/chef_sink/chem_sink,
+/obj/machinery/sink/slim,
 /obj/item/kitchen/rollingpin,
 /obj/item/plate,
 /obj/item/kitchen/utensil/knife,

@@ -14,7 +14,8 @@
 /datum/antagonist/broken/assign_objectives()
 	if (!src.shared_objective_text)
 		var/objective_type = pick(concrete_typesof(/datum/objective/madness))
-		var/datum/objective/objective = new objective_type(null, src.owner, src)
+		var/datum/objective/madness/objective = new objective_type(null, src.owner, src)
+		objective.set_up_from_victims(list(src.owner.current))
 		src.shared_objective_text = objective.explanation_text
 	else
 		new /datum/objective/specialist(src.shared_objective_text, src.owner, src)

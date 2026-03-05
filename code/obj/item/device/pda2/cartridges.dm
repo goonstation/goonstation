@@ -24,7 +24,6 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	desc = "A data cartridge for PDAs."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "cart-blank"
-	item_state = "electronic"
 	file_amount = 32
 	title = "ROM Cart"
 

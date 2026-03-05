@@ -676,7 +676,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	var/homeloc = null
 	allow_self_service = 0
 	/// Mailgroups it'll try to send PDA notifications to
-	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+	var/list/mailgroups = list(MGD_MEDICAL)
 
 	New()
 		..()

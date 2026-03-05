@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 	desc = "A non-functional upgrade for a cyborg."
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 
 	/// Is this upgrade used like an item?
 	var/active = 0
