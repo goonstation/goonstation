@@ -4212,6 +4212,7 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge2"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "asv" = (
@@ -31258,8 +31259,8 @@
 /area/station/science/chemistry)
 "con" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "coo" = (
@@ -32252,10 +32253,10 @@
 /area/station/maintenance/southwest)
 "crw" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "crx" = (
@@ -43777,14 +43778,11 @@
 /obj/drink_rack/cup{
 	pixel_y = 28
 	},
-/obj/item/reagent_containers/food/drinks/espressocup{
-	pixel_y = 2;
-	pixel_x = 8
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
 /obj/table/wood/auto/desk,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/bar)
 "iWb" = (
@@ -43978,6 +43976,7 @@
 	dir = 1;
 	pixel_y = 3
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/bar)
 "jeh" = (
@@ -56740,10 +56739,10 @@
 	dir = 4
 	},
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/shuttlebay,
 /area/station/crew_quarters/baroffice)
 "srd" = (
@@ -57986,7 +57985,7 @@
 "tmd" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/pharmacy)
 "tni" = (
@@ -62851,13 +62850,13 @@
 /area/station/security/detectives_office)
 "wDL" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "wEe" = (

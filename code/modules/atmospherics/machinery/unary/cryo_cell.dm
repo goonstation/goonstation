@@ -1,3 +1,6 @@
+#define CRYO_ATMOS_INTERACTION_TRESHOLD 1 MOLES
+#define CRYO_MOB_HEAL_TRESHOLD 10 MOLES
+
 TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	mats = list("cobryl" = 100,
 				"crystal" = 50,
@@ -17,7 +20,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/datum/light/light
 	var/ARCHIVED(temperature)
 	var/mob/occupant = null //! Mob inside the tube being healed
-	var/obj/item/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
+	var/obj/item/reagent_containers/glass/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
 	var/show_beaker_contents = FALSE
 	var/current_heat_capacity = 50
 	var/occupied_power_use = 500 WATTS //! Additional power usage when the pod is occupied (and on)
@@ -63,6 +66,9 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.use_power(src.occupied_power_use, EQUIP)
 
 	if(src.air_contents)
+		if(src.beaker && TOTAL_MOLES(src.air_contents) >= CRYO_ATMOS_INTERACTION_TRESHOLD)
+			// cryotubes cool people and the chemicals they keep in them
+			src.beaker.reagents.temperature_reagents(src.air_contents.temperature, exposed_volume = (600 + src.beaker.reagents.total_volume * 7.5), change_cap = 30)
 		src.ARCHIVED(temperature) = src.air_contents.temperature
 		src.heat_gas_contents()
 		src.expel_gas()
@@ -374,7 +380,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.UpdateOverlays(null, "defib")
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
-	if(TOTAL_MOLES(src.air_contents) < 10 MOLES)
+	if(TOTAL_MOLES(src.air_contents) < CRYO_MOB_HEAL_TRESHOLD)
 		return
 	if(ishuman(src.occupant))
 		if(isdead(src.occupant))
@@ -398,11 +404,11 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		return
 	if(src.beaker)
 		src.beaker.reagents.trans_to(occupant, 0.1, 10)
-		src.beaker.reagents.reaction(occupant, TOUCH, 5, paramslist = list("nopenetrate")) //1/10th of small beaker - matches old rate for default beakers, give or take
+		src.beaker.reagents.reaction(occupant, TOUCH, 5, can_burn = FALSE, paramslist = list("nopenetrate")) //1/10th of small beaker - matches old rate for default beakers, give or take
 
 /// Slowly heats air_contents to 20C
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
-	if(TOTAL_MOLES(air_contents) < 1 MOLE)
+	if(TOTAL_MOLES(air_contents) < CRYO_ATMOS_INTERACTION_TRESHOLD)
 		return
 	var/air_heat_capacity = HEAT_CAPACITY(src.air_contents)
 	var/combined_heat_capacity = src.current_heat_capacity + air_heat_capacity
@@ -412,7 +418,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 
 /// Leaks some gas out.
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
-	if(TOTAL_MOLES(src.air_contents) < 1)
+	if(TOTAL_MOLES(src.air_contents) < CRYO_ATMOS_INTERACTION_TRESHOLD)
 		return
 	var/remove_amount = TOTAL_MOLES(src.air_contents)/100
 	var/datum/gas_mixture/expel_gas = air_contents.remove(remove_amount)
@@ -497,3 +503,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	icon = 'icons/obj/Cryogenic2.dmi'
 	layer = 3
 	icon_state = "defib-shock"
+
+#undef CRYO_ATMOS_INTERACTION_TRESHOLD
+#undef CRYO_MOB_HEAL_TRESHOLD

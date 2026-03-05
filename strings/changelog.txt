@@ -1,4 +1,51 @@
 
+(t)thu mar 05 26
+(u)Kubius
+(p)26061
+(e)|
+(*)Barcodes can once again be click-dragged onto large storages (while they're closed).
+(u)Nexusuxen
+(p)26077
+(e)🚨🐁|A-Admin, A-Critters
+(+)Genetic stability should behave more consistently now; having no mutations should ALWAYS result in having 100 stability. Report any issues relating to stability.
+(u)NibChocolateeny
+(p)26078
+(e)🌱|A-Hydroponics
+(+)Recent studies from NT's botanists reveal that plasmaglass-producing organisms are faster-growing and have higher yields than was previously assumed.
+(u)Kubius
+(p)26003
+(e)🆕🗺🎨📦🔬📨|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Science, A-Logistics
+(*)Nadir's Harmonic Siphon has 3 new resources with shifting requirements, and a new resonator the Research Director can print that helps out with them.
+(u)bork and tofumutt
+(p)25987
+(e)🎨📨|C-Sprites, A-Logistics
+(*)Adds dog ears to the clothing booth. Comes in 9 different colors! Start a fight with your local catperson today.
+(u)Lord_Earthfire
+(p)25944
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Added asphyxiation inducing poison, parazamine. The recipe is (1) Atropine + (1) Cryoxadone + (0.1) space fungus @ 258K -> (2) Parazamine
+(u)Lord_Earthfire
+(p)25945
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Cryotubes will adjust the temperature of chemicals inserted into them to the temperature of the cryotube
+(+)Chemicals inserted into cryotubes cannot burn/frostburn their occupants anymore
+(u)Ikea
+(p)25924
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can now find flavored vape cartridges in cigarette machines.
+(u)bork
+(p)26096
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds the recipe for pig in a blanket (hot dog half + dough strip)!
+(t)wed mar 04 26
+(u)QuiteLiterallyAnything
+(p)26066
+(e)🆕🗺💅⚗|C-Feature, A-Mapping, C-QoL, A-Chemistry
+(+)Beakers now appear directly inside most chemical dispensers at round start.
+(u)Lord_Earthfire
+(p)25912
+(e)💡|A-Station-Systems
+(+)The TEG warning lights should be somewhat more consistent when working under very high load.
 (t)sun mar 01 26
 (u)glowbold
 (p)26018

@@ -302,20 +302,20 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// index = which reagent to transfer (0 = all)
 	proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1, var/index=0, var/exception=0)
 		if(amount > total_volume) amount = total_volume
-		if(amount <= 0) return
+		if(amount <= CHEM_EPSILON) return
 		if(!target) return
+
+		amount = round(amount, CHEM_EPSILON)
+
+		if (do_fluid_react && issimulatedturf(target))
+			var/turf/simulated/T = target
+			return T.fluid_react(src, amount, index = index)
 
 		if (isnull(target.reagents))
 			target.create_reagents()
 
 		var/datum/reagents/target_reagents = target.reagents
 		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
-		amount = round(amount, CHEM_EPSILON)
-		if(amount <= CHEM_EPSILON) return
-
-		if (do_fluid_react && issimulatedturf(target))
-			var/turf/simulated/T = target
-			return T.fluid_react(src, amount, index = index)
 
 		return trans_to_direct(target_reagents, amount, multiplier, index = index, exception = exception)
 

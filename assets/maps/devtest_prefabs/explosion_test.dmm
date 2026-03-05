@@ -1153,6 +1153,7 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/space)
 "MJ" = (

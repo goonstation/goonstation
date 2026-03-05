@@ -1,5 +1,6 @@
 
 ABSTRACT_TYPE(/datum/siphon_mineral)
+///A datum providing description and requirements for a particular thing the harmonic siphon can extract.
 /datum/siphon_mineral
 	///Name of mineral, can be used for the player-viewable settings compendium
 	var/name = "Youshouldn'tseemium"
@@ -15,13 +16,36 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	var/shear = null
 	///Sensitivity window for target resonances; a higher window is more forgiving of imprecise settings
 	var/sens_window = 0
+
+	//A note: Parameter requirements will be totally ignored if not explicitly set.
+
 	///Stuff to produce when parameters are successfully met
 	var/product = /obj/item/raw_material/scrap_metal
 	///Setup guide, formatted as a list of strings describing individual resonator positions and intensities
 	var/list/setup_guide = null
+	///When a harmonic cycle is provided, the siphon and associated hardware will automatically handle its integration and cycling.
+	var/datum/harmonic_cycle/hm_cycle = null
 
+ABSTRACT_TYPE(/datum/harmonic_cycle)
+///Certain harmonic siphon extraction targets have requirements that change over time; this datum specifies the precise manner in which they change.
+/datum/harmonic_cycle
+	///The minimum time in each cycle before "reharmonization", the randomization of specified parameters.
+	var/time_to_shift = 5 MINUTES
+	///Additional persistence time that can be added on randomly with each cycle.
+	var/extra_time_variability = null
+	///Each time a shift occurs, the newly-randomized delay until the next shift is stored here.
+	var/current_shift_length = null
+	///What time the cycle last shifted (for tracking how long it is until the next shift).
+	var/tmp/last_shifted = null
 
-//A note: Parameter requirements will be totally ignored if not explicitly set.
+	var/x_torque_min = null
+	var/x_torque_max = null
+	var/y_torque_min = null
+	var/y_torque_max = null
+	var/shear_min = null
+	var/shear_max = null
+
+//Individual entries
 
 /datum/siphon_mineral/miraclium
 	name = "Direct Extraction"
@@ -236,23 +260,60 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 54
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
-//telecrystal and gnesis have unusual formative conditions difficult to induce manually
-//should probably have highly specific parameters, maybe obtained through secrets?
-//idea in particular: the required shear is in the 76-89 range and chooses a different value every 60 or 90 sec
-//and the recipe is learned through a device that shows you when this value changes, so you need a rapidly adjustable resonator setup
-/*
+
+//variable materials
+
 /datum/siphon_mineral/telecrystal
 	name = "Telecrystal"
-	tick_req = 200
-	shear = 63
+	tick_req = 75
+	y_torque = -10
+	shear = 800
+	sens_window = 1
 	product = /obj/item/raw_material/telecrystal
+	hm_cycle = new /datum/harmonic_cycle/telecrystal
 
-	New()
-		src.tick_req = rand(200,230)
-		src.shear = rand(61,63)
-		..()
-*/
-//shear of 65 or higher should probably do Bad Things unless precisely set.
+/datum/harmonic_cycle/telecrystal
+	time_to_shift = 4 MINUTES
+	extra_time_variability = 70 SECONDS
+	shear_min = 70
+	shear_max = 98
+
+/datum/siphon_mineral/veranium
+	name = "Veranium"
+	tick_req = 110
+	x_torque = 0
+	y_torque = -13
+	shear = 0
+	sens_window = 2
+	product = /obj/item/raw_material/veranium
+	hm_cycle = new /datum/harmonic_cycle/veranium
+
+/datum/harmonic_cycle/veranium
+	time_to_shift = 6 MINUTES
+	extra_time_variability = 50 SECONDS
+	x_torque_min = -61
+	x_torque_max = 61
+	y_torque_min = -19
+	y_torque_max = -13
+
+/datum/siphon_mineral/yuranite
+	name = "Yuranite"
+	tick_req = 120
+	x_torque = 0
+	y_torque = -111
+	shear = 130
+	sens_window = 5
+	product = /obj/item/raw_material/yuranite
+	hm_cycle = new /datum/harmonic_cycle/yuranite
+
+/datum/harmonic_cycle/yuranite
+	time_to_shift = 1 MINUTES
+	extra_time_variability = 12 SECONDS
+	y_torque_min = -70
+	y_torque_max = -110
+
+//high shear special zone
+
 /datum/siphon_mineral/gold
 	name = "Gold"
 	tick_req = 50
