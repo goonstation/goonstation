@@ -120,7 +120,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "acs" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/sanitary,
@@ -982,7 +982,7 @@
 	name = "Nuclear Control Room"
 	})
 "auw" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "utility sink"
@@ -1284,6 +1284,9 @@
 	pixel_x = -15;
 	pixel_y = 5
 	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = -8
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "aAN" = (
@@ -1403,6 +1406,7 @@
 /area/station/hallway/primary/northwest)
 "aEs" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/south,
 /area/station/medical/head)
 "aEI" = (
@@ -1810,6 +1814,7 @@
 /area/pasiphae/bridge)
 "aRh" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/east,
 /area/station/medical/medbay/pharmacy)
 "aRr" = (
@@ -2917,10 +2922,7 @@
 /area/station/maintenance/disposal)
 "bpN" = (
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "bpV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2930,7 +2932,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/drainage,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -3402,6 +3404,7 @@
 /obj/stool/chair/red{
 	dir = 1
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/security/secwing)
 "bxL" = (
@@ -3659,10 +3662,7 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "bCW" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
@@ -3873,7 +3873,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "bIm" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 4;
 	name = "rusty sink"
@@ -3938,6 +3938,7 @@
 	})
 "bJE" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/north,
 /area/station/science/chemistry)
 "bJF" = (
@@ -4393,10 +4394,7 @@
 "bVY" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "bWh" = (
 /obj/table/auto,
 /obj/item/shaker/mustard{
@@ -5437,7 +5435,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/blackwhite,
@@ -5911,7 +5909,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/pasiphae/bridge)
 "cIO" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -6052,10 +6050,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "cMK" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/plating,
@@ -6231,6 +6226,7 @@
 	desc = "What? Security has moments of weakness too!";
 	name = "emergency alcohol dispenser"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/south,
 /area/station/ai_monitored/armory)
 "cQf" = (
@@ -6326,10 +6322,7 @@
 "cSf" = (
 /obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "cSg" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -7050,10 +7043,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "diu" = (
 /obj/stool/chair/comfy/flock{
 	dir = 8
@@ -8504,7 +8494,7 @@
 /area/station/crewquarters/cryotron)
 "dSt" = (
 /obj/machinery/light/small/floor/netural,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 8
 	},
 /turf/simulated/floor/sanitary/white,
@@ -9643,10 +9633,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "euj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10591,6 +10578,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"ePp" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
 "ePt" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/light{
@@ -10794,6 +10787,10 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
+"eTC" = (
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "eTI" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -11421,10 +11418,7 @@
 	},
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "fiR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12067,10 +12061,7 @@
 "fvZ" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "fwk" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -12920,6 +12911,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"fNS" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "fNY" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -13386,10 +13388,7 @@
 "fZP" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "fZQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14131,7 +14130,7 @@
 /obj/stool/chair/office/blue{
 	dir = 8
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /turf/simulated/floor/engine/caution/east,
@@ -14186,10 +14185,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "grC" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/decoration/ashtray,
@@ -14896,10 +14892,7 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "gEL" = (
 /obj/machinery/light/small,
 /obj/machinery/shieldgenerator/energy_shield{
@@ -15341,6 +15334,7 @@
 	pixel_x = 4;
 	pixel_y = -1
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -15419,7 +15413,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/blueblack{
@@ -15571,7 +15565,7 @@
 	},
 /area/station/storage/emergencyinternals)
 "gTI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -16104,6 +16098,7 @@
 	},
 /obj/decal/stripe_caution,
 /obj/machinery/flasher/portable,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -19278,7 +19273,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "irP" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -20203,6 +20198,9 @@
 "iMR" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black{
 	icon_state = "respect6"
@@ -21153,10 +21151,7 @@
 /obj/disposalpipe/trunk/south,
 /obj/machinery/disposal,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "jjb" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -21338,10 +21333,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "joJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21670,7 +21662,7 @@
 /turf/simulated/floor/purpleblack,
 /area/station/hallway/primary/northeast)
 "juY" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -21808,7 +21800,7 @@
 "jxY" = (
 /obj/stool/chair/office,
 /obj/landmark/start/job/roboticist,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor/sanitary/white,
@@ -21935,6 +21927,7 @@
 	name = "Chemistry Lab Shutters";
 	pixel_y = 26
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -22299,6 +22292,7 @@
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -22401,10 +22395,7 @@
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "jNu" = (
 /mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/red/fancy/edge/west,
@@ -22665,10 +22656,7 @@
 "jRv" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "jRw" = (
 /obj/machinery/drainage,
 /obj/machinery/light_switch/west,
@@ -23394,7 +23382,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southeast)
 "kjb" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /turf/simulated/floor/black/side{
@@ -23439,7 +23427,7 @@
 	},
 /area/station/science/hall)
 "kkl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -24008,18 +23996,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ksw" = (
-/obj/table/reinforced/auto,
 /obj/drink_rack/mug{
 	pixel_y = 32
 	},
-/obj/item/kitchen/food_box/sugar_box{
-	pixel_x = -11;
-	pixel_y = 11
-	},
-/obj/item/device/radio/headset/medical{
-	pixel_x = 9;
-	pixel_y = 3
-	},
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "ksL" = (
@@ -24581,10 +24561,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "kEC" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/cable{
@@ -24637,7 +24614,7 @@
 	name = "The Warrens"
 	})
 "kFu" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 16
 	},
 /obj/machinery/drainage,
@@ -24706,7 +24683,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "kHl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -25419,7 +25396,6 @@
 	name = "The Warrens"
 	})
 "kXR" = (
-/obj/storage/secure/closet/medical/chemical,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -25909,7 +25885,7 @@
 	name = "The Warrens"
 	})
 "lkp" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -26851,7 +26827,7 @@
 /area/station/medical/medbay)
 "lEA" = (
 /obj/machinery/drainage,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -27258,10 +27234,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "lLN" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -28028,10 +28001,7 @@
 /area/station/security/equipment)
 "mbt" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "mby" = (
 /obj/storage/secure/closet/fridge/blood,
 /turf/simulated/floor/redblack,
@@ -28475,7 +28445,7 @@
 	name = "North Catalytic Substation"
 	})
 "mjY" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -28905,7 +28875,7 @@
 	},
 /area/station/storage/emergency)
 "mvb" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -29141,7 +29111,7 @@
 "mzV" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/firealarm/directional/west,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/west,
 /area/station/crew_quarters/baroffice)
 "mAa" = (
@@ -30221,7 +30191,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/cashreg,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
@@ -31306,7 +31276,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "nzD" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -31833,10 +31803,7 @@
 	},
 /obj/storage/crate/bloody,
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "nIb" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "purge valve"
@@ -33632,10 +33599,7 @@
 /obj/item/reagent_containers/dropper,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "oBx" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -37470,10 +37434,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "qqf" = (
 /obj/fakeobject/flock/antenna/broken{
 	icon_state = "atenna-broken-1"
@@ -37541,6 +37502,7 @@
 /obj/disposalpipe/trunk/brig{
 	dir = 1
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "qrV" = (
@@ -38236,10 +38198,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "qHP" = (
 /obj/machinery/light{
 	dir = 8;
@@ -38263,7 +38222,7 @@
 	},
 /area/station/science/hall)
 "qHY" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/item/storage/wall{
@@ -38509,7 +38468,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "qQo" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -39060,7 +39019,7 @@
 /turf/simulated/floor/plating,
 /area/pasiphae/bridge)
 "rfM" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /obj/machinery/drainage,
@@ -39431,10 +39390,10 @@
 "ror" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -40105,10 +40064,7 @@
 	},
 /obj/blind_switch/area/west,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "rGm" = (
 /obj/disposalpipe/trunk/north,
 /obj/machinery/disposal/transport{
@@ -40263,8 +40219,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "rKw" = (
-/obj/item/device/radio/intercom/security,
 /obj/storage/closet/wardrobe/orange,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -41641,6 +41599,7 @@
 /obj/disposalpipe/trunk/brig{
 	dir = 1
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "ssA" = (
@@ -41797,6 +41756,7 @@
 "svm" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/revimp_kit,
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -42955,7 +42915,7 @@
 	},
 /area/station/hallway/primary/northeast)
 "sWA" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 15
 	},
 /obj/decal/cleanable/dirt/jen,
@@ -43621,6 +43581,14 @@
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
 	})
+"tkB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "tkJ" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -44254,7 +44222,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
 	},
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/pharmacy,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -44650,6 +44618,7 @@
 	pixel_x = -9;
 	pixel_y = 17
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 9
 	},
@@ -44696,10 +44665,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "tJx" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/stool/chair/comfy/wheelchair{
@@ -44950,10 +44916,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "tQS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45364,7 +45327,7 @@
 	},
 /area/pasiphae/sys)
 "tZC" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/redblack{
@@ -45796,6 +45759,7 @@
 /area/station/hallway/secondary/exit)
 "ujK" = (
 /obj/storage/secure/closet/engineering/mining,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/yellowblack,
 /area/station/mining/staff_room)
 "ujY" = (
@@ -46508,7 +46472,7 @@
 /area/station/crew_quarters/courtroom)
 "uAs" = (
 /obj/machinery/drainage,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -46750,10 +46714,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "uHL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -46857,7 +46818,7 @@
 	},
 /area/station/medical/medbay/treatment)
 "uKG" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -47264,10 +47225,15 @@
 	},
 /obj/machinery/door_control{
 	id = "market";
-	pixel_y = 24
+	pixel_y = 24;
+	pixel_x = 3
 	},
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -7;
+	pixel_y = 23
 	},
 /turf/simulated/floor/grey/side{
 	dir = 9
@@ -47312,10 +47278,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "uUW" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -47605,7 +47568,7 @@
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "vcV" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -47692,6 +47655,14 @@
 	dir = 8
 	},
 /area/station/security/main)
+"vfb" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/grey,
+/area/pasiphae/bridge)
 "vfE" = (
 /obj/stool/chair{
 	dir = 4
@@ -47749,7 +47720,6 @@
 	pixel_y = 5
 	},
 /obj/noticeboard/persistent/bar/directional/north,
-/obj/item/reagent_containers/food/drinks/espressocup,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -47761,6 +47731,7 @@
 	dir = 4;
 	pixel_y = 4
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "viB" = (
@@ -47884,6 +47855,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "vlO" = (
@@ -48211,6 +48183,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
+	},
+/obj/item/paper/manufacturer_blueprint/resonator_type_fq{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
@@ -48572,6 +48548,7 @@
 /area/station/maintenance/disposal)
 "vzZ" = (
 /obj/machinery/manufacturer/hangar,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -49462,7 +49439,7 @@
 /area/station/hallway/primary/southeast)
 "vUc" = (
 /obj/machinery/drainage,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -49474,7 +49451,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/hop)
 "vUQ" = (
-/obj/machinery/door/airlock/pyro/glass/med,
+/obj/machinery/door/airlock/pyro/glass/med{
+	id = "nadirmed"
+	},
 /obj/mapping_helper/access/medical,
 /obj/cable{
 	icon_state = "1-2"
@@ -50828,10 +50807,7 @@
 "wBt" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
+/area/station/storage/hydroponics)
 "wBG" = (
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
@@ -51246,6 +51222,7 @@
 "wNu" = (
 /obj/machinery/disposal/cart_port,
 /obj/disposalpipe/trunk/west,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/supply)
 "wNv" = (
@@ -51267,6 +51244,15 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"wNH" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/black/grime,
+/area/station/security/brig/genpop)
 "wNM" = (
 /turf/simulated/floor/carpet/purple/fancy/innercorner/omni,
 /area/station/chapel/sanctuary)
@@ -51280,7 +51266,7 @@
 	name = "Northeast Breach Hull"
 	})
 "wNP" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -52000,7 +51986,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "xcU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -53873,6 +53859,7 @@
 /obj/stool/chair/office{
 	dir = 8
 	},
+/obj/landmark/start/job/pharmacist,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
@@ -86965,7 +86952,7 @@ vuA
 ssd
 iPb
 jdm
-gcO
+eTC
 ioV
 tAC
 rDo
@@ -91517,7 +91504,7 @@ gFm
 hoh
 qvr
 dcw
-gFm
+wNH
 ida
 mni
 mjp
@@ -93935,7 +93922,7 @@ mHH
 vJk
 vJk
 vJk
-mHH
+fNS
 rKw
 iMR
 jDG
@@ -94237,7 +94224,7 @@ mHH
 uvS
 wdX
 rKK
-mHH
+tkB
 fkw
 jsd
 nOV
@@ -111429,7 +111416,7 @@ lDM
 wuw
 xDg
 ijc
-ijc
+ePp
 mOL
 dfm
 tAt
@@ -122677,7 +122664,7 @@ bzS
 gtT
 rcO
 nVY
-vZZ
+vfb
 vSG
 vZZ
 rHX

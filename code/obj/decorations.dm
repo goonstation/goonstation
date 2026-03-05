@@ -795,6 +795,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "blind1"
 	anchored = ANCHORED
 	density = 0
+	var/working = TRUE
 	var/on = 0
 	var/id = null
 
@@ -830,7 +831,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		src.UpdateIcon()
 
 	proc/toggle_group()
-		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
+		if (src.working)
+			switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
 		. = ..()

@@ -1,11 +1,3 @@
-/obj/submachine/chef_sink/chem_sink
-	name = "sink"
-	density = 0
-	layer = 5
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "sink"
-	flags = NOSPLASH
-
 // Removed quite a bit of of duplicate code here (Convair880).
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1235,6 +1227,8 @@ TYPEINFO(/obj/machinery/chem_master)
 
 TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	mats = 15
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_CHEMICOMPILER)
+
 
 /obj/machinery/chemicompiler_stationary
 	name = "ChemiCompiler CCS1001"

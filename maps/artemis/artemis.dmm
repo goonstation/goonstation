@@ -41,7 +41,7 @@
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
 "fx" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},

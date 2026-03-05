@@ -11,7 +11,8 @@
 	stack_type = /obj/item/neon_lining
 	icon = 'icons/obj/decals/neon_lining.dmi'
 	icon_state = "item_blue"
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "coil"
 	throwforce = 2
 	w_class = W_CLASS_TINY
 	throw_speed = 2

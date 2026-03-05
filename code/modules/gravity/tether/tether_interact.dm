@@ -326,19 +326,22 @@
 	var/obj/item/cable_coil/cable = I
 	if (!istype(cable))
 		return
-	if (!cable.change_stack_amount(-TETHER_WIRE_REPAIR_CABLE_COST))
+	if (!cable.use(TETHER_WIRE_REPAIR_CABLE_COST))
 		return
 
 	user.visible_message(
 		SPAN_NOTICE("The wires inside [src] are repaired out by [user]."),
 		SPAN_NOTICE("You repair the wires inside [src]."),
 	)
+	src.set_fixed()
 
+/obj/machinery/gravity_tether/proc/set_fixed()
 	src.wire_state = TETHER_WIRES_INTACT
 	src.status &= ~BROKEN
 	src.glitching_out = FALSE
 	src.power_change()
 
+	src.update_ma_status()
 	src.update_ma_wires()
 	src.update_ma_graviton()
 	src.update_ma_screen()

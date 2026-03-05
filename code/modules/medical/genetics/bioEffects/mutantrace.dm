@@ -61,7 +61,66 @@
 	msgGain = "You feel kinda thin."
 	msgLose = "You've put on a bit more weight."
 	icon_state  = "skeleton"
-	isBad = 1
+
+	OnAdd()
+		. = ..()
+		src.onPowerChange(0, src.power)
+
+	OnRemove()
+		src.onPowerChange(src.power, 0)
+		. = ..()
+
+	onPowerChange(oldval, newval)
+		if (newval >= 2)
+			src.owner.abilityHolder?.addAbility(/datum/targetable/geneticsAbility/remove_head)
+		else
+			src.owner.abilityHolder?.removeAbility(/datum/targetable/geneticsAbility/remove_head)
+
+#define HEAD_PROMPT_ON "Head on."
+#define HEAD_PROMPT_OFF "HEAD. OFF."
+/datum/targetable/geneticsAbility/remove_head
+	name = "Remove head"
+	desc = "Place your head into your hands, or drop it on the ground if your hands are full."
+	icon_state = "skeleton"
+	cooldown = 30 SECONDS
+	targeted = FALSE
+
+	cast()
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		if (!isskeleton(src.owner)) // look, we both know this will somehow happen. by bug or by admin.
+			if(tgui_alert(src.owner, "This will probably kill you! Are you sure?", "Wait...", list(HEAD_PROMPT_ON, HEAD_PROMPT_OFF)) != HEAD_PROMPT_OFF)
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
+			var/obj/item/organ/head/myHead = H.organHolder.get_organ("head")
+			if (!istype(myHead))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+			H.organHolder.drop_organ(myHead)
+			H.visible_message(SPAN_ALERT("<b>[H]</b> takes [his_or_her(H)] head clean off!"))
+			H.put_in_hand_or_drop(myHead)
+			playsound(H, 'sound/items/capsule_pop.ogg', 50, TRUE, pitch=0.7)
+
+			if (isskeleton(H))
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				S.set_head(myHead)
+				S.head_moved(TRUE)
+			return CAST_ATTEMPT_SUCCESS
+
+		else if (isrobot(src.holder.owner)) // one day
+			var/mob/living/silicon/robot/R = src.owner
+			if(R.part_head.robot_movement_modifier)
+				REMOVE_MOVEMENT_MODIFIER(R, R.part_head.robot_movement_modifier, R.part_head.type)
+			R.part_head.set_loc(R.loc)
+			R.part_head.holder = null
+			R.part_head = null
+			R.update_bodypart("head")
+			return CAST_ATTEMPT_SUCCESS
+
+#undef HEAD_PROMPT_ON
+#undef HEAD_PROMPT_OFF
 
 /datum/bioEffect/mutantrace/ithillid
 	name = "Aquatic Genetics"

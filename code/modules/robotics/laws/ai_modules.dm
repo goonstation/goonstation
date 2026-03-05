@@ -16,7 +16,7 @@ TYPEINFO(/obj/item/aiModule)
 	icon_state = "aimod_1"
 	var/highlight_color = rgb(0, 167, 1, 255)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
 	flags = TABLEPASS | CONDUCT
 	force = 5
@@ -508,6 +508,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 	wonky = TRUE
 	can_be_secured = FALSE
 	var/obj/item/reagent_containers/food/bread = null
+
+	on_inserted(slotNum, obj/machinery/lawrack/rack, mob/user)
+		. = ..()
+		if(!src.bread)
+			src.bread = new/obj/item/reagent_containers/food/snacks/breadslice(src)
+		src.lawText = "CATASTROPHIC [prob(5) ? "B" : ""]READ ERROR: [copytext(src.bread.get_average_color(TRUE), 2)]-[rand(200, 999)]"
 
 	on_removed(slotNum, obj/machinery/lawrack/rack, mob/user)
 		if (user)

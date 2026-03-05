@@ -17,7 +17,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/bloodType = "AB+-"
 	var/bloodColor = null
 	var/age = 30
+	/// What our current stability is
 	var/genetic_stability = 100
+	/// What our base stability should be - aka without any genes present
+	var/base_genetic_stability = 100
+	/// Forces stability to be set to this value if it is not null. Admin-only at this time.
+	var/forced_stability = null
 	var/clone_generation = 0 //Get this high enough and you can be like Arnold. Maybe. I found that movie fun. Don't judge me.
 
 	var/datum/appearanceHolder/mobAppearance = null
@@ -25,13 +30,20 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/Uid = "not initialized" //Unique id for the mob. Used for fingerprints and whatnot.
 	var/uid_hash
-	var/fingerprints
+
+	var/datum/forensic_id/default_fingerprints = null
+
+	///If true, bioeffects won't actually be applied to the owner (used for when we want to store a separate bioholder, ie changelings)
+	var/inactive = FALSE
 
 	New(var/mob/owneri)
 		owner = owneri
 		Uid = CreateUid()
 		bioUids[Uid] = null
-		build_fingerprints()
+
+		var/fprint_id = build_id_separate(build_id_norepeat(FORENSIC_CHARS_FINGERPRINTS, 16), 4)
+		src.default_fingerprints = register_id(fprint_id)
+
 		mobAppearance = new/datum/appearanceHolder()
 
 		mobAppearance.owner = owner
@@ -47,13 +59,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return ..()
 
 	proc/build_fingerprints()
-		uid_hash = md5(Uid)
-		var/fprint_base = uppertext(md5_to_more_pronouncable(uid_hash))
-		var/list/fprint_parts = list()
-		for(var/i in 1 to length(fprint_base) step 6)
-			if(i + 6 <= length(fprint_base) + 1)
-				fprint_parts += copytext(fprint_base, i, i + 6)
-		fingerprints = jointext(fprint_parts, "-")
+		var/id_text = build_id_norepeat(FORENSIC_CHARS_FINGERPRINTS, 16)
+		id_text = build_id_separate(id_text, 4)
+		src.default_fingerprints = register_id(id_text)
 
 	disposing()
 		for(var/D in effects)
@@ -122,7 +130,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.owner = null
 		E.holder = null
 		E.activated_from_pool = 0
-		E.OnRemove()
+		if (!src.inactive)
+			E.OnRemove()
 
 		src.OutputGainOrLoseMsg(E, FALSE)
 
@@ -153,7 +162,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.owner = owner
 		E.holder = src
 		E.activated_from_pool = 1
-		E.OnAdd()
+		if (!src.inactive)
+			E.OnAdd()
 
 		OutputGainOrLoseMsg(E, TRUE)
 
@@ -345,7 +355,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			ownerName = toCopy.ownerName || toCopy.owner.real_name // To quote line 386, "fuck this shit"
 			Uid = toCopy.Uid
 			uid_hash = md5(Uid)
-			build_fingerprints()
+			default_fingerprints = toCopy.default_fingerprints
 
 		if (copyPool)
 			src.RemoveAllPoolEffects()
@@ -439,7 +449,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
 			newEffect.holder = src
-			if(owner)
+			if(owner && !src.inactive)
 				newEffect.OnAdd()
 
 			if (do_stability)
@@ -447,8 +457,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 					newEffect.timeLeft = rand(20, 60)
 					newEffect.degrade_after = TRUE
 
-				src.genetic_stability -= newEffect.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
+				if(newEffect.stability_loss)
+					src.calculateStability()
 
 			if(owner)
 				OutputGainOrLoseMsg(newEffect, TRUE)
@@ -487,15 +497,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 		effects[BE.id] = BE
 		BE.owner = owner
 		BE.holder = src
-		BE.OnAdd()
+		if (!src.inactive)
+			BE.OnAdd()
 
 		if (do_stability)
 			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability+10, 0, 100), 100, 0.5)))
 				BE.timeLeft = rand(20, 60)
 				BE.degrade_after = TRUE
 
-			src.genetic_stability -= BE.stability_loss
-			src.genetic_stability = max(0,src.genetic_stability)
+			if(BE.stability_loss)
+				src.calculateStability()
 
 		OutputGainOrLoseMsg(BE, TRUE)
 		mobAppearance.UpdateMob()
@@ -516,19 +527,20 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return 0
 
 	proc/RemoveEffectInstance(var/datum/bioEffect/effect)
-		effect.OnRemove()
-		if (!effect.activated_from_pool)
-			src.genetic_stability += effect.stability_loss
-			src.genetic_stability = max(0,src.genetic_stability)
+		if (!src.inactive)
+			effect.OnRemove()
+		var/was_natural = effect.activated_from_pool
 		effect.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
-
 		if (owner)
 			OutputGainOrLoseMsg(effect, FALSE)
 
 		if (mobAppearance)
 			mobAppearance.UpdateMob()
 		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
-		return effects.Remove(effect.id)
+
+		. = effects.Remove(effect.id)
+		if (!was_natural && effect.stability_loss)
+			src.calculateStability()
 
 	///ignoreMagic means "do not remove magical bioeffects"
 	proc/RemoveAllEffects(var/type = null, var/ignoreMagic = FALSE)
@@ -682,6 +694,19 @@ proc/GetBioeffectResearchLevelFromGlobalListByID(var/id)
 		. = BE.research_level
 	else
 		. = 0
+
+/// Updates host stability by summing up stability of each gene, and host's base stability
+/datum/bioHolder/proc/calculateStability()
+	if (!isnull(src.forced_stability))
+		src.genetic_stability = src.forced_stability
+		return
+
+	var/poolStability = 0
+	for (var/datum/bioEffect/current as anything in src.effects)
+		var/datum/bioEffect/mutation = src.effects[current] // review: copy/pasted this code. this feels weird, is this duplicate variable declaration necessary?
+		if (!mutation.activated_from_pool)
+			poolStability -= mutation.stability_loss
+	src.genetic_stability = max(0, (src.base_genetic_stability + poolStability))
 
 ///Bioholder type for when you need a bioholder that isn't strongly linked to an owner, uses a weakref to allow GC
 /datum/bioHolder/unlinked

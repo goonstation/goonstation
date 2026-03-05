@@ -283,6 +283,8 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 		/datum/clothingbooth_grouping_tag/season/winter,
 	)
+/datum/clothingbooth_grouping/flatcap
+	item_paths = list(/datum/clothingbooth_item/head/flatcap)
 
 /datum/clothingbooth_grouping/hijab
 	name = "Hijab"
@@ -322,4 +324,21 @@
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
+	)
+
+/datum/clothingbooth_grouping/dog_ears
+	name = "Dog Ears"
+	item_paths = list(
+		/datum/clothingbooth_item/head/dog_ears/white,
+		/datum/clothingbooth_item/head/dog_ears/black,
+		/datum/clothingbooth_item/head/dog_ears/blue,
+		/datum/clothingbooth_item/head/dog_ears/green,
+		/datum/clothingbooth_item/head/dog_ears/grey,
+		/datum/clothingbooth_item/head/dog_ears/orange,
+		/datum/clothingbooth_item/head/dog_ears/purple,
+		/datum/clothingbooth_item/head/dog_ears/red,
+		/datum/clothingbooth_item/head/dog_ears/yellow,
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)

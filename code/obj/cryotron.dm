@@ -20,6 +20,7 @@
 #else
 	pixel_x = -32
 #endif
+	open_to_sound = FALSE
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()

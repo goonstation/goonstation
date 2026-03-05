@@ -60,7 +60,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	New()
 		..()
 		req_access = list(access_medical_lockers) //For premature unlocking.
-		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+		mailgroups = list(MGD_MEDICAL)
 
 		src.create_reagents(100)
 
