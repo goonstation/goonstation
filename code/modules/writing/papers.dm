@@ -922,7 +922,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/resonator_type_sm
 	name = "printed card"
 	icon_state = "index_card"
-	info = {"TYPE-AX - SHEAR MITIGATOR<br>
+	info = {"TYPE-SM - SHEAR MITIGATOR<br>
 	Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>
 	Maximum 3 intensity"}
 
