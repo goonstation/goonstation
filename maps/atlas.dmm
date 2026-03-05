@@ -9753,6 +9753,7 @@
 /area/station/turret_protected/Zeta)
 "dKA" = (
 /obj/machinery/chem_dispenser/chef,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white/corner{
 	dir = 4
 	},
@@ -10424,10 +10425,7 @@
 /obj/machinery/espresso_machine{
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/espressocup{
-	pixel_y = -1;
-	pixel_x = 10
-	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "eUz" = (
@@ -10615,6 +10613,7 @@
 /area/station/science/lab)
 "fhj" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -14842,10 +14841,10 @@
 /area/station/security/brig)
 "ltD" = (
 /obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "ltF" = (
@@ -22709,6 +22708,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},

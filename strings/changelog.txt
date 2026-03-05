@@ -1,4 +1,18 @@
 
+(t)thu mar 05 26
+(u)bork
+(p)26096
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds the recipe for pig in a blanket (hot dog half + dough strip)!
+(t)wed mar 04 26
+(u)QuiteLiterallyAnything
+(p)26066
+(e)🆕🗺💅⚗|C-Feature, A-Mapping, C-QoL, A-Chemistry
+(+)Beakers now appear directly inside most chemical dispensers at round start.
+(u)Lord_Earthfire
+(p)25912
+(e)💡|A-Station-Systems
+(+)The TEG warning lights should be somewhat more consistent when working under very high load.
 (t)sun mar 01 26
 (u)glowbold
 (p)26018

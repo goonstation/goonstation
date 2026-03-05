@@ -1020,11 +1020,13 @@
 /area/skeleton_trader)
 "Jj" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "Jn" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/decal/cleanable/dirt/dirt2,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "Jv" = (
