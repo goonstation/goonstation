@@ -287,7 +287,7 @@
 /area/listeningpost/power)
 "pn" = (
 /obj/machinery/drainage,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,

@@ -7,7 +7,7 @@ TYPEINFO(/obj/item/device/disguiser)
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
-	item_state = "electronic"
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
