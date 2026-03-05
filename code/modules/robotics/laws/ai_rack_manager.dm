@@ -20,6 +20,11 @@
 		//On initialisation of the ticker's ai rack manager, find all racks on the station and register them, and all silicons and associate them with default rack
 		for_by_tcl(R, /obj/machinery/lawrack)
 			src.register_new_rack(R)
+		//Find all mapped corrupted modules that couldn't be setup before we were
+		for_by_tcl(module, /obj/item/aiModule/experimental/corrupted)
+			if(module.lawText != "This law does not exist.")
+				continue
+			module.lawText = src.generate_random_law()
 		for (var/mob/living/silicon/S in mobs)
 			if(!S.syndicate)
 				S.law_rack_connection = src.default_ai_rack

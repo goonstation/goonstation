@@ -456,7 +456,13 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 
 	New()
 		..()
-		src.lawText = ticker.ai_law_rack_manager.generate_random_law()
+		START_TRACKING //If there's no law rack manager yet let it handle our setup when its made (see ai_rack_manager.dm)
+		if(ticker?.ai_law_rack_manager)
+			src.lawText = ticker.ai_law_rack_manager.generate_random_law()
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /*** Historic ***/
 /obj/item/aiModule/experimental/historic
