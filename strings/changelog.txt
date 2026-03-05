@@ -1,5 +1,171 @@
 
+(t)thu mar 05 26
+(u)NibChocolateeny
+(p)26071
+(e)🪲💪|C-Bug, A-Traits
+(+)Touch-shy individuals no longer have the superpower of shoving people to the ground when touched while lying down. They will panic via emotes instead.
+(u)Kubius
+(p)26061
+(e)|
+(*)Barcodes can once again be click-dragged onto large storages (while they're closed).
+(u)Nexusuxen
+(p)26077
+(e)🚨🐁|A-Admin, A-Critters
+(+)Genetic stability should behave more consistently now; having no mutations should ALWAYS result in having 100 stability. Report any issues relating to stability.
+(u)NibChocolateeny
+(p)26078
+(e)🌱|A-Hydroponics
+(+)Recent studies from NT's botanists reveal that plasmaglass-producing organisms are faster-growing and have higher yields than was previously assumed.
+(u)Kubius
+(p)26003
+(e)🆕🗺🎨📦🔬📨|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Science, A-Logistics
+(*)Nadir's Harmonic Siphon has 3 new resources with shifting requirements, and a new resonator the Research Director can print that helps out with them.
+(u)bork and tofumutt
+(p)25987
+(e)🎨📨|C-Sprites, A-Logistics
+(*)Adds dog ears to the clothing booth. Comes in 9 different colors! Start a fight with your local catperson today.
+(u)Lord_Earthfire
+(p)25944
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Added asphyxiation inducing poison, parazamine. The recipe is (1) Atropine + (1) Cryoxadone + (0.1) space fungus @ 258K -> (2) Parazamine
+(u)Lord_Earthfire
+(p)25945
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Cryotubes will adjust the temperature of chemicals inserted into them to the temperature of the cryotube
+(+)Chemicals inserted into cryotubes cannot burn/frostburn their occupants anymore
+(u)Ikea
+(p)25924
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can now find flavored vape cartridges in cigarette machines.
+(u)bork
+(p)26096
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds the recipe for pig in a blanket (hot dog half + dough strip)!
+(t)wed mar 04 26
+(u)QuiteLiterallyAnything
+(p)26066
+(e)🆕🗺💅⚗|C-Feature, A-Mapping, C-QoL, A-Chemistry
+(+)Beakers now appear directly inside most chemical dispensers at round start.
+(u)Lord_Earthfire
+(p)25912
+(e)💡|A-Station-Systems
+(+)The TEG warning lights should be somewhat more consistent when working under very high load.
+(t)sun mar 01 26
+(u)glowbold
+(p)26018
+(e)💡💪|A-Station-Systems, A-Traits
+(*)Jailbird trait has been removed.
+(t)sat feb 28 26
+(u)LeahTheTech
+(p)26052
+(e)🧛🌠|A-Gamemodes, A-Events
+(+)Neon broken event objectives have been tweaked slightly to ensure there is always conflict.
+(t)fri feb 27 26
+(u)JORJ949
+(p)26031
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The VR murderbox now has a vending machine containing weapons found in the Armory. Plus the Lawbringer, Detective's guns and clock 180.
+(t)thu feb 26 26
+(u)JORJ949
+(p)26020
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)Manufacturers now have a permanent red blinking light when hacked via wires to show their expanded inventory or speed options.
+(u)Sord
+(+)The Pharmacist's auto injector filler can now hold atropine, calomel, diphenhydramine, filgrastim, heparin, morphine, and proconvertin on top of the normal chemical whitelist.
+(u)bork
+(p)25988
+(e)🔬|A-Science
+(+)Records now all display their names in the same format.
+(t)wed feb 25 26
+(u)Sord
+(+)Pharmacists and the Medical Director get an auto-injector filler which can fill empty auto-injectors with hypospray whitelisted chemicals (unless emagged)
+(+)Empty auto-injectors can be printed at the medical fabricator.
+(+)Note: expended/already filled auto-injectors can not have more chemicals added to them.
+(u)A.I. The Artificial Idiot
+(p)26002
+(e)⚗|A-Chemistry
+(*)Adds fish sauce, made by putting a fish in a still
+(u)JORJ949
+(p)25923
+(e)🎨💅🧛🔨|C-Sprites, C-QoL, A-Gamemodes, A-Player-Actions
+(*)Headspiders are now tied to using a 10 DNA ability rather than having 10 DNA left on death. Using the ability removes it from your list of abilities and will activate on death.
+(u)Temthrush & Sunkiisu
+(p)24649
+(e)🎨🤖|C-Sprites, A-Silicons
+(+)Added 21 new borg screenhead faces
+(t)mon feb 23 26
+(u)Kanthes
+(p)25978
+(e)🆕💊|C-Feature, A-Medical
+(+)Empowered Ossification allows you to remove your head without tools. Just pop it off!
+(u)Cheekybrdy
+(p)25655
+(e)🎨🏅🧛|C-Sprites, A-Medal, A-Gamemodes
+(+)Added new medals (no rewards) for winning Battle Royale, Pod Wars and Football.
+(u)JORJ949
+(p)25810
+(e)🔄📄🧛📨|C-Rework, A-UI, A-Gamemodes, A-Logistics
+(*)NPC Traders are now in TGUI. Report any bugs you find with this fancy new window.
+(t)sun feb 22 26
+(u)glowbold
+(*)PDA messaging app has been reorganized. Please report any bugs! More details in minor notes
+(+)PDAs automatically scan for other PDAs to message when first used in-hand.
+(+)SpaceMessenger keeps your most recent contacts at the top of the Direct Messages tab, and all groups in the Groups tab.
+(u)Lord_Earthfire
+(p)25716
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)Stains of any kind won't magically vanish on assemblies while being manipulated.
+(u)bork and Pirate-Rob
+(p)25984
+(e)🎨|C-Sprites
+(*)Resprites all the gene/ability icons! Sprites by Pirate-Rob!
+(u)QuiteLiterallyAnything
+(p)25443
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The gene booth's locking and price adjustment menu now only appears when the booth is hit with an ID.
+(u)Pirate-Rob
+(p)25982
+(e)🎨|C-Sprites
+(+)Electronics now have in-hand icons.
+(t)sat feb 21 26
+(u)LeahTheTech
+(+)Possessed objects now respect item specific click delays.
+(u)glowbold
+(p)25933
+(e)⚖🧛🐁|C-Balance, A-Gamemodes, A-Critters
+(*)Dead bodies and the paralyzed only twitch if physically hit.
+(*)Changeling "Regenerative Stasis" ability acts as dead for hit-twitches.
+(+)Changeling "Regenerative Stasis" ability prevents forced emotes while faking death.
+(t)thu feb 19 26
+(u)cringe
+(p)25961
+(e)🆕🗺🔎⚗⚙🍝📨|C-Feature, A-Mapping, C-Code-Quality, A-Chemistry, A-Internal, A-Catering, A-Logistics
+(+)There is now a plumbed variant of the sink, to be added to maps. Sinks actually touch reagents on you now.
+(u)cringe
+(p)25814
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)There is now a shower and bath compatible with liquid pipes. to be added to maps.
+(u)Egregorious
+(p)25180
+(e)🔎⚙🍝|C-Code-Quality, A-Internal, A-Catering
+(*)Recipes used by the oven and mixer have been internally reworked. Please report any changes in behaviour, nothing should be different.
+(u)Kubius
+(p)25957
+(e)⚖|C-Balance
+(+)Increased the baseline payout range of prototypist requisitions (800-1400 > 3600-5350).
+(u)Cheekybrdy
+(p)25953
+(e)🎨|C-Sprites
+(+)Big Pharmacist now has their own custom backpacks, satchels, winter coats and PDAs. Pharmacists can now be copied by the chameleon outfit.
+(u)JORJ949
+(p)25943
+(e)🎨💊|C-Sprites, A-Medical
+(+)The pharmacist now has their own headset with access to the medical and research lines.
 (t)wed feb 18 26
+(u)Kubius
+(p)25762
+(e)🆕🎨📦📨|C-Feature, C-Sprites, A-Game-Objects, A-Logistics
+(+)The Prototypist requisition that previously rewarded sonic showerheads (which are now in the regular purchase pool with a less hostile noise) will now give you several 6-in-1 multifunction tools.
 (u)JORJ949
 (p)25930
 (e)💅📦|C-QoL, A-Game-Objects

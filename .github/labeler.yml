@@ -34,7 +34,7 @@ A-Engineering:
   - any-glob-to-any-file: code/modules/mechanics/*
 A-Events:
 - changed-files:
-  - any-glob-to-any-file: code/modules/holiday/*
+  - any-glob-to-any-file: code/modules/events/*
 A-Game-Objects:
 - changed-files:
   - any-glob-to-any-file: code/modules/items/*

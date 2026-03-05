@@ -32,6 +32,8 @@
 	var/cooldown = 10 SECONDS
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell1"
+	var/status_buff = "wrestler"
+	var/status_duration = INFINITE_STATUS
 	var/last_ring = 0
 	/// tiny hammer when taken out
 	var/obj/item/tinyhammer/wrestling/hammer = null
@@ -91,7 +93,7 @@
 		for (var/mob/living/mob in floor.loc) // checks if anyone in the room's area has the status
 			var/turf/position = get_turf(mob)
 			if (istype(position, /turf/simulated/floor/specialroom/gym))
-				mob.setStatus("wrestler", INFINITE_STATUS, optional=mob)
+				mob.setStatus(src.status_buff, src.status_duration, optional=mob)
 
 	/// snap back if too far away
 	proc/hammer_move()

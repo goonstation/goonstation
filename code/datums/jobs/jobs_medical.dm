@@ -3,6 +3,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 	ui_colour = TGUI_COLOUR_PINK
 	slot_card = /obj/item/card/id/medical
 	job_category = JOB_MEDICAL
+	email_group = MGD_MEDICAL
 
 /datum/job/medical/medical_doctor
 	name = "Medical Doctor"
@@ -70,7 +71,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_poc1 = list(/obj/item/device/pda2/medical/robotics)
+	slot_poc1 = list(/obj/item/device/pda2/robotics)
 	slot_poc2 = list(/obj/item/reagent_containers/mender/brute)
 	wiki_link = "https://wiki.ss13.co/Roboticist"
 
@@ -97,11 +98,12 @@ ABSTRACT_TYPE(/datum/job/medical)
 	wages = PAY_DOCTORATE
 	limit = 1 // limited workspace
 	access_string = "Pharmacist"
-	slot_back = list(/obj/item/storage/backpack/medic)
-	slot_belt = list(/obj/item/device/pda2/medical)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/pharmacist)
+	slot_belt = list(/obj/item/device/pda2/pharmacist)
+	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_jump = list(/obj/item/clothing/under/rank/pharmacist)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/pharmacist)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_ears = list(/obj/item/device/radio/headset/pharmacist)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
-	items_in_backpack = list(/obj/item/storage/box/beakerbox)
+	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/reagent_containers/injector_filler)
+	wiki_link = "https://wiki.ss13.co/Pharmacist"
