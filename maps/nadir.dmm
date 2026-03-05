@@ -2879,12 +2879,9 @@
 	pixel_y = 4;
 	pixel_x = 4
 	},
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "TYPE-FQ - FIELD QUANTIZER<br>WARNING: PROTOTYPE<br>Provides field dilation, with secondary consequence to axial resonances (see database)<br>Maximum 7 intensity";
-	name = "printed card";
-	pixel_x = -4;
-	pixel_y = 4
+/obj/item/paper/resonator_type_fq{
+	pixel_y = 3;
+	pixel_x = -3
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
@@ -8251,12 +8248,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Rods decay at a diminishing rate;<br>corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
-	name = "printed card";
-	pixel_y = 6
-	},
+/obj/item/paper/catalytic_guide,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -26046,12 +26038,8 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>Maximum 3 intensity";
-	name = "printed card";
-	pixel_x = -4;
-	pixel_y = 13
+/obj/item/paper/resonator_type_sm{
+	pixel_y = 12
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -46773,12 +46761,7 @@
 "uJG" = (
 /obj/machinery/light/incandescent/cool,
 /obj/table/reinforced/auto,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Rods decay at a diminishing rate;<br>corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
-	name = "printed card";
-	pixel_y = 6
-	},
+/obj/item/paper/catalytic_guide,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -48080,12 +48063,8 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
-	name = "printed card";
-	pixel_x = 4;
-	pixel_y = 13
+/obj/item/paper/resonator_type_ax{
+	pixel_y = 12
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -48199,12 +48178,9 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "TYPE-FQ - FIELD QUANTIZER<br>WARNING: PROTOTYPE<br>Provides field dilation, with secondary consequence to axial resonances (see database)<br>Maximum 7 intensity";
-	name = "printed card";
+/obj/item/paper/resonator_type_fq{
 	pixel_x = -6;
-	pixel_y = -4
+	pixel_y = -2
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
