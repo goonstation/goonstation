@@ -16,6 +16,7 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
 	var/has_material = TRUE
@@ -1412,6 +1413,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	icon_state = "snow1"
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 	New()
 		..()
@@ -1436,6 +1438,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 /turf/simulated/floor/snow/green
 	name = "snow-covered floor"
 	icon_state = "snowgreen"
+	can_dig = FALSE
 
 /turf/simulated/floor/snow/green/corner
 	name = "snow-covered floor"
@@ -1446,7 +1449,8 @@ DEFINE_FLOORS(snowcalm,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_calm";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowcalm/border,
 	icon_state = "snow_calm_border")
@@ -1456,7 +1460,8 @@ DEFINE_FLOORS(snowrough,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_rough";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowrough/border,
 	icon_state = "snow_rough_border")
@@ -1540,7 +1545,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "synthrubber"
+	default_material = "synthrubber_green"
 	can_dig = TRUE
 
 	#ifdef SEASON_WINTER
@@ -1658,8 +1663,9 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /obj/effect/snow_step
 	icon = 'icons/obj/decals/blood/blood.dmi'
+	anchored = ANCHORED_ALWAYS
 	layer = DECAL_LAYER
-	plane = PLANE_FLOOR
+	plane = PLANE_NOSHADOW_BELOW
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | TILE_BOUND
 	color = "#91b8d0"
 

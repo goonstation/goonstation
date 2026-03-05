@@ -37,7 +37,7 @@ jobs:
           ]
         compiletype: ["default"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Add Architecture
         run: |
@@ -51,7 +51,7 @@ jobs:
           packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -138,7 +138,7 @@ jobs:
         compiletype: ["default"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
           token: "${{ secrets.ROBUDDYBOT_PAT }}"
@@ -155,7 +155,7 @@ jobs:
           packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -219,7 +219,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Add Architecture
         run: |
@@ -233,7 +233,7 @@ jobs:
           packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}

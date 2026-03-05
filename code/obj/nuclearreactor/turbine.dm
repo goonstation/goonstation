@@ -21,6 +21,7 @@
 	custom_suicide = TRUE
 	machine_registry_idx = MACHINES_FISSION
 	processing_tier = PROCESSING_QUARTER
+	provides_grip = TRUE
 	/// Reference to the power terminal we use to dump power onto the net
 	var/obj/machinery/power/terminal/terminal = null
 	/// ID of this object on the pnet

@@ -18,37 +18,51 @@
 	wear_layer = MOB_EARS_LAYER
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
-	var/obj/item/device/radio_upgrade/wiretap = null
+	microphone_listen_input = LISTEN_INPUT_OUTLOUD_RANGE_0
+	var/obj/item/device/radio_upgrade/current_upgrade = null
 	hardened = 0
 
 	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/device/radio_upgrade))
 			var/obj/item/device/radio_upgrade/R = O
-			if (wiretap)
-				boutput(user, SPAN_ALERT("This [src] already has a wiretap installed! It doesn't have room for any more!"))
+			if (src.current_upgrade)
+				boutput(user, SPAN_ALERT("\The [src] already has [src.current_upgrade] installed! It doesn't have room for any more!"))
 				return
 
 			src.install_radio_upgrade(R)
+			logTheThing(LOG_STATION, user, "installs [O]([O.type]) into their [src]([src.type])")
 			boutput(user, SPAN_NOTICE("You install [R] into [src]."))
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(R)
 
-		else if (issnippingtool(O) && wiretap)
-			boutput(user, SPAN_NOTICE("You begin removing [src.wiretap] from [src]."))
+		else if (issnippingtool(O) && src.current_upgrade)
+			boutput(user, SPAN_NOTICE("You begin removing [src.current_upgrade] from [src]."))
 			if (!do_after(user, 2 SECONDS))
 				boutput(user, SPAN_ALERT("You were interrupted!."))
 				return
-			boutput(user, SPAN_NOTICE("You remove [src.wiretap] from [src]."))
+			boutput(user, SPAN_NOTICE("You remove [src.current_upgrade] from [src]."))
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
-			user.put_in_hand_or_drop(src.wiretap)
+			user.put_in_hand_or_drop(src.current_upgrade)
 			src.remove_radio_upgrade()
 		..()
 
+	emp_act()
+		. = ..()
+		src.emp = TRUE
+		src.visible_message(SPAN_ALERT("[src] sparks and goes silent!")) // Alert the wearer that their headset is busted
+
+		// After a certain amount of time, toggle speaker back on
+		SPAWN(90 SECONDS)
+			if (src.emp)
+				src.visible_message(SPAN_NOTICE("[src] automatically toggles back on!"))
+				src.emp = FALSE
+				src.toggle_speaker(initial_speaker_enabled)
+
 	proc/install_radio_upgrade(var/obj/item/device/radio_upgrade/R)
-		if (wiretap)
+		if (src.current_upgrade)
 			return
 
-		src.wiretap = R
+		src.current_upgrade = R
 		for (var/frequency in R.secure_frequencies)
 			if (!(frequency in src.secure_frequencies))
 				src.set_secure_frequency(frequency, R.secure_frequencies[frequency])
@@ -60,7 +74,7 @@
 		R.set_loc(src)
 
 	proc/remove_radio_upgrade()
-		src.wiretap = null
+		src.current_upgrade = null
 
 		var/obj/item/device/radio/headset/headset = new src.type
 		src.secure_frequencies = headset.secure_frequencies
@@ -107,17 +121,18 @@
 /obj/item/device/radio/headset/command/nt
 	name = "\improper NanoTrasen headset"
 	desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
+	icon_tooltip = "NanoTrasen Ancillary"
+	icon_override = "nt"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY,
 		)
-	icon_override = "nt"
-	icon_tooltip = "NanoTrasen Special Operative"
 
 /obj/item/device/radio/headset/command/nt/commander
-	name = "\improper NT Commander's headset"
+	name = "\improper NanoTrasen Commander headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+	icon_tooltip = "NanoTrasen Commander"
+	icon_override = "ntboss"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
@@ -127,14 +142,29 @@
 		"m" = R_FREQ_MEDICAL,
 		"c" = R_FREQ_CIVILIAN,
 		)
-	icon_override = "ntboss"
-	icon_tooltip = "Nanotrasen Commander"
 
 /obj/item/device/radio/headset/command/nt/consultant
+	name = "\improper NanoTrasen Consultant headset"
 	icon_tooltip = "NanoTrasen Security Consultant"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		)
+
+/obj/item/device/radio/headset/command/nt/special_operative
+	name = "\improper NanoTrasen Operative headset"
+	icon_tooltip = "NanoTrasen Special Operative"
+	secure_frequencies = list(
+		"n" = R_FREQ_NANOTRASEN,
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		)
 
 /obj/item/device/radio/headset/command/nt/engineer
-	icon_tooltip = "Nanotrasen Emergency Repair Technician"
+	name = "\improper NanoTrasen Engineer headset"
+	icon_tooltip = "NanoTrasen Emergency Repair Technician"
+	icon_override = "nt_eng"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
@@ -142,7 +172,9 @@
 		)
 
 /obj/item/device/radio/headset/command/nt/medic
-	icon_tooltip = "Nanotrasen Emergency Medic"
+	name = "\improper NanoTrasen Medic headset"
+	icon_tooltip = "NanoTrasen Emergency Medic"
+	icon_override = "nt_med"
 	secure_frequencies = list(
 		"n" = R_FREQ_NANOTRASEN,
 		"h" = R_FREQ_COMMAND,
@@ -302,6 +334,15 @@
 	icon_override = "med"
 	icon_tooltip = "Medical"
 
+/obj/item/device/radio/headset/pharmacist
+	name = "pharmaceutical headset"
+	desc = "One of the most commonly produced headsets by Nanotrasen, despite the comparably low hire rates of pharmacists."
+	icon_state = "pharmacist headset"
+	wear_state = "med headset"
+	secure_frequencies = list("m" = R_FREQ_MEDICAL, "r" = R_FREQ_RESEARCH)
+	icon_override = "pharmacist"
+	icon_tooltip = "Pharmacist"
+
 /obj/item/device/radio/headset/research
 	name = "research headset"
 	desc = "A science headset, for science. Whether directly or by proxy, these are frequently burned, exploded, corroded, dissolved, shot, and teleported, to name a few."
@@ -346,12 +387,22 @@
 	icon_override = "mail"
 	icon_tooltip = "Mail Courier"
 
+TYPEINFO(/obj/item/device/radio/headset/clown)
+	start_listen_modifiers = list(LISTEN_MODIFIER_RADIO, LISTEN_MODIFIER_COMIC_SANS)
+
 /obj/item/device/radio/headset/clown
 	name = "clown's headset"
 	desc = "Anybody using this headset is unlikely to be taken seriously."
+	icon_state = "clown headset"
 	icon_override = "clown"
 	icon_tooltip = "Clown"
 	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
+
+/obj/item/device/radio/headset/clown/blue
+	name = "blue clown's headset"
+	icon_state = "blue clown headset"
+	icon_override = "clown_blue"
+	icon_tooltip = "Blue Clown"
 
 /obj/item/device/radio/headset/ghost_buster
 	name = "\improper Ghost Buster's headset"
@@ -376,7 +427,6 @@
 	frequency = R_FREQ_SECURITY
 	locked_frequency = TRUE
 	speaker_range = 0
-	secure_frequencies = list("g" = R_FREQ_SECURITY)
 
 /obj/item/device/radio/commentator
 	name = "commentator radio"
@@ -553,66 +603,3 @@ Secure Frequency:
 			var/new_frequency = sanitize_frequency(text2num_safe("[secure_frequencies["h"]]") + text2num_safe(href_list["sfreq"]))
 			set_secure_frequency("h", new_frequency)
 	return ..(href, href_list)
-
-TYPEINFO(/obj/item/device/radio_upgrade)
-	mats = 12
-
-/obj/item/device/radio_upgrade //traitor radio upgrader
-	name = "wiretap radio upgrade"
-	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "syndie_upgr"
-	w_class = W_CLASS_TINY
-	is_syndicate = 1
-	var/secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY,
-		"e" = R_FREQ_ENGINEERING,
-		"r" = R_FREQ_RESEARCH,
-		"m" = R_FREQ_MEDICAL,
-		"c" = R_FREQ_CIVILIAN,
-		"z" = R_FREQ_SYNDICATE,
-		)
-	var/secure_classes = list()
-
-	conspirator
-		name = "private radio channel upgrade"
-		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
-		secure_frequencies = null
-		secure_classes = null
-
-		New()
-			..()
-			var/datum/game_mode/conspiracy/C = new /datum/game_mode/conspiracy
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
-				C = ticker.mode
-			src.secure_frequencies = list("z" = C.agent_radiofreq)
-			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
-
-	gang
-		name = "private radio channel upgrade"
-		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
-		secure_frequencies = null
-		secure_classes = null
-
-		New(turf/newLoc, var/frequency)
-			..()
-			if (!frequency)
-				return
-
-			src.secure_frequencies = list("z" = frequency)
-			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
-
-	// Crimers gotta crime
-	syndicatechannel
-		name = "syndicate radio channel upgrade"
-		desc = "A device capable of upgrading a headset to allow access over the syndicate radio channel"
-		icon_state = "syndie_radio_channel_upgrade"
-		secure_frequencies = list("z" = R_FREQ_SYNDICATE)
-
-	// For the super crimers (admin shenanigans)
-	nanotrasen
-		name = "nanotrasen radio channel upgrade"
-		desc = "A device capable of upgrading a headset to allow access over the Nanotrasen radio channel"
-		icon_state = "nt_radio_channel_upgrade"
-		secure_frequencies = list("n" = R_FREQ_NANOTRASEN)

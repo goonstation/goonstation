@@ -20,6 +20,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 	var/irresistible = 0
+	can_arcplate = FALSE
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
@@ -138,15 +139,6 @@
 			I.process_grab(mult)
 
 		UpdateIcon()
-
-	afterattack(atom/target, mob/user, reach, params)
-		. = ..()
-		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
-			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container(TRUE))
-				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
-				var/trans = src.affecting.reagents.trans_to(target, 10)
-				if (trans)
-					boutput(user, SPAN_NOTICE("You dump [trans] units of the solution from [src.affecting] to [target]."))
 
 	attack(atom/target, mob/user)
 		if (check())
@@ -452,7 +444,11 @@
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
-		qdel(src)
+		if (isitem(src.loc))
+			var/obj/item/I = src.loc
+			I.drop_grab()
+		else
+			qdel(src)
 
 
 	proc/check_hostage(owner, obj/projectile/P)
@@ -563,7 +559,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
+		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED) && T.get_gforce_current() > GFORCE_GRAVITY_MINIMUM)
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -587,6 +583,15 @@
 
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
+
+	// attempt to pour into the object instead, putting it here because i dont know whether its open by its type
+	if (G.state >= GRAB_AGGRESSIVE && !istype(src,/turf))
+		if (M.is_open_container() && M.reagents && src.is_open_container(TRUE))
+			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [M] [log_reagents(M)] to [src] at [log_loc(user)].")
+			var/trans = M.reagents.trans_to(src, 10)
+			if (trans)
+				boutput(user, SPAN_NOTICE("You dump [trans] units of the solution from [M] to [src]."))
+				return 0
 
 	user.visible_message(SPAN_ALERT("<B>[M] has been smashed against [src] by [user]!</B>"))
 	logTheThing(LOG_COMBAT, user, "smashes [constructTarget(M,"combat")] against [src]")
@@ -638,6 +643,9 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
+	if (user.traction == TRACTION_NONE)
+		return 0
+
 	if (!G.can_pin)
 		return 0
 
@@ -656,6 +664,9 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
+	if (user.traction == TRACTION_NONE)
+		return 0
+
 	if (!G.can_pin)
 		return 0
 
@@ -672,6 +683,9 @@
 		return 0
 
 	if (BOUNDS_DIST(src, M) > 0)
+		return 0
+
+	if (user.traction == TRACTION_NONE)
 		return 0
 
 	if (!G.can_pin)
@@ -920,8 +934,7 @@
 		var/target_dir = get_dir(user,target)
 		if(!target_dir)
 			target_dir = user.dir
-		if (!istype(T, /turf/space) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir &&!isghostcritter(user))
-
+		if (T.get_gforce_current() > GFORCE_GRAVITY_MINIMUM && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir &&!isghostcritter(user))
 			user.changeStatus("knockdown", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
 			var/turf/target_turf = get_step(user, target_dir)

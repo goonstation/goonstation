@@ -316,10 +316,12 @@
 			src.frame = new_frame
 		else
 			src.frame = new /obj/item/pipebomb/frame
+		src.w_class = max(src.payload.w_class, W_CLASS_TINY)
 		src.frame.set_loc(src)
 		src.frame.master = src
 		// mousetrap roller + wrench -> disassembly
 		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassemble), FALSE)
+		src.tooltip_rebuild = TRUE
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)

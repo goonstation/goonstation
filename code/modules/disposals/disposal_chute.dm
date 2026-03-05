@@ -24,6 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	provides_grip = TRUE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSAL_CHUTE_CHARGING	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -208,6 +209,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes() || !src.fits_in(GM))
 					boutput(user, SPAN_ALERT("That won't fit!"))
 					return
+				if (GM.buckled || GM.anchored)
+					return
 				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
 		else
 			if (src._health < src._max_health && iswrenchingtool(I))
@@ -235,6 +238,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 		if(user.restrained() && (user.pulled_by || length(user.grabbed_by)))
 			return
+		if (HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE))
+			return
 		if (istype(target, /obj/machinery/bot))
 			var/obj/machinery/bot/bot = target
 			bot.set_loc(src)
@@ -251,7 +256,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 		if (isliving(target))
 			var/mob/living/mobtarget = target
-			if  (mobtarget.buckled || isAI(mobtarget))
+			if (mobtarget.buckled || isAI(mobtarget) || mobtarget.anchored)
 				return
 
 			if (istype(src, /obj/machinery/disposal/mail))
@@ -667,6 +672,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "disposal-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH
@@ -687,6 +693,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "brig-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH
@@ -725,6 +732,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "ore-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH

@@ -44,7 +44,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (!src.reagents)
 			src.make_reagents()
 
-		if (istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/paper))
+		if (istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/paper) || istype (W, /obj/item/poster/))
 			boutput(user, SPAN_ALERT("You roll up [W] into a cigarette."))
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
 			if(istype(W, /obj/item/currency/spacecash))
@@ -52,6 +52,8 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 				P.item_state = "cig-[W.icon_state]"
 				P.litstate = "ciglit-[W.icon_state]"
 				P.buttstate = "cigbutt-[W.icon_state]"
+			else if (istype(W, /obj/item/poster/titled_photo))
+				P.contraband += 2 // its made of CRIME
 			P.name = build_name(W)
 			P.transform = src.transform
 			P.reagents.maximum_volume = src.reagents.total_volume

@@ -138,3 +138,271 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 		HH.can_attack = TRUE
 		HH.can_range_attack = TRUE
 		HH.object_for_inhand = /obj/item/gun/kinetic/assault_rifle
+
+ABSTRACT_TYPE(/mob/living/critter/human/cultist)
+/mob/living/critter/human/cultist
+	name = "\improper Broken Cultist"
+	real_name = "\improper Broken Cultist"
+	desc = "What little you can see of their eyes has the midnight shine of oil, they look ready to jump at anything that moves."
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist
+	human_to_copy = /mob/living/carbon/human/normal/cultist
+	ai_type = /datum/aiHolder/aggressive
+	hand_count = 2
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD // Insane fuckers, could be too difficult though
+
+	faction = list(FACTION_DEEP_CULT) // I'm going to take this off a few so they fight
+
+	var/list/chant_list = list("Do you hear it?", "I see now...", "IT WANTS BLOOD", "IT SCREAMS", "The dream walks...", "GET OUT OF MY HEAD", "What beautiful lights...", "The Deep promises.", "BELIEVE DAMN YOU.",
+	"The water stirs...", "Its all crashing down...", "Would you like to hear about our lords and saviours the old ones?", "What... is that melody?")
+	var/chant_cooldown = 0
+	var/last_use = 0
+
+	New()
+		. = ..()
+		chant_cooldown = rand(35, 135) // 10ths of seconds cooldown
+
+	Life(datum/controller/process/mobs/parent) // shamelessly stolen from the crunched cause adding this as a AI task was a nightmare
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled && (world.time - chant_cooldown) >= last_use)
+			src.say(pick(chant_list))
+			last_use = world.time
+
+/mob/living/critter/human/cultist/initiate
+	name = "Broken Initiate"
+	health_brute = 25
+	health_burn = 25
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/initiate
+	human_to_copy = /mob/living/carbon/human/normal/cultist/initiate
+
+	knife
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/sword
+			HH.name = "left hand"
+			HH.suffix = "-L"
+			HH.icon_state = "blade"
+			HH.limb_name = "kitchen knife"
+			HH.can_hold_items = FALSE
+			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+	pistol
+		ai_type = /datum/aiHolder/ranged
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/gun/kinetic/silenced_22
+			HH.name = "silenced pistol"
+			HH.suffix = "-L"
+			HH.icon_state = "silenced"
+			HH.limb_name = "\improper Orion silenced pistol"
+			HH.can_hold_items = FALSE
+			HH.can_attack = TRUE
+			HH.can_range_attack = TRUE
+			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+/mob/living/critter/human/cultist/acolyte
+	name = "Broken Acolyte"
+	health_brute = 50
+	health_burn = 50
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/acolyte
+	human_to_copy = /mob/living/carbon/human/normal/cultist/acolyte
+
+	New()
+		..()
+		src.bioHolder.AddEffect("accent_void")
+
+	knife
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/sword
+			HH.name = "left hand"
+			HH.suffix = "-L"
+			HH.icon_state = "blade"
+			HH.limb_name = "rusted blade"
+			HH.can_hold_items = FALSE
+			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+	pistol
+		ai_type = /datum/aiHolder/ranged
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/gun/kinetic/silenced_22
+			HH.name = "silenced pistol"
+			HH.suffix = "-L"
+			HH.icon_state = "silenced"
+			HH.limb_name = "\improper Orion silenced pistol"
+			HH.can_hold_items = FALSE
+			HH.can_attack = TRUE
+			HH.can_range_attack = TRUE
+			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+/mob/living/critter/human/cultist/imposter //ඞ
+	name = "Broken Infiltrator"
+	health_brute = 75
+	health_burn = 75
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist_imposter
+	human_to_copy = /mob/living/carbon/human/normal/cultist_imposter
+
+	New()
+		..()
+		src.bioHolder.AddEffect("accent_void")
+
+	knife
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/sword
+			HH.name = "left hand"
+			HH.suffix = "-L"
+			HH.icon_state = "blade"
+			HH.limb_name = "rusted blade"
+			HH.can_hold_items = FALSE
+			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+	pistol
+		ai_type = /datum/aiHolder/ranged
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/gun/kinetic/silenced_22
+			HH.name = "silenced pistol"
+			HH.suffix = "-L"
+			HH.icon_state = "silenced"
+			HH.limb_name = "\improper Orion silenced pistol"
+			HH.can_hold_items = FALSE
+			HH.can_attack = TRUE
+			HH.can_range_attack = TRUE
+			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+		key2
+			human_to_copy = /mob/living/carbon/human/normal/cultist_imposter/key2
+			corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist_imposter/key2
+
+/mob/living/critter/human/cultist/leader
+	name = "Broken Leader"
+	health_brute = 150
+	health_burn = 150
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/leader
+	human_to_copy = /mob/living/carbon/human/normal/cultist/leader
+	add_abilities = list(/datum/targetable/wraithAbility/command/cultist)
+	New()
+		..()
+		src.bioHolder.AddEffect("accent_void")
+		src.bioHolder.AddEffect("accent_badmin")
+		src.bioHolder.AddEffect("ithillid")
+		src.bioHolder.AddEffect("hulk") // I was GONNA be nice but humans are so easy to stamcrit
+
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/telekinesis = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/command/cultist)
+		if (!telekinesis.disabled && telekinesis.cooldowncheck() && prob(10))
+			telekinesis.handleCast(target.loc)
+			return TRUE
+
+	knife
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/sword
+			HH.name = "left hand"
+			HH.suffix = "-L"
+			HH.icon_state = "blade"
+			HH.limb_name = "rusted blade"
+			HH.can_hold_items = FALSE
+			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+		key1
+			human_to_copy = /mob/living/carbon/human/normal/cultist/leader/key1
+			corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/leader/key1
+
+
+	pistol
+		ai_type = /datum/aiHolder/ranged
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/gun/kinetic/silenced_22
+			HH.name = "silenced pistol"
+			HH.suffix = "-L"
+			HH.icon_state = "silenced"
+			HH.limb_name = "\improper Orion silenced pistol"
+			HH.can_hold_items = FALSE
+			HH.can_attack = TRUE
+			HH.can_range_attack = TRUE
+			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"

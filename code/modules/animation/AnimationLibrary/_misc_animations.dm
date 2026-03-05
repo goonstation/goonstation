@@ -873,3 +873,21 @@ ADD_TO_NAMESPACE(ANIMATE)(proc/little_spark(atom/A))
 	animate(spark, alpha = 255, time = 2 DECI SECONDS)
 	SPAWN(0.6 SECONDS)
 		qdel(spark)
+
+ADD_TO_NAMESPACE(ANIMATE)(proc/drift(atom/A, loopnum = -1, floatspeed = 25))
+	if (!istype(A))
+		return
+
+	SPAWN(rand(1,10))
+		if (A)
+			var/matrix/M = matrix(A.transform)
+			var/initial_y = A.pixel_y
+			animate(A, pixel_y = initial_y + 4, time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL, tag="grav_drift")
+			animate(pixel_y = initial_y, transform = M, time = floatspeed, loop = loopnum, easing = QUAD_EASING)
+			A.temp_flags |= DRIFT_ANIMATION // make sure we will be cleared, needed due to SPAWN
+
+ADD_TO_NAMESPACE(ANIMATE)(proc/squish_flat(atom/A))
+	var/matrix/squish_matrix = matrix(A.transform)
+	squish_matrix.Scale(1,0.2)
+	squish_matrix.Translate(0, -14)
+	animate(A, transform = squish_matrix, time = 10, easing = CIRCULAR_EASING, flags=ANIMATION_PARALLEL)

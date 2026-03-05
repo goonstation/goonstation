@@ -26,14 +26,17 @@
 	var/obj/item/clothing/head/det_hat/linked_hat = null
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
-	New()
+	New(var/loc, var/mob/living/carbon/human/creator = null)
 		..()
 		//Comes with the goggles
-		src.spawn_goggles()
+		src.spawn_goggles(creator)
 
-	proc/spawn_goggles()
+	proc/spawn_goggles(var/mob/living/carbon/human/creator = null)
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 		R.connected_scuttlebot = src
+		//If a person transformed the hat (most cases), let's be nice and put the controller in their hand.
+		if(creator)
+			creator.put_in_hand_or_eject(R)
 
 	setup_hands()
 		..()

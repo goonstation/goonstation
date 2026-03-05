@@ -94,7 +94,7 @@ TYPEINFO(/obj/item/gun/energy)
 			return
 
 		if (!(src in processing_items))
-			logTheThing(LOG_DEBUG, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_DEBUG, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 			processing_items.Add(src)
 			return
 		if (!src.cell)
@@ -1430,7 +1430,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				"energy_high" = 5)
 	start_listen_effects = list(LISTEN_EFFECT_LAWBRINGER)
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED, LISTEN_INPUT_DEADCHAT)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 
 /obj/item/gun/energy/lawbringer
@@ -2130,11 +2130,11 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		qdel(src)
 
 	proc/finish_repairs(obj/item/cable_coil/C, mob/user)
-		C.change_stack_amount(-10)
-		heat_repair = 0
-		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
-		src.icon_state = "makeshift-energy"
-		UpdateIcon()
+		if(C?.use(10))
+			heat_repair = 0
+			playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
+			src.icon_state = "makeshift-energy"
+			UpdateIcon()
 
 	proc/add_heat(var/heat_to_add, var/mob/user)
 		heat += heat_to_add
@@ -2514,3 +2514,25 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 					src.overheated = FALSE
 					src.shotcount = 0
 					src.UpdateParticles(null, "overheat_steam")
+
+/obj/item/gun/energy/resonator
+	name = "Resonator"
+	cell_type = /obj/item/ammo/power_cell/siren_orb
+	icon = 'icons/obj/items/guns/energy.dmi'
+	icon_state = "resonator"
+	desc = "The combination of the creature's excess energy and the cultist's artifact has created a proficient weapon utilising the creature's innate vibration energy."
+	item_state = "resonator"
+	charge_icon_state = "resonator"
+	can_swap_cell = 0
+	force = 10
+	two_handed = TRUE
+	uses_charge_overlay = TRUE
+	camera_recoil_enabled = TRUE
+	abilities = list(/obj/ability_button/toggle_scope)
+
+	New()
+		set_current_projectile(new/datum/projectile/special/piercing/resonator)
+		projectiles = list(new/datum/projectile/special/piercing/resonator)
+		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope/resonator, 'sound/machines/found.ogg')
+		..()

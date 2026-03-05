@@ -30,6 +30,8 @@
 #define FACTION_GUANTLET		"gauntlet"
 /// Mercenaries
 #define FACTION_MERCENARY		"mercenary"
+/// Deep Cultists
+#define FACTION_DEEP_CULT		"deepcult"
 
 /// Returns TRUE if ourguy is enemies with otherguy FALSE otherwise
 proc/faction_check(mob/ourguy, mob/otherguy, attack_neutral)

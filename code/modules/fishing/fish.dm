@@ -94,6 +94,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	slice_amount = 1
 	slice_suffix = "fillet"
 	food_color = "#F4B4BC"
+	brew_result = list("fish_sauce"=20)
 	/// What kind of fish is this? (See defines above)
 	var/category = null
 	// How many points is this fish worth in the upload terminal?
@@ -447,6 +448,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	desc = "At home in a can. Good grilled, pickled or smoked. The sardine isn't a fan of this however."
 	icon_state = "sardine"
 	inhand_color = "#618fe4"
+	category = FISH_CATEGORY_OCEAN
+	rarity = ITEM_RARITY_COMMON
+
+/obj/item/reagent_containers/food/fish/anchovy
+	name = "anchovy"
+	desc = "Great on pizza."
+	icon_state = "anchovy"
+	inhand_color = "#636f85"
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_COMMON
 

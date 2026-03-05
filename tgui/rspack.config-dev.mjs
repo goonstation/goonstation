@@ -107,6 +107,12 @@ export default (env = {}, argv) => {
             {
               issuer: /\.(s)?css$/,
               type: 'asset/inline',
+              generator: {
+                dataUrl: (content) => {
+                  const normalized = content.toString().replace(/\r\n/g, '\n');
+                  return `data:image/svg+xml;base64,${Buffer.from(normalized).toString('base64')}`;
+                },
+              },
             },
             {
               use: [

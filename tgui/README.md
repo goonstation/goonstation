@@ -126,15 +126,6 @@ BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
 
 Add `crossorigin="anonymous"` to the script tags in your downloaded tgui-window-x.html file found in your BYOND cache.
 
-[TODO 516] Does this still apply to Rspack?
-**Webpack errors out with some cryptic messages!**
-
-> Example: `No template for dependency: PureExpressionDependency`
-
-Webpack stores its cache on disk since tgui 4.3, and it is very sensitive to build configuration. So if you update webpack, or share the same cache directory between development and production build, it will start hallucinating.
-
-To fix this kind of problem, run `bin/tgui --clean` and try again.
-
 **Error: Unable to locate pnpapi, the module '...\goonstation\tgui\packages\tgui-dev-server\index.js' is controlled by multiple pnpapi instances.**
 
 At present, due to an issue with yarn the dev server cannot be ran if the path to your repo contains spaces. This could be caused if you have the repo in your Documents folder and your Windows user is your first name and last name (e.g. `C:\Users\Firstname Lastname\Documents\goonstation`).

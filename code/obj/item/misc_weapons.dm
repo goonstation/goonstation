@@ -66,6 +66,7 @@ TYPEINFO(/obj/item/sword)
 
 	New()
 		..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 		if(src.bladecolor == "invalid")
 			src.bladecolor = pick(valid_colors)
 		var/r = 0
@@ -1223,6 +1224,7 @@ TYPEINFO(/obj/item/bat)
 
 /obj/item/swords/New()
 	src.AddComponent(/datum/component/bloodflick)
+	src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 	..()
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
@@ -1344,10 +1346,12 @@ TYPEINFO(/obj/item/swords/katana)
 
 	crafted
 		name = "handcrafted katana"
-		delimb_prob = 2
+		delimb_prob = 20
 
 		force = 12
 		contraband = 5
+		HELP_MESSAGE_OVERRIDE({"Hit someone while aiming at a specific limb for a chance to slice off the targeted limb. If both arms and legs are sliced off, you can decapitate your target by aiming for the head.\n
+								While on any intent other than <span class='help'>help</span>, click a tile away from you to quickly dash forward to it's location, slicing those in the way."})
 
 	New()
 		..()
@@ -1494,6 +1498,7 @@ TYPEINFO(/obj/item/swords/captain)
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+		src.RemoveComponentsOfType(/datum/component/log_item_pickup) //Its a silly sword that does minimal damage, no need.
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(ismob(target))
@@ -1541,6 +1546,7 @@ TYPEINFO(/obj/item/swords/captain)
 		sword_inside = K
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 
 	attack_hand(mob/living/carbon/human/user)
 		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
@@ -1713,6 +1719,10 @@ TYPEINFO(/obj/item/swords/captain)
 	ih_sheathed_state = "scabbard-clown1"
 	ih_sheath_state = "scabbard-clown0"
 	sword_path = /obj/item/swords/clown
+
+	New()
+		. = ..()
+		src.RemoveComponentsOfType(/datum/component/log_item_pickup)
 
 /*
  *							--- Non-electronic Swords ---

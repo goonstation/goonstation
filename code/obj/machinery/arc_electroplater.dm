@@ -107,25 +107,25 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		if (src.target_item)
 			boutput(user, SPAN_ALERT("There is already something in [src]!"))
 			return
-		if (W.material)
-			boutput(user, SPAN_ALERT("You can't plate something that already has a material!"))
-			return
-
-		if (istype(W, /obj/item/grab))
-			boutput(user, SPAN_ALERT("That wouldn't possibly fit!"))
-			return
-
-		if (istype(W, /obj/item/implant))
-			boutput(user, SPAN_ALERT("You can't plate something this tiny!"))
-			return
-
 		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure) || W.anchored)
 			boutput(user, SPAN_ALERT("There is no way that could fit!"))
 			return
-
+		if (istype(W, /obj/item/grab))
+			boutput(user, SPAN_ALERT("That wouldn't possibly fit!"))
+			return
+		if (istype(W, /obj/item/implant))
+			boutput(user, SPAN_ALERT("You can't plate something this tiny!"))
+			return
 		if(istype(W, /obj/item/assembly))
 			//holy heck, blacklisting from the arcplater should certainly be handled by a flag
 			boutput(user, SPAN_ALERT("[W] can't be plated in [src]!"))
+			return
+
+		if(!W.can_arcplate)
+			boutput(user, SPAN_ALERT("That cannot be plated!"))
+			return
+		if(W.material && W.material.getID() != W.default_material)
+			boutput(user, SPAN_ALERT("You can't plate something that already has a non-standard material!"))
 			return
 
 		if(W.amount > 1)
@@ -136,6 +136,10 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			src.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."))
 			if (status & (BROKEN|NOPOWER))
 				boutput(user, SPAN_ALERT("You try to turn on [src] but it doesn't seem to be working."))
+				src.eject_contents(FALSE)
+				return
+			if(W.material && my_bar.material?.getID() == W.material.getID())
+				boutput(user, SPAN_ALERT("[W] is already made of [W.material.getName()]!"))
 				src.eject_contents(FALSE)
 				return
 			user.u_equip(W)
@@ -211,10 +215,19 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			UnsubscribeProcess()
 			return
 
-		if(my_bar?.material && isnull(target_item.material) && successful)
+		var/cancel_arcplate = FALSE
+		if(!my_bar?.material || !successful)
+			cancel_arcplate = TRUE
+		else if(target_item.material && target_item.material.getID() != target_item.default_material)
+			cancel_arcplate = TRUE
+		else if(isitem(target_item))
+			var/obj/item/I = target_item
+			if(!I.can_arcplate)
+				cancel_arcplate = TRUE
+		if(!cancel_arcplate)
 			target_item.setMaterial(my_bar.material)
 			qdel(my_bar)
-		src.my_bar = null
+			src.my_bar = null
 
 		for (var/atom/movable/AM in src) //Things can get dropped somehow sometimes ok
 			AM.set_loc(src.loc)

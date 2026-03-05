@@ -19,6 +19,8 @@ TYPEINFO(/obj/item/device/multitool)
 	m_amt = 50
 	g_amt = 20
 	custom_suicide = TRUE
+	var/spark_power = 2000 //! The amount of power needed to cause an upgraded spark in a cell-assembly
+	var/max_spark_power_usage = 8000 //! The amount of power consumed at maximum power.
 
 	New()
 		..()
@@ -79,20 +81,44 @@ TYPEINFO(/obj/item/device/multitool)
 	parent_assembly.applier_icon_prefix = "multitool"
 	if (!parent_assembly.target)
 		// trigger-multitool-Assembly + plasmatank -> trigger-multitool-plasmatank-bomb
-		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+		// trigger-multitool-Assembly + power cell -> trigger-multitool-powercell-assembly
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/cell), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+
+//this proc handles multitool/cell assembly power drain and calculation.
+//it returns the new power of the new multitool application
+/obj/item/device/multitool/proc/handle_power_cell_boost(var/obj/item/assembly/manipulated_assembly, var/obj/item/cell/manipulated_cell)
+	var/power_output = 2
+	if(istype(manipulated_cell, /obj/item/cell/erebite))
+		manipulated_assembly.visible_message(SPAN_ALERT("[manipulated_assembly] violently explodes!"))
+		logTheThing(LOG_COMBAT, manipulated_assembly.last_armer, "'s [manipulated_assembly] (erebite power cell) went off at [log_loc(src)].")
+		var/turf/T = get_turf(src)
+		explosion(src, T, 0, 1, 2, 2)
+		SPAWN(0.1 SECONDS)
+			qdel(manipulated_assembly)
+		return 0
+	if (manipulated_cell && manipulated_cell.charge >= src.spark_power)
+		power_output += floor(min(manipulated_cell.charge / src.spark_power, src.max_spark_power_usage / src.spark_power))
+		manipulated_cell.use(src.max_spark_power_usage)
+	return power_output
+
 
 /obj/item/device/multitool/proc/assembly_application(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
-	if(!assembly_target)
-		//if there is no target, we make a shock akin to using the multitools special on a 1-second cooldown
-		if(!ON_COOLDOWN(src, "multitool shock", 1 SECONDS))
-			elecflash(get_turf(src),0, power=2, exclude_center = 0)
+	if(istype(assembly_target, /obj/item/tank/plasma))
+		var/obj/item/tank/plasma/manipulated_plasma_tank = assembly_target
+		manipulated_plasma_tank.ignite()
+		qdel(parent_assembly)
 		return
-	else
-		if(istype(assembly_target, /obj/item/tank/plasma))
-			var/obj/item/tank/plasma/manipulated_plasma_tank = assembly_target
-			manipulated_plasma_tank.ignite()
-			qdel(parent_assembly)
+	//if there is no plasma tank attached (e.g. a cell), we make a shock akin to using the multitools special on a 1-second cooldown.
+	if(!ON_COOLDOWN(src, "multitool shock", 1 SECONDS))
+		//We upgrade it with cell power, though
+		var/multitool_power = src.handle_power_cell_boost(parent_assembly, assembly_target)
+		if(multitool_power == 0)
+			//erebite cell goes boom
 			return
+		var/multitool_range = max(0, ceil((multitool_power - 2) / 2)) // 0 radius on power 2, 1 at 3-4, 2 at 5-6 (the max)
+		elecflash(get_turf(src),multitool_range, multitool_power, 0)
+	return
+
 
 /obj/item/device/multitool/proc/assembly_target_addition(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/mob/user, var/obj/item/new_target)
 	//canbomb require a specific assembly to be build

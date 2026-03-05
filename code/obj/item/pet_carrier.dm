@@ -21,6 +21,7 @@
 	icon_state = "carrier-full"
 	item_state = "carrier-open"
 	w_class = W_CLASS_BULKY
+	default_material = "plastic"
 
 	/// Please override this in child types to specify what can actually fit in.
 	var/allowed_mob_types = list(/mob/living/critter/small_animal, /mob/living/critter/wraith/plaguerat, /obj/item/rocko)

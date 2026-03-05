@@ -16,7 +16,9 @@ TYPEINFO(/obj/item/device/flash)
 	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
-	item_state = "electronic"
+	//no inhands, flash is a little sneaky
+	inhand_image_icon = null
+	item_state = null
 
 	var/status = 1 // Bulb still functional?
 	var/use = 0 // Times the flash has been used.
@@ -287,7 +289,7 @@ TYPEINFO(/obj/item/device/flash)
 	src.handle_animations(user, item_in_use)
 	// Handle turboflash power cell.
 	// Flash target mobs.
-	for (var/atom/A in oviewers((3 + src.range_mod), get_turf(src)))
+	for (var/atom/A in viewers((3 + src.range_mod), get_turf(src)))
 		var/mob/living/M
 		if (istype(A, /obj/vehicle))
 			var/obj/vehicle/V = A
@@ -295,7 +297,7 @@ TYPEINFO(/obj/item/device/flash)
 				M = V.rider
 		else if (ismob(A))
 			M = A
-		if (M)
+		if (M && M != user)
 			if (flash_power > 1)
 				M.apply_flash(35, 0, 0, 25)
 			else
@@ -318,9 +320,10 @@ TYPEINFO(/obj/item/device/flash)
 
 		if (safety == 0 && user.mind && user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && !isghostcritter(user))
 			var/nostun = 0
+			var/obj/item/implant/counterrev/implant = locate() in H.implant
 			if (!H.client || !H.mind)
 				user.show_text("[H] is braindead and cannot be converted.", "red")
-			else if (locate(/obj/item/implant/counterrev) in H.implant)
+			else if (implant?.online)
 				src.on_counterrev(M, user)
 				.= 0.5
 				nostun = 1

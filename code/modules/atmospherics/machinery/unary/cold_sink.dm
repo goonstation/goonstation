@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/cold_sink.dmi'
 	icon_state = "intact_off"
 	density = TRUE
+	provides_grip = TRUE
 
 	var/on = FALSE
 	/// What temperature are we changing the gas to.

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A handheld monocular device with a laser built into it, used for calling in fire support."
 	icon_state = "laser_designator"
-	item_state = "electronic"
+	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	/// How many times can this be used?
 	var/uses = 1

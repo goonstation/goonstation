@@ -71,6 +71,9 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		playsound(T, 'sound/effects/mag_warp.ogg', 100, TRUE)
 		var/turf/destination = pick(random_floor_turfs)
 		logTheThing(LOG_COMBAT, user, "was teleported by artifact fault from [log_loc(user)] to [log_loc(destination)]")
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.shoes?.magnetic_teleport_check(H, get_turf(H), destination)
 		user.set_loc(destination)
 
 /datum/artifact_fault/grow

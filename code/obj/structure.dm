@@ -358,6 +358,7 @@ TYPEINFO(/obj/structure/woodwall)
 	_health = 30
 	_max_health = 30
 	flags = ON_BORDER
+	provides_grip = TRUE
 	var/builtby = null
 	var/anti_z = 0
 	// for projectile damage component

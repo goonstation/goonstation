@@ -60,6 +60,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	default_material = "steel"
+	can_arcplate = FALSE
 	///the material id string (lowercase) of the starting reinforcement
 	var/default_reinforcement = null
 	uses_default_material_appearance = TRUE
@@ -268,9 +269,9 @@ MATERIAL
 
 	proc/build_terminal(obj/item/cable_coil/cable, mob/user)
 		if ((src in user) && (cable in user))
-			new /obj/machinery/power/data_terminal(get_turf(user))
-			src.change_stack_amount(-1)
-			cable.change_stack_amount(-1)
+			if (cable.use(1))
+				new /obj/machinery/power/data_terminal(get_turf(user))
+				src.change_stack_amount(-1)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]!"))
@@ -608,6 +609,7 @@ MATERIAL
 	inventory_counter_enabled = 1
 	material_amt = 0.05
 	uses_default_material_appearance = TRUE
+	can_arcplate = FALSE
 
 	New()
 		..()
@@ -967,6 +969,7 @@ MATERIAL
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
 	material_amt = 0.025
+	can_arcplate = FALSE
 
 	New(make_amount = 0)
 		..()

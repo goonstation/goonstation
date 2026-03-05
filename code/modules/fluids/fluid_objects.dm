@@ -564,7 +564,8 @@ TYPEINFO(/obj/naval_mine)
 
 	proc/boom()
 		if (src.active)
-			logTheThing(LOG_BOMBING, src.fingerprintslast, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			var/last_ckey = src.get_last_ckey()
+			logTheThing(LOG_BOMBING, last_ckey, "A naval mine explodes at [log_loc(src)]. Last touched by [replace_if_false(last_ckey, "None")].")
 			src.blowthefuckup(boom_str)
 
 

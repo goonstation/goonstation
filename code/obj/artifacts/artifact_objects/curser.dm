@@ -367,6 +367,7 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 
 /mob/living/intangible/art_curser_displaced_soul
 	var/list/statusUiElements = list()
+	var/colour = "#7b88ff"
 
 	New(newLoc, mob/living/carbon/human/H)
 		src.name = "soul of [H.name]"
@@ -385,7 +386,7 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 		I.Insert(H.build_flat_icon(EAST), dir = EAST)
 		I.Insert(H.build_flat_icon(WEST), dir = WEST)
 		src.icon = I
-		src.color = "#7b88ff"
+		src.color = src.colour
 		src.alpha = 200
 		src.add_filter("soul blur", 0, gauss_blur_filter(size = 0.5))
 
@@ -443,3 +444,11 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 
 	MouseDrop_T()
 		return
+
+/mob/living/intangible/art_curser_displaced_soul/gene // For ghost walk gene
+	colour = "#f37a99"
+
+	New()
+		..()
+		src.abilityHolder = new /datum/abilityHolder/gimmick(src)
+		src.addAbility(/datum/targetable/gimmick/ghost_walk_return)

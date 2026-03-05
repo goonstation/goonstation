@@ -66,7 +66,7 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 
 	if (istype(item, /obj/item/clothing/head/butt) && isAI(target))
 		var/obj/item/clothing/head/butt/butt = item
-		if (butt.donor == attacker)
+		if (attacker && butt.donor == attacker)
 			attacker.unlock_medal("Law 1: Don't be an asshat", TRUE)
 
 	return TRUE

@@ -574,7 +574,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	light_type = /datum/light/cone
 	var/icon_state_collapsed = "floodlight_item"
 	var/icon_state_deployed = "floodlight"
-	var/icon_state_light_overlay = "floodlight_light"
+	var/icon_state_light_overlay = "floodlight-light"
 	var/icon_state_lever = "floodlight-lever"
 	var/outer_angular_size = 120
 	var/inner_angular_size = 60

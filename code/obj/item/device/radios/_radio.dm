@@ -94,6 +94,10 @@ TYPEINFO(/obj/item/device/radio)
 	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
 	/// The build status of this radio, determining whether it can be attached to other objects, and other objects attached to it.
 	var/b_stat = FALSE
+	/// The radio has malfunctioned due to an EMP
+	var/emp = FALSE
+	/// The message that should be displayed when attempting to use a radio that is under the effects of an EMP.
+	var/emp_msg = "The radio buzzes softly. Hopefully it kicks back on soon."
 
 /obj/item/device/radio/New()
 	. = ..()
@@ -173,6 +177,10 @@ TYPEINFO(/obj/item/device/radio)
 /obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
 	if (src.bricked)
 		user.show_text(src.bricked_msg, "red")
+		return
+
+	if (src.emp)
+		user.show_text(src.emp_msg, "red")
 		return
 
 	ui = tgui_process.try_update_ui(user, src, ui)

@@ -331,7 +331,7 @@ datum/mind
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID `role` from this mind, or if provided, a specific instance of an antagonist datum.
-	proc/remove_antagonist(role, source = null, take_gear = TRUE)
+	proc/remove_antagonist(role, source = null, take_gear = TRUE, set_dnr=FALSE)
 		var/datum/antagonist/antagonist_role
 		if (istype(role, /datum/antagonist))
 			antagonist_role = role
@@ -344,6 +344,8 @@ datum/mind
 
 		if (!antagonist_role)
 			return FALSE
+		if (set_dnr)
+			src.get_player()?.dnr = TRUE
 		if (antagonist_role.faction)
 			LAZYLISTREMOVE(antagonist_role.owner.current.faction, antagonist_role.faction)
 		antagonist_role.remove_self(take_gear, source)

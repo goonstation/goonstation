@@ -57,6 +57,22 @@ var/regex/mutable_content_regex = regex(@"(?<=\<mutable\>).*?(?=\<\/mutable\>)",
 /// Applies a proc to the mutable content of a say message datum in the form of a callback.
 #define APPLY_CALLBACK_TO_MESSAGE_CONTENT(_MESSAGE, _CALLBACK) _MESSAGE.content = global.mutable_content_regex.ReplaceWithCallback(_MESSAGE.content, _CALLBACK)
 
+//-------- Soundproofing --------//
+/// Spoken lines from contents will not be emitted
+#define SOUNDPROOFING_MUTE 20
+/// Used for Floor Closets.
+#define SOUNDPROOFING_FLOOR_CLOSET 15
+/// Spoken lines from contents will prepend "muffled" text to the message
+#define SOUNDPROOFING_MUFFLED 10
+/// Spoken lines from contents will prepend "inside" text to the message
+#define SOUNDPROOFING_INSIDE 5
+/// Used for crates/lockers.
+#define SOUNDPROOFING_STORAGE 3
+/// Spoken lines from contents will prepend "on" text to the message
+#define SOUNDPROOFING_ON 0
+/// Spoken lines from contents will not prepend any text. Used for chameleon projector.
+#define SOUNDPROOFING_NOT_ON -1
+
 
 //------------ Other ------------//
 #define NO_MESSAGE null

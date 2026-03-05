@@ -347,3 +347,13 @@
 
 /datum/movement_modifier/mimic/mimic_superslow
 	additive_slowdown = 5
+
+/datum/movement_modifier/gravity
+	ask_proc = TRUE
+
+// high gforce adds multiplicative slowdown
+/datum/movement_modifier/gravity/modifiers(mob/user, turf/move_target, running)
+	var/gforce = user.gforce
+	if (user.bioHolder?.HasOneOfTheseEffects("dwarf", "strong"))
+		gforce = max(GFORCE_EARTH_GRAVITY, gforce - GFORCE_EARTH_GRAVITY)
+	return list(0, gforce > GFORCE_EARTH_GRAVITY ? gforce/GFORCE_EARTH_GRAVITY : 1)

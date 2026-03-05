@@ -13,6 +13,7 @@
 	var/id = null
 	var/frequency = null
 	var/base_icon_state = null
+	var/emagged = FALSE //! the emag behaviour is done in the corresponding computer frame, but we need to carry over the effect onto the curcuit board.
 
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
@@ -97,9 +98,15 @@
 
 	///save custom data to a circuit board
 	proc/save_board_data(obj/item/circuitboard/circuitboard)
+		if(src.emagged)
+			//we transfer the emagged state from the computer onto the curcuitboard
+			circuitboard.emag_act(null, null)
 
 	///Load custom data from a circuit board
 	proc/load_board_data(obj/item/circuitboard/circuitboard)
+		if(circuitboard.emagged)
+			//we transfer the emagged state from the curcuitboard onto the computer
+			src.emag_act(null, null)
 		if(isnull(circuitboard.saved_data))
 			return TRUE // no data to load
 

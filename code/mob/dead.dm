@@ -1,6 +1,6 @@
 TYPEINFO(/mob/dead)
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL, LISTEN_INPUT_WRAITHCHAT)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_GHOST)
@@ -20,6 +20,7 @@ TYPEINFO(/mob/dead)
 	..()
 	src.flags |= UNCRUSHABLE
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)
@@ -78,7 +79,6 @@ TYPEINFO(/mob/dead)
 		return
 	..()
 	var/message = null
-	var/used_name = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src
 	switch (lowertext(act))
 		if ("fart")
 			if (farting_allowed && src.emote_check(voluntary, 25, 1, 0))
@@ -88,7 +88,7 @@ TYPEINFO(/mob/dead)
 					playsound(src, 'sound/voice/farts/poo2.ogg', 7, FALSE, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 					break
 				for (var/mob/living/M in src.loc)
-					message = "<B>[used_name]</B> lets out \an [fluff] fart in [M]'s face!"
+					message = "<B>[src]</B> lets out \an [fluff] fart in [M]'s face!"
 					fart_on_other = 1
 					if (prob(95))
 						break
@@ -96,7 +96,7 @@ TYPEINFO(/mob/dead)
 						M.show_text("<i>You feel \an [fluff] [pick("draft", "wind", "breeze", "chill", "pall")]...</i>")
 						break
 				if (!fart_on_other)
-					message = "<B>[used_name]</B> lets out \an [fluff] fart!"
+					message = "<B>[src]</B> lets out \an [fluff] fart!"
 #ifdef HALLOWEEN
 				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
@@ -109,7 +109,7 @@ TYPEINFO(/mob/dead)
 
 		if ("scream")
 			if (src.emote_check(voluntary, 25, 1, 0))
-				message = "<B>[used_name]</B> lets out \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] [pick("wail", "screech", "shriek")]!"
+				message = "<B>[src]</B> lets out \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] [pick("wail", "screech", "shriek")]!"
 
 		if ("laugh")
 			if (src.emote_check(voluntary, 20, 1, 0))
@@ -118,10 +118,10 @@ TYPEINFO(/mob/dead)
 		if ("dance")
 			if (src.emote_check(voluntary, 100, 1, 0))
 				switch (rand(1, 4))
-					if (1) message = "<B>[used_name]</B> does the Monster Mash!"
-					if (2) message = "<B>[used_name]</B> gets spooky with it!"
-					if (3) message = "<B>[used_name]</B> boogies!"
-					if (4) message = "<B>[used_name]</B> busts out some [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] moves."
+					if (1) message = "<B>[src]</B> does the Monster Mash!"
+					if (2) message = "<B>[src]</B> gets spooky with it!"
+					if (3) message = "<B>[src]</B> boogies!"
+					if (4) message = "<B>[src]</B> busts out some [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] moves."
 				if (prob(2)) // roll the probability first so we're not checking for critters each time this happens
 					for (var/obj/critter/domestic_bee/responseBee in range(7, src))
 						if (!responseBee.alive)
@@ -142,7 +142,7 @@ TYPEINFO(/mob/dead)
 
 		if ("flip")
 			if (src.emote_check(voluntary, 100, 1, 0))
-				message = "<B>[used_name]</B> does \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] flip!"
+				message = "<B>[src]</B> does \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] flip!"
 				animate(src) // stop the animation
 				ANIMATE.spin(src, prob(50) ? "R" : "L", 1, 0)
 				SPAWN(1 SECOND)
@@ -156,7 +156,7 @@ TYPEINFO(/mob/dead)
 
 		if ("wave","salute","nod")
 			if (src.emote_check(voluntary, 10, 1, 0))
-				message = "<B>[used_name]</B> [act]s."
+				message = "<B>[src]</B> [act]s."
 
 		else
 			if (voluntary)
@@ -170,7 +170,7 @@ TYPEINFO(/mob/dead)
 			GH.change_points(5)
 
 #endif
-		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
+		log_emote(src, html_encode(message), voluntary)
 		src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]"),group = "[src]_[lowertext(act)]")
 		return 1
 	return 0

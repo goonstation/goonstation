@@ -18,4 +18,5 @@
 		string = splicetext(string, src.index, src.next, replacement_string)
 		src.next += (length(replacement_string) - length(src.match))
 
+	callback.arguments.Cut(1, 2)
 	return string
