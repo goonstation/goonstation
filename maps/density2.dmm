@@ -705,10 +705,10 @@
 /area/station/turret_protected/ai_upload)
 "et" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "eD" = (
@@ -3182,6 +3182,7 @@
 "uJ" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/decal/cleanable/dirt,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/bridge)
 "uK" = (
@@ -3234,7 +3235,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1";
@@ -3749,6 +3749,7 @@
 "yP" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet/red/standard/edge/se,
 /area/station/bridge)
 "yV" = (
@@ -5700,10 +5701,12 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Nt" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Nu" = (
@@ -5773,7 +5776,7 @@
 /area/station/crew_quarters/cafeteria)
 "NO" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "NS" = (

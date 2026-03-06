@@ -671,3 +671,52 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headscarf)
 		name = "White"
 		swatch_background_color = "#ebf0f2"
 		item_path = /obj/item/clothing/head/headscarf/white
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/dog_ears)
+/datum/clothingbooth_item/head/dog_ears
+	cost = PAY_TRADESMAN
+
+	white
+		name = "White"
+		swatch_background_color = "#e5e5e5"
+		item_path = /obj/item/clothing/head/headband/woof/white
+
+	black
+		name = "Black"
+		swatch_background_color = "#191919"
+		item_path = /obj/item/clothing/head/headband/woof/black
+
+	blue
+		name = "Blue"
+		swatch_background_color = "#007f7f"
+		item_path = /obj/item/clothing/head/headband/woof/blue
+
+	green
+		name = "Green"
+		swatch_background_color = "#007f00"
+		item_path = /obj/item/clothing/head/headband/woof/green
+
+	grey
+		name = "Grey"
+		swatch_background_color = "#4c4c4c"
+		item_path = /obj/item/clothing/head/headband/woof/gray
+
+	orange
+		name = "Orange"
+		swatch_background_color = "#7f3f00"
+		item_path = /obj/item/clothing/head/headband/woof/orange
+
+	purple
+		name = "Purple"
+		swatch_background_color = "#55007f"
+		item_path = /obj/item/clothing/head/headband/woof/purple
+
+	red
+		name = "Red"
+		swatch_background_color = "#7f0000"
+		item_path = /obj/item/clothing/head/headband/woof/red
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#7f6a00"
+		item_path = /obj/item/clothing/head/headband/woof/yellow

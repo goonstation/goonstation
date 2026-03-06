@@ -25,6 +25,8 @@ ABSTRACT_TYPE(/datum/recipe/burger)
 	category = "Burgers"
 
 	get_output(var/list/input_list, var/list/output_list)
+		if (length(ingredients) < 2)
+			return ..()
 		//this is dumb and assumes the second thing is always the meat but it usually is so :iiam:
 		var/obj/item/possibly_meat = locate(ingredients[2]) in input_list
 		if (possibly_meat?.reagents?.get_reagent_amount("crime") >= 5)
@@ -2093,3 +2095,8 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 /datum/recipe/yuck
 	tools = list(/obj/item/reagent_containers/food/snacks/yuck = 1)
 	category = null
+
+/datum/recipe/pigblanket
+	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/pigblanket)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_strip = 1, /obj/item/reagent_containers/food/snacks/hotdog_half =1)
+	output = /obj/item/reagent_containers/food/snacks/pigblanket

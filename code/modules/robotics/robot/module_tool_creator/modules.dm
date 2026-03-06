@@ -57,6 +57,9 @@
 		/obj/item/device/gps, // Let's them assist with telesci
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/places_pipes/research,
+		#ifdef MAP_OVERRIDE_NADIR
+			/obj/item/device/calibrator,
+		#endif
 		/obj/item/hand_labeler,
 		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/pen/omni,
