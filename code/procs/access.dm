@@ -172,10 +172,7 @@
 			return get_all_accesses() + list(access_syndicate_shuttle)
 		// --------------------------- Heads of staff
 		if("Captain")
-			if(IS_IT_SATURDAY)
-				return get_all_accesses() + list(access_maxsec)
-			else
-				return get_all_accesses()
+			return get_all_accesses() + list(access_maxsec)
 		if("Head of Personnel")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
 						access_fine_small, access_fine_large, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
