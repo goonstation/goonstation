@@ -132,12 +132,11 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		if(src.authed)
 			return
 
-		if(IS_IT_SATURDAY)
-			var/ircmsg[] = new()
-			ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
-			ircmsg["msg"] = "authorized the armory."
-			ircbot.export_async("admin", ircmsg)
+		var/ircmsg[] = new()
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		ircmsg["msg"] = "authorized the armory."
+		ircbot.export_async("admin", ircmsg)
 
 		logTheThing(LOG_STATION, usr, "authorized armory access")
 		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
