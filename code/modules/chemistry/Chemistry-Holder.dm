@@ -362,10 +362,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 				src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE, dontchangecolorcache = TRUE)
 			if (old_ratios)
-				total = target_reagents.total_volume
+				total = target_reagents.total_volume+amount
 				for (var/id in target_reagents.reagent_list)
 					if (!old_ratios[id])
-						var/old_ratio = target_reagents.reagent_list[id].volume / (total-amount)
+						var/old_ratio = target_reagents.reagent_list[id].volume / (target_reagents.total_volume)
 						if (abs((target_reagents.reagent_list[id].volume / total) - old_ratio) >= 0.01)
 							target_reagents.color_update_queued = TRUE
 							break;
