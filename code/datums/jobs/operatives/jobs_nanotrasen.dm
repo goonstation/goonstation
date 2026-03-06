@@ -109,7 +109,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	wages = PAY_TRADESMAN
 	trait_list = list("training_security")
 	access_string = "Nanotrasen Security Consultant"
-	requires_whitelist = TRUE
+	requires_whitelist = REQUIRES_WHITELIST_ALWAYS
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
