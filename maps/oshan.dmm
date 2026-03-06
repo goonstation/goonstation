@@ -47362,10 +47362,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"woI" = (
-/obj/storage/secure/closet/research/chemical,
-/turf/simulated/floor/purple/checker,
-/area/station/science/chemistry)
 "woS" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/stripe_delivery,
@@ -111967,7 +111963,7 @@ aGr
 wgo
 aHy
 dKZ
-aGo
+aGr
 aGr
 aGr
 fGJ
@@ -112269,7 +112265,7 @@ qGu
 sOq
 iVD
 pbf
-woI
+aGo
 alD
 aHU
 wfs
