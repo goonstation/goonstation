@@ -1,5 +1,9 @@
 
 (t)thu mar 05 26
+(u)Kubius
+(p)26103
+(e)🗺⚖|A-Mapping, C-Balance
+(+)Added a second Type-FQ resonator blueprint in Nadir Chief Engineer's office. Both locations now have a printed info card.
 (u)NibChocolateeny
 (p)26071
 (e)🪲💪|C-Bug, A-Traits
