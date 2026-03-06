@@ -11804,6 +11804,7 @@
 "aZy" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/device/radio/intercom/medical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "aZz" = (
@@ -14790,6 +14791,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/espresso_machine,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "boy" = (
@@ -15300,7 +15302,7 @@
 /area/station/hydroponics/bay)
 "bqX" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/clothing/glasses/spectro,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "bqZ" = (
@@ -18220,6 +18222,7 @@
 /area/station/science/chemistry)
 "bFh" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -27842,6 +27845,7 @@
 /obj/table/reinforced/chemistry/auto{
 	name = "prep counter"
 	},
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "dfK" = (
@@ -35771,6 +35775,7 @@
 "iys" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light_switch/north,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "iyU" = (
@@ -36585,7 +36590,14 @@
 /area/station/security/hos)
 "iXW" = (
 /obj/machinery/chem_dispenser/chemical,
+<<<<<<< HEAD
 /obj/machinery/alarm/directional/south,
+=======
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
+/obj/mapping_helper/glassware_spawn,
+>>>>>>> upstream/master
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/crew_quarters/md)
 "iXZ" = (
@@ -45966,6 +45978,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "pzZ" = (
@@ -52636,6 +52649,7 @@
 /area/station/hallway/primary/south)
 "ueg" = (
 /obj/machinery/chem_dispenser/chef,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "uez" = (
@@ -53496,7 +53510,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "uEM" = (

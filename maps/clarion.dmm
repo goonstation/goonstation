@@ -1378,6 +1378,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "apT" = (
@@ -10027,6 +10028,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bSk" = (
@@ -11552,11 +11556,11 @@
 /turf/space,
 /area/space)
 "cUY" = (
-/obj/machinery/light{
+/obj/storage/secure/crate/weapon/armory/pod_weapons,
+/obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/storage/secure/crate/weapon/armory/pod_weapons,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -13353,6 +13357,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "eqq" = (
@@ -15145,11 +15150,16 @@
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "fEx" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/vending/security_ammo,
+/obj/machinery/computer3/generic/communications{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/recharger/wall{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -16232,13 +16242,13 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "gpb" = (
-/obj/storage/secure/crate/gear/armory/equipment,
-/obj/machinery/recharger/wall{
-	dir = 8;
-	pixel_x = -19
-	},
 /obj/machinery/status_display{
 	pixel_y = 30
+	},
+/obj/machinery/vending/security_ammo,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/redblack{
 	dir = 9
@@ -17643,7 +17653,7 @@
 /obj/disposalpipe/segment,
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -18055,7 +18065,7 @@
 /area/station/crew_quarters/cafeteria)
 "hNt" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "hNA" = (
@@ -18295,7 +18305,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "hTx" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -19247,8 +19257,17 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/machinery/light_switch/west,
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_x = -2;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/snacks/donut/custom/robust{
+	pixel_x = -1;
+	pixel_y = 2;
+	rand_pos = 0
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -21407,11 +21426,11 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "kcn" = (
-/obj/machinery/light/emergency{
+/obj/random_item_spawner/armory_phasers,
+/obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/random_item_spawner/armory_phasers,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -21567,7 +21586,6 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/espressocup,
 /obj/item/clothing/head/helmet/space/santahat{
 	pixel_x = 12;
 	pixel_y = 13
@@ -21575,6 +21593,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "kiu" = (
@@ -21935,15 +21954,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/alarm/directional/south,
-/obj/table/reinforced/auto,
-/obj/item/kitchen/food_box/donut_box{
-	pixel_x = -2;
-	pixel_y = 13
-	},
-/obj/item/reagent_containers/food/snacks/donut/custom/robust{
-	pixel_x = -1;
-	pixel_y = 2;
-	rand_pos = 0
+/obj/stool/chair/office/red{
+	dir = 4;
+	tag = "icon-office_chair_red (EAST)"
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
@@ -26644,6 +26657,16 @@
 /obj/machinery/alarm/directional/south,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"nIv" = (
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/ai_monitored/armory)
 "nKb" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -29915,6 +29938,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/chem_dispenser/alcohol/bar,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/caution/west,
 /area/station/crew_quarters/bar)
 "qcy" = (
@@ -31803,6 +31827,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"rDn" = (
+/obj/random_item_spawner/armory_armor_supplies,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/ai_monitored/armory)
 "rDo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36382,10 +36416,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "uDF" = (
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
 /obj/storage/secure/crate/gear/armory/grenades,
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -39746,7 +39776,7 @@
 /obj/machinery/turretid/armory_perimeter{
 	pixel_x = -24
 	},
-/obj/random_item_spawner/armory_armor_supplies,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -40032,6 +40062,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/crew_quarters/bar)
 "xoG" = (
@@ -40986,11 +41017,11 @@
 "xZx" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light_switch/north{
 	pixel_x = -10;
 	pixel_y = 28
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -83822,7 +83853,7 @@ csQ
 csQ
 csQ
 uPa
-bIO
+uPa
 bIO
 bFo
 bIO
@@ -84121,10 +84152,10 @@ iyl
 uDF
 qLR
 xdq
+rDn
 txc
 oxR
 uPa
-bIO
 bIO
 bFo
 bIO
@@ -84423,10 +84454,10 @@ biM
 biM
 biM
 biM
+biM
 frn
 ozI
 uPa
-bIO
 bIO
 bFo
 bIO
@@ -84725,10 +84756,10 @@ glL
 glL
 glL
 glL
+glL
 pzC
 hjZ
 uPa
-bIO
 bIO
 bFo
 bIO
@@ -85027,10 +85058,10 @@ kcn
 jOO
 cUY
 hTx
+nIv
 rTC
 hjZ
 uPa
-bIO
 bIO
 bFo
 bIO
@@ -85330,9 +85361,9 @@ vpj
 sPv
 sPv
 sPv
+sPv
 htj
 uPa
-bIO
 bIO
 bFo
 bIO
@@ -85634,7 +85665,7 @@ uPa
 uPa
 uPa
 uPa
-bXM
+uPa
 bXM
 mUF
 bXM
