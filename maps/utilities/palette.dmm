@@ -945,7 +945,7 @@
 	},
 /area/space)
 "dU" = (
-/obj/machinery/alarm/directional/east,
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/yellow,
 /area/space)
 "dV" = (
@@ -1352,7 +1352,7 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "fK" = (
-/obj/machinery/alarm/directional/west,
+/obj/machinery/alarm/directional/east,
 /obj/machinery/disposal/cart_port,
 /turf/simulated/floor/yellow,
 /area/space)
@@ -6033,7 +6033,7 @@
 	},
 /area/space)
 "yd" = (
-/obj/machinery/alarm/directional/south,
+/obj/machinery/alarm/directional/north,
 /turf/simulated/floor,
 /area/space)
 "ye" = (

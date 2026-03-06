@@ -1406,7 +1406,6 @@
 /area/station/hallway/primary/northwest)
 "aEs" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/south,
 /area/station/medical/head)
 "aEI" = (
@@ -1814,7 +1813,6 @@
 /area/pasiphae/bridge)
 "aRh" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/east,
 /area/station/medical/medbay/pharmacy)
 "aRr" = (
@@ -2874,14 +2872,6 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
-	},
-/obj/item/paper/manufacturer_blueprint/resonator_type_fq{
-	pixel_y = 4;
-	pixel_x = 4
-	},
-/obj/item/paper/resonator_type_fq{
-	pixel_y = 3;
-	pixel_x = -3
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
@@ -3946,7 +3936,6 @@
 	})
 "bJE" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/north,
 /area/station/science/chemistry)
 "bJF" = (
@@ -6234,7 +6223,6 @@
 	desc = "What? Security has moments of weakness too!";
 	name = "emergency alcohol dispenser"
 	},
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/south,
 /area/station/ai_monitored/armory)
 "cQf" = (
@@ -8248,7 +8236,12 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/catalytic_guide,
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Rods decay at a diminishing rate;<br>corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
+	name = "printed card";
+	pixel_y = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -9396,7 +9389,7 @@
 /area/station/engine/engineering/ce)
 "eop" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/alarm/directional/south,
+/obj/machinery/alarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "eoI" = (
@@ -20224,7 +20217,7 @@
 /area/station/crew_quarters/courtroom)
 "iNR" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/alarm/directional/east,
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
 "iNU" = (
@@ -21925,7 +21918,6 @@
 	name = "Chemistry Lab Shutters";
 	pixel_y = 26
 	},
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -22290,7 +22282,6 @@
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -26033,8 +26024,12 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
-/obj/item/paper/resonator_type_sm{
-	pixel_y = 12
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>Maximum 3 intensity";
+	name = "printed card";
+	pixel_x = -4;
+	pixel_y = 13
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -29105,7 +29100,7 @@
 "mzV" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/firealarm/directional/west,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/engine/caution/west,
 /area/station/crew_quarters/baroffice)
 "mAa" = (
@@ -29721,7 +29716,7 @@
 	},
 /area/station/quartermaster/cargooffice)
 "mOL" = (
-/obj/machinery/alarm/directional/west,
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
@@ -30138,7 +30133,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/machinery/alarm/directional/west,
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -39378,10 +39373,10 @@
 "ror" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/chem_dispenser/alcohol/bar,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -46259,7 +46254,7 @@
 /area/station/science/teleporter)
 "uvL" = (
 /obj/machinery/centrifuge_nuclear,
-/obj/machinery/alarm/directional/west,
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -46747,7 +46742,12 @@
 "uJG" = (
 /obj/machinery/light/incandescent/cool,
 /obj/table/reinforced/auto,
-/obj/item/paper/catalytic_guide,
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Rods decay at a diminishing rate;<br>corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
+	name = "printed card";
+	pixel_y = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -47635,14 +47635,6 @@
 	dir = 8
 	},
 /area/station/security/main)
-"vfb" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/cleanable/dirt/jen,
-/obj/item/raw_material/shard/glass,
-/turf/simulated/floor/grey,
-/area/pasiphae/bridge)
 "vfE" = (
 /obj/stool/chair{
 	dir = 4
@@ -47700,6 +47692,7 @@
 	pixel_y = 5
 	},
 /obj/noticeboard/persistent/bar/directional/north,
+/obj/item/reagent_containers/food/drinks/espressocup,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -47711,7 +47704,6 @@
 	dir = 4;
 	pixel_y = 4
 	},
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "viB" = (
@@ -47835,7 +47827,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "vlO" = (
@@ -48049,8 +48040,12 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
-/obj/item/paper/resonator_type_ax{
-	pixel_y = 12
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
+	name = "printed card";
+	pixel_x = 4;
+	pixel_y = 13
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -48159,14 +48154,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
-	},
-/obj/item/paper/manufacturer_blueprint/resonator_type_fq{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/paper/resonator_type_fq{
-	pixel_x = -6;
-	pixel_y = -2
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
@@ -122644,7 +122631,7 @@ bzS
 gtT
 rcO
 nVY
-vfb
+vZZ
 vSG
 vZZ
 rHX
