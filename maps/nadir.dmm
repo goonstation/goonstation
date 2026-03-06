@@ -9389,9 +9389,7 @@
 /area/station/engine/engineering/ce)
 "eop" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/alarm{
-	pixel_y = 22
-	},
+/obj/machinery/alarm/directional/south,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "eoI" = (
@@ -20219,10 +20217,7 @@
 /area/station/crew_quarters/courtroom)
 "iNR" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
 "iNU" = (
@@ -29721,10 +29716,7 @@
 	},
 /area/station/quartermaster/cargooffice)
 "mOL" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
@@ -30141,10 +30133,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -46265,10 +46254,7 @@
 /area/station/science/teleporter)
 "uvL" = (
 /obj/machinery/centrifuge_nuclear,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
