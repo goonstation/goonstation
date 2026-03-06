@@ -363,6 +363,7 @@
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "solderingiron"
+	item_state = "soldering"
 	force = 10
 	hit_type = DAMAGE_BURN
 	throwforce = 5
