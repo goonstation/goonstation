@@ -517,7 +517,7 @@
 
 
 /client/proc/init_admin()
-#ifdef DONT_ADMIN_MEE
+#ifndef DONT_ADMIN_MEE
 	if (IsLocalClient(src))
 		admins[src.ckey] = "Host"
 #endif
