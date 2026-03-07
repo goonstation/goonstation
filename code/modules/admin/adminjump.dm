@@ -11,7 +11,7 @@
 		if (!A)
 			A = tgui_input_list(usr, "Where do you want to jump?", "Jump", by_type[/area])
 		if(flourish)
-			shrink_teleport(src.mob)
+			ANIMATE.shrink_teleport(src.mob)
 		var/turf/origin_turf = get_turf(usr)
 		var/list/turfs = get_area_turfs(A, 1)
 		if (length(turfs))
@@ -45,7 +45,7 @@
 		logTheThing(LOG_DIARY, usr, "jumped to [log_loc(T)]", "admin")
 		message_admins("[key_name(usr)] jumped [isturf(origin_turf) ? "from [log_loc(origin_turf)]" : ""] to [log_loc(T)]")
 		if(flourish)
-			shrink_teleport(src.mob)
+			ANIMATE.shrink_teleport(src.mob)
 
 		usr.set_loc(T)
 	else
@@ -71,7 +71,7 @@
 		logTheThing(LOG_DIARY, usr, "jumped to [constructTarget(M,"diary")] [log_loc(M)]", "admin")
 		message_admins("[key_name(usr)] jumped [isturf(origin_turf) ? "from [log_loc(origin_turf)]" : ""] to [key_name(M)] [log_loc(M)]")
 		if(flourish)
-			shrink_teleport(src.mob)
+			ANIMATE.shrink_teleport(src.mob)
 		usr.set_loc(get_turf(M))
 	else
 		alert("Admin jumping disabled")
@@ -105,7 +105,7 @@
 		logTheThing(LOG_DIARY, usr, "jumped to [constructTarget(target,"diary")] [log_loc(target)]", "admin")
 		message_admins("[key_name(usr)] jumped [isturf(origin_turf) ? "from [log_loc(origin_turf)]" : ""] to [key_name(target)] [log_loc(target)]")
 		if(flourish)
-			shrink_teleport(src.mob)
+			ANIMATE.shrink_teleport(src.mob)
 		usr.set_loc(target.loc)
 	else
 		alert("Admin jumping disabled")
@@ -132,7 +132,7 @@
 		var/turf/turf = locate(x, y, z)
 		var/turf/origin_turf = get_turf(usr)
 		if(flourish)
-			shrink_teleport(src.mob)
+			ANIMATE.shrink_teleport(src.mob)
 		usr.set_loc(turf)
 		logTheThing(LOG_ADMIN, usr, "jumped to [log_loc(usr)]")
 		logTheThing(LOG_DIARY, usr, "jumped to [log_loc(usr)]", "admin")
@@ -343,7 +343,7 @@
 		logTheThing(LOG_DIARY, usr, "teleported [target] to their turf [log_loc(usr)] from [log_loc(target)]", "admin")
 		message_admins("[key_name(usr)] teleported [target] to their turf [log_loc(usr)] from [log_loc(target)]")
 		if(flourish)
-			shrink_teleport(target)
+			ANIMATE.shrink_teleport(target)
 		target:set_loc(get_turf(usr))
 	else
 		alert("Admin jumping disabled")

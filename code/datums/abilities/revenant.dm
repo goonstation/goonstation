@@ -89,7 +89,7 @@
 		owner.attach_hud(hud)
 		owner.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_REVENANT)
 
-		animate_levitate(owner)
+		ANIMATE.levitate(owner)
 		LAZYLISTADDUNIQUE(owner.faction, FACTION_WRAITH)
 
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant", 100)
@@ -351,7 +351,7 @@
 				if (prob(current_prob))
 					current_prob *= 0.75
 					thrown += O
-					animate_float(O)
+					ANIMATE.float(O)
 		SPAWN(1 SECOND)
 			if (!destination) return
 			for (var/obj/O in thrown)
@@ -375,7 +375,7 @@
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
 					M.changeStatus("knockdown", 2 SECONDS)
-			animate_revenant_shockwave(T, 1, 3)
+			ANIMATE.revenant_shockwave(T, 1, 3)
 			sleep(0.3 SECONDS)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))

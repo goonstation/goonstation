@@ -119,4 +119,4 @@
 			alert("fuck you nerd","what are you doing")
 			return
 		for(var/turf/T in circular_range(get_turf(src),user_input))
-			animate_flash_color_fill(T,"#FF0000",1,5)
+			ANIMATE.flash_color_fill(T,"#FF0000",1,5)

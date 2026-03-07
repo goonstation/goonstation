@@ -140,7 +140,7 @@ change the direction of created objects.<br>
 				if("Spawn Heavenly")
 					if (ispath(objpath, /atom/movable))
 						var/atom/movable/A = new objpath(T)
-						heavenly_spawn(A)
+						ANIMATE.heavenly_spawn(A)
 					else if(ispath(objpath, /turf))
 						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
@@ -148,7 +148,7 @@ change the direction of created objects.<br>
 				if("Spawn Demonically")
 					if (ispath(objpath, /atom/movable))
 						var/atom/movable/A = new objpath(T)
-						demonic_spawn(A)
+						ANIMATE.demonic_spawn(A)
 					else if(ispath(objpath, /turf))
 						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
@@ -165,7 +165,7 @@ change the direction of created objects.<br>
 				if("Beam")
 					if(ispath(objpath, /atom/movable))
 						var/atom/movable/AM = new objpath(T)
-						spawn_beam(AM)
+						ANIMATE.spawn_beam(AM)
 					else if(ispath(objpath, /turf))
 						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else

@@ -635,7 +635,7 @@
 				if (vandalism_tracker[targetArea] >= vandalism_tracker_target[targetArea])
 					src.announcer_say_source.say("You've successfully ruined \the [targetArea.name]! The duffle bag has been delivered to where the last act of vandalism occurred.")
 					var/obj/item/loot = new/obj/item/gang_loot/guns_and_gear(location)
-					showswirl(loot)
+					ANIMATE.showswirl(loot)
 					vandalism_tracker -= targetArea
 				break
 
@@ -2155,7 +2155,7 @@
 			return
 		is_hiding = desired
 		var/turf/floorturf = get_turf(src)
-		animate_slide(floorturf, 0, 22, 4)
+		ANIMATE.slide(floorturf, 0, 22, 4)
 		SPAWN(0.4 SECONDS)
 			if (!src)
 				return
@@ -2167,7 +2167,7 @@
 				src.layer = MOB_LAYER
 				src.plane = PLANE_DEFAULT
 				src.mouse_opacity = 1
-			animate_slide(floorturf, 0, 0, 4)
+			ANIMATE.slide(floorturf, 0, 0, 4)
 
 	proc/cash_amount()
 		var/number = 0
@@ -2221,8 +2221,8 @@
 			if (DAMAGE_BURN)
 				user.visible_message(SPAN_ALERT("[user] ineffectually hits the [src] with [W]!"))
 			else
-				attack_particle(user,src)
-				hit_twitch(src)
+				ANIMATE.MOB.attack_particle(user,src)
+				ANIMATE.hit_twitch(src)
 				if (src.stored_cash > 0)
 					take_damage(W.force)
 					if (W.hitsound)

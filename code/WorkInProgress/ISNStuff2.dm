@@ -109,7 +109,7 @@
 			src.playsound_local(src.loc, pick(sounds_punch), 25, 1, -1)
 			boutput(src, SPAN_ALERT("<B>[H.name] punches [src.name]!</B>"))
 		src.fake_damage(rand(2,9),100)
-	hit_twitch(src)
+	ANIMATE.hit_twitch(src)
 
 ///////////////
 // Anomalies //

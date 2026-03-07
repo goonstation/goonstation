@@ -1102,9 +1102,9 @@ TYPEINFO(/mob)
 	if (src.nodamage || QDELETED(src)) return
 
 	if (brute > 0)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 	else if((burn > 0 || tox > 0) && isalive(src) && !src.hasStatus("paralysis"))
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
 
@@ -1151,7 +1151,7 @@ TYPEINFO(/mob)
 				src.pulling = G.assailant
 				G.assailant.pulled_by = src
 
-	pull_particle(src,pulling)
+	ANIMATE.MOB.pull_particle(src,pulling)
 
 /mob/proc/remove_pulling()
 	if(src.pulling)
@@ -2193,17 +2193,17 @@ TYPEINFO(/mob)
 		playsound(the_turf, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 70, TRUE)
 
 		floorcluwne.loc=the_turf //I actually do want to bypass Entered() and Exit() stuff now tyvm
-		animate_slide(the_turf, 0, -24, duration)
+		ANIMATE.slide(the_turf, 0, -24, duration)
 		sleep(duration/2)
 		if(!floorcluwne)
-			animate_slide(the_turf, 0, 0, duration)
+			ANIMATE.slide(the_turf, 0, 0, duration)
 			src.gib()
 			return
 		floorcluwne.say("honk honk motherfucker")
 		floorcluwne.point(src)
 		sleep(duration/2)
 		if(!floorcluwne)
-			animate_slide(the_turf, 0, 0, duration)
+			ANIMATE.slide(the_turf, 0, 0, duration)
 			src.gib()
 			return
 		floorcluwne.visible_message("<span style='font-weight:bold; color:red;'>[floorcluwne] drags [src] beneath \the [the_turf]!</span>")
@@ -2211,7 +2211,7 @@ TYPEINFO(/mob)
 		src.set_loc(the_turf)
 		src.layer=0
 		src.plane = PLANE_UNDERFLOOR
-		animate_slide(the_turf, 0, 0, duration)
+		ANIMATE.slide(the_turf, 0, 0, duration)
 		sleep(duration+5)
 		src.death(TRUE)
 		var/mob/dead/observer/newmob = ghostize()
@@ -2297,7 +2297,7 @@ TYPEINFO(/mob)
 
 /mob/proc/smite_gib()
 	var/turf/T = get_turf(src)
-	showlightning_bolt(T)
+	ANIMATE.showlightning_bolt(T)
 	playsound(T, 'sound/effects/lightning_strike.ogg', 50, TRUE)
 	src.unequip_all()
 	src.emote("scream")
@@ -2349,7 +2349,7 @@ TYPEINFO(/mob)
 	src.anchored = ANCHORED_ALWAYS
 	if (ishuman(src))
 		playsound(src, 'sound/impact_sounds/Slimy_Splat_2.ogg', 50, TRUE)
-	animate_squish_flat(src)
+	ANIMATE.squish_flat(src)
 	SPAWN (10)
 		if (QDELETED(src))
 			return
@@ -2568,9 +2568,9 @@ TYPEINFO(/mob)
 	if (thr.throw_type & THROW_PEEL_SLIP)
 		var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
 		if(("slip_obj" in thr.params) && istype(thr.params["slip_obj"], /obj/item/device/pda2/clown))
-			animate_peel_slip(src, stun_duration=stun_duration, T = 0.85 SECONDS, n_flips = 2, height = 24)
+			ANIMATE.peel_slip(src, stun_duration=stun_duration, T = 0.85 SECONDS, n_flips = 2, height = 24)
 		else
-			animate_peel_slip(src, stun_duration=stun_duration)
+			ANIMATE.peel_slip(src, stun_duration=stun_duration)
 		if(!isturf(hit) || hit.density)
 			random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 		return ..()
@@ -3238,7 +3238,7 @@ TYPEINFO(/mob)
 		playsound(the_turf, 'sound/effects/damnation.ogg', 50, TRUE)
 
 		satan.loc=the_turf //I actually do want to bypass Entered() and Exit() stuff now tyvm
-		animate_slide(the_turf, 0, -24, duration)
+		ANIMATE.slide(the_turf, 0, -24, duration)
 		sleep(duration/2)
 		if(!satan)
 			return
@@ -3247,7 +3247,7 @@ TYPEINFO(/mob)
 		satan.point(src)
 		sleep(duration/2)
 		if(!satan)
-			animate_slide(the_turf, 0, 0, duration)
+			ANIMATE.slide(the_turf, 0, 0, duration)
 			src.gib()
 			return
 		satan.visible_message("<span style='font-weight:bold; color:red;'>[satan] drags [src] off to hell!</span>")
@@ -3256,7 +3256,7 @@ TYPEINFO(/mob)
 		src.set_loc(the_turf)
 		src.layer = 0
 		src.plane = PLANE_UNDERFLOOR
-		animate_slide(the_turf, 0, 0, duration)
+		ANIMATE.slide(the_turf, 0, 0, duration)
 		src.emote("scream") // AAAAAAAAAAAA
 		sleep(duration+5)
 		src.hell_respawn()
@@ -3343,7 +3343,7 @@ TYPEINFO(/mob)
 	set category = "Local"
 
 	if (src.pulling && src.pulling == A)
-		unpull_particle(src,src.pulling)
+		ANIMATE.MOB.unpull_particle(src,src.pulling)
 		src.set_pulling(null)
 	else
 		A.pull(src)

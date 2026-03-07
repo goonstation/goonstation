@@ -229,7 +229,7 @@
 
 							for (var/turf/simulated/wall/WT in range(2,get_center()))
 								if(IS_ARRIVALS(WT.loc)) continue
-								leavescan(WT, 1)
+								ANIMATE.leavescan(WT, 1)
 								new /obj/item/raw_material/scrap_metal(WT)
 								if(prob(50))
 									WT.ReplaceWithLattice()
@@ -502,7 +502,7 @@
 			if (1)	//N
 				for(increment in 2 to 9)
 					T = locate(src.loc.x,src.loc.y + increment,src.loc.z)
-					leavepurge(T, increment, src.dir)
+					ANIMATE.leavepurge(T, increment, src.dir)
 					SPAWN(15)
 						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + 1,src.loc.y + 1 + increment,0)
@@ -510,7 +510,7 @@
 			if (4)	//E
 				for(increment in 2 to 9)
 					T = locate(src.loc.x + increment,src.loc.y,src.loc.z)
-					leavepurge(T, increment, src.dir)
+					ANIMATE.leavepurge(T, increment, src.dir)
 					SPAWN(15)
 						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + 1 + increment,src.loc.y + 1,0)
@@ -518,7 +518,7 @@
 			if (2)	//S
 				for(increment in 2 to 9)
 					T = locate(src.loc.x,src.loc.y - increment,src.loc.z)
-					leavepurge(T, increment, src.dir)
+					ANIMATE.leavepurge(T, increment, src.dir)
 					SPAWN(15)
 						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + 1,src.loc.y + 1 - increment,0)
@@ -526,7 +526,7 @@
 			if (8)	//W
 				for(increment in 2 to 9)
 					T = locate(src.loc.x - increment,src.loc.y,src.loc.z)
-					leavepurge(T, increment, src.dir)
+					ANIMATE.leavepurge(T, increment, src.dir)
 					SPAWN(15)
 						playsound(get_center(), 'sound/weapons/laserultra.ogg', 100, 1)
 						tile_purge(src.loc.x + 1 - increment,src.loc.y + 1,0)
@@ -553,7 +553,7 @@
 		current_ability = "gyrating_edge"
 
 		var/spin_dir = prob(50) ? "L" : "R"
-		animate_spin(src, spin_dir, 5, 0)
+		ANIMATE.spin(src, spin_dir, 5, 0)
 		playsound(get_center(), 'sound/effects/flameswoosh.ogg', 60, 1)
 		if(spin_dir == "L")
 			glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "gyratingEdge_L")
@@ -563,7 +563,7 @@
 		src.UpdateOverlays(glow, "glow")
 
 		SPAWN(0.5 SECONDS)
-			animate_spin(src, spin_dir, 5, 0)
+			ANIMATE.spin(src, spin_dir, 5, 0)
 
 		SPAWN(1 SECOND)
 			for (var/mob/living/M in range(5,get_center()))
@@ -848,7 +848,7 @@
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/atom, emote), "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
-			leavescan(T, 1)
+			ANIMATE.leavescan(T, 1)
 			fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 			if(prob(64))
 				new /obj/item/raw_material/scrap_metal(T)
@@ -869,11 +869,11 @@
 					T.ReplaceWithSpace()
 			for (var/obj/S in locate(point_x,point_y,src.z))
 				if(dam_type == 3 && !istype(S, /obj/critter))
-					leavescan(get_turf(S), 1)
+					ANIMATE.leavescan(get_turf(S), 1)
 					fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 					qdel(S)
 				else if(prob(64) && !istype(S, /obj/critter))
-					leavescan(get_turf(S), 1)
+					ANIMATE.leavescan(get_turf(S), 1)
 					fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 					S.ex_act(1)
 		return

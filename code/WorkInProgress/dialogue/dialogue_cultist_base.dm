@@ -24,7 +24,7 @@
 		..()
 		src.alpha = 0
 		animate(src, 10 SECONDS, alpha = 255)
-		animate_wave(src)
+		ANIMATE.wave(src)
 
 	EnteredProximity()
 		for(var/mob/living/M in oview(300))
@@ -365,7 +365,7 @@
 		for(var/atom/movable/mysterious_beast/B in (range(7)))
 			qdel(B)
 		for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
-			animate_little_spark(C)
+			ANIMATE.little_spark(C)
 		shake_camera(user, 4, 4)
 		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
 		D.dir = 4

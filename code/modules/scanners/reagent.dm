@@ -7,7 +7,7 @@
 		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if(visible)
-		animate_scanning(A, "#a92fda")
+		ANIMATE.scanning(A, "#a92fda")
 
 	var/data = null
 	var/reagent_data = null

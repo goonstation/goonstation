@@ -69,7 +69,7 @@
 		for(var/turf/T in landmarks[current_tutorial.checkpoint_landmark])
 			if(current_tutorial.region.turf_in_region(T))
 				src.set_loc(T)
-				showswirl(T)
+				ANIMATE.showswirl(T)
 				break
 
 		src.full_heal()

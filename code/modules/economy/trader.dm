@@ -351,7 +351,7 @@
 				pickedloc = get_turf(src) // put it SOMEWHERE
 
 		var/obj/storage/crate/A = new /obj/storage/crate(pickedloc)
-		showswirl(pickedloc)
+		ANIMATE.showswirl(pickedloc)
 		A.name = "Goods Crate ([src.name])"
 		if (src.business_card && prob(src.business_card_chance))
 			new src.business_card(A)
@@ -672,7 +672,7 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 				else
 					P = new /mob/living/critter/martian/warrior
 				P.set_loc(D.loc)
-				showswirl(P.loc)
+				ANIMATE.showswirl(P.loc)
 
 /obj/npc/trader/random/ore
 	commercetype = /datum/commodity/ore
@@ -790,7 +790,7 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
-				showswirl(P.loc)
+				ANIMATE.showswirl(P.loc)
 
 	//Special martian trader behaviour: prefix with '&' to display generic "feelings" to players that aren't emoted or telepathied
 	trader_say(var/message, var/mob/target)

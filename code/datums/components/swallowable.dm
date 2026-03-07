@@ -19,7 +19,7 @@
 		return
 	user.visible_message(SPAN_ALERT("[user] stuffs [src.parent] into [his_or_her(user)] mouth and swallows it!"))
 	playsound(user, 'sound/misc/gulp.ogg', 30, TRUE)
-	eat_twitch(user)
+	ANIMATE.eat_twitch(user)
 	user.drop_item(src.parent)
 	user.organHolder.stomach.consume(src.parent)
 	if (prob(50))

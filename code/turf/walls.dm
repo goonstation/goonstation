@@ -233,7 +233,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	boutput(user, SPAN_NOTICE("You hit the [src.name] but nothing happens!"))
 	playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
-	interact_particle(user,src)
+	ANIMATE.MOB.interact_particle(user,src)
 	return
 
 /turf/simulated/wall/attackby(obj/item/W, mob/user, params)

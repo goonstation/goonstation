@@ -97,7 +97,7 @@
 			playsound(target, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, clamp(1.0 + (30 - target.bioHolder.age)/50, 0.7, 1.4))
 			target.change_misstep_chance(60)
 
-			animate_clownspell(target)
+			ANIMATE.clownspell(target)
 			//target.unequip_all()
 			target.drop_from_slot(target.w_uniform)
 			target.drop_from_slot(target.shoes)
@@ -117,7 +117,7 @@
 				target.mind.assigned_role = "Lawyer"
 			target.change_misstep_chance(-INFINITY)
 
-			animate_clownspell(target)
+			ANIMATE.clownspell(target)
 			for(var/datum/ailment_data/AD in target.ailments)
 				if(istype(AD.master,/datum/ailment/disability/clumsy))
 					target.cure_disease(AD)

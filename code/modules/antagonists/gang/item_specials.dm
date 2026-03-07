@@ -69,7 +69,7 @@
 				A.UpdateOverlays(tag,"graffitisplat[length(status.tag_images)+1]")
 				status.tag_images += tag
 
-				hit_twitch(A)
+				ANIMATE.hit_twitch(A)
 				if (ishuman(A) && prob(40))
 					var/mob/living/carbon/human/victim = A
 					victim.emote("cough")

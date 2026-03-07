@@ -688,7 +688,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)
-			attack_twitch(src)
+			ANIMATE.attack_twitch(src)
 
 	if (src.should_attack && prob(10)) step_away(src,my_target,2)
 	SPAWN(0.3 SECONDS)
@@ -824,7 +824,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				//this is almost a straight copy/paste from singulo code
 				if(src.spaget_count < 3 || A == src.my_target) //always show the mob getting spaget'd
 					src.spaget_count++
-					animate_spaghettification(A, src, 15 SECONDS, right_spinning, src.my_target.client)
+					ANIMATE.spaghettification(A, src, 15 SECONDS, right_spinning, src.my_target.client)
 					SPAWN(16 SECONDS)
 						src.spaget_count--
 

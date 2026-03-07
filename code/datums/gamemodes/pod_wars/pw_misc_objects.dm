@@ -180,7 +180,7 @@
 
 	New()
 		..()
-		animate_rainbow_glow(src) // rgb shit cause it looks cool
+		ANIMATE.rainbow_glow(src) // rgb shit cause it looks cool
 		SubscribeToProcess()
 		last_check = world.time
 
@@ -777,7 +777,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		..()
 
 	attackby(var/obj/item/W, var/mob/user)
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 		take_damage(W.force)
 		playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 20, 1)
 		user.lastattacked = get_weakref(src)
@@ -798,7 +798,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 					else
 						take_damage(5)
 					playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
-					attack_particle(user,src)
+					ANIMATE.MOB.attack_particle(user,src)
 
 
 		user.lastattacked = get_weakref(src)
@@ -973,7 +973,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		src.team_num = team_num
 		src.tier = tier
 
-		showswirl(src, 0)
+		ANIMATE.showswirl(src, 0)
 		playsound(loc, 'sound/effects/mag_warp.ogg', 100, TRUE, flags = SOUND_IGNORE_SPACE)
 		//handle name, color, and access for types...
 		var/team_name_str

@@ -1141,7 +1141,7 @@
 			if (counter >= count && owner && !owner.hasStatus(list("knockdown", "unconscious")) )
 				counter -= count
 				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
-				violent_twitch(owner)
+				ANIMATE.violent_twitch(owner)
 			. = ..(timePassed)
 
 	/// Basically disorient, but only does the animation and its maxDuration is
@@ -1163,7 +1163,7 @@
 			if (counter >= count && owner)
 				counter -= count
 				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
-				violent_twitch(owner)
+				ANIMATE.violent_twitch(owner)
 			. = ..(timePassed)
 		onAdd()
 			if(istype(owner, /mob/living/silicon/robot))
@@ -1635,7 +1635,7 @@
 				if (prob(10))
 					owner.changeStatus("stunned", 2 SECONDS)
 				if (prob(20))
-					violent_twitch(owner)
+					ANIMATE.violent_twitch(owner)
 					M.make_jittery(rand(6,9))
 
 	mutiny
@@ -2843,7 +2843,7 @@
 		..()
 		var/mob/M = src.owner
 		if (M.client)
-			animate_fade_grayscale(M.client, 5 SECONDS)
+			ANIMATE.fade_grayscale(M.client, 5 SECONDS)
 		if (M.mind)
 			RegisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self)) //we're editing the client directly so we should be Cautious
 
@@ -2853,7 +2853,7 @@
 		if (M.mind)
 			UnregisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB)
 		if (M.client)
-			animate_fade_from_grayscale(M.client, 5 SECONDS)
+			ANIMATE.fade_from_grayscale(M.client, 5 SECONDS)
 
 /datum/statusEffect/oneMsgAccent
 	id = "temp_accent"
@@ -2932,7 +2932,7 @@
 				var/mob/victim = owner
 				victim.emote(pick("cough", "blink"))
 			playsound(owner, sound, 17, TRUE, 0.4, 1.6)
-			violent_twitch(owner)
+			ANIMATE.violent_twitch(owner)
 		. = ..(timePassed)
 
 /datum/statusEffect/patches_applied
@@ -3681,7 +3681,7 @@
 			src.vomiting = TRUE
 			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(src.desc)))
 			for (var/atom/movable/screen/statusEffect/hud_element in src.hud_elements)
-				animate_angry_wibble(hud_element)
+				ANIMATE.angry_wibble(hud_element)
 			SPAWN(5 SECONDS)
 				var/mob/vomitee = src.owner
 				vomitee.vomit()

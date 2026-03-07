@@ -18,7 +18,7 @@
 	if (istype(user, /mob/living/critter/small_animal))
 		return
 	if (src.rustle)
-		animate_storage_rustle(src.linked_item)
+		ANIMATE.storage_rustle(src.linked_item)
 	if (src.open_sound)
 		playsound(src.linked_item.loc, src.open_sound, 50, TRUE, -5)
 	src.storage_item_mouse_drop(user, user)

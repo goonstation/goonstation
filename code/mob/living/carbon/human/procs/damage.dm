@@ -317,14 +317,14 @@
 	if (src.nodamage || QDELETED(src)) return
 
 	if (brute > 0)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 	else if((burn > 0 || tox > 0) && isalive(src) && !src.hasStatus("paralysis"))
 		if (ischangeling(src))
 			var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
 			if (!C || !C.in_fakedeath)
-				hit_twitch(src)
+				ANIMATE.hit_twitch(src)
 		else
-			hit_twitch(src)
+			ANIMATE.hit_twitch(src)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal") && !bypass_reversal)
 		src.HealDamage(zone, brute, burn, tox, TRUE)

@@ -441,11 +441,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			if (istype(target, /obj/stool/chair)/* || istype(target, /obj/stool/bed)*/)
 				for (var/mob/living/L in target.loc.contents)
 					if (L.buckled)
-						animate_levitate(L, 1, 10)
-				animate_levitate(target, 1, 10)
+						ANIMATE.levitate(L, 1, 10)
+				ANIMATE.levitate(target, 1, 10)
 				boutput(holder.owner, SPAN_ALERT("You levitate[target] and its occupant(s)!"))
 			else if (istype(target, /obj/item))
-				animate_levitate(target, 1, 10)
+				ANIMATE.levitate(target, 1, 10)
 				boutput(holder.owner, SPAN_ALERT("You levitate[target]!"))
 			else
 				boutput(holder.owner, SPAN_ALERT("But it's beyond your power!"))
@@ -622,7 +622,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	proc/start_spooking()
 		src.original_color = src.holder.owner.color
 		src.holder.owner.color = rgb(170, 0, 0)
-		anim_f_ghost_blur(src.holder.owner)
+		ANIMATE.anim_f_ghost_blur(src.holder.owner)
 
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder

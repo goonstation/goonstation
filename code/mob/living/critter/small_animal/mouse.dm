@@ -384,7 +384,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 					return SPAN_EMOTE("<b>[src]</b> toots helpfully!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
-					animate_bouncy(src) // bouncy!
+					ANIMATE.bouncy(src) // bouncy!
 					return SPAN_EMOTE("<b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!")
 		return ..()
 
@@ -416,7 +416,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 		. = ..()
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with [his_or_her(M)] body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
-		animate_bouncy(src)
+		ANIMATE.bouncy(src)
 		animate(M, alpha=0, time=disappearance_time)
 		SPAWN(disappearance_time)
 			M.ghostize()

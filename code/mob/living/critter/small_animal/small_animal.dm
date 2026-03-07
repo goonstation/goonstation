@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		return src.fur_color || ..()
 
 	animate_lying(lying)
-		animate_180_rest(src, !lying)
+		ANIMATE.rest_180(src, !lying)
 
 	proc/randomize_name()
 		src.name = pick_string_autokey(name_list)
@@ -1527,7 +1527,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return SPAN_EMOTE("<b>[src]</b> chirps!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
-					animate_bouncy(src)
+					ANIMATE.bouncy(src)
 					return SPAN_EMOTE("<b>[src]</b> hops about with joy!")
 		return null
 
@@ -2079,7 +2079,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					sleep(0.2 SECONDS)
 
 			if (prob(5))
-				animate_spin(src, pick("L","R"))
+				ANIMATE.spin(src, pick("L","R"))
 
 			if (prob(10))
 				src.visible_message("[src] [pick("wigs out","frolics","rolls about","freaks out","goes wild","wiggles","wobbles")]!")
@@ -2920,7 +2920,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("dance")
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
 					SPAWN(1 SECOND)
-						animate_bumble(src)
+						ANIMATE.bumble(src)
 					return SPAN_EMOTE("<b>[src]</b> bumbles menacingly!")
 			if ("scream","buzz")
 				if (src.emote_check(voluntary, 30))
@@ -3589,7 +3589,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return SPAN_EMOTE("<b>[src]</b> farts!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
-					animate_bouncy(src)
+					ANIMATE.bouncy(src)
 					return SPAN_EMOTE("<b>[src]</b> dances!")
 		return ..()
 
@@ -3891,7 +3891,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.add_stam_mod_max("trilobite", -(STAMINA_MAX-10))
 		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
 		SPAWN(1 SECOND)
-			animate_bumble(src)
+			ANIMATE.bumble(src)
 
 	setup_hands()
 		..()
@@ -4033,7 +4033,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.add_stam_mod_max("pikaia", -(STAMINA_MAX-140))
 		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
 		SPAWN(1 SECOND)
-			animate_bumble(src)
+			ANIMATE.bumble(src)
 
 	is_hulk()
 		.= 1
@@ -4071,7 +4071,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					continue
 				if (!G.affecting)
 					continue
-				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+				ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 				if (G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
 					logTheThing(LOG_COMBAT, src, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
@@ -4403,7 +4403,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					continue
 				if (!G.affecting)
 					continue
-				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+				ANIMATE.spin(src, prob(50) ? "L" : "R", 1, 0)
 				if (G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc))
 					src.emote("scream")
 					logTheThing(LOG_COMBAT, src, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")

@@ -49,7 +49,7 @@
 		return
 
 	if(visible)
-		animate_scanning(A, "#70e800")
+		ANIMATE.scanning(A, "#70e800")
 
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
 		return SPAN_ALERT("Cannot scan.")

@@ -232,7 +232,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 
 		if (prob(thud_prob))
 			playsound(POT, 'sound/effects/exlow.ogg', 30, TRUE)
-			animate_wiggle_then_reset(POT)
+			ANIMATE.wiggle_then_reset(POT)
 
 
 // Bean Mutations
@@ -839,7 +839,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 
 		// add lights to the plant pot
 		POT.add_simple_light("glowstick_tree", list(255, 0, 255, 100))
-		animate_rainbow_glow(POT.simple_light, 5 SECONDS, 10 SECONDS)
+		ANIMATE.rainbow_glow(POT.simple_light, 5 SECONDS, 10 SECONDS)
 
 		var/image/glowverlay = object.SafeGetOverlayImage("glowverlay", 'icons/obj/hydroponics/plants_crop.dmi', "TreeGlow-glow")
 		if (istype(POT, /obj/decorative_pot)) //*dies of cringe*

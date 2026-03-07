@@ -385,7 +385,7 @@
 	user.changeStatus("knockdown", 4 SECONDS)
 	src.visible_message(SPAN_ALERT("<b>[src]</b> emits a loud thump and rattles a bit."))
 
-	animate_storage_thump(src)
+	ANIMATE.storage_thump(src)
 
 /obj/proc/mob_resist_inside(var/mob/user)
 	return

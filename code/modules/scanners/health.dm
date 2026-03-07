@@ -12,7 +12,7 @@
 		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
-		animate_scanning(M, "#0AEFEF")
+		ANIMATE.scanning(M, "#0AEFEF")
 
 	var/death_state = M.stat
 	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))

@@ -222,12 +222,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (user.a_intent == INTENT_GRAB)
 			var/datum/limb/current_limb = user.equipped_limb()
 			if (current_limb.can_gun_grab)
-				attack_particle(user,target)
+				ANIMATE.MOB.attack_particle(user,target)
 				return ..()
 		src.ShootPointBlank(target, user)
 	else
 		..()
-		attack_particle(user,target)
+		ANIMATE.MOB.attack_particle(user,target)
 
 #ifdef DATALOGGER
 		game_stats.Increment("violence")
@@ -311,7 +311,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
-			muzzle_flash_attack_particle(user, user.loc, target, src.muzzle_flash)
+			ANIMATE.muzzle_flash_attack_particle(user, user.loc, target, src.muzzle_flash)
 
 
 	if(slowdown && ismob(user))
@@ -400,7 +400,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
 			var/turf/origin = user.loc
-			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
+			ANIMATE.muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 
 	if (ismob(user))

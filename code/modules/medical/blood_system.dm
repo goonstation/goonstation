@@ -542,7 +542,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		//BLOOD_DEBUG("[some_idiot] enters bleed from blood_slash")
 
 /* ============================================ */
-/* ---------- animate_blood_damage() ---------- */
+/* ---------- ANIMATE.blood_damage() ---------- */
 /* ============================================ */
 /*
 /proc/animate_blood_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob)

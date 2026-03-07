@@ -12,7 +12,7 @@
 		return
 
 	if(visible)
-		animate_scanning(target, "#b66393")
+		ANIMATE.scanning(target, "#b66393")
 
 	if (istype(target, /turf))
 		var/turf/T = target

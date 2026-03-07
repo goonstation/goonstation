@@ -295,7 +295,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 				H.sims.affectMotive("fun", 1)
 		src.ribbit()
 		src.add_fingerprint(user)
-		animate_door_squeeze(src)
+		ANIMATE.door_squeeze(src)
 		user.visible_message(SPAN_EMOTE("[user] squeezes [src], and it croaks. Wow!"))
 	return
 
@@ -345,7 +345,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	default_material = "synthrubber_yellow"
 
 /obj/item/toy/plush/small/stress_ball/attack_self(mob/user as mob)
-	animate_door_squeeze(src) //squish
+	ANIMATE.door_squeeze(src) //squish
 	if (ON_COOLDOWN(src, "squish", 1 SECOND))
 		return
 

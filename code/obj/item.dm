@@ -497,7 +497,7 @@ ABSTRACT_TYPE(/obj/item)
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 		playsound(M.loc, src.eat_sound, rand(10, 50), 1)
-		eat_twitch(M)
+		ANIMATE.eat_twitch(M)
 		SPAWN(0.6 SECOND)
 			if (!src || !M || !user)
 				return
@@ -541,7 +541,7 @@ ABSTRACT_TYPE(/obj/item)
 			src.reagents.trans_to(M, src.reagents.total_volume)
 
 	playsound(M.loc, src.eat_sound, rand(10, 50), 1)
-	eat_twitch(M)
+	ANIMATE.eat_twitch(M)
 	SPAWN(1 SECOND)
 		if (!src || !M || !user)
 			return
@@ -1291,7 +1291,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		if (user.pulling == src)
 			user.remove_pulling()
 		if (isturf(src.loc))
-			pickup_particle(user,src)
+			ANIMATE.MOB.pickup_particle(user,src)
 	if (!user)
 		return 0
 
@@ -1462,7 +1462,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	var/armor_blocked = 0
 
 	if(pre_armor_power > 0 && power/pre_armor_power <= 0.66)
-		block_spark(target,armor=1)
+		ANIMATE.MOB.block_spark(target,armor=1)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
 				playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1, pitch=1.5)
@@ -1473,7 +1473,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			if (DAMAGE_BURN)
 				playsound(target, 'sound/impact_sounds/block_burn.ogg', 50, TRUE, -1, pitch=1.5)
 		if(power <= 0)
-			fuckup_attack_particle(user)
+			ANIMATE.MOB.fuckup_attack_particle(user)
 			armor_blocked = 1
 
 	if (!armor_blocked)

@@ -20,7 +20,7 @@
 					H.set_loc(holder.owner.loc)
 					holder.owner.set_dir(get_dir(holder.owner, H))
 					H.set_dir(get_dir(H, holder.owner))
-					animate_flip(H, 3)
+					ANIMATE.flip(H, 3)
 					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] grabs [H] and spins in the air!</B>"))
 					playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 					for (var/i = 0, i < 15, i++)

@@ -51,7 +51,7 @@
 		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
-		animate_scanning(M, "#0AEFEF")
+		ANIMATE.scanning(M, "#0AEFEF")
 
 	var/mob/living/carbon/human/H = M
 	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
@@ -81,7 +81,7 @@
 		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
-		animate_scanning(M, "#ef0a0a")
+		ANIMATE.scanning(M, "#ef0a0a")
 
 	var/mob/living/carbon/human/H = M
 	var/datum/db_record/GR = data_core.general.find_record("name", H.name)

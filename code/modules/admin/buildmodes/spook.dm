@@ -108,7 +108,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 		if("Toggle")
 			toggle()
 		if("Thump")
-			animate_storage_thump(src)
+			ANIMATE.storage_thump(src)
 		else .=..()
 
 /obj/item/spookTypes = "Spook;Come Alive"

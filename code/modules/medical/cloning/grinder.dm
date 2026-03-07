@@ -146,7 +146,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return 1
 
 	attack_hand(mob/user)
-		interact_particle(user,src)
+		ANIMATE.MOB.interact_particle(user,src)
 		if (src.status & (BROKEN | NOPOWER))
 			boutput(user, SPAN_ALERT("The [src.name] is not functioning!"))
 			return

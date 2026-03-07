@@ -118,7 +118,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "artifact_robot", 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "artifact_robot", 100)
 
-		animate_bumble(src)
+		ANIMATE.bumble(src)
 
 
 	setup_healths()

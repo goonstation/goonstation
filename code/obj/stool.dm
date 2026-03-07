@@ -1153,7 +1153,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	New()
 		..()
 		if (src.lying)
-			animate_rest(src, !src.lying)
+			ANIMATE.rest(src, !src.lying)
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 
 	update_icon()
@@ -1180,7 +1180,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 		else
 			src.visible_message(SPAN_ALERT("[src] tips [T ? "as it rolls over [T]" : "over"]!"))
 		src.lying = 1
-		animate_rest(src, !src.lying)
+		ANIMATE.rest(src, !src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 		src.scoot_sounds = list('sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg')
 
@@ -1189,7 +1189,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 			user.visible_message("[user] sets [src] back on its wheels.",\
 			"You set [src] back on its wheels.")
 			src.lying = 0
-			animate_rest(src, !src.lying)
+			ANIMATE.rest(src, !src.lying)
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 			src.scoot_sounds = scoot_sounds = list('sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg')
 			return

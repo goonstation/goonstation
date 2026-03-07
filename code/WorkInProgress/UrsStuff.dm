@@ -78,9 +78,9 @@
 		. = ..()
 		if(randomize_start)
 			spawn(rand(0,13))
-				animate_rainbow_glow(src)
+				ANIMATE.rainbow_glow(src)
 		else
-			animate_rainbow_glow(src)
+			ANIMATE.rainbow_glow(src)
 
 	random_start
 		randomize_start = 1
@@ -93,9 +93,9 @@
 		. = ..()
 		if(randomize_start)
 			spawn(rand(0,13))
-				oscillate_colors(src,list(color_1,color_2))
+				ANIMATE.oscillate_colors(src,list(color_1,color_2))
 		else
-			oscillate_colors(src,list(color_1,color_2))
+			ANIMATE.oscillate_colors(src,list(color_1,color_2))
 
 	random_start
 		randomize_start = 1
@@ -392,7 +392,7 @@
 		bilked.vis_contents += src
 	process()
 		..()
-		animate_storage_rustle(src)
+		ANIMATE.storage_rustle(src)
 		playsound(my_bap.bilked_idiot, 'sound/mksounds/gotitem.ogg', 5, FALSE)
 		if(src.my_bap.bilked_idiot.reagents.get_reagent_amount("bilk") == 0)
 			src.my_bilk.counter = null

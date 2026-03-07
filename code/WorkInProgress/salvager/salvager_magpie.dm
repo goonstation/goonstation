@@ -248,7 +248,7 @@ var/datum/magpie_manager/magpie_man = new
 					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
 				else if(src.active)
 					var/old_color = ship.color
-					animate_teleport(ship)
+					ANIMATE.teleport(ship)
 					sleep(0.8 SECONDS)
 					ship.set_loc(target)
 					ship.color = old_color // revert color from teleport color-shift
@@ -689,7 +689,7 @@ TYPEINFO(/obj/npc/trader/salvager)
 
 		. = appraise_text(I)
 
-		animate_scanning(user, . ? "#FFFF00" : "#ff4400", scan_time)
+		ANIMATE.scanning(user, . ? "#FFFF00" : "#ff4400", scan_time)
 		sleep(scan_time)
 		src.say(.)
 

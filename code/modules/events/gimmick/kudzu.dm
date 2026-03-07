@@ -135,7 +135,7 @@
 	Crossed(atom/movable/AM)
 		. = ..()
 		if (current_stage == 3 && src.can_kudzu_walk(AM))
-			animate_door_squeeze(AM)
+			ANIMATE.door_squeeze(AM)
 			if(!ON_COOLDOWN(AM, "kudzuwalk", 1 SECOND))
 				playsound(AM.loc, 'sound/impact_sounds/Bush_Hit.ogg', 45, 1)
 

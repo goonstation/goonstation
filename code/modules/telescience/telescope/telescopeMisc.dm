@@ -77,7 +77,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 					if(H.shoes?.magnetic)
 						boutput(H, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
 						continue
-				animate_teleport(M)
+				ANIMATE.teleport(M)
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
@@ -102,7 +102,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			for(var/atom/movable/M in target)
 				if(M.anchored)
 					continue
-				animate_teleport(M)
+				ANIMATE.teleport(M)
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)

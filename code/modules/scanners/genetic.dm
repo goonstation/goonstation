@@ -8,7 +8,7 @@
 	if (!M)
 		return "<b class='alert'>ERROR: NO SUBJECT DETECTED</b>"
 	if (visible)
-		animate_scanning(M, "#9eee80")
+		ANIMATE.scanning(M, "#9eee80")
 	if (!M.has_genetics())
 		return "<b class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</b>"
 	var/mob/living/carbon/human/H = M

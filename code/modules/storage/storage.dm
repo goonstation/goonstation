@@ -212,7 +212,7 @@
 			return FALSE
 		src.show_hud(user)
 		src.linked_item.add_fingerprint(user)
-		animate_storage_rustle(src.linked_item)
+		ANIMATE.storage_rustle(src.linked_item)
 	else
 		// don't show storages other people are wearing
 		if (ismob(src.linked_item.loc) && src.linked_item.loc != user)
@@ -413,7 +413,7 @@
 	// a mob put the item in
 	src.linked_item.add_fingerprint(user)
 	if (visible)
-		animate_storage_rustle(src.linked_item)
+		ANIMATE.storage_rustle(src.linked_item)
 		if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
 			user.visible_message(SPAN_NOTICE("[user] has added [I] to [src.linked_item]!"),
 				SPAN_NOTICE("You have added [I] to [src.linked_item]."))

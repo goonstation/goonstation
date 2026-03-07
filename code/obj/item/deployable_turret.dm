@@ -226,7 +226,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 						casing_turfs += T
 			for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 				FLICK("[src.icon_tag]_fire",src)
-				muzzle_flash_any(src, 0, "muzzle_flash")
+				ANIMATE.muzzle_flash_any(src, 0, "muzzle_flash")
 				if (src.current_projectile.casing)
 					picked_turf = pick(casing_turfs)
 					var/obj/item/casing/turret_casing = new src.current_projectile.casing(picked_turf, src.forensic_ID)
@@ -325,7 +325,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		else
 			src.health = src.health - W.force
 			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
-			attack_particle(user,src)
+			ANIMATE.MOB.attack_particle(user,src)
 			src.check_health()
 			..()
 

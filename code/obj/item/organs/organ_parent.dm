@@ -114,8 +114,8 @@
 
 		else
 			user.lastattacked = get_weakref(src)
-			attack_particle(user,src)
-			hit_twitch(src)
+			ANIMATE.MOB.attack_particle(user,src)
+			ANIMATE.hit_twitch(src)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, TRUE)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)

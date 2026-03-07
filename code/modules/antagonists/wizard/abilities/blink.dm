@@ -68,5 +68,5 @@
 		if(!isturf(picked))
 			boutput(holder.owner, SPAN_ALERT("It's too dangerous to blink there!"))
 			return
-		animate_blink(holder.owner)
+		ANIMATE.blink(holder.owner)
 		holder.owner.set_loc(picked)

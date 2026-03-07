@@ -30,7 +30,7 @@
 				if (prob(current_prob))
 					current_prob *= 0.35 // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
-					animate_float(O)
+					ANIMATE.float(O)
 		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)

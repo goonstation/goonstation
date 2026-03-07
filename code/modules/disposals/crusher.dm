@@ -138,7 +138,7 @@ ABSTRACT_TYPE(/obj/machinery/crusher)
 			//To prevent them moving away.
 			user.canmove = 0
 			user.anchored = ANCHORED
-			interact_particle(user,src)
+			ANIMATE.MOB.interact_particle(user,src)
 			sleep(0.5 SECONDS)
 			if(user) //Still here?
 				poking_jerks -= user

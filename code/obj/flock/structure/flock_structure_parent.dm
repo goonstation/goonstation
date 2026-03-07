@@ -255,7 +255,7 @@ TYPEINFO(/obj/flock_structure)
 	return src.accepts_sapper_power
 
 /obj/flock_structure/attack_hand(var/mob/user)
-	attack_particle(user, src)
+	ANIMATE.MOB.attack_particle(user, src)
 	user.lastattacked = get_weakref(src)
 
 	if(user.a_intent == INTENT_HARM)
@@ -281,7 +281,7 @@ TYPEINFO(/obj/flock_structure)
 /obj/flock_structure/attackby(obj/item/W, mob/user)
 	src.visible_message(SPAN_ALERT("<b>[user]</b> attacks [src] with [W]!"))
 	src.report_attack()
-	attack_particle(user, src)
+	ANIMATE.MOB.attack_particle(user, src)
 	user.lastattacked = get_weakref(src)
 
 	var/damtype = "brute"
@@ -290,7 +290,7 @@ TYPEINFO(/obj/flock_structure)
 
 	takeDamage(damtype, W.force)
 	if (src.hitTwitch)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 	if (W.force < 5)
 		playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 	else
@@ -364,7 +364,7 @@ TYPEINFO(/obj/flock_structure)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(src.passthrough && istype(drone) && !drone.floorrunning)
-		animate_flock_passthrough(mover)
+		ANIMATE.flock_passthrough(mover)
 		. = TRUE
 	else if(istype(mover,/mob/living/critter/flock))
 		. = TRUE

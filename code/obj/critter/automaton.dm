@@ -340,7 +340,7 @@ var/global/the_automaton = null
 						DEBUG_MESSAGE("<B>HAINE DEBUG:</b> spin set to [src.spin_lock]")
 					var/final_spin = 1000 - min(src.sun_spin, 999)
 					DEBUG_MESSAGE("<B>HAINE DEBUG:</b> final spin set to [final_spin]")
-					animate_spin(the_sun, src.spin_lock, final_spin, -1)
+					ANIMATE.spin(the_sun, src.spin_lock, final_spin, -1)
 					if (src.sun_spin >= 990)
 						src.sun_spin += 1
 						DEBUG_MESSAGE("<B>HAINE DEBUG:</b> spin now [src.sun_spin]")
@@ -447,7 +447,7 @@ var/global/the_automaton = null
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
-					animate_float(I, 5, 10)
+					ANIMATE.float(I, 5, 10)
 			if (prob(T_effect_prob))
 				SPAWN(rand(30, 50))
 					if (T)
@@ -473,7 +473,7 @@ var/global/the_automaton = null
 		spin()
 
 		for(var/mob/living/carbon/human/H in mobs)
-			animate_float(H, 5, 10)
+			ANIMATE.float(H, 5, 10)
 			SPAWN(1 SECOND)
 				H.flash(3 SECONDS)
 				shake_camera(H, 210, 2)

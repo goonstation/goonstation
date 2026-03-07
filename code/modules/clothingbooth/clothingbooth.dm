@@ -318,7 +318,7 @@
 /// A shame this will rarely fire, since having insufficient funds will just disable the purchase button.
 /obj/machinery/clothingbooth/proc/insufficient_funds()
 	boutput(usr, SPAN_ALERT("Insufficient funds!"))
-	animate_shake(src, 12, 3, 3)
+	ANIMATE.shake(src, 12, 3, 3)
 	playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 
 /obj/machinery/clothingbooth/proc/purchase_item(mob/target)

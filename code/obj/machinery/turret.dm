@@ -203,11 +203,11 @@
 		if (src.lasers)
 			use_power(200)
 			shoot_projectile_ST_pixel_spread(src, lethal, U)
-			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_laser")
+			ANIMATE.muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_laser")
 		else
 			use_power(100)
 			shoot_projectile_ST_pixel_spread(src, stun, U)
-			muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_elec")
+			ANIMATE.muzzle_flash_any(src, get_angle(src,target), "muzzle_flash_elec")
 
 
 	return
@@ -230,7 +230,7 @@
 	else if(P.proj_data.damage_type == D_ENERGY)
 		src.health -= damage / 2
 	if (damage > 0)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 
 	if (src.health <= 0)
 		src.die()

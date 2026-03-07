@@ -89,7 +89,7 @@
 			src.owner.mind.transfer_to(src)
 
 		src.visible_message(SPAN_ALERT("<b>[src.possessed_thing] comes to life!</b>"))
-		animate_levitate(src, -1, 20, 1)
+		ANIMATE.levitate(src, -1, 20, 1)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
 

@@ -129,7 +129,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 
 
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/attack_hand(mob/user)
-	interact_particle(user, src)
+	ANIMATE.MOB.interact_particle(user, src)
 	src.on = !src.on
 	src.UpdateIcon(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	var/pullrate = 100
 
 /obj/machinery/fluid_machinery/unary/hand_pump/attack_hand(mob/user)
-	interact_particle(user, src)
+	ANIMATE.MOB.interact_particle(user, src)
 	FLICK("output1", src)
 	if(!src.network)
 		return
@@ -512,7 +512,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	logTheThing(LOG_STATION, null, "A fluid pump was toggled [src.on ? "on" : "off"] through MechComp at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/binary/pump/attack_hand(mob/user)
-	interact_particle(user, src)
+	ANIMATE.MOB.interact_particle(user, src)
 	src.on = !src.on
 	src.UpdateIcon(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
@@ -548,7 +548,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	icon_state = "valve1"
 
 /obj/machinery/fluid_machinery/binary/valve/attack_hand(mob/user)
-	interact_particle(user, src)
+	ANIMATE.MOB.interact_particle(user, src)
 	if(ON_COOLDOWN(src, "fluidvalve", 1 SECOND))
 		return
 	src.on = !src.on

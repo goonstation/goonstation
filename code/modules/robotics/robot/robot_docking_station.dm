@@ -102,7 +102,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		boutput(user, SPAN_ALERT("You must attach [src]'s floor bolts before the machine will work."))
 		return
 
-	interact_particle(user, src)
+	ANIMATE.MOB.interact_particle(user, src)
 	ui_interact(user)
 
 /obj/machinery/recharge_station/attackby(obj/item/W, mob/user)

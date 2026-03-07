@@ -72,7 +72,7 @@
 						SPAWN(max(200*V.strength, 30))
 							if(T)
 								T:setProperty("stamcost", 0)
-						animate_float(T)
+						ANIMATE.float(T)
 				else if(isobj(T))
 					SPAWN(0)
 						T.setStatus("airrit", (istype(T, /obj/critter) ? null : 120*V.strength))
@@ -297,10 +297,10 @@
 			else if(isobj(A))
 				SPAWN(0) A.changeStatus("cloaked", max(200*V.strength, 30))
 			else if(isturf(A))
-				SPAWN(0) animate_fade_to_color_fill(A,"#111111",30)
+				SPAWN(0) ANIMATE.fade_to_color_fill(A,"#111111",30)
 				SPAWN(max(100*V.strength, 30))
 					if(A)
-						animate_fade_to_color_fill(A,"#FFFFFF",30)
+						ANIMATE.fade_to_color_fill(A,"#FFFFFF",30)
 			return A
 
 		flag_create(var/datum/ritualVars/V, var/atom/loc, var/applyaoe=1)

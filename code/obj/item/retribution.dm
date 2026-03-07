@@ -115,7 +115,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 		var/destruction_point_y
 		var/increment_x
 		var/increment_y
-		leavescan(user.loc, 0)
+		ANIMATE.leavescan(user.loc, 0)
 		destruction_point_z = user.loc.z
 		spawn(16)
 			if(core_inserted)
@@ -165,7 +165,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			create_scan_decal = TRUE
 			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
 		if(create_scan_decal)
-			leavescan(T, 1)
+			ANIMATE.leavescan(T, 1)
 			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, TRUE)
 		return
 

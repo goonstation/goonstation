@@ -21,7 +21,7 @@
 
 			message.maptext_animation_colours[i] = message.maptext_css_values["color"]
 
-		global.oscillate_colors(src, message.maptext_animation_colours)
+		ANIMATE.oscillate_colors(src, message.maptext_animation_colours)
 
 	for (var/datum/callback/callback as anything in message.maptext_callbacks)
 		callback.Invoke(message, src)

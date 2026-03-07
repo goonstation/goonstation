@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			owner.changeStatus("knockdown", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
-			animate_storage_thump(container)
+			ANIMATE.storage_thump(container)
 
 		return CAST_ATTEMPT_SUCCESS
 
@@ -930,7 +930,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			SF.farting = 0
 			if (linked_power.power > 1)
 				for (var/turf/T in range(owner,6))
-					animate_shake(T,5,rand(3,8),rand(3,8))
+					ANIMATE.shake(T,5,rand(3,8),rand(3,8))
 
 			// Superfarted on the bible? Off to hell.
 			for (var/obj/item/bible/B in owner.loc)
@@ -1722,7 +1722,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				if (prob(current_prob))
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
-					animate_float(O)
+					ANIMATE.float(O)
 		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
@@ -1743,7 +1743,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				if (prob(current_prob))
 					current_prob *= modifier // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
-					animate_float(O)
+					ANIMATE.float(O)
 		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(owner, 32, 2)

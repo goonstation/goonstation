@@ -1,7 +1,7 @@
 /obj/machinery/gravity_tether/proc/take_significant_damage(probability)
 	if (!prob(probability))
 		return
-	animate_shake(src)
+	ANIMATE.shake(src)
 	if (src.door_state == TETHER_DOOR_WELDED || src.door_state == TETHER_DOOR_CLOSED)
 		src.visible_message(SPAN_ALERT("The door on \the [src] is flung right off its hinges!"))
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, TRUE)

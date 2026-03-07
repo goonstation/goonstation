@@ -210,7 +210,7 @@
 	onEnd()
 		consume_input_buffer--
 		if (bottle.try_consume_from_bottle(target))
-			eat_twitch(target)
+			ANIMATE.eat_twitch(target)
 		else // if a pill was not successfully swallowed something is probably wrong, so don't let the loop restart
 			bottle.consumption_action = null
 			..()

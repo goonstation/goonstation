@@ -10,7 +10,7 @@
 		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if(visible)
-		animate_scanning(A, "#b9d689")
+		ANIMATE.scanning(A, "#b9d689")
 	var/datum/forensic_scan/scan = new(A)
 	return scan
 

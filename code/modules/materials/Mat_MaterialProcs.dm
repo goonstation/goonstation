@@ -438,7 +438,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			air.merge(payload) //add it to the target air
 
 			//sparkles
-			animate_flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
+			ANIMATE.flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
 			playsound(owner, 'sound/effects/leakagentb.ogg', 50, TRUE, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
@@ -447,7 +447,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			payload.temperature = temp
 			air.merge(payload) //add it to the target air
 			//blue sparkles
-			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
+			ANIMATE.flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
@@ -486,7 +486,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/miracle_add
 	execute(var/location)
-		animate_rainbow_glow(location)
+		ANIMATE.rainbow_glow(location)
 		return
 
 /datum/materialProc/radioactive_add
@@ -651,7 +651,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(endswith(owner.icon_state, "$$spacelag"))
 			return
 		if (!isturf(owner))
-			animate_lag(owner)
+			ANIMATE.lag(owner)
 			var/outline_filter = outline_filter(1, "#003800", OUTLINE_SHARP) // Outline color gets changed by material color
 			owner.add_filter("spacelag_outline", 20, outline_filter)
 		return

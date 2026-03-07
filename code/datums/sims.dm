@@ -714,7 +714,7 @@ var/global/datum/simsControl/simsController = new()
 
 	New()
 		..()
-		animate_bumble(src, Y1 = 32, Y2 = 30, slightly_random = 0)
+		ANIMATE.bumble(src, Y1 = 32, Y2 = 30, slightly_random = 0)
 		add_simple_light("plumbob", list(255, 255, 255, 100))
 
 	// relay procs

@@ -86,7 +86,7 @@
 		if (!ON_COOLDOWN(global, "chomp_gib", 2 SECONDS))
 			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(target))
 			playsound(src.user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
-			eat_twitch(src.user)
+			ANIMATE.eat_twitch(src.user)
 			random_brute_damage(src.target, 6)
 			ThrowRandom(gib, rand(2,6))
 

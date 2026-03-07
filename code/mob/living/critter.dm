@@ -488,7 +488,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	//actually throw it!
 	if (I)
-		attack_twitch(src)
+		ANIMATE.attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/throw_dir = get_dir(src, target)
 		if(prob(yeet_chance))
@@ -923,9 +923,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		return
 
 	if (brute > 0)
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 	else if((burn > 0 || tox > 0) && isalive(src) && !src.hasStatus("paralysis"))
-		hit_twitch(src)
+		ANIMATE.hit_twitch(src)
 
 	var/datum/healthHolder/Br = get_health_holder("brute")
 	if (Br)
@@ -1192,7 +1192,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 						container.mob_flip_inside(src)
 					else
 						message = "<b>[src]</B> does a flip!"
-						animate_spin(src, pick("L", "R"), 1, 0)
+						ANIMATE.spin(src, pick("L", "R"), 1, 0)
 
 	if (!message)
 		return
@@ -1328,9 +1328,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	O.icon = ghost_icon
 	O.icon_state = ghost_icon_state
 
-	animate_fade_grayscale(O, 1)
+	ANIMATE.fade_grayscale(O, 1)
 	O.pixel_y = initial(src.pixel_y) // byond's animation system is dumb so this needs to be done to fix things
-	animate_bumble(O)
+	ANIMATE.bumble(O)
 	O.alpha = 160
 	if(src.ghost_spawned && src.original_name)
 		O.name = src.original_name

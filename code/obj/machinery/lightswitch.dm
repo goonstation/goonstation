@@ -152,7 +152,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	area.power_change()
 
 	if(user)
-		interact_particle(user,src)
+		ANIMATE.MOB.interact_particle(user,src)
 
 	playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE)
 

@@ -420,7 +420,7 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 				U.update_value()
 				src.client?.screen += U
 				pos_x -= spacing
-				animate_buff_in(U)
+				ANIMATE.buff_in(U)
 
 	click(atom/target)
 		if (src.client?.check_key(KEY_EXAMINE))

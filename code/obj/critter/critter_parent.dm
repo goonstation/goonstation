@@ -242,14 +242,14 @@
 				return
 			if (src.feed_text)
 				src.visible_message(SPAN_NOTICE("[src] [src.feed_text]"))
-			eat_twitch(src)
+			ANIMATE.eat_twitch(src)
 			src.health = min(src.maxhealth, src.health + health_gain_from_food)
 			user.drop_item()
 			qdel(W)
 			return
 
 		user.lastattacked = get_weakref(src)
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 
 		var/attack_force = 0
 		var/damage_type = "brute"
@@ -360,14 +360,14 @@
 			on_wake()
 
 		user.lastattacked = get_weakref(src)
-		attack_particle(user,src)
+		ANIMATE.MOB.attack_particle(user,src)
 
 		if (user.a_intent == INTENT_HARM)
 			src.health -= rand(1,2) * src.brutevuln
 			src.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]!"))
 			playsound(src.loc, pick(sounds_punch), 100, 1)
-			attack_twitch(user)
-			hit_twitch(src)
+			ANIMATE.attack_twitch(user)
+			ANIMATE.hit_twitch(src)
 			if (hitsound)
 				playsound(src, hitsound, 50, TRUE)
 			if (src.alive && src.health <= 0) src.CritterDeath()
@@ -738,9 +738,9 @@
 							if(ATTACK_CHECK(src.target))
 								CritterAttack(src.target)
 								if (src)
-									attack_twitch(src)
+									ANIMATE.attack_twitch(src)
 								if (src.target)
-									hit_twitch(src.target)
+									ANIMATE.hit_twitch(src.target)
 						if (!src.aggressive)
 							src.task = "thinking"
 							src.target = null

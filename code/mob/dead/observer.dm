@@ -263,7 +263,7 @@ TYPEINFO(/mob/dead/observer)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
-	animate_bumble(src) // floaty ghosts  c:
+	ANIMATE.bumble(src) // floaty ghosts  c:
 	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
 	src.verbs += /mob/dead/observer/proc/toggle_ghost_chem_vision
 	if (ismob(corpse))

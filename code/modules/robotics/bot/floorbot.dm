@@ -541,7 +541,7 @@
 		if (!master.on)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		attack_twitch(master)
+		ANIMATE.attack_twitch(master)
 		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 
 	onInterrupt()
@@ -602,7 +602,7 @@
 		if (!master.on)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		attack_twitch(master)
+		ANIMATE.attack_twitch(master)
 		playsound(master, 'sound/items/Welder.ogg', 50, TRUE)
 
 	onInterrupt()

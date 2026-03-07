@@ -15,7 +15,7 @@
 			return SPAN_ALERT("Unable to obtain a reading.")
 
 	if(visible)
-		animate_scanning(A, "#00a0ff", alpha_hex = "32")
+		ANIMATE.scanning(A, "#00a0ff", alpha_hex = "32")
 
 	var/datum/gas_mixture/check_me = A.return_air(direct = TRUE)
 	var/pressure = null

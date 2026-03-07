@@ -9,7 +9,7 @@ proc/StartDriftFloat(atom/movable/AM)
 	if (!(AM.temp_flags & DRIFT_ANIMATION))
 		AM.temp_flags |= DRIFT_ANIMATION
 		animate(AM, flags=ANIMATION_END_NOW, tag="grav_drift") // reset animations so they don't stack
-		animate_drift(AM, -1, 25)
+		ANIMATE.drift(AM, -1, 25)
 
 proc/StopDriftFloat(atom/movable/AM)
 	AM.temp_flags &= ~DRIFT_ANIMATION
