@@ -30,10 +30,10 @@
 #define PRICE_LUXURY_COSTLY 5000 //You can at best afford one of these a round unless you're high ranking
 
 ///Need I say more?
-#define PRICE_EXORBITANT 10000 //Either you're buying plutonium or getting scammed
+#define PRICE_EXORBITANT 10000 //Big moni
+#define PRICE_RICHES_OF_HEAVEN_AND_EARTH 100000 //Either you're buying plutonium or getting scammed
 
-#define PRICE_7_5 8
-#define PRICE_10 10
+#define PRICE_RECURRING_CHEAP*0.1 10
 #define PRICE_15 15
 #define PRICE_18_75 19
 #define PRICE_25 25
@@ -44,29 +44,26 @@
 #define PRICE_50 50
 #define PRICE_60 60
 #define PRICE_75 75
-#define PRICE_100 100
-#define PRICE_120 120
-#define PRICE_150 150
-#define PRICE_200 200
-#define PRICE_240 240
-#define PRICE_300 300
-#define PRICE_400 400
-#define PRICE_450 450
-#define PRICE_480 480
-#define PRICE_600 600
-#define PRICE_900 900
-#define PRICE_1200 1200
-#define PRICE_1500 1500
-#define PRICE_1800 1800
-#define PRICE_2400 2400
-#define PRICE_3000 3000
-#define PRICE_3600 3600
-#define PRICE_4500 4500
-#define PRICE_4800 4800
-#define PRICE_5000 5000
-#define PRICE_6000 6000
-#define PRICE_7500 7500
-#define PRICE_9000 9000
-#define PRICE_10000 10000
-#define PRICE_12000 12000
-#define PRICE_25000 25000
+#define PRICE_RECURRING_CHEAP 100
+#define PRICE_RECURRING*0.6 120
+#define PRICE_RECURRING*0.75 150
+#define PRICE_RECURRING 200
+#define PRICE_RECURRING_COSTLY*0.8 240
+#define PRICE_RECURRING_COSTLY 300
+#define PRICE_LUXURY_CHEAP*0.4 400
+#define PRICE_LUXURY_CHEAP*0.45 450
+#define PRICE_LUXURY_CHEAP*0.48 480
+#define PRICE_LUXURY_CHEAP*0.6 600
+#define PRICE_LUXURY_CHEAP*0.9 900
+#define PRICE_LUXURY*0.4 1200
+#define PRICE_LUXURY*0.5 1500
+#define PRICE_LUXURY*0.6 1800
+#define PRICE_LUXURY*0.8 2400
+#define PRICE_LUXURY 3000
+#define PRICE_LUXURY_COSTLY*0.72 3600
+#define PRICE_LUXURY_COSTLY*0.9 4500
+#define PRICE_LUXURY_COSTLY*0.96 4800
+#define PRICE_LUXURY_COSTLY 5000
+#define PRICE_EXORBITANT*0.6 6000
+#define PRICE_EXORBITANT*0.75 7500
+#define PRICE_EXORBITANT*0.9 9000

@@ -1,11 +1,11 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 /datum/clothingbooth_item/head
 	slot = SLOT_HEAD
-	cost = PRICE_150
+	cost = PRICE_RECURRING*0.75
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 /datum/clothingbooth_item/head/barrettes
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	black
 		name = "Black"
@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 /datum/clothingbooth_item/head/basecap
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	black
 		name = "Black"
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 /datum/clothingbooth_item/head/beret
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 	white
 		name = "White"
@@ -125,20 +125,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 		item_path = /obj/item/clothing/head/frenchberet/blueberry
 
 /datum/clothingbooth_item/head/mime_bowler
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/head/mime_bowler
 
 /datum/clothingbooth_item/head/mime_beret
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/head/mime_beret
 
 /datum/clothingbooth_item/head/sailormoon
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/head/sailormoon
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 /datum/clothingbooth_item/head/butterfly_hairclip
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	blue
 		name = "Blue"
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 /datum/clothingbooth_item/head/cat_ears
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 
 	white
 		name = "White"
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 /datum/clothingbooth_item/head/costume_goggles
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 	yellow
 		name = "Yellow"
@@ -229,19 +229,19 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 		item_path = /obj/item/clothing/head/goggles/purple
 
 /datum/clothingbooth_item/head/cowboy
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/head/cowboy
 
 /datum/clothingbooth_item/head/cwhat
 	item_path = /obj/item/clothing/head/cwhat
 
 /datum/clothingbooth_item/head/diner_waitress_hat
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/head/waitresshat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 /datum/clothingbooth_item/head/fedora
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	black
 		name = "Black"
@@ -259,20 +259,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 		item_path = /obj/item/clothing/head/mj_hat
 
 /datum/clothingbooth_item/head/frog
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 	item_path = /obj/item/clothing/head/frog_hat
 
 /datum/clothingbooth_item/head/fthat
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/head/fthat
 
 /datum/clothingbooth_item/head/green_visor
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/head/pokervisor
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 /datum/clothingbooth_item/head/hairbow
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 	blue
 		name = "Blue"
@@ -348,7 +348,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 /datum/clothingbooth_item/head/headband/basic
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	blue
 		name = "Blue"
@@ -421,18 +421,18 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 		item_path = /obj/item/clothing/head/headband/basic/cream
 
 /datum/clothingbooth_item/head/maid_headwear
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 	item_path = /obj/item/clothing/head/maid
 
 /datum/clothingbooth_item/head/lace_veil
-	cost = PRICE_1200
+	cost = PRICE_LUXURY*0.4
 	item_path = /obj/item/clothing/head/veil
 
 /datum/clothingbooth_item/head/leaf_hairclip
 	item_path = /obj/item/clothing/head/headsprout
 
 /datum/clothingbooth_item/head/pinwheel
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 	item_path = /obj/item/clothing/head/pinwheel_hat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/pirate)
@@ -463,7 +463,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/pomhat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/sunhat)
 /datum/clothingbooth_item/head/sunhat
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	red
 		name = "Red"
@@ -533,16 +533,16 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 		item_path = /obj/item/clothing/head/westhat/red
 
 /datum/clothingbooth_item/head/ushanka
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 	item_path = /obj/item/clothing/head/ushanka
 
 /datum/clothingbooth_item/head/flatcap
-	cost = PRICE_150
+	cost = PRICE_RECURRING*0.75
 	item_path = /obj/item/clothing/head/flatcap
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/hijab)
 /datum/clothingbooth_item/head/hijab
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	black
 		name = "Black"
@@ -615,7 +615,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hijab)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/headscarf)
 /datum/clothingbooth_item/head/headscarf
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	black
 		name = "Black"
@@ -674,7 +674,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headscarf)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/dog_ears)
 /datum/clothingbooth_item/head/dog_ears
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 
 	white
 		name = "White"

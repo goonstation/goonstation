@@ -1,7 +1,7 @@
 #ifdef SEASON_SUMMER
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 /datum/clothingbooth_item/w_uniform/bikini/white
 	name = "White"
@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini/polkadot
 	name = "Red Polka-Dot"
 	item_path = /obj/item/clothing/under/misc/bikini/pdot_red
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 	swatch_background_color = "#e21616"
 	swatch_foreground_color = "#ffffff"
 	swatch_foreground_shape = SWATCH_POLKADOTS
@@ -50,7 +50,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini/strawberry
 	name = "Strawberry"
 	item_path = /obj/item/clothing/under/misc/bikini/strawberry
-	cost = PRICE_400
+	cost = PRICE_LUXURY_CHEAP*0.4
 	swatch_background_color = "#c20038"
 	swatch_foreground_color = "#1fa03b"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
@@ -58,14 +58,14 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini/bee
 	name = "Bee"
 	item_path = /obj/item/clothing/under/misc/bikini/bee
-	cost = PRICE_400
+	cost = PRICE_LUXURY_CHEAP*0.4
 	swatch_background_color = "#e0e02c"
 	swatch_foreground_color = "#2f2851"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/onepiece)
 /datum/clothingbooth_item/w_uniform/onepiece
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 
 /datum/clothingbooth_item/w_uniform/onepiece/white
@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/onepiece)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 /datum/clothingbooth_item/w_uniform/frillyswimsuit
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/white
 	name = "White"
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/bubblegum
 	name = "Bubblegum"
 	item_path = /obj/item/clothing/under/swimsuit/frillyswimsuit/bubblegum
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 	swatch_background_color = "#f2a9a9"
 	swatch_foreground_color = "#7fffff"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
@@ -143,14 +143,14 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/circus
 	name = "Circus"
 	item_path = /obj/item/clothing/under/swimsuit/frillyswimsuit/circus
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#e55b16"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 /datum/clothingbooth_item/w_uniform/swimtrunks
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 /datum/clothingbooth_item/w_uniform/swimtrunks/white
 	name = "White"
 	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/white
@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 /datum/clothingbooth_item/w_uniform/swimtrunks/circus
 	name = "Circus"
 	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/circus
-	cost = PRICE_300
+	cost = PRICE_RECURRING_COSTLY
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#e55b16"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/oldswimsuit)
 /datum/clothingbooth_item/w_uniform/oldswimsuit
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 /datum/clothingbooth_item/w_uniform/oldswimsuit/red
 	name = "Red and White"
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/wetsuit)
 /datum/clothingbooth_item/w_uniform/wetsuit/black
 	name = "Black"
 	item_path = /obj/item/clothing/under/misc/wetsuit
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 	swatch_background_color = "#2f2851"
 
 /datum/clothingbooth_item/w_uniform/wetsuit/red

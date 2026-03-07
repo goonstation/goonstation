@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 10, cost = PRICE_30) // 24
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 20, cost = PRICE_25) // 20
 
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost = PRICE_150, hidden=1) // 120
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost = PRICE_RECURRING*0.75, hidden=1) // 120
 
 /// This is currently unused as it was intended for use in PR 6684, but it was removed upon request. This might be a temporary removal, so it's staying here.
 /obj/machinery/vending/meat/station
@@ -108,12 +108,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		..()
 		// prices here are triple of the prefab_grill version where applicable
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost = PRICE_30)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget, 5, cost = PRICE_300)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish, 3, cost = PRICE_300)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget, 5, cost = PRICE_RECURRING_COSTLY)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish, 3, cost = PRICE_RECURRING_COSTLY)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 6, cost = PRICE_50)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 3, cost = PRICE_75)
 
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 5, cost = PRICE_600, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 5, cost = PRICE_LUXURY_CHEAP*0.6, hidden=1)
 
 // all of john's area specific lines here
 /area/var/john_talk = null

@@ -1,18 +1,18 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit)
 /datum/clothingbooth_item/wear_suit
 	slot = SLOT_WEAR_SUIT
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 /datum/clothingbooth_item/wear_suit/baseball_jacket
 	item_path = /obj/item/clothing/suit/jacketsjacket
 
 /datum/clothingbooth_item/wear_suit/dinosaur_pajamas
-	cost = PRICE_150
+	cost = PRICE_RECURRING*0.75
 	item_path = /obj/item/clothing/suit/gimmick/dinosaur
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 /datum/clothingbooth_item/wear_suit/dress
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 
 	black
 		name = "Black"
@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 		item_path = /obj/item/clothing/suit/dressb/dressr
 
 /datum/clothingbooth_item/wear_suit/guards_coat
-	cost = PRICE_400
+	cost = PRICE_LUXURY_CHEAP*0.4
 	item_path = /obj/item/clothing/suit/guards_coat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie_large)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 /datum/clothingbooth_item/wear_suit/jacket
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 	cerulean
 		name = "Cerulean"
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 	item_path = /obj/item/clothing/suit/loosejacket
 
 /datum/clothingbooth_item/wear_suit/offbrand_labcoat
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 	item_path = /obj/item/clothing/suit/labcoatlong
 
 /datum/clothingbooth_item/wear_suit/overcoat_and_scarf
@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 // todo: distinguish these two somehow
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 /datum/clothingbooth_item/wear_suit/poncho
-	cost = PRICE_150
+	cost = PRICE_RECURRING*0.75
 
 	poncho
 		name = "Poncho"
@@ -231,26 +231,26 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 	item_path = /obj/item/clothing/suit/merchant
 
 /datum/clothingbooth_item/wear_suit/scarf
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 	item_path = /obj/item/clothing/suit/scarf
 
 /datum/clothingbooth_item/wear_suit/skull_mask_and_cloak
-	cost = PRICE_150
+	cost = PRICE_RECURRING*0.75
 	item_path = /obj/item/clothing/suit/rando
 
 /datum/clothingbooth_item/wear_suit/suspenders
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 	item_path = /obj/item/clothing/suit/suspenders
 
 /datum/clothingbooth_item/wear_suit/hitman
 	item_path = /obj/item/clothing/suit/hitman
 
 /datum/clothingbooth_item/wear_suit/tuxedo_jacket
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 	item_path = /obj/item/clothing/suit/tuxedo_jacket
 
 /datum/clothingbooth_item/wear_suit/waistcoat
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 	item_path = /obj/item/clothing/suit/wcoat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/sweater_vest)

@@ -1,11 +1,11 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes)
 /datum/clothingbooth_item/shoes
 	slot = SLOT_SHOES
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/boots)
 /datum/clothingbooth_item/shoes/boots
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	black
 		name = "Black"
@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/cowboy_boots)
 		item_path = /obj/item/clothing/shoes/westboot/brown
 
 /datum/clothingbooth_item/shoes/dress_shoes
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/shoes/dress_shoes
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/flats)
@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/flats)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/heels)
 /datum/clothingbooth_item/shoes/heels
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 
 	white
 		name = "White"
@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/heels)
 		item_path = /obj/item/clothing/shoes/heels/red
 
 /datum/clothingbooth_item/shoes/macando_boots
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/shoes/cwboots
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/mary_janes)

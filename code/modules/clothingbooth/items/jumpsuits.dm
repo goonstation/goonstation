@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform)
 	item_path = /obj/item/clothing/under/misc/bubble
 
 /datum/clothingbooth_item/w_uniform/butler
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 	item_path = /obj/item/clothing/under/gimmick/butler
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/card_suit_shirt)
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/collar_dress)
 		item_path = /obj/item/clothing/under/collardressr
 
 /datum/clothingbooth_item/w_uniform/cwfashion
-	cost = PRICE_120
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/under/gimmick/cwfashion
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat)
 /datum/clothingbooth_item/w_uniform/dress_shirt_wcoat
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 
 	black
 		name = "Black"
@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat)
 		item_path = /obj/item/clothing/under/gimmick/red_wcoat
 
 /datum/clothingbooth_item/w_uniform/fancy_vest
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 	item_path = /obj/item/clothing/under/misc/fancy_vest
 
 /datum/clothingbooth_item/w_uniform/fish
@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/flame_shirt)
 		name = "Rainbow"
 		swatch_foreground_shape = SWATCH_RAINBOW
 		item_path = /obj/item/clothing/under/misc/flame_rainbow
-		cost = PRICE_100
+		cost = PRICE_RECURRING_CHEAP
 
 /datum/clothingbooth_item/w_uniform/flannel
 	item_path = /obj/item/clothing/under/misc/flannel
@@ -152,12 +152,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/flame_shirt)
 	item_path = /obj/item/clothing/under/gimmick/ftuniform
 
 /datum/clothingbooth_item/w_uniform/hawaiian_dress
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 	item_path = /obj/item/clothing/under/misc/dress/hawaiian
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/little_dress)
 /datum/clothingbooth_item/w_uniform/little_dress
-	cost = PRICE_400
+	cost = PRICE_LUXURY_CHEAP*0.4
 
 	black
 		name = "Black"
@@ -170,12 +170,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/little_dress)
 		item_path = /obj/item/clothing/under/misc/dress/red
 
 /datum/clothingbooth_item/w_uniform/maid
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 	item_path = /obj/item/clothing/under/gimmick/maid
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/masquerade)
 /datum/clothingbooth_item/w_uniform/masquerade
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 
 	cherryblossom
 		name = "Cherryblossom"
@@ -188,12 +188,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/masquerade)
 		item_path = /obj/item/clothing/under/peacockdress
 
 /datum/clothingbooth_item/w_uniform/redtie
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 	item_path = /obj/item/clothing/under/redtie
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/scifi)
 /datum/clothingbooth_item/w_uniform/scifi
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 
 	black_and_purple
 		name = "Black and Purple"
@@ -217,7 +217,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/scifi)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/racing)
 /datum/clothingbooth_item/w_uniform/racing
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 
 	bee
 		name = "Bee"
@@ -293,7 +293,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_jeans)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_pants)
 /datum/clothingbooth_item/w_uniform/shirt_and_pants
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 	black_pants_no_tie
 		name = "Black Pants No Tie"
@@ -377,7 +377,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_pants)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/skirt_dress)
 /datum/clothingbooth_item/w_uniform/skirt_dress
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 	red
 		name = "Red and Black"
@@ -435,7 +435,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 
 	bolt
 		name = "Bolt"
-		cost = PRICE_100
+		cost = PRICE_RECURRING_CHEAP
 		swatch_background_color = "#7c77ad"
 		swatch_foreground_color = "#ffe244"
 		swatch_foreground_shape = SWATCH_BISECT_RIGHT
@@ -443,7 +443,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 
 	purple_bolt
 		name = "Purple Bolt"
-		cost = PRICE_100
+		cost = PRICE_RECURRING_CHEAP
 		swatch_background_color = "#b726ff"
 		swatch_foreground_color = "#ecddff"
 		swatch_foreground_shape = SWATCH_BISECT_RIGHT
@@ -451,7 +451,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 
 	leopard
 		name = "Leopard"
-		cost = PRICE_100
+		cost = PRICE_RECURRING_CHEAP
 		swatch_background_color = "#f2cb2f"
 		swatch_foreground_color = "#57435f"
 		swatch_foreground_shape = SWATCH_POLKADOTS
@@ -462,28 +462,28 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 		swatch_background_color = "#cb3083"
 		swatch_foreground_color = "#57435f"
 		swatch_foreground_shape = SWATCH_POLKADOTS
-		cost = PRICE_100
+		cost = PRICE_RECURRING_CHEAP
 		item_path = /obj/item/clothing/under/misc/casdressleop
 
 /datum/clothingbooth_item/w_uniform/tuxedo
-	cost = PRICE_200
+	cost = PRICE_RECURRING
 	item_path = /obj/item/clothing/under/rank/bartender/tuxedo
 
 /datum/clothingbooth_item/w_uniform/wedding_dress
-	cost = PRICE_3600
+	cost = PRICE_LUXURY_COSTLY*0.72
 	item_path = /obj/item/clothing/under/gimmick/wedding_dress
 
 /datum/clothingbooth_item/w_uniform/western
-	cost = PRICE_150
+	cost = PRICE_RECURRING*0.75
 	item_path = /obj/item/clothing/under/misc/western
 
 /datum/clothingbooth_item/w_uniform/western_dress
-	cost = PRICE_150
+	cost = PRICE_RECURRING*0.75
 	item_path = /obj/item/clothing/under/misc/westerndress
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/yoga)
 /datum/clothingbooth_item/w_uniform/yoga
-	cost = PRICE_100
+	cost = PRICE_RECURRING_CHEAP
 
 	white
 		name = "White"
