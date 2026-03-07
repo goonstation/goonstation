@@ -1,88 +1,76 @@
-// god damn it
-// TODO: make microwaves use /datum/cookingRecipe, somehow
-// possibly reclaim /datum/recipe
-/datum/recipe_m
-	var/egg_amount = 0
-	var/flour_amount = 0
-	var/water_amount = 0
-	var/monkeymeat_amount = 0
-	var/humanmeat_amount = 0
-	var/synthmeat_amount = 0 //temporary, but whatever!
-	var/donkpocket_amount = 0
-	var/obj/extra_item = null // This is if an extra item is needed, eg a butte for an buttburger
-	var/creates = "" // The item that is spawned when the recipe is made
+// Recipes made specifically for the microwave
+// These are not all the microwave recipes, it shares some recipes with other appliances
 
-/datum/recipe_m/donut
-	egg_amount = 1
-	flour_amount = 1
-	creates = "/obj/item/reagent_containers/food/snacks/donut"
+/datum/recipe/sequential/cooked_slug
+	ingredients = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+	output = /mob/living/critter/small_animal/slug
+	recipe_instructions = list(/datum/recipe_instructions/microwave/cooked_slug)
+	get_output(var/list/input_list, var/list/output_list, var/atom/cook_source)
+		var/mob/adultSlug = new output
+		if (cook_source)
+			playsound(cook_source.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+		cook_source?.visible_message(SPAN_NOTICE("The slug is expanding..."))
+		output_list += adultSlug
+		return TRUE
 
-/datum/recipe_m/monkeyburger
-	egg_amount = 0
-	flour_amount = 1
-	monkeymeat_amount = 1
-	creates = "/obj/item/reagent_containers/food/snacks/burger/monkeyburger"
+/datum/recipe/sequential/microwaved_skeleton_head
+	ingredients = /obj/item/organ/head
 
-/datum/recipe_m/synthburger
-	egg_amount = 0
-	flour_amount = 1
-	synthmeat_amount = 1
-	creates = "/obj/item/reagent_containers/food/snacks/burger/synthburger"
+	get_output(var/list/input_list, var/list/output_list, var/atom/cook_source)
+		var/obj/item/organ/head/head = input_list[1]
+		if (!istype(head))
+			return FALSE
 
-/datum/recipe_m/humanburger
-	flour_amount = 1
-	humanmeat_amount = 1
-	creates = "/obj/item/reagent_containers/food/snacks/burger/humanburger"
+		var/mob/living/carbon/human/H = head.linked_human
+		if (!(H && head.head_type == HEAD_SKELETON && isskeleton(H)))
+			return FALSE
+		head.linked_human.emote("scream")
+		boutput(H, SPAN_ALERT("The microwave burns your skull!"))
 
-/datum/recipe_m/brainburger
-	flour_amount = 1
-	extra_item = /obj/item/organ/brain
-	creates = "/obj/item/reagent_containers/food/snacks/burger/brainburger"
+		if (!(head.glasses && istype(head.glasses, /obj/item/clothing/glasses/sunglasses))) //Always wear protection
+			H.take_eye_damage(1, 2)
+			H.change_eye_blurry(2)
+			H.changeStatus("stunned", 1 SECOND)
+			H.change_misstep_chance(5)
+		return TRUE
 
-/datum/recipe_m/buttburger
-	flour_amount = 1
-	extra_item = /obj/item/clothing/head/butt
-	creates = "/obj/item/reagent_containers/food/snacks/burger/buttburger"
+/datum/recipe/sequential/microwaved_dice
+	ingredients = /obj/item/dice
+	output = /obj/item/dice
 
-/datum/recipe_m/roburger
-	flour_amount = 1
-	extra_item = /obj/item/parts/robot_parts/head
-	creates = "/obj/item/reagent_containers/food/snacks/burger/roburger"
+	get_output(var/list/input_list, var/list/output_list, var/atom/cook_source)
+		if (!istype(input_list[1], /obj/item/dice))
+			return FALSE
+		var/obj/item/dice/dice = input_list[1]
+		dice.load()
+		return TRUE
 
-/datum/recipe_m/heartburger
-	flour_amount = 1
-	extra_item = /obj/item/organ/heart
-	creates = "/obj/item/reagent_containers/food/snacks/burger/heartburger"
+/datum/recipe/sequential/microwaved_egg
+	recipe_instructions = list(/datum/recipe_instructions/microwave/egg)
+	ingredients = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	output = /obj/item/reagent_containers/food/snacks/ingredient/egg
 
-/datum/recipe_m/waffles
-	egg_amount = 2
-	flour_amount = 2
-	creates = "/obj/item/reagent_containers/food/snacks/waffles"
+	get_output(var/list/input_list, var/list/output_list, var/atom/cook_source)
+		if (cook_source)
+			playsound(cook_source.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+		return TRUE
 
-/datum/recipe_m/meatball
-	monkeymeat_amount = 1
-	humanmeat_amount = 1
-	creates = "/obj/item/reagent_containers/food/snacks/meatball"
+// even though the microwave can technically make popcorn just by heating the corn, the code doesn't work well with the microwave mechanics
+/datum/recipe/sequential/popcorn
+	recipe_instructions = list(/datum/recipe_instructions/microwave/default_cook)
+	ingredients = /obj/item/reagent_containers/food/snacks/plant/corn
+	output = /obj/item/reagent_containers/food/snacks/popcorn
 
-/datum/recipe_m/pie
-	flour_amount = 2
-	extra_item = /obj/item/reagent_containers/food/snacks/plant/banana
-	creates = "/obj/item/reagent_containers/food/snacks/pie/custard"
+	get_output(var/list/input_list, var/list/output_list, var/atom/cook_source)
+		if (cook_source)
+			cook_source.visible_message(SPAN_ALERT("Something in [cook_source] pops violently!"))
+			playsound(cook_source.loc, 'sound/effects/pop.ogg', 50, 1)
+		return ..()
 
-/datum/recipe_m/donkpocket
-	flour_amount = 1
-	extra_item = /obj/item/reagent_containers/food/snacks/meatball
-	creates = "/obj/item/reagent_containers/food/snacks/donkpocket"
-
-/datum/recipe_m/donkpocket_warm
-	donkpocket_amount = 1
-	creates = "/obj/item/reagent_containers/food/snacks/donkpocket"
-
-/datum/recipe_m/popcorn
-	extra_item = /obj/item/reagent_containers/food/snacks/plant/corn
-	creates = "/obj/item/reagent_containers/food/snacks/popcorn"
-
-/datum/recipe_m/butterburger
-	flour_amount = 1
-	extra_item = /obj/item/reagent_containers/food/snacks/ingredient/butter
-	creates = "/obj/item/reagent_containers/food/snacks/burger/butterburger"
+/// microwave-specific version of custard pie.
+/datum/recipe/pie_custard_mw
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/plant/banana = 1)
+	output = /obj/item/reagent_containers/food/snacks/pie/custard
+	category = "Pies"
