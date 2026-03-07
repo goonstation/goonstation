@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_foot = list(/obj/item/clothing/shoes/chef)
 	slot_head = list(/obj/item/clothing/head/souschefhat)
 	slot_suit = list(/obj/item/clothing/suit/apron)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/catering)
 	wiki_link = "https://wiki.ss13.co/Chef"
 	email_group = MGD_CIVILIAN
 
@@ -331,7 +331,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/reagent_containers/food/snacks/beefood, /obj/item/reagent_containers/food/snacks/beefood)
 	alt_names = list("Apiculturist", "Apiarist")
 	email_group = MGD_CIVILIAN
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_head = list(/obj/item/clothing/head/black)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes/waders)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/fishing_rod/basic)
 	email_group = MGD_CIVILIAN
 

@@ -111,6 +111,9 @@ o+`        `-` ``..-:yooos-..----------..`
 // Enable local authentication using a dummy version of the goonhub authentication process
 //#define TEST_AUTH
 
+//Don't automatically grant admin to all localhost connections
+//#define DONT_ADMIN_MEE
+
 // Makes the code crash / log when an abstract type is instantiated.
 // see _stadlib/_types.dm for details
 // #define ABSTRACT_VIOLATION_CRASH
