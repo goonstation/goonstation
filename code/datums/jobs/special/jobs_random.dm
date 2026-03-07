@@ -248,6 +248,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (B && istype(B))
 			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
+		M.traitHolder?.addTrait("unionized")
+
 		return
 
 /datum/job/special/random/salesman

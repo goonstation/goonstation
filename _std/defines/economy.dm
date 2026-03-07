@@ -25,3 +25,11 @@
 	. = tgui_input_pin(src, "Please enter your PIN:", title, src.mind?.remembered_pin || null, PIN_MAX, PIN_MIN)
 	if(. && src.mind && isnull(src.mind.remembered_pin))
 		src.mind.remembered_pin = .
+
+// % of both extra pay and % to the union budget
+#define UNIONIZED_PAY_MULT 0.20
+
+#define BUDGET_CAT_STATION "station"
+#define BUDGET_CAT_SHIPPING "shipping"
+#define BUDGET_CAT_DEPT_MEDICAL "medical"
+#define BUDGET_CAT_UNION "union"

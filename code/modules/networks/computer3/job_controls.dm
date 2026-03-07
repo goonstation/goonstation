@@ -140,7 +140,7 @@ var/datum/job/priority_job = null
 						request_count = 0
 						src.print_main_menu()
 						return
-					src.print_text("This will deduct [requested_job.request_cost * request_count][CREDIT_SIGN] from the payroll budget. Current payroll budget: [global.wagesystem.station_budget][CREDIT_SIGN]")
+					src.print_text("This will deduct [requested_job.request_cost * request_count][CREDIT_SIGN] from the payroll budget. Current payroll budget: [global.wagesystem.budgets[BUDGET_CAT_STATION]][CREDIT_SIGN]")
 					src.print_text("Confirm job request? (Y/N)")
 					state = MENU_REQUEST_CONFIRM
 			if(MENU_REQUEST_CONFIRM)
@@ -152,12 +152,12 @@ var/datum/job/priority_job = null
 						src.print_main_menu()
 					if("y")
 						var/total_cost = requested_job.request_cost * request_count
-						if(global.wagesystem.station_budget < total_cost)
+						if(global.wagesystem.budgets[BUDGET_CAT_STATION] < total_cost)
 							src.print_text("Error: insufficient funds, request cancelled...")
 						else
 							requested_job.limit += request_count
 							requested_job.player_requested = TRUE
-							global.wagesystem.station_budget -= total_cost
+							global.wagesystem.budgets[BUDGET_CAT_STATION] -= total_cost
 							src.print_text("Sucess: Requested [request_count] job opening[s_es(request_count)] for the [requested_job.name] role")
 							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] opening[s_es(request_count)] requested by [src.account.assignment] [src.account.registered]")
 							src.notify_respawnable_players(SPAN_NOTICE("New job opening[s_es(request_count)] for the [requested_job.name] role!"))

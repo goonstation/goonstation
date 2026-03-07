@@ -77,7 +77,7 @@
 		if (current_demand_level > 0)
 			current_demand_level--
 		var/profit = price_multiplier * C.baseprice
-		wagesystem.shipping_budget += profit
+		wagesystem.budgets[BUDGET_CAT_SHIPPING] += profit
 		adjust_price_multiplier()
 		return profit
 
@@ -690,10 +690,10 @@ TYPEINFO(/obj/supply_pad/outgoing)
 					var/datum/supply_packs/P = locate(href_list["purchase"])
 					var/datum/supply_control/C = locate(href_list["control"])
 					if (C.is_available(workstation_grade))
-						if (P.cost <= wagesystem.shipping_budget)
+						if (P.cost <= wagesystem.budgets[BUDGET_CAT_SHIPPING])
 							in_target.used()
 							C.consume()
-							wagesystem.shipping_budget -= P.cost
+							wagesystem.budgets[BUDGET_CAT_SHIPPING] -= P.cost
 							P.create(T)
 							showswirl(T)
 							message = "<span class='good'>Purchase complete. Cost: [P.cost] credits.</span>"
@@ -792,7 +792,7 @@ h2 {
 			interface += "<span class='bad'><b>Warning:</b> workstation operating off battery power.<br><br>"
 		if (message)
 			interface += "[message]<br><br>"
-		interface += "<strong>Expedition budget:</strong> [wagesystem.shipping_budget] credits<br>"
+		interface += "<strong>Expedition budget:</strong> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] credits<br>"
 		if (!in_target)
 			interface += "<span class='bad'>Incoming supply pad not detected. <a href='byond://?src=\ref[src];recheck=1'>Re-check</a></span><br>"
 		else
