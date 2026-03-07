@@ -10,11 +10,11 @@
 	max_length = 48
 
 /obj/linked_laser/h7_beam/proc/update_master_power()
-	var/brightness = min(src.get_power(), 3) / 5
+	var/brightness = min(src.get_source_power(), 3) / 5
 	src.add_simple_light("laser_beam", list(0.28 * 255, 0.07 * 255, 0.58 * 255, brightness * 255))
 
 /obj/linked_laser/h7_beam/get_icon_state()
-	return "h7beam[min(round(src.get_power(), 1), 5)]"
+	return "h7beam[min(round(src.get_source_power(), 1), 5)]"
 
 /obj/linked_laser/h7_beam/copy_laser(turf/T, dir)
 	var/obj/linked_laser/h7_beam/new_laser = ..()
@@ -26,7 +26,7 @@
 	. = ..()
 	src.update_master_power()
 
-/obj/linked_laser/h7_beam/proc/get_power()
+/obj/linked_laser/h7_beam/get_source_power()
 	if (src.master)
 		src.power = src.master.crystalCount
 	return src.power
@@ -66,8 +66,9 @@
 	src.hit(AM)
 
 /obj/linked_laser/h7_beam/proc/hit(atom/movable/AM)
-	var/power = src.get_power()
+	var/power = src.get_source_power()
 
+	// TODO: This needs to check if the object has connected the beam instead of a `/obj/laser_sink` type check
 	if (isobj(AM) && !istypes(AM, list(/obj/effects, /obj/overlay, /obj/laser_sink, /obj/linked_laser)))
 		telehop(AM, power)
 		return

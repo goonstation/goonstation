@@ -251,6 +251,7 @@
 #include "code\datums\components\hallucinations.dm"
 #include "code\datums\components\hattable.dm"
 #include "code\datums\components\health_maptext.dm"
+#include "code\datums\components\laser_sink.dm"
 #include "code\datums\components\legs.dm"
 #include "code\datums\components\light.dm"
 #include "code\datums\components\loc_invisibility.dm"
