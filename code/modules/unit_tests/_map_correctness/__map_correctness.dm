@@ -7,11 +7,8 @@
 
 	for (var/T in concrete_typesof(/datum/map_correctness_check))
 		var/datum/map_correctness_check/map_check = new T()
-
-		#if (defined(PREFAB_CHECKING) || defined(RANDOM_ROOM_CHECKING))
-		if (!map_check.check_prefabs)
+		if (!map_check.can_run_check())
 			continue
-		#endif
 
 		var/list/map_check_result = map_check.run_check()
 		if (length(map_check_result))
