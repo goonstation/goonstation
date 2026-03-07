@@ -110,6 +110,9 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/teleporter
 	name = "circuit board (teleporter)"
 	computertype = /obj/machinery/computer/teleporter
+/obj/item/circuitboard/mass_transport
+	name = "circuit board (mass transport)"
+	computertype = /obj/machinery/computer/mass_transport
 /obj/item/circuitboard/secure_data
 	name = "circuit board (secure data)"
 	computertype = /obj/machinery/computer/secure_data

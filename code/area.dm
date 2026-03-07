@@ -1966,6 +1966,24 @@ TYPEINFO(/area/station/maintenance)
 	name = "North West Maintenance"
 	icon_state = "NWmaint"
 
+	asclepius
+		name = "Asclepius NW Maintenance"
+
+	dionysus
+		name = "Dionysus NW Maintenance"
+
+	hammer
+		name = "Hammer NW Maintenance"
+
+	maru
+		name = "Maru NW Maintenance"
+
+	meridian
+		name = "Meridian NW Maintenance"
+
+	tenebrae
+		name = "Tenebrae NW Maintenance"
+
 /area/station/maintenance/northeast
 	name = "North East Maintenance"
 	icon_state = "NEmaint"
@@ -1973,6 +1991,24 @@ TYPEINFO(/area/station/maintenance)
 /area/station/maintenance/southeast
 	name = "South East Maintenance"
 	icon_state = "SEmaint"
+
+	asclepius
+		name = "Asclepius SE Maintenance"
+
+	dionysus
+		name = "Dionysus SE Maintenance"
+
+	hammer
+		name = "Hammer SE Maintenance"
+
+	maru
+		name = "Maru SE Maintenance"
+
+	meridian
+		name = "Meridian SE Maintenance"
+
+	tenebrae
+		name = "Tenebrae SE Maintenance"
 
 /area/station/maintenance/southwest
 	name = "South West Maintenance"
@@ -2188,6 +2224,24 @@ ABSTRACT_TYPE(/area/station/maintenance/outer)
 	name = "Waste Disposal"
 	icon_state = "disposal"
 
+	asclepius
+		name = "Asclepius Disposal Wing"
+
+	dionysus
+		name = "Dionysus Disposal Wing"
+
+	hammer
+		name = "Hammer Disposal Wing"
+
+	maru
+		name = "Maru Disposal Wing"
+
+	meridian
+		name = "Meridian Disposal Wing"
+
+	tenebrae
+		name = "Tenebrae Disposal Wing"
+
 /area/station/maintenance/scidisposal
 	name = "Outpost Zeta Waste Disposal"
 	icon_state = "disposal"
@@ -2237,6 +2291,24 @@ ABSTRACT_TYPE(/area/station/hallway/primary)
 	name = "North Primary Hallway"
 	icon_state = "hallN"
 
+	asclepius
+		name = "Asclepius Starboard Hallway"
+
+	dionysus
+		name = "Dionysus Starboard Hallway"
+
+	hammer
+		name = "Hammer Starboard Hallway"
+
+	maru
+		name = "Maru Starboard Hallway"
+
+	meridian
+		name = "Meridian Starboard Hallway"
+
+	tenebrae
+		name = "Tenebrae Starboard Hallway"
+
 /area/station/hallway/primary/east
 	name = "East Primary Hallway"
 	icon_state = "hallE"
@@ -2249,6 +2321,24 @@ ABSTRACT_TYPE(/area/station/hallway/primary)
 /area/station/hallway/primary/south
 	name = "South Primary Hallway"
 	icon_state = "hallS"
+
+	asclepius
+		name = "Asclepius Port Hallway"
+
+	dionysus
+		name = "Dionysus Port Hallway"
+
+	hammer
+		name = "Hammer Port Hallway"
+
+	maru
+		name = "Maru Port Hallway"
+
+	meridian
+		name = "Meridian Port Hallway"
+
+	tenebrae
+		name = "Tenebrae Port Hallway"
 
 /area/station/hallway/primary/west
 	name = "West Primary Hallway"
@@ -2273,6 +2363,24 @@ ABSTRACT_TYPE(/area/station/hallway/primary)
 /area/station/hallway/primary/central
 	name = "Central Primary Hallway"
 	icon_state = "hallC"
+
+	asclepius
+		name = "Asclepius Primary Hallway"
+
+	dionysus
+		name = "Dionysus Primary Hallway"
+
+	hammer
+		name = "Hammer Primary Hallway"
+
+	maru
+		name = "Maru Primary Hallway"
+
+	meridian
+		name = "Meridian Primary Hallway"
+
+	tenebrae
+		name = "Tenebrae Primary Hallway"
 
 ABSTRACT_TYPE(/area/station/hallway/secondary)
 /area/station/hallway/secondary/exit
@@ -2374,6 +2482,24 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	sound_environment = 2
 	workplace = 1
 
+	asclepius
+		name = "Asclepius Logistics Hub"
+
+	dionysus
+		name = "Dionysus Logistics Hub"
+
+	hammer
+		name = "Hammer Logistics Hub"
+
+	maru
+		name = "Maru Logistics Hub"
+
+	meridian
+		name = "Meridian Logistics Hub"
+
+	tenebrae
+		name = "Tenebrae Logistics Hub"
+
 /area/station/construction
 	name = "Construction"
 	icon_state = "red"
@@ -2409,6 +2535,24 @@ ABSTRACT_TYPE(/area/station/mining)
 	icon_state = "bridge"
 	sound_environment = 4
 	station_map_colour = MAPC_COMMAND
+
+	asclepius
+		name = "Asclepius Bridge Sector"
+
+	dionysus
+		name = "Dionysus Bridge Sector"
+
+	hammer
+		name = "Hammer Bridge Sector"
+
+	maru
+		name = "Maru Bridge Sector"
+
+	meridian
+		name = "Meridian Bridge Sector"
+
+	tenebrae
+		name = "Tenebrae Bridge Sector"
 
 /area/station/bridge/united_command //currently only on atlas - ET
     name = "United Command"
@@ -2496,8 +2640,28 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 	icon_state = "orange"
 	sound_environment = 2
 
+/area/station/crew_quarters/asclepius
+	name = "Asclepius Crew Quarters"
+	icon_state = "crew_lounge"
+	sound_environment = 2
+
+/area/station/crew_quarters/dionysus
+	name = "Dionysus Crew Quarters"
+	icon_state = "crew_lounge"
+	sound_environment = 2
+
+/area/station/crew_quarters/hammer
+	name = "Hammer Crew Quarters"
+	icon_state = "crew_lounge"
+	sound_environment = 2
+
 /area/station/crew_quarters/maru
 	name = "Maru Crew Quarters"
+	icon_state = "crew_lounge"
+	sound_environment = 2
+
+/area/station/crew_quarters/meridian
+	name = "Meridian Crew Quarters"
 	icon_state = "crew_lounge"
 	sound_environment = 2
 
@@ -2699,6 +2863,24 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "toilets"
 	sound_environment = 3
 
+	asclepius
+		name = "Asclepius Restroom"
+
+	dionysus
+		name = "Dionysus Restroom"
+
+	hammer
+		name = "Hammer Restroom"
+
+	maru
+		name = "Maru Restroom"
+
+	meridian
+		name = "Meridian Restroom"
+
+	tenebrae
+		name = "Tenebrae Restroom"
+
 /area/station/crew_quarters/showers
 	name = "Shower Room"
 	icon_state = "showers"
@@ -2783,6 +2965,24 @@ ABSTRACT_TYPE(/area/station/com_dish)
 	#ifdef UNDERWATER_MAP
 	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 	#endif
+
+	asclepius
+		name = "Asclepius Forward Instruments"
+
+	dionysus
+		name = "Dionysus Forward Instruments"
+
+	hammer
+		name = "Hammer Forward Instruments"
+
+	maru
+		name = "Maru Forward Instruments"
+
+	meridian
+		name = "Meridian Forward Instruments"
+
+	tenebrae
+		name = "Tenebrae Forward Instruments"
 
 /area/station/com_dish/comdish
 	name = "Communications Dish"
@@ -2920,22 +3120,38 @@ TYPEINFO(/area/station/engine/substation)
 /area/station/engine/substation
 	icon_state = "purple"
 	sound_environment = 3
+	do_not_irradiate = TRUE
+
+	asclepius
+		name = "Asclepius Auxiliary Generation"
+
+	dionysus
+		name = "Dionysus Auxiliary Generation"
+
+	hammer
+		name = "Hammer Auxiliary Generation"
+
+	maru
+		name = "Maru Auxiliary Generation"
+
+	meridian
+		name = "Meridian Auxiliary Generation"
+
+	tenebrae
+		name = "Tenebrae Auxiliary Generation"
+
 
 /area/station/engine/substation/pylon
 	name = "Electrical Substation"
-	do_not_irradiate = TRUE
 
 /area/station/engine/substation/west
 	name = "West Electrical Substation"
-	do_not_irradiate = TRUE
 
 /area/station/engine/substation/east
 	name = "East Electrical Substation"
-	do_not_irradiate = TRUE
 
 /area/station/engine/substation/north
 	name = "North Electrical Substation"
-	do_not_irradiate = TRUE
 
 /area/station/engine/substation/northwest
 	name = "Northwest Electrical Substation"
@@ -2973,6 +3189,24 @@ TYPEINFO(/area/station/engine/substation)
 	sound_environment = 3
 	workplace = 1
 	station_map_colour = MAPC_COMMAND
+
+	asclepius
+		name = "Asclepius Telehub (MED)"
+
+	dionysus
+		name = "Dionysus Telehub (CIV)"
+
+	hammer
+		name = "Hammer Telehub (SEC)"
+
+	maru
+		name = "Maru Telehub (ENG)"
+
+	meridian
+		name = "Meridian Telehub (ESCAPE)"
+
+	tenebrae
+		name = "Tenebrae Telehub (SCI)"
 
 ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical
@@ -3561,6 +3795,24 @@ ABSTRACT_TYPE(/area/station/chapel)
 	name = "Emergency Storage A"
 	icon_state = "emergencystorage"
 
+	asclepius
+		name = "Asclepius Emergency Storage"
+
+	dionysus
+		name = "Dionysus Emergency Storage"
+
+	hammer
+		name = "Hammer Emergency Storage"
+
+	maru
+		name = "Maru Emergency Storage"
+
+	meridian
+		name = "Meridian Emergency Storage"
+
+	tenebrae
+		name = "Tenebrae Emergency Storage"
+
 /area/station/storage/emergency2
 	name = "Emergency Storage B"
 	icon_state = "emergencystorage"
@@ -3594,6 +3846,27 @@ ABSTRACT_TYPE(/area/station/hangar)
 	name = "Hangar"
 	icon_state = "hangar"
 	workplace = 1
+
+	asclepius
+		name = "Asclepius Primary Hangar"
+
+	dionysus
+		name = "Dionysus Primary Hangar"
+
+	hammer
+		name = "Hammer Primary Hangar"
+		teleport_blocked = 1
+		station_map_colour = MAPC_SECURITY
+
+	maru
+		name = "Maru Primary Hangar"
+		station_map_colour = MAPC_ENGINEERING
+
+	meridian
+		name = "Meridian Primary Hangar"
+
+	tenebrae
+		name = "Tenebrae Primary Hangar"
 
 /area/station/hangar/main
 		name = "Pod Bay"

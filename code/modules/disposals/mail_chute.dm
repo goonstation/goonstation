@@ -5,6 +5,7 @@
 	icon_state = "mailchute"
 	desc = "A pneumatic mail-delivery chute."
 	icon_style = "mail"
+	mail_only = 1
 	light_style = "mailchute"
 	var/mail_tag = null
 	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
@@ -143,6 +144,13 @@
 
 		..()
 		return
+
+/obj/machinery/disposal/mail/transit
+	icon_state = "people_mailchute"
+	repressure_speed = 0.3
+	icon_style = "people_mail"
+	light_style = "qm_mailchute"
+	mail_only = 0
 
 /obj/machinery/disposal/mail/autoname
 	autoname = TRUE

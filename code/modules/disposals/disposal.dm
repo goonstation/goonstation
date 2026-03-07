@@ -2209,6 +2209,52 @@ TYPEINFO(/obj/disposaloutlet)
 	icon = 'icons/effects/VR.dmi'
 // --------------------------------------------
 
+// ----------------- TRANSIT ------------------
+// doesn't launch things ejected from it; safer
+/obj/disposaloutlet/transit
+	name = "transit outlet"
+	desc = "Spits people out of the ground. Pretty cool."
+	layer = 2.9
+	density = 0
+	icon_state = "transit"
+
+	expel(var/obj/disposalholder/H)
+		if (message && (mailgroup || mailgroup2))
+			var/groups = list()
+			if (mailgroup)
+				groups += mailgroup
+			if (mailgroup2)
+				groups += mailgroup2
+			groups += MGA_MAIL
+
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
+			newsignal.data["command"] = "text_message"
+			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
+			newsignal.data["message"] = "[message]"
+			newsignal.data["address_1"] = "00000000"
+			newsignal.data["group"] = groups
+			newsignal.data["sender"] = src.net_id
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+
+		flick("transit-open", src)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+
+		sleep(1.6 SECONDS)	//wait until correct animation frame
+		playsound(src, 'sound/machines/airlock_swoosh_temp.ogg', 30, 0, 0)
+		sleep(0.7 SECONDS)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+
+		for(var/atom/movable/AM in H)
+			AM.set_loc(src.loc)
+		H.vent_gas(src.loc)
+		qdel(H)
+
+		return
+// --------------------------------------------
+
 // takes a pipe and changes one of its disconnected directions to new_dir, or makes a junction if all are connected and make_junctions=1
 proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/make_junctions=0)
 	var/list/avail_dirs = pipe.disconnected_dirs()

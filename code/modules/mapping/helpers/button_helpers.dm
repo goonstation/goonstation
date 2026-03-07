@@ -29,6 +29,10 @@ This ID is then placed on buttons in your active tile, and doors one tile away i
 					O:id = pair_id
 				else
 					O:id = src.id
+			if(istype(O,/obj/machinery/r_door_control) && !O:pass) //not a great way to do this but gets it working
+				O:pass = "[O:id]-[rand(1,50)]"
+				O.name = "Access Code: [O:pass]"
+
 		if(do_pair)
 			var/turf/looking_at = get_step(our_spot,src.dir)
 			for(var/obj/O in looking_at)

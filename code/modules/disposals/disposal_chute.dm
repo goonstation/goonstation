@@ -35,6 +35,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	var/light_style = "disposal" // for the lights and stuff
 	var/image/handle_image = null
 	var/destination_tag = null
+	var/mail_only = 0 // prevents certain things (mainly people) from entering the chute, barring special conditions
 	var/repair_step = DISPOSAL_REPAIR_STEP_FIXED
 	///How fast do we repressurize
 	var/repressure_speed = 0.1
@@ -206,7 +207,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if(istype(G))	// handle grabbed mob
 			if (ismob(G.affecting))
 				var/mob/GM = G.affecting
-				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes() || !src.fits_in(GM))
+				if (src.mail_only && !GM.canRideMailchutes() || !src.fits_in(GM))
 					boutput(user, SPAN_ALERT("That won't fit!"))
 					return
 				if (GM.buckled || GM.anchored)
@@ -261,7 +262,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 			if (istype(src, /obj/machinery/disposal/mail))
 				//Is this mob allowed to ride mailchutes?
-				if (!mobtarget.canRideMailchutes())
+				if (src.mail_only && !mobtarget.canRideMailchutes())
 					boutput(user, SPAN_ALERT("That won't fit!"))
 					return
 
