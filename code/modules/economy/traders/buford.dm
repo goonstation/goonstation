@@ -163,7 +163,7 @@
 	comname = "Methane canister"
 	comtype = /obj/machinery/portable_atmospherics/canister/methane
 	amount = 1
-	price_boundary = list(PAY_EXECUTIVE, PAY_EMBEZZLED) //a little expensive
+	price_boundary = list(PRICE_2400, PAY_EMBEZZLED) //a little expensive
 	possible_names = list("Big ol' canister of stink, don't ask where it comes from.",
 	"Probably won't get you high but it's worth a shot. Maybe.")
 

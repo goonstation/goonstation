@@ -106,20 +106,20 @@
 /datum/commodity/trader/josh/hosboots
 	comname = "HoS' Boots"
 	comtype = /obj/item/clothing/shoes/swat/heavy
-	price_boundary = list(PAY_EXECUTIVE,PAY_EMBEZZLED)
+	price_boundary = list(PRICE_2400,PAY_EMBEZZLED)
 	possible_names = list("I'm going to a fancy party tonight. Got a pair of slick nasty security kicks for me?",
 	"Got a pair of those sick stompy boots the HoS wears? They're cool as heck.")
 
 /datum/commodity/trader/josh/injectorbelt
 	comname = "Injector Belt"
 	comtype = /obj/item/injector_belt
-	price_boundary = list(PAY_EXECUTIVE,PAY_EMBEZZLED)
+	price_boundary = list(PRICE_2400,PAY_EMBEZZLED)
 	possible_names = list("I've heard of a belt that lets you constantly drink Brotien Shakes. Give it to me if you find one.")
 
 /datum/commodity/trader/josh/injectormask
 	comname = "Vape-o-matic"
 	comtype = /obj/item/clothing/mask/injector_mask
-	price_boundary = list(PAY_EXECUTIVE,PAY_EMBEZZLED)
+	price_boundary = list(PRICE_2400,PAY_EMBEZZLED)
 	possible_names = list("There's a mask out there that lets you consume the vapor form of chemicals. That would be sick.")
 
 /* Josh sells this stuff */
@@ -198,7 +198,7 @@
 /datum/commodity/trader/josh/paintgun
 	comname = "Portable Paint Popper"
 	comtype = /obj/item/gun/paintball
-	price_boundary = list(PRICE_1200,PAY_EXECUTIVE)
+	price_boundary = list(PRICE_1200,PRICE_2400)
 	possible_names = list("This'll let you paint the town red! Or any other color!",
 	"Load this bad boy up with some paint and you'll be seeing colors!",
 	"Dude, paintball's season's here!")

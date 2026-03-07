@@ -244,7 +244,7 @@
 	comtype =  /obj/item/gun/energy/laser_gun
 	onmarket = 0
 	desc = "A laser gun. Pew pew."
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 /datum/commodity/pen
 	comname = "Pen"
@@ -293,7 +293,7 @@
 	comtype = /mob/living/critter/small_animal/boogiebot
 	desc = "The latest in boogie technology!"
 	onmarket = 0
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 // cogwerks - NPC stuff
 
@@ -415,19 +415,19 @@
 	comname = "Pod Paint Job Kit (Red Racing Stripes)"
 	comtype = /obj/item/pod/paintjob/stripe_r
 	desc = "A pod paint job kit that makes it look all spiffy!"
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 /datum/commodity/podparts/skin_stripe_b
 	comname = "Pod Paint Job Kit (Blue Racing Stripes)"
 	comtype = /obj/item/pod/paintjob/stripe_b
 	desc = "A pod paint job kit that makes it look all spiffy!"
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 /datum/commodity/podparts/skin_flames
 	comname = "Pod Paint Job Kit (Flames)"
 	comtype = /obj/item/pod/paintjob/flames
 	desc = "A pod paint job kit that makes it look all spiffy!"
-	price = PAY_EXECUTIVE*2
+	price = PRICE_2400*2
 
 ////////////////////////////
 ///// 420 all day //////////
@@ -525,7 +525,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Bath Salts (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/bathsalts
 	desc = "Sometimes packaged as a refreshing bathwater additive, these crystals are definitely not for human consumption."
-	price = PAY_EXECUTIVE*2
+	price = PRICE_2400*2
 
 /datum/commodity/drugs/sell/catdrugs
 	comname = "Cat Drugs (5x pills)"
@@ -1903,7 +1903,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Personal Laptop"
 	comtype = /obj/item/luggable_computer/personal
 	desc = "Top of the line!"
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 
 ////////////////////////////////////////////////
@@ -1915,7 +1915,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Psychedelic jumpsuit"
 	comtype = /obj/item/clothing/under/gimmick/psyche
 	desc = "Some garish garb, stolen off a hippie's back."
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 /datum/commodity/clothing/chameleon
 	comname = "Black jumpsuit"
@@ -1954,14 +1954,14 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/racing_clowncar/kart
 	desc = "They just don't make the same quality go-karts anymore. Get this relic while you can."
 	onmarket = 0
-	price = PAY_EXECUTIVE*2
+	price = PRICE_2400*2
 
 /datum/commodity/car
 	comname = "Fancy Car"
 	comtype = /obj/machinery/vehicle/tank/car/rusty
 	desc = "Might need some TLC, but a discount ride is a discount ride."
 	onmarket = 0
-	price = PAY_EXECUTIVE*2
+	price = PRICE_2400*2
 
 /datum/commodity/menthol_cigarettes
 	comname = "Menthol Cigarettes"
@@ -1984,21 +1984,21 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/gun/kinetic/airzooka
 	desc = "A high tech air deploying and transportation device produced by Donk Co!"
 	onmarket = 0
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 /datum/commodity/airbag
 	comname = "Airzooka Replacement Bag"
 	comtype = /obj/item/ammo/bullets/airzooka
 	desc = "A replacement bag for your Donk Co brand Airzooka!"
 	onmarket = 0
-	price = PAY_EXECUTIVE/5
+	price = PRICE_2400/5
 
 /datum/commodity/dangerbag
 	comname = "Airzooka Replacement Bag: Xtreme Edition"
 	comtype = /obj/item/ammo/bullets/airzooka/bad
 	desc = "A replacement bag for your Donk Co brand Airzooka, now with plasma lining!"
 	onmarket = 0
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 /datum/commodity/owleggs
 	comname = "Owl Eggs"
@@ -2033,7 +2033,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Limited Edition Owlery Brand Pod Painting Kit"
 	desc = "Now you can represent your love for the Owls by painting your Space Pod in our signature colors!"
 	onmarket = 0
-	price = PAY_EXECUTIVE
+	price = PRICE_2400
 
 /datum/commodity/HEtorpedo
 	comname = "High Explosive Torpedo"

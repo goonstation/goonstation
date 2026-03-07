@@ -77,7 +77,7 @@
 	comname = "Telecrystals"
 	comtype = /obj/item/raw_material/telecrystal
 	amount = 20
-	price_boundary = list(PRICE_600,PAY_EXECUTIVE)
+	price_boundary = list(PRICE_600,PRICE_2400)
 	possible_names = list("We have a limited amount of telecrystal available for purchase.",
 	"We have raw telecrystal stones and no facilities to make use of them, so we're selling them instead.")
 

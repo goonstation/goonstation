@@ -567,7 +567,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
 					/obj/item/clothing/head/helmet/hardhat/security/improved,
 					/obj/item/gun/energy/stasis)
-	cost = PAY_EXECUTIVE*2
+	cost = PRICE_2400*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Macro Phaser Gun."
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_huge = 1)
-	cost = PAY_EXECUTIVE*2
+	cost = PRICE_2400*2
 	containertype = /obj/storage/secure/crate/weapon/armory
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	access = access_armory
@@ -746,7 +746,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/suit/tuxedo_jacket = 2,
 					/obj/item/clothing/gloves/ring = 2,
 					/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne = 1)
-	cost = PAY_EXECUTIVE*2
+	cost = PRICE_2400*2
 	containertype = /obj/storage/crate
 	containername = "Wedding Supplies"
 
@@ -1201,7 +1201,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Red Event Table Crate"
 	desc = "x5 Flat-Packed Tables. Each with a fancy red tablecloth."
 	contains = list(/obj/item/furniture_parts/table/clothred = 5)
-	cost = PAY_EXECUTIVE*2
+	cost = PRICE_2400*2
 	containertype = /obj/storage/crate/wooden
 	containername = "Red Event Table Crate"
 
@@ -1210,7 +1210,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x4 Flat-Packed Tables, x4 Flat-Packed Stools. Each in eye-searing neon."
 	contains = list(/obj/item/furniture_parts/table/neon = 4,
 					/obj/item/furniture_parts/stool/neon = 4)
-	cost = PAY_EXECUTIVE*2
+	cost = PRICE_2400*2
 	containertype = /obj/storage/crate/wooden
 	containername = "Neon Furnishings Crate"
 
@@ -1229,7 +1229,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/furniture_parts/table/sleek = 4,
 					/obj/item/furniture_parts/stool/sleek = 2,
 					/obj/item/furniture_parts/sleekchair =2)
-	cost = PAY_EXECUTIVE*2
+	cost = PRICE_2400*2
 	containertype = /obj/storage/crate/wooden
 	containername = "Sleek Furnishings Crate"
 
@@ -1337,7 +1337,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/shoes/sandal = 10,
 					/obj/fireworksbox = 2,
 					/obj/item/firework = 5)
-	cost = PAY_EXECUTIVE*2
+	cost = PRICE_2400*2
 	containertype = /obj/storage/crate/wooden
 	containername = "Obon Festival Crate"
 
@@ -1472,7 +1472,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Administrative ID card"
 	desc = "x1 Captain level ID."
 	contains = list(/obj/item/card/id/gold/captains_spare)
-	cost = PAY_EXECUTIVE*2
+	cost = PRICE_2400*2
 	hidden = 1
 	containertype = null
 	containername = null
