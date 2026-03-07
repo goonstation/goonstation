@@ -13,7 +13,21 @@
 /// e.g. you cheated somehow
 #define PAY_EMBEZZLED 5000
 
+///Clown life
 #define PRICE_PISS 1
+///Recurring costs are something you'd expect to buy regularly, like food or supplies
+#define PRICE_RECURRING_CHEAP 100
+#define PRICE_RECURRING 200
+#define PRICE_RECURRING_COSTLY 300 //Wow, as expensive as a tradesman salary!
+
+///Luxury costs are items that are really nice, typically one off purchases, not mandatory but you'd like to have one
+#define PRICE_LUXURY_CHEAP 1000 //Might be able to get a couple of these
+#define PRICE_LUXURY 3000 //You can maybe get 2 of these
+#define PRICE_LUXURY_COSTLY 5000 //You can at best afford one of these a round unless you're high ranking
+
+///Need I say more?
+#define PRICE_EXORBITANT 10000 //Either you're buying plutonium or getting scammed
+
 #define PRICE_7_5 8
 #define PRICE_10 10
 #define PRICE_15 15
