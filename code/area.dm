@@ -3949,6 +3949,13 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
 				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
+				if(!src.armory_auth)
+					var/ircmsg[] = new()
+					ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+					ircmsg["msg"] = "entered the armory while it's unauthorized."
+					ircbot.export_async("admin", ircmsg)
+					logTheThing(LOG_STATION, M, "test cooldown")
 // // // // // //
 
 /// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.
