@@ -1565,6 +1565,10 @@ TYPEINFO(/mob/living)
 	src.Virus_ShockCure(min(wattage / 500, 100))
 
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
+	//if you are too touchy towards a wire, your arm gets disabled
+	if (H && (shock_damage > 10) && (zone in list("r_arm","l_arm")))
+		H.numb_limb(duration = min(stun * 2, 20 SECONDS), target_limbs = list(zone))
+
 	src.do_disorient(100 * stun_multiplier + stun, knockdown = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
 
 	return shock_damage

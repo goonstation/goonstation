@@ -877,7 +877,7 @@ TRAYS
 		if(user?.lying)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if (!H.limbs.r_leg && !H.limbs.l_leg)
+				if (!H.limbs.is_limb_functional("l_leg") && !H.limbs.is_limb_functional("r_leg"))
 					return // fix for legless players shattering plates when stacking and pulling disposed plates from null space
 			user.visible_message(SPAN_ALERT("[user] drops \the [src]!"))
 			src.shatter()

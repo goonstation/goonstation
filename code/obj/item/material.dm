@@ -775,7 +775,8 @@
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
-	H.changeStatus("knockdown", 3 SECONDS)
+	//if your one foot is already numbed, you likely used the other one
+	H.numb_limb(duration = 10 SECONDS, ignore_numbed_limbs = TRUE, target_limbs = list("l_leg", "r_leg"))
 	H.force_laydown_standup()
 	var/zone = pick("l_leg", "r_leg")
 	H.TakeDamage(zone, force, 0, 0, DAMAGE_CUT)

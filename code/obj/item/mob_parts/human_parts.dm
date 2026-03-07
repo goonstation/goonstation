@@ -582,7 +582,7 @@
 			handimage.icon_state = state
 
 			handimage.pixel_y = H.mutantrace.hand_offset + 6
-
+			SEND_SIGNAL(I, COMSIG_ITEM_SET_AS_LIMB, src)
 			if (H)
 				//H.update_clothing()
 				H.update_body()
@@ -714,7 +714,7 @@
 				state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
 
 			handimage.pixel_y = H.mutantrace.hand_offset + 6
-
+			SEND_SIGNAL(I, COMSIG_ITEM_SET_AS_LIMB, src)
 			if (H)
 				H.update_clothing()
 				H.update_body()
