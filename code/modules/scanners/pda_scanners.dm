@@ -1,10 +1,3 @@
-//CONTENTS:
-//Base scanner stuff
-//Health scanner
-//Forensic scanner
-//Reagent scanner
-//Plant scanner
-
 /datum/computer/file/pda_program/scan
 	return_text()
 		return src.return_text_header()
@@ -83,7 +76,7 @@
 		scan_atom(atom/A as mob|obj|turf|area)
 			if(..())
 				return
-			. = scan_plant(A, usr, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+			. = scan_plant(A, usr, visible = 1)
 
 	electronics
 		name = "Device Analyzer"
@@ -194,31 +187,3 @@
 			else
 				. += "The material is completely unremarkable."
 
-/datum/computer/file/electronics_scan
-	name = "scanfile"
-	extension = "OSCN"
-	var/scannedName = null
-	var/scannedPath = null
-	var/scannedMats = null
-
-/datum/computer/file/electronics_bundle
-	name = "Ruckingenur Data"
-	extension = "DSCN"
-	var/datum/mechanic_controller/ruckData = null
-	var/target = null
-	var/known_rucks = null
-
-/datum/computer/file/genetics_scan
-	name = "DNA Scan"
-	extension = "GSCN"
-	var/subject_name = null
-	var/subject_uID = null
-	var/subject_stability = null
-	var/scanned_at = null
-	var/list/datum/bioEffect/dna_pool = null
-	var/list/datum/bioEffect/dna_active = null
-
-	disposing()
-		src.dna_pool = null
-		src.dna_active = null
-		..()
