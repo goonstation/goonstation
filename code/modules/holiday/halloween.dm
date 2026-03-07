@@ -222,8 +222,11 @@
 */
 /obj/machinery/computer3/generic/hjam
 	name = "Dr. Jam's Console"
-	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-	setup_starting_peripheral2 = /obj/item/peripheral/printer
+	setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive,
+			/obj/item/peripheral/network/powernet_card,
+			/obj/item/peripheral/printer)
 	setup_drive_type = /obj/item/disk/data/fixed_disk/hjam_rdrive
 
 /obj/item/disk/data/fixed_disk/hjam_rdrive
