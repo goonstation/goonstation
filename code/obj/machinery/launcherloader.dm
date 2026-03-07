@@ -93,6 +93,11 @@
 		return_if_overlay_or_effect(A)
 		activate()
 
+	attack_hand(mob/user)
+		. = ..()
+		if(.)
+			return
+		activate()
 
 /obj/machinery/launcher_loader/north
 	dir = NORTH
@@ -155,6 +160,7 @@
 			for(var/atom/movable/AM2 in src.loc)
 				if(AM2.anchored || AM2 == src || HAS_ATOM_PROPERTY(AM2, PROP_ATOM_FLOATING) || isflockmob(AM2)) continue
 				step(AM2,src.dir)
+				// AM2?.inertia_value = 0 // slides, doesn't push
 
 			driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
 
@@ -657,10 +663,10 @@
 	target_destination = "Arrivals"
 /obj/machinery/arrivalnotifier/catering
 	target_destination = "Catering"
-	mailgroups = list(MGD_KITCHEN, MGD_BOTANY)
+	mailgroups = list(MGT_CATERING, MGT_HYDROPONICS)
 /obj/machinery/arrivalnotifier/cafeteria
 	target_destination = "Cafeteria"
-	mailgroups = list(MGD_KITCHEN)
+	mailgroups = list(MGT_CATERING)
 /obj/machinery/arrivalnotifier/disposal
 	target_destination = "Disposal"
 /obj/machinery/arrivalnotifier/disposals
@@ -669,49 +675,49 @@
 	target_destination = "EVA"
 /obj/machinery/arrivalnotifier/engine
 	target_destination = "Engine"
-	mailgroups = list(MGO_ENGINEER)
+	mailgroups = list(MGD_ENGINEER)
 /obj/machinery/arrivalnotifier/engineering
 	target_destination = "Engineering"
-	mailgroups = list(MGO_ENGINEER)
+	mailgroups = list(MGD_ENGINEER)
 /obj/machinery/arrivalnotifier/escape
 	target_destination = "Escape"
 /obj/machinery/arrivalnotifier/export
 	target_destination = "Export"
 /obj/machinery/arrivalnotifier/medbay
 	target_destination = "Medbay"
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+	mailgroups = list(MGD_MEDICAL)
 /obj/machinery/arrivalnotifier/medsci
 	target_destination = "MedSci"
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE)
+	mailgroups = list(MGD_MEDICAL, MGD_RESEARCH)
 /obj/machinery/arrivalnotifier/mining
 	target_destination = "Mining"
-	mailgroups = list(MGD_MINING)
+	mailgroups = list(MGT_MINING)
 /obj/machinery/arrivalnotifier/podbay
 	target_destination = "Pod Bay"
 /obj/machinery/arrivalnotifier/qm
 	target_destination = "QM"
-	mailgroups = list(MGD_CARGO)
+	mailgroups = list(MGT_CARGO)
 /obj/machinery/arrivalnotifier/research
 	target_destination = "Research"
-	mailgroups = list(MGD_SCIENCE)
+	mailgroups = list(MGD_RESEARCH)
 /obj/machinery/arrivalnotifier/security
 	target_destination = "Security"
 	mailgroups = list(MGD_SECURITY)
 /obj/machinery/arrivalnotifier/undeliverable
 	target_destination = "Mail Sorting Room"
-	// mailgroups = list(MGD_CARGO)
-	 // TODO: should this notify on all packages instead?
+	mailgroups = list(MGT_CARGO)
+	// TODO: should this notify on all packages instead?
 
 /obj/machinery/arrivalnotifier/carousel
 /obj/machinery/arrivalnotifier/carousel/north
 	target_destination = "Carousel North"
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+	mailgroups = list(MGD_MEDICAL, MGT_SPIRITUALAFFAIRS)
 /obj/machinery/arrivalnotifier/carousel/south
 	target_destination = "Carousel South"
 	mailgroups = list(MGD_SECURITY)
 /obj/machinery/arrivalnotifier/carousel/east
 	target_destination = "Carousel East"
-	mailgroups = list(MGO_ENGINEER, MGD_SCIENCE)
+	mailgroups = list(MGD_ENGINEER, MGD_RESEARCH)
 /obj/machinery/arrivalnotifier/carousel/west
 	target_destination = "Carousel West"
-	mailgroups = list(MGD_KITCHEN, MGD_BOTANY)
+	mailgroups = list(MGT_CATERING, MGT_HYDROPONICS)

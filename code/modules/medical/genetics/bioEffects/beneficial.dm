@@ -309,6 +309,7 @@
 	msgGain = "Your mind feels closed."
 	msgLose = "You feel oddly exposed."
 	degrade_to = "screamer"
+	icon_state = "meta_neural"
 
 /////////////
 // Healing //
@@ -424,7 +425,7 @@
 	var/remove_per_tick = 3.3
 	stability_loss = 10
 	degrade_to = "toxification"
-	icon_state  = "tox_res"
+	icon_state  = "anti_tox"
 
 	OnAdd()
 		. = ..()
@@ -460,7 +461,6 @@
 	lockedTries = 6
 	stability_loss = 5
 	icon_state  = "haze"
-	isBad = 1
 
 	OnAdd()
 		. = ..()
@@ -492,7 +492,6 @@
 	probability = 99
 	stability_loss = 5
 	icon_state  = "dead"
-	isBad = 1
 
 /datum/bioEffect/noir
 	name = "Noir"
@@ -842,7 +841,7 @@
 	lockedDiff = 3
 	lockedTries = 8
 	stability_loss = 5
-	icon_state  = "strong"
+	icon_state  = "fit"
 	effect_group = "fit"
 
 	OnAdd()
@@ -889,9 +888,10 @@
 ///////////////////////////
 
 /datum/bioEffect/claws
-	name = "Manusclavis felidunguus"
+	name = "Manusclavis Felidunguus"
 	desc = "Subject arms change into a more animalistic form over time."
 	id = "claws"
+	icon_state = "armadillo"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your arms start to feel strange and clumsy."
@@ -920,6 +920,7 @@
 	name = "Manuschela Crustaceaformis"
 	desc = "Subject's arm changes into a pincer."
 	id = "claws_pincer"
+	icon_state ="big_meaty_claws"
 	msgGain = "You feel like your arms are oddly firm."
 	msgLose = "You are once again feel comfortable with your arms."
 
@@ -942,6 +943,7 @@
 	name = "Chitinoarmis Durescutis "
 	desc = "Subject skin develops into a hardened carapace."
 	id = "carapace"
+	icon_state = "armadillo2"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel your skin harden."
@@ -972,6 +974,7 @@
 	name = "Lateral Undulation"
 	desc = "Subject muscles develop the ability to perform a serpentine locomation."
 	id = "slither"
+	icon_state = "undulation"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you could propel yourself on your belly with a good wiggle."
@@ -994,6 +997,7 @@
 	name = "Lipid Stores"
 	desc = "Subject gains the ability to improve the nourishment available from their lipid stores."
 	id = "camel_fat"
+	icon_state = "lipid"
 	probability = 10
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you can store away some food and drink for later."
@@ -1149,8 +1153,9 @@
 
 /datum/bioEffect/skitter
 	id = "skitter"
-	name = "Insectoid locomotion"
+	name = "Insectoid Locomotion"
 	desc = "The subject is capable of skittering across the floor like a bug."
+	icon_state = "locomotion"
 	occur_in_genepools = 0
 
 	OnAdd()
@@ -1164,7 +1169,7 @@
 		if (!isturf(src.owner.loc))
 			return
 		var/turf/T = get_turf(src.owner)
-		if (!istype(T) || T.throw_unlimited)
+		if (!istype(T) || src.owner.traction == TRACTION_NONE)
 			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return
@@ -1208,8 +1213,9 @@
 
 /datum/bioEffect/plasma_metabolism
 	id = "plasma_metabolism"
-	name = "Plasma metabolism"
+	name = "Plasma Metabolism"
 	desc = "The subject's body is capable of metabolising solid and liquid forms of plasma into electric charge."
+	icon_state = "plasma_metabolism"
 	occur_in_genepools = FALSE
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel a sudden hunger for plasma..."
@@ -1221,6 +1227,8 @@
 	VAR_PRIVATE/burp_counter = 0
 	///Stored to keep UpdateOverlays calls to a minimum
 	VAR_PRIVATE/eye_state = -1
+	//Doesn't drain, doesn't generate electricity, just does the weird plasma effects
+	var/passive = FALSE
 
 	OnLife(mult)
 		. = ..()
@@ -1237,8 +1245,11 @@
 		if (prob(20))
 			return
 		ON_COOLDOWN(src.owner, "plasma_electricity", 7 SECONDS)
-		src.material -= 5
+		if (!src.passive || src.material > 20)
+			src.material -= 5
 		src.update_eyes()
+		if (src.passive)
+			return
 		var/obj/item/found_item = null
 		if (prob(15)) //most of the time we try to ground into an item, sometimes it misses
 			boutput(src.owner, SPAN_ALERT("Electricty arcs wildly from your fingers!"))
@@ -1303,7 +1314,7 @@
 			return
 		var/new_eye_state
 		switch (src.material)
-			if (1 to 20)
+			if (1 to 15)
 				new_eye_state = 1
 			if (15 to INFINITY)
 				new_eye_state = 2
@@ -1324,7 +1335,7 @@
 		if (src.eye_state >= 2 && prob(10))
 			src.owner.AddComponent(\
 				/datum/component/hallucination/random_image_override,\
-				timeout = 20,\
+				timeout = 15,\
 				image_list = list(\
 					image('icons/turf/floors.dmi', "void")\
 				),\
@@ -1341,3 +1352,10 @@
 		src.owner.ClearSpecificOverlays("plasma_eyes")
 		src.owner.remove_color_matrix(COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
 		. = ..()
+
+/datum/bioEffect/plasma_metabolism/passive
+	passive = TRUE
+
+	New(for_global_list)
+		. = ..()
+		src.material = 16

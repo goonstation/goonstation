@@ -11,7 +11,7 @@ TYPEINFO(/obj/item/device/powersink)
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
 	icon_state = "powersink0"
-	item_state = "electronic"
+	item_state = "electronics"
 	w_class = W_CLASS_BULKY
 	flags = TABLEPASS | CONDUCT
 	throwforce = 5

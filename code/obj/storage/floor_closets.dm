@@ -5,7 +5,7 @@
 	icon_state = "closedf"
 	icon_closed = "closedf"
 	density = 0
-	soundproofing = 15
+	soundproofing = SOUNDPROOFING_FLOOR_CLOSET
 	p_class = 1
 	plane = PLANE_DEFAULT
 

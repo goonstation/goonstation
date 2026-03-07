@@ -65,22 +65,27 @@
 			var/list/row_classes = list()
 			var/noteReason = playerNote.note
 
-			var/regex/R = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
-			if (R.Find(noteReason))
-				row_classes += "ban"
-				noteReason = R.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
-
 			var/list/legacyData
 			if (length(playerNote.legacy_data))
 				legacyData = json_decode(playerNote.legacy_data)
 
-			var/id = playerNote.server_id
-			if (!id && ("oldserver" in legacyData))
-				id = legacyData["oldserver"]
-
 			var/gameAdminCkey = playerNote.game_admin?.player?.ckey
 			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
 				gameAdminCkey = legacyData["game_admin_ckey"]
+
+			var/regex/old_ban_regex = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
+			var/regex/new_ban_regex = new("Banned from (.+?) (?:for (.+)|(permanently)). Reason: (.+)", "m")
+			if (old_ban_regex.Find(noteReason))
+				row_classes += "ban"
+				noteReason = old_ban_regex.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
+			else if (new_ban_regex.Find(noteReason))
+				row_classes += "ban"
+				//Capture groups 2 and 3 are the duration or "permanently", neither will show up at the same time.
+				noteReason = new_ban_regex.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>[gameAdminCkey]</b> &mdash; $2$3<br><blockquote>$4</blockquote>")
+
+			var/id = playerNote.server_id
+			if (!id && ("oldserver" in legacyData))
+				id = legacyData["oldserver"]
 
 			if (gameAdminCkey == "bot")
 				row_classes += "auto"

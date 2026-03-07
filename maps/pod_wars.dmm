@@ -231,6 +231,7 @@
 /area/pod_wars/spacejunk/restaurant)
 "aN" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "aP" = (
@@ -881,7 +882,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "dn" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 18
 	},
 /turf/simulated/floor,
@@ -1620,6 +1621,7 @@
 /area/pod_wars/spacejunk/uvb67/crew)
 "fS" = (
 /obj/machinery/chem_dispenser/alcohol/bar,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "fT" = (
@@ -2391,7 +2393,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/brightwell)
 "iN" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -3006,7 +3008,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/bar)
 "ll" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 18
 	},
 /turf/simulated/floor/yellow,
@@ -3161,6 +3163,7 @@
 /area/pod_wars/team1/equipmentroom)
 "lK" = (
 /obj/machinery/chem_dispenser/medical,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
@@ -4003,7 +4006,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/pod_wars/spacejunk/nancy)
 "oB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -4184,8 +4187,8 @@
 /area/pod_wars/spacejunk/reliant)
 "pi" = (
 /obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/machinery/light/incandescent/netural,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "pj" = (
@@ -5026,7 +5029,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "st" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	pixel_y = -4
 	},
@@ -5524,7 +5527,7 @@
 	},
 /area/pod_wars/team2/hangar)
 "un" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 10
 	},
@@ -5895,7 +5898,7 @@
 /area/pod_wars/spacejunk/reliant)
 "vL" = (
 /obj/machinery/chem_dispenser/soda,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "vM" = (
@@ -6202,6 +6205,7 @@
 "wK" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/chem_dispenser/medical/fortuna,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "wL" = (
@@ -7124,7 +7128,7 @@
 	},
 /area/pod_wars/team2/hangar)
 "Ab" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 18
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
@@ -8378,7 +8382,7 @@
 /turf/space,
 /area/space)
 "En" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 10
 	},
@@ -9853,6 +9857,7 @@
 "JB" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/light/incandescent/netural,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "JC" = (
@@ -9863,7 +9868,7 @@
 	pixel_x = 10;
 	pixel_y = 9
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -9884,6 +9889,7 @@
 /area/pod_wars/team2/medbay)
 "JH" = (
 /obj/machinery/chem_dispenser/medical,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/bluewhite{
 	dir = 8
 	},
@@ -10087,7 +10093,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "Kt" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	density = 0;
 	dir = 8;
 	name = "utility sink";
@@ -10333,7 +10339,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/storageA)
 "Lj" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},
@@ -11390,7 +11396,7 @@
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/porthall)
 "Pq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 10
 	},
@@ -12038,7 +12044,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "RP" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 18
 	},
 /turf/simulated/floor/sanitary,
@@ -12130,7 +12136,7 @@
 /area/pod_wars/team2/bar)
 "Sf" = (
 /obj/machinery/chem_dispenser/alcohol,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "Sg" = (
@@ -13302,7 +13308,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "Wp" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	density = 0;
 	dir = 8;
 	name = "utility sink";

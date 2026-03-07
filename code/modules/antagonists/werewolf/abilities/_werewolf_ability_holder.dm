@@ -151,7 +151,7 @@
 					boutput(M, SPAN_NOTICE("That tasted amazing!"))
 					M.unlock_medal("Space Ham", 1)
 					healing *= 2
-				else if (HH.mind && HH.mind.assigned_role == "Clown")
+				else if (HH.mind && HH.traitHolder?.hasTrait("training_clown"))
 					boutput(M, SPAN_NOTICE("That tasted funny, huh."))
 					M.unlock_medal("That tasted funny", 1)
 				else

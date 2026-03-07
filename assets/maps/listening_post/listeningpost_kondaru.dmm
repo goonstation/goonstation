@@ -287,7 +287,7 @@
 /area/listeningpost/power)
 "pn" = (
 /obj/machinery/drainage,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
@@ -761,18 +761,20 @@
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/break_room)
 "Oe" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Listening Post"
-	},
 /obj/cable/black{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
+"Oi" = (
+/obj/machinery/gravity_tether/multi_area/listening_post,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "Om" = (
 /obj/machinery/light_switch/north,
 /obj/machinery/computer/camera_viewer,
@@ -784,6 +786,9 @@
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/listeningpost/general)
@@ -1534,7 +1539,7 @@ tz
 tz
 WC
 pj
-pj
+Oi
 Fl
 ik
 pj

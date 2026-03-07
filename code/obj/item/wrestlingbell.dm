@@ -32,6 +32,8 @@
 	var/cooldown = 10 SECONDS
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell1"
+	var/status_buff = "wrestler"
+	var/status_duration = INFINITE_STATUS
 	var/last_ring = 0
 	/// tiny hammer when taken out
 	var/obj/item/tinyhammer/wrestling/hammer = null
@@ -91,7 +93,7 @@
 		for (var/mob/living/mob in floor.loc) // checks if anyone in the room's area has the status
 			var/turf/position = get_turf(mob)
 			if (istype(position, /turf/simulated/floor/specialroom/gym))
-				mob.setStatus("wrestler", INFINITE_STATUS, optional=mob)
+				mob.setStatus(src.status_buff, src.status_duration, optional=mob)
 
 	/// snap back if too far away
 	proc/hammer_move()
@@ -115,6 +117,12 @@
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEUTRAL
 
+	preCheck(atom/A)
+		. = ..()
+		var/turf/T = get_turf(A)
+		if (!istype(T, /turf/simulated/floor/specialroom/gym))
+			return FALSE
+
 	onAdd(optional)
 		. = ..()
 		var/mob/M = null
@@ -131,7 +139,8 @@
 			M = owner
 		else
 			return ..(timePassed)
-		if (M.health <= 0)
+		var/turf/T = get_turf(M)
+		if (M.health <= 0 || !istype(T, /turf/simulated/floor/specialroom/gym))
 			M.delStatus("wrestler")
 
 	onRemove()
@@ -141,6 +150,9 @@
 			M = owner
 			UnregisterSignal(M, COMSIG_ATTACKHAND)
 			UnregisterSignal(M, COMSIG_ATTACKBY)
+			// TODO: This should be reversed or something
+			var/obj/itemspecialeffect/boxing/effect = new /obj/itemspecialeffect/boxing
+			effect.setup(M.loc)
 			if (M.health <= 0)
 				SPAWN(0)
 					playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)

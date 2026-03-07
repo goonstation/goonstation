@@ -205,7 +205,8 @@
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2,
-		/obj/item/material_piece/cloth/cottonfabric = 2)
+		/obj/item/material_piece/cloth/cottonfabric = 2,
+		/obj/item/material_piece/cobryl = 2)
 	available = list(
 		/datum/manufacture/scalpel,
 		/datum/manufacture/circular_saw,
@@ -224,6 +225,14 @@
 		/datum/manufacture/mender,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
+		/datum/manufacture/empty_autoinjector/orange,
+		/datum/manufacture/empty_autoinjector/red,
+		/datum/manufacture/empty_autoinjector/blue,
+		/datum/manufacture/empty_autoinjector/green,
+		/datum/manufacture/empty_autoinjector/yellow,
+		/datum/manufacture/empty_autoinjector/purple,
+		/datum/manufacture/empty_autoinjector/black,
+		/datum/manufacture/empty_autoinjector/white,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,
@@ -248,6 +257,9 @@
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/empty_kit,
+		/datum/manufacture/chembarrel,
+		/datum/manufacture/chembarrel/yellow,
+		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
@@ -339,6 +351,7 @@
 #endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
+		/datum/manufacture/magnetic_shoes,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
@@ -346,6 +359,7 @@
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/breach_pouch,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 #ifdef UNDERWATER_MAP
@@ -522,8 +536,7 @@
 		/datum/manufacture/radio_upgrade/civilian)
 	hidden = list(/datum/manufacture/id_card_gold,
 		/datum/manufacture/implant_access_infinite,
-		/datum/manufacture/radio_upgrade/command,
-		/datum/manufacture/radio_upgrade/security)
+		/datum/manufacture/radio_upgrade/command)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 /obj/machinery/manufacturer/hop_and_uniform
@@ -634,6 +647,7 @@
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/gravity_scanner,
 		/datum/manufacture/RCD,
 		/datum/manufacture/places_pipes,
 		/datum/manufacture/RCDammo,
@@ -647,6 +661,7 @@
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
 		/datum/manufacture/heavy_firesuit,
+		/datum/manufacture/magnetic_shoes,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
@@ -657,6 +672,8 @@
 		/datum/manufacture/flippers,
 		/datum/manufacture/turbine_shaft,
 		/datum/manufacture/current_turbine,
+#else
+		/datum/manufacture/mechanics/gravity_tether_area,
 #endif
 #ifdef MAP_OVERRIDE_OSHAN
 		/datum/manufacture/cable/reinforced,

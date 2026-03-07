@@ -67,6 +67,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	speech_verb_say = "beeps"
+	provides_grip = TRUE
 
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
@@ -1014,12 +1015,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (src.layer < victim.layer)
 			src.layer = victim.layer+1
 		src.set_loc(vicTurf)
-		random_brute_damage(victim, rand(20,40),1)
+		random_brute_damage(victim, rand(20,40) * vicTurf.get_gforce_fractional(), TRUE)
 	else
 		src.visible_message("<b>[SPAN_ALERT("[src.name] tips over!")]</b>")
 
 	src.power_change()
 	src.anchored = UNANCHORED
+	src.provides_grip = FALSE
+	vicTurf?.grip_atom_count -= 1
 	return
 
 /obj/machinery/vending/set_broken()
@@ -1339,6 +1342,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		product_list += new/datum/data/vending_product(/obj/item/decoration/ashtray, 5, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape, 10, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge, 20, cost=PAY_TRADESMAN/5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge/flavored, 10, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/medical_patches/nicotine, 5, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper, 20, cost=PAY_TRADESMAN/20)
 
@@ -1888,6 +1892,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/elective_prosthetics_for_dummies, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/teg_guide, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/gravity_tether, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/horrorcontest, 2, cost=PAY_UNTRAINED/5)
 
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/the_trial, 1, cost=PAY_UNTRAINED/5, hidden=1)
@@ -2070,12 +2075,12 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			boardinstalled = TRUE
 		else if (state == "WIRESINSTALLED")
 			var/obj/item/cable_coil/targetcoil = target
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			targetcoil.use(5)
-			wiresinstalled = TRUE
-			icon_state = "standard-frame-wired"
-			desc = glassdesc
-			boutput(user, SPAN_NOTICE("You add cables to the frame."))
+			if (targetcoil.use(5))
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				wiresinstalled = TRUE
+				icon_state = "standard-frame-wired"
+				desc = glassdesc
+				boutput(user, SPAN_NOTICE("You add cables to the frame."))
 		else if (state == "GLASSINSTALLED")
 			var/obj/item/sheet/glass/S = target
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -2970,11 +2975,14 @@ TYPEINFO(/obj/machinery/vending/chem)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/solo, 5, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/solo_rules, 5, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/storage/briefcase/poker_chips/low_stakes, 8, cost=2600)  // cost equals the sum of chip value
+		product_list += new/datum/data/vending_product(/obj/item/storage/briefcase/poker_chips/medium_stakes, 4, cost=12000)  // cost equals the sum of chip value
 		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
 		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/secure/sbriefcase/high_stakes, 4, cost=54000, hidden=1) // cost equals the sum of chip value
 
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
@@ -3449,3 +3457,60 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/sword/discount/gang, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/gang_machete, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/swords/katana/reverse, 1, infinite=TRUE)
+
+/obj/machinery/vending/murderbox_armory
+	name = "RIOT.DM" //The armory computer file
+	desc = "A vendor stocked with various riot-suppressive ammunitions. Perfect for taking down cybercrime."
+	icon_state = "ammo"
+	can_hack = FALSE
+	anchored = ANCHORED
+	acceptcard = FALSE
+	pay = FALSE
+	can_fall = FALSE
+	is_syndicate = 1
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/stasis, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/egun, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/egun_jr, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/lawbringer, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/pulse_rifle, 1, infinite = TRUE)
+
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/phaser_small, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/phaser_gun, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/phaser_smg, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/energy/phaser_huge, 1, infinite = TRUE)
+
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/pumpweapon/riotgun, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, infinite = TRUE)
+
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/detectiverevolver, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/single_action/colt_saa/detective, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 1, infinite = TRUE)
+
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/clock_188/boomerang, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 1, infinite = TRUE)
+
+		product_list += new/datum/data/vending_product(/obj/item/gun/flamethrower/assembled/loaded, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/flaregun, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 1, infinite = TRUE)
+
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/riot40mm, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 1, infinite = TRUE)
+
+		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/dart_rifle, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 1, infinite = TRUE)
+
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/pepper, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/old_grenade/smoke, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/old_grenade/stinger, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/shock, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/very_incendiary, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/incendiary, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/cryo, 1, infinite = TRUE)

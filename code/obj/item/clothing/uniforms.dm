@@ -535,6 +535,16 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
 
+/obj/item/clothing/under/rank/pharmacist
+	name = "pharmacist's jumpsuit"
+	desc = "Proves you know how to make chemicals explode and/or heal people."
+	icon_state = "pharmacist"
+	item_state = "pharmacist"
+
+	april_fools
+		icon_state = "pharmacist-alt"
+		item_state = "pharmacist-alt"
+
 /obj/item/clothing/under/rank/pathologist
 	name = "pathologist's jumpsuit"
 	desc = "Scientifically proven to block up to 99% of pathogens."
@@ -542,8 +552,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	item_state = "pathology"
 
 	april_fools
-		icon_state = "medical-alt"
-		item_state = "medical-alt"
+		icon_state = "pharmacist-alt"
+		item_state = "pharmacist-alt"
 
 // Engineering
 
@@ -1614,10 +1624,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 	item_state = "collar_shirt-white"
 	var/shirt_colour_name = "white"
 
-	New()
-		..()
-		src.name = "[src.shirt_colour_name] collar shirt"
-		src.desc = "A plain [src.shirt_colour_name] collared shirt."
+/obj/item/clothing/under/misc/collar_shirt/New()
+	..()
+	src.name = "[src.shirt_colour_name] collar shirt"
+	src.desc = "A plain [src.shirt_colour_name] collared shirt."
+	src.AddComponent(/datum/component/cycle_tuck, base_name = src.item_state)
 
 /obj/item/clothing/under/misc/collar_shirt/white
 	icon_state = "collar_shirt-white"
@@ -2159,6 +2170,39 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/tea_party_dress)
 	name = "yellow tea party dress"
 	icon_state = "tea_party_dress-yellow"
 	item_state = "tea_party_dress-yellow"
+
+// Hawaiian shirts
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/hawaiian_shirt)
+/obj/item/clothing/under/misc/hawaiian_shirt
+	name = "hawaiian shirt"
+	desc = "You're ready to party! Just kidding, you work here. You don't get invited to parties."
+	icon_state = "floral-red"
+	item_state = "floral-red"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/red
+	name = "red hawaiian shirt"
+	icon_state = "floral-red"
+	item_state = "floral-red"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/yellow
+	name = "yellow hawaiian shirt"
+	icon_state = "floral-yellow"
+	item_state = "floral-yellow"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/black
+	name = "black hawaiian shirt"
+	icon_state = "floral-black"
+	item_state = "floral-black"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/pink
+	name = "pink hawaiian shirt"
+	icon_state = "floral-pink"
+	item_state = "floral-pink"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/sec
+	name = "security hawaiian shirt"
+	icon_state = "floral-sec"
+	item_state = "floral-sec"
 
 // New chaplain stuff
 

@@ -6,7 +6,7 @@
 	icon_closed = "cart"
 	icon_opened = "cartopen"
 	icon_welded = "welded-crate"
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	throwforce = 50
 	flip_health = 4
 	can_flip_bust = 1
@@ -111,6 +111,7 @@
 		/obj/item/clothing/mask/surgical{pixel_x=-6; pixel_y=8} = 1,
 		/obj/item/device/detective_scanner{pixel_x=2;pixel_y=4} = 1,
 		/obj/item/spraybottle/detective{pixel_x=2; pixel_y=-4} = 1,
+		/obj/item/reagent_containers/glass/vial/silver_nitrate{pixel_x=-2;pixel_y=2} = 1,
 	)
 
 /obj/storage/cart/forensic/security

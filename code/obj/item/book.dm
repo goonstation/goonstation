@@ -156,6 +156,12 @@ Custom Books
 	desc = "A book detailing behaviors and operations of Nadir's transception array"
 	file_path = "strings/books/transception_guide.txt"
 
+/obj/item/paper/book/from_file/gravity_tether
+	name = "Gravi-Tonne Tether Manual"
+	icon_state = "tether_book"
+	desc = "An in-depth guide to the monitoring and operation of a Gravity Tether."
+	file_path = "strings/books/tether_manual.txt"
+
 /****Civilian Guides****/
 
 /obj/item/paper/book/from_file/hydroponicsguide

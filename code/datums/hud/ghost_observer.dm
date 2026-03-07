@@ -14,6 +14,8 @@
 
 	proc/get_respawn_timer()
 		RETURN_TYPE(/atom/movable/screen/respawn_timer)
+		if(master.mind?.get_player()?.joined_observer)
+			return null
 		if(isnull(src.respawn_timer))
 			src.respawn_timer = new
 			src.add_object(src.respawn_timer)
