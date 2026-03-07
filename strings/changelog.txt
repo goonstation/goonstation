@@ -1,4 +1,9 @@
 
+(t)fri mar 06 26
+(u)glowbold
+(p)26105
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The gaming vending machines stock some pre-made poker chip sets, all at one to one credit value.
 (t)thu mar 05 26
 (u)Kubius
 (p)26103
