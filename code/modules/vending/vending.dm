@@ -1850,7 +1850,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/security, 1, cost = PRICE_300/3, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/head, 1, cost = PRICE_1200/3, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/clown, 1, cost=PAY_DUMBCLOWN, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/clown, 1, cost=PRICE_PISS, hidden=1)
 
 /obj/machinery/vending/book //cogwerks: eventually this oughta have some of the wiki job guides available in it
 	name = "Books4u"

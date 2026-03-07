@@ -913,14 +913,14 @@ datum/commodity/drugs/sell/poppies
 	desc = "A tool module compatible with guardbuddies. Are tool modules supposed to have cream on them?"
 	price = PRICE_600/2
 	baseprice = PRICE_600/2
-	upperfluc = PAY_DOCTORATE/6
-	lowerfluc = -PAY_DOCTORATE/6
+	upperfluc = PRICE_600/6
+	lowerfluc = -PRICE_600/6
 
 /datum/commodity/junk/laughbox
 	comname = "Box of Laughs"
 	comtype = /obj/item/storage/box/box_o_laughs
 	desc = "A box full of canned laughs. In case you cant get any of the real stuff."
-	price = PAY_DUMBCLOWN
+	price = PRICE_PISS
 
 /datum/commodity/junk/ai_kit_clown
 	comname = "Circus AI Parts"

@@ -13,11 +13,11 @@
 /// e.g. you cheated somehow
 #define PAY_EMBEZZLED 5000
 
-
-#define PRICE_150
-#define PRICE_300
-#define PRICE_600
-#define PRICE_1200
-#define PRICE_2400
-#define PRICE_5000
-#define PRICE_25000
+#define PRICE_PISS 1
+#define PRICE_150 150
+#define PRICE_300 300
+#define PRICE_600 600
+#define PRICE_1200 1200
+#define PRICE_2400 2400
+#define PRICE_5000 5000
+#define PRICE_25000 25000

@@ -93,7 +93,7 @@
 	comname = "Emergency Gas Masks"
 	comtype = /obj/item/clothing/mask/gas/emergency
 	amount = 25
-	price_boundary = list(PRICE_150, PAY_DOCTORATE)
+	price_boundary = list(PRICE_150,PRICE_600)
 	possible_names = list("We have a surplus of gas masks. Need any?",
 	"We seem to have ordered too many gas masks, so we're putting the extras up for sale.")
 
@@ -101,7 +101,7 @@
 	comname = "Monkeys"
 	comtype = /mob/living/carbon/human/npc/monkey
 	amount = 4
-	price_boundary = list(PRICE_150, PAY_DOCTORATE)
+	price_boundary = list(PRICE_150,PRICE_600)
 	possible_names = list("We found a few stowaway monkeys on our ship. Feel free to take them off our hands.",
 	"We seem to have a simian situation, and are selling them for a cheap price.")
 
