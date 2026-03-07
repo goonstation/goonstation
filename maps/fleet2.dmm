@@ -36864,8 +36864,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
+	dir = 8
 	},
 /obj/mapping_helper/access/tox,
 /turf/simulated/floor/shuttlebay{
@@ -53043,6 +53042,7 @@
 	req_access_txt = null
 	},
 /obj/mapping_helper/access/tox,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
