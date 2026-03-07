@@ -13,6 +13,10 @@
 /// e.g. you cheated somehow
 #define PAY_EMBEZZLED 5000
 
+//Prices below are just categories, most actual prices are some percentage of their category
+//So if you want an item to cost 20, do PRICE_RECURRING_CHEAP*0.2, assuming PRICE_RECURRING_CHEAP is 100.
+//But don't use PRICE_RECURRING*0.1 just to get a number you could get with a lower category
+
 ///Clown life
 #define PRICE_PISS 1
 ///Recurring costs are something you'd expect to buy regularly, like food or supplies
