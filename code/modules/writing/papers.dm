@@ -912,6 +912,47 @@ Only trained personnel should operate station systems. Follow all procedures car
 		..()
 		info = PAPER_IMAGE_RENDER("images/pocket_guides/siphonguide.png")
 
+/obj/item/paper/resonator_type_ax
+	name = "printed card"
+	icon_state = "index_card"
+	info = {"TYPE-AX - AXIAL RESONATOR<br>
+	Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>
+	Maximum 4 intensity"}
+
+/obj/item/paper/resonator_type_sm
+	name = "printed card"
+	icon_state = "index_card"
+	info = {"TYPE-SM - SHEAR MITIGATOR<br>
+	Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>
+	Maximum 3 intensity"}
+
+/obj/item/paper/resonator_type_fq
+	name = "printed card"
+	icon_state = "index_card"
+	info = {"TYPE-FQ - FIELD QUANTIZER<br>
+	<span style="color:red;">WARNING: PROTOTYPE ONLY FOR USE BY ADVANCED TECHNICIANS</span><br>
+	Provides field dilation, with secondary consequence to axial resonances (see database)<br>
+	Maximum 7 intensity"}
+
+/obj/item/paper/catalytic_guide
+	name = "printed card"
+	icon_state = "index_card"
+	info = {"ANODE PARAMETERS<br>
+	Base efficacy percentage is conductivity x 17;<br>
+	energetic properties, at any concentration, confer 1.3x bonus.<br>
+	<br>
+	CATHODE PARAMETERS<br>
+	5 Density recommended, with Hardness as close to 5 as possible.<br>
+	<br>
+	Rods decay at a diminishing rate;<br>
+	corrosion resistance slows rate of decay.<br>
+	<br>
+	Engineering co-operates the Harmonic Siphon<br>
+	and is authorized to use its products<br>
+	in furtherance of generator operation and Site upkeep."}
+
+
+
 /obj/item/paper/iou
 	name = "IOU"
 	desc = "Somebody took whatever was in here."
