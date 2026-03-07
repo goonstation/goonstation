@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 1
 	wages = PAY_DUMBCLOWN
 	request_limit = 3 //this is definitely a bad idea
-	request_cost = PAY_TRADESMAN*4
+	request_cost =  PAY_TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	ui_colour = TGUI_COLOUR_PINK

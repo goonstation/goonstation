@@ -3,9 +3,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/glasses)
 	slot = SLOT_GLASSES
 
 /datum/clothingbooth_item/glasses/ftscanplate
-	cost = PAY_DOCTORATE/5
+	cost = PRICE_RECURRING*0.6
 	item_path = /obj/item/clothing/glasses/ftscanplate
 
 /datum/clothingbooth_item/glasses/monocle
-	cost = PAY_IMPORTANT/3
+	cost = PRICE_LUXURY_CHEAP*0.4
 	item_path = /obj/item/clothing/glasses/monocle

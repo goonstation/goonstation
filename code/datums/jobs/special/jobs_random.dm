@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Random"
 	job_category = JOB_RANDOM
 	request_limit = 2
-	request_cost = PAY_IMPORTANT*4
+	request_cost =  PAY_IMPORTANT*4
 	email_group = MGD_CIVILIAN
 
 	New()
@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/radioshowhost
 	name = "Radio Show Host"
 	wages = PAY_TRADESMAN
-	request_cost = PAY_DOCTORATE * 4
+	request_cost =  PAY_DOCTORATE * 4
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_OSHAN
 	special_spawn_location = null
@@ -44,7 +44,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 /datum/job/special/random/souschef
 	name = "Sous-Chef"
-	request_cost = PAY_DOCTORATE * 4
+	request_cost =  PAY_DOCTORATE * 4
 	wages = PAY_UNTRAINED
 	trait_list = list("training_chef")
 	access_string = "Sous-Chef"
@@ -124,7 +124,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY_EXECUTIVE
 	access_string = "VIP"
 	ui_colour = TGUI_COLOUR_RED
-	request_cost = PAY_EMBEZZLED * 4 // they're on the take
+	request_cost =  PAY_EMBEZZLED * 4 // they're on the take
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Inspector"
 	wages = PAY_IMPORTANT
 	ui_colour = /datum/job/special/nt::ui_colour
-	request_cost = PAY_EXECUTIVE * 4
+	request_cost =  PAY_EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)

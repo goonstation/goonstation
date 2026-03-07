@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 /datum/req_contract/special/weed_sampler
 	name = "Weed Flight"
 	req_sheet = new /obj/item/paper/requisition/weed_sample
-	payout = PAY_DONTBUYIT*2
+	payout = PAY_EMBEZZLED*10
 
 	New()
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/megaweed,1)
