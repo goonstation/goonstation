@@ -60,7 +60,8 @@
 #define HIDDEN_JOBS (1<<2)
 
 // Job round requirements
-#define ROUNDS_MIN_CAPTAIN 30 // captains should know what they're doing (they won't)
+#define ROUNDS_MIN_CAPTAIN 50 // captains should know what they're doing (they won't)
+#define ROUNDS_MIN_HIGHSEC 50 // HoS, NTSC
 #define ROUNDS_MIN_SECURITY 30 // higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 #define ROUNDS_MIN_DETECTIVE 15 // half of sec, please stop shooting people with lethals
 #define ROUNDS_MIN_SECASS 5
@@ -78,3 +79,7 @@
 #define ANNOUNCE_ORDER_HEADS 2
 #define ANNOUNCE_ORDER_LAST 1
 #define ANNOUNCE_ORDER_NEVER 0
+
+//Job whitelist requirements
+#define REQUIRES_WHITELIST_ALWAYS 2 // NTSC
+#define REQUIRES_WHITELIST_USUALLY 1 //Used for no hos whitelist saturday or mentor hos friday
