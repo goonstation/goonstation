@@ -67,7 +67,7 @@
 	comname = "Alien Artifacts"
 	comtype = /obj/artifact_type_spawner/vurdalak
 	amount = 4
-	price_boundary = list(PRICE_600*2,PRICE_600*5)
+	price_boundary = list(PRICE_1200,PRICE_3000)
 	possible_names = list("We are selling artifacts of alien origin. We cannot verify their purpose.",
 	"We have a collection of alien artifacts you may be interested in.")
 
@@ -76,14 +76,14 @@
 /datum/commodity/trader/vurdalak/meat
 	comname = "Raw Meat"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat
-	price_boundary = list(PRICE_150/5,PRICE_150)
+	price_boundary = list(PRICE_30,PRICE_150)
 	possible_names = list("Our stocks of raw meat are running low. The condition is of no concern.",
 	"We wish to purchase raw meat of any kind. Spoilage is not an issue.")
 
 /datum/commodity/trader/vurdalak/brains
 	comname = "Brains"
 	comtype = /obj/item/organ/brain
-	price_boundary = list(PRICE_600,PRICE_600*2)
+	price_boundary = list(PRICE_600,PRICE_1200)
 	possible_names = list("Our stocks of brains are running low. We care not for the condition.",
 	"We require the excised brains of living creatures. If you have such an item, sell it to us.")
 

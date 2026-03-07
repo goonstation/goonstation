@@ -1,11 +1,11 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes)
 /datum/clothingbooth_item/shoes
 	slot = SLOT_SHOES
-	cost = PRICE_300/5
+	cost = PRICE_120
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/boots)
 /datum/clothingbooth_item/shoes/boots
-	cost = PRICE_600/5
+	cost = PRICE_120
 
 	black
 		name = "Black"
@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/boots)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/cowboy_boots)
 /datum/clothingbooth_item/shoes/cowboy_boots
-	cost = PRICE_150/2
+	cost = PRICE_75
 
 	real
 		name = "Real"
@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/cowboy_boots)
 		item_path = /obj/item/clothing/shoes/westboot/brown
 
 /datum/clothingbooth_item/shoes/dress_shoes
-	cost = PRICE_600/5
+	cost = PRICE_120
 	item_path = /obj/item/clothing/shoes/dress_shoes
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/flats)
@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/flats)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/heels)
 /datum/clothingbooth_item/shoes/heels
-	cost = PRICE_600/5
+	cost = PRICE_120
 
 	white
 		name = "White"
@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/heels)
 		item_path = /obj/item/clothing/shoes/heels/red
 
 /datum/clothingbooth_item/shoes/macando_boots
-	cost = PRICE_600/5
+	cost = PRICE_120
 	item_path = /obj/item/clothing/shoes/cwboots
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/mary_janes)

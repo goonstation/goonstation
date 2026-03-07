@@ -2,7 +2,7 @@
 
 /* ------------------------ Masks ------------------------ */
 /datum/clothingbooth_item/mask/tengumask
-	cost = PRICE_300/2
+	cost = PRICE_150
 	item_path = /obj/item/clothing/mask/tengu
 
 /* ------------------------- Head ------------------------ */
@@ -10,7 +10,7 @@
 	item_path = /obj/item/clothing/head/giraffehat
 
 /datum/clothingbooth_item/head/axehat
-	cost = PRICE_300/3
+	cost = PRICE_100
 	item_path = /obj/item/clothing/head/axehat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beetlehat)
@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beetlehat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/elephanthat)
 /datum/clothingbooth_item/head/elephanthat
-	cost = PRICE_300/3
+	cost = PRICE_100
 
 	pink
 		name = "Pink"

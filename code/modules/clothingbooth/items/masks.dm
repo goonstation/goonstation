@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/mask)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/mask/masquerade)
 /datum/clothingbooth_item/mask/masquerade
-	cost = PRICE_300/5
+	cost = PRICE_120
 
 	cherryblossom
 		name = "Cherryblossom"

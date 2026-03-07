@@ -1,7 +1,7 @@
 #ifdef SEASON_SUMMER
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini
-	cost = PRICE_300/3
+	cost = PRICE_100
 
 /datum/clothingbooth_item/w_uniform/bikini/white
 	name = "White"
@@ -65,7 +65,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/onepiece)
 /datum/clothingbooth_item/w_uniform/onepiece
-	cost = PRICE_300/3
+	cost = PRICE_100
 
 
 /datum/clothingbooth_item/w_uniform/onepiece/white
@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/onepiece)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 /datum/clothingbooth_item/w_uniform/frillyswimsuit
-	cost = PRICE_300/3
+	cost = PRICE_100
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/white
 	name = "White"
@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 /datum/clothingbooth_item/w_uniform/swimtrunks
-	cost = PRICE_300/3
+	cost = PRICE_100
 /datum/clothingbooth_item/w_uniform/swimtrunks/white
 	name = "White"
 	item_path = /obj/item/clothing/under/swimsuit/swimtrunks/white
@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/oldswimsuit)
 /datum/clothingbooth_item/w_uniform/oldswimsuit
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
-	cost = PRICE_300/3
+	cost = PRICE_100
 
 /datum/clothingbooth_item/w_uniform/oldswimsuit/red
 	name = "Red and White"
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/wetsuit)
 /datum/clothingbooth_item/w_uniform/wetsuit/black
 	name = "Black"
 	item_path = /obj/item/clothing/under/misc/wetsuit
-	cost = PRICE_300/3
+	cost = PRICE_100
 	swatch_background_color = "#2f2851"
 
 /datum/clothingbooth_item/w_uniform/wetsuit/red

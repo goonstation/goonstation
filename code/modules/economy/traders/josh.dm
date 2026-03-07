@@ -76,14 +76,14 @@
 /datum/commodity/trader/josh/syringes
 	comname = "Syringes"
 	comtype = /obj/item/reagent_containers/syringe
-	price_boundary = list(PRICE_150/10,PRICE_150/3)
+	price_boundary = list(PRICE_15,PRICE_50)
 	possible_names = list("Hey bro, got any syringes? I need some... for a friend.",
 	"Broski, I need some syringes pronto. Got any?")
 
 /datum/commodity/trader/josh/radios
 	comname = "Personal Radios"
 	comtype = /obj/item/device/radio
-	price_boundary = list(PRICE_150/10,PRICE_150/3)
+	price_boundary = list(PRICE_15,PRICE_50)
 	possible_names = list("I need some radios for some secret communications. Spare a few?",
 	"I need some of those walkie-talike radio things to plan an event. Got any in storage?")
 
@@ -151,7 +151,7 @@
 	comname = "Rippin' Tacos"
 	comtype = /obj/item/reagent_containers/food/snacks/taco/complete
 	amount = 2
-	price_boundary = list(PRICE_150/10,PRICE_300/10)
+	price_boundary = list(PRICE_15,PRICE_30)
 	possible_names = list("You hungry? I got some finger-lickin' good tacos.",
 	"I got some authentic broriffic tacos. You up for some?",
 	"All out of broritos today. Want to try some tacos?")
@@ -213,7 +213,7 @@
 /datum/commodity/trader/josh/firecracker
 	comname = "Totally Legit Bangers"
 	comtype = /obj/item/device/light/sparkler/firecracker
-	price_boundary = list(PRICE_150/2,PRICE_300/2)
+	price_boundary = list(PRICE_75,PRICE_150)
 	amount = 20 //not completely unlimited
 	possible_names = list("These are technically legal, trust me bro!",
 		"REAL firecrackers, chuck them and run!",

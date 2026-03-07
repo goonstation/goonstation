@@ -69,7 +69,7 @@
 	comname = "Cloth Fabric"
 	comtype = /obj/item/material_piece/cloth/cottonfabric
 	amount = 300
-	price_boundary = list(PRICE_150/10,PRICE_150/5)
+	price_boundary = list(PRICE_15,PRICE_30)
 	possible_names = list("We have lots of cloth for sale. Good for making clothes with.",
 	"We have a great deal of cloth we need to shift soon, so please buy it!")
 
@@ -85,7 +85,7 @@
 	comname = "Glowsticks"
 	comtype = /obj/item/device/light/glowstick
 	amount = 100
-	price_boundary = list(PRICE_150/10,PRICE_150/5)
+	price_boundary = list(PRICE_15,PRICE_30)
 	possible_names = list("We have a number of glowsticks available for purchase.",
 	"We have come across some glowstick lighting supplies and have no use for them. Please buy them!")
 
@@ -109,21 +109,21 @@
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/speedyclone
 	amount = 1
-	price_boundary = list(PRICE_600*2,PRICE_600*5)
+	price_boundary = list(PRICE_1200,PRICE_3000)
 	possible_names = list("We have these new-fangled cloning upgrade modules lying around, but they are usless to our puritan crew.")
 
 /datum/commodity/trader/efficiencymodule
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/efficientclone
 	amount = 1
-	price_boundary = list(PRICE_600*2,PRICE_600*5)
+	price_boundary = list(PRICE_1200,PRICE_3000)
 	possible_names = list("We have these new-fangled cloning upgrade modules lying around, but they are useless to our puritan crew.")
 
 /datum/commodity/trader/dnamodule
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/genepowermodule
 	amount = 1
-	price_boundary = list(PRICE_600*2,PRICE_600*5)
+	price_boundary = list(PRICE_1200,PRICE_3000)
 	possible_names = list("We have these new-fangled cloning upgrade modules lying around, but they are useless to our puritan crew.")
 
 /datum/commodity/trader/ringtone_dogs
@@ -139,28 +139,28 @@
 /datum/commodity/trader/generic/anyore
 	comname = "Ore"
 	comtype = /obj/item/raw_material
-	price_boundary = list(PRICE_150/3,PRICE_300)
+	price_boundary = list(PRICE_50,PRICE_300)
 	possible_names = list("I'm looking to buy any kind of ore you might have.",
 	"Our ore supplies are critically low - I'll buy any kind of ore for this price.")
 
 /datum/commodity/trader/generic/anyfood
 	comname = "Food"
 	comtype = /obj/item/reagent_containers/food/snacks
-	price_boundary = list(PRICE_150/4,PRICE_150/2)
+	price_boundary = list(PRICE_37_5,PRICE_75)
 	possible_names = list("We're ferrying food to the outer colonies, so sell us any extra you have.",
 	"An accident has lost us most of our food supplies, so we're willing to buy any you may have.")
 
 /datum/commodity/trader/generic/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
-	price_boundary = list(PRICE_150/3,PRICE_300)
+	price_boundary = list(PRICE_50,PRICE_300)
 	possible_names = list("I'll buy any medical herbs you may have.",
 	"I need to restock on medical herbs. I'm willing to buy them from you for a good price.")
 
 /datum/commodity/trader/generic/shipcomponents
 	comname = "Ship/Pod Components"
 	comtype = /obj/item/shipcomponent
-	price_boundary = list(PRICE_150/3,PRICE_300)
+	price_boundary = list(PRICE_50,PRICE_300)
 	possible_names = list("Our shipyards are low on ship-building components. Could you sell us some?",
 	"We're trying a new experimental pod construction technique and need all the ship components we can get.",
 	"Some jokers sold us 600 cargo bays when we asked for parts, so we can't build any pods. We're in dire need of some other ship components.")
@@ -175,27 +175,27 @@
 /datum/commodity/trader/generic/shoes
 	comname = "Shoes"
 	comtype = /obj/item/clothing/shoes
-	price_boundary = list(PRICE_150/3,PRICE_150)
+	price_boundary = list(PRICE_50,PRICE_150)
 	possible_names = list("We're had a run-in with a rather unsavory type, and need new shoes.",
 	"We need any shoes you can spare. Don't ask.")
 
 /datum/commodity/trader/generic/furniture
 	comname = "Furniture Parts"
 	comtype = /obj/item/furniture_parts
-	price_boundary = list(PRICE_150/3,PRICE_300)
+	price_boundary = list(PRICE_50,PRICE_300)
 	possible_names = list("We need some more furniture to spice up our ship.",
 	"We're building a new lounge, and we need whatever furniture you have.")
 
 /datum/commodity/trader/generic/instruments
 	comname = "Instruments"
 	comtype = /obj/item/instrument
-	price_boundary = list(PRICE_150/2, PRICE_150)
+	price_boundary = list(PRICE_75, PRICE_150)
 	possible_names = list("We need some instruments to 'increase' staff morale.",
 	"The captain's latest team-building exercise requires a large number of instruments.")
 
 /datum/commodity/trader/generic/utensils
 	comname = "Kitchen Utensils"
 	comtype = /obj/item/kitchen/utensil
-	price_boundary = list(PRICE_150/3, PRICE_150)
+	price_boundary = list(PRICE_50, PRICE_150)
 	possible_names = list("Our staff require kitchen utensils to eat our chef's food.",
 	"We need some kitchen utensils to prepare for a feast.")

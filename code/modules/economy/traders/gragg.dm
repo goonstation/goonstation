@@ -65,7 +65,7 @@
 	comname = "Char"
 	comtype = /obj/item/raw_material/char
 	amount = 100
-	price_boundary = list(PRICE_150,PRICE_150*2)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("SELLING CHAR. NOT EVEN FOOD.",
 	"SELLING CHAR ORE. TRIED TO COOK. BURNT IT.",
 	"SELLING CHAR. FLAKY. GROSS.")
@@ -74,7 +74,7 @@
 	comname = "Strange Red Rock"
 	comtype = /obj/item/raw_material/erebite
 	amount = 5
-	price_boundary = list(PRICE_600*2,PRICE_600*4)
+	price_boundary = list(PRICE_1200,PRICE_2400)
 	possible_names = list("SELLING GROSS SPICY ROCK. NOT GOOD EAT.",
 	"SELLING WEIRD RED ROCK. GIVES GAS.",
 	"SELLING TERRIBLE TO EAT RED ROCK.")
@@ -83,7 +83,7 @@
 	comname = "Toxic Blue Rock"
 	comtype = /obj/item/raw_material/cerenkite
 	amount = 5
-	price_boundary = list(PRICE_600,PRICE_600*2)
+	price_boundary = list(PRICE_600,PRICE_1200)
 	possible_names = list("SELLING BAD TASTING ROCK. NOT GOOD EAT.",
 	"SELLING GLOWY BLUE ROCK. MAKES SICK.",
 	"SELLING TERRIBLE TO EAT BLUE ROCK.")
@@ -92,7 +92,7 @@
 	comname = "Volatile Purple Rock"
 	comtype = /obj/item/raw_material/plasmastone
 	amount = 5
-	price_boundary = list(PRICE_600*2,PRICE_600*4)
+	price_boundary = list(PRICE_1200,PRICE_2400)
 	possible_names = list("SELLING AWFUL PURPLE ROCK. TASTE TERRIBLE.",
 	"SELLING NASTY PURPLE ROCK. EXPLODE KIND OF EASY.",
 	"SELLING TERRIBLE TO EAT PURPLE ROCK.")
@@ -123,14 +123,14 @@
 /datum/commodity/trader/gragg/rock
 	comname = "Rock"
 	comtype = /obj/item/raw_material/rock
-	price_boundary = list(PRICE_150/10,PRICE_150/5)
+	price_boundary = list(PRICE_15,PRICE_30)
 	possible_names = list("BUYING PLAIN ROCK. NOT ORE, JUST ROCK. STOCKING UP ON FOOD.",
 	"BUYING PLAIN ROCK. NOT METAL OR CRYSTAL, JUST STONE.")
 
 /datum/commodity/trader/gragg/mauxite
 	comname = "Mauxite"
 	comtype = /obj/item/raw_material/mauxite
-	price_boundary = list(PRICE_150/2,PRICE_150)
+	price_boundary = list(PRICE_75,PRICE_150)
 	possible_names = list("BUYING MAUXITE. CRUNCHY AND DELICIOUS.",
 	"BUYING MAUXITE. GOOD MEAL FOR LITHOVORE. HELPS GROW STRONG CARAPACE.")
 
