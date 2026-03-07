@@ -68,7 +68,7 @@
 	name = "\improper Janitor's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/janitor,\
 	/obj/item/clothing/shoes/brown,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/janitor,\
 	/obj/item/device/pda2/janitor,\
 #ifdef SEASON_WINTER
 	/obj/item/clothing/suit/puffer/janitor)
@@ -80,7 +80,7 @@
 	name = "\improper Botanist's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/hydroponics,\
 	/obj/item/clothing/shoes/brown,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/hydroponics,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black,\
 #ifdef SEASON_WINTER
@@ -93,7 +93,7 @@
 	name = "\improper Rancher's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
 	/obj/item/clothing/shoes/westboot/brown/rancher,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/hydroponics,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black,\
 #ifdef SEASON_WINTER
@@ -108,7 +108,7 @@
 	/obj/item/clothing/shoes/chef,\
 	/obj/item/clothing/head/chefhat,\
 	/obj/item/clothing/suit/chef,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/catering,\
 	/obj/item/device/pda2/chef)
 
 /obj/item/storage/box/clothing/souschef
@@ -117,14 +117,14 @@
 	/obj/item/clothing/shoes/chef,\
 	/obj/item/clothing/head/souschefhat,\
 	/obj/item/clothing/suit/apron,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/catering,\
 	/obj/item/device/pda2/chef)
 
 /obj/item/storage/box/clothing/bartender
 	name = "\improper Bartender's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/bartender,\
 	/obj/item/clothing/shoes/black,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/catering,\
 	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/waiter
@@ -132,14 +132,14 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/bartender,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/wcoat,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/catering,\
 	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/chaplain
 	name = "\improper Chaplain's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/chaplain,\
 	/obj/item/clothing/shoes/black,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/chaplain,\
 	/obj/item/device/pda2/chaplain)
 
 // Security Equipment

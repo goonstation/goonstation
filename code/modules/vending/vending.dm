@@ -3390,7 +3390,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nunhood, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/flockcultist, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/witchfinder, 1)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/chaplain, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/chaplain, 1) //Also contains the headset
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/holywaterkit, 1)
 		product_list += new/datum/data/vending_product(/obj/item/swingsignfolded, 1)
 		product_list += new/datum/data/vending_product(/obj/item/scripture/eyehb, 1 )
