@@ -237,7 +237,7 @@
 	comname = "Stamped Gold Bullion"
 	comtype = /obj/item/stamped_bullion
 	onmarket = 1
-	price = PRICE_5000*2
+	price = PRICE_10000
 
 /datum/commodity/laser_gun
 	comname = "Laser Gun"
@@ -373,7 +373,7 @@
 	comname = "Gold Pod Armor"
 	comtype = /obj/item/podarmor/armor_gold
 	desc = "A kit of gold-plated pod armor plating."
-	price = PRICE_5000*2
+	price = PRICE_10000
 
 /datum/commodity/podparts/ballistic_22
 	comname = "PEP-22 Ballistic System"
@@ -385,7 +385,7 @@
 	comname = "PEP-9 Ballistic System"
 	comtype = /obj/item/shipcomponent/mainweapon/gun_9mm
 	desc = "A pod-mounted kinetic weapon system."
-	price = PRICE_5000*1.5
+	price = PRICE_7500
 
 /datum/commodity/podparts/ballistic
 	comname = "SPE-12 Ballistic System"
@@ -427,7 +427,7 @@
 	comname = "Pod Paint Job Kit (Flames)"
 	comtype = /obj/item/pod/paintjob/flames
 	desc = "A pod paint job kit that makes it look all spiffy!"
-	price = PRICE_2400*2
+	price = PRICE_4800
 
 ////////////////////////////
 ///// 420 all day //////////
@@ -525,7 +525,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Bath Salts (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/bathsalts
 	desc = "Sometimes packaged as a refreshing bathwater additive, these crystals are definitely not for human consumption."
-	price = PRICE_2400*2
+	price = PRICE_4800
 
 /datum/commodity/drugs/sell/catdrugs
 	comname = "Cat Drugs (5x pills)"
@@ -663,7 +663,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Head of Security Beret"
 	comtype = /obj/item/clothing/head/hos_hat
 	desc = "The beloved beret of an NT HoS."
-	price = PRICE_5000*2
+	price = PRICE_10000
 
 /datum/commodity/contraband/egun
 	comname = "Energy Gun"
@@ -799,7 +799,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Surplus armored vest"
 	comtype = /obj/item/clothing/suit/armor/NT_alt
 	desc = "A surplus blue armored vest, well worn and definitely not drycleaned."
-	price = PRICE_1200*2
+	price = PRICE_2400
 
 /////////////////////////////////
 ////// salvage trader ///////////
@@ -1954,14 +1954,14 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/racing_clowncar/kart
 	desc = "They just don't make the same quality go-karts anymore. Get this relic while you can."
 	onmarket = 0
-	price = PRICE_2400*2
+	price = PRICE_4800
 
 /datum/commodity/car
 	comname = "Fancy Car"
 	comtype = /obj/machinery/vehicle/tank/car/rusty
 	desc = "Might need some TLC, but a discount ride is a discount ride."
 	onmarket = 0
-	price = PRICE_2400*2
+	price = PRICE_4800
 
 /datum/commodity/menthol_cigarettes
 	comname = "Menthol Cigarettes"
@@ -1991,7 +1991,7 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/ammo/bullets/airzooka
 	desc = "A replacement bag for your Donk Co brand Airzooka!"
 	onmarket = 0
-	price = PRICE_2400/5
+	price = PRICE_480
 
 /datum/commodity/dangerbag
 	comname = "Airzooka Replacement Bag: Xtreme Edition"
@@ -2040,7 +2040,7 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/torpedo_tray/hiexp_loaded
 	desc = "A highly explosive torpedo, ready for your sick, destructive needs."
 	onmarket = 0
-	price = PRICE_5000*2
+	price = PRICE_10000
 
 /datum/commodity/sketchy_press_upgrade
 	comname = "Sketchy press upgrade"

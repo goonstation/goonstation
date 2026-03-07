@@ -131,7 +131,7 @@
 	If you come by such an item, we strongly advise against wearing it. Instead, sell it to us, we have a great deal of funds
 	allocated specifically for purchasing this item."})
 	comtype = /obj/item/clothing/suit/armor/ancient
-	price_boundary = list(PRICE_5000*2,PRICE_25000*2)
+	price_boundary = list(PRICE_10000,PRICE_25000*2)
 
 /datum/commodity/trader/vurdalak/relic
 	comname = "Strange Relic"

@@ -101,7 +101,7 @@
 	comname = "Rock Worm Poop"
 	comtype = /obj/item/raw_material/uqill
 	amount = 5
-	price_boundary = list(PRICE_1200,PRICE_1200*2)
+	price_boundary = list(PRICE_1200,PRICE_2400)
 	possible_alt_types = list(/obj/item/raw_material/gemstone)
 	alt_type_chance = 10
 	possible_names = list("SELLING ROCK WORM POOP. NOT KNOW WHY YOU WANT THAT. BUT THERE IT IS.",

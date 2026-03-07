@@ -131,7 +131,7 @@
 	comname = "Vintage Drink"
 	comtype = /obj/item/reagent_containers/food/drinks/bottle/wine
 	amount = 8
-	price_boundary = list(PRICE_15,PRICE_2400/10)
+	price_boundary = list(PRICE_15,PRICE_240)
 	possible_alt_types = list(/obj/item/reagent_containers/food/drinks/bottle/vintage)
 	alt_type_chance = 50
 	possible_names = list("Cause to celebrate? This deal certainly is! Vintage drink of the best quality!",
@@ -141,7 +141,7 @@
 	comname = "Addiction Aid Patches"
 	comtype = /obj/item/reagent_containers/patch/nicotine
 	amount = 50
-	price_boundary = list(PRICE_15,PRICE_2400/10)
+	price_boundary = list(PRICE_15,PRICE_240)
 	possible_alt_types = list(/obj/item/reagent_containers/patch/LSD)
 	alt_type_chance = 33
 	possible_names = list("Having trouble with addictive drugs? No worries! Just slap on one of these patches and your worries will go away!",
@@ -150,7 +150,7 @@
 /datum/commodity/trader/pianzi/seeds
 	comname = "Unusual Plant Seeds"
 	comtype = /obj/item/seed/alien
-	price_boundary = list(PRICE_15,PRICE_2400/10)
+	price_boundary = list(PRICE_15,PRICE_240)
 	possible_alt_types = list(/obj/item/seed/grass)
 	alt_type_chance = 75
 	possible_names = list("Love growing unusual plants? Then these seeds are for you, my good friend!",
@@ -161,7 +161,7 @@
 /datum/commodity/trader/pianzi/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
-	price_boundary = list(PRICE_15,PRICE_2400/10)
+	price_boundary = list(PRICE_15,PRICE_240)
 	possible_names = list("My good friend, I am rather low on medical herbs right now. Perhaps you could sell me some, hmm?",
 	"Everyone's in need of medical herbs, and Pianzi is no exception! I'll pay top premium, as always!")
 
@@ -189,6 +189,6 @@
 /datum/commodity/trader/pianzi/cigarettes
 	comname = "Cigarettes"
 	comtype = /obj/item/clothing/mask/cigarette
-	price_boundary = list(PRICE_15,PRICE_2400/10)
+	price_boundary = list(PRICE_15,PRICE_240)
 	possible_names = list("Cigarettes are always a good trade. Right now, I'd like to buy any you have!",
 	"Did you know cigarettes are currency on some colonies? That's why I'd like to buy any you can spare!")

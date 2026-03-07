@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/storage/box/tactical_kit,
 					/obj/item/device/disguiser,
 					/obj/item/radiojammer)
-	cost = PRICE_5000*2
+	cost = PRICE_10000
 	containertype = /obj/storage/crate
 	containername = "Special Ops Crate"
 	syndicate = 1
@@ -553,7 +553,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/head/helmet/hardhat/security,
 					/obj/item/requisition_token/security/assistant,
 					/obj/item/storage/box/handcuff_kit)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Security Equipment (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -567,7 +567,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
 					/obj/item/clothing/head/helmet/hardhat/security/improved,
 					/obj/item/gun/energy/stasis)
-	cost = PRICE_2400*2
+	cost = PRICE_4800
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -578,7 +578,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/machinery/port_a_brig,
 					/obj/item/remote/porter/port_a_brig)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Security Containment Crate - Security Equipment (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x2 Phaser Guns."
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_gun = 2)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -598,7 +598,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x4 Micro Phaser Guns."
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_small = 4)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Micro Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Macro Phaser Gun."
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_huge = 1)
-	cost = PRICE_2400*2
+	cost = PRICE_4800
 	containertype = /obj/storage/secure/crate/weapon/armory
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	access = access_armory
@@ -618,7 +618,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x2 Phaser SMGs."
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_smg = 2)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -746,7 +746,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/suit/tuxedo_jacket = 2,
 					/obj/item/clothing/gloves/ring = 2,
 					/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne = 1)
-	cost = PRICE_2400*2
+	cost = PRICE_4800
 	containertype = /obj/storage/crate
 	containername = "Wedding Supplies"
 
@@ -837,7 +837,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x5 Birds. Hand-reared, to help brighten your workplace."
 	category = "Civilian Department"
 	contains = list(/obj/critter/parrot/random = 5)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/pryable/animal
 	containername = "Avian Import Kit"
 
@@ -846,7 +846,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x4+ Assorted Animals."
 	category = "Civilian Department"
 	contains = list (/obj/random_item_spawner/critter)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/pryable/animal
 	containername = "Animal Import Kit"
 
@@ -970,7 +970,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Handheld Pipe Dispenser."
 	category = "Basic Materials"
 	contains = list(/obj/item/places_pipes)
-	cost = PRICE_5000*2
+	cost = PRICE_10000
 	containertype = /obj/storage/crate/wooden
 	containername = "HPD Replacement"
 
@@ -1184,7 +1184,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/implantcase/counterrev = 4,
 					/obj/item/implanter = 2)
-	cost = PRICE_1200*4
+	cost = PRICE_4800
 	containertype = /obj/storage/crate
 	containername = "Counter-Revolutionary Kit"
 	access = access_security
@@ -1193,7 +1193,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Furnishings Crate"
 	desc = "x8 Assorted Flat-Packed Furniture. Designed in Space Sweden."
 	contains = list(/obj/random_item_spawner/furniture_parts)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/wooden
 	containername = "Furnishings Crate"
 
@@ -1201,7 +1201,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Red Event Table Crate"
 	desc = "x5 Flat-Packed Tables. Each with a fancy red tablecloth."
 	contains = list(/obj/item/furniture_parts/table/clothred = 5)
-	cost = PRICE_2400*2
+	cost = PRICE_4800
 	containertype = /obj/storage/crate/wooden
 	containername = "Red Event Table Crate"
 
@@ -1210,7 +1210,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x4 Flat-Packed Tables, x4 Flat-Packed Stools. Each in eye-searing neon."
 	contains = list(/obj/item/furniture_parts/table/neon = 4,
 					/obj/item/furniture_parts/stool/neon = 4)
-	cost = PRICE_2400*2
+	cost = PRICE_4800
 	containertype = /obj/storage/crate/wooden
 	containername = "Neon Furnishings Crate"
 
@@ -1229,7 +1229,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/furniture_parts/table/sleek = 4,
 					/obj/item/furniture_parts/stool/sleek = 2,
 					/obj/item/furniture_parts/sleekchair =2)
-	cost = PRICE_2400*2
+	cost = PRICE_4800
 	containertype = /obj/storage/crate/wooden
 	containername = "Sleek Furnishings Crate"
 
@@ -1239,7 +1239,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/furniture_parts/dining_chair/regal = 4,
 					/obj/item/furniture_parts/table/regal = 4,
 					/obj/item/furniture_parts/decor/regallamp = 2)
-	cost = PRICE_5000*2
+	cost = PRICE_10000
 	containertype = /obj/storage/crate/wooden
 	containername = "Regal Furnishings Crate"
 
@@ -1247,7 +1247,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Golden Throne"
 	desc = "x1 Flat-Packed Throne. It can't be real gold for that price..."
 	contains = list(/obj/item/furniture_parts/throne_gold)
-	cost = PRICE_5000*5
+	cost = PRICE_25000
 	containertype = /obj/storage/crate/wooden
 	containername = "Throne Crate"
 
@@ -1255,7 +1255,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Haberdasher's Crate"
 	desc = "x5+ Assorted Hats. A veritable smörgåsbord of head ornaments."
 	contains = list(/obj/random_item_spawner/hat)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/packing
 	containername = "Haberdasher's Crate"
 
@@ -1264,14 +1264,14 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x7 Assorted Wigs."
 	category = "Civilian Department"
 	contains = list(/obj/item/clothing/head/wig/spawnable/random = 7)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/packing
 	containername = "Wig Crate"
 
 /datum/supply_packs/headbands
 	name = "Bargain Bows and Bands Box"
 	desc = "x8 Headbands. For all occasions."
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	contains = list(/obj/item/clothing/head/headband/giraffe = 1,
 					/obj/item/clothing/head/headband/antlers = 1,
 					/obj/item/clothing/head/headband/nyan/tiger = 1,
@@ -1287,7 +1287,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Masquerade Crate"
 	desc = "x5+ Assorted Novelty Masks. For hosting a masked ball in the bar."
 	contains = list(/obj/random_item_spawner/mask)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/packing
 	containername = "Masquerade Crate"
 
@@ -1295,7 +1295,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Shoe Crate"
 	desc = "x5+ Assorted Novelty Shoes. Has an unruly staff assistant stolen all your shoes?"
 	contains = list(/obj/random_item_spawner/shoe)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/packing
 	containername = "Shoe Crate"
 
@@ -1304,7 +1304,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x4 Social Dancing Shoes, x5+ Assorted Formalwear. Host your very own HR approved ball."
 	contains = list(/obj/random_item_spawner/formalclothes,
 					/obj/item/clothing/shoes/dress_shoes/dance = 4)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate
 	containername = "Ballroom Supplies"
 
@@ -1316,7 +1316,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/gloves/kote = 2,
 					/obj/item/shinai_bag,
 					/obj/item/storage/box/kendo_box/hakama)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/wooden
 	containername = "Kendo Crate"
 
@@ -1337,7 +1337,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/shoes/sandal = 10,
 					/obj/fireworksbox = 2,
 					/obj/item/firework = 5)
-	cost = PRICE_2400*2
+	cost = PRICE_4800
 	containertype = /obj/storage/crate/wooden
 	containername = "Obon Festival Crate"
 
@@ -1345,7 +1345,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Sponge Capsule Crate"
 	desc = "x1 Sponge Capsule Set. For all your watery animal needs!"
 	contains = list(/obj/item/spongecaps = 1)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/packing
 	containername = "Sponge Capsule Crate"
 
@@ -1411,7 +1411,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Security Restock Cartridge, x1 Security Ammo Restock Cartridge."
 	contains = list(/obj/item/vending/restock_cartridge/security,
 					/obj/item/vending/restock_cartridge/security_ammo)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate
 	containername = "Security Vending Machine Restocking Pack"
 
@@ -1447,14 +1447,14 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 ATM Circuitboard, x1 BankBoss Disk."
 	contains = list(/obj/item/circuitboard/atm, /obj/item/disk/data/floppy/read_only/bank_progs)
 	hidden = 1
-	cost = PRICE_1200*5
+	cost = PRICE_6000
 	containertype = /obj/storage/crate
 	containername = "Banking Kit"
 
 /datum/supply_packs/homing_kit
 	name = "Homing Kit"
 	desc = "x3 Tracking Beacons."
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	hidden = 1
 	contains = list(/obj/item/device/radio/beacon = 3)
 	containertype = /obj/storage/crate
@@ -1466,13 +1466,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 ID Computer Circuitboard."
 	hidden = 1
 	contains = list(/obj/item/circuitboard/card)
-	cost = PRICE_1200*5
+	cost = PRICE_6000
 
 /datum/supply_packs/administrative_id
 	name = "Administrative ID card"
 	desc = "x1 Captain level ID."
 	contains = list(/obj/item/card/id/gold/captains_spare)
-	cost = PRICE_2400*2
+	cost = PRICE_4800
 	hidden = 1
 	containertype = null
 	containername = null
@@ -1508,7 +1508,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Telecrystal Resupply Pack"
 	desc = "x10 Telecrystals."
 	contains = list(/obj/item/raw_material/telecrystal = 10)
-	cost = PRICE_1200*10
+	cost = PRICE_12000
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Telecrystal Resupply Pack"
@@ -1536,7 +1536,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Single-use Law Rack ManuDrive. For creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
 	category = "Engineering Department"
 	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/secure/crate
 	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
@@ -1546,7 +1546,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "A single-use ManuDrive for creating a replacement Gravity Tether for your ship or station. Note: Multiple gravity tethers are unsupported."
 	category = "Engineering Department"
 	contains = list(/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/secure/crate
 	containername = "Station Gravity Tether ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
@@ -1739,7 +1739,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	frames = list(/obj/machinery/turret/construction = 3,
 					/obj/machinery/turretid/computer,
 					/obj/machinery/camera = 2)
-	cost = PRICE_1200*10
+	cost = PRICE_12000
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Defense Turret Kit"
@@ -1751,7 +1751,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/machinery/turret/construction = 2,
 					/obj/machinery/turretid/computer,
 					/obj/machinery/camera = 2)
-	cost = PRICE_1200*10
+	cost = PRICE_12000
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
@@ -1764,7 +1764,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 		/obj/machinery/status_display,
 		/obj/machinery/status_display,
 		/obj/machinery/status_display)
-	cost = PRICE_1200*5
+	cost = PRICE_6000
 	containertype = /obj/storage/crate
 	containername = "Status Display Kit"
 
@@ -1808,7 +1808,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/machinery/networked/radio,
 					/obj/machinery/power/data_terminal = 3,
 					/obj/machinery/vending/computer3)
-	cost = PRICE_1200*10
+	cost = PRICE_12000
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Computer Core Kit"
@@ -1895,7 +1895,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	frames = list(/obj/machinery/networked/teleconsole,
 					/obj/machinery/networked/telepad,
 					/obj/machinery/power/data_terminal = 2)
-	cost = PRICE_1200*10
+	cost = PRICE_12000
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "Telescience"
@@ -2040,7 +2040,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/press_upgrade/ink,
 					/obj/item/paper_bin,
 					/obj/item/paper_bin)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/packing
 	containername = "Printing Press Refill Crate"
 
@@ -2049,7 +2049,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "x1 Ink Color Upgrade."
 	category = "Civilian Department"
 	contains = list(/obj/item/press_upgrade/colors)
-	cost = PRICE_1200*3
+	cost = PRICE_3600
 	containertype = /obj/storage/crate/packing
 	containername = "Printing Press Colour Crate"
 
@@ -2058,7 +2058,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "x1 Custom Cover Upgrade."
 	category = "Civilian Department"
 	contains = list(/obj/item/press_upgrade/books)
-	cost = PRICE_1200*2
+	cost = PRICE_2400
 	containertype = /obj/storage/crate/packing
 	containername = "Printing Press Cover Crate"
 
@@ -2068,7 +2068,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	category = "Civilian Department"
 	contains = list(/obj/item/electronics/frame/press_frame,
 					/obj/item/paper/press_warning)
-	cost = PRICE_1200*5
+	cost = PRICE_6000
 	containertype = /obj/storage/crate/wooden
 	containername = "Printing Press Crate"
 

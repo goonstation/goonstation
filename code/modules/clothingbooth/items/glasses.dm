@@ -7,5 +7,5 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/glasses)
 	item_path = /obj/item/clothing/glasses/ftscanplate
 
 /datum/clothingbooth_item/glasses/monocle
-	cost = PRICE_1200/3
+	cost = PRICE_400
 	item_path = /obj/item/clothing/glasses/monocle

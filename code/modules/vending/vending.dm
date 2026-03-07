@@ -1849,7 +1849,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 10, cost = PRICE_75)
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/security, 1, cost = PRICE_100, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/head, 1, cost = PRICE_1200/3, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/head, 1, cost = PRICE_400, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/clown, 1, cost=PRICE_PISS, hidden=1)
 
 /obj/machinery/vending/book //cogwerks: eventually this oughta have some of the wiki job guides available in it
@@ -3045,12 +3045,12 @@ TYPEINFO(/obj/machinery/vending/chem)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/yoga/communist, 1, cost = PRICE_120, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/rando, 1, cost = PRICE_100, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/wedding_dress, 1, cost = PRICE_1200*4, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/wedding_dress, 1, cost = PRICE_4800, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/veil, 1, cost = PRICE_1200, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/heels, 1, cost = PRICE_120, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/tuxedo_jacket, 1, cost = PRICE_1200, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/bartender/tuxedo, 1, cost = PRICE_1200/5, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost = PRICE_1200/5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/bartender/tuxedo, 1, cost = PRICE_240, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/dress_shoes, 1, cost = PRICE_240, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/ring/gold, 2, cost = PRICE_1200, hidden=1)
 
 TYPEINFO(/obj/machinery/vending/janitor)

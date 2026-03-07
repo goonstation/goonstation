@@ -30,8 +30,11 @@
 #define PRICE_120 120
 #define PRICE_150 150
 #define PRICE_200 200
+#define PRICE_240 240
 #define PRICE_300 300
+#define PRICE_400 400
 #define PRICE_450 450
+#define PRICE_480 480
 #define PRICE_600 600
 #define PRICE_900 900
 #define PRICE_1200 1200
@@ -39,9 +42,13 @@
 #define PRICE_1800 1800
 #define PRICE_2400 2400
 #define PRICE_3000 3000
+#define PRICE_3600 3600
 #define PRICE_4500 4500
+#define PRICE_4800 4800
 #define PRICE_5000 5000
 #define PRICE_6000 6000
+#define PRICE_7500 7500
 #define PRICE_9000 9000
+#define PRICE_10000 10000
 #define PRICE_12000 12000
 #define PRICE_25000 25000

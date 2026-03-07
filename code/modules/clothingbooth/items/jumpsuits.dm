@@ -157,7 +157,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/flame_shirt)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/little_dress)
 /datum/clothingbooth_item/w_uniform/little_dress
-	cost = PRICE_1200/3
+	cost = PRICE_400
 
 	black
 		name = "Black"
@@ -470,7 +470,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 	item_path = /obj/item/clothing/under/rank/bartender/tuxedo
 
 /datum/clothingbooth_item/w_uniform/wedding_dress
-	cost = PRICE_1200*3
+	cost = PRICE_3600
 	item_path = /obj/item/clothing/under/gimmick/wedding_dress
 
 /datum/clothingbooth_item/w_uniform/western
