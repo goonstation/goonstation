@@ -901,7 +901,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		DNA.endurance += HYPstat_rounding(src.current_tick.endurance_bonus * src.current_tick.tick_multiplier)
 	// Now we modify chems in the tray
 	if (src.reagents)
-		src.reagents?.remove_any_except(src.current_tick.water_consumption * src.current_tick.tick_multiplier * src.drink_mult, "nectar")
+		src.reagents?.consume_any(src.current_tick.water_consumption * src.current_tick.tick_multiplier * src.drink_mult, 0.1, "nectar")
 		// This is where drink_rate does its thing. It will remove a bit of all reagents to meet
 		// it's quota, except nectar because that's supposed to stay in the plant pot.
 		// We give off nectar and should check our nectar levels
