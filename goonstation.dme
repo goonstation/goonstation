@@ -839,6 +839,7 @@
 #include "code\modules\antagonists\__subordinate_antagonist.dm"
 #include "code\modules\antagonists\antagonist_helpers.dm"
 #include "code\modules\antagonists\arcfiend\arcfiend.dm"
+#include "code\modules\antagonists\arcfiend\plasmafiend.dm"
 #include "code\modules\antagonists\arcfiend\abilities\_arcfiend_ability_holder.dm"
 #include "code\modules\antagonists\arcfiend\abilities\arc_flash.dm"
 #include "code\modules\antagonists\arcfiend\abilities\discharge.dm"
