@@ -1225,9 +1225,9 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 //Computer, disk and files.
 
-/obj/item/disk/data/fixed_disk/radioship
+/obj/item/disk/data/fixed_disk/hd32/radioship
 
-/obj/item/disk/data/fixed_disk/radioship/New()
+/obj/item/disk/data/fixed_disk/hd32/radioship/New()
 	..()
 
 	var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -1247,7 +1247,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	newfolder.add_file( new /datum/computer/file/record/radioship/testlog2 (src))
 
 /obj/machinery/computer3/generic/personal/radioship
-	setup_drive_type = /obj/item/disk/data/fixed_disk/radioship
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd32/radioship
 
 /datum/computer/file/record/radioship
 

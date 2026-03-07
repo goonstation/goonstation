@@ -234,9 +234,9 @@ var/sound/iomoon_alarm_sound = null
 /obj/machinery/computer3/luggable/personal/iomoon
 	name = "Research Laptop"
 	desc = "A portable computer used for away team-style research."
-	setup_drive_type = /obj/item/disk/data/fixed_disk/iomoon
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd32/iomoon
 
-/obj/item/disk/data/fixed_disk/iomoon
+/obj/item/disk/data/fixed_disk/hd32/iomoon
 
 	New()
 		..()

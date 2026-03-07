@@ -431,8 +431,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		src.transform = src.transform.Scale(randx, randy) //make em weird lookin (mood)
 
 //adhara comp stuff - very ugly and big code
-/obj/item/disk/data/fixed_disk/adharas_laptop
-	file_amount = 512 //very big
+/obj/item/disk/data/fixed_disk/hd128/adharas_laptop
+	//file_amount = 512 //very big
+	//Why did it have to be so big??
 
 	New()
 		..()
@@ -457,7 +458,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		newfolder.add_file( new /datum/computer/file/record/adhara_office/macncheese (src))
 
 /obj/machinery/computer3/luggable/personal/adhara_laptop //due to jank system, this isnt the one that gets put in the map. but it is used internally by the other
-	setup_drive_type = /obj/item/disk/data/fixed_disk/adharas_laptop
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd128/adharas_laptop
 
 /obj/item/luggable_computer/personal/adhara_laptop //hi i go into the map
 	name = "cute laptop"

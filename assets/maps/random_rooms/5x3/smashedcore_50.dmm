@@ -74,7 +74,7 @@
 	pixel_x = 3;
 	layer = 2.99
 	},
-/obj/item/disk/data/fixed_disk{
+/obj/item/disk/data/fixed_disk/hd64{
 	pixel_y = 28;
 	pixel_x = -1
 	},

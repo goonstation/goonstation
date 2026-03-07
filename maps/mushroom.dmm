@@ -22392,7 +22392,7 @@
 /area/station/hangar/sec)
 "mJl" = (
 /obj/table/auto,
-/obj/item/disk/data/fixed_disk,
+/obj/item/disk/data/fixed_disk/hd64,
 /obj/item/disk/data/floppy/read_only/terminal_os,
 /obj/item/disk/data/floppy/read_only/medical_progs,
 /obj/item/disk/data/floppy/read_only/communications,

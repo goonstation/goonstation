@@ -36935,7 +36935,7 @@
 /area/station/communications/centre)
 "qcm" = (
 /obj/table/auto,
-/obj/item/disk/data/fixed_disk{
+/obj/item/disk/data/fixed_disk/hd64{
 	pixel_y = 9
 	},
 /obj/item/disk/data/floppy/read_only/security_progs{

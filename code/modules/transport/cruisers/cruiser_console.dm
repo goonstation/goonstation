@@ -113,7 +113,7 @@
 	name = "cruiser console"
 	icon_state = "cruiser"
 	base_icon_state = "cruiser"
-	setup_drive_size = 64
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64
 	setup_frame_type = /obj/computer3frame/terminal
 	setup_starting_os = /datum/computer/file/terminal_program/os/main_os/no_login
 	setup_starting_peripheral1 = /obj/item/peripheral/cruiser
