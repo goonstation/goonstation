@@ -2315,6 +2315,7 @@
 #include "code\modules\unit_tests\_map_correctness\_map_correctness_check.dm"
 #include "code\modules\unit_tests\_map_correctness\apcless_areas.dm"
 #include "code\modules\unit_tests\_map_correctness\blind_switches.dm"
+#include "code\modules\unit_tests\_map_correctness\chemistry_supplies.dm"
 #include "code\modules\unit_tests\_map_correctness\directional_objects.dm"
 #include "code\modules\unit_tests\_map_correctness\door_turfs.dm"
 #include "code\modules\unit_tests\_map_correctness\duplicate_area_names.dm"
