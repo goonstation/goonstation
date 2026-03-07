@@ -67,13 +67,13 @@ TYPEINFO(/obj/item/device/accessgun)
 				command_access.Add(access_data(A))
 
 		.["accesses_by_area"] = list(
-			list(name = "Civilian", color = "civilian", accesses = civilian_access),
-			list(name = "Engineering", color = "engineering", accesses = engineering_access),
-			list(name = "Supply", color = "engineering", accesses = supply_access),
-			list(name = "Science", color = "research", accesses = research_access),
-			list(name = "Medical", color = "medical", accesses = medical_access),
-			list(name = "Security", color = "security", accesses = security_access),
-			list(name = "Command", color = "command", accesses = command_access),
+			list(name = "Command", color = /datum/job/command::ui_colour, accesses = command_access),
+			list(name = "Security", color = /datum/job/security::ui_colour, accesses = security_access),
+			list(name = "Science", color = /datum/job/research::ui_colour, accesses = research_access),
+			list(name = "Medical", color = /datum/job/medical::ui_colour, accesses = medical_access),
+			list(name = "Engineering", color = /datum/job/engineering::ui_colour, accesses = engineering_access),
+			list(name = "Supply", color = /datum/job/engineering::ui_colour, accesses = supply_access),
+			list(name = "Civilian", color = /datum/job/civilian::ui_colour, accesses = civilian_access),
 		)
 
 	proc/access_data(var/A)
