@@ -30,6 +30,11 @@
 			if ("bang") playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 40, 1)
 			if ("buzz") playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
 			if ("gunshot") playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
+			if ("laughter")
+				var/which = rand(1,2)
+				switch(which)
+					if(1) playsound(src.loc, 'sound/misc/laughter/laughtrack1.ogg', 50, 0)
+					if(2) playsound(src.loc, 'sound/misc/laughter/laughtrack3.ogg', 50, 0)
 			if ("siren") playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
 			if ("coo") playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 1)
 			if ("rimshot") playsound(src.loc, 'sound/misc/rimshot.ogg', 50, 1)
@@ -40,7 +45,7 @@
 			else playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		var/newmode = tgui_input_list(user, "Select sound to play", "Make some noise", list("bang", "burp", "buzz", "cat", "coo", "fart", "gunshot", "harmonica", "honk", "rimshot", "siren", "squeak", "trombone", "vuvuzela"), src.mode)
+		var/newmode = tgui_input_list(user, "Select sound to play", "Make some noise", list("bang", "burp", "buzz", "cat", "coo", "fart", "gunshot", "harmonica", "honk", "laughter", "rimshot", "siren", "squeak", "trombone", "vuvuzela"), src.mode)
 
 		if (newmode && rand(1,150) == 1)
 			boutput(user, SPAN_ALERT("BZZZ SOUND SYNTHESISER ERROR"))
