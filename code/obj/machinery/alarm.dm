@@ -262,3 +262,5 @@
 #undef ALARM_GOOD
 #undef ALARM_MINOR
 #undef ALARM_SEVERE
+
+SET_UP_DIRECTIONALS(/obj/machinery/alarm, OFFSETS_AIRALARM)
