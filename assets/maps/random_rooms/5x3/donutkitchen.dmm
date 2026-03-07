@@ -19,7 +19,7 @@
 /area/dmm_suite/clear_area)
 "j" = (
 /obj/machinery/chem_dispenser/chef,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/dmm_suite/clear_area)
 "v" = (

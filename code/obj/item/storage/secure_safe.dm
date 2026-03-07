@@ -287,6 +287,8 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/stamped_bullion)
 
+	HELP_MESSAGE_OVERRIDE("Set or enter a code by <b>using in-hand</b>.<br>View contents by <b>click-dragging</b> from the briefcase to your character.")
+
 TYPEINFO(/obj/item/storage/secure/ssafe)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8

@@ -158,7 +158,7 @@ TYPEINFO(/obj/item/electronics/frame)
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
 		var/obj/item/electronics/E = W
-		if(!(istype(E,/obj/item/electronics/disk)||istype(E,/obj/item/electronics/scanner)||istype(E,/obj/item/electronics/soldering)||istype(E,/obj/item/electronics/frame)))
+		if(!(istype(E,/obj/item/electronics/scanner)||istype(E,/obj/item/electronics/soldering)||istype(E,/obj/item/electronics/frame)))
 			E.set_loc(src)
 			user.u_equip(E)
 			//parts.Add(E)
@@ -213,7 +213,7 @@ TYPEINFO(/obj/item/electronics/frame)
 	if(BOUNDS_DIST(user, src) > 0)
 		return
 
-	var/list/bad_types = list(/obj/item/electronics/disk, /obj/item/electronics/scanner, /obj/item/electronics/soldering, /obj/item/electronics/frame)
+	var/list/bad_types = list(/obj/item/electronics/scanner, /obj/item/electronics/soldering, /obj/item/electronics/frame)
 	if(!istype(O, /obj/item/electronics) || (O.type in bad_types))
 		boutput(user, SPAN_ALERT("That is not a valid component!"))
 		return
@@ -379,64 +379,6 @@ TYPEINFO(/obj/item/electronics/frame)
 		var/datum/component/soldering/solder_comp = src.GetComponent(/datum/component/soldering)
 		solder_comp.repair_deconstruction_buttons(target, user)
 		..()
-
-////////////////////////////////////////////////////////////////no
-/obj/item/electronics/disk
-	name = "data module"
-	icon_state = "disk"
-	var/list/parts = new/list()
-	var/item_name = "Error"
-
-////////////////////////////////////////////////////////////////up
-/obj/item/electronics/scanner
-	name = "device analyzer"
-	icon_state = "deviceana"
-	desc = "Used for scanning certain items for use with the ruckingenur kit."
-	force = 2
-	hit_type = DAMAGE_BLUNT
-	throwforce = 5
-	w_class = W_CLASS_SMALL
-	pressure_resistance = 50
-	var/list/scanned = list()
-	var/viewstat = 0
-	var/scannable_tags = DEVICE_ANALYZER_ALLOWED_TAGS
-
-	New()
-		. = ..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
-
-	get_desc()
-		// We display this on a separate line and with a different color to show emphasis
-		. = ..()
-		. += "<br>[SPAN_NOTICE("Use the Help, Disarm, or Grab intents to scan objects when you click them. Switch to Harm intent do other things.")]"
-		. += "<br>Scanned items:"
-		if (!length(src.scanned))
-			. += " None"
-			return
-		for (var/obj/item_type as anything in src.scanned)
-			var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
-			if (typeinfo.analyser_flags & ANALYSER_SYNDIE_ONLY)
-				continue
-			. += "<br>-" + "\proper[initial(item_type.name)]"
-
-	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
-		if (user.a_intent == INTENT_HARM)
-			return
-
-		var/datum/computer/file/electronics_scan/theScan = new
-		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, DEVICE_ANALYZER_ALLOWED_TAGS, scanned, theScan)
-
-		if(scan_result == ANALYSIS_SIGNAL_SUCCESS)
-			if (!isnull(theScan.scannedPath))
-				src.scanned += theScan.scannedPath
-		else if(scan_result == ANALYSIS_SIGNAL_SKIPPED)
-			return
-
-		return TRUE
-
-
-/obj/item/electronics/scanner/syndicate
-	scannable_tags = DEVICE_ANALYZER_ALLOWED_TAGS | ANALYSER_SYNDIE_ONLY //We allow anything we can scan including syndie items
 
 ////////////////////////////////////////////////////////////////no
 TYPEINFO(/obj/machinery/rkit)
