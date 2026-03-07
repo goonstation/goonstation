@@ -81,6 +81,7 @@ var/list/admin_verbs = list(
 	list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
+		/client/proc/set_titlecard,
 		/datum/admins/proc/pixelexplosion,
 		/datum/admins/proc/camtest,
 		/client/proc/alt_key,
@@ -1939,6 +1940,21 @@ proc/alert_all_ghosts(atom/target, message)
 					winshow(C, "pregameBrowser", 1)
 					var/mob/new_player/new_player = C.mob
 					new_player.pregameBrowserLoaded = TRUE
+
+/client/proc/set_titlecard()
+	set name = "Set lobby titlecard"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	var/card_path = tgui_input_list(src, "Pick titlecard type", "Pick titlecard", concrete_typesof(/datum/titlecard))
+	if (!card_path)
+		return
+	var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
+	if(T)
+		T = locate(T.x + 3, T.y, T.z)
+		if (!(locate(/obj/titlecard) in T))
+			new /obj/titlecard(T)
+	global.lobby_titlecard = new card_path
+	global.lobby_titlecard.set_pregame_html()
 
 /client/proc/implant_all()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
