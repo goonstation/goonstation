@@ -237,7 +237,7 @@
 	comname = "Stamped Gold Bullion"
 	comtype = /obj/item/stamped_bullion
 	onmarket = 1
-	price = PAY_EMBEZZLED*2
+	price = PRICE_5000*2
 
 /datum/commodity/laser_gun
 	comname = "Laser Gun"
@@ -367,25 +367,25 @@
 	comname = "Syndicate Pod Armor"
 	comtype = /obj/item/podarmor/armor_red
 	desc = "A kit of Syndicate pod armor plating."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/podparts/goldarmor
 	comname = "Gold Pod Armor"
 	comtype = /obj/item/podarmor/armor_gold
 	desc = "A kit of gold-plated pod armor plating."
-	price = PAY_EMBEZZLED*2
+	price = PRICE_5000*2
 
 /datum/commodity/podparts/ballistic_22
 	comname = "PEP-22 Ballistic System"
 	comtype = /obj/item/shipcomponent/mainweapon/gun_22
 	desc = "A pod-mounted kinetic weapon system."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/podparts/ballistic_9mm
 	comname = "PEP-9 Ballistic System"
 	comtype = /obj/item/shipcomponent/mainweapon/gun_9mm
 	desc = "A pod-mounted kinetic weapon system."
-	price = PAY_EMBEZZLED*1.5
+	price = PRICE_5000*1.5
 
 /datum/commodity/podparts/ballistic
 	comname = "SPE-12 Ballistic System"
@@ -580,7 +580,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/relics/skull
 	comname = "Skull"
 	comtype = /obj/item/skull
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/relics/relic
 	comname = "Strange Relic"
@@ -590,7 +590,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/relics/gnome
 	comname = "Garden Gnome"
 	comtype = /obj/item/gnomechompski
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/relics/crown
 	comname = "Obsidian Crown"
@@ -605,12 +605,12 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/relics/marshelmet
 	comname = "Antique Mars Helmet"
 	comtype = /obj/item/clothing/head/helmet/mars
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/relics/marsuit
 	comname = "Antique Mars Suit"
 	comtype = /obj/item/clothing/suit/armor/mars
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/relics/bootlegfirework
 	comname = "Bootleg Firework (1x rocket)"
@@ -637,7 +637,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "NT Captain Gold ID"
 	comtype = /obj/item/card/id/gold/captains_spare
 	desc = "NT gold-level registered captain ID."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 	bee
 		comname = "Captain Gold ID"
@@ -647,7 +647,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "NT Spare Gold ID"
 	comtype = /obj/item/card/id/gold
 	desc = "NT gold-level unregistered spare ID."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 	bee
 		comname = "Gold ID"
@@ -663,13 +663,13 @@ datum/commodity/drugs/sell/poppies
 	comname = "Head of Security Beret"
 	comtype = /obj/item/clothing/head/hos_hat
 	desc = "The beloved beret of an NT HoS."
-	price = PAY_EMBEZZLED*2
+	price = PRICE_5000*2
 
 /datum/commodity/contraband/egun
 	comname = "Energy Gun"
 	comtype = /obj/item/gun/energy/egun
 	desc = "A standard-issue NT energy gun."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 //// purchase stuff
 
@@ -725,13 +725,13 @@ datum/commodity/drugs/sell/poppies
 	comname = "DNA Scrambler"
 	comtype = /obj/item/dna_scrambler
 	desc = "An injector that gives a new, random identity upon injection, storing the original for later."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/contraband/voicechanger
 	comname = "Voice Changer"
 	comtype = /obj/item/voice_changer
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/contraband/syndicate_headset
 	comname = "Illegal Headset"
@@ -749,25 +749,25 @@ datum/commodity/drugs/sell/poppies
 	comname = "Holographic Disguiser"
 	comtype = /obj/item/device/disguiser
 	desc = "Another one of those experimental Syndicate holographic projects, seems to be an older model."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/contraband/birdbomb
 	comname = "12ga AEX ammo"
 	comtype = /obj/item/ammo/bullets/aex
 	desc = "12 gauge ammo marked 12ga AEX Large Wildlife Dispersal Cartridge. Huh."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/contraband/flare
 	comname = "12ga Flare Shells"
 	comtype = /obj/item/ammo/bullets/flare
 	desc = "Military-grade 12 gauge flare shells. Guaranteed to brighten your day."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/contraband/eguncell_highcap
 	comname = "High-Capacity Power Cell"
 	comtype = /obj/item/ammo/power_cell/high_power
 	desc = "Power cell with a capacity of 300 PU. Compatible with energy guns and stun batons."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/contraband/spy_sticker_kit
 	comname = "Spy Sticker Kit"
@@ -824,22 +824,22 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/salvage/robot_upgrades/efficiency
 	comname = "Cyborg Upgrade (Efficiency)"
 	comtype = /obj/item/roboupgrade/efficiency
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/salvage/robot_upgrades/expand
 	comname = "Cyborg Upgrade (Expansion)"
 	comtype = /obj/item/roboupgrade/expand
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/salvage/robot_upgrades/selfrepair
 	comname = "Cyborg Upgrade (Self-Repair)"
 	comtype = /obj/item/roboupgrade/repair
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/salvage/robot_upgrades/stunresist
 	comname = "Cyborg Upgrade (Recovery)"
 	comtype = /obj/item/roboupgrade/aware
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/junk
 	comname = "Space Junk"
@@ -1138,7 +1138,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/bodyparts/aibrain
 	comname = "AI Neural Net Processor"
 	comtype = /obj/item/organ/brain/ai
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/bodyparts/butt
 	comname = "Human Butt"
@@ -1233,17 +1233,17 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/bodyparts/cybereye_night
 	comname = "Night Vision Cybereye"
 	comtype = /obj/item/organ/eye/cyber/nightvision
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/bodyparts/cybereye_laser
 	comname = "Laser Cybereye"
 	comtype = /obj/item/organ/eye/cyber/laser
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/bodyparts/cybereye_ecto
 	comname = "Ectosensor Cybereye"
 	comtype = /obj/item/organ/eye/cyber/ecto
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/bodyparts/l_lung
 	comname = "Left Human Lung"
@@ -1357,18 +1357,18 @@ datum/commodity/drugs/sell/poppies
 	comname = "Injector Belt"
 	comtype = /obj/item/injector_belt
 	desc = "A belt that injects the wearer with chemicals loaded from a container."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/medical/injectormask
 	comname = "Vapo-Matic"
 	comtype = /obj/item/clothing/mask/injector_mask
 	desc = "A gas mask that doses the wearer with chemicals loaded from a container."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/medical/strange_reagent
 	comname = "Strange Reagent"
 	comtype = /obj/item/reagent_containers/glass/beaker/strange_reagent
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/medical/firstaidR
 	comname = "First Aid Kit - Regular"
@@ -1425,19 +1425,19 @@ datum/commodity/drugs/sell/poppies
 	comname = "Toxin"
 	comtype = /obj/item/reagent_containers/glass/bottle/toxin
 	desc = "Various toxin compounds."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/medical/cyanide
 	comname = "Cyanide"
 	comtype = /obj/item/reagent_containers/pill/toxlite
 	desc = "A rapidly acting and highly dangerous chemical."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/medical/omnizine
 	comname = "Omnizine"
 	comtype = /obj/item/reagent_containers/glass/bottle/omnizine
 	desc = "An experimental and expensive herbal compound."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 ///// costume kits
 
@@ -1921,7 +1921,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Black jumpsuit"
 	comtype = /obj/item/clothing/under/chameleon
 	desc = "A plain black jumpsuit. Not very mysterious at all, no."
-	price = PAY_EMBEZZLED
+	price = PRICE_5000
 
 /datum/commodity/banana_grenade
 	comname = "Banana grenade"
@@ -2040,7 +2040,7 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/torpedo_tray/hiexp_loaded
 	desc = "A highly explosive torpedo, ready for your sick, destructive needs."
 	onmarket = 0
-	price = PAY_EMBEZZLED*2
+	price = PRICE_5000*2
 
 /datum/commodity/sketchy_press_upgrade
 	comname = "Sketchy press upgrade"
@@ -2054,4 +2054,4 @@ datum/commodity/drugs/sell/poppies
 	desc = "Wow...people really pay a lot for these cards..."
 	comtype = /obj/item/playing_card/expensive
 	onmarket = 1
-	price = PAY_EMBEZZLED
+	price = PRICE_5000

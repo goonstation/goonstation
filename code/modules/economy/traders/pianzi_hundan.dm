@@ -182,7 +182,7 @@
 /datum/commodity/trader/pianzi/artifact
 	comname = "Useless Handheld Artifacts"
 	comtype = /obj/item/artifact
-	price_boundary = list(PRICE_600,PAY_EMBEZZLED)
+	price_boundary = list(PRICE_600,PRICE_5000)
 	possible_names = list("I'm collecting handheld artifacts! I only want inert ones, though!",
 	"Right now i'd like to get my hands on some inert handheld artifacts! Keep the dangerous ones for yourself though.")
 

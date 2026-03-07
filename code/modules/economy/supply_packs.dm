@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/storage/box/tactical_kit,
 					/obj/item/device/disguiser,
 					/obj/item/radiojammer)
-	cost = PAY_EMBEZZLED*2
+	cost = PRICE_5000*2
 	containertype = /obj/storage/crate
 	containername = "Special Ops Crate"
 	syndicate = 1
@@ -970,7 +970,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Handheld Pipe Dispenser."
 	category = "Basic Materials"
 	contains = list(/obj/item/places_pipes)
-	cost = PAY_EMBEZZLED*2
+	cost = PRICE_5000*2
 	containertype = /obj/storage/crate/wooden
 	containername = "HPD Replacement"
 
@@ -1063,7 +1063,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Extremely Unstable Gravitational Singularity. Stored in a hi-tech jam jar, fired directly at your current location."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/the_singularitygen)
-	cost = PAY_EMBEZZLED
+	cost = PRICE_5000
 	containertype = /obj/storage/secure/crate
 	containername = "Singularity Generator Crate (Cardlocked \[Chief Engineer])"
 	access = access_engineering_chief
@@ -1073,7 +1073,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Emitter. For energizing field generators. You'll need a few of these."
 	category = "Engineering Department"
 	contains = list(/obj/machinery/emitter)
-	cost = PAY_EMBEZZLED
+	cost = PRICE_5000
 	containertype = /obj/storage/secure/crate
 	containername = "Emitter Crate (Cardlocked \[Engineering])"
 	access = access_engineering
@@ -1085,7 +1085,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/electronics/frame/collector_array = 4,
 					/obj/item/electronics/frame/collector_control,
 					/obj/item/electronics/soldering)
-	cost = PAY_EMBEZZLED
+	cost = PRICE_5000
 	containertype = /obj/storage/secure/crate
 	containername = "Radiation Array Crate (Cardlocked \[Engineering])"
 	access = access_engineering
@@ -1239,7 +1239,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/furniture_parts/dining_chair/regal = 4,
 					/obj/item/furniture_parts/table/regal = 4,
 					/obj/item/furniture_parts/decor/regallamp = 2)
-	cost = PAY_EMBEZZLED*2
+	cost = PRICE_5000*2
 	containertype = /obj/storage/crate/wooden
 	containername = "Regal Furnishings Crate"
 
@@ -1247,7 +1247,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Golden Throne"
 	desc = "x1 Flat-Packed Throne. It can't be real gold for that price..."
 	contains = list(/obj/item/furniture_parts/throne_gold)
-	cost = PAY_EMBEZZLED*5
+	cost = PRICE_5000*5
 	containertype = /obj/storage/crate/wooden
 	containername = "Throne Crate"
 
@@ -1689,7 +1689,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "x1 Rockbox™ Ore Cloud Storage Container."
 	category = "Engineering Department"
 	frames = list(/obj/machinery/ore_cloud_storage_container)
-	cost = PAY_EMBEZZLED
+	cost = PRICE_5000
 	containertype = /obj/storage/secure/crate/plasma
 	containername = "Rockbox™ Storage Container (Cardlocked \[Chief Engineer])"
 	access = access_engineering_chief
@@ -1947,7 +1947,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "x4 Field Generator Frames. The four goal-posts needed to contain a singularity."
 	category = "Engineering Department"
 	frames = list(/obj/machinery/field_generator = 4)
-	cost = PAY_EMBEZZLED
+	cost = PRICE_5000
 	containertype = /obj/storage/secure/crate
 	containername = "Field Generator Crate (Cardlocked \[Engineering])"
 	access = access_engineering

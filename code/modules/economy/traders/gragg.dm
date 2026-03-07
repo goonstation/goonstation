@@ -112,7 +112,7 @@
 	comname = "Unknown Item"
 	comtype = /obj/artifact_type_spawner/gragg
 	amount = 1
-	price_boundary = list(PRICE_1200,PAY_EMBEZZLED)
+	price_boundary = list(PRICE_1200,PRICE_5000)
 	possible_alt_types = list(/obj/item/raw_material/miracle)
 	alt_type_chance = 5
 	possible_names = list("SELLING WEIRD THING I DUG UP. DONT KNOW WHAT IS.",

@@ -120,7 +120,7 @@
 /datum/commodity/trader/vurdalak/obsidiancrown
 	comname = "Strange Relic"
 	comtype = /obj/item/clothing/head/void_crown
-	price_boundary = list(PAY_EMBEZZLED,PRICE_25000)
+	price_boundary = list(PRICE_5000,PRICE_25000)
 	possible_names = list({"We are looking to buy a reputedly unique relic that is said to be jet-black and horned in appearance,
 	and hails from another dimension of space and time. We are willing to pay a considerable premium to purchase it,
 	should you locate the curio in question."})
@@ -131,11 +131,11 @@
 	If you come by such an item, we strongly advise against wearing it. Instead, sell it to us, we have a great deal of funds
 	allocated specifically for purchasing this item."})
 	comtype = /obj/item/clothing/suit/armor/ancient
-	price_boundary = list(PAY_EMBEZZLED*2,PRICE_25000*2)
+	price_boundary = list(PRICE_5000*2,PRICE_25000*2)
 
 /datum/commodity/trader/vurdalak/relic
 	comname = "Strange Relic"
 	possible_names = list({"We are seeking a reputed relic that takes the appearance of a small grey box adorned with a simplistic
 	symbol. If you have such an item, we are willing to pay a very large price for it."})
 	comtype = /obj/item/relic
-	price_boundary = list(PAY_EMBEZZLED,PRICE_25000)
+	price_boundary = list(PRICE_5000,PRICE_25000)
