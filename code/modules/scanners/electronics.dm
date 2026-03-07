@@ -14,9 +14,7 @@
 	pressure_resistance = 50
 	var/list/scanned = list()
 	var/viewstat = 0
-
-	syndicate
-		is_syndicate = TRUE
+	var/scannable_tags = DEVICE_ANALYZER_ALLOWED_TAGS
 
 	New()
 		. = ..()
@@ -31,50 +29,29 @@
 			. += " None"
 			return
 		for (var/obj/item_type as anything in src.scanned)
-			if (initial(item_type.is_syndicate))
+			var/typeinfo/obj/typeinfo = get_type_typeinfo(item_type)
+			if (typeinfo.analyser_flags & ANALYSER_SYNDIE_ONLY)
 				continue
 			. += "<br>-" + "\proper[initial(item_type.name)]"
 
 	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
 		if (user.a_intent == INTENT_HARM)
 			return
-		var/skip_if_fail = FALSE
-		var/scan_result
-		if (isobj(A))
-			var/obj/O = A
-			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
-				return
-			if (O.mechanics_interaction == MECHANICS_INTERACTION_ALWAYS_INCOMPATIBLE)
-				scan_result = MECHANICS_ANALYSIS_INCOMPATIBLE
-			skip_if_fail = O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL
-		if (!scan_result)
-			scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user)
-		if (scan_result != MECHANICS_ANALYSIS_SUCCESS && skip_if_fail)
+
+		var/datum/computer/file/electronics_scan/theScan = new
+		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, DEVICE_ANALYZER_ALLOWED_TAGS, scanned, theScan)
+
+		if(scan_result == ANALYSIS_SIGNAL_SUCCESS)
+			if (!isnull(theScan.scannedPath))
+				src.scanned += theScan.scannedPath
+		else if(scan_result == ANALYSIS_SIGNAL_SKIPPED)
 			return
-		var/scan_output = null
-		switch (scan_result)
-			if (MECHANICS_ANALYSIS_SUCCESS)
-				scan_output = SPAN_NOTICE("Item scan successful.")
-				playsound(A.loc, 'sound/machines/tone_beep.ogg', 30, FALSE)
-			if (MECHANICS_ANALYSIS_INCOMPATIBLE, 0) // 0 is returned by SEND_SIGNAL if the component is not present, so we use it here too
-				scan_output = SPAN_ALERT("The structure of [A] is not compatible with [parent_item].")
-			if (MECHANICS_ANALYSIS_ALREADY_SCANNED)
-				scan_output = SPAN_ALERT("You have already scanned this type of object.")
-		if (!isnull(scan_output))
-			// this is technically sleight of hand, since the effects of scanning are only shown after the scan is actually done
-			// doing this is a lot cleaner, though, than displaying some or all of the messages if the target has MECHANICS_INTERACTION_SKIP_IF_FAIL
-			do_scan_effects(A, user)
-			boutput(user, scan_output)
+
 		return TRUE
 
-	proc/do_scan_effects(atom/target, mob/user)
-		// more often than not, this will display for objects, but we include a message to scanned mobs just for consistency's sake
-		user.tri_message(target,
-			SPAN_NOTICE("[user] scans [user == target ? himself_or_herself(user) : target] with [src]."), \
-			SPAN_NOTICE("You run [src] over [user == target ? "yourself" : target]..."), \
-			SPAN_NOTICE("[user] waves [src] at you. You feel [pick("funny", "weird", "odd", "strange", "off")].")
-		)
-		animate_scanning(target, "#FFFF00")
+
+/obj/item/electronics/scanner/syndicate
+	scannable_tags = DEVICE_ANALYZER_ALLOWED_TAGS | ANALYSER_SYNDIE_ONLY //We allow anything we can scan including syndie items
 
 
 /datum/computer/file/electronics_scan
