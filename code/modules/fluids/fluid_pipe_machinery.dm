@@ -447,7 +447,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Message Alerts", PROC_REF(toggle_alerts))
 
 // Robbed from implant code
-/obj/machinery/fluid_machinery/unary/sensor/proc/send_message(var/message, var/alertgroup, var/sender_name)
+/obj/machinery/fluid_machinery/unary/sensor/proc/send_message(message, alertgroup, sender_name)
 	DEBUG_MESSAGE("sending message: [message]")
 	var/datum/component/packet_connected/radio/radio_connection = MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, alert_frequency)
 	var/datum/signal/newsignal = get_free_signal()
