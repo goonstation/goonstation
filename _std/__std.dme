@@ -48,6 +48,7 @@
 #include "defines\clothingbooth.dm"
 #include "defines\combat.dm"
 #include "defines\component_defines\component_defines_atom.dm"
+#include "defines\component_defines\component_defines_complex.dm"
 #include "defines\component_defines\component_defines_datum.dm"
 #include "defines\component_defines\component_defines_global.dm"
 #include "defines\component_defines\component_defines_mechcomp.dm"
