@@ -24,33 +24,6 @@ TYPEINFO(/obj/item/device/gps)
 	var/tracking_x = 1
 	var/tracking_y = 1
 
-	proc/get_z_info(var/turf/T)
-		. =  "Landmark: Unknown"
-		if (!T)
-			return
-		if (!istype(T))
-			T = get_turf(T)
-		if (!T)
-			return
-		if (T.z == 1)
-			. = "Landmark: [capitalize(station_or_ship())]"
-/*			if (ismap("DESTINY"))
-				. =  "Landmark: NSS Destiny"
-			else if (ismap("CLARION"))
-				. =  "Landmark: NSS Clarion"
-			else
-				. =  "Landmark: Station"
-*/
-		else if (T.z == 2)
-			. =  "Landmark: Restricted"
-		else if (T.z == 3)
-			. =  "Landmark: Debris Field"
-		else if (T.z == 5)
-			#ifdef UNDERWATER_MAP
-			. =  "Landmark: Trench"
-			#else
-			. =  "Landmark: Asteroid Field"
-			#endif
 
 	proc/get_gps_info()
 		var/list/gps_info = list()
@@ -61,11 +34,12 @@ TYPEINFO(/obj/item/device/gps)
 			var/turf/T = get_turf(G.loc)
 			if (!T)
 				continue
+			var/datum/zlevel/current_z_level = zlevels[T.z]
 			gps_info += list(list("name" = "[G.serial]-[G.identifier]",
 								  "obj_ref" = "\ref[G]",
 								  "x" = T.x,
 								  "y" = T.y,
-								  "z_info" = src.get_z_info(T),
+								  "z_info" = "Landmark: [current_z_level.display_name]",
 								  "distress" = !!G.distress))
 
 		return gps_info
@@ -79,11 +53,12 @@ TYPEINFO(/obj/item/device/gps)
 			var/turf/T = get_turf(imp.loc)
 			if (!T)
 				continue
+			var/datum/zlevel/current_z_level = zlevels[T.z]
 			imp_info += list(list("name" = imp.loc.name,
 								  "obj_ref" = "\ref[imp]",
 								  "x" = T.x,
 								  "y" = T.y,
-								  "z_info" = src.get_z_info(T)))
+								  "z_info" = "Landmark: [current_z_level.display_name]"))
 
 		return imp_info
 
@@ -92,11 +67,12 @@ TYPEINFO(/obj/item/device/gps)
 
 		for (var/obj/B in by_type[/obj/warp_beacon])
 			var/turf/T = get_turf(B.loc)
+			var/datum/zlevel/current_z_level = zlevels[T.z]
 			warp_info += list(list("name" = B.name,
 								   "obj_ref" = "\ref[B]",
 								   "x" = T.x,
 								   "y" = T.y,
-								   "z_info" = src.get_z_info(T)))
+								   "z_info" = "Landmark: [current_z_level.display_name]"))
 
 		return warp_info
 
@@ -230,13 +206,14 @@ TYPEINFO(/obj/item/device/gps)
 	proc/send_distress_signal(distress)
 		var/distressAlert = distress ? "help" : "clear"
 		var/turf/T = get_turf(usr)
+		var/datum/zlevel/current_z_level = zlevels[T.z]
 		var/datum/signal/reply = get_free_signal()
 		reply.source = src
 		reply.data["sender"] = src.net_id
 		reply.data["identifier"] = "[src.serial]-[src.identifier]"
 		reply.data["x"] = "[T.x]"
 		reply.data["y"] = "[T.y]"
-		reply.data["location"] = "[src.get_z_info(T)]"
+		reply.data["location"] = "Landmark: [current_z_level.display_name]"
 		reply.data["distress_alert"] = "[distressAlert]"
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 
@@ -295,10 +272,11 @@ TYPEINFO(/obj/item/device/gps)
 								reply.data["description"] = "ERROR: UNKNOWN TOPIC"
 				if ("status")
 					var/turf/T = get_turf(src)
+					var/datum/zlevel/current_z_level = zlevels[T.z]
 					reply.data["identifier"] = "[src.serial]-[src.identifier]"
 					reply.data["x"] = "[T.x]"
 					reply.data["y"] = "[T.y]"
-					reply.data["location"] = "[src.get_z_info(T)]"
+					reply.data["location"] = "Landmark: [current_z_level.display_name]"
 					reply.data["distress"] = "[src.distress]"
 				else
 					return //COMMAND NOT RECOGNIZED
