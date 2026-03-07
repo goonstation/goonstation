@@ -58,6 +58,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	///can be heated by external sources
 	var/can_be_heated = TRUE
 
+	var/datum/color/cached_color = null
+	var/color_update_queued = FALSE
+
 	New(maximum=100)
 		..()
 		maximum_volume = maximum
@@ -327,13 +330,24 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/transfer_ratio = amount/total_volume
 
 		if(!index)
+			var/total = target_reagents.total_volume
+			var/alist/old_ratios
+			if (total <= CHEM_EPSILON)
+				target_reagents.color_update_queued = TRUE
+			else
+				old_ratios = alist()
+
 			for(var/reagent_id in reagent_list)
 				if (reagent_id == exception)
+					src.color_update_queued = TRUE //somethins might change for us, queue it up
 					continue
 
 				var/datum/reagent/current_reagent = reagent_list[reagent_id]
 				if (isnull(current_reagent) || current_reagent.volume == 0)
 					continue
+
+				if (old_ratios && target_reagents.reagent_list[reagent_id])
+					old_ratios[reagent_id] = target_reagents.reagent_list[reagent_id].volume / total
 
 				var/transfer_amt = current_reagent.volume*transfer_ratio
 				var/receive_amt = transfer_amt * multiplier
@@ -341,11 +355,24 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				/*if(istype(current_reagent, /datum/reagent/disease))
 					target_reagents.add_reagent_disease(current_reagent, (transfer_amt * multiplier), current_reagent.data, current_reagent.temperature)
 				else*/
-				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
+
+				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE, dontchangecolorcache = TRUE)
 
 				current_reagent.on_transfer(src, target_reagents, receive_amt)
 
-				src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
+				src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE, dontchangecolorcache = TRUE)
+			if (old_ratios)
+				total = target_reagents.total_volume+amount
+				for (var/id in target_reagents.reagent_list)
+					if (!old_ratios[id])
+						var/old_ratio = target_reagents.reagent_list[id].volume / (target_reagents.total_volume)
+						if (abs((target_reagents.reagent_list[id].volume / total) - old_ratio) >= 0.01)
+							target_reagents.color_update_queued = TRUE
+							break;
+					if (abs((target_reagents.reagent_list[id].volume / total) - old_ratios[id]) >= 0.01) // 1 percentage point change
+						target_reagents.color_update_queued = TRUE
+						break;
+
 		else //Only transfer one reagent
 			var/CI = 1
 			for(var/reagent_id in reagent_list)
@@ -798,7 +825,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			temp_fluid_reagents.update_total()
 			fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
-	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0, var/chemical_reaction = FALSE, var/chem_reaction_priority = 1)
+	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0, var/chemical_reaction = FALSE, var/chem_reaction_priority = 1, var/dontchangecolorcache = FALSE)
 		if(istype(my_atom, /obj/item/reagent_containers/glass/plumbing) && chemical_reaction)
 			var/obj/item/reagent_containers/glass/plumbing/condenser/condenser = my_atom
 			condenser.try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, chem_reaction_priority)
@@ -817,6 +844,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
 		var/datum/reagent/current_reagent = reagent_list[reagent]
+
+		if (!dontchangecolorcache && (!current_reagent || (length(reagent_list) != 1 && amount/(src.total_volume+amount) >= 0.01))) //new or different enough from old
+			src.color_update_queued = TRUE
 
 		if(!current_reagent)
 			if (length(reagents_cache) <= 0)
@@ -869,7 +899,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				src.handle_reactions()
 		return 1
 
-	proc/remove_reagent(var/reagent, var/amount, var/update_total = 1, var/reagents_change = 1)
+	proc/remove_reagent(var/reagent, var/amount, var/update_total = 1, var/reagents_change = 1, var/dontchangecolorcache = FALSE)
 
 		if(!isnum(amount)) return 1
 		amount = round(amount, CHEM_EPSILON)
@@ -881,8 +911,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if(current_reagent)
 			current_reagent.volume -= amount
+			if (length(reagent_list) != 1 && amount/(src.total_volume-amount) >= 0.01) //different enough from old
+				src.color_update_queued = TRUE
 			current_reagent.check_threshold()
 			if(current_reagent.volume <= CHEM_EPSILON && (reagents_change || update_total))
+				if (!dontchangecolorcache)
+					src.color_update_queued = TRUE
 				del_reagent(reagent)
 
 			if (update_total)
@@ -1058,6 +1092,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// reagent_exception_ids argument is a list of reagents to excluded from the calculation
 	proc/get_average_color(list/reagent_exception_ids = null)
 		RETURN_TYPE(/datum/color)
+		if (src.cached_color && !src.color_update_queued) return src.cached_color
 		var/datum/color/average = new(0,0,0,0)
 		var/total_weight = 0
 
@@ -1083,6 +1118,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			average.g /= total_weight
 			average.b /= total_weight
 			average.a /= total_weight
+		src.cached_color = average
+		src.color_update_queued = FALSE
 		return average
 
 	proc/get_average_rgb()
