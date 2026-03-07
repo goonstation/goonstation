@@ -1,4 +1,9 @@
 
+(t)sat mar 07 26
+(u)JORJ949
+(p)25964
+(e)🎨💅🎩🍝🌱|C-Sprites, C-QoL, A-Clothing, A-Catering, A-Hydroponics
+(*)The civilian department now has four new headsets! Catering, Hydroponics, Janitor and Chaplain headsets can now be found on appropriate jobs and in the matching vending machines or gear lockers.
 (t)fri mar 06 26
 (u)glowbold
 (p)26105

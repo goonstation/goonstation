@@ -338,11 +338,11 @@ TYPEINFO(/obj/machinery/genetics_booth)
 								account = FindBankAccountByName(selected_product.registered_sale_id)
 								if (account)
 									account["current_money"] += selected_product.cost/2
-									wagesystem.research_budget += selected_product.cost/2
+									wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] += selected_product.cost/2
 								else
-									wagesystem.research_budget += selected_product.cost
+									wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] += selected_product.cost
 							else
-								wagesystem.research_budget += selected_product.cost
+								wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] += selected_product.cost
 
 							src.say("Thank you for your patronage, <b>[M.name]</b>.", flags = SAYFLAG_IGNORE_HTML)
 

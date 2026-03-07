@@ -722,11 +722,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 						else
 							src.credit -= product.product_cost
 						if (!player_list || !vMachine.owneraccount)
-							wagesystem.shipping_budget += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+							wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 						else
 							//Players get 90% of profit from player vending machines QMs get 10%
 							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
-							wagesystem.shipping_budget += round(product.product_cost * (1 - profit))
+							wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(product.product_cost * (1 - profit))
 					src.currently_vending = null
 					update_static_data(usr)
 				if(product.logged_on_vend)
@@ -851,12 +851,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				else
 					src.credit -= R.product_cost
 				if (!isplayer)
-					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+					wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 				else
 					//Players get 90% of profit from player vending machines QMs get 10%
 					var/obj/machinery/vending/player/T = src
 					T.owneraccount["current_money"] += round(R.product_cost * profit)
-					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
+					wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
 			//Gotta do this before the SPAWN
@@ -3390,7 +3390,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nunhood, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/flockcultist, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/witchfinder, 1)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/chaplain, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/chaplain, 1) //Also contains the headset
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/holywaterkit, 1)
 		product_list += new/datum/data/vending_product(/obj/item/swingsignfolded, 1)
 		product_list += new/datum/data/vending_product(/obj/item/scripture/eyehb, 1 )

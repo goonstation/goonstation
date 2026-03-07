@@ -166,7 +166,7 @@ var/datum/score_tracker/score_tracker
 			score_expenses = 100
 		else
 			var/profit_target = wagesystem.total_stipend
-			var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
+			var/totalfunds = wagesystem.budgets[BUDGET_CAT_STATION] + wagesystem.budgets[BUDGET_CAT_SHIPPING] + wagesystem.budgets[BUDGET_CAT_UNION] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL]
 			if (totalfunds == 0)
 				score_expenses = 0
 			if (totalfunds != totalfunds) //let's see if someone sets the budget to -NaN!

@@ -432,10 +432,10 @@
 
 		// sell
 		if (scan && account)
-			wagesystem.shipping_budget += price / 2
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += price / 2
 			account["current_money"] += price / 2
 		else
-			wagesystem.shipping_budget += price
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += price
 		qdel(sell_art)
 
 		// give PDA group messages
@@ -641,12 +641,12 @@
 		if(scan && account)
 			var/share_NT = round(duckets / 2,1) // NT gets half the money, decimals rounded up in case of uneven sale price
 			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
-			wagesystem.shipping_budget += share_NT
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += share_NT
 			account["current_money"] += share_seller
 			logTheThing(LOG_STATION, null, "Cargo sale split [share_seller] credits to [scan.registered], whoever that is.")
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
-			wagesystem.shipping_budget += duckets
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += duckets
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
@@ -760,16 +760,17 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 	var/payroll = 0
-	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
+	var/totalfunds = wagesystem.budgets[BUDGET_CAT_STATION] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] + wagesystem.budgets[BUDGET_CAT_SHIPPING]
 	for(var/datum/db_record/R as anything in data_core.bank.records)
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
 	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.station_budget,50)][CREDIT_SIGN]
-	<BR><b>Current Research Budget:</b> [num2text(wagesystem.research_budget,50)][CREDIT_SIGN]
-	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.shipping_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_STATION],50)][CREDIT_SIGN]
+	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_SHIPPING],50)][CREDIT_SIGN]
+	<BR><b>Current Union Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_UNION],50)][CREDIT_SIGN]
+	<BR><b>Current Medical Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL],50)][CREDIT_SIGN]
 	<BR>
 	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
@@ -801,7 +802,7 @@
 	set desc = "Add to or subtract from a budget."
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
+	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Medical", "Union")
 	if (!trans) return
 
 	var/amount = input(usr, "How much to add to this budget?", "Funds", 0) as null|num
@@ -809,14 +810,17 @@
 
 	switch(trans)
 		if("Payroll")
-			wagesystem.station_budget += amount
-			if (wagesystem.station_budget < 0) wagesystem.station_budget = 0
+			wagesystem.budgets[BUDGET_CAT_STATION] += amount
+			if (wagesystem.budgets[BUDGET_CAT_STATION] < 0) wagesystem.budgets[BUDGET_CAT_STATION] = 0
 		if("Shipping")
-			wagesystem.shipping_budget += amount
-			if (wagesystem.shipping_budget < 0) wagesystem.shipping_budget = 0
-		if("Research")
-			wagesystem.research_budget += amount
-			if (wagesystem.research_budget < 0) wagesystem.research_budget = 0
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += amount
+			if (wagesystem.budgets[BUDGET_CAT_SHIPPING] < 0) wagesystem.budgets[BUDGET_CAT_SHIPPING] = 0
+		if("Union")
+			wagesystem.budgets[BUDGET_CAT_UNION] += amount
+			if (wagesystem.budgets[BUDGET_CAT_UNION] < 0) wagesystem.budgets[BUDGET_CAT_UNION] = 0
+		if("Medical")
+			wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] += amount
+			if (wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] < 0) wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] = 0
 		else
 			boutput(usr, SPAN_ALERT("Whatever you did, it didn't work."))
 			return
