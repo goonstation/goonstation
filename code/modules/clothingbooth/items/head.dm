@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/tophat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 /datum/clothingbooth_item/head/westhat
-	cost = PRICE_75
+	cost = PRICE_RECURRING_CHEAP*0.75
 
 	beige
 		name = "Beige"

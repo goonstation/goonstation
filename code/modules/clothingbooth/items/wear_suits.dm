@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
 /datum/clothingbooth_item/wear_suit/hoodie
-	cost = PRICE_50
+	cost = PRICE_RECURRING_CHEAP*0.5
 
 	orange
 		name = "Orange"
@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie_large)
 /datum/clothingbooth_item/wear_suit/hoodie_large
-	cost = PRICE_50
+	cost = PRICE_RECURRING_CHEAP*0.5
 
 	orange
 		name = "Orange - Large"
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/sweater_vest)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/denim_dress)
 /datum/clothingbooth_item/wear_suit/denim_dress
-	cost = PRICE_50
+	cost = PRICE_RECURRING_CHEAP*0.5
 	name = "Denim Dress"
 
 	blue

@@ -76,7 +76,7 @@
 /datum/commodity/trader/vurdalak/meat
 	comname = "Raw Meat"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat
-	price_boundary = list(PRICE_30,PRICE_RECURRING*0.75)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.3,PRICE_RECURRING*0.75)
 	possible_names = list("Our stocks of raw meat are running low. The condition is of no concern.",
 	"We wish to purchase raw meat of any kind. Spoilage is not an issue.")
 

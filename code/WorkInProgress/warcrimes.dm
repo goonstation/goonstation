@@ -92,9 +92,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 	create_products(restocked)
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 10, cost = PRICE_37_5) // 30
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 10, cost = PRICE_30) // 24
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 20, cost = PRICE_25) // 20
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 10, cost = PRICE_RECURRING_CHEAP*0.38) // 30
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 10, cost = PRICE_RECURRING_CHEAP*0.3) // 24
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 20, cost = PRICE_RECURRING_CHEAP*0.25) // 20
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 2, cost = PRICE_RECURRING*0.75, hidden=1) // 120
 
@@ -107,11 +107,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	create_products(restocked)
 		..()
 		// prices here are triple of the prefab_grill version where applicable
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost = PRICE_30)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost = PRICE_RECURRING_CHEAP*0.3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget, 5, cost = PRICE_RECURRING_COSTLY)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish, 3, cost = PRICE_RECURRING_COSTLY)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 6, cost = PRICE_50)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 3, cost = PRICE_75)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 6, cost = PRICE_RECURRING_CHEAP*0.5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 3, cost = PRICE_RECURRING_CHEAP*0.75)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 5, cost = PRICE_LUXURY_CHEAP*0.6, hidden=1)
 

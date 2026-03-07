@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform)
 /datum/clothingbooth_item/w_uniform
 	slot = SLOT_W_UNIFORM
-	cost = PRICE_50
+	cost = PRICE_RECURRING_CHEAP*0.5
 
 /datum/clothingbooth_item/w_uniform/bandshirt
 	item_path = /obj/item/clothing/under/misc/bandshirt

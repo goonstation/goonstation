@@ -123,14 +123,14 @@
 /datum/commodity/trader/gragg/rock
 	comname = "Rock"
 	comtype = /obj/item/raw_material/rock
-	price_boundary = list(PRICE_15,PRICE_30)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.15,PRICE_RECURRING_CHEAP*0.3)
 	possible_names = list("BUYING PLAIN ROCK. NOT ORE, JUST ROCK. STOCKING UP ON FOOD.",
 	"BUYING PLAIN ROCK. NOT METAL OR CRYSTAL, JUST STONE.")
 
 /datum/commodity/trader/gragg/mauxite
 	comname = "Mauxite"
 	comtype = /obj/item/raw_material/mauxite
-	price_boundary = list(PRICE_75,PRICE_RECURRING*0.75)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.75,PRICE_RECURRING*0.75)
 	possible_names = list("BUYING MAUXITE. CRUNCHY AND DELICIOUS.",
 	"BUYING MAUXITE. GOOD MEAL FOR LITHOVORE. HELPS GROW STRONG CARAPACE.")
 

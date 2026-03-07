@@ -79,7 +79,7 @@
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
 	onmarket = 1
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/honey
 	comname = "Space Honey"
@@ -105,7 +105,7 @@
 	desc_buy = "The Promethus Consortium is currently gathering resources for a research project and is willing to buy this item"
 	desc_buy_demand = "The colony on Regus X has had their main power reactor break down and need this item for repairs"
 	onmarket = 1
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 	linked_commodities = list(
 		/datum/commodity/sheet = 0.1,
 	)
@@ -251,35 +251,35 @@
 	comtype = /obj/item/pen
 	desc = "A useful writing tool."
 	onmarket = 0
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/guardbot_medicator
 	comname = "Medicator Tool Module"
 	comtype = /obj/item/device/guardbot_tool/medicator
 	desc = "A 'Medicator' syringe launcher module for PR-6S Guardbuddies. These things are actually outlawed on Earth."
 	onmarket = 0
-	price = PRICE_60
+	price = PRICE_RECURRING_CHEAP*0.6
 
 /datum/commodity/guardbot_smoker
 	comname = "Smoker Tool Module"
 	comtype = /obj/item/device/guardbot_tool/smoker
 	desc = "A riot-control gas module for PR-6S Guardbuddies."
 	onmarket = 0
-	price = PRICE_60
+	price = PRICE_RECURRING_CHEAP*0.6
 
 /datum/commodity/guardbot_flash
 	comname = "Flash Tool Module"
 	comtype = /obj/item/device/guardbot_tool/flash
 	desc = "A flash module for PR-6S Guardbuddies."
 	onmarket = 0
-	price = PRICE_60
+	price = PRICE_RECURRING_CHEAP*0.6
 
 /datum/commodity/guardbot_taser
 	comname = "Taser Tool Module"
 	comtype = /obj/item/device/guardbot_tool/taser
 	desc = "A taser module for PR-6S Guardbuddies."
 	onmarket = 0
-	price = PRICE_60
+	price = PRICE_RECURRING_CHEAP*0.6
 
 /datum/commodity/guardbot_kit
 	comname = "Guardbot Construction Kit"
@@ -454,7 +454,7 @@
 /datum/commodity/drugs/buy/cannabis
 	comname = "Cannabis"
 	comtype = /obj/item/plant/herb/cannabis
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/drugs/buy/cannabis_mega
 	comname = "Rainbow Cannabis"
@@ -492,7 +492,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/drugs/sell/cannabis
 	comname = "Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/spawnable
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/drugs/sell/cannabis_mega
 	comname = "Rainbow Cannabis"
@@ -616,7 +616,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Bootleg Firework (1x rocket)"
 	comtype = /obj/item/firework/bootleg
 	desc = "Bootleg fireworks, found deep in the back of an old warehouse."
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 ////////////////////////////////
 ///// syndicate trader /////////
@@ -813,7 +813,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/salvage/scrap
 	comname = "Scrap Metal"
 	comtype = /obj/item/scrap
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 	desc_buy = "We are interested in recycling ground metal scrap."
 
 /datum/commodity/salvage/robot_upgrades
@@ -869,12 +869,12 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/junk/cowboy_boots
 	comname = "Cowboy Boots"
 	comtype = /obj/item/clothing/shoes/cowboy
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/junk/cowboy_hat
 	comname = "Cowboy Hat"
 	comtype = /obj/item/clothing/head/cowboy
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/junk/voltron
 	comname = "Voltron"
@@ -945,12 +945,12 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/produce/special/gmelon
 	comname = "George Melon"
 	comtype = /obj/item/reagent_containers/food/snacks/plant/melon/george
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/produce/special/greengrape
 	comname = "Green Grapes"
 	comtype = /obj/item/reagent_containers/food/snacks/plant/grape/green
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/produce/special/chilly
 	comname = "Chilly Pepper"
@@ -996,87 +996,87 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/diner/mysteryburger
 	comname = "Mystery Burger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/mysteryburger
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/sloppyjoe
 	comname = "Sloppy Joe"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/sloppyjoe
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/fishburger
 	comname = "Fish-Fil-A"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/fishburger
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/luauburger
 	comname = "Luau Burger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/luauburger
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/tikiburger
 	comname = "Tiki Burger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/tikiburger
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/coconutburger
 	comname = "Coconut Burger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/coconutburger
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/onigiri
 	comname = "Onigiri"
 	comtype = /obj/item/reagent_containers/food/snacks/rice_ball/onigiri
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/nigiri_roll
 	comname = "Nigiri Roll"
 	comtype = /obj/item/reagent_containers/food/snacks/nigiri_roll
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/diner/sushi_roll
 	comname = "Sushi Roll"
 	comtype = /obj/item/reagent_containers/food/snacks/sushi_roll
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/diner/mashedpotatoes
 	comname = "Mashed Potatoes"
 	comtype = /obj/item/reagent_containers/food/snacks/mashedpotatoes
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/waffles
 	comname = "Waffles"
 	comtype = /obj/item/reagent_containers/food/snacks/waffles
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/pancake
 	comname = "Pancake"
 	comtype = /obj/item/reagent_containers/food/snacks/pancake
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/meatloaf
 	comname = "Meatloaf"
 	comtype = /obj/item/reagent_containers/food/snacks/meatloaf
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/fishfingers
 	comname = "Fish Fingers"
 	comtype = /obj/item/reagent_containers/food/snacks/fish_fingers
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/slurrypie
 	comname = "Slurry Pie"
 	comtype = /obj/item/reagent_containers/food/snacks/pie/slurry
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/creampie
 	comname = "Cream Pie"
 	comtype = /obj/item/reagent_containers/food/snacks/pie/cream
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/diner/daily_special
 	comname = "Daily Special"
 	comtype = null
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 	New()
 		..()
@@ -1606,14 +1606,14 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/storage/box/balloonbox
 	desc = "A box full of colorful balloons!  Neat!"
 	onmarket = 0
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/crayons
 	comname = "box of crayons"
 	comtype = /obj/item/storage/box/crayon
 	desc = "A box of colorful crayons! Lovely!"
 	onmarket = 0
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/sticker
 	onmarket = 0
@@ -1623,28 +1623,28 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/item_box/googly_eyes
 	desc = "A box of googly eyes! Sweet!"
 	onmarket = 0
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/sticker/googly_eyes_angry
 	comname = "box of angry googly eyes"
 	comtype = /obj/item/item_box/googly_eyes/angry
 	desc = "A box of angry googly eyes! Aaaaargh!"
 	onmarket = 0
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/toygun
 	comname = "Toy Gun"
 	comtype = /obj/item/gun/kinetic/foamdartgun
 	desc = "A toy gun that fires foam darts."
 	onmarket = 0
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/toygunammo
 	comname = "Foam Darts"
 	comtype = /obj/item/ammo/bullets/foamdarts
 	desc = "Six foam darts for toy guns."
 	onmarket = 0
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/clownsabre
 	comname = "C-Sabre"
@@ -1658,7 +1658,7 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/clothing/mask/clown_nose
 	desc = "A clown nose, simple!"
 	onmarket = 0
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /*
 /datum/commodity/screamshoes
@@ -1713,13 +1713,13 @@ datum/commodity/drugs/sell/poppies
 	comname = "Feather"
 	comtype = /obj/item/feather
 	desc_buy = "Low material value, but it reminds us of the Source. We find these comforting."
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/flock/desired/electronics
 	comname = "Electronic Components"
 	comtype = /obj/item/electronics
 	desc_buy = "The aggressive drones of this space have useful innards."
-	price = PRICE_50
+	price = PRICE_RECURRING_CHEAP*0.5
 
 /datum/commodity/flock/desired/brain
 	comname = "Brain"
@@ -1743,19 +1743,19 @@ datum/commodity/drugs/sell/poppies
 	comname = "Regular Egg"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	desc_buy = "Eggs are delicious and a good source of nutrients for growing flockdrones."
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/flock/desired/material
 	comname = "Material Piece"
 	comtype = /obj/item/material_piece
 	desc_buy = "We are not selective. Any processed material is acceptable."
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/flock/desired/rawmaterial
 	comname = "Raw Material Piece"
 	comtype = /obj/item/raw_material
 	desc_buy = "We are not selective. Any raw material is acceptable."
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 // WILL SELL
 /datum/commodity/flock/tech
@@ -1789,7 +1789,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Flocknugget"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock
 	desc = "Apparently this is a delicacy. We did not know your kind can stomach metallic crystal."
-	price = PRICE_15
+	price = PRICE_RECURRING_CHEAP*0.15
 
 /datum/commodity/flock/tech/flockbrain
 	comname = "Processing Core"
@@ -1807,7 +1807,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Flockburger"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/flockburger
 	desc = "We have found a new use for completely irrecoverable processing cores. We cannot currently offer fries with that. We've changed the recipe after some complaints from our customers."
-	price = PRICE_30
+	price = PRICE_RECURRING_CHEAP*0.3
 
 /datum/commodity/flock/tech/flockblocker
 	comname = "Flockblocker Telejammer"
@@ -2019,7 +2019,7 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/storage/box/crayon
 	desc = "Donkola brand color sticks! FDA approved to not cause sudden cell death since 2032!"
 	onmarket = 0
-	price = PRICE_75
+	price = PRICE_RECURRING_CHEAP*0.75
 
 /datum/commodity/drugs/poppies/greg
 	comname = "Poppies"

@@ -69,7 +69,7 @@
 	comname = "Cloth Fabric"
 	comtype = /obj/item/material_piece/cloth/cottonfabric
 	amount = 300
-	price_boundary = list(PRICE_15,PRICE_30)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.15,PRICE_RECURRING_CHEAP*0.3)
 	possible_names = list("We have lots of cloth for sale. Good for making clothes with.",
 	"We have a great deal of cloth we need to shift soon, so please buy it!")
 
@@ -85,7 +85,7 @@
 	comname = "Glowsticks"
 	comtype = /obj/item/device/light/glowstick
 	amount = 100
-	price_boundary = list(PRICE_15,PRICE_30)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.15,PRICE_RECURRING_CHEAP*0.3)
 	possible_names = list("We have a number of glowsticks available for purchase.",
 	"We have come across some glowstick lighting supplies and have no use for them. Please buy them!")
 
@@ -139,28 +139,28 @@
 /datum/commodity/trader/generic/anyore
 	comname = "Ore"
 	comtype = /obj/item/raw_material
-	price_boundary = list(PRICE_50,PRICE_RECURRING_COSTLY)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.5,PRICE_RECURRING_COSTLY)
 	possible_names = list("I'm looking to buy any kind of ore you might have.",
 	"Our ore supplies are critically low - I'll buy any kind of ore for this price.")
 
 /datum/commodity/trader/generic/anyfood
 	comname = "Food"
 	comtype = /obj/item/reagent_containers/food/snacks
-	price_boundary = list(PRICE_37_5,PRICE_75)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.38,PRICE_RECURRING_CHEAP*0.75)
 	possible_names = list("We're ferrying food to the outer colonies, so sell us any extra you have.",
 	"An accident has lost us most of our food supplies, so we're willing to buy any you may have.")
 
 /datum/commodity/trader/generic/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
-	price_boundary = list(PRICE_50,PRICE_RECURRING_COSTLY)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.5,PRICE_RECURRING_COSTLY)
 	possible_names = list("I'll buy any medical herbs you may have.",
 	"I need to restock on medical herbs. I'm willing to buy them from you for a good price.")
 
 /datum/commodity/trader/generic/shipcomponents
 	comname = "Ship/Pod Components"
 	comtype = /obj/item/shipcomponent
-	price_boundary = list(PRICE_50,PRICE_RECURRING_COSTLY)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.5,PRICE_RECURRING_COSTLY)
 	possible_names = list("Our shipyards are low on ship-building components. Could you sell us some?",
 	"We're trying a new experimental pod construction technique and need all the ship components we can get.",
 	"Some jokers sold us 600 cargo bays when we asked for parts, so we can't build any pods. We're in dire need of some other ship components.")
@@ -175,27 +175,27 @@
 /datum/commodity/trader/generic/shoes
 	comname = "Shoes"
 	comtype = /obj/item/clothing/shoes
-	price_boundary = list(PRICE_50,PRICE_RECURRING*0.75)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.5,PRICE_RECURRING*0.75)
 	possible_names = list("We're had a run-in with a rather unsavory type, and need new shoes.",
 	"We need any shoes you can spare. Don't ask.")
 
 /datum/commodity/trader/generic/furniture
 	comname = "Furniture Parts"
 	comtype = /obj/item/furniture_parts
-	price_boundary = list(PRICE_50,PRICE_RECURRING_COSTLY)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.5,PRICE_RECURRING_COSTLY)
 	possible_names = list("We need some more furniture to spice up our ship.",
 	"We're building a new lounge, and we need whatever furniture you have.")
 
 /datum/commodity/trader/generic/instruments
 	comname = "Instruments"
 	comtype = /obj/item/instrument
-	price_boundary = list(PRICE_75, PRICE_RECURRING*0.75)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.75, PRICE_RECURRING*0.75)
 	possible_names = list("We need some instruments to 'increase' staff morale.",
 	"The captain's latest team-building exercise requires a large number of instruments.")
 
 /datum/commodity/trader/generic/utensils
 	comname = "Kitchen Utensils"
 	comtype = /obj/item/kitchen/utensil
-	price_boundary = list(PRICE_50, PRICE_RECURRING*0.75)
+	price_boundary = list(PRICE_RECURRING_CHEAP*0.5, PRICE_RECURRING*0.75)
 	possible_names = list("Our staff require kitchen utensils to eat our chef's food.",
 	"We need some kitchen utensils to prepare for a feast.")

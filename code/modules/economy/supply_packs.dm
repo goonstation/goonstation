@@ -100,7 +100,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Empty Crate"
 	desc = "x1 Empty Crate."
 	contains = list()
-	cost = PRICE_15
+	cost = PRICE_RECURRING_CHEAP*0.15
 	containertype = /obj/storage/crate
 	containername = "crate"
 

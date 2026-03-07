@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/boots)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/cowboy_boots)
 /datum/clothingbooth_item/shoes/cowboy_boots
-	cost = PRICE_75
+	cost = PRICE_RECURRING_CHEAP*0.75
 
 	real
 		name = "Real"
