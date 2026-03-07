@@ -79,6 +79,9 @@ A-Medical:
 A-Mutantraces:
 - changed-files:
   - any-glob-to-any-file: code/datums/mutantraces.dm
+A-Networks:
+- changed-files:
+  - any-glob-to-any-file: code/modules/networks/*
 A-Player-Actions:
 - changed-files:
   - any-glob-to-any-file: code/datums/actions/*

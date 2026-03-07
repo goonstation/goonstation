@@ -108,3 +108,5 @@ labelMappings:
     "[VEHICLES]": a-vehicles
     "[TRAITS]": a-traits
     "[TRAIT]": a-traits
+    "[NETWORK]": a-networks
+    "[NETWORKS]": a-networks
