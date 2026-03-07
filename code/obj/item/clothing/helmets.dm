@@ -650,6 +650,7 @@ obj/item/clothing/head/helmet/hardhat/security/hos
 /obj/item/clothing/head/helmet/hardhat/abilities = list(/obj/ability_button/flashlight_hardhat)
 
 TYPEINFO(/obj/item/clothing/head/helmet/camera)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 4,
 				"crystal" = 2,
 				"conductive" = 2)
@@ -826,6 +827,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		setProperty("movespeed", 0.15)
 
 TYPEINFO(/obj/item/clothing/head/helmet/siren)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/clothing/head/helmet/siren
@@ -918,6 +920,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 		setProperty("disorient_resist_eye", 15)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 7
 
 /obj/item/clothing/head/helmet/space/industrial
@@ -1017,6 +1020,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		src.remove_visor(user)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 5,
 				"conductive_high" = 5,
 				"crystal_dense" = 5)
@@ -1025,7 +1029,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
-	is_syndicate = 1
 	blocked_from_petasusaphilic = TRUE
 
 	setupProperties()
@@ -1042,6 +1045,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 		..()
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
 				"conductive_high" = 10,
@@ -1066,6 +1070,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/item/clothing/head/helmet/space/mining_combat

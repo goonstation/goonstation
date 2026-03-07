@@ -342,6 +342,7 @@ TYPEINFO(/obj/item/device/radio)
 
 
 TYPEINFO(/obj/item/radiojammer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 10
 
 /obj/item/radiojammer
@@ -350,7 +351,6 @@ TYPEINFO(/obj/item/radiojammer)
 	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldoff"
 	w_class = W_CLASS_TINY
-	is_syndicate = TRUE
 	var/active = FALSE
 	var/range = DEFAULT_RADIO_JAMMER_RANGE
 

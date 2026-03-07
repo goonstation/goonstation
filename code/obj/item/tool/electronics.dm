@@ -117,10 +117,11 @@
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////no
+TYPEINFO(/obj/item/electronics/frame)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/electronics/frame
 	name = "frame"
 	icon_state = "frame"
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	var/store_type = null
 	var/secured = 0
 	var/viewstat = 0
@@ -380,6 +381,8 @@
 		..()
 
 ////////////////////////////////////////////////////////////////no
+TYPEINFO(/obj/machinery/rkit)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/machinery/rkit
 	name = "ruckingenur kit"
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
@@ -387,7 +390,7 @@
 	icon_state = "rkit"
 	anchored = ANCHORED
 	density = 1
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
+
 	//var/datum/electronics/electronics_items/link = null
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
 

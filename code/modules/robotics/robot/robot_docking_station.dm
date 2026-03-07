@@ -439,9 +439,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.add_fingerprint(usr)
 	src.UpdateIcon()
 
+TYPEINFO(/obj/machinery/recharge_station/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/machinery/recharge_station/syndicate
 	conversion_chamber = 1
-	is_syndicate = 1
 	anchored = UNANCHORED
 	p_class = 1.5
 	SYNDICATE_STEALTH_DESCRIPTION("It is full of sharp instruments designed to tear open human flesh.", null)

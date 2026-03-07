@@ -1,6 +1,8 @@
 
 TYPEINFO(/obj/item/storage/wall)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 8
+	manufactured_type = /obj/item/storage/wall //For subtypes
 
 /obj/item/storage/wall
 	name = "cabinet"
@@ -14,7 +16,6 @@ TYPEINFO(/obj/item/storage/wall)
 	density = 0
 	deconstruct_flags = DECON_SIMPLE
 	burn_possible = FALSE
-	mechanics_type_override = /obj/item/storage/wall
 	slots = 13 // these can't move so I guess we may as well let them store more stuff?
 	max_wclass = W_CLASS_BULKY
 

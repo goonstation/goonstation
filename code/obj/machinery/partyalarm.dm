@@ -3,7 +3,7 @@
 //
 
 TYPEINFO(/obj/machinery/partyalarm)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/partyalarm
 	name = "Party Button"

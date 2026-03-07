@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item/remote)
 
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
 TYPEINFO(/obj/item/remote/porter)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/remote/porter
@@ -225,6 +226,7 @@ TYPEINFO(/obj/item/remote/porter)
 
 // I suppose this device would be sorta useless with tele-block checks?
 TYPEINFO(/obj/item/remote/porter/port_a_sci)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"conductive" = 5,
 				"telecrystal" = 10)
@@ -711,7 +713,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 //////////////////////////////////////// Port-a-NanoMed ///////////////////////////////////////////
 
 TYPEINFO(/obj/machinery/vending/port_a_nanomed)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/vending/port_a_nanomed
 	name = "Port-A-NanoMed"
@@ -816,7 +818,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 
 //DIRTY DIRTY PLAYERS
 TYPEINFO(/obj/submachine/laundry_machine/portable)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"

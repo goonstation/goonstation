@@ -1030,6 +1030,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 ADMIN_INTERACT_PROCS(/obj/machinery/networked/nuclear_charge, proc/activate, proc/deactivate, proc/detonate)
 
 TYPEINFO(/obj/machinery/networked/nuclear_charge)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //^ Agreed
 	mats = list("energy_extreme" = 27,
 				"metal_superdense" = 25,
 				"conductive_high" = 13,
@@ -1051,7 +1052,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
 	deconstruct_flags = DECON_NONE
-	is_syndicate = 1 //^ Agreed
 
 	New()
 		..()

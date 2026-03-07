@@ -40,7 +40,7 @@
 // ------------ syndicate airlocks ------------
 
 TYPEINFO(/obj/machinery/door/airlock/syndicate)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/syndicate // fuck our players for making us (or at least me) need this
 	name = "reinforced external airlock"
@@ -61,7 +61,7 @@ TYPEINFO(/obj/machinery/door/airlock/syndicate)
 // ------------ centcomm airlocks ------------
 
 TYPEINFO(/obj/machinery/door/airlock/centcom)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/Doorcom.dmi'

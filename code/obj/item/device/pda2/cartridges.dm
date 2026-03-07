@@ -17,7 +17,7 @@
 //Ringtone Carts
 
 TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/disk/data/cartridge
 	name = "\improper PDA cartridge"

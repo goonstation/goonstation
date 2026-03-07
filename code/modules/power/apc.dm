@@ -20,6 +20,7 @@ var/zapLimiter = 0
 
 TYPEINFO(/obj/machinery/power/apc)
 	mats = 10
+	manufactured_type = /obj/machinery/power/apc //for sub types
 
 	/// Only allow building an APC in an area if no APC currently is powering the area.
 	can_build(turf/T)
@@ -84,7 +85,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 //	luminosity = 1
 	var/debug = 0
-	mechanics_type_override = /obj/machinery/power/apc
 	autoname_north
 		name = "Autoname N APC"
 		dir = NORTH

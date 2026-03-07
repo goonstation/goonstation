@@ -157,6 +157,7 @@ Shield and graivty well generators
 		return 1
 
 TYPEINFO(/obj/gravity_well_generator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 14
 
 /obj/gravity_well_generator

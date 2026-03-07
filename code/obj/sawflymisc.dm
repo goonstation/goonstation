@@ -12,6 +12,7 @@
 
 // -------------------grenades-------------
 TYPEINFO(/obj/item/old_grenade/sawfly)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 7,
 				"conductive" = 7,
 				"energy" = 5)
@@ -27,7 +28,6 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 
 	is_dangerous = TRUE
-	is_syndicate = TRUE
 	issawfly = TRUE //used to tell the sawfly remote if it can or can't detonate() the grenade
 	contraband = 2
 	overlays = null
@@ -53,6 +53,8 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 		qdel(src)
 
+TYPEINFO(/obj/item/old_grenade/sawfly/firsttime)
+	manufactured_type = /obj/item/old_grenade/sawfly/firsttime //For subtype, prevents remote clutter if you're making an army
 /obj/item/old_grenade/sawfly/firsttime //super important- traitor uplinks and sawfly pouches use this specific version
 	New()
 
@@ -61,12 +63,14 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 		heldfly.set_loc(src)
 		..()
 
+
 /obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
-	mechanics_type_override = /obj/item/old_grenade/sawfly/firsttime //prevents remote clutter if you're making an army
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
 
+TYPEINFO(/obj/item/old_grenade/spawner/sawflycluster)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
 	desc = "A whole lot of little angry robots at the end of the stick, ready to shred whoever stands in their way."
@@ -83,7 +87,6 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	icon_state_armed = "clusterflyA1"
 	payload = /mob/living/critter/robotic/sawfly/ai_controlled
 	is_dangerous = TRUE
-	is_syndicate = TRUE
 	issawfly = TRUE
 	contraband = 5
 
@@ -97,6 +100,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 // -------------------controller---------------
 TYPEINFO(/obj/item/remote/sawflyremote)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("conductive"=2)
 /obj/item/remote/sawflyremote
 	name = "Sawfly remote"
@@ -106,7 +110,6 @@ TYPEINFO(/obj/item/remote/sawflyremote)
 
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
-	is_syndicate = TRUE
 
 	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})
 

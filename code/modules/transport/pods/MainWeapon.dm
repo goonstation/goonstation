@@ -548,6 +548,7 @@
 #define LOAD_SUCCESS 2
 
 TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 50, "claretine" = 20, "electrum" = 10)
 
 /obj/item/shipcomponent/mainweapon/constructor

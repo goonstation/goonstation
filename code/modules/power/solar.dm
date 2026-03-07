@@ -424,7 +424,7 @@ TYPEINFO(/obj/machinery/power/solar)
 // solar panels which ignore occlusion
 
 TYPEINFO(/obj/machinery/power/solar/owl_cheat)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/power/solar/owl_cheat
 	id = "owl"

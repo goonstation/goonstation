@@ -472,15 +472,33 @@ TYPEINFO(/atom)
 	master = null
 	..()
 
+
+
 TYPEINFO(/atom/movable)
 	/// A key-value list of match property or material IDs and an amount required to construct the item
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
+	var/analyser_flags = ANALYSER_ALLOWED | ANALYSER_FAILFEEDBACK /// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/manufactured_type = null /// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+	//IF YOU OVERRIDE MANUFACTURED TYPE, THE SYSTEM USES THE ANALYSER FLAGS FROM THE OVERRIDE, NOT THE ORIGINAL
 
 	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
 	/// if an object type can be built somewhere, before instantiating the object itself.
 	proc/can_build(turf/T, direction)
 		return TRUE
+
+
+//Wow why are these TYPEINFOs here? Because parent_type:: depends on file load order :))))
+TYPEINFO(/obj/item/device)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_DEVICE
+TYPEINFO(/obj/machinery)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_MACHINERY
+TYPEINFO(/obj/item/storage)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
+TYPEINFO(/obj/item/disk)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = 8
+
 
 /atom/movable
 	layer = OBJ_LAYER
@@ -511,20 +529,24 @@ TYPEINFO(/atom/movable)
 	/// whether it uses p_class regardless of pull_slowing.
 	var/always_slow_pull = FALSE
 
-	// Enables mobs and objs to be mechscannable
-	/// Can this only be scanned with a syndicate mech scanner?
-	var/is_syndicate = FALSE
-	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
-	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
-	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
-	var/mechanics_type_override = null
 
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	if (typeinfo.mats && !(src.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED))
-		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
+	var/override_type = src.type
+	var/__while_safety = 0;
+	while(!isnull(typeinfo.manufactured_type) && override_type != typeinfo.manufactured_type) //Recursively go up the list of manufacture overrides.
+		override_type = typeinfo.manufactured_type
+		typeinfo = get_type_typeinfo(override_type)
+		__while_safety++
+		if(__while_safety > 10) //This should never be needed but just in case someone messes up and can't figure out what the problem is
+			message_coders("Infinite loop because of a bad typeinfo.manufactured_type, please check it.")
+			break
+
+	if (typeinfo.analyser_flags & (ANALYSER_ALLOWED | ANALYSER_SKIP_IF_FAIL | ANALYSER_FAILFEEDBACK)) // typeinfo.mats &&
+		src.AddComponent(/datum/component/analyzable, override_type)
+
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things

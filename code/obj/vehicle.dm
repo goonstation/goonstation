@@ -267,6 +267,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 //////////////////////////////////////////////////////////// Segway ///////////////////////////////////////////
 
 TYPEINFO(/obj/vehicle/segway)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 #define SEGWAY_STATE_RIDDEN 1
@@ -633,6 +634,7 @@ TYPEINFO(/obj/vehicle/segway)
 ////////////////////////////////////////////////////// Floor buffer /////////////////////////////////////
 
 TYPEINFO(/obj/vehicle/floorbuffer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 8
 
 /obj/vehicle/floorbuffer
@@ -640,7 +642,6 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	desc = "A snazzy ridable floor buffer with a holding tank for cleaning agents."
 	icon_state = "floorbuffer"
 	layer = MOB_LAYER + 1
-	is_syndicate = 1
 	health = 80
 	health_max = 80
 	var/low_reagents_warning = 0
@@ -973,6 +974,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 /////////////////////////////////////////////////////// Clown car ////////////////////////////////////////
 
 TYPEINFO(/obj/vehicle/clowncar)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
 
 /obj/vehicle/clowncar
@@ -982,7 +984,6 @@ TYPEINFO(/obj/vehicle/clowncar)
 	var/antispam = 0
 	var/moving = 0
 	rider_visible = 0
-	is_syndicate = 1
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/drop_peel, /obj/ability_button/stopthebus/clowncar)
 	soundproofing = SOUNDPROOFING_INSIDE
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
@@ -1574,6 +1575,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 ////////////////////////////////////////////////// Admin bus /////////////////////////////////////
 
 TYPEINFO(/obj/vehicle/adminbus)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
 
 /obj/vehicle/adminbus
@@ -1587,7 +1589,6 @@ TYPEINFO(/obj/vehicle/adminbus)
 	var/badmin_moving_state = "badminbus2"
 	var/badmin_nonmoving_state = "badminbus"
 	var/antispam = 0
-	is_syndicate = 1
 	sealed_cabin = 1
 	rider_visible = 0
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn, /obj/ability_button/stopthebus, /obj/ability_button/togglespook)
@@ -2209,6 +2210,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 //////////////////////////////////////////////////////////////// Forklift //////////////////////////
 
 TYPEINFO(/obj/vehicle/forklift)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/vehicle/forklift

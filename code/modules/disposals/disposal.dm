@@ -1079,9 +1079,6 @@
 
 		qdel(src)
 
-TYPEINFO(/obj/disposalpipe/loafer)
-	mats = 100
-
 /obj/disposalpipe/chicken_disposal_pipe
 	name = "humane chicken processor"
 	desc = "a pipe segment designed to convert alive chickens into dead chickens"
@@ -1155,11 +1152,13 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 		return P
 
+TYPEINFO(/obj/disposalpipe/loafer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+	mats = 100
 /obj/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	is_syndicate = 1
 	weldable = FALSE
 	var/is_doing_stuff = FALSE
 	HELP_MESSAGE_OVERRIDE("The disciplinary loaf processor cannot be detached by welding.")
@@ -2031,6 +2030,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 // the disposal outlet machine
 
 TYPEINFO(/obj/disposaloutlet)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/disposaloutlet

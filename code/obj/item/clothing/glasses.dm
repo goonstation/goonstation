@@ -124,6 +124,7 @@ ABSTRACT_TYPE(/obj/item/clothing/glasses/toggleable)
 		toggler.update_clothing()
 
 TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 /obj/item/clothing/glasses/toggleable/meson
 	name = "meson goggles"
@@ -241,6 +242,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	return
 
 TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/clothing/glasses/sunglasses/tanning
@@ -345,6 +347,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 		setProperty("disorient_resist_eye", 100)
 
 TYPEINFO(/obj/item/clothing/glasses/thermal)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/clothing/glasses/thermal
@@ -394,13 +397,14 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
 		return
 
+TYPEINFO(/obj/item/clothing/glasses/thermal/traitor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark. They sort of hurt your eyes to look through."
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
-	is_syndicate = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -411,6 +415,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_b = 0.8
 
 TYPEINFO(/obj/item/clothing/glasses/visor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/clothing/glasses/visor
@@ -640,6 +645,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	network = LANDMARK_VR_BOMBTEST
 
 TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/clothing/glasses/healthgoggles
@@ -706,6 +712,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 
 // Glasses that allow the wearer to get a full reagent report for containers
 TYPEINFO(/obj/item/clothing/glasses/spectro)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/clothing/glasses/spectro
@@ -739,6 +746,7 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 
 // Glasses that allow the wearer to scan plants & seeds
 TYPEINFO(/obj/item/clothing/glasses/phyto)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/clothing/glasses/phyto
@@ -807,6 +815,7 @@ TYPEINFO(/obj/item/clothing/glasses/phyto)
 			active = FALSE
 
 TYPEINFO(/obj/item/clothing/glasses/noir)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/clothing/glasses/noir
@@ -827,12 +836,15 @@ TYPEINFO(/obj/item/clothing/glasses/noir)
 				animate_fade_from_grayscale(H.client, 5)
 
 TYPEINFO(/obj/item/clothing/glasses/nightvision)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 25 //expensive if someone scans them because I can do what I want
 
 /obj/item/clothing/glasses/nightvision
@@ -951,6 +963,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		..()
 
 TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 /obj/item/clothing/glasses/toggleable/atmos
 	name = "pressure visualization goggles"

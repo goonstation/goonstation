@@ -59,6 +59,7 @@
 
 
 TYPEINFO(/obj/item/plantanalyzer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/plantanalyzer

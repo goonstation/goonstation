@@ -6,6 +6,7 @@
 #define CYCLE_TIME 10
 
 TYPEINFO(/obj/submachine/laundry_machine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 20
 
 /obj/submachine/laundry_machine

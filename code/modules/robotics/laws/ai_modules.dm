@@ -8,6 +8,7 @@ AI MODULES
 
 ABSTRACT_TYPE(/obj/item/aiModule)
 TYPEINFO(/obj/item/aiModule)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/item/aiModule
@@ -394,10 +395,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 
 /* Disguised */
 
+TYPEINFO(/obj/item/aiModule/freeform/disguised)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/aiModule/freeform/disguised
 	name = "AI Law Module - 'Disguised'"
 	highlight_color = rgb(0, 167, 1, 255)
-	is_syndicate = TRUE
+
 
 /******************** Random ********************/
 

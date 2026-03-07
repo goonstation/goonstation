@@ -1,5 +1,7 @@
 //So much fun!
 
+TYPEINFO(/obj/monkey_barrel)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/monkey_barrel
 	name = "mysterious barrel"
 	desc = "More fun than a ValuChimp!"
@@ -7,7 +9,6 @@
 	icon_state = "barrel"
 	throwforce = 50
 	p_class = 3
-	is_syndicate = 1
 	density = 1
 	open_inv_within = TRUE
 	var/mob/living/carbon/human/npc/monkey/angry/template_monkey // spawns first, copies clothing icons to spawned monkeys
@@ -51,6 +52,8 @@
 			thing.set_loc(get_turf(src))
 		qdel(src)
 
+TYPEINFO(/obj/item/barrel_signaller)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/barrel_signaller
 	name = "mysterious signaller"
 	desc = "For monkey business only."
@@ -58,7 +61,6 @@
 	icon_state = "barrel_signaller"
 	w_class = W_CLASS_TINY
 	var/obj/monkey_barrel/my_barrel = null
-	is_syndicate = 1
 
 	attack_self()
 		if (isliving(usr))

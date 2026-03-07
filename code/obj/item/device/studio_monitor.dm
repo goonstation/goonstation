@@ -1,5 +1,5 @@
 TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 	start_listen_inputs = null
 
 /obj/item/device/radio/nukie_studio_monitor
@@ -60,7 +60,8 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			var/mob/M = src.loc
 			M.update_clothing()
 
-
+TYPEINFO(/obj/item/breaching_hammer/rock_sledge)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/breaching_hammer/rock_sledge
 	name = "Orpheus electric guitar"
 	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Funk-Tek."
@@ -68,7 +69,6 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	icon_state = "guitar"
 	item_state = "guitar"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	is_syndicate = 1
 	click_delay = 30 / 2 // TODO
 
 	force = 30 //this number is multiplied by 4 when attacking doors.
@@ -156,12 +156,13 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			for(var/obj/ability_button/nukie_rocker/B as anything in ability_buttons)
 				B.UpdateOverlays(null, "rocked_out")
 
+TYPEINFO(/obj/item/breaching_hammer/rock_sledge/nanotrasen)
+	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY
 /obj/item/breaching_hammer/rock_sledge/nanotrasen
 	name = "Marsyas electric guitar"
 	desc = "A high-tech Syndicate guitar, reverse engineered by Nanotrasen and given a blue paint job."
 	icon_state = "guitar_nt"
 	item_state = "guitar_nt"
-	is_syndicate = FALSE
 
 /obj/ability_button/nukie_rocker
 	name = "Nukie Rocker Ability - You shouldn't see this..."
@@ -211,7 +212,8 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			var/mob/living/carbon/human/virtual/V = target
 			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
 		else
-			if(the_item.is_syndicate)
+			var/typeinfo/obj/typeinfo = the_item.get_typeinfo()
+			if(typeinfo.analyser_flags & ANALYSER_SYNDIE_ONLY)
 				. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
 			else
 				. = istype(target.ears, /obj/item/device/radio/headset/command) //Nanotrasen guitar, Nanotrasen tunes

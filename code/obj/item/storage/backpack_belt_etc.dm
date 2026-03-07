@@ -1209,6 +1209,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /* -------------------- Wrestling Belt -------------------- */
 
 TYPEINFO(/obj/item/storage/belt/wrestling)
+	analyser_flags =  parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
 				"hauntium" = 20)
@@ -1218,7 +1219,6 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	contraband = 8
-	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
 	HELP_MESSAGE_OVERRIDE({"In addition to granting the wearer wrestler abilities, it also gives them the wrestler passives detailed "} + EXTERNAL_LINK("https://wiki.ss13.co/Wrestler#Passives", "here") + ".")
@@ -1234,6 +1234,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 			user.remove_wrestle_powers(src.fake)
 
 TYPEINFO(/obj/item/storage/belt/wrestling/fake)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //For whatever reason, inhereting tags from parent crashes game
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
 				"fabric" = 5
@@ -1242,11 +1243,11 @@ TYPEINFO(/obj/item/storage/belt/wrestling/fake)
 	name = "fake wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
 	contraband = 0
-	is_syndicate = 0
 	fake = 1
 
 // I dunno where else to put these vOv
 TYPEINFO(/obj/item/inner_tube)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER //Something tells me these have never been scanned
 	mats = 5 // I dunno???
 
 /obj/item/inner_tube

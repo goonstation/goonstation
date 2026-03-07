@@ -1577,7 +1577,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	..()
 
 TYPEINFO(/obj/machinery/plantpot/bareplant)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/plantpot/bareplant
 	name = "arable soil"

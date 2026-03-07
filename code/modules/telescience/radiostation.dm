@@ -1267,7 +1267,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 
 TYPEINFO(/obj/item/device/radio/intercom/radiostation)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/device/radio/intercom/radiostation
 	name = "broadcast radio"
 	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."

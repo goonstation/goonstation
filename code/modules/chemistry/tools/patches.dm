@@ -441,6 +441,7 @@
 
 //mender
 TYPEINFO(/obj/item/reagent_containers/mender)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 5,
 				"crystal" = 4,
 				"gold" = 5)

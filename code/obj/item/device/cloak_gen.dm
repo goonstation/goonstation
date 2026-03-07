@@ -5,6 +5,7 @@
 // TODO cloak gen remote needs a TGUI menu real fucking bad. so many verbs
 
 TYPEINFO(/obj/item/cloak_gen)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 12
 
 /obj/item/cloak_gen
@@ -17,7 +18,6 @@ TYPEINFO(/obj/item/cloak_gen)
 	var/active = FALSE
 	var/image/noise_image
 	var/list/fields = new/list()
-	is_syndicate = TRUE
 	contraband = 2
 	HELP_MESSAGE_OVERRIDE({"Place the cloaking field generator on the floor, then use the associated remote to turn it on or off. While on, the cloaking field generator is immovable."})
 
@@ -114,13 +114,14 @@ TYPEINFO(/obj/item/cloak_gen)
 	proc/update_noise_image(var/set_icon_state)
 		src.noise_image.icon_state = set_icon_state
 
+TYPEINFO(/obj/item/remote/cloak_gen)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/remote/cloak_gen
 	name = "cloaking field generator remote"
 	desc = "A remote control for a cloaking field generator."
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
 	item_state = "accessgun"
-	is_syndicate = 1
 	w_class = W_CLASS_SMALL
 	var/obj/item/cloak_gen/my_gen = null
 	var/anti_spam = 0 // Creating and deleting overlays en masse can cause noticeable lag (Convair880).
