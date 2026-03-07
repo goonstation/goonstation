@@ -19,6 +19,7 @@
 
 ///Clown life
 #define PRICE_PISS 1
+
 ///Recurring costs are something you'd expect to buy regularly, like food or supplies
 #define PRICE_RECURRING_CHEAP 100
 #define PRICE_RECURRING 200
