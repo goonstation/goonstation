@@ -101,7 +101,7 @@
 	comname = "Rock Worm Poop"
 	comtype = /obj/item/raw_material/uqill
 	amount = 5
-	price_boundary = list(PAY_IMPORTANT,PAY_IMPORTANT*2)
+	price_boundary = list(PRICE_1200,PRICE_1200*2)
 	possible_alt_types = list(/obj/item/raw_material/gemstone)
 	alt_type_chance = 10
 	possible_names = list("SELLING ROCK WORM POOP. NOT KNOW WHY YOU WANT THAT. BUT THERE IT IS.",
@@ -112,7 +112,7 @@
 	comname = "Unknown Item"
 	comtype = /obj/artifact_type_spawner/gragg
 	amount = 1
-	price_boundary = list(PAY_IMPORTANT,PAY_EMBEZZLED)
+	price_boundary = list(PRICE_1200,PAY_EMBEZZLED)
 	possible_alt_types = list(/obj/item/raw_material/miracle)
 	alt_type_chance = 5
 	possible_names = list("SELLING WEIRD THING I DUG UP. DONT KNOW WHAT IS.",
@@ -151,7 +151,7 @@
 /datum/commodity/trader/gragg/syreline
 	comname = "Syreline"
 	comtype = /obj/item/raw_material/syreline
-	price_boundary = list(PRICE_600,PAY_IMPORTANT)
+	price_boundary = list(PRICE_600,PRICE_1200)
 	possible_names = list("BUYING SYRELINE. NICE SWEET TREAT NOW AND THEN.",
 	"BUYING SYRELINE. NOT TOO MANY THOUGH. DON'T WANT FAT.")
 

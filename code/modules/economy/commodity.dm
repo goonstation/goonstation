@@ -561,7 +561,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Uranium (1x nugget)"
 	comtype = /obj/item/reagent_containers/pill/uranium
 	desc = "A nugget of weapons grade uranium. Label says it's roughly 'size 5'."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/drugs/sell/cyberpunk
 	comname = "Designer Drugs (5x pills)"
@@ -626,7 +626,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Syndicate Clothing Vendor Restock Cartridge"
 	desc = "A restock cartridge for restocking syndicate clothing vending machines."
 	comtype = /obj/item/vending/restock_cartridge/jobclothing/syndicate
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/contraband
 	comname = "Contraband"
@@ -657,7 +657,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Security Headset"
 	comtype = /obj/item/device/radio/headset/security
 	desc = "A radio headset used by NT security forces."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/contraband/hosberet
 	comname = "Head of Security Beret"
@@ -689,13 +689,13 @@ datum/commodity/drugs/sell/poppies
 	comname = "Scary Gasmask"
 	comtype = /obj/item/clothing/mask/gas/swat
 	desc = "Pretty much exactly what it sounds like."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/contraband/swatmask/NT
 	comname = "Scary NanoTrasen Gasmask"
 	comtype = /obj/item/clothing/mask/gas/swat/NT
 	desc = "Pretty much exactly what it sounds like, but in blue."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/contraband/plutonium
 	comname = "Plutonium Core"
@@ -779,7 +779,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Red AI Kit"
 	comtype = /obj/item/ai_plating_kit/syndicate
 	desc = "A dubiously colored AI core kit, which doesn't match standard designs. It's sold at a discount though, because it's just the casing pieces."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 //NT stuff
 
@@ -787,19 +787,19 @@ datum/commodity/drugs/sell/poppies
 	comname = "Surplus tactical uniform"
 	comtype = /obj/item/clothing/under/misc/turds
 	desc = "A rather smelly tactical uniform sold off from an NT warehouse."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/contraband/ntso_beret
 	comname = "Surplus NT beret"
 	comtype = /obj/item/clothing/head/NTberet
 	desc = "Fancy. Possibly salvaged, possibly stolen, what's it to you?"
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/contraband/ntso_vest
 	comname = "Surplus armored vest"
 	comtype = /obj/item/clothing/suit/armor/NT_alt
 	desc = "A surplus blue armored vest, well worn and definitely not drycleaned."
-	price = PAY_IMPORTANT*2
+	price = PRICE_1200*2
 
 /////////////////////////////////
 ////// salvage trader ///////////
@@ -1143,7 +1143,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/bodyparts/butt
 	comname = "Human Butt"
 	comtype = /obj/item/clothing/head/butt
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/synthbutt
 	comname = "Synthetic Butt"
@@ -1193,42 +1193,42 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/bodyparts/cybereye_sunglass
 	comname = "Polarized Cybereye"
 	comtype = /obj/item/organ/eye/cyber/sunglass
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/cybereye_sechud
 	comname = "Security HUD Cybereye"
 	comtype = /obj/item/organ/eye/cyber/sechud
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/cybereye_thermal
 	comname = "Thermal Imager Cybereye"
 	comtype = /obj/item/organ/eye/cyber/thermal
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/cybereye_meson
 	comname = "Mesonic Imager Cybereye"
 	comtype = /obj/item/organ/eye/cyber/meson
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/cybereye_spectro
 	comname = "Spectroscopic Imager Cybereye"
 	comtype = /obj/item/organ/eye/cyber/spectro
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/cybereye_prodoc
 	comname = "ProDoc Healthview Cybereye"
 	comtype = /obj/item/organ/eye/cyber/prodoc
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/cybereye_camera
 	comname = "Camera Cybereye"
 	comtype = /obj/item/organ/eye/cyber/camera
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/cybereye_monitor
 	comname = "Monitor Cybereye"
 	comtype = /obj/item/organ/eye/cyber/monitor
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/bodyparts/cybereye_night
 	comname = "Night Vision Cybereye"
@@ -1795,7 +1795,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Processing Core"
 	comtype = /obj/item/organ/brain/flockdrone
 	desc = "We are loathe to part with our processing cores, but we can be convinced with enough credits."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/flock/tech/fluid
 	comname = "Fluid Cache"
@@ -1825,7 +1825,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Flock Plating Kit"
 	comtype = /obj/item/ai_plating_kit/flock
 	desc = "A decorative plating kit for a computational core. We cannot guarantee an absence of side effects."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /////////////////////////////////
 ///////skeleton trader //////////
@@ -1897,7 +1897,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Laurels"
 	comtype = /obj/item/clothing/head/laurels
 	desc = "An ancient Greek affair."
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/tech/laptop
 	comname = "Personal Laptop"
@@ -2012,7 +2012,7 @@ datum/commodity/drugs/sell/poppies
 	comtype = null
 	desc = "We are now authorized to begin importing fashion accessories for our customers!"
 	onmarket = 0
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/crayons/greg
 	comname = "box of crayons"
@@ -2047,7 +2047,7 @@ datum/commodity/drugs/sell/poppies
 	desc = "This looks like a bootlegged printing press upgrade."
 	comtype = /obj/item/press_upgrade/forbidden
 	onmarket = 0
-	price = PAY_IMPORTANT
+	price = PRICE_1200
 
 /datum/commodity/expensive_card
 	comname = "Incredibly Expensive Card"

@@ -425,7 +425,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 	item_path = /obj/item/clothing/head/maid
 
 /datum/clothingbooth_item/head/lace_veil
-	cost = PAY_IMPORTANT
+	cost = PRICE_1200
 	item_path = /obj/item/clothing/head/veil
 
 /datum/clothingbooth_item/head/leaf_hairclip

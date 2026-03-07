@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 		item_path = /obj/item/clothing/suit/dressb/dressr
 
 /datum/clothingbooth_item/wear_suit/guards_coat
-	cost = PAY_IMPORTANT/3
+	cost = PRICE_1200/3
 	item_path = /obj/item/clothing/suit/guards_coat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)

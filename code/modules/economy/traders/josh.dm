@@ -97,7 +97,7 @@
 /datum/commodity/trader/josh/secbelts
 	comname = "Security Belt"
 	comtype = /obj/item/storage/belt/security
-	price_boundary = list(PRICE_600,PAY_IMPORTANT)
+	price_boundary = list(PRICE_600,PRICE_1200)
 	possible_names = list("Can you give me some security belt? They look slick.",
 	"I'm trying to freshen up. Got a security belt?")
 
@@ -198,7 +198,7 @@
 /datum/commodity/trader/josh/paintgun
 	comname = "Portable Paint Popper"
 	comtype = /obj/item/gun/paintball
-	price_boundary = list(PAY_IMPORTANT,PAY_EXECUTIVE)
+	price_boundary = list(PRICE_1200,PAY_EXECUTIVE)
 	possible_names = list("This'll let you paint the town red! Or any other color!",
 	"Load this bad boy up with some paint and you'll be seeing colors!",
 	"Dude, paintball's season's here!")

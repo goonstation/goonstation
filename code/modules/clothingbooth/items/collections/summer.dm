@@ -50,7 +50,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini/strawberry
 	name = "Strawberry"
 	item_path = /obj/item/clothing/under/misc/bikini/strawberry
-	cost = PAY_IMPORTANT/3
+	cost = PRICE_1200/3
 	swatch_background_color = "#c20038"
 	swatch_foreground_color = "#1fa03b"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini/bee
 	name = "Bee"
 	item_path = /obj/item/clothing/under/misc/bikini/bee
-	cost = PAY_IMPORTANT/3
+	cost = PRICE_1200/3
 	swatch_background_color = "#e0e02c"
 	swatch_foreground_color = "#2f2851"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
