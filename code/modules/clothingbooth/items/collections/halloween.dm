@@ -2,7 +2,7 @@
 
 /* ------------------------ Masks ------------------------ */
 /datum/clothingbooth_item/mask/tengumask
-	cost = PAY_TRADESMAN/2
+	cost = PRICE_300/2
 	item_path = /obj/item/clothing/mask/tengu
 
 /* ------------------------- Head ------------------------ */
@@ -10,7 +10,7 @@
 	item_path = /obj/item/clothing/head/giraffehat
 
 /datum/clothingbooth_item/head/axehat
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 	item_path = /obj/item/clothing/head/axehat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beetlehat)
@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beetlehat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/elephanthat)
 /datum/clothingbooth_item/head/elephanthat
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 
 	pink
 		name = "Pink"
@@ -71,11 +71,11 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/mushroomcap)
 	inky
 		name = "Inky"
 		swatch_background_color = "#545461"
-		cost = PAY_TRADESMAN
+		cost = PRICE_300
 		item_path = /obj/item/clothing/head/mushroomcap/inky
 
 /datum/clothingbooth_item/head/minotaurmask
-	cost = PAY_TRADESMAN
+	cost = PRICE_300
 	item_path = /obj/item/clothing/head/minotaurmask
 
 #endif

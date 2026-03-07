@@ -1,18 +1,18 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit)
 /datum/clothingbooth_item/wear_suit
 	slot = SLOT_WEAR_SUIT
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 
 /datum/clothingbooth_item/wear_suit/baseball_jacket
 	item_path = /obj/item/clothing/suit/jacketsjacket
 
 /datum/clothingbooth_item/wear_suit/dinosaur_pajamas
-	cost = PAY_TRADESMAN/2
+	cost = PRICE_300/2
 	item_path = /obj/item/clothing/suit/gimmick/dinosaur
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 /datum/clothingbooth_item/wear_suit/dress
-	cost = PAY_DOCTORATE/3
+	cost = PRICE_600/3
 
 	black
 		name = "Black"
@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
 /datum/clothingbooth_item/wear_suit/hoodie
-	cost = PAY_UNTRAINED/3
+	cost = PRICE_150/3
 
 	orange
 		name = "Orange"
@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie_large)
 /datum/clothingbooth_item/wear_suit/hoodie_large
-	cost = PAY_UNTRAINED / 3
+	cost = PRICE_150 / 3
 
 	orange
 		name = "Orange - Large"
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie_large)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 /datum/clothingbooth_item/wear_suit/jacket
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 
 	cerulean
 		name = "Cerulean"
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 	item_path = /obj/item/clothing/suit/loosejacket
 
 /datum/clothingbooth_item/wear_suit/offbrand_labcoat
-	cost = PAY_DOCTORATE/3
+	cost = PRICE_600/3
 	item_path = /obj/item/clothing/suit/labcoatlong
 
 /datum/clothingbooth_item/wear_suit/overcoat_and_scarf
@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 // todo: distinguish these two somehow
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 /datum/clothingbooth_item/wear_suit/poncho
-	cost = PAY_UNTRAINED/1
+	cost = PRICE_150/1
 
 	poncho
 		name = "Poncho"
@@ -231,26 +231,26 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 	item_path = /obj/item/clothing/suit/merchant
 
 /datum/clothingbooth_item/wear_suit/scarf
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 	item_path = /obj/item/clothing/suit/scarf
 
 /datum/clothingbooth_item/wear_suit/skull_mask_and_cloak
-	cost = PAY_TRADESMAN/2
+	cost = PRICE_300/2
 	item_path = /obj/item/clothing/suit/rando
 
 /datum/clothingbooth_item/wear_suit/suspenders
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 	item_path = /obj/item/clothing/suit/suspenders
 
 /datum/clothingbooth_item/wear_suit/hitman
 	item_path = /obj/item/clothing/suit/hitman
 
 /datum/clothingbooth_item/wear_suit/tuxedo_jacket
-	cost = PAY_DOCTORATE/3
+	cost = PRICE_600/3
 	item_path = /obj/item/clothing/suit/tuxedo_jacket
 
 /datum/clothingbooth_item/wear_suit/waistcoat
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 	item_path = /obj/item/clothing/suit/wcoat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/sweater_vest)
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/sweater_vest)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/denim_dress)
 /datum/clothingbooth_item/wear_suit/denim_dress
-	cost = PAY_UNTRAINED/3
+	cost = PRICE_150/3
 	name = "Denim Dress"
 
 	blue

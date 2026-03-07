@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	request_limit = 2
 	ui_colour = TGUI_COLOUR_GREY
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
-	request_cost = PAY_DOCTORATE * 4
+	request_cost =  PAY_DOCTORATE * 4
 	trait_list = list("training_mime")
 	access_string = "Mime"
 	slot_belt = list(/obj/item/device/pda2)
@@ -433,7 +433,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
 	job_category = JOB_DAILY
 	request_limit = 2
-	request_cost = PAY_DOCTORATE*4
+	request_cost =  PAY_DOCTORATE*4
 	email_group = MGD_CIVILIAN
 	var/day = ""
 /datum/job/daily/boxer

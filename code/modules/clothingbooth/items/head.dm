@@ -1,11 +1,11 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 /datum/clothingbooth_item/head
 	slot = SLOT_HEAD
-	cost = PAY_TRADESMAN/2
+	cost = PRICE_300/2
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 /datum/clothingbooth_item/head/barrettes
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 
 	black
 		name = "Black"
@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 /datum/clothingbooth_item/head/basecap
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 
 	black
 		name = "Black"
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 /datum/clothingbooth_item/head/beret
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 
 	white
 		name = "White"
@@ -125,20 +125,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 		item_path = /obj/item/clothing/head/frenchberet/blueberry
 
 /datum/clothingbooth_item/head/mime_bowler
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 	item_path = /obj/item/clothing/head/mime_bowler
 
 /datum/clothingbooth_item/head/mime_beret
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 	item_path = /obj/item/clothing/head/mime_beret
 
 /datum/clothingbooth_item/head/sailormoon
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 	item_path = /obj/item/clothing/head/sailormoon
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 /datum/clothingbooth_item/head/butterfly_hairclip
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 
 	blue
 		name = "Blue"
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 /datum/clothingbooth_item/head/cat_ears
-	cost = PAY_TRADESMAN
+	cost = PRICE_300
 
 	white
 		name = "White"
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 /datum/clothingbooth_item/head/costume_goggles
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 
 	yellow
 		name = "Yellow"
@@ -229,19 +229,19 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 		item_path = /obj/item/clothing/head/goggles/purple
 
 /datum/clothingbooth_item/head/cowboy
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 	item_path = /obj/item/clothing/head/cowboy
 
 /datum/clothingbooth_item/head/cwhat
 	item_path = /obj/item/clothing/head/cwhat
 
 /datum/clothingbooth_item/head/diner_waitress_hat
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 	item_path = /obj/item/clothing/head/waitresshat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 /datum/clothingbooth_item/head/fedora
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 
 	black
 		name = "Black"
@@ -259,20 +259,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 		item_path = /obj/item/clothing/head/mj_hat
 
 /datum/clothingbooth_item/head/frog
-	cost = PAY_TRADESMAN
+	cost = PRICE_300
 	item_path = /obj/item/clothing/head/frog_hat
 
 /datum/clothingbooth_item/head/fthat
-	cost = PAY_DOCTORATE/5
+	cost = PRICE_600/5
 	item_path = /obj/item/clothing/head/fthat
 
 /datum/clothingbooth_item/head/green_visor
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 	item_path = /obj/item/clothing/head/pokervisor
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 /datum/clothingbooth_item/head/hairbow
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 
 	blue
 		name = "Blue"
@@ -348,7 +348,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 /datum/clothingbooth_item/head/headband/basic
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 
 	blue
 		name = "Blue"
@@ -421,7 +421,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 		item_path = /obj/item/clothing/head/headband/basic/cream
 
 /datum/clothingbooth_item/head/maid_headwear
-	cost = PAY_TRADESMAN/3
+	cost = PRICE_300/3
 	item_path = /obj/item/clothing/head/maid
 
 /datum/clothingbooth_item/head/lace_veil
@@ -432,7 +432,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 	item_path = /obj/item/clothing/head/headsprout
 
 /datum/clothingbooth_item/head/pinwheel
-	cost = PAY_TRADESMAN
+	cost = PRICE_300
 	item_path = /obj/item/clothing/head/pinwheel_hat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/pirate)
@@ -463,7 +463,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/pomhat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/sunhat)
 /datum/clothingbooth_item/head/sunhat
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 
 	red
 		name = "Red"
@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/tophat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 /datum/clothingbooth_item/head/westhat
-	cost = PAY_UNTRAINED/2
+	cost = PRICE_150/2
 
 	beige
 		name = "Beige"
@@ -533,16 +533,16 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 		item_path = /obj/item/clothing/head/westhat/red
 
 /datum/clothingbooth_item/head/ushanka
-	cost = PAY_TRADESMAN
+	cost = PRICE_300
 	item_path = /obj/item/clothing/head/ushanka
 
 /datum/clothingbooth_item/head/flatcap
-	cost = PAY_UNTRAINED
+	cost = PRICE_150
 	item_path = /obj/item/clothing/head/flatcap
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/hijab)
 /datum/clothingbooth_item/head/hijab
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 
 	black
 		name = "Black"
@@ -615,7 +615,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hijab)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/headscarf)
 /datum/clothingbooth_item/head/headscarf
-	cost = PAY_TRADESMAN/5
+	cost = PRICE_300/5
 
 	black
 		name = "Black"
@@ -674,7 +674,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headscarf)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/dog_ears)
 /datum/clothingbooth_item/head/dog_ears
-	cost = PAY_TRADESMAN
+	cost = PRICE_300
 
 	white
 		name = "White"

@@ -71,7 +71,7 @@
 /datum/commodity/trader/pianzi/metal
 	comname = "Sheets of Construction Supplies"
 	comtype = /obj/item/sheet/steel
-	price_boundary = list(PAY_UNTRAINED/10,PAY_TRADESMAN/10)
+	price_boundary = list(PRICE_150/10,PRICE_300/10)
 	possible_alt_types = list(/obj/item/paper)
 	alt_type_chance = 80
 	possible_names = list("I am selling sheets of a lightweight and flexible building material! Very useful!",
@@ -81,7 +81,7 @@
 	comname = "Live Insects"
 	comtype = /obj/critter/domestic_bee
 	amount = 10
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_alt_types = list(/mob/living/critter/small_animal/cockroach)
 	alt_type_chance = 50
 	possible_names = list("I have a number of very friendly live insects for sale! Very cute too!",
@@ -91,7 +91,7 @@
 	comname = "Camera Viewing Devices"
 	comtype = /obj/item/device/camera_viewer/security
 	amount = 3
-	price_boundary = list(PAY_TRADESMAN,PAY_DOCTORATE)
+	price_boundary = list(PRICE_300,PRICE_600)
 	possible_alt_types = list(/obj/item/device/light/flashlight)
 	alt_type_chance = 50
 	possible_names = list("Now for sale; a handful of devices that can be used for viewing cameras far more easily!",
@@ -101,7 +101,7 @@
 	comname = "Scanning Devices"
 	comtype = /obj/item/emeter
 	amount = 10
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_alt_types = list(/obj/item/oreprospector,/obj/item/plantanalyzer,/obj/item/device/analyzer/healthanalyzer)
 	alt_type_chance = 40
 	possible_names = list("I have some spare scanning devices for sale! Think of all the data you could scan, my good friend!",
@@ -111,7 +111,7 @@
 	comname = "Mining Gloves"
 	comtype = /obj/item/clothing/gloves/concussive
 	amount = 2
-	price_boundary = list(PAY_TRADESMAN*2,PAY_TRADESMAN*5)
+	price_boundary = list(PRICE_300*2,PRICE_300*5)
 	possible_alt_types = list(/obj/item/clothing/gloves/black, /obj/item/clothing/gloves/yellow/unsulated)
 	alt_type_chance = 70
 	possible_names = list("I've got some gloves your miners may find very useful! Very stylish and substantial!",
@@ -121,7 +121,7 @@
 	comname = "Medicine"
 	comtype = /obj/item/reagent_containers/glass/beaker/large/brute
 	amount = 5
-	price_boundary = list(PAY_DOCTORATE,PAY_DOCTORATE*2)
+	price_boundary = list(PRICE_600,PRICE_600*2)
 	possible_alt_types = list(/obj/item/reagent_containers/glass/beaker/large/epinephrine,/obj/item/storage/firstaid/old)
 	alt_type_chance = 25
 	possible_names = list("Everyone needs medicine at some point. Luckily, Pianzi has some for sale!",
@@ -131,7 +131,7 @@
 	comname = "Vintage Drink"
 	comtype = /obj/item/reagent_containers/food/drinks/bottle/wine
 	amount = 8
-	price_boundary = list(PAY_UNTRAINED/10,PAY_EXECUTIVE/10)
+	price_boundary = list(PRICE_150/10,PAY_EXECUTIVE/10)
 	possible_alt_types = list(/obj/item/reagent_containers/food/drinks/bottle/vintage)
 	alt_type_chance = 50
 	possible_names = list("Cause to celebrate? This deal certainly is! Vintage drink of the best quality!",
@@ -141,7 +141,7 @@
 	comname = "Addiction Aid Patches"
 	comtype = /obj/item/reagent_containers/patch/nicotine
 	amount = 50
-	price_boundary = list(PAY_UNTRAINED/10,PAY_EXECUTIVE/10)
+	price_boundary = list(PRICE_150/10,PAY_EXECUTIVE/10)
 	possible_alt_types = list(/obj/item/reagent_containers/patch/LSD)
 	alt_type_chance = 33
 	possible_names = list("Having trouble with addictive drugs? No worries! Just slap on one of these patches and your worries will go away!",
@@ -150,7 +150,7 @@
 /datum/commodity/trader/pianzi/seeds
 	comname = "Unusual Plant Seeds"
 	comtype = /obj/item/seed/alien
-	price_boundary = list(PAY_UNTRAINED/10,PAY_EXECUTIVE/10)
+	price_boundary = list(PRICE_150/10,PAY_EXECUTIVE/10)
 	possible_alt_types = list(/obj/item/seed/grass)
 	alt_type_chance = 75
 	possible_names = list("Love growing unusual plants? Then these seeds are for you, my good friend!",
@@ -161,34 +161,34 @@
 /datum/commodity/trader/pianzi/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
-	price_boundary = list(PAY_UNTRAINED/10,PAY_EXECUTIVE/10)
+	price_boundary = list(PRICE_150/10,PAY_EXECUTIVE/10)
 	possible_names = list("My good friend, I am rather low on medical herbs right now. Perhaps you could sell me some, hmm?",
 	"Everyone's in need of medical herbs, and Pianzi is no exception! I'll pay top premium, as always!")
 
 /datum/commodity/trader/pianzi/crystalglass
 	comname = "Crystal Glass"
 	comtype = /obj/item/sheet/glass/crystal
-	price_boundary = list(PAY_TRADESMAN,PAY_DOCTORATE)
+	price_boundary = list(PRICE_300,PRICE_600)
 	possible_names = list("I have need of some glass made from crystallised plasma, my good friend! I'll pay a very good price!",
 	"I'm currently paying a very good price for crystallised plasma glass! It's all the rage, I'm sure you know!")
 
 /datum/commodity/trader/pianzi/telecrystal
 	comname = "Telecrystal"
 	comtype = /obj/item/raw_material/telecrystal
-	price_boundary = list(PAY_DOCTORATE,PAY_EXECUTIVE)
+	price_boundary = list(PRICE_600,PAY_EXECUTIVE)
 	possible_names = list("Right now I'm in need of raw Telecrystals. Buying for top price as always!",
 	"Telecrystals, weird little things aren't they? What's even more weird is that i'm also buying them for such a great price!")
 
 /datum/commodity/trader/pianzi/artifact
 	comname = "Useless Handheld Artifacts"
 	comtype = /obj/item/artifact
-	price_boundary = list(PAY_DOCTORATE,PAY_EMBEZZLED)
+	price_boundary = list(PRICE_600,PAY_EMBEZZLED)
 	possible_names = list("I'm collecting handheld artifacts! I only want inert ones, though!",
 	"Right now i'd like to get my hands on some inert handheld artifacts! Keep the dangerous ones for yourself though.")
 
 /datum/commodity/trader/pianzi/cigarettes
 	comname = "Cigarettes"
 	comtype = /obj/item/clothing/mask/cigarette
-	price_boundary = list(PAY_UNTRAINED/10,PAY_EXECUTIVE/10)
+	price_boundary = list(PRICE_150/10,PAY_EXECUTIVE/10)
 	possible_names = list("Cigarettes are always a good trade. Right now, I'd like to buy any you have!",
 	"Did you know cigarettes are currency on some colonies? That's why I'd like to buy any you can spare!")

@@ -785,7 +785,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if(20)
 				name = "Mk.2 scout laser"
 				typepath = /obj/item/shipcomponent/mainweapon/laser
-				feemod = (PAY_DONTBUYIT*2) + (PAY_DOCTORATE * rand(3,6))
+				feemod = (PAY_EMBEZZLED*10) + (PAY_DOCTORATE * rand(3,6))
 		..()
 
 /datum/rc_entry/item/pod_secondary

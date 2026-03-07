@@ -76,28 +76,28 @@
 /datum/commodity/trader/josh/syringes
 	comname = "Syringes"
 	comtype = /obj/item/reagent_containers/syringe
-	price_boundary = list(PAY_UNTRAINED/10,PAY_UNTRAINED/3)
+	price_boundary = list(PRICE_150/10,PRICE_150/3)
 	possible_names = list("Hey bro, got any syringes? I need some... for a friend.",
 	"Broski, I need some syringes pronto. Got any?")
 
 /datum/commodity/trader/josh/radios
 	comname = "Personal Radios"
 	comtype = /obj/item/device/radio
-	price_boundary = list(PAY_UNTRAINED/10,PAY_UNTRAINED/3)
+	price_boundary = list(PRICE_150/10,PRICE_150/3)
 	possible_names = list("I need some radios for some secret communications. Spare a few?",
 	"I need some of those walkie-talike radio things to plan an event. Got any in storage?")
 
 /datum/commodity/trader/josh/vrgoggles
 	comname = "VR Goggles"
 	comtype = /obj/item/clothing/glasses/vr
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("Hey, I need some VR goggles. I hear they're all the rage these days.",
 	"I want to check out this VR matrix stuff. Got a spare pair of goggles for me?")
 
 /datum/commodity/trader/josh/secbelts
 	comname = "Security Belt"
 	comtype = /obj/item/storage/belt/security
-	price_boundary = list(PAY_DOCTORATE,PAY_IMPORTANT)
+	price_boundary = list(PRICE_600,PAY_IMPORTANT)
 	possible_names = list("Can you give me some security belt? They look slick.",
 	"I'm trying to freshen up. Got a security belt?")
 
@@ -130,11 +130,11 @@
 	"Looking for some hardcore gaming dude? We got a sweet set.",
 	"Get pumped with some tight games my bro-nado.")
 
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 /datum/commodity/trader/josh/skateboards
 	comname = "Slickin' Skateboards"
 	comtype = /obj/vehicle/skateboard
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("I got some radical rides here bro.",
 	"You skate? I got a ride with a sick-ass deck.",
 	"Do you wanna harvest some stoke? Try this deck!")
@@ -142,7 +142,7 @@
 /datum/commodity/trader/josh/rocketshoes
 	comname = "Jet Boots"
 	comtype = /obj/item/clothing/shoes/rocket
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("Wanna go fast? I got some kicks for that.",
 	"I got some fast-flying kicks here for ya.",
 	"Try these kicks. They'll give you wings.")
@@ -151,7 +151,7 @@
 	comname = "Rippin' Tacos"
 	comtype = /obj/item/reagent_containers/food/snacks/taco/complete
 	amount = 2
-	price_boundary = list(PAY_UNTRAINED/10,PAY_TRADESMAN/10)
+	price_boundary = list(PRICE_150/10,PRICE_300/10)
 	possible_names = list("You hungry? I got some finger-lickin' good tacos.",
 	"I got some authentic broriffic tacos. You up for some?",
 	"All out of broritos today. Want to try some tacos?")
@@ -159,7 +159,7 @@
 /datum/commodity/trader/josh/fingerless
 	comname = "Stylish Black Gloves"
 	comtype = /obj/item/clothing/gloves/fingerless
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("Haven't been keeping up with the style? Try these fingerless gloves.",
 	"You look like such a poseur. Fix yourself up with these slick gloves.",
 	"Want to look as cool as me? Grab a pair of fingerless gloves.")
@@ -168,7 +168,7 @@
 	comname = "Brotein Shake"
 	comtype = /obj/item/reagent_containers/food/drinks/energyshake
 	amount = 2
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("These shakes get you so pumped dude. You should totally try one.",
 	"They say these give you supa hot fire breath, and last night I dreamt just that.",
 	"I've heard around that one kid grew dragon wings and flew away after he drank one of these.")
@@ -176,21 +176,21 @@
 /datum/commodity/trader/josh/hoodie
 	comname = "Gnarly Hoodie"
 	comtype = /obj/item/clothing/suit/hoodie
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("Want look stylish? Try this hoodie.",
 	"You seem a bit prone to scratches. Want some padding?")
 
 /datum/commodity/trader/josh/flyswatter
 	comname = "Radical Electrical Device"
 	comtype = /obj/item/device/flyswatter
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("Bro this is out of the world. You can cook an omelette and play guitar on it at the same time!",
 	"Do you want to be the coolest on the block or nah?")
 
 /datum/commodity/trader/josh/foamgun
 	comname = "Totally Cool Foam Flingin' Tool"
 	comtype = /obj/item/gun/kinetic/foamdartrevolver
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("Bro, this thing can shoot sooo fast! You gotta have one.",
 	"You could have such a sick battle if you had enough of these.",
 	"You want to become an elite dart sniper like me? You'll need one of these.")
@@ -206,14 +206,14 @@
 /datum/commodity/trader/josh/spraypaint
 	comname = "Wicked Spray Can"
 	comtype = /obj/item/spray_paint_graffiti
-	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	price_boundary = list(PRICE_150,PRICE_300)
 	possible_names = list("All the up-and-coming artists are buzzing over this!",
 	"Show off your vast, oceanic soul with some ART, bro!")
 
 /datum/commodity/trader/josh/firecracker
 	comname = "Totally Legit Bangers"
 	comtype = /obj/item/device/light/sparkler/firecracker
-	price_boundary = list(PAY_UNTRAINED/2,PAY_TRADESMAN/2)
+	price_boundary = list(PRICE_150/2,PRICE_300/2)
 	amount = 20 //not completely unlimited
 	possible_names = list("These are technically legal, trust me bro!",
 		"REAL firecrackers, chuck them and run!",
