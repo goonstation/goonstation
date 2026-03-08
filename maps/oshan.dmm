@@ -26630,7 +26630,6 @@
 	dir = 4;
 	name = "interrogation pipe"
 	},
-/obj/machinery/vending/snack,
 /turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "edf" = (
@@ -47901,7 +47900,7 @@
 	dir = 4;
 	name = "interrogation pipe"
 	},
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/snack,
 /turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "wKy" = (
@@ -48608,10 +48607,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/red{
-	dir = 1
-	},
-/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
