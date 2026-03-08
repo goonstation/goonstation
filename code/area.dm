@@ -3955,7 +3955,6 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "entered the armory while it's unauthorized."
 					ircbot.export_async("admin", ircmsg)
-					logTheThing(LOG_STATION, M, "test cooldown")
 // // // // // //
 
 /// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.
