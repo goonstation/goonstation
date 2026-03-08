@@ -370,7 +370,7 @@
 /area/centcom/outside)
 "kZ" = (
 /obj/decal/poster/wallsign/newtonscrew{
-	desc = "In memory of the Nanotrasen transit shuttle aquarium, we bring to you the Nanotrasen transit shuttle terrarium. Rest in peace Steve the clownfish";
+	desc = "In memory of the Nanotrasen transit shuttle aquarium, we bring to you the Nanotrasen transit shuttle terrarium. Rest in peace Steve the goldfish";
 	name = "Nanotrasen transit shuttle terrarium"
 	},
 /turf/simulated/wall/auto/shuttle{
@@ -692,7 +692,7 @@
 /obj/item/storage/firstaid/regular{
 	pixel_x = 6
 	},
-/obj/machinery/light/small/floor/warm,
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"
@@ -1346,7 +1346,7 @@
 "NG" = (
 /mob/living/critter/aquatic/fish/clown{
 	name = "Steve";
-	desc = "It's steve! the only remaining survivor of the Nanotrasen transit shuttle aquarium"
+	desc = "It's steve! the only remaining survivor of the Nanotrasen transit shuttle aquarium. This is a clownfish, not a gold fish, i guess they don't care as much as they want you to believe"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "grass_lush";
@@ -2267,7 +2267,7 @@ sT
 jn
 pw
 pw
-pw
+VO
 pw
 pw
 jn
