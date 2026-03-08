@@ -3949,13 +3949,10 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
 				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
-				if(!src.armory_auth)
-					var/antag_text = ""
-					for (var/datum/antagonist/antag in M.mind.antagonists)
-						antag_text += "[antag.display_name] "
+				if(!src.armory_auth && (!IS_IT_SATURDAY))
 					var/ircmsg[] = new()
 					ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-					ircmsg["name"] = M.job ? "[stripTextMacros(M.real_name)] \[[antag_text][M.job]]" : "[stripTextMacros(M.real_name)] \[antag_text]"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "entered the armory while it's unauthorized."
 					ircbot.export_async("admin", ircmsg)
 // // // // // //
