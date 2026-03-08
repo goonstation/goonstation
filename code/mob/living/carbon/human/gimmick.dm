@@ -1048,7 +1048,6 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/referee
 	is_npc = TRUE
 	gender = MALE
-	real_name = "Bill Ballerson"
 
 	New()
 		..()
