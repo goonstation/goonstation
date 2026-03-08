@@ -6,13 +6,14 @@ TYPEINFO(/obj/item/lightbreaker)
 	desc = "A casette player loaded with a casette of a vampire's screech."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newSmall"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "radio"
+	w_class = W_CLASS_SMALL
 	var/active = 0
 	flags = TABLEPASS | CONDUCT
-	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 10
-	w_class = W_CLASS_SMALL
 	is_syndicate = 1
 	stamina_cost = 10
 	stamina_crit_chance = 15

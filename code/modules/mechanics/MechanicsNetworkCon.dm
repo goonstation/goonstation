@@ -9,6 +9,7 @@
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "generic-p"
 	cabinet_banned = 1 // non-functional, abuse potential. B&
+	mechanically_copyable = FALSE // The prospect worries me.
 	plane = PLANE_DEFAULT
 	var/net_id = null
 	var/host_id = null //Who are we connected to?(If we have a single host)

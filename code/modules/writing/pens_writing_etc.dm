@@ -7,7 +7,6 @@
  - Hand labeler
  - Clipboard
  - Booklet
- - Sticky notes
  - Folder
 */
 /* --------------------------------- */
@@ -1391,57 +1390,6 @@
 		else
 			..()
 		return
-
-/* =============== STICKY NOTES =============== */
-
-/obj/item/postit_stack
-	name = "SHOULDN'T BE SEEING THIS"
-	desc = "OLD AND BAD"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "postit_stack"
-	/* force = 1
-	throwforce = 1
-	w_class = W_CLASS_TINY
-	amount = 10
-	burn_point = 220
-	burn_output = 200
-	burn_possible = TRUE
-	health = 2
-
-	// @TODO
-	// HOLY SHIT REMOVE THIS THESE OLD POST ITS ARE GONE or something idk fuck
-	New()
-		..()
-		new /obj/item/item_box/postit(get_turf(src))
-
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
-		if (!A)
-			return
-		if (isarea(A))
-			return
-		if (src.amount < 0)
-			qdel(src)
-			return
-		var/turf/T = get_turf(A)
-		var/obj/decal/cleanable/writing/postit/P = make_cleanable(/obj/decal/cleanable/writing/postit ,T)
-		if (params && islist(params) && params["icon-y"] && params["icon-x"])
-			// oh boy i can't wait to see people make huge post-it note trains across the station somehow!
-			P.pixel_x = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
-			P.pixel_y = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
-
-		P.layer = A.layer + 1 //Do this instead so the stickers don't show over bushes and stuff.
-		P.appearance_flags = RESET_COLOR | PIXEL_SCALE
-
-		user.visible_message("<b>[user]</b> sticks a sticky note to [T].",\
-		"You stick a sticky note to [T].")
-		var/obj/item/pen/pen = user.find_type_in_hand(/obj/item/pen)
-		if (pen)
-			P.Attackby(pen, user)
-		src.amount --
-		if (src.amount < 0)
-			qdel(src)
-			return
-*/
 
 /* ============== PRINTERS & TYPEWRITERS ================= */
 

@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A single-use teleporter remote that summons the nuclear bomb to the user's current location."
 	icon_state = "bomb_remote"
-	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 
 	var/charges = 1

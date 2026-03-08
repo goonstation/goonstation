@@ -159,6 +159,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
 	w_class = W_CLASS_SMALL
+	default_material = "synthrubber_yellow"
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 3
@@ -168,7 +169,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "std_module"
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	flags = TABLEPASS|CONDUCT
 	var/mtype = 1						// 1=electronic 2=hardware
 
@@ -294,6 +295,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "rubber_hammer"
 	c_flags = ONBELT
 	force = 0
+	default_material = "synthrubber_yellow"
 
 	New()
 		..()
@@ -332,7 +334,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
-	var/list/safe_smokables = list("nicotine", "THC", "CBD")
+	var/list/safe_smokables = list("nicotine", "THC", "CBD", "beff", "fizzy_banana", "beer", "menthol", "synaptizine", "cryostylane", "barbecue_sauce", "strawberry_milk")
 	var/datum/effects/system/bad_smoke_spread/smoke
 	var/range = 1
 
@@ -473,6 +475,17 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	item_state = "ecigrefill"
 	icon_state = "ecigrefill"
 	flags = TABLEPASS
+
+	flavored
+		name = "flavored E-cigarette refill pack"
+		desc = "A small black box full of flavors fun for the whole family"
+		var/list/flavors = list("beff", "fizzy_banana", "beer", "menthol", "synaptizine", "cryostylane", "barbecue_sauce", "strawberry_milk") // when changing make sure you adjust safe_whitelist on vapes
+		initial_reagents = null
+
+		New()
+			..()
+			src.reagents.add_reagent("nicotine", 25)
+			src.reagents.add_reagent(pick(flavors), 25)
 
 /obj/item/trophy
 	name = "trophy"

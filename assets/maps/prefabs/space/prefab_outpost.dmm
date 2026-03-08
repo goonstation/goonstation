@@ -43,7 +43,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/mining/miningoutpost)
 "ak" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/sanitary/white,
 /area/mining/miningoutpost)

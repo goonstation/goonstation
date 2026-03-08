@@ -745,8 +745,14 @@
 
 	proc/defend_personal_space(mob/owner, mob/target)
 		if(owner != target && can_act(owner) && target.a_intent == INTENT_HELP)
-			owner.disarm(target, is_special = TRUE)
-			playsound(owner, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE)
+			if(!owner.lying) // Please stop shoving people when you're lying down, that's illegal
+				owner.disarm(target, is_special = TRUE)
+				playsound(owner, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE)
+			else
+				if(prob(80))
+					owner.emote(pick("flinch","twitch","twitch_v","shudder"))
+				else
+					owner.emote("scream")
 
 /* Hey dudes, I moved these over from the old bioEffect/Genetics system so they work on clone */
 
@@ -1149,16 +1155,9 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/unionized
 	name = "Unionized"
-	desc = "You start with a higher paycheck than normal."
+	desc = "You start with a higher paycheck than normal, provided you're not management."
 	id = "unionized"
 	icon_state = "handshake"
-	points = -1
-
-/datum/trait/jailbird
-	name = "Jailbird"
-	desc = "You have a criminal record and are currently on the run!"
-	id = "jailbird"
-	icon_state = "jail"
 	points = -1
 
 /datum/trait/clericalerror

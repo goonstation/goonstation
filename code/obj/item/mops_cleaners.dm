@@ -471,10 +471,10 @@ TRASH BAG
 			. |= SPONGE_DRY
 	if (src.reagents.total_volume)
 		. |= SPONGE_WIPE
-		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
+		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/machinery/sink) || istype(target, /obj/mopbucket))
 			. |= SPONGE_WRING
-	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
-		if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
+	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/machinery/sink)) || istype(target, /obj/mopbucket))
+		if (istype(target, /obj/machinery/sink) || (target.reagents && target.reagents.total_volume))
 			. |= SPONGE_WET
 
 /obj/item/sponge/afterattack(atom/target, mob/user)
@@ -541,7 +541,7 @@ TRASH BAG
 		if (SPONGE_WRING)
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
-			else if(istype(target, /obj/submachine/chef_sink))
+			else if(istype(target, /obj/machinery/sink))
 				src.reagents.clear_reagents()
 
 		if (SPONGE_WET)
@@ -864,7 +864,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				src.tooltip_rebuild = TRUE
 				disposal.update()
 				return
-		else if(istype(target, /obj/submachine/chef_sink))
+		else if(istype(target, /obj/machinery/sink))
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 				src.bucket.reagents.clear_reagents()

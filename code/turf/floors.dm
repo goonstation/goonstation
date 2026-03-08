@@ -1545,7 +1545,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "synthrubber"
+	default_material = "synthrubber_green"
 	can_dig = TRUE
 
 	#ifdef SEASON_WINTER

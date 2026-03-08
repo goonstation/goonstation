@@ -73,7 +73,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon_state = "shield0"
 	flags = TABLEPASS | CONDUCT | EXTRADELAY | SUPPRESSATTACK
 	c_flags = ONBELT
-	item_state = "electronic"
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5

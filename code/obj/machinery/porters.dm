@@ -8,6 +8,11 @@
 
 ///////////////////////////// Remote parent ///////////////////////////////////
 
+ABSTRACT_TYPE(/obj/item/remote)
+/obj/item/remote
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
+
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
 TYPEINFO(/obj/item/remote/porter)
 	mats = 4
@@ -17,7 +22,6 @@ TYPEINFO(/obj/item/remote/porter)
 	icon = 'icons/obj/items/device.dmi'
 	desc = "You shouldn't be able to see this!"
 	icon_state = "locator"
-	item_state = "electronic"
 	density = 0
 	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL
@@ -204,7 +208,6 @@ TYPEINFO(/obj/item/remote/porter)
 	name = "Port-A-Medbay Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Medbay."
 	machinery_name = "Port-a-Medbay"
 
@@ -229,7 +232,6 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 	name = "Port-A-Sci Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
 	machinery_name = "Port-a-Sci"
 
@@ -249,7 +251,6 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 	name = "Port-A-NanoMed Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-NanoMed."
 	machinery_name = "Port-a-NanoMed"
 
@@ -269,7 +270,6 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 	name = "Port-A-Gene Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Gene."
 	machinery_name = "Port-a-Gene"
 
@@ -289,7 +289,6 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 	name = "Port-A-Laundry Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Laundry."
 	machinery_name = "Port-a-Laundry"
 

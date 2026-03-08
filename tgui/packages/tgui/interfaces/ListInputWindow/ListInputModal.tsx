@@ -32,6 +32,7 @@ type ListInputModalProps = {
   on_cancel: () => void;
   start_with_search: boolean;
   capitalize: boolean;
+  banned_chars?: string[];
 };
 
 export const ListInputModal = (props: ListInputModalProps) => {
@@ -43,6 +44,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
     on_cancel,
     start_with_search,
     capitalize,
+    banned_chars,
   } = props;
 
   const [selectedIndex, setSelectedIndex] = useState(
@@ -98,6 +100,9 @@ export const ListInputModal = (props: ListInputModalProps) => {
   // User presses a letter key and searchbar is visible
   // |goonstation-change| send any text input to the search bar
   const onFocusSearch = (letter: string) => {
+    if (banned_chars && banned_chars.includes(letter)) {
+      return;
+    }
     let searchBarInput = getSearchBar();
     if (!searchBarInput) {
       return;
@@ -132,6 +137,11 @@ export const ListInputModal = (props: ListInputModalProps) => {
   // User types into search bar
   // |goonstation-change| Only change selection when necessary
   const onSearch = (query: string) => {
+    if (banned_chars) {
+      for (const char of banned_chars) {
+        query = query.replaceAll(char, '');
+      }
+    }
     if (query === searchQuery) {
       return;
     }
@@ -267,6 +277,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
         </Stack.Item>
         {searchBarVisible !== false && (
           <SearchBar
+            banned_chars={banned_chars}
             onEnter={() => on_selected(filteredItems[selectedIndex])}
             onSearch={onSearch}
             searchQuery={searchQuery}
@@ -352,6 +363,7 @@ const ListDisplay = (props: ListDisplayProps) => {
 };
 
 interface SearchBarProps {
+  banned_chars?: string[];
   onEnter: () => void;
   onSearch: (search: string) => void;
   searchQuery: string;
@@ -362,7 +374,7 @@ interface SearchBarProps {
  * Closing the bar defaults input to an empty string.
  */
 const SearchBar = (props: SearchBarProps) => {
-  const { onEnter, onSearch, searchQuery } = props;
+  const { banned_chars, onEnter, onSearch, searchQuery } = props;
 
   return (
     <Input
@@ -372,6 +384,11 @@ const SearchBar = (props: SearchBarProps) => {
       id="search_bar"
       onEnter={onEnter}
       onChange={(value) => onSearch(value)}
+      onKeyDown={(event) => {
+        if (banned_chars?.includes(event.key)) {
+          event.preventDefault();
+        }
+      }}
       placeholder="Search..."
       value={searchQuery}
     />
