@@ -251,6 +251,16 @@ var/global/game_force_started = FALSE
 	//Equip characters
 	equip_characters()
 
+#ifdef I_WANNA_DO_CRIME
+	SPAWN(1 SECOND) //Avoids runtiming on certain special job setups changing equipment through SPAWN()s of their own
+		for (var/datum/mind/mind in src.minds)
+			if(!mind.current.client)
+				continue
+			mind.add_antagonist(I_WANNA_DO_CRIME)
+			if(isnull(mind.current.loc))
+				mind.current.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+#endif
+
 #ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 	Z_LOG_DEBUG("Game Start", "Animating client colors to normal")
 	for (var/client/C in animateclients)
@@ -293,6 +303,17 @@ var/global/game_force_started = FALSE
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 		roundManagement.recordUpdate(mode)
+
+#ifdef GENERATE_GOONHUB_MAP
+	SPAWN(3.5 SECONDS)
+		var/client/map_client
+		UNTIL((map_client = locate() in clients), 10 SECONDS)
+		if (isnewplayer(map_client.mob))
+			var/mob/new_player/dude = map_client.mob
+			dude.observe_round()
+			UNTIL(!isnewplayer(map_client.mob), 10 SECONDS)
+		map_client.mapWorld(automated = TRUE)
+#endif
 
 #ifdef BAD_MONKEY_NO_BANANA
 	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)

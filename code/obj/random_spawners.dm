@@ -795,7 +795,6 @@
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
-	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
@@ -1912,7 +1911,8 @@
 	icon_state = "rand_gun"
 	amt2spawn = 1
 
-	items2spawn = list(/obj/item/gun/energy/stasis,
+	items2spawn = list(/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun_jr,
 	/obj/item/gun/energy/phaser_huge)
@@ -2383,7 +2383,6 @@
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
-	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,

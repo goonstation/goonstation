@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_card = /obj/item/card/id/security
 	receives_miranda = TRUE
 	job_category = JOB_SECURITY
+	email_group = MGD_SECURITY
 
 /datum/job/security/security_officer
 	name = "Security Officer"

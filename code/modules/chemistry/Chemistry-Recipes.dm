@@ -252,7 +252,6 @@
 			if (holder)
 				holder.del_reagent("lumen")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			var/location = get_turf(holder.my_atom)
 			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
@@ -280,7 +279,6 @@
 			if (holder)
 				holder.del_reagent("pyrosium")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 /*		The smoke reaction now deletes pyrosium (thalmerite) to prevent it from spreading everywhere without blocking delayed smoke reactions - IM
@@ -328,7 +326,6 @@
 				holder.del_reagent("aranesp")
 				holder.del_reagent("booster_enzyme")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 	booster_enzyme
@@ -3981,6 +3978,18 @@
 			var/turf/location = pick(holder.covered_turf())
 			location.fluid_react_single("miasma", created_volume, airborne = 1)
 
+	parazamine
+		name = "parazamine"
+		id = "parazamine"
+		result = "parazamine"
+		required_reagents = list("space_fungus" = 0.1, "cryoxadone" = 1, "atropine" = 1)
+		instant = 0
+		reaction_speed = 2
+		result_amount = 2
+		max_temperature = (T0C - 25)
+		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+		mix_phrase = "The particles of fungus begin to slowly dissolve in the cold solution."
+
 	lungrot
 		name = "lungrot"
 		id = "lungrot"
@@ -4221,7 +4230,8 @@
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
 				s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			else
 				var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -4230,7 +4240,8 @@
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = (created_volume / max(length(holder.covered_cache),1)))
 					s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			return
 
 	metalfoam

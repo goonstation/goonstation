@@ -112,7 +112,10 @@ SET_UP_DIRECTIONALS(/obj/noticeboard/persistent, OFFSETS_NOTICEBOARD)
 				var/obj/item/paper/paper = new(src)
 				paper.name = book_info[1]
 				paper.info = book_info[2]
-				paper.fingerprintslast = book_info[3]
+				var/poster_ckey = book_info[3]
+				var/datum/forensic_data/adminprint/aprint = new(poster_ckey)
+				aprint.time_start = 0
+				paper.add_evidence(aprint, FORENSIC_GROUP_ADMINPRINTS)
 				if(length(book_info) >= 4) // Gotta love adding a line that will be useful exactly once on each server...
 					paper.color = book_info[4]
 		if(version == 1)
@@ -130,7 +133,10 @@ SET_UP_DIRECTIONALS(/obj/noticeboard/persistent, OFFSETS_NOTICEBOARD)
 				if(isnull(item))
 					continue
 				item.name = info["name"]
-				item.fingerprintslast = info["fingerprintslast"]
+				var/poster_ckey = info["last_ckey"]
+				var/datum/forensic_data/adminprint/aprint = new(poster_ckey)
+				aprint.time_start = 0
+				item.add_evidence(aprint, FORENSIC_GROUP_ADMINPRINTS)
 
 	src.notices = length(src.contents)
 	src.UpdateIcon()
@@ -142,7 +148,7 @@ SET_UP_DIRECTIONALS(/obj/noticeboard/persistent, OFFSETS_NOTICEBOARD)
 			"type" = "paper",
 			"name" = paper.name,
 			"info" = paper.info,
-			"fingerprintslast" = paper.fingerprintslast,
+			"last_ckey" = paper.get_last_ckey(),
 			"color" = paper.color
 			))
 	var/i = 0
@@ -154,7 +160,7 @@ SET_UP_DIRECTIONALS(/obj/noticeboard/persistent, OFFSETS_NOTICEBOARD)
 			"type" = "canvas",
 			"name" = canvas.name,
 			"id" = canvas_id,
-			"fingerprintslast" = canvas.fingerprintslast
+			"last_ckey" = canvas.get_last_ckey()
 			))
 	src.data[src.persistent_id]["_version"] = PERSISTENT_NOTICEBOARD_VERSION
 

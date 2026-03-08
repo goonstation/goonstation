@@ -167,3 +167,4 @@ Want to express yourself, but can't put things into words? Press M to make your 
 You can find the GPS verb under the commands tab after the game has started. It is quite helpful in finding your way around the station!
 You can click-drag yourself over a crate to slide on top of it - even in zero-G!
 You can keep moving in zero-G - just keep to walls, windows, and tables! Or snag some magboots...
+You can slowly unbury yourself out of an early grave by trying to move.

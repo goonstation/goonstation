@@ -192,6 +192,11 @@
 		..()
 		JobEquipSpawned("Roboticist")
 
+/mob/living/carbon/human/normal/pharmacist
+	New()
+		..()
+		JobEquipSpawned("Pharmacist")
+
 /mob/living/carbon/human/normal/chemist
 	New()
 		..()

@@ -3546,6 +3546,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
 		if (prob(25))
 			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
+		else if (prob(1))
+			desc = "Actually the Fulmar 1881 can't be called a true coach gun if it's sawn off, that would by definition make it a sawn-off. Meh, semantics."
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()

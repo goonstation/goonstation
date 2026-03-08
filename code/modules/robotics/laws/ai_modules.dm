@@ -16,7 +16,7 @@ TYPEINFO(/obj/item/aiModule)
 	icon_state = "aimod_1"
 	var/highlight_color = rgb(0, 167, 1, 255)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
 	flags = TABLEPASS | CONDUCT
 	force = 5

@@ -587,35 +587,57 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 ABSTRACT_TYPE(/datum/objective/madness)
 /datum/objective/madness
+	///Manually called after objective is added so we can check who's in the event
+	proc/set_up_from_victims(list/mob/all_victims)
+		return
 
 /datum/objective/madness/hate_department
-	set_up()
-		src.explanation_text = "Your mind fills with a burning need to destroy [pick("Genetics", "Genetics", "Catering", "Botany", "all janitors", "Medbay", "Cargo", "the research department")]."
+	set_up_from_victims(list/mob/all_victims)
+		var/targets = list("Genetics", "Genetics", "Catering", "Botany", "all janitors", "Medbay", "Cargo", "the research department")
+		//everyone else can destroy their workplace but janitors don't really have one so
+		for (var/mob/victim as anything in all_victims)
+			if (victim.mind?.assigned_role == "Janitor")
+				targets -= "all janitors"
+		src.explanation_text = "Your mind fills with a burning need to destroy [pick(targets)]."
 
 /datum/objective/madness/greed
-	set_up()
+	set_up_from_victims(list/mob/all_victims)
 		src.explanation_text = "You are filled with an overwhelming need for [pick("blood", "money", "sharp things", "welding fuel", "plasma")]."
 
 /datum/objective/madness/kill
-	set_up()
+	set_up_from_victims(list/mob/all_victims)
+		//is there a captain or HoS among the victims?
+		var/is_captain = FALSE
+		var/is_hos = FALSE
+		for (var/mob/victim in all_victims)
+			if (victim?.mind.assigned_role == "Captain")
+				is_captain = TRUE
+			else if (victim?.mind.assigned_role == "Head of Security")
+				is_hos = TRUE
+
 		var/list/valid_targets = list()
 		for (var/mob/living/M in mobs)
 			if (!isalive(M))
 				continue
-			if (istype(M, /mob/living/critter/small_animal/cat/jones))
+			//captains love jones too much (also it's boring when they just shoot the cat)
+			if (istype(M, /mob/living/critter/small_animal/cat/jones) && !is_captain)
 				valid_targets |= "Jones, the captain's cat"
-			else if (istype(M, /mob/living/critter/small_animal/turtle/sylvester))
+			//if there is an HoS you have to get past them to get the turtle
+			else if (istype(M, /mob/living/critter/small_animal/turtle/sylvester) && !is_hos)
 				valid_targets |= "Sylvester, the HoS's turtle"
 			else if (istype(M, /mob/living/critter/small_animal/opossum/morty))
 				//might be a little hard to kill this one but also we're insane so it fits
 				valid_targets |= "Morty, the morgue opossum"
-			else if (istype(M, /mob/living/carbon/human/npc/monkey/stirstir))
+			//both of these probably have the authority to just shoot stirstir anyway
+			else if (istype(M, /mob/living/carbon/human/npc/monkey/stirstir) && !is_hos && !is_captain)
 				valid_targets |= "Monsieur Stirstir, security's prisoner"
+			//the AI is always fair game because they can scream really loudly
 			else if (istype(M, /mob/living/silicon/ai))
 				var/mob/living/silicon/ai/ai = M
 				if (ai.client || ai.deployed_to_eyecam || ai.deployed_shell) //they're probably logged in somewhere
 					valid_targets |= "[M.real_name], the AI"
-			else if (istype(M, /mob/living/carbon/human))
+			//no suicidal captains
+			else if (istype(M, /mob/living/carbon/human) && !is_captain)
 				if (M.job == "Captain" && M.client)
 					valid_targets |= "[M.real_name], the captain"
 		if (!length(valid_targets))

@@ -23,6 +23,10 @@
 "C" = (
 /obj/fakeobject/lawrack,
 /obj/map/light/dimred,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "Q" = (
@@ -34,6 +38,12 @@
 	pixel_x = 1;
 	pixel_y = 10
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)
 "T" = (
@@ -44,6 +54,10 @@
 	},
 /obj/item/paper/spaceodyssey{
 	pixel_y = -1
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/circuit/red,
 /area/dmm_suite/clear_area)

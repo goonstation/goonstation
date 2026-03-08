@@ -260,10 +260,10 @@
 		if(!do_after(user, 10 SECONDS))
 			return
 
-		C.use(4)
-		src.hacked = TRUE
-		src.locked = FALSE
-		src.update_overlays()
+		if(C.use(4))
+			src.hacked = TRUE
+			src.locked = FALSE
+			src.update_overlays()
 		return
 
 	else if (issnippingtool(W) && hacked)

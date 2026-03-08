@@ -99,6 +99,8 @@
 		..()
 		if(src.is_reinforced)
 			src.flags |= FLUID_DENSE
+		if(src.broken) // Map varedit broken
+			src.railing_break(src)
 		layerify()
 
 	Turn()

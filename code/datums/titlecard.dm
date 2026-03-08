@@ -38,6 +38,10 @@
 		overlay_image_url = "images/titlecards/battleroyale_titlecard.png"
 		is_game_mode = TRUE
 
+	test
+		overlay_image_url = "images/titlecards/testcard.png"
+		pixelated = FALSE
+
 /datum/titlecard/proc/set_pregame_html()
 	var/html = grabResource("html/pregame.html")
 	html = replacetext(html, "<!--main_img-->", {"<img id="main-img" src="[resource(src.image_url)]" style="[src.pixelated ? "image-rendering: pixelated;" : ""]">"})

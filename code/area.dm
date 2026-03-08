@@ -2834,7 +2834,7 @@ ABSTRACT_TYPE(/area/station/engine)
 	icon_state = "yellow"
 
 /area/station/engine/core/nuclear
-	name = "Nuclear reactor room"
+	name = "Nuclear Reactor Core"
 
 /area/station/engine/storage
 	name = "Engineering Storage"
@@ -4352,6 +4352,15 @@ ABSTRACT_TYPE(/area/mining)
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"
+
+	unpowered
+		requires_power = TRUE
+
+	no_default_light
+		ambient_light = null
+
+		unpowered
+			requires_power = TRUE
 
 	gravity_traction_partial
 		gforce_minimum = GFORCE_TRACTION_PARTIAL

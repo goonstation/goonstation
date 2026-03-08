@@ -363,11 +363,8 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/barracks)
 "Tz" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Weather Satellite"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"

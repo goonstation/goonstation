@@ -1594,27 +1594,27 @@
 		for (var/datum/gang_item/consumable/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Equipment</b></font></td></tr>"
 		for (var/datum/gang_item/equipment/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Weapons</b></font></td></tr>"
 		for (var/datum/gang_item/weapon/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Special</b></font></td></tr>"
 		for (var/datum/gang_item/special/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 
@@ -1828,7 +1828,7 @@
 				has_gang_headwear = TRUE
 			else if(istype(I, /obj/item/device/radio/headset))
 				var/obj/item/device/radio/headset/headset = I
-				if (istype(headset.wiretap, /obj/item/device/radio_upgrade/gang))
+				if (istype(headset.current_upgrade, /obj/item/device/radio_upgrade/gang))
 					has_gang_headset = TRUE
 
 		if(!has_gang_uniform)
@@ -1870,7 +1870,7 @@
 				else
 					user.put_in_hand_or_drop(headset)
 
-			if (headset.wiretap)
+			if (headset.current_upgrade)
 				headset.remove_radio_upgrade()
 			headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/gang(frequency = src.gang.gang_frequency))
 
