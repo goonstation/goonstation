@@ -17060,16 +17060,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/paper/book/from_file/the_trial{
-	pixel_x = 4;
-	pixel_y = 2
-	},
 /obj/item/device/camera_viewer{
-	pixel_x = -8;
 	pixel_y = 6
-	},
-/obj/item/paper/book/from_file/deep_blue_sea{
-	pixel_x = -2
 	},
 /obj/item/pen,
 /turf/simulated/floor/carpet,
@@ -25095,12 +25087,10 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/hangar/medical)
 "cXA" = (
-/obj/item/storage/wall/emergency{
-	dir = 4;
-	pixel_x = -31
-	},
-/turf/simulated/floor/escape{
-	dir = 9
+/obj/bookshelf,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
 	},
 /area/station/hallway/secondary/exit)
 "cXB" = (
@@ -26684,6 +26674,10 @@
 	dir = 5
 	},
 /area/station/hallway/primary/west)
+"efv" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "efw" = (
 /obj/item/raw_material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -28289,6 +28283,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"fkW" = (
+/obj/stool/chair/couch{
+	dir = 5
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "flf" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start/job/technical_trainee,
@@ -30918,6 +30920,24 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
+"hBQ" = (
+/obj/railing{
+	dir = 4
+	},
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/takeout{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_y = 1;
+	pixel_x = 4
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "hBR" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver)
@@ -32969,14 +32989,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/info)
-"jnU" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/mapping_helper/access/maint,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
 "jof" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/disposalpipe/segment/mail,
@@ -33635,14 +33647,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"jPN" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/light/runway_light/delay2,
-/turf/space/fluid,
-/area/space)
 "jQH" = (
 /obj/machinery/firealarm/directional/south,
 /obj/table/wood/auto/desk,
@@ -37813,6 +37817,23 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"nDn" = (
+/obj/table/wood/auto,
+/obj/item/luggable_computer{
+	pixel_y = 4
+	},
+/obj/item/paper/book/from_file/deep_blue_sea{
+	pixel_y = 3;
+	pixel_x = -3
+	},
+/obj/item/paper/book/from_file/the_trial{
+	pixel_y = 3;
+	pixel_x = 1
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "nDS" = (
 /obj/table/auto,
 /obj/item/coin{
@@ -38338,6 +38359,15 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/west)
+"ocH" = (
+/mob/living/critter/vending/snack,
+/obj/railing{
+	dir = 4
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "ocT" = (
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
@@ -40820,6 +40850,11 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/emergency)
+"qpu" = (
+/turf/simulated/floor/airless/stairs/wood{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "qqc" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/mail,
@@ -42349,6 +42384,14 @@
 /obj/stool/chair/comfy,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"rMw" = (
+/obj/stool/chair/couch{
+	dir = 10
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "rNc" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
@@ -45151,6 +45194,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
+"ueE" = (
+/obj/stool/chair/couch{
+	dir = 9
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "ueW" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -45995,6 +46046,15 @@
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"uUi" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black{
+	pixel_y = 3
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "uUw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46515,6 +46575,11 @@
 /obj/item/reagent_containers/food/snacks/burrito,
 /turf/simulated/floor/grass,
 /area/spacehabitat/owlery)
+"vye" = (
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/hallway/secondary/exit)
 "vyg" = (
 /obj/mesh/grille/steel,
 /turf/space/fluid,
@@ -111703,7 +111768,7 @@ avB
 tag
 avB
 avB
-avB
+byq
 nVP
 bAm
 bAm
@@ -112309,8 +112374,8 @@ aoj
 aoj
 rcP
 bzg
-bAo
-bAo
+byY
+byY
 bCM
 byo
 aqn
@@ -112320,8 +112385,8 @@ aqn
 bFU
 bFU
 bFU
-eLI
 aqn
+eLI
 aqn
 bFU
 bFU
@@ -112616,6 +112681,8 @@ byY
 bCN
 byq
 aqn
+aqn
+aqn
 bFU
 bFU
 bFU
@@ -112627,10 +112694,8 @@ bFU
 bFU
 bFU
 bFU
-bFU
-bFU
-bFU
-bFU
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -112913,10 +112978,11 @@ xRM
 vhF
 byi
 bzg
-byY
-byY
+bAo
+bAo
 bCM
 byq
+aqn
 aqn
 bFU
 bFU
@@ -112931,8 +112997,7 @@ bFU
 bFU
 bFU
 bFU
-bFU
-bFU
+aqn
 aqn
 aqn
 aqn
@@ -113214,7 +113279,7 @@ lbk
 aOO
 kPu
 byi
-bzi
+bzg
 byY
 byY
 bCM
@@ -113818,10 +113883,10 @@ mtk
 xRM
 fZb
 byi
-bzj
+bzi
 byY
 byY
-bCO
+bCM
 nVP
 aqn
 bFU
@@ -114124,7 +114189,7 @@ bzg
 byY
 byY
 bCM
-byq
+nVP
 aqn
 bFU
 bFU
@@ -114422,12 +114487,12 @@ aOO
 jNo
 kgn
 byi
-qeZ
+bzj
 byY
 byY
-bCM
-byo
-byq
+bCO
+nVP
+aqn
 bFU
 bFU
 bFU
@@ -114724,12 +114789,12 @@ aOO
 vVn
 qjH
 byi
-bWZ
+bzg
 byY
 byY
 bCM
-wRa
-fYf
+byq
+aqn
 bFU
 bFU
 bFU
@@ -115025,13 +115090,13 @@ jNo
 mPe
 mPe
 xtQ
-rcP
-bzg
+byi
+qeZ
 byY
 byY
-kLf
-oIU
-nVP
+bCM
+byo
+byq
 bFU
 bFU
 bFU
@@ -115328,12 +115393,12 @@ xRM
 aOO
 uKE
 byi
-bzk
+bWZ
 byY
 byY
 bCM
-mnx
-doK
+wRa
+fYf
 bFU
 bFU
 bFU
@@ -115629,13 +115694,13 @@ jNo
 mPe
 aOO
 fZb
-byi
-diY
-bAp
-bAp
-bCR
-byo
-byq
+rcP
+bzg
+byY
+byY
+kLf
+oIU
+nVP
 bFU
 bFU
 bFU
@@ -115932,12 +115997,12 @@ mPe
 mPe
 xRM
 byi
-nVP
-bAq
-bAq
-nVP
-byq
-aqn
+bzk
+byY
+byY
+bCM
+mnx
+doK
 bFU
 bFU
 bFU
@@ -116234,12 +116299,12 @@ svk
 gdv
 aOO
 byi
-bzf
-bAn
-bAn
-bCS
+diY
+bAp
+bAp
+bCR
+byo
 byq
-aqn
 bFU
 bFU
 bFU
@@ -116536,11 +116601,11 @@ vjC
 aoj
 hTm
 byi
-bzk
-bAo
-bAo
-bCQ
 nVP
+bAq
+bAq
+nVP
+byq
 aqn
 bFU
 bFU
@@ -116838,13 +116903,12 @@ mPe
 mPe
 pod
 byi
-bzg
-byY
-byY
-bCM
-nVP
+bzf
+bAn
+bAn
+bCS
+byq
 aqn
-aqn
 bFU
 bFU
 bFU
@@ -116858,7 +116922,8 @@ bFU
 bFU
 bFU
 bFU
-aqn
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -117140,27 +117205,27 @@ aoj
 mPe
 tUY
 byi
-bzg
-byY
-byY
-bCM
+bzk
+bAo
+bAo
+bCQ
 nVP
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -117446,23 +117511,23 @@ bzg
 byY
 byY
 bCM
-byq
+nVP
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -117739,32 +117804,32 @@ aqn
 aqn
 anx
 anx
-byq
+anx
+aOO
+piI
+aOO
 byi
-jnU
-byi
-byi
-bzk
+bzg
 byY
 byY
-bCQ
-byq
-byq
+bCM
 nVP
-byq
-byq
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -118043,29 +118108,29 @@ aqn
 aqn
 nVP
 cXA
-bAn
-ngC
-bAn
-yiS
+vye
+ueE
+efv
+bzg
 byY
 byY
-hbh
-bAn
-ngC
-bAn
-vNf
+bCM
 nVP
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -118344,27 +118409,27 @@ aqn
 aqn
 aqn
 nVP
-bzl
-bAp
-bAp
-bAp
-ikm
+uUi
+vye
+rMw
+efv
+bzg
 byY
 byY
-vqP
-bAp
-bAp
-bAp
-bCR
+bCM
 nVP
 aqn
 aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -118645,27 +118710,27 @@ aqn
 aqn
 aqn
 aqn
-byq
-cXB
-mEu
-cXB
-byq
+nVP
+nDn
+vye
+fkW
+efv
 bzg
-bAo
-bAo
+byY
+byY
 bCM
 byq
-cXB
-mEu
-cXB
-byq
 aqn
 aqn
 aqn
 aqn
 aqn
 aqn
-aqn
+bFU
+bFU
+bFU
+bFU
+bFU
 aqn
 aqn
 aqn
@@ -118948,18 +119013,18 @@ aqn
 aqn
 aqn
 byq
-bEa
+ocH
+qpu
+hBQ
 byq
-bEa
+bzk
+byY
+byY
+bCQ
 byq
-bzl
-bAp
-bAp
-bCR
 byq
-bEa
+nVP
 byq
-bEa
 byq
 aqn
 aqn
@@ -119249,20 +119314,20 @@ aqn
 aqn
 aqn
 aqn
-byq
-bEc
-byq
-bEc
-byq
 nVP
-oID
-oID
+bzf
+bAn
+bAn
+bAn
+yiS
+byY
+byY
+hbh
+bAn
+ngC
+bAn
+vNf
 nVP
-byq
-bEc
-byq
-bEc
-byq
 aqn
 aqn
 aqn
@@ -119551,20 +119616,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aBF
-aqn
-aqn
-aqn
-aqn
+nVP
+bzl
+bAp
+bAp
+bAp
+ikm
+byY
+byY
+vqP
+bAp
+bAp
+bAp
+bCR
+nVP
 aqn
 aqn
 aqn
@@ -119853,20 +119918,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-jPN
-aqn
-aqn
-aqn
-aqn
+byq
+cXB
+mEu
+cXB
+byq
+bzg
+bAo
+bAo
+bCM
+byq
+cXB
+mEu
+cXB
+byq
 aqn
 aqn
 aqn
@@ -120155,20 +120220,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aBF
-aqn
-aqn
-aqn
-aqn
+byq
+bEa
+byq
+bEa
+byq
+bzl
+bAp
+bAp
+bCR
+byq
+bEa
+byq
+bEa
+byq
 aqn
 aqn
 aqn
@@ -120457,20 +120522,20 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-aqn
-bEb
-aqn
-aqn
-aqn
-aqn
+byq
+bEc
+byq
+bEc
+byq
+nVP
+oID
+oID
+nVP
+byq
+bEc
+byq
+bEc
+byq
 aqn
 aqn
 aqn
@@ -120768,7 +120833,7 @@ aqn
 aqn
 aqn
 aqn
-iMf
+aBF
 aqn
 aqn
 aqn
@@ -121070,7 +121135,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+bEb
 aqn
 aqn
 aqn
@@ -121372,7 +121437,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+iMf
 aqn
 aqn
 aqn
