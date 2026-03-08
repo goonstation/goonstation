@@ -1346,7 +1346,7 @@
 "NG" = (
 /mob/living/critter/aquatic/fish/clown{
 	name = "Steve";
-	desc = "It's steve! the only remaining survivor of the Nanotrasen transit shuttle aquarium. This is a clownfish, not a gold fish, i guess they don't care as much as they want you to believe"
+	desc = "It's steve! The only remaining survivor of the Nanotrasen transit shuttle aquarium. This is a clownfish, not a goldfish, I guess they don't care as much as they want you to believe"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "grass_lush";
@@ -1504,7 +1504,7 @@
 "SU" = (
 /mob/living/critter/small_animal/iguana{
 	name = "Michael";
-	desc = "It's Michael the space isguana"
+	desc = "It's Michael the space iguana"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "grass_lush";
