@@ -3949,7 +3949,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
 				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
-				if(!src.armory_auth && (!IS_IT_SATURDAY))
+				if(!src.armory_auth && (IS_IT_SATURDAY))
 					var/ircmsg[] = new()
 					ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
