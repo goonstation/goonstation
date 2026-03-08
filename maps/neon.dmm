@@ -10266,12 +10266,6 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
-"hrA" = (
-/obj/mapping_helper/algae,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
 "hrC" = (
 /obj/landmark/bill_spawn,
 /turf/simulated/floor/shuttlebay{
@@ -97273,7 +97267,7 @@ oup
 qpn
 qpn
 qpn
-hrA
+pxf
 wgu
 srp
 jgT
