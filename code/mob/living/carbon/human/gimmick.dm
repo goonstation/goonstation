@@ -1047,7 +1047,6 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 // Basketball whitehole NPC
 /mob/living/carbon/human/referee
 	is_npc = TRUE
-	uses_mobai = TRUE
 	gender = MALE
 	real_name = "Bill Ballerson"
 
@@ -1083,7 +1082,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		if(isdead(src))
 			return
-		if(prob(70))
+		if(prob(50))
 			say(pick("ASSAULT! ASSAULT ON AN OFFICIAL!","FOUL! FOUL! FOUL!","FLAGRANT FOUL!","GET THE HELL OFF MY COURT"))
 
 #undef BILL_PICK
