@@ -202,6 +202,13 @@ TYPEINFO(/obj/item/baton)
 				FLICK(flick_baton_active, src)
 				JOB_XP(victim, "Clown", 3)
 
+			if ("stun_backfire") //emag effect
+				user.visible_message(SPAN_ALERT("<B>[user] tries to stun [victim] with the [src.name] but somehow stuns [himself_or_herself(user)] instead!</B>"))
+				logTheThing(LOG_COMBAT, user, "tries to stun [constructTarget(victim,"combat")] with the emagged [src.name] but stuns themselves at [log_loc(user)].")
+				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
+				FLICK(flick_baton_active, src)
+				JOB_XP(user, "Head of Security", 3)
+
 			else
 				logTheThing(LOG_DEBUG, user, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 				return
@@ -267,6 +274,27 @@ TYPEINFO(/obj/item/baton)
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, target, "failed", 1)
 			JOB_XP(user, "Clown", 1)
+			return
+
+		if (src.emagged)
+			switch (user.a_intent)
+				if ("harm")
+					// Looks flipped/dangerous but actually works normally
+					if (!src.is_active || (src.is_active && src.can_stun() == 0))
+						src.do_stun(user, target, "failed_stun", 1)
+					else
+						if (user.mind && target.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == target.mind))
+							boutput(user, SPAN_ALERT("You cannot harm your master!"))
+							return
+						if (target.do_dodge(user, src) || target.parry_or_dodge(user, src))
+							return
+						src.do_stun(user, target, "stun", 2)
+				else
+					// Looks normal/safe but stuns the user
+					if (!src.is_active || (src.is_active && src.can_stun() == 0))
+						src.do_stun(user, target, "failed_stun", 1)
+					else
+						src.do_stun(user, target, "stun_backfire", 1)
 			return
 
 		switch (user.a_intent)
@@ -342,27 +370,15 @@ TYPEINFO(/obj/item/baton)
 			boutput(user, SPAN_ALERT("You jam [E] into [src]'s charging port."))
 			src.emagged = TRUE
 			playsound(src, "sparks", 75, 1, -1)
-			src.desc = "For some reason you can't figure out how to recharge this thing."
-			var/datum/component/cell_holder/CH = GetComponent(/datum/component/cell_holder)
 			if (src.name == "extendable stun baton")
 				src.name = pick("extendable batong","extensible stong baton","extensive stun batong")
-				if (CH?.cell)
-					var/datum/component/power_cell/PCC = CH.cell.GetComponent(/datum/component/power_cell)
-					if (PCC)
-						PCC.recharge_rate = 0
 			else if (src.name == "stun cane")
 				src.name = "long batong"
-				if (CH?.cell)
-					var/datum/component/power_cell/PCC = CH.cell.GetComponent(/datum/component/power_cell)
-					if (PCC)
-						PCC.recharge_rate = 0
 			else
 				src.name = pick("batong","stong baton","stung baton","stun batong")
-				if (CH)
-					CH.can_be_recharged = FALSE
-					CH.swappable_cell = FALSE
 			return TRUE
 		return FALSE
+
 
 
 
