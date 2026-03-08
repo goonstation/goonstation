@@ -859,7 +859,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		),
 		"basketball" = list(
 			/obj/item/basketball = 15,
-			/obj/item/bballbasket = 6,
+			/obj/item/bballbasket = 4,
 			/obj/item/clothing/under/referee = 3,
 			/obj/item/clothing/under/jersey/red = 5,
 			/obj/item/clothing/under/jersey/green = 5,
@@ -868,12 +868,12 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/clothing/shoes/white = 2,
 			/obj/newmeteor/basketball = 4,
 			/obj/item/trophy = 1,
-			/obj/item/instrument/whistle = 5,
+			/obj/item/instrument/whistle = 4,
 			/obj/item/instrument/bikehorn/airhorn = 3,
 			/obj/item/basketball/lethal = 0.3,
 			/obj/item/plutonium_core = 0.01,
-			/obj/item/reagent_containers/food/snacks/hotdog = 2,
-			/obj/item/reagent_containers/food/drinks/energyshake = 2,
+			/obj/item/reagent_containers/food/snacks/hotdog = 3,
+			/obj/item/reagent_containers/food/drinks/energyshake = 3,
 			/mob/living/carbon/human/referee = 1
 		),
 	)
