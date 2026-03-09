@@ -1,4 +1,5 @@
 #ifdef SEASON_SPRING
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/sundress)
 /datum/clothingbooth_item/w_uniform/sundress
 	name = "Sundress"
@@ -30,7 +31,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/poetshirt)
 	white
 		name = "White"
 		swatch_background_color = "#e9e9e9"
-		item_path = /obj/item/clothing/under/misc/poetshirt/white
+		item_path = /obj/item/clothing/under/misc/poetshirt
 
 	yellow
 		name = "Yellow"
