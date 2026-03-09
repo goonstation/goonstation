@@ -100,7 +100,8 @@
 /area/station/medical/morgue)
 "p" = (
 /obj/landmark/start/job/medical_trainee,
-/obj/disposalpipe/segment,
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "q" = (
@@ -168,7 +169,6 @@
 /area/station/medical/medbay/psychiatrist)
 "w" = (
 /obj/machinery/firealarm/directional/east,
-/obj/disposalpipe/trunk,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "x" = (
@@ -338,6 +338,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/trunk,
+/obj/machinery/disposal/small/east,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/medbay/psychiatrist)
 "Q" = (

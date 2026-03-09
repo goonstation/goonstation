@@ -280,7 +280,6 @@
 /area/station/crewquarters/cryotron)
 "U" = (
 /obj/landmark/start/latejoin,
-/obj/landmark/observer,
 /obj/cable{
 	icon_state = "1-2"
 	},

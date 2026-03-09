@@ -13,6 +13,7 @@
 /area/station/crew_quarters/catering)
 "d" = (
 /obj/machinery/chem_master,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "e" = (
@@ -74,6 +75,7 @@
 /area/station/crew_quarters/catering)
 "l" = (
 /obj/machinery/chem_dispenser/chef,
+/obj/machinery/camera/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "n" = (
