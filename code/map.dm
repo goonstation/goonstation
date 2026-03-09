@@ -973,6 +973,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/probstation
 	name = "probstation"
 	goonhub_map = "/maps" //good fucking luck
+	arrivals_type = MAP_SPAWN_CRYO
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
 
