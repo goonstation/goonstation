@@ -24,6 +24,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"g" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/rancher,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "h" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -42,6 +52,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "k" = (
@@ -311,6 +322,8 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "X" = (
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "Y" = (
@@ -381,7 +394,7 @@ l
 v
 F
 j
-V
+g
 "}
 (6,1,1) = {"
 a

@@ -26,13 +26,17 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "eN" = (
-/obj/storage/closet/port_a_sci,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -128,6 +132,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "ss" = (
@@ -190,6 +195,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -204,6 +210,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "wu" = (
@@ -243,6 +250,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -258,6 +266,7 @@
 	dir = 10
 	},
 /obj/landmark/start/job/assistant,
+/obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -307,6 +316,9 @@
 	},
 /obj/landmark/start/job/assistant,
 /obj/machinery/light/incandescent/cool,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/science/teleporter/foyer)
 "Eo" = (
@@ -340,15 +352,14 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "EQ" = (
-/obj/shrub{
-	dir = 1
-	},
 /obj/cable,
 /obj/machinery/light_switch/east,
 /obj/machinery/power/apc/autoname_south,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor,
 /area/station/science/teleporter/foyer)
 "Fd" = (
@@ -435,13 +446,29 @@
 /area/station/science/teleporter)
 "KM" = (
 /obj/machinery/light_switch/north,
+/obj/storage/closet/port_a_sci,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "Mf" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/jen/purple,
+/area/station/science/teleporter)
+"Pd" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	id = "telepub";
+	name = "Teleporter Lockdown Shutter";
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "PR" = (
 /obj/item/device/camera_viewer/telesci{
@@ -522,6 +549,13 @@
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
+/area/station/science/teleporter)
+"Wz" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "WB" = (
 /turf/simulated/floor/purple/side{
@@ -623,14 +657,14 @@ EL
 jb
 RB
 aV
-SG
+Pd
 Mf
 "}
 (6,1,1) = {"
 jb
 Hz
 rv
-bS
+Wz
 wa
 xn
 vu

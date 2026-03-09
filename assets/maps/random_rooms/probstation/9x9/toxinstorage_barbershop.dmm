@@ -147,6 +147,13 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
+"u" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
 "v" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -201,6 +208,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -241,6 +249,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "J" = (
@@ -250,6 +259,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "K" = (
@@ -285,6 +295,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -312,6 +325,16 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"S" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal/small/south,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
 "T" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -363,6 +386,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/wall/auto/jen,
 /area/station/science/storage)
 
@@ -418,7 +442,7 @@ c
 D
 Z
 I
-l
+u
 J
 "}
 (6,1,1) = {"
@@ -437,7 +461,7 @@ B
 k
 L
 U
-K
+S
 Y
 a
 v

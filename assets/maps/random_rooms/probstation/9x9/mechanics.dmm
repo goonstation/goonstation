@@ -66,6 +66,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -134,6 +135,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -148,6 +150,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light/incandescent,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -184,6 +187,9 @@
 	dir = 1
 	},
 /obj/landmark/start/job/engineer,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -191,6 +197,8 @@
 "pJ" = (
 /obj/machinery/manufacturer/mechanic,
 /obj/machinery/light/incandescent,
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal/small/east,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -200,6 +208,7 @@
 	icon_state = "1-2"
 	},
 /obj/submachine/cargopad/mechanics,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -208,6 +217,9 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
 	icon_state = "line1"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -220,6 +232,7 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -231,6 +244,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "tz" = (
@@ -406,6 +420,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/corner,
 /area/station/engine/elect)
 "Rs" = (
@@ -458,6 +473,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},

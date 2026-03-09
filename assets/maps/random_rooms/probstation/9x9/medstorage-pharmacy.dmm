@@ -20,6 +20,7 @@
 /area/station/medical/medbay/pharmacy)
 "b" = (
 /obj/landmark/start/job/medical_trainee,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "c" = (
@@ -30,6 +31,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "e" = (
@@ -45,6 +47,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/junction/middle/south,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "g" = (
@@ -132,6 +135,9 @@
 	pixel_x = 28;
 	pixel_y = 4
 	},
+/obj/machinery/light_switch/south{
+	pixel_x = -11
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "p" = (
@@ -141,6 +147,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "q" = (
@@ -183,11 +190,15 @@
 /area/station/medical/medbay/surgery/storage)
 "u" = (
 /obj/landmark/start/job/medical_doctor,
+/obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "v" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
@@ -204,11 +215,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "y" = (
 /obj/machinery/chem_master,
-/obj/machinery/light_switch/south,
+/obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk/north,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "z" = (
@@ -325,11 +338,17 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "M" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
@@ -386,6 +405,8 @@
 /obj/storage/cart/medcart/crash,
 /obj/item_dispenser/latex_gloves,
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "S" = (
@@ -402,6 +423,13 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
+"T" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
 "U" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -413,6 +441,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "V" = (
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "W" = (
@@ -420,6 +449,7 @@
 /area/station/medical/medbay/pharmacy)
 "X" = (
 /obj/machinery/light/incandescent/cool,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "Y" = (
@@ -451,7 +481,7 @@ k
 R
 V
 b
-M
+T
 X
 u
 i

@@ -15,11 +15,22 @@
 "b" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/morgue)
+"c" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "d" = (
 /obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"e" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "f" = (
@@ -34,6 +45,13 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"h" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "i" = (
@@ -82,6 +100,7 @@
 /area/station/medical/morgue)
 "p" = (
 /obj/landmark/start/job/medical_trainee,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "q" = (
@@ -149,6 +168,7 @@
 /area/station/medical/medbay/psychiatrist)
 "w" = (
 /obj/machinery/firealarm/directional/east,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "x" = (
@@ -158,6 +178,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "y" = (
@@ -221,6 +242,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/psychiatrist)
 "F" = (
@@ -242,6 +264,7 @@
 	dir = 4;
 	pixel_x = -21
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/psychiatrist)
 "G" = (
@@ -260,6 +283,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "J" = (
@@ -313,6 +337,7 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/medbay/psychiatrist)
 "Q" = (
@@ -323,6 +348,9 @@
 /obj/mapping_helper/access/morgue,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
@@ -349,6 +377,7 @@
 "T" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "U" = (
@@ -416,8 +445,8 @@ b
 t
 w
 p
-A
-j
+h
+c
 I
 T
 b
@@ -430,7 +459,7 @@ b
 Q
 b
 M
-q
+e
 x
 "}
 (6,1,1) = {"

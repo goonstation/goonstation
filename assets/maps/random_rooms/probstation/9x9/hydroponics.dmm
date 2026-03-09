@@ -22,6 +22,13 @@
 "f" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hydroponics/bay)
+"g" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "i" = (
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -36,11 +43,29 @@
 /obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"n" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "o" = (
 /obj/machinery/plantpot{
 	anchored = 1
 	},
 /obj/machinery/camera/directional/east,
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"p" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "q" = (
@@ -97,6 +122,7 @@
 /area/station/hydroponics/bay)
 "y" = (
 /obj/machinery/firealarm/directional/east,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/wide/green/other,
 /area/station/hydroponics/bay)
 "z" = (
@@ -115,10 +141,8 @@
 	dir = 5
 	},
 /obj/landmark/start/job/botanist,
-/obj/machinery/phone/wall{
-	pixel_x = 25;
-	pixel_y = 3
-	},
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "B" = (
@@ -135,6 +159,14 @@
 	pixel_x = 28;
 	pixel_y = 3
 	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
+"D" = (
+/obj/machinery/hydro_growlamp,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "E" = (
@@ -147,6 +179,15 @@
 "F" = (
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/stairs/wide/green,
+/area/station/hydroponics/bay)
+"G" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "H" = (
 /obj/machinery/hydro_growlamp,
@@ -191,6 +232,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "S" = (
@@ -209,6 +251,10 @@
 /area/station/hydroponics/bay)
 "U" = (
 /obj/machinery/vending/hydroponics,
+/obj/machinery/phone/wall{
+	pixel_x = 25;
+	pixel_y = 3
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "V" = (
@@ -298,8 +344,8 @@ L
 m
 Y
 Y
-Y
-V
+p
+n
 "}
 (6,1,1) = {"
 f
@@ -309,7 +355,7 @@ w
 W
 i
 B
-B
+G
 f
 "}
 (7,1,1) = {"
@@ -320,7 +366,7 @@ w
 P
 i
 B
-H
+D
 a
 "}
 (8,1,1) = {"
@@ -328,7 +374,7 @@ f
 U
 A
 y
-W
+g
 C
 R
 o

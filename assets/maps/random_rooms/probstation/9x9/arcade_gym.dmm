@@ -48,6 +48,10 @@
 /obj/item/cable_coil/cut/small,
 /obj/decal/cleanable/oil,
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "i" = (
@@ -77,6 +81,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "p" = (
@@ -90,6 +95,9 @@
 	},
 /obj/item/wrench{
 	pixel_x = 4
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -113,8 +121,31 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "t" = (
+/obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"u" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
+"v" = (
+/obj/fitness/weightlifter,
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor,
+/area/station/crew_quarters/fitness)
+"w" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/junction/middle/south,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "x" = (
 /obj/fitness/speedbag/syndie,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -127,6 +158,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/station/crew_quarters/arcade)
 "z" = (
@@ -140,6 +172,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "B" = (
@@ -160,6 +193,9 @@
 "F" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -183,6 +219,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "L" = (
@@ -205,6 +244,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "P" = (
@@ -215,6 +255,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "Q" = (
@@ -223,6 +264,12 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -256,6 +303,9 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
 "W" = (
@@ -273,6 +323,10 @@
 /obj/cable,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
+"Y" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "Z" = (
 /obj/rack,
 /obj/item/bballbasket,
@@ -317,7 +371,7 @@ z
 g
 y
 t
-W
+u
 p
 Z
 j
@@ -330,7 +384,7 @@ I
 p
 V
 p
-D
+v
 o
 O
 "}
@@ -339,7 +393,7 @@ z
 f
 q
 p
-Q
+w
 P
 A
 T
@@ -348,7 +402,7 @@ a
 (7,1,1) = {"
 z
 h
-t
+Y
 p
 F
 l

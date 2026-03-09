@@ -18,6 +18,22 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"d" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters)
+"e" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction/right/west,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters)
 "h" = (
 /obj/machinery/door_control/bolter/new_walls/south{
 	pixel_y = 25;
@@ -38,12 +54,29 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"k" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction/middle/east,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters)
+"l" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters)
 "m" = (
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
@@ -52,15 +85,26 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/camera/directional/north,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "q" = (
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quarters)
+"r" = (
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "s" = (
 /obj/machinery/door/airlock/pyro/alt{
 	id = "crewquarters_2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "t" = (
@@ -78,6 +122,11 @@
 "v" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
+/area/station/crew_quarters/quarters)
+"x" = (
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "y" = (
 /obj/machinery/power/apc/autoname_east,
@@ -134,6 +183,13 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"K" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters)
 "L" = (
 /obj/storage/crate,
 /obj/item/clothing/mask/horse_mask,
@@ -153,10 +209,18 @@
 	icon_state = "purple2"
 	},
 /area/station/crew_quarters/quarters)
+"Q" = (
+/obj/machinery/light/small/sticky{
+	dir = 4
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quarters)
 "R" = (
 /obj/machinery/door/airlock/pyro/alt{
 	id = "crewquarters_3"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "S" = (
@@ -182,6 +246,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/junction/middle/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "V" = (
@@ -189,6 +254,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "W" = (
@@ -196,6 +262,8 @@
 	pixel_x = -27;
 	pixel_y = 3
 	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "purple2"
@@ -205,6 +273,7 @@
 /obj/machinery/door/airlock/pyro/alt{
 	id = "crewquarters_1"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "Y" = (
@@ -249,9 +318,9 @@ Z
 (2,1,1) = {"
 Z
 S
-q
+r
 X
-D
+k
 W
 T
 Y
@@ -285,17 +354,17 @@ G
 y
 F
 U
-F
+K
 V
-F
-F
+K
+K
 "}
 (6,1,1) = {"
 Z
 Z
 Z
 Z
-D
+d
 Z
 Z
 Z
@@ -306,18 +375,18 @@ Z
 B
 q
 Z
-D
+e
 R
-q
+x
 L
 Z
 "}
 (8,1,1) = {"
 Z
 c
-t
+Q
 s
-D
+l
 Z
 j
 H

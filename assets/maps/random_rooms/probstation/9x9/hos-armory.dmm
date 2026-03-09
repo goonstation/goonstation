@@ -135,6 +135,9 @@
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/button/area,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/hos)
 "q" = (
@@ -152,6 +155,9 @@
 "s" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -173,6 +179,9 @@
 "u" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "v" = (
@@ -191,6 +200,9 @@
 "x" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/hos)
@@ -213,6 +225,13 @@
 "A" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "B" = (
@@ -265,16 +284,22 @@
 "G" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "I" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/security/hos)
 "J" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -284,6 +309,7 @@
 /obj/machinery/light_switch/east{
 	pixel_y = 3
 	},
+/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -327,6 +353,7 @@
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/button/area,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/wood/seven,
 /area/station/security/hos)
 "P" = (
@@ -342,6 +369,7 @@
 /obj/machinery/light_switch/east{
 	pixel_y = 6
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/security/hos)
 "Q" = (
@@ -405,6 +433,10 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	pixel_y = 24
+	},
+/obj/disposalpipe/trunk,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/security/hos)

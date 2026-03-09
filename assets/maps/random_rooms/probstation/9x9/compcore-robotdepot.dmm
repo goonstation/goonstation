@@ -48,6 +48,7 @@
 /obj/item/parts/robot_parts/arm/right/standard,
 /obj/item/parts/robot_parts/arm/right/standard,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "g" = (
@@ -67,6 +68,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
+"i" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/wall/auto/jen/dark4,
+/area/station/science/bot_storage)
 "j" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
@@ -131,6 +136,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "r" = (
@@ -263,6 +269,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "F" = (
@@ -349,6 +356,7 @@
 	pixel_x = -24;
 	pixel_y = 20
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "N" = (
@@ -370,6 +378,13 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"P" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "Q" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
@@ -398,6 +413,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
+"T" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/wall/auto/reinforced/jen/dark4,
+/area/station/turret_protected/Zeta)
 "U" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -413,6 +432,10 @@
 /obj/machinery/light/incandescent/cool,
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/disposalpipe/trunk,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -504,18 +527,18 @@ j
 h
 Y
 W
-W
+T
 "}
 (6,1,1) = {"
 m
 V
 q
 M
-z
+P
 E
 E
 f
-m
+i
 "}
 (7,1,1) = {"
 m

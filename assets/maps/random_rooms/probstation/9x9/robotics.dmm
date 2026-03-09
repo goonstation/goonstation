@@ -23,6 +23,10 @@
 	},
 /obj/machinery/portable_reclaimer,
 /obj/submachine/cargopad/robotics,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "c" = (
@@ -345,6 +349,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "J" = (
@@ -389,6 +394,7 @@
 /obj/machinery/door/airlock/pyro/medical/alt,
 /obj/mapping_helper/access/robotics,
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "P" = (
@@ -398,6 +404,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "Q" = (
@@ -466,6 +473,7 @@
 	dir = 1
 	},
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "W" = (

@@ -23,12 +23,14 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "f" = (
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 6
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "g" = (
@@ -108,6 +110,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "s" = (
@@ -143,6 +146,7 @@
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 5
 	},
+/obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "w" = (
@@ -206,6 +210,9 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "D" = (
@@ -238,10 +245,11 @@
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "G" = (
-/obj/machinery/firealarm/directional/west,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "H" = (
@@ -299,6 +307,13 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
+"N" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
 "O" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -353,6 +368,7 @@
 	pixel_x = -7;
 	pixel_y = 2
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "T" = (
@@ -407,6 +423,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "Z" = (
@@ -415,6 +432,9 @@
 	},
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 9
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
@@ -435,7 +455,7 @@ p
 S
 B
 G
-T
+N
 f
 r
 v

@@ -126,6 +126,13 @@
 "t" = (
 /turf/simulated/floor/greenblack,
 /area/station/medical/research)
+"u" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "v" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -185,6 +192,8 @@
 	icon_state = "line2"
 	},
 /obj/machinery/camera/directional/south,
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/cloner)
 "D" = (
@@ -196,6 +205,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "E" = (
@@ -406,7 +416,7 @@ b
 k
 O
 v
-v
+u
 D
 "}
 (6,1,1) = {"

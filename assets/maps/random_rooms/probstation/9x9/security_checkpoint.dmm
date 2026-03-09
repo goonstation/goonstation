@@ -69,6 +69,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint)
 "fb" = (
@@ -85,6 +88,7 @@
 	pixel_y = -15
 	},
 /obj/landmark/start/job/security_assistant,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -94,6 +98,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/reagent_containers/food/drinks/water,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -140,12 +145,14 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint)
 "mw" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/security/checkpoint)
 "mz" = (
@@ -231,8 +238,8 @@
 /area/station/security/checkpoint)
 "uu" = (
 /obj/machinery/light/incandescent/warm,
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -263,6 +270,7 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint)
 "Ev" = (
+/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -272,10 +280,11 @@
 /area/station/security/checkpoint)
 "Ix" = (
 /obj/machinery/power/apc/autoname_east,
-/obj/submachine/weapon_vendor/security,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -288,6 +297,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor,
 /area/station/security/checkpoint)
 "JT" = (
@@ -366,6 +376,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint)
 "SH" = (
@@ -409,6 +422,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
 "TD" = (

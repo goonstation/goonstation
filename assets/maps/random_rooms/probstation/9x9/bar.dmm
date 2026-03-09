@@ -16,11 +16,22 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred6"
 	},
 /area/station/crew_quarters/jazz)
+"d" = (
+/obj/stool/bar,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
 "e" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred6"
@@ -80,6 +91,11 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/jazz)
+"m" = (
+/obj/table/reinforced/bar/auto,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
 "n" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine{
@@ -92,6 +108,13 @@
 	pixel_y = 2;
 	pixel_x = 8
 	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"o" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "p" = (
@@ -137,6 +160,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/jazz)
 "w" = (
@@ -145,6 +169,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/jazz)
 "x" = (
@@ -181,6 +206,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "D" = (
@@ -210,6 +236,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/carpet{
 	icon_state = "fred6"
 	},
@@ -252,6 +279,10 @@
 	pixel_y = 5;
 	pixel_x = -3
 	},
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "Q" = (
@@ -286,6 +317,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "V" = (
@@ -308,6 +340,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
+"Y" = (
+/obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor/carpet{
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
 
 (1,1,1) = {"
 a
@@ -369,18 +408,18 @@ a
 s
 g
 f
-Q
+d
 I
 t
-e
+Y
 y
 "}
 (7,1,1) = {"
 a
 P
 C
-f
-D
+m
+o
 p
 A
 b

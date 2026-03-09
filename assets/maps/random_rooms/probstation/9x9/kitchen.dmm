@@ -65,8 +65,9 @@
 	},
 /area/station/crew_quarters/kitchen)
 "j" = (
-/mob/living/critter/small_animal/mouse/remy,
 /obj/machinery/camera/directional/west,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -88,6 +89,22 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
+"m" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
 "n" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -100,6 +117,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "p" = (
@@ -110,6 +128,13 @@
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
+/area/station/crew_quarters/kitchen)
+"q" = (
+/mob/living/critter/small_animal/mouse/remy,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "r" = (
 /obj/cable{
@@ -134,6 +159,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "u" = (
@@ -146,9 +172,26 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
+/area/station/crew_quarters/kitchen)
+"w" = (
+/obj/landmark/start/job/chef,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"x" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "y" = (
 /obj/cable{
@@ -175,6 +218,8 @@
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -272,6 +317,7 @@
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -297,6 +343,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -347,7 +394,7 @@ D
 "}
 (2,1,1) = {"
 D
-u
+b
 j
 p
 h
@@ -359,7 +406,7 @@ D
 (3,1,1) = {"
 D
 e
-R
+w
 g
 Y
 g
@@ -369,8 +416,8 @@ D
 "}
 (4,1,1) = {"
 D
-b
-g
+u
+q
 Q
 G
 s
@@ -381,7 +428,7 @@ D
 (5,1,1) = {"
 k
 n
-o
+x
 o
 t
 o
@@ -397,7 +444,7 @@ T
 T
 T
 f
-N
+m
 D
 "}
 (7,1,1) = {"

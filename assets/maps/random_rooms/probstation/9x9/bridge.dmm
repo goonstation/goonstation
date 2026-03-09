@@ -98,6 +98,9 @@
 	dir = 4
 	},
 /obj/landmark/start/job/head_of_personnel,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge)
 "j" = (
@@ -113,6 +116,11 @@
 	pixel_y = 10
 	},
 /obj/item/kitchen/food_box/sugar_box,
+/turf/simulated/floor/black,
+/area/station/bridge)
+"l" = (
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "m" = (
@@ -257,6 +265,7 @@
 	pixel_x = -15
 	},
 /obj/mapping_helper/button/area,
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge)
 "z" = (
@@ -368,6 +377,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor/cool,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/bridge)
 "J" = (
@@ -414,12 +424,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/bridge)
 "P" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/bridge)
 "Q" = (
@@ -488,6 +500,9 @@
 "X" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/phone,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se,
 /area/station/bridge)
 "Y" = (
@@ -527,7 +542,7 @@ B
 w
 d
 S
-t
+l
 k
 m
 A
