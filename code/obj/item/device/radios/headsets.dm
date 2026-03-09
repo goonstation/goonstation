@@ -355,8 +355,37 @@
 	name = "civilian headset"
 	desc = "These headsets are used by the civilian staff, who are employed to keep the station clean, fed, and productive. As if."
 	icon_state = "civ headset"
+	wear_state = "civ headset" //So the unique ones keep the civilian worn icon
 	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
 	icon_tooltip = "Civilian"
+
+/obj/item/device/radio/headset/civilian/chaplain
+	name = "chaplain headset"
+	desc = "For communication with higher powers, the clown, or both." // Higher powers, aka Command.
+	icon_override = "chaplain"
+	icon_state = "chaplain headset"
+	icon_tooltip = "Chaplain"
+
+/obj/item/device/radio/headset/civilian/hydroponics
+	name = "hydroponics headset"
+	desc = "Unlike money, these do not grow on trees."
+	icon_override = "hydroponics"
+	icon_state = "hydroponics headset"
+	icon_tooltip = "Hydroponics"
+
+/obj/item/device/radio/headset/civilian/catering
+	name = "catering headset"
+	desc = "Used by catering staff to request plants from hydroponics, but they're probably too busy growing weed"
+	icon_override = "catering"
+	icon_state = "catering headset"
+	icon_tooltip = "Catering"
+
+/obj/item/device/radio/headset/civilian/janitor
+	name = "janitor headset"
+	desc = "A headset perfect for hearing the clown's cry over spilt milk. It is polished so well you can see your face in it."
+	icon_override = "janitor"
+	icon_state = "janitor headset"
+	icon_tooltip = "Janitor"
 
 /obj/item/device/radio/headset/shipping
 	name = "shipping headset"
