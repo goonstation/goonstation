@@ -190,7 +190,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	icon_state = "raincoat-yellow"
 	item_state = "raincoat-yellow"
 	body_parts_covered = TORSO|ARMS
-	rcolor = "yellow"
+	var/rcolor = "yellow"
 	New()
 		..()
 		setProperty("chemprot", 10)
