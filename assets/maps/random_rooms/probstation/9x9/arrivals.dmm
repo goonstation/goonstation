@@ -1,0 +1,404 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/jen/cyan,
+/area/station/crewquarters/cryotron)
+"b" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = -8
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 8
+	},
+/area/station/crewquarters/cryotron)
+"c" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/item/device/radio/intercom{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/unsimulated/floor/green/side,
+/area/station/crewquarters/cryotron)
+"e" = (
+/obj/storage/secure/closet/personal,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/checker{
+	dir = 4
+	},
+/area/station/crewquarters/cryotron)
+"f" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/station/crewquarters/cryotron)
+"g" = (
+/turf/unsimulated/floor/green/corner{
+	dir = 4
+	},
+/area/station/crewquarters/cryotron)
+"h" = (
+/obj/stool/chair{
+	dir = 4;
+	tag = "icon-chair (EAST)"
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/landmark/start/job/assistant,
+/turf/unsimulated/floor/green/side,
+/area/station/crewquarters/cryotron)
+"i" = (
+/obj/stool/chair{
+	dir = 4;
+	tag = "icon-chair (EAST)"
+	},
+/obj/landmark/start/job/assistant,
+/turf/unsimulated/floor/green/side{
+	dir = 10
+	},
+/area/station/crewquarters/cryotron)
+"j" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 9
+	},
+/area/station/crewquarters/cryotron)
+"k" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/station/crewquarters/cryotron)
+"m" = (
+/obj/storage/closet/emergency,
+/obj/item/crowbar,
+/obj/item/storage/toolbox/emergency,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/unsimulated/floor/green,
+/area/station/crewquarters/cryotron)
+"p" = (
+/obj/cryotron,
+/turf/unsimulated/floor/green,
+/area/station/crewquarters/cryotron)
+"q" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
+/area/station/crewquarters/cryotron)
+"r" = (
+/turf/unsimulated/floor/green,
+/area/station/crewquarters/cryotron)
+"s" = (
+/obj/storage/closet/emergency,
+/obj/item/crowbar,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor/green,
+/area/station/crewquarters/cryotron)
+"t" = (
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/station/crewquarters/cryotron)
+"u" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/unsimulated/floor/green/corner{
+	dir = 8
+	},
+/area/station/crewquarters/cryotron)
+"v" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/side,
+/area/station/crewquarters/cryotron)
+"w" = (
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 8
+	},
+/area/station/crewquarters/cryotron)
+"x" = (
+/turf/unsimulated/floor/green/corner{
+	dir = 1
+	},
+/area/station/crewquarters/cryotron)
+"z" = (
+/obj/machinery/light/incandescent/warm,
+/turf/unsimulated/floor/green/side{
+	dir = 4
+	},
+/area/station/crewquarters/cryotron)
+"A" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/unsimulated/floor/green/side{
+	dir = 6
+	},
+/area/station/crewquarters/cryotron)
+"B" = (
+/turf/unsimulated/floor/green/side{
+	dir = 8
+	},
+/area/station/crewquarters/cryotron)
+"C" = (
+/obj/storage/secure/closet/personal,
+/turf/unsimulated/floor/green/checker{
+	dir = 4
+	},
+/area/station/crewquarters/cryotron)
+"D" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/station/crewquarters/cryotron)
+"E" = (
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/station/crewquarters/cryotron)
+"H" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green/side,
+/area/station/crewquarters/cryotron)
+"I" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 8
+	},
+/area/station/crewquarters/cryotron)
+"K" = (
+/turf/unsimulated/floor/green/side{
+	dir = 4
+	},
+/area/station/crewquarters/cryotron)
+"L" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/green/corner,
+/area/station/crewquarters/cryotron)
+"M" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 8
+	},
+/area/station/crewquarters/cryotron)
+"N" = (
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/station/crewquarters/cryotron)
+"O" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/green/side,
+/area/station/crewquarters/cryotron)
+"P" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 4
+	},
+/area/station/crewquarters/cryotron)
+"Q" = (
+/turf/unsimulated/floor/green/side{
+	dir = 5
+	},
+/area/station/crewquarters/cryotron)
+"R" = (
+/obj/table/glass/auto,
+/obj/item/boardgame/chess,
+/turf/unsimulated/floor/green/side,
+/area/station/crewquarters/cryotron)
+"S" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 4
+	},
+/area/station/crewquarters/cryotron)
+"T" = (
+/obj/storage/closet/emergency,
+/obj/item/crowbar,
+/obj/item/storage/toolbox/emergency,
+/obj/machinery/light/incandescent/warm,
+/turf/unsimulated/floor/green,
+/area/station/crewquarters/cryotron)
+"U" = (
+/obj/landmark/start/latejoin,
+/obj/landmark/observer,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/green,
+/area/station/crewquarters/cryotron)
+"W" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = -8
+	},
+/obj/machinery/firealarm/directional/east{
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/green/side{
+	dir = 4
+	},
+/area/station/crewquarters/cryotron)
+"Z" = (
+/obj/table/glass/auto,
+/obj/item/card_box/plain,
+/turf/unsimulated/floor/green/side,
+/area/station/crewquarters/cryotron)
+
+(1,1,1) = {"
+a
+q
+q
+a
+N
+a
+q
+q
+a
+"}
+(2,1,1) = {"
+a
+m
+j
+w
+M
+b
+B
+i
+q
+"}
+(3,1,1) = {"
+q
+T
+E
+L
+P
+K
+g
+R
+q
+"}
+(4,1,1) = {"
+q
+p
+E
+O
+C
+C
+E
+c
+a
+"}
+(5,1,1) = {"
+k
+U
+D
+H
+e
+e
+f
+v
+t
+"}
+(6,1,1) = {"
+q
+r
+E
+O
+C
+C
+E
+h
+a
+"}
+(7,1,1) = {"
+q
+T
+E
+u
+I
+B
+x
+Z
+q
+"}
+(8,1,1) = {"
+a
+s
+Q
+W
+S
+z
+K
+A
+q
+"}
+(9,1,1) = {"
+a
+q
+q
+a
+N
+a
+q
+q
+a
+"}
