@@ -1354,7 +1354,9 @@
 		. = ..()
 
 /datum/bioEffect/plasma_metabolism/passive
+	id = "plasma_metabolism_passive"
 	passive = TRUE
+	effect_group = null
 
 	New(for_global_list)
 		. = ..()
