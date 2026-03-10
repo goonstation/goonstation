@@ -2,7 +2,7 @@
 #define PAY_DUMBCLOWN 1
 /// e.g. staffie
 #define PAY_UNTRAINED 150
-// e.g. miner
+/// e.g. miner
 #define PAY_TRADESMAN 300
 /// e.g. scientist
 #define PAY_DOCTORATE 600

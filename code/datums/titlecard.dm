@@ -38,6 +38,11 @@
 		overlay_image_url = "images/titlecards/battleroyale_titlecard.png"
 		is_game_mode = TRUE
 
+	//Made by Thrush in a day for a one off event, kept because it's so so cool
+	test
+		image_url = "images/titlecards/testcard.png"
+		pixelated = TRUE
+
 /datum/titlecard/proc/set_pregame_html()
 	var/html = grabResource("html/pregame.html")
 	html = replacetext(html, "<!--main_img-->", {"<img id="main-img" src="[resource(src.image_url)]" style="[src.pixelated ? "image-rendering: pixelated;" : ""]">"})
