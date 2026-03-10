@@ -136,7 +136,7 @@ TYPEINFO(/obj/item/motherboard)
 			src.updateUsrDialog()
 
 		if (href_list["addPeriph"])
-			src.insert_periph(usr.equipped())
+			src.insert_periph(usr.equipped(),usr)
 
 			src.updateUsrDialog()
 
@@ -169,14 +169,7 @@ TYPEINFO(/obj/item/motherboard)
 
 	//We can slap in periphs at any point as long as maint is accessible
 	if (istype(P, /obj/item/peripheral) && maint_accessible(user))
-		if(length(src.peripherals) < src.max_peripherals)
-			user.drop_item()
-			src.peripherals.Add(P)
-			P.set_loc(src)
-			boutput(user, SPAN_NOTICE("You add [P] to the frame."))
-			src.updateUsrDialog()
-		else
-			boutput(user, SPAN_ALERT("There is no more room for peripheral cards."))
+		insert_periph(P,user)
 		return
 
 	switch(state)
@@ -422,12 +415,12 @@ TYPEINFO(/obj/item/motherboard)
 /obj/computer3frame/proc/maint_accessible(mob/user)
 	return (state >= 2 && BOUNDS_DIST(src, user) <= 0)
 
-/obj/computer3frame/proc/insert_periph(obj/item/peripheral/P)
+/obj/computer3frame/proc/insert_periph(obj/item/peripheral/P, mob/user)
 	if (istype(P))
 		if(length(src.peripherals) < src.max_peripherals)
-			usr.drop_item()
+			user.drop_item()
 			src.peripherals.Add(P)
 			P.set_loc(src)
-			boutput(usr, SPAN_NOTICE("You add the [P] to the frame."))
+			boutput(user, SPAN_NOTICE("You add \the [P] to the frame."))
 		else
-			boutput(usr, SPAN_ALERT("There is no more room for peripheral cards."))
+			boutput(user, SPAN_ALERT("There is no more room for peripheral cards."))
