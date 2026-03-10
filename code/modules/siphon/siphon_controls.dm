@@ -451,6 +451,11 @@
 	simply based on their distance from the Siphon itself;<br>
 	as an example, G2 and D6 would both cause a Type-SM<br>
 	resonator to subtract four shear per intensity.<br>
+	<br>
+	Type-FQ resonators have a more complex set of<br>
+	behaviors documented below; however, their use<br>
+	is not required for most extraction. Most users<br>
+	can safely disregard associated sections.<br>
 	<h3>LATERAL RESONANCE</h3>
 	First of three resonant parameters,<br>
 	charted on the letter axis.<br>
@@ -459,6 +464,13 @@
 	this value by eight units per intensity at 'point-blank'<br>
 	(columns D or F), diminishing by powers of two to a <br>
 	minimum of one unit at max range (columns A or I).<br>
+	<br>
+	The prototype Type-FQ resonator will raise or lower<br>
+	this value by five units per intensity at 'point-blank'<br>
+	(columns D or F), diminishing by two units per tile to<br>
+	a minimum of one unit <strong>in the opposing direction</strong>
+	at maximum max range (columns A or I). This is not<br>
+	their primary function (see Type-FQ section).<br>
 	<h3>VERTICAL RESONANCE</h3>
 	Second of three resonant parameters,<br>
 	charted on the number axis.<br>
@@ -467,6 +479,12 @@
 	this value by eight units per intensity at 'point-blank'<br>
 	(rows 3 or 5), diminishing by powers of two to a <br>
 	minimum of one unit at max range (rows 0 or 8).<br>
+	<br>
+	The prototype Type-FQ resonator will raise or lower<br>
+	this value by one unit per intensity at 'point-blank'<br>
+	(rows 3 or 5), <strong>increasing</strong> by one unit per tile to<br>
+	a maximum of four units at max range (rows 0 or 8).<br>
+	This is not their primary function (see Type-FQ).<br>
 	<h3>RESONANT SHEAR</h3>
 	Third of three resonant parameters, a byproduct<br>
 	of lateral and vertical resonance.<br>
@@ -488,7 +506,38 @@
 	inexact parameters than others. If this value is listed,<br>
 	<strong>any</strong> resonance parameter may differ by<br>
 	the amount of the listed value without an<br>
-	adverse effect on extraction.<br>"}
+	adverse effect on extraction.<br>
+	<h3>VARIABLE PARAMETERS</h3>
+	Certain materials' extraction parameters do not remain<br>
+	stable indefinitely, periodically undergoing a shift<br>
+	known as <strong>reharmonization.</strong> For those targets for which<br>
+	this is the case, usage of a harmonic systems calibrator<br>
+	in the hand (not on any particular device) will<br>
+	perform a scan for cyclical harmonic fields in nearby<br>
+	siphon equipment; taking scans across multiple cycles<br>
+	and cross-referencing with the database may help you<br>
+	to devise a methodology for extraction.<br>
+	<br>
+	Typical use does <strong>not</strong> require familiarization with<br>
+	the reharmonization process or associated targets.<br>
+	<h3>TYPE-FQ</h3>
+	With authorization of the Research Director,<br>
+	the Type-FQ resonator may be manufactured, which is<br>
+	capable of applying a field dilation effect that<br>
+	delays the onset of parameter reharmonization.<br>
+	<br>
+	In addition to lateral and vertical resonance<br>
+	properties enumerated in the respective sections,<br>
+	Type-FQ resonators provide 0.6% field dilation<br>
+	strength per intensity; field dilation strength<br>
+	influences cycle time as a denominator, with<br>
+	100% strength doubling effective cycle time.<br>
+	<br>
+	<strong>This resonator has a higher degree of integration</strong><br>
+	<strong>with the resonant field; maintaining dilation</strong><br>
+	<strong>will increase the electrical cost of maintaining</strong><br>
+	<strong>an idle state, and any failure to meet resonance</strong><br>
+	<strong>parameters may cause extreme instability.</strong><br>"}
 
 	user.Browse(HTML, "window=siphonControl_\ref[src];title=Resonance Calibration Database;size=420x500;")
 	onclose(user, "siphonControl_\ref[src]")
@@ -507,12 +556,23 @@
 			continue
 		rollingtext += "<h2>[mat.name]</h2>"
 		rollingtext += "<strong>EEU per Extraction:</strong> [mat.tick_req]<br>"
+
 		if(mat.x_torque != null)
-			rollingtext += "<strong>Target Lateral Resonance:</strong> [mat.x_torque]<br>"
+			if(mat.hm_cycle && mat.hm_cycle.x_torque_max)
+				rollingtext += "<strong>Variable Lateral Resonance:</strong> [mat.hm_cycle.x_torque_min] to [mat.hm_cycle.x_torque_max]<br>"
+			else
+				rollingtext += "<strong>Target Lateral Resonance:</strong> [mat.x_torque]<br>"
 		if(mat.y_torque != null)
-			rollingtext += "<strong>Target Vertical Resonance:</strong> [mat.y_torque]<br>"
+			if(mat.hm_cycle && mat.hm_cycle.y_torque_max)
+				rollingtext += "<strong>Variable Vertical Resonance:</strong> [mat.hm_cycle.y_torque_min] to [mat.hm_cycle.y_torque_max]<br>"
+			else
+				rollingtext += "<strong>Target Vertical Resonance:</strong> [mat.y_torque]<br>"
 		if(mat.shear != null)
-			rollingtext += "<strong>Target Resonant Shear:</strong> [mat.shear]<br>"
+			if(mat.hm_cycle && mat.hm_cycle.shear_max)
+				rollingtext += "<strong>Variable Resonant Shear:</strong> [mat.hm_cycle.shear_min] to [mat.hm_cycle.shear_max]<br>"
+			else
+				rollingtext += "<strong>Target Resonant Shear:</strong> [mat.shear]<br>"
+
 		rollingtext += "<strong>Sensitivity Margin:</strong> [mat.sens_window]<br>"
 		if(mat.setup_guide)
 			rollingtext += "<br><strong>Reference Configuration</strong><br>"

@@ -502,6 +502,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 				user.set_loc(T)
 				return
 
+		if (istype(O,/obj/item/sticker/barcode) && !src.open) //only do it on closed storages, so you can bring barcodes somewhere if you need to
+			O:AfterAttack(src,user,1)
+			return
+
 		if (src.locked)
 			user.show_text("You'll have to unlock [src] first.", "red")
 			return

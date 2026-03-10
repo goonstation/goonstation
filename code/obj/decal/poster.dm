@@ -948,7 +948,9 @@
 
 			prohibited
 				name = "prohibited action sign"
-				icon_state = "prohibited_smoking"
+				icon_state = "prohibited_general"
+
+				generic // P001
 
 				smoking // P002
 					name = "smoking prohibited sign"
@@ -965,6 +967,10 @@
 				fire // P003
 					name = "naked flame prohibited sign"
 					icon_state = "prohibited_fire"
+
+				shoes // P060
+					name = "outdoor footwear prohibited sign"
+					icon_state = "prohibited_shoes"
 
 			mandatory
 				name = "mandatory action sign"
@@ -995,6 +1001,22 @@
 				catears //M30W
 					name = "mandatory cat ears sign"
 					icon_state = "mandatory_catears"
+
+				ground // M005
+					name = "mandatory ground terminal sign"
+					icon_state = "mandatory_ground"
+
+				magnet // M4GN3T
+					name = "mandatory magnetic equipment sign"
+					icon_state = "mandatory_mag"
+
+				horn // M029
+					name = "mandatory sound horn sign"
+					icon_state = "mandatory-horn"
+
+				buckle // M020
+					name = "mandatory safety belt sign"
+					icon_state = "mandatory_belt"
 
 			warning
 				name = "warning sign"
@@ -1033,6 +1055,14 @@
 				corrosive // W023
 					name = "corrosive material warning sign"
 					icon_state = "warning_corrosive"
+
+				quicksand // W061
+					name = "quicksand warning sign"
+					icon_state = "quicksand"
+
+				cliff // W053
+					name = "unstable cliff warning sign"
+					icon_state = "warning_cliff"
 
 			safe
 				name = "safe condition sign"
@@ -1083,6 +1113,10 @@
 				water // E015
 					name = "potable water sign"
 					icon_state = "safe_water"
+
+				evac // E007
+					name = "evacuation assembly point sign"
+					icon_state = "safe evac"
 
 			fire
 				name = "fire protection sign"

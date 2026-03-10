@@ -111,6 +111,7 @@
 "az" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/decal/cleanable/dirt,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "aA" = (
@@ -129,9 +130,7 @@
 /area/prefab/sea_monkey_hideout)
 "aC" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light/incandescent/cool/very,
-/obj/item/reagent_containers/pill/methamphetamine,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "aD" = (
@@ -1202,6 +1201,17 @@
 /mob/living/carbon/human/npc/monkey/sea/lab,
 /turf/simulated/floor/black/grime,
 /area/prefab/sea_monkey_hideout)
+"RM" = (
+/obj/item/reagent_containers/pill/methamphetamine{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/pill/methamphetamine{
+	pixel_x = -9;
+	pixel_y = -9
+	},
+/turf/simulated/floor/white,
+/area/prefab/sea_monkey_hideout)
 "WJ" = (
 /mob/living/carbon/human/npc/monkey/sea/gang,
 /turf/simulated/floor/plating/random,
@@ -1969,7 +1979,7 @@ ab
 aa
 aa
 aC
-aV
+RM
 bk
 bp
 bC

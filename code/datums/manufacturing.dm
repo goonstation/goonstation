@@ -3824,6 +3824,17 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	time = 30 SECONDS
 	category = "Machinery"
 
+/datum/manufacture/resonator_type_fq
+	name = "Type-FQ Resonator"
+	item_requirements = list("metal_dense" = 15,
+							 "conductive_high" = 20,
+							 "koshmarite" = 10,
+							 "electrum" = 5)
+	item_outputs = list(/obj/machinery/siphon/resonator/field_dilation)
+	create = 1
+	time = 30 SECONDS
+	category = "Machinery"
+
 /************ NADIR GEAR ************/
 
 /datum/manufacture/nanoloom

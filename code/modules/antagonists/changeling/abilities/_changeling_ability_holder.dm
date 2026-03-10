@@ -225,6 +225,7 @@
 	proc/set_up_from(mob/living/carbon/human/victim)
 		//lol this is so nonstandardized I want to cry
 		src.bioHolder = new /datum/bioHolder(victim)
+		src.bioHolder.inactive = TRUE
 		src.bioHolder.CopyOther(victim.bioHolder)
 
 		src.traitHolder = new /datum/traitHolder(victim)
