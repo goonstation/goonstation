@@ -73,41 +73,40 @@ TYPEINFO(/obj/item/motherboard)
 			qdel(src)
 
 /obj/computer3frame/attack_hand(mob/user)
-	if(..() || !src.maint_accessible(user))return
+	if(..() || !src.maint_accessible(user))
+		return
 
 	src.add_dialog(user)
 
 	var/dat = "<html><head><title>[name]</title></head><body>"
 
 	dat += "<hr>"
-	if(mainboard)dat += "<tt>Motherboard: [mainboard.name]</tt>"
-	else dat += "<tt>Motherboard: ----</tt>"
+	if(mainboard)
+		dat += "<tt>Motherboard: [mainboard.name]</tt>"
+	else
+		dat += "<tt>Motherboard: ----</tt>"
 
 	if(hd)
 		dat += "<br><tt>Hard Drive: [hd.name]</tt> <a href='byond://?src=\ref[src];driveRemove=1'>(Remove)</a><br>"
+	else if(state >= 3)
+		dat += "<br><tt>Hard Drive: <a href='byond://?src=\ref[src];driveAdd=1'>----</a><br></tt>"
 	else
-		if(state >= 3)
-			dat += "<br><tt>Hard Drive: <a href='byond://?src=\ref[src];driveAdd=1'>----</a><br></tt>"
-		else
-			dat += "<br><tt>Hard Drive: ----</tt><br>"
+		dat += "<br><tt>Hard Drive: ----</tt><br>"
 
 	dat += "<hr>"
 	dat += "<b>Peripherals:</b> [length(peripherals)]/[max_peripherals]<br>"
 
-	var/i = 1
-	for(var/obj/item/peripheral/P in peripherals)
+	for (var/i in 1 to length(src.peripherals))
+		var/obj/item/peripheral/P = src.peripherals[i]
 		var/cant_remove_reason = ""
-		if(istype(P, /obj/item/peripheral/card_scanner))
-			var/obj/item/peripheral/card_scanner/CS = P
-			if(CS.authid)
-				cant_remove_reason = "Card inserted." //#BlameGlowbold
+		if(astype(P, /obj/item/peripheral/card_scanner)?.authid)
+			cant_remove_reason = "Card inserted." //#BlameGlowbold
 		if(!cant_remove_reason)
 			dat += "&nbsp;&nbsp;- [P.name] <a href='byond://?src=\ref[src];periphID=[i]'>(Remove)</a><br>"
 		else
 			dat += "&nbsp;&nbsp;- [P.name] <s>(Remove)</s> <i>[cant_remove_reason]</i><br>"
-		i++
 
-	for(i = i; i <= max_peripherals; i++)
+	for (var/i in 1 to (src.max_peripherals - length(src.peripherals)))
 		if(state >= 2)
 			dat += "&nbsp;&nbsp;<a href='byond://?src=\ref[src];addPeriph=1'>----</a><br>"
 		else
@@ -137,15 +136,7 @@ TYPEINFO(/obj/item/motherboard)
 			src.updateUsrDialog()
 
 		if (href_list["addPeriph"])
-			var/obj/item/peripheral/P = usr.equipped()
-			if (istype(P, /obj/item/peripheral))
-				if(length(src.peripherals) < src.max_peripherals)
-					usr.drop_item()
-					src.peripherals.Add(P)
-					P.set_loc(src)
-					boutput(usr, SPAN_NOTICE("You add the [P] to the frame."))
-				else
-					boutput(usr, SPAN_ALERT("There is no more room for peripheral cards."))
+			src.insert_periph(usr.equipped())
 
 			src.updateUsrDialog()
 
@@ -333,7 +324,7 @@ TYPEINFO(/obj/item/motherboard)
 				src.state = 1
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, SPAN_NOTICE("You deconstruct the frame."))
-				src.eject_all(FALSE);
+				src.eject_all(FALSE)
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 				A.amount = metal_given
 				if (src.material)
@@ -368,7 +359,7 @@ TYPEINFO(/obj/item/motherboard)
 				switch(state)
 					if(0)
 						new /obj/item/scrap(src.loc)
-						src.eject_all(TRUE); //Shouldn't come up but just for sanity's sake
+						src.eject_all(TRUE) //Shouldn't come up but just for sanity's sake
 						qdel(src)
 					if(1)
 						if(src.mainboard)
@@ -412,7 +403,8 @@ TYPEINFO(/obj/item/motherboard)
 	src.icon_state = "1"
 
 /obj/computer3frame/proc/eject_harddrives(fling)
-	if(isnull(src.hd)) return
+	if(isnull(src.hd))
+		return
 	src.hd.set_loc(get_turf(src))
 	if(fling)
 		src.hd.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
@@ -429,3 +421,13 @@ TYPEINFO(/obj/item/motherboard)
 
 /obj/computer3frame/proc/maint_accessible(mob/user)
 	return (state >= 2 && BOUNDS_DIST(src, user) <= 0)
+
+/obj/computer3frame/proc/insert_periph(obj/item/peripheral/P)
+	if (istype(P))
+		if(length(src.peripherals) < src.max_peripherals)
+			usr.drop_item()
+			src.peripherals.Add(P)
+			P.set_loc(src)
+			boutput(usr, SPAN_NOTICE("You add the [P] to the frame."))
+		else
+			boutput(usr, SPAN_ALERT("There is no more room for peripheral cards."))
