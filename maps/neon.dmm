@@ -516,6 +516,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
+"asS" = (
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/engine,
+/area/station/science/chemistry)
 "atd" = (
 /turf/simulated/floor/blueblack{
 	dir = 4
@@ -644,6 +651,15 @@
 /obj/storage/crate,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"azj" = (
+/obj/machinery/chem_master{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 8
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/science/chemistry)
 "azr" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -3686,6 +3702,12 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
+"cQZ" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/science/chemistry)
 "cRi" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -4585,11 +4607,6 @@
 /area/station/medical/research)
 "dvG" = (
 /obj/table/reinforced/chemistry/auto/auxsup,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro,
-/obj/item/clothing/glasses/spectro{
-	pixel_y = -3
-	},
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
@@ -4600,6 +4617,7 @@
 /obj/machinery/light_switch/north{
 	pixel_x = -6
 	},
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -4793,6 +4811,14 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
+"dBA" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/chemistry,
+/turf/simulated/floor/engine,
+/area/station/science/chemistry)
 "dBJ" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/sanitary,
@@ -6772,6 +6798,15 @@
 	dir = 8
 	},
 /area/research_outpost)
+"eSF" = (
+/obj/machinery/chem_heater/chemistry,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/science/chemistry)
 "eSL" = (
 /obj/machinery/sink/slim{
 	dir = 8;
@@ -10205,6 +10240,11 @@
 	pixel_y = 14
 	},
 /obj/machinery/light/incandescent/cool,
+/obj/item/device/reagentscanner,
+/obj/item/clothing/glasses/spectro,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = -3
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -10561,6 +10601,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"hEz" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/purple/checker{
+	dir = 1
+	},
+/area/station/science/chemistry)
 "hEB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16167,10 +16213,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"lxR" = (
-/obj/machinery/chemicompiler_stationary,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "lxW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -16319,6 +16361,10 @@
 	},
 /turf/space/fluid,
 /area/space)
+"lEa" = (
+/obj/machinery/chemicompiler_stationary,
+/turf/simulated/floor/engine/caution/south,
+/area/station/science/chemistry)
 "lEc" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
@@ -16839,6 +16885,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"lXM" = (
+/obj/storage/crate{
+	desc = "null";
+	name = "Chemistry Supplies Crate"
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/storage/box/patchbox,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox,
+/obj/item/storage/wall/fire{
+	dir = 8;
+	pixel_x = 32
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "lXN" = (
 /obj/machinery/conveyor_switch{
 	id = "outbound";
@@ -19073,6 +19138,10 @@
 /obj/storage/crate/abcumarker,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
+"nHc" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/purple,
+/area/station/science/chemistry)
 "nIg" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -19908,6 +19977,11 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"omj" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
+/turf/simulated/floor/engine/caution/north,
+/area/station/science/chemistry)
 "omm" = (
 /obj/rack,
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian{
@@ -21178,6 +21252,22 @@
 /obj/mapping_helper/algae,
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"pmm" = (
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/machinery/light/lamp/black{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/pen{
+	pixel_x = 1;
+	pixel_y = 0
+	},
+/turf/simulated/floor/engine/caution/corner,
+/area/station/science/chemistry)
 "pmt" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/mail{
@@ -28967,18 +29057,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central)
-"uMz" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
-	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "uMA" = (
 /obj/machinery/vehicle/tank/minisub,
 /turf/simulated/floor/shuttlebay,
@@ -29794,6 +29872,9 @@
 	},
 /turf/simulated/floor/grime,
 /area/iss)
+"vsS" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/chemistry)
 "vtg" = (
 /obj/machinery/drainage/big,
 /obj/cable{
@@ -33617,6 +33698,9 @@
 /obj/random_item_spawner/armory_goggle_supplies,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"xVI" = (
+/turf/simulated/floor/engine/caution/east,
+/area/station/science/chemistry)
 "xVQ" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/segment/horizontal,
@@ -69811,11 +69895,11 @@ cvu
 cvu
 cvu
 eUE
-eUE
-qpn
-qpn
-qpn
-qpn
+vsS
+vsS
+vsS
+vsS
+vsS
 qpn
 itG
 kmt
@@ -70113,11 +70197,11 @@ jOL
 ayK
 pHO
 pfe
-eUE
-qpn
-qpn
-qpn
-qpn
+vsS
+eSF
+azj
+pmm
+vsS
 qpn
 dhU
 nKG
@@ -70415,11 +70499,11 @@ jOL
 cxl
 ayK
 thh
-eUE
-qpn
-qpn
-qpn
-eUE
+vsS
+omj
+asS
+lEa
+vsS
 hZZ
 dhU
 eli
@@ -70717,11 +70801,11 @@ hSx
 jOL
 idX
 oXB
-eUE
-eUE
-eUE
-eUE
-eUE
+vsS
+lXM
+xVI
+cQZ
+vsS
 pwy
 itG
 xaU
@@ -71019,11 +71103,11 @@ fxY
 nFJ
 fxY
 fxY
-eUE
-uMz
-pMP
-lxR
-eUE
+vsS
+vsS
+dBA
+vsS
+vsS
 obI
 itG
 itG
@@ -71320,10 +71404,10 @@ jOL
 jOL
 jOL
 jOL
+pMP
 jOL
 jOL
 jOL
-dLu
 jOL
 jOL
 jOL
@@ -71622,10 +71706,10 @@ eCB
 eCB
 eCB
 dAs
-eCB
+odR
 bWz
 eCB
-odR
+eCB
 cYc
 eCB
 eCB
@@ -72533,7 +72617,7 @@ dLu
 qav
 hnN
 ree
-sWY
+hEz
 umb
 xwI
 qav
@@ -73439,7 +73523,7 @@ dLu
 qav
 dkp
 slZ
-umb
+nHc
 qLU
 jZQ
 pNn

@@ -141,22 +141,26 @@
 
 	S["sec_flag"] = "None"
 
-	B["current_money"] = 100
-	B["pda_net_id"] = pda_net_id
-	B["notes"] = "No notes."
-
-	// If it exists for a job give them the correct wage
-	var/wageMult = 1
-	if(H.traitHolder.hasTrait("unionized"))
-		wageMult = 1.5
-
 	var/datum/job/J
 	if (H.job != null && istext(H.job))
 		J = find_job_in_controller_by_string(H.job)
 	else
 		J = find_job_in_controller_by_string(H.mind.assigned_role)
+
+	B["current_money"] = 100
+	B["pda_net_id"] = pda_net_id
+	// management isn't in the union (they're going to steal it anyway)
+	if (H.traitHolder?.hasTrait("unionized") && (J?.job_category == JOB_COMMAND || istype(J, /datum/job/special/random/vip)))
+		B["unionized"] = "Yes"
+	else
+		B["unionized"] = "No"
+	B["notes"] = "No notes."
+
 	if (J?.wages)
-		B["wage"] = round(J.wages * wageMult)
+		B["wage"] = round(J.wages)
+		if (B["unionized"] == "Yes")
+			B["wage"] = B["wage"] + round(B["wage"] * UNIONIZED_PAY_MULT)
+			global.wagesystem.union_stipend += round(B["wage"] * UNIONIZED_PAY_MULT)
 	else
 		B["wage"] = 0
 
@@ -381,24 +385,24 @@
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
-		wagesystem.station_budget += amount
+		wagesystem.budgets[BUDGET_CAT_STATION] += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.station_budget += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
-		wagesystem.station_budget += (amount-paid_amount)
+		wagesystem.budgets[BUDGET_CAT_STATION] += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.station_budget += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
