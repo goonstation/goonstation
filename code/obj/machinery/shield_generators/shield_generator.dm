@@ -230,7 +230,7 @@ TYPEINFO(/area/station/shield_zone)
 			/obj/item/peripheral/card_scanner,
 			/obj/item/peripheral/drive,
 			/obj/item/peripheral/network/powernet_card)
-	//setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda
+	///obj/item/peripheral/network/radio/locked/pda
 	setup_starting_program = /datum/computer/file/terminal_program/shield_control
 
 /obj/machinery/computer3/generic/shield_control/console_upper
