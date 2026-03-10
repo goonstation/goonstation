@@ -722,11 +722,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 						else
 							src.credit -= product.product_cost
 						if (!player_list || !vMachine.owneraccount)
-							wagesystem.shipping_budget += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+							wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 						else
 							//Players get 90% of profit from player vending machines QMs get 10%
 							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
-							wagesystem.shipping_budget += round(product.product_cost * (1 - profit))
+							wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(product.product_cost * (1 - profit))
 					src.currently_vending = null
 					update_static_data(usr)
 				if(product.logged_on_vend)
@@ -851,12 +851,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				else
 					src.credit -= R.product_cost
 				if (!isplayer)
-					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+					wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 				else
 					//Players get 90% of profit from player vending machines QMs get 10%
 					var/obj/machinery/vending/player/T = src
 					T.owneraccount["current_money"] += round(R.product_cost * profit)
-					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
+					wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
 			//Gotta do this before the SPAWN
@@ -1342,6 +1342,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		product_list += new/datum/data/vending_product(/obj/item/decoration/ashtray, 5, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape, 10, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge, 20, cost=PAY_TRADESMAN/5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ecig_refill_cartridge/flavored, 10, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/medical_patches/nicotine, 5, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper, 20, cost=PAY_TRADESMAN/20)
 
@@ -2974,11 +2975,14 @@ TYPEINFO(/obj/machinery/vending/chem)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/solo, 5, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/solo_rules, 5, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/storage/briefcase/poker_chips/low_stakes, 8, cost=2600)  // cost equals the sum of chip value
+		product_list += new/datum/data/vending_product(/obj/item/storage/briefcase/poker_chips/medium_stakes, 4, cost=12000)  // cost equals the sum of chip value
 		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
 		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/secure/sbriefcase/high_stakes, 4, cost=54000, hidden=1) // cost equals the sum of chip value
 
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"
@@ -3386,7 +3390,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nunhood, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/flockcultist, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/witchfinder, 1)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/chaplain, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/clothing/chaplain, 1) //Also contains the headset
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/holywaterkit, 1)
 		product_list += new/datum/data/vending_product(/obj/item/swingsignfolded, 1)
 		product_list += new/datum/data/vending_product(/obj/item/scripture/eyehb, 1 )

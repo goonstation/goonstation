@@ -1109,6 +1109,7 @@
 "aNf" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light/incandescent/cool,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aNk" = (
@@ -4253,8 +4254,8 @@
 /area/research_outpost/chamber)
 "dkp" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light/incandescent/cool,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -17075,8 +17076,8 @@
 /area/station/science/lab)
 "mgn" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light/incandescent/cool,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -19636,6 +19637,7 @@
 "odC" = (
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/chem_dispenser/alcohol/bar,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "odE" = (
@@ -23718,6 +23720,7 @@
 /area/tech_outpost)
 "rbY" = (
 /obj/machinery/chem_dispenser/chef,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "rcm" = (
@@ -24449,6 +24452,7 @@
 /area/station/bridge/customs)
 "rDe" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "rDA" = (
@@ -25842,12 +25846,13 @@
 /area/station/turret_protected/Zeta)
 "sEW" = (
 /obj/table/wood/round/auto,
+/obj/drink_rack/cup{
+	pixel_y = 28
+	},
+/obj/mapping_helper/glassware_spawn,
 /obj/machinery/espresso_machine{
 	pixel_y = 8;
 	pixel_x = -8
-	},
-/obj/drink_rack/cup{
-	pixel_y = 28
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
@@ -33642,6 +33647,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "xWv" = (
