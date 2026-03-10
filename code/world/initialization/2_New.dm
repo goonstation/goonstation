@@ -9,6 +9,8 @@
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
+	else if (prob(2)) //rare treat
+		lobby_titlecard = new /datum/titlecard/test()
 	else
 		lobby_titlecard = new /datum/titlecard()
 

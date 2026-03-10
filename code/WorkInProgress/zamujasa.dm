@@ -1251,12 +1251,13 @@ TYPEINFO(/obj/item/device/speechtotext)
 	budget
 		New()
 			src.monitored = wagesystem
+			src.monitored_list = "budgets"
 			..()
 
 		name = "station budget monitor"
-		desc = "This is the current amount of money the Head of Personell has yet to embezzle."
+		desc = "This is the current amount of money the Head of Personnel has yet to embezzle."
 		display_mode = "round"
-		monitored_var = "station_budget"
+		monitored_var = BUDGET_CAT_STATION
 		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
 		ding_sound = 'sound/misc/cashregister.ogg'
 		ding_on_change = 1
@@ -1266,13 +1267,18 @@ TYPEINFO(/obj/item/device/speechtotext)
 		shipping
 			name = "shipping budget monitor"
 			desc = "This is the current amount of money in the cargo/shipping budget."
-			monitored_var = "shipping_budget"
+			monitored_var = BUDGET_CAT_SHIPPING
 			maptext_prefix = "<span class='c pixel sh'>Shipping Budget:\n<span class='vga'>$"
+		union
+			name = "union budget monitor"
+			desc = "This is the current amount of money in the union dues budget. The union rep will surely get it distributed, right?"
+			monitored_var = BUDGET_CAT_UNION
+			maptext_prefix = "<span class='c pixel sh'>Union Budget:\n<span class='vga'>$"
 		research
-			name = "research budget monitor"
-			desc = "This is the current amount of money in the research budget that has yet to be blown on genetic materials."
-			monitored_var = "research_budget"
-			maptext_prefix = "<span class='c pixel sh'>Research Budget:\n<span class='vga'>$"
+			name = "medical budget monitor"
+			desc = "This is the current amount of money in the medical budget that has yet to be blown on genetic materials."
+			monitored_var = BUDGET_CAT_DEPT_MEDICAL
+			maptext_prefix = "<span class='c pixel sh'>Medical Budget:\n<span class='vga'>$"
 
 
 	clients
