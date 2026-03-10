@@ -339,7 +339,7 @@
 		return attack_hand(user)
 
 	proc/lever_hv(mob/user)
-		if(!cutoff)
+		if(!src.cutoff)
 			for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
 				for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
 					arcFlashTurf(C, R.loc, 50, 50)
@@ -356,11 +356,11 @@
 			for(var/mob/living/carbon/human/H in (range(5)))
 				if(H.mind)
 					H.unlock_medal("Waking Nightmare", TRUE)
-			cutoff = TRUE
+			src.cutoff = TRUE
 			qdel(src)
 
 	proc/lever_lv(mob/user)
-		if(!cutoff)
+		if(!src.cutoff)
 			for(var/obj/decoration/ritual/R in(range(7)))
 				new /obj/item/siren_orb(R.loc)
 			for(var/atom/movable/mysterious_beast/B in (range(7)))
@@ -375,14 +375,14 @@
 			for(var/mob/living/carbon/human/H in (range(5)))
 				if(H.mind)
 					H.unlock_medal("Waking Dream", TRUE)
-			cutoff = TRUE
+			src.cutoff = TRUE
 			qdel(src)
 
 /datum/dialogueMaster/controlpc
 	dialogueName = "Voltage Control Terminal"
 	start = /datum/dialogueNode/controlpc_start
 	visibleDialogue = 0
-	maxDistance = -1 // Cause they have to delete themselves, doubt it'll be a problem... right?
+	maxDistance = 1 // Cause they have to delete themselves, doubt it'll be a problem... right? It was.
 
 	showDialogue()
 		var/obj/dialogueobj/controlpc/PC = src.master
