@@ -14820,7 +14820,7 @@
 "bbg" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal{
-	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd128/techcomputer3
 	},
 /obj/machinery/power/data_terminal,
 /obj/decal/poster/wallsign/teaparty{
