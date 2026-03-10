@@ -73,101 +73,101 @@ TYPEINFO(/obj/item/motherboard)
 			qdel(src)
 
 /obj/computer3frame/attack_hand(mob/user)
-		if(..() || !src.maint_accessible(user))return
+	if(..() || !src.maint_accessible(user))return
 
-		src.add_dialog(user)
+	src.add_dialog(user)
 
-		var/dat = "<html><head><title>[name]</title></head><body>"
+	var/dat = "<html><head><title>[name]</title></head><body>"
 
-		dat += "<hr>"
-		if(mainboard)dat += "<tt>Motherboard: [mainboard.name]</tt>"
-		else dat += "<tt>Motherboard: ----</tt>"
+	dat += "<hr>"
+	if(mainboard)dat += "<tt>Motherboard: [mainboard.name]</tt>"
+	else dat += "<tt>Motherboard: ----</tt>"
 
-		if(hd)
-			dat += "<br><tt>Hard Drive: [hd.name]</tt> <a href='byond://?src=\ref[src];driveRemove=1'>(Remove)</a><br>"
+	if(hd)
+		dat += "<br><tt>Hard Drive: [hd.name]</tt> <a href='byond://?src=\ref[src];driveRemove=1'>(Remove)</a><br>"
+	else
+		if(state >= 3)
+			dat += "<br><tt>Hard Drive: <a href='byond://?src=\ref[src];driveAdd=1'>----</a><br></tt>"
 		else
-			if(state >= 3)
-				dat += "<br><tt>Hard Drive: <a href='byond://?src=\ref[src];driveAdd=1'>----</a><br></tt>"
-			else
-				dat += "<br><tt>Hard Drive: ----</tt><br>"
+			dat += "<br><tt>Hard Drive: ----</tt><br>"
 
-		dat += "<hr>"
-		dat += "<b>Peripherals:</b> [length(peripherals)]/[max_peripherals]<br>"
+	dat += "<hr>"
+	dat += "<b>Peripherals:</b> [length(peripherals)]/[max_peripherals]<br>"
 
-		var/i = 1
-		for(var/obj/item/peripheral/P in peripherals)
-			var/cant_remove_reason = ""
-			if(istype(P, /obj/item/peripheral/card_scanner))
-				var/obj/item/peripheral/card_scanner/CS = P
-				if(CS.authid)
-					cant_remove_reason = "Card inserted." //#BlameGlowbold
-			if(!cant_remove_reason)
-				dat += "&nbsp;&nbsp;- [P.name] <a href='byond://?src=\ref[src];periphID=[i]'>(Remove)</a><br>"
-			else
-				dat += "&nbsp;&nbsp;- [P.name] <s>(Remove)</s> <i>[cant_remove_reason]</i><br>"
-			i++
+	var/i = 1
+	for(var/obj/item/peripheral/P in peripherals)
+		var/cant_remove_reason = ""
+		if(istype(P, /obj/item/peripheral/card_scanner))
+			var/obj/item/peripheral/card_scanner/CS = P
+			if(CS.authid)
+				cant_remove_reason = "Card inserted." //#BlameGlowbold
+		if(!cant_remove_reason)
+			dat += "&nbsp;&nbsp;- [P.name] <a href='byond://?src=\ref[src];periphID=[i]'>(Remove)</a><br>"
+		else
+			dat += "&nbsp;&nbsp;- [P.name] <s>(Remove)</s> <i>[cant_remove_reason]</i><br>"
+		i++
 
-		for(i = i; i <= max_peripherals; i++)
-			if(state >= 2)
-				dat += "&nbsp;&nbsp;<a href='byond://?src=\ref[src];addPeriph=1'>----</a><br>"
-			else
-				dat += "&nbsp;&nbsp;----<br>"
+	for(i = i; i <= max_peripherals; i++)
+		if(state >= 2)
+			dat += "&nbsp;&nbsp;<a href='byond://?src=\ref[src];addPeriph=1'>----</a><br>"
+		else
+			dat += "&nbsp;&nbsp;----<br>"
 
-		user.Browse(dat,"window=computer;size=320x245")
-		onclose(user,"computer")
-		return
+	user.Browse(dat,"window=computer;size=320x245")
+	onclose(user,"computer")
+	return
 
 /obj/computer3frame/Topic(href, href_list)
-		if(..())
-			return
-
-		src.add_dialog(usr)
-
-		if(src.maint_accessible(usr) && can_act(usr) && !usr.lying)
-			var/periphID = text2num(href_list["periphID"])
-			if (periphID > 0 && periphID <= length(peripherals))
-				var/obj/item/peripheral/peri = peripherals[periphID]
-
-				peri.uninstalled()
-				usr.put_in_hand_or_drop(peri)
-				src.peripherals.Remove(peri)
-
-				boutput(usr, SPAN_NOTICE("You remove the [peri] from the frame."))
-
-				src.updateUsrDialog()
-
-			if (href_list["addPeriph"])
-				var/obj/item/peripheral/P = usr.equipped()
-				if (istype(P, /obj/item/peripheral))
-					if(length(src.peripherals) < src.max_peripherals)
-						usr.drop_item()
-						src.peripherals.Add(P)
-						P.set_loc(src)
-						boutput(usr, SPAN_NOTICE("You add the [P] to the frame."))
-					else
-						boutput(usr, SPAN_ALERT("There is no more room for peripheral cards."))
-
-				src.updateUsrDialog()
-
-			if(href_list["driveRemove"])
-				if(src.hd)
-					usr.put_in_hand_or_drop(src.hd)
-					boutput(usr, SPAN_NOTICE("You remove the drive."))
-					src.hd = null
-
-				src.updateUsrDialog()
-
-			if(href_list["driveAdd"] && state >= 3)
-				var/obj/item/disk/data/fixed_disk/P = usr.equipped()
-				if(istype(P, /obj/item/disk/data/fixed_disk) && !src.hd)
-					usr.drop_item()
-					src.hd = P
-					P.set_loc(src)
-					boutput(usr, SPAN_NOTICE("You connect the drive to the cabling."))
-				src.updateUsrDialog()
-
-		src.add_fingerprint(usr)
+	if(..())
 		return
+
+	src.add_dialog(usr)
+
+	if(src.maint_accessible(usr) && can_act(usr) && !usr.lying)
+		var/periphID = text2num(href_list["periphID"])
+		if (periphID > 0 && periphID <= length(peripherals))
+			var/obj/item/peripheral/peri = peripherals[periphID]
+
+			peri.uninstalled()
+			usr.put_in_hand_or_drop(peri)
+			src.peripherals.Remove(peri)
+
+			boutput(usr, SPAN_NOTICE("You remove the [peri] from the frame."))
+
+			src.updateUsrDialog()
+
+		if (href_list["addPeriph"])
+			var/obj/item/peripheral/P = usr.equipped()
+			if (istype(P, /obj/item/peripheral))
+				if(length(src.peripherals) < src.max_peripherals)
+					usr.drop_item()
+					src.peripherals.Add(P)
+					P.set_loc(src)
+					boutput(usr, SPAN_NOTICE("You add the [P] to the frame."))
+				else
+					boutput(usr, SPAN_ALERT("There is no more room for peripheral cards."))
+
+			src.updateUsrDialog()
+
+		if(href_list["driveRemove"])
+			if(src.hd)
+				usr.put_in_hand_or_drop(src.hd)
+				boutput(usr, SPAN_NOTICE("You remove the drive."))
+				src.hd = null
+
+			src.updateUsrDialog()
+
+		if(href_list["driveAdd"] && state >= 3)
+			var/obj/item/disk/data/fixed_disk/P = usr.equipped()
+			if(istype(P, /obj/item/disk/data/fixed_disk) && !src.hd)
+				usr.drop_item()
+				src.hd = P
+				P.set_loc(src)
+				boutput(usr, SPAN_NOTICE("You connect the drive to the cabling."))
+			src.updateUsrDialog()
+
+	src.add_fingerprint(usr)
+	return
 
 /obj/computer3frame/meteorhit(obj/O as obj)
 	qdel(src)
