@@ -1,4 +1,17 @@
 
+(t)tue mar 10 26
+(u)Egregorious
+(p)26110
+(e)⚗|A-Chemistry
+(*)Fertilizer in plant trays are no longer infinite.
+(u)JORJ949
+(p)26093
+(e)🆕💪👮|C-Feature, A-Traits, A-Security
+(*)The Detective now receives special Forensics Training, allowing them to identify what weapon fired a bullet casing at a glance.
+(u)Spyritdragon
+(p)26136
+(e)|
+(+)Pharmacists now get a beaker lid in their starting backpack.
 (t)sun mar 08 26
 (u)SimpleWolf
 (p)26106
