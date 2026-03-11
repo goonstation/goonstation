@@ -78,11 +78,11 @@
 				return TRUE
 
 		if(cache.Find("Security Department") || cache.Find("Security Officer"))
-			if(J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security))
+			if(J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security) || istype(J, /datum/job/special/nt/security_consultant))
 				return TRUE
 
 		if(cache.Find("Heads of Staff"))
-			if(J.job_category == JOB_COMMAND)
+			if(J.job_category == JOB_COMMAND || istype(J, /datum/job/special/nt/security_consultant))
 				return TRUE
 
 	if(cache.Find("Ghostdrone"))

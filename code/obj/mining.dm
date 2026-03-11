@@ -1824,7 +1824,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	afterattack(atom/target, mob/user)
 		..()
-		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mods)
+		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mode)
 			if(isturf(target))
 				src.process_charges(src.get_power_usage(), user)
 			else
@@ -1996,7 +1996,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 /obj/item/mining_tool/powered/hedron_beam
 	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
 	name = "\improper Hedron beam device"
-	desc = "A prototype multifunctional industrial tool capable of rapidly switching between welding and mining modes."
+	desc = "A prototype multifunction industrial tool capable of rapidly switching between welding and mining modes. Ships with a weak self-charging cell."
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
@@ -2006,10 +2006,10 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	tool_flags = TOOL_WELDING
 	force = 10
 	dig_strength = 0
-	powered_dig_strength = 3
-	power_usage = 2
+	powered_dig_strength = 5
+	power_usage = 1
 	robot_power_usage = 50
-	default_cell = /obj/item/ammo/power_cell
+	default_cell = /obj/item/ammo/power_cell/self_charging/tricklecharge
 
 	examine(mob/user)
 		. = ..()
@@ -2025,7 +2025,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 		FLICK("hedron-MtoW", src)
 		..()
 
-	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
+	proc/try_weld(mob/user, var/fuel_amt = 4, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
 	//All welding tools just copy and paste this proc? Horrible, but out of scope so it can be some other handsome coder's problem.
 		if (!src.is_on) //are we in welding mode?
 			if(use_amt == -1)
@@ -2056,6 +2056,9 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	New()
 		..()
 		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
+
+	get_fiber_mask()
+		return create_glovemask_order(2) // 1/2 chance of match
 
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
@@ -2735,34 +2738,34 @@ TYPEINFO(/obj/submachine/cargopad)
 	podbay
 		name = "Pod Bay Pad"
 	hydroponic
-		mailgroup = MGD_BOTANY
+		mailgroup = MGT_HYDROPONICS
 		name = "Hydroponics Pad"
 	robotics
-		mailgroup = MGD_MEDRESEACH
+		mailgroup = MGT_ROBOTICS
 		name = "Robotics Pad"
 	artlab
-		mailgroup = MGD_SCIENCE
+		mailgroup = MGD_RESEARCH
 		name = "Artifact Lab Pad"
 	engineering
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEER
 		name = "Engineering Pad"
 	mechanics
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEER
 		name = "Mechanics Pad"
 	magnet
-		mailgroup = MGD_MINING
+		mailgroup = MGT_MINING
 		name = "Mineral Magnet Pad"
 	miningoutpost
-		mailgroup = MGD_MINING
+		mailgroup = MGT_MINING
 		name = "Mining Outpost Pad"
 	qm
-		mailgroup = MGD_CARGO
+		mailgroup = MGT_CARGO
 		name = "QM Pad"
 	qm2
-		mailgroup = MGD_CARGO
+		mailgroup = MGT_CARGO
 		name = "QM Pad 2"
 	researchoutpost
-		mailgroup = MGD_SCIENCE
+		mailgroup = MGD_RESEARCH
 		name = "Research Outpost Pad"
 	radio
 		name = "Radio Station Pad"
@@ -2776,17 +2779,17 @@ TYPEINFO(/obj/submachine/cargopad)
 		if (!src.mailgroup)
 			var/area/area = get_area(src)
 			if (istype(area, /area/station/hydroponics) || istype(area, /area/station/storage/hydroponics) || istype(area, /area/station/ranch))
-				src.mailgroup = MGD_BOTANY
+				src.mailgroup = MGT_HYDROPONICS
 			else if (istype(area, /area/station/medical))
-				src.mailgroup = MGD_MEDRESEACH
+				src.mailgroup = MGT_ROBOTICS // usually, robotics pad
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
-				src.mailgroup = MGD_SCIENCE
+				src.mailgroup = MGD_RESEARCH
 			else if (istype(area, /area/station/engine))
-				src.mailgroup = MGO_ENGINEER
+				src.mailgroup = MGD_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
-				src.mailgroup = MGD_MINING
+				src.mailgroup = MGT_MINING
 			else if (istype(area, /area/station/quartermaster))
-				src.mailgroup = MGD_CARGO
+				src.mailgroup = MGT_CARGO
 
 		if (src.active) //in case of map edits etc
 			AddOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")

@@ -496,7 +496,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "cq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -2297,7 +2297,7 @@
 /obj/decoration/toiletholder{
 	pixel_y = 32
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -4076,7 +4076,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "CA" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/grime,
@@ -4107,10 +4107,6 @@
 /obj/decal/cleanable/ranch_feed,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
-"Dz" = (
-/obj/item/device/infra_sensor,
-/turf/unsimulated/floor/martian,
-/area/evilreaver/security)
 "DK" = (
 /obj/fakeobject/ritual_symbol{
 	icon_state = "corruptus"
@@ -4156,7 +4152,7 @@
 /turf/space/fluid/noexplosion,
 /area/cult_base)
 "Ef" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/grime,
@@ -4480,7 +4476,7 @@
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "Lr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -5000,7 +4996,7 @@
 /area/cult_base/leader)
 "Xr" = (
 /obj/decal/cleanable/ripped_poster,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for custodial purposes.";
 	dir = 8;
 	name = "custodial sink";
@@ -12991,7 +12987,7 @@ Ns
 FT
 Hn
 Hn
-Dz
+Ns
 Ns
 Ns
 Ns

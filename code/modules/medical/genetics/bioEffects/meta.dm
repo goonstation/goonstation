@@ -3,6 +3,7 @@
 	desc = "This function of this gene is not well-researched."
 	researched_desc = "This gene will activate every latent mutation in the subject when activated."
 	id = "activator"
+	icon_state = "booster_x"
 	secret = 1
 	isBad = 1
 	probability = 33
@@ -29,6 +30,7 @@
 	desc = "This function of this gene is not well-researched."
 	researched_desc = "This gene will completely randomise the subject's gene pool and remove all active effects."
 	id = "gene_scrambler"
+	icon_state = "booster_y"
 	secret = 1
 	isBad = 1
 	probability = 33
@@ -54,6 +56,7 @@
 	desc = "This function of this gene is not well-researched."
 	researched_desc = "This gene will remove all active and latent effects from the subject."
 	id = "gene_clearer"
+	icon_state = "booster_z"
 	secret = 1
 	isBad = 1
 	probability = 33

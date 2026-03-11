@@ -57,6 +57,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	..()
 	name = "[src.shuttlename] Shuttle Computer"
 	desc = "A computer that controls the movement of the [src.shuttlename]."
+	START_TRACKING_CAT(TR_CAT_SHUTTLE_COMPUTERS)
 	if(src.embed)
 		src.icon_state = "shuttle-embed"
 		src.layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
@@ -71,6 +72,10 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 				pixel_y = -25
 			if (WEST)
 				pixel_x = -25
+
+/obj/machinery/computer/transit_shuttle/disposing()
+	STOP_TRACKING_CAT(TR_CAT_SHUTTLE_COMPUTERS)
+	. = ..()
 
 /obj/machinery/computer/transit_shuttle/power_change()  // fuck you parent code
 	if(powered() && embed)
@@ -185,14 +190,13 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 						ejectT = locate(westBound - 1,T.y,T.z)
 				if (istype(AM, /atom/movable/buried_storage))
 					var/atom/movable/buried_storage/buried_storage = AM
-					for (var/atom/movable/buried as anything in buried_storage)
-						buried.set_loc(ejectT)
-					buried_storage.has_buried_mob = FALSE
-					buried_storage.number_of_objects = 0
+					buried_storage.move_storage_contents_to_turf(ejectT)
 					continue
 				AM.set_loc(ejectT)
 
+		endlocation.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 		currentlocation.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
+		currentlocation.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
 
 		// cant figure out why the walls arent behaving when moved so
 		for (var/turf/unsimulated/wall/auto/wall in end_location)

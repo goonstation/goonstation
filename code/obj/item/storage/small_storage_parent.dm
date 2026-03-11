@@ -12,7 +12,7 @@
 	var/list/can_hold = null
 	var/list/can_hold_exact = null
 	var/list/prevent_holding = null
-	var/check_wclass = 0
+	var/check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
 	var/datum/hud/storage/hud
 	var/sneaky = 0
 	var/stealthy_storage = FALSE
@@ -61,7 +61,7 @@
 	icon_state = "box"
 	desc = "A box that can hold a number of small items."
 	max_wclass = W_CLASS_SMALL
-	soundproofing = 20
+	soundproofing = SOUNDPROOFING_MUTE
 
 /obj/item/storage/box/starter // the one you get in your backpack
 	name = "emergency box"

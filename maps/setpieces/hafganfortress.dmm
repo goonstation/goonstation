@@ -30,7 +30,7 @@
 	teleport_blocked = 1
 	})
 "ae" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8
 	},
 /turf/unsimulated/floor/wood/five,
@@ -567,7 +567,7 @@
 	teleport_blocked = 1
 	})
 "bH" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/setpieces/oldfloor,
@@ -3570,7 +3570,7 @@
 	icon_state = "line1";
 	dir = 8
 	},
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	name = "sanitary basin";
 	desc = "A water-filled unit intended for hospital purposes.";
@@ -4158,7 +4158,7 @@
 	teleport_blocked = 1
 	})
 "lx" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 17
 	},
 /turf/unsimulated/floor/sanitary/blue,
@@ -5610,7 +5610,7 @@
 /obj/railing/yellow{
 	dir = 8
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/sanitary/blue,
@@ -6880,7 +6880,7 @@
 	teleport_blocked = 1
 	})
 "sx" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /turf/unsimulated/floor/grey/checker,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -9301,7 +9301,7 @@
 	teleport_blocked = 1
 	})
 "yx" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8;
 	name = "sanitary basin";
 	desc = "A water-filled unit intended for hospital purposes.";
@@ -9594,7 +9594,7 @@
 	name = "Executive Wing"
 	})
 "zl" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/minitiles/black,
@@ -10181,7 +10181,7 @@
 	teleport_blocked = 1
 	})
 "AV" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/sanitary/blue,
@@ -10498,7 +10498,7 @@
 	teleport_blocked = 1
 	})
 "BX" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	name = "laundry sink";
 	desc = "A water-filled unit intended for laundry purposes."
@@ -11570,7 +11570,7 @@
 	irradiated = 0.7
 	})
 "EB" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -4
@@ -12183,7 +12183,7 @@
 	name = "Executive Wing"
 	})
 "Ga" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8;
 	name = "sanitary basin";
 	desc = "A water-filled unit intended for hospital purposes.";
@@ -16795,7 +16795,7 @@
 /turf/unsimulated/floor/shiny,
 /area/prefab/vault)
 "RG" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/marble/black,

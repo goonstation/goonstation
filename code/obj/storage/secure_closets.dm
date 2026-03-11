@@ -2,7 +2,7 @@
 	name = "secure locker"
 	desc = "A card-locked storage locker."
 	object_flags = NO_GHOSTCRITTER
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
 	p_class = 3
 	open_sound = 'sound/misc/locker_open.ogg'
@@ -14,6 +14,8 @@
 	var/bolted = TRUE
 	/// Can't be broken open with melee
 	var/reinforced = FALSE
+	/// Logging var
+	var/was_unbolted = FALSE
 	var/obj/particle/attack/attack_particle
 
 	New()
@@ -111,6 +113,8 @@
 
 	proc/toggle_bolts(var/mob/user)
 		user.visible_message("<b>[user]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+		if (src.bolted && src.was_unbolted)
+			logTheThing(LOG_STATION, user, "was the first player to unbolt [src] from the ground at [log_loc(src)]")
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
 		logTheThing(LOG_STATION, user, "[src.anchored ? "unanchored" : "anchored"] [log_object(src)] at [log_loc(src)]")
@@ -211,7 +215,7 @@
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-	/obj/item/barrier,
+	/obj/item/barrier/collapsible/security,
 	/obj/item/device/pda2/hos,
 	/obj/item/circuitboard/card/security,
 	/obj/item/circuitboard/announcement/security)
@@ -288,7 +292,8 @@
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/medical_director,
 	/obj/item/circuitboard/card/medical,
-	/obj/item/circuitboard/announcement/medical)
+	/obj/item/circuitboard/announcement/medical,
+	/obj/item/reagent_containers/injector_filler)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -302,6 +307,7 @@
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
 		/obj/item/disk/data/floppy/manudrive/law_rack,
+		/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
 		/obj/item/stamp/ce,
@@ -381,7 +387,7 @@
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
-	/obj/item/barrier)
+	/obj/item/barrier/collapsible/security)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -398,7 +404,7 @@
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
-	/obj/item/barrier)
+	/obj/item/barrier/collapsible/security)
 
 	make_my_stuff()
 		..()
@@ -642,7 +648,7 @@
 	icon_closed = "medical_restricted"
 	icon_state = "medical_restricted"
 	spawn_contents = list()
-	req_access = list(access_medical_director)
+	req_access = list(access_pharmacy)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			// let's organize the SHIT outta this closet too! hot damn
@@ -742,7 +748,7 @@
 	name = "pharmacy chemical locker"
 	icon_closed = "medical_chemical"
 	icon_state = "medical_chemical"
-	req_access = list(access_medical_lockers)
+	req_access = list(access_pharmacy)
 
 /* ======================= */
 /* ----- Engineering ----- */
@@ -817,7 +823,7 @@
 	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/backpack/engineering,
-	/obj/item/breaching_charge/mining/light = 3,
+	/obj/item/storage/breach_pouch/filled,
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,

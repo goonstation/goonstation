@@ -2942,6 +2942,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 3
 	food_effects = list("food_refreshed","food_warm")
 
+/obj/item/reagent_containers/food/snacks/maghaz
+	name = "maghaz"
+	desc = "Brain served in gravy. There are some almonds in it, not sure where those came from."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "maghaz"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 3
+	heal_amt = 3
+	bites_left = 3
+	initial_volume = 10
+	initial_reagents = "gravy"
+	food_effects = list("food_explosion_resist", "food_hp_up_big", "brain_food_ithillid")
+	meal_time_flags = MEAL_TIME_DINNER
+
 // Dippable food
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 /obj/item/reagent_containers/food/snacks/dippable

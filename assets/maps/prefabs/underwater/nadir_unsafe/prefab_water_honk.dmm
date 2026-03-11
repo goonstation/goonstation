@@ -148,7 +148,7 @@
 /area/prefab/slimy_honk)
 "aH" = (
 /obj/item/cigbutt,
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	icon_state = "sink";
 	dir = 4
 	},

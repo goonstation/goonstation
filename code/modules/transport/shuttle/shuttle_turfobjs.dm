@@ -207,6 +207,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	icon_state = "corner"
 	density = 1
 	opacity = 0
+	provides_grip = TRUE
 	gas_impermeable = TRUE
 	layer = EFFECTS_LAYER_BASE - 1
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID

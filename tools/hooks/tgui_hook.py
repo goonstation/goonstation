@@ -204,7 +204,7 @@ def _rewrite_merge_commit(repo: pygit2.Repository, commit: pygit2.Commit) -> int
         return 1
 
     committer = _default_committer(repo, commit)
-    parents = [parent.oid for parent in commit.parents]
+    parents = [_commit_oid(parent) for parent in commit.parents]
 
     try:
         new_oid = repo.create_commit(None, commit.author, committer, commit.message, tree_id, parents)
@@ -267,6 +267,13 @@ def _default_committer(repo: pygit2.Repository, commit: pygit2.Commit) -> pygit2
         return repo.default_signature
     except (KeyError, ValueError):
         return commit.committer
+
+
+def _commit_oid(commit: pygit2.Commit):
+    try:
+        return commit.id
+    except AttributeError:
+        return commit.oid
 
 
 if __name__ == "__main__":

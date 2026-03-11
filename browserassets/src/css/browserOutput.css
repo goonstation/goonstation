@@ -750,6 +750,17 @@ h2.astation {
   border-color: #c8714c;
 }
 
+div.acentcom {
+  border-color: #0a4882;
+}
+h1.acentcom {
+  background-color: #395cc6;
+}
+h2.acentcom {
+  background-color: #62a5ee;
+  border-color: #395cc6;
+}
+
 div.awatchful {
   border-color: #9b56f4;
 }
@@ -1305,6 +1316,16 @@ html.theme-dark h2.astation {
   border-color: #953e19;
 }
 
+html.theme-dark div.acentcom {
+  border-color: #01273f;
+}
+html.theme-dark h1.acentcom {
+  background-color: #0a4882;
+}
+html.theme-dark h2.acentcom {
+  background-color: #395cc6;
+  border-color: #0a4882;
+}
 html.theme-dark div.awatchful {
   border-color: #6823c1;
 }

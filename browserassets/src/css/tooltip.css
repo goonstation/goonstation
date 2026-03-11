@@ -523,6 +523,40 @@ img {
   --theme-primary: #1a35cf;
 }
 
+/** Gravity  */
+
+[data-theme='gravInd0'] .tt-content,
+[data-theme='gravInd1'] .tt-content,
+[data-theme='gravInd2'] .tt-content {
+  --theme-highlight: #2b7ada;
+}
+
+[data-theme='gravInd3'] .tt-content,
+[data-theme='gravInd4'] .tt-content {
+  --theme-highlight: #fefe00;
+}
+
+[data-theme='gravInd0'] .tt-content {
+  --theme-primary: #1a35cf;
+}
+
+[data-theme='gravInd1'] .tt-content {
+  --theme-primary: #44cccd;
+}
+
+[data-theme='gravInd2'] .tt-content {
+  --theme-primary: #3cbf5b;
+}
+
+[data-theme='gravInd3'] .tt-content {
+  --theme-primary: #c57200;
+}
+
+[data-theme='gravInd4'] .tt-content {
+  --theme-primary: #980400;
+  --theme-secondary: #3e090d;
+}
+
 /* Stamina */
 
 [data-theme='stamina'] .tt-content {

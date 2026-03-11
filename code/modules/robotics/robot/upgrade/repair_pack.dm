@@ -12,4 +12,6 @@
 		return
 	for (var/obj/item/parts/robot_parts/RP in user.contents)
 		RP.ropart_mend_damage(100, 100)
+	health_update_queue |= user
+	user.update_appearance()
 	boutput(user, SPAN_NOTICE("All components repaired!"))

@@ -115,7 +115,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/water_treatment)
 "aw" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},

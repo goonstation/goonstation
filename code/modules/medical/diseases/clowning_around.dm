@@ -18,7 +18,7 @@
 /datum/ailment/disease/clowning_around/stage_act(mob/living/affected_mob, datum/ailment_data/D, mult)
 	if (..())
 		return
-	if(affected_mob.job == "Clown")
+	if(affected_mob.traitHolder?.hasTrait("training_clown"))
 		D.state = "Asymptomatic"
 		return
 	if(affected_mob.job == "Cluwne")

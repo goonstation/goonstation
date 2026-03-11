@@ -94,6 +94,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	slice_amount = 1
 	slice_suffix = "fillet"
 	food_color = "#F4B4BC"
+	brew_result = list("fish_sauce"=20)
 	/// What kind of fish is this? (See defines above)
 	var/category = null
 	// How many points is this fish worth in the upload terminal?

@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/motherboard)
 	icon = 'icons/obj/module.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "mainboard"
-	item_state = "electronic"
+	item_state = "electronics"
 	w_class = W_CLASS_SMALL
 	var/created_name = null //If defined, result computer will have this name.
 	var/integrated_floppy = 1 //Does the resulting computer have a built-in disk drive?
@@ -237,10 +237,11 @@ TYPEINFO(/obj/item/motherboard)
 				src.state = 0
 		if(2)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				boutput(user, SPAN_NOTICE("You add cables to the frame."))
-				P.change_stack_amount(-5)
-				src.state = 3
-				src.icon_state = "3"
+				var/obj/item/cable_coil/coil = P
+				if (coil?.use(5))
+					boutput(user, SPAN_NOTICE("You add cables to the frame."))
+					src.state = 3
+					src.icon_state = "3"
 		if(3)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
 				boutput(user, SPAN_NOTICE("You put in the glass panel."))

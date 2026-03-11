@@ -1,6 +1,6 @@
 TYPEINFO(/mob/dead)
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL, LISTEN_INPUT_WRAITHCHAT)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_GHOST)
@@ -20,6 +20,7 @@ TYPEINFO(/mob/dead)
 	..()
 	src.flags |= UNCRUSHABLE
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)
@@ -169,7 +170,7 @@ TYPEINFO(/mob/dead)
 			GH.change_points(5)
 
 #endif
-		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
+		log_emote(src, html_encode(message), voluntary)
 		src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]"),group = "[src]_[lowertext(act)]")
 		return 1
 	return 0

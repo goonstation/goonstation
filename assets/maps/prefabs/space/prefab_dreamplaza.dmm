@@ -817,7 +817,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "zv" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 7
 	},
 /obj/decal/cleanable/dirt,
@@ -1083,7 +1083,7 @@
 /turf/simulated/floor/carpet/clowncarpet/border,
 /area/prefab/dreamplaza)
 "Jp" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	pixel_y = 5
 	},
 /obj/decal/cleanable/dirt/dirt5,

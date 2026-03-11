@@ -69,8 +69,14 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			FLICK("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in src.loc)
+				continue_if_overlay_or_effect(M)
 				if(M.anchored)
 					continue
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.shoes?.magnetic)
+						boutput(H, SPAN_NOTICE("You feel yourself being pulled away, but [H.shoes] keeps you stable."))
+						continue
 				animate_teleport(M)
 				if(ismob(M))
 					var/mob/O = M

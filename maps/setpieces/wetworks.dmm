@@ -582,7 +582,7 @@
 	color = "aqua"
 	})
 "dT" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -5
@@ -1014,7 +1014,7 @@
 	color = "aqua"
 	})
 "gT" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	tag = "icon-sink (NORTH)"
 	},
@@ -1350,7 +1350,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	pixel_y = -2;
 	name = "utility sink";
@@ -1391,7 +1391,7 @@
 	color = "aqua"
 	})
 "ju" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -5
@@ -1509,7 +1509,7 @@
 	color = "aqua"
 	})
 "kn" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	pixel_y = -2
 	},
@@ -3446,7 +3446,7 @@
 	color = "aqua"
 	})
 "ye" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 5
 	},
@@ -5867,7 +5867,7 @@
 	color = "aqua"
 	})
 "OD" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	tag = "icon-sink (NORTH)";
 	pixel_x = 6
@@ -6440,7 +6440,7 @@
 	color = "aqua"
 	})
 "SZ" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	tag = "icon-sink (NORTH)";
 	pixel_x = 6
@@ -6986,7 +6986,7 @@
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 3
 	},
 /turf/unsimulated/floor/shiny{

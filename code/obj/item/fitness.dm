@@ -92,7 +92,7 @@
 					H.sims.affectMotive("fun", 4)
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
-			user.changeStatus("fitness_stam_regen", 100 SECONDS)
+			user.changeStatus("fitness_stam_regen", 100 SECONDS, user.gforce)
 			boutput(user, SPAN_NOTICE("[finishmessage]"))
 
 /obj/fitness/weightlifter
@@ -156,4 +156,4 @@
 			icon_state = "fitnessweight"
 			src.UpdateOverlays(null, "barbell")
 			boutput(user, SPAN_NOTICE("[finishmessage]"))
-			user.changeStatus("fitness_stam_max", 100 SECONDS)
+			user.changeStatus("fitness_stam_max", 100 SECONDS, user.gforce)

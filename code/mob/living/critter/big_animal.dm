@@ -102,7 +102,7 @@
 	is_npc = TRUE
 	butcherable = BUTCHER_ALLOWED
 	meat_type = /obj/item/reagent_containers/food/snacks/ectoplasm
-	skinresult = /obj/item/void_shield
+	skinresult = /obj/item/barrier/void
 	max_skins = 1
 
 	add_abilities = list(/datum/targetable/critter/slam,

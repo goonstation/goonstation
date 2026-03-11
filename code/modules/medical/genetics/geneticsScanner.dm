@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 	var/datum/movable_preview/character/multiclient/occupant_preview = null
 	var/locked = 0
 	anchored = ANCHORED
-	soundproofing = 10
+	soundproofing = SOUNDPROOFING_MUFFLED
 
 	var/net_id = null
 	var/frequency = FREQ_PDA

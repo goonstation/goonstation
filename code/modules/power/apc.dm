@@ -558,10 +558,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				boutput(user, SPAN_ALERT("Access denied."))
 
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
-	W.change_stack_amount(-4)
-	boutput(user, "You repair the autotransformer.")
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-	src.repair_status = 2
+	var/obj/item/cable_coil/coil = W
+	if (coil?.use(4))
+		boutput(user, "You repair the autotransformer.")
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		src.repair_status = 2
 
 /obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
 	boutput(user, "You tune the autotransformer.")
