@@ -339,44 +339,46 @@
 		return attack_hand(user)
 
 	proc/lever_hv(mob/user)
-		if(!QDELETED(src))
-			for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
-				for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
-					arcFlashTurf(C, R.loc, 50, 50)
-				new /mob/living/critter/void_scale(R.loc)
-			for(var/atom/movable/mysterious_beast/B in (range(7)))
-				qdel(B)
-			shake_camera(user, 5, 16)
-			random_brute_damage(user, 3)
-			user.changeStatus("knockdown", 1 SECOND)
-			var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
-			D.dir = 4
-			playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
-			playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
-			for(var/mob/living/carbon/human/H in (range(5)))
-				if(H.mind)
-					H.unlock_medal("Waking Nightmare", TRUE)
-			src.cutoff = TRUE
-			qdel(src)
+		if(QDELETED(src))
+			return
+		for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
+			for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
+				arcFlashTurf(C, R.loc, 50, 50)
+			new /mob/living/critter/void_scale(R.loc)
+		for(var/atom/movable/mysterious_beast/B in (range(7)))
+			qdel(B)
+		shake_camera(user, 5, 16)
+		random_brute_damage(user, 3)
+		user.changeStatus("knockdown", 1 SECOND)
+		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
+		D.dir = 4
+		playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
+		for(var/mob/living/carbon/human/H in (range(5)))
+			if(H.mind)
+				H.unlock_medal("Waking Nightmare", TRUE)
+		src.cutoff = TRUE
+		qdel(src)
 
 	proc/lever_lv(mob/user)
-		if(!src.cutoff)
-			for(var/obj/decoration/ritual/R in(range(7)))
-				new /obj/item/siren_orb(R.loc)
-			for(var/atom/movable/mysterious_beast/B in (range(7)))
-				qdel(B)
-			for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
-				animate_little_spark(C)
-			shake_camera(user, 4, 4)
-			var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
-			D.dir = 4
-			playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
-			playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
-			for(var/mob/living/carbon/human/H in (range(5)))
-				if(H.mind)
-					H.unlock_medal("Waking Dream", TRUE)
-			src.cutoff = TRUE
-			qdel(src)
+		if(QDELETED(src))
+			return
+		for(var/obj/decoration/ritual/R in(range(7)))
+			new /obj/item/siren_orb(R.loc)
+		for(var/atom/movable/mysterious_beast/B in (range(7)))
+			qdel(B)
+		for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
+			animate_little_spark(C)
+		shake_camera(user, 4, 4)
+		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
+		D.dir = 4
+		playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
+		for(var/mob/living/carbon/human/H in (range(5)))
+			if(H.mind)
+				H.unlock_medal("Waking Dream", TRUE)
+		src.cutoff = TRUE
+		qdel(src)
 
 /datum/dialogueMaster/controlpc
 	dialogueName = "Voltage Control Terminal"
