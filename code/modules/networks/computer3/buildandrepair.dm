@@ -81,20 +81,20 @@ TYPEINFO(/obj/item/motherboard)
 	var/dat = "<html><head><title>[name]</title></head><body>"
 
 	dat += "<hr>"
-	if(mainboard)
-		dat += "<tt>Motherboard: [mainboard.name]</tt>"
+	if(src.mainboard)
+		dat += "<tt>Motherboard: [src.mainboard.name]</tt>"
 	else
 		dat += "<tt>Motherboard: ----</tt>"
 
 	if(hd)
 		dat += "<br><tt>Hard Drive: [hd.name]</tt> <a href='byond://?src=\ref[src];driveRemove=1'>(Remove)</a><br>"
-	else if(state >= 3)
+	else if(src.state >= 3)
 		dat += "<br><tt>Hard Drive: <a href='byond://?src=\ref[src];driveAdd=1'>----</a><br></tt>"
 	else
 		dat += "<br><tt>Hard Drive: ----</tt><br>"
 
 	dat += "<hr>"
-	dat += "<b>Peripherals:</b> [length(peripherals)]/[max_peripherals]<br>"
+	dat += "<b>Peripherals:</b> [length(src.peripherals)]/[src.max_peripherals]<br>"
 
 	for (var/i in 1 to length(src.peripherals))
 		var/obj/item/peripheral/P = src.peripherals[i]
@@ -107,7 +107,7 @@ TYPEINFO(/obj/item/motherboard)
 			dat += "&nbsp;&nbsp;- [P.name] <s>(Remove)</s> <i>[cant_remove_reason]</i><br>"
 
 	for (var/i in 1 to (src.max_peripherals - length(src.peripherals)))
-		if(state >= 2)
+		if(src.state >= 2)
 			dat += "&nbsp;&nbsp;<a href='byond://?src=\ref[src];addPeriph=1'>----</a><br>"
 		else
 			dat += "&nbsp;&nbsp;----<br>"
@@ -124,8 +124,8 @@ TYPEINFO(/obj/item/motherboard)
 
 	if(src.maint_accessible(usr) && can_act(usr) && !usr.lying)
 		var/periphID = text2num(href_list["periphID"])
-		if (periphID > 0 && periphID <= length(peripherals))
-			var/obj/item/peripheral/peri = peripherals[periphID]
+		if (periphID > 0 && periphID <= length(src.peripherals))
+			var/obj/item/peripheral/peri = src.peripherals[periphID]
 
 			peri.uninstalled()
 			usr.put_in_hand_or_drop(peri)
@@ -148,7 +148,7 @@ TYPEINFO(/obj/item/motherboard)
 
 			src.updateUsrDialog()
 
-		if(href_list["driveAdd"] && state >= 3)
+		if(href_list["driveAdd"] && src.state >= 3)
 			var/obj/item/disk/data/fixed_disk/P = usr.equipped()
 			if(istype(P, /obj/item/disk/data/fixed_disk) && !src.hd)
 				usr.drop_item()
@@ -168,8 +168,8 @@ TYPEINFO(/obj/item/motherboard)
 	list(P,user), P.icon, P.icon_state, null)
 
 	//We can slap in periphs at any point as long as maint is accessible
-	if (istype(P, /obj/item/peripheral) && maint_accessible(user))
-		insert_periph(P,user)
+	if (istype(P, /obj/item/peripheral) && src.maint_accessible(user))
+		src.insert_periph(P,user)
 		return
 
 	switch(state)
@@ -306,7 +306,7 @@ TYPEINFO(/obj/item/motherboard)
 				//dispose()
 				src.dispose()
 			else
-				return attack_hand(user)
+				return src.attack_hand(user)
 
 /obj/computer3frame/proc/state_actions(obj/item/P, mob/user)
 	switch(state)
@@ -413,14 +413,15 @@ TYPEINFO(/obj/item/motherboard)
 		peripheral.uninstalled()
 
 /obj/computer3frame/proc/maint_accessible(mob/user)
-	return (state >= 2 && BOUNDS_DIST(src, user) <= 0)
+	return (src.state >= 2 && BOUNDS_DIST(src, user) <= 0)
 
 /obj/computer3frame/proc/insert_periph(obj/item/peripheral/P, mob/user)
-	if (istype(P))
-		if(length(src.peripherals) < src.max_peripherals)
-			user.drop_item()
-			src.peripherals.Add(P)
-			P.set_loc(src)
-			boutput(user, SPAN_NOTICE("You add \the [P] to the frame."))
-		else
-			boutput(user, SPAN_ALERT("There is no more room for peripheral cards."))
+	if(!istype(P))
+		return
+	if(length(src.peripherals) < src.max_peripherals)
+		user.drop_item()
+		src.peripherals.Add(P)
+		P.set_loc(src)
+		boutput(user, SPAN_NOTICE("You add \the [P] to the frame."))
+	else
+		boutput(user, SPAN_ALERT("There is no more room for peripheral cards."))
