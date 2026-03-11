@@ -138,8 +138,6 @@ TYPEINFO(/obj/item/motherboard)
 		if (href_list["addPeriph"])
 			src.insert_periph(usr.equipped(),usr)
 
-			src.updateUsrDialog()
-
 		if(href_list["driveRemove"])
 			if(src.hd)
 				usr.put_in_hand_or_drop(src.hd)
@@ -423,5 +421,6 @@ TYPEINFO(/obj/item/motherboard)
 		src.peripherals.Add(P)
 		P.set_loc(src)
 		boutput(user, SPAN_NOTICE("You add \the [P] to the frame."))
+		src.updateUsrDialog()
 	else
 		boutput(user, SPAN_ALERT("There is no more room for peripheral cards."))
