@@ -384,7 +384,7 @@
 	dialogueName = "Voltage Control Terminal"
 	start = /datum/dialogueNode/controlpc_start
 	visibleDialogue = 0
-	maxDistance = 1 // Cause they have to delete themselves, doubt it'll be a problem... right? It was.
+	maxDistance = -1 // Cause they have to delete themselves, doubt it'll be a problem... right? It was. Other guards shooould cover this
 
 	showDialogue()
 		var/obj/dialogueobj/controlpc/PC = src.master
