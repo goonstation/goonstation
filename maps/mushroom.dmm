@@ -462,7 +462,7 @@
 /area/station/hallway/secondary/exit)
 "acH" = (
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/lobby)
@@ -3469,7 +3469,7 @@
 "auW" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/storage/box/beakerbox,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
 "avh" = (
@@ -6962,10 +6962,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"bJZ" = (
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "bKe" = (
 /obj/disposalpipe/junction/right/west,
 /obj/machinery/bot/secbot/autopatrol,
@@ -7668,7 +7664,6 @@
 	pixel_y = 10
 	},
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -7826,13 +7821,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
-"ckk" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "ckv" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -8904,7 +8892,7 @@
 /area/station/hallway/primary/west)
 "cUl" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
 "cUZ" = (
@@ -10240,10 +10228,6 @@
 /obj/machinery/light/small/floor,
 /obj/drink_rack/cup{
 	pixel_x = -27
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = 0;
-	pixel_y = 8
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
@@ -14045,6 +14029,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
+"gCw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "gCJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -15124,7 +15115,6 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "hqr" = (
-/obj/stool/chair,
 /obj/machinery/light_switch{
 	name = "W light switch";
 	pixel_x = -24;
@@ -15134,6 +15124,7 @@
 	pixel_y = -8;
 	id = "RD"
 	},
+/obj/stool/chair/purple,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -15225,7 +15216,7 @@
 /area/station/science/hall)
 "hsp" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
@@ -15316,13 +15307,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"huB" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "huJ" = (
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor,
@@ -16061,6 +16045,10 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"iau" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon13,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "iaz" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -16116,6 +16104,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"ici" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "icj" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -18557,10 +18552,6 @@
 	dir = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/kitchen/food_box/donut_box{
-	desc = "It appears to be a Martian brand of donuts.";
-	name = "Robust Donuts"
-	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "jPK" = (
@@ -19595,7 +19586,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "kCj" = (
@@ -19969,11 +19959,6 @@
 	dir = 4
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon3,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
-"kQz" = (
-/obj/disposalpipe/segment,
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "kQT" = (
@@ -20448,6 +20433,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"lkH" = (
+/obj/disposalpipe/segment,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "lkJ" = (
 /obj/machinery/firealarm/directional/south,
 /turf/unsimulated/floor/arrival,
@@ -21152,6 +21142,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"lNi" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "lNm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage)
@@ -21994,8 +21988,11 @@
 /area/station/maintenance/southeast)
 "mph" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts"
+	},
 /obj/machinery/espresso_machine,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
@@ -22424,12 +22421,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
-"mLu" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/lobby)
 "mMp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23612,6 +23603,12 @@
 	tag = "icon-0,6"
 	},
 /area/station/crew_quarters/fitness)
+"nzY" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/lobby)
 "nAc" = (
 /obj/rack,
 /obj/item/clothing/glasses/thermal{
@@ -28786,7 +28783,6 @@
 /area/station/crew_quarters/kitchen)
 "qJJ" = (
 /obj/machinery/chem_dispenser/chef,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "qKe" = (
@@ -29982,10 +29978,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
-"rtJ" = (
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon13,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "rum" = (
 /obj/machinery/power/solar/aisat,
 /obj/cable/yellow,
@@ -40617,7 +40609,7 @@
 /area/station/chapel/sanctuary)
 "yiB" = (
 /obj/machinery/chem_dispenser/alcohol,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "yiJ" = (
@@ -83140,7 +83132,7 @@ ozy
 ozy
 cPi
 pYi
-kQz
+lkH
 llD
 ozy
 sva
@@ -83708,7 +83700,7 @@ ylM
 acp
 ntQ
 fVr
-huB
+ici
 lov
 aoJ
 aoJ
@@ -87923,7 +87915,7 @@ aaa
 fEr
 wIc
 acb
-bJZ
+lNi
 acG
 fEr
 adA
@@ -87974,7 +87966,7 @@ iwf
 xLd
 rrG
 xvz
-rtJ
+iau
 jkA
 jkA
 jkA
@@ -92839,8 +92831,8 @@ jvc
 lfe
 mwA
 pGw
+nzY
 acH
-mLu
 gWq
 ieK
 jGs
@@ -93436,7 +93428,7 @@ bqO
 aDh
 bqO
 bse
-ckk
+gCw
 gOR
 icY
 jzN
