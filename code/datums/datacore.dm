@@ -127,125 +127,40 @@
 	else
 		S["notes"] = sec_note
 
-	if(H.traitHolder.hasTrait("jailbird"))
-		S["criminal"] = ARREST_STATE_ARREST
-		S["mi_crim"] = pick(\
-								"Public urination.",\
-								"Reading highly confidential private information.",\
-								"Vandalism.",\
-								"Illegal manufacturing of space goods.",\
-								"Tresspassing.",\
-								"Killing a monkey.",\
-								"Negligence.",\
-								"Pushing down and farting on a member of security.",\
-								"Throwing a toolbox at a member of security.",\
-								"Being drunk.",\
-								"Being high.",\
-								"Excessive force.",\
-								"Impersonating a security officer.",\
-								"Stealing shoes.",\
-								"Littering.",\
-								"Existing.",\
-								"Illegal haircutting.",\
-								"Staring at a bee for over an hour.",\
-								"Not showering before entering pool.",\
-								"Rampant idiocy.",\
-								"Never tipping the catering staff.",\
-								"Disregarding previous tickets.",\
-								"Fashion crimes.",\
-								"Gambling.",\
-								"Bribery.",\
-								"Sleeping on the job.",\
-								"Unauthorized stamp collecting.",\
-								"Refusing to wash their hands.",\
-								"Maintenance lurking.",\
-								"Dumpster diving.",\
-								"Not covering their mouth when sneezing.",\
-								"Open mouth chewing.",\
-								"Riding pods without a license.",\
-								"Breathing loudly.",\
-								"Riding a segway directly into the captain.",\
-								"Wearing their shirt backwards.",\
-								"Excessive swearing",\
-								"Cutting in line.",\
-								"Tying the captain's shoelaces together.",\
-								"Forgetting the captain's birthday.")
-		S["mi_crim_d"] = "No details provided."
-		S["ma_crim"] = pick(\
-								"Grand theft apidae.",\
-								"Bee murder.",\
-								"Superfarted on the captain.",\
-								"Released the singularity.",\
-								"Stole the captain's spare ID.",\
-								"Arson, murder, jaywalking.",\
-								"Arson.",\
-								"Murder.",\
-								"Jaywalking.",\
-								"Skating right through the bounds of real-space. Wicked sick, but highly illegal.",\
-								"Being a really really bad surgeon.",\
-								"Distributing meth.",\
-								"Dismemberment and decapitation.",\
-								"Running around with a chainsaw.",\
-								"Throwing explosive tomatoes at people.",\
-								"Caused multiple seemingly unrelated accidents.",\
-								"Dabbing.",\
-								"Assembling explosives.",\
-								"Being in the wrong place at the wrong time.",\
-								"Assault.",\
-								"Tossing someone in space.",\
-								"Over-escalation.",\
-								"Manslaughter",\
-								"Refusing to share their meth.",\
-								"Grand larceny.")
-		S["ma_crim_d"] = "No details provided."
+	if (H.traitHolder?.hasTrait("training_clown"))
+		S["criminal"] = ARREST_STATE_CLOWN
+		S["mi_crim"] = "Clown"
 		H.update_arrest_icon()
-
-
-		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
-		if(S["notes"] == "No notes.")
-			S["notes"] = randomNote
-		else
-			S["notes"] += " [randomNote]"
-
-		boutput(H, SPAN_NOTICE("You are currently on the run because you've committed the following crimes:"))
-		boutput(H, SPAN_NOTICE("- [S["mi_crim"]]"))
-		boutput(H, SPAN_NOTICE("- [S["ma_crim"]]"))
-
-		H.mind.store_memory("You've committed the following crimes before arriving on the station:")
-		H.mind.store_memory("- [S["mi_crim"]]")
-		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		if (H.traitHolder?.hasTrait("training_clown"))
-			S["criminal"] = ARREST_STATE_CLOWN
-			S["mi_crim"] = "Clown"
-			H.update_arrest_icon()
-		else
-			S["criminal"] = ARREST_STATE_NONE
-			S["mi_crim"] = "None"
+		S["criminal"] = ARREST_STATE_NONE
+		S["mi_crim"] = "None"
 
-		S["mi_crim_d"] = "No minor crime convictions."
-		S["ma_crim"] = "None"
-		S["ma_crim_d"] = "No major crime convictions."
+	S["mi_crim_d"] = "No minor crime convictions."
+	S["ma_crim"] = "None"
+	S["ma_crim_d"] = "No major crime convictions."
 
 	S["sec_flag"] = "None"
-
-
-	B["current_money"] = 100
-	B["pda_net_id"] = pda_net_id
-	B["notes"] = "No notes."
-
-	// If it exists for a job give them the correct wage
-	var/wageMult = 1
-	if(H.traitHolder.hasTrait("unionized"))
-		wageMult = 1.5
 
 	var/datum/job/J
 	if (H.job != null && istext(H.job))
 		J = find_job_in_controller_by_string(H.job)
 	else
 		J = find_job_in_controller_by_string(H.mind.assigned_role)
+
+	B["current_money"] = 100
+	B["pda_net_id"] = pda_net_id
+	// management isn't in the union (they're going to steal it anyway)
+	if (H.traitHolder?.hasTrait("unionized") && (J?.job_category == JOB_COMMAND || istype(J, /datum/job/special/random/vip)))
+		B["unionized"] = "Yes"
+	else
+		B["unionized"] = "No"
+	B["notes"] = "No notes."
+
 	if (J?.wages)
-		B["wage"] = round(J.wages * wageMult)
+		B["wage"] = round(J.wages)
+		if (B["unionized"] == "Yes")
+			B["wage"] = B["wage"] + round(B["wage"] * UNIONIZED_PAY_MULT)
+			global.wagesystem.union_stipend += round(B["wage"] * UNIONIZED_PAY_MULT)
 	else
 		B["wage"] = 0
 
@@ -470,24 +385,24 @@
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
-		wagesystem.station_budget += amount
+		wagesystem.budgets[BUDGET_CAT_STATION] += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.station_budget += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
-		wagesystem.station_budget += (amount-paid_amount)
+		wagesystem.budgets[BUDGET_CAT_STATION] += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.station_budget += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 

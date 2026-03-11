@@ -430,6 +430,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	New()
 		..()
 		src.UpdateStackAppearance()
+		if (!src.inventory_counter)
+			src.create_inventory_counter()
+		src.inventory_counter.update_number(src.amount)
 
 	UpdateName()
 		src.name = "[src.amount > 1 ? "[src.amount] " : null][name_prefix(null, 1)][src.value]-credit [src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
@@ -463,15 +466,21 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			..(I, user)
 
 	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = src.amount == 2 ? 1 : round(input("How many [src.real_name]s do you want to take from the stack?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, SPAN_ALERT("You wish!"))
-					return
-				src.change_stack_amount(0 - amt)
-				var/obj/item/dice/coin/poker_chip/P = new src.type(user.loc)
-				P.Attackhand(user)
+		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+			var/splitnum = round(input("How many [src.real_name]s do you want to take from the stack?","Stack of [src.amount]") as null|num)
+			if(!global.in_interact_range(src, user) || !isnum_safe(splitnum))
+				return
+			splitnum = round(clamp(splitnum, 0, src.amount))
+			if(amount == 0)
+				return
+
+			var/obj/item/dice/coin/poker_chip/new_chip = src.split_stack(splitnum)
+			if (!istype(new_chip))
+				boutput(user, SPAN_ALERT("Invalid entry, try again."))
+				return
+			user.put_in_hand_or_drop(new_chip)
+			new_chip.add_fingerprint(user)
+			boutput(user, SPAN_NOTICE("You take [splitnum] chips from the stack, leaving [src.amount] chips behind."))
 		else
 			..(user)
 
@@ -479,35 +488,167 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	color = "#DC0E18" // red
 	value = 5
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
 /obj/item/dice/coin/poker_chip/v10
 	color = "#30BA67" // green
 	value = 10
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
 /obj/item/dice/coin/poker_chip/v25
 	color = "#3153CE" // blue
 	value = 25
+
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
 
 /obj/item/dice/coin/poker_chip/v50
 	color = "#FFFFFF" // white
 	pip_color = "#3153CE" // blue
 	value = 50
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
 /obj/item/dice/coin/poker_chip/v100
 	color = "#FF7BD2" // pink
 	value = 100
+
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
 
 /obj/item/dice/coin/poker_chip/v250
 	color = "#E78B2E" // orange
 	value = 250
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
 /obj/item/dice/coin/poker_chip/v500
 	color = "#BE3ED6" // purple
 	value = 500
+
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
 
 /obj/item/dice/coin/poker_chip/v1000
 	color = "#4BE1DD" // aqua
 	value = 1000
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
+/obj/item/storage/briefcase/poker_chips
+	name = "Variety Poker Chip Case"
+	desc = "A briefcase containing a variety of poker-style betting chips."
+	can_hold = list(/obj/item/dice/coin/poker_chip)
+	slots = 8
+	w_class = W_CLASS_BULKY
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v5/stack, // 5 * 20 = 100
+		/obj/item/dice/coin/poker_chip/v10/stack, // 10 * 20 = 200 etc.
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v50/stack, // 1000
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v250/stack, // 5000
+		/obj/item/dice/coin/poker_chip/v500/stack, // 10 000
+		/obj/item/dice/coin/poker_chip/v1000/stack, // 20 000
+	)
+
+/obj/item/storage/briefcase/poker_chips/low_stakes
+	name = "low-stakes poker chip case"
+	slots = 7
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v5/stack, // 100
+		/obj/item/dice/coin/poker_chip/v5/stack, // 100
+		/obj/item/dice/coin/poker_chip/v10/stack, // 200
+		/obj/item/dice/coin/poker_chip/v10/stack, // 200
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v50/stack, // 1000
+	) // 2 600 credits, update vending machine costs if changed
+
+/obj/item/storage/briefcase/poker_chips/medium_stakes
+	name = "medium-stakes poker chip case"
+	icon_state = "briefcase_black"
+	item_state = "sec-case"
+	slots = 7
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v50/stack, // 1000
+		/obj/item/dice/coin/poker_chip/v50/stack, // 1000
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v250/stack, // 5000
+	) // 12 000 credits, update vending machine costs if changed
+
+/obj/item/storage/secure/sbriefcase/high_stakes
+	name = "high-stakes poker chip case"
+	desc = "A briefcase set of high-value poker-style betting chips, with included digital locking system."
+	check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
+	can_hold = list(/obj/item/dice/coin/poker_chip)
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v250/stack, // 5000
+		/obj/item/dice/coin/poker_chip/v250/stack, // 5000
+		/obj/item/dice/coin/poker_chip/v500/stack, // 10 000
+		/obj/item/dice/coin/poker_chip/v500/stack, // 10 000
+		/obj/item/dice/coin/poker_chip/v1000/stack, // 20 000
+	) // 54 000 credits, update vending machine costs if changed
+
+// admin spawn
+/obj/item/storage/briefcase/poker_chips/the_house
+	name = "The House's Poker Chip Case"
+	icon_state = "briefcase_rd"
+	item_state = "rd-case"
+	slots = 8
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v5/stack/house,
+		/obj/item/dice/coin/poker_chip/v10/stack/house,
+		/obj/item/dice/coin/poker_chip/v25/stack/house,
+		/obj/item/dice/coin/poker_chip/v50/stack/house,
+		/obj/item/dice/coin/poker_chip/v100/stack/house,
+		/obj/item/dice/coin/poker_chip/v250/stack/house,
+		/obj/item/dice/coin/poker_chip/v500/stack/house,
+		/obj/item/dice/coin/poker_chip/v1000/stack/house,
+	)
 /*
                     +---------------+
                     ¦m  S N A K E   ¦

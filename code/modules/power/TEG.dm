@@ -233,11 +233,10 @@
 
 						if(surplus <= 0 && fan_power_draw > apc_charge)
 							src.warning_active |= WARNING_APC_DRAINING
-
-						if(fan_power_draw * WARNING_FAIL_1MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_1MIN_ITERS)))
-							src.warning_active |= WARNING_1MIN
-						else if(fan_power_draw * WARNING_FAIL_5MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_5MIN_ITERS)))
-							src.warning_active |= WARNING_5MIN
+							if((fan_power_draw) * WARNING_FAIL_1MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_1MIN_ITERS)))
+								src.warning_active |= WARNING_1MIN
+							else if((fan_power_draw) * WARNING_FAIL_5MIN_ITERS > (cell_wattage + (apc_charge * WARNING_FAIL_5MIN_ITERS)))
+								src.warning_active |= WARNING_5MIN
 
 		else if(pressure_delta < 0)
 			gas_input = air2
@@ -767,7 +766,7 @@ datum/pump_ui/circulator_ui
 
 		var/max_warning = src.circ1?.warning_active | src.circ2?.warning_active
 		if( max_warning )
-			if(max_warning > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
+			if(max_warning >= WARNING_1MIN && !(src.status & (BROKEN | NOPOWER)))
 				if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
 					playsound(src.loc, 'sound/misc/klaxon.ogg', 40, pitch=1.1)
 			var/warning_side = 0
@@ -781,7 +780,7 @@ datum/pump_ui/circulator_ui
 			// Use single light if we are variant b (only has one light) OR if we are ONLY in the APC draining state
 			var/one_light = src.variant_b || ( max_warning == WARNING_APC_DRAINING )
 			var/image/warning = image('icons/obj/power.dmi', one_light ? "tegv_lights" : "teg_lights", dir=warning_side)
-			if(max_warning > WARNING_5MIN)
+			if(max_warning >= WARNING_1MIN)
 				warning.color = "#ff0000"
 				warning_light_desc = "<br>[SPAN_ALERT("The power emergency lights are flashing.")]"
 			else
@@ -790,7 +789,7 @@ datum/pump_ui/circulator_ui
 			AddOverlays(warning, "warning")
 
 			if(lastgenlev)
-				if(max_warning > WARNING_5MIN)
+				if(max_warning >= WARNING_1MIN)
 					light.set_color(1, 0, 0)
 				else
 					light.set_color(1.0, 0.70, 0.03)
@@ -910,7 +909,7 @@ datum/pump_ui/circulator_ui
 				running = 1
 			SPAWN(0.5 SECONDS)
 				spam_limiter = 0
-		else if(warnings > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
+		else if(warnings >= WARNING_1MIN && !(src.status & (BROKEN | NOPOWER)))
 			// Allow for klaxon to trigger when off cooldown if UpdateIcon() not called
 			if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
 				playsound(src.loc, 'sound/misc/klaxon.ogg', 40, pitch=1.1)

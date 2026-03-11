@@ -4,7 +4,7 @@
 	desc = "A pretty nice flower... you shouldn't see this, though."
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
-	flags = SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/datum/forensic_id/scent_A = null
 	var/datum/forensic_id/scent_B = null

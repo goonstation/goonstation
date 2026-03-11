@@ -201,6 +201,10 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (transception interlink)"
 	computertype = /obj/machinery/computer/transception
 	icon_state = "circuit_engineering"
+/obj/item/circuitboard/transception_control
+	name = "circuit board (transception control array)"
+	computertype = /obj/machinery/computer/trsc_array
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/mining_magnet
 	name = "circuit board (mining magnet computer)"
 	computertype = /obj/machinery/computer/magnet
