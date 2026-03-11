@@ -183,8 +183,8 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 					qdel(pilot)
 
 	proc/move_forward(var/obj/image_pilot/pilot, var/direction, var/speed=1)
-		var/glide = 0 // this system seems to desync sometimes, not a huge issue it seems to add a bit of variety to the way they move
-		glide = (32 / speed) * world.tick_lag
+	 	// this system seems to desync sometimes, not a huge issue it seems to add a bit of variety to the way they move
+		var/glide = (32 / speed) * world.tick_lag
 		pilot.glide_size = glide
 		pilot.animate_movement = SLIDE_STEPS
 		var/old_loc = pilot.loc
@@ -201,7 +201,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	desc = ""
 	anchored = ANCHORED
 	density = 0
-	layer = 104 // AAAAAAAAA
+	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	flags = KEEP_TOGETHER
 	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	var/icon/image_overlay
@@ -228,7 +228,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
 			world << src.attached_sound
 
-	proc/check_for_pilots()
+	proc/check_for_pilots() // check if there's only one pilot, used for starting and stopping looping audio
 		var/list/pilotlist = list()
 		for (var/obj/image_pilot/spawned_pilot in world)
 			pilotlist += spawned_pilot
