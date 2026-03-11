@@ -150,7 +150,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				for (counter=0, counter<pathamountinput, counter++)
 					var/turf/T = GetRandomPerimeterTurf(get_turf(pilot), 1)
 					new pathinput(T)
-					var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
+					var/obj/itemspecialeffect/poof/P = new
 					P.setup(T)
 
 		switch (src.end_effect)
