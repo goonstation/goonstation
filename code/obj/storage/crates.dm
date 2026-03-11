@@ -12,7 +12,7 @@
 	icon_opened = "crateopen"
 	#endif
 	icon_welded = "welded-crate"
-	soundproofing = 3
+	soundproofing = SOUNDPROOFING_STORAGE
 	throwforce = 50 //ouch
 	can_flip_bust = 1
 	object_flags = NO_GHOSTCRITTER

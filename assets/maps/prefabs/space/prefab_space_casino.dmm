@@ -172,7 +172,7 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "sf" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8
 	},
 /turf/simulated/floor/blackwhite/whitegrime,
@@ -396,7 +396,7 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "Od" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "Or" = (

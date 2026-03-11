@@ -93,7 +93,11 @@ export const BioEffect = (props) => {
   );
   let activeOrStorage = isActive || isStorage; // haha, what a dumb way to reduce arrow function complexity
   return (
-    <Section title={name} buttons={<GeneIcon name={icon} size={1.5} />}>
+    <Section
+      className="BioEffect__section"
+      title={name}
+      buttons={<GeneIcon name={icon} size={1.5} />}
+    >
       {booth && booth.ref === ref && (
         <Modal full>
           <Section

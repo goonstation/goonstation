@@ -698,11 +698,11 @@ CONTAINS:
 
 	proc/cut_open()
 		for (var/obj/O in src)
-			O.set_loc(get_turf(src))
+			O.set_loc(src.loc)
 		for (var/mob/M in src)
 			M.changeStatus("knockdown", 0.5 SECONDS)
-			M.set_loc(get_turf(src))
-		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, get_turf(src))
+			M.set_loc(src.loc)
+		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, src.loc)
 		B.icon_state = "balloon_black_pop"
 		B.name = "body bag"
 		B.desc = "The remains of a body bag"
@@ -711,11 +711,11 @@ CONTAINS:
 	proc/open()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in src)
-			O.set_loc(get_turf(src))
+			O.set_loc(src.loc)
 		for (var/mob/M in src)
 			M.changeStatus("knockdown", 0.5 SECONDS)
 			SPAWN(0.3 SECONDS)
-				M.set_loc(get_turf(src))
+				M.set_loc(src.loc)
 		src.open = 1
 		src.UpdateIcon()
 

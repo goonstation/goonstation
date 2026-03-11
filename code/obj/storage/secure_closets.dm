@@ -2,7 +2,7 @@
 	name = "secure locker"
 	desc = "A card-locked storage locker."
 	object_flags = NO_GHOSTCRITTER
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
 	p_class = 3
 	open_sound = 'sound/misc/locker_open.ogg'
@@ -14,6 +14,8 @@
 	var/bolted = TRUE
 	/// Can't be broken open with melee
 	var/reinforced = FALSE
+	/// Logging var
+	var/was_unbolted = FALSE
 	var/obj/particle/attack/attack_particle
 
 	New()
@@ -111,6 +113,8 @@
 
 	proc/toggle_bolts(var/mob/user)
 		user.visible_message("<b>[user]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+		if (src.bolted && src.was_unbolted)
+			logTheThing(LOG_STATION, user, "was the first player to unbolt [src] from the ground at [log_loc(src)]")
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
 		logTheThing(LOG_STATION, user, "[src.anchored ? "unanchored" : "anchored"] [log_object(src)] at [log_loc(src)]")
@@ -288,7 +292,8 @@
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/medical_director,
 	/obj/item/circuitboard/card/medical,
-	/obj/item/circuitboard/announcement/medical)
+	/obj/item/circuitboard/announcement/medical,
+	/obj/item/reagent_containers/injector_filler)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -643,7 +648,7 @@
 	icon_closed = "medical_restricted"
 	icon_state = "medical_restricted"
 	spawn_contents = list()
-	req_access = list(access_medical_director)
+	req_access = list(access_pharmacy)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			// let's organize the SHIT outta this closet too! hot damn
@@ -743,7 +748,7 @@
 	name = "pharmacy chemical locker"
 	icon_closed = "medical_chemical"
 	icon_state = "medical_chemical"
-	req_access = list(access_medical_lockers)
+	req_access = list(access_pharmacy)
 
 /* ======================= */
 /* ----- Engineering ----- */

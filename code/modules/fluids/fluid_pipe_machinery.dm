@@ -121,6 +121,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	drain_min = 10
 	drain_max = 15
 
+/obj/machinery/fluid_machinery/unary/drain/inlet_pump/active
+	on = TRUE
+	icon_state = "inlet1"
+
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/proc/activate()
 
 
@@ -158,6 +162,11 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/fluid_machinery/unary/drain/inlet_pump/overfloor/active
+	on = TRUE
+	icon_state = "inlet1"
+
 
 /obj/machinery/fluid_machinery/unary/hand_pump
 	name = "hand pump"
@@ -474,6 +483,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	var/on = FALSE
 	var/pumprate = 200
 
+/obj/machinery/fluid_machinery/binary/pump/active
+	on = TRUE
+	icon_state = "pump1"
+
 /obj/machinery/fluid_machinery/binary/pump/New()
 	..()
 	AddComponent(/datum/component/mechanics_holder)
@@ -529,6 +542,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 	desc = "Separates two fluid pipe networks."
 	icon_state = "valve0"
 	var/on = FALSE
+
+/obj/machinery/fluid_machinery/binary/valve/active
+	on = TRUE
+	icon_state = "valve1"
 
 /obj/machinery/fluid_machinery/binary/valve/attack_hand(mob/user)
 	interact_particle(user, src)
@@ -624,6 +641,24 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 	flags = NOSPLASH
 	var/pullrate = 200
 	var/obj/item/reagent_containers/glass/beaker
+	var/default_reagent = null
+
+/obj/machinery/fluid_machinery/trinary/filter/New()
+	..()
+	if(default_reagent)
+		src.beaker = new /obj/item/reagent_containers/glass/vial
+		src.beaker.reagents.add_reagent(default_reagent, 5)
+		src.UpdateIcon()
+
+/obj/machinery/fluid_machinery/trinary/filter/disposing()
+	src.beaker.set_loc(src.loc)
+	src.beaker = null
+	..()
+
+/obj/machinery/fluid_machinery/trinary/filter/water
+	name = "water filter"
+	default_reagent = "water"
+	icon_state = "filter1"
 
 /obj/machinery/fluid_machinery/trinary/filter/attackby(obj/item/reagent_containers/glass/B, mob/user)
 	..()

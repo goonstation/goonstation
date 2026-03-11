@@ -17,8 +17,13 @@
 	if (src.hasStatus("paralysis"))
 		return //pls stop emoting :((
 
-	if (voluntary && (src.hasStatus("unconscious") || isunconscious(src)))
-		return
+	if (voluntary)
+		if (src.hasStatus("unconscious") || isunconscious(src))
+			return
+	else if (ischangeling(src))
+		var/datum/abilityHolder/changeling/C = src.get_ability_holder(/datum/abilityHolder/changeling)
+		if (C?.in_fakedeath)
+			return
 
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")

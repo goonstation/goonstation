@@ -1,0 +1,20 @@
+# Copied from 24295_alarm_directionals.txt
+/obj/machinery/alarm/@SUBTYPES/south		: /obj/machinery/alarm/@SUBTYPES_1{@OLD; dir = 1}
+/obj/machinery/alarm/@SUBTYPES/north		: /obj/machinery/alarm/@SUBTYPES_1{@OLD; dir = 2}
+/obj/machinery/alarm/@SUBTYPES/east			: /obj/machinery/alarm/@SUBTYPES_1{@OLD; dir = 8}
+/obj/machinery/alarm/@SUBTYPES/west			: /obj/machinery/alarm/@SUBTYPES_1{@OLD; dir = 4}
+/obj/machinery/alarm/@SUBTYPES/directional	: /obj/machinery/alarm/@SUBTYPES_1{@OLD}
+
+# SOUTH
+/obj/machinery/alarm/@SUBTYPES{dir = @UNSET}	: /temporary_alarm_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/machinery/alarm/@SUBTYPES{dir = 0}			: /temporary_alarm_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/machinery/alarm/@SUBTYPES{dir = 2}			: /temporary_alarm_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# NORTH
+/obj/machinery/alarm/@SUBTYPES{dir = 1}			: /temporary_alarm_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# EAST
+/obj/machinery/alarm/@SUBTYPES{dir = 4}			: /temporary_alarm_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP}
+# WEST
+/obj/machinery/alarm/@SUBTYPES{dir = 8}			: /temporary_alarm_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP}
+
+# Revert the temporary repaths.
+/temporary_alarm_repath/@SUBTYPES : /obj/machinery/alarm/@SUBTYPES{@OLD}

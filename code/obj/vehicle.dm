@@ -282,7 +282,7 @@ TYPEINFO(/obj/vehicle/segway)
 	health_max = 30
 	var/weewoo_cycles_remaining = 0 //! Number of light cycles currently left to perform
 	var/initial_weewoo_cycles = 10 //! Number of times our lights cycle with each press of the siren button
-	soundproofing = FALSE
+	soundproofing = SOUNDPROOFING_ON
 	can_eject_items = TRUE
 	var/datum/light/light
 	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
@@ -651,7 +651,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	var/rider_state = 1
 	delay = 4
 	ability_buttons_to_initialize = list(/obj/ability_button/fbuffer_toggle, /obj/ability_button/fbuffer_status)
-	soundproofing = 0
+	soundproofing = SOUNDPROOFING_ON
 	can_eject_items = TRUE
 
 	New()
@@ -984,7 +984,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	rider_visible = 0
 	is_syndicate = 1
 	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/drop_peel, /obj/ability_button/stopthebus/clowncar)
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 	var/peel_count = 5
 	HELP_MESSAGE_OVERRIDE({"While wearing two or more pieces of clown attire, <b>click drag</b> yourself to the car while next to it to enter it.
@@ -1393,7 +1393,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	desc = "He looks happy... how odd!"
 	icon_state = "segwaycat"
 	layer = MOB_LAYER + 1
-	soundproofing = 0
+	soundproofing = SOUNDPROOFING_ON
 	can_eject_items = TRUE
 
 // Might as well make use of the Garfield sprites (Convair880).
@@ -1596,7 +1596,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	var/darkness = FALSE
 	booster_upgrade =1
 	delay = 1
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 
 	New()
 		..()
@@ -2223,7 +2223,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	var/openpanel = 0			//1 when the back panel is opened
 	var/broken = 0				//1 when the forklift is broken
 	var/light = 0				//1 when the yellow light is on
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	can_eject_items = TRUE
 	var/image/image_light = null
 	var/image/image_panel = null

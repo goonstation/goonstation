@@ -131,15 +131,38 @@
 				if(istype(part, /obj/item/parts)) // LIMBS
 					var/obj/item/parts/old_limb = H.limbs.get_limb(part_loc)
 					if(old_limb)
+						random_burn_damage(user, rand(15, 25))
 						old_limb.remove(FALSE)
+						qdel(old_limb)
 					H.limbs.replace_with(part_loc, part_type, null , 0)
 					H.update_body()
-					remove_action = pick("tears off", "yanks off", "chops off")
+					remove_action = pick("dissolves", "integrates", "absorbs")
 					replace_action = pick("attaches something else to the stump", "reattaches it where it once was")
 					ArtifactLogs(user, null, O, "touched by [H.real_name]", "given limb [part] as [part_loc]", 0)
 				else // ORGANS
-					var/obj/item/organ = part
-					H.drop_organ(part_loc)
+					var/obj/item/organ/organ = part
+					H.organHolder.chest?.op_stage = 2
+					switch (organ.region)
+						if(RIBS)
+							if (H.organHolder.ribs_stage != REGION_OPENED)
+								random_brute_damage(user, rand(15,25))
+								H.organHolder.ribs_stage = REGION_OPENED
+						if(SUBCOSTAL)
+							if (H.organHolder.subcostal_stage != REGION_OPENED)
+								random_brute_damage(user, rand(15,25))
+								H.organHolder.subcostal_stage = REGION_OPENED
+						if(ABDOMINAL)
+							if (H.organHolder.abdominal_stage != REGION_OPENED)
+								random_brute_damage(user, rand(15,25))
+								H.organHolder.abdominal_stage = REGION_OPENED
+						if(FLANKS)
+							if (H.organHolder.flanks_stage != REGION_OPENED)
+								random_brute_damage(user, rand(15,25))
+								H.organHolder.flanks_stage = REGION_OPENED
+					if (H.get_organ(part_loc))
+						random_brute_damage(user, 10)
+						var/obj/item/item = H.drop_organ(part_loc)
+						qdel(item)
 					H.receive_organ(organ, part_loc, 0, 1)
 					H.update_body()
 					remove_action = pick("rips out", "tears out", "swiftly removes")
@@ -151,8 +174,8 @@
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
 			boutput(H, SPAN_ALERT("<b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b>"))
 			H.emote("scream")
-			random_brute_damage(user, 30)
-			bleed(H, 5, 5)
+			random_brute_damage(user, rand(15, 25))
+			take_bleeding_damage(H, null, rand(15,25), DAMAGE_STAB)
 			O.ArtifactFaultUsed(H)
 			if (limited_use)
 				uses[H.bioHolder.uid_hash]++

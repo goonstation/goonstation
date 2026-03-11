@@ -4,7 +4,7 @@
 	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = ANCHORED
-	soundproofing = -1
+	soundproofing = SOUNDPROOFING_NOT_ON
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
@@ -73,7 +73,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon_state = "shield0"
 	flags = TABLEPASS | CONDUCT | EXTRADELAY | SUPPRESSATTACK
 	c_flags = ONBELT
-	item_state = "electronic"
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
