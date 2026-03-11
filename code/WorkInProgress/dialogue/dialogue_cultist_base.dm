@@ -339,7 +339,7 @@
 		return attack_hand(user)
 
 	proc/lever_hv(mob/user)
-		if(!src.cutoff)
+		if(!QDELETED(src))
 			for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
 				for(var/obj/fakeobject/catalytic_doodad/C in (range(11)))
 					arcFlashTurf(C, R.loc, 50, 50)
