@@ -97,12 +97,12 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		else
 			new_dir = src.dir_input
 
-		if (src.startnearby)
+		if (src.startnearby) // set pilot's spawn location
 			start = get_ranged_target_turf(src.target_loc, new_dir, 35)
 		else
 			start = get_edge_target_turf(src.target_loc, new_dir)
 
-		new_dir = turn(new_dir, 180)
+		new_dir = turn(new_dir, 180) // set where the pilot is facing to the direction of target loc
 		send_pilot(start,new_dir)
 
 	proc/send_pilot(var/turf/startloc,var/direction=EAST)
@@ -141,8 +141,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		// everything below is after the pilot reaches its destination
 
 		if (!pilot.loopsound && pilot.attached_sound)
-			for (var/mob/player in view(25, pilot))
-				player << sound(pilot.attached_sound, volume=10)
+			playsound(pilot.loc, pilot.attached_sound, 30)
 
 		if (pathinput)
 			if(ispath(pathinput, /atom/movable))
@@ -169,7 +168,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 						sleep(1)
 			if ("Explode")
 				var/turf/T = get_turf(pilot)
-				playsound(T, "sound/effects/Explosion[pick(1, 2)].ogg", 15, 1)
+				playsound(T, pick(big_explosions), 80, 1)
 				new /obj/effects/explosion(T)
 				qdel(pilot)
 				robogibs(T)
@@ -210,17 +209,19 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0)
 			var/image/ship
 			ship = image(icon=src.image_overlay, loc=src, layer = EFFECTS_LAYER_4)
 			AddOverlays(ship, "ship")
-			if (src.check_for_pilots())
+			if (src.loopsound && src.check_for_pilots())
 				play()
 
 	disposing()
 		if (src.check_for_pilots())
 			var/sound/stopsound = sound(null, wait = TRUE, channel=1020)
 			world << stopsound
+		STOP_TRACKING
 		..()
 
 	proc/play()
@@ -229,12 +230,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			world << src.attached_sound
 
 	proc/check_for_pilots() // check if there's only one pilot, used for starting and stopping looping audio
-		var/list/pilotlist = list()
-		for (var/obj/image_pilot/spawned_pilot in world)
-			pilotlist += spawned_pilot
-
-		if (pilotlist.len == 1)
-			if (pilotlist.Find(src))
-				return TRUE
+		if (length(by_type[/obj/image_pilot]) == 1)
+			return TRUE
 		else
 			return FALSE
