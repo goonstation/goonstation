@@ -1,4 +1,27 @@
 
+(t)tue mar 10 26
+(u)Egregorious
+(p)26110
+(e)⚗|A-Chemistry
+(*)Fertilizer in plant trays are no longer infinite.
+(u)JORJ949
+(p)26093
+(e)🆕💪👮|C-Feature, A-Traits, A-Security
+(*)The Detective now receives special Forensics Training, allowing them to identify what weapon fired a bullet casing at a glance.
+(u)Spyritdragon
+(p)26136
+(e)|
+(+)Pharmacists now get a beaker lid in their starting backpack.
+(t)sun mar 08 26
+(u)SimpleWolf
+(p)26106
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Air Alarms have been resprited. Please keep the sensors clear of debris.
+(t)sat mar 07 26
+(u)JORJ949
+(p)25964
+(e)🎨💅🎩🍝🌱|C-Sprites, C-QoL, A-Clothing, A-Catering, A-Hydroponics
+(*)The civilian department now has four new headsets! Catering, Hydroponics, Janitor and Chaplain headsets can now be found on appropriate jobs and in the matching vending machines or gear lockers.
 (t)fri mar 06 26
 (u)glowbold
 (p)26105

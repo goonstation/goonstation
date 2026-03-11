@@ -2833,8 +2833,6 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Quarters"
 	icon_state = "yellow"
 
-/area/station/engine/core/nuclear
-	name = "Nuclear Reactor Core"
 
 /area/station/engine/storage
 	name = "Engineering Storage"
@@ -2889,6 +2887,15 @@ TYPEINFO(/area/station/engine/singcore)
 	name = "Thermo-Electric Generator"
 	icon_state = "teg" // sometimes you just gotta make an icon the way it is because that's what your heart tells you to do, even if it looks like something a cartoon for toddlers would reject for looking too stupid
 	sound_environment = 10
+
+/area/station/engine/core/nuclear
+	name = "Nuclear Reactor Engine Room"
+
+/area/station/engine/core/singularity
+	name = "Singularity Engine Room"
+
+/area/station/engine/core/thermoelectric
+	name = "Thermo-Electric Engine Room"
 
 /area/station/engine/hotloop
 	name = "Hot Loop"

@@ -435,9 +435,6 @@
 				return src.traverse_history(params["ckey"],  1)
 		if("text")
 			if(src.active_program && params["value"]) // haha it fucking works WOOOOOO
-				if(params["value"] == "term_clear")
-					src.temp = "Cleared\n"
-					return
 				src.active_program.input_text(params["value"])
 				src.add_history(params["ckey"], params["value"])
 				playsound(src.loc, "keyboard", 50, 1, -15)

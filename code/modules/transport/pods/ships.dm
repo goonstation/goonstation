@@ -1442,7 +1442,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 				steps_moved++
 				if(prob((steps_moved-7) * 4 * (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT ? (1 - SHUTTLE_PERCENT_FROM_STATION) : 1)) && !succeeding) // failure becomes more likely as the shuttle gets farther
 					fail()
-				if (prob((steps_moved-7) * 6 * SHUTTLE_PERCENT_FROM_STATION))
+				if (prob((steps_moved-7) * 8 * SHUTTLE_PERCENT_FROM_STATION))
 					succeed()
 				sleep(0.4 SECONDS)
 	#undef SHUTTLE_PERCENT_FROM_STATION
