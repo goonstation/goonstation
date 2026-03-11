@@ -15,8 +15,8 @@
 		for(var/turf/T in get_area_turfs(SA, TRUE))
 			if (istype(T, /turf/simulated/floor))
 				var/turf/simulated/floor/F = T
-				var/floor_chance = rand(1,6)
-				if(floor_chance < 5)
+				var/floor_chance = prob(16.67)
+				if(floor_chance)
 					if (locate(/obj/item/reagent_containers/food/snacks/ingredient/egg/century) in F.hidden_contents)
 						return
 					else
