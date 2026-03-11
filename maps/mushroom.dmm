@@ -12125,6 +12125,12 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
+"ffs" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/lobby)
 "fft" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -14029,13 +14035,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
-"gCw" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "gCJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -16045,10 +16044,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
-"iau" = (
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon13,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "iaz" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -16104,13 +16099,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"ici" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "icj" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20433,11 +20421,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"lkH" = (
-/obj/disposalpipe/segment,
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "lkJ" = (
 /obj/machinery/firealarm/directional/south,
 /turf/unsimulated/floor/arrival,
@@ -21142,10 +21125,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"lNi" = (
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "lNm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage)
@@ -22648,6 +22627,10 @@
 	dir = 1
 	},
 /area/station/security/brig)
+"mTD" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon13,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "mTI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/wall/auto/supernorn,
@@ -23603,12 +23586,6 @@
 	tag = "icon-0,6"
 	},
 /area/station/crew_quarters/fitness)
-"nzY" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/lobby)
 "nAc" = (
 /obj/rack,
 /obj/item/clothing/glasses/thermal{
@@ -25358,6 +25335,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"oJU" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "oJW" = (
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/light/small/broken{
@@ -31134,6 +31115,13 @@
 	dir = 8
 	},
 /area/station/security/main)
+"rZe" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "rZk" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -33947,6 +33935,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "tKY" = (
@@ -36856,6 +36845,11 @@
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
+"vCI" = (
+/obj/disposalpipe/segment,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "vDy" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -83132,7 +83126,7 @@ ozy
 ozy
 cPi
 pYi
-lkH
+vCI
 llD
 ozy
 sva
@@ -83700,7 +83694,7 @@ ylM
 acp
 ntQ
 fVr
-ici
+rZe
 lov
 aoJ
 aoJ
@@ -87915,7 +87909,7 @@ aaa
 fEr
 wIc
 acb
-lNi
+oJU
 acG
 fEr
 adA
@@ -87966,7 +87960,7 @@ iwf
 xLd
 rrG
 xvz
-iau
+mTD
 jkA
 jkA
 jkA
@@ -92831,7 +92825,7 @@ jvc
 lfe
 mwA
 pGw
-nzY
+ffs
 acH
 gWq
 ieK
@@ -93428,7 +93422,7 @@ bqO
 aDh
 bqO
 bse
-gCw
+xkk
 gOR
 icY
 jzN
