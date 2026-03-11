@@ -1159,6 +1159,7 @@
 /area/station/hangar/main)
 "ahD" = (
 /obj/storage/closet/welding_supply,
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "ahE" = (
@@ -2806,6 +2807,7 @@
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -11826,6 +11828,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "eWe" = (
@@ -16421,6 +16424,7 @@
 	name = "Emergency Engine Fuel Crate";
 	spawn_contents = list(/obj/item/raw_material/char = 40)
 	},
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "iqk" = (
@@ -20101,6 +20105,9 @@
 	pixel_y = -4
 	},
 /obj/item/device/igniter,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -32024,6 +32031,9 @@
 "sFP" = (
 /obj/item/rods,
 /obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "sFY" = (
