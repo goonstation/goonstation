@@ -201,6 +201,10 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			return ARMORY_ACCESS_LEVEL_NEEDS_AUTH
 		return 0
 
+	proc/clear_authorizations()
+		src.authorized = list()
+		src.authorized_registered = list()
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
@@ -212,7 +216,12 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		.["disk_authed"] = src.authdisk_authorized
 		.["auths_needed"] = src.auth_need
 		.["cooldown"] = GET_COOLDOWN(src, "unauth")
-		.["authorization_bioholders"] = src.authorized
+		.["authorization_bioholders"] = list()
+		for(var/auth in src.authorized)
+			if(ismob(auth)) //Nonhumans give refs not bioholder UIDs
+				.["authorization_bioholders"] += "Unknown"
+			else
+				.["authorization_bioholders"] += auth
 		.["authorization_names"] = src.authorized_registered
 		.["authed"] = src.authed
 		.["user_access_level"] = src.check_access_level(user)
@@ -222,11 +231,11 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		. = ..()
 		if (.)
 			return
+		var/mob/user = ui.user
 		if(GET_COOLDOWN(src, "unauth"))
 			boutput(user, SPAN_ALERT("The [src] cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] second\s!"))
 			playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
 			return
-		var/mob/user = ui.user
 		var/obj/item/card/id/id_card = user.get_id()
 		src.add_fingerprint(user)
 		if(!id_card && action != "disk_auth")
@@ -324,10 +333,10 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 #undef CAN_STILL_USE_CHECK
 
 /obj/machinery/computer/riotgear/attackby(var/obj/item/W, mob/user)
+	. = ..()
+	if(istypes(W, list(/obj/item/card/id, /obj/item/device/pda2, /obj/item/disk/data/floppy/read_only/authentication)))
+		src.Attackhand(user) //Open the UI
 
-	proc/clear_authorizations()
-		src.authorized = list()
-		src.authorized_registered = list()
 
 #undef ARMORY_ACCESS_LEVEL_UNRESTRICTED
 #undef ARMORY_ACCESS_LEVEL_NEEDS_AUTH

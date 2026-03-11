@@ -9,12 +9,12 @@ import { BooleanLike } from 'common/react';
 import {
   Button,
   Modal,
-  NoticeBox,
-  Stack,
   Section,
+  Stack,
   Table,
   TimeDisplay,
 } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
@@ -36,11 +36,8 @@ export const ArmoryAuthorization = () => {
       <Window.Content>
         {data.cooldown > 0 && (
           <Modal textAlign="center" fontSize={2} p="10px">
-            Armory Cooldown: <br></br>
-            <TimeDisplay
-              value={data.cooldown}
-              format={formatTime}
-            ></TimeDisplay>
+            Armory Cooldown: <br />
+            <TimeDisplay value={data.cooldown} format={formatTime} />
           </Modal>
         )}
         <Stack vertical fill>
@@ -51,7 +48,7 @@ export const ArmoryAuthorization = () => {
                 onClick={() => act('auth')}
                 color={
                   data.user_access_level > 1 ||
-                  data.auths_needed - 1 == data.authorization_bioholders.length
+                  data.auths_needed - 1 === data.authorization_bioholders.length
                     ? 'green'
                     : 'red'
                 }
@@ -90,7 +87,7 @@ export const ArmoryAuthorization = () => {
                   <b>DNA:</b>
                 </Table.Cell>
                 {data.authorization_bioholders.map((authorization, index) => (
-                  <Table.Row>
+                  <Table.Row key={index}>
                     <Table.Cell>{data.authorization_names[index]}</Table.Cell>
                     <Table.Cell>
                       {data.authorization_bioholders[index]}
