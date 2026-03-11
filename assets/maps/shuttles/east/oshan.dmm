@@ -55,6 +55,16 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
+"bh" = (
+/obj/stool/chair/couch{
+	dir = 2;
+	icon_state = "chair_couch_ew-green"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6";
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
 "bq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1493,8 +1503,9 @@
 	},
 /area/shuttle/escape/centcom)
 "SF" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch_ew-green"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6";
@@ -1554,7 +1565,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Uv" = (
-/obj/stool/chair/comfy/shuttle{
+/obj/stool/chair/comfy/shuttle/green{
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttle{
@@ -1991,7 +2002,7 @@ fn
 Gh
 Gh
 oS
-SF
+bh
 SF
 hg
 jn
