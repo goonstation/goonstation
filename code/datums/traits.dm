@@ -821,6 +821,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained in generalized robustness and asskicking."
 	id = "training_security"
 
+/datum/trait/job/forensic
+	name = "Forensic Training"
+	desc = "Subject is trained in analysing forensic evidence."
+	id = "training_forensic"
+
 /datum/trait/job/quartermaster
 	name = "Quartermaster Training"
 	desc = "Subject is proficient at haggling."

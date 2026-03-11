@@ -216,7 +216,7 @@
 	},
 /area/station/science/chemistry)
 "adp" = (
-/obj/reagent_dispensers/fueltank,
+/obj/storage/closet/wardrobe/white,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
@@ -3250,6 +3250,7 @@
 /area/station/crew_quarters/pool)
 "avE" = (
 /obj/machinery/light/incandescent,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -44346,8 +44347,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "tql" = (
-/obj/storage/closet/wardrobe/white,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/chemicompiler_stationary,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
