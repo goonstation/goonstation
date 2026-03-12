@@ -3,10 +3,14 @@
  * @copyright 2020 Aleksej Komarov
  * @license MIT
  */
-
 import { useBackend } from './backend';
 import { useDebug } from './debug';
 import { Window } from './layouts';
+import {
+  getSecretComponent,
+  loadPersistedSecretID,
+  persistSecretID,
+} from './secret-interfaces';
 
 const requireInterface = require.context('./interfaces');
 
@@ -72,6 +76,19 @@ export function getRoutedComponent() {
   }
 
   const name = config?.interface?.name;
+
+  // |GOONSTATION-ADD| - check if secret interface
+  if (name) {
+    // Should we be loading a secret interface? fallback to sessionStorage
+    const secretId =
+      config?.secretInterfaces?.[name] || loadPersistedSecretID(name);
+
+    if (secretId) {
+      persistSecretID(name, secretId);
+      return getSecretComponent(name, secretId);
+    }
+  }
+
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,
     (name: string) => `./${name}.jsx`,

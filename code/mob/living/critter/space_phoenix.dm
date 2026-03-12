@@ -314,7 +314,7 @@ TYPEINFO(/mob)
 	layer = PLATING_LAYER
 	plane = PLANE_UNDERFLOOR
 	anchored = ANCHORED_ALWAYS
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	alpha = 160
 
 	New()

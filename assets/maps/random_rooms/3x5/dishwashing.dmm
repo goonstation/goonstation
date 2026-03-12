@@ -105,7 +105,7 @@
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "O" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)

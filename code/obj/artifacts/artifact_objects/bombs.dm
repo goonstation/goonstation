@@ -198,6 +198,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	warning_initial = "begins intensifying its own gravity!"
 	warning_final = "begins to collapse in on itself!"
 
+	effect_activate(obj/O)
+		. = ..()
+		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, O.z)
+
 	deploy_payload(var/obj/O)
 		if (..())
 			return
@@ -592,3 +596,89 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				src.nuclear_fallout_amount = src.nuclear_fallout_amount * src.nuclear_fallout_decay_rate
 				if(floor(src.nuclear_fallout_amount) < 1)
 					O.ArtifactDestroyed()
+
+
+// biological bomb
+
+/obj/machinery/artifact/bomb/biological
+
+	name = "artifact biological bomb"
+	associated_datum = /datum/artifact/bomb/biological
+
+	New()
+		..()
+		src.create_reagents(rand(10,50))
+
+/datum/artifact/bomb/biological
+	associated_object = /obj/machinery/artifact/bomb/biological
+	type_name = "Bomb (biological)"
+	rarity_weight = 90
+	explode_delay = 0
+	alarm_initial = null
+	alarm_during = null
+	alarm_final = null
+	react_xray = list(5,65,20,11,"ORGANIC MATTER DETECTED")
+	touch_descriptors = list("It's covered in a thin layer of slime")
+	validtypes = list("wizard","eldritch")
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/heat,/datum/artifact_trigger/carbon_touch)
+	recharge_delay = 10 MINUTES
+	var/self_destruct_strength = 1 // sets the strength of explosion when artifact cracks open
+	var/list/payload_disease_reagents = list()
+
+	post_setup()
+		. = ..()
+
+		var/reagent = "unknown"
+		switch(artitype.name)
+			if("wizard") //wizard related and silly diseases
+				reagent = pick("rainbow fluid", "painbow fluid", "grave dust", "explodingheadjuice")
+
+			if("eldritch") //horrible stuff
+				reagent = pick("gibbis", "pubbie tears", "rat_spit", "loose_screws", "e.coli", "green mucus")
+
+		payload_disease_reagents += reagent
+		log_addendum = "Payload: [reagent]"
+
+		recharge_delay = rand(30 SECONDS,80 SECONDS)
+
+	deploy_payload(var/obj/O)
+		if (..())
+			return
+
+		var/list/reaction_reagents = list()
+
+		for (var/X in payload_disease_reagents)
+			reaction_reagents += X
+
+		var/amountper = 0
+		if (length(reaction_reagents) > 0)
+			amountper = round(O.reagents.maximum_volume / reaction_reagents.len)
+		else
+			amountper = 20
+
+		for (var/X in reaction_reagents)
+			O.reagents.add_reagent(X,amountper)
+
+		// "classic" smoke only
+		O.reagents.smoke_start(50,1)
+
+		// adds 50% chance for artifact to crack open
+
+		if (prob(50))
+			for (var/mob/M in viewers(O, null))
+				M.flash(2 SECONDS)
+
+			explosion_new(O, get_turf(O), self_destruct_strength, turf_safe=TRUE)
+
+			O.visible_message(SPAN_ALERT("<b>With a blinding light [O] cracks open, releasing its contents into the air.</b>"))
+
+			O.ArtifactDestroyed()
+			return
+
+		if(QDELETED(O))
+			return
+		O.reagents.clear_reagents()
+
+		SPAWN(recharge_delay)
+			if (O)
+				O.ArtifactDeactivated()

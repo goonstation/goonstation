@@ -12,7 +12,7 @@
 	icon_opened = "crateopen"
 	#endif
 	icon_welded = "welded-crate"
-	soundproofing = 3
+	soundproofing = SOUNDPROOFING_STORAGE
 	throwforce = 50 //ouch
 	can_flip_bust = 1
 	object_flags = NO_GHOSTCRITTER
@@ -807,7 +807,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/chem_grenade/cryo = 4)
 
 	weapons3
-		spawn_contents = list(/obj/item/barrier,
+		spawn_contents = list(/obj/item/barrier/collapsible/security,
 		/obj/item/chem_grenade/shock = 2)
 
 	weapons4

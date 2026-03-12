@@ -157,7 +157,7 @@
 			return TRUE
 
 		// People who have been on the ship the whole time, or who aren't on the ship, shouldn't be announced.
-		if (person.traitHolder.getTraitWithCategory("background"))
+		if (person.traitHolder.getTraitWithCategory("spawn scenario"))
 			return TRUE
 
 		var/job = person.mind.assigned_role
@@ -299,7 +299,6 @@
 	name = "Illegal Announcement Computer"
 	icon_state = "announcementclown"
 	circuit_type = /obj/item/circuitboard/announcement/clown
-	var/emagged = FALSE
 	var/explodes = TRUE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."

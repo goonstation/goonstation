@@ -211,7 +211,11 @@ var/global/lastStationNameChange = 0 //timestamp
 
 	else
 		if(isnull(name))
+			#ifdef NO_SHUTTLE_CALLS
+			name = "Goonstation Development SS13"
+			#else
 			name = generate_random_station_name()
+			#endif
 			#if defined(REVERSED_MAP)
 			name = reverse_text(name)
 			#endif

@@ -159,7 +159,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			src.say("Oh, now I can die a warrior's death! Thank you!")
 			ADD_FLAG(src.status, BROKEN)
 			name = "Satiated [initial(src.name)]"
-			ice_feeder = ice_feeder || ckey_to_mob(src.fryitem.fingerprintslast) // in case someone else had to fufill, no direct ref
+			ice_feeder = ice_feeder || ckey_to_mob(src.fryitem.get_last_ckey()) // in case someone else had to fufill, no direct ref
 			ice_feeder?.unlock_medal("Deep Freeze", TRUE)
 
 		qdel(src.fryitem)

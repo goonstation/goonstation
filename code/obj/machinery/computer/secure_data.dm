@@ -134,8 +134,12 @@
 			<td><a href="javascript:goBYOND('action=field;field=rank');">[src.active_record_general["rank"]]</a></td>
 		</tr>
 		<tr>
-			<th>Fingerprint</th>
-			<td><a href="javascript:goBYOND('action=field;field=fingerprint');">[src.active_record_general["fingerprint"]]</a></td>
+			<th>Fingerprint (R)</th>
+			<td><a href="javascript:goBYOND('action=field;field=fingerprint_right');">[src.active_record_general["fingerprint_right"]]</a></td>
+		</tr>
+		<tr>
+			<th>Fingerprint (L)</th>
+			<td><a href="javascript:goBYOND('action=field;field=fingerprint_left');">[src.active_record_general["fingerprint_left"]]</a></td>
 		</tr>
 		<tr>
 			<th>DNA</th>
@@ -468,13 +472,20 @@
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general["id"] = t1
-					if ("fingerprint")
+					if ("fingerprint_right")
 						if (istype(src.active_record_general, /datum/db_record))
-							var/t1 = input("Please input fingerprint hash:", "Security Records", src.active_record_general["fingerprint"], null) as text
+							var/t1 = input("Please input right fingerprint id:", "Security Records", src.active_record_general["fingerprint_right"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
-							src.active_record_general["fingerprint"] = t1
+							src.active_record_general["fingerprint_right"] = t1
+					if ("fingerprint_left")
+						if (istype(src.active_record_general, /datum/db_record))
+							var/t1 = input("Please input left fingerprint id:", "Security Records", src.active_record_general["fingerprint_left"], null) as text
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_general["fingerprint_left"] = t1
 					if ("sex")
 						if (istype(src.active_record_general, /datum/db_record))
 							switch(src.active_record_general["sex"])
@@ -696,7 +707,8 @@
 				G["sex"] = "Unknown"
 				G["pronouns"] = "Unknown"
 				G["age"] = "Unknown"
-				G["fingerprint"] = "Unknown"
+				G["fingerprint_right"] = "Unknown"
+				G["fingerprint_left"] = "Unknown"
 				G["p_stat"] = "Active"
 				G["m_stat"] = "Stable"
 				data_core.general.add_record(G)
@@ -759,7 +771,9 @@
 				src.active_record_security = null
 				t1 = lowertext(t1)
 				for (var/datum/db_record/R as anything in data_core.general.records)
-					if (lowertext(R["fingerprint"]) == t1)
+					if (lowertext(R["fingerprint_right"]) == t1)
+						src.active_record_general = R
+					else if (lowertext(R["fingerprint_left"]) == t1)
 						src.active_record_general = R
 				if (!src.active_record_general)
 					src.temp = "Could not locate record matching '[t1]''."
@@ -806,7 +820,10 @@
 						<br>
 						<br>Age: [src.active_record_general["age"]]
 						<br>
-						<br>Fingerprint: [src.active_record_general["fingerprint"]]
+						<br>Fingerprint (R): [src.active_record_general["fingerprint_right"]]
+						<br>
+						<br>
+						<br>Fingerprint (L): [src.active_record_general["fingerprint_left"]]
 						<br>
 						<br>Physical Status: [src.active_record_general["p_stat"]]
 						<br>

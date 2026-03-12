@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/datum/stock/event)
 		if (prob(75))
 			position = "C[prob(20) ? pick(vowels_upper) : pick(consonants_upper)]O"
 		else
-			position = ucfirsts(company.industry.detokenize("Lead %industrial% Engineer"))
+			position = capitalize_each_word(company.industry.detokenize("Lead %industrial% Engineer"))
 		offenses = ""
 		var/list/O = list("corruption", "murder", "jaywalking", "assault", "battery", "drug possession", "burglary", "theft", "larceny", "bribery", "disorderly conduct", "treason", "sedition", "shoplifting", "tax evasion", "tax fraud", "insurance fraud", "perjury", "kidnapping", "manslaughter", "vandalism", "forgery", "extortion", "embezzlement", "public indecency", "public intoxication", "trespassing", "loitering", "littering", "vigilantism", "squatting", "panhandling")
 		do

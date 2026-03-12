@@ -631,7 +631,7 @@ to say if there's demand for that.
 	id = "space_movespeed"
 
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "[propVal] movement delay - 0 when worn in space."
+		return "[propVal] movement delay - 0 when worn in Zero-G."
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
 
 /datum/objectProperty/equipment/movement/fluid //important : delay added to dry land!

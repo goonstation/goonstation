@@ -37,6 +37,7 @@ var/list/removed_jobs = list(
 
 	var/be_traitor = FALSE
 	var/be_syndicate = FALSE
+	var/be_sleeper_agent = FALSE
 	var/be_syndicate_commander = FALSE
 	var/be_spy = FALSE
 	var/be_gangleader = FALSE
@@ -274,6 +275,7 @@ var/list/removed_jobs = list(
 
 			"antagonistPreferences" = list(
 				ROLE_TRAITOR = src.be_traitor,
+				ROLE_SLEEPER_AGENT = src.be_sleeper_agent,
 				ROLE_NUKEOP = src.be_syndicate,
 				ROLE_NUKEOP_COMMANDER = src.be_syndicate_commander,
 				ROLE_SPY_THIEF = src.be_spy,
@@ -1121,6 +1123,7 @@ var/list/removed_jobs = list(
 				src.use_click_buffer = FALSE
 				src.help_text_in_examine = TRUE
 				src.be_traitor = FALSE
+				src.be_sleeper_agent = FALSE
 				src.be_syndicate = FALSE
 				src.be_syndicate_commander = FALSE
 				src.be_spy = FALSE

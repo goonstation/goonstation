@@ -139,39 +139,6 @@
 		src.object.icon_state = "help[holder.help_mode]"
 		holder.updateButtons()
 
-/datum/targetable/wraithAbility/toggle_deadchat
-	name = "Toggle deadchat"
-	desc = "Silences or re-enables the whispers of the dead."
-	icon_state = "hide_chat"
-	targeted = 0
-	cooldown = 0
-	pointCost = 0
-	do_logs = FALSE
-	interrupt_action_bars = FALSE
-
-	cast(mob/target)
-		if (!holder)
-			return TRUE
-
-		var/mob/living/intangible/wraith/W = holder.owner
-
-		if (!W)
-			return TRUE
-
-		. = ..()
-
-		W.hearghosts = !W.hearghosts
-		if (W.hearghosts)
-			W.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
-			src.icon_state = "hide_chat"
-			boutput(W, SPAN_NOTICE("Now listening to the dead again."))
-		else
-			W.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_DEADCHAT)
-			src.icon_state = "show_chat"
-			boutput(W, SPAN_NOTICE("No longer listening to the dead."))
-
-		return FALSE
-
 /obj/spookMarker
 	name = "Spooky Marker"
 	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischievous aura."

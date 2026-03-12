@@ -45,6 +45,7 @@ datum/forensic_holder
 
 	/// Obtain a specific type of forensic group if it exists
 	proc/get_group(var/category = FORENSIC_GROUP_NOTES, var/check_admin = FALSE)
+		RETURN_TYPE(/datum/forensic_group)
 		var/list/datum/forensic_group/target_groups
 		if(check_admin)
 			target_groups = src.admin_list
@@ -58,12 +59,13 @@ datum/forensic_holder
 	proc/remove_group(var/datum/forensic_group/group)
 		src.group_list -= group
 
-	proc/copy_to(var/datum/forensic_holder/other, var/is_admin = FALSE)
+	/// Copy evidence to another forensic holder. Can include a scan datum if evidence is being scanned.
+	proc/copy_to(var/datum/forensic_holder/other, var/datum/forensic_scan/scan, var/is_admin = FALSE)
 		var/list/datum/forensic_group/scan_groups = src.group_list
 		if(is_admin)
 			scan_groups = src.admin_list
 		for(var/datum/forensic_group/group in scan_groups)
-			group.copy_to(other)
+			group.copy_to(other, scan)
 
 	proc/report_text(var/datum/forensic_scan/scan, var/datum/forensic_report/report, var/is_admin = FALSE)
 		var/list/datum/forensic_group/scan_groups = src.group_list

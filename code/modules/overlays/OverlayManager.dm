@@ -390,6 +390,18 @@
 
 		return ..()
 
+/datum/overlayComposition/steelmask/tunnel_vision
+
+/datum/overlayComposition/greyout
+	New()
+		var/datum/overlayDefinition/meaty = new()
+		meaty.d_icon = 'icons/effects/overlays/meatyC.dmi'
+		meaty.d_icon_state = "meatyC"
+		meaty.d_blend_mode = 2
+		meaty.d_alpha = 140
+		meaty.d_color = "#999999"
+		definitions.Add(meaty)
+		return ..()
 
 // temporary blindness overlay until the other one is fixed
 /datum/overlayComposition/limited_sight
@@ -423,6 +435,8 @@
 		//meaty.d_color = "#610306"
 		definitions.Add(meaty)
 		return ..()
+
+/datum/overlayComposition/blinded/cryo
 
 /datum/overlayComposition/blinded_r_eye
 	New()
@@ -512,14 +526,14 @@
 		return ..()
 
 	resonator
-	New()
-		var/datum/overlayDefinition/sniper_scope = new()
-		sniper_scope.d_icon = 'icons/effects/overlays/sniper_scope.dmi'
-		sniper_scope.d_icon_state = "resonator"
-		sniper_scope.do_wide_fill = 0
-		definitions.Add(sniper_scope)
+		New()
+			var/datum/overlayDefinition/sniper_scope = new()
+			sniper_scope.d_icon = 'icons/effects/overlays/sniper_scope.dmi'
+			sniper_scope.d_icon_state = "resonator"
+			sniper_scope.do_wide_fill = 0
+			definitions.Add(sniper_scope)
 
-		return ..()
+			return ..()
 
 /datum/overlayComposition/telephoto
 	New()

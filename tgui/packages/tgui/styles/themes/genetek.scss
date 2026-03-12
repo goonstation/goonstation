@@ -42,4 +42,19 @@
   .LabeledList__cell {
     height: 2em;
   }
+
+  // Accommodate 32px gene icons on the Mutations tab
+  .BioEffect__section {
+    .Section__title {
+      min-height: calc(32px + 2 * var(--space-m));
+      display: flex;
+      align-items: center;
+    }
+
+    .Section__buttons {
+      top: 50%;
+      transform: translateY(-50%);
+      margin-top: 0;
+    }
+  }
 }

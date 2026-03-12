@@ -2,6 +2,7 @@
 	id = ROLE_ZOMBIE
 	display_name = "zombie"
 	remove_on_clone = TRUE
+	antagonist_icon = "zombie"
 
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)

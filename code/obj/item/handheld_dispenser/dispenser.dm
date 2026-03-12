@@ -1,8 +1,8 @@
 TYPEINFO(/obj/item/places_pipes)
-	mats = list("metal_superdense" = 12,
-				"crystal_dense" = 6,
-				"conductive_high" = 6,
-				"energy_high" = 6)
+	mats = list("metal_dense" = 12,
+				"crystal" = 15,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /obj/item/places_pipes
 	name = "handheld pipe dispenser"
 	desc = "A neat tool to quickly lay down pipes onto the floor."
