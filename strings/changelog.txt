@@ -1,4 +1,6 @@
-
+(t)wed mar 11 26
+(u)LeahTheTech
+(+)Infernal contracts now make you bleed slightly when signing them. It is your blood after all!
 (t)tue mar 10 26
 (u)Egregorious
 (p)26110
