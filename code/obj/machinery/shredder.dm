@@ -2,7 +2,7 @@
 	name = "shredder"
 	desc = "Don't stick your hand in there..."
 	icon = 'icons/obj/machines/shredder.dmi'
-	icon_state = "feed_grinder"
+	icon_state = "shredder"
 	power_usage = 100
 	density = 1
 	anchored = ANCHORED
@@ -79,6 +79,7 @@
 	set waitfor = FALSE
 
 	src.shredding = TRUE
+	src.AddOverlays(image(src.icon, "grind"), "grind")
 
 	src.proxy = new
 	src.proxy.mouse_opacity = FALSE
@@ -95,12 +96,12 @@
 		src.proxy.icon = icon
 
 	src.proxy.pixel_x = 0
-	src.proxy.pixel_y = 24
+	src.proxy.pixel_y = 22
 
-	src.proxy.add_filter("grinder_mask", 1, alpha_mask_filter(x=0, y=-16, icon=mask_icon))
+	src.proxy.add_filter("grinder_mask", 1, alpha_mask_filter(x=0, y=-14, icon=mask_icon))
 
-	animate(src.proxy, pixel_y = -8, time = 70)
-	animate(src.proxy.get_filter("grinder_mask"), y = 32, time = 105, flags=ANIMATION_PARALLEL)
+	animate(src.proxy, pixel_y = -10, time = 70)
+	animate(src.proxy.get_filter("grinder_mask"), y = 30, time = 105, flags=ANIMATION_PARALLEL)
 	src.vis_contents += src.proxy
 	//particles come out a bit late so they don't show up before it hits the shredder (hopefully)
 	sleep(2 SECOND)
@@ -108,17 +109,18 @@
 	playsound(src, 'sound/machines/shredder.ogg', 50, 0)
 	global.particleMaster.SpawnSystem(new /datum/particleSystem/shredded(src, target = item))
 	sleep (5 SECONDS)
+	src.ClearSpecificOverlays("grind")
 	src.add_shreddings()
 	QDEL_NULL(src.proxy)
 	QDEL_NULL(item)
 	src.shredding = FALSE
 
-#define LOWER_BOUND 5
-#define SLOT_HEIGHT 6
-#define SLOT_WIDTH 5
+#define LOWER_BOUND 6
+#define SLOT_HEIGHT 5
+#define SLOT_WIDTH 4
 
 /obj/machinery/shredder/proc/add_shreddings()
-	if (src.shreddings_count >= floor(SLOT_HEIGHT/2))
+	if (src.shreddings_count >= ceil(SLOT_HEIGHT/2))
 		//delete the bottom row (squashed or something)
 		src.shreddings_icon.DrawBox(null, 16 - floor(SLOT_WIDTH/2), LOWER_BOUND, 16 + ceil(SLOT_WIDTH/2), LOWER_BOUND + 1)
 		//shunt everything down one
@@ -130,9 +132,12 @@
 	for (var/y_offset = 0 to 1)
 		var/y_pos = LOWER_BOUND + src.shreddings_count * 2 + y_offset
 		for (var/i in 1 to SLOT_WIDTH)
-			var/x_pos = 16 - floor(SLOT_WIDTH/2) + i - 1 //-1 because it makes it work
+			var/x_pos = 16 - floor(SLOT_WIDTH/2) + i
 			src.shreddings_icon.DrawBox(icon.RandomPixelColor(), x_pos, y_pos)
 
 	src.icon = src.shreddings_icon
 	src.shreddings_count += 1
-	// src.shreddings_count = min(src.shreddings_count, floor(SLOT_HEIGHT/2))
+
+#undef LOWER_BOUND
+#undef SLOT_HEIGHT
+#undef SLOT_WIDTH
