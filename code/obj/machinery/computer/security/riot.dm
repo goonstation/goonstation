@@ -269,8 +269,8 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if("auth") //Handles both Authorization and Revokation depending on src.authed
 				var/auths_left = (src.check_access_level(user) == ARMORY_ACCESS_LEVEL_UNRESTRICTED ? 0 : src.auth_need - length(src.authorized))
 				var/auth_or_revoke = src.authed ? "revoke" : "authorize"
-				var/choice = tgui_alert(user, "Would you like to [auth_or_revoke] access to riot gear? [auths_left ? "[auths_left] approval\s are still needed." : null]", src.name, list(auth_or_revoke, "Cancel"))
-				if(choice != auth_or_revoke || !CAN_STILL_USE_CHECK)
+				var/choice = tgui_alert(user, "Would you like to [auth_or_revoke] access to riot gear? [auths_left ? "[auths_left] approval\s are still needed." : null]", src.name, list(capitalize(auth_or_revoke), "Cancel"))
+				if(choice != capitalize(auth_or_revoke) || !CAN_STILL_USE_CHECK)
 					return
 				id_card = user.get_id()
 				switch(src.check_access_level(user))
