@@ -32,7 +32,7 @@ interface ArmoryAuthorizationData {
 export const ArmoryAuthorization = () => {
   const { act, data } = useBackend<ArmoryAuthorizationData>();
   return (
-    <Window width={400} height={220}>
+    <Window width={400} height={230}>
       <Window.Content>
         {data.cooldown > 0 && (
           <Modal textAlign="center" fontSize={2} p="10px">
@@ -92,7 +92,7 @@ export const ArmoryAuthorization = () => {
                     <Table.Cell>
                       {data.authorization_bioholders[index]}
                     </Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell py="2px">
                       <Button
                         color="grey"
                         onClick={() => act('repeal', { index: index + 1 })}
