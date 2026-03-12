@@ -2629,6 +2629,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal/magic/wizard, 8)
 		product_list += new/datum/data/vending_product(/obj/item/staff, 4)
 		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 4, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/wizard, 2)
 
 /obj/machinery/vending/standard
 	desc = "A vending machine full of various useful tools and devices that definitely cannot be used to make bombs"
