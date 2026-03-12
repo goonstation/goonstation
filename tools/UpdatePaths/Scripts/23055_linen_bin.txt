@@ -1,0 +1,2 @@
+/obj/bedsheetbin : /obj/linen_bin/bedsheet{@OLD}
+/obj/towelbin : /obj/linen_bin/towel{@OLD}

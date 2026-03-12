@@ -12,7 +12,7 @@
 /datum/ailment/disease/space_madness/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
-	if(affected_mob.job == "Clown")
+	if(affected_mob.traitHolder?.hasTrait("training_clown"))
 		if(probmult(6))
 			var/icp = pick("Fuckin' magnets!", "Fuckin' rainbows!", "Magic everywhere...", "Pure motherfuckin' miracles!", "Magic all around you and you don't even know it!")
 			affected_mob.say("[icp]")

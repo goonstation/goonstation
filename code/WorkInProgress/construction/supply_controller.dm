@@ -77,7 +77,7 @@
 		if (current_demand_level > 0)
 			current_demand_level--
 		var/profit = price_multiplier * C.baseprice
-		wagesystem.shipping_budget += profit
+		wagesystem.budgets[BUDGET_CAT_SHIPPING] += profit
 		adjust_price_multiplier()
 		return profit
 
@@ -690,10 +690,10 @@ TYPEINFO(/obj/supply_pad/outgoing)
 					var/datum/supply_packs/P = locate(href_list["purchase"])
 					var/datum/supply_control/C = locate(href_list["control"])
 					if (C.is_available(workstation_grade))
-						if (P.cost <= wagesystem.shipping_budget)
+						if (P.cost <= wagesystem.budgets[BUDGET_CAT_SHIPPING])
 							in_target.used()
 							C.consume()
-							wagesystem.shipping_budget -= P.cost
+							wagesystem.budgets[BUDGET_CAT_SHIPPING] -= P.cost
 							P.create(T)
 							showswirl(T)
 							message = "<span class='good'>Purchase complete. Cost: [P.cost] credits.</span>"
@@ -792,9 +792,9 @@ h2 {
 			interface += "<span class='bad'><b>Warning:</b> workstation operating off battery power.<br><br>"
 		if (message)
 			interface += "[message]<br><br>"
-		interface += "<strong>Expedition budget:</strong> [wagesystem.shipping_budget] credits<br>"
+		interface += "<strong>Expedition budget:</strong> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] credits<br>"
 		if (!in_target)
-			interface += "<span class='bad'>Incoming supply pad not detected. <a href='?src=\ref[src];recheck=1'>Re-check</a></span><br>"
+			interface += "<span class='bad'>Incoming supply pad not detected. <a href='byond://?src=\ref[src];recheck=1'>Re-check</a></span><br>"
 		else
 			if (in_target.has_crystal == 0)
 				interface += "<span class='bad'>Incoming supply pad telecrystal storage depleted.</span><br>"
@@ -803,7 +803,7 @@ h2 {
 			else
 				interface += "<span class='good'>Incoming supply pad is ready. Available crystals: [in_target.has_crystal].</span><br>"
 		if (!out_target)
-			interface += "<span class='bad'>Outgoing supply pad not detected. <a href='?src=\ref[src];recheck=1'>Re-check</a></span><br>"
+			interface += "<span class='bad'>Outgoing supply pad not detected. <a href='byond://?src=\ref[src];recheck=1'>Re-check</a></span><br>"
 		else
 			if (out_target.has_crystal == 0)
 				interface += "<span class='bad'>Outgoing supply pad telecrystal storage depleted.</span><br>"
@@ -812,7 +812,7 @@ h2 {
 			else
 				interface += "<span class='good'>Outgoing supply pad is ready. Available crystals: [out_target.has_crystal].</span><br>"
 		if (mode == 0)
-			interface += "<strong>Purchase items</strong> | <a href='?src=\ref[src];mode=1'>View market demand</a> | <a href='?src=\ref[src];sell=1'>Sell goods</a><br>"
+			interface += "<strong>Purchase items</strong> | <a href='byond://?src=\ref[src];mode=1'>View market demand</a> | <a href='byond://?src=\ref[src];sell=1'>Sell goods</a><br>"
 			interface += "<table class='orderable'><thead><tr><th>Item name and contents</th><th>Stock</th><th>Cost</th><th>Purchase</th></tr></thead>"
 			interface += "<tbody>"
 			for (var/datum/supply_control/S in C.special_supply_control)
@@ -830,11 +830,11 @@ h2 {
 						interface += "<td>[P.cost * S.cost_multiplier]</td>"
 						interface += "<td class='purchase'>"
 						if (S.is_available(workstation_grade) && in_target)
-							interface += "<a href='?src=\ref[src];purchase=\ref[P];control=\ref[S]'>Buy</a>"
+							interface += "<a href='byond://?src=\ref[src];purchase=\ref[P];control=\ref[S]'>Buy</a>"
 						interface += "</td></tr>"
 			interface += "</tbody></table>"
 		else
-			interface += "<a href='?src=\ref[src];mode=0'>Purchase items</a> | <strong>View market demand</strong> | <a href='?src=\ref[src];sell=1'>Sell goods</a><br>"
+			interface += "<a href='byond://?src=\ref[src];mode=0'>Purchase items</a> | <strong>View market demand</strong> | <a href='byond://?src=\ref[src];sell=1'>Sell goods</a><br>"
 			interface += "<table class='orderable'><thead><tr><th>Demanded commodity</th><th>Price per unit</th><th>Demand level</th></thead>"
 			for (var/datum/demand_control/D in C.special_demand_control)
 				var/vis = D.visibility(workstation_grade)

@@ -63,24 +63,9 @@ client/proc/replace_space()
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	ADMIN_ONLY
 
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type = 0
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
+	var/datum/reagent/reagent = pick_reagent(src.mob)
+	if (!reagent)
 		return
-	if(!type) return
-	var/datum/reagent/reagent = new type()
 
 	logTheThing(LOG_ADMIN, src, "began to convert all space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all space tiles into an ocean of [reagent.id]. Oh no.")
@@ -98,6 +83,8 @@ client/proc/replace_space()
 			var/turf/orig = locate(S.x, S.y, S.z)
 			orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
 		message_admins("Finished space replace!")
+
+		global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, TRUE)
 		map_currently_underwater = 1
 
 client/proc/replace_space_exclusive()
@@ -107,24 +94,7 @@ client/proc/replace_space_exclusive()
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	var/list/L = list()
-	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
-	if(searchFor)
-		for(var/R in concrete_typesof(/datum/reagent))
-			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
-
-	var/type = 0
-	if(length(L) == 1)
-		type = L[1]
-	else if(length(L) > 1)
-		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
-	else
-		usr.show_text("No reagents matching that name", "red")
-		return
-	if(!type) return
-	var/datum/reagent/reagent = new type()
+	var/datum/reagent/reagent = pick_reagent(src)
 
 	logTheThing(LOG_ADMIN, src, "began to convert all station space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all station space tiles into an ocean of [reagent.id].")
@@ -150,19 +120,15 @@ client/proc/replace_space_exclusive()
 		ocean_color = R.get_average_color().to_rgb()
 		qdel(R)
 
+		global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, TRUE)
+
 		map_currently_underwater = 1
 		for(var/turf/space/S in world)
 			if (S.z != 1 || istype(S, /turf/space/fluid/warp_z5)) continue
 
 			var/turf/orig = locate(S.x, S.y, S.z)
 
-#if defined(MOVING_SUB_MAP)
-			var/turf/space/fluid/manta/T = orig.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
-#elif defined(UNDERWATER_MAP)
 			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
-#else //space map
-			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
-#endif
 
 #ifdef UNDERWATER_MAP
 			T.name = ocean_name
@@ -187,15 +153,6 @@ client/proc/replace_space_exclusive()
 		map_currently_underwater = 1
 
 
-client/proc/update_ocean_lighting()
-	ADMIN_ONLY
-	SPAWN(0)
-		for(var/turf/space/fluid/S in world)
-			S.update_light()
-			LAGCHECK(LAG_REALTIME)
-		message_admins("Finished space light update!!!")
-
-
 client/proc/dereplace_space()
 	set name = "Unoceanify"
 	set desc = "uh oh."
@@ -211,18 +168,23 @@ client/proc/dereplace_space()
 	SPAWN(0)
 		map_currently_underwater = 0
 
+
+
 		if (answer == "Yes")
 			for(var/turf/space/fluid/F in world)
 				if (F.z == 1)
 					var/turf/orig = locate(F.x, F.y, F.z)
 					orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_GRAVITY_MINIMUM, TRUE)
 			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 		else
 			for(var/turf/space/fluid/F in world)
 				var/turf/orig = locate(F.x, F.y, F.z)
 				orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_GRAVITY_MINIMUM, TRUE)
+			global.set_zlevel_gforce(Z_LEVEL_MINING, GFORCE_GRAVITY_MINIMUM, TRUE)
 			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_DEBRIS)
 			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_MINING)

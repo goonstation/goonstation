@@ -50,7 +50,7 @@
 		"Martian Warrior" = /mob/living/critter/martian/warrior,
 		"Meat Mutant" = /mob/living/critter/blobman,
 		"Meat Thing" = /mob/living/critter/blobman/meat,
-		"Micro Man" = /obj/critter/microman,
+		"Micro Man" = /mob/living/critter/microman,
 		"Mimic" = /mob/living/critter/mimic,
 		"Plasma Spore" = /obj/critter/spore,
 		"Skeleton" = /mob/living/critter/skeleton,

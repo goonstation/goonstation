@@ -13,6 +13,7 @@ proc/initialize_biomes()
 	var/floor_turf_type
 	var/wall_turf_type
 	var/clear_turf_type
+	var/lag_check_count
 
 ///This proc will be ran by areas on world/proc/init(), and provides the areas turfs as argument to allow for generation.
 /datum/map_generator/proc/generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
@@ -27,6 +28,17 @@ proc/initialize_biomes()
 /datum/map_generator/proc/set_seed(list/seed_list)
 	if(length(seed_list))
 		seeds = seed_list
+
+/datum/map_generator/proc/lag_check(var/flags)
+	if(flags & MAPGEN_SLOW_GENERATION)
+		lag_check_count++
+		if(lag_check_count % 10 == 0)
+			sleep(1)
+
+	if (current_state >= GAME_STATE_PLAYING)
+		LAGCHECK(LAG_LOW)
+	else
+		LAGCHECK(LAG_HIGH)
 
 ABSTRACT_TYPE(/area/map_gen)
 /area/map_gen

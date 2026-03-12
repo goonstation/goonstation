@@ -86,6 +86,7 @@
 			if(!istype(user, /mob/living/carbon/human)) return
 			boutput(user,SPAN_ALERT("<B>God, holding it makes you feel sick.</B>"))
 			user.vomit()
+			user.nauseate(5)
 			random_brute_damage(user, rand(5,30))
 			if(prob(50)) //The stone has a price to pay
 				var/mob/living/carbon/human/M = user

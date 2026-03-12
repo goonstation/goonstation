@@ -150,7 +150,7 @@ proc/get_battle_area_names(var/list/strings)
 	. = ""
 	if(length(strings) == 1)
 		return "[strings[1]]"
-	for(var/i = 1, i < strings.len; i++)
+	for(var/i = 1; i < strings.len; i++)
 		. += strings[i] + ", "
 	. += "or [strings[strings.len]]"
 

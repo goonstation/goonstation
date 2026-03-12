@@ -1,0 +1,19 @@
+/obj/item/clothing/under/misc/bikini/@SUBTYPES : /obj/item/clothing/under/swimsuit/bikini/@SUBTYPES{@OLD}
+/obj/item/clothing/under/misc/bikini : /obj/item/clothing/under/swimsuit/bikini{@OLD}
+
+/obj/item/clothing/under/gimmick/donkini : /obj/item/clothing/under/swimsuit/donkini{@OLD}
+
+/obj/item/clothing/under/misc/onepiece/@SUBTYPES : /obj/item/clothing/under/swimsuit/onepiece/@SUBTYPES{@OLD}
+/obj/item/clothing/under/misc/onepiece : /obj/item/clothing/under/swimsuit/onepiece{@OLD}
+
+/obj/item/clothing/under/misc/frillyswimsuit/@SUBTYPES : /obj/item/clothing/under/swimsuit/frillyswimsuit/@SUBTYPES{@OLD}
+/obj/item/clothing/under/misc/frillyswimsuit : /obj/item/clothing/under/swimsuit/frillyswimsuit{@OLD}
+
+/obj/item/clothing/under/misc/swimtrunks/@SUBTYPES : /obj/item/clothing/under/swimsuit/swimtrunks/@SUBTYPES{@OLD}
+/obj/item/clothing/under/misc/swimtrunks : /obj/item/clothing/under/swimsuit/swimtrunks{@OLD}
+
+/obj/item/clothing/under/misc/wetsuit/@SUBTYPES : /obj/item/clothing/under/swimsuit/wetsuit/@SUBTYPES{@OLD}
+/obj/item/clothing/under/misc/wetsuit : /obj/item/clothing/under/swimsuit/wetsuit{@OLD}
+
+/obj/item/clothing/under/misc/oldswimsuit/@SUBTYPES : /obj/item/clothing/under/swimsuit/oldswimsuit/@SUBTYPES{@OLD}
+/obj/item/clothing/under/misc/oldswimsuit : /obj/item/clothing/under/swimsuit/oldswimsuit{@OLD}

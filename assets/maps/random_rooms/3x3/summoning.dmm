@@ -5,7 +5,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "l" = (
 /obj/cable/hotpink{
 	icon_state = "0-4"
@@ -18,7 +18,7 @@
 	},
 /obj/cable/yellow,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/cable/hotpink{
 	icon_state = "0-8"
@@ -31,7 +31,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "x" = (
 /obj/cable/hotpink{
 	icon_state = "0-2"
@@ -40,7 +40,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /obj/cable{
 	icon_state = "4-10"
@@ -53,7 +53,7 @@
 	},
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -66,7 +66,7 @@
 	},
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "N" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -79,7 +79,7 @@
 	},
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -92,7 +92,7 @@
 	},
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 "T" = (
 /obj/cable/hotpink{
 	icon_state = "0-2"
@@ -106,7 +106,7 @@
 	},
 /obj/item/storage/pill_bottle,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 z

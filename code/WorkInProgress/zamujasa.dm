@@ -23,21 +23,16 @@
 
 
 
+TYPEINFO(/obj/item/device/speechtotext)
+	start_listen_effects = list(LISTEN_EFFECT_PROTOTYPE_MAPTEXT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+
 /obj/item/device/speechtotext
 	name = "prototype flying chat device"
 	desc = "This is a microphone that was a prototype of the floating chat that pali added. It doesn't work that great, but hey."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
-
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
-
-	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		new /obj/maptext_junk/speech(M, msg = messages[1])
-
 
 /obj/maptext_junk
 	mouse_opacity = 0
@@ -942,12 +937,12 @@
 			if (!src.monitored_proc)
 				// no proc to check.
 				return 0
-			if (src.monitored_var && !istype(src.monitored[monitored_var], /datum))
+			if (src.monitored_var && !istype(src.monitored.vars[monitored_var], /datum))
 				// If we're calling a proc on a var it better be something we can call a proc on
 				return 0
 
 			// So what ARE we calling this proc on then?
-			src.effective_callee = (src.monitored_var ? src.monitored[src.monitored_var] : src.monitored)
+			src.effective_callee = (src.monitored_var ? src.monitored.vars[src.monitored_var] : src.monitored)
 
 			if (!hascall(src.effective_callee, monitored_proc))
 				// does it have this proc?
@@ -1247,21 +1242,22 @@
 			update_delay = 1
 
 			get_value()
-				if (!src.monitored["stats"]["lastdeath"])
+				if (!src.monitored.vars["stats"]["lastdeath"])
 					return "None... yet</span>"
-				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
+				return "[src.monitored.vars["stats"]["lastdeath"]["name"]]</span><br>[src.monitored.vars["stats"]["lastdeath"]["whereText"]]"
 
 
 
 	budget
 		New()
 			src.monitored = wagesystem
+			src.monitored_list = "budgets"
 			..()
 
 		name = "station budget monitor"
-		desc = "This is the current amount of money the Head of Personell has yet to embezzle."
+		desc = "This is the current amount of money the Head of Personnel has yet to embezzle."
 		display_mode = "round"
-		monitored_var = "station_budget"
+		monitored_var = BUDGET_CAT_STATION
 		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
 		ding_sound = 'sound/misc/cashregister.ogg'
 		ding_on_change = 1
@@ -1271,13 +1267,18 @@
 		shipping
 			name = "shipping budget monitor"
 			desc = "This is the current amount of money in the cargo/shipping budget."
-			monitored_var = "shipping_budget"
+			monitored_var = BUDGET_CAT_SHIPPING
 			maptext_prefix = "<span class='c pixel sh'>Shipping Budget:\n<span class='vga'>$"
+		union
+			name = "union budget monitor"
+			desc = "This is the current amount of money in the union dues budget. The union rep will surely get it distributed, right?"
+			monitored_var = BUDGET_CAT_UNION
+			maptext_prefix = "<span class='c pixel sh'>Union Budget:\n<span class='vga'>$"
 		research
-			name = "research budget monitor"
-			desc = "This is the current amount of money in the research budget that has yet to be blown on genetic materials."
-			monitored_var = "research_budget"
-			maptext_prefix = "<span class='c pixel sh'>Research Budget:\n<span class='vga'>$"
+			name = "medical budget monitor"
+			desc = "This is the current amount of money in the medical budget that has yet to be blown on genetic materials."
+			monitored_var = BUDGET_CAT_DEPT_MEDICAL
+			maptext_prefix = "<span class='c pixel sh'>Medical Budget:\n<span class='vga'>$"
 
 
 	clients
@@ -1451,9 +1452,8 @@
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
-New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" class="ol" target="_blank">Click here for a tutorial!</a>
-Ask mentors for help with <strong>F3</strong>
-Contact admins with <strong>F1</strong>
+Have gameplay questions? Ask mentors with \[F3]!
+Have rules questions? Message admins with \[F1].
 Read the rules, don't grief, and have fun!</div>"}
 
 
@@ -1529,7 +1529,7 @@ Read the rules, don't grief, and have fun!</div>"}
 
 		proc/setup_process_signal()
 			set waitfor = FALSE
-			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, 0)
 			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
 
 		proc/update_text()
@@ -1541,9 +1541,8 @@ Read the rules, don't grief, and have fun!</div>"}
 				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][!isnull(server.player_count) ? " ([server.player_count] players)" : " (restarting now)"]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
-New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
-Have questions? Ask mentors with \[F3]!
-Need an admin? Message us with \[F1].
+Have gameplay questions? Ask mentors with \[F3]!
+Have rules questions? Message admins with \[F1].
 
 Other Goonstation servers:[serverList]</span>"})
 
@@ -1649,7 +1648,7 @@ Other Goonstation servers:[serverList]</span>"})
 	matter_remove_light_fixture = 1
 	time_remove_light_fixture = 0
 
-
+	forbidden_walltypes = list()
 
 
 
@@ -1799,7 +1798,7 @@ Other Goonstation servers:[serverList]</span>"})
 	name = "admin spacebux store setup object"
 	desc = "An admin can click on this to set stuff up."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/mob/inhand/hand_general.dmi'
 	icon_state = "DONGS"
 	var/tmp/set_up = FALSE

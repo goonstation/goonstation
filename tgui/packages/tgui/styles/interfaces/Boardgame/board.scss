@@ -1,16 +1,17 @@
-@import './setup.scss';
+@use 'sass:map';
+@use './setup';
 
 // The board on where the pieces are placed
 
 .boardgame__board {
-  z-index: map-get($boardgame-layers, 'board');
+  z-index: map.get(setup.$boardgame-layers, 'board');
   flex-grow: 1;
 
   &-pieces {
-    z-index: map-get($boardgame-layers, 'pieces');
+    z-index: map.get(setup.$boardgame-layers, 'pieces');
   }
   &-overlay {
-    z-index: map-get($boardgame-layers, 'overlay');
+    z-index: map.get(setup.$boardgame-layers, 'overlay');
   }
   &-inner {
     transition: 1s all;

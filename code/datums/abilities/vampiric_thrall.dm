@@ -140,17 +140,13 @@
 		animate(src.owner.client, color=flash_color, time=0.4 SECONDS)
 		animate(color=original_color, time=1.5 SECONDS)
 		if (severity > 0.2)
-			playsound(src.owner, 'sound/effects/heartbeat.ogg', 60, FALSE)
+			src.owner.playsound_local(src.owner, 'sound/effects/heartbeat.ogg', 60, FALSE)
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
 		.= list()
 		.["Blood:"] = round(src.points)
 		.["Max HP:"] = round(src.owner.max_health)
-
-	proc/msg_to_master(var/msg)
-		if (master)
-			master.transmit_thrall_msg(msg,owner)
 
 	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
 		if(!total_blood)

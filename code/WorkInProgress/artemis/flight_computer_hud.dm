@@ -59,37 +59,37 @@
 
 		master = P
 
-		leave = create_screen("leave", "Leave Pod", 'icons/misc/artemis/manta_hud-elements.dmi', "exit", exit_button_xy, tooltipTheme = "pod-alt")
-		scan = create_screen("scan","Scan Object", 'icons/misc/artemis/manta_hud-elements.dmi', "sonarbutton", scanner_xy, tooltipTheme = "pod-alt")
-		toggle_tracking = create_screen("toggle_tracking","Toggle Tracking Arrows", 'icons/misc/artemis/manta_hud-elements.dmi', "tracking-on", tracking_switch_xy, tooltipTheme = "pod-alt")
-		toggle_nav = create_screen("toggle_nav","Toggle Long Distance Navigation", 'icons/misc/artemis/manta_hud-elements.dmi', "nav-off", nav_term_xy, tooltipTheme = "pod-alt")
-		launch_nav_sat = create_screen("launch_nav_sat","Launch Navigation Satellite", 'icons/misc/artemis/manta_hud-elements.dmi', "buoybutton", buoy_button_xy, tooltipTheme = "pod-alt")
+		leave = create_screen("leave", "Leave Pod", 'icons/misc/artemis/manta_hud-elements.dmi', "exit", exit_button_xy, tooltip_options = list("theme" = "pod-alt"))
+		scan = create_screen("scan","Scan Object", 'icons/misc/artemis/manta_hud-elements.dmi', "sonarbutton", scanner_xy, tooltip_options = list("theme" = "pod-alt"))
+		toggle_tracking = create_screen("toggle_tracking","Toggle Tracking Arrows", 'icons/misc/artemis/manta_hud-elements.dmi', "tracking-on", tracking_switch_xy, tooltip_options = list("theme" = "pod-alt"))
+		toggle_nav = create_screen("toggle_nav","Toggle Long Distance Navigation", 'icons/misc/artemis/manta_hud-elements.dmi', "nav-off", nav_term_xy, tooltip_options = list("theme" = "pod-alt"))
+		launch_nav_sat = create_screen("launch_nav_sat","Launch Navigation Satellite", 'icons/misc/artemis/manta_hud-elements.dmi', "buoybutton", buoy_button_xy, tooltip_options = list("theme" = "pod-alt"))
 
-		throttle_slide = create_screen("slide", "Throttle", 'icons/misc/artemis/manta_hud-elements.dmi', "throttle_slide", throttle_slide_xy, tooltipTheme = "pod-alt")
-		throttle_stick = create_screen("throttle", "Throttle", 'icons/misc/artemis/manta_hud-elements.dmi', "throttle_stick", throttle_stick_xy, tooltipTheme = "pod-alt")
-		killswitch = create_screen("killswitch", "Engine Killswitch", 'icons/misc/artemis/manta_hud-elements.dmi', "killswitch_closed", killswitch_xy, tooltipTheme = "pod-alt")
-		killswitch_close = create_screen("killswitch_close", "Engine Killswitch", 'icons/misc/artemis/manta_hud-elements.dmi', null, killswitch_xy, tooltipTheme = "pod-alt")
-		radar = create_screen("radar", "Radar", 'icons/misc/artemis/manta_hud-elements.dmi', "radar_on", radar_xy, tooltipTheme = "pod-alt")
-		radar_ping = create_screen("radar_ping", "Radar", 'icons/misc/artemis/manta_hud-elements.dmi', null, radar_xy, tooltipTheme = "pod-alt")
-		tracking_light = create_screen("tracking_light", "Tracking Indicator", 'icons/misc/artemis/manta_hud-elements.dmi', "tracking_light-on", tracking_light_xy, tooltipTheme = "pod-alt")
-		buoy_counter = create_screen("buoy_counter", "Buoy Counter", 'icons/misc/artemis/manta_hud-elements.dmi', "buoy-3", buoy_counter_xy, tooltipTheme = "pod-alt")
-		coffee = create_screen("coffee", "Coffee", 'icons/misc/artemis/manta_hud-elements.dmi', "coffee3", coffee_xy, tooltipTheme = "pod-alt")
-		tele_ok = create_screen("tele_ok", "LRT Lock On Indictor", 'icons/misc/artemis/manta_hud-elements.dmi', "lrt-nok", tele_ok_xy, tooltipTheme = "pod-alt")
-		control_lock = create_screen("control_lock", "Control Lock", 'icons/misc/artemis/manta_hud-elements.dmi', "key_unlocked", control_lock_key_xy, tooltipTheme = "pod-alt")
-		control_light = create_screen("control_light", "Control Lock Indicator", 'icons/misc/artemis/manta_hud-elements.dmi', "control_unlocked", control_lock_light_xy, tooltipTheme = "pod-alt")
-		maint_panel = create_screen("maint_panel", "Maintenance Panel", 'icons/misc/artemis/manta_hud-elements.dmi', "panel_closed", maint_panel_xy, tooltipTheme = "pod-alt")
+		throttle_slide = create_screen("slide", "Throttle", 'icons/misc/artemis/manta_hud-elements.dmi', "throttle_slide", throttle_slide_xy, tooltip_options = list("theme" = "pod-alt"))
+		throttle_stick = create_screen("throttle", "Throttle", 'icons/misc/artemis/manta_hud-elements.dmi', "throttle_stick", throttle_stick_xy, tooltip_options = list("theme" = "pod-alt"))
+		killswitch = create_screen("killswitch", "Engine Killswitch", 'icons/misc/artemis/manta_hud-elements.dmi', "killswitch_closed", killswitch_xy, tooltip_options = list("theme" = "pod-alt"))
+		killswitch_close = create_screen("killswitch_close", "Engine Killswitch", 'icons/misc/artemis/manta_hud-elements.dmi', null, killswitch_xy, tooltip_options = list("theme" = "pod-alt"))
+		radar = create_screen("radar", "Radar", 'icons/misc/artemis/manta_hud-elements.dmi', "radar_on", radar_xy, tooltip_options = list("theme" = "pod-alt"))
+		radar_ping = create_screen("radar_ping", "Radar", 'icons/misc/artemis/manta_hud-elements.dmi', null, radar_xy, tooltip_options = list("theme" = "pod-alt"))
+		tracking_light = create_screen("tracking_light", "Tracking Indicator", 'icons/misc/artemis/manta_hud-elements.dmi', "tracking_light-on", tracking_light_xy, tooltip_options = list("theme" = "pod-alt"))
+		buoy_counter = create_screen("buoy_counter", "Buoy Counter", 'icons/misc/artemis/manta_hud-elements.dmi', "buoy-3", buoy_counter_xy, tooltip_options = list("theme" = "pod-alt"))
+		coffee = create_screen("coffee", "Coffee", 'icons/misc/artemis/manta_hud-elements.dmi', "coffee3", coffee_xy, tooltip_options = list("theme" = "pod-alt"))
+		tele_ok = create_screen("tele_ok", "LRT Lock On Indictor", 'icons/misc/artemis/manta_hud-elements.dmi', "lrt-nok", tele_ok_xy, tooltip_options = list("theme" = "pod-alt"))
+		control_lock = create_screen("control_lock", "Control Lock", 'icons/misc/artemis/manta_hud-elements.dmi', "key_unlocked", control_lock_key_xy, tooltip_options = list("theme" = "pod-alt"))
+		control_light = create_screen("control_light", "Control Lock Indicator", 'icons/misc/artemis/manta_hud-elements.dmi', "control_unlocked", control_lock_light_xy, tooltip_options = list("theme" = "pod-alt"))
+		maint_panel = create_screen("maint_panel", "Maintenance Panel", 'icons/misc/artemis/manta_hud-elements.dmi', "panel_closed", maint_panel_xy, tooltip_options = list("theme" = "pod-alt"))
 
-		engine_health_one = create_screen("engine_health_one", "Engine One Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_1", engine_health_xy, tooltipTheme = "pod-alt")
-		engine_health_two = create_screen("engine_health_two", "Engine Two Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_2", engine_health_xy, tooltipTheme = "pod-alt")
-		engine_health_three = create_screen("engine_health_three", "Engine Three Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_3", engine_health_xy, tooltipTheme = "pod-alt")
-		engine_health_four = create_screen("engine_health_four", "Engine Four Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_4", engine_health_xy, tooltipTheme = "pod-alt")
-		engine_health_five = create_screen("engine_health_five", "Engine Five Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_5", engine_health_xy, tooltipTheme = "pod-alt")
-		engine_health_six = create_screen("engine_health_six", "Engine Six Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_6", engine_health_xy, tooltipTheme = "pod-alt")
-		engine_health_seven = create_screen("engine_health_seven", "Engine Seven Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_7", engine_health_xy, tooltipTheme = "pod-alt")
-		engine_health_eight = create_screen("engine_health_eight", "Engine Eight Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_8", engine_health_xy, tooltipTheme = "pod-alt")
+		engine_health_one = create_screen("engine_health_one", "Engine One Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_1", engine_health_xy, tooltip_options = list("theme" = "pod-alt"))
+		engine_health_two = create_screen("engine_health_two", "Engine Two Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_2", engine_health_xy, tooltip_options = list("theme" = "pod-alt"))
+		engine_health_three = create_screen("engine_health_three", "Engine Three Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_3", engine_health_xy, tooltip_options = list("theme" = "pod-alt"))
+		engine_health_four = create_screen("engine_health_four", "Engine Four Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_4", engine_health_xy, tooltip_options = list("theme" = "pod-alt"))
+		engine_health_five = create_screen("engine_health_five", "Engine Five Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_5", engine_health_xy, tooltip_options = list("theme" = "pod-alt"))
+		engine_health_six = create_screen("engine_health_six", "Engine Six Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_6", engine_health_xy, tooltip_options = list("theme" = "pod-alt"))
+		engine_health_seven = create_screen("engine_health_seven", "Engine Seven Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_7", engine_health_xy, tooltip_options = list("theme" = "pod-alt"))
+		engine_health_eight = create_screen("engine_health_eight", "Engine Eight Health", 'icons/misc/artemis/manta_hud-elements.dmi', "engine_8", engine_health_xy, tooltip_options = list("theme" = "pod-alt"))
 
 
-		big_hud = create_screen("big_hud","Dashboard",'icons/misc/artemis/manta_hud-background.dmi',"BG","SOUTH,WEST",tooltipTheme = "pod-alt")
+		big_hud = create_screen("big_hud","Dashboard",'icons/misc/artemis/manta_hud-background.dmi',"BG","SOUTH,WEST", tooltip_options = list("theme" = "pod-alt"))
 		src.big_hud.layer = src.big_hud.layer - 0.01
 
 
@@ -122,12 +122,12 @@
 		switch (id)
 
 			if ("leave")
-				flick("exit_push",leave)
+				FLICK("exit_push",leave)
 				SPAWN(0.7 SECONDS)
 					master.go_out()
 
 			if ("scan")
-				flick("sonarbutton_push",scan)
+				FLICK("sonarbutton_push",scan)
 				if(master.ship.control_lock)
 					user.show_message(SPAN_ALERT("The controls are locked!"))
 					return
@@ -182,7 +182,7 @@
 					master.ship.remove_nav_arrow(user)
 					master.ship.navigating = 0
 					user.show_message(SPAN_NOTICE("No longer navigating."))
-					flick("nav-turn-off",toggle_nav)
+					FLICK("nav-turn-off",toggle_nav)
 					toggle_nav.icon_state = "nav-off"
 				else
 					var/list/navigable_bodies = list()
@@ -200,12 +200,12 @@
 						master.ship.apply_nav_arrow(user)
 						master.ship.navigating = 1
 						user.show_message(SPAN_NOTICE("Now navigating to waypoint [target]."))
-						flick("nav-turn-on",toggle_nav)
+						FLICK("nav-turn-on",toggle_nav)
 						toggle_nav.icon_state = "nav-on"
 
 
 			if("launch_nav_sat")
-				flick("buoybutton_push",src.launch_nav_sat)
+				FLICK("buoybutton_push",src.launch_nav_sat)
 
 				if(master.ship.control_lock)
 					user.show_message(SPAN_ALERT("The controls are locked!"))
@@ -256,11 +256,11 @@
 
 			if("control_lock")
 				if(master.ship.control_lock)
-					flick("key_unlocking",control_lock)
+					FLICK("key_unlocking",control_lock)
 					control_lock.icon_state = "key_unlocked"
 					control_light.icon_state = "control_unlocked"
 				else
-					flick("key_locking",control_lock)
+					FLICK("key_locking",control_lock)
 					control_lock.icon_state = "key_locked"
 					control_light.icon_state = "control_locked"
 				master.ship.control_lock = !master.ship.control_lock

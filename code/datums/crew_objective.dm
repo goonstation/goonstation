@@ -102,18 +102,7 @@ ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 			return 1
 		else
 			return 0
-/datum/objective/crew/headofsecurity/brig
-	explanation_text = "Have at least one antagonist cuffed in the brig at the end of the round." //can be dead as people usually suicide
-	medal_name = "Suitable? How about the Oubliette?!"
-	var/static/check_result = null
-	check_completion()
-		if(isnull(check_result))
-			check_result = FALSE
-			for(var/datum/mind/M in ticker.minds)
-				if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.hasStatus("handcuffed")) //think that's everything...
-					check_result = TRUE
-					break
-		return check_result
+
 /datum/objective/crew/headofsecurity/centcom
 	explanation_text = "Bring at least one antagonist back to CentCom in handcuffs for interrogation. You must accompany them on the escape shuttle." //can also be dead I guess
 	medal_name = "Dead or alive, you're coming with me"
@@ -198,16 +187,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
-// grabbed the HoS's two antag-related objectives cause they work just fine for regular sec too, so...?
-	/*brig
-		explanation_text = "Have at least one antagonist cuffed in the brig at the end of the round." //can be dead as people usually suicide
-		medal_name = "Suitable? How about the Oubliette?!"
-		check_completion()
-			for(var/datum/mind/M in ticker.minds)
-				if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.hasStatus("handcuffed")) //think that's everything...
-					return 1
-			return 0
-	*/
+
 /datum/objective/crew/securityofficer/centcom
 	explanation_text = "Bring at least one antagonist back to CentCom in handcuffs for interrogation. You must accompany them on the escape shuttle." //can also be dead I guess
 	medal_name = "Dead or alive, you're coming with me"
@@ -251,13 +231,13 @@ ABSTRACT_TYPE(/datum/objective/crew/securityassistant)
 
 ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 /datum/objective/crew/quartermaster/profit
-	explanation_text = "End the round with a budget of over 50,000 credits."
+	explanation_text = "End the round with a Shipping budget of over 50,000 credits."
 	medal_name = "Tax Haven"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
-			if(wagesystem.shipping_budget > 50000)
+			if(wagesystem.budgets[BUDGET_CAT_SHIPPING] > 50000)
 				check_result = TRUE
 		return check_result
 
@@ -638,6 +618,24 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 			check_result = length(materials) >= 10
 		return check_result
 
+#ifndef UNDERWATER_MAP // not a lot of rockworms under the sea
+/datum/objective/crew/miner/rockworm
+	explanation_text = "Have two tamed rock worms at the end of the round."
+	var/static/check_result
+	check_completion()
+		. = ..()
+		if (isnull(check_result))
+			check_result = FALSE
+			var/tame_worm_count = 0
+			for_by_tcl(worm, /mob/living/critter/rockworm)
+				if (worm.tamed)
+					tame_worm_count++
+					if (tame_worm_count >= 2)
+						check_result = TRUE
+						break
+		return check_result
+#endif
+
 ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 /datum/objective/crew/researchdirector/heisenbee
 	explanation_text = "Ensure that Heisenbee escapes on the shuttle."
@@ -672,6 +670,15 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		for_by_tcl(F, /obj/dfissure_to)
 			if(F.z == Z_LEVEL_STATION) return 1
 		return 0
+
+/datum/objective/crew/researchdirector/artifact
+	explanation_text = "Research and activate 10 artifacts by the end of the shift."
+	medal_name = "Licensed Archaeologist"
+	var/artifacts_activated = 0
+	check_completion()
+		if (src.artifacts_activated >= 10)
+			return TRUE
+
 /datum/objective/crew/researchdirector/onfire
 	explanation_text = "Escape on the shuttle alive while on fire with silver sulfadiazine in your bloodstream."
 	medal_name = "Better to burn out, than fade away"
@@ -717,12 +724,13 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 			if(in_centcom(H) && H.getStatusDuration("burning") > 1 && owner.current.reagents.has_reagent("silver_sulfadiazine")) return 1
 			else return 0
 
-	/*artifact // This is going to be really fucking awkward to do so disabling for now
-		explanation_text = "Activate at least one artifact on the station z level by the end of the round, excluding the test artifact."
-		check_completion()
-			for(var/obj/machinery/artifact/A in machines)
-				if(A.z == Z_LEVEL_STATION && A.activated == 1 && A.name != "Test Artifact") return 1 //someone could label it I guess but I don't want to go adding an istestartifact var just for this..
-			return 0*/
+/datum/objective/crew/scientist/artifact
+	explanation_text = "Research and activate 10 artifacts by the end of the shift."
+	medal_name = "Licensed Archaeologist"
+	var/artifacts_activated = 0
+	check_completion()
+		if (src.artifacts_activated >= 10)
+			return TRUE
 
 ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 // so much copy/pasted stuff  :(
@@ -862,6 +870,16 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				geneoptions |= GB.offered_genes
 			check_result = length(geneoptions) >= 5
+		return check_result
+
+/datum/objective/crew/geneticist/budget
+	explanation_text = "End the round with the Medical budget over 30,000 credits."
+	var/static/check_result = null
+	check_completion()
+		if(isnull(check_result))
+			check_result = FALSE
+			if (wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] >= 30000)
+				check_result = TRUE
 		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/roboticist)

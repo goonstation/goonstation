@@ -38,8 +38,8 @@
 		if (element.height != 1)
 			logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [src] because height was not 1 (height: [element.height]).")
 			return FALSE
-		var/forces_wraparound = (src.horizontal_offset + element.width) > (HUD_ZONE_LENGTH(src.coords))
-		if (forces_wraparound && ((src.vertical_offset + element.height) >= HUD_ZONE_HEIGHT(src.coords))) // ZEWAKA TODO: why >=
+
+		if (src.ensure_empty(element) == HUD_ZONE_FULL)
 			logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [src] it would force a wraparound while vertically full.")
 			return FALSE
 

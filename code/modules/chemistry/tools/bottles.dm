@@ -250,6 +250,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "cyanide"
 
+/obj/item/reagent_containers/glass/bottle/cytotoxin
+	name = "cytotoxin bottle"
+	desc = "A small bottle of cytotoxin, a potent poison originating from lifeforms around the frontier system."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "cytotoxin"
+
 /obj/item/reagent_containers/glass/bottle/fluorosurfactant
 	name = "fluorosurfactant bottle"
 	desc = "A small bottle of fluorosurfactant, a chemical that foams rapidly when mixed with water."
@@ -291,6 +298,7 @@
 /obj/item/reagent_containers/glass/bottle/chemical/plastic
 	name = "plastic chemical bottle"
 	desc = "A 3D-printed reagent storage bottle."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()
@@ -392,6 +400,17 @@
 	fluid_overlay_states = 0
 	initial_reagents = "formaldehyde"
 
+/* ================================================== */
+/* -------------------- Forensic -------------------- */
+/* ================================================== */
+
+/obj/item/reagent_containers/glass/vial/silver_nitrate
+	name = "vial (silver nitrate)"
+	desc = "A small vial containing silver nitrate, used for revealing partial fingerprints."
+	amount_per_transfer_from_this = 1
+	splash_all_contents = FALSE
+	initial_reagents = "silver_nitrate"
+
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */
@@ -427,3 +446,4 @@
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10
 	fluid_overlay_states = 0
+	default_material = "plastic"

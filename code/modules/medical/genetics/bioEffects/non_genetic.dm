@@ -55,14 +55,18 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 	can_copy = 0
 
 	OnMobDraw()
+		if (..())
+			return
 		if(ishuman(owner))
 			owner:body_standing:overlays += image('icons/mob/human.dmi', "husk")
 
 	OnAdd()
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
+		. = ..()
 
 	OnRemove()
+		. = ..()
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
 
@@ -75,18 +79,21 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 	can_copy = 0
 
 	OnMobDraw()
+		if (..())
+			return
 		if (ishuman(owner) && !owner:decomp_stage)
 			if (isskeleton(owner))
 				owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp4")
 			else
 				owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp1")
-		return
 
 	OnAdd()
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
+		. = ..()
 
 	OnRemove()
+		. = ..()
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
 
@@ -110,13 +117,14 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 	msgLose = "You are no longer rotting."
 
 	OnAdd()
+		. = ..()
 		owner.set_mutantrace(/datum/mutantrace/zombie)
-		return
+
 
 	OnRemove()
 		if (istype(owner:mutantrace, /datum/mutantrace/zombie))
 			owner.set_mutantrace(null)
-		return
+		. = ..()
 
 	OnLife()
 		if(..()) return
@@ -157,11 +165,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 			holder.RemoveEffect(id)
 
 		if (outOfPod)
-			if (probmult(6))
-				var/vomit_message = SPAN_ALERT("[owner.name] suddenly and violently vomits!")
-				owner.vomit(0, null, vomit_message)
+			if (probmult(20))
+				owner.nauseate(1)
 
-			else if (probmult(2) && !owner.reagents?.has_reagent("promethazine"))
+			else if (probmult(2) && !HAS_ATOM_PROPERTY(owner, PROP_MOB_CANNOT_VOMIT))
 				owner.visible_message(SPAN_ALERT("[owner.name] vomits blood!"))
 				playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(owner, rand(5,8))

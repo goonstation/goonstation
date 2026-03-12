@@ -36,6 +36,7 @@
 
 	proc/transform_to_type(type, mat_id)
 		if(ispath(type, /datum/teg_transformation))
+			logTheThing(LOG_STATION, generator, "began TEG transformation [type][mat_id ? " (material: [mat_id])" : ""].")
 			SPAWN(0)
 				if(generator.active_form)
 					generator.active_form.on_revert()

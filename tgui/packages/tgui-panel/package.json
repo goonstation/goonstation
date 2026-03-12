@@ -1,13 +1,16 @@
 {
   "private": true,
   "name": "tgui-panel",
-  "version": "4.3.1",
+  "version": "5.0.1",
   "dependencies": {
+    "@types/node": "^24.1.0",
+    "@types/react": "^19.1.9",
     "common": "workspace:*",
-    "dompurify": "^2.3.1",
-    "inferno": "^7.4.8",
+    "dompurify": "^2.5.8",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "tgui": "workspace:*",
-    "tgui-dev-server": "workspace:*",
-    "tgui-polyfill": "workspace:*"
+    "tgui-core": "^5.3.2",
+    "tgui-dev-server": "workspace:*"
   }
 }

@@ -2,6 +2,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 
 /datum/controller/lag_detection
 	var/tmp/highCpuCount = 0 // how many times in a row has the cpu been high
+	var/tmp/automatic_profiling_count = 0 // how many times has the auto-profiler been triggered this round
 	var/tmp/automatic_profiling_on = FALSE
 	var/tmp/automatic_profiling_started = 0
 	var/tmp/manual_profiling_on = FALSE
@@ -66,24 +67,27 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				automatic_profiling_on = FALSE
 				last_tick_time = null
 				time_since_last = 0
+				src.automatic_profiling_count++
 		else if(ticker.round_elapsed_ticks > CPU_PROFILING_ROUNDSTART_GRACE_PERIOD) // give server some time to settle
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
 			if(world.cpu >= cpu_start_profiling_immediately_threshold || time_since_last > tick_time_profiling_threshold)
 				#ifdef PRE_PROFILING_ENABLED
-				var/output = world.Profile(PROFILE_REFRESH, null, "json")
+				var/output = src.start_auto_profile(PROFILE_REFRESH)
 				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++]_spike.json"
 				rustg_file_write(output, fname)
 				#endif
 				force_start = TRUE
 			else
 				highCpuCount = 0
+			if (global.current_state >= GAME_STATE_FINISHED) //we don't reeaally care about the end of game lag spike, probably
+				return
 			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)
 				var/prof_flags = PROFILE_START
 				#ifndef PRE_PROFILING_ENABLED
 				prof_flags |= PROFILE_CLEAR
 				#endif
-				world.Profile(prof_flags , null, "json")
+				src.start_auto_profile(prof_flags)
 				message_admins("CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last], turning on profiling.")
 				logTheThing(LOG_DEBUG, null, "Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last].")
 				ircbot.export_async("admin_debug", list("msg"="Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last]."))
@@ -96,3 +100,12 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 		manual_profiling_on = TRUE
 		manual_profiling_disable_time = TIME + delay
 
+	proc/start_auto_profile(prof_flags)
+		if (src.automatic_profiling_count > 3 && !global.flick_hack_enabled)
+			global.flick_hack_enabled = TRUE
+			var/msg = "Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK."
+			//tell EVERYONE
+			ircbot.export_async("admin_debug", list("msg"=msg))
+			message_admins(msg)
+			logTheThing(LOG_DEBUG, null, msg)
+		return world.Profile(prof_flags, null, "json")

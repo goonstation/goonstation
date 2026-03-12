@@ -17,6 +17,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	var/list/mob/climbers = list()
 	mat_changename = FALSE
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+	HELP_MESSAGE_OVERRIDE("Move another mob up or down by clicking with an <b>upgraded grab</b>.")
 
 /obj/ladder/broken
 	name = "broken ladder"
@@ -111,13 +112,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	. = ..()
 	if(isnull(src.material))
 		return
-	var/found_negative = (src.material.getID() == "negativematter")
-	if(!found_negative)
-		for(var/datum/material/parent_mat in src.material.getParentMaterials())
-			if(parent_mat.getID() == "negativematter")
-				found_negative = TRUE
-				break
-	if(found_negative)
+	if(contains_negative_matter(src))
 		src.AddComponent(/datum/component/extradimensional_storage/ladder)
 
 /obj/ladder/proc/update_id(new_id)
@@ -142,11 +137,13 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
 /obj/ladder/attack_hand(mob/user)
 	if (src.unclimbable) return
-	if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0)
+	if (is_incapacitated(user) || BOUNDS_DIST(user, src) > 0)
 		return
 	src.climb(user)
 
 /obj/ladder/attack_ai(mob/user)
+	if(isAIeye(user))
+		return
 	return src.Attackhand(user)
 
 /obj/ladder/Click(location, control, params)
@@ -163,7 +160,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		var/obj/item/grab/grab = W
 		if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
 			return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b>"))
 		return climb(grab.affecting)
 

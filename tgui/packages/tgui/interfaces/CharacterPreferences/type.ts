@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 export interface CharacterPreferencesData {
   isMentor: BooleanLike;
@@ -20,6 +20,7 @@ export interface CharacterPreferencesData {
   nameFirst: string;
   nameMiddle: string;
   nameLast: string;
+  hyphenateName: BooleanLike;
   robotName: string;
   randomName: number;
   gender: string;
@@ -37,6 +38,8 @@ export interface CharacterPreferencesData {
   chatsound: string;
   pdaColor: string;
   pdaRingtone: string;
+  useSatchel: BooleanLike;
+  preferredUplink: string;
   skinTone: string;
   specialStyle: string;
   eyeColor: string;
@@ -49,6 +52,15 @@ export interface CharacterPreferencesData {
   underwearColor: string;
   underwearStyle: string;
   randomAppearance: BooleanLike;
+
+  jobStaticData: Record<string, JobStaticData>;
+  jobFavourite: string;
+  jobsMedPriority: string[];
+  jobsLowPriority: string[];
+  jobsUnwanted: string[];
+
+  antagonistStaticData: Record<string, AntagonistStaticData>;
+  antagonistPreferences: Record<string, boolean>;
 
   fontSize: string;
   seeMentorPms: BooleanLike;
@@ -63,6 +75,7 @@ export interface CharacterPreferencesData {
   hudThemePreview: string;
   tooltipOption: CharacterPreferencesTooltip;
   scrollWheelTargeting: CharacterPreferencesScrollTarget;
+  middleMouseSwap: BooleanLike;
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;
   viewChangelog: BooleanLike;
@@ -73,17 +86,32 @@ export interface CharacterPreferencesData {
   useWasd: BooleanLike;
   useAzerty: BooleanLike;
   preferredMap: string;
-  traitsData: Record<string, CharacterPreferencesTraitStaticData>
+  traitsData: Record<string, CharacterPreferencesTraitStaticData>;
   traitsAvailable: CharacterPreferencesTraitData[];
   traitsMax: number;
   traitsPointsTotal: number;
-  partsData: Record<string, CharacterPreferencesPartData>;
+  partsData: Partial<Record<string, CharacterPreferencesPartData>>;
 }
 export interface CharacterPreferencesPartData {
   id: string;
   name: string;
   points: number;
   img: string;
+}
+
+export interface JobStaticData {
+  colour: string;
+  disabled: BooleanLike;
+  disabled_tooltip?: string;
+  required: BooleanLike;
+  wiki_link?: string;
+}
+
+export interface AntagonistStaticData {
+  name: string;
+  variable: string;
+  disabled: number;
+  disabled_tooltip?: string;
 }
 
 export interface CharacterPreferencesTraitStaticData {
@@ -101,7 +129,8 @@ export interface CharacterPreferencesTraitData {
   available: BooleanLike;
 }
 
-export type CharacterPreferencesTrait = CharacterPreferencesTraitData & CharacterPreferencesTraitStaticData
+export type CharacterPreferencesTrait = CharacterPreferencesTraitData &
+  CharacterPreferencesTraitStaticData;
 
 export interface CharacterPreferencesProfile {
   active: boolean;
@@ -112,6 +141,7 @@ export enum CharacterPreferencesTabKeys {
   Saves,
   General,
   Character,
+  Occupation,
   Traits,
   GameSettings,
 }
@@ -125,5 +155,31 @@ export enum CharacterPreferencesTooltip {
 export enum CharacterPreferencesScrollTarget {
   Never = 1, // SCROLL_TARGET_NEVER
   Hover = 2, // SCROLL_TARGET_HOVER
-  Always = 3 // SCROLL_TARGET_ALWAYS
+  Always = 3, // SCROLL_TARGET_ALWAYS
+}
+
+export enum PriorityLevel {
+  Favorite = 1,
+  Medium = 2,
+  Low = 3,
+  Unwanted = 4,
+}
+
+export interface OccupationPriorityModalOptions {
+  occupation: string;
+  hasWikiLink: boolean;
+  priorityLevel: number;
+  required: boolean;
+}
+
+export interface ModalContextValue {
+  setOccupationPriorityModalOptions: (
+    options: OccupationPriorityModalOptions | undefined,
+  ) => void;
+  showResetOccupationPreferencesModal: (show: boolean | undefined) => void;
+}
+
+export interface ModalContextState {
+  occupationModal: OccupationPriorityModalOptions | undefined;
+  resetOccupationPreferencesModal: boolean | undefined;
 }

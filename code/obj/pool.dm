@@ -4,7 +4,7 @@
 	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID | FLUID_DENSE_ALWAYS
 
 	Cross(atom/movable/mover)
 		ENSURE_TYPE(mover)
@@ -42,6 +42,7 @@
 	var/in_use = 0
 	var/suiciding = 0
 	var/deadly = 0
+	var/buckled_guy // a a aaaaaaa aa aaaaaaaa
 
 	attackby(obj/item/W, mob/user)
 		return src.Attackhand(user)
@@ -67,6 +68,8 @@
 			user.pixel_y = 15
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
+			if(user.buckled)
+				user.buckled.unbuckle()
 			user.buckled = src
 			sleep(0.3 SECONDS)
 			user.pixel_x = -3
@@ -107,7 +110,31 @@
 						playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0
-			playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, TRUE)
+			if (istype(user, /mob/living/silicon/ai))
+				src.visible_message(SPAN_ALERT("[user.name]'s bulky frame slams straight into the ground!"))
+				user.emote("scream")
+				playsound(user, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
+				user.TakeDamage(brute=10)
+				for (var/mob/M in viewers(user))
+					shake_camera(M, 4, 16)
+			else
+				if (!istype(get_turf(user), /turf/space) || istype(get_turf(user), /turf/space/fluid))
+					var/underwater = FALSE
+					if (istype(get_turf(user), /turf/space/fluid))
+						underwater = TRUE
+					else
+						var/turf/T = get_turf(user)
+						if (T?.active_liquid?.last_depth_level > 2)
+							underwater = TRUE
+					if (underwater)
+						playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, TRUE)
+					else
+						if (issilicon(user))
+							playsound(user, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
+						else
+							playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE, 0.2, 1)
+						src.visible_message(SPAN_ALERT("[user.name] lands on the ground hard!"))
+						user.TakeDamage(brute = 10)
 			in_use = 0
 			suiciding = 0
 			user.transforming = 0

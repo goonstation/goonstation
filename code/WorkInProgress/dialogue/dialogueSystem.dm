@@ -37,7 +37,7 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 	var/objectDialogueVerb = "says" //If the dialogueMaster belong to an object and showDialogue is one, what "verb" do we use for it's chat output.
 	var/list/dialogueFlags = list() //Holds simple string flags that can be used in dialogue. I.e. "Have we talked about this before"
 	var/list/allNodes = null //Complete list of nodes in the master.
-	var/wait_to_speak = 0 SECONDS // time to wait for more natural visible conversations
+	var/wait_to_speak = 1 SECONDS // time to wait for more natural visible conversations
 
 	New(var/datum/M)
 		master = M
@@ -79,18 +79,9 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 				showDialogue(C.mob, html)
 				if(visibleDialogue)
 					C.mob.say(N.getLinkText(C))
-					if(N != start)
-						if(ismob(master))
-							var/mob/M = master
-							M.say(N.getNodeText(C))
-						else if(isobj(master))
-							sleep(wait_to_speak)
-							var/chat_text = null
-							if (floatingText)
-								chat_text = make_chat_maptext(master, N.getNodeText(C), floating_text_style)
-							for(var/mob/O in all_hearers(5, master.loc))
-								O.show_message("[SPAN_NAME("[master.name]")] [objectDialogueVerb], [SPAN_MESSAGE("\"[N.getNodeText(C)]\"")]", 2, assoc_maptext = chat_text)
-		return
+					SPAWN(src.wait_to_speak)
+						if(N != start)
+							master.say(N.getNodeText(C))
 
 	proc/setFlag(var/client/C, var/flag="", var/value="") //Sets flag to value for this client in this dialogue master.
 		if(!dialogueFlags.Find(C.ckey))
@@ -260,7 +251,7 @@ Links are ignored on this node. It uses the target node's links.
 		return html
 
 	proc/getLinkHtml(var/client/C) //Returns getLinkText() by default. Can override for dynamic behaviour.
-		return {"<a class="button full" href='?src=\ref[master];link=\ref[src];client=\ref[C]'>[getLinkText(C)]</a>"}
+		return {"<a class="button full" href='byond://?src=\ref[master];link=\ref[src];client=\ref[C]'>[getLinkText(C)]</a>"}
 
 	proc/getNodeText(var/client/C) //Simply returns the node text by default - node text is what the npc says. Can override for dynamic behaviour.
 		return nodeText

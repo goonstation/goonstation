@@ -15,7 +15,7 @@
 		src.on = FALSE
 
 	icon_state = src.on ? "on" : "off"
-	SET_PIPE_UNDERLAY(src.node, src.dir, "short", issimplepipe(src.node) ?  src.node.color : null, FALSE)
+	update_pipe_underlay(src.node, src.dir, "short", FALSE)
 
 /obj/machinery/atmospherics/unary/heat_reservoir/process()
 	..()

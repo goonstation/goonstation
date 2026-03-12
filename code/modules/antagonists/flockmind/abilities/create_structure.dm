@@ -44,3 +44,6 @@
 	if(structurewantedtype)
 		logTheThing(LOG_STATION, holder.owner, "queues a [initial(structurewantedtype.flock_id)] tealprint ([log_loc(T)])")
 		return F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
+
+/datum/targetable/flockmindAbility/createStructure/logCast(atom/target)
+	return

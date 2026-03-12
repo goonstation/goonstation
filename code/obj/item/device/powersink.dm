@@ -11,7 +11,7 @@ TYPEINFO(/obj/item/device/powersink)
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
 	icon_state = "powersink0"
-	item_state = "electronic"
+	item_state = "electronics"
 	w_class = W_CLASS_BULKY
 	flags = TABLEPASS | CONDUCT
 	throwforce = 5
@@ -52,6 +52,7 @@ TYPEINFO(/obj/item/device/powersink)
 						anchored = ANCHORED
 						mode = POWERSINK_CLAMPED
 						boutput(user, "You attach the device to the cable.")
+						message_ghosts("<b>[src]</b> has been activated at [log_loc(src, ghostjump=TRUE)].")
 						for(var/mob/M in AIviewers(user))
 							if(M == user) continue
 							boutput(M, "[user] attaches the power sink to the cable.")

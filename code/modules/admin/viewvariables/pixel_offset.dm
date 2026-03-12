@@ -26,6 +26,7 @@
 		return list("x" = thing.pixel_x, "y" = thing.pixel_y, "thing_name" = "[src.thing]")
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		switch(action)
 			if ("set_x")
 				thing.pixel_x = params["x"]

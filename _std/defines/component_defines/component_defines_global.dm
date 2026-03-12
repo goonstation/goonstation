@@ -6,6 +6,14 @@
 /// When a drone dies. Y'know, the critter ones.
 #define COMSIG_GLOBAL_DRONE_DEATH "global_drone_death"
 
+// ---- client signals ----
+/// When a client is calling New() (GLOBAL_SIGNAL, client)
+#define COMSIG_GLOBAL_CLIENT_NEW "global_client_new"
+
+// ---- z-levels ----
+	/// When `world.maxz` is incremented.
+	#define COMSIG_GLOBAL_MAXZ_INCREMENTED "global_maxz_incremented"
+
 // ---- cargo pads ----
 
 	/// When a cargo pad is destroyed, deconstructed, or turned off
@@ -20,6 +28,11 @@
 
 	/// Armory computer unauthorized
 	#define COMSIG_GLOBAL_ARMORY_UNAUTH "armory_auth_removed"
+
+// ---- nukes ----
+
+	/// "Nuke" sized nuke planted on station Z
+	#define COMSIG_GLOBAL_NUKE_PLANTED "nuclear_bomb_planted"
 
 // ---- ඞ ----
 

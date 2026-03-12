@@ -41,7 +41,7 @@ var/global/list/toggleable_admin_verb_categories = list(
 //Auditing
 
 /// Whether or not a potentially suspicious action gets denied by the code.
-#define AUDIT_ACCESS_DENIED (0 << 1)
+#define AUDIT_ACCESS_DENIED (1 << 0)
 /// Logged whenever you try to View Variables a thing
 #define AUDIT_VIEW_VARIABLES (1 << 1)
 

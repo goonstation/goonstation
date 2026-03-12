@@ -1,6 +1,5 @@
 /mob/living/critter/plasmaspore
 	name = "plasma spore"
-	real_name = "plasma spore"
 	desc = "A barely intelligent colony of organisms. Very volatile."
 	density = 1
 	icon_state = "spore"

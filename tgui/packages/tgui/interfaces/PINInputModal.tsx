@@ -5,11 +5,28 @@
  * @license MIT
  */
 
-import { Loader } from './common/Loader';
-import { KEY_0, KEY_9, KEY_BACKSPACE, KEY_ENTER, KEY_ESCAPE, KEY_NUMPAD_0, KEY_NUMPAD_9, KEY_NUMPAD_DECIMAL } from '../../common/keycodes';
-import { useBackend, useLocalState } from '../backend';
-import { Button, NoticeBox, Section, Stack } from '../components';
+import { useState } from 'react';
+import {
+  Autofocus,
+  Button,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+
+import {
+  KEY_0,
+  KEY_9,
+  KEY_BACKSPACE,
+  KEY_ENTER,
+  KEY_ESCAPE,
+  KEY_NUMPAD_0,
+  KEY_NUMPAD_9,
+  KEY_NUMPAD_DECIMAL,
+} from '../../common/keycodes';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { Loader } from './common/Loader';
 
 type PINInputData = {
   message: string;
@@ -21,11 +38,12 @@ type PINInputData = {
   theme: string;
 };
 
-export const PINInputModal = (_, context) => {
-  const { act, data } = useBackend<PINInputData>(context);
-  const { message, init_value, min_value, max_value, timeout, title, theme } = data;
-  const [pin, setPin] = useLocalState(context, 'input', setupPinState(init_value));
-  const [giveWarning, setGiveWarning] = useLocalState(context, 'giveWarning', false);
+export const PINInputModal = () => {
+  const { act, data } = useBackend<PINInputData>();
+  const { message, init_value, min_value, max_value, timeout, title, theme } =
+    data;
+  const [pin, setPin] = useState(setupPinState(init_value));
+  const [giveWarning, setGiveWarning] = useState(false);
 
   const onClick = (value: number) => {
     // If the pin is less than 4 digits, add the new digit to the right.
@@ -41,7 +59,10 @@ export const PINInputModal = (_, context) => {
     if (pin.length < 4) {
       return;
     }
-    if ((min_value !== null && pinToNumber(pin) < min_value) || (max_value !== null && pinToNumber(pin) > max_value)) {
+    if (
+      (min_value !== null && pinToNumber(pin) < min_value) ||
+      (max_value !== null && pinToNumber(pin) > max_value)
+    ) {
       setGiveWarning(true);
       setPin([]);
       return;
@@ -50,39 +71,41 @@ export const PINInputModal = (_, context) => {
   };
 
   return (
-    <Window title={title} width={160} height={giveWarning ? 345 : 315} theme={theme || 'nanotrasen'} >
+    <Window
+      title={title}
+      width={160}
+      height={giveWarning ? 345 : 315}
+      theme={theme || 'nanotrasen'}
+    >
       {timeout && <Loader value={timeout} />}
-      <Window.Content onKeyDown={(event) => {
-        const keyCode = window.event ? event.which : event.keyCode;
-        if (keyCode === KEY_ENTER) {
-          handleSubmission();
-        }
-        else if (keyCode === KEY_ESCAPE) {
-          act('cancel');
-        }
-        else if (keyCode === KEY_BACKSPACE) {
-          setPin(pin.slice(0, -1));
-        }
-        else if (keyCode === KEY_NUMPAD_DECIMAL) {
-          setPin([]);
-        }
-        else if (keyCode >= KEY_0 && keyCode <= KEY_9) {
-          const number = keyCode - KEY_0;
-          onClick(number);
-        }
-        else if (keyCode >= KEY_NUMPAD_0 && keyCode <= KEY_NUMPAD_9) {
-          const number = keyCode - KEY_NUMPAD_0;
-          onClick(number);
-        }
-      }}>
+      <Window.Content
+        onKeyDown={(event) => {
+          const keyCode = window.event ? event.which : event.keyCode;
+          if (keyCode === KEY_ENTER) {
+            handleSubmission();
+          } else if (keyCode === KEY_ESCAPE) {
+            act('cancel');
+          } else if (keyCode === KEY_BACKSPACE) {
+            setPin(pin.slice(0, -1));
+          } else if (keyCode === KEY_NUMPAD_DECIMAL) {
+            setPin([]);
+          } else if (keyCode >= KEY_0 && keyCode <= KEY_9) {
+            const number = keyCode - KEY_0;
+            onClick(number);
+          } else if (keyCode >= KEY_NUMPAD_0 && keyCode <= KEY_NUMPAD_9) {
+            const number = keyCode - KEY_NUMPAD_0;
+            onClick(number);
+          }
+        }}
+      >
+        <Autofocus />
         {giveWarning ? (
           <NoticeBox danger>
-            The PIN you entered is outside the valid range of {min_value}-{max_value}.
+            The PIN you entered is outside the valid range of {min_value}-
+            {max_value}.
           </NoticeBox>
         ) : (
-          <NoticeBox info>
-            {message}
-          </NoticeBox>
+          <NoticeBox info>{message}</NoticeBox>
         )}
         <Section className="PINInput">
           <Stack fill className="PINInput__Stack" mb={1}>
@@ -106,7 +129,12 @@ export const PINInputModal = (_, context) => {
                     const number = index * 3 + subIndex + 1;
                     return (
                       <Stack.Item key={subIndex} grow>
-                        <Button onClick={() => onClick(number)}>{number}</Button>
+                        <Button
+                          className="PINInput__button"
+                          onClick={() => onClick(number)}
+                        >
+                          {number}
+                        </Button>
                       </Stack.Item>
                     );
                   })}
@@ -116,13 +144,29 @@ export const PINInputModal = (_, context) => {
             <Stack.Item>
               <Stack fill>
                 <Stack.Item grow>
-                  <Button icon="circle-xmark" color="red" onClick={() => setPin([])} />
+                  <Button
+                    icon="circle-xmark"
+                    className="PINInput__button"
+                    color="red"
+                    onClick={() => setPin([])}
+                  />
                 </Stack.Item>
                 <Stack.Item grow>
-                  <Button onClick={() => onClick(0)}>0</Button>
+                  <Button
+                    className="PINInput__button"
+                    onClick={() => onClick(0)}
+                  >
+                    0
+                  </Button>
                 </Stack.Item>
                 <Stack.Item grow>
-                  <Button icon="circle-right" color="green" onClick={handleSubmission} />
+                  <Button
+                    icon="circle-right"
+                    iconPosition="center"
+                    className="PINInput__button"
+                    color="green"
+                    onClick={handleSubmission}
+                  />
                 </Stack.Item>
               </Stack>
             </Stack.Item>
@@ -131,7 +175,6 @@ export const PINInputModal = (_, context) => {
       </Window.Content>
     </Window>
   );
-
 };
 
 const setupPinState = (init_value: number | null): number[] => {

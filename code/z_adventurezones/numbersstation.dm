@@ -15,6 +15,7 @@ var/global/shut_up_about_the_fucking_numbers_station = 1
 /area/spyshack
 	name = "Space Shack"
 	icon_state = "yellow"
+	lightswitch = FALSE
 
 /obj/item/paper/mission_outline
 	name = "gibberish note"
@@ -233,7 +234,7 @@ Nanotrasen, Inc.<br>
 	/obj/item/reagent_containers/emergency_injector/random,/obj/item/reagent_containers/emergency_injector/random,
 	/obj/item/reagent_containers/food/drinks/bottle/hobo_wine)
 
-
+var/global/datum/numbers_station/lincolnshire = null
 
 /datum/numbers_station // This is not a physical entity!
 	var/name = "Space Lincolnshire"
@@ -255,13 +256,12 @@ Nanotrasen, Inc.<br>
 		else
 			next_play = play_interval
 		next_warning = next_play - 300
-		SPAWN(20 SECONDS)
-			try
-				var/datum/apiRoute/numbersstation/get/getNumbers = new
-				var/datum/apiModel/NumbersStationPasswordResource/numbersStationPassword = apiHandler.queryAPI(getNumbers)
-				lincolnshire_numbers(numbersStationPassword.numbers)
-			catch
-				// pass
+		try
+			var/datum/apiRoute/numbersstation/get/getNumbers = new
+			var/datum/apiModel/NumbersStationPasswordResource/numbersStationPassword = apiHandler.queryAPI(getNumbers)
+			lincolnshire_numbers(numbersStationPassword.numbers)
+		catch
+			// pass
 
 	proc/gather_listeners()
 		listeners = list()
@@ -407,8 +407,6 @@ Nanotrasen, Inc.<br>
 		ogg = get_vox_by_string(sones)
 		if (ogg)
 			broadcast_sound(ogg)
-
-var/global/datum/numbers_station/lincolnshire = new
 
 /proc/debug_lincolnshire()
 	lincolnshire.next_warning = 0
@@ -569,7 +567,7 @@ take the bad gene, because it's dominant! If your two seeds are both dominant or
 grow those sweet, sweet corn melon hybrids. So don't try and fuse two species together! It won't work!</p>
 <p>Through splicing, you can potentially take a seed with good genes in one area, splice it with a seed that covers the weak genes or adds further advantages, and end up with a seed that has the benefits of both and drawbacks of neither! There are other benefits to splicing seeds, too -
 genetic strains that normally only manifest in one species of plant will be shared in the new hybrid. That prized Immortality strain in your Cannabis plant can finally be a reality!</p>
-<p>The PlantMaster is also capable of performing infusions. Infusion is a process whereby a reagent is injected into paticular parts of a seed, hopefully without killing it, in order to forcibly induce genetic changes. You will need at least ten units of a reagent to perform this process,
+<p>The PlantMaster is also capable of performing infusions. Infusion is a process whereby a reagent is injected into particular parts of a seed, hopefully without killing it, in order to forcibly induce genetic changes. You will need at least ten units of a reagent to perform this process,
 and a beaker of course! Also a seed. That's important too. Different species can react differently to different kinds of reagent, but some have a universal effect on all plants. For instance, infusing a seed with one of the plant nutrient tonics is most likely a great idea - they are designed
 to stimulate genes, and what better way to do that than by injecting it directly into the seed's genes? You might not want to infuse a seed with acid, though. That tends to just dissolve it.</p>
 <p>Of course, due to the physical damage involved in injecting a seed full of stuff, infusion will always damage the seed a little - certain reagents might cause a lot of damage in addition to this! In some cases, infusions can also trigger drastic mutations in a plant - try infusing a wheat

@@ -19,7 +19,7 @@
 		src.send(
 			M.mind.get_player().id,
 			F.target,
-			F.reason,
+			html_decode(F.reason),
 			M.real_name,
 			M.job,
 			M.ckey,

@@ -7,7 +7,7 @@
 	desc = "\improper 面 : A light padded helmet with a grilled faceplate to protect the user in a kendo match."
 	icon_state = "men"
 	item_state = "men"
-	seal_hair = 1
+	c_flags = parent_type::c_flags | COVERSHAIR
 
 	setupProperties()
 		..()
@@ -41,6 +41,7 @@
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35
+	fingertip_color = "#2d3c52"
 
 	setupProperties()
 		..()
@@ -180,7 +181,7 @@
 
 /obj/item/shinai_bag
 	name = "shinai bag"
-	desc = "\improper 竹刀袋 : A tube-like back for holding two shinai."
+	desc = "\improper 竹刀袋 : A tube-like bag for holding two shinai."
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"

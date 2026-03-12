@@ -1,28 +1,24 @@
-/obj/item/assembly/detonator
+/// The holder of the canbomb assembly which we use to handle the wires and functions of the canbomb.
+/// Maybe once we have some kind of wire hacking component we could do away with this and merge that whole shitshow into obj/item/assembly
+
+/obj/item/canbomb_detonator
 	desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
 	name = "Detonator Assembly"
 	icon_state = "multitool-igniter"
-	var/obj/item/device/multitool/part_mt = null
-	var/obj/item/device/igniter/part_ig = null
-	var/obj/item/tank/plasma/part_t = null
-	var/obj/item/device/timer/part_fs = null
-	var/obj/item/device/trigger = null
-
+	var/obj/item/assembly/part_assembly = null
+	var/list/initial_wire_functions = null //! a list with the in New() addec wires of the canbomb
 	var/obj/machinery/portable_atmospherics/canister/attachedTo = null
-	var/list/WireColors = list()
-	var/list/obj/item/attachments = list()
+	var/list/obj/item/attachments = null
 	var/safety = 1
 	var/defused = 0
 	var/grant = 1
 	var/shocked = 0
 	var/leaks = 0
 	var/det_state = 0
-	var/list/WireNames = list()
-	var/list/WireFunctions = list()
-	var/list/WireStatus = list()
-	var/dfcodeSet
-	var/dfcode
-	var/dfcodeTries = 3 //How many code attempts before *boom*
+	var/force_dud = 0
+	var/list/WireNames = null
+	var/list/WireFunctions = null
+	var/list/WireStatus = null
 	var/mob/builtBy = null
 
 	flags = TABLEPASS | CONDUCT
@@ -32,220 +28,57 @@
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 
-/obj/item/assembly/detonator/New()
+/obj/item/canbomb_detonator/New(var/new_location, var/obj/item/assembly/new_assembly)
 	..()
-	var/list/WireFuncs
-	WireColors = list("Alabama Crimson", "Antique White", "Burnt Umber", "China Rose", "Dodger Blue", "Field Drab", "Harvest Gold", "Jonquil", "Midori", "Neon Carrot", "Oxford Blue", "Periwinkle", "Purple Pizzazz", "Stil De Grain Yellow", "Toolbox Purple", "Urobilin", "Vivid Tangerine", "Yale Blue")
-	WireFuncs = list("detonate", "defuse", "safety", "losetime", "mobility", "leak")
-	var/i
-	for (i=1, i<=6, i++)
-		var/N = pick(WireColors)
-		WireColors -= N
-		var/F = pick(WireFuncs)
-		WireNames += N + " wire"
-		WireFunctions += F
-		WireFuncs -= F
-	for (i=1, i<=9, i++)
-		WireStatus += 1
+	src.initial_wire_functions = list("detonate", "defuse", "safety", "losetime", "mobility", "leak")
+	src.attachments = list()
+	src.WireNames = list()
+	src.WireFunctions = list()
+	src.WireStatus = list()
+	var/potential_wire_colors = list("Alabama Crimson", "Antique White", "Burnt Umber", "China Rose", "Dodger Blue", "Field Drab", "Harvest Gold", "Jonquil", "Midori", "Neon Carrot", "Oxford Blue", "Periwinkle", "Purple Pizzazz", "Stil De Grain Yellow", "Toolbox Purple", "Urobilin", "Vivid Tangerine", "Yale Blue")
+	new_assembly.override_upstream = TRUE //the timer sends the signal to the assembly, the assembly sends the signal to the detonator
+	new_assembly.set_trigger_time(90 SECONDS, TRUE)
+	new_assembly.master = src
+	new_assembly.set_loc(src)
+	src.part_assembly = new_assembly
+	UnregisterSignal(new_assembly, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL) //we need the assembly to stay assembled if e.g. material parts of it blow
+	for(var/obj/item/checked_item in new_assembly.additional_components)
+		src.attachments += checked_item
+		checked_item.detonator_act("attach", src)
+	// now, for each wire, we shuffle them around and set a colour
+	while(length(src.initial_wire_functions) > 0)
+		var/wire_picked_colour = pick(potential_wire_colors)
+		potential_wire_colors -= wire_picked_colour
+		var/wire_picked_function = pick(initial_wire_functions)
+		src.WireNames += wire_picked_colour + " wire"
+		src.WireFunctions += wire_picked_function
+		src.initial_wire_functions -= wire_picked_function
+		WireStatus += TRUE
 
-/obj/item/assembly/detonator/proc/setDetState(var/newstate)
-	switch (newstate)
-		if (0)
-			src.desc = "A multitool wired to the activation switch of an igniter, with a slot that seems to be able to hold a rectangular tank in place."
-			src.name = "Multitool/Igniter Assembly"
-			src.icon_state = "multitool-igniter"
-			src.det_state = 0
+/obj/item/canbomb_detonator/disposing()
+	qdel(src.part_assembly)
+	src.part_assembly = null
+	src.builtBy = null
+	src.attachedTo = null
+	src.master = null
+	. = ..()
 
-		if (1)
-			src.desc = "An igniter and a multitool, with the plasma tank inserted into a slot. Most of the wiring is missing. <br>The plasma tank is not secured to the assembly."
-			src.name = "Multitool/Igniter/Tank Assembly"
-			src.icon_state = "m-i-plasma"
-			src.det_state = 1
+/obj/item/canbomb_detonator/proc/disassemble()
+	src.part_assembly.set_loc(get_turf(src))
+	src.part_assembly.override_upstream = FALSE
+	src.part_assembly.master = null
+	src.part_assembly = null
+	qdel(src)
 
-		if (2)
-			src.desc = "An igniter and a multitool, with the plasma tank inserted into a slot. Most of the wiring is missing. <br>The plasma tank is firmly secured to the assembly."
-			src.name = "Multitool/Igniter/Tank Assembly"
-			src.icon_state = "m-i-plasma"
-			src.det_state = 2
 
-		if (3)
-			src.desc = "An igniter wired to critically weaken a plasma tank when signalled by the multitool. The failsafe wires are unattached."
-			src.name = "Unfinished Detonator Assembly"
-			src.icon_state = "m-i-p-wire"
-			src.det_state = 3
-
-		if (4)
-			src.desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
-			src.name = "Detonator Assembly"
-			src.icon_state = "m-i-p-w-timer"
-			src.det_state = 4
-
-/obj/item/assembly/detonator/attackby(obj/item/W, mob/user)
-	switch (src.det_state)
-		if (0)
-			if (istype(W, /obj/item/tank/plasma))
-				src.setDetState(1)
-				user.u_equip(W)
-				W.set_loc(src)
-				W.master = src
-				W.layer = initial(src.layer)
-				src.part_t = W
-				src.add_fingerprint(user)
-				user.show_message(SPAN_NOTICE("You insert the [W.name] into the slot."))
-			else if (issnippingtool(W))
-				src.part_ig.set_loc(user.loc)
-				src.part_mt.set_loc(user.loc)
-				src.part_ig.master = null
-				src.part_mt.master = null
-				src.part_ig = null
-				src.part_mt = null
-				user.u_equip(src)
-				qdel(src)
-				user.show_message(SPAN_NOTICE("You sever the connection between the multitool and the igniter. The assembly falls apart."))
-			else
-				user.show_message(SPAN_ALERT("The [W.name] doesn't seem to fit into the slot!"))
-
-		if (1)
-			if (istype(W, /obj/item/cable_coil))
-				user.show_message(SPAN_ALERT("The plasma tank must be firmly secured to the assembly first."))
-			else if (ispryingtool(W))
-				src.setDetState(0)
-				src.part_t.set_loc(user.loc)
-				src.part_t.master = null
-				src.part_t = null
-				user.show_message(SPAN_NOTICE("You pry the plasma tank out of the assembly."))
-			else if (isscrewingtool(W))
-				src.setDetState(2)
-				user.show_message(SPAN_NOTICE("You secure the plasma tank to the assembly."))
-
-		if (2)
-			if (istype(W, /obj/item/cable_coil))
-				var/obj/item/cable_coil/C = W
-				if (C.amount >= 6)
-					C.use(6)
-					src.setDetState(3)
-					src.add_fingerprint(user)
-					user.show_message(SPAN_NOTICE("You add the wiring to the assembly."))
-				else
-					user.show_message(SPAN_ALERT("This cable coil isn't long enough!"))
-			else if (ispryingtool(W))
-				user.show_message(SPAN_ALERT("The plasma tank is firmly secured to the assembly and won't budge."))
-			else if (isscrewingtool(W))
-				src.setDetState(1)
-				user.show_message(SPAN_NOTICE("You unsecure the plasma tank from the assembly."))
-
-		if (3)
-			if (istype(W, /obj/item/device/timer))
-				src.setDetState(4)
-				user.u_equip(W)
-				W.set_loc(src)
-				W.master = src
-				W.layer = initial(src.layer)
-				src.part_fs = W
-				src.part_fs.time = 90 SECONDS //Minimum det time
-				src.add_fingerprint(user)
-				user.show_message(SPAN_NOTICE("You wire the timer failsafe to the assembly, disabling its external controls."))
-			else if (issnippingtool(W))
-				src.setDetState(2)
-				var/obj/item/cable_coil/C = new /obj/item/cable_coil(user, 6)
-				C.set_loc(user.loc)
-				user.show_message(SPAN_NOTICE("You cut the wiring on the assembly."))
-		if (4)
-			if (issnippingtool(W))
-				src.setDetState(3)
-				src.part_fs.set_loc(user.loc)
-				src.part_fs.master = null
-				src.part_fs = null
-				if (src.trigger)
-					src.trigger.set_loc(user.loc)
-					src.trigger.master = null
-					src.trigger = null
-					user.show_message(SPAN_ALERT("The triggering device falls off the assembly."))
-				for (var/obj/item/a in src.attachments)
-					a.set_loc(user.loc)
-					a.master = null
-					a.layer = initial(a.layer)
-					src.clear_attachment(a)
-					user.show_message(SPAN_ALERT("The [a] falls off the assembly."))
-				src.attachments.Cut()
-				user.show_message(SPAN_NOTICE("You disconnect the timer from the assembly, and reenable its external controls."))
-			if (isscrewingtool(W))
-				if (!src.trigger && !length(src.attachments))
-					user.show_message(SPAN_ALERT("You cannot remove any attachments, as there are none attached."))
-					return
-				var/list/options = list(src.trigger)
-				options += src.attachments
-				options += "cancel"
-				var/target = input("Which device do you want to remove?", "Device to remove", "cancel") in options
-				if (target == src.trigger)
-					src.trigger.set_loc(user.loc)
-					src.trigger.master = null
-					src.trigger = null
-					user.show_message(SPAN_NOTICE("You remove the triggering device from the assembly."))
-				else if (target == "cancel")
-					return
-				else
-					var/obj/item/T = target
-					T.set_loc(user.loc)
-					T.master = null
-					T.detonator_act("detach", src)
-					src.clear_attachment(target)
-					src.attachments.Remove(target)
-					setDescription()
-					user.show_message(SPAN_NOTICE("You remove the [target] from the assembly."))
-				setDescription()
-			else if (istype(W, /obj/item/device/radio/signaler))
-				if (src.trigger)
-					user.show_message(SPAN_ALERT("There is a trigger already screwed onto the assembly."))
-				else
-					W.set_loc(src)
-					W.master = src
-					user.u_equip(W)
-					src.trigger = W
-					user.show_message(SPAN_NOTICE("You attach the [W.name] to the trigger slot."))
-					setDescription()
-			else if (istype(W, /obj/item/paper))
-				W.set_loc(src)
-				W.master = src
-				user.u_equip(W)
-				src.attachments += W
-				user.show_message(SPAN_NOTICE("You stick the note onto the detonator assembly."))
-			else if (W.is_detonator_attachment())
-				if (length(src.attachments) < 3)
-					W.set_loc(src)
-					W.master = src
-					user.u_equip(W)
-					src.attachments += W
-					W.detonator_act("attach", src)
-
-					var/N = pick(src.WireColors)
-					src.WireColors -= N
-					N += " wire"
-					var/pos = rand(0, src.WireNames.len)
-					src.WireNames.Insert(pos, N)
-					src.WireFunctions.Insert(pos, W)
-
-					user.show_message(SPAN_NOTICE("You attach the [W.name] to an attachment slot."))
-					setDescription()
-				else
-					user.show_message(SPAN_ALERT("There are no more free attachment slots on the device!"))
-					setDescription()
-
-/obj/item/assembly/detonator/proc/clear_attachment(var/obj/item/T)
-	var/pos = src.WireFunctions.Find(T)
-	var/N = copytext(src.WireNames[pos], 1, -5)
-	src.WireColors += N
-	src.WireNames.Cut(pos, pos+1)
-	src.WireFunctions.Cut(pos, pos+1)
-
-/obj/item/assembly/detonator/proc/detonate()
+/obj/item/canbomb_detonator/proc/detonate()
 	if (!src.attachedTo)
 		return
 
 	if(ON_COOLDOWN(attachedTo, "canbomb sanity check", 10 SECONDS))
 		return
 
-	if(force_dud)
+	if(src.force_dud)
 		var/turf/T = get_turf(src)
 		message_admins("A canister bomb would have detonated at at [T.loc.name] ([log_loc(T)]) but was forced to dud!")
 		return
@@ -256,7 +89,8 @@
 	if (src.defused)
 		src.attachedTo.visible_message(SPAN_ALERT("<b>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</b>"))
 		return
-	if (MIXTURE_PRESSURE(src.part_t.air_contents) < 400 || src.part_t.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
+	var/obj/item/tank/plasma_tank = src.part_assembly.target
+	if (MIXTURE_PRESSURE(plasma_tank.air_contents) < 400 || plasma_tank.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
 		src.attachedTo.visible_message(SPAN_ALERT("<b>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</b>"))
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
@@ -290,74 +124,50 @@
 		//src.builtBy.unlock_medal("", 1) //WIRE TODO: make new medal for this
 	explosion_new(attachedTo, epicenter, power)
 
-/obj/item/assembly/detonator/proc/setDescription()
-	src.desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
+/obj/item/canbomb_detonator/proc/get_timing()
+	return (SEND_SIGNAL(src.part_assembly, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE))
 
-	if (src.trigger)
-		src.desc += "<br>[SPAN_NOTICE("There is \an [src.trigger.name] as a detonation trigger.")]"
-	for (var/obj/item/a in src.attachments)
-		src.desc += "<br>[SPAN_NOTICE("There is \an [a] wired onto the assembly as an attachment.")]"
+/obj/item/canbomb_detonator/proc/get_signaler()
+	for(var/obj/item/device/radio/signaler/found_trigger in src.part_assembly.additional_components)
+		return found_trigger
 
-/obj/item/assembly/detonator/proc/failsafe_engage()
-	if (src.part_fs.timing)
-		return
+/obj/item/canbomb_detonator/proc/get_time_left()
+	return src.part_assembly.get_trigger_time_left()
+
+/obj/item/canbomb_detonator/proc/failsafe_engage()
 	if (!src.attachedTo || !src.master) // if the detonator assembly isn't wired to anything, then no need to prime it
 		return
 	if (src.attachedTo.destroyed)
 		return
 	src.safety = 0
-	src.part_fs.timing = 1
-	src.part_fs.c_state(1)
-	processing_items |= src
-	processing_items |= src.part_fs
-	src.dispatch_event("prime")
-
-	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time / 10] seconds.")
-	playsound_global(world, 'sound/machines/siren_generalquarters_quiet.ogg', 100)
-	logTheThing(LOG_BOMBING, usr, "primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
-	message_admins("[key_name(usr)] primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
-	src.attachedTo.visible_message("<B><font color=#FF0000>The detonator's priming process initiates. Its timer shows [src.part_fs.time / 10] seconds.</font></B>")
+	if (SEND_SIGNAL(src.part_assembly.trigger, COMSIG_ITEM_ASSEMBLY_ACTIVATION, part_assembly))
+		processing_items |= src
+		src.dispatch_event("prime")
+		command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.get_time_left() / 10] seconds.")
+		playsound_global(world, 'sound/machines/siren_generalquarters_quiet.ogg', 100)
+		logTheThing(LOG_BOMBING, usr, "primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
+		message_admins("[key_name(usr)] primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
+		src.attachedTo.visible_message("<B><font color=#FF0000>The detonator's priming process initiates. Its timer shows [src.get_time_left() / 10] seconds.</font></B>")
 
 // Legacy.
-/obj/item/assembly/detonator/proc/leaking()
+/obj/item/canbomb_detonator/proc/leaking()
 	src.dispatch_event("leak")
 
-/obj/item/assembly/detonator/process()
+/obj/item/canbomb_detonator/process()
 	src.dispatch_event("process")
 
-/obj/item/assembly/detonator/proc/dispatch_event(event)
+/obj/item/canbomb_detonator/proc/dispatch_event(event)
 	for (var/obj/item/a in src.attachments)
 		a.detonator_act(event, src)
 
-/obj/item/assembly/detonator/receive_signal(datum/signal/signal)
+/obj/item/canbomb_detonator/receive_signal(datum/signal/signal)
 	if (signal)
-		if (signal.source == src.part_fs)
+		if (signal.source == src.part_assembly.trigger)
 			src.attachedTo.visible_message("<B><font color=#FF0000>The failsafe timer's ticks more rapidly with every passing moment, then suddenly goes quiet.</font></B>")
 			src.detonate()
 		else
 			failsafe_engage()
 
-/obj/item/proc/is_detonator_attachment()
-	return 0
-
 // Possible events: attach, detach, leak, process, prime, detonate, cut, pulse
-/obj/item/proc/detonator_act(event, var/obj/item/assembly/detonator/det)
+/obj/item/proc/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	return
-
-
-//For testing and I'm too lazy to hand-assemble these whenever I need one =I
-/obj/item/assembly/detonator/finished
-
-	New()
-		..()
-		var/obj/item/tank/plasma/ptank = new /obj/item/tank/plasma(src)
-		ptank.air_contents.toxins = 30
-		ptank.master = src
-		src.part_t = ptank
-
-		var/obj/item/device/timer/timer = new /obj/item/device/timer(src)
-		timer.master = src
-		src.part_fs = timer
-		src.part_fs.time = 90 SECONDS //Minimum det time
-
-		setDetState(4)

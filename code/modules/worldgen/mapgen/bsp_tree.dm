@@ -96,12 +96,12 @@
 		if(a.y < b.y + b.height && a.y + a.height > b.y)
 			if(a.x + a.width == b.x)  // A|B to the right
 				. = TRUE
-			if(b.x + b.width == a.x)  // B|A to the left
+			else if(b.x + b.width == a.x)  // B|A to the left
 				. = TRUE
 		if(a.x < b.x + b.width && a.x + a.width > b.x)
 			if(a.y + a.height == b.y)  // A/B above
 				. = TRUE
-			if(b.y + b.height == a.y)  // B/A below
+			else if(b.y + b.height == a.y)  // B/A below
 				. = TRUE
 
 	/// Get all leaves from a given node
@@ -129,6 +129,22 @@
 			if(result)
 				nodes_to_divide += result.left
 				nodes_to_divide += result.right
+
+	proc/tree_to_string()
+		. = ""
+		var/x
+		var/y
+		var/cell_list = new/list(world.maxx,world.maxy)
+		var/node_count = 0
+		for(var/datum/bsp_node/active_node in src.get_leaves(src.root))
+			node_count = (node_count+1) % 74
+			var/value = ascii2text(48+node_count)
+			for(x=active_node.x to active_node.x+active_node.width-1)
+				for(y=active_node.y to active_node.y+active_node.height-1)
+					cell_list[x][y] = value
+
+		for(x = root.x to root.width)
+			. += jointext(cell_list[x], "")
 
 
 /// Split a node based on the tree's requirements

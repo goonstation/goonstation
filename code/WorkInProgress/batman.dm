@@ -27,7 +27,7 @@
 			src.equip_new_if_possible(/obj/item/device/radio/headset/command, SLOT_EARS)
 			src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
 			src.equip_new_if_possible(/obj/item/handcuffs/tape_roll, SLOT_L_STORE)
-			src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
+			src.equip_new_if_possible(/obj/item/tank/pocket/oxygen, SLOT_R_STORE)
 
 			src.equip_new_if_possible(/obj/item/storage/box/tactical_kit, SLOT_IN_BACKPACK)
 			src.equip_new_if_possible(/obj/item/storage/medical_pouch, SLOT_IN_BACKPACK)
@@ -230,7 +230,7 @@
 		usr.visible_message(SPAN_ALERT("<B>[usr] unleashes a tremendous kick to the jaw towards [T]!</B>"), SPAN_ALERT("<B>You unleash a tremendous kick to the jaw towards [T]!</B>"))
 		playsound(T.loc, "swing_hit", 25, 1, -1)
 		batman_pow(T.loc)
-		//flick("e_flash", T.flash)
+		//FLICK("e_flash", T.flash)
 		T.setStatus("knockdown", T.getStatusDuration("knockdown") + 6 SECONDS)
 		step_away(T,usr,15)
 		sleep(0.1 SECONDS)

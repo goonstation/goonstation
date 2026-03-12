@@ -1,15 +1,15 @@
 /obj/fitness/speedbag
 	name = "punching bag"
 	desc = "A punching bag. Can you get to speed level 4???"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "punchingbag"
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
 
 	attack_hand(mob/user)
-		user.lastattacked = src
-		flick("[icon_state]2", src)
+		user.lastattacked = get_weakref(src)
+		FLICK("[icon_state]2", src)
 		playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -35,8 +35,8 @@
 		icon_state = "bopbag"
 
 		attack_hand(mob/user)
-			user.lastattacked = src
-			flick("[icon_state]2", src)
+			user.lastattacked = get_weakref(src)
+			FLICK("[icon_state]2", src)
 			playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 			playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 			user.changeStatus("fitness_stam_regen", 100 SECONDS)
@@ -44,7 +44,7 @@
 /obj/fitness/stacklifter
 	name = "Weight Machine"
 	desc = "Just looking at this thing makes you feel tired."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "fitnesslifter"
 	density = 1
 	anchored = ANCHORED
@@ -92,13 +92,13 @@
 					H.sims.affectMotive("fun", 4)
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
-			user.changeStatus("fitness_stam_regen", 100 SECONDS)
+			user.changeStatus("fitness_stam_regen", 100 SECONDS, user.gforce)
 			boutput(user, SPAN_NOTICE("[finishmessage]"))
 
 /obj/fitness/weightlifter
 	name = "Weight Machine"
 	desc = "Just looking at this thing makes you feel tired."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "fitnessweight"
 	density = 1
 	anchored = ANCHORED
@@ -124,12 +124,8 @@
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
-			var/obj/decal/W = new /obj/decal
-			W.icon = 'icons/obj/stationobjs.dmi'
-			W.icon_state = "fitnessweight-w"
-			W.set_loc(loc)
-			W.anchored = ANCHORED
-			W.layer = MOB_LAYER_BASE+1
+			var/image/new_overlay = src.SafeGetOverlayImage("barbell", 'icons/obj/gym_objs.dmi', "fitnessweight-w", MOB_LAYER + 1)
+			src.UpdateOverlays(new_overlay, "barbell")
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 			user.visible_message(SPAN_ALERT("<B>[user] is [bragmessage]!</B>"))
 			var/reps = 0
@@ -158,6 +154,6 @@
 					H.sims.affectMotive("fun", 4)
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnessweight"
-			qdel(W)
+			src.UpdateOverlays(null, "barbell")
 			boutput(user, SPAN_NOTICE("[finishmessage]"))
-			user.changeStatus("fitness_stam_max", 100 SECONDS)
+			user.changeStatus("fitness_stam_max", 100 SECONDS, user.gforce)

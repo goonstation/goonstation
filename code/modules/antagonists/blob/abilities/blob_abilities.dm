@@ -12,6 +12,7 @@
 	var/atom/movable/screen/blob/button
 	var/special_screen_loc = null
 	var/helpable = 1
+	var/list/tooltip_options = list()
 
 	New()
 		..()
@@ -21,6 +22,7 @@
 		B.ability = src
 		B.name = src.name
 		B.desc = src.desc
+		B.tooltip_options = src.tooltip_options
 		src.button = B
 
 	disposing()
@@ -150,6 +152,7 @@
 	targeted = 0
 	special_screen_loc = "SOUTH,WEST"
 	helpable = 0
+	tooltip_options = list("align" = TOOLTIP_TOP, "bounds" = list(16, 32))
 
 	onUse(var/turf/T)
 		if (..())
@@ -167,6 +170,7 @@
 	targeted = 0
 	special_screen_loc = "SOUTH,EAST"
 	helpable = 0
+	tooltip_options = list("align" = TOOLTIP_TOP | TOOLTIP_RIGHT)
 
 	onUse(var/turf/T)
 		if (..())
@@ -250,6 +254,7 @@
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
 		logTheThing(LOG_GAMEMODE, owner, "plants their start nucleus at [log_loc(startTurf)].")
+		message_ghosts("<b>A Blob</b> has just deployed at [log_loc(startTurf, ghostjump=TRUE)].")
 		C.layer++
 		owner.total_placed++
 		C.setOvermind(owner)
@@ -343,7 +348,7 @@
 		if (!T)
 			T = get_turf(owner)
 
-		if (istype(T, /turf/space))
+		if (istype(T, /turf/space) || (istype(T, /turf/unsimulated) && T.can_build))
 			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
 
 			if (B)
@@ -702,7 +707,7 @@
 		if (!T)
 			T = get_turf(owner)
 
-		if (!istype(T, /turf/space))
+		if (!istype(T, /turf/space) && !T.can_build)
 			boutput(owner, SPAN_ALERT("Bridges must be placed on space tiles."))
 			return 1
 
@@ -956,6 +961,7 @@
 	var/atom/movable/screen/blob/button
 	var/upgradename = "upgrade"
 	var/purchased_times = 0 // For crew credits
+	var/list/tooltip_options = list("align" = TOOLTIP_TOP)
 
 	New()
 		..()
@@ -965,6 +971,7 @@
 		B.upgrade = src
 		B.name = src.name
 		B.desc = src.desc
+		B.tooltip_options = src.tooltip_options
 		src.button = B
 
 	disposing()

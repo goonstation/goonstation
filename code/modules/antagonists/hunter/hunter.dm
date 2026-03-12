@@ -2,6 +2,7 @@
 	id = ROLE_HUNTER
 	display_name = "hunter"
 	antagonist_icon = "predator"
+	wiki_link = "https://wiki.ss13.co/Hunter"
 
 	/// The ability holder of this hunter, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/hunter/ability_holder
@@ -74,7 +75,7 @@
 
 				// Cluwnes first.
 				if (iscluwne(H))
-					skull_type = /obj/item/skull/noface
+					skull_type = /obj/item/skull/cluwne
 					skull_desc = "A meaningless trophy from a weak opponent. You feel disgusted to even look at it."
 
 				else
@@ -82,22 +83,22 @@
 					if (H.mind?.is_antagonist())
 						switch (H.mind.special_role) // Ordered by skull value.
 							if (ROLE_OMNITRAITOR)
-								skull_type = /obj/item/skull/crystal
+								skull_type = /obj/item/skull/omnitraitor
 								skull_desc = "A trophy taken from a mystic, all-powerful creature. It is an immeasurable honor."
 							if (ROLE_HUNTER)
-								skull_type = /obj/item/skull/strange
+								skull_type = /obj/item/skull/hunter
 								skull_desc = "A trophy taken from a hunter, the finest hunters of all."
 							if (ROLE_CHANGELING)
-								skull_type = /obj/item/skull/odd
+								skull_type = /obj/item/skull/changeling
 								skull_desc = "A trophy taken from a shapeshifting alien! It is an immense honor."
 							if (ROLE_WEREWOLF)
 								skull_value = 4
 								skull_desc = "A grand trophy from a lycanthrope, a very capable hunter. It is an immense honor."
 							if (ROLE_WIZARD)
-								skull_type = /obj/item/skull/peculiar
+								skull_type = /obj/item/skull/wizard
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
 							if (ROLE_VAMPIRE)
-								skull_type = /obj/item/skull/menacing
+								skull_type = /obj/item/skull/vampire
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."
 							else
@@ -108,7 +109,7 @@
 						// Mutantrace and ability holder check for non-antagonists.
 						if (ischangeling(H) || isvampire(H))
 							if (ischangeling(H))
-								skull_type = /obj/item/skull/odd
+								skull_type = /obj/item/skull/changeling
 								skull_desc = "A trophy taken from a shapeshifting alien! It is an immense honor."
 							else if (isvampire(H))
 								skull_value = 3
@@ -117,7 +118,7 @@
 						else
 							if (!isnull(H.mutantrace))
 								if (ishunter(H))
-									skull_type = /obj/item/skull/strange
+									skull_type = /obj/item/skull/hunter
 									skull_desc = "A trophy taken from a hunter, the finest hunters of all."
 								if (iswerewolf(H))
 									skull_value = 4
@@ -125,12 +126,16 @@
 								if (isnpcmonkey(H))
 									skull_value = 0
 									skull_desc = "A meaningless trophy from a lab monkey. You feel disgusted to even look at it."
+								if (isfrog(H))
+									skull_type = /obj/item/skull/frog
+									skull_value = 2
+									skull_desc = "A trophy taken from an amphibian. A meaningless oddity at best."
 
 						// Everything's still default, so check for assigned_role. Could be a lizard captain or whatever.
 						if (isnull(skull_type) && skull_value == default_skull_value && skull_desc == default_skull_desc)
 							if (H.mind)
 								if (H.mind.special_role == ROLE_MACHO_MAN) // Not in ticker.Agimmicks.
-									skull_type = /obj/item/skull/gold
+									skull_type = /obj/item/skull/macho
 									skull_desc = "A trophy taken from a legendary wrestler. It is an immeasurable honor."
 								else
 									switch (H.mind.assigned_role)
@@ -368,7 +373,7 @@
 	src.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(src), SLOT_SHOES)
 	src.equip_if_possible(new /obj/item/device/radio/headset(src), SLOT_EARS)
 	src.equip_if_possible(new /obj/item/storage/backpack(src), SLOT_BACK)
-	src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(src), SLOT_L_STORE)
+	src.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(src), SLOT_L_STORE)
 	src.equip_if_possible(new /obj/item/cloaking_device/hunter(src), SLOT_R_STORE)
 	src.equip_if_possible(new /obj/item/knife/butcher/hunterspear(src), SLOT_IN_BACKPACK)
 	src.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(src), SLOT_IN_BACKPACK)

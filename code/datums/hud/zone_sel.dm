@@ -55,6 +55,19 @@
 		r_leg = create_screen("r_leg", "Target Right Leg", src.icon_hud, "sel-r_leg", src.slocation, HUD_LAYER+1, customType=/atom/movable/screen/hud/zone_zel)
 		selection = create_screen("selection", "Current Target ([capitalize(zone_sel2name[src.selecting])])", src.icon_hud, src.selecting, src.slocation, HUD_LAYER+2, customType=/atom/movable/screen/hud/zone_zel)
 
+	disposing()
+		QDEL_NULL(background)
+		QDEL_NULL(head)
+		QDEL_NULL(chest)
+		QDEL_NULL(l_arm)
+		QDEL_NULL(r_arm)
+		QDEL_NULL(l_leg)
+		QDEL_NULL(r_leg)
+		QDEL_NULL(selection)
+		src.master = null
+		. = ..()
+
+
 	clear_master()
 		master = null
 		..()

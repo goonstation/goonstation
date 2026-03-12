@@ -6,11 +6,11 @@
 @use 'sass:meta';
 @use 'sass:color';
 
-@use '~tgui/styles/colors.scss';
-@use '~tgui/styles/base.scss' with (
+@use '~tgui/styles/colors';
+@use '~tgui/styles/base' with (
   $color-bg: #202020,
   $color-bg-section: color.adjust(#202020, $lightness: -5%),
-  $color-bg-grad-spread: 0%,
+  $color-bg-grad-spread: 0%
 );
 
 // Core styles
@@ -56,5 +56,5 @@
 // @include meta.load-css('~tgui/styles/layouts/TitleBar.scss');
 @include meta.load-css('~tgui/styles/layouts/Window.scss');
 
-// Goonchat styles
+// goon-tgchat styles
 @include meta.load-css('./goon/chat-dark.scss');

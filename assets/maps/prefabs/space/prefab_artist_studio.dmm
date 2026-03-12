@@ -312,7 +312,7 @@
 /turf/simulated/floor/longtile/red,
 /area/prefab/art_workshop)
 "DH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "Eq" = (

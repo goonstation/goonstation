@@ -5,6 +5,7 @@
 	success_medal = "You're no Elminster!"
 	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
+	wiki_link = "https://wiki.ss13.co/Wizard"
 	var/list/datum/SWFuplinkspell/purchased_spells = list()
 
 	/// The ability holder of this wizard, containing their respective abilities.
@@ -36,21 +37,22 @@
 			src.ability_holder.addAbility(/datum/targetable/spell/magicmissile)
 
 		// Assign wizard hair.
-		H.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/wiz
+		H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations["hair_top"].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/gimmick/wiz
 		H.update_colorful_parts()
 
 		// Assign wizard attire.
 		H.unequip_all(TRUE)
 		H.equip_if_possible(new /obj/item/clothing/under/shorts/black(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/storage/backpack(H), SLOT_BACK)
-		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), SLOT_EARS)
+		if (!src.vr)
+			H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), SLOT_EARS)
 		H.equip_if_possible(new /obj/item/clothing/suit/wizrobe(H), SLOT_WEAR_SUIT)
 		H.equip_if_possible(new /obj/item/clothing/head/wizard(H), SLOT_HEAD)
 		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard(H), SLOT_SHOES)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
 		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), SLOT_R_STORE)
 		H.equip_if_possible(new /obj/item/staff(H), SLOT_R_HAND)
 
@@ -62,6 +64,7 @@
 		H.equip_if_possible(SB, SLOT_BELT)
 
 		H.equip_sensory_items()
+		H.equip_body_traits(extended_tank=TRUE)
 
 		H.assign_gimmick_skull()
 
@@ -82,7 +85,6 @@
 					newname = randomname
 
 				if (newname)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 					newname = strip_html(newname)
 					H.real_name = newname
 					H.on_realname_change()

@@ -6,6 +6,7 @@
 	pass_unstable = FALSE
 
 	New()
+		src.flags |= UNCRUSHABLE
 		..()
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
@@ -17,7 +18,6 @@
 
 		if (!real_name)
 			real_name = name
-		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L)
 		if (random_icon_states && length(src.random_icon_states) > 0)
@@ -64,10 +64,18 @@
 	mouse_opacity = 0
 	blend_mode = 2
 	plane = PLANE_NOSHADOW_ABOVE
+	var/y_blur = 3
 
 	New()
-		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=src.y_blur))
 		..()
+
+	talisman
+		icon_state = null
+		y_blur = 2
+
+		proc/activate_glimmer()
+			FLICK("glimmer", src)
 
 /obj/decal/floatingtiles
 	name = "floating tiles"
@@ -179,13 +187,13 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon = 'icons/obj/decals/blood/blood.dmi'
 	icon_state = "floor2"
 	color = "#3399FF"
-	alpha = 100
+	alpha = 200
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
 	anchored = ANCHORED
 
-/obj/decal/boxingrope
+/obj/decal/boxingrope // for functional ropes see below and /obj/railing/boxingrope
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
 	density = 1
@@ -193,17 +201,20 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	plane = PLANE_DEFAULT
-	layer = OBJ_LAYER
+	object_flags = HAS_DIRECTIONAL_BLOCKING
+	layer = MOB_LAYER + 0.1
 	event_handler_flags = USE_FLUID_ENTER
 	pass_unstable = TRUE
 
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
-			return 0
-		if(get_dir(loc, mover) & dir)
+		if (!src.density || (mover.flags & TABLEPASS) || istype(mover, /obj/newmeteor) || istype(mover, /obj/linked_laser) )
+			return 1
+		if (mover.throwing)
+			return 1
 
+		if(get_dir(loc, mover) & dir)
 			return !density
 		else
 			return 1
@@ -211,6 +222,8 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density)
 			. = 1
+		if (O.throwing)
+			return 1
 		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
 			. = 0
 		else
@@ -224,6 +237,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
+	object_flags = HAS_DIRECTIONAL_BLOCKING
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	pass_unstable = TRUE
@@ -251,38 +265,40 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
+		if (!src.density || mover.flags & TABLEPASS || istype(mover, /obj/newmeteor) || istype(mover, /obj/linked_laser) )
+			return 1
+		if (mover.throwing)
+			return 1
+		if (src.dir == NORTHEAST || src.dir == NORTHWEST || src.dir == SOUTHEAST || src.dir == SOUTHWEST)
 			return 0
 		if(get_dir(loc, mover) & dir)
-
 			return !density
 		else
 			return 1
 
 	Uncross(atom/movable/O, do_bump = TRUE)
-		if (!src.density)
+		if (!src.density || O.flags & TABLEPASS  || istype(O, /obj/newmeteor) || istype(O, /obj/linked_laser) )
 			. = 1
+		if (O.throwing)
+			return 1
 		else if (get_dir(O.loc, O.movement_newloc) & src.dir)
 			. = 0
 		else
 			. = 1
 		UNCROSS_BUMP_CHECK(O)
 
-/obj/decal/boxingropeenter
+/obj/railing/boxing
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
-	density = 0
-	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
-	layer = OBJ_LAYER
 
 /obj/decal/alienflower
 	name = "strange alien flower"
 	desc = "Is it going to eat you if you get too close?"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
-	random_dir = WEST
+	random_dir = RANDOM_DIR_ALL
 	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 

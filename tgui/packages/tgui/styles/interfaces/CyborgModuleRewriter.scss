@@ -5,10 +5,10 @@
  * @license ISC
  */
 
-@use '../colors.scss';
+@use '../colors';
 
 .cyborg-module-rewriter-interface {
-  $color-label: colors.fg(colors.$label) !default;
+  $color-label: colors.fg(var(--color-label)) !default;
 
   &-empty-placeholder {
     color: $color-label;

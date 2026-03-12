@@ -324,7 +324,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 	amount_max = 5
 
 	valid_instance(obj/machinery/camera/camera)
-		. = ..() && camera.type == /obj/machinery/camera && camera.network == "SS13" && get_z(camera) == Z_LEVEL_STATION
+		. = ..() && camera.type == /obj/machinery/camera && camera.network == CAMERA_NETWORK_STATION && get_z(camera) == Z_LEVEL_STATION
 
 	build_targets()
 		for_by_tcl(camera, /obj/machinery/camera)
@@ -337,12 +337,14 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/flock_speak //hehehe
 	amount_max = 7
 	amount_min = 3
+	var/atom/movable/abstract_say_source/ion_flock/flock_say_source
+
+	New()
+		. = ..()
+		src.flock_say_source = new()
 
 	fuck_up()
 		SPAWN(0)
 			for (var/i in 1 to rand(src.amount_min, src.amount_max))
-				var/siliconrendered = "<span class='flocksay sentient'>[SPAN_BOLD("\[?????\] ")]<span class='name'>[radioGarbleText(get_default_flock().name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(phrase_log.random_phrase("radio"), FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
-				for (var/client/client in global.clients)
-					if(client.mob.robot_talk_understand || istype(client.mob, /mob/living/intangible/aieye))
-						boutput(client, siliconrendered)
+				src.flock_say_source.say(phrase_log.random_phrase("radio"))
 				sleep(rand(2 SECONDS, 30 SECONDS))

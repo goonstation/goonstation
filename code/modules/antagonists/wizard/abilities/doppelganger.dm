@@ -35,7 +35,7 @@
 			P.overlays += I
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("GIN EMUS") // ^-- No speech bubble.
+			holder.owner.say("GIN EMUS", flags = SAYFLAG_NO_MAPTEXT | SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 
 		var/turf/curr_turf = get_turf(holder.owner)

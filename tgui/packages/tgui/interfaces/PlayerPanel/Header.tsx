@@ -5,25 +5,22 @@
  * @license ISC
  */
 
-import { InfernoNode } from 'inferno';
-import { Icon, Stack } from '../../components';
+import { PropsWithChildren } from 'react';
+import { Icon, Stack } from 'tgui-core/components';
+
 import { SortDirection } from './constant';
 
 interface HeaderProps {
-  children: InfernoNode,
-  onSortClick?: () => any,
-  sortDirection?: SortDirection,
+  onSortClick?: () => any;
+  sortDirection?: SortDirection;
 }
 
-export const Header = (props: HeaderProps) => {
-  const {
-    children,
-    onSortClick,
-    sortDirection,
-    ...rest
-  } = props;
+export const Header = (props: PropsWithChildren<HeaderProps>) => {
+  const { children, onSortClick, sortDirection, ...rest } = props;
   const iconName = sortDirection
-    ? (sortDirection === SortDirection.Asc ? 'sort-alpha-down' : 'sort-alpha-up')
+    ? sortDirection === SortDirection.Asc
+      ? 'sort-alpha-down'
+      : 'sort-alpha-up'
     : 'sort';
   return (
     <Stack
@@ -36,10 +33,7 @@ export const Header = (props: HeaderProps) => {
       <Stack.Item>{children}</Stack.Item>
       {onSortClick && (
         <Stack.Item>
-          <Icon
-            name={iconName}
-            unselectable
-          />
+          <Icon name={iconName} />
         </Stack.Item>
       )}
     </Stack>

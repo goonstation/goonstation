@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <style type="text/css">
+      table {
+        font-size: 9pt;
+        font-family: Arial;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <script type="text/javascript">
+        var ref_src = null; /* ref_src */
+        var raw_bans = null; /* raw_bans */
+        var split_bans = raw_bans == null ? new Array() : raw_bans.split(';');
+
+        if (split_bans.length > 1) {
+          var i;
+          for (i in split_bans)
+            document.write(
+              "<tr><td><A href='byond://?src=" +
+                ref_src +
+                ';action=removejobban;target=' +
+                split_bans[i] +
+                "'>" +
+                split_bans[i] +
+                '</A></td></tr>'
+            );
+        } else document.write('Error, no ban data or the data was corrupt.');
+      </script>
+    </table>
+  </body>
+</html>

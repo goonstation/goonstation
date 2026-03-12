@@ -167,11 +167,11 @@ proc/get_prefab_tags()
 #if defined(MAP_OVERRIDE_OSHAN)
 		wanted_tags |= PREFAB_OSHAN | PREFAB_NADIR_UNSAFE
 #endif
+#if defined(MAP_OVERRIDE_NEON)
+		wanted_tags |= PREFAB_OSHAN | PREFAB_NADIR_UNSAFE
+#endif
 #if defined(MAP_OVERRIDE_NADIR)
 		wanted_tags |= PREFAB_NADIR
-#endif
-#if defined(MAP_OVERRIDE_MANTA)
-		wanted_tags |= PREFAB_MANTA | PREFAB_NADIR_UNSAFE
 #endif
 	else
 		wanted_tags |= PREFAB_SPACE

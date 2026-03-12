@@ -4,7 +4,7 @@
 	icon_state = "wingrille"
 	gas_impermeable = TRUE
 	var/win_path = /obj/window
-	var/grille_path = /obj/grille/steel
+	var/grille_path = /obj/mesh/grille/steel
 	var/full_win = 0 // adds a full window as well
 	var/no_dirs = 0 //ignore directional
 
@@ -15,7 +15,7 @@
 		if (!no_dirs)
 			for (var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
-				if ((!locate(/obj/mapping_helper/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
+				if ((!locate(/obj/mapping_helper/wingrille_spawn) in T) && (!locate(/obj/mesh/grille) in T))
 					new win_path(src.loc, dir)
 
 		if (src.full_win)
@@ -78,7 +78,7 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "wingrille"
 	win_path = /obj/window/feather
-	grille_path = /obj/grille/flock
+	grille_path = /obj/mesh/flock/barricade
 	full_win = TRUE
 	no_dirs = TRUE
 

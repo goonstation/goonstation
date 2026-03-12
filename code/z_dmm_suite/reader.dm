@@ -21,7 +21,7 @@ dmm_suite
 	default to (1, 1, world.maxz+1)
 	*/
 	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, flags as num)
-		UNTIL(!air_master?.is_busy)
+		UNTIL(!air_master?.is_busy, 0)
 		src.flags = flags
 		if(flags & DMM_BESPOKE_AREAS)
 			src.area_cache = list()
@@ -118,9 +118,9 @@ dmm_suite
 						for(var/posX = 1 to length(yLine)/key_len)
 							var/turf/T = locate(posX + igridCoordX - 1, posY+igridCoordY - 1, igridCoordZ)
 							for(var/x in T)
-								if(istype(x, /obj) && flags & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
+								if(isobj(x) && flags & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
 									qdel(x)
-								else if(istype(x, /mob) && flags & DMM_OVERWRITE_MOBS)
+								else if(ismob(x) && flags & DMM_OVERWRITE_MOBS)
 									qdel(x)
 								LAGCHECK(LAG_MED)
 
@@ -134,7 +134,7 @@ dmm_suite
 					)
 				sleep(-1)
 			sleep(-1)
-		//
+
 		return props
 
 	/*-- load_map ------------------------------------
@@ -243,6 +243,8 @@ dmm_suite
 			else
 				if(ispath(atomPath, /turf))
 					//instance = new atomPath(location)
+					location.RL_Cleanup()
+					location.RL_Reset()
 					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0, force = 1)
 					if(instance) // I hate that we made it so ReplaceWith can return null, it sucks so much
 						instance.set_dir(initial(instance.dir))

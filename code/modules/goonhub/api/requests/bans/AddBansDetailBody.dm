@@ -6,6 +6,7 @@
 		"ckey", // string
 		"comp_id", // string
 		"ip", // string
+		"player_id", // integer
 		"evasion" // boolean
 	)
 

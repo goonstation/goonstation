@@ -105,10 +105,11 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
-		if (user.zone_sel.selecting == "head")
-			target.emote("sneeze")
-		else
-			target.emote(pick("giggle", "laugh"))
+		if (isalive(target))
+			if (user.zone_sel.selecting == "head")
+				target.emote("sneeze")
+			else
+				target.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -429,6 +430,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	New()
 		..()
 		src.UpdateStackAppearance()
+		if (!src.inventory_counter)
+			src.create_inventory_counter()
+		src.inventory_counter.update_number(src.amount)
 
 	UpdateName()
 		src.name = "[src.amount > 1 ? "[src.amount] " : null][name_prefix(null, 1)][src.value]-credit [src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
@@ -462,15 +466,21 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			..(I, user)
 
 	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = src.amount == 2 ? 1 : round(input("How many [src.real_name]s do you want to take from the stack?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, SPAN_ALERT("You wish!"))
-					return
-				src.change_stack_amount(0 - amt)
-				var/obj/item/dice/coin/poker_chip/P = new src.type(user.loc)
-				P.Attackhand(user)
+		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
+			var/splitnum = round(input("How many [src.real_name]s do you want to take from the stack?","Stack of [src.amount]") as null|num)
+			if(!global.in_interact_range(src, user) || !isnum_safe(splitnum))
+				return
+			splitnum = round(clamp(splitnum, 0, src.amount))
+			if(amount == 0)
+				return
+
+			var/obj/item/dice/coin/poker_chip/new_chip = src.split_stack(splitnum)
+			if (!istype(new_chip))
+				boutput(user, SPAN_ALERT("Invalid entry, try again."))
+				return
+			user.put_in_hand_or_drop(new_chip)
+			new_chip.add_fingerprint(user)
+			boutput(user, SPAN_NOTICE("You take [splitnum] chips from the stack, leaving [src.amount] chips behind."))
 		else
 			..(user)
 
@@ -478,35 +488,167 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	color = "#DC0E18" // red
 	value = 5
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
 /obj/item/dice/coin/poker_chip/v10
 	color = "#30BA67" // green
 	value = 10
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
 /obj/item/dice/coin/poker_chip/v25
 	color = "#3153CE" // blue
 	value = 25
+
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
 
 /obj/item/dice/coin/poker_chip/v50
 	color = "#FFFFFF" // white
 	pip_color = "#3153CE" // blue
 	value = 50
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
 /obj/item/dice/coin/poker_chip/v100
 	color = "#FF7BD2" // pink
 	value = 100
+
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
 
 /obj/item/dice/coin/poker_chip/v250
 	color = "#E78B2E" // orange
 	value = 250
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
 /obj/item/dice/coin/poker_chip/v500
 	color = "#BE3ED6" // purple
 	value = 500
+
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
 
 /obj/item/dice/coin/poker_chip/v1000
 	color = "#4BE1DD" // aqua
 	value = 1000
 
+	stack
+		amount = 20
+
+		house
+			amount = 1000
+			max_stack = 9999
+
+/obj/item/storage/briefcase/poker_chips
+	name = "Variety Poker Chip Case"
+	desc = "A briefcase containing a variety of poker-style betting chips."
+	can_hold = list(/obj/item/dice/coin/poker_chip)
+	slots = 8
+	w_class = W_CLASS_BULKY
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v5/stack, // 5 * 20 = 100
+		/obj/item/dice/coin/poker_chip/v10/stack, // 10 * 20 = 200 etc.
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v50/stack, // 1000
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v250/stack, // 5000
+		/obj/item/dice/coin/poker_chip/v500/stack, // 10 000
+		/obj/item/dice/coin/poker_chip/v1000/stack, // 20 000
+	)
+
+/obj/item/storage/briefcase/poker_chips/low_stakes
+	name = "low-stakes poker chip case"
+	slots = 7
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v5/stack, // 100
+		/obj/item/dice/coin/poker_chip/v5/stack, // 100
+		/obj/item/dice/coin/poker_chip/v10/stack, // 200
+		/obj/item/dice/coin/poker_chip/v10/stack, // 200
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v50/stack, // 1000
+	) // 2 600 credits, update vending machine costs if changed
+
+/obj/item/storage/briefcase/poker_chips/medium_stakes
+	name = "medium-stakes poker chip case"
+	icon_state = "briefcase_black"
+	item_state = "sec-case"
+	slots = 7
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v25/stack, // 500
+		/obj/item/dice/coin/poker_chip/v50/stack, // 1000
+		/obj/item/dice/coin/poker_chip/v50/stack, // 1000
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v250/stack, // 5000
+	) // 12 000 credits, update vending machine costs if changed
+
+/obj/item/storage/secure/sbriefcase/high_stakes
+	name = "high-stakes poker chip case"
+	desc = "A briefcase set of high-value poker-style betting chips, with included digital locking system."
+	check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
+	can_hold = list(/obj/item/dice/coin/poker_chip)
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
+		/obj/item/dice/coin/poker_chip/v250/stack, // 5000
+		/obj/item/dice/coin/poker_chip/v250/stack, // 5000
+		/obj/item/dice/coin/poker_chip/v500/stack, // 10 000
+		/obj/item/dice/coin/poker_chip/v500/stack, // 10 000
+		/obj/item/dice/coin/poker_chip/v1000/stack, // 20 000
+	) // 54 000 credits, update vending machine costs if changed
+
+// admin spawn
+/obj/item/storage/briefcase/poker_chips/the_house
+	name = "The House's Poker Chip Case"
+	icon_state = "briefcase_rd"
+	item_state = "rd-case"
+	slots = 8
+	spawn_contents = list(
+		/obj/item/dice/coin/poker_chip/v5/stack/house,
+		/obj/item/dice/coin/poker_chip/v10/stack/house,
+		/obj/item/dice/coin/poker_chip/v25/stack/house,
+		/obj/item/dice/coin/poker_chip/v50/stack/house,
+		/obj/item/dice/coin/poker_chip/v100/stack/house,
+		/obj/item/dice/coin/poker_chip/v250/stack/house,
+		/obj/item/dice/coin/poker_chip/v500/stack/house,
+		/obj/item/dice/coin/poker_chip/v1000/stack/house,
+	)
 /*
                     +---------------+
                     ¦m  S N A K E   ¦
@@ -996,7 +1138,7 @@ TYPEINFO(/obj/submachine/blackjack)
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
-		playsound(src.loc, "swoosh", 50, 1)
+		playsound(src.loc, 'sound/effects/swoosh.ogg', 50, 1)
 		if (usr)
 			usr.say("MOON TIARA ACTION!")
 		return ..(target)
@@ -1017,6 +1159,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	name = "gloves"
 	desc = "Long white gloves with red bands on them."
 	icon_state = "sailormoon"
+	fingertip_color = "#f3f3f3"
 
 /obj/item/clothing/shoes/sailormoon
 	name = "boots"
@@ -1113,8 +1256,8 @@ TYPEINFO(/obj/submachine/blackjack)
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customization_first = new /datum/customization_style/hair/gimmick/sailor_moon
-	AH.customization_first_color = "#FFD700"
+	AH.customizations["hair_bottom"].style =  new /datum/customization_style/hair/gimmick/sailor_moon
+	AH.customizations["hair_bottom"].color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder
 
@@ -1659,7 +1802,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	name = "mola ram thing"
 	desc = "kali ma motherfuckers"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "bedsheet"
 	item_state = "bedsheet"
@@ -1793,7 +1936,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2 //add
-		zero.customization_third_color = "#08BFC2"
+		zero.customizations["hair_top"].color = "#08BFC2"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1807,7 +1950,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customization_third_color = "#FFFFFF"
+		zero.customizations["hair_top"].color = "#FFFFFF"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1821,7 +1964,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customization_third_color = "#C20B08"
+		zero.customizations["hair_top"].color = "#C20B08"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1900,7 +2043,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 			M.emote(pick("grin", "smirk", "nod", "laugh", "chuckle", "scream"))
 /*		if(prob(6))
 			boutput(M, SPAN_ALERT("<b>You feel warm.</b>"))
-			M.bodytemperature += rand(1,10)
+			M.changeBodyTemp(rand(1,10) KELVIN)
 		if(prob(4))
 			boutput(M, SPAN_ALERT("<b>You feel kinda awful!</b>"))
 			M.take_toxin_damage(1)
@@ -1924,7 +2067,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))
 			else if (effect <= 4)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"), SPAN_ALERT("<b>Did it get way fucking hotter in here?</b>"))
-				M.bodytemperature += rand(10,30)
+				M.changeBodyTemp(rand(10,30) KELVIN)
 				M.brainloss++
 				M.take_toxin_damage(1)
 			else if (effect <= 7)
@@ -1938,7 +2081,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 				holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine_major_od)
 			if (effect <= 2)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> is sweating like a pig!"), SPAN_ALERT("<b>Fuck, someone turn on the AC!</b>"))
-				M.bodytemperature += rand(20,100)
+				M.changeBodyTemp(rand(20,100) KELVIN)
 				M.take_toxin_damage(5)
 			else if (effect <= 4)
 				M.visible_message(SPAN_ALERT("<b>[M.name]</b> starts freaking the fuck out!"), SPAN_ALERT("<b>Holy shit, what the fuck was that?!</b>"))

@@ -328,7 +328,6 @@
 	icon_state = "gib3"
 	},
 /obj/item/rcd_ammo,
-/obj/item/implantcase/robotalk,
 /obj/item/robot_module/civilian,
 /obj/item/robot_module/medical,
 /obj/item/robot_module/construction_worker,

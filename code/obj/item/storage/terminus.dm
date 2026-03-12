@@ -31,7 +31,7 @@
 				return
 			src.storage:synchronize()
 			src.icon_state = "terminus1"
-			flick("terminus-on",src)
+			FLICK("terminus-on",src)
 			src.w_class = W_CLASS_BULKY
 			src.synchronized = TRUE
 			processing_items |= src
@@ -49,7 +49,7 @@
 		src.icon_state = "terminus0"
 		processing_items -= src
 		playsound(src.loc, 'sound/machines/heater_off.ogg', 40, 1)
-		flick("terminus-off",src)
+		FLICK("terminus-off",src)
 
 	attack_self(mob/user)
 		if(!ON_COOLDOWN(src, "toggle", 2 SECONDS))

@@ -78,3 +78,22 @@ TYPEINFO(/obj/item/organ/intestines/cyber)
 			digestion_efficiency = clamp(digestion_efficiency, 0, 200) / 100
 		else
 			. = ..()
+
+/obj/item/organ/intestines/amphibian
+	name = "amphibian intestines"
+	desc = "A fair bit shorter than you expected."
+	icon_state = "amphibian_intestines"
+
+/obj/item/organ/intestines/skeleton
+	name = "skeleton intestines"
+	desc = "This is fucking spaghetti. Is someone pulling your leg?"
+	icon_state = "skeleton_intestines"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/intestines/martian
+	name = "squishy tube"
+	desc = "Some hunk of a martian digestive system, you think."
+	icon_state = "martian_intestines"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

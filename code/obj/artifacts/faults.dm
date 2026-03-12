@@ -14,7 +14,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	var/halt_loop = 0
 
 	proc/deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
-		if (!O || !user)
+		if (!O || !user || user.nodamage)
 			return 1
 		return 0
 
@@ -71,6 +71,9 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		playsound(T, 'sound/effects/mag_warp.ogg', 100, TRUE)
 		var/turf/destination = pick(random_floor_turfs)
 		logTheThing(LOG_COMBAT, user, "was teleported by artifact fault from [log_loc(user)] to [log_loc(destination)]")
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.shoes?.magnetic_teleport_check(H, get_turf(H), destination)
 		user.set_loc(destination)
 
 /datum/artifact_fault/grow
@@ -190,6 +193,8 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
+		if(isdead(user))
+			return
 		if(src.say_instead)
 			var/msg = "[prob(20)?"":";"][generate_message(O, user)]"
 			if(prob(20))
@@ -197,7 +202,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 			else
 				user.say(generate_message(O, user))
 			var/datum/artifact/A = O.artifact
-			logTheThing(LOG_SAY, src, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
+			logTheThing(LOG_SAY, user, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
 			return
 		switch(text_style)
 			if ("small")

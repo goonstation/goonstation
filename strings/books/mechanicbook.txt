@@ -34,6 +34,51 @@
 	<br>Sends specified signal when both inputs receive a Signal within a specified Time Frame.
 	<br>
 	<br>
+	<br><B>Buffer Component:</B>
+	<br>Collects signals in a buffer of a congfigurable size and outputs them with a delay, also configurable.
+	<br>There are several buffer modes that can be set, either with a multitool or a component input.
+	<br><ul>
+	<li> FIFO(First in First Out) outputs the oldest signals first, dropping new signals when the buffer is full. </li>
+	<li> FILO(First in Last Out) outputs the newest signals first, dropping new signals when the buffer is full. </li>
+	<li> Ring buffer outputs the oldest signals first like FIFO, but signals will replace the oldest signal in the buffer instead of being dropped.</li>
+	<li> Random mode outputs signals in a random order, and randomly overwrites signals when the buffer is full. </li>
+	</ul>
+  <br>
+	<br>
+	<br><B>Arithmetic Component:</B>
+	<br>Store numbers received in signals to variable A or B, then do mathematical operations on them. By default it will compute the result immediately, then send it on as a signal.
+	<br>Conveniently strips off trailing letters when setting variables.
+	<br>
+	<br>There are several options and inputs.
+	<ul>
+		<li>Set A/Set B: set the variables manually with your multitool, or with with a signal input.</li>
+		<li>Evaluate: immediately send a signal with the result of the current mode and variables.</li>
+		<li>Set Mode: set the operation to apply to the variables, we'll list these below.
+			<br>It can be set by hand or with an input signal.
+		<li>Toggle Auto-Evaluate: toggle evaluating automatically when variables are set.</li>
+		<li>Toggle Auto-Floor: automatically floor() results to the closest integer
+	</ul>
+
+	The following are the modes you can set the component to. Results are passed along as a signal,
+	either when setting a variable with a signal, or when an evaluate signal is recieved.
+	<ul>
+		<li>Add: Finds the sum of A and B.</li>
+		<li>Sub: Subtracts B from A.</li>
+		<li>Div: Divides A by B, errors if B is zero.</li>
+		<li>Mul: Multiplies A and B.</li>
+		<li>Mod: Finds the modulus (remainder) of A divided by B.</li>
+		<li>Pow: Power. Gets the result of A to exponent B.</li>
+		<li>Rng: Gets a random number between A and B.</li>
+		<li>Gt/lt: Greater than, less than. Returns 1 if A is greater than or less than B, respectively. Otherwise returns 0.
+			<br>You'll need a signal check component after this.</li>
+		<li>Gte/lte: Greater than or equal/less than or equal. Same as above but also triggers on equality.</li>
+		<li>Eq: Equal. Returns 1 if A and B are equal, 0 if not.</li>
+		<li>Neq: Not equal. Opposite of equal.</li>
+		<li>Min: Returns A or B, whichever is smaller.</li>
+		<li>Max: Like min but returns whichever is larger.</li>
+	</ul>
+	<br>
+	<br>
 	<br><B>Button:</B>
 	<br>Sends set Signal when used.
 	<br>
@@ -128,14 +173,32 @@
 	<br>
 	<br>
 	<br><B>Wifi Component:</B>
-	<br>The "send radio message" Command accepts Messages in the Format of command=herp&data=derp which will then be sent on the set Frequency.
+	<br>The "send radio message" Command accepts Messages in the Format of
+	<br><tt>command=herp&data=derp</tt>
+	<br>which will then be sent on the set Frequency.
+	<br>A semicolon may also be used instead of &amp;, such as <tt>command=herp;data=derp</tt>
+	<br>which does the same as above.
+	<br>When sending special characters such as <tt>&amp; \ ( )</tt> as a key or as data it is neccessary to "escape" them with a backslash.
+	<br>For example
+	<br><tt>command=update_fruit_basket;fruits=apples\&oranges\&limes</tt>
+	<br>which will cause &amp; to be sent as data in the packet instead of as a delimeter.
+	<br>You may also wrap data keys in parenthesis to ignore special characters, such as
+	<br><tt>clown_modes=(clown's delight&double honk)</tt>
+	<br>But parenthesis may still need to be escaped.
 	<br>The Component can receive a sendmsg Radio Signal that will send the Data in the \"data\" Portion of the Signal to the Outputs of this Component.
-	<br>Following the previous Syntax a sendmsg Signal would look like this : address_1=WIFICompoAddHere&command=sendmsg&data=MyCompoCommand
+	<br>Following the previous Syntax a sendmsg Signal would look like this : <tt>address_1=WIFICompoAddHere&command=sendmsg&data=MyCompoCommand</tt>
 	<br>Normal PDA Messages can also be used to trigger the Component.
-	<br>The frequency can be changed wirelessly as well by using the setfreq Command : address_1=WIFICompoAddHere&command=setfreq&data=1419
+	<br>The frequency can be changed wirelessly as well by using the setfreq Command : <tt>address_1=WIFICompoAddHere&command=setfreq&data=1419</tt>
 	<br>If you enable the forward all option, the Component will forward any Radio Messages it receives, unprocessed and in the above format, to its Outputs.
 	<br>By disabling NetID filtering you can make the Component react to any and all Radio Messages on its frequency.
 	<br>The Component will blink green when it receives a wireless Message and blink red when it sends a wireless Message."
+	<br>
+	<br>
+	<br><B>Powernet-networking Component:</B>
+	<br>Accepts a "send packet" input which works much the same as the wifi component above, the main difference being that it must be wrenched onto a working data terminal.
+	<br>
+	<br>The configuration is similiar, Toggling Self-Only messages will allow you to receive all messages on the powernet.
+	<br>Turning off mainframe registration will disconnect it from the mainframe and will prevent terminals from connecting to the component.
 	<br>
 	<br>
 	<br><B>Wifi Signal Splitter Component:</B>

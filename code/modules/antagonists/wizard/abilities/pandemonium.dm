@@ -15,7 +15,7 @@
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("WARR LEHFUQUE", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("WARR LEHFUQUE", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
@@ -151,5 +151,5 @@
 				playsound(W.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 25, 1, -1)
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))
-						new /obj/grille/steel(T)
+						new /obj/mesh/grille/steel(T)
 		logTheThing(LOG_COMBAT, W, "'s Pandemonium caused a [spell_result] effect at [log_loc(W)].")

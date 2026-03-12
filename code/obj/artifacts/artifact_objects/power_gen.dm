@@ -101,7 +101,7 @@
 					playsound(O, 'sound/effects/screech2.ogg', 75, TRUE)
 					O.visible_message(SPAN_ALERT("[O] sparks violently!"))
 					for (var/mob/M in view(min(5,gen_level),T))
-						if (isintangible(M)) continue
+						if (M.invisibility >= INVIS_AI_EYE) continue
 						arcFlash(O, M, gen_rate/2)
 						if(!M.disposed)
 							O.ArtifactFaultUsed(M) // in case you weren't already fucked enough lol

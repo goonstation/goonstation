@@ -1,7 +1,6 @@
 // Contains:
 //
 // - Chainsaw
-// - Plant analyzer
 // - Portable seed fabricator
 // - Watering can
 // - Compost bag
@@ -19,7 +18,7 @@ TYPEINFO(/obj/item/saw)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_off"
-	item_state = "c_saw"
+	item_state = "c_saw-D"
 	var/base_state = "c_saw"
 	var/active = 0
 	hit_type = DAMAGE_CUT
@@ -38,7 +37,6 @@ TYPEINFO(/obj/item/saw)
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
-	override_attack_hand = 1
 	can_hold_items = 0
 	stamina_damage = 30
 	stamina_cost = 15
@@ -49,7 +47,10 @@ TYPEINFO(/obj/item/saw)
 	active
 		active = 1
 		force = 12
+		icon_state = "c_saw"
+		item_state = "c_saw-A"
 		arm_icon = "chainsaw-A"
+
 
 		New()
 			..()
@@ -57,9 +58,6 @@ TYPEINFO(/obj/item/saw)
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			if (src)
-				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)
 		return
 
@@ -84,12 +82,12 @@ TYPEINFO(/obj/item/saw)
 
 		if (src.active)
 
-			user.lastattacked = target
-			target.lastattacker = user
+			user.lastattacked = get_weakref(target)
+			target.lastattacker = get_weakref(user)
 			target.lastattackertime = world.time
 
 			if (ishuman(target))
-				if (ishuman(user) && saw_surgery(target,user))
+				if (ishuman(user) && (!is_special && saw_surgery(target,user)))
 					take_bleeding_damage(target, user, 2, DAMAGE_CUT)
 					return
 				else if (!isdead(target))
@@ -113,7 +111,7 @@ TYPEINFO(/obj/item/saw)
 			boutput(user, SPAN_NOTICE("[src] is now off."))
 			src.force = off_force
 			src.hitsound = initial(src.hitsound)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		user.set_body_icon_dirty()
 		src.UpdateIcon()
 		user.update_inhands()
@@ -142,7 +140,7 @@ TYPEINFO(/obj/item/saw/syndie)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
-	item_state = "c_saw_s"
+	item_state = "c_saw_s-D"
 	base_state = "c_saw_s"
 	tool_flags = TOOL_SAWING | TOOL_CHOPPING //fucks up doors. fuck doors
 	active = 0
@@ -348,7 +346,7 @@ TYPEINFO(/obj/item/saw/elimbinator)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "c_saw_s"
-	item_state = "c_saw_s"
+	item_state = "c_saw_s-A"
 	base_state = "c_saw_s"
 	hit_type = DAMAGE_CUT
 	active = 1
@@ -389,26 +387,6 @@ TYPEINFO(/obj/item/saw/elimbinator)
 			bleed(H, 3, 5)
 		return ..()
 
-////////////////////////////////////// Plant analyzer //////////////////////////////////////
-
-TYPEINFO(/obj/item/plantanalyzer)
-	mats = 4
-
-/obj/item/plantanalyzer
-	name = "plant analyzer"
-	desc = "A device which examines the genes of plant seeds."
-	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "plantanalyzer"
-	w_class = W_CLASS_TINY
-	c_flags = ONBELT
-
-	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (BOUNDS_DIST(A, user) > 0)
-			return
-
-		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).
-		src.add_fingerprint(user)
-		return
 
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 
@@ -457,8 +435,9 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "garden trowel"
 	desc = "A tool to uproot plants and transfer them to decorative pots"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "trowel"
 
 	c_flags = ONBELT
 	w_class = W_CLASS_TINY
@@ -474,39 +453,84 @@ TYPEINFO(/obj/item/plantanalyzer)
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	rand_pos = 1
-	var/image/plantyboi //! The "plant" overlay of the plant
-	var/image/plantyboi_plantoverlay //! The "plantoverlay" of the plant
+
 	var/datum/plantgenes/genes //! The genes of the plant when it was plucked
 	var/grow_level = -1 //! The growth level of the plant when it was plucked
+	var/holding_plant = FALSE //! If the trowel currently holds a plant
+	var/plant_icon //! The "plant" overlay icon of the plant
+	var/plant_icon_state //! The "plant" overlay icon state of the plant
+	var/plantoverlay_icon //! The "plantoverlay" icon of the plant
+	var/plantoverlay_icon_state //! The "plantoverlay" icon state of the plant
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	afterattack(obj/target as obj, mob/user as mob)
+		if (istype(target, /obj/decorative_pot))
+			handle_planting(target)
+			return
 		if(istype(target, /obj/machinery/plantpot))
-			var/obj/machinery/plantpot/pot = target
-			if(pot.current)
-				var/datum/plant/p = pot.current
-				if(p.growthmode == "weed")
-					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!",SPAN_ALERT("The [p.name] is too strong for you traveller..."))
-					return
-				src.genes = pot.plantgenes
-				src.grow_level = pot.grow_level
-				if(pot.GetOverlayImage("plant"))
-					plantyboi = pot.GetOverlayImage("plant")
-					plantyboi.pixel_x = 2
-					src.icon_state = "trowel_full"
-					if(pot.GetOverlayImage("plantoverlay"))
-						plantyboi_plantoverlay = pot.GetOverlayImage("plantoverlay")
-						plantyboi_plantoverlay.pixel_x = 2
-					else
-						plantyboi_plantoverlay = null
-				else
-					return
-				pot.HYPdestroyplant()
+			handle_unearthing(target, user)
+			return
+		..()
 
-		//check if target is a plant pot to paste in the cosmetic plant overlay
+	proc/handle_icon_setup(var/obj/machinery/plantpot/pot)
+		if (pot.plant_sprite)
+			plant_icon = pot.plant_sprite.icon
+			plant_icon_state = pot.plant_sprite.icon_state
+			var/image/plantoverlay_image = pot.plant_sprite.GetOverlayImage("plantoverlay")
+			if(plantoverlay_image)
+				plantoverlay_icon = plantoverlay_image.icon
+				plantoverlay_icon_state = plantoverlay_image.icon_state
+			else
+				plantoverlay_icon = null
+				plantoverlay_icon_state = null
+			return TRUE
+		return FALSE
+
+	proc/handle_unearthing(var/obj/machinery/plantpot/pot, mob/user)
+		if(!pot.current)
+			return
+		var/datum/plant/p = pot.current
+		if(p.growthmode == "weed")
+			user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!",SPAN_ALERT("The [p.name] is too strong for you traveller..."))
+			return
+		if (!handle_icon_setup(pot))
+			return
+		src.genes = pot.plantgenes
+		src.grow_level = pot.grow_level
+		src.icon_state = "trowel_full"
+		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
+		holding_plant = TRUE
+		pot.HYPdestroyplant()
+
+	proc/handle_planting(obj/decorative_pot/pot)
+		if (!holding_plant)
+			return
+		pot.insert_plant(image(src.plant_icon, src.plant_icon_state), image(src.plantoverlay_icon, src.plantoverlay_icon_state), genes, grow_level)
+		src.empty_trowel()
+		playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
+
+	/// Disposes all the trowel's contents and resets its icon state
+	proc/empty_trowel()
+		src.icon_state = "trowel"
+		src.plant_icon = null
+		src.plant_icon_state = null
+		src.plantoverlay_icon = null
+		src.plantoverlay_icon_state = null
+		src.holding_plant = FALSE
+		qdel(src.genes)
+		src.genes = null
+
+	should_suppress_attack(var/object, mob/user, params)
+		if (istype(object, /obj/machinery/plantpot))
+			var/obj/machinery/plantpot/pot = object
+			if (pot.current)
+				return TRUE
+			return FALSE
+		if (istype(object, /obj/decorative_pot) && holding_plant)
+			return TRUE
 ///////////////////////////////////// Watering can ///////////////////////////////////////////////
 
 /obj/item/reagent_containers/glass/wateringcan
@@ -639,6 +663,30 @@ TYPEINFO(/obj/item/plantanalyzer)
 	New()
 		..()
 		reagents.add_reagent("mutadone", 40)
+
+/obj/item/reagent_containers/glass/bottle/oldcoot
+	name = "Ageinium Poultry Formula"
+	desc = "A mildew-encrusted bottle with labeling boasting aging effects and early retirement."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 40
+
+	New()
+		..()
+		reagents.add_reagent("ageinium", 40)
+
+/obj/item/reagent_containers/glass/bottle/younggun
+	name = "Deageinium Poultry Formula"
+	desc = "An angsty bottle with labeling describing youth and fitness."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 40
+
+	New()
+		..()
+		reagents.add_reagent("deageinium", 40)
 
 /obj/item/reagent_containers/glass/happyplant
 	name = "Happy Plant Mixture"

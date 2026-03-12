@@ -993,7 +993,7 @@
 			else return 1
 
 		onActivate(var/client/C)
-			flick("futurecrateopen",master.master)
+			FLICK("futurecrateopen",master.master)
 			playsound(C.mob.loc, 'sound/effects/polaris_crateopening.ogg', 50, 1,1)
 			master.master.icon_state = "futurecrateopened"
 			return

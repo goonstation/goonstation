@@ -33,7 +33,7 @@ TYPEINFO(/obj/machinery/space_heater)
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
-			ui = new(user, src, "space_heater", src.name)
+			ui = new(user, src, "SpaceHeater", src.name)
 			ui.open()
 
 	ui_data(mob/user)

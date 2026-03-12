@@ -26,7 +26,8 @@
 
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
-	. = TRUE
+	if(src.holder)
+		. = TRUE
 
 /datum/aiTask/sequence/goalbased/on_tick()
 	..()
@@ -77,6 +78,23 @@
 	// thanks zewaka for reminding me the previous implementation of this is BYOND NATIVE
 	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
 	holder.owner.move_dir = pick(alldirs)
+	holder.owner.process_move()
+	holder?.stop_move() // Just in case they yeet themselves out of existance
+	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
+
+/datum/aiTask/timed/wander/short
+	minimum_task_ticks = 1
+	maximum_task_ticks = 3
+
+/datum/aiTask/timed/wander/floor_only
+/datum/aiTask/timed/wander/floor_only/on_tick()
+	var/list/valid_dirs = list()
+	for (var/dir in alldirs)
+		if (isfloor(get_step(holder.owner, dir)))
+			valid_dirs += dir
+	if (length(valid_dirs) == 0)
+		valid_dirs = alldirs // we're stranded!
+	holder.owner.move_dir = pick(valid_dirs)
 	holder.owner.process_move()
 	holder?.stop_move() // Just in case they yeet themselves out of existance
 	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
@@ -252,3 +270,45 @@
 	..()
 	holder.target = null
 	holder.stop_move()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERIC ACTION BAR TASK
+// Use this when you want to an action bar, then wait for it to complete or be interupted before continuing
+// Interupt counts as a fail.
+// Set the final action you want to happen in `callback_proc`. It will recieve the owner and the target as arguments.
+// You can also define a `before_action_start()` proc on the aitask to do something before the action is started
+/datum/aiTask/succeedable/actionbar
+	var/datum/action/bar/icon/callback/actionbar
+	// action bar duration in deciseconds
+	var/duration = 5 SECONDS
+	// The proc to run when the action completes. PROC_REF(callback) where callback is a proc on the aitask
+	var/callback_proc = null
+	// The icon to display above the actionbar
+	var/action_icon = null
+	// The iconstate for the icon above the actionbar
+	var/action_icon_state = null
+	// a message displayed to all mobs that can see the owner at the end of the task (e.g. "the [holder.owner] does the thing to [holder.target]")
+	var/end_message = null
+	// flags which indicate what actions should interupt the actionbar
+	var/interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	// internal flag for having started
+	var/_has_started = FALSE
+
+/datum/aiTask/succeedable/actionbar/on_reset()
+	QDEL_NULL(src.actionbar)
+	_has_started = FALSE
+
+/datum/aiTask/succeedable/actionbar/on_tick()
+	if(!istype(actionbar))
+		src.before_action_start()
+		actionbar = SETUP_GENERIC_ACTIONBAR(src.holder.owner, src.holder.target, src.duration, src.callback_proc, list(src.holder.owner, src.holder.target), src.action_icon, src.action_icon_state, src.end_message, src.interrupt_flags)
+		actionbar.call_proc_on = src
+		_has_started = TRUE
+
+/datum/aiTask/succeedable/actionbar/proc/before_action_start()
+
+/datum/aiTask/succeedable/actionbar/succeeded()
+	return (_has_started && QDELETED(actionbar)) || (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start == -1)
+
+/datum/aiTask/succeedable/actionbar/failed()
+	return (istype(actionbar) && actionbar.state == ACTIONSTATE_DELETE && actionbar.interrupt_start > -1)

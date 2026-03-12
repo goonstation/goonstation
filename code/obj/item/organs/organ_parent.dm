@@ -113,7 +113,7 @@
 				return
 
 		else
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			hit_twitch(src)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, TRUE)
@@ -140,10 +140,10 @@
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
+				src.name = "[src.donor_name]’s [initial(src.name)]"
 			else if (src.donor.name)
 				src.donor_name = src.donor.name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
+				src.name = "[src.donor_name]’s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 			src.blood_DNA = src.donor_DNA
 			src.blood_type = src.donor.bioHolder?.bloodType
@@ -157,6 +157,7 @@
 
 	disposing()
 		if (src.holder)
+			src.remove_organ_abilities()
 			for(var/thing in holder.organ_list)
 				if(thing == "all")
 					continue
@@ -269,21 +270,24 @@
 			src.blood_type = src.donor.bioHolder?.bloodType
 		src.blood_color = src.donor?.bioHolder?.bloodColor
 		src.blood_reagent = src.donor?.blood_id
-		if (islist(src.organ_abilities) && length(src.organ_abilities))// && src.donor.abilityHolder)
-			var/datum/abilityHolder/aholder
-			if (src.donor && src.donor.abilityHolder)
-				aholder = src.donor.abilityHolder
-			else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
-				aholder = src.holder.donor.abilityHolder
-			if (istype(aholder))
-				for (var/abil in src.organ_abilities)
-					src.remove_ability(aholder, abil)
+		src.remove_organ_abilities()
+
 		src.donor = null
 		src.in_body = FALSE
 		if (src.surgery_contexts)
 			src.surgery_contexts = null
-
 		return
+
+	proc/remove_organ_abilities()
+		if (islist(src.organ_abilities) && length(src.organ_abilities))
+			var/datum/abilityHolder/aholder
+			if (src.donor?.abilityHolder)
+				aholder = src.donor.abilityHolder
+			else if (src.holder?.donor?.abilityHolder)
+				aholder = src.holder.donor.abilityHolder
+			if (istype(aholder))
+				for (var/abil in src.organ_abilities)
+					src.remove_ability(aholder, abil)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.robotic)
@@ -308,6 +312,11 @@
 	emp_act()
 		if (robotic)
 			src.take_damage(20, 20, 20)
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.donor_DNA)
+			scan.add_text("[src.organ_name]'s DNA: [src.donor_DNA]")
 
 	proc/add_ability(var/datum/abilityHolder/aholder, var/abil) // in case things wanna do stuff instead of just straight-up adding/removing the abilities (see: laser eyes)
 		if (!aholder || !abil)

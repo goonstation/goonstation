@@ -12,19 +12,19 @@ export enum DisposalChuteState {
 }
 
 export interface DisposalChuteConfig {
-  pumpColor: string,
-  pumpText: string,
+  pumpColor: string;
+  pumpText: string;
 }
 
 export type DisposalChuteConfigLookup = {
   [key in DisposalChuteState]: DisposalChuteConfig;
-}
+};
 
 export interface DisposalChuteData {
-  name: string,
-  destinations: string[],
-  destinationTag: string,
-  flush: boolean,
-  mode: DisposalChuteState,
-  pressure: number,
+  name: string;
+  destinations: string[];
+  destinationTag: string;
+  flush: boolean;
+  mode: DisposalChuteState;
+  pressure: number;
 }

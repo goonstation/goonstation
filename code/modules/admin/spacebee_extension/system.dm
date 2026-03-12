@@ -5,6 +5,9 @@
 
 // we use a bit of a magic of storing the Discord username in `usr`, probably a bad idea but who cares!
 #define ENSURE_USER if(!user) user = usr
+//the range of server keys that refer to the main "live" servers
+#define LIVE_SERVER_MIN 1
+#define LIVE_SERVER_MAX 4
 
 var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 
@@ -108,6 +111,9 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 		if(COMMAND_TARGETING_ALL_SERVERS)
 			if(server_key)
 				return
+		if (COMMAND_TARGETING_LIVE_SERVERS)
+			if (global.serverKey < LIVE_SERVER_MIN || global.serverKey > LIVE_SERVER_MAX)
+				return
 		else
 			CRASH("Invalid server targeting [command.server_targeting] on command [command.name].")
 
@@ -164,3 +170,6 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 		src.active_callbacks[user] = list(callback_datum, callback_proc)
 	else
 		src.active_callbacks[user] = callback_proc
+
+#undef LIVE_SERVER_MIN
+#undef LIVE_SERVER_MAX

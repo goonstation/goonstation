@@ -8,6 +8,7 @@
 
 		if(!pestlandmark)
 			logTheThing(LOG_DEBUG, null, "Minor pest event couldn't find a LANDMARK_PESTSTART!")
+			message_admins("Minor pest event couldn't find a LANDMARK_PESTSTART! Aborting minor pests event")
 			return
 
 		if (length(hearers(5, pestlandmark)) != 0)
@@ -32,6 +33,7 @@
 
 			if (occupied)
 				logTheThing(LOG_DEBUG, null, "Minor pest event couldn't find a unoccupied LANDMARK_PESTSTART, spawning somewhere with people instead.")
+				message_admins("Minor pest event couldn't find a unoccupied LANDMARK_PESTSTART, spawning somewhere with people instead.")
 				pestlandmark = firstpestlandmark // goes back to the first option if none are available
 
 		var/masterspawnamount = rand(4,12)
@@ -69,15 +71,4 @@
 					spawnamount -= 12
 					LAGCHECK(LAG_LOW)
 		logTheThing(LOG_STATION, null, "minor pest event spawned [type] at [log_loc(pestlandmark)]")
-
-#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
-/datum/random_event/minor/electricmalfunction
-	name = "Electrical Malfunction"
-
-	event_effect()
-		..()
-		var/obj/machinery/junctionbox/J = pick(by_type[/obj/machinery/junctionbox])
-		if (J.broken)
-			return
-		J.Breakdown()
-#endif
+		message_admins("Minor pest event spawned [type] at [log_loc(pestlandmark)]")

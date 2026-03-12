@@ -1,20 +1,23 @@
 * text=auto
 
 ## Enforce text mode and LF line breaks
-*.js			text eol=lf
-*.jsx			text eol=lf
-*.ts			text eol=lf
-*.tsx			text eol=lf
-*.css			text eol=lf
-*.scss		text eol=lf
-*.html		text eol=lf
-*.json		text eol=lf
-*.yml			text eol=lf
-*.md			text eol=lf
-*.bat			text eol=lf
-yarn.lock	text eol=lf
-bin/tgui	text eol=lf
+*.js      text eol=lf
+*.jsx     text eol=lf
+*.ts      text eol=lf
+*.tsx     text eol=lf
+*.css     text eol=lf
+*.scss    text eol=lf
+*.html    text eol=lf
+*.json    text eol=lf
+*.yml     text eol=lf
+*.md      text eol=lf
+*.bat     text eol=lf
+*.mjs     text eol=lf
+*.mts     text eol=lf
+*.svg     text eol=lf
+yarn.lock text eol=lf
+bin/tgui  text eol=lf
 
-## Treat bundles as binary and ignore them during conflicts
-.yarn/releases/*		binary
-.yarn/plugins/**/*	binary
+# |GOONSTATION-CHANGE| We do not care about .bundle or .chunk files here, as they get put outside of this directory
+.yarn/releases/**/* binary
+.yarn/plugins/**/*  binary

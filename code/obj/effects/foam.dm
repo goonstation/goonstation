@@ -63,9 +63,9 @@
 			M.UpdateIcon()
 
 		if(metal)
-			flick("mfoam-disolve", src)
+			FLICK("mfoam-disolve", src)
 		else
-			flick("foam-disolve", src)
+			FLICK("foam-disolve", src)
 		sleep(0.5 SECONDS)
 		die()
 	return
@@ -150,7 +150,7 @@
 // except metal foams
 /obj/effects/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	if(!metal && prob(max(0, exposed_temperature - 475)))
-		flick("foam-disolve", src)
+		FLICK("foam-disolve", src)
 
 		SPAWN(0.5 SECONDS)
 			die()

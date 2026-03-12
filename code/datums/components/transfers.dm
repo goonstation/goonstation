@@ -114,9 +114,6 @@
 #define CONTAINER_CHOICE_DUMP  "Dump its contents inside"
 
 /datum/component/transfer_input/proc/handle_attackby(comsig_target, atom/movable/incoming, mob/attacker)
-	if (istype(incoming, /obj/item/deconstructor))
-		return
-
 	if(cant_do_shit(attacker))
 		return
 
@@ -160,7 +157,7 @@
 			incoming.UpdateIcon()
 			if (istype(incoming, /obj/item/satchel))
 				var/obj/item/satchel/changed_satchel = incoming
-				changed_satchel.tooltip_rebuild = 1
+				changed_satchel.tooltip_rebuild = TRUE
 			if (transfers)
 				attacker.visible_message(SPAN_NOTICE("[attacker] dumps [transfers] items out of [incoming] into [parent]."))
 			else

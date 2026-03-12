@@ -22,7 +22,7 @@
 		logTheThing(LOG_DEBUG, src, "Starting main /obj initialize loop")
 
 		for(var/obj/object in world)
-			object.initialize()
+			object.initialize(FALSE)
 			itemcount++
 			if (game_start_countdown)
 				if (lasttime != world.timeofday)

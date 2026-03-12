@@ -72,6 +72,7 @@ TYPEINFO(/datum/component/foldable)
 
 	briefcase.set_loc(get_turf(object))
 	object.set_loc(briefcase)
+	tgui_process.close_uis(src)
 	usr.visible_message(SPAN_ALERT("[usr] folds [object] back up!"))
 
 /obj/item/objBriefcase
@@ -138,3 +139,8 @@ TYPEINFO(/datum/component/foldable)
 	blue_green_stripe
 		icon_state = "hopcaseC"
 		item_state = "hopcaseC"
+	syndicate
+		w_class = W_CLASS_NORMAL //So you can fit it in your backpack
+		icon_state = "syndiecase"
+		item_state = "syndiecase"
+

@@ -1,5 +1,5 @@
 /datum/game_mode/mixed
-	name = "Mixed (Action)"
+	name = "Action"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
@@ -11,7 +11,7 @@
 	var/has_wizards = TRUE
 	var/has_werewolves = TRUE
 
-	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 0.5, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 0.5, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1, ROLE_SALVAGER = 0.5)
 #if defined(MAP_OVERRIDE_NADIR)
 	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
 #else
@@ -25,7 +25,7 @@
 
 
 /datum/game_mode/mixed/announce()
-	boutput(world, "<B>The current game mode is - Mixed Action!</B>")
+	boutput(world, "<B>The current game mode is - Action!</B>")
 	boutput(world, "<B>Anything could happen! Be on your guard!</B>")
 
 /datum/game_mode/mixed/pre_setup()
@@ -51,6 +51,7 @@
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
 	var/num_flockminds = 0
+	var/num_salvagers = 0
 #if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types[ROLE_GRINCH] = 1;
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
@@ -81,6 +82,12 @@
 				if(ROLE_SPY_THIEF)
 					if(j+1<num_enemies) //don't overcap
 						num_spy_thiefs += 2
+						j++
+					else
+						j-- //reroll
+				if(ROLE_SALVAGER)
+					if(j+2<num_enemies) //don't overcap
+						num_salvagers += 3
 						j++
 					else
 						j-- //reroll
@@ -135,6 +142,11 @@
 				traitors += tplayer
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_ARCFIEND
+			if(ROLE_SALVAGER)
+				traitors += tplayer
+				token_players.Remove(tplayer)
+				tplayer.assigned_role = "MODE"
+				tplayer.special_role = ROLE_SALVAGER
 
 		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
@@ -211,6 +223,15 @@
 			traitors += spy
 			spy.special_role = ROLE_SPY_THIEF
 			possible_spy_thieves.Remove(spy)
+
+	if(num_salvagers)
+		var/list/possible_salvagers = get_possible_enemies(ROLE_SALVAGER,num_salvagers)
+		var/list/chosen_salvagers = antagWeighter.choose(pool = possible_salvagers, role = ROLE_SALVAGER, amount = num_salvagers, recordChosen = 1)
+		for (var/datum/mind/salvager in chosen_salvagers)
+			traitors += salvager
+			salvager.assigned_role = "MODE"
+			salvager.special_role = ROLE_SALVAGER
+			possible_salvagers.Remove(salvager)
 
 	if(num_werewolves)
 		var/list/possible_werewolves = get_possible_enemies(ROLE_WEREWOLF,num_werewolves)

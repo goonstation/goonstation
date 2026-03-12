@@ -2,7 +2,7 @@
 #define NAME_CHAR_MAX 16
 #define NAME_CHAR_MIN 2
 #define FLAVOR_CHAR_LIMIT 256
-#define LONG_FLAVOR_CHAR_LIMIT 4000
+#define LONG_FLAVOR_CHAR_LIMIT 2000
 
 #define FULLNAME_MAX 50
 
@@ -18,3 +18,7 @@
 
 //human voice stuff
 #define RANDOM_HUMAN_VOICE pick("1", "2", "3", "4")
+
+#define PREFERRED_UPLINK_PDA "PDA"
+#define PREFERRED_UPLINK_RADIO "Radio"
+#define PREFERRED_UPLINK_STANDALONE "Standalone"

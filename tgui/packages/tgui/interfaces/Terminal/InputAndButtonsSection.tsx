@@ -1,63 +1,90 @@
 /**
  * @file
  * @copyright 2023
- * @author Garash2k (https://github.com/garash2k)
+ * @author Original Garash2k (https://github.com/garash2k)
+ * @author Changes Mordent (https://github.com/mordent-goonstation)
  * @license ISC
  */
 
+import { useCallback, useState } from 'react';
+import { Button, Input, Section, Stack, Tooltip } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { TerminalData } from './types';
-import { Button, Flex, Input, Section, Tooltip } from '../../components';
+import { createLogger } from '../../logging';
+import type { TerminalData } from './types';
 
-export const InputAndButtonsSection = (_props, context) => {
-  const { act, data } = useBackend<TerminalData>(context);
-  const {
-    TermActive,
-  } = data;
+const logger = createLogger('inputbuttonssection');
 
-  const handleInputEnter = (_e, value) => {
-    act('text', { value: value });
-  };
-  const handleEnterClick = () => {
-    // Still a tiny bit hacky but it's a manual click on the enter button which already caused me too much grief
-    const domInput = document.querySelector('#terminalInput .Input__input') as HTMLInputElement;
-    act('text', { value: domInput.value });
-    domInput.value = '';
-  };
-  const handleRestartClick = () => act('restart');
+export const InputAndButtonsSection = () => {
+  const { act, data } = useBackend<TerminalData>();
+  const { TermActive, ckey } = data;
+
+  const [localInputValue, setLocalInputValue] = useState('');
+  // renderKey used to force input to remount, triggering autoFocus
+  const [renderKey, setRenderKey] = useState(0);
+  const incrementRenderKey = useCallback(
+    () => setRenderKey((prev) => prev + 1),
+    [],
+  );
+
+  const handleEnter = useCallback(
+    (value: string) => {
+      act('text', { value, ckey });
+      setLocalInputValue('');
+      incrementRenderKey();
+    },
+    [act, ckey, incrementRenderKey],
+  );
+  const handleEnterClick = useCallback(() => {
+    act('text', { value: localInputValue, ckey });
+    setLocalInputValue('');
+    incrementRenderKey();
+  }, [act, ckey, incrementRenderKey, localInputValue]);
+  const handleChange = useCallback(
+    (value: string) => setLocalInputValue(value),
+    [],
+  );
+  const handleRestartClick = useCallback(() => {
+    act('restart');
+    setLocalInputValue('');
+    incrementRenderKey();
+  }, [act, incrementRenderKey]);
 
   return (
     <Section fitted>
-      <Flex align="center">
-        <Flex.Item grow>
+      <Stack verticalAlign="center">
+        <Stack.Item grow>
           <Input
-            id="terminalInput"
+            autoFocus
+            key={renderKey}
+            value={localInputValue}
             placeholder="Type Here"
-            selfClear
             fluid
-            mr="0.5rem"
-            onEnter={handleInputEnter}
-            history
+            onEnter={handleEnter}
+            onChange={handleChange}
           />
-        </Flex.Item>
-        <Flex.Item>
+        </Stack.Item>
+        <Stack.Item>
           <Tooltip content="Enter">
-            <Button icon="share"
-              color={TermActive ? "green" : "red"}
+            <Button
+              icon="share"
+              // disabled={!TermActive}
+              color={!TermActive ? 'transparent' : 'default'}
               onClick={handleEnterClick}
-              mr="0.5rem"
-              my={0.25} />
+            />
           </Tooltip>
-        </Flex.Item>
-        <Flex.Item>
+        </Stack.Item>
+        <Stack.Item>
           <Tooltip content="Restart">
-            <Button icon="repeat"
-              color={TermActive ? "green" : "red"}
+            <Button
+              icon="repeat"
+              // disabled={!TermActive}
+              color={!TermActive ? 'transparent' : 'default'}
               onClick={handleRestartClick}
-              my={0.25} />
+            />
           </Tooltip>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };

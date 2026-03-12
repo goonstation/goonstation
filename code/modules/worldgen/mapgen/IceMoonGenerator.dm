@@ -108,10 +108,7 @@
 			tmp_flags |= MAPGEN_IGNORE_BUILDABLE
 		selected_biome.generate_turf(gen_turf, tmp_flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check(flags)
 
 
 ///for the mapgen mountains, temp until we get something better
@@ -128,7 +125,7 @@
 	oxygen = 0
 	temperature = 100
 
-	destroy_asteroid(var/dropOre=1)
+	destroy_asteroid(var/dropOre=1, var/mob/user)
 		if(src.ore || prob(33)) // provide less rock
 			default_ore = /obj/item/raw_material/ice
 		. = ..()

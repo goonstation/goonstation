@@ -8,7 +8,8 @@ TYPEINFO(/obj/item/pinpointer)
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
@@ -20,7 +21,7 @@ TYPEINFO(/obj/item/pinpointer)
 	/// do not set directly, use turn_on and turn_off
 	var/active = FALSE
 	var/icon_type = "disk"
-	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technologically advanced arrow."
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -91,7 +92,8 @@ TYPEINFO(/obj/item/pinpointer)
 				if (istype(user))
 					var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
 					arrow?.change_target(src.target)
-			work_check()
+			if(work_check())
+				return
 			var/turf/ST = get_turf(src)
 			var/turf/T = get_turf(target)
 			if(!ST || !T || ST.z != T.z || !isnull(max_range) && GET_DIST(src,target) > max_range)
@@ -99,7 +101,7 @@ TYPEINFO(/obj/item/pinpointer)
 				if(ismob(src.loc))
 					boutput(src.loc, SPAN_ALERT("Pinpointer target out of range."))
 				return
-			src.set_dir(get_dir(src,target))
+			src.set_dir(get_dir_accurate(src,target))
 			var/dist = GET_DIST(src,target)
 			switch(dist)
 				if(0)
@@ -134,6 +136,8 @@ TYPEINFO(/obj/item/pinpointer)
 			if(A.disposed || isnull(T))
 				continue
 			if(!isnull(z_locked) && z_locked != T.z)
+				continue
+			if(isnull(z_locked) && T.z != Z_LEVEL_STATION)
 				continue
 			var/dist = GET_DIST(A, src)
 			if(!isnull(max_range) && dist > max_range)
@@ -177,6 +181,35 @@ TYPEINFO(/obj/item/pinpointer)
 /obj/item/pinpointer/category/spysticker/det
 	category = TR_CAT_SPY_STICKERS_DET
 
+	get_choices()
+		var/list/choices = ..()
+		for(var/key in choices)
+			var/obj/item/sticker/S = choices[key]
+			if(!trackable_item(S.attached))
+				choices -= key
+		return choices
+
+	proc/trackable_item(obj/item/I)
+		. = TRUE
+		if(istype(I.loc, /obj/item/storage)) //allow one level of storage item
+			I = I.loc
+		if(!(isturf(I) || isturf(I.loc) || istype(I.loc, /obj/storage))) //if we aren't on a turf, something sitting on a turf, or in a locker/etc
+			if(ismob(I.loc))
+				var/mob/M = I.loc
+				if(!(I in (M.get_equipped_items(TRUE) + M.equipped_list())))
+					. = FALSE
+			else
+				. = FALSE
+
+	work_check()
+		. = ..()
+		var/obj/item/sticker/S = src.target
+		if(!trackable_item(S.attached))
+			src.turn_off()
+			if(ismob(src.loc))
+				boutput(src.loc, SPAN_ALERT("[src] shuts down because the tracking signal is obscured!"))
+			return TRUE
+
 /obj/item/pinpointer/nuke
 	name = "pinpointer (nuclear bomb)"
 	desc = "Points in the direction of the nuclear bomb."
@@ -192,14 +225,6 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_type = "disk"
 	hudarrow_color = "#14ad00"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
-
-	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
 
 /obj/item/pinpointer/identificationcomputer
 	name = "pinpointer (identification computer)"
@@ -332,7 +357,7 @@ TYPEINFO(/obj/item/pinpointer)
 			blood_dna = A.blood_DNA
 		else if (CHECK_LIQUID_CLICK(A))
 			var/turf/T = get_turf(A)
-			blood_dna = T.active_liquid.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
+			blood_dna = T.active_liquid?.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
 		if(!blood_dna)
 			var/datum/reagents/reagents = A.reagents
 			if(isturf(A))
@@ -360,6 +385,7 @@ TYPEINFO(/obj/item/pinpointer)
 			src.turn_off()
 			if(ismob(src.loc))
 				boutput(src.loc, SPAN_ALERT("[src] shuts down because the blood in it became too dry!"))
+			return TRUE
 
 TYPEINFO(/obj/item/pinpointer/secweapons)
 	mats = null
@@ -371,7 +397,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	var/list/itemrefs
 	var/list/accepted_types
 	hudarrow_color = "#ee4444"
-	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technologically advanced arrow."
 
 	proc/track(var/list/L)
 		itemrefs = list()
@@ -532,6 +558,20 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	name = "mob pinpointer"
 	category = /mob
 	thing_name = "mob"
+
+/obj/item/pinpointer/category/mobs/single_use
+	name = "single-use mob pinpointer"
+	var/used = FALSE
+
+	attack_self(mob/user)
+		if (used)
+			user.show_text("This pinpointer has already been used and cannot be activated again.", "red")
+			return
+		. = ..()
+		used = TRUE
+
+		src.name = "[target.name] pinpointer"
+
 
 /obj/item/pinpointer/category/ouija_boards
 	name = "ouija board pinpointer"

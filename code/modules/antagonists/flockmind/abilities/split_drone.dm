@@ -24,3 +24,6 @@
 	boutput(F, SPAN_NOTICE("You diffract the drone."))
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts diffract drone on [constructTarget(target)] at [log_loc(src.holder.owner)].")
 	target.split_into_bits()
+
+/datum/targetable/flockmindAbility/splitDrone/logCast(atom/target)
+	return

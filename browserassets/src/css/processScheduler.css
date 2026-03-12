@@ -1,0 +1,129 @@
+body {
+  background: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+}
+
+h2 {
+  margin-top: 5px;
+}
+
+h2,
+h3 {
+  color: #90caf9;
+  margin-bottom: 10px;
+}
+
+button {
+  background: #333;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10pt;
+  margin: 2px;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+button:hover {
+  background: #58b4dc;
+  color: #000;
+  border-color: #58b4dc;
+}
+
+.kill-btn,
+.enable-btn,
+.disable-btn,
+.edit-btn {
+  font-size: 9pt;
+  padding: 4px 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1e1e1e;
+  margin-bottom: 20px;
+}
+
+thead tr {
+  background: #21272c;
+}
+
+thead td {
+  color: #e0e0e0;
+  font-weight: bold;
+  padding: 6px;
+  border-bottom: 1px solid #333;
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+}
+
+thead td:hover {
+  background: #2a2f35;
+}
+
+thead td[data-dir='asc']::after {
+  content: ' ▲';
+  color: #58b4dc;
+  font-size: 0.8em;
+}
+
+thead td[data-dir='desc']::after {
+  content: ' ▼';
+  color: #58b4dc;
+  font-size: 0.8em;
+}
+
+thead td.non-sortable {
+  cursor: default;
+}
+
+thead td.non-sortable:hover {
+  background: inherit;
+}
+
+thead td.non-sortable::after {
+  display: none;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #21272c;
+}
+
+tbody td {
+  padding: 6px;
+  color: #ccc;
+  border-top: 1px solid #333;
+}
+
+tbody tr:nth-child(odd) {
+  background: #181818;
+}
+
+tbody tr:nth-child(even) {
+  background: #1e1e1e;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.container-fluid {
+  padding: 5px;
+}
+
+.btn-group {
+  display: inline-flex;
+  gap: 4px;
+}

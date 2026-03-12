@@ -10,6 +10,8 @@
 	var/lifetime_energy = 0
 	/// Number of hearts stopped with Jolt
 	var/hearts_stopped = 0
+	/// Total number of machines overloaded
+	var/machines_overloaded = 0
 
 	onAbilityStat()
 		..()
@@ -53,6 +55,10 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	var/container_safety_bypass = FALSE
 
 	castcheck(atom/target)
+		var/area/A = get_area(holder.owner)
+		if (A.sanctuary)
+			boutput(holder.owner, SPAN_ALERT("You cannot use your abilities in a sanctuary."))
+			return FALSE
 		var/mob/living/M = src.holder.owner
 		if (!container_safety_bypass && !isturf(M.loc))
 			boutput(holder.owner, SPAN_ALERT("Interference from [M.loc] is preventing use of this ability!"))

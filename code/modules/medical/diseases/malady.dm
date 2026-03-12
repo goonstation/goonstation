@@ -3,10 +3,15 @@
 	name = "Malady"
 	scantype = "Medical Malady"
 	cure_flags = CURE_UNKNOWN
+	strain_type = /datum/ailment_data/malady
 
 /datum/ailment_data/malady
 	var/robo_restart = 0 // used for cyberheart stuff
 	var/affected_area = null // used for bloodclots, can be chest (heart, eventually lung), head (brain), limb
+
+	copy_other(datum/ailment_data/malady/other)
+		..()
+		src.affected_area = other.affected_area
 
 	New()
 		..()
@@ -272,6 +277,8 @@
 					affected_mob.losebreath ++
 				if (probmult(5))
 					affected_mob.take_oxygen_deprivation(rand(1,2))
+				if (probmult(5))
+					affected_mob?.organHolder.damage_organ(tox=2*mult, organ="heart")
 				if (probmult(5))
 					affected_mob.emote(pick("twitch", "groan", "gasp"))
 				if (probmult(1))
@@ -559,3 +566,4 @@
 		H.changeStatus("knockdown", 6 * mult SECONDS)
 		H.losebreath+=20 * mult
 		H.take_oxygen_deprivation(20 * mult)
+		H.organHolder?.damage_organ(tox=1 * mult, organ="heart")

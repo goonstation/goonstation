@@ -58,7 +58,7 @@ so you'll want your single-digit days to have 0s in front
 	. += "(e)🧪|Testmerge"
 	. += splittext(changelog_regex.group[2], "\n") // actual changelog (*) changes
 
-/proc/changelog_parse(changes, title, testmerge_changes)
+/proc/changelog_parse(changes, title, testmerge_changes, use_modern_tags)
 	var/list/html = list()
 	var/text = changes
 	if (!text)
@@ -99,7 +99,10 @@ so you'll want your single-digit days to have 0s in front
 						html += "<li class='date testmerge'>Current Testmerged PRs</li>"
 						continue
 					if (length(collapsible_html)) // test -1 below because the prior changes would've eaten it
-						html += "<li class='collapse-button[tmerge_lines_left > -1 ? " testmerge" : ""]'>Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
+						if (use_modern_tags)
+							html += "<li class='minor-changes[tmerge_lines_left > -1 ? " testmerge" : ""]'><details><summary>Minor Changes</summary><div>[collapsible_html.Join()]</div></details></li>"
+						else
+							html += "<li class='collapse-button[tmerge_lines_left > -1 ? " testmerge" : ""]'>Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
 						collapsible_html.Cut()
 						author = null
 						added_collapsible_author = 0
@@ -229,11 +232,14 @@ so you'll want your single-digit days to have 0s in front
 					continue
 
 		if(collapsible_html.len)
-			html += "<li class='collapse-button[tmerge_lines_left > 0 ? " testmerge" : ""]'>Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
+			if (use_modern_tags)
+				html += "<li class='minor-changes[tmerge_lines_left > 0 ? " testmerge" : ""]'><details><summary>Minor Changes</summary></li><div>[collapsible_html.Join()]</div></details>"
+			else
+				html += "<li class='collapse-button[tmerge_lines_left > 0 ? " testmerge" : ""]'>Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
 		html += "</ul>"
 		return html.Join()
 
-/datum/changelog/New()
+/datum/changelog/New(use_modern_tags)
 	..()
 
 #ifdef TESTMERGE_PRS
@@ -253,7 +259,7 @@ so you'll want your single-digit days to have 0s in front
     <li>Official Forums<br><strong><a target="_blank" href="https://forum.ss13.co/" target="_blank">https://forum.ss13.co</a></strong></li>
 </ul>"}
 
-	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog", src.testmerge_changes)
+	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog", src.testmerge_changes, use_modern_tags)
 	html += {"
 <h3>GoonStation 13 Development Team</h3>
 <p class="team">

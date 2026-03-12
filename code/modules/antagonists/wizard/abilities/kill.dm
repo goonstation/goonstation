@@ -21,7 +21,7 @@
 		playsound(holder.owner.loc, 'sound/effects/elec_bzzz.ogg', 25, 1, -1)
 		if (do_mob(holder.owner, target, 20))
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
-				holder.owner.say("EI NATH", FALSE, maptext_style, maptext_colors)
+				holder.owner.say("EI NATH", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 			..()
 
 			if (ishuman(target))
@@ -43,7 +43,7 @@
 				elecflash(holder.owner,power = 2)
 				boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 				target.visible_message(SPAN_ALERT("[target] is severely burned by an electrical charge!"))
-				target.lastattacker = holder.owner
+				target.lastattacker = get_weakref(holder.owner)
 				target.lastattackertime = world.time
 				target.TakeDamage("chest", 0, 80, 0, DAMAGE_BURN)
 				target.changeStatus("stunned", 10 SECONDS)

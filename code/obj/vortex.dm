@@ -120,9 +120,9 @@
 			var/obj/horror = new horror_path(src.loc)
 			if (ismobcritter(horror))
 				var/mob/living/critter/C = horror
-				C.faction |= FACTION_DERELICT
+				LAZYLISTADDUNIQUE(C.faction, FACTION_DERELICT)
 				if (derelict_mode) // In disaster rounds we don't want wraith spawns fighting the local wildlife
-					C.faction |= FACTION_WRAITH
+					LAZYLISTADDUNIQUE(C.faction, FACTION_WRAITH)
 			src.visible_message(SPAN_ALERT("<b>[horror] emerges from the [src]!</b>"),SPAN_ALERT("You hear a sharp buzzing noise."))
 		else
 			SPAWN(randfloat(0.2 SECONDS, 2 SECONDS)) //desynchronize the visual/audible indication of interdiction in case of large batches of simultaneous vortexes

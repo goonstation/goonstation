@@ -60,7 +60,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";

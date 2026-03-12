@@ -6,7 +6,7 @@
 
 /// add storage to an atom
 /atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), list/prevent_holding = list(),
-		check_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, stealthy_storage = FALSE, opens_if_worn = FALSE, list/params = list())
+		check_wclass = STORAGE_CHECK_W_CLASS_IGNORE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, stealthy_storage = FALSE, opens_if_worn = FALSE, list/params = list())
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
@@ -20,6 +20,10 @@
 	qdel(src.storage)
 	src.storage = null
 
+/// override as necessary, used to affect an atom stored in any nested level of storage when any higher parent storage changes location
+/atom/proc/parent_storage_loc_changed()
+	return
+
 /// a datum for atoms that allows holdable storage of items in a hud
 /datum/storage
 	/// Types that can be held
@@ -29,13 +33,15 @@
 	/// Types that have a w_class holdable but that the storage will not hold
 	var/list/prevent_holding = null
 	/// If set, if can_hold is used, an item not in can_hold or can_hold_exact can fit in the storage if its weight is low enough
-	var/check_wclass = FALSE
+	var/check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
 	/// Storage hud attached to the storage
 	var/datum/hud/storage/hud = null
 	/// Don't print a visible message on use
 	var/sneaky = FALSE
 	/// Don't show the contents of the storage on its description
 	var/stealthy_storage = FALSE
+	/// Whether or not this storage allows stacking stackables into its contents
+	var/stack_stackables = FALSE
 	/// Prevent accessing storage when clicked when worn, ex. in pocket
 	var/opens_if_worn = FALSE
 	/// Maximum w_class that can be held
@@ -48,6 +54,10 @@
 	var/atom/linked_item = null
 	/// All items stored
 	var/list/stored_items = null
+	/// Sound to play when opening (file or `generate_sound` group)
+	var/open_sound = "rustle"
+	/// Sound to play when closing (file or `generate_sound` group)
+	var/close_sound = null
 
 /datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
 		slots, sneaky, stealthy_storage, opens_if_worn, list/params)
@@ -129,7 +139,8 @@
 		logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [log_object(src.linked_item)] has more than [slots] items in it!")
 
 /// when clicking the storage item with an object
-/datum/storage/proc/storage_item_attack_by(obj/item/W, mob/user)
+/// `visible` is for when the click is fake and we're actually calling it from a safe store chain
+/datum/storage/proc/storage_item_attack_by(obj/item/W, mob/user, visible = TRUE)
 	. = TRUE
 	// check if item is the storage item
 	if (W == src.linked_item)
@@ -149,7 +160,7 @@
 	if (canhold != STORAGE_CAN_HOLD)
 		if (canhold == STORAGE_CANT_HOLD || canhold == STORAGE_WONT_FIT || canhold == STORAGE_RESTRICTED_TYPE)
 			// if item has a storage, dump contents into this storage
-			if (W.storage && !src.is_full())
+			if (W.storage && (src.stack_stackables || !src.is_full()))
 				for (var/obj/item/I as anything in (W.storage.get_contents() - src.linked_item))
 					if (src.check_can_hold(I) == STORAGE_CAN_HOLD)
 						if (I.anchored)
@@ -180,12 +191,12 @@
 		checkloc = checkloc.loc
 
 	// add item to storage
-	src.add_contents(W, user)
+	src.add_contents(W, user, visible)
 
 /// when clicking the storage item with an empty hand
 /datum/storage/proc/storage_item_attack_hand(mob/user)
-	if (!src.sneaky)
-		playsound(src.linked_item.loc, "rustle", 50, TRUE, -2)
+	if (!src.sneaky && src.open_sound)
+		playsound(src.linked_item.loc, src.open_sound, 50, TRUE, -2)
 	// check if its in your inventory
 	if (src.linked_item.loc == user && (src.opens_if_worn || (src.linked_item in user.equipped_list(FALSE)) || IS_LIVING_OBJECT_USING_SELF(user)))
 		// check if storage is attached as an arm
@@ -203,6 +214,9 @@
 		src.linked_item.add_fingerprint(user)
 		animate_storage_rustle(src.linked_item)
 	else
+		// don't show storages other people are wearing
+		if (ismob(src.linked_item.loc) && src.linked_item.loc != user)
+			return FALSE
 		// make sure only the user can see the storage
 		for (var/mob/M as anything in src.hud.mobs)
 			if (M != user)
@@ -215,7 +229,8 @@
 	// if mouse dropping storage item onto a hand slot, attempt to hold it
 	if (istype(over_object, /atom/movable/screen/hud))
 		var/atom/movable/screen/hud/S = over_object
-		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
+		if (src.open_sound)
+			playsound(src.linked_item.loc, src.open_sound, 50, TRUE, -5)
 		if (!user.restrained() && !is_incapacitated(user) && src.linked_item.loc == user)
 			if (S.id == "rhand" && !user.r_hand)
 				user.u_equip(src.linked_item)
@@ -245,18 +260,12 @@
 				return
 		user.visible_message(SPAN_ALERT("[user] dumps the contents of [src.linked_item.name] onto [over_object]!"))
 		for (var/obj/item/I as anything in src.get_contents())
+			if(I.anchored)
+				continue
 			src.transfer_stored_item(I, T, user = user)
 			I.layer = initial(I.layer)
-			if (istype(I, /obj/item/mousetrap))
-				var/obj/item/mousetrap/MT = I
-				if (MT.armed)
-					MT.visible_message(SPAN_ALERT("[MT] triggers as it falls on the ground!"))
-					MT.triggered(user, null)
-			else if (istype(I, /obj/item/mine))
-				var/obj/item/mine/M = I
-				if (M.armed && M.used_up != TRUE)
-					M.visible_message(SPAN_ALERT("[M] triggers as it falls on the ground!"))
-					M.triggered(user)
+			if(SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, user))
+				I.visible_message(SPAN_ALERT("[I] triggers as it falls on the ground!"))
 
 /// using storage item in hand
 /datum/storage/proc/storage_item_attack_self(mob/user)
@@ -264,6 +273,9 @@
 
 /// after attacking an object with the storage item
 /datum/storage/proc/storage_item_after_attack(atom/target, mob/user, reach)
+	var/obj/O = target
+	if (istype(O) && O.anchored)
+		return
 	// if item is stored, drop storage and take it out
 	if (target in src.get_contents())
 		user.drop_item()
@@ -272,9 +284,6 @@
 			target.Attackhand(user)
 	// attempt to load item into storage if you have a free hand
 	else if (isitem(target) && !istype(target, /obj/item/storage))
-		var/obj/O = target
-		if (O.anchored)
-			return
 		if (!can_reach(user, target))
 			return
 		if (issilicon(user))
@@ -300,17 +309,10 @@
 /datum/storage/proc/mousetrap_check(mob/user)
 	if (!ishuman(user) || is_incapacitated(user))
 		return FALSE
-	for (var/obj/item/mousetrap/MT in src.get_contents())
-		if (MT.armed)
-			user.visible_message(SPAN_ALERT("<B>[user] reaches into \the [src.linked_item.name] and sets off a mousetrap!</B>"),\
-				SPAN_ALERT("<B>You reach into \the [src.linked_item.name], but there was a live mousetrap in there!</B>"))
-			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
-			return TRUE
-	for (var/obj/item/mine/M in src.get_contents())
-		if (M.armed && M.used_up != TRUE)
-			user.visible_message(SPAN_ALERT("<B>[user] reaches into \the [src.linked_item.name] and sets off a [M.name]!</B>"),\
-				SPAN_ALERT("<B>You reach into \the [src.linked_item.name], but there was a live [M.name] in there!</B>"))
-			M.triggered(user)
+	for (var/obj/item/checked_item in src.get_contents())
+		if (SEND_SIGNAL(checked_item, COMSIG_ITEM_STORAGE_INTERACTION, user))
+			user.visible_message(SPAN_ALERT("<B>[user] reaches into \the [src.linked_item.name] and sets off a [checked_item.name]!</B>"),\
+				SPAN_ALERT("<B>You reach into \the [src.linked_item.name], but there was a live [checked_item.name] in there!</B>"))
 			return TRUE
 
 // ----------------- PUBLIC PROCS ----------------------
@@ -327,10 +329,16 @@
 		if (ispath(type) && istype(W, type))
 			return STORAGE_RESTRICTED_TYPE
 
+	var/fullness = src.get_fullness(W)
+
+	// We check for the storage size if check_wclass is STORAGE_CHECK_W_CLASS_EXCLUDE or if can_hold is not defined
+	if ((!length(src.can_hold) || src.check_wclass == STORAGE_CHECK_W_CLASS_EXCLUDE) && (W.w_class > src.max_wclass))
+		return STORAGE_WONT_FIT
+
 	// if can_hold is defined, check against that
-	if (length(src.can_hold) && !src.is_full())
+	else if (length(src.can_hold) && (fullness != STORAGE_IS_FULL))
 		// early skip if weight class is allowed
-		if (src.check_wclass && W.w_class <= src.max_wclass)
+		if (src.check_wclass == STORAGE_CHECK_W_CLASS_INCLUDE && W.w_class <= src.max_wclass)
 			return STORAGE_CAN_HOLD
 		for (var/type in src.can_hold)
 			if (ispath(type) && istype(W, type))
@@ -340,26 +348,57 @@
 				return STORAGE_CAN_HOLD
 		return STORAGE_CANT_HOLD
 
-	else if (W.w_class > src.max_wclass)
-		return STORAGE_WONT_FIT
-
-	if (src.is_full())
-		return STORAGE_IS_FULL
-
-	return STORAGE_CAN_HOLD
+	return fullness
 
 /// when adding an item in
 /datum/storage/proc/add_contents(obj/item/I, mob/user = null, visible = TRUE)
 	if (I in user?.equipped_list())
 		user.u_equip(I)
-	src.stored_items += I
+	if (src.stack_stackables)
+		var/obj/item/curr = I
+		I = src.try_stack_contents(I)
+		if (isnull(I)) // we couldn't stack everything. this shouldn't happen
+			logTheThing(LOG_DEBUG, src, "[curr] failed to be added to [src] after trying to stack contents")
+			curr.set_loc(get_turf(linked_item))
+			return
+	else
+		src.stored_items += I
 	I.set_loc(src.linked_item, FALSE)
 	src.hud.add_item(I, user)
 	I.stored = src
 
 	src.add_contents_extra(I, user, visible)
+	SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
 
-/// available if add_contents needs to be overridden
+/// For adding an item by trying to stack it with other items.
+/// Returns the item the input was stacked into if that happened, returns W
+/// if it was instead stacked into an available slot. Returns null if it wasn't stacked.
+/datum/storage/proc/try_stack_contents(obj/item/W)
+	var/amt_stacked = 0
+	var/item_starting_amount = W.amount
+
+	// Try stacking with one of the things in the storage
+	for (var/obj/item/I in src.stored_items)
+		if (!W.check_valid_stack(I))
+			continue
+		var/amt_add = min(W.amount, (I.max_stack - I.amount))
+		if (amt_add == W.amount)
+			amt_stacked += I.stack_item(W)
+		else
+			var/obj/item/W_to_stack = W.split_stack(amt_add, src.linked_item)
+			amt_stacked += I.stack_item(W_to_stack)
+		if (amt_stacked >= item_starting_amount)
+			return I
+
+	// We couldn't stack everything or at all, try to insert into an available slot
+	if (amt_stacked < W.amount)
+		if (src.slots > length(src.stored_items))
+			src.stored_items += W
+			W.set_loc(src.linked_item, FALSE)
+			W.stored = src
+			return W
+
+/// Available if add_contents needs to be overridden
 /datum/storage/proc/add_contents_extra(obj/item/I, mob/user, visible)
 	// make sure storage item tooltip will be updated
 	if (istype(src.linked_item, /obj/item))
@@ -378,11 +417,12 @@
 		if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
 			user.visible_message(SPAN_NOTICE("[user] has added [I] to [src.linked_item]!"),
 				SPAN_NOTICE("You have added [I] to [src.linked_item]."))
-		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
+		if (src.open_sound)
+			playsound(src.linked_item.loc, src.open_sound, 50, TRUE, -5)
 
 /// use this versus add_contents() if you also want extra safety checks
 /datum/storage/proc/add_contents_safe(obj/item/I, mob/user = null, visible = TRUE)
-	src.storage_item_attack_by(I, user)
+	src.storage_item_attack_by(I, user, visible)
 
 /// when transfering something in the storage out
 /datum/storage/proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
@@ -416,8 +456,31 @@
 		return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
 
 /// storage is full or not
-/datum/storage/proc/is_full()
-	return length(src.get_contents()) >= src.slots
+/datum/storage/proc/is_full(obj/item/W)
+	if (!src.stack_stackables || isnull(W))
+		return length(src.get_contents()) >= src.slots
+	else
+		return (src.get_fullness(W) == STORAGE_CANT_HOLD)
+
+/// storage is full or not, or can hold some of the given item in it
+/datum/storage/proc/get_fullness(obj/item/W)
+	if (length(src.get_contents()) < src.slots)
+		return STORAGE_CAN_HOLD
+	else if (!src.stack_stackables)
+		return STORAGE_IS_FULL
+
+	var/amount_holdable = 0
+	for (var/obj/item/I as anything in src.stored_items)
+		if (!W.check_valid_stack(I))
+			continue
+		amount_holdable += (I.max_stack - I.amount)
+		if (amount_holdable >= W.amount)
+			return STORAGE_CAN_HOLD
+
+	if (amount_holdable == 0)
+		return STORAGE_IS_FULL
+
+	return STORAGE_CAN_HOLD_SOME
 
 /// return stored contents
 /datum/storage/proc/get_contents()
@@ -432,6 +495,14 @@
 		if (A.storage)
 			. += A.storage.get_all_contents()
 
+/// increase storage slots of the storage
+/datum/storage/proc/increase_slots(mod)
+	src.slots += mod
+	var/list/viewing_mobs = src.hud?.mobs
+	src.hide_all_huds()
+	for (var/mob/M as anything in viewing_mobs)
+		src.show_hud(M)
+
 /// show storage contents
 /datum/storage/proc/show_hud(mob/user)
 	if (user.s_active && user.s_active != src.hud)
@@ -445,6 +516,8 @@
 	if (user.s_active == src.hud)
 		user.s_active = null
 		user.detach_hud(src.hud)
+		if (src.close_sound)
+			playsound(src.linked_item.loc, src.close_sound, 50, TRUE)
 
 /datum/storage/proc/hide_all_huds()
 	for (var/mob/M as anything in src.hud?.mobs)

@@ -4,7 +4,7 @@
 /obj/item/reagent_containers/food/fish/random,
 /obj/decal/stage_edge,
 /turf/simulated/floor/twotone/blue,
-/area/space)
+/area/dmm_suite/clear_area)
 "c" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -13,21 +13,21 @@
 	pixel_y = -11;
 	pixel_x = 8
 	},
-/turf/unsimulated/floor/setpieces/swampgrass,
-/area/space)
+/turf/simulated/floor/swampgrass,
+/area/dmm_suite/clear_area)
 "h" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blue,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
-/turf/simulated/floor/airless/stairs/wood2,
-/area/space)
+/turf/simulated/floor/stairs/wood2,
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/turf/unsimulated/floor/setpieces/swampgrass,
-/area/space)
+/turf/simulated/floor/swampgrass,
+/area/dmm_suite/clear_area)
 "t" = (
 /obj/item/fishing_rod/basic{
 	pixel_x = 6;
@@ -41,12 +41,12 @@
 	pixel_y = -5;
 	pixel_x = 12
 	},
-/turf/unsimulated/floor/wood,
-/area/space)
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/decal/cleanable/paper,
 /turf/simulated/floor/twotone/blue,
-/area/space)
+/area/dmm_suite/clear_area)
 "B" = (
 /obj/item/cigbutt{
 	pixel_x = 2;
@@ -56,24 +56,24 @@
 	pixel_y = 3;
 	pixel_x = 8
 	},
-/turf/unsimulated/floor/setpieces/swampgrass,
-/area/space)
+/turf/simulated/floor/swampgrass,
+/area/dmm_suite/clear_area)
 "E" = (
-/turf/unsimulated/floor/setpieces/swampgrass,
-/area/space)
+/turf/simulated/floor/swampgrass,
+/area/dmm_suite/clear_area)
 "I" = (
-/turf/unsimulated/floor/setpieces/swampgrass_edging,
-/area/space)
+/turf/simulated/floor/swampgrass_edging,
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/storage/crate/freezer{
 	desc = "A cooler to keep your fresh catches in.";
 	name = "cooler"
 	},
-/turf/unsimulated/floor/setpieces/swampgrass,
-/area/space)
+/turf/simulated/floor/swampgrass,
+/area/dmm_suite/clear_area)
 "R" = (
 /turf/simulated/floor/twotone/blue,
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
 	pixel_y = -3
@@ -85,8 +85,8 @@
 	pixel_y = -6;
 	pixel_x = -12
 	},
-/turf/unsimulated/floor/wood,
-/area/space)
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 c

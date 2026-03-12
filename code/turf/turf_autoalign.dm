@@ -78,7 +78,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
+		for (var/obj/mesh/grille/G in orange(1,src))
 			G.UpdateIcon()
 
 /turf/simulated/wall/auto/the_tuff_stuff
@@ -221,7 +221,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 #endif
 	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_jen.dmi'
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	update_neighbors()
 		..()
@@ -295,10 +295,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 #endif
 	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_jen.dmi'
 	light_mod = "wall-jen-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
-		explosion_resistance = 3
+		explosion_resistance = 11
 
 	update_neighbors()
 		..()
@@ -498,7 +498,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 #else
 	icon_state = "mapwall"
 #endif
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
 		explosion_resistance = 7
@@ -536,7 +536,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 #endif
 	mod = "norn-R-"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
 		explosion_resistance = 11
@@ -573,8 +573,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 #endif
 	mod = "norn-Y-"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
+/turf/simulated/wall/auto/reinforced/supernorn/yellow/sturdy
+	name = "plasmasteel reinforced wall"
+	default_material = "plasmasteel"
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 	connect_overlay = 1
@@ -601,7 +604,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 #endif
 	mod = "norn-O-"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	explosion_resistance = 11
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
@@ -656,7 +659,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 #endif
 	mod = "norn-BR-"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	explosion_resistance = 11
 
 
@@ -751,7 +754,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 #endif
 	mod = "old-"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/old)
 	connect_overlay = 1
@@ -782,7 +785,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 #endif
 	mod = "oldr-"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 
 TYPEINFO(/turf/simulated/wall/auto/hedge)
@@ -809,8 +812,22 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 	icon_state = "hedge-map"
 	mod = "hedge-"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	default_material = "wood"
+
+TYPEINFO(/turf/simulated/wall/auto/shuttle/dark)
+TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle/dark)
+	. = ..()
+	connect_overlay = 0
+/turf/simulated/wall/auto/shuttle/dark
+	icon = 'icons/turf/walls/shuttle/dark.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "dshuttle-0"
+#else
+	icon_state = "dshuttle-map"
+#endif
+	mod = "dshuttle-"
+	opacity = 1
 
 /* ===================================================== */
 /* -------------------- UNSIMULATED -------------------- */
@@ -886,7 +903,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 	proc/update_neighbors()
 		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
 			T.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
+		for (var/obj/mesh/grille/G in orange(1,src))
 			G.UpdateIcon()
 
 
@@ -921,7 +938,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 #endif
 	light_mod = "wall-"
 	mod = "norn-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 TYPEINFO(/turf/unsimulated/wall/auto/reinforced/supernorn)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
@@ -949,7 +966,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 #endif
 	light_mod = "wall-"
 	mod = "norn-R-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/supernorn/wood)
@@ -1024,7 +1041,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead)
 /turf/unsimulated/wall/auto/lead
 	name = "lead wall"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 TYPEINFO(/turf/unsimulated/wall/auto/lead/blue)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead/blue)
@@ -1066,7 +1083,7 @@ ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure) // Re abstract this it is n
 /turf/unsimulated/wall/auto/adventure // azone fancy walls
 	name = "adventure wall"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 /turf/unsimulated/wall/auto/adventure/overgrown1
 	name = "overgrown wall"
@@ -1217,6 +1234,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemoon)
 	icon = 'icons/turf/walls/ice.dmi'
 	mod = "ice-"
 	icon_state = "ice-0"
+	plane = PLANE_NOSHADOW_BELOW
 
 /turf/unsimulated/wall/auto/adventure/icemooninterior
 	name = "blue wall"
@@ -1336,7 +1354,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	icon_state = "hedge-map"
 	mod = "hedge-"
 	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	connect_diagonal = TRUE

@@ -1,3 +1,5 @@
+#define POLTERGEISTS_PER_WRAITH 2
+
 /datum/targetable/wraithAbility/make_poltergeist
 	name = "Make Poltergeist"
 	desc = "Attempt to breach the veil between worlds to allow a lesser spirit to enter this realm."
@@ -12,17 +14,16 @@
 	cast(atom/target, params)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
-#ifdef RP_MODE
 		var/mob/living/intangible/wraith/wraith = src.holder.owner
-		if (istype(wraith) && length(wraith.poltergeists) >= 2)
+		if (istype(wraith) && length(wraith.poltergeists) >= POLTERGEISTS_PER_WRAITH)
 			boutput(wraith, SPAN_ALERT("This world is already loud with the voices of your children. No more ghosts will come for now."))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-#endif
 		var/turf/T = get_turf(src.holder.owner)
 		if (!isturf(T) || istype(T, /turf/space))
 			boutput(src.holder.owner, SPAN_ALERT("You can't summon a poltergeist here!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		boutput(holder.owner, SPAN_NOTICE("You begin to channel power to call a spirit to this realm..."))
+		src.doCooldown()
 		make_poltergeist(src.holder.owner, get_turf(src.holder.owner))
 		return CAST_ATTEMPT_SUCCESS
 
@@ -67,3 +68,5 @@
 			message_ghosts("<b>[P]</b>, a poltergeist, has manifested at [log_loc(P, ghostjump = TRUE)].")
 			boutput(W, SPAN_NOTICE("The poltergeist you called has entered this realm. Its name is <b>[P]</b>."))
 		W.spawn_marker = null
+
+#undef POLTERGEISTS_PER_WRAITH

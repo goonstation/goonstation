@@ -46,7 +46,7 @@ This will be your primary tool for sustaining the hydration of growing plants. I
 A rich nutrient slurry from Farmer Melons' processing plants, this will improve the health condition of plants - note however that this advanced mixture will cause the
 soil in the pot to dry out a lot quicker - if you plan on using this, make sure you have a lot of water available.<br><br>
 <u>Gen-Chem Labs Atrazine Weedkiller Compound</u><br>
-A bottle containing the herbicidal compound Atrazine (nitrohychloride), it will selectively target paticular types of plant and eliminate them from the inside
+A bottle containing the herbicidal compound Atrazine (nitrohychloride), it will selectively target particular types of plant and eliminate them from the inside
 once absorbed through the soil, while remaining harmless to useful types of crop. Though it takes a short time to work, it is highly effective against weed infestations
 of any kind.<br><br>
 <u>Farmer Melons' GeneScan v2</u><br>
@@ -65,14 +65,14 @@ The process of growing and harvesting plants is simple enough, for the most part
 </ul>
 If you wish to breed plants, it may be wise to save at least one item of produce for the Seed Extractor.<br>
 While plants are growing, it is prudent to keep checking both the plant itself and the surrounding pots. Certain chemicals can cause unstable or detrimental effects upon
-a plant's health and genes. In paticular you should avoid pouring unusual chemicals into the plantpots, and you should keep an eye on the other pots in the hydroponics room,
-paticularly for Creeper weeds which are an aggressive, fast-growing vine capable of spreading to other pots and killing other plants.<br>
+a plant's health and genes. In particular you should avoid pouring unusual chemicals into the plantpots, and you should keep an eye on the other pots in the hydroponics room,
+particularly for Creeper weeds which are an aggressive, fast-growing vine capable of spreading to other pots and killing other plants.<br>
 The use of compost, while not vital to growing plants, is very helpful in improving the condition of a damaged plant or increasing the crop yield and lifespan of a plant.
 Simply pour the compost into the plantpot to saturate the soil with rich nutrients - take note however that this will cause the water in the pot to dry out twice as quickly,
 so if you wish to nurture a plant to good health then it would be wise to not stray far from the plant. Other forms of plant nutrients exist - co-operate with the chemist
 and experiment to see if you can find nutrients with more potency or other beneficial effects to the standard issue compost.<hr>
 <b>Chapter 3 - Plant Breeding</b><br>
-Plant Scanners will be invaulable to you in this line of work. Using a plant scanner on a plant, fruit or seed will display information about mutable genes in this plant.
+Plant Scanners will be invaluable to you in this line of work. Using a plant scanner on a plant, fruit or seed will display information about mutable genes in this plant.
 Different species may have different combinations of genes. Bear in mind that genes operate in concordance with the plant's normal values for it's species.
 For instance, Melons normally produce two melons per harvest - a Yield gene of 1 means they would produce three. The most well-known genes are:
 <ul>
@@ -85,7 +85,7 @@ For instance, Melons normally produce two melons per harvest - a Yield gene of 1
 </ul>
 With the exception of the Rates, higher numbers are better. Genes are passed down from plants to their fruits and seeds - when planted, a seed will mutate slightly from the
 genes it already had. This is largely up to chance and any gene could be raised or lowered - experiment with various lineages and try to get as many seeds as possible if you
-are breeding for a paticular kind of gene.<hr>
+are breeding for a particular kind of gene.<hr>
 <font size=1>PDA technology produced by Thinktronic Systems, LTD for the NanoTrasen Corporation</font>
 "}
 
@@ -96,7 +96,7 @@ are breeding for a paticular kind of gene.<hr>
 	data = {"
 <b>Readme file - Nanotrasen Network Diagnostic Cartridge for Thinktronic PDA v0.9.2</b><hr><br>
 <p>For use only by qualified network diagnostic technicians.
-<p>No user servicable parts inside. Do not dissasemble - risque de choc electrique.
+<p>No user servicable parts inside. Do not disassemble - risque de choc electrique.
 <p>Do not use in radio frequency interference (RFI) sensitive environments. Do not use attempt to use messenger, bot control or other wireless networking applications
 simultaneously as a malfunction may occur.
 <p>This device does not comply with part 15 of the GCC rules. Operation is subject to the following two conditions: (1) this device

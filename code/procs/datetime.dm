@@ -92,3 +92,33 @@ proc/validateIso8601(iso8601)
 		return FALSE
 
 	return TRUE
+
+///returns a string describing approximately how much time this represents, useful for when you want to be *vague*
+///if this already exists somewhere else I apologise but I couldn't find it
+proc/approx_time_text(time)
+	var/number = null
+	var/string = null
+	if (time < 1 MINUTE)
+		number = time / (1 SECOND)
+		string = "second"
+	else if (time < 1 HOUR)
+		number = time / (1 MINUTE)
+		string = "minute"
+	else if (time < 1 DAY)
+		number = time / (1 HOUR)
+		string = "hour"
+	else if (time < 1 WEEK)
+		number = time / (1 DAY)
+		string = "day"
+	else if (time < 1 MONTH)
+		number = time / (1 WEEK)
+		string = "week"
+	else if (time < 1 YEAR)
+		number = time / (1 MONTH)
+		string = "month"
+	else
+		number = time / (1 YEAR)
+		string = "year"
+
+	number = floor(number)
+	return "[number] [string][number > 1 ? "s" : ""]"

@@ -21,7 +21,7 @@
 		. += "<br>It contains [matter] units of ammo."
 
 	attackby(obj/item/W, mob/user, params)
-		if(istype(W, /obj/item/rcd))
+		if(istype(W, /obj/item/rcd) || istype(W, /obj/item/places_pipes))
 			W.Attackby(src, user, params)
 			return
 		. = ..()

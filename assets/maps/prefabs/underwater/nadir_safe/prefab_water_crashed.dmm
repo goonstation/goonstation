@@ -24,7 +24,7 @@
 /area/station/turret_protected/sea_crashed)
 "ag" = (
 /obj/item/raw_material/shard,
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ah" = (
@@ -92,7 +92,7 @@
 /area/station/turret_protected/sea_crashed)
 "ax" = (
 /obj/item/raw_material/scrap_metal,
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ay" = (
@@ -240,7 +240,7 @@
 /area/station/turret_protected/sea_crashed)
 "ba" = (
 /obj/fakeobject/firealarm_broken{
-	dir = 4;
+	dir = 8;
 	icon_state = "firex";
 	pixel_x = -24
 	},
@@ -356,7 +356,7 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "bs" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 10;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -374,7 +374,8 @@
 "bv" = (
 /obj/fakeobject/firealarm_broken{
 	pixel_x = 0;
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
@@ -715,7 +716,7 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2
@@ -1280,7 +1281,7 @@
 /turf/variableTurf/floor,
 /area/station/turret_protected/sea_crashed)
 "ee" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/variableTurf/clear,
 /area/station/turret_protected/sea_crashed)
 "pO" = (

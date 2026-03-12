@@ -50,21 +50,6 @@
 	color = SECURITY
 
 //////////// Medical ////
-/obj/mapping_helper/access/pathology // top of the list because of the whole "science or med" thing w/e
-	name = "pathology spawn"
-	#ifdef CREATE_PATHOGENS
-	req_access = list(access_pathology)
-	#elif defined(SCIENCE_PATHO_MAP)
-	req_access = list(access_research)
-	#else
-	req_access = list(access_medical)
-	#endif
-	#ifdef SCIENCE_PATHO_MAP
-	color = RESEARCH
-	#else
-	color = MEDICAL
-	#endif
-
 /obj/mapping_helper/access/medical
 	name = "medical access spawn"
 	req_access = list(access_medical)
@@ -90,6 +75,16 @@
 	req_access = list(access_robotics)
 	color = MEDICAL
 
+/obj/mapping_helper/access/pathology
+	name = "pathology access spawn"
+	req_access = list(access_medical)
+	color = MEDICAL
+
+/obj/mapping_helper/access/pharmacy
+	name = "pharmacy access spawn"
+	req_access = list(access_pharmacy)
+	color = MEDICAL
+
 //////////// Engineering ////
 /obj/mapping_helper/access/cargo
 	name = "cargo access spawn"
@@ -104,11 +99,6 @@
 /obj/mapping_helper/access/engineering_storage
 	name = "engineering storage access spawn"
 	req_access = list(access_engineering_storage)
-	color = ENGINEERING
-
-/obj/mapping_helper/access/engineering_eva
-	name = "engineering EVA access spawn"
-	req_access = list(access_engineering_eva)
 	color = ENGINEERING
 
 /obj/mapping_helper/access/engineering_power
@@ -148,12 +138,12 @@
 
 //////////// Research ////
 /obj/mapping_helper/access/tox
-	name = "tox access spawn"
+	name = "toxins access spawn"
 	req_access = list(access_tox)
 	color = TOXINS
 
 /obj/mapping_helper/access/tox_storage
-	name = "tox access spawn"
+	name = "toxins storage access spawn"
 	req_access = list(access_tox_storage)
 	color = TOXINS
 
@@ -329,12 +319,12 @@
 
 /obj/mapping_helper/access/owlcommand
 	name = "owlery command access spawn"
-	req_access = list(access_owlerysec)
+	req_access = list(access_owlerycommand)
 	color = COMMAND
 
 /obj/mapping_helper/access/owlsecurity
 	name = "owlery sec access spawn"
-	req_access = list(access_owlerycommand)
+	req_access = list(access_owlerysec)
 	color = SECURITY
 
 /obj/mapping_helper/access/polariscargo
@@ -346,6 +336,16 @@
 	name = "polaris important access spawn"
 	req_access = list(access_polarisimportant)
 	color = CARGO
+
+/obj/mapping_helper/access/impossible
+	name = "impossible access spawn"
+	req_access = list(access_impossible)
+	color = MORGUE_BLACK
+
+/obj/mapping_helper/access/lunar_breakdoor
+	name = "lunar breakdoor access spawn"
+	req_access = list(access_lunar_breakdoor)
+	color = ENGINEERING
 
 #undef MEDICAL
 #undef SECURITY

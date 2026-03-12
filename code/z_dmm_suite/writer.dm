@@ -184,7 +184,7 @@ dmm_suite/proc
 					var/tempKey = keys[keyNumber]
 					joinGrid.Add(tempKey)
 					sleep(-1)
-				dmmText += {"[list2text(joinGrid, "\n")]\n\"}"}
+				dmmText += {"[jointext(joinGrid, "\n")]\n\"}"}
 				sleep(-1)
 		//
 		return jointext(dmmText, "")

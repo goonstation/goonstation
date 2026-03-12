@@ -65,3 +65,12 @@
 			venom_ids = list("ants", "histamine")
 			inject_amount = 8
 
+	mimic
+		name = "Mimicotoxin Sting"
+		desc = "Inject your target with a confusing toxin."
+		venom_ids = list("mimicotoxin")
+		inject_amount = 15
+
+		antag_spawn
+			inject_amount = 17 //enough to blind someone for a few seconds
+

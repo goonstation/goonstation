@@ -172,6 +172,7 @@
 	icon_state = "tubesponge_small"
 	database_id = "sea_plant_tubesponge-small"
 
+
 //NADIR DOODADS (indev)
 //stony and weird "plants" and rocks that you can mine, sometimes yielding resources
 /obj/nadir_doodad
@@ -287,6 +288,101 @@
 		/obj/item/raw_material/mauxite = 60,
 		/obj/item/raw_material/fibrilith = 50
 	)
+
+/obj/plasma_coral // so it doesn't generate randomly with the rest of the sea plants
+	name = "plasma coral"
+	icon = 'icons/obj/sealab_objects.dmi'
+	desc = "It's somehow thriving."
+	anchored = ANCHORED
+	density = 0
+	layer = EFFECTS_LAYER_UNDER_1
+	var/database_id = null
+	var/random_color = 1
+	var/drop_type = 0
+	event_handler_flags = USE_FLUID_ENTER
+
+	default_material = "plasmacoral"
+	uses_default_material_appearance = FALSE
+
+
+	New()
+		..()
+		if (src.random_color)
+			src.color = random_saturated_hex_color()
+		if (!src.pixel_x)
+			src.pixel_x = rand(-8,8)
+		if (!src.pixel_y)
+			src.pixel_y = rand(-8,8)
+
+	attackby(obj/item/W, mob/user)
+		if (issnippingtool(W))
+			if(drop_type)
+				var/obj/item/drop = new drop_type
+				drop.set_loc(src.loc)
+			src.visible_message(SPAN_ALERT("[user] cuts down [src]."))
+			qdel(src)
+		..()
+
+
+//mbc : added dumb layer code to keep perspective intact *most of the time*
+/obj/plasma_coral/Cross(atom/A)
+	if (ismob(A))
+
+		var/mob/M = A
+
+		var/has_fluid_move_gear = 0
+		for(var/atom in M.get_equipped_items())
+			var/obj/item/I = atom
+			if (I.getProperty("negate_fluid_speed_penalty"))
+				has_fluid_move_gear = 1
+				break
+
+		if (!has_fluid_move_gear)
+			if (ishuman(A))
+				var/mob/living/carbon/human/H = A
+				if (H.mutantrace.aquatic)
+					has_fluid_move_gear = 1
+
+		if (!has_fluid_move_gear)
+			A.setStatus("slowed", 0.5 SECONDS, optional = 4)
+
+		if (get_dir(src,A) & SOUTH || pixel_y > 0) //If we approach from underneath, fudge the layer so the drawing order doesn't break perspective
+			src.layer = 3.9
+		else
+			src.layer = EFFECTS_LAYER_UNDER_1
+		return 1
+	else if(istype(A,/obj/machinery/vehicle/tank) || istype(A,/mob/living/critter/aquatic/king_crab))
+		animate_door_squeeze(src)
+		return 1
+	//else if (istype(A,/obj/storage))
+	//	return 1
+	else return 1
+
+/obj/plasma_coral/Uncrossed(atom/movable/A as mob|obj)
+	..()
+	if (ismob(A))
+		if (A.dir & SOUTH) //If mob exiting south, dont break perspective
+			src.layer = 3.9
+		else
+			src.layer = EFFECTS_LAYER_UNDER_1
+
+/obj/plasma_coral/bulbous
+	name = "bulbous plasmacoral"
+	icon_state = "plascoral3"
+	database_id = "sea_plant_bluecoral"
+	drop_type = /obj/item/raw_material/plasmastone
+
+/obj/plasma_coral/branching
+	name = "branching plasmacoral"
+	icon_state = "plascoral2"
+	database_id = "sea_plant_branchcoral"
+	drop_type = /obj/item/raw_material/plasmastone
+
+/obj/plasma_coral/coralfingers
+	name = "stylophora plasmacoral"
+	icon_state = "plascoral1"
+	database_id = "sea_plant_fingercoral"
+	drop_type = /obj/item/raw_material/plasmastone
 
 //TURFS
 /turf/unsimulated/wall/trench

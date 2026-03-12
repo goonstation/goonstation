@@ -159,7 +159,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "gO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
 	dir = 1;
@@ -237,7 +237,7 @@
 /area/prefab/bee_sanctuary)
 "jJ" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/caution/west,
 /area/prefab/bee_sanctuary)
 "jW" = (
@@ -330,7 +330,7 @@
 /area/prefab/bee_sanctuary)
 "ow" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "oz" = (
@@ -650,7 +650,7 @@
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "Dn" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";

@@ -389,82 +389,118 @@
 		on_end_path()
 			qdel(src)
 
-	lunar_cab
-		icon = 'icons/obj/large/64x48.dmi'
-		icon_state = "cab-engineer"
-
-		name = "lunar tram engine"
-		desc = "The La Caille Model 2006 LunaTram. A staple of lunar transit."
-		plane = -100
-
-	passenger
-		icon = 'icons/obj/large/64x48.dmi'
-		icon_state = "car-passenger-middle"
-		plane = -100
-
-		start
-			icon_state = "car-passenger-start"
-
-		end
-			icon_state = "car-passenger-end"
-
 	flatbed
 		icon = 'icons/obj/large/64x48.dmi'
 		icon_state = "car-platform"
+		bound_width = 64
 		plane = -100
 
+		/// icon file for the train car contents
+		var/contents_icon = 'icons/obj/large/64x48.dmi'
+		/// icon state for the train car contents
+		var/contents_icon_state = null
+		/// pixel_x for the contents overlay
+		var/contents_pixel_x = 0
+		/// pixel_y for the contents overlay
+		var/contents_pixel_y = 0
+		/// If TRUE, overlays a caution frame above the contents
+		var/has_caution_frame = FALSE
+
+		New()
+			..()
+			if (src.contents_icon_state)
+				var/image/contents_overlay = src.SafeGetOverlayImage("contents_overlay", contents_icon, contents_icon_state, src.layer+0.1, contents_pixel_x, contents_pixel_y)
+				src.UpdateOverlays(contents_overlay, "contents_overlay")
+			if (src.has_caution_frame)
+				var/image/frame_overlay = src.SafeGetOverlayImage("frame_overlay", 'icons/obj/large/64x48.dmi', "frame-caution", src.layer+0.2)
+				src.UpdateOverlays(frame_overlay, "frame_overlay")
+
+
+		update_icon(...)
+			. = ..()
+			if (src.contents_icon_state)
+				var/image/contents_overlay = src.SafeGetOverlayImage("contents_overlay", contents_icon, contents_icon_state, src.layer+0.1, contents_pixel_x, contents_pixel_y)
+				src.UpdateOverlays(contents_overlay, "contents_overlay")
+			else
+				src.ClearSpecificOverlays(FALSE, "contents_overlay")
+			if (src.has_caution_frame)
+				var/image/frame_overlay = src.SafeGetOverlayImage("frame_overlay", 'icons/obj/large/64x48.dmi', "frame-caution", src.layer+0.2)
+				src.UpdateOverlays(frame_overlay, "frame_overlay")
+			else
+				src.ClearSpecificOverlays(FALSE, "frame_overlay")
+		lunar_cab
+
+			contents_icon_state = "cab-engineer"
+
+			name = "lunar tram engine"
+			desc = "The La Caille Model 2006 LunaTram. A staple of lunar transit."
+
+		passenger
+			contents_icon_state = "car-passenger-middle"
+
+			start
+				contents_icon_state = "car-passenger-start"
+
+			end
+				contents_icon_state = "car-passenger-end"
+
 		container
-			icon_state = "car-container-green"
+			contents_icon_state = "car-container-green"
 
 			red
-				icon_state = "car-container-red"
+				contents_icon_state = "car-container-red"
 				name = "Hafgan container"
 
 			blue
-				icon_state = "car-container-blue"
+				contents_icon_state = "car-container-blue"
 
 			tanker
-				icon_state = "car-tanker"
+				contents_icon_state = "car-tanker"
+				has_caution_frame = TRUE
 
 			barrels
-				icon_state = "car-barrels"
+				contents_icon_state = "car-barrels"
 
 			mail
-				icon_state = "car-mailcrates"
+				contents_icon_state = "car-mailcrates"
 
 			woodcrates
-				icon_state = "car-woodcrates"
+				contents_icon_state = "car-woodcrates"
 
 			nt
-				icon_state = "car-nt"
+				contents_icon_state = "car-nt"
 
 			cyborgs
-				icon_state = "car-cyborgs"
+				contents_icon_state = "car-cyborgs"
 
 			rtgs
-				icon_state = "car-rtgs"
+				contents_icon_state = "car-rtgs"
 
 			thruster
-				icon_state = "car-thruster"
+				contents_icon_state = "car-thruster"
 
 			nuclear
-				icon_state = "car-nukes"
+				contents_icon_state = "car-nukes"
+				has_caution_frame = TRUE
 
 			industrial
-				icon_state = "car-industrial"
+				contents_icon_state = "car-industrial"
 
 			crime
-				icon_state = "car-crime"
+				contents_icon_state = "car-crime"
 
 			military
-				icon_state = "car-military"
+				contents_icon_state = "car-military"
 
 			warhead
-				icon_state = "car-warhead"
+				contents_icon_state = "car-warhead"
 
 			firebarrel
-				icon_state = "car-fire"
+				contents_icon_state = "car-fire"
 
+			howitzer
+				icon_state = "car-platform-green"
+				contents_icon_state = "car-howitzer"
 
 
 /obj/decoration/railyard

@@ -9,7 +9,7 @@ TYPEINFO(/obj/item/device/multitool)
 	icon_state = "multitool"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
-	tool_flags = TOOL_PULSING
+	tool_flags = TOOL_PULSING | TOOL_ASSEMBLY_APPLIER
 	w_class = W_CLASS_SMALL
 	force = 5
 	throwforce = 5
@@ -19,10 +19,24 @@ TYPEINFO(/obj/item/device/multitool)
 	m_amt = 50
 	g_amt = 20
 	custom_suicide = TRUE
+	var/spark_power = 2000 //! The amount of power needed to cause an upgraded spark in a cell-assembly
+	var/max_spark_power_usage = 8000 //! The amount of power consumed at maximum power.
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/elecflash)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_target_addition))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, PROC_REF(assembly_component_addition))
+
+	disposing()
+		. = ..()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION)
+
 
 	grey
 		desc = "You can use this on airlocks or APCs to try to hack them without cutting wires. This one comes with a handy grey stripe."
@@ -42,6 +56,117 @@ TYPEINFO(/obj/item/device/multitool)
 /obj/item/device/multitool/afterattack(atom/target, mob/user , flag)
 	. = ..()
 	get_and_return_netid(target,user)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+/obj/item/device/multitool/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+	if(!parent_assembly.target)
+		return " You can add a plasma tank onto this assembly in order to modify it further."
+	if(parent_assembly.special_construction_identifier == "canbomb")
+		//when were at this stage, the igniter is inserted, so we need to check if either the cabling is in there or not
+		var/is_cabled = FALSE
+		for(var/obj/item/checked_item in parent_assembly.additional_components)
+			if(istype(checked_item, /obj/item/cable_coil))
+				is_cabled = TRUE
+		if(is_cabled)
+			return " You can use this on a canister to build a canbomb. You can use other items, like a signaler or atmospheric scanner, to modify this further"
+		return " You can use 6 units of cable coils to continue to the construction of the canbomb detonator"
+	// there is a target, the only one able at this point is the plasma tank
+	if(istype(parent_assembly.trigger, /obj/item/device/timer))
+		return " You can use an igniter to start the assembly of a canbomb detonator."
+
+
+/obj/item/device/multitool/proc/assembly_setup(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	//since we have different multitools
+	parent_assembly.applier_icon_prefix = "multitool"
+	if (!parent_assembly.target)
+		// trigger-multitool-Assembly + plasmatank -> trigger-multitool-plasmatank-bomb
+		// trigger-multitool-Assembly + power cell -> trigger-multitool-powercell-assembly
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/cell), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+
+//this proc handles multitool/cell assembly power drain and calculation.
+//it returns the new power of the new multitool application
+/obj/item/device/multitool/proc/handle_power_cell_boost(var/obj/item/assembly/manipulated_assembly, var/obj/item/cell/manipulated_cell)
+	var/power_output = 2
+	if(istype(manipulated_cell, /obj/item/cell/erebite))
+		manipulated_assembly.visible_message(SPAN_ALERT("[manipulated_assembly] violently explodes!"))
+		logTheThing(LOG_COMBAT, manipulated_assembly.last_armer, "'s [manipulated_assembly] (erebite power cell) went off at [log_loc(src)].")
+		var/turf/T = get_turf(src)
+		explosion(src, T, 0, 1, 2, 2)
+		SPAWN(0.1 SECONDS)
+			qdel(manipulated_assembly)
+		return 0
+	if (manipulated_cell && manipulated_cell.charge >= src.spark_power)
+		power_output += floor(min(manipulated_cell.charge / src.spark_power, src.max_spark_power_usage / src.spark_power))
+		manipulated_cell.use(src.max_spark_power_usage)
+	return power_output
+
+
+/obj/item/device/multitool/proc/assembly_application(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+	if(istype(assembly_target, /obj/item/tank/plasma))
+		var/obj/item/tank/plasma/manipulated_plasma_tank = assembly_target
+		manipulated_plasma_tank.ignite()
+		qdel(parent_assembly)
+		return
+	//if there is no plasma tank attached (e.g. a cell), we make a shock akin to using the multitools special on a 1-second cooldown.
+	if(!ON_COOLDOWN(src, "multitool shock", 1 SECONDS))
+		//We upgrade it with cell power, though
+		var/multitool_power = src.handle_power_cell_boost(parent_assembly, assembly_target)
+		if(multitool_power == 0)
+			//erebite cell goes boom
+			return
+		var/multitool_range = max(0, ceil((multitool_power - 2) / 2)) // 0 radius on power 2, 1 at 3-4, 2 at 5-6 (the max)
+		elecflash(get_turf(src),multitool_range, multitool_power, 0)
+	return
+
+
+/obj/item/device/multitool/proc/assembly_target_addition(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/mob/user, var/obj/item/new_target)
+	//canbomb require a specific assembly to be build
+	if(istype(parent_assembly.trigger, /obj/item/device/timer) && istype(new_target, /obj/item/tank/plasma))
+		// timer/multitool/plasmatank-assembly + igniter -> detonator-assembly
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/device/igniter), TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
+
+/obj/item/device/multitool/proc/assembly_component_addition(var/manipulated_multitool, var/obj/item/assembly/parent_assembly, var/mob/user, var/obj/item/new_component)
+	var/list/canbomb_valid_additions = list(/obj/item/instrument/bikehorn,
+											/obj/item/instrument/vuvuzela,
+											/obj/item/cell,
+											/obj/item/device/brainjar,
+											/obj/item/device/flash,
+											/obj/item/device/analyzer/atmospheric)
+	var/max_amount_of_canbomb_attachments = 3
+	if(parent_assembly.special_construction_identifier == "canbomb")
+		if(istype(new_component, /obj/item/device/igniter))
+			// detonator assembly + cable -> cabled detonator assembly
+			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/cable_coil), TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
+		else
+			//in any other case, since we locked canbomb assembly, it's either the cable coil, some canbomb specifics or paper
+			//so we add the components for the complete assembly accordingly
+			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/machinery/portable_atmospherics/canister), TYPE_PROC_REF(/obj/item/assembly, create_canbomb), TRUE)
+			//now we build a list of stuff we can add to the canbomb as additions
+			var/has_paper = FALSE
+			var/has_signaler = FALSE
+			var/amount_of_attachments = 0
+			for(var/obj/item/checked_item in parent_assembly.additional_components)
+				if(istype(checked_item, /obj/item/paper))
+					has_paper = TRUE
+				if(istype(checked_item, /obj/item/device/radio/signaler))
+					has_signaler = TRUE
+				for(var/checked_type in canbomb_valid_additions)
+					if(istype(checked_item, checked_type))
+						amount_of_attachments += 1
+			var/list/potential_additions = list()
+			if(!has_paper)
+				potential_additions += /obj/item/paper
+			if(!has_signaler)
+				potential_additions += /obj/item/device/radio/signaler
+			if(amount_of_attachments < max_amount_of_canbomb_attachments)
+				potential_additions |= canbomb_valid_additions
+			if(length(potential_additions) > 0)
+				parent_assembly.AddComponent(/datum/component/assembly, potential_additions, TYPE_PROC_REF(/obj/item/assembly, add_additional_component), TRUE)
+
+
+/// ----------------------------------------------
+
 
 /proc/get_and_return_netid(atom/target, mob/user)
 	//Get the NETID from bots/computers/everything else
@@ -73,7 +198,7 @@ TYPEINFO(/obj/item/device/multitool)
 			frequency = omniperipheral.frequency
 	else if (targetimplant)
 		net_id = targetimplant.net_id
-		frequency = targetimplant.pda_alert_frequency
+		frequency = targetimplant.alert_frequency
 
 	if(net_id)
 		boutput(user, SPAN_ALERT("NETID#[net_id]"))

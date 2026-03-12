@@ -81,7 +81,7 @@
 "G" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
-/obj/item/reagent_containers/food/drinks/espressocup,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/bar,
 /area/dmm_suite/clear_area)
 "I" = (
@@ -92,8 +92,7 @@
 /area/dmm_suite/clear_area)
 "U" = (
 /obj/machinery/door/window/eastright{
-	name = "Beestro Bar Door";
-	req_access_txt = null
+	name = "Beestro Bar Door"
 	},
 /obj/critter/domestic_bee/chef,
 /turf/simulated/bar,

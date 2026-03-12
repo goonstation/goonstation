@@ -1,12 +1,12 @@
 name: Report a Bug
 description: Report a bug here on our issue tracker.
+type: Bug
 body:
 - type: "input"
   id: "labels"
   attributes:
     label: "Labels"
     description: "To automatically label this issue, add the uppercase'd label(s) sourrounded by brackets"
-    value: "[BUG]"
     placeholder: "[LABEL]"
 
 - type: "input"

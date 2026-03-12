@@ -7,6 +7,12 @@ mob/verb/checkrewards()
 	set name = "Check Job Rewards"
 	set category = "Commands"
 
+	if (!src.mind) return
+
+	if(isdead(usr))
+		boutput(usr, SPAN_NOTICE("You can't claim rewards while dead!"))
+		return
+
 	SPAWN(0)
 		var/mob/M = usr
 		if(!winexists(M, "winjobrewards_[M.ckey]"))
@@ -39,29 +45,11 @@ mob/verb/checkrewards()
 	var/datum/jobXpReward/rewardDatum = null
 
 	Click(location,control,params)
-		if(control && rewardDatum)
-			if(control == "winjobrewards_[usr.ckey].grdJobRewards")
-				if(rewardDatum.claimable && (usr.job in rewardDatum.required_levels) && rewardDatum.qualifies(usr.key)) //Check for number of claims.
-					var/claimsLeft = 1
-					if(rewardDatum.claimPerRound > 0)
-						if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
-							claimsLeft = 0
-					if(claimsLeft)
-						if(tgui_alert(usr, "Would you like to claim this reward?", "Claim reward", list("Yes", "No")) == "Yes")
-							if(rewardDatum.claimPerRound > 0)
-								if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
-									return
-							if(rewardDatum.qualifies(usr.key))
-								rewardDatum.activate(usr.client)
-								if(usr.key in rewardDatum.claimedNumbers)
-									rewardDatum.claimedNumbers[usr.key] = (rewardDatum.claimedNumbers[usr.key] + 1)
-								else
-									rewardDatum.claimedNumbers[usr.key] = 1
-							else
-								boutput(usr, SPAN_ALERT("Looks like you haven't earned this yet, sorry!"))
-					else
-						boutput(usr, SPAN_ALERT("Sorry, you can not claim any more of this reward, this round."))
-		return
+		if(!src.rewardDatum)
+			return
+		if(control != "winjobrewards_[usr.ckey].grdJobRewards")
+			return
+		src.rewardDatum.try_claim(usr)
 
 	MouseEntered(location,control,params)
 		if(winexists(usr, "winjobrewards_[usr.ckey]"))
@@ -90,15 +78,42 @@ mob/verb/checkrewards()
 	var/list/claimedNumbers = list() //Assoc list, key:numclaimed
 
 	proc/qualifies(var/key)
-		var/pass = 1
 		for(var/X in required_levels)
+			if (required_levels[X] <= 0) //dont car
+				continue
 			var/level = get_level(key, X)
 			if(level < required_levels[X])
-				pass = 0
-		return pass
+				return FALSE
+		return TRUE
 
 	proc/activate(var/client/C)
 		return
+
+	proc/try_claim(mob/user, check_levels = TRUE)
+		if(!src.claimable || !(user.job in src.required_levels))
+			return
+
+		if(src.claimPerRound > 0) //Check for number of claims.
+			if(src.claimedNumbers.Find(user.key) && src.claimedNumbers[user.key] >= src.claimPerRound)
+				boutput(user, SPAN_ALERT("Sorry, you can not claim any more of this reward, this round."))
+				return
+
+		if(tgui_alert(user, "Would you like to claim this reward?", "Claim reward", list("Yes", "No")) != "Yes")
+			return
+
+		if(check_levels && !src.qualifies(user.key))
+			boutput(user, SPAN_ALERT("Looks like you haven't earned this yet, sorry!"))
+			return
+
+		src.activate(user.client)
+
+		if(user.key in src.claimedNumbers)
+			src.claimedNumbers[user.key] = (src.claimedNumbers[user.key] + 1)
+		else
+			src.claimedNumbers[user.key] = 1
+
+		return TRUE
+
 
 //JANITOR
 

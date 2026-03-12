@@ -33,6 +33,13 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 
 /obj/machinery/hydro_growlamp/process(mult)
 	..()
+	for(var/obj/machinery/hydro_growlamp/hg in get_turf(src))
+		if(hg.active && hg != src)
+			hg.visible_message(SPAN_ALERT("[hg] overheats and shuts down!"), "", "hydro_lamp_shutdown")
+			hg.active = FALSE
+			hg.light.disable()
+			hg.icon_state = "growlamp[hg.active]"
+
 	if(!src.active || !powered())
 		return
 	for (var/atom/A in view(4,src))
@@ -52,8 +59,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 						manipulated_tick.growth_rate += 4
 		else if (ismob(A))
 			var/mob/M = A
-			if (M.bodytemperature < M.base_body_temp)
-				M.bodytemperature += 15 * mult
+			M.changeBodyTemp(15 KELVIN * mult, max_temp = M.base_body_temp)
 	use_power(ACTIVE_POWER_USAGE)
 
 /obj/machinery/hydro_growlamp/attack_hand(var/mob/user)

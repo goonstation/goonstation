@@ -28,12 +28,12 @@
 		))
 	add_server(new/datum/game_server(
 		"main5",
-		"Goonstation 5 Roleplay overflow: Rocko",
+		"Goonstation 5 Event: Rocko",
 		"byond://goon5.goonhub.com:26500",
 		5
 		))
 
-	add_server(new/datum/game_server(
+/* 	add_server(new/datum/game_server(
 		"streamer1",
 		"Goonstation Nightshade 1",
 		"byond://tomato1.goonhub.com:27111",
@@ -50,4 +50,4 @@
 		"Goonstation Nightshade 3",
 		"byond://tomato3.goonhub.com:27113",
 		13, publ=FALSE
-		))
+		)) */

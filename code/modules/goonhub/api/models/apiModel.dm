@@ -20,3 +20,10 @@ ABSTRACT_TYPE(/datum/apiModel)
 /// Override to build a model from an API response object
 /datum/apiModel/proc/SetupFromResponse()
 	return
+
+//"Wire proofing" - Zewaka
+/datum/apiModel/proc/operator[](key)
+	return src.vars[key]
+
+/datum/apiModel/proc/operator[]=(key, value)
+	src.vars[key] = value

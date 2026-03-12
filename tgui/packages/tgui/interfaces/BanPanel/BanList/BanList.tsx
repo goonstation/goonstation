@@ -6,15 +6,24 @@
  * @license ISC
  */
 
-import { useLocalState } from '../../../backend';
-import { Button, Dropdown, Flex, Input, NumberInput, Section, Stack } from '../../../components';
+import { useState } from 'react';
+import {
+  Button,
+  Dropdown,
+  Flex,
+  Input,
+  NumberInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+
 import { HeaderCell } from '../../../components/goonstation/ListGrid';
-import { useBanPanelBackend } from '../useBanPanelBackend';
+import type { BanResource } from '../apiType';
 import type { BanListTabData } from '../type';
 import { BanPanelSearchFilter } from '../type';
+import { useBanPanelBackend } from '../useBanPanelBackend';
 import { BanListItem } from './BanListItem';
 import { buildColumnConfigs } from './columnConfig';
-import type { BanResource } from '../apiType';
 
 interface BanListProps {
   data: BanListTabData;
@@ -24,19 +33,20 @@ const DEFAULT_PAGE_SIZE = 30;
 const filterOptions = Object.keys(BanPanelSearchFilter);
 const getRowId = (data: BanResource) => `${data.id}`;
 
-export const BanList = (props: BanListProps, context) => {
+export const BanList = (props: BanListProps) => {
   const { data } = props;
   const { ban_list, per_page } = data;
-  const { action } = useBanPanelBackend(context);
+  const { action } = useBanPanelBackend();
   const { search_response } = ban_list ?? {};
   const { data: banResources } = search_response ?? {};
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const [searchFilter, setSearchFilter] = useLocalState(context, 'searchFilter', BanPanelSearchFilter.ckey);
-  const handleSearch = () => action.searchBans(searchText, BanPanelSearchFilter[searchFilter]);
-  const handleSearchTextChange = (_e, value: string) => setSearchText(value);
+  const [searchText, setSearchText] = useState('');
+  const [searchFilter, setSearchFilter] = useState(BanPanelSearchFilter.ckey);
+  const handleSearch = () =>
+    action.searchBans(searchText, BanPanelSearchFilter[searchFilter]);
+  const handleSearchTextChange = (value: string) => setSearchText(value);
   const handlePreviousPage = action.navigatePreviousPage;
   const handleNextPage = action.navigateNextPage;
-  const handlePerPageChange = (_e, value: number) => action.setPerPage(value);
+  const handlePerPageChange = (value: number) => action.setPerPage(value);
   const handleEditBan = (id: number) => action.editBan(id);
   const handleDeleteBan = (id: number) => action.deleteBan(id);
   const columnConfigs = buildColumnConfigs({
@@ -48,7 +58,11 @@ export const BanList = (props: BanListProps, context) => {
       <Stack.Item>
         <Flex pt={1}>
           <Flex.Item direction="column" mx={1} wrap="wrap">
-            <Input value={searchText} onInput={handleSearchTextChange} mr={1} />
+            <Input
+              value={searchText}
+              onChange={handleSearchTextChange}
+              mr={1}
+            />
             <Button icon="magnifying-glass" onClick={handleSearch}>
               Search
             </Button>
@@ -57,7 +71,7 @@ export const BanList = (props: BanListProps, context) => {
             <Dropdown
               width={11}
               icon="filter"
-              nochevron
+              noChevron
               selected={searchFilter}
               options={filterOptions}
               onSelected={(value: BanPanelSearchFilter) => {
@@ -80,7 +94,12 @@ export const BanList = (props: BanListProps, context) => {
         <Section fill scrollable>
           <Stack vertical zebra mb={1}>
             {(banResources ?? []).map((banData) => (
-              <BanListItem key={banData.id} columnConfigs={columnConfigs} data={banData} rowId={getRowId(banData)} />
+              <BanListItem
+                key={banData.id}
+                columnConfigs={columnConfigs}
+                data={banData}
+                rowId={getRowId(banData)}
+              />
             ))}
           </Stack>
         </Section>
@@ -94,8 +113,8 @@ export const BanList = (props: BanListProps, context) => {
             minValue={5}
             maxValue={100}
             value={per_page ?? DEFAULT_PAGE_SIZE}
-            placeholder={DEFAULT_PAGE_SIZE}
             onChange={handlePerPageChange}
+            step={5}
           />
         </Section>
       </Stack.Item>

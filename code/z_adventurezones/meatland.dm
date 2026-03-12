@@ -262,6 +262,14 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 #define MEATHEAD_MAX_CUSTOM_UTTERANCES 32
 
+TYPEINFO(/obj/critter/monster_door/meat_head)
+	start_listen_effects = list(LISTEN_EFFECT_MEAT_HEAD)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/monster_door/meat_head //Clash at Meathead
 	name = "Something"
 	desc = "jesus fuck"
@@ -276,6 +284,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	bound_height = 64
 	bound_width = 64
 	angertext = "shakes and wobbles furiously at"
+
+	speech_verb_say = list("mutters", "gurgles", "whimpers")
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	say_language = LANGUAGE_ENGLISH
+
 	var/list/dialog = null
 	var/obj/item/clothing/head/hat = null
 	var/static/list/meathead_noises = list('sound/misc/meat_gargle.ogg', 'sound/misc/meat_hork.ogg', 'sound/misc/meat_plop.ogg', 'sound/misc/meat_splat.ogg')
@@ -328,8 +341,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			if (prob(10) && length(dialog))
-				speak(pick(dialog))
+			if (prob(10) && length(src.dialog) && src.alive)
+				FLICK("meatboss_chatter", src)
+				playsound(src.loc, pick(src.meathead_noises), 40, 1)
+				src.say(pick(src.dialog))
+
 			return ..()
 
 	CritterAttack(mob/M)
@@ -382,12 +398,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		return 0
 
-	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if (prob(20))
-			update_meat_head_dialog(messages[1])
-
-			return
-
 	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/head))
 			user.visible_message("[user] tosses [O] onto [src]!", "You toss [O] onto [src].")
@@ -419,17 +429,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		else
 			return ..()
-
-	proc/speak(var/message)
-		if(!src.alive || !message)
-			return
-
-		flick("meatboss_chatter", src)
-		playsound(src.loc, pick(meathead_noises), 40, 1)
-
-		for(var/mob/O in hearers(src, null)) //Todo: gnarly font of some sort
-			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\""), 2)
-		return
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
 
@@ -1121,7 +1120,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				qdel(O)
 
 				src.visible_message(SPAN_ALERT("Something pops out of [src]!"))
-				new /obj/item/skull/crystal(get_turf(src))
+				new /obj/item/skull/omnitraitor(get_turf(src))
 
 			else
 				boutput(user, SPAN_ALERT("It doesn't fit.  Dang."))
@@ -1276,7 +1275,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		changing_state = 1
 		active = (opened != default_state)
 
-		flick("fangdoorc0",src)
+		FLICK("fangdoorc0",src)
 		src.icon_state = "fangdoor0"
 		set_density(0)
 		set_opacity(0)
@@ -1296,7 +1295,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		set_density(1)
 		set_opacity(1)
-		flick("fangdoorc1",src)
+		FLICK("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))
 				boutput(L, SPAN_NOTICE("You just barely slip by the clenching teeth unharmed!"))

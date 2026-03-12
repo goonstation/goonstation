@@ -33,6 +33,8 @@
 	var/same_z_level = 0
 	var/trackable_range = 0
 
+	get_install_slot()
+		return POD_PART_SENSORS
 
 	disposing()
 		stop_tracking_me()
@@ -55,7 +57,7 @@
 		var/dat = "<B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
 			dat += build_html_gps_form(src, FALSE, src.tracking_target)
-			dat += {"<HR><BR><A href='?src=\ref[src];scan=1'>Scan Area</A>"}
+			dat += {"<HR><BR><A href='byond://?src=\ref[src];scan=1'>Scan Area</A>"}
 			dat += {"<HR><B>[beacons] Beacons Nearby:</B><BR>"}
 			if(beaconlist.len)
 				for(var/obj/B in beaconlist)
@@ -109,7 +111,7 @@
 		if (src.tracking_target)
 			var/obj/machinery/vehicle/target_pod = src.tracking_target
 			if (istype(target_pod))
-				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.sensors
+				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.get_part(POD_PART_SENSORS)
 				if (istype(target_sensor))
 					target_sensor.whos_tracking_me |= src.ship
 					target_pod.myhud.sensor_lock.icon_state = "master-caution"
@@ -125,7 +127,7 @@
 		if (src.tracking_target)
 			var/obj/machinery/vehicle/target_pod = src.tracking_target
 			if (istype(target_pod))
-				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.sensors
+				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.get_part(POD_PART_SENSORS)
 				if (istype(target_sensor))
 					target_sensor.whos_tracking_me -= src.ship
 					if (islist(target_sensor.whos_tracking_me) && length(target_sensor.whos_tracking_me) == 0)
@@ -176,7 +178,8 @@
 	//currently only using this for tracking. It doesn't effect the active sensor scan button.
 	proc/adjust_seekrange(var/obj/machinery/vehicle/pod)
 		if (istype(pod))
-			if (pod.sec_system && pod.sec_system.f_active && istype(pod.sec_system, /obj/item/shipcomponent/secondary_system/cloak))
+			var/obj/item/shipcomponent/secondary_system/sec_part = pod.get_part(POD_PART_SECONDARY)
+			if (sec_part?.f_active && istype(sec_part, /obj/item/shipcomponent/secondary_system/cloak))
 				return src.seekrange/3
 			if (pod.powercapacity == 0 || (pod.powercurrent/pod.powercapacity) <= 0.1)
 				return src.seekrange/2
@@ -267,7 +270,7 @@
 		for (var/obj/O in whos_tracking_me)
 			var/obj/machinery/vehicle/pod = O
 			if (istype(pod))
-				var/obj/item/shipcomponent/sensor/S = pod.sensors
+				var/obj/item/shipcomponent/sensor/S = pod.get_part(POD_PART_SENSORS)
 				if (istype(S))
 					S.end_tracking()
 

@@ -10,11 +10,11 @@
 /obj/item/stamped_bullion,
 /obj/item/stamped_bullion,
 /obj/item/stamped_bullion,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "C" = (
 /obj/deployable_turret/outpost/active/south,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "I" = (
 /turf/simulated/wall/auto/supernorn/wood,
@@ -23,10 +23,10 @@
 /obj/machinery/door/unpowered/wood/pyro{
 	pixel_y = -9
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "W" = (
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 
 (1,1,1) = {"

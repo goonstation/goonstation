@@ -3,11 +3,13 @@
 	name = "SECURE AREA"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "securearea"
+	deconstruct_flags = DECON_WIRECUTTERS
 	anchored = ANCHORED
 	opacity = 0
 	density = 0
 	layer = EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_BELOW
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MINERAL_MAGNET
 
 /obj/joeq
 	desc = "Here lies Joe Q. Loved by all. He was a terrorist. R.I.P."

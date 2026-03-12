@@ -84,6 +84,15 @@
 		name = "box of bee stickers"
 		contained_item = /obj/item/sticker/bee
 
+	anchovy
+		name = "can of anchovies"
+		icon_state = "anch"
+		icon_open = "anch-open"
+		icon_empty = "anch-open"
+		contained_item = /obj/item/reagent_containers/food/fish/anchovy
+		item_amount = 6
+		max_item_amount = 6
+
 	contraband
 		name = "contraband adjustment sticker box"
 		desc = "Contains stickers which can adjust the effective level of contraband an item is detected as."
@@ -472,13 +481,13 @@
 		if (myItem)
 			if (src.item_amount >= 1)
 				src.item_amount--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			src.UpdateIcon()
 			return myItem
 		else if (src.item_amount != 0) // should be either a positive number or -1
 			if (src.item_amount >= 1)
 				src.item_amount--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			var/obj/item/newItem = new src.contained_item(src)
 			src.UpdateIcon()
 			return newItem
@@ -505,7 +514,7 @@
 				return 0
 			if (src.item_amount != -1)
 				src.item_amount ++
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			src.UpdateIcon()
 			if (user && show_messages)
 				boutput(user, "You stuff [I] into [src].")

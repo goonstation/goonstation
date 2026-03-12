@@ -13,7 +13,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 		return 0
 	to_buff.force = (initial(to_buff.force)) + total_souls_value
 	to_buff.throwforce = (initial(to_buff.throwforce)) + total_souls_value //these were originally capped at 30, but that seemed arbitrary and pointless in hindsight
-	to_buff.tooltip_rebuild = 1
+	to_buff.tooltip_rebuild = TRUE
 	return 1
 
 /proc/souladjust(var/to_adjust as num)
@@ -406,7 +406,9 @@ END GUIDE
 		if (isdiabolical(user))
 			boutput(user, SPAN_NOTICE("You can't sell your soul to yourself!"))
 			return 0
-		src.visible_message(SPAN_ALERT("<b>[user] signs [his_or_her(user)] name in blood upon [src]!</b>"))
+		boutput(user, SPAN_ALERT(SPAN_BOLD("The pen stabs into your hand as you start to sign, your blood trickling down onto the page.")))
+		src.visible_message(SPAN_ALERT("<b>[user] signs [his_or_her(user)] name in [his_or_her(user)] own blood upon [src]!</b>"))
+		take_bleeding_damage(user, user, 4, DAMAGE_STAB, TRUE)
 		logTheThing(LOG_ADMIN, user, "signed a [src.type] contract at [log_loc(user)]!")
 		. = user.sell_soul(100, 0, 1)
 		if(!.)
@@ -415,7 +417,7 @@ END GUIDE
 	proc/updateuses(var/mob/user as mob, var/mob/badguy as mob)
 		if (src.limiteduse == 1)
 			src.used++
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			SPAWN(0)
 				if (src.used >= src.contractlines)
 					src.vanish(user, badguy)

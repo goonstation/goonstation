@@ -6,55 +6,35 @@
  * @license MIT
  */
 
+import { Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { TerminalData } from './types';
-import { TerminalOutputSection } from './TerminalOutputSection';
 import { InputAndButtonsSection } from './InputAndButtonsSection';
-import { PheripheralsSection } from './PheripheralsSection';
-import { Stack } from '../../components';
+import { PeripheralsSection } from './PeripheralsSection';
+import { TerminalOutputSection } from './TerminalOutputSection';
+import type { TerminalData } from './types';
 
-export const Terminal = (_props, context) => {
-  const { data } = useBackend<TerminalData>(context);
-  const {
-    windowName,
-    displayHTML,
-  } = data;
-
-  const handleTerminalOutputComponentDidUpdate = (lastProps, nextProps) => {
-    if (lastProps.displayHTML === nextProps.displayHTML) {
-      return;
-    }
-    scrollToBottom();
-  };
-  const scrollToBottom = () => {
-    const terminalOutputScroll = document.querySelector('#terminalOutput .Section__content');
-    if (!terminalOutputScroll) {
-      return;
-    }
-    terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
-  };
+export const Terminal = () => {
+  const { data } = useBackend<TerminalData>();
+  const { bgColor, displayHTML, fontColor, peripherals, windowName } = data;
 
   return (
-    <Window
-      theme="retro-dark"
-      title={windowName}
-      fontFamily="Consolas"
-      width="380"
-      height="350">
-      <Window.Content>
+    <Window theme="retro-dark" title={windowName} width={380} height={350}>
+      <Window.Content fontFamily="Consolas">
         <Stack vertical fill>
           <Stack.Item grow>
             <TerminalOutputSection
+              bgColor={bgColor}
               displayHTML={displayHTML}
-              onComponentDidMount={scrollToBottom}
-              onComponentDidUpdate={handleTerminalOutputComponentDidUpdate} />
+              fontColor={fontColor}
+            />
           </Stack.Item>
           <Stack.Item>
             <InputAndButtonsSection />
           </Stack.Item>
           <Stack.Item>
-            <PheripheralsSection />
+            <PeripheralsSection peripherals={peripherals} />
           </Stack.Item>
         </Stack>
       </Window.Content>

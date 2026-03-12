@@ -41,21 +41,12 @@
 //contract entries: contract creation instantiates these for "this much of whatever"
 //these entries each have their own "validation protocol", automatically set up when instantiated
 
-//entry classes
-#define RC_ITEM 1
-#define RC_REAGENT 2
-#define RC_STACK 3
-#define RC_SEED 4
-#define RC_ARTIFACT 5
-
 //base entry
 ABSTRACT_TYPE(/datum/rc_entry)
 ///Requisition contract entry: analyzes things passed to it, returns whether they were needed, and is checked for completion at end of analyses.
 /datum/rc_entry
 	///Name as shown on the requisition contract itself. Can be different from your item's real name for flavor purposes.
 	var/name
-	///The evaluation class of the entry; used for formatting when building the text form of a contract's list of requirements.
-	var/entryclass = RC_ITEM
 	///What quantity this entry requires (examples: item quantity, stack quantity or reagent units); can be adjusted at any point during creation.
 	var/count = 1
 	///When an item contributes to fulfillment, this value should be incremented; when it matches or exceeds the count, the entry is fully satisfied.
@@ -81,10 +72,25 @@ ABSTRACT_TYPE(/datum/rc_entry)
 	proc/extra_eval(atom/eval_item)
 		return TRUE
 
+	// Mandatory: override to generate descriptions
+	proc/generate_requis_description()
+		return "This description has not been generated correctly, please submit a bug report."
+
+	// Procs for default descriptions
+	proc/requis_description_item()
+		return "[count]x [name]<br>"
+
+
+	proc/requis_description_stack()
+		return "[count]+ [name]<br>"
+
+	// A shortened description for use with shopping lists
+	proc/shoppinglist_description()
+		return "<li>[name]</li>"
+
 ABSTRACT_TYPE(/datum/rc_entry/item)
 ///Basic item entry. Use for items that can't stack, and whose properties outside of path aren't relevant.
 /datum/rc_entry/item
-	entryclass = RC_ITEM
 	///Type path of the item the entry is looking for.
 	var/typepath
 	///Optional alternate type path to look for. Useful when an item has two functionally interchangeable forms, such as an empty or charged power cell.
@@ -115,10 +121,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 		src.rollcount++
 		. = TRUE
 
+	generate_requis_description()
+		return requis_description_item()
+
+	shoppinglist_description()
+		return "<li>[count]x [name]</li>"
+
 ABSTRACT_TYPE(/datum/rc_entry/food)
 ///Food item entry, used to properly detect food integrity.
 /datum/rc_entry/food
-	entryclass = RC_ITEM
 	///Type path of the item the entry is looking for.
 	var/typepath
 	///If true, requires precise path; if false (default), sub-paths are accepted.
@@ -159,10 +170,15 @@ ABSTRACT_TYPE(/datum/rc_entry/food)
 				src.rollcount++
 		. = TRUE
 
+	generate_requis_description()
+		return requis_description_item()
+
+	shoppinglist_description()
+		return "<li>[count]x [name]</li>"
+
 ABSTRACT_TYPE(/datum/rc_entry/stack)
 ///Stackable item entry. Remarkably, used for items that can be stacked.
 /datum/rc_entry/stack
-	entryclass = RC_STACK
 	///Type path of the item the entry is looking for.
 	var/typepath
 	///Optional alternate type path to look for. Useful when an item has two functionally interchangeable forms, such as raw or refined ore.
@@ -192,10 +208,15 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 			rollcount += eval_item.amount
 			. = TRUE // Let manager know passed eval item is claimed by contract
 
+	generate_requis_description()
+		return requis_description_stack()
+
+	shoppinglist_description()
+		return "<li>[count]+ [name]</li>"
+
 ///Reagent entry. Searches for reagents in sent objects, consuming any suitable reagent containers until the quantity is satisfied.
 ABSTRACT_TYPE(/datum/rc_entry/reagent)
 /datum/rc_entry/reagent
-	entryclass = RC_REAGENT
 	///IDs of reagents being looked for in the evaluation; can be a single one in string form, or a list containing several strings.
 	var/chem_ids = "water"
 	///Reagent container type: optionally set this to a path to require reagents be contained in that particular thing to count.
@@ -225,13 +246,27 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 					rollcount += C
 					. = TRUE // Let manager know reagent was found in passed eval item
 
-///Seed entry. Searches for seeds of the correct crop name, typically matching a particular genetic makeup.
-ABSTRACT_TYPE(/datum/rc_entry/seed)
-/datum/rc_entry/seed
-	entryclass = RC_SEED
+	generate_requis_description()
+		return requis_description_reagent()
+
+	proc/requis_description_reagent()
+		. = ""
+		if(single_container)
+			. += "[count] unit[s_es(count)] of [name] in discrete vessel<br>"
+		else
+			if(container_name)
+				. += "[container_name] containing [count]+ unit[s_es(count)] of [name]<br>"
+			else
+				. += "[count]+ unit[s_es(count)] of [name]<br>"
+
+	shoppinglist_description()
+		return "<li>[count]+ unit[s_es(count)] of [name]</li>"
+
+///Plant genetics entry. Searches for items of the correct crop name, typically matching a particular genetic makeup.
+ABSTRACT_TYPE(/datum/rc_entry/plant)
+/datum/rc_entry/plant
 	///Name of the desired crop, as it appears in plant genes.
 	var/cropname = "Tomato"
-
 	/**
 	 * List of required plant gene parameters, each formatted as a key-value pair.
 	 * Add your key value pairs to this list, either hard-coded or with a thing in New() BEFORE ..(), for evaluation. Example of the latter:
@@ -252,40 +287,86 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 		src.gene_factors = length(src.gene_reqs)
 		..()
 
+	// override to account for any item type that has plantgenes and planttype. Boy do I miss interfaces.
+	proc/GetGenesAndPlantType(atom/eval_item)
+		if (!istype(eval_item,/obj/item/reagent_containers/food/snacks/plant)) return
+		var/GenesAndType = list()
+		var/obj/item/reagent_containers/food/snacks/plant/plant = eval_item
+		GenesAndType += plant.plantgenes
+		GenesAndType += plant.planttype
+		return GenesAndType
+
 	rc_eval(atom/eval_item)
 		. = ..()
-		if(rollcount >= count) return // Standard skip-if-complete
-		if(!istype(eval_item,/obj/item/seed)) return // Not a seed? Skip it
+		if(rollcount >= count) return // Standard skip-if-complet
+		var/genesandtype = GetGenesAndPlantType(eval_item)
+		if (!genesandtype) return
+		var/datum/plantgenes/genes
+		var/datum/plant/plant_type
+		genes = genesandtype[1]
+		plant_type = genesandtype[2]
 
-		var/obj/item/seed/cultivar = eval_item
-		if(!cultivar.plantgenes) return // No genome? Skip it
-		if(cultivar.planttype.name != cropname) return // Wrong species? Skip it
+		if(!genes) return // No genome? Skip it
+		if(plant_type.name != cropname) return // Wrong species? Skip it
 		if(!extra_eval(eval_item)) return
 
 		gene_count = 0
 		for(var/index in gene_reqs) // Iterate over each parameter to see if the genome meets it, or exceeds it in the right direction
 			switch(index)
 				if("Maturation")
-					if(cultivar.plantgenes.growtime >= gene_reqs["Maturation"]) gene_count++
+					if(genes.growtime >= gene_reqs["Maturation"]) gene_count++
 				if("Production")
-					if(cultivar.plantgenes.harvtime >= gene_reqs["Production"]) gene_count++
+					if(genes.harvtime >= gene_reqs["Production"]) gene_count++
 				if("Lifespan")
-					if(cultivar.plantgenes.harvests >= gene_reqs["Lifespan"]) gene_count++
+					if(genes.harvests >= gene_reqs["Lifespan"]) gene_count++
 				if("Yield")
-					if(cultivar.plantgenes.cropsize >= gene_reqs["Yield"]) gene_count++
+					if(genes.cropsize >= gene_reqs["Yield"]) gene_count++
 				if("Potency")
-					if(cultivar.plantgenes.potency >= gene_reqs["Potency"]) gene_count++
+					if(genes.potency >= gene_reqs["Potency"]) gene_count++
 				if("Endurance")
-					if(cultivar.plantgenes.endurance >= gene_reqs["Endurance"]) gene_count++
+					if(genes.endurance >= gene_reqs["Endurance"]) gene_count++
 
 		if(gene_count >= gene_factors) // Compare satisfied parameter count to number of parameters. Met or exceeded means seed satisfies requirements
-			src.rollcount++
+			increase_rollcount(eval_item)
 			. = TRUE // Let manager know seed passes muster and is claimed by contract
+
+	proc/increase_rollcount(atom/eval_item)
+		src.rollcount++
+
+	generate_requis_description()
+		return requis_description_plant()
+
+	proc/requis_description_plant(is_seed = FALSE)
+		. = ""
+		var/seed_text = is_seed ? " seed" : "" // need to manually add the word 'seed' if it's a seed
+		if(length(gene_reqs))
+			. += "[count]x [cropname][seed_text] with following traits:<br>"
+			for(var/index in gene_reqs)
+				. += "* [index]: [gene_reqs[index]] or higher<br>"
+		else
+			. += "[count]x [cropname][seed_text]<br>"
+
+// Plant genetics entry that specifically checks for seeds
+/datum/rc_entry/plant/seed
+	GetGenesAndPlantType(eval_item)
+		if (!istype(eval_item,/obj/item/seed)) return
+		var/GenesAndType = list()
+		var/obj/item/seed/seed = eval_item
+		GenesAndType += seed.plantgenes
+		GenesAndType += seed.planttype
+		return GenesAndType
+
+	generate_requis_description()
+		return requis_description_plant(TRUE)
+
+	// Account for seed packets, treat each seed charge as an item.
+	increase_rollcount(atom/eval_item)
+		var/obj/item/seed/eval_seed = eval_item
+		src.rollcount += eval_seed.charges
 
 ///Artifact entry. Evaluates provided handheld artifacts based on their artifact parameters.
 ABSTRACT_TYPE(/datum/rc_entry/artifact)
 /datum/rc_entry/artifact
-	entryclass = RC_ARTIFACT
 	///Origin requirement, checked against the artifact's type_name if specified. Current type names are Silicon, Martian, Wizard, Eldritch, Precursor
 	var/required_origin
 	///Types of artifact functionality desired. Can be left empty.
@@ -314,6 +395,23 @@ ABSTRACT_TYPE(/datum/rc_entry/artifact)
 		if(!extra_eval(eval_item)) return
 		src.rollcount++
 		. = TRUE // Let manager know artifact passes muster and is claimed by contract
+
+	generate_requis_description()
+		return requis_description_artifact()
+
+	proc/requis_description_artifact()
+		. = ""
+		. += "x[count] handheld artifact with following parameters<br>"
+		if(required_origin)
+			. += "| Origin class: [required_origin]<br>"
+		else
+			. += "| Origin class: any<br>"
+		if(length(acceptable_types))
+			. += "| Acceptable categories:<br>"
+			for(var/index in acceptable_types)
+				. += "| [index]<br>"
+		else
+			. += "| Acceptable categories: Any<br>"
 
 /**
  * Item reward datum optionally used in contract creation.
@@ -377,6 +475,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/requis_desc = ""
 	///Tracks whether contract is pinned; one contract at a time may be pinned, reserving it for QM and preventing it from leaving with market shift
 	var/pinned = FALSE
+	///determines payout multiplier
+	var/static/count = 0
 
 	New() //in individual definitions, create entries and THEN call this, it'll get things set up for you
 		..()
@@ -389,42 +489,9 @@ ABSTRACT_TYPE(/datum/req_contract)
 			src.req_code = "REQ-[flavoraffix][rand(0,9)][rand(0,9)][rand(0,9)]-[pick(consonants_upper)][prob(20) ? pick(consonants_upper) : rand(0,9)]"
 
 		for(var/datum/rc_entry/rce in rc_entries) //Visual formatting of list entries
-			switch(rce.entryclass)
-				if(RC_ITEM)
-					src.requis_desc += "[rce.count]x [rce.name]<br>"
-				if(RC_REAGENT)
-					var/datum/rc_entry/reagent/rchem = rce
-					if(rchem.single_container)
-						src.requis_desc += "[rchem.count] unit[s_es(rchem.count)] of [rchem.name] in discrete vessel<br>"
-					else
-						if(rchem.container_name)
-							src.requis_desc += "[rchem.container_name] containing [rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
-						else
-							src.requis_desc += "[rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
-				if(RC_STACK)
-					src.requis_desc += "[rce.count]+ [rce.name]<br>"
-				if(RC_SEED)
-					var/datum/rc_entry/seed/rceed = rce
-					if(length(rceed.gene_reqs))
-						src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
-						for(var/index in rceed.gene_reqs)
-							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
-					else
-						src.requis_desc += "[rce.count]x [rceed.cropname] seed<br>"
-				if(RC_ARTIFACT)
-					var/datum/rc_entry/artifact/rcart = rce
-					src.requis_desc += "x[rce.count] handheld artifact with following parameters<br>"
-					if(rcart.required_origin)
-						src.requis_desc += "| Origin class: [rcart.required_origin]<br>"
-					else
-						src.requis_desc += "| Origin class: any<br>"
-					if(length(rcart.acceptable_types))
-						src.requis_desc += "| Acceptable categories:<br>"
-						for(var/index in rcart.acceptable_types)
-							src.requis_desc += "| [index]<br>"
-					else
-						src.requis_desc += "| Acceptable categories: Any<br>"
+			requis_desc += rce.generate_requis_description()
 			src.payout += rce.feemod * rce.count
+		src.payout *= round(1.1**count + 0.1*count, 2)
 
 /**
  * Called to tally a crate's contents, to evaluate whether they've fulfilled the contract.
@@ -505,7 +572,3 @@ ABSTRACT_TYPE(/datum/req_contract)
 				for(var/datum/rc_entry/shopped in rc_entries)
 					shopped.rollcount = 0
 
-#undef RC_ITEM
-#undef RC_REAGENT
-#undef RC_STACK
-#undef RC_SEED

@@ -41,6 +41,14 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/list/datum/objective/objectives = list()
 	/// The faction given to the player by this antagonist role for AI targeting purposes.
 	var/faction = list()
+	/// Used in lieu of the id for antag_popups.dm
+	var/popup_name_override
+	/// Set when the antagonist is in the process of being removed, to prevent double removals.
+	var/removing = FALSE
+	/// Link to this antagonist's wiki page
+	var/wiki_link = null
+	/// Saved value of `do_equip` so we know if this antag was spawned with gear
+	var/did_equip = FALSE
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -100,7 +108,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			if (isnull(antagonists["[src.id]"]))
 				antagonists -= "[src.id]"
 
-			owner.former_antagonist_roles.Add(owner.special_role)
+			owner.former_antagonist_roles.Add(src.id)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks.Remove(src.owner)
@@ -110,6 +118,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
 	proc/remove_self(take_gear = TRUE, source)
+		src.removing = TRUE
 		if (take_gear)
 			src.remove_equipment()
 
@@ -148,6 +157,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			if (!src.owner.assigned_role)
 				message_admins("Antagonist datum of type [src.type] failed to properly late setup after 60 seconds. Report this to a coder.")
 
+		src.did_equip = do_equip
 		if (do_equip)
 			src.give_equipment()
 			if (!src.uses_pref_name)
@@ -161,7 +171,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.add_to_image_groups()
 
 		if (src.faction)
-			src.owner.current?.faction |= src.faction
+			LAZYLISTADDUNIQUE(src.owner.current?.faction, src.faction)
 
 		if (!src.silent)
 			src.announce()
@@ -185,6 +195,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		RETURN_TYPE(/image)
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		image.plane = PLANE_ANTAG_ICONS
 		. = image
 
 	proc/add_to_image_groups()
@@ -247,16 +258,16 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
 	proc/announce()
-		boutput(owner.current, SPAN_ALERT("<h3>You are \a [src.display_name]!</h3>"))
+		boutput(owner.current, SPAN_ALERT("<h1 class='system'>You are \a [src.display_name]!</h1>"))
 
 	/// Display something when this antagonist is removed.
 	proc/announce_removal(source)
-		boutput(owner.current, SPAN_ALERT("<h3>You are no longer \a [src.display_name]!</h3>"))
+		boutput(owner.current, SPAN_ALERT("<h1 class='system'>You are no longer \a [src.display_name]!</h1>"))
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
-	proc/do_popup(override)
-		if (has_info_popup || override)
-			owner.current.show_antag_popup(!override ? id : override)
+	proc/do_popup()
+		if (has_info_popup || popup_name_override)
+			owner.current.show_antag_popup(popup_name_override ? popup_name_override : id)
 
 	/// Returns whether or not this antagonist is considered to have succeeded. By default, this checks all antagonist-specific objectives.
 	proc/check_success()

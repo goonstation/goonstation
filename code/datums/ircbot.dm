@@ -66,17 +66,17 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		text_args(list/arguments)
 			return src.apikey_scrub(list2params(arguments))
 
-		export_async(iface, args)
+		export_async(iface, api_args)
 			set waitfor = FALSE
-			export(iface, args)
+			export(iface, api_args)
 
 		/// Send a message to an irc bot! Yay!
-		export(iface, args)
+		export(iface, api_args)
 			if (src.debugging)
-				src.logDebug("Export called with <b>iface:</b> [iface]. <b>args:</b> [text_args(args)]. <b>src.interface:</b> [src.interface]. <b>src.loaded:</b> [src.loaded]")
+				src.logDebug("Export called with <b>iface:</b> [iface]. <b>args:</b> [text_args(api_args)]. <b>src.interface:</b> [src.interface]. <b>src.loaded:</b> [src.loaded]")
 
 			if (!config || !src.loaded)
-				src.queue += list(list("iface" = iface, "args" = args))
+				src.queue += list(list("iface" = iface, "args" = api_args))
 
 				if (src.debugging)
 					src.logDebug("Export, message queued due to unloaded config")
@@ -89,26 +89,26 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				if (config.env == "dev" || !config.ircbot_api) // If we have no API key, why even bother
 					return null
 
-				args = (args == null ? list() : args)
-				args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
-				args["server"] = serverKey
-				args["api_key"] = (config.ircbot_api ? config.ircbot_api : null)
+				api_args = (api_args == null ? list() : api_args)
+				api_args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
+				api_args["server"] = serverKey
+				api_args["api_key"] = (config.ircbot_api ? config.ircbot_api : null)
 
 				if (src.debugging)
-					src.logDebug("Export, final args: [text_args(args)]. Final route: [src.interface]/[iface]?[text_args(args)]")
+					src.logDebug("Export, final args: [text_args(api_args)]. Final route: [src.interface]/[iface]?[text_args(api_args)]")
 
 				var/n_tries = 3
 				var/datum/http_response/response = null
 				while(--n_tries > 0 && (isnull(response) || response.errored))
 					// Via rust-g HTTP
 					var/datum/http_request/request = new()
-					request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(args)]", "", "")
+					request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(api_args)]", "", "")
 					request.begin_async()
-					UNTIL(request.is_complete())
+					UNTIL(request.is_complete(), 10 SECONDS)
 					response = request.into_response()
 
 				if (response.errored || !response.body)
-					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(api_args)] <br> <b>error:</b> [response.error]")
 					return null
 
 				var/content = response.body
@@ -132,20 +132,20 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 
 		/// Format the response to an irc request juuuuust right
-		response(args)
+		response(api_args)
 			if (src.debugging)
-				src.logDebug("Response called with args: [text_args(args)]")
+				src.logDebug("Response called with args: [text_args(api_args)]")
 
-			args = (args == null ? list() : args)
+			api_args = (api_args == null ? list() : api_args)
 
 			if (config?.server_name)
-				args["server_name"] = replacetext(config.server_name, "#", "")
-				args["server"] = replacetext(config.server_name, "#", "") //TEMP FOR BACKWARD COMPAT WITH SHITFORMANT
+				api_args["server_name"] = replacetext(config.server_name, "#", "")
+				api_args["server"] = replacetext(config.server_name, "#", "") //TEMP FOR BACKWARD COMPAT WITH SHITFORMANT
 
 			if (src.debugging)
-				src.logDebug("Response, final args: [text_args(args)]")
+				src.logDebug("Response, final args: [text_args(api_args)]")
 
-			return text_args(args)
+			return text_args(api_args)
 
 
 		toggleDebug(client/C)

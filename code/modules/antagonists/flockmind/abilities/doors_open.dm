@@ -23,3 +23,6 @@
 	else
 		boutput(holder.get_controlling_mob(), SPAN_ALERT("No targets in range that can be opened via radio."))
 		return TRUE
+
+/datum/targetable/flockmindAbility/doorsOpen/logCast(atom/target)
+	return

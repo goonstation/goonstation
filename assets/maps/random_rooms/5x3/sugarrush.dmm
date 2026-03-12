@@ -17,10 +17,10 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /turf/simulated/floor/wood/four,
-/area/space)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/rack/lunar,
 /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
@@ -39,14 +39,14 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
-/area/space)
+/area/dmm_suite/clear_area)
 "F" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/goodybag{
 	rand_pos = 1
 	},
 /turf/simulated/floor/wood/four,
-/area/space)
+/area/dmm_suite/clear_area)
 "N" = (
 /obj/rack/lunar,
 /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
@@ -65,11 +65,11 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/wood/four,
-/area/space)
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/machinery/light/small/floor/cool/very,
 /turf/simulated/floor/wood/four,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 F

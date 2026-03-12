@@ -1,4 +1,4 @@
-#define itemblock_tooltip_entry(img, desc) "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[img]")]\" width=\"12\" height=\"12\" /> [desc]"
+#define itemblock_tooltip_entry(img, desc) "<br><img src=\"[resource("images/tooltips/[img]")]\" class='icon' /> [desc]"
 // A dummy parent type used for easily making components that are active when blocking with an item
 
 /datum/component/itemblock
@@ -10,8 +10,9 @@
 
 
 /datum/component/itemblock/Initialize()
-	..()
 	SHOULD_CALL_PARENT(1)
+	..()
+
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ITEM_BLOCK_BEGIN, PROC_REF(on_block_begin))

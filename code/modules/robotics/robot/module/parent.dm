@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	icon = 'icons/obj/items/cyborg_parts/modules.dmi'
 	icon_state = "blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | CONDUCT
 	var/list/tools = list()
@@ -16,8 +16,7 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	var/included_tools = /datum/robot/module_tool_creator/recursive/module/common
 	var/included_cosmetic = null
 	var/radio_type = null
-	var/obj/item/device/radio/headset/radio = null
-	var/list/mailgroups = list(MGO_SILICON, MGD_PARTY)
+	var/list/mailgroups = list(MGD_SILICON, MGD_PARTY)
 	var/list/alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
 
 /obj/item/robot_module/New()
@@ -28,9 +27,6 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 
 	if (ispath(src.included_cosmetic, /datum/robot_cosmetic))
 		src.cosmetic_mods = new included_cosmetic(src)
-
-	if (src.radio_type != null)
-		src.radio = new src.radio_type(src)
 
 // handle various ways of adding tools to the module
 /obj/item/robot_module/proc/add_contents(adding_contents)

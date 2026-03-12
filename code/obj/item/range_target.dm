@@ -3,7 +3,7 @@
 /obj/range_target
 	name = "shooting range target"
 	desc = "A target to fire at in a shooting range."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "bopbag"
 	density = 1
 	anchored = ANCHORED
@@ -15,7 +15,7 @@
 	bullet_act(obj/projectile/P)
 		. = ..()
 		if(!ON_COOLDOWN(src, "target_range_hit", 0.5 SECONDS))
-			flick("[icon_state]2", src)
+			FLICK("[icon_state]2", src)
 
 	ex_act(severity)
 		return

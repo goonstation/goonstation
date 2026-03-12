@@ -48,7 +48,8 @@
 	G["pronouns"] = H.get_pronouns().name
 
 	G["age"] ="[H.bioHolder.age]"
-	G["fingerprint"] = "[H.bioHolder.fingerprints]"
+	G["fingerprint_right"] = "[H.limbs?.r_arm?.limb_print.id]"
+	G["fingerprint_left"] = "[H.limbs?.l_arm?.limb_print.id]"
 	G["dna"] = H.bioHolder.Uid
 	G["p_stat"] = "Active"
 	G["m_stat"] = "Stable"
@@ -126,126 +127,40 @@
 	else
 		S["notes"] = sec_note
 
-	if(H.traitHolder.hasTrait("jailbird"))
-		S["criminal"] = ARREST_STATE_ARREST
-		S["mi_crim"] = pick(\
-								"Public urination.",\
-								"Reading highly confidential private information.",\
-								"Vandalism.",\
-								"Illegal manufacturing of space goods.",\
-								"Tresspassing.",\
-								"Killing a monkey.",\
-								"Negligence.",\
-								"Pushing down and farting on a member of security.",\
-								"Throwing a toolbox at a member of security.",\
-								"Being drunk.",\
-								"Being high.",\
-								"Excessive force.",\
-								"Impersonating a security officer.",\
-								"Stealing shoes.",\
-								"Littering.",\
-								"Existing.",\
-								"Illegal haircutting.",\
-								"Staring at a bee for over an hour.",\
-								"Not showering before entering pool.",\
-								"Rampant idiocy.",\
-								"Never tipping the catering staff.",\
-								"Disregarding previous tickets.",\
-								"Fashion crimes.",\
-								"Gambling.",\
-								"Bribery.",\
-								"Sleeping on the job.",\
-								"Unauthorized stamp collecting.",\
-								"Refusing to wash their hands.",\
-								"Maintenance lurking.",\
-								"Dumpster diving.",\
-								"Not covering their mouth when sneezing.",\
-								"Open mouth chewing.",\
-								"Riding pods without a license.",\
-								"Breathing loudly.",\
-								"Riding a segway directly into the captain.",\
-								"Wearing their shirt backwards.",\
-								"Excessive swearing",\
-								"Cutting in line.",\
-								"Tying the captain's shoelaces together.",\
-								"Forgetting the captain's birthday.")
-		S["mi_crim_d"] = "No details provided."
-		S["ma_crim"] = pick(\
-								"Grand theft apidae.",\
-								"Bee murder.",\
-								"Superfarted on the captain.",\
-								"Released the singularity.",\
-								"Stole the captain's spare ID.",\
-								"Arson, murder, jaywalking.",\
-								"Arson.",\
-								"Murder.",\
-								"Jaywalking.",\
-								"Skating right through the bounds of real-space. Wicked sick, but highly illegal.",\
-								"Being a really really bad surgeon.",\
-								"Distributing meth.",\
-								"Dismemberment and decapitation.",\
-								"Running around with a chainsaw.",\
-								"Throwing explosive tomatoes at people.",\
-								"Caused multiple seemingly unrelated accidents.",\
-								"Dabbing.",\
-								"Assembling explosives.",\
-								"Being in the wrong place at the wrong time.",\
-								"Assault.",\
-								"Tossing someone in space.",\
-								"Over-escalation.",\
-								"Manslaughter",\
-								"Refusing to share their meth.",\
-								"Grand larceny.")
-		S["ma_crim_d"] = "No details provided."
+	if (H.traitHolder?.hasTrait("training_clown"))
+		S["criminal"] = ARREST_STATE_CLOWN
+		S["mi_crim"] = "Clown"
 		H.update_arrest_icon()
-
-
-		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
-		if(S["notes"] == "No notes.")
-			S["notes"] = randomNote
-		else
-			S["notes"] += " [randomNote]"
-
-		boutput(H, SPAN_NOTICE("You are currently on the run because you've committed the following crimes:"))
-		boutput(H, SPAN_NOTICE("- [S["mi_crim"]]"))
-		boutput(H, SPAN_NOTICE("- [S["ma_crim"]]"))
-
-		H.mind.store_memory("You've committed the following crimes before arriving on the station:")
-		H.mind.store_memory("- [S["mi_crim"]]")
-		H.mind.store_memory("- [S["ma_crim"]]")
 	else
-		if (H.mind?.assigned_role == "Clown")
-			S["criminal"] = ARREST_STATE_CLOWN
-			S["mi_crim"] = "Clown"
-			H.update_arrest_icon()
-		else
-			S["criminal"] = ARREST_STATE_NONE
-			S["mi_crim"] = "None"
+		S["criminal"] = ARREST_STATE_NONE
+		S["mi_crim"] = "None"
 
-		S["mi_crim_d"] = "No minor crime convictions."
-		S["ma_crim"] = "None"
-		S["ma_crim_d"] = "No major crime convictions."
+	S["mi_crim_d"] = "No minor crime convictions."
+	S["ma_crim"] = "None"
+	S["ma_crim_d"] = "No major crime convictions."
 
 	S["sec_flag"] = "None"
-
-
-	B["job"] = H.job
-	B["current_money"] = 100
-	B["pda_net_id"] = pda_net_id
-	B["notes"] = "No notes."
-
-	// If it exists for a job give them the correct wage
-	var/wageMult = 1
-	if(H.traitHolder.hasTrait("unionized"))
-		wageMult = 1.5
 
 	var/datum/job/J
 	if (H.job != null && istext(H.job))
 		J = find_job_in_controller_by_string(H.job)
 	else
 		J = find_job_in_controller_by_string(H.mind.assigned_role)
+
+	B["current_money"] = 100
+	B["pda_net_id"] = pda_net_id
+	// management isn't in the union (they're going to steal it anyway)
+	if (H.traitHolder?.hasTrait("unionized") && (J?.job_category == JOB_COMMAND || istype(J, /datum/job/special/random/vip)))
+		B["unionized"] = "Yes"
+	else
+		B["unionized"] = "No"
+	B["notes"] = "No notes."
+
 	if (J?.wages)
-		B["wage"] = round(J.wages * wageMult)
+		B["wage"] = round(J.wages)
+		if (B["unionized"] == "Yes")
+			B["wage"] = B["wage"] + round(B["wage"] * UNIONIZED_PAY_MULT)
+			global.wagesystem.union_stipend += round(B["wage"] * UNIONIZED_PAY_MULT)
 	else
 		B["wage"] = 0
 
@@ -255,12 +170,7 @@
 	src.bank.add_record(B)
 	wagesystem.payroll_stipend += B["wage"] * 1.1
 
-	//Add email group
-	if ("[H.mind.assigned_role]" in job_mailgroup_list)
-		var/mailgroup = job_mailgroup_list["[H.mind.assigned_role]"]
-		if (!mailgroup)
-			return
-
+	if (J?.email_group)
 		var/username = format_username(H.real_name)
 		if (!src.mainframe || !src.mainframe.hd || !(src.mainframe.hd in src.mainframe))
 			for (var/obj/machinery/networked/mainframe/newMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
@@ -271,7 +181,7 @@
 					src.mainframe = newMainframe
 					break
 
-		if (src.mainframe && src.mainframe.hd && src.mainframe.hd.root) //ZeWaka: Fix for null.root
+		if (src.mainframe?.hd?.root) //ZeWaka: Fix for null.root
 			for (var/datum/computer/folder/folder in src.mainframe.hd.root.contents)
 				if (ckey(folder.name) == "etc")
 					for (var/datum/computer/folder/folder2 in folder.contents)
@@ -284,12 +194,12 @@
 									break
 
 								for (var/mailgroupEntry in groups.fields)
-									if (dd_hasprefix(mailgroupEntry, "[mailgroup]:"))
+									if (dd_hasprefix(mailgroupEntry, "[J.email_group]:"))
 										groups.fields -= mailgroupEntry
 										groups.fields += "[mailgroupEntry][username],"
 										break
 
-								groups.fields += "[mailgroup]:[username],"
+								groups.fields += "[J.email_group]:[username],"
 								break
 
 						break
@@ -306,10 +216,10 @@
 	var/list/Command = list()
 	var/list/Security = list()
 	var/list/Engineering = list()
-	var/list/Medsci = list()
+	var/list/Research = list()
+	var/list/Medical = list()
 	var/list/Service = list()
 	var/list/Unassigned = list()
-	var/medsci_integer = 0 // Used to check if one of medsci's two heads has already been added to the manifest
 	for(var/datum/db_record/staff_record as anything in data_core.general.records)
 		if (staff_record["p_stat"] == "In Cryogenic Storage")
 			continue
@@ -323,8 +233,6 @@
 				continue // Only Continue as Captain, as non-captain command staff appear both in the command section and their departmental section
 			else
 				Command.Add(entry)
-				if(rank == "Communications Officer")
-					continue
 
 		if((rank in security_jobs) || (rank in security_gimmicks))
 			if(rank in command_jobs)
@@ -343,14 +251,23 @@
 			else
 				Engineering.Add(entry)
 			continue
-		if((rank in medsci_jobs) || (rank in medsci_gimmicks))
-			if(rank in command_jobs)
-				Medsci.Insert(1, "<b>[entry]</b>")
-				medsci_integer++
+
+		if((rank in science_jobs) || (rank in science_gimmicks))
+			if (rank in command_jobs)
+				Research.Insert(1, "<b>[entry]</b>")
 			else if(rank in command_gimmicks)
-				Medsci.Insert(medsci_integer + 1, "<b>[entry]</b>") // If there are two heads, both an MD and RD, medsci_integer will be at two, thus the Head Surgeon gets placed at 3 in the manifest
+				Research.Insert(2, "<b>[entry]</b>")
 			else
-				Medsci.Add(entry)
+				Research.Add(entry)
+			continue
+
+		if((rank in medical_jobs) || (rank in medical_gimmicks))
+			if(rank in command_jobs)
+				Medical.Insert(1, "<b>[entry]</b>")
+			else if(rank in command_gimmicks)
+				Medical.Insert(2, "<b>[entry]</b>")
+			else
+				Medical.Add(entry)
 			continue
 
 		if((rank in service_jobs) || (rank in service_gimmicks))
@@ -380,9 +297,13 @@
 		sorted_manifest += "<b><u>Engineering and Supply:</u></b><br>"
 		for(var/crew in Engineering)
 			sorted_manifest += crew
-	if(length(Medsci))
-		sorted_manifest += "<b><u>Medical and Research:</u></b><br>"
-		for(var/crew in Medsci)
+	if(length(Research))
+		sorted_manifest += "<b><u>Research:</u></b><br>"
+		for(var/crew in Research)
+			sorted_manifest += crew
+	if(length(Medical))
+		sorted_manifest += "<b><u>Medical:</u></b><br>"
+		for(var/crew in Medical)
 			sorted_manifest += crew
 	if(length(Service))
 		sorted_manifest += "<b><u>Crew Service:</u></b><br>"
@@ -447,10 +368,10 @@
 			var/datum/eventRecord/Fine/fineEvent = new()
 			fineEvent.buildAndSend(src, usr)
 
-/datum/fine/proc/approve(var/approved_by,var/their_job)
+/datum/fine/proc/approve(var/approved_by,var/their_job,var/ticket_level)
 	if(approver || paid) return
-	if (amount > MAX_FINE_NO_APPROVAL && !(JOBS_CAN_TICKET_BIG)) return
-	if (!(their_job in JOBS_CAN_TICKET_SMALL)) return
+	if (amount > MAX_FINE_NO_APPROVAL && !(ticket_level >= TICKET_LEVEL_FINE_LARGE)) return
+	if (ticket_level < TICKET_LEVEL_FINE_SMALL) return
 
 	approver = approved_by
 	approver_job = their_job
@@ -464,24 +385,24 @@
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
-		wagesystem.station_budget += amount
+		wagesystem.budgets[BUDGET_CAT_STATION] += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.station_budget += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
-		wagesystem.station_budget += (amount-paid_amount)
+		wagesystem.budgets[BUDGET_CAT_STATION] += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.station_budget += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 

@@ -1,6 +1,6 @@
 
 TYPEINFO(/obj/item/magtractor)
-	mats = 12
+	mats = 0
 
 /obj/item/magtractor
 	name = "magtractor"
@@ -92,6 +92,8 @@ TYPEINFO(/obj/item/magtractor)
 
 	afterattack(atom/A, mob/user as mob)
 		if (!A) return 0
+
+		if (!can_act(user)) return 0
 
 		if (!src.holding)
 			if (!isitem(A)) return 0

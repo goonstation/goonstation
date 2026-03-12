@@ -15,7 +15,6 @@
 	density = 1
 	anchored = UNANCHORED
 	flags = CONDUCT | USEDELAY | FLUID_SUBMERGE
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
@@ -30,7 +29,6 @@
 	var/followed_path_retry_target = null
 	var/follow_path_blindly = 0
 
-	var/report_state = 0
 	var/quality_name = null
 	var/mobile = 1
 	var/aggressive = 0
@@ -118,18 +116,6 @@
 		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
 		src.visible_message(SPAN_ALERT("[msg]"))
 
-	proc/report_spawn()
-		if (!report_state)
-			report_state = 1
-			if (src in gauntlet_controller.gauntlet)
-				gauntlet_controller.increaseCritters(src)
-
-	proc/report_death()
-		if (report_state == 1)
-			report_state = 0
-			if (src in gauntlet_controller.gauntlet)
-				gauntlet_controller.decreaseCritters(src)
-
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 		F["[path].aggressive"] << src.aggressive
@@ -195,7 +181,7 @@
 			//critters -= src //Stop processing this critter
 
 
-	HasProximity(atom/movable/AM as mob|obj)
+	EnteredProximity(atom/movable/AM)
 		if(task == "hibernating" && ismob(AM))
 			var/mob/living/M = AM
 			if(M.client) wake_from_hibernation()
@@ -262,7 +248,7 @@
 			qdel(W)
 			return
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 
 		var/attack_force = 0
@@ -332,6 +318,11 @@
 			var/turf/T = get_edge_target_turf(src, get_dir(user, src))
 			src.throw_at(T, 2, W.getProperty("impact"))
 
+		if (W.force)
+			var/datum/gang/gang = user.get_gang()
+			if (gang && src.health > 0)
+				gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(src))
+
 		if (src.defensive)
 			if (src.target == user && src.task == "attacking")
 				if (prob(50 - attack_force))
@@ -368,7 +359,7 @@
 			sleeping = 0
 			on_wake()
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 
 		if (user.a_intent == INTENT_HARM)
@@ -780,7 +771,6 @@
 		if(!src.reagents) src.create_reagents(100)
 		wander_check = rand(5,20)
 		START_TRACKING_CAT(TR_CAT_CRITTERS)
-		report_spawn()
 		if(isnull(src.is_pet))
 			src.is_pet = !generic && (copytext(src.name, 1, 2) in uppercase_letters)
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
@@ -793,6 +783,7 @@
 			if(nickname)
 				src.quality_name = nickname
 				src.name = "[nickname] [src.name]"
+		src.AddComponent(/datum/component/proximity)
 		..()
 
 	disposing()
@@ -887,7 +878,6 @@
 		src.anchored = UNANCHORED
 		src.set_density(0)
 		walk_to(src,0) //halt walking
-		report_death()
 		src.tokenized_message(death_text)
 
 	proc/ChaseAttack(mob/M)

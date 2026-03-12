@@ -89,22 +89,23 @@
 
 		update_shipping_data()
 
+		//set up pressure crystal market peaks
+		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
+			var/value = rand(1, 230)
+			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
+
+	proc/init()
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
 			spawnpoint = T
 			break
 
 		var/turf/target
-		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
 			target = T
 			break
 
 		src.launch_distance = get_dist(spawnpoint, target)
-
-		//set up pressure crystal market peaks
-		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
-			var/value = rand(1, 230)
-			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -246,7 +247,7 @@
 					T.hidden = 0
 					T.current_message = pick(T.dialogue_greet)
 					T.patience = rand(T.base_patience[1],T.base_patience[2])
-					T.set_up_goods()
+					T.set_up_goods(FALSE)
 			else
 				if (prob(T.chance_leave))
 					T.hidden = 1
@@ -398,7 +399,7 @@
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
 		price *= randfloat(0.9, 1.3)
-		price = round(price, 5)
+		price = round(price, 4)
 
 		// track score
 		if(pap)
@@ -417,7 +418,7 @@
 				artifact_resupply_amount -= art_amount
 				// message
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([art_amount] objects)")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGD_RESEARCH), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([art_amount] objects)")
 				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 				// make crate
 				var/obj/storage/crate/artcrate = new /obj/storage/crate()
@@ -431,10 +432,10 @@
 
 		// sell
 		if (scan && account)
-			wagesystem.shipping_budget += price / 2
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += price / 2
 			account["current_money"] += price / 2
 		else
-			wagesystem.shipping_budget += price
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += price
 		qdel(sell_art)
 
 		// give PDA group messages
@@ -447,7 +448,7 @@
 				message += "Analysis was incorrect. Misidentified traits: [pap.lastAnalysisErrors]."
 		else
 			message += "Artifact was not analyzed."
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGD_RESEARCH, MGA_SALES), "sender"="00000000", "message"=message)
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	// Returns value of whatever the list of objects would sell for
@@ -539,7 +540,7 @@
 			src.pressure_crystal_sales["[pc.pressure]"] = value
 			var/datum/signal/pdaSignal = get_free_signal() // tell sciv
 			var/message = "Notification: [value] credits earned from outgoing pressure crystal at [pc.pressure] kiloblast. "
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"=message)
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_RESEARCH), "sender"="00000000", "message"=message)
 			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 		return value
@@ -592,6 +593,7 @@
 						if(AID_CONTRACT) src.aid_contracts_active--
 						if(SCI_CONTRACT) src.sci_contracts_active--
 					duckets += contract.payout
+					contract.count += 1
 					if(length(contract.item_rewarders))
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()
@@ -615,7 +617,7 @@
 					var/datum/signal/pdaSignal = get_free_signal()
 					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."
 					if(delivery_code == "REQ-THIRDPARTY") returnmsg = "Notification: Third-party delivery requires physical requisition sheet. Returning as sent."
-					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="[returnmsg]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 					return
@@ -639,28 +641,38 @@
 		if(scan && account)
 			var/share_NT = round(duckets / 2,1) // NT gets half the money, decimals rounded up in case of uneven sale price
 			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
-			wagesystem.shipping_budget += share_NT
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += share_NT
 			account["current_money"] += share_seller
 			logTheThing(LOG_STATION, null, "Cargo sale split [share_seller] credits to [scan.registered], whoever that is.")
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
-			wagesystem.shipping_budget += duckets
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += duckets
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	//NADIR: Transception antenna cargo I/O
 #ifdef MAP_OVERRIDE_NADIR
-	proc/receive_crate(atom/movable/shipped_thing)
+	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
 
-		pending_crates.Add(shipped_thing)
+		if(force)
+			var/obj/machinery/transception_pad/toRecv = pick(by_type[/obj/machinery/transception_pad])
+			var/turf/T = get_turf(toRecv) || get_turf(pick_landmark(LANDMARK_LATEJOIN)) //AAAAA
+			shipped_thing.set_loc(T)
+			if(get_turf(toRecv))
+				showswirl(get_turf(toRecv))
 
-		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+
+		else
+			pending_crates.Add(shipped_thing)
+
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 #else
-	proc/receive_crate(atom/movable/shipped_thing)
+	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -668,22 +680,26 @@
 			break
 
 		var/turf/target
-		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
 			target = T
 			break
 
 		if (!spawnpoint)
+			if(force)
+				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
 			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
 			return
 
 		if (!target)
+			if(force)
+				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
 			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
 		shipped_thing.set_loc(spawnpoint)
 
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
@@ -696,11 +712,16 @@
 					if (P && !P.density)
 						P.close()
 
-		shipped_thing.throw_at(target, src.launch_distance, 1)
+		if (global.map_currently_underwater || global.is_map_on_ground_terrain)
+			shipped_thing.throw_at(target, src.launch_distance, 1)
+		else
+			shipped_thing.throw_at(target, 1, 1)
 #endif
 
 	proc/get_path_to_market()
-		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
+		var/list/bounds = list()
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
+			bounds += T
 		bounds += get_area_turfs(/area/supply/sell_point)
 		bounds += get_area_turfs(/area/supply/spawn_point)
 		var/min_x = INFINITY
@@ -719,7 +740,8 @@
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
 			computer.update_static_data()
-
+		for_by_tcl(barcoder, /obj/item/portable_barcoder)
+			barcoder.update_destinations()
 
 // Debugging and admin verbs (mostly coder)
 
@@ -738,16 +760,17 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 	var/payroll = 0
-	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
+	var/totalfunds = wagesystem.budgets[BUDGET_CAT_STATION] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] + wagesystem.budgets[BUDGET_CAT_SHIPPING]
 	for(var/datum/db_record/R as anything in data_core.bank.records)
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
 	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.station_budget,50)][CREDIT_SIGN]
-	<BR><b>Current Research Budget:</b> [num2text(wagesystem.research_budget,50)][CREDIT_SIGN]
-	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.shipping_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_STATION],50)][CREDIT_SIGN]
+	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_SHIPPING],50)][CREDIT_SIGN]
+	<BR><b>Current Union Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_UNION],50)][CREDIT_SIGN]
+	<BR><b>Current Medical Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL],50)][CREDIT_SIGN]
 	<BR>
 	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
@@ -779,7 +802,7 @@
 	set desc = "Add to or subtract from a budget."
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
+	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Medical", "Union")
 	if (!trans) return
 
 	var/amount = input(usr, "How much to add to this budget?", "Funds", 0) as null|num
@@ -787,14 +810,17 @@
 
 	switch(trans)
 		if("Payroll")
-			wagesystem.station_budget += amount
-			if (wagesystem.station_budget < 0) wagesystem.station_budget = 0
+			wagesystem.budgets[BUDGET_CAT_STATION] += amount
+			if (wagesystem.budgets[BUDGET_CAT_STATION] < 0) wagesystem.budgets[BUDGET_CAT_STATION] = 0
 		if("Shipping")
-			wagesystem.shipping_budget += amount
-			if (wagesystem.shipping_budget < 0) wagesystem.shipping_budget = 0
-		if("Research")
-			wagesystem.research_budget += amount
-			if (wagesystem.research_budget < 0) wagesystem.research_budget = 0
+			wagesystem.budgets[BUDGET_CAT_SHIPPING] += amount
+			if (wagesystem.budgets[BUDGET_CAT_SHIPPING] < 0) wagesystem.budgets[BUDGET_CAT_SHIPPING] = 0
+		if("Union")
+			wagesystem.budgets[BUDGET_CAT_UNION] += amount
+			if (wagesystem.budgets[BUDGET_CAT_UNION] < 0) wagesystem.budgets[BUDGET_CAT_UNION] = 0
+		if("Medical")
+			wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] += amount
+			if (wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] < 0) wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] = 0
 		else
 			boutput(usr, SPAN_ALERT("Whatever you did, it didn't work."))
 			return

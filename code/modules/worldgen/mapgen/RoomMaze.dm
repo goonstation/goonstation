@@ -11,9 +11,9 @@
 	var/gen_max_y
 
 	var/tree_type = /datum/bsp_tree
+	var/room_size = 7
 	wall_turf_type	= /turf/unsimulated/wall/auto/adventure/cave
 	floor_turf_type = /turf/unsimulated/floor/cave
-	var/room_size = 7
 
 	var/edge_proc = /datum/map_generator/room_maze_generator/proc/connect_nodes_by_edges
 	/// Border between rooms
@@ -62,14 +62,14 @@
 			LAGCHECK(LAG_MED)
 
 	proc/connect_nodes_by_spatial_distance(datum/bsp_tree/tree)
-		var/datum/spatial_hashmap/datums/spatial_map = new(cs=room_size*2, zlevels=1)
-		spatial_map.update_cooldown = INFINITY
+		var/datum/spatial_hashmap/manual/spatial_map = new(depth = 1, track_world_maxz = FALSE, cell_size = src.room_size * 2, name = "Room Maze Nodes")
+
 		var/center_x
 		var/center_y
 		for(var/datum/bsp_node/node in tree.leaves)
 			center_x = node.x + node.width * 0.5
 			center_y = node.y + node.height * 0.5
-			spatial_map.add_target(center_x, center_y, 1, node)
+			spatial_map.register_hashmap_entry(node, locate(center_x, center_y, 1))
 			build_room(node)
 		var/list/datum/bsp_node/connected = list()
 		connected += pick(tree.leaves)
@@ -88,7 +88,7 @@
 				for(traverser in tree.leaves)
 					center_x = traverser.x + traverser.width * 0.5
 					center_y = traverser.y + traverser.height * 0.5
-					nearby = spatial_map.get_nearby_by_coords(center_x, center_y, 1, room_size)
+					nearby = spatial_map.fast_manhattan(locate(center_x, center_y, 1), room_size)
 					nearby -= tree.leaves
 					if(length(nearby))
 						break // We found something!
@@ -98,7 +98,7 @@
 				traverser = connected[length(connected)-backtrack_ptr]
 				center_x = traverser.x + traverser.width * 0.5
 				center_y = traverser.y + traverser.height * 0.5
-				nearby = spatial_map.get_nearby_by_coords(center_x, center_y, 1, room_size + backtrack_ptr)
+				nearby = spatial_map.fast_manhattan(locate(center_x, center_y, 1), room_size + backtrack_ptr)
 				nearby -= connected
 			if(length(nearby))
 				backtrack_ptr = 0
@@ -166,8 +166,10 @@
 			min_y = room_a.y + room_a.height * 0.5 + rand(-range, range)
 			max_y = min_y + prob(15)
 
-		if(max_x == src.gen_max_x || max_y == src.gen_max_y )
-			max_x = max_x
+		if(min_x < 0)	min_x = 0
+		if(min_y < 0)	min_y = 0
+		if(max_x > src.gen_max_x)	max_x = src.gen_max_x
+		if(max_y > src.gen_max_y)	max_y = src.gen_max_y
 
 		for(var/i in min_x to max_x)
 			for(var/j in min_y to max_y)
@@ -200,10 +202,7 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check(flags)
 
 /datum/map_generator/room_maze_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = src.cell_grid[T.x][T.y]

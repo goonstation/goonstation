@@ -3,7 +3,11 @@
 #define SPACEBEE_EXTENSION_ASAY_PREFIX ";"
 
 /// server id of the server that processes commands with server_targeting = COMMAND_TARGETING_MAIN_SERVER
+#ifdef LIVE_SERVER
 #define SPACEBEE_EXTENSION_MAIN_SERVER "main4"
+#else
+#define SPACEBEE_EXTENSION_MAIN_SERVER "local"
+#endif
 
 /// values for the server_targeting var of commands, picks which server processes a given command
 
@@ -13,3 +17,5 @@
 #define COMMAND_TARGETING_MAIN_SERVER 2
 /// command is always ran on all servers at once
 #define COMMAND_TARGETING_ALL_SERVERS 3
+/// command is run on each of the 1-4 live servers
+#define COMMAND_TARGETING_LIVE_SERVERS 4

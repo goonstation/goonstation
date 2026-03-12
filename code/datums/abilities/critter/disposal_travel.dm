@@ -51,6 +51,10 @@
 				boutput(holder.owner, SPAN_ALERT("That pipe is a mangled mess of pain!  Best to stay here for now."))
 				return TRUE
 
+			if (istype(holder.owner, /mob/living/critter/mimic/antag_spawn) && holder.owner.max_health >= 50)
+				boutput(holder.owner, SPAN_ALERT("Your disguise is too big to fit inside!"))
+				return TRUE
+
 			activate()
 
 	proc/activate()

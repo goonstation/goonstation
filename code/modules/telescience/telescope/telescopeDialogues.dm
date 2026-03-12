@@ -252,6 +252,34 @@
 			else
 				return 0
 
+/* WATCHFUL EYE SENSOR DIALOGUE */
+
+/datum/dialogueMaster/telescopeEye
+	dialogueName = "Watchful Eye Sensor"
+	start = /datum/dialogueNode/telEyeStart
+	visibleDialogue = 0
+
+/datum/dialogueNode
+	telEyeStart
+		nodeImage = "eye.png"
+		nodeText = "Periodic Signals emanate from this Satellite.<br>It seems awfully close to the purple giant."
+		linkText = "..."
+		links = list(/datum/dialogueNode/telEyeEnable)
+
+	telEyeEnable
+		linkText = "Save the location."
+		nodeText = "The location is now available at the long-range teleporter."
+
+		onActivate(var/client/C)
+			if(!special_places.Find("Watchful-Eye Sensor"))
+				special_places.Add("Watchful-Eye Sensor")
+			return
+
+		canShow(var/client/C)
+			if(!special_places.Find("Watchful-Eye Sensor"))
+				return 1
+			else
+				return 0
 
 /* GENERIC ASTEROID DIALOGUE BELOW */
 
