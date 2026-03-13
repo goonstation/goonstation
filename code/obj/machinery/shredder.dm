@@ -109,7 +109,6 @@ TYPEINFO(/obj/machinery/shredder)
 	src.vis_contents += src.proxy
 	//particles come out a bit late so they don't show up before it hits the shredder (hopefully)
 	sleep(2 SECOND)
-	// https://pixabay.com/sound-effects/technology-paper-shredder-02-421981/
 	playsound(src, 'sound/machines/shredder.ogg', 50, 0)
 	global.particleMaster.SpawnSystem(new /datum/particleSystem/shredded(src, target = item))
 	sleep (5 SECONDS)
