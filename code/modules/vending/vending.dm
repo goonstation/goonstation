@@ -1558,8 +1558,8 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
 
 		if (!restocked) //technically, this deletes any ammo left over on restock. oh well.
-			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm/armory,3)
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 		else
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm/armory,1) // only 1 mag when restocked
 
