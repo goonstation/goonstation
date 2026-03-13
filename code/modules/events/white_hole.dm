@@ -872,9 +872,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/instrument/whistle = 4,
 			/obj/item/instrument/bikehorn/airhorn = 3,
 			/obj/item/basketball/lethal = 0.3,
-			/obj/item/plutonium_core = 0.01,
 			/obj/item/reagent_containers/food/snacks/hotdog = 3,
 			/obj/item/reagent_containers/food/drinks/energyshake = 3,
+			/obj/item/reagent_containers/emergency_injector/methamphetamine = 2,
 			/mob/living/carbon/human/referee = 1
 		),
 	)
