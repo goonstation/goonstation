@@ -1028,7 +1028,7 @@ var/list/fun_images = list()
 
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	boutput(src, O.get_adminprints())
+	boutput(src, replacetext(replacetext(O.get_adminprints(), "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
 /client/proc/respawn_cinematic()
 	set name = "Respawn Cinematic"

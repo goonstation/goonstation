@@ -55042,6 +55042,19 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/locker)
+"gVj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/shredder{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/bridge/customs)
 "gVq" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -139927,7 +139940,7 @@ euh
 gbC
 wYn
 ojR
-rAg
+gVj
 eDL
 hzM
 oxr

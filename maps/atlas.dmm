@@ -16427,6 +16427,10 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
+"nzZ" = (
+/obj/machinery/shredder,
+/turf/simulated/floor/blue,
+/area/station/bridge/customs)
 "nAo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -81066,7 +81070,7 @@ amu
 amu
 amu
 evY
-ayd
+nzZ
 axY
 ayd
 pLJ

@@ -35842,12 +35842,8 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/folder{
-	pixel_x = 2
-	},
-/obj/item/folder{
-	pixel_x = -2;
-	pixel_y = 3
+/obj/machinery/shredder{
+	pixel_y = 11
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 10

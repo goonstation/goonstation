@@ -57371,7 +57371,10 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/random_item_spawner/desk_stuff/four,
+/obj/machinery/shredder{
+	pixel_y = 10;
+	pixel_x = 3
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "rPs" = (
