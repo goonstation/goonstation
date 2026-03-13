@@ -129,6 +129,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	New()
 		..()
 		name = "Drone SC-[rand(1,999)]"
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
 		START_TRACKING
 
 	disposing()
@@ -1032,6 +1033,8 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	current_projectile = new/datum/projectile/laser/precursor/sphere
 	smashes_shit = 1
 	attack_cooldown = 70
+	event_handler_flags = IMMUNE_TRENCH_WARP
+
 	process()
 		..()
 		if(prob(3))

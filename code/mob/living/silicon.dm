@@ -35,6 +35,8 @@ TYPEINFO(/mob/living/silicon)
 	speech_verb_say = "states"
 	speech_verb_ask = "queries"
 	speech_verb_exclaim = "declares"
+	speech_verb_stammer = "states"
+	speech_verb_gasp = "states"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	say_language = LANGUAGE_ENGLISH
 	speech_bubble_icon_sing = "noterobot"
@@ -168,7 +170,7 @@ TYPEINFO(/mob/living/silicon)
 		usr.show_text("Unable to interface with door due to unknown interference.", "red")
 		return
 	if(isAI(src) && door_loc?.z == get_z(z) )
-		usr.show_text("Your mainframe was unable relay this command that far away!", "red")
+		usr.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if (istype(our_door, /obj/machinery/door/airlock/))

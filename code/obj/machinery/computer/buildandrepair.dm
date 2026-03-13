@@ -32,11 +32,13 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	item_state = "electronics"
 	var/computertype = null
 	var/powernet = null
 	/// Custom data saved to the on-board memory chip from its computer type
 	var/saved_data = null
+	/// Behaviour to handle the emagging effect on the board and transfer it to the corresponding computer
+	var/emagged = FALSE
 
 	New()
 		. = ..()
@@ -49,6 +51,14 @@ TYPEINFO(/obj/item/circuitboard)
 	get_desc(dist, mob/user)
 		if (!isnull(saved_data))
 			. += "This one has an onboard memory chip."
+
+	emag_act(var/mob/user, var/obj/item/card/emag/used_emag)
+		src.emagged = TRUE
+		return TRUE
+
+	demag(var/mob/user)
+		src.emagged = FALSE
+		return TRUE
 
 /obj/item/circuitboard/security
 	name = "circuit board (security camera viewer)"
@@ -190,6 +200,10 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/transception
 	name = "circuit board (transception interlink)"
 	computertype = /obj/machinery/computer/transception
+	icon_state = "circuit_engineering"
+/obj/item/circuitboard/transception_control
+	name = "circuit board (transception control array)"
+	computertype = /obj/machinery/computer/trsc_array
 	icon_state = "circuit_engineering"
 /obj/item/circuitboard/mining_magnet
 	name = "circuit board (mining magnet computer)"
@@ -440,10 +454,11 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 				src.state = STATE_UNANCHORED
 		if(STATE_HAS_BOARD)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				boutput(user, SPAN_NOTICE("You add cables to the frame."))
-				P.change_stack_amount(-5)
-				src.state = STATE_HAS_CABLES
-				src.icon_state = "3"
+				var/obj/item/cable_coil/coil = P
+				if (coil?.use(5))
+					boutput(user, SPAN_NOTICE("You add cables to the frame."))
+					src.state = STATE_HAS_CABLES
+					src.icon_state = "3"
 		if(STATE_HAS_CABLES)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
 				boutput(user, SPAN_NOTICE("You put in the glass panel."))

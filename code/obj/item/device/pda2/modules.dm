@@ -16,7 +16,6 @@ TYPEINFO(/obj/item/device/pda_module)
 	var/obj/item/device/pda2/host = null
 
 	var/setup_use_menu_badge = 0  //Should we have a line in the main menu?
-	var/setup_allow_os_config = 0 //Do we support a big config page?
 
 	New()
 		..()

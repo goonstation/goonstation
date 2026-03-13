@@ -197,14 +197,12 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/underwater/nadir_unsafe)
 		prefabSizeX = 16
 		prefabSizeY = 9
 
-	#ifdef MAP_OVERRIDE_NEON
 	cultbase
 		maxNum = 1
 		probability = 100
 		prefabPath = "assets/maps/prefabs/underwater/nadir_unsafe/prefab_water_cultistpit.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 10
-	#endif
 
 // Map specific
 // Nadir only prefabs

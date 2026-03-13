@@ -84,9 +84,21 @@
 		src.num_victims = min(src.num_victims, length(potential_victims))
 		//frick u static
 		/datum/antagonist/broken::shared_objective_text = null
+		var/list/actual_victims = list()
 		for (var/i in 1 to src.num_victims)
-			var/mob/living/carbon/human/victim = pick(potential_victims)
-			victim.mind.add_antagonist(ROLE_BROKEN)
+			actual_victims += pick(potential_victims)
+
+		for (var/mob/living/carbon/human/victim in actual_victims)
+			if (!/datum/antagonist/broken::shared_objective_text)
+				var/objective_type = pick(concrete_typesof(/datum/objective/madness))
+				var/datum/objective/madness/objective = new objective_type(null, victim.mind)
+				objective.set_up_from_victims(actual_victims)
+				/datum/antagonist/broken::shared_objective_text = objective.explanation_text
+			else
+				var/datum/objective/specialist/objective = new(null, victim.mind)
+				objective.explanation_text = /datum/antagonist/broken::shared_objective_text
+			//we're handling objectives manually above so that we can pass the list of victims
+			victim.mind.add_antagonist(ROLE_BROKEN, do_objectives = FALSE)
 			message_admins("[key_name(victim)] surrendered to madness and became a broken antagonist. Source: [source ? "[source]" : "random event"]")
 			logTheThing(LOG_ADMIN, victim, "surrendered to madness and became a broken antagonist. Source: [source ? "[source]" : "random event"]")
 			potential_victims -= victim

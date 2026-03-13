@@ -220,6 +220,7 @@
 	name = "Apocrine Enhancement"
 	desc = "Increases the amount of natural body substances produced from the subject's apocrine glands."
 	id = "stinky"
+	icon_state = "stinky"
 	probability = 99
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
@@ -414,6 +415,7 @@
 	desc = {"Human worker clone batch #92 may contain inactive space bee DNA.
 	If you do not have the authorization level to know that this subject is a clone, please forget this entire message."}
 	id = "bee"
+	icon_state = "human_honey"
 	msgGain = "You feel buzzed!"
 	msgLose = "You lose your buzz."
 	probability = 99
@@ -455,6 +457,7 @@
 	name = "Chronal Additive Inversement"
 	desc = "Causes the subject's age to become its additive inverse...somehow."
 	id = "chronal_additive_inversement"
+	icon_state = "chronal_temp"
 	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
@@ -474,6 +477,7 @@
 	name = "Temporal Displacement"
 	desc = "The subject becomes displaced in time, aging them at random."
 	id = "temporal_displacement"
+	icon_state = "chronal_temp"
 	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	blockCount = 3
@@ -541,6 +545,7 @@
 	name = "Antitemporal Inner Ear"
 	desc = "Makes your inner ear travel back in time, causing you to hear sounds in reverse."
 	id = "reversed_sounds"
+	icon_state = "inner_ear"
 	probability = 25
 	msgGain = "You start hearing things backwards."
 	msgLose = "You no longer hear things backwards."
@@ -557,6 +562,7 @@
 	name = "Leisurely Inner Ear"
 	desc = "Makes your inner ear chill out a little, meaning you hear things deeper and in slow motion."
 	id = "slow_sounds"
+	icon_state = "inner_ear"
 	probability = 25
 	msgGain = "You hear everything slowed down and deeper."
 	msgLose = "You no longer hear everything slowed down and deeper."
@@ -578,6 +584,7 @@
 	name = "Hurried Inner Ear"
 	desc = "Your inner ear is full of performance enhancing drugs, it processes sounds really quickly and with higher pitch!"
 	id = "fast_sounds"
+	icon_state = "inner_ear"
 	probability = 25
 	msgGain = "You hear everything sped up and higher pitched."
 	msgLose = "You no longer hear everything sped up and higher pitched."

@@ -1,3 +1,6 @@
+(t)fri jan 23 26
+(u)Sovexe
+(*)Added the move area build mode tool. Move turfs and objects from one place to another. Prep your gimmicks, and warp them in.
 (t)thu jan 15 26
 (u)JORJ949
 (*)You'll no longer see antag icons as a ghost while in player mode. While not in player mode and a ghost, the observer menu and AI law rack will consider you DNR and show you antags/laws.

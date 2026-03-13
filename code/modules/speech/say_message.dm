@@ -303,7 +303,7 @@
 		if ("!")
 			speech_bubble_icon = src.speaker.speech_bubble_icon_exclaim
 		else
-			var/number = text2num(src.content)
+			var/number = text2num(src.original_content)
 			if (number && (((number >= 0) && (number <= 20)) || number == 420))
 				speech_bubble_icon = "[number]"
 

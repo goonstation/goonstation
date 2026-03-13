@@ -33,40 +33,11 @@ const adjustTileSizeType = () => {
   }
 };
 
+// This used to contain a bunch of brittle code to handle different window sizes
+// That broke everything so we're just hard setting it to the right size for now
 const adjustWindowSize = () => {
-  const { data } = useBackend<BoardgameData>();
-  const { aspectRatio } = data.styling;
-
-  const PaletteSetPadding = 100; // Add 100 pixels to the width
-  const titlebarHeightPadding = 32 + 0.25;
-  let width = 500;
-  let height = 400;
-  // Fetch boardgame__wrapper element and get its width and height
-  const wrapper = document.getElementsByClassName('boardgame__window')[0];
-  if (wrapper) {
-    const wrapperRect = wrapper.getBoundingClientRect();
-    let wrapperWidth = wrapperRect.width;
-    let wrapperHeight = wrapperRect.height;
-
-    // Return if the width and height are the same
-    if (wrapperWidth === width && wrapperHeight === height) {
-      return;
-    }
-
-    let shortestSide =
-      wrapperWidth < wrapperHeight ? wrapperWidth : wrapperHeight;
-
-    // Set the width and height to the shortest side
-    width = shortestSide + PaletteSetPadding;
-    height = shortestSide + titlebarHeightPadding;
-
-    // Set the width and height to the aspect ratio
-    if (aspectRatio) {
-      width = shortestSide * aspectRatio + PaletteSetPadding;
-      height = shortestSide + titlebarHeightPadding;
-    }
-  }
-
+  let width = 580;
+  let height = 512;
   Byond.winset(window.__windowId__, {
     size: `${width}x${height}`,
   });

@@ -1,6 +1,4 @@
 <!-- The text between the arrows are comments - they won't be visible on your PR. -->
-<!-- To label this PR, add the label(s) without the prefixes surrounded by brackets anywhere, for example: [LABEL] -->
-<!-- PRs should at least have one area (A-) label and at least one category (C-) label -->
 
 ## About the PR <!-- Describe the Pull Request here. What does it change? What other things could this impact? -->
 

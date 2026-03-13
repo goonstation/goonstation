@@ -9,6 +9,7 @@
 	var/dy
 	var/dist_x
 	var/dist_y
+	var/momentum
 	var/range
 	var/target_x
 	var/target_y
@@ -38,6 +39,7 @@
 		src.dist_x = dist_x
 		src.dist_y = dist_y
 		src.range = range
+		src.momentum = max(min(range, GET_EUCLIDEAN_DIST(thing, target)),0)
 		src.target_x = target_x
 		src.target_y = target_y
 		src.transform_original = transform_original
@@ -93,16 +95,13 @@ var/global/datum/controller/throwing/throwing_controller = new
 				break
 			var/turf/T = thing.loc
 			if( !(
-					thr.target && thing.throwing && isturf(T) && \
-						(
-							(
-								(thr.target_x != thing.x || thr.target_y != thing.y ) && \
-								thr.dist_travelled < thr.range
-							) || \
-							T?.throw_unlimited || \
-							thing.throw_unlimited
-						)
-					))
+				thr.target && thing.throwing && isturf(T) && \
+					(
+						thr.momentum > 0 || \
+						T?.get_gforce_current() == GFORCE_GRAVITY_MINIMUM || \
+						thing.throw_unlimited
+					)
+				))
 				end_throwing = TRUE
 				break
 			var/choose_x = thr.error > 0
@@ -148,6 +147,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			var/hit_thing = ( thr.throw_type & THROW_NO_CLIP ) ? null : thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
+			thr.momentum -= max(0, T.get_gforce_fractional())
 			if(!thing.throwing || hit_thing)
 				end_throwing = TRUE
 				break

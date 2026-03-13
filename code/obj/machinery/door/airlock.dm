@@ -774,13 +774,15 @@ var/global/list/cycling_airlocks = list()
 	return
 
 /obj/machinery/door/airlock/proc/interact_panel(mob/user)
-	if (!src.panel_open)
+	src.panel_open = !src.panel_open
+	if (src.panel_open)
 		user.visible_message(SPAN_ALERT("[user] opens the maintenance panel on \the [src.name]."))
 		logTheThing(LOG_STATION, user, "opens the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
+		ui_interact(user)
+		interact_particle(user,src)
 	else
 		user.visible_message(SPAN_ALERT("[user] closes the maintenance panel on \the [src.name]."))
 		logTheThing(LOG_STATION, user, "closes the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
-	src.panel_open = !(src.panel_open)
 	tgui_process.update_uis(src)
 	src.UpdateIcon()
 	playsound(src.loc, 'sound/items/screwdriver2.ogg', 25, TRUE)
@@ -884,7 +886,7 @@ var/global/list/cycling_airlocks = list()
 	return 0
 
 /obj/machinery/door/airlock/autoclose()
-	if (src.aiControlDisabled != 1)
+	if (!src.isWireCut(AIRLOCK_WIRE_AI_CONTROL))
 		if(!src.welded)
 			close(0, 1)
 		else

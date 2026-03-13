@@ -139,11 +139,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
-		src.cabling += C.amount
-		boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
-		if (user.contents.Find(W))
-			user.drop_item()
-		qdel(W)
+		var/cable_amount = C.amount
+		if (C.use(C.amount))
+			src.cabling += cable_amount
+			boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
 
 	//this is defined here instead of just using OPENCONTAINER because we want to be able to dump large amounts of reagents at once
 	else if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
@@ -879,6 +878,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			for (var/obj/item/parts/robot_parts/RP in R.contents)
 				RP.ropart_mend_damage(usage, 0)
 			src.reagents.remove_reagent("fuel", usage)
+			health_update_queue |= R
 			R.update_appearance()
 			. = TRUE
 
@@ -899,6 +899,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.cabling -= usage
 			if (src.cabling < 0)
 				src.cabling = 0
+			health_update_queue |= R
 			R.update_appearance()
 			. = TRUE
 

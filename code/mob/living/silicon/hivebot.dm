@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/mob/living/silicon/hivebot, proc/admin_add_tool, proc/admin_remove_tool)
 /mob/living/silicon/hivebot
 	name = "Robot"
 	voice_name = "synthesized voice"
@@ -381,7 +382,7 @@
 			return
 
 	if ((message && isalive(src)))
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		log_emote(src, message, voluntary)
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(SPAN_EMOTE("[message]"), m_type)
@@ -499,14 +500,14 @@
 		if (src.get_burn_damage() < 1)
 			user.show_text("There's no burn damage on [src.name]'s wiring to mend.", "red")
 			return
-		coil.use(1)
-		src.HealDamage("All", 0, 30)
-		if (src.get_burn_damage() < 1)
-			src.fireloss = 0
-			src.visible_message(SPAN_ALERT("<b>[user.name]</b> fully repairs the damage to [src.name]'s wiring."))
-		else
-			boutput(user, SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
-		health_update_queue |= src
+		if (coil.use(1))
+			src.HealDamage("All", 0, 30)
+			if (src.get_burn_damage() < 1)
+				src.fireloss = 0
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> fully repairs the damage to [src.name]'s wiring."))
+			else
+				boutput(user, SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
+			health_update_queue |= src
 
 	else if (istype(W, /obj/item/clothing/suit/bee))
 		boutput(user, "You stuff [src] into [W]! It fits surprisingly well.")
@@ -1023,6 +1024,20 @@ Frequency:
 	on_close_viewport(datum/viewport/vp)
 		src.mainframe?.on_close_viewport(vp)
 
+/mob/living/silicon/hivebot/proc/admin_add_tool()
+	set name = "Add Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_add_tool()
+
+/mob/living/silicon/hivebot/proc/admin_remove_tool()
+	set name = "Remove Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_remove_tool()
+
 /*-----Shell-Creation---------------------------------------*/
 
 /obj/item/ai_interface
@@ -1074,15 +1089,12 @@ Frequency:
 	else if (istype(W, /obj/item/cable_coil))
 		if (src.build_step == 1)
 			var/obj/item/cable_coil/coil = W
-			if (coil.amount >= 3)
+			if (coil.use(3))
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				coil.amount -= 3
 				src.icon_state = "shell-cable"
-				if (coil.amount < 1)
-					user.drop_item()
-					qdel(coil)
 				return
 			else
 				boutput(user, "You need at least three lengths of cable to install it in [src].")

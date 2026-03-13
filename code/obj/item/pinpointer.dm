@@ -8,7 +8,8 @@ TYPEINFO(/obj/item/pinpointer)
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500

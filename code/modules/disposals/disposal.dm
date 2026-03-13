@@ -40,7 +40,7 @@
 			src.set_loc(D)
 
 		if (length(D.contents) > LOG_FLUSHING_THRESHOLD)
-			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.fingerprintslast)].")
+			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.get_last_ckey())].")
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs

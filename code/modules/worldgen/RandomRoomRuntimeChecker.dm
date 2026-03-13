@@ -19,9 +19,7 @@
  * `/datum/mapPrefab/random_room`. To add a new prefab to be checked, simply
  * create a type for it.
  */
-#if defined(CI_RUNTIME_CHECKING)
 var/global/loaded_prefab_path
-#endif
 
 /proc/placeAllRandomRooms()
 #if defined(CI_RUNTIME_CHECKING)

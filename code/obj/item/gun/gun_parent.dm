@@ -524,6 +524,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
 	src.current_projectile = newProj
 	src.tooltip_rebuild = TRUE
+	if (src.silenced)
+		src.silence_projectile()
 	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)
 
 /obj/item/gun/proc/do_camera_recoil(mob/user, turf/start, turf/target, POX, POY)
@@ -592,3 +594,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (start_recoil && icon_recoil_enabled)
 		SPAWN(0)
 			do_icon_recoil()
+
+/obj/item/gun/proc/silence_projectile()
+	src.current_projectile.shot_sound_extrarange = -10
+	src.current_projectile.sound_los = TRUE

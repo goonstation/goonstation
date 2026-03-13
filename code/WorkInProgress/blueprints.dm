@@ -37,7 +37,7 @@
 		This fine piece of machinery can construct entire rooms from blueprints."
 	density = 1
 	opacity = 0
-	anchored = UNANCHORED
+	anchored = UNANCHORED // Set to ANCHORED_ALWAYS when locked.
 	processing_tier = PROCESSING_FULL
 	event_handler_flags = NO_MOUSEDROP_QOL
 
@@ -353,7 +353,7 @@
 
 	proc/activate(mob/user)
 		src.locked = TRUE
-		src.anchored = ANCHORED
+		src.anchored = ANCHORED_ALWAYS
 		src.invalid_count = 0
 		for(var/datum/tileinfo/T in src.current_bp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
@@ -538,7 +538,7 @@
 	/obj/submachine/claw_machine, \
 	/obj/submachine/chem_extractor, \
 	/obj/submachine/chef_oven, \
-	/obj/submachine/chef_sink, \
+	/obj/machinery/sink, \
 	/obj/machinery/launcher_loader, \
 	/obj/machinery/optable, \
 	/obj/machinery/mass_driver, \
@@ -553,6 +553,7 @@
 	/obj/securearea, \
 	/obj/machinery/mixer, \
 	/obj/submachine/foodprocessor, \
+	/obj/machinery/gravity_tether/current_area, \
 	\
 )
 // blacklist overrules whitelist
