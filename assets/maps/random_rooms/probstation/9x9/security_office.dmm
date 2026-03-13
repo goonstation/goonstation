@@ -173,6 +173,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/secscanner{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "yI" = (
@@ -303,6 +306,9 @@
 /obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 4
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
