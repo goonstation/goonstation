@@ -444,6 +444,7 @@
 /obj/machinery/chem_dispenser/chef{
 	pixel_y = 5
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purple/checker,
 /area/prefab/dreamplaza)
 "pa" = (

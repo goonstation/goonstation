@@ -165,6 +165,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		handle_reactions()
 
+	/// Removes a certain amount of reagents, prorated by their current volume. Returns the amount removed.
+	/// This simulates pouring fluids, and thus will often not completely remove any one reagent until the total volume approaches 0.
 	proc/remove_any(var/amount=1)
 		if(amount > total_volume) amount = total_volume
 		if(amount <= 0) return
@@ -224,6 +226,26 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		src.update_total()
 
 		return amount
+
+	/// Similar to remove_any, but a portion of the reagent is removed non-proportional to its volume.
+	/// This is useful when reagents are binary and simulating fluid mechanics fully is undesirable.
+	/// This is not intended for transferring reagents, there is no support for remembering the removed reagent amounts.
+	proc/consume_any(var/amount=1, var/consumption_ratio = 0.5, var/exception = null)
+		var/total_consumption_amount = amount * consumption_ratio
+		var/remove_amount = amount - total_consumption_amount
+		if (remove_amount > 0)
+			// little bit inefficient to call this rather than implement it in the loop below, but cleaner and probably not a performance issue
+			src.remove_any_except(remove_amount, exception)
+		if (total_consumption_amount <= 0)
+			return amount
+		var/consumption_per_reagent = total_consumption_amount / length(reagent_list)
+		for(var/reagent_id in reagent_list)
+			if (reagent_id == exception)
+				continue
+			var/datum/reagent/current_reagent = reagent_list[reagent_id]
+			if(current_reagent)
+				src.remove_reagent(reagent_id, consumption_per_reagent)
+
 
 	proc/get_master_reagent_name()
 		var/largest_name = null
@@ -302,20 +324,20 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// index = which reagent to transfer (0 = all)
 	proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1, var/index=0, var/exception=0)
 		if(amount > total_volume) amount = total_volume
-		if(amount <= 0) return
+		if(amount <= CHEM_EPSILON) return
 		if(!target) return
+
+		amount = round(amount, CHEM_EPSILON)
+
+		if (do_fluid_react && issimulatedturf(target))
+			var/turf/simulated/T = target
+			return T.fluid_react(src, amount, index = index)
 
 		if (isnull(target.reagents))
 			target.create_reagents()
 
 		var/datum/reagents/target_reagents = target.reagents
 		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
-		amount = round(amount, CHEM_EPSILON)
-		if(amount <= CHEM_EPSILON) return
-
-		if (do_fluid_react && issimulatedturf(target))
-			var/turf/simulated/T = target
-			return T.fluid_react(src, amount, index = index)
 
 		return trans_to_direct(target_reagents, amount, multiplier, index = index, exception = exception)
 

@@ -129,6 +129,7 @@
 /area/prefab/water_treatment)
 "aC" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -174,7 +175,6 @@
 /obj/item/clothing/glasses/spectro{
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purple/side{
 	dir = 9
