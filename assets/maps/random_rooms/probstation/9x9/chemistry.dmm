@@ -19,6 +19,7 @@
 "d" = (
 /obj/table/reinforced/chemistry/auto/firstaid,
 /obj/item/storage/toolbox/mechanical,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "e" = (
@@ -65,10 +66,10 @@
 "j" = (
 /obj/table/reinforced/chemistry/auto/auxsup,
 /obj/machinery/chem_shaker/large/chemistry,
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "k" = (
@@ -156,37 +157,8 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "x" = (
-/obj/storage/crate{
-	desc = "Wow! Crate may or may not still contain bottles.";
-	name = "Bottles in a Crate"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_x = -8;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_x = 8;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = -6
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 8
-	},
-/obj/cable,
 /obj/machinery/firealarm/directional/west,
+/obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "y" = (
@@ -195,7 +167,9 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "z" = (
-/obj/machinery/door_control/bolter/new_walls/east,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "chem_stall_west"
+	},
 /obj/machinery/light/small/warm/very{
 	dir = 1;
 	pixel_y = 21
@@ -209,7 +183,7 @@
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "nadir_chemshut";
+	id = "chem_shutters";
 	layer = 3.2;
 	name = "Chemistry Lab Shutters";
 	opacity = 0
@@ -222,7 +196,7 @@
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
-	id = "nadir_chemshut";
+	id = "chem_shutters";
 	layer = 3.2;
 	name = "Chemistry Lab Shutters";
 	opacity = 0
@@ -274,7 +248,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/door_control/bolter/new_walls/west,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "chem_stall_east"
+	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
@@ -284,12 +260,40 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/storage/secure/closet/research/chemical,
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/storage/crate{
+	desc = "Wow! Crate may or may not still contain bottles.";
+	name = "Bottles in a Crate"
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 8
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "M" = (
 /obj/machinery/door_control{
-	id = "nadir_chemshut";
+	id = "chem_shutters";
 	name = "Chemistry Lab Shutters";
 	pixel_y = 26
 	},
@@ -329,7 +333,8 @@
 /area/station/science/chemistry)
 "S" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
-	dir = 1
+	dir = 1;
+	id = "chem_stall_east"
 	},
 /obj/mapping_helper/access/chemistry,
 /obj/cable{
@@ -342,7 +347,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "T" = (
 /obj/stool/chair/office/purple{
@@ -357,7 +362,8 @@
 /area/station/science/chemistry)
 "U" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
-	dir = 1
+	dir = 1;
+	id = "chem_stall_west"
 	},
 /obj/mapping_helper/access/chemistry,
 /obj/cable{
@@ -370,7 +376,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "V" = (
 /turf/simulated/floor/specialroom/arcade,

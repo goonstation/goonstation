@@ -410,6 +410,7 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/storage)
 "Z" = (

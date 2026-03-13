@@ -71,6 +71,11 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black/grime,
 /area/station/engine/gas)
+"l" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/alarm/directional/west,
+/turf/simulated/floor/black/grime,
+/area/station/engine/gas)
 "m" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/jen/purple,
@@ -264,6 +269,10 @@
 "Q" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/poster/wallsign/iso/warning/biological,
+/obj/item/wrench/yellow{
+	pixel_x = -5;
+	pixel_y = 3
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/gas)
 "R" = (
@@ -341,7 +350,7 @@ X
 J
 o
 P
-P
+l
 b
 a
 "}

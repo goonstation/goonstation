@@ -424,6 +424,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellowblack{
 	dir = 6
 	},

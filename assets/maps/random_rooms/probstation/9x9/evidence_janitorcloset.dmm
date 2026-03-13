@@ -3,6 +3,10 @@
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/security/evidence)
 "bZ" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "ci" = (
@@ -120,16 +124,16 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "qd" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
 /obj/landmark/start/job/janitor,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/darkblue,
 /area/station/janitor/supply)
 "qu" = (

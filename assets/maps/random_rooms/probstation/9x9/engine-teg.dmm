@@ -237,10 +237,7 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 8
 	},
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -20
-	},
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/engine/glow,
 /area/station/engine/core/thermoelectric)
 "Bq" = (
