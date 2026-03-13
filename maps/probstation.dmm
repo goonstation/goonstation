@@ -1055,7 +1055,8 @@
 /obj/machinery/computer/airbr{
 	pixel_y = 33;
 	id = "southhall";
-	starts_established = 1
+	starts_established = 1;
+	density = 0
 	},
 /turf/simulated/floor/stairs/medical/wide{
 	dir = 4
@@ -7219,7 +7220,8 @@
 /obj/machinery/computer/airbr{
 	pixel_y = 33;
 	id = "southhall";
-	starts_established = 1
+	starts_established = 1;
+	density = 0
 	},
 /turf/simulated/floor/stairs/medical/wide/other{
 	dir = 8
@@ -58522,7 +58524,7 @@ Sr
 uC
 uC
 Uv
-uC
+vM
 uC
 wy
 KL
