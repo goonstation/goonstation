@@ -1544,7 +1544,6 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 6)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 2)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm,3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 8)
@@ -1554,6 +1553,9 @@ TYPEINFO(/obj/machinery/vending/medical)
 
 		if (!restocked) //technically, this deletes any ammo left over on restock. oh well.
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm/armory,3)
+		else
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm/armory,1) // only 1 mag when restocked
 
 /obj/machinery/vending/htr_team
 	name = "SecTech"

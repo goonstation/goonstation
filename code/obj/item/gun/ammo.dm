@@ -592,6 +592,10 @@
 	five_shots
 		amount_left = 5
 
+	armory
+		amount_left = 8
+		max_amount = 8
+
 	smg
 		name = "9mm SMG magazine"
 		desc = "An extended 9mm magazine for a sub machine gun."
