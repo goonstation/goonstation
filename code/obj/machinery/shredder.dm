@@ -8,7 +8,9 @@
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_WRENCH
 	/// What can a shredder shred?
-	var/accepted_types = list(/obj/item/card, /obj/item/paper, /obj/item/toy/diploma, /obj/item/currency/spacecash)
+	var/accepted_types = list(/obj/item/card, /obj/item/paper, /obj/item/toy/diploma, /obj/item/currency/spacecash, /obj/item/currency/fishing, /obj/item/random_mail)
+	/// Some things get rotated 90 degrees to fit better
+	var/rotated_types = list(/obj/item/card, /obj/item/currency/spacecash, /obj/item/currency/fishing)
 	/// Visual proxy for the thing being shredded
 	var/atom/movable/proxy = null
 	var/shredding = FALSE
@@ -89,7 +91,7 @@
 	var/icon/mask_icon = icon('icons/obj/kitchen_grinder_mask.dmi', "shredder-mask")
 
 	//some things go in sideways
-	if (istypes(item, list(/obj/item/card, /obj/item/currency/spacecash)))
+	if (istypes(item, src.rotated_types) || (istype(item, /obj/item/random_mail) && (item.icon_state == "mail-1" || item.icon_state == "mail-1")))
 		//rotate the icon ONLY so the alpha mask filter doesn't get messed up
 		var/icon/icon = getFlatIcon(item)
 		icon.Turn(90)
