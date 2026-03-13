@@ -1,3 +1,5 @@
+TYPEINFO(/obj/machinery/shredder)
+	mats = 6
 /obj/machinery/shredder
 	name = "shredder"
 	desc = "Don't stick your hand in there..."
