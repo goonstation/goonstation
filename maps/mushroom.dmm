@@ -3270,6 +3270,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/shredder,
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
 	},

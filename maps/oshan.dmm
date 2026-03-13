@@ -32297,7 +32297,10 @@
 /area/ghostdrone_factory)
 "jiS" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/machinery/shredder{
+	pixel_y = 10;
+	pixel_x = -3
+	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
 	pixel_x = 4;
 	pixel_y = 8
