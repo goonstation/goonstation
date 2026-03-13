@@ -25,10 +25,11 @@
 /datum/antagonist/generic/syndicate_agent
 	id = ROLE_SYNDICATE_AGENT
 	antagonist_icon = "syndicate"
+	display_name = "syndicate agent"
 	grouped_name = "Syndicate Agents"
 	faction = list(FACTION_SYNDICATE)
 
-	New(datum/mind/new_owner)
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, id, display_name)
 		src.owner = new_owner
 		if (istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/gamemode = ticker.mode
@@ -57,3 +58,8 @@
 
 		. = ..()
 
+
+/datum/antagonist/generic/syndicate_agent/commander
+	id = ROLE_SYNDICATE_COMMANDER
+	antagonist_icon = "syndcomm"
+	display_name = "syndicate commander"

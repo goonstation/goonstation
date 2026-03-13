@@ -981,6 +981,7 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 	icon_state = "snow1"
 	step_material = "step_snow"
 	turf_flags = MOB_STEP
+	can_dig = TRUE
 
 	New()
 		..()
@@ -999,6 +1000,7 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 /turf/unsimulated/floor/snow/green
 	name = "snow-covered floor"
 	icon_state = "snowgreen"
+	can_dig = FALSE
 
 /turf/unsimulated/floor/snow/green/corner
 	name = "snow-covered floor"

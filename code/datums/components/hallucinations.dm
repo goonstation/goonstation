@@ -566,6 +566,47 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	buttcrab
 		fake_icon_state = "buttcrab"
 		should_attack = FALSE
+
+	headspider
+		fake_icon_state = "headspider"
+		var/frustration = 0
+		var/last_loc
+
+		New(location, target)
+			// try to spawn out of sight
+			var/list/turf/potential_spawns = list()
+			for(var/turf/T in (orange(target, 7) - oview(target, 7)))
+				if (isfloor(T))
+					potential_spawns += T
+			if (length(potential_spawns))
+				src.set_loc(pick(potential_spawns))
+			. = ..()
+
+		process()
+			if (!src.my_target)
+				qdel(src)
+				return
+			if(src.stop_processing)
+				return
+			if (BOUNDS_DIST(src, src.my_target) > 0)
+				step_towards(src, src.my_target)
+				if (src.loc == last_loc)
+					frustration++
+				last_loc = src.loc
+				if (frustration > 10)
+					src.set_loc(get_step_towards(src, src.my_target))
+					frustration = 0
+			else
+				if (prob(70))
+					boutput(src.my_target, ("<font color='#FF0000'><B>\The [src]</B> crawls down [src.my_target.name]'s throat!</font>"))
+					src.my_target.playsound_local(src.my_target, 'sound/misc/headspiderability.ogg', 60)
+					src.my_target.setStatusMin("unconscious", 5 SECONDS)
+					qdel(src)
+
+			if (prob(10)) step_away(src,my_target,2)
+			SPAWN(0.3 SECONDS)
+				src.process()
+
 	bat
 		fake_icon_state = "bat"
 		get_name()

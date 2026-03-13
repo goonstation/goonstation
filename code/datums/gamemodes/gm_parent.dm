@@ -62,15 +62,17 @@ ABSTRACT_TYPE(/datum/game_mode)
 	if (emergency_shuttle.online && emergency_shuttle.direction == 1)
 		return
 	if (shuttle_last_auto_call + (shuttle_initial_auto_call_done ? shuttle_auto_call_time / 2 : shuttle_auto_call_time) <= ticker.round_elapsed_ticks)
-		emergency_shuttle.incall()
-		var/announcement = "The shuttle has automatically been called for a shift change."
-		if(shuttle_prevent_recall_time <= ticker.round_elapsed_ticks)
-			emergency_shuttle.can_recall = FALSE
-			logTheThing(LOG_STATION, null, "Automatically disabled recalling of the Energency Shuttle.")
-			announcement += " Central Command has prohibited further recalls."
+		if(emergency_shuttle.incall())
+			var/announcement = "The shuttle has automatically been called for a shift change."
+			if(shuttle_prevent_recall_time <= ticker.round_elapsed_ticks)
+				emergency_shuttle.can_recall = FALSE
+				logTheThing(LOG_STATION, null, "Automatically disabled recalling of the Energency Shuttle.")
+				announcement += " Central Command has prohibited further recalls."
+			else
+				announcement += " Please recall the shuttle to extend the shift."
+			command_alert(announcement,"Shift Shuttle Update", alert_origin=ALERT_GENERAL)
 		else
-			announcement += " Please recall the shuttle to extend the shift."
-		command_alert(announcement,"Shift Shuttle Update", alert_origin=ALERT_GENERAL)
+			logTheThing(LOG_STATION, "The emergency shuttle would have been called automatically now, but shuttle calling was completely disabled.")
 		shuttle_last_auto_call = ticker.round_elapsed_ticks
 		if (!shuttle_initial_auto_call_done)
 			shuttle_initial_auto_call_done = 1

@@ -27,7 +27,7 @@
 				for (var/atom/A as anything in src.get_tracked_examine_atoms())
 					hover_tag = A.get_examine_tag(src)
 					hover_tag?.show_images(src.client, TRUE, FALSE)
-			if (src.atom_hovered_over)
+			if (src.atom_hovered_over && (GET_DIST(src.atom_hovered_over, src) <= MAX_NAMETAG_RANGE))
 				var/atom/A = src.atom_hovered_over
 				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
 				hover_tag?.show_images(src.client, FALSE, TRUE)

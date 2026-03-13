@@ -165,6 +165,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	volume = 70
 	auto_close = FALSE
 	can_leghole = FALSE
+	default_material = "wood"
 
 	wood
 		icon_closed = "woodcoffin"

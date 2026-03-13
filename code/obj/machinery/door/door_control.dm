@@ -679,6 +679,7 @@ TYPEINFO(/obj/machinery/door_control)
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////
 ///////////////////////////////////////////////////////
+ADMIN_INTERACT_PROCS(/obj/machinery/activation_button, proc/activate)
 ABSTRACT_TYPE(/obj/machinery/activation_button)
 /obj/machinery/activation_button
 	name = "Activation Button"

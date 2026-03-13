@@ -22,6 +22,7 @@ TYPEINFO(/obj/item/light_parts)
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
 	material_amt = 0.2
+	can_arcplate = FALSE
 
 	var/installed_icon_state = "tube-empty"
 	var/installed_base_state = "tube"

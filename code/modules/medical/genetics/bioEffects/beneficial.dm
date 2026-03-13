@@ -465,15 +465,24 @@
 	OnAdd()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, src.power)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 	OnRemove()
 		. = ..()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, newval)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
@@ -768,7 +777,7 @@
 	lockedTries = 8
 	stability_loss = 15
 	degrade_to = "bad_eyesight"
-	icon_state  = "eye"
+	icon_state  = "eye_night"
 
 	OnAdd()
 		. = ..()

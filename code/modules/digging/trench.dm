@@ -17,8 +17,14 @@
 	pass_unstable = TRUE
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_TRENCH
 	can_replace_with_stuff = TRUE
+	layer = PLATING_LAYER
 
 	var/old_type
+	var/can_fill = TRUE
+	var/base_icon_state = "trench"
+
+	unfiilable
+		can_fill = FALSE
 
 	New()
 		. = ..()
@@ -82,7 +88,7 @@
 		. = ..()
 
 	attackby(obj/item/I, mob/user, params, is_special)
-		if (isdiggingtool(I))
+		if (src.can_fill && isdiggingtool(I))
 			actions.start(new/datum/action/bar/dig_trench(src), user)
 			return
 
@@ -130,7 +136,7 @@
 					var/turf/simulated/floor/auto/trench/neighbour = OT
 					neighbour.update_trench_overlay(FALSE)
 
-		src.icon_state = "trench-[connected_directions]"
+		src.icon_state = "[src.base_icon_state]-[connected_directions]"
 
 	proc/fall_down_trench(mob/M)
 		M.set_loc(src)
@@ -148,8 +154,16 @@
 	icon_state = "trench-0"
 	pass_unstable = TRUE
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_TRENCH
+	// Trench prying is rather buggy and unsupported by their current code.
+	pryable = FALSE
+	layer = PLATING_LAYER
 
 	var/old_type
+	var/can_fill = TRUE
+	var/base_icon_state = "trench"
+
+	unfillable
+		can_fill = FALSE
 
 	New()
 		. = ..()
@@ -213,7 +227,7 @@
 		. = ..()
 
 	attackby(obj/item/I, mob/user, params, is_special)
-		if (isdiggingtool(I))
+		if (src.can_fill && isdiggingtool(I))
 			actions.start(new/datum/action/bar/dig_trench(src), user)
 			return
 
@@ -261,7 +275,7 @@
 					var/turf/simulated/floor/auto/trench/neighbour = OT
 					neighbour.update_trench_overlay(FALSE)
 
-		src.icon_state = "trench-[connected_directions]"
+		src.icon_state = "[src.base_icon_state]-[connected_directions]"
 
 	proc/fall_down_trench(mob/M)
 		M.set_loc(src)
@@ -300,11 +314,8 @@
 			return // station areas do not get ambient effects
 		if(global.station_repair.ambient_light)
 			src.AddOverlays(global.station_repair.ambient_light, "ambient")
-		if(global.station_repair.weather_img)
-			if(islist(global.station_repair.weather_img))
-				src.AddOverlays(pick(global.station_repair.weather_img), "weather")
-			else
-				src.AddOverlays(global.station_repair.weather_img, "weather")
+		if(global.station_repair.weather_imgs)
+			src.AddOverlays(pick(global.station_repair.weather_imgs), "weather")
 		if(global.station_repair.weather_effect)
 			var/obj/effects/E = locate(global.station_repair.weather_effect) in src
 			if(!E)

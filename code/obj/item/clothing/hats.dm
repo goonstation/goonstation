@@ -417,11 +417,11 @@ TYPEINFO(/obj/item/clothing/head/det_hat/gadget)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
 		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] DetGadget hat into a spiffy scuttlebot!</b>"))
-		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		user.drop_item()
+		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src), user)
 		if (src.inspector == TRUE)
 			S.make_inspector()
 		S.linked_hat = src
-		user.drop_item()
 		src.set_loc(S)
 		user.update_inhands()
 		return

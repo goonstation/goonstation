@@ -154,7 +154,7 @@
 				purchased_items += list(
 					list(
 						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-						"name" = "[purchased_item[1].name] ([purchased_item[1].cost] TC)",
+						"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
 					)
 				)
 

@@ -54,6 +54,10 @@
 	var/atom/linked_item = null
 	/// All items stored
 	var/list/stored_items = null
+	/// Sound to play when opening (file or `generate_sound` group)
+	var/open_sound = "rustle"
+	/// Sound to play when closing (file or `generate_sound` group)
+	var/close_sound = null
 
 /datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
 		slots, sneaky, stealthy_storage, opens_if_worn, list/params)
@@ -191,8 +195,8 @@
 
 /// when clicking the storage item with an empty hand
 /datum/storage/proc/storage_item_attack_hand(mob/user)
-	if (!src.sneaky)
-		playsound(src.linked_item.loc, "rustle", 50, TRUE, -2)
+	if (!src.sneaky && src.open_sound)
+		playsound(src.linked_item.loc, src.open_sound, 50, TRUE, -2)
 	// check if its in your inventory
 	if (src.linked_item.loc == user && (src.opens_if_worn || (src.linked_item in user.equipped_list(FALSE)) || IS_LIVING_OBJECT_USING_SELF(user)))
 		// check if storage is attached as an arm
@@ -222,7 +226,8 @@
 	// if mouse dropping storage item onto a hand slot, attempt to hold it
 	if (istype(over_object, /atom/movable/screen/hud))
 		var/atom/movable/screen/hud/S = over_object
-		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
+		if (src.open_sound)
+			playsound(src.linked_item.loc, src.open_sound, 50, TRUE, -5)
 		if (!user.restrained() && !is_incapacitated(user) && src.linked_item.loc == user)
 			if (S.id == "rhand" && !user.r_hand)
 				user.u_equip(src.linked_item)
@@ -408,7 +413,8 @@
 		if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
 			user.visible_message(SPAN_NOTICE("[user] has added [I] to [src.linked_item]!"),
 				SPAN_NOTICE("You have added [I] to [src.linked_item]."))
-		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
+		if (src.open_sound)
+			playsound(src.linked_item.loc, src.open_sound, 50, TRUE, -5)
 
 /// use this versus add_contents() if you also want extra safety checks
 /datum/storage/proc/add_contents_safe(obj/item/I, mob/user = null, visible = TRUE)
@@ -506,6 +512,8 @@
 	if (user.s_active == src.hud)
 		user.s_active = null
 		user.detach_hud(src.hud)
+		if (src.close_sound)
+			playsound(src.linked_item.loc, src.close_sound, 50, TRUE)
 
 /datum/storage/proc/hide_all_huds()
 	for (var/mob/M as anything in src.hud?.mobs)

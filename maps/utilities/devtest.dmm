@@ -2621,6 +2621,10 @@
 "UD" = (
 /turf/simulated/floor/engine,
 /area/station/devzone)
+"UG" = (
+/obj/machinery/genetics_booth,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
 "UI" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/unary/portables_connector,
@@ -2887,6 +2891,10 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/green,
+/area/station/devzone)
+"YH" = (
+/obj/item/device/analyzer/genetic,
+/turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "YM" = (
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -3730,7 +3738,7 @@ ng
 oG
 wy
 Tp
-vd
+YH
 ng
 Yx
 "}
@@ -3816,7 +3824,7 @@ ng
 bS
 Gn
 Er
-vd
+UG
 ng
 Yx
 "}

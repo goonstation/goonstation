@@ -1514,7 +1514,11 @@ TYPEINFO(/mob/living)
 	else if (src.bioHolder.HasEffect("resist_electric"))
 		boutput(src, SPAN_NOTICE("You feel electricity course through you harmlessly!"))
 		return 0
+
 	src.setStatus("defibbed", sqrt(shock_damage) SECONDS)
+	if (length(src.implant) && shock_damage >= 5)
+		src.changeStatus("implants_disabled", clamp(shock_damage, 15, 60) SECONDS)
+
 	switch(shock_damage)
 		if (0 to 25)
 			playsound(src.loc, 'sound/effects/electric_shock.ogg', 50, 1)

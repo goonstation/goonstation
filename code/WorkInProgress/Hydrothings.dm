@@ -316,14 +316,12 @@
 	access = list(access_owlerymaint)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/item/card/id/owlsecurity
 	icon_state = "id_sec"
 	access = list(access_owlerysec)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/item/card/id/owlgold
 	name = "identification card"
@@ -333,7 +331,6 @@
 	access = list(access_owlerycommand, access_owlerysec, access_owlerymaint)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/fakeobject/bustedpod
 	name = "Busted Escape Pod"

@@ -356,7 +356,7 @@ TYPEINFO(/obj/item/pinpointer)
 			blood_dna = A.blood_DNA
 		else if (CHECK_LIQUID_CLICK(A))
 			var/turf/T = get_turf(A)
-			blood_dna = T.active_liquid.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
+			blood_dna = T.active_liquid?.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
 		if(!blood_dna)
 			var/datum/reagents/reagents = A.reagents
 			if(isturf(A))

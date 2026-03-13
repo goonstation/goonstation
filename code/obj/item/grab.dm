@@ -20,6 +20,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 	var/irresistible = 0
+	can_arcplate = FALSE
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
@@ -138,15 +139,6 @@
 			I.process_grab(mult)
 
 		UpdateIcon()
-
-	afterattack(atom/target, mob/user, reach, params)
-		. = ..()
-		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
-			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container(TRUE))
-				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
-				var/trans = src.affecting.reagents.trans_to(target, 10)
-				if (trans)
-					boutput(user, SPAN_NOTICE("You dump [trans] units of the solution from [src.affecting] to [target]."))
 
 	attack(atom/target, mob/user)
 		if (check())
@@ -587,6 +579,15 @@
 
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
+
+	// attempt to pour into the object instead, putting it here because i dont know whether its open by its type
+	if (G.state >= GRAB_AGGRESSIVE && !istype(src,/turf))
+		if (M.is_open_container() && M.reagents && src.is_open_container(TRUE))
+			logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [M] [log_reagents(M)] to [src] at [log_loc(user)].")
+			var/trans = M.reagents.trans_to(src, 10)
+			if (trans)
+				boutput(user, SPAN_NOTICE("You dump [trans] units of the solution from [M] to [src]."))
+				return 0
 
 	user.visible_message(SPAN_ALERT("<B>[M] has been smashed against [src] by [user]!</B>"))
 	logTheThing(LOG_COMBAT, user, "smashes [constructTarget(M,"combat")] against [src]")

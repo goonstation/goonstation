@@ -82,6 +82,8 @@
 	var/relay_flags = null
 	/// If FALSE, this message will not be permitted to be retransmitted, regardless of the flags present in `relay_flags`.
 	var/can_relay = TRUE
+	/// The browser output group of this message. Messages in the same group will be bundled as if their contents were identical.
+	var/group = ""
 
 	// Maptext Variables:
 	/// The CSS values for the maptext, stored as an associative list, i.e: "font-weight" = "bold".
@@ -96,6 +98,8 @@
 	)
 	/// A list of colours for the maptext to oscillate through. Use the "start_colour" value to determine the colour to animate from to `maptext_css_values["color"]`.
 	var/list/maptext_animation_colours = null
+	/// A list of callback datums to be invoked, with the message itself as the first argument and the maptext image created by this message as the second argument.
+	var/list/datum/callback/maptext_callbacks = null
 	/// A prefix that should only be displayed on the maptext.
 	var/maptext_prefix = null
 	/// A suffix that should only be displayed on the maptext.
@@ -444,11 +448,13 @@
 	copy.atom_listeners_to_be_excluded = src.atom_listeners_to_be_excluded?.Copy()
 	copy.relay_flags = src.relay_flags
 	copy.can_relay = src.can_relay
+	copy.group = src.group
 
 	// Maptext Variables:
 	copy.maptext_css_values = src.maptext_css_values?.Copy()
 	copy.maptext_variables = src.maptext_variables?.Copy()
 	copy.maptext_animation_colours = src.maptext_animation_colours?.Copy()
+	copy.maptext_callbacks = src.maptext_callbacks?.Copy()
 	copy.maptext_prefix = src.maptext_prefix
 	copy.maptext_suffix = src.maptext_suffix
 

@@ -182,7 +182,15 @@
 				return
 
 		if (istype(W, /obj/item/tank/plasma))
-			src.open_parts_panel(user)
+			if(src.fueltank || !src.atmostank)
+				src.open_parts_panel(user)
+			else
+				logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
+				boutput(usr, SPAN_NOTICE("You attach the [W.name] to [src.name]'s fuel supply valve."))
+				user.drop_item()
+				W.set_loc(src)
+				src.fueltank = W
+				src.myhud?.update_fuel()
 			return
 
 		..()

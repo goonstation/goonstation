@@ -16,20 +16,85 @@ TYPEINFO(/obj/item/device/radio/electropack)
 	throw_range = 3
 	w_class = W_CLASS_HUGE
 	flags = TABLEPASS | CONDUCT
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBACK
 	item_state = "electropack"
 	cant_self_remove = TRUE
 
+	var/baseline_arc_power = -2000 //! the amount of Wattage the electropack does provides or drains baseline
+	var/required_arc_power = 1500 //! The total of power needed to cause an electric arc with the assembly. This will make a elecflash power of 2.
+	var/maximum_arc_power = 15000 //! the power the electropack will drain for a max-capacity arc flash. This will make a elecflash power of 6.
 	var/code = 2
 	var/on = FALSE
 
 /obj/item/device/radio/electropack/New()
 	. = ..()
-
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 	// Electropack + sec helmet  -> shock kit
 	src.AddComponent(/datum/component/assembly, /obj/item/clothing/head/helmet, PROC_REF(shock_kit_assembly), TRUE)
 
+/obj/item/device/radio/electropack/disposing()
+	. = ..()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+/obj/item/device/radio/electropack/proc/assembly_setup(var/manipulated_electropack, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	//dangerous assemblies should likely all fall under contraband level 4
+	var/electropack_assembly_contraband_level = 4
+	// Since the electropack itself is not contraband, we need to update this here.
+	APPLY_ATOM_PROPERTY(parent_assembly, PROP_MOVABLE_VISIBLE_CONTRABAND, parent_assembly, max(GET_ATOM_PROPERTY(parent_assembly,PROP_MOVABLE_VISIBLE_CONTRABAND), electropack_assembly_contraband_level))
+	SEND_SIGNAL(parent_assembly, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
+	// trigger/electropack-Assembly + cell -> trigger/electropack/cell assembly
+	parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/cell), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+
+/obj/item/device/radio/electropack/proc/assembly_application(var/manipulated_electropack, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+	//give it a bigger cooldown because the effect can be quite severe
+	if(!ON_COOLDOWN(src, "electropack_applier", 4 SECONDS))
+		//The electropack supplies a baseline power, we then add the cell's power to it
+		var/electropack_power = src.baseline_arc_power
+		var/obj/item/cell/manipulated_cell = assembly_target
+		if(istype(manipulated_cell, /obj/item/cell/erebite))
+			parent_assembly.visible_message(SPAN_ALERT("[parent_assembly] violently explodes!"))
+			logTheThing(LOG_COMBAT, parent_assembly.last_armer, "'s [parent_assembly] (erebite power cell) went off at [log_loc(src)].")
+			var/turf/T = get_turf(src)
+			explosion(src, T, 0, 1, 2, 2)
+			SPAWN(0.1 SECONDS)
+				qdel(parent_assembly)
+			return
+		if(manipulated_cell)
+			electropack_power += manipulated_cell.charge
+		// Now we check if we have enough power for an arc flash
+		if(electropack_power >= src.required_arc_power)
+			//if that's the case, we cap the power on the maximum of the electropack
+			electropack_power = min(src.maximum_arc_power, electropack_power)
+			var/turf/current_turf = get_turf(src)
+			var/atom/target = null
+			var/list/target_group = list()
+			for(var/mob/iterated_mob in viewers(4, current_turf))
+				//We discard any intangible mob
+				if(!isintangible(iterated_mob))
+					target_group += iterated_mob
+			if(!length(target_group))
+				//if we don't find any mob in range, we pick a random turf instead
+				for(var/turf/iterated_turf in range(4, current_turf))
+					target_group += iterated_turf
+			// once we have a target group, we pick a target and arcflash them
+			target = pick(target_group)
+			if(manipulated_cell)
+				manipulated_cell.use(src.maximum_arc_power)
+			arcFlash(parent_assembly, target, electropack_power)
+		else
+			elecflash(get_turf(src),0, power=4, exclude_center = 0)
+
+/// ----------------------------------------------
+
 /obj/item/device/radio/electropack/receive_signal(datum/signal/signal)
+	if(istype(src.master, /obj/item/assembly))
+		return
+
 	if (!signal || !signal.data || ("[signal.data["code"]]" != "[code]"))
 		return
 

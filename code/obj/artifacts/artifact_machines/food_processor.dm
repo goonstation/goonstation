@@ -103,15 +103,8 @@
 				if (!convertable_limbs.len) //avoid runtiming once all limbs are converted
 					continue
 				var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
-				switch(limb_to_replace.slot)
-					if ("l_arm")
-						qdel(humanuser.limbs.get_limb("l_arm"))
-					if ("r_arm")
-						qdel(humanuser.limbs.get_limb("r_arm"))
-					if ("l_leg")
-						qdel(humanuser.limbs.get_limb("l_leg"))
-					if ("r_leg")
-						qdel(humanuser.limbs.get_limb("r_leg"))
+				humanuser.sever_limb(limb_to_replace.slot)
+				qdel(limb_to_replace)
 				convertable_limbs -= limb_to_replace
 				humanuser.update_body()
 				src.biomatter += 2

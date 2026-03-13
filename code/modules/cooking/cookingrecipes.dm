@@ -687,7 +687,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 			customSandwich.name = "toast"
 			customSandwich.desc = "A slice of toast between two slices of bread. Apparently this counts as a sandwich?"
 			extraSlices--
-			customSandwich.reagents.add_reagent("worcestershire_sauce", 25)
+			customSandwich.reagents.add_reagent("yorkshire_sauce", 25)
 		else if (!fillings.len)
 			customSandwich.name = "wish"
 			customSandwich.desc = "So named because you 'wish' you had something to put between the slices of bread. Ha.  ha.  Ha..."

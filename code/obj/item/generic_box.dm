@@ -84,6 +84,15 @@
 		name = "box of bee stickers"
 		contained_item = /obj/item/sticker/bee
 
+	anchovy
+		name = "can of anchovies"
+		icon_state = "anch"
+		icon_open = "anch-open"
+		icon_empty = "anch-open"
+		contained_item = /obj/item/reagent_containers/food/fish/anchovy
+		item_amount = 6
+		max_item_amount = 6
+
 	contraband
 		name = "contraband adjustment sticker box"
 		desc = "Contains stickers which can adjust the effective level of contraband an item is detected as."

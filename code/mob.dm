@@ -2800,6 +2800,10 @@ TYPEINFO(/mob)
 //	return radiation
 
 /mob/UpdateName()
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+		src.update_name_tag("")
+		return
 	if (src.real_name)
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 	else
@@ -2826,8 +2830,6 @@ TYPEINFO(/mob)
 	return mobs
 
 /mob/get_examine_tag(mob/examiner)
-	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
-		return null
 	return src.name_tag
 
 /mob/proc/protected_from_space()
@@ -3389,7 +3391,7 @@ TYPEINFO(/mob)
 /mob/MouseEntered(location, control, params)
 	var/mob/M = usr
 	M.atom_hovered_over = src
-	if(M.client.check_key(KEY_EXAMINE))
+	if(M.client.check_key(KEY_EXAMINE) && (HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) || GET_DIST(src, M) <= MAX_NAMETAG_RANGE))
 		var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
 		hover_tag?.show_images(M.client, FALSE, TRUE)
 

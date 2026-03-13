@@ -27,6 +27,8 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 	if(copy_flags & COPY_SKIP_EXPLOITABLE && (
 			istype(orig, /obj/item/uplink) || istype(orig, /obj/item/currency/spacebux) || istype(orig, /obj/item/chem_hint) || istype(orig, /obj/item/pixel_pass)))
 		return null
+	if(isobserver(orig)) //None of these will have clients anyway so don't bother
+		return null
 	if(isnull(environment))
 		root = orig
 		environment = list()

@@ -510,46 +510,53 @@ ABSTRACT_TYPE(/datum/job/daily)
 		..()
 		if (!M)
 			return
+		SPAWN(0)
+			var/morph = null
+			var/list/options = list(/datum/mutantrace/lizard,
+									/datum/mutantrace/skeleton,
+									/datum/mutantrace/ithillid,
+									/datum/mutantrace/martian,
+									/datum/mutantrace/amphibian,
+									/datum/mutantrace/blob,
+									/datum/mutantrace/cow)
 
-		var/morph = null
-		if(prob(33))
-			morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
+			morph = tgui_input_list(M,"Pick a Mutantrace. Cancel to be Human.","Pick a Mutantrace. Cancel to be Human.",options)
 
-		if (morph && (morph == /datum/mutantrace/martian || morph == /datum/mutantrace/blob)) // doesn't wear human clothes
-			M.equip_if_possible(new /obj/item/storage/backpack/empty(src), SLOT_BACK)
-			var/obj/item/backpack = M.back
+			if (morph && (morph == /datum/mutantrace/martian || morph == /datum/mutantrace/blob)) // doesn't wear human clothes
+				M.equip_if_possible(new /obj/item/storage/backpack/empty(src), SLOT_BACK)
+				var/obj/item/backpack = M.back
 
-			var/obj/item/storage/fanny/belt_storage = M.belt
-			if(istype(belt_storage))
-				for(var/obj/item/I in belt_storage.storage.get_contents())
-					belt_storage.storage.transfer_stored_item(I, backpack, TRUE, M)
-			qdel(belt_storage)
+				var/obj/item/storage/fanny/belt_storage = M.belt
+				if(istype(belt_storage))
+					for(var/obj/item/I in belt_storage.storage.get_contents())
+						belt_storage.storage.transfer_stored_item(I, backpack, TRUE, M)
+				qdel(belt_storage)
 
-			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
+				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_IN_BACKPACK)
 
-			M.stow_in_available(M.l_store, FALSE)
-			M.stow_in_available(M.r_store, FALSE)
+				M.stow_in_available(M.l_store, FALSE)
+				M.stow_in_available(M.r_store, FALSE)
 
-			var/obj/item/shirt = M.get_slot(SLOT_W_UNIFORM)
-			M.drop_from_slot(shirt)
-			qdel(shirt)
+				var/obj/item/shirt = M.get_slot(SLOT_W_UNIFORM)
+				M.drop_from_slot(shirt)
+				qdel(shirt)
 
-			var/obj/item/shoes = M.get_slot(SLOT_SHOES)
-			M.drop_from_slot(shoes)
-			qdel(shoes)
+				var/obj/item/shoes = M.get_slot(SLOT_SHOES)
+				M.drop_from_slot(shoes)
+				qdel(shoes)
 
-		else
-			var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
-			var/obj/item/card/id = locate() in M
-			if (id)
-				L.storage.add_contents(id, M, FALSE)
-			if (M.l_store)
-				M.stow_in_available(M.l_store)
-			M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
-			M.equip_if_possible(L, SLOT_WEAR_ID, TRUE)
+			else
+				var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
+				var/obj/item/card/id = locate() in M
+				if (id)
+					L.storage.add_contents(id, M, FALSE)
+				if (M.l_store)
+					M.stow_in_available(M.l_store)
+				M.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
+				M.equip_if_possible(L, SLOT_WEAR_ID, TRUE)
 
-		if(morph) // now that we've handled weird mutantrace cases, morph them
-			M.set_mutantrace(morph)
+			if(morph) // now that we've handled weird mutantrace cases, morph them
+				M.set_mutantrace(morph)
 
 /datum/job/daily/musician
 	day = "Saturday"

@@ -289,6 +289,9 @@
 	cast(atom/target)
 		if (..())
 			return 1
+		if (!(target.hasStatus("kudzuwalk") || iskudzuman(target)))
+			boutput(holder.owner, SPAN_ALERT("[target] is not attuned to the kudzu!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		if (target == holder.owner)
 			heal_coef = round(heal_coef/2)
@@ -470,6 +473,40 @@
 				new/obj/spacevine/living(loc=T, to_spread=5)
 				boutput(holder.owner, SPAN_NOTICE("Some of the kudzu soaked in nutrients attached to your body detaches and finds a new home on [T]."))
 
+/datum/targetable/kudzu/thorn_shot
+	name = "Thorn shot"
+	desc = "Fire a thorn loaded with harmful irritants."
+	icon_state = "thorn"
+	targeted = 1
+	target_anything = 1
+	cooldown = 10 SECONDS
+	pointCost = 20
+	var/current_projectile
+
+	New()
+		. = ..()
+		src.current_projectile = new/datum/projectile/syringe/kudzu_thorn
+
+	cast(atom/target)
+		. = ..()
+		var/obj/projectile/P = shoot_projectile_ST_pixel_spread(src.holder.owner, src.current_projectile, target)
+		if (!P)
+			return
+		src.holder.owner.visible_message(SPAN_ALERT("<b>[src.holder.owner] fires [P] at [target]!</b>"))
+
+/datum/projectile/syringe/kudzu_thorn
+	name = "sharp thorn"
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "seedproj"
+	implanted = /obj/item/implant/projectile/body_visible/syringe/kudzu_thorn
+	reagent_payload = "itching"
+
+/obj/item/implant/projectile/body_visible/syringe/kudzu_thorn
+	name = "sharp thorn"
+	pull_out_name = "thorn"
+	desc = "A sharp thorn. It was likely loaded with some bad stuff..."
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "seedproj"
 
 /datum/targetable/kudzu/vine_appendage
 	name = "Use-Vine"

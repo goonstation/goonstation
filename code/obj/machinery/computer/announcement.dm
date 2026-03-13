@@ -300,6 +300,7 @@
 	icon_state = "announcementclown"
 	circuit_type = /obj/item/circuitboard/announcement/clown
 	var/emagged = FALSE
+	var/explodes = TRUE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."
 	sound_volume = 50
@@ -309,27 +310,12 @@
 		. = ..()
 		if(.)
 			SPAWN(0.5 SECONDS)
-				new /obj/effects/explosion (src.loc)
-				playsound(src.loc, "explosion", 50, 1)
-				src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
-				user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
-
 				var/mob/living/carbon/human/clown = user
 				if(istype(clown))
 					//Computer is normally offcams and the clown normally has mask on + ID in computer so visible name will be Unknown
 					clown.apply_automated_arrest("Making a very irritating announcement.", requires_camera_seen = FALSE, use_visible_name = FALSE)
-
-					clown.update_burning(15) // placed here since update_burning is only for mob/living
-				if(src.ID)
-					user.put_in_hand_or_eject(src.ID)
-
-				if (src.emagged)
-					var/turf/T = get_turf(src.loc)
-					if(T)
-						src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
-						explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
-				qdel(src)
-
+				if(src.explodes)
+					src.blow_up(user)
 
 	attackby(obj/item/W, mob/user)
 		..()
@@ -352,3 +338,35 @@
 			src.visible_message(SPAN_ALERT("<B>The clown on the screen grins in horrid delight!</B>"))
 		src.emagged = TRUE
 
+	proc/blow_up(mob/user)
+		if(!src.explodes)
+			return
+		var/mob/living/living_user = user
+		if(istype(living_user))
+			living_user.update_burning(15) // placed here since update_burning is only for mob/living
+		new /obj/effects/explosion (src.loc)
+		playsound(src.loc, "explosion", 50, 1)
+		src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
+		user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
+		if(src.ID)
+			user.put_in_hand_or_eject(src.ID)
+		if (src.emagged)
+			var/turf/T = get_turf(src.loc)
+			if(T)
+				src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
+				explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
+		qdel(src)
+
+/obj/machinery/computer/announcement/clown/foldable
+	name = "Ultra Illegal Announcement Computer"
+	icon_state = "clownuncement_port"
+	area_name = "Ultra Illegal Clown"
+	circuit_type = null //Prevents deconstructing via screwdriver
+	explodes = FALSE
+	density = 0
+
+	New()
+		..()
+		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/syndicate)
+		SPAWN(0)
+			src.foldUpIntoBriefcase()

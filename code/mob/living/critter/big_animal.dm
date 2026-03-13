@@ -80,3 +80,80 @@
 	add_abilities = list(/datum/targetable/critter/slam, /datum/targetable/critter/bite/big)
 	is_npc = FALSE // Maybe change later if anyone wants to use these as a spawn
 
+/mob/living/critter/void_scale
+	name = "ominious scale"
+	real_name = "void_scale"
+	icon_state = "void_scale"
+	icon_state_dead = "void_scale-dead"
+	desc = "The sentient and very, very angry scale off a semi-eldritch leviathian. This would be invaluable to a geneticist."
+	speech_verb_say = "echos"
+	speech_verb_exclaim = "whirls"
+	speech_verb_ask = "pings"
+	death_text = "%src%, unable to suspend itself with eldritch energy falls to the floor!"
+	hand_count = 1
+	health_brute = 300
+	health_brute_vuln = 0.6
+	health_burn = 300
+	health_burn_vuln = 1
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/ranged
+	is_npc = TRUE
+	butcherable = BUTCHER_ALLOWED
+	meat_type = /obj/item/reagent_containers/food/snacks/ectoplasm
+	skinresult = /obj/item/void_shield
+	max_skins = 1
+
+	add_abilities = list(/datum/targetable/critter/slam,
+		/datum/targetable/wraithAbility/command/cultist,
+		/datum/targetable/critter/psyblast,
+		/datum/targetable/critter/teleport)
+	has_genes = TRUE
+	var/telerange = 7
+
+	New()
+		..()
+		src.add_stam_mod_max("void_scale", 300)
+		src.bioHolder.AddNewPoolEffect("plasma_metabolism", scramble=FALSE) // These are the intended loot for this path of the azone
+		src.bioHolder.AddNewPoolEffect("hulk", scramble=FALSE)
+		src.bioHolder.AddNewPoolEffect("ithillid", scramble=FALSE)
+		src.bioHolder.AddNewPoolEffect("breathless", scramble=FALSE)
+		src.bioHolder.AddNewPoolEffect("ghost_walk", scramble=FALSE)
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/energy/resonator			// if not null, the special limb to use when attack_handing
+		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon_state = "mouth"					// the icon state of the hand UI background
+		HH.name = "retinal beam"						// designation of the hand - purely for show
+		HH.limb_name = "eye"					// name for the dummy holder
+		HH.can_hold_items = FALSE
+
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam)
+		var/datum/targetable/critter/telekinesis = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/command/cultist)
+		var/datum/targetable/critter/blast = src.abilityHolder.getAbility(/datum/targetable/critter/psyblast)
+		var/datum/targetable/critter/teleport = src.abilityHolder.getAbility(/datum/targetable/critter/teleport)
+		if (!slam.disabled && slam.cooldowncheck() && prob(40))
+			slam.handleCast(target)
+			return TRUE
+		if (!telekinesis.disabled && telekinesis.cooldowncheck() && prob(10))
+			telekinesis.handleCast(target.loc)
+			return TRUE
+		if (!blast.disabled && blast.cooldowncheck() && prob(50))
+			blast.handleCast(target)
+			. = TRUE
+			if(!teleport.disabled && teleport.cooldowncheck())
+				var/list/randomturfs = new/list()
+				for(var/turf/T in orange(src, telerange))
+					if(istype(T, /turf/space) || T.density)
+						continue
+					randomturfs.Add(T)
+				teleport.handleCast(pick(randomturfs))
+

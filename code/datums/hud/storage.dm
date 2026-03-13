@@ -55,6 +55,8 @@
 			if ("close")
 				user.detach_hud(src)
 				user.s_active = null
+				if (src.master.close_sound && src.master.linked_item)
+					playsound(src.master.linked_item.loc, src.master.close_sound, 50, TRUE)
 
 	//issue below with th4e way we draw boxes : all boxes are one object drawn multiple tiles using screenloc...
 	//I cannot get specific values for one box or find which item is in which box without some maybe-expensive string parsing. Figure out not-slow fix later

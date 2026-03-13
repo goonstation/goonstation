@@ -422,7 +422,7 @@
 	name = "Dactyl Crystallization"
 	desc = "The subject's digits crystallize and, when struck together, emit a pleasant noise."
 	id = "chime_snaps"
-	icon_state = "chime_snaps"
+	icon_state = "chime_snap"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "Your fingers and toes turn transparent and crystalline."

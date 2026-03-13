@@ -20,7 +20,8 @@ var/datum/station_zlevel_repair/station_repair = new
 /datum/station_zlevel_repair
 	var/datum/map_generator/station_generator
 	var/image/ambient_light
-	var/image/weather_img
+	/// pick()ed from randomly
+	var/list/image/weather_imgs
 	var/obj/effects/weather_effect
 	var/overlay_delay
 	var/datum/gas_mixture/default_air
@@ -48,11 +49,8 @@ var/datum/station_zlevel_repair/station_repair = new
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
 					T.AddOverlays(src.ambient_light, "ambient")
-				if(src.weather_img)
-					if(islist(src.weather_img))
-						T.AddOverlays(pick(src.weather_img), "weather")
-					else
-						T.AddOverlays(src.weather_img, "weather")
+				if(src.weather_imgs)
+					T.AddOverlays(pick(src.weather_imgs), "weather")
 				if(src.weather_effect)
 					var/obj/effects/E = locate(src.weather_effect) in T
 					if(!E)
@@ -455,11 +453,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/turf/T as anything in turfs)
 			if(station_repair.ambient_light)
 				T.AddOverlays(station_repair.ambient_light, "ambient")
-			if(station_repair.weather_img)
-				if(islist(station_repair.weather_img))
-					T.AddOverlays(pick(station_repair.weather_img), "weather")
-				else
-					T.AddOverlays(station_repair.weather_img, "weather")
+			if(station_repair.weather_imgs)
+				T.AddOverlays(pick(station_repair.weather_imgs), "weather")
 			if(station_repair.weather_effect)
 				var/obj/effects/E = locate(station_repair.weather_effect) in T
 				if(!E)
@@ -896,9 +891,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 			snow = (snow == "No") ? null : snow
 			if(snow)
 				if(snow == "Yes")
-					station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
-					station_repair.weather_img.alpha = 200
-					station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
+					station_repair.weather_imgs = list(image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE))
+					station_repair.weather_imgs[1].alpha = 200
+					station_repair.weather_imgs[1].plane = PLANE_NOSHADOW_ABOVE
 				else
 					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
 
@@ -1000,13 +995,12 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.station_generator = new/datum/map_generator/jungle_generator
 
 			if(rain == "Yes")
-				//station_repair.weather_img = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
-				station_repair.weather_img = list()
+				station_repair.weather_imgs = list()
 				for(var/idx in 1 to 4)
-					station_repair.weather_img += image('icons/effects/64x64.dmi',"rain_[idx]", layer = EFFECTS_LAYER_BASE)
-					station_repair.weather_img[idx].alpha
-					station_repair.weather_img[idx].alpha = 200
-					station_repair.weather_img[idx].plane = PLANE_NOSHADOW_ABOVE
+					station_repair.weather_imgs += image('icons/effects/64x64.dmi',"rain_[idx]", layer = EFFECTS_LAYER_BASE)
+					station_repair.weather_imgs[idx].alpha
+					station_repair.weather_imgs[idx].alpha = 200
+					station_repair.weather_imgs[idx].plane = PLANE_NOSHADOW_ABOVE
 			else if(rain)
 				station_repair.weather_effect = /obj/effects/precipitation/rain/sideways/tile
 
@@ -1019,7 +1013,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					if(istype(S,/turf/unsimulated/floor/auto/swamp))
 						S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
 						if(rain == "Yes")
-							S.AddOverlays(pick(station_repair.weather_img), "weather")
+							S.AddOverlays(pick(station_repair.weather_imgs), "weather")
 						else
 							new station_repair.weather_effect(S)
 						if(!params["Ambient Light Obj"])
@@ -1039,7 +1033,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		if(..())
 			if(params["Duststorm"])
 				station_repair.station_generator = new/datum/map_generator/mars_generator/duststorm
-				station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
+				station_repair.weather_imgs = list(image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE))
 			else
 				station_repair.station_generator = new/datum/map_generator/mars_generator
 			station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
@@ -1057,7 +1051,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			var/ambient_value
 			for (var/turf/S in space)
-				S.UpdateOverlays(station_repair.weather_img, "weather")
+				S.UpdateOverlays(pick(station_repair.weather_imgs), "weather")
 
 				if(!params["Ambient Light Obj"])
 					ambient_value = lerp(20,80,S.x/300)
@@ -1077,7 +1071,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				T.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
 				if(station_repair.allows_vehicles)
 					T.allows_vehicles = station_repair.allows_vehicles
-				T.UpdateOverlays(station_repair.weather_img, "weather")
+				T.UpdateOverlays(pick(station_repair.weather_imgs), "weather")
 
 				if(!params["Ambient Light Obj"])
 					ambient_value = lerp(20,80,T.x/300)

@@ -713,6 +713,15 @@
 				animate(A, color="#666666", time=10 SECONDS)
 			else
 				animate(A, color="#222222", time=10 SECONDS)
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					if( controller.current_color == "#222222" )
+						controller.manual_animate_colors(list("#666666"), list(10 SECONDS))
+					else
+						controller.manual_animate_colors(list("#222222"), list(10 SECONDS))
 
 	proc/lightning(fadeout=3 SECONDS, flash_color="#ccf")
 		var/obj/ambient/A = locate() in vis_contents
@@ -732,6 +741,20 @@
 			playsound(src, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 			SPAWN(fadeout + (1.5 SECONDS))
 				A.color = old_color
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					var/old_color = controller.current_color
+					var/first_flash_low = "#666666"
+					var/list/L1 = hex_to_rgb_list(old_color)
+					var/list/L2 = hex_to_rgb_list(flash_color)
+					if(!isnull(L1) && !isnull(L2))
+						first_flash_low = rgb(lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8))
+					color_shift_lights(list(flash_color, first_flash_low, flash_color, old_color), list(0.5, 0.75 SECONDS, 0.75, fadeout))
+					SPAWN(fadeout + (1.5 SECONDS))
+						controller.active = TRUE
 
 	proc/color_shift_lights(colors, durations)
 		var/obj/ambient/A = locate() in vis_contents
@@ -742,12 +765,18 @@
 					animate(A, color=colors[i], time=durations[i])
 				else
 					animate(color=colors[i], time=durations[i])
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					controller.manual_animate_colors(colors, durations)
 
 	proc/sunset()
-		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(0, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
+		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(5 SECONDS, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
 
 	proc/sunrise()
-		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
+		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(5 SECONDS, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
 
 	proc/set_color()
 		var/color = input(usr, "Please select ambient light color.", "Color Menu") as color

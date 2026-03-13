@@ -316,6 +316,7 @@
 			src.frame = new_frame
 		else
 			src.frame = new /obj/item/pipebomb/frame
+		src.w_class = max(src.payload.w_class, W_CLASS_TINY)
 		src.frame.set_loc(src)
 		src.frame.master = src
 		// mousetrap roller + wrench -> disassembly
