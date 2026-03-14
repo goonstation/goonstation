@@ -18978,6 +18978,9 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bIw" = (
@@ -18992,6 +18995,9 @@
 "bIy" = (
 /obj/table/reinforced/auto,
 /obj/item/pen,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/courtroom)
 "bIz" = (
@@ -19008,11 +19014,11 @@
 /obj/item/device/radio/intercom{
 	pixel_x = 1
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 10
@@ -29942,6 +29948,12 @@
 /obj/decal/tile_edge/floorguide/hop,
 /turf/simulated/floor/red/corner,
 /area/station/hallway/primary/south)
+"ewG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "ewL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -30936,6 +30948,14 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"fhM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/stairs/wood{
+	dir = 9
+	},
+/area/station/crew_quarters/courtroom)
 "fhZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31805,6 +31825,16 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
+"fMY" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/courtroom)
 "fNA" = (
 /obj/item/storage/wall/random{
 	dir = 8;
@@ -33783,6 +33813,15 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"gYX" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/courtroom)
 "gYY" = (
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
@@ -35837,9 +35876,6 @@
 "izO" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
-	},
-/obj/cable{
-	icon_state = "0-2"
 	},
 /obj/machinery/shredder{
 	pixel_y = 11
@@ -38986,6 +39022,15 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"kEF" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/courtroom)
 "kER" = (
 /obj/lattice{
 	dir = 6;
@@ -40699,6 +40744,9 @@
 "lIw" = (
 /obj/stool/chair{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/courtroom)
@@ -42646,6 +42694,9 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "nbp" = (
@@ -55471,6 +55522,15 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/west)
+"vVP" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/courtroom)
 "vWN" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple/side{
@@ -115759,9 +115819,9 @@ bDA
 pdL
 bFO
 bGV
-bMt
-bMt
-bMt
+vVP
+gYX
+kEF
 bMt
 cnX
 tiv
@@ -116061,7 +116121,7 @@ bDA
 bEv
 bFO
 eCH
-bMu
+fhM
 bMu
 bMu
 bMu
@@ -116665,7 +116725,7 @@ ugo
 ewx
 kpk
 hKu
-pAz
+ewG
 pAz
 spB
 pot
@@ -117571,7 +117631,7 @@ bDA
 bEv
 bFO
 rpN
-bIz
+fMY
 bJV
 pAz
 pAz
