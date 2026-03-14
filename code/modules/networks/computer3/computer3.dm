@@ -378,8 +378,8 @@
 		"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
 		"windowName" = src.name,
 		"user" = user,
-		"fontColor" = src.mainboard ? src.mainboard.font_color : "#000000", // display monochrome values
-		"bgColor" = src.mainboard ? src.mainboard.bg_color : "#000000",
+		"fontColor" = src.mainboard ? src.mainboard.font_color : "#aaaaaa", //If there's no motherboard, mimic BSOD colours \o/
+		"bgColor" = src.mainboard ? src.mainboard.bg_color : "#0000aa",
 		"inputValue" = src.tgui_last_accessed[user.ckey],
 	)
 
