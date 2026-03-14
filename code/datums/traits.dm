@@ -1298,7 +1298,7 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/kleptomaniac
 	name = "Kleptomaniac"
-	desc = "You will sometimes randomly pick up nearby items."
+	desc = "You will sometimes randomly steal nearby items and pickpocket people."
 	id = "kleptomaniac"
 	icon_state = "klepto"
 	points = 1
