@@ -9,7 +9,7 @@
 	density = 1
 	anchored = ANCHORED
 	var/base_icon_state = "computer_generic"
-	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
+	var/temp = ""
 	var/temp_add = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
@@ -18,6 +18,7 @@
 	var/list/peripherals = list()
 	var/restarting = 0 //Are we currently restarting the system?
 	var/datum/light/light
+	var/obj/item/motherboard/mainboard = null
 
 	//Does it spawn with a card scanner? (It should, the main os needs one of these now.)
 	var/setup_drive_size = 64
@@ -27,8 +28,7 @@
 	var/setup_starting_os = null //This program will start out installed AND AS ACTIVE PROGRAM
 	var/list/setup_starting_peripherals = list(/obj/item/peripheral/card_scanner)
 	var/setup_os_string = null
-	var/setup_font_color = "#19A319"
-	var/setup_bg_color = "#1B1E1B"
+
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
@@ -340,15 +340,14 @@
 
 				src.hd.root.add_file(os)
 
+			if(!src.mainboard)
+				mainboard = new /obj/item/motherboard()
+			if(mainboard.created_name)src.name = mainboard.created_name
+
+
 		src.post_system()
 
-		if (prob(60))
-			switch(rand(1,2))
-				if(1)
-					setup_font_color = "#E79C01"
-				if(2)
-					setup_font_color = "#A5A5FF"
-					setup_bg_color = "#4242E7"
+
 
 	return
 /obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
@@ -378,8 +377,8 @@
 		"TermActive" = src.active_program, // is the terminal running or restarting
 		"windowName" = src.name,
 		"user" = user,
-		"fontColor" = src.setup_font_color, // display monochrome values
-		"bgColor" = src.setup_bg_color,
+		"fontColor" = src.mainboard ? src.mainboard.font_color : "#aaaaaa", //If there's no motherboard, mimic BSOD colours \o/
+		"bgColor" = src.mainboard ? src.mainboard.bg_color : "#0000aa",
 		"inputValue" = src.tgui_last_accessed[user.ckey],
 	)
 
@@ -638,8 +637,7 @@
 		A.hd = src.hd
 		src.hd = null
 
-	A.mainboard = new /obj/item/motherboard(A)
-	A.mainboard.created_name = src.name
+	A.mainboard = src.mainboard
 
 
 	A.anchored = ANCHORED
@@ -815,6 +813,7 @@
 		return
 
 	post_system()
+		if(src.mainboard)src.temp_add += src.mainboard.bios_version+"<br>"
 		src.temp_add += "Initializing system...<br>"
 
 		if(!src.hd)
@@ -866,12 +865,12 @@
 	if (src.hd)
 		cloneComp.hd = src.hd.clone()
 
+	if (src.mainboard)
+		cloneComp.mainboard = src.mainboard.clone()
+
 	cloneComp.setup_starting_peripherals = src.setup_starting_peripherals
 
 	cloneComp.setup_starting_os = null
-
-	cloneComp.setup_font_color = src.setup_font_color
-	cloneComp.setup_bg_color = src.setup_bg_color
 
 	return cloneComp
 
