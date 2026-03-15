@@ -17,6 +17,4 @@
 		CONTENTS_GT(/obj/machinery/recharge_station, 1),
 		CONTENTS_GT(/obj/machinery/cell_charger, 0),
 		CONTENTS_GT(/obj/item/device/multitool, 0),
-		CONTENTS_GT(/obj/item/sheet/steel/fullstack, 0),
-		CONTENTS_GT(/obj/item/storage/box/cablesbox, 0),
 	)
