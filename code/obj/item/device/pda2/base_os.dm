@@ -1062,7 +1062,7 @@
 				return 1
 
 			message = copytext(message, 1, 257)
-			usr.visible_message(SPAN_NOTICE("[usr] types on their PDA."), "you type on your PDA","you hear typing.")
+			usr.visible_message(SPAN_NOTICE("[usr] types on their PDA."), "you type on your PDA.","you hear typing.")
 
 			phrase_log.log_phrase("pda", message)
 
