@@ -114,6 +114,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			bank_record["name"] = src.active1["name"]
 			bank_record["id"] = src.active1["id"]
 			bank_record["current_money"] = 0
+			bank_record["unionized"] = "No"
 			bank_record["wage"] = 0
 			bank_record["notes"] = "No notes."
 			if(istype(target.wear_id, /obj/item/device/pda2))

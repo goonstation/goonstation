@@ -309,7 +309,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		<div style='float: right;'>
 			Market updates in <strong>[timer ? timer : "...uh"]</strong>
 		</div>
-		Budget: <strong>[wagesystem.shipping_budget]</strong> Credits
+		Budget: <strong>[wagesystem.budgets[BUDGET_CAT_SHIPPING]]</strong> Credits
 		<div style='clear: both; text-align: center; font-weight: bold; padding: 0.2em;'>
 			<a href='[topicLink("requests")]'>Requests ([shippingmarket.supply_requests.len])</a> &bull;
 			<a href='[topicLink("order")]'>Place Order</a> &bull;
@@ -410,16 +410,16 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 					var/datum/supply_order/O = locate(href_list["what"])
 					var/datum/supply_packs/P = O.object
 					shippingmarket.supply_requests -= O
-					if(wagesystem.shipping_budget >= P.cost)
+					if(wagesystem.budgets[BUDGET_CAT_SHIPPING] >= P.cost)
 						O.object = P
 						O.orderedby = usr.name
 						var/default_comment = ""
 						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-						if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
+						if (isnull(O.comment) || P.cost > wagesystem.budgets[BUDGET_CAT_SHIPPING])
 							shippingmarket.supply_requests += O
 							return .("list") // The user cancelled the order
 						O.comment = html_encode(trimtext(O.comment))
-						wagesystem.shipping_budget -= P.cost
+						wagesystem.budgets[BUDGET_CAT_SHIPPING] -= P.cost
 						if (O.address)
 							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
 						var/obj/storage/S = O.create(usr)
@@ -449,15 +449,15 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 							return
 
-						if(wagesystem.shipping_budget >= P.cost)
+						if(wagesystem.budgets[BUDGET_CAT_SHIPPING] >= P.cost)
 							O.object = P
 							O.orderedby = usr.name
 							var/default_comment = ""
 							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-							if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
+							if (isnull(O.comment) || P.cost > wagesystem.budgets[BUDGET_CAT_SHIPPING])
 								return .("list") // The user cancelled the order
 							O.comment = html_encode(trimtext(O.comment))
-							wagesystem.shipping_budget -= P.cost
+							wagesystem.budgets[BUDGET_CAT_SHIPPING] -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
 							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -526,8 +526,8 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				var/response = ""
 				response = tgui_alert(usr, "Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?", "Rockbox™ Premium Service", list("Yes", "No"))
 				if(response == "Yes")
-					if(wagesystem.shipping_budget >= 10000)
-						wagesystem.shipping_budget -= 10000
+					if(wagesystem.budgets[BUDGET_CAT_SHIPPING] >= 10000)
+						wagesystem.budgets[BUDGET_CAT_SHIPPING] -= 10000
 						rockbox_globals.rockbox_premium_purchased = 1
 						. = {"Congratulations on your purchase of RockBox™ Premium!"}
 					else
@@ -803,7 +803,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			if (total_cart_amount > buy_cap)
 				boutput(usr, SPAN_ALERT("There are too many items in the cart. You may only order [buy_cap] items at a time."))
 			else
-				if (wagesystem.shipping_budget < cart_cost)
+				if (wagesystem.budgets[BUDGET_CAT_SHIPPING] < cart_cost)
 					T.current_message = pick(T.dialogue_cant_afford_that)
 				else
 					T.current_message = pick(T.dialogue_purchase)

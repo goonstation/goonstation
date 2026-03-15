@@ -36,7 +36,7 @@
 		dat = src.temp
 	else
 
-		dat += {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR>
+		dat += {"<B>Shipping Budget:</B> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] Credits<BR>
 		<B>Scanned Card:</B> <A href='byond://?src=\ref[src];card=1'>([src.scan])</A><BR><HR>"}
 		if(src.scan != null)
 			var/datum/db_record/account = null
@@ -94,7 +94,7 @@
 		if(account)
 			src.temp += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		else
-			src.temp += "<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>"
+			src.temp += "<B>Shipping Budget:</B> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] Credits<BR><HR>"
 		src.temp += "<B>Please select the Supply Package you would like to request:</B><BR><BR>"
 		src.temp += search_snippet()
 		src.temp += "<BR><BR>"
@@ -285,7 +285,7 @@
 							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 			else
 				src.temp = {"<B>Contribute to Shipping Budget</B><BR>
-							<B>Shipping Budget:</b> [wagesystem.shipping_budget] Credits<BR>
+							<B>Shipping Budget:</b> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] Credits<BR>
 							<B>Credits in Account:</B> [account["current_money"]] Credits<BR><HR>
 							<A href='byond://?src=\ref[src];buy=1'>Make Transaction</A><BR>
 							<A href='byond://?src=\ref[src];mainmenu=1'>Cancel Transfer</A>"}
@@ -306,7 +306,7 @@
 			var/transaction = input("How much?", "Shipping Budget", null, null)  as null|num
 			if (account["current_money"] >= transaction && (transaction > 0) && isnum_safe(transaction))
 				account["current_money"] -= transaction
-				wagesystem.shipping_budget += transaction
+				wagesystem.budgets[BUDGET_CAT_SHIPPING] += transaction
 				src.temp = "Transaction successful. Thank you for your patronage.<BR>"
 				////// PDA NOTIFY/////
 				var/datum/signal/pdaSignal = get_free_signal()

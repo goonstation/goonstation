@@ -3892,10 +3892,9 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen/fancy,
+/obj/machinery/shredder{
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/nw_triple,
 /area/station/bridge)
 "Ak" = (
