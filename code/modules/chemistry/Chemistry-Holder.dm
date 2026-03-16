@@ -238,6 +238,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			src.remove_any_except(remove_amount, exception)
 		if (total_consumption_amount <= 0)
 			return amount
+		if (length(reagent_list) <= 0)
+			return
 		var/consumption_per_reagent = total_consumption_amount / length(reagent_list)
 		for(var/reagent_id in reagent_list)
 			if (reagent_id == exception)

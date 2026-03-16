@@ -17835,9 +17835,6 @@
 /turf/simulated/floor,
 /area/station/science/hall)
 "edR" = (
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
@@ -17845,6 +17842,10 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/head_of_personnel,
+/obj/machinery/shredder{
+	pixel_y = 10;
+	pixel_x = 3
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -45562,16 +45563,6 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/research/outpost)
-"tVe" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "North Electrical Substation";
-	pixel_y = 10
-	},
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grime,
-/area/station/engine/substation/north)
 "tVj" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -49684,6 +49675,7 @@
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "wpC" = (
@@ -81800,7 +81792,7 @@ aDY
 woD
 mFz
 aEU
-tVe
+gum
 gum
 vKU
 aBP

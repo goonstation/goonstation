@@ -52269,9 +52269,14 @@
 "peE" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
-	pixel_y = 5
+	pixel_y = 5;
+	pixel_x = 4
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/item/bell/hop{
+	pixel_y = 8;
+	pixel_x = -8
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "pfM" = (
@@ -53619,18 +53624,9 @@
 /area/station/hydroponics/bay)
 "qid" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp/black{
-	pixel_x = 6;
-	pixel_y = 5
-	},
 /obj/machinery/door/firedoor/pyro,
-/obj/item/bell/hop{
-	pixel_y = 8;
-	pixel_x = -3
-	},
-/obj/item/pen/marker/blue{
-	pixel_x = -6;
-	pixel_y = -1
+/obj/machinery/shredder{
+	pixel_y = 12
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
