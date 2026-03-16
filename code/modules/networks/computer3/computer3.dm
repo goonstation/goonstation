@@ -376,7 +376,6 @@
 	. = list(
 		"displayHTML" = src.temp, // display data
 		"TermActive" = src.active_program, // is the terminal running or restarting
-		"fdisk" = null, // I can't do tgui stuff yet, I hope this isn't visible on the window
 		"windowName" = src.name,
 		"user" = user,
 		"fontColor" = src.setup_font_color, // display monochrome values
