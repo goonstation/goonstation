@@ -356,7 +356,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/janitor,
-/turf/simulated/wall/auto/jen/purple,
+/turf/simulated/floor/darkblue,
 /area/station/janitor/supply)
 "JM" = (
 /obj/cable{
