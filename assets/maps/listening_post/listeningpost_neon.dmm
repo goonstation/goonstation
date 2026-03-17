@@ -265,6 +265,11 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
+"jt" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/device/audio_log,
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
 "jE" = (
 /obj/item/storage/toilet,
 /turf/simulated/floor,
@@ -994,11 +999,13 @@
 	icon_state = "line1"
 	},
 /obj/table/reinforced/auto,
-/obj/item/device/audio_log,
 /obj/cable/black{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west/hardened,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "PM" = (
@@ -2023,7 +2030,7 @@ Wk
 hx
 ap
 nh
-yc
+jt
 sL
 ry
 UO
