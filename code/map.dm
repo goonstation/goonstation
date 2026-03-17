@@ -135,7 +135,7 @@ var/global/list/mapNames = list(
 	var/airlock_style = "pyro"
 
 	/// The Syndicate Listening Post prefab datum, used to dynamically insert the listening post at runtime
-	var/listening_post_prefab = /datum/mapPrefab/listening_post/standard
+	var/list/listening_post_prefab = list(/datum/mapPrefab/listening_post/standard)
 
 	var/escape_centcom = /area/shuttle/escape/centcom
 	var/escape_transit = /area/shuttle/escape/transit
@@ -304,7 +304,7 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	listening_post_prefab = /datum/mapPrefab/listening_post/wrestlemap
+	listening_post_prefab = list(/datum/mapPrefab/listening_post/wrestlemap)
 
 	escape_dir = NORTH
 
@@ -537,7 +537,7 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	listening_post_prefab = /datum/mapPrefab/listening_post/donut3
+	listening_post_prefab = list(/datum/mapPrefab/listening_post/donut3)
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
@@ -600,7 +600,7 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	listening_post_prefab = /datum/mapPrefab/listening_post/kondaru
+	listening_post_prefab = list(/datum/mapPrefab/listening_post/kondaru)
 
 	escape_dir = EAST
 
@@ -658,7 +658,7 @@ var/global/list/mapNames = list(
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
 
-	listening_post_prefab = /datum/mapPrefab/listening_post/atlas
+	listening_post_prefab = list(/datum/mapPrefab/listening_post/atlas)
 
 	escape_dir = EAST
 
@@ -790,7 +790,7 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	listening_post_prefab = /datum/mapPrefab/listening_post/oshan
+	listening_post_prefab = list(/datum/mapPrefab/listening_post/oshan)
 
 	escape_dir = EAST
 	default_shuttle = "oshan"
@@ -850,7 +850,7 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	listening_post_prefab = /datum/mapPrefab/listening_post/nadir
+	listening_post_prefab = list(/datum/mapPrefab/listening_post/nadir)
 
 	escape_dir = EAST
 	default_shuttle = "oshan"
@@ -951,7 +951,7 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	listening_post_prefab = /datum/mapPrefab/listening_post/density2
+	listening_post_prefab = list(/datum/mapPrefab/listening_post/density2)
 
 	default_shuttle = "east_density"
 	escape_dir = EAST
@@ -989,6 +989,13 @@ var/global/list/mapNames = list(
 	auto_windows = TRUE
 
 	escape_dir = EAST
+
+	listening_post_prefab = list(
+		/datum/mapPrefab/listening_post/standard,
+		/datum/mapPrefab/listening_post/atlas,
+		/datum/mapPrefab/listening_post/donut3,
+		/datum/mapPrefab/listening_post/kondaru,
+	)
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
@@ -1068,7 +1075,7 @@ var/global/list/mapNames = list(
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
-	listening_post_prefab = /datum/mapPrefab/listening_post/neon
+	listening_post_prefab = list(/datum/mapPrefab/listening_post/neon)
 
 	escape_dir = EAST
 	default_shuttle = "oshan"

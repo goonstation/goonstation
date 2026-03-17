@@ -1449,6 +1449,10 @@
 	},
 /turf/simulated/floor/marble,
 /area/station/maintenance/north)
+"hV" = (
+/obj/landmark/listening_post,
+/turf/space,
+/area/space)
 "hW" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -78882,7 +78886,7 @@ By
 By
 By
 By
-By
+hV
 By
 By
 By

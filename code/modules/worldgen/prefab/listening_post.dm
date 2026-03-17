@@ -128,7 +128,8 @@ proc/load_listening_post()
 		..()
 
 	proc/apply()
-		var/datum/mapPrefab/listening_post/listening_post = new map_settings.listening_post_prefab
+		var/prefab_path = pick(map_settings.listening_post_prefab)
+		var/datum/mapPrefab/listening_post/listening_post = new prefab_path
 		listening_post.applyTo(src.loc)
 		logTheThing(LOG_DEBUG, null, "loaded listening post [listening_post.prefabPath]")
 		qdel(src)
