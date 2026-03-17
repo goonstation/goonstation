@@ -6,6 +6,13 @@
 "ac" = (
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/se)
+"ad" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw)
 "ae" = (
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -511,7 +518,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "cX" = (
@@ -716,7 +722,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/secondary/west)
 "eb" = (
@@ -1011,6 +1016,9 @@
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "floating_hallway_ext";
 	name = "Floating Hallway Airlock"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/west)
@@ -1325,9 +1333,21 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/bent/south,
+/obj/disposalpipe/segment/horizontal,
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
+"hs" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "floating_hallway_int";
+	name = "Floating Hallway Airlock"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hallway/secondary/west)
 "hu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1800,7 +1820,6 @@
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -1879,8 +1898,10 @@
 /area/station/maintenance/inner/nw)
 "kf" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/north,
+/obj/machinery/disposal/transport,
+/obj/disposalpipe/trunk/transport{
+	dir = 1
+	},
 /turf/simulated/floor/arrival{
 	dir = 4
 	},
@@ -2142,6 +2163,19 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"lI" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/lattice,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/space)
 "lJ" = (
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/blue/side,
@@ -2214,6 +2248,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/arrival{
 	dir = 4
 	},
@@ -2457,6 +2492,13 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
+"nK" = (
+/obj/lattice,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "nL" = (
 /obj/table/glass/auto,
 /obj/item/paper_bin,
@@ -2726,8 +2768,16 @@
 	cycle_id = "floating_hallway_int";
 	name = "Floating Hallway Airlock"
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/west)
+"pw" = (
+/obj/lattice,
+/obj/disposalpipe/segment/bent/west,
+/turf/space,
+/area/space)
 "px" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/northwest)
@@ -2987,6 +3037,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/northeast)
+"re" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/space,
+/area/space)
 "rf" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -3012,6 +3070,9 @@
 /area/station/hallway/primary/south)
 "rn" = (
 /obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/simulated/floor/arrival{
 	dir = 1
 	},
@@ -3124,6 +3185,7 @@
 /area/station/maintenance/outer/west)
 "rV" = (
 /obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/west)
 "rW" = (
@@ -3627,6 +3689,17 @@
 "uC" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
+"uD" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "floating_hallway_ext";
+	name = "Floating Hallway Airlock"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hallway/secondary/west)
 "uH" = (
 /obj/decal/stage_edge,
 /obj/machinery/vending/medical_public,
@@ -3792,17 +3865,6 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
-"vR" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "northwestmaint";
-	name = "Northwest Maintenance"
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/nw)
 "vY" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
@@ -3955,6 +4017,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "wT" = (
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/west)
 "wW" = (
@@ -4196,7 +4259,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/arrival{
 	dir = 4
 	},
@@ -4481,7 +4543,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/west)
 "zZ" = (
@@ -4694,6 +4755,12 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"Bh" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw)
 "Bk" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/disposalpipe/segment,
@@ -4875,6 +4942,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/disposalpipe/trunk/south,
+/obj/machinery/disposal,
 /turf/simulated/floor/arrival{
 	dir = 4
 	},
@@ -4972,17 +5041,6 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/northeast)
-"CZ" = (
-/obj/mesh/catwalk{
-	dir = 4
-	},
-/obj/lattice,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
 "Db" = (
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/plating,
@@ -5082,6 +5140,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/north)
+"DJ" = (
+/obj/lattice,
+/obj/lattice,
+/obj/disposalpipe/segment/bent/west,
+/turf/space,
+/area/space)
 "DL" = (
 /obj/table/reinforced/auto,
 /obj/item/cigpacket/nicofree{
@@ -5113,6 +5177,33 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"DR" = (
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/machinery/light/small/frostedred{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw)
 "DV" = (
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/southwest)
@@ -5126,16 +5217,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/ne)
-"Eb" = (
-/obj/mesh/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/airless/plating/catwalk/auto,
-/area/space)
 "Ec" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating,
@@ -5673,10 +5754,18 @@
 /turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "HB" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northwestmaint";
+	name = "Northwest Maintenance"
+	},
+/obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
 "HF" = (
 /obj/disposalpipe/segment,
@@ -5784,6 +5873,9 @@
 /turf/simulated/floor,
 /area/station/maintenance/outer/ne)
 "Ij" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/simulated/floor/arrival{
 	dir = 1
 	},
@@ -5817,6 +5909,14 @@
 /obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/comdish)
+"It" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/space,
+/area/space)
 "Iu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5848,6 +5948,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/north)
+"II" = (
+/obj/lattice,
+/obj/disposalpipe/segment/transport,
+/turf/space,
+/area/space)
 "IJ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -5980,11 +6085,6 @@
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/outer/se)
-"Jt" = (
-/obj/random_item_spawner/gross_with_junk/one,
-/obj/disposalpipe/segment/bent/west,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/nw)
 "Jw" = (
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor,
@@ -6098,6 +6198,11 @@
 /obj/shrub/syndicateplant,
 /turf/simulated/floor/grass/random,
 /area/station/hallway/secondary/north)
+"Kb" = (
+/obj/machinery/disposal/transport,
+/obj/disposalpipe/trunk/transport,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw)
 "Ke" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -6411,7 +6516,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
 "LO" = (
-/obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -6460,7 +6564,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/north,
 /area/station/hallway/primary/southwest)
 "Mf" = (
-/obj/disposalpipe/segment/vertical,
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/arrival{
 	dir = 4
 	},
@@ -7123,6 +7227,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/west)
+"PR" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hallway/secondary/west)
 "PS" = (
 /obj/random_item_spawner/gross_with_junk/one,
 /obj/cable{
@@ -7179,10 +7287,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "Qq" = (
+/obj/random_item_spawner/gross_with_junk/one,
+/obj/disposalpipe/segment/bent/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
 "Qr" = (
@@ -7529,6 +7638,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
+"St" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/space,
+/area/space)
 "Su" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
@@ -7610,6 +7727,16 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/ne)
+"SL" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "SO" = (
 /obj/machinery/camera/directional/east,
 /turf/simulated/floor,
@@ -7641,6 +7768,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
+"Ta" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw)
 "Tc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7876,7 +8007,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment/bent/east,
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "UJ" = (
@@ -7958,6 +8089,9 @@
 "Vn" = (
 /obj/lattice,
 /obj/lattice,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/space,
 /area/space)
 "Vp" = (
@@ -8463,6 +8597,11 @@
 /obj/random_item_spawner/gross_with_junk/one,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
+"Yj" = (
+/obj/lattice,
+/obj/disposalpipe/segment/bent/east,
+/turf/space,
+/area/space)
 "Ym" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
@@ -30286,7 +30425,7 @@ FR
 FR
 FR
 FR
-FR
+PR
 ea
 FR
 FR
@@ -30588,7 +30727,7 @@ FR
 FR
 FR
 FR
-FR
+PR
 ea
 FR
 FR
@@ -31192,7 +31331,7 @@ tQ
 tQ
 vH
 vH
-pv
+hs
 zX
 pv
 vH
@@ -32400,7 +32539,7 @@ By
 By
 By
 vH
-fH
+uD
 zX
 fH
 vH
@@ -32702,9 +32841,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -33004,9 +33143,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -33306,9 +33445,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -33608,9 +33747,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -33910,9 +34049,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -34212,9 +34351,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -34514,9 +34653,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -34816,9 +34955,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -35118,9 +35257,9 @@ By
 By
 By
 By
-Ye
-jB
-oM
+re
+dq
+SL
 By
 By
 By
@@ -35415,13 +35554,13 @@ By
 By
 By
 Ye
-Vw
-Vw
-Vw
-Vw
-Vw
-Vn
-jB
+It
+St
+St
+St
+St
+DJ
+dq
 Vn
 Vw
 Vw
@@ -35718,13 +35857,13 @@ By
 By
 Ye
 UC
-Eb
-Eb
-Eb
-Eb
-CZ
-cU
+jw
+jw
+jw
+jw
 lG
+cU
+lI
 jw
 jw
 jw
@@ -36020,13 +36159,13 @@ By
 By
 Ye
 jB
-WL
-WL
-WL
-WL
-WL
-WL
-WL
+Yj
+II
+II
+II
+II
+II
+pw
 WL
 WL
 WL
@@ -36322,7 +36461,7 @@ By
 By
 Ye
 jB
-WL
+nK
 PH
 Vi
 Vi
@@ -36624,7 +36763,7 @@ By
 By
 Ye
 jB
-WL
+nK
 PH
 NC
 NC
@@ -36926,7 +37065,7 @@ By
 PH
 PH
 fw
-PH
+ad
 PH
 NC
 NC
@@ -37226,9 +37365,9 @@ By
 By
 By
 PH
-qD
+DR
 PI
-Od
+Bh
 PH
 NC
 NC
@@ -37528,9 +37667,9 @@ By
 By
 By
 PH
-NC
+Kb
 hq
-pO
+Ta
 PH
 PH
 PH
@@ -37832,7 +37971,7 @@ PH
 PH
 PH
 HB
-vR
+Vi
 PH
 sn
 NC
@@ -38134,7 +38273,7 @@ eZ
 YY
 eZ
 Qq
-Jt
+NC
 NC
 NC
 NC
