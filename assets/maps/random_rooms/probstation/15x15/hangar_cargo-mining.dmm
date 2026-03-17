@@ -373,6 +373,9 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/hangar/qm)
+"Ho" = (
+/turf/simulated/wall/auto/jen/orange,
+/area/station/hangar/qm)
 "Jd" = (
 /obj/warp_beacon/mining{
 	name = "cargo/mining hangar beacon"
@@ -503,15 +506,15 @@
 /area/station/hangar/qm)
 
 (1,1,1) = {"
-Kc
-Kc
-Kc
-Kc
-Kc
-Kc
-Kc
-Kc
-Kc
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
 yc
 yc
 yc
@@ -520,7 +523,7 @@ yc
 yc
 "}
 (2,1,1) = {"
-Kc
+Ho
 UZ
 lX
 UZ
@@ -528,7 +531,7 @@ Sa
 UZ
 lX
 Gz
-Kc
+Ho
 iW
 yc
 yc
@@ -537,7 +540,7 @@ yc
 yc
 "}
 (3,1,1) = {"
-Kc
+Ho
 yA
 WD
 UZ
@@ -554,7 +557,7 @@ yc
 yc
 "}
 (4,1,1) = {"
-Kc
+Ho
 UZ
 UZ
 UZ
@@ -571,7 +574,7 @@ cG
 yc
 "}
 (5,1,1) = {"
-Kc
+Ho
 lX
 UZ
 UZ
@@ -588,7 +591,7 @@ Jd
 yc
 "}
 (6,1,1) = {"
-Kc
+Ho
 UZ
 WD
 UZ
@@ -605,7 +608,7 @@ Ru
 yc
 "}
 (7,1,1) = {"
-Kc
+Ho
 Ay
 UZ
 UZ
@@ -622,7 +625,7 @@ yc
 yc
 "}
 (8,1,1) = {"
-Kc
+Ho
 lX
 UZ
 UZ
@@ -630,7 +633,7 @@ UZ
 UZ
 UZ
 De
-Kc
+Ho
 yk
 TS
 TS
@@ -639,7 +642,7 @@ yc
 yc
 "}
 (9,1,1) = {"
-Kc
+Ho
 cQ
 ON
 sZ
@@ -647,7 +650,7 @@ PH
 AM
 ua
 zA
-Kc
+Ho
 Kc
 TP
 Kc
@@ -656,7 +659,7 @@ yc
 yc
 "}
 (10,1,1) = {"
-Kc
+Ho
 iz
 Yw
 sX
@@ -664,7 +667,7 @@ sX
 DT
 wZ
 qm
-Kc
+Ho
 hI
 eo
 oo
@@ -673,7 +676,7 @@ yc
 yc
 "}
 (11,1,1) = {"
-Kc
+Ho
 Kq
 Fo
 kI
@@ -681,7 +684,7 @@ KL
 ic
 fX
 jQ
-Kc
+Ho
 hI
 eo
 eo
@@ -690,15 +693,15 @@ yc
 yc
 "}
 (12,1,1) = {"
-Kc
+Ho
 BL
 Fo
 Zl
 Wv
 ZO
-Kc
+Ho
 SX
-Kc
+Ho
 Kc
 TP
 Kc
@@ -707,7 +710,7 @@ yc
 yc
 "}
 (13,1,1) = {"
-Kc
+Ho
 oR
 Fo
 Yw
@@ -724,7 +727,7 @@ yc
 yc
 "}
 (14,1,1) = {"
-Kc
+Ho
 Wt
 GJ
 ib
@@ -741,13 +744,13 @@ yc
 yc
 "}
 (15,1,1) = {"
-Kc
-Kc
-Kc
-Kc
-Kc
-Kc
-Kc
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
 up
 Kc
 jy
