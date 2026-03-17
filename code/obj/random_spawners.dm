@@ -2548,7 +2548,7 @@
 	/obj/machinery/vending/air_vendor,
 	/obj/machinery/vending/air_vendor/plasma,
 	/obj/machinery/vending/book,
-	/obj/machinery/vending/alcohol,
+	/obj/machinery/vending/alcohol/paid,
 	/obj/machinery/vending/capsule,
 	/obj/machinery/vending/cards,
 	/obj/machinery/vending/cigarette,
