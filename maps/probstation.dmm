@@ -722,6 +722,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/secondary/west)
 "eb" = (
@@ -2106,6 +2107,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"lo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor,
+/area/station/hallway/secondary/west)
 "lr" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -7228,7 +7236,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/west)
 "PR" = (
-/obj/disposalpipe/segment/horizontal,
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor,
 /area/station/hallway/secondary/west)
 "PS" = (
@@ -30425,7 +30433,7 @@ FR
 FR
 FR
 FR
-PR
+FR
 ea
 FR
 FR
@@ -30728,7 +30736,7 @@ FR
 FR
 FR
 PR
-ea
+lo
 FR
 FR
 FR
