@@ -37,7 +37,6 @@
 /area/station/mining/magnet)
 "eg" = (
 /obj/mesh/catwalk,
-/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 1;
@@ -144,20 +143,12 @@
 /area/mining/refinery)
 "kL" = (
 /obj/mesh/catwalk,
-/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/mining/magnet)
-"kU" = (
-/obj/landmark/magnet_center{
-	height = 13;
-	width = 13
-	},
-/turf/space,
 /area/mining/magnet)
 "ld" = (
 /obj/cable{
@@ -201,6 +192,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/item/magnetizer{
+	loaded = 1
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -282,13 +276,6 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
-/area/station/mining/magnet)
-"wv" = (
-/obj/mesh/catwalk,
-/obj/railing/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/station/mining/magnet)
 "xt" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -398,11 +385,13 @@
 /turf/simulated/floor,
 /area/mining/refinery)
 "zt" = (
-/obj/machinery/mining_magnet{
+/obj/mesh/catwalk,
+/obj/machinery/magnet_chassis{
 	dir = 8
 	},
-/obj/mesh/catwalk,
-/obj/railing/reinforced,
+/obj/machinery/mining_magnet/construction/small{
+	dir = 8
+	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/station/mining/magnet)
 "zx" = (
@@ -489,7 +478,6 @@
 /obj/mesh/catwalk{
 	dir = 4
 	},
-/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 8;
@@ -500,7 +488,6 @@
 /area/mining/magnet)
 "IJ" = (
 /obj/mesh/catwalk,
-/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 1;
@@ -535,7 +522,6 @@
 /area/mining/refinery)
 "Jt" = (
 /obj/mesh/catwalk,
-/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	icon_state = "magwarning";
@@ -574,7 +560,6 @@
 /area/mining/refinery)
 "Kj" = (
 /obj/mesh/catwalk,
-/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 1;
@@ -611,7 +596,6 @@
 /obj/mesh/catwalk{
 	dir = 4
 	},
-/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	dir = 4;
@@ -670,7 +654,6 @@
 /area/mining/refinery)
 "Sc" = (
 /obj/mesh/catwalk,
-/obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
 	icon_state = "magwarning";
@@ -902,7 +885,7 @@ LZ
 Tp
 Tp
 Tp
-kU
+Tp
 Tp
 Tp
 Tp
@@ -986,7 +969,7 @@ xz
 TE
 Ib
 Fs
-wv
+Ib
 zt
 Zk
 Ib
