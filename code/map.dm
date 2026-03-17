@@ -1002,9 +1002,13 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
 
-	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria))
+	valid_nuke_targets = list("the shrub hallway" = list(/area/station/crew_quarters/garden/shrub_hall),
+		"the luxury seating area" = list(/area/station/crew_quarters/lounge/luxury_seating),
+		"the observatory" = list(/area/station/crew_quarters/observatory),
+		"the waste disposal room" = list(/area/station/maintenance/disposal),
+		"the central mapping atrium" = list(/area/station/crew_quarters/map_atrium),
+		"the entrance to the clown hole" = list(/area/station/crew_quarters/clown/entryway),
+		"the genetics lab" = list(/area/station/medical/research),)
 
 /datum/map_settings/devtest
 	name = "DEVTEST"

@@ -2419,6 +2419,9 @@ ABSTRACT_TYPE(/area/station/mining)
 	sound_environment = 4
 	station_map_colour = MAPC_COMMAND
 
+/area/station/bridge/map_control
+	name = "Map Control Center"
+
 /area/station/bridge/united_command //currently only on atlas - ET
     name = "United Command"
     icon_state ="bridge"
@@ -2635,6 +2638,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	requires_power = FALSE
 #endif
 
+/area/station/crew_quarters/clown/entryway
+	name = "Clown Hole Entrance"
+	icon_state = "pink"
+
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
 	icon_state = "storage"
@@ -2657,6 +2664,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/info
 	name = "Information Office"
 	icon_state = "purple"
+
+/area/station/crew_quarters/map_atrium
+	name = "Mapping Atrium"
+	icon_state = "park"
 
 /area/station/crew_quarters/bar
 	name= "Bar"
@@ -2770,6 +2781,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/garden
 	name = "Public Garden"
 	icon_state = "park"
+
+/area/station/crew_quarters/garden/shrub_hall
+	name = "Shrub Hall"
 
 /area/station/crew_quarters/garden/sunlight
 	name = "Public Garden"
