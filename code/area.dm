@@ -2019,6 +2019,15 @@ ABSTRACT_TYPE(/area/station/maintenance/solar)
 /area/station/maintenance/solar/north
 	name = "North Solar Maintenance"
 	icon_state = "SolarcontrolN"
+
+/area/station/maintenance/solar/alpha
+	name = "Alpha Solar Maintenance"
+	icon_state = "SolarcontrolW"
+
+/area/station/maintenance/solar/bravo
+	name = "Bravo Solar Maintenance"
+	icon_state = "SolarcontrolW"
+
 ABSTRACT_TYPE(/area/station/maintenance/inner)
 /area/station/maintenance/inner
 	name = "Inner Maintenance"

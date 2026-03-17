@@ -92,3 +92,8 @@ proc/buildRandomRooms()
 		size = "9x9"
 		icon = 'icons/effects/mapeditor/9x9tiles.dmi'
 		additional_tags = list("probstation")
+
+	probstation_15x15
+		size = "15x15"
+		icon = 'icons/effects/mapeditor/15x15tiles.dmi'
+		additional_tags = list("probstation")

@@ -385,9 +385,9 @@
 /obj/table/reinforced/auto,
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/printer{
-	name = "Printer - Escape Checkpoint";
+	name = "Printer - Security Checkpoint";
 	pixel_y = 5;
-	print_id = "EscapeCheckpoint"
+	print_id = "SecurityCheckpoint"
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
