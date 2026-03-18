@@ -204,7 +204,7 @@
 	},
 /area/prefab/secbot_academy)
 "ib" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	name = "sink"
 	},
@@ -438,7 +438,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "te" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/white,

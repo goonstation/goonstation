@@ -17,7 +17,7 @@
 /area/dmm_suite/clear_area)
 "C" = (
 /obj/machinery/chem_dispenser/alcohol,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "Q" = (
@@ -25,7 +25,7 @@
 /area/dmm_suite/clear_area)
 "S" = (
 /obj/machinery/chem_dispenser/soda,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/dmm_suite/clear_area)
 "Y" = (

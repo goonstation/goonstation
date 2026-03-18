@@ -41,14 +41,14 @@ datum
 					M.HealDamage("All", 1 * mult, 1 * mult)
 
 				var/datum/db_record/bilked = data_core.bank.find_record("name", M.real_name)
-				if(!isnull(src.counter))
-					bilk_ratio = 1
-				else
-					bilk_ratio = 0.1
-				if(bilked["current_money"] > 0)
-					bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
-				..()
-				return
+				if (istype(bilked))
+					if(!isnull(src.counter))
+						bilk_ratio = 1
+					else
+						bilk_ratio = 0.1
+					if(bilked["current_money"] > 0)
+						bilked["current_money"] = round(max(bilked["current_money"] - mult * holder.get_reagent_amount(src.id) * bilk_ratio,0))
+				. = ..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
@@ -3055,6 +3055,23 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.reagents.add_reagent("salt", 1.25 * src.calculate_depletion_rate(M, mult))
 				..()
+
+		fooddrink/fish_sauce
+			name = "fish sauce"
+			id = "fish_sauce"
+			description = "A sauce made by fermenting fish in salt, staple in East Asian cuisine."
+			reagent_state = LIQUID
+			fluid_r = 104
+			fluid_g = 44
+			fluid_b = 28
+			transparency = 250
+			taste = list("fishy", "umami")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("salt", 0.75 * src.calculate_depletion_rate(M, mult))
+				M.reagents.add_reagent("fishoil", 0.75 * src.calculate_depletion_rate(M, mult))
+				..()
+
 
 		fooddrink/porktonium
 			name = "porktonium"

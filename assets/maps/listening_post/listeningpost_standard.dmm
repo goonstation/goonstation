@@ -400,7 +400,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost/tech_room)
 "tU" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 8;
 	pixel_x = 2

@@ -586,7 +586,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Rk" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	tag = "icon-sink (NORTH)"
 	},

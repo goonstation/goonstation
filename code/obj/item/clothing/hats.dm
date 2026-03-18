@@ -1642,6 +1642,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 				H.name = src.name
 				H.icon_state = src.icon_state
 				H.wear_image_icon = src.wear_image_icon
+				H.wear_state = src.wear_state
 				H.wear_image = src.wear_image
 				H.desc = "Someone has taped a radio headset underneath the headband."
 				qdel(src)
@@ -1651,6 +1652,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 				H.name = src.name
 				H.icon_state = src.icon_state
 				H.wear_image_icon = src.wear_image_icon
+				H.wear_state = src.wear_state
 				H.wear_image = src.wear_image
 				H.wear_layer = MOB_FULL_SUIT_LAYER
 				H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
@@ -1822,6 +1824,57 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	item_state = "antennae"
 	w_class = W_CLASS_TINY
 	throwforce = 0
+
+ABSTRACT_TYPE(/obj/item/clothing/head/headband/woof)
+/obj/item/clothing/head/headband/woof
+	name = "gray dog ears"
+	desc = "Aww, cute and floppy."
+	icon_state = "dog-gray"
+	item_state = "dog-gray"
+	random
+		New()
+			..()
+			var/color = pick("white","gray","black","red","orange","yellow","green","blue","purple")
+			name = "[color] dog ears"
+			item_state = "dog-[color]"
+			icon_state = "dog-[color]"
+
+	white
+		name = "white dog ears"
+		icon_state = "dog-white"
+		item_state = "dog-white"
+	gray
+		name = "gray dog ears"
+		icon_state = "dog-gray"
+		item_state = "dog-gray"
+	black
+		name = "black dog ears"
+		icon_state = "dog-black"
+		item_state = "dog-black"
+	red
+		name = "red dog ears"
+		icon_state = "dog-red"
+		item_state = "dog-red"
+	orange
+		name = "orange dog ears"
+		icon_state = "dog-orange"
+		item_state = "dog-orange"
+	yellow
+		name = "yellow dog ears"
+		icon_state = "dog-yellow"
+		item_state = "dog-yellow"
+	green
+		name = "green dog ears"
+		icon_state = "dog-green"
+		item_state = "dog-green"
+	blue
+		name = "blue dog ears"
+		icon_state = "dog-blue"
+		item_state = "dog-blue"
+	purple
+		name = "purple dog ears"
+		icon_state = "dog-purple"
+		item_state = "dog-purple"
 
 // BARRETTES
 

@@ -606,6 +606,9 @@ TYPEINFO(/mob)
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
 					if (tmob.hasStatus("spatial_protection"))
+						for_by_tcl(IX, /obj/machinery/interdictor)
+							if(IX.notify_interdictor(tmob))
+								break
 						src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade."))
 						var/atom/source = get_turf(tmob)
 						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
@@ -659,6 +662,9 @@ TYPEINFO(/mob)
 					//spatial interdictor: mitigate biomagnetic discharges
 
 					if (tmob.hasStatus("spatial_protection"))
+						for_by_tcl(IX, /obj/machinery/interdictor)
+							if(IX.notify_interdictor(tmob))
+								break
 						src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade."))
 						var/atom/source = get_turf(tmob)
 						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
@@ -1099,7 +1105,12 @@ TYPEINFO(/mob)
 
 // for mobs without organs
 /mob/proc/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss=FALSE)
-	hit_twitch(src)
+	if (src.nodamage || QDELETED(src)) return
+
+	if (brute > 0)
+		hit_twitch(src)
+	else if((burn > 0 || tox > 0) && isalive(src) && !src.hasStatus("paralysis"))
+		hit_twitch(src)
 	src.health -= max(0, brute)
 	src.health -= max(0, (src.bioHolder?.HasEffect("fire_resist") > 1) ? burn/2 : burn)
 

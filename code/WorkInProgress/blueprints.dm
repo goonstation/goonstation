@@ -538,7 +538,7 @@
 	/obj/submachine/claw_machine, \
 	/obj/submachine/chem_extractor, \
 	/obj/submachine/chef_oven, \
-	/obj/submachine/chef_sink, \
+	/obj/machinery/sink, \
 	/obj/machinery/launcher_loader, \
 	/obj/machinery/optable, \
 	/obj/machinery/mass_driver, \

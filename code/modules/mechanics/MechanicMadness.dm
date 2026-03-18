@@ -4483,6 +4483,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	icon='icons/obj/large/96x32.dmi'
 	icon_state = "mechcomp_ledsign"
 	cabinet_banned = TRUE
+	plane = PLANE_OVERFLOOR
 	two_handed = 1     // it's big
 	w_class = W_CLASS_BULKY // too big to fit in a bag
 	pixel_w = -32

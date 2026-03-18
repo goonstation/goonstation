@@ -2738,34 +2738,34 @@ TYPEINFO(/obj/submachine/cargopad)
 	podbay
 		name = "Pod Bay Pad"
 	hydroponic
-		mailgroup = MGD_BOTANY
+		mailgroup = MGT_HYDROPONICS
 		name = "Hydroponics Pad"
 	robotics
-		mailgroup = MGD_MEDRESEACH
+		mailgroup = MGT_ROBOTICS
 		name = "Robotics Pad"
 	artlab
-		mailgroup = MGD_SCIENCE
+		mailgroup = MGD_RESEARCH
 		name = "Artifact Lab Pad"
 	engineering
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEER
 		name = "Engineering Pad"
 	mechanics
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEER
 		name = "Mechanics Pad"
 	magnet
-		mailgroup = MGD_MINING
+		mailgroup = MGT_MINING
 		name = "Mineral Magnet Pad"
 	miningoutpost
-		mailgroup = MGD_MINING
+		mailgroup = MGT_MINING
 		name = "Mining Outpost Pad"
 	qm
-		mailgroup = MGD_CARGO
+		mailgroup = MGT_CARGO
 		name = "QM Pad"
 	qm2
-		mailgroup = MGD_CARGO
+		mailgroup = MGT_CARGO
 		name = "QM Pad 2"
 	researchoutpost
-		mailgroup = MGD_SCIENCE
+		mailgroup = MGD_RESEARCH
 		name = "Research Outpost Pad"
 	radio
 		name = "Radio Station Pad"
@@ -2779,17 +2779,17 @@ TYPEINFO(/obj/submachine/cargopad)
 		if (!src.mailgroup)
 			var/area/area = get_area(src)
 			if (istype(area, /area/station/hydroponics) || istype(area, /area/station/storage/hydroponics) || istype(area, /area/station/ranch))
-				src.mailgroup = MGD_BOTANY
+				src.mailgroup = MGT_HYDROPONICS
 			else if (istype(area, /area/station/medical))
-				src.mailgroup = MGD_MEDRESEACH
+				src.mailgroup = MGT_ROBOTICS // usually, robotics pad
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
-				src.mailgroup = MGD_SCIENCE
+				src.mailgroup = MGD_RESEARCH
 			else if (istype(area, /area/station/engine))
-				src.mailgroup = MGO_ENGINEER
+				src.mailgroup = MGD_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
-				src.mailgroup = MGD_MINING
+				src.mailgroup = MGT_MINING
 			else if (istype(area, /area/station/quartermaster))
-				src.mailgroup = MGD_CARGO
+				src.mailgroup = MGT_CARGO
 
 		if (src.active) //in case of map edits etc
 			AddOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")

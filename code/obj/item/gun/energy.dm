@@ -1430,7 +1430,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				"energy_high" = 5)
 	start_listen_effects = list(LISTEN_EFFECT_LAWBRINGER)
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED, LISTEN_INPUT_DEADCHAT)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 
 /obj/item/gun/energy/lawbringer
