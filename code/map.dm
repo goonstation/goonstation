@@ -1004,6 +1004,8 @@ var/global/list/mapNames = list(
 		/datum/mapPrefab/listening_post/kondaru,
 	)
 
+	cargo_shipping_method = SHIPPING_METHOD_TRANSCEPTION
+
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
