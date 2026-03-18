@@ -42405,15 +42405,6 @@
 /turf/space,
 /area/space)
 "iie" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellow/side{
