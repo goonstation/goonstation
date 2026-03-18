@@ -1298,27 +1298,101 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/kleptomaniac
 	name = "Kleptomaniac"
-	desc = "You will sometimes randomly pick up nearby items."
+	desc = "You will sometimes randomly steal nearby items and pickpocket people."
 	id = "kleptomaniac"
 	icon_state = "klepto"
 	points = 1
 	afterlife_blacklisted = TRUE
+	///Where we pickpocket from
+	var/static/slots_to_steal = list(SLOT_L_STORE, SLOT_R_STORE)
+	///Where we stash our loot
+	var/static/slots_to_stash = list(SLOT_BACK, SLOT_BELT, SLOT_L_STORE, SLOT_R_STORE)
 
 	onLife(var/mob/owner, var/mult)
-		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
-			if(istype(owner, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = owner
-				if (H.hand == LEFT_HAND)
-					if (H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
-						return
-				else
-					if (H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
-						return
-			for(var/obj/item/I in oview(1, owner))
-				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE))
-					I.Attackhand(owner)
-					owner.emote(pick("grin", "smirk", "chuckle", "smug"))
-					break
+		if(owner.stat || owner.lying || !can_act(owner) || owner.equipped())
+			return
+
+		if(istype(owner, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = owner
+			if (H.hand == LEFT_HAND)
+				if (H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
+					return
+			else
+				if (H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
+					return
+
+		if (probmult(6))
+			if(!src.grab_a_thing(owner) && probmult(2))
+				src.pickpocket(owner)
+
+	///Returns TRUE on a successful yoink
+	proc/grab_a_thing(mob/owner)
+		var/obj/item/loot = null
+		for(var/obj/item/I in oview(1, owner))
+			if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE))
+				loot = I
+				break
+		if (!loot)
+			return FALSE
+
+		//critters just grab it
+		if (!ishuman(owner))
+			loot.Attackhand(owner)
+			src.smug(owner)
+			return TRUE
+
+		//humans stash it
+		for (var/slot as anything in src.slots_to_stash)
+			var/mob/living/carbon/human/H = owner
+			var/obj/item/storage_item = H.get_slot(slot)
+			//if it fits in pockets then great
+			if (!storage_item && (slot == SLOT_L_STORE || slot == SLOT_R_STORE) && H.can_equip(loot, slot))
+				loot.Attackhand(owner)
+				loot = H.equipped()
+				//we failed to pick anything up for some reason
+				if (!loot)
+					return FALSE
+				owner.u_equip(loot)
+				H.force_equip(loot, slot)
+				src.smug(owner)
+				return TRUE
+			if (!storage_item?.storage)
+				continue
+			//otherwise it might fit in our bag or belt
+			if (length(storage_item.storage.stored_items) < storage_item.storage.slots && storage_item.storage.check_can_hold(loot))
+				loot.Attackhand(owner)
+				loot = H.equipped()
+				//we failed to pick anything up for some reason
+				if (!loot)
+					return FALSE
+				storage_item.Attackby(loot, owner)
+				src.smug(owner)
+				return TRUE
+		return FALSE
+
+	///Returns TRUE on a successful yoink
+	proc/pickpocket(mob/owner)
+		for (var/mob/living/carbon/human/victim in hearers(1, owner))
+			if (victim == owner)
+				continue
+			for (var/slot in src.slots_to_steal)
+				var/obj/item/loot = victim.get_slot(slot)
+				if (!loot)
+					continue
+				actions.start(new/datum/action/bar/icon/otherItem(
+					owner,
+					victim,
+					null,
+					slot,
+					0,
+					TRUE
+				), owner)
+				return TRUE
+		return FALSE
+
+
+	proc/smug(mob/owner)
+		owner.emote(pick("grin", "smirk", "chuckle", "smug"))
 
 /datum/trait/clutz
 	name = "Clutz"

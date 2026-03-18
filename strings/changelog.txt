@@ -1,4 +1,41 @@
 
+(t)tue mar 17 26
+(u)bork
+(p)26198
+(e)🗺|A-Mapping
+(+)On Neon: fixes some button directions,  add security scanners and the ddgtm
+(t)mon mar 16 26
+(u)Pirate-Rob
+(p)25776
+(e)|
+(+)Computers now have a maintenance panel you can access by unscrewing them, allowing you to change peripherals and harddrives.
+(u)Kubius
+(p)26176
+(e)🆕⚖🔬📨|C-Feature, C-Balance, A-Science, A-Logistics
+(*)Nadir's Harmonic Siphon now consumes dramatically more power at high intensity, and may experience mechanical failures if power is interrupted mid-operation.
+(t)sun mar 15 26
+(u)Lord_Earthfire
+(p)26177
+(e)🪲📡|C-Bug, A-AI
+(+)Mob AI got a change so they don't get stuck as often or unstuck themselves.
+(t)sat mar 14 26
+(u)LeahTheTech
+(p)26178
+(e)🔄💪|C-Rework, A-Traits
+(*)The kleptomaniac trait now makes you grab things and stuff them in your bag and pockets, stopping when you have no more space. It also now makes you rarely try to pickpocket the person standing next to you.
+(t)fri mar 13 26
+(u)JORJ949
+(p)26107
+(e)💅🐣|C-QoL, A-Respawning
+(*)You can now select to automatically spawn with your ID in your PDA with an option in character setup
+(u)bamlord
+(p)26124
+(e)🎨🌠|C-Sprites, A-Events
+(*)Added the dreaded basketball white hole
+(u)LeahTheTech + bork
+(p)26159
+(e)🆕🗺🎨🔊|C-Feature, A-Mapping, C-Sprites, C-Sound
+(*)Added shredders, one per HoP office. Shred disobedient employees' IDs right in front of them!
 (t)thu mar 12 26
 (u)JORJ949
 (p)25951
