@@ -1398,15 +1398,16 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "bbZ" = (
-/obj/machinery/door_control{
-	id = "cloning_door";
-	name = "Cloning Door Control";
-	pixel_x = 22
-	},
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
 /obj/disposalpipe/segment/bent/south,
+/obj/machinery/door_control{
+	id = "cloning_door";
+	name = "Cloning Door Control";
+	pixel_x = 22;
+	dir = 4
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -2137,6 +2138,9 @@
 	},
 /obj/mapping_helper/access/armory,
 /obj/mapping_helper/airlock/aiDisabler,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bJr" = (
@@ -2654,7 +2658,8 @@
 /obj/machinery/door_control{
 	id = "seclockdown";
 	name = "Security Lockdown";
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -4687,7 +4692,8 @@
 "dyC" = (
 /obj/machinery/computer/announcement/station/captain,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "capquarters"
+	id = "capquarters";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -4843,7 +4849,8 @@
 /obj/landmark/bill_spawn,
 /obj/landmark/start/job/assistant,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "medtoilet2"
+	id = "medtoilet2";
+	dir = 2
 	},
 /obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
@@ -5954,7 +5961,8 @@
 "eqR" = (
 /obj/machinery/computer/announcement/station/engineering,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "cequarters"
+	id = "cequarters";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/ce)
@@ -6262,6 +6270,9 @@
 	enter_id = "outer";
 	name = "Security"
 	},
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "ezF" = (
@@ -6339,7 +6350,8 @@
 /obj/machinery/door_control{
 	id = "hangar_security";
 	name = "Secure Dock Blast Door Control";
-	pixel_x = -24
+	pixel_x = -24;
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -6431,6 +6443,9 @@
 	},
 /obj/mapping_helper/access/medical,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "eGu" = (
@@ -6988,7 +7003,6 @@
 "faA" = (
 /obj/machinery/genetics_scanner,
 /obj/machinery/light_switch/east,
-/obj/blind_switch/east,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -7378,6 +7392,10 @@
 	cycle_id = "bridge";
 	enter_id = "outer";
 	name = "Bridge"
+	},
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -8272,7 +8290,8 @@
 /obj/machinery/door_control{
 	id = "hangar_security";
 	name = "Secure Dock Blast Door Control";
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -10088,13 +10107,14 @@
 	pixel_y = 16
 	},
 /obj/machinery/drainage,
+/obj/random_item_spawner/gross/one_or_zero,
 /obj/machinery/light/incandescent/cool{
-	dir = 8
+	dir = 4;
+	nostick = 1
 	},
-/obj/machinery/door_control/bolter/new_walls/east{
+/obj/machinery/door_control/bolter/new_walls/west{
 	id = "pubshower2"
 	},
-/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/toilets)
 "hhA" = (
@@ -11397,12 +11417,14 @@
 /obj/machinery/door_control/bolter/new_walls/north{
 	pixel_x = -6;
 	id = "markettindoor";
-	name = "Thin Door Bolt Control"
+	name = "Thin Door Bolt Control";
+	dir = 2
 	},
 /obj/machinery/door_control/north{
 	pixel_x = 6;
 	id = "market";
-	name = "Market Stall Door Control"
+	name = "Market Stall Door Control";
+	dir = 2
 	},
 /turf/simulated/floor,
 /area/station/storage/tools)
@@ -12175,6 +12197,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/cargo)
 "iJU" = (
@@ -12318,7 +12344,8 @@
 /obj/machinery/door_control{
 	id = "cargo_shutter";
 	name = "Cargo Shutters Control";
-	pixel_x = -24
+	pixel_x = -24;
+	dir = 8
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
@@ -12705,6 +12732,9 @@
 "jeR" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "jfm" = (
@@ -13164,7 +13194,9 @@
 /obj/machinery/door_control{
 	id = "crusher";
 	name = "Disposals Doors";
-	pixel_x = -24
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -13175,6 +13207,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -13546,7 +13582,8 @@
 /obj/landmark/start/job/assistant,
 /obj/landmark/bill_spawn,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "pubtoilet2"
+	id = "pubtoilet2";
+	dir = 2
 	},
 /obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/specialroom/freezer,
@@ -16423,6 +16460,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "lFI" = (
@@ -18258,6 +18299,9 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/mapping_helper/access/medical,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mYp" = (
@@ -18984,7 +19028,8 @@
 /obj/landmark/start/job/assistant,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "medtoilet1"
+	id = "medtoilet1";
+	dir = 2
 	},
 /obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
@@ -19613,6 +19658,9 @@
 	icon_state = "1-4"
 	},
 /obj/mapping_helper/access/security,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "obo" = (
@@ -19624,7 +19672,8 @@
 /obj/landmark/start/job/assistant,
 /obj/landmark/bill_spawn,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "pubtoilet3"
+	id = "pubtoilet3";
+	dir = 2
 	},
 /obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/specialroom/freezer,
@@ -21102,6 +21151,9 @@
 	enter_id = "outer";
 	name = "Security"
 	},
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "pfq" = (
@@ -21241,6 +21293,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/security/evidence)
 "plQ" = (
@@ -23214,6 +23269,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "qDN" = (
@@ -24786,6 +24845,10 @@
 /obj/stool,
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
+"rNb" = (
+/obj/submachine/GTM,
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/inner/north)
 "rNK" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -26703,8 +26766,8 @@
 	},
 /obj/item/cloneModule/genepowermodule,
 /obj/blind_switch/area/south{
-	working = 0;
-	on = 1
+	name = "broken blind switch";
+	working = 0
 	},
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -28674,7 +28737,8 @@
 "uwg" = (
 /obj/machinery/computer/card/department/research,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "quarters_rd"
+	id = "quarters_rd";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/science/research_director)
@@ -30037,6 +30101,17 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"vyx" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 8;
+	pixel_x = 20
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "vyK" = (
 /obj/machinery/flasher/portable,
 /turf/simulated/floor/redblack/corner{
@@ -30261,11 +30336,6 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "vGt" = (
-/obj/machinery/door_control{
-	id = "ai_core";
-	name = "AI Core Shield";
-	pixel_x = 28
-	},
 /obj/landmark/start/job/AI,
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
@@ -30280,6 +30350,12 @@
 	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/door_control{
+	id = "ai_core";
+	name = "AI Core Shield";
+	pixel_x = 28;
+	dir = 4
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -30583,7 +30659,8 @@
 "vPQ" = (
 /obj/machinery/computer/card/department/medical,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "mdirquarters"
+	id = "mdirquarters";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/head)
@@ -31130,7 +31207,8 @@
 /obj/machinery/vending/chapel,
 /obj/blind_switch/west,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "chapeloffice"
+	id = "chapeloffice";
+	dir = 2
 	},
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
@@ -31399,16 +31477,17 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = -10
 	},
-/obj/machinery/door_control{
-	id = "cargo_inbound";
-	name = "Cargo Inbound Door Control";
-	pixel_x = 24
-	},
 /obj/machinery/conveyor_switch{
 	id = "inbound";
 	name = "inbound conveyor switch";
 	pixel_y = 12;
 	last_pos = 1
+	},
+/obj/machinery/door_control{
+	id = "cargo_inbound";
+	name = "Cargo Inbound Door Control";
+	pixel_x = 24;
+	dir = 4
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
@@ -32745,13 +32824,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/pharmacy)
 "xmF" = (
+/obj/machinery/computer/supplycomp{
+	dir = 8
+	},
 /obj/machinery/door_control{
 	id = "cargo_outbound";
 	name = "Cargo Outbound Door Control";
-	pixel_x = 24
-	},
-/obj/machinery/computer/supplycomp{
-	dir = 8
+	pixel_x = 24;
+	dir = 4
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
@@ -33854,15 +33934,16 @@
 /turf/simulated/floor,
 /area/research_outpost)
 "ybG" = (
-/obj/machinery/door_control{
-	id = "research_podbay";
-	name = "Research Pod Bay Blast Door Control";
-	pixel_x = -22
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
 /obj/machinery/vending/air_vendor/plasma,
+/obj/machinery/door_control{
+	id = "research_podbay";
+	name = "Research Pod Bay Blast Door Control";
+	pixel_x = -22;
+	dir = 8
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "ybI" = (
@@ -78622,7 +78703,7 @@ uJy
 bPe
 prS
 csP
-csP
+rNb
 pxA
 gEZ
 csP
@@ -96442,9 +96523,9 @@ qpn
 qpn
 evD
 brh
-fZT
+vyx
 nwd
-fZT
+vyx
 brh
 qpn
 gyv
