@@ -2875,6 +2875,14 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/paper/manufacturer_blueprint/resonator_type_fq{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/obj/item/paper/resonator_type_fq{
+	pixel_y = 3;
+	pixel_x = -3
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
 "boV" = (
@@ -8240,12 +8248,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Rods decay at a diminishing rate;<br>corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
-	name = "printed card";
-	pixel_y = 6
-	},
+/obj/item/paper/catalytic_guide,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -9393,9 +9396,7 @@
 /area/station/engine/engineering/ce)
 "eop" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/alarm{
-	pixel_y = 22
-	},
+/obj/machinery/alarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "eoI" = (
@@ -20223,10 +20224,7 @@
 /area/station/crew_quarters/courtroom)
 "iNR" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
 "iNU" = (
@@ -24543,12 +24541,12 @@
 /area/station/chapel/sanctuary)
 "kEo" = (
 /obj/table/reinforced/auto,
-/obj/item/device/radio/intercom{
-	pixel_x = 1
-	},
 /obj/item/toy/judge_gavel{
 	pixel_x = -18;
 	pixel_y = 3
+	},
+/obj/machinery/shredder{
+	pixel_y = 12
 	},
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -26035,12 +26033,8 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>Maximum 3 intensity";
-	name = "printed card";
-	pixel_x = -4;
-	pixel_y = 13
+/obj/item/paper/resonator_type_sm{
+	pixel_y = 12
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -29727,10 +29721,7 @@
 	},
 /area/station/quartermaster/cargooffice)
 "mOL" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
@@ -30147,10 +30138,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -31390,6 +31378,9 @@
 /obj/noticeboard/persistent/customs/directional/north,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
+	},
+/obj/item/device/radio/intercom{
+	dir = 4
 	},
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/courtroom)
@@ -46271,10 +46262,7 @@
 /area/station/science/teleporter)
 "uvL" = (
 /obj/machinery/centrifuge_nuclear,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -46762,12 +46750,7 @@
 "uJG" = (
 /obj/machinery/light/incandescent/cool,
 /obj/table/reinforced/auto,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Rods decay at a diminishing rate;<br>corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
-	name = "printed card";
-	pixel_y = 6
-	},
+/obj/item/paper/catalytic_guide,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -48069,12 +48052,8 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
-	name = "printed card";
-	pixel_x = 4;
-	pixel_y = 13
+/obj/item/paper/resonator_type_ax{
+	pixel_y = 12
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -48187,6 +48166,10 @@
 /obj/item/paper/manufacturer_blueprint/resonator_type_fq{
 	pixel_x = -5;
 	pixel_y = 4
+	},
+/obj/item/paper/resonator_type_fq{
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)

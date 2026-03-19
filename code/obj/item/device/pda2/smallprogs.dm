@@ -1250,7 +1250,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			dat += "<br>[src.temp]"
 		else
 			dat += {"<br><B>Supply Ordering Program</B><HR>
-			<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR>
+			<B>Shipping Budget:</B> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] Credits<BR>
 			<A href='byond://?src=\ref[src];viewrequests=1'>View Requests</A><BR>
 			<A href='byond://?src=\ref[src];order=1'>Request Items</A><BR>"}
 		return dat
@@ -1261,7 +1261,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (href_list["order"])
-			src.temp = {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>
+			src.temp = {"<B>Shipping Budget:</B> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] Credits<BR><HR>
 			<B>Please select the Supply Package you would like to request:</B><BR><BR>"}
 			src.temp += search_snippet("background-color: #6F7961; color: #000;")
 			src.temp += "<BR><BR>"
