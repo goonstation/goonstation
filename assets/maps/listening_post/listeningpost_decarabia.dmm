@@ -574,6 +574,9 @@
 /obj/cable/black{
 	icon_state = "1-8"
 	},
+/obj/cable/black{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/general)
 "pQ" = (
@@ -646,6 +649,7 @@
 "rv" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/power/apc/autoname_south/hardened,
+/obj/cable/black,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicate_teleporter)
 "rD" = (
@@ -757,6 +761,9 @@
 /area/space)
 "tW" = (
 /obj/submachine/syndicate_teleporter,
+/obj/cable/black{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/techfloor/red,
 /area/listeningpost/syndicate_teleporter)
 "tY" = (
@@ -1364,6 +1371,9 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/map/light/dimred,
+/obj/cable/black{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicate_teleporter)
 "LB" = (
