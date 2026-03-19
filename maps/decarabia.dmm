@@ -12114,8 +12114,8 @@
 /area/station/security/checkpoint/west)
 "cTJ" = (
 /obj/decal/poster/wallsign/stencil/left/zero,
-/obj/decal/poster/wallsign/stencil/right/three,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
+/obj/decal/poster/wallsign/stencil/right/four,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "cTK" = (
@@ -17959,11 +17959,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/core/nuclear)
-"ehM" = (
-/obj/lattice,
-/obj/machinery/light/runway_light,
-/turf/space,
-/area/station/solar/north)
 "ehV" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/protectStation{
@@ -22415,9 +22410,7 @@
 /area/station/janitor/supply)
 "fji" = (
 /obj/stool/chair/comfy/yellow,
-/obj/blind_switch/area/west{
-	dir = 4
-	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
 "fjl" = (
@@ -28870,6 +28863,7 @@
 "gIS" = (
 /obj/machinery/light/small/floor/netural,
 /obj/critter/meatslinky/piggy,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "gIV" = (
@@ -30790,9 +30784,7 @@
 	},
 /area/station/hallway/primary/east)
 "hdQ" = (
-/obj/machinery/light_switch/west{
-	dir = 4
-	},
+/obj/machinery/light_switch/west,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -47942,6 +47934,13 @@
 	dir = 10
 	},
 /area/station/chapel/sanctuary)
+"liy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/grime,
+/area/station/hallway/secondary/researchshuttle)
 "liA" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/decal/tile_edge/stripe{
@@ -57165,6 +57164,7 @@
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "noO" = (
 /obj/kitchenspike,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "noP" = (
@@ -60859,7 +60859,6 @@
 	pixel_y = 5
 	},
 /obj/machinery/light_switch/east{
-	dir = 8;
 	pixel_y = -5
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge{
@@ -68815,6 +68814,7 @@
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/solitary)
 "qeK" = (
@@ -72561,12 +72561,10 @@
 /area/station/maintenance/outer/south)
 "rcq" = (
 /obj/machinery/light_switch/west{
-	dir = 4;
 	pixel_y = 4
 	},
 /obj/blind_switch/area/west{
-	pixel_y = -8;
-	dir = 4
+	pixel_y = -8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/medical/medbay/psychiatrist)
@@ -73433,12 +73431,9 @@
 	},
 /area/station/crew_quarters/jazz)
 "rnE" = (
-/obj/machinery/light_switch/west{
-	dir = 4
-	},
+/obj/machinery/light_switch/west,
 /obj/blind_switch/area/west{
-	pixel_y = -11;
-	dir = 4
+	pixel_y = -11
 	},
 /mob/living/critter/small_animal/cat/jones,
 /obj/stool/pet_bed/jones,
@@ -77124,7 +77119,6 @@
 	pixel_y = 5
 	},
 /obj/machinery/light_switch/east{
-	dir = 8;
 	pixel_y = -5
 	},
 /turf/simulated/floor/wood/two,
@@ -78546,7 +78540,6 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/equipment)
 "ssZ" = (
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -99036,9 +99029,7 @@
 "xee" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/reagent_dispensers/foamtank,
-/obj/machinery/light_switch/west{
-	dir = 4
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/black/grime,
 /area/station/storage/primary)
 "xeg" = (
@@ -123117,7 +123108,7 @@ rxT
 jWo
 jWo
 jWo
-jWo
+liy
 sqf
 kqo
 jWK
@@ -150799,7 +150790,7 @@ lYA
 nfZ
 nfZ
 wJb
-ehM
+nfZ
 epH
 epH
 nfZ
