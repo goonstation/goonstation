@@ -29,7 +29,7 @@
 		mainframe_prog_exit
 		return
 
-	else if (istype(dest_check, /datum/computer/folder) && !src.get_computer_datum(target.name, dest_check))
+	if (istype(dest_check, /datum/computer/folder) && !src.get_computer_datum(target.name, dest_check))
 		copy_name = target.name
 
 	else
