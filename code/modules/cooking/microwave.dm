@@ -2,17 +2,11 @@
 #define MW_STATE_BROKEN_1 1
 #define MW_STATE_BROKEN_2 2
 
-#define MW_CLEAN 0
-#define MW_DIRTY 1
-#define MW_DIRTY_SLIME 2
-#define MW_DIRTY_EGG 3
-
 #define IDLE_POWER_USAGE 5
 #define ACTIVE_POWER_USAGE 80
 
-// The temperature in kelvin that the microwave exposes its contents to.
-// The only reasoning for this value is that it's hot enough to warm up donk pockets.
-#define MW_HEAT 500
+/// Amount of heat that the microwave exposes its contents to.
+#define MW_HEAT 500 KELVIN // The only reasoning for this value is that it's hot enough to warm up donk pockets.
 
 
 TYPEINFO(/obj/machinery/microwave)
