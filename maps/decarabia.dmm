@@ -3234,6 +3234,14 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/random/walp,
 /area/station/crew_quarters/garden)
+"aQw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/chair/folded,
+/obj/item/raw_material/rock,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se)
 "aQA" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -3345,12 +3353,7 @@
 /obj/machinery/door_control/bolter/new_walls/north{
 	id = "scibath"
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -5451,12 +5454,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -7935,12 +7933,7 @@
 /area/station/engine/elect)
 "bUu" = (
 /obj/kitchenspike,
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -8138,12 +8131,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "bWP" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -10326,12 +10314,7 @@
 	},
 /area/station/mining/staff_room)
 "cwF" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -11043,12 +11026,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/east)
 "cEX" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -11468,12 +11446,7 @@
 /turf/simulated/floor/minitiles/white,
 /area/station/crew_quarters/pool)
 "cKt" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -14325,12 +14298,7 @@
 /area/ghostdrone_factory)
 "dpq" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -15413,12 +15381,7 @@
 /obj/shrub{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -31358,12 +31321,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "hfq" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -32728,12 +32686,7 @@
 /obj/item/extinguisher{
 	pixel_x = 6
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -33756,12 +33709,7 @@
 	},
 /area/station/medical/breakroom)
 "hHs" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -37599,12 +37547,7 @@
 	pixel_y = 12;
 	pixel_x = 3
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -39706,12 +39649,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/twotone/red,
 /area/station/security/checkpoint/west)
 "jcI" = (
@@ -40607,12 +40545,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -42715,12 +42648,7 @@
 /obj/shrub{
 	dir = 1
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -49314,12 +49242,7 @@
 	tag = "icon-plant (NORTH)";
 	pixel_y = 3
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/diplomat{
@@ -51462,12 +51385,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -52669,12 +52587,7 @@
 	dir = 4
 	},
 /obj/cable,
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -57399,12 +57312,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -61608,12 +61516,7 @@
 /obj/item/device/light/candle/small{
 	pixel_x = 10
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -63594,12 +63497,7 @@
 	pixel_x = 9;
 	pixel_y = 20
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/landmark/spawner/artifact,
 /obj/cable{
 	icon_state = "0-8"
@@ -66460,12 +66358,7 @@
 /obj/stool/chair/comfy/wheelchair{
 	dir = 8
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -67931,12 +67824,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "pHG" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -68635,12 +68523,7 @@
 	dir = 4;
 	icon_state = "chair_couch-brown"
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -72397,12 +72280,7 @@
 /area/station/medical/medbay)
 "qKL" = (
 /obj/machinery/light/small/floor/purpleish,
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -76053,12 +75931,7 @@
 	dir = 4;
 	icon_state = "check1"
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -77216,12 +77089,7 @@
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -84568,12 +84436,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -88907,12 +88770,7 @@
 /obj/machinery/recharger{
 	pixel_y = 8
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -93007,12 +92865,7 @@
 /area/station/maintenance/inner/ne)
 "vqC" = (
 /obj/machinery/light/emergency,
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -99460,12 +99313,7 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/security/hos)
 "wOJ" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -99655,12 +99503,7 @@
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw)
 "wRD" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -102138,12 +101981,7 @@
 /turf/simulated/floor/greenwhite/other,
 /area/station/hallway/secondary/researchshuttle)
 "xxY" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -102587,12 +102425,7 @@
 /turf/simulated/floor/twotone/green,
 /area/station/crew_quarters/garden)
 "xDG" = (
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -102623,12 +102456,7 @@
 	layer = 3;
 	pixel_y = 7
 	},
-/obj/machinery/power/apc/autoname_east{
-	coverlocked = 0;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -165970,7 +165798,7 @@ xLG
 xJC
 xLG
 aFR
-kwk
+aQw
 gVW
 bzN
 gVW
