@@ -356,6 +356,7 @@
 /obj/machinery/computer3/ui_static_data(mob/user)
 	. = list(
 		"ckey" = user.ckey,
+		"peripherals" = list()
 	)
 	for (var/i in 1 to length(src.peripherals)) // originally i had all this stuff in static data, but the buttons didnt update.
 		var/obj/item/peripheral/periph = src.peripherals[i]
