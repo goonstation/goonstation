@@ -304,7 +304,10 @@
 		src.AddOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
-		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
+		if(!src.mainboard) // make sure this is the first time we're initializing this computer
+			mainboard = new /obj/item/motherboard()
+			if(mainboard.created_name)src.name = mainboard.created_name
+
 
 			for(var/peripheral in src.setup_starting_peripherals)
 				if(ispath(peripheral))
@@ -339,11 +342,6 @@
 					src.active_program = os
 
 				src.hd.root.add_file(os)
-
-			if(!src.mainboard)
-				mainboard = new /obj/item/motherboard()
-			if(mainboard.created_name)src.name = mainboard.created_name
-
 
 		src.post_system()
 
