@@ -38893,11 +38893,9 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/refinery)
 "wwT" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = 4
+/obj/machinery/shredder{
+	pixel_x = 5;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge/customs)

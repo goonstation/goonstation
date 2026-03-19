@@ -52946,6 +52946,12 @@
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
 	},
+/obj/item/storage/box/trackimp_kit{
+	pixel_y = 6
+	},
+/obj/item/storage/box/PDAbox{
+	pixel_y = -5
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "xZx" = (
@@ -53053,11 +53059,8 @@
 /area/station/maintenance/solar/north)
 "ybM" = (
 /obj/table/glass/auto,
-/obj/item/storage/box/trackimp_kit{
-	pixel_y = 6
-	},
-/obj/item/storage/box/PDAbox{
-	pixel_y = -5
+/obj/machinery/shredder{
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/ne,
 /area/station/bridge)

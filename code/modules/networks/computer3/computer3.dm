@@ -9,7 +9,7 @@
 	density = 1
 	anchored = ANCHORED
 	var/base_icon_state = "computer_generic"
-	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
+	var/temp = ""
 	var/temp_add = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
@@ -19,6 +19,7 @@
 	var/list/peripherals = list()
 	var/restarting = 0 //Are we currently restarting the system?
 	var/datum/light/light
+	var/obj/item/motherboard/mainboard = null
 
 	//Does it spawn with a card scanner? (It should, the main os needs one of these now.)
 	var/setup_idscan_path = null
@@ -31,8 +32,7 @@
 	var/setup_starting_peripheral1 = null //Please note that the user cannot install more than 3.
 	var/setup_starting_peripheral2 = null //And the os tends to need that third one for the card reader
 	var/setup_os_string = null
-	var/setup_font_color = "#19A319"
-	var/setup_bg_color = "#1B1E1B"
+
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
@@ -291,7 +291,10 @@
 		src.AddOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
-		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
+		if(!src.mainboard) // make sure this is the first time we're initializing this computer
+			mainboard = new /obj/item/motherboard()
+			if(mainboard.created_name)src.name = mainboard.created_name
+
 			if(ispath(src.setup_starting_peripheral1))
 				new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
@@ -334,13 +337,7 @@
 
 		src.post_system()
 
-		if (prob(60))
-			switch(rand(1,2))
-				if(1)
-					setup_font_color = "#E79C01"
-				if(2)
-					setup_font_color = "#A5A5FF"
-					setup_bg_color = "#4242E7"
+
 
 	return
 /obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
@@ -379,8 +376,8 @@
 		"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
 		"windowName" = src.name,
 		"user" = user,
-		"fontColor" = src.setup_font_color, // display monochrome values
-		"bgColor" = src.setup_bg_color,
+		"fontColor" = src.mainboard ? src.mainboard.font_color : "#aaaaaa", //If there's no motherboard, mimic BSOD colours \o/
+		"bgColor" = src.mainboard ? src.mainboard.bg_color : "#0000aa",
 		"inputValue" = src.tgui_last_accessed[user.ckey],
 	)
 
@@ -638,8 +635,7 @@
 		A.hd = src.hd
 		src.hd = null
 
-	A.mainboard = new /obj/item/motherboard(A)
-	A.mainboard.created_name = src.name
+	A.mainboard = src.mainboard
 	A.mainboard.integrated_floppy = src.setup_has_internal_disk
 
 
@@ -821,6 +817,7 @@
 		return
 
 	post_system()
+		if(src.mainboard)src.temp_add += src.mainboard.bios_version+"<br>"
 		src.temp_add += "Initializing system...<br>"
 
 		if(!src.hd)
@@ -882,15 +879,15 @@
 	if (src.diskette)
 		cloneComp.diskette = src.diskette.clone()
 
+	if (src.mainboard)
+		cloneComp.mainboard = src.mainboard.clone()
+
 	cloneComp.setup_starting_peripheral1 = src.setup_starting_peripheral1
 	cloneComp.setup_starting_peripheral2 = src.setup_starting_peripheral2
 
 	cloneComp.setup_starting_os = null
 	cloneComp.setup_idscan_path = src.setup_idscan_path
 	cloneComp.setup_has_internal_disk = src.setup_has_internal_disk
-
-	cloneComp.setup_font_color = src.setup_font_color
-	cloneComp.setup_bg_color = src.setup_bg_color
 
 	return cloneComp
 

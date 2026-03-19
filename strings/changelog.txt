@@ -1,4 +1,77 @@
 
+(t)wed mar 18 26
+(u)nova2053
+(p)26200
+(e)|
+(+)Replacing floor tiles under tables will no longer hide items under the floor tiles.
+(u)Lord_Earthfire
+(p)25719
+(e)🆕🔬|C-Feature, A-Science
+(*)Teleportation pads (telepads) receive packets over frequency `1479`. Specific commands in minor changes, or issue a "help" command to one in-game.
+(+)Telepads respond to un-targeted "ping" commands with their net ID.
+(+)Telepads respond to targeted "coords" commands with their exact X/Y coordinates and human-readable Z-level. Use this to track telepads hidden off-station.
+(+)Telepads respond to targeted "status" commands with whether they are connected to a mainframe, and the net ID of the mainframe if so.
+(t)tue mar 17 26
+(u)bork
+(p)26198
+(e)🗺|A-Mapping
+(+)On Neon: fixes some button directions,  add security scanners and the ddgtm
+(t)mon mar 16 26
+(u)Pirate-Rob
+(p)25776
+(e)|
+(+)Computers now have a maintenance panel you can access by unscrewing them, allowing you to change peripherals and harddrives.
+(u)Kubius
+(p)26176
+(e)🆕⚖🔬📨|C-Feature, C-Balance, A-Science, A-Logistics
+(*)Nadir's Harmonic Siphon now consumes dramatically more power at high intensity, and may experience mechanical failures if power is interrupted mid-operation.
+(t)sun mar 15 26
+(u)Lord_Earthfire
+(p)26177
+(e)🪲📡|C-Bug, A-AI
+(+)Mob AI got a change so they don't get stuck as often or unstuck themselves.
+(t)sat mar 14 26
+(u)LeahTheTech
+(p)26178
+(e)🔄💪|C-Rework, A-Traits
+(*)The kleptomaniac trait now makes you grab things and stuff them in your bag and pockets, stopping when you have no more space. It also now makes you rarely try to pickpocket the person standing next to you.
+(t)fri mar 13 26
+(u)JORJ949
+(p)26107
+(e)💅🐣|C-QoL, A-Respawning
+(*)You can now select to automatically spawn with your ID in your PDA with an option in character setup
+(u)bamlord
+(p)26124
+(e)🎨🌠|C-Sprites, A-Events
+(*)Added the dreaded basketball white hole
+(u)LeahTheTech + bork
+(p)26159
+(e)🆕🗺🎨🔊|C-Feature, A-Mapping, C-Sprites, C-Sound
+(*)Added shredders, one per HoP office. Shred disobedient employees' IDs right in front of them!
+(t)thu mar 12 26
+(u)JORJ949
+(p)25951
+(e)🔎💅📄🧑‍✈️|C-Code-Quality, C-QoL, A-UI, A-Command
+(+)The ID Computer UI has been refactored to be less reliant on scrolling.
+(u)Kubius
+(p)25981
+(e)🆕⏰📦|C-Feature, A-Status-Effects, A-Game-Objects
+(+)Interdictors make activity noises again! The procedure for when they make noises has been adjusted.
+(u)Lord_Earthfire
+(p)25946
+(e)🆕💊|C-Feature, A-Medical
+(*)Cryotubes operated with sufficient amounts of superheated gasses will severely burn their occupants
+(u)bamlord
+(p)26155
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizards can now collect a new headset from the magivend after losing theirs to the clown/dying
+(u)Temthrush
+(p)26142
+(e)🎨|C-Sprites
+(+)Adds 21 new stickers
+(t)wed mar 11 26
+(u)LeahTheTech
+(+)Infernal contracts now make you bleed slightly when signing them. It is your blood after all!
 (t)tue mar 10 26
 (u)Egregorious
 (p)26110
