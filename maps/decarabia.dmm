@@ -5429,15 +5429,13 @@
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "bsh" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/light/incandescent,
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/red/fancy/narrow{
 	dir = 8
 	},
@@ -8963,14 +8961,12 @@
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "cjK" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/computer/announcement/station/medical{
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -12201,8 +12197,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "cUZ" = (
@@ -13249,8 +13245,8 @@
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 8
 	},
-/obj/mapping_helper/access/tox_storage,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "dfR" = (
@@ -13807,6 +13803,7 @@
 	},
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "dmh" = (
@@ -15824,8 +15821,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering,
-/obj/mapping_helper/access/engineering_storage,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/black/grime,
 /area/station/storage/primary)
 "dKp" = (
@@ -17378,8 +17375,8 @@
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 8
 	},
-/obj/mapping_helper/access/tox_storage,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor,
 /area/research_outpost)
 "ebn" = (
@@ -17425,9 +17422,9 @@
 /turf/simulated/floor/twotone,
 /area/station/quartermaster/office)
 "ebO" = (
-/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/command/alt,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/hos/private)
 "ebR" = (
@@ -23996,8 +23993,8 @@
 /area/station/mining/staff_room)
 "fAx" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "fAE" = (
@@ -28459,9 +28456,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer"
-	},
 /obj/machinery/light/incandescent/purpleish,
 /obj/cable{
 	icon_state = "0-4"
@@ -28469,6 +28463,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "gED" = (
@@ -35079,7 +35074,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/station/bridge{
 	dir = 8
 	},
 /turf/simulated/floor/minitiles/black,
@@ -39300,13 +39295,11 @@
 /turf/simulated/floor/terrazzo/black,
 /area/station/crew_quarters/jazz)
 "jes" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
+	},
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 6
@@ -40162,10 +40155,6 @@
 "job" = (
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/surgery/storage)
-"jod" = (
-/obj/decal/poster/wallsign/iso/prohibited/touch,
-/turf/simulated/wall/auto/walp,
-/area/station/crew_quarters/bathroom)
 "joI" = (
 /obj/mapping_helper/wingrille_spawn/auto/walp,
 /turf/simulated/floor/plating,
@@ -45379,6 +45368,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/turretid/armory_perimeter{
+	pixel_x = 24
+	},
 /turf/simulated/floor/glassblock/transparent/red,
 /area/station/security/main)
 "kDb" = (
@@ -45580,13 +45572,11 @@
 /turf/simulated/floor/yellow,
 /area/station/hangar/main)
 "kFG" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/research{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_east,
 /area/station/crew_quarters/hor)
 "kFI" = (
@@ -48244,15 +48234,11 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/northwest)
 "llv" = (
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	pixel_y = 5;
-	req_access_txt = "31"
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/computer/announcement/station/cargo,
 /turf/simulated/floor/twotone/yellow,
 /area/station/quartermaster/office)
 "llw" = (
@@ -52530,6 +52516,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/machinery/computer/announcement/station/security/department,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -56823,10 +56810,11 @@
 	},
 /area/station/security/main)
 "nkn" = (
-/obj/machinery/door/airlock/pyro/security/alt{
+/obj/mapping_helper/access/hos,
+/obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "nko" = (
@@ -62913,8 +62901,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/armory,
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "oIY" = (
@@ -78915,8 +78905,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "syx" = (
@@ -85403,14 +85393,10 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/machinery/turretid{
-	pixel_y = -1;
-	turretArea = /area/station/ai_monitored/armory;
-	pixel_x = -26;
-	name = "Armory Turret deactivation control"
-	},
 /obj/stool/bench/red,
-/obj/mapping_helper/access/hos,
+/obj/machinery/turretid/armory{
+	pixel_x = -24
+	},
 /turf/simulated/floor/glassblock/transparent/red,
 /area/station/security/main)
 "tVM" = (
@@ -91992,8 +91978,8 @@
 /obj/cable/blue{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "vxI" = (
@@ -92881,7 +92867,7 @@
 /area/station/maintenance/outer/se)
 "vKW" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/computer/announcement,
+/obj/machinery/computer/announcement/station/engineering,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"
@@ -96238,8 +96224,8 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "wyJ" = (
@@ -96790,8 +96776,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "wDd" = (
@@ -163549,7 +163535,7 @@ fBf
 fBf
 oua
 fBf
-jod
+fBf
 fBf
 fBf
 fBf
