@@ -292,7 +292,8 @@
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/medical_director,
 	/obj/item/circuitboard/card/medical,
-	/obj/item/circuitboard/announcement/medical)
+	/obj/item/circuitboard/announcement/medical,
+	/obj/item/reagent_containers/injector_filler)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has

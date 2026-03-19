@@ -415,11 +415,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
 		crate.spawn_items(owner, uplink)
 
-/datum/syndicate_buylist/traitor/fingerprinter
-	name = "Fingerprinter"
-	items = list(/obj/item/device/fingerprinter)
-	desc = "A tool which allows you to scan and plant fingerprints."
-	cost = 1
+// TODO: Rework to falsify all forensics
+// /datum/syndicate_buylist/traitor/fingerprinter
+// 	name = "Fingerprinter"
+// 	items = list(/obj/item/device/fingerprinter)
+// 	desc = "A tool which allows you to scan and plant fingerprints."
+// 	cost = 1
 
 /datum/syndicate_buylist/traitor/blowgun
 	name = "Blowgun"
@@ -431,7 +432,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/wiretap
 	name = "Wiretap Radio Upgrade"
-	items = list(/obj/item/device/radio_upgrade)
+	items = list(/obj/item/device/radio_upgrade/wiretap)
 	cost = 3
 	desc = "A small device that may be installed in a headset to grant access to all station channels, along with one reserved for Syndicate operatives."
 	vr_allowed = FALSE

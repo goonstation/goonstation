@@ -42,7 +42,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: "yarn"
           cache-dependency-path: |
             ./tgui/yarn.lock
@@ -222,9 +222,11 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: "yarn"
-          cache-dependency-path: ./tgui/yarn.lock
+          cache-dependency-path: |
+            ./tgui/yarn.lock
+            ./tgui/package.json
 
       - uses: actions/setup-python@v6
         with:

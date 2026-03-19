@@ -38,6 +38,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/espresso_machine,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "ak" = (
@@ -105,10 +106,12 @@
 /area/prefab/blind_pig)
 "az" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "aA" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "aB" = (

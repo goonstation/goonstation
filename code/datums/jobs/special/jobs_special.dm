@@ -76,6 +76,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Mime"
 	email_group = MGD_CIVILIAN
+	rounds_needed_to_play = ROUNDS_MIN_SECASS
 
 /datum/job/special/vice_officer
 	name = "Vice Officer"
@@ -101,6 +102,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	ui_colour = /datum/job/security::ui_colour
 	limit = 0
 	wages = PAY_TRADESMAN
+	trait_list = list("training_forensic")
 	access_string = "Forensic Technician"
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	slot_belt = list(/obj/item/device/pda2/security)
@@ -186,6 +188,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	add_to_manifest = FALSE
 	radio_announcement = FALSE
 	low_priority_job = TRUE
+	rounds_needed_to_play = ROUNDS_MIN_SECASS
 	slot_card = null
 	slot_head = list(\
 	/obj/item/clothing/head/green = 1,
@@ -488,7 +491,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
 	slot_suit = list(/obj/item/clothing/suit/wcoat)
 	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/catering)
 	slot_lhan = list(/obj/item/plate/tray)
 	slot_poc1 = list(/obj/item/cloth/towel/white)
 	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)

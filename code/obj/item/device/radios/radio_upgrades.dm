@@ -1,23 +1,29 @@
+ABSTRACT_TYPE(/obj/item/device/radio_upgrade)
 TYPEINFO(/obj/item/device/radio_upgrade)
 	mats = 12
 
-/obj/item/device/radio_upgrade //traitor radio upgrader
-	name = "wiretap radio upgrade"
-	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
+/obj/item/device/radio_upgrade
+	name = "radio upgrade"
+	desc = "A device that adds one or more secure channels to a headset. Can be installed in a radio headset."
 	icon = 'icons/obj/items/radio_upgrades.dmi'
 	icon_state = "wiretap"
 	w_class = W_CLASS_TINY
-	is_syndicate = 1
-	var/secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"g" = R_FREQ_SECURITY,
-		"e" = R_FREQ_ENGINEERING,
-		"r" = R_FREQ_RESEARCH,
-		"m" = R_FREQ_MEDICAL,
-		"c" = R_FREQ_CIVILIAN,
-		"z" = R_FREQ_SYNDICATE,
-		)
+	is_syndicate = TRUE
+	var/secure_frequencies = list()
 	var/secure_classes = list()
+
+	wiretap //traitor radio upgrader
+		name = "wiretap radio upgrade"
+		desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
+		secure_frequencies = list(
+			"h" = R_FREQ_COMMAND,
+			"g" = R_FREQ_SECURITY,
+			"e" = R_FREQ_ENGINEERING,
+			"r" = R_FREQ_RESEARCH,
+			"m" = R_FREQ_MEDICAL,
+			"c" = R_FREQ_CIVILIAN,
+			"z" = R_FREQ_SYNDICATE,
+			)
 
 	conspirator
 		name = "private radio channel upgrade"

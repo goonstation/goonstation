@@ -1,7 +1,6 @@
 // Contains:
 //
 // - Chainsaw
-// - Plant analyzer
 // - Portable seed fabricator
 // - Watering can
 // - Compost bag
@@ -388,37 +387,6 @@ TYPEINFO(/obj/item/saw/elimbinator)
 			bleed(H, 3, 5)
 		return ..()
 
-////////////////////////////////////// Plant analyzer //////////////////////////////////////
-
-TYPEINFO(/obj/item/plantanalyzer)
-	mats = 4
-
-/obj/item/plantanalyzer
-	name = "plant analyzer"
-	desc = "A device which examines the genes of plant seeds."
-	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "plantanalyzer"
-	w_class = W_CLASS_TINY
-	c_flags = ONBELT
-
-	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (BOUNDS_DIST(A, user) > 0)
-			return
-
-		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).
-		src.add_fingerprint(user)
-		return
-
-// This is the best place for this thing
-/obj/item/device/analyzer/phytoscopic_upgrade
-	name = "phytoscopic analyzer upgrade"
-	desc = "A small upgrade card that allows phytoscopic goggles to detect gene strains present in a plant."
-	icon_state = "phyto_upgr"
-	flags = TABLEPASS | CONDUCT
-	throwforce = 0
-	w_class = W_CLASS_TINY
-	throw_speed = 5
-	throw_range = 10
 
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 
