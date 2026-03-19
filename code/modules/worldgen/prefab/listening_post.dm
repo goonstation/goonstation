@@ -92,6 +92,8 @@ TYPEINFO(/datum/mapPrefab/listening_post)
 	prefabPath = "assets/maps/listening_post/listeningpost_standard.dmm"
 /datum/mapPrefab/listening_post/atlas
 	prefabPath = "assets/maps/listening_post/listeningpost_atlas.dmm"
+/datum/mapPrefab/listening_post/decarabia
+	prefabPath = "assets/maps/listening_post/listeningpost_decarabia.dmm"
 /datum/mapPrefab/listening_post/density2
 	prefabPath = "assets/maps/listening_post/listeningpost_density2.dmm"
 /datum/mapPrefab/listening_post/donut3
