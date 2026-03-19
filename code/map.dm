@@ -480,6 +480,8 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
+	listening_post_prefab = /datum/mapPrefab/listening_post/decarabia
+
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
