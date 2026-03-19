@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 	explanation_text = "Don't lose your hat!"
 	// medal_name = "Hatris"
 	check_completion()
-		if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/caphat || owner.current.check_contents_for(/obj/item/clothing/head/fancy/captain)))
+		if(owner.current && (owner.current.check_contents_for(/obj/item/clothing/head/caphat) || owner.current.check_contents_for(/obj/item/clothing/head/fancy/captain)))
 			return 1
 		else
 			return 0
@@ -89,6 +89,15 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 	// medal_name = "Edward Smith"
 	check_completion()
 		if(owner.current && owner.current.reagents && owner.current.reagents.has_reagent("ethanol"))
+			return 1
+		else
+			return 0
+
+/datum/objective/crew/captain/authdisk
+	explanation_text = "Don't lose the Authentication Disk!"
+
+	check_completion()
+		if(owner.current && owner.current.check_contents_for(/obj/item/disk/data/floppy/read_only/authentication))
 			return 1
 		else
 			return 0

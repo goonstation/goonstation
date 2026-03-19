@@ -390,6 +390,8 @@
 		var/obj/dialogueobj/controlpc/PC = src.master
 		if(PC.cutoff)
 			return
+		if(QDELETED(PC))
+			return
 		else
 			..()
 
@@ -414,9 +416,12 @@
 			else return 0
 
 		onActivate(var/client/C)
+			if(QDELETED(src))
+				return
 			var/obj/dialogueobj/controlpc/M = new /obj/dialogueobj/controlpc
 			M.lever_lv(C.mob)
-			qdel(src) // pretty sure all of these are needed for cleanup
+			for(var/datum/dialogueNode/nodes in src.master.allNodes)
+				qdel(nodes)
 			qdel(src.master)
 			qdel(src.master.master)
 
@@ -431,9 +436,12 @@
 			else return 0
 
 		onActivate(var/client/C)
+			if(QDELETED(src))
+				return
 			var/obj/dialogueobj/controlpc/M = new /obj/dialogueobj/controlpc
 			M.lever_hv(C.mob)
-			qdel(src) // pretty sure all of these are needed for cleanup
+			for(var/datum/dialogueNode/nodes in src.master.allNodes)
+				qdel(nodes)
 			qdel(src.master)
 			qdel(src.master.master)
 
