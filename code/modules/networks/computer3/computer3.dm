@@ -308,7 +308,6 @@
 			mainboard = new /obj/item/motherboard()
 			if(mainboard.created_name)src.name = mainboard.created_name
 
-
 			for(var/peripheral in src.setup_starting_peripherals)
 				if(ispath(peripheral))
 					new peripheral(src)//Peripherals add themselves automatically if spawned inside a computer3
