@@ -1,4 +1,25 @@
 
+(t)thu mar 19 26
+(u)JORJ949
+(p)26074
+(e)🔎🤖⚙🌠|C-Code-Quality, A-Silicons, A-Internal, A-Events
+(+)Random AI laws have been internally refactored and should no longer take precedence over themselves or any laws higher in number than them (e.g. a corrupted law 1 saying it takes precedence over law 2 despite it doing that by default). Report any weird bugs or inconsistencies with corrupted laws!
+(u)Egregorious
+(p)25972
+(e)🆕🍝|C-Feature, A-Catering
+(*)The microwave has received a rework, and its burger, waffle, and donut recipes now match those of the oven.
+(t)wed mar 18 26
+(u)nova2053
+(p)26200
+(e)|
+(+)Replacing floor tiles under tables will no longer hide items under the floor tiles.
+(u)Lord_Earthfire
+(p)25719
+(e)🆕🔬|C-Feature, A-Science
+(*)Teleportation pads (telepads) receive packets over frequency `1479`. Specific commands in minor changes, or issue a "help" command to one in-game.
+(+)Telepads respond to un-targeted "ping" commands with their net ID.
+(+)Telepads respond to targeted "coords" commands with their exact X/Y coordinates and human-readable Z-level. Use this to track telepads hidden off-station.
+(+)Telepads respond to targeted "status" commands with whether they are connected to a mainframe, and the net ID of the mainframe if so.
 (t)tue mar 17 26
 (u)bork
 (p)26198

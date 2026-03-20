@@ -28692,8 +28692,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1;
-	name = "Break Room";
-	req_access_txt = null
+	name = "Break Room"
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -33793,9 +33792,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/classic{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "nnm" = (
@@ -36754,8 +36751,7 @@
 	},
 /obj/machinery/light/small/sticky,
 /obj/machinery/door/window/eastleft{
-	name = "Security";
-	req_access_txt = null
+	name = "Security"
 	},
 /obj/mapping_helper/access/security,
 /turf/simulated/floor,
@@ -40581,9 +40577,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "rby" = (
-/obj/machinery/door/airlock/pyro/classic{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "rbF" = (

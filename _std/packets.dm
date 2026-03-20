@@ -83,6 +83,7 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_BOT_CONTROL 1447
 #define FREQ_AIRLOCK_CONTROL 1449 // seems to be unused nowadays?
 #define FREQ_GPS 1453
+#define FREQ_TELESCI 1479
 #define FREQ_RUCK 1467
 #define FREQ_AINLEY_BUDDY 1917
 #define FREQ_BUDDY 1219

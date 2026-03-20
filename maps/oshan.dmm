@@ -4130,9 +4130,7 @@
 /area/station/science/research_director)
 "asV" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4;
-	name = "Operating Theater";
-	req_access_txt = "29"
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
@@ -11053,9 +11051,7 @@
 /area/research_outpost/toxins)
 "bcG" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4;
-	name = "Operating Theater";
-	req_access_txt = "29"
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
@@ -11158,8 +11154,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null;
-	req_access_txt = "5";
 	name = "Medical Booth"
 	},
 /turf/simulated/floor/blue,
@@ -12633,7 +12627,6 @@
 "bko" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
-	req_access_txt = "20";
 	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
@@ -25189,8 +25182,7 @@
 /area/station/science/lobby)
 "dlG" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Medical Booth";
-	req_access_txt = "5"
+	name = "Medical Booth"
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -29267,7 +29259,6 @@
 "gAk" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Captain's Quarters";
-	req_access_txt = "20";
 	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
@@ -30953,8 +30944,7 @@
 /area/station/hallway/primary/west)
 "hSL" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -31094,8 +31084,7 @@
 /area/station/chapel/office)
 "hZK" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	name = "Morgue";
-	req_access_txt = "29"
+	name = "Morgue"
 	},
 /obj/mapping_helper/access/morgue,
 /obj/disposalpipe/segment/morgue,
@@ -32210,9 +32199,7 @@
 	name = "Catering Hangar"
 	})
 "jez" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "1-2"
@@ -33917,7 +33904,6 @@
 /area/station/science/artifact)
 "kyq" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	req_access_txt = "20";
 	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
@@ -35600,8 +35586,7 @@
 	pixel_x = -20
 	},
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/station/security/evidence)
@@ -37071,8 +37056,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/security/alt{
-	name = "Detective's Office";
-	req_access_txt = "1"
+	name = "Detective's Office"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
@@ -39779,9 +39763,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/arcade)
 "pHL" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/disposalpipe/segment/ejection,
 /obj/mapping_helper/firedoor_spawn,
@@ -40581,8 +40563,7 @@
 /area/station/crew_quarters/market)
 "qsU" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+	dir = 4
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
@@ -41376,7 +41357,6 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1";
 	id = "court_door"
 	},
 /turf/simulated/floor/red,
@@ -43790,8 +43770,7 @@
 "tag" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 8;
-	name = "Escape Hallway Security Checkpoint";
-	req_access_txt = "1"
+	name = "Escape Hallway Security Checkpoint"
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
@@ -43870,8 +43849,7 @@
 /area/station/hallway/primary/east)
 "tcD" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	name = "Detective's Office";
-	req_access_txt = "1"
+	name = "Detective's Office"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
@@ -44570,8 +44548,7 @@
 /area/station/medical/head)
 "tIN" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+	dir = 4
 	},
 /obj/mapping_helper/access/security,
 /obj/cable{
@@ -47388,9 +47365,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "wmW" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/brig,
 /obj/cable{
@@ -48788,9 +48763,7 @@
 	},
 /area/station/quartermaster/refinery)
 "xtK" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "1-2"
@@ -49275,9 +49248,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/security,
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	id = "eng_bathroom"
-	},
+/obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/black,
 /area/station/security/evidence)
 "xNc" = (

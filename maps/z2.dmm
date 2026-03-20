@@ -80205,18 +80205,17 @@
 /area/iomoon/base)
 "xxs" = (
 /obj/table/wood/auto/desk,
-/obj/item/clothing/head/flower/rose/poisoned{
-	name = "very suspicious rose";
-	pixel_x = -4;
-	pixel_y = 8;
-	trick = 1
-	},
 /obj/item/clothing/mask/mime{
-	pixel_x = 4
+	pixel_x = -6;
+	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal{
 	pixel_y = 11;
-	pixel_x = 8
+	pixel_x = 4
+	},
+/obj/item/wrench/bloody{
+	pixel_x = 4;
+	name = "Shae’s wrench"
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)

@@ -647,9 +647,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/chemistry)
 "aea" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch1";
 	name = "North Merchant Dock";
@@ -5901,8 +5899,7 @@
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 8;
-	icon_state = "right";
-	req_access_txt = "0"
+	icon_state = "right"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
@@ -17217,9 +17214,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "iSf" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch1";
 	name = "North Merchant Dock";
@@ -27866,9 +27861,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "qew" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch2";
 	name = "North Merchant Dock";
@@ -34889,8 +34882,7 @@
 "uqO" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
@@ -37062,13 +37054,12 @@
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters/lounge)
 "vLa" = (
-/obj/machinery/turretid{
-	pixel_y = 24;
-	req_access_txt = "19"
-	},
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/turretid/computer_core{
+	pixel_y = 24
 	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/Zeta)
@@ -40332,9 +40323,7 @@
 	},
 /area/station/hallway/primary/central)
 "xXU" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch2";
 	name = "North Merchant Dock";

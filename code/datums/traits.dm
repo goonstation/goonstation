@@ -1006,7 +1006,7 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/slowmetabolism
 	name = "Slow Metabolism"
-	desc = "Any chemicals in you body deplete much more slowly."
+	desc = "Any chemicals in your body deplete much more slowly."
 	id = "slowmetabolism"
 	icon_state = "slowm"
 	points = 0
