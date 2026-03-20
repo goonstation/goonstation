@@ -21,8 +21,7 @@
 	var/obj/item/motherboard/mainboard = null
 
 	//Does it spawn with a card scanner? (It should, the main os needs one of these now.)
-	var/setup_drive_size = 64
-	var/setup_drive_type = null //Use this path for the hd
+	var/setup_drive_type = /obj/item/disk/data/fixed_disk/hd64 //Use this path for the hd
 	var/setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!
 	var/setup_starting_program = null //This program will start out installed on the drive (can be a path or a list of paths)
 	var/setup_starting_os = null //This program will start out installed AND AS ACTIVE PROGRAM
@@ -41,7 +40,7 @@
 	power_usage = 250
 
 	generic //Generic computer, standard os and card scanner
-		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
 		setup_starting_peripherals = list(
 			/obj/item/peripheral/card_scanner,
@@ -134,7 +133,7 @@
 			name = "personnel management computer"
 			icon_state = "personnel_management"
 			base_icon_state = "personnel_management"
-			setup_drive_size = 80
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd96
 			setup_starting_peripherals = list(
 				/obj/item/peripheral/card_scanner,
 				/obj/item/peripheral/drive,
@@ -155,7 +154,7 @@
 				/obj/item/peripheral/drive,
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/network/radio/locked/status)
-			setup_drive_size = 80
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd96
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -170,7 +169,6 @@
 			name = "Artifact Database"
 			icon_state = "resart"
 			setup_starting_program = /datum/computer/file/terminal_program/artifact_research
-			setup_drive_size = 48
 
 		engine
 			name = "Engine Control Console"
@@ -183,7 +181,7 @@
 				/obj/item/peripheral/drive,
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
-			setup_drive_size = 48
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd32
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -209,7 +207,7 @@
 		name = "Terminal"
 		icon_state = "dterm"
 		base_icon_state = "dterm"
-		setup_drive_size = 24
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd16
 		setup_frame_type = /obj/computer3frame/terminal
 		setup_starting_os = /datum/computer/file/terminal_program/os/terminal_os
 
@@ -260,10 +258,9 @@
 		icon_state = "bcase"
 		base_icon_state = "bcase"
 
-		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
 		setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/drive,/obj/item/peripheral/network/omni,/obj/item/peripheral/cell_monitor)
-		setup_drive_size = 32
 
 		var/obj/item/cell/cell //We have limited power! Immersion!!
 		var/setup_charge_maximum = 15000
@@ -312,13 +309,12 @@
 				if(ispath(peripheral))
 					new peripheral(src)//Peripherals add themselves automatically if spawned inside a computer3
 
-			if(!hd && (setup_drive_size > 0))
+			if(!hd)
 				if(src.setup_drive_type)
 					src.hd = new src.setup_drive_type
 					src.hd.set_loc(src)
 				else
-					src.hd = new /obj/item/disk/data/fixed_disk(src)
-				src.hd.file_amount = src.setup_drive_size
+					src.hd = new /obj/item/disk/data/fixed_disk/hd64(src)
 
 			for (var/program_path in (list() + src.setup_starting_program)) //neat hack to make it work with lists or a single path
 				if(ispath(program_path))
@@ -1097,7 +1093,7 @@
 	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
 	icon_state = "oldlap"
 	base_icon_state = "oldlap"
-	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd128/techcomputer3
 	setup_starting_peripherals = list(
 		/obj/item/peripheral/card_scanner,
 		/obj/item/peripheral/drive,

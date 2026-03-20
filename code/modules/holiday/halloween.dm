@@ -227,9 +227,9 @@
 			/obj/item/peripheral/drive,
 			/obj/item/peripheral/network/powernet_card,
 			/obj/item/peripheral/printer)
-	setup_drive_type = /obj/item/disk/data/fixed_disk/hjam_rdrive
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd32/hjam_rdrive
 
-/obj/item/disk/data/fixed_disk/hjam_rdrive
+/obj/item/disk/data/fixed_disk/hd32/hjam_rdrive
 	title = "HJam_HDD"
 
 	New()

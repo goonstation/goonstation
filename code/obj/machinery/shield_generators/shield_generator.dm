@@ -225,7 +225,7 @@ TYPEINFO(/area/station/shield_zone)
 	name = "shield control computer"
 	icon_state = "engine"
 	base_icon_state = "engine"
-	setup_drive_size = 48
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64
 	setup_starting_peripherals = list(
 			/obj/item/peripheral/card_scanner,
 			/obj/item/peripheral/drive,

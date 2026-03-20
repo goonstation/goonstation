@@ -427,8 +427,9 @@
 	src.linkbg_color = rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8)
 	src.update_colors(src.bg_color, src.linkbg_color)
 
-	src.hd = new /obj/item/disk/data/fixed_disk(src)
+	src.hd = new /obj/item/disk/data/fixed_disk/hd32(src)
 	src.hd.file_amount = src.setup_drive_size
+	src.hd.max_file_amount = src.setup_drive_size
 	src.hd.name = "Minidrive"
 	src.hd.title = "Minidrive"
 
