@@ -58,6 +58,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				src.audio = input(usr, "Upload a file:", "File Uploader - Long files WILL lag people out, sounds will loop.", null) as null|sound
 			if (src.audio)
 				logTheThing(LOG_ADMIN, usr, "uploaded a sound [src.audio] to use with Fly Object Overhead buildmode")
+
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
 			src.dir_input = tgui_input_list(usr, "Pick starting direction", "Direction", list(NORTH, SOUTH, EAST, WEST, "Random"))
