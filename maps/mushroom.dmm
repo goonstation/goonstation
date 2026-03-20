@@ -460,17 +460,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"acH" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=crewhall";
-	location = "escape"
-	},
-/obj/stool/bench/red/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "acK" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -652,9 +641,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/chemistry)
 "aea" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch1";
 	name = "North Merchant Dock";
@@ -1164,6 +1151,7 @@
 /area/station/hangar/main)
 "ahD" = (
 /obj/storage/closet/welding_supply,
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "ahE" = (
@@ -2811,6 +2799,7 @@
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -3273,6 +3262,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/shredder,
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
 	},
@@ -3474,7 +3464,7 @@
 "auW" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/storage/box/beakerbox,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
 "avh" = (
@@ -3795,10 +3785,7 @@
 	},
 /area/station/quartermaster/office)
 "aEP" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=market";
-	location = "cargo"
-	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon18,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
 "aFw" = (
@@ -5676,11 +5663,8 @@
 /area/station/crew_quarters/pool)
 "bos" = (
 /obj/disposalpipe/segment,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Courtroom"
-	},
 /obj/decal/stripe_caution,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon8,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bou" = (
@@ -5909,8 +5893,7 @@
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 8;
-	icon_state = "right";
-	req_access_txt = "0"
+	icon_state = "right"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
@@ -6986,10 +6969,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bKs" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=chapel";
-	location = "outerbar"
-	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bKv" = (
@@ -7678,7 +7658,6 @@
 	pixel_y = 10
 	},
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -8516,6 +8495,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"cDO" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon13,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "cEp" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 1;
@@ -8907,7 +8890,7 @@
 /area/station/hallway/primary/west)
 "cUl" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
 "cUZ" = (
@@ -10169,6 +10152,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/purplewhite/corner,
 /area/station/science/lobby)
 "dPc" = (
@@ -10240,10 +10226,6 @@
 /obj/machinery/light/small/floor,
 /obj/drink_rack/cup{
 	pixel_x = -27
-	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = 0;
-	pixel_y = 8
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
@@ -11842,6 +11824,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "eWe" = (
@@ -12339,6 +12322,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"fnB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/lobby)
 "fnT" = (
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/black,
@@ -12954,7 +12943,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
@@ -14481,10 +14469,7 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "gQG" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=lowcrew";
-	location = "crewhall"
-	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon2,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "gQY" = (
@@ -14587,6 +14572,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/lobby)
@@ -14722,10 +14710,7 @@
 /area/station/chapel/sanctuary)
 "haY" = (
 /obj/disposalpipe/segment,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=crossway";
-	location = "security"
-	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon7,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "hba" = (
@@ -15128,7 +15113,6 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "hqr" = (
-/obj/stool/chair,
 /obj/machinery/light_switch{
 	name = "W light switch";
 	pixel_x = -24;
@@ -15138,6 +15122,7 @@
 	pixel_y = -8;
 	id = "RD"
 	},
+/obj/stool/chair/purple,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -15229,7 +15214,7 @@
 /area/station/science/hall)
 "hsp" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
@@ -16168,6 +16153,9 @@
 /area/station/maintenance/northwest)
 "ieK" = (
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/lobby)
 "ife" = (
@@ -16432,6 +16420,7 @@
 	name = "Emergency Engine Fuel Crate";
 	spawn_contents = list(/obj/item/raw_material/char = 40)
 	},
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "iqk" = (
@@ -16941,10 +16930,18 @@
 	},
 /area/station/bridge)
 "iJE" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon20_to_1_end,
 /turf/simulated/floor{
 	icon_state = "L4";
 	tag = "icon-L4"
 	},
+/area/station/hallway/secondary/entry)
+"iJL" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon16,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "iKs" = (
 /obj/cable{
@@ -17035,10 +17032,7 @@
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "iMw" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	location = "Tool Storage"
-	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon9,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -17225,9 +17219,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "iSf" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch1";
 	name = "North Merchant Dock";
@@ -17819,16 +17811,13 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "jnJ" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=outerbar";
-	location = "crossway"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon10,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "joM" = (
@@ -18247,6 +18236,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "jGv" = (
@@ -18553,10 +18545,6 @@
 	dir = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/kitchen/food_box/donut_box{
-	desc = "It appears to be a Martian brand of donuts.";
-	name = "Robust Donuts"
-	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "jPK" = (
@@ -19242,10 +19230,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "knT" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=market";
-	location = "chapel"
-	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon14,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 10
 	},
@@ -19594,7 +19579,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "kCj" = (
@@ -19964,13 +19948,10 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "kQy" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=crew";
-	location = "lowcrew"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon3,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "kQT" = (
@@ -20125,6 +20106,9 @@
 	pixel_y = -4
 	},
 /obj/item/device/igniter,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -21991,8 +21975,11 @@
 /area/station/maintenance/southeast)
 "mph" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts"
+	},
 /obj/machinery/espresso_machine,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
@@ -24424,6 +24411,9 @@
 /area/station/crew_quarters/kitchen)
 "ocl" = (
 /obj/machinery/firealarm/directional/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/Zeta)
 "oda" = (
@@ -26992,6 +26982,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/lobby)
 "pBx" = (
@@ -27865,9 +27858,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "qew" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch2";
 	name = "North Merchant Dock";
@@ -28771,7 +28762,6 @@
 /area/station/crew_quarters/kitchen)
 "qJJ" = (
 /obj/machinery/chem_dispenser/chef,
-/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "qKe" = (
@@ -29550,6 +29540,11 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
+"reu" = (
+/obj/disposalpipe/segment,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "reQ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -29886,6 +29881,12 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"rpR" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/lobby)
 "rqf" = (
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/engine,
@@ -32025,6 +32026,9 @@
 "sFP" = (
 /obj/item/rods,
 /obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 10
+	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "sFY" = (
@@ -33936,6 +33940,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "tKY" = (
@@ -34878,8 +34883,7 @@
 "uqO" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
@@ -36503,6 +36507,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"vsN" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "vsS" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -37046,9 +37054,12 @@
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters/lounge)
 "vLa" = (
-/obj/machinery/turretid{
-	pixel_y = 24;
-	req_access_txt = "19"
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/turretid/computer_core{
+	pixel_y = 24
 	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/Zeta)
@@ -37093,6 +37104,9 @@
 "vPb" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/Zeta)
@@ -38625,6 +38639,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "red2"
@@ -38838,10 +38853,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "xhh" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	location = "Crew Quarters"
-	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "xhC" = (
@@ -39125,13 +39137,10 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "xpc" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=courtroom";
-	location = "crew"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon4,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "xpB" = (
@@ -39745,12 +39754,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "xFs" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	location = "Market"
-	},
 /obj/decal/stripe_caution,
 /obj/machinery/light/incandescent,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "xFG" = (
@@ -40139,6 +40145,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "xSr" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon1_start,
 /turf/simulated/floor{
 	icon_state = "L10";
 	tag = "icon-L10"
@@ -40316,9 +40323,7 @@
 	},
 /area/station/hallway/primary/central)
 "xXU" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch2";
 	name = "North Merchant Dock";
@@ -40598,7 +40603,7 @@
 /area/station/chapel/sanctuary)
 "yiB" = (
 /obj/machinery/chem_dispenser/alcohol,
-/obj/mapping_helper/glassware_spawn,
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "yiJ" = (
@@ -83121,7 +83126,7 @@ ozy
 ozy
 cPi
 pYi
-ozy
+reu
 llD
 ozy
 sva
@@ -83689,7 +83694,7 @@ ylM
 acp
 ntQ
 fVr
-xDN
+iJL
 lov
 aoJ
 aoJ
@@ -87301,7 +87306,7 @@ fEr
 kxB
 adh
 adh
-acH
+acG
 fEr
 adA
 adB
@@ -87904,7 +87909,7 @@ aaa
 fEr
 wIc
 acb
-adh
+vsN
 acG
 fEr
 adA
@@ -87955,7 +87960,7 @@ iwf
 xLd
 rrG
 xvz
-jkA
+cDO
 jkA
 jkA
 jkA
@@ -92820,8 +92825,8 @@ jvc
 lfe
 mwA
 pGw
-ejE
-ejE
+rpR
+fnB
 gWq
 ieK
 jGs

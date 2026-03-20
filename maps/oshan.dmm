@@ -4234,9 +4234,7 @@
 /area/station/science/research_director)
 "asV" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4;
-	name = "Operating Theater";
-	req_access_txt = "29"
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
@@ -11253,9 +11251,7 @@
 /area/research_outpost/toxins)
 "bcG" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 4;
-	name = "Operating Theater";
-	req_access_txt = "29"
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
@@ -11368,8 +11364,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null;
-	req_access_txt = "5";
 	name = "Medical Booth"
 	},
 /turf/simulated/floor/blue,
@@ -12825,7 +12819,6 @@
 "bko" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
-	req_access_txt = "20";
 	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
@@ -24900,8 +24893,7 @@
 	pixel_x = -20
 	},
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/station/security/evidence)
@@ -25441,8 +25433,7 @@
 /area/spacehabitat/owlery)
 "dlG" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Medical Booth";
-	req_access_txt = "5"
+	name = "Medical Booth"
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -26043,9 +26034,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/security,
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	id = "eng_bathroom"
-	},
+/obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/black,
 /area/station/security/evidence)
 "dIQ" = (
@@ -26620,7 +26609,6 @@
 	dir = 4;
 	name = "interrogation pipe"
 	},
-/obj/machinery/vending/snack,
 /turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "edf" = (
@@ -29768,7 +29756,6 @@
 "gAk" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "Captain's Quarters";
-	req_access_txt = "20";
 	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
@@ -31459,8 +31446,7 @@
 /area/station/crew_quarters/lounge)
 "hZK" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	name = "Morgue";
-	req_access_txt = "29"
+	name = "Morgue"
 	},
 /obj/mapping_helper/access/morgue,
 /obj/disposalpipe/segment/morgue,
@@ -32713,7 +32699,6 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1";
 	id = "court_door"
 	},
 /turf/simulated/floor/red,
@@ -32864,7 +32849,10 @@
 /area/ghostdrone_factory)
 "jiS" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/machinery/shredder{
+	pixel_y = 10;
+	pixel_x = -3
+	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
 	pixel_x = 4;
 	pixel_y = 8
@@ -33898,8 +33886,7 @@
 /area/station/medical/medbay)
 "kay" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+	dir = 4
 	},
 /obj/mapping_helper/access/security,
 /obj/cable{
@@ -34363,7 +34350,6 @@
 /area/station/security/main)
 "kyq" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	req_access_txt = "20";
 	id = "quarters_cap"
 	},
 /obj/mapping_helper/access/captain,
@@ -37075,9 +37061,7 @@
 /turf/simulated/floor/plating/random,
 /area/tech_outpost)
 "mXn" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "1-2"
@@ -37305,8 +37289,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/security/alt{
-	name = "Detective's Office";
-	req_access_txt = "1"
+	name = "Detective's Office"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
@@ -40002,8 +39985,7 @@
 /area/station/turret_protected/ai)
 "pEX" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+	dir = 4
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
@@ -40093,9 +40075,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/arcade)
 "pHL" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/disposalpipe/segment/ejection,
 /obj/mapping_helper/firedoor_spawn,
@@ -40339,8 +40319,7 @@
 /area/station/crew_quarters/market)
 "pSc" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4;
-	req_access_txt = "1"
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -43939,8 +43918,7 @@
 "tag" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 8;
-	name = "Escape Hallway Security Checkpoint";
-	req_access_txt = "1"
+	name = "Escape Hallway Security Checkpoint"
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
@@ -44028,8 +44006,7 @@
 /area/station/hallway/primary/east)
 "tcD" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	name = "Detective's Office";
-	req_access_txt = "1"
+	name = "Detective's Office"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/forensics,
@@ -46438,9 +46415,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/north)
 "vol" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/brig,
 /obj/cable{
@@ -47966,7 +47941,7 @@
 	dir = 4;
 	name = "interrogation pipe"
 	},
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/snack,
 /turf/simulated/floor/wood/seven,
 /area/station/security/main)
 "wKy" = (
@@ -48673,10 +48648,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair/red{
-	dir = 1
-	},
-/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -49274,9 +49245,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "xID" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "1-2"

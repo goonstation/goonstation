@@ -114,6 +114,7 @@
 		"Payroll",
 		"Shipping",
 		"Research",
+		"Union",
 	)
 
 	var/static/list/team_to_job_datum = list(
@@ -540,7 +541,7 @@
 
 		if(MENU_BUDGET_TRANSFER_FROM)
 			var/selection = round(text2num_safe(command))
-			if (selection < 0 || selection > 3)
+			if (selection < 0 || selection > 4)
 				return
 			switch(selection)
 				if(MENU_TRANSFER_OPT_BACK)
@@ -567,7 +568,7 @@
 
 		if(MENU_BUDGET_TRANSFER_TO)
 			var/selection = round(text2num_safe(command))
-			if (selection < 0 || selection > 3)
+			if (selection < 0 || selection > 4)
 				return
 			switch(selection)
 				if(MENU_TRANSFER_OPT_BACK)
@@ -621,9 +622,9 @@
 						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL]
 					global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] -= transfer_amount
 				if(MENU_TRANSFER_OPT_UNION)
-					if (transfer_amount > global.wagesystem.budgets[MENU_TRANSFER_OPT_UNION])
-						transfer_amount = global.wagesystem.budgets[MENU_TRANSFER_OPT_UNION]
-					global.wagesystem.budgets[MENU_TRANSFER_OPT_UNION] -= transfer_amount
+					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_UNION])
+						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_UNION]
+					global.wagesystem.budgets[BUDGET_CAT_UNION] -= transfer_amount
 
 			switch(src.transfer_to)
 				if(MENU_TRANSFER_OPT_PAYROLL)
@@ -1308,6 +1309,7 @@
 #undef MENU_TRANSFER_OPT_PAYROLL
 #undef MENU_TRANSFER_OPT_SHIPPING
 #undef MENU_TRANSFER_OPT_RESEARCH
+#undef MENU_TRANSFER_OPT_UNION
 
 #undef MENU_PRINT_OPT_BACK
 #undef MENU_PRINT_OPT_CONNECT

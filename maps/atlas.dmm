@@ -8233,6 +8233,10 @@
 	dir = 1
 	},
 /area/station/hangar/engine)
+"byb" = (
+/obj/machinery/shredder,
+/turf/simulated/floor/blue,
+/area/station/bridge/customs)
 "byc" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -81066,7 +81070,7 @@ amu
 amu
 amu
 evY
-ayd
+byb
 axY
 ayd
 pLJ
