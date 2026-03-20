@@ -1,3 +1,8 @@
+#define LEAVE "Leave zlevel"
+#define RUN "Run away"
+#define EXPLODE "Explode"
+#define FADE "Fade away"
+
 /datum/buildmode/fly_image_overhead
 	name = "Fly Image Overhead"
 	desc = {"***********************************************************<br>
@@ -58,14 +63,14 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			src.dir_input = tgui_input_list(usr, "Pick starting direction", "Direction", list(NORTH, SOUTH, EAST, WEST, "Random"))
 			var/choice = tgui_input_list(usr, "Choose a set speed or random values", "Choose", list("Set", "Clear"))
 			var/choice2 = tgui_input_list(usr, "Start from edge of zlevel or nearby? (About 2 screens away)", "Choose", list("Edge", "Nearby"))
-			if (choice2 == "Nearby")
-				src.startnearby = TRUE
-			else
-				src.startnearby = FALSE
 			if (choice == "Set")
 				src.move_delay = tgui_input_number(usr, "Enter speed value of image", "Higher is slower, gets very slow by 5", 1)
 			else
 				src.move_delay = 1
+			if (choice2 == "Nearby")
+				src.startnearby = TRUE
+			else
+				src.startnearby = FALSE
 		if (alt)
 			var/choice = tgui_input_list(usr, "Spawn mobs/objects or clear?", "Choose", list("Spawn", "Clear"))
 			if (choice == "Spawn")
@@ -78,7 +83,6 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
 			src.target_loc = get_turf(object)
-			logTheThing(LOG_ADMIN, usr, "uploaded ")
 			aim_pilot()
 
 	proc/aim_pilot() // Spawn pilot at edge of zlevel then redirect to target
@@ -143,22 +147,21 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		if (!pilot.loopsound && pilot.attached_sound)
 			playsound(pilot.loc, pilot.attached_sound, 30)
 
-		if (pathinput)
+		if (pathinput) // spawn your optional mobs and objects if chosen
 			if(ispath(pathinput, /atom/movable))
-				var/counter
 				playsound(pilot.loc, 'sound/effects/poff.ogg', 30, TRUE, pitch = 1)
-				for (counter=0, counter<pathamountinput, counter++)
+				for (var/i in 1 to pathamountinput)
 					var/turf/T = GetRandomPerimeterTurf(get_turf(pilot), 1)
 					new pathinput(T)
 					var/obj/itemspecialeffect/poof/P = new
 					P.setup(T)
 
 		switch (src.end_effect)
-			if ("Leave zlevel")
+			if (LEAVE)
 				while (pilot.loc)
 					move_forward(pilot, direction, speed=speedinput)
 					sleep(speedinput)
-			if ("Run away")
+			if (RUN)
 				SPAWN(3 SECONDS)
 					direction = turn(direction, 180)
 					new/obj/particle/attack/sprint(pilot.loc)
@@ -166,13 +169,13 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 					while (pilot.loc)
 						move_forward(pilot, direction)
 						sleep(1)
-			if ("Explode")
+			if (EXPLODE)
 				var/turf/T = get_turf(pilot)
 				playsound(T, pick(big_explosions), 80, 1)
 				new /obj/effects/explosion(T)
 				qdel(pilot)
 				robogibs(T)
-			if ("Fade away")
+			if (FADE)
 				animate(pilot, transform = matrix(), alpha = 0, time = 0.5 SECONDS)
 				for (var/i=0,i<=3,i++)
 					move_forward(pilot, direction, 3)
@@ -219,14 +222,14 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 
 	disposing()
 		if (src.check_for_pilots())
-			var/sound/stopsound = sound(null, wait = TRUE, channel=1020)
+			var/sound/stopsound = sound(null, wait = TRUE, channel=SOUNDCHANNEL_ADMIN_HIGH)
 			world << stopsound
 		STOP_TRACKING
 		..()
 
 	proc/play()
 		if (src.loc && !QDELETED(src))
-			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, 1020, 10)
+			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, SOUNDCHANNEL_ADMIN_HIGH, 10)
 			world << src.attached_sound
 
 	proc/check_for_pilots() // check if there's only one pilot, used for starting and stopping looping audio
