@@ -237,3 +237,8 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			return TRUE
 		else
 			return FALSE
+
+#undef LEAVE
+#undef RUN
+#undef EXPLODE
+#undef FADE
