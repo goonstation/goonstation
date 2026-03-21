@@ -126,3 +126,6 @@
 
 //Lunar door access, given to the tour guide to open the door
 #define access_lunar_breakdoor 90
+
+//Access to the captain's quarters on the russian ainley ship. Only given to the relavant guardbuddy.
+#define access_ainley_buddy 91
