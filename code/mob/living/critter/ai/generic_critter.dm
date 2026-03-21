@@ -34,15 +34,35 @@
 ///This is standard wander behaviour with frequent checks for nearby enemies, which will interrupt the wandering.
 /datum/aiTask/timed/wander/critter/aggressive
 	name = "aggressive wander"
+	var/check_reachability = FALSE //! if set to TRUE, this will only interrupt if they can actually reach the target
+	var/distance_search = 5 //! the amount of tiles the mob picks up targets while wandering
 
 /datum/aiTask/timed/wander/critter/aggressive/on_tick()
 	if(length(holder.owner.grabbed_by))
 		holder.owner.resist()
 	var/mob/living/critter/C = holder.owner
-	if(istype(holder.owner) && length(C.seek_target()))
-		src.holder.owner.ai.interrupt()
-	else
+	var/potential_targets = C.seek_target(src.distance_search)
+	var/to_interrupt = FALSE
+	if(istype(holder.owner) && length(potential_targets))
+		to_interrupt = TRUE
+		if(check_reachability)
+			// we check here if we even can reach our targets
+			var/simulated_only = !src.move_through_space
+			#ifdef UNDERWATER_MAP
+			simulated_only = FALSE
+			#endif
+			var/list/atom/paths_found = get_path_to(holder.owner, potential_targets, max_distance=src.distance_search + 2, mintargetdist= 1, simulated_only=simulated_only, required_goals=1)
+			if(length(paths_found) == 0)
+				to_interrupt = FALSE
+		if(to_interrupt)
+			src.holder.owner.ai.interrupt()
+	if(!to_interrupt)
 		..()
+
+/// This is the same behaviour but more chill so we don't interrupt the wandering if we can't reach anything
+/datum/aiTask/timed/wander/critter/aggressive/melee
+	name = "aggressive wander"
+	check_reachability = TRUE
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//

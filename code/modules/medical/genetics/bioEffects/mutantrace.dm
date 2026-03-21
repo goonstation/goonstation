@@ -61,6 +61,8 @@
 	msgGain = "You feel kinda thin."
 	msgLose = "You've put on a bit more weight."
 	icon_state  = "skeleton"
+	// mimic parts of a genetic power so we can coast off that intrastructure
+	var/ability_path = /datum/targetable/geneticsAbility/remove_head
 
 	OnAdd()
 		. = ..()
@@ -72,7 +74,9 @@
 
 	onPowerChange(oldval, newval)
 		if (newval >= 2)
-			src.owner.abilityHolder?.addAbility(/datum/targetable/geneticsAbility/remove_head)
+			var/datum/targetable/geneticsAbility/AB = src.owner.abilityHolder?.addAbility(/datum/targetable/geneticsAbility/remove_head)
+			AB.owner = src.owner
+			AB.linked_power = src
 		else
 			src.owner.abilityHolder?.removeAbility(/datum/targetable/geneticsAbility/remove_head)
 
