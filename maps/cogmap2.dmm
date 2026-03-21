@@ -37003,7 +37003,7 @@
 "coT" = (
 /obj/table/auto,
 /obj/item/screwdriver,
-/obj/item/disk/data/fixed_disk,
+/obj/item/disk/data/fixed_disk/hd64,
 /obj/item/disk/data/floppy/computer3boot,
 /obj/item/disk/data/floppy/read_only/network_progs,
 /obj/item/disk/data/floppy/read_only/security_progs,
@@ -55042,6 +55042,19 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/locker)
+"gVj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/shredder{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/bridge/customs)
 "gVq" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -73876,16 +73889,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/scorched,
 /area/station/crew_quarters/quartersB)
-"xjU" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
-	},
-/obj/machinery/light/emergency/exitsign{
-	dir = 1;
-	pixel_y = 16
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/se)
 "xlc" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/firealarm/directional/north,
@@ -139927,7 +139930,7 @@ euh
 gbC
 wYn
 ojR
-rAg
+gVj
 eDL
 hzM
 oxr
@@ -139976,7 +139979,7 @@ qaU
 qaU
 cLV
 jio
-xjU
+cQf
 dqF
 cTp
 xHu

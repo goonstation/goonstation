@@ -345,17 +345,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
-"ahz" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit)
 "ahJ" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -1204,6 +1193,14 @@
 	dir = 1
 	},
 /area/station/storage/emergency2)
+"azO" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "azQ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -6514,6 +6511,19 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"cVi" = (
+/obj/table/reinforced/auto,
+/obj/item/toy/judge_gavel{
+	pixel_x = -18;
+	pixel_y = 3
+	},
+/obj/machinery/shredder{
+	pixel_y = 12
+	},
+/turf/simulated/floor/black/side{
+	dir = 4
+	},
+/area/station/crew_quarters/courtroom)
 "cVr" = (
 /obj/machinery/light_switch/west,
 /obj/reagent_dispensers/fueltank,
@@ -14622,18 +14632,6 @@
 	dir = 9
 	},
 /area/station/engine/elect)
-"gza" = (
-/obj/machinery/light/emergency,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 4
-	},
-/area/station/hallway/secondary/exit)
 "gzc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -16359,6 +16357,32 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"hgQ" = (
+/obj/table/auto,
+/obj/item/disk/data/fixed_disk/hd64{
+	pixel_y = 9
+	},
+/obj/item/disk/data/floppy/read_only/security_progs{
+	pixel_x = 16;
+	pixel_y = 7
+	},
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_x = 16;
+	pixel_y = -4
+	},
+/obj/item/disk/data/floppy/computer3boot{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/screwdriver{
+	pixel_x = -9
+	},
+/obj/item/device/flash{
+	pixel_x = -11;
+	pixel_y = 9
+	},
+/turf/simulated/floor/grey/blackgrime/other,
+/area/station/storage/tech)
 "hhc" = (
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
@@ -18937,6 +18961,17 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/minitiles/black,
 /area/station/communications/centre)
+"ihZ" = (
+/obj/submachine/poster_creator,
+/obj/noticeboard/persistent/customs/directional/north,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/item/device/radio/intercom{
+	dir = 4
+	},
+/turf/simulated/floor/black/corner,
+/area/station/crew_quarters/courtroom)
 "iid" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -21923,6 +21958,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
+"jzk" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "jzw" = (
 /obj/cable,
 /turf/simulated/floor/black,
@@ -24539,14 +24585,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
-"kDR" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit)
 "kEe" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -24578,19 +24616,6 @@
 "kEl" = (
 /turf/simulated/floor/carpet/purple/standard/narrow/nw,
 /area/station/chapel/sanctuary)
-"kEo" = (
-/obj/table/reinforced/auto,
-/obj/item/device/radio/intercom{
-	pixel_x = 1
-	},
-/obj/item/toy/judge_gavel{
-	pixel_x = -18;
-	pixel_y = 3
-	},
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/crew_quarters/courtroom)
 "kEt" = (
 /obj/storage/secure/closet/civilian/hydro,
 /obj/machinery/light/small{
@@ -30030,17 +30055,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/southwest)
-"mUt" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 4
-	},
-/area/station/hallway/secondary/exit)
 "mUx" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -31430,14 +31444,6 @@
 	dir = 1
 	},
 /area/shuttle/sea_elevator_room)
-"nBm" = (
-/obj/submachine/poster_creator,
-/obj/noticeboard/persistent/customs/directional/north,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/turf/simulated/floor/black/corner,
-/area/station/crew_quarters/courtroom)
 "nBD" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/cryo{
@@ -36964,32 +36970,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
-"qcm" = (
-/obj/table/auto,
-/obj/item/disk/data/fixed_disk{
-	pixel_y = 9
-	},
-/obj/item/disk/data/floppy/read_only/security_progs{
-	pixel_x = 16;
-	pixel_y = 7
-	},
-/obj/item/disk/data/floppy/read_only/network_progs{
-	pixel_x = 16;
-	pixel_y = -4
-	},
-/obj/item/disk/data/floppy/computer3boot{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/screwdriver{
-	pixel_x = -9
-	},
-/obj/item/device/flash{
-	pixel_x = -11;
-	pixel_y = 9
-	},
-/turf/simulated/floor/grey/blackgrime/other,
-/area/station/storage/tech)
 "qcz" = (
 /obj/machinery/light{
 	dir = 8;
@@ -44346,6 +44326,17 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/cloner)
+"tCn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "tCp" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -48160,6 +48151,18 @@
 	dir = 8
 	},
 /area/pasiphae/sys)
+"vtR" = (
+/obj/machinery/light/emergency,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "vtV" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -98173,10 +98176,10 @@ lIG
 nha
 jhv
 uqF
-nBm
+ihZ
 tFt
 uAn
-kEo
+cVi
 uiw
 wOo
 gMN
@@ -105734,7 +105737,7 @@ mlm
 qPV
 fTv
 dCD
-qcm
+hgQ
 uoh
 kSp
 oaS
@@ -116587,7 +116590,7 @@ wXk
 hhn
 hJZ
 pnk
-mUt
+jzk
 rPJ
 fnR
 hiM
@@ -117795,7 +117798,7 @@ qBq
 hiM
 wyP
 udE
-gza
+vtR
 mWg
 wXk
 lxn
@@ -119001,7 +119004,7 @@ rJg
 lxn
 wXk
 fGw
-ahz
+tCn
 hzZ
 aAv
 hiM
@@ -119573,9 +119576,9 @@ rJg
 jky
 gYJ
 jGl
-kDR
+azO
 pnk
-mUt
+jzk
 jUC
 qbx
 lsH
@@ -119605,7 +119608,7 @@ uvq
 lsH
 gYJ
 jUC
-kDR
+azO
 pnk
 phV
 uWc

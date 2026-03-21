@@ -1044,5 +1044,44 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai.target = M
 		src.ai.enable()
 
+// Basketball whitehole NPC
+/mob/living/carbon/human/referee
+	is_npc = TRUE
+	gender = MALE
+
+	New()
+		..()
+		src.say("LET'S PLAY BALL") // balling as soon as he exits the white hole
+		src.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/referee, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/instrument/whistle, SLOT_L_HAND)
+
+	initializeBioholder()
+		. = ..()
+		bioHolder.age = 52
+		bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/hair/short/balding
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#555555"
+		bioHolder.mobAppearance.gender = "male"
+		bioHolder.mobAppearance.underwear = "boxers"
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+		if(prob(10))
+			SPAWN(0) src.say(pick("PLAY BALL","GET THE HELL UP","CALL THIS BASKETBALL?","PLAY ON","I'VE SEEN CLOWNS BALL BETTER THAN THAT","CALL YOURSELF A BALLER?"))
+
+	attack_hand(mob/M)
+		..()
+		if(isdead(src))
+			return
+		if (prob(30))
+			say(pick("DON'T TRY ME","STEP THE HELL BACK BACK OR IT'S A FOUL","I'M IN CHARGE HERE","VIOLATION!"))
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
+		if(isdead(src))
+			return
+		if(prob(50))
+			say(pick("ASSAULT! ASSAULT ON AN OFFICIAL!","FOUL! FOUL! FOUL!","FLAGRANT FOUL!","GET THE HELL OFF MY COURT"))
 
 #undef BILL_PICK

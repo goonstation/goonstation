@@ -12,6 +12,30 @@ TYPEINFO(/obj/item/motherboard)
 	w_class = W_CLASS_SMALL
 	var/created_name = null //If defined, result computer will have this name.
 	var/integrated_floppy = 1 //Does the resulting computer have a built-in disk drive?
+	var/font_color = "#19A319"
+	var/bg_color = "#1B1E1B"
+	var/bios_version = "<b>Thinktronic BIOS V2.1</b>"
+
+/obj/item/motherboard/New()
+	..()
+	if (prob(60))
+		switch(rand(1,2))
+			if(1)
+				font_color = "#E79C01"
+			if(2)
+				font_color = "#A5A5FF"
+				bg_color = "#4242E7"
+
+/obj/item/motherboard/clone()
+	var/obj/item/motherboard/myclone = ..()
+	if (!myclone)
+		return
+
+	myclone.font_color = src.font_color
+	myclone.bg_color = src.bg_color
+
+	return myclone
+
 
 /obj/computer3frame
 	density = 1
@@ -72,15 +96,107 @@ TYPEINFO(/obj/item/motherboard)
 		if (prob(power * 2.5))
 			qdel(src)
 
+/obj/computer3frame/attack_hand(mob/user)
+	if(..() || !src.maint_accessible(user))
+		return
+
+	src.add_dialog(user)
+
+	var/dat = "<html><head><title>[name]</title></head><body>"
+
+	dat += "<hr>"
+	if(src.mainboard)
+		dat += "<tt>Motherboard: [src.mainboard.name]</tt>"
+	else
+		dat += "<tt>Motherboard: ----</tt>"
+
+	if(hd)
+		dat += "<br><tt>Hard Drive: [hd.name]</tt> <a href='byond://?src=\ref[src];driveRemove=1'>(Remove)</a><br>"
+	else if(src.state >= 3)
+		dat += "<br><tt>Hard Drive: <a href='byond://?src=\ref[src];driveAdd=1'>----</a><br></tt>"
+	else
+		dat += "<br><tt>Hard Drive: ----</tt><br>"
+
+	dat += "<hr>"
+	dat += "<b>Peripherals:</b> [length(src.peripherals)]/[src.max_peripherals]<br>"
+
+	for (var/i in 1 to length(src.peripherals))
+		var/obj/item/peripheral/P = src.peripherals[i]
+		var/cant_remove_reason = ""
+		if(astype(P, /obj/item/peripheral/card_scanner)?.authid)
+			cant_remove_reason = "Card inserted." //#BlameGlowbold
+		if(!cant_remove_reason)
+			dat += "&nbsp;&nbsp;- [P.name] <a href='byond://?src=\ref[src];periphID=[i]'>(Remove)</a><br>"
+		else
+			dat += "&nbsp;&nbsp;- [P.name] <s>(Remove)</s> <i>[cant_remove_reason]</i><br>"
+
+	for (var/i in 1 to (src.max_peripherals - length(src.peripherals)))
+		if(src.state >= 2)
+			dat += "&nbsp;&nbsp;<a href='byond://?src=\ref[src];addPeriph=1'>----</a><br>"
+		else
+			dat += "&nbsp;&nbsp;----<br>"
+
+	user.Browse(dat,"window=computer;size=320x245")
+	onclose(user,"computer")
+	return
+
+/obj/computer3frame/Topic(href, href_list)
+	if(..())
+		return
+
+	src.add_dialog(usr)
+
+	if(src.maint_accessible(usr) && can_act(usr) && !usr.lying)
+		var/periphID = text2num(href_list["periphID"])
+		if (periphID > 0 && periphID <= length(src.peripherals))
+			var/obj/item/peripheral/peri = src.peripherals[periphID]
+
+			peri.uninstalled()
+			usr.put_in_hand_or_drop(peri)
+			src.peripherals.Remove(peri)
+
+			boutput(usr, SPAN_NOTICE("You remove the [peri] from the frame."))
+
+			src.updateUsrDialog()
+
+		if (href_list["addPeriph"])
+			src.insert_periph(usr.equipped(),usr)
+
+		if(href_list["driveRemove"])
+			if(src.hd)
+				usr.put_in_hand_or_drop(src.hd)
+				boutput(usr, SPAN_NOTICE("You remove the drive."))
+				src.hd = null
+
+			src.updateUsrDialog()
+
+		if(href_list["driveAdd"] && src.state >= 3)
+			var/obj/item/disk/data/fixed_disk/P = usr.equipped()
+			if(istype(P, /obj/item/disk/data/fixed_disk) && !src.hd)
+				usr.drop_item()
+				src.hd = P
+				P.set_loc(src)
+				boutput(usr, SPAN_NOTICE("You connect the drive to the cabling."))
+			src.updateUsrDialog()
+
+	src.add_fingerprint(usr)
+	return
+
 /obj/computer3frame/meteorhit(obj/O as obj)
 	qdel(src)
 
 /obj/computer3frame/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computer3frame/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
+
+	//We can slap in periphs at any point as long as maint is accessible
+	if (istype(P, /obj/item/peripheral) && src.maint_accessible(user))
+		src.insert_periph(P,user)
+		return
+
 	switch(state)
 		if(0)
-			if (iswrenchingtool(P))
+			if(iswrenchingtool(P))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				actions.start(action_bar, user)
 			if(isweldingtool(P) && P:try_weld(user,0,-1) )
@@ -118,28 +234,24 @@ TYPEINFO(/obj/item/motherboard)
 				src.mainboard = null
 
 		if(2)
-			if (isscrewingtool(P) && mainboard && (!peripherals.len))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, SPAN_NOTICE("You unfasten the mainboard."))
-				src.state = 1
-				src.icon_state = "1"
-
-			if (istype(P, /obj/item/peripheral))
-				if(length(src.peripherals) < src.max_peripherals)
-					user.drop_item()
-					src.peripherals.Add(P)
-					P.set_loc(src)
-					boutput(user, SPAN_NOTICE("You add [P] to the frame."))
+			if (isscrewingtool(P) && mainboard)
+				if(length(src.peripherals) <= 0)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+					boutput(user, SPAN_NOTICE("You unfasten the mainboard."))
+					src.state = 1
+					src.icon_state = "1"
 				else
-					boutput(user, SPAN_ALERT("There is no more room for peripheral cards."))
+					boutput(user, SPAN_ALERT("Remove peripheral boards first."))
 
-			if (ispryingtool(P) && length(src.peripherals))
+
+			if (ispryingtool(P) && length(src.peripherals) > 0)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, SPAN_NOTICE("You remove the peripheral boards."))
 				for(var/obj/item/peripheral/W in src.peripherals)
 					W.set_loc(src.loc)
 					src.peripherals.Remove(W)
 					W.uninstalled()
+				src.updateUsrDialog()
 
 			if (istype(P, /obj/item/cable_coil))
 				if (P.amount >= 5)
@@ -157,18 +269,21 @@ TYPEINFO(/obj/item/motherboard)
 				if(src.hd)
 					src.hd.set_loc(src.loc)
 					src.hd = null
+					src.updateUsrDialog()
 
 			if (istype(P, /obj/item/disk/data/fixed_disk) && !src.hd)
 				user.drop_item()
 				src.hd = P
 				P.set_loc(src)
 				boutput(user, SPAN_NOTICE("You connect the drive to the cabling."))
+				src.updateUsrDialog()
 
 			if (ispryingtool(P) && src.hd)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, SPAN_NOTICE("You remove the hard drive."))
 				src.hd.set_loc(src.loc)
 				src.hd = null
+				src.updateUsrDialog()
 
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
@@ -189,7 +304,7 @@ TYPEINFO(/obj/item/motherboard)
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
 				A.amount = src.glass_needed
 
-			if (isscrewingtool(P))
+			else if (isscrewingtool(P))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, SPAN_NOTICE("You connect the monitor."))
 				if(!ispath(computer_type, /obj/machinery/computer3))
@@ -197,13 +312,12 @@ TYPEINFO(/obj/item/motherboard)
 				var/obj/machinery/computer3/C= new src.computer_type( src.loc )
 				C.set_dir(src.dir)
 				if(src.material) C.setMaterial(src.material)
-				C.setup_drive_size = 0
 				C.icon_state = src.created_icon_state
 				C.setup_frame_type = src.type
-				if(mainboard.created_name) C.name = mainboard.created_name
-				if(mainboard.integrated_floppy) C.setup_has_internal_disk = 1
-				//qdel(mainboard)
-				mainboard.dispose()
+				if(src.mainboard)
+					C.mainboard = src.mainboard
+					if(mainboard.integrated_floppy) C.setup_has_internal_disk = 1
+
 				if(hd)
 					C.hd = hd
 					hd.set_loc(C)
@@ -212,6 +326,8 @@ TYPEINFO(/obj/item/motherboard)
 					W.installed(C) //Set C as their host, etc
 				//dispose()
 				src.dispose()
+			else
+				return src.attack_hand(user)
 
 /obj/computer3frame/proc/state_actions(obj/item/P, mob/user)
 	switch(state)
@@ -222,6 +338,7 @@ TYPEINFO(/obj/item/motherboard)
 				src.state = 1
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, SPAN_NOTICE("You deconstruct the frame."))
+				src.eject_all(FALSE)
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 				A.amount = metal_given
 				if (src.material)
@@ -257,23 +374,22 @@ TYPEINFO(/obj/item/motherboard)
 				switch(state)
 					if(0)
 						new /obj/item/scrap(src.loc)
+						src.eject_all(TRUE) //Shouldn't come up but just for sanity's sake
 						qdel(src)
 					if(1)
 						if(src.mainboard)
-							src.eject_mainboard()
+							src.eject_mainboard(TRUE)
 						else
 							src.anchored = UNANCHORED
 							src.state = 0
 					if(2)
 						if(length(src.peripherals))
-							src.eject_peripherals()
+							src.eject_peripherals(TRUE)
 						else if(src.mainboard)
-							src.eject_mainboard()
+							src.eject_mainboard(TRUE)
 					if(3)
 						if (src.hd)
-							src.hd.set_loc(src)
-							src.hd.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
-							src.hd = null
+							src.eject_harddrives(TRUE)
 						else
 							var/obj/item/cable_coil/debris = new /obj/item/cable_coil(src.loc)
 							debris.amount = 1
@@ -287,18 +403,48 @@ TYPEINFO(/obj/item/motherboard)
 						src.state = 3
 						src.icon_state = "3"
 
-/obj/computer3frame/proc/eject_mainboard()
+/obj/computer3frame/proc/eject_all(fling)
+	src.eject_mainboard(fling)
+	src.eject_harddrives(fling)
+	src.eject_peripherals(fling)
+
+/obj/computer3frame/proc/eject_mainboard(fling)
 	if(isnull(src.mainboard)) return
 	src.mainboard.set_loc(get_turf(src))
-	src.mainboard.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+	if(fling)
+		src.mainboard.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 	src.mainboard = null
 	src.state = 1
 	src.icon_state = "1"
 
-/obj/computer3frame/proc/eject_peripherals()
+/obj/computer3frame/proc/eject_harddrives(fling)
+	if(isnull(src.hd))
+		return
+	src.hd.set_loc(get_turf(src))
+	if(fling)
+		src.hd.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+	src.hd = null
+
+/obj/computer3frame/proc/eject_peripherals(fling)
 	if (length(src.peripherals) == 0) return
 	for(var/obj/item/peripheral/peripheral in src.peripherals)
 		peripheral.set_loc(get_turf(src))
-		peripheral.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
+		if(fling)
+			peripheral.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 		src.peripherals.Remove(peripheral)
 		peripheral.uninstalled()
+
+/obj/computer3frame/proc/maint_accessible(mob/user)
+	return (src.state >= 2 && BOUNDS_DIST(src, user) <= 0)
+
+/obj/computer3frame/proc/insert_periph(obj/item/peripheral/P, mob/user)
+	if(!istype(P))
+		return
+	if(length(src.peripherals) < src.max_peripherals)
+		user.drop_item()
+		src.peripherals.Add(P)
+		P.set_loc(src)
+		boutput(user, SPAN_NOTICE("You add \the [P] to the frame."))
+		src.updateUsrDialog()
+	else
+		boutput(user, SPAN_ALERT("There is no more room for peripheral cards."))

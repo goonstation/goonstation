@@ -216,7 +216,7 @@
 	},
 /area/station/science/chemistry)
 "adp" = (
-/obj/reagent_dispensers/fueltank,
+/obj/storage/closet/wardrobe/white,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
@@ -3250,6 +3250,7 @@
 /area/station/crew_quarters/pool)
 "avE" = (
 /obj/machinery/light/incandescent,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -5797,7 +5798,7 @@
 /area/station/hallway/primary/east)
 "aJa" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/item/disk/data/fixed_disk,
+/obj/item/disk/data/fixed_disk/hd64,
 /obj/item/device/flash,
 /obj/cable{
 	icon_state = "0-4"
@@ -17834,9 +17835,6 @@
 /turf/simulated/floor,
 /area/station/science/hall)
 "edR" = (
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
@@ -17844,6 +17842,10 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/head_of_personnel,
+/obj/machinery/shredder{
+	pixel_y = 10;
+	pixel_x = 3
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -28690,8 +28692,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1;
-	name = "Break Room";
-	req_access_txt = null
+	name = "Break Room"
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -33791,9 +33792,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/door/airlock/pyro/classic{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "nnm" = (
@@ -36752,8 +36751,7 @@
 	},
 /obj/machinery/light/small/sticky,
 /obj/machinery/door/window/eastleft{
-	name = "Security";
-	req_access_txt = null
+	name = "Security"
 	},
 /obj/mapping_helper/access/security,
 /turf/simulated/floor,
@@ -40579,9 +40577,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "rby" = (
-/obj/machinery/door/airlock/pyro/classic{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "rbF" = (
@@ -44346,8 +44342,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "tql" = (
-/obj/storage/closet/wardrobe/white,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/chemicompiler_stationary,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -45561,16 +45557,6 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/research/outpost)
-"tVe" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "North Electrical Substation";
-	pixel_y = 10
-	},
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grime,
-/area/station/engine/substation/north)
 "tVj" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -49683,6 +49669,7 @@
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "wpC" = (
@@ -81799,7 +81786,7 @@ aDY
 woD
 mFz
 aEU
-tVe
+gum
 gum
 vKU
 aBP

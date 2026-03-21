@@ -38,6 +38,7 @@
 #define MGA_RADIO "Radio Alert"
 #define MGA_TRACKING "Tracking Alert"
 #define MGA_SYNDICATE "Syndicate Alert"
+#define MGA_PLUMBING "Plumbing Alert"
 
 // Job "department" categories
 #define JOB_COMMAND "command"

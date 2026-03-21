@@ -3,7 +3,7 @@
 
 /datum/map_correctness_check/duplicate_area_names/run_check()
 	var/list/area_names = list()
-	for (var/area/A in world)
+	for_by_tcl(A, /area)
 		if (istype(A, /area/shuttle/merchant_shuttle))
 			continue
 
@@ -19,4 +19,4 @@
 		. = list()
 
 		for (var/name in duplicates)
-			. += "\"[name || "***EMPTY STRING***"]\": [english_list(area_names[name])]"
+			. += "\"[name || "***EMPTY STRING***"]\": [src.area_list(area_names[name])]"
