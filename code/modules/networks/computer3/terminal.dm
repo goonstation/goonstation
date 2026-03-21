@@ -54,6 +54,10 @@ file_save - Save file to local disk."}
 			return
 
 		switch(command)
+			if("term_clear")
+				src.master.temp = null
+				src.master.temp_add = "Cleared\n"
+
 			if("term_status")
 				if(src.netcard)
 					var/statdat = netcard.return_status_text()
@@ -290,7 +294,7 @@ file_save - Save file to local disk."}
 				if (!src.temp_file)
 					src.print_text("Alert: No file to save.")
 					return
-				
+
 				if (src.temp_file.dont_copy)
 					src.print_text("Error: File is copy-protected.")
 					return

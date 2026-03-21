@@ -264,7 +264,10 @@ export default Component;\n`;
       // write mapping file
       if (existsSync(secretRepoRoot)) {
         mkdirSync(path.dirname(secretMappingFile), { recursive: true });
-        writeFileSync(secretMappingFile, JSON.stringify(mapping, null, 2));
+        writeFileSync(
+          secretMappingFile,
+          JSON.stringify(mapping, null, 2) + '\n',
+        );
       }
 
       if (copied > 0) {

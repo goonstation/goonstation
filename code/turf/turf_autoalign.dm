@@ -296,7 +296,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
-		explosion_resistance = 3
+		explosion_resistance = 11
 
 	update_neighbors()
 		..()
@@ -440,6 +440,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 	light_mod = "wall-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
+/turf/simulated/wall/auto/reinforced/supernorn/yellow/sturdy
+	name = "plasmasteel reinforced wall"
+	default_material = "plasmasteel"
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 	connect_overlay = 1

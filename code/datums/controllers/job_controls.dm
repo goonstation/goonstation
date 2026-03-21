@@ -111,8 +111,10 @@ var/datum/job_controller/job_controls
 			return
 		if (job.requires_whitelist && !player.client.can_play_whitelisted_roles())
 			return
-		if (job.requires_supervisor_job && countJob(job.requires_supervisor_job) <= 0)
-			return
+		if (job.requires_supervisor_job)
+			var/datum/job/boss_job = find_job_in_controller_by_string(job.requires_supervisor_job)
+			if (boss_job?.assigned <= 0)
+				return
 		return TRUE
 
 	/// attempts to assign a player to a job from a list of either job datums or job strings
