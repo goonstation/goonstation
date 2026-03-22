@@ -17,7 +17,11 @@ TYPEINFO(/obj/machinery/shredder)
 		/obj/item/currency/spacecash,
 		/obj/item/currency/fishing,
 		/obj/item/random_mail,
-		/obj/item/poster
+		/obj/item/poster,
+		/obj/item/toy/figure,
+		/obj/item/disk,
+		/obj/item/clothing/head/paper_hat,
+		/obj/item/clothing/head/wig
 	)
 	/// Some things get rotated 90 degrees to fit better
 	var/rotated_types = list(/obj/item/card,
