@@ -116,6 +116,21 @@
 /obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/checkpoint)
+"jG" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint)
 "lj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -266,6 +281,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint)
@@ -598,7 +617,7 @@ GW
 GW
 GW
 GW
-Eg
+jG
 GW
 GW
 GW

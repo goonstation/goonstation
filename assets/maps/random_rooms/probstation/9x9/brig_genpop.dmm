@@ -166,6 +166,10 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
 "oU" = (
@@ -537,6 +541,9 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
 "Zi" = (

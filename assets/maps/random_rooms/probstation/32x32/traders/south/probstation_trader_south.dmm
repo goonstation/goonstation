@@ -172,6 +172,17 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
+"AG" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "merchanta";
+	name = "Merchant Shuttle Dock Alpha"
+	},
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/northwest)
 "Cu" = (
 /turf/simulated/wall/auto/jen,
 /area/space)
@@ -835,7 +846,7 @@ ms
 ms
 sl
 HA
-sl
+AG
 "}
 (18,1,1) = {"
 NX
@@ -1243,7 +1254,7 @@ Yd
 Yd
 sl
 HA
-sl
+AG
 "}
 (30,1,1) = {"
 NX

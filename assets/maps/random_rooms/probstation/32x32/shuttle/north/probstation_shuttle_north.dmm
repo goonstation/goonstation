@@ -99,6 +99,10 @@
 	icon_state = "engine_caution_west"
 	},
 /area/station/hallway/secondary/exit)
+"gp" = (
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "gt" = (
 /obj/machinery/camera/directional/east,
 /turf/simulated/floor,
@@ -126,6 +130,16 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/escape)
+"im" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "in" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -316,6 +330,13 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/hallway/secondary/exit)
+"Au" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "BQ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -331,6 +352,11 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "CT" = (
@@ -342,6 +368,9 @@
 "CU" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/stripe_delivery,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/south)
 "CV" = (
@@ -381,9 +410,18 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
+/area/station/hallway/secondary/exit)
+"EZ" = (
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/wood,
 /area/station/hallway/secondary/exit)
 "FC" = (
 /turf/simulated/floor/shuttlebay{
@@ -411,6 +449,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/south)
+"GI" = (
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "Hg" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -419,13 +463,13 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/security,
-/obj/machinery/secscanner{
-	dir = 4;
-	pixel_x = -20
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
@@ -510,6 +554,16 @@
 "QE" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"RF" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor/escape{
+	dir = 4
+	},
 /area/station/hallway/secondary/exit)
 "Si" = (
 /obj/machinery/door/poddoor/blast/pyro{
@@ -614,8 +668,20 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
+"ZE" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 
 (1,1,1) = {"
 ID
@@ -738,7 +804,7 @@ oX
 oX
 vK
 Kp
-Pu
+gp
 vK
 vK
 pd
@@ -1052,7 +1118,7 @@ Hg
 oX
 oX
 vK
-Oa
+GI
 cF
 vK
 oX
@@ -1086,8 +1152,8 @@ Hg
 Hg
 Hg
 vK
-Oa
-Pu
+ZE
+Au
 vK
 oX
 oX
@@ -1222,7 +1288,7 @@ Hg
 Hg
 Hg
 vK
-Oa
+GI
 mv
 vK
 oX
@@ -1304,7 +1370,7 @@ ic
 ic
 ic
 ic
-ic
+EZ
 vK
 vK
 vK
@@ -1332,7 +1398,7 @@ oX
 oX
 "}
 (22,1,1) = {"
-ib
+im
 ib
 ib
 ib
@@ -1366,7 +1432,7 @@ oX
 oX
 "}
 (23,1,1) = {"
-Yl
+pd
 Yl
 Yl
 Yl
@@ -1400,7 +1466,7 @@ oX
 oX
 "}
 (24,1,1) = {"
-Yl
+pd
 Yl
 Yl
 Go
@@ -1434,7 +1500,7 @@ oX
 oX
 "}
 (25,1,1) = {"
-la
+RF
 la
 la
 bt

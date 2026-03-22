@@ -406,6 +406,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "WM" = (

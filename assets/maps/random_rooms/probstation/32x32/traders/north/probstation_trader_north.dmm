@@ -6,6 +6,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/secondary/southwest)
 "c" = (
@@ -146,6 +147,21 @@
 /obj/storage/closet/wardrobe/black/formalwear,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
+"F" = (
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"G" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "merchanta";
+	name = "Merchant Shuttle Dock Alpha"
+	},
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
 "H" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -155,6 +171,10 @@
 /area/station/crew_quarters/stockex)
 "I" = (
 /obj/stool/chair/office,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"J" = (
+/obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "L" = (
@@ -225,6 +245,17 @@
 /area/station/crew_quarters/stockex)
 "Y" = (
 /obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"Z" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "merchantb";
+	name = "Merchant Shuttle Dock Beta"
+	},
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
 
@@ -368,7 +399,7 @@ a
 C
 P
 P
-p
+G
 Y
 p
 h
@@ -401,7 +432,7 @@ a
 (6,1,1) = {"
 S
 O
-P
+F
 S
 S
 S
@@ -641,7 +672,7 @@ l
 j
 j
 j
-j
+J
 D
 D
 a
@@ -977,7 +1008,7 @@ a
 a
 "}
 (23,1,1) = {"
-f
+Z
 Y
 f
 d

@@ -704,6 +704,10 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/podbay)
 

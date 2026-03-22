@@ -141,6 +141,9 @@
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
 /turf/simulated/floor/plating,
 /area/station/security/brig/cell_block_control)
 "t" = (

@@ -1,16 +1,129 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/machinery/computer3/generic/communications,
-/obj/item/device/radio/intercom/security,
+"aw" = (
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
+/area/station/bridge)
+"be" = (
+/obj/table/nanotrasen/auto,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/pen/fancy,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/east,
+/area/station/bridge)
+"bj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/station/bridge)
+"bH" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	layer = 4;
+	opacity = 0
+	},
+/obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
+"cn" = (
+/obj/table/nanotrasen/auto,
+/obj/machinery/phone,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/fancy/innercorner/se,
+/area/station/bridge)
+"dP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small/floor/cool,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/bridge)
+"fg" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/wall/false_wall/reinforced,
+/area/station/bridge)
+"fo" = (
+/obj/storage/crate/radio,
+/turf/simulated/floor/darkblueblack{
+	dir = 4
+	},
+/area/station/bridge)
+"gz" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/obj/landmark/start/job/head_of_security,
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/station/bridge)
+"gL" = (
+/obj/machinery/computer3/generic/bank_data{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/darkblueblack{
-	dir = 1
+	dir = 8
 	},
 /area/station/bridge)
-"b" = (
+"hl" = (
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
+"im" = (
+/obj/cable{
+	icon_state = "6-9"
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
+"iR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/black,
+/area/station/bridge)
+"kb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/floor/cool,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
+/area/station/bridge)
+"km" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "2-8"
@@ -34,58 +147,22 @@
 /obj/landmark/start/job/captain,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
-"c" = (
-/obj/machinery/computer/general_alert{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/yellowblack{
-	dir = 4
-	},
-/area/station/bridge)
-"d" = (
-/obj/machinery/computer3/generic/secure_data{
+"kF" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
 	dir = 4;
-	tag = ""
+	icon_state = "pdoor0";
+	layer = 4;
+	opacity = 0
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/redblack{
+/obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/left{
 	dir = 8
 	},
+/turf/simulated/floor/plating,
 /area/station/bridge)
-"e" = (
-/obj/stool/chair/comfy/yellow{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/landmark/start/job/chief_engineer,
-/turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge)
-"f" = (
-/obj/stool/chair/comfy/blue{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start/job/medical_director,
-/turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge)
-"g" = (
-/obj/cable{
-	icon_state = "1-10"
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
-"h" = (
+"lw" = (
 /obj/table/nanotrasen/auto,
 /obj/item/storage/box/trackimp_kit{
 	pixel_x = 3;
@@ -93,50 +170,35 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/east,
 /area/station/bridge)
-"i" = (
-/obj/stool/chair/comfy/green{
-	dir = 4
-	},
-/obj/landmark/start/job/head_of_personnel,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/bridge)
-"j" = (
+"lS" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"k" = (
-/obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 6;
-	pixel_y = 10
+"nx" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	layer = 4;
+	opacity = 0
 	},
-/obj/item/kitchen/food_box/sugar_box,
-/turf/simulated/floor/black,
-/area/station/bridge)
-"l" = (
-/obj/disposalpipe/trunk/east,
-/obj/machinery/disposal,
-/turf/simulated/floor/black,
-/area/station/bridge)
-"m" = (
-/obj/table/wood/round/auto,
-/obj/machinery/coffeemaker/command,
-/obj/drink_rack/mug{
-	pixel_x = -26
+/obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/left{
+	dir = 4
 	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
+/turf/simulated/floor/plating,
 /area/station/bridge)
-"n" = (
-/obj/table/nanotrasen/auto,
-/turf/simulated/floor/carpet/blue/fancy/innercorner/west,
+"pa" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/bridge)
-"o" = (
+"pr" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -151,148 +213,33 @@
 	opacity = 0;
 	id = "bridge"
 	},
-/turf/simulated/floor/plating,
-/area/station/bridge)
-"p" = (
-/obj/cable{
-	icon_state = "6-9"
-	},
-/obj/cable{
-	icon_state = "1-6"
-	},
-/obj/cable{
-	icon_state = "6-8"
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
-"q" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	layer = 4;
-	opacity = 0
-	},
-/obj/mapping_helper/button/area,
-/obj/window_blinds/cog2/left{
-	dir = 8
+/obj/machinery/secscanner{
+	pixel_y = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"r" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	layer = 4;
-	opacity = 0
-	},
-/obj/mapping_helper/button/area,
-/obj/window_blinds/cog2/left{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/bridge)
-"s" = (
-/obj/machinery/computer/camera_viewer,
-/obj/item/device/radio/intercom/medical,
+"pS" = (
+/obj/machinery/computer3/generic/communications,
+/obj/item/device/radio/intercom/security,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/camera/directional/north{
-	pixel_x = 18
-	},
-/turf/simulated/floor/redblack{
+/turf/simulated/floor/darkblueblack{
 	dir = 1
 	},
 /area/station/bridge)
-"t" = (
-/turf/simulated/floor/black,
-/area/station/bridge)
-"u" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	layer = 4;
-	opacity = 0
-	},
-/obj/mapping_helper/button/area,
-/obj/window_blinds/cog2/right{
+"qI" = (
+/obj/stool/chair/comfy/green{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/bridge)
-"v" = (
-/obj/table/auto,
-/obj/machinery/microwave,
-/turf/simulated/floor/black,
-/area/station/bridge)
-"w" = (
-/obj/machinery/computer3/generic/bank_data{
+/obj/landmark/start/job/head_of_personnel,
+/obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/darkblueblack{
-	dir = 8
-	},
-/area/station/bridge)
-"x" = (
-/obj/stool/chair/comfy/red{
-	dir = 4
-	},
-/obj/landmark/start/job/head_of_security,
-/obj/machinery/camera/directional/south,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge)
-"y" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/table/nanotrasen/auto,
-/obj/machinery/shipalert{
-	dir = 1
-	},
-/obj/machinery/door_control/table{
-	pixel_x = -15
-	},
-/obj/mapping_helper/button/area,
-/obj/disposalpipe/segment/bent/south,
-/turf/simulated/floor/carpet/blue/fancy/innercorner/south,
-/area/station/bridge)
-"z" = (
-/obj/stool/chair/comfy/purple{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start/job/research_director,
-/turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge)
-"A" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/bridge)
-"B" = (
-/obj/machinery/chem_dispenser/soda,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/firealarm/directional/west,
-/turf/simulated/floor/greenblack{
-	dir = 9
-	},
-/area/station/bridge)
-"C" = (
+"rP" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -309,39 +256,62 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"D" = (
+"sg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	layer = 4;
+	opacity = 0
+	},
+/obj/mapping_helper/button/area,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
+"uI" = (
 /obj/table/nanotrasen/auto,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 9
+/obj/machinery/networked/printer{
+	name = "Printer - Bridge";
+	pixel_y = 5;
+	print_id = "Bridge"
 	},
-/obj/item/pen/fancy,
-/turf/simulated/floor/carpet/blue/fancy/innercorner/east,
-/area/station/bridge)
-"E" = (
-/obj/machinery/computer/announcement/station/bridge,
-/obj/item/device/radio/intercom/AI,
-/obj/cable{
-	icon_state = "0-2"
-	},
+/obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/darkblueblack{
-	dir = 1
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue3"
 	},
 /area/station/bridge)
-"F" = (
-/obj/storage/secure/closet/fridge,
-/obj/item/storage/box/donkpocket_kit,
-/obj/machinery/light/incandescent/warm,
-/obj/machinery/power/apc/autoname_east,
+"xv" = (
+/obj/stool/chair/comfy/yellow{
+	dir = 8
+	},
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "1-4"
+	},
+/obj/landmark/start/job/chief_engineer,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/bridge)
+"Bz" = (
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"G" = (
+"BN" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/station/bridge)
+"DN" = (
 /obj/shrub,
 /obj/machinery/light{
 	dir = 1;
@@ -357,7 +327,177 @@
 	dir = 5
 	},
 /area/station/bridge)
-"H" = (
+"EE" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
+"Hz" = (
+/obj/table/wood/round/auto,
+/obj/machinery/coffeemaker/command,
+/obj/drink_rack/mug{
+	pixel_x = -26
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/station/bridge)
+"Ic" = (
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/bridge)
+"Lk" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/station/bridge)
+"LG" = (
+/obj/machinery/computer/general_alert{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/bridge)
+"LZ" = (
+/obj/machinery/computer/camera_viewer,
+/obj/item/device/radio/intercom/medical,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/camera/directional/north{
+	pixel_x = 18
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/bridge)
+"Mr" = (
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4;
+	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/bridge)
+"MR" = (
+/obj/stool/chair/comfy/purple{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/research_director,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/bridge)
+"MY" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/nanotrasen/auto,
+/obj/machinery/shipalert{
+	dir = 1
+	},
+/obj/machinery/door_control/table{
+	pixel_x = -15
+	},
+/obj/mapping_helper/button/area,
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/south,
+/area/station/bridge)
+"OB" = (
+/obj/machinery/chem_dispenser/soda,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/greenblack{
+	dir = 9
+	},
+/area/station/bridge)
+"Rc" = (
+/obj/table/nanotrasen/auto,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/west,
+/area/station/bridge)
+"Rs" = (
+/obj/cable{
+	icon_state = "5-10"
+	},
+/obj/cable{
+	icon_state = "4-10"
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
+"RV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	layer = 4;
+	opacity = 0;
+	id = "bridge"
+	},
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 8
+	},
+/obj/mapping_helper/access/heads,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
+"Tf" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/kitchen/food_box/sugar_box,
+/turf/simulated/floor/black,
+/area/station/bridge)
+"TN" = (
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/medical_director,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/bridge)
+"Vf" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/storage/box/donkpocket_kit,
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
+"VX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -372,69 +512,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"I" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small/floor/cool,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
+"WG" = (
+/turf/simulated/floor/black,
 /area/station/bridge)
-"J" = (
-/obj/cable{
-	icon_state = "4-8"
+"WI" = (
+/obj/table/nanotrasen/auto,
+/obj/item/device/radio/intercom/bridge{
+	dir = 1
 	},
-/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/west,
 /area/station/bridge)
-"K" = (
-/obj/storage/crate/radio,
-/turf/simulated/floor/darkblueblack{
-	dir = 4
-	},
-/area/station/bridge)
-"L" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/small/floor/cool,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/bridge)
-"M" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	layer = 4;
-	opacity = 0
-	},
-/obj/mapping_helper/button/area,
-/obj/window_blinds/cog2/left{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/bridge)
-"N" = (
-/turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/bridge)
-"O" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/wall/false_wall/reinforced,
-/area/station/bridge)
-"P" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
-/area/station/bridge)
-"Q" = (
+"Xi" = (
 /obj/machinery/computer/ordercomp,
 /obj/item/device/radio/intercom/science,
 /obj/cable{
@@ -445,182 +533,124 @@
 	dir = 1
 	},
 /area/station/bridge)
-"R" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/small/floor/cool,
-/turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/bridge)
-"S" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
+"XB" = (
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
 /turf/simulated/floor/black,
 /area/station/bridge)
-"T" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/north,
+"XP" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/black,
 /area/station/bridge)
-"U" = (
-/obj/table/nanotrasen/auto,
-/obj/machinery/networked/printer{
-	name = "Printer - Bridge";
-	pixel_y = 5;
-	print_id = "Bridge"
+"YP" = (
+/obj/machinery/computer/announcement/station/bridge,
+/obj/item/device/radio/intercom/AI,
+/obj/cable{
+	icon_state = "0-2"
 	},
-/obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue3"
-	},
-/area/station/bridge)
-"V" = (
-/obj/table/nanotrasen/auto,
-/obj/item/device/radio/intercom/bridge{
+/turf/simulated/floor/darkblueblack{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/west,
-/area/station/bridge)
-"W" = (
-/obj/cable{
-	icon_state = "1-6"
-	},
-/obj/cable{
-	icon_state = "6-8"
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
-"X" = (
-/obj/table/nanotrasen/auto,
-/obj/machinery/phone,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/se,
-/area/station/bridge)
-"Y" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small/floor/cool,
-/turf/simulated/floor/black,
-/area/station/bridge)
-"Z" = (
-/obj/cable{
-	icon_state = "5-10"
-	},
-/obj/cable{
-	icon_state = "4-10"
-	},
-/obj/cable{
-	icon_state = "1-10"
-	},
-/turf/simulated/floor/black,
 /area/station/bridge)
 
 (1,1,1) = {"
-A
-A
-u
-r
-C
-u
-r
-A
-A
+Ic
+Ic
+bH
+nx
+rP
+bH
+nx
+Ic
+Ic
 "}
 (2,1,1) = {"
-A
-B
-w
-d
-S
-l
-k
-m
-A
+Ic
+OB
+gL
+Mr
+lS
+XB
+Tf
+Hz
+Ic
 "}
 (3,1,1) = {"
-A
-a
-W
-S
-R
-i
-N
-x
-A
+Ic
+pS
+EE
+lS
+pa
+qI
+BN
+gz
+Ic
 "}
 (4,1,1) = {"
-A
-E
-j
-p
-J
-X
-D
-h
-A
+Ic
+YP
+Bz
+im
+Lk
+cn
+be
+lw
+Ic
 "}
 (5,1,1) = {"
-o
-j
-Y
-j
-b
-y
-I
-P
-O
+pr
+Bz
+iR
+Bz
+km
+MY
+kb
+aw
+fg
 "}
 (6,1,1) = {"
-A
-s
-j
-Z
-T
-U
-n
-V
-A
+Ic
+LZ
+Bz
+Rs
+bj
+uI
+Rc
+WI
+Ic
 "}
 (7,1,1) = {"
-A
-Q
-g
-S
-L
-f
-z
-e
-A
+Ic
+Xi
+hl
+lS
+dP
+TN
+MR
+xv
+Ic
 "}
 (8,1,1) = {"
-A
-G
-K
-c
-S
-t
-v
-F
-A
+Ic
+DN
+fo
+LG
+lS
+WG
+XP
+Vf
+Ic
 "}
 (9,1,1) = {"
-A
-A
-q
-H
-C
-M
-H
-A
-A
+Ic
+Ic
+sg
+VX
+RV
+kF
+VX
+Ic
+Ic
 "}

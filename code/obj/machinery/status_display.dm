@@ -66,6 +66,16 @@ TYPEINFO(/obj/machinery/status_display)
 
 	// new display
 	// register for radio system
+	new_walls
+		north
+			pixel_y = 30
+		south
+			pixel_y = -30
+		east
+			pixel_x = 30
+		west
+			pixel_x = -30
+
 	New()
 		..()
 		src.proxy = new
@@ -413,6 +423,17 @@ TYPEINFO(/obj/machinery/ai_status_display)
 	var/face_color = null
 
 	var/datum/light/screen_glow
+
+	new_walls
+		north
+			pixel_y = 30
+		south
+			pixel_y = -30
+		east
+			pixel_x = 30
+		west
+			pixel_x = -30
+
 
 	New()
 		..()
