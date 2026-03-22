@@ -88,12 +88,27 @@ proc/buildRandomRooms()
 		size = "5x15"
 		additional_tags = list("d2_artlab")
 
-	probstation
-		size = "9x9"
-		icon = 'icons/effects/mapeditor/9x9tiles.dmi'
-		additional_tags = list("probstation")
+//Probstation
+/obj/landmark/random_room/probstation
+	size = "9x9"
+	icon = 'icons/effects/mapeditor/9x9tiles.dmi'
+	additional_tags = list("probstation")
 
-	probstation_15x15
-		size = "15x15"
-		icon = 'icons/effects/mapeditor/15x15tiles.dmi'
-		additional_tags = list("probstation")
+/obj/landmark/random_room/probstation_15x15
+	size = "15x15"
+	icon = 'icons/effects/mapeditor/15x15tiles.dmi'
+	additional_tags = list("probstation")
+
+/obj/landmark/random_room/probstation_shuttles
+	size = "32x32"
+	icon = 'icons/effects/mapeditor/32x32tiles.dmi'
+	icon_state = "probstation_shuttles"
+	additional_tags = list("probstation")
+	var/static/locations_to_apply = list("shuttle", "traders")
+
+	apply()
+		var/picked_tag = pick(locations_to_apply)
+		src.additional_tags += picked_tag
+		src.locations_to_apply -= picked_tag
+		src.additional_tags += dir_to_dirname(src.dir)
+		. = ..()

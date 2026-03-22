@@ -1006,10 +1006,10 @@ var/global/list/mapNames = list(
 
 	cargo_shipping_method = SHIPPING_METHOD_TRANSCEPTION
 
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the shrub hallway" = list(/area/station/crew_quarters/garden/shrub_hall),
 		"the luxury seating area" = list(/area/station/crew_quarters/lounge/luxury_seating),
