@@ -245,6 +245,9 @@
 /area/station/crew_quarters/stockex)
 "Y" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/light/incandescent/small{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
 "Z" = (

@@ -207,7 +207,7 @@
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
 "J" = (
-/obj/machinery/atmospherics/pipe/simple{
+/obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
@@ -215,7 +215,7 @@
 	},
 /area/station/science/testchamber)
 "M" = (
-/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/atmospherics/pipe/simple/overfloor,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -228,7 +228,7 @@
 /obj/stool/chair/office{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple{
+/obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 10
 	},
 /obj/machinery/light{
@@ -238,7 +238,7 @@
 /area/station/science/testchamber)
 "P" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/atmospherics/pipe/simple{
+/obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,

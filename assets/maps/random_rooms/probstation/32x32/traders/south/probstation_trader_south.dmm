@@ -191,6 +191,9 @@
 /area/station/crew_quarters/stockex)
 "HA" = (
 /obj/decal/stripe_delivery,
+/obj/machinery/light/incandescent/small{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/northwest)
 "IO" = (
@@ -211,6 +214,13 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/northwest)
 "NX" = (
+/turf/space,
+/area/space)
+"OM" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/space,
 /area/space)
 "Ry" = (
@@ -673,7 +683,7 @@ NX
 NX
 NX
 NX
-NX
+OM
 NX
 NX
 jT

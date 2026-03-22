@@ -4246,11 +4246,6 @@
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor,
 /area/station/hallway/secondary/north)
-"ux" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/nw)
 "uy" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
@@ -5357,6 +5352,10 @@
 /area/station/hallway/secondary/northwest)
 "Aq" = (
 /obj/random_item_spawner/clothing_booth,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/north)
 "As" = (
@@ -41375,7 +41374,7 @@ NC
 Oq
 NC
 Oq
-ux
+yB
 yy
 Ut
 yy
