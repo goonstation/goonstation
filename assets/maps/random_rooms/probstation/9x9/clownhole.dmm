@@ -119,10 +119,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/clown)
-"E" = (
-/obj/blind_switch/area/east,
-/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
-/area/station/crew_quarters/clown)
 "H" = (
 /obj/machinery/computer/announcement/clown,
 /turf/simulated/floor/carpet/clowncarpet/border{
@@ -308,7 +304,7 @@ S
 h
 S
 S
-E
+S
 M
 "}
 (9,1,1) = {"
