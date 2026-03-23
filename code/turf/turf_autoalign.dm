@@ -395,13 +395,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls/supernorn/smooth.dmi'
-#ifdef PERSPECTIVE_EDITOR_WALL
-	icon_state = "perspective-mapwall_r"
-#else
-	icon_state = "mapwall_r"
-#endif
-	mod = "norn-R-"
-	light_mod = "wall-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -525,6 +518,72 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	explosion_resistance = 11
 
+/turf/simulated/wall/auto/supernorn/colored
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi'
+
+/turf/simulated/wall/auto/supernorn/colored/blue
+	icon = 'icons/turf/walls/supernorn/standard/blue.dmi'
+
+/turf/simulated/wall/auto/supernorn/colored/cyan
+	icon = 'icons/turf/walls/supernorn/standard/cyan.dmi'
+
+/turf/simulated/wall/auto/supernorn/colored/green
+	icon = 'icons/turf/walls/supernorn/standard/green.dmi'
+
+/turf/simulated/wall/auto/supernorn/colored/purple
+	icon = 'icons/turf/walls/supernorn/standard/purple.dmi'
+
+/turf/simulated/wall/auto/supernorn/colored/red
+	icon = 'icons/turf/walls/supernorn/standard/red.dmi'
+
+//Currently are reinforced, but use the lighter colouring so probstation wants an unreinforced version
+/turf/simulated/wall/auto/supernorn/colored/orange
+	icon = 'icons/turf/walls/supernorn/orange.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall-O"
+#else
+	icon_state = "mapwall-O"
+#endif
+	mod = "norn-O-"
+
+/turf/simulated/wall/auto/supernorn/colored/yellow
+	icon = 'icons/turf/walls/supernorn/yellow.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall-Y"
+#else
+	icon_state = "mapwall-Y"
+#endif
+	mod = "norn-Y-"
+
+
+/turf/simulated/wall/auto/reinforced/supernorn/colored
+	icon = 'icons/turf/walls/supernorn/reinforced/black.dmi'
+	mod = "norn-"
+	light_mod = "wall-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
+	icon_state = "mapwall"
+#endif
+	explosion_resistance = 11
+
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue
+	icon = 'icons/turf/walls/supernorn/reinforced/blue.dmi'
+
+/turf/simulated/wall/auto/reinforced/supernorn/colored/cyan
+	icon = 'icons/turf/walls/supernorn/reinforced/cyan.dmi'
+
+/turf/simulated/wall/auto/reinforced/supernorn/colored/green
+	icon = 'icons/turf/walls/supernorn/reinforced/green.dmi'
+
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple
+	icon = 'icons/turf/walls/supernorn/reinforced/purple.dmi'
+
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange
+	icon = 'icons/turf/walls/supernorn/reinforced/orange.dmi'
+
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow
+	icon = 'icons/turf/walls/supernorn/reinforced/yellow.dmi'
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/paper)
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/paper)
