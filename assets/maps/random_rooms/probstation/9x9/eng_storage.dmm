@@ -17,7 +17,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/storage)
 "aC" = (
 /obj/cable{
@@ -129,7 +129,7 @@
 	},
 /area/station/engine/storage)
 "rW" = (
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/storage)
 "sa" = (
 /obj/machinery/disposal/small/north{

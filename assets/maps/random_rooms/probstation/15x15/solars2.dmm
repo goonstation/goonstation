@@ -101,7 +101,7 @@
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/station/solar/small_backup2)
 "t" = (
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/maintenance/solar/bravo)
 "u" = (
 /obj/landmark/gps_waypoint,

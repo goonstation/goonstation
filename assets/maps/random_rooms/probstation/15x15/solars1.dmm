@@ -49,7 +49,7 @@
 /area/station/maintenance/solar/alpha)
 "m" = (
 /obj/decal/poster/wallsign/space,
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/maintenance/solar/alpha)
 "n" = (
 /obj/cable{
@@ -99,7 +99,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/alpha)
 "s" = (
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/maintenance/solar/alpha)
 "t" = (
 /obj/mesh/catwalk{

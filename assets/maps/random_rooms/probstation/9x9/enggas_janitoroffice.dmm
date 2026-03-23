@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/gas)
 "b" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,

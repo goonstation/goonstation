@@ -19,7 +19,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/crew_quarters/ce)
 "c" = (
 /obj/landmark/gps_waypoint,
@@ -78,7 +78,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/ce)
 "i" = (
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/crew_quarters/ce)
 "j" = (
 /obj/cable{
@@ -121,7 +121,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/gravity)
 "n" = (
 /obj/cable{
@@ -417,7 +417,7 @@
 /turf/simulated/floor/grey,
 /area/station/engine/gravity)
 "P" = (
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/gravity)
 "Q" = (
 /turf/simulated/floor/yellow/side{
@@ -473,7 +473,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/crew_quarters/ce)
 "W" = (
 /obj/cable{

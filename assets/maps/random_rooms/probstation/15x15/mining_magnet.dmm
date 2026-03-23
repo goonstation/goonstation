@@ -121,7 +121,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "iD" = (
-/turf/simulated/wall/auto/reinforced/jen/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/orange,
 /area/station/mining/magnet)
 "jb" = (
 /obj/cable{
@@ -214,7 +214,7 @@
 	},
 /area/mining/refinery)
 "qm" = (
-/turf/simulated/wall/auto/jen/yellow,
+/turf/simulated/wall/auto/jen/orange,
 /area/station/mining/magnet)
 "qn" = (
 /obj/decal/tile_edge/stripe/extra_big{
