@@ -326,7 +326,6 @@
 /turf/simulated/floor/black,
 /area/station/security/evidence)
 "HE" = (
-/obj/disposalpipe/switch_junction,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -341,6 +340,7 @@
 /obj/item/reagent_containers/glass/bottle/acetone/janitors,
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/supply)
 "Io" = (

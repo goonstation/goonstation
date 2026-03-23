@@ -412,6 +412,7 @@
 	},
 /obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
 "HW" = (

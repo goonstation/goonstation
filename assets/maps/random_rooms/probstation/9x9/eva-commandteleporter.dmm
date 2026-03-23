@@ -463,7 +463,7 @@
 /obj/machinery/disposal/small/north{
 	pixel_y = 32
 	},
-/obj/disposalpipe/segment/bent/west,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/darkblueblack{
 	dir = 1
 	},

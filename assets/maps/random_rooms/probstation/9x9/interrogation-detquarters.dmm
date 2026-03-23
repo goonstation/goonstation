@@ -106,6 +106,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "nE" = (

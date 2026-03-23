@@ -260,6 +260,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Ht" = (
@@ -464,6 +467,9 @@
 /obj/table/reinforced/auto,
 /obj/item/device/panicbutton,
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Zb" = (

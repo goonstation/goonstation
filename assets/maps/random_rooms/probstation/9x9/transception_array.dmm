@@ -135,6 +135,9 @@
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/mapping_helper/access/cargo,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner{
 	name = "Transception Array Control"
