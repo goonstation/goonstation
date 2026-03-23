@@ -2,7 +2,7 @@
 "aQ" = (
 /obj/machinery/flasher/minibrig/new_walls/south,
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "bj" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -10,7 +10,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "br" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -31,22 +31,22 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/red,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "cx" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "cy" = (
 /obj/machinery/light/incandescent/warm,
 /obj/vehicle/tug/security,
 /turf/simulated/floor/red/redblackchecker,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "dg" = (
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red/redblackchecker,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "ev" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -55,13 +55,13 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "eF" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "eN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -73,7 +73,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "fb" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -89,7 +89,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "ge" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -99,7 +99,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "ic" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -108,11 +108,11 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "iu" = (
 /obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor/red/redblackchecker,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "jG" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -127,7 +127,7 @@
 	pixel_x = 20
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "lj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -138,13 +138,13 @@
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "lt" = (
 /obj/machinery/sink/slim{
 	pixel_y = 12
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "lB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -152,21 +152,21 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "lG" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "mw" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/jen/red,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "mz" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -177,7 +177,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "qv" = (
 /obj/machinery/computer/card{
 	dir = 8
@@ -189,7 +189,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/red/side,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "qM" = (
 /obj/storage/secure/closet/brig_automatic/minibrig,
 /obj/machinery/phone/wall{
@@ -200,7 +200,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "sp" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -217,7 +217,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "sv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -228,7 +228,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "sM" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	name = "Mini-Brig"
@@ -239,18 +239,18 @@
 /obj/mapping_helper/access/brig,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red/side,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "tv" = (
 /obj/machinery/camera/directional/south,
 /obj/machinery/firealarm/directional/east,
 /obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor/red/redblackchecker,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "ue" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "uu" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/trunk/west,
@@ -258,7 +258,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "vT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -272,7 +272,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Eg" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -287,16 +287,16 @@
 	pixel_x = -20
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Ev" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "GW" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Ix" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -307,7 +307,7 @@
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "IZ" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -318,7 +318,7 @@
 	},
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "JT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -326,13 +326,13 @@
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "JV" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Ko" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -341,7 +341,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Ku" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/item/device/radio/intercom/security{
@@ -350,7 +350,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "KG" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -359,7 +359,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "LK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -367,10 +367,10 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Nq" = (
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Qy" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -380,7 +380,7 @@
 	},
 /obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red/side,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "QH" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -392,7 +392,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "SH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/power/data_terminal,
@@ -406,7 +406,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/red/side,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "SR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/disposalpipe/trunk/west,
@@ -428,7 +428,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "SZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -436,7 +436,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "TD" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/reinforced/auto,
@@ -444,13 +444,13 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "TW" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
 /turf/simulated/floor/red/side,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "UX" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -458,7 +458,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Vf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -469,10 +469,10 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "VL" = (
 /turf/simulated/floor/red/redblackchecker,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Wh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -480,7 +480,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Wo" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 4;
@@ -494,12 +494,12 @@
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "XC" = (
 /obj/machinery/floorflusher/minibrig,
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 "Yr" = (
 /obj/table/reinforced/auto,
 /obj/mapping_helper/access/security,
@@ -516,7 +516,7 @@
 	},
 /obj/item/folder,
 /turf/simulated/floor/red,
-/area/station/security/checkpoint)
+/area/station/security/checkpoint/generic)
 
 (1,1,1) = {"
 GW

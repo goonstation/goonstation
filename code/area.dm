@@ -3235,6 +3235,8 @@ ABSTRACT_TYPE(/area/station/security)
 		name = "Security Foyer Checkpoint"
 /area/station/security/checkpoint/sec_foyer/no_teleblock
 	teleport_blocked = AREA_TELEPORT_ALLOWED
+/area/station/security/checkpoint/generic
+		name = "Security Checkpoint"
 /area/station/security/checkpoint/podbay
 		name = "Pod Bay Security Checkpoint"
 /area/station/security/checkpoint/chapel
