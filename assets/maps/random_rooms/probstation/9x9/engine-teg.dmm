@@ -21,7 +21,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "eq" = (
 /obj/cable{
@@ -68,7 +68,7 @@
 /area/station/engine/core/thermoelectric)
 "jU" = (
 /obj/machinery/atmospherics/binary/valve,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "mb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -77,7 +77,7 @@
 /area/station/engine/core/thermoelectric)
 "mo" = (
 /obj/machinery/atmospherics/binary/pump/active,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "mq" = (
 /obj/cable/orange{
@@ -117,7 +117,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "qW" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -162,13 +162,13 @@
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/core/thermoelectric)
 "sx" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "sU" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "vg" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
@@ -223,7 +223,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "zh" = (
 /turf/space,
@@ -257,7 +257,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "Cs" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -282,7 +282,7 @@
 	dir = 1;
 	transfer_rate = 1000
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "HV" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -399,7 +399,7 @@
 /obj/machinery/atmospherics/binary/volume_pump/active{
 	transfer_rate = 1000
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "ZI" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{

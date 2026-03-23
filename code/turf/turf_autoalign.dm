@@ -433,10 +433,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 	light_mod = "wall-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
-/turf/simulated/wall/auto/reinforced/supernorn/yellow/sturdy
-	name = "plasmasteel reinforced wall"
-	default_material = "plasmasteel"
-
 TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 	connect_overlay = 1
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
@@ -584,6 +580,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 
 /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow
 	icon = 'icons/turf/walls/supernorn/reinforced/yellow.dmi'
+
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow/plasmasteel
+	name = "plasmasteel reinforced wall"
+	default_material = "plasmasteel"
+	color = "#ecbbff"
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/paper)
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/paper)
