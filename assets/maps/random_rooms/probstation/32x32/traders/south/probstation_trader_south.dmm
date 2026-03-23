@@ -55,11 +55,8 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "jT" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/northwest)
-"lA" = (
-/turf/simulated/wall/auto/jen,
-/area/station/crew_quarters/stockex)
 "ms" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/left_station/cogmap)
@@ -183,9 +180,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/northwest)
-"Cu" = (
-/turf/simulated/wall/auto/jen,
-/area/space)
 "Ez" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
@@ -217,12 +211,8 @@
 /turf/space,
 /area/space)
 "OM" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 24
-	},
-/turf/space,
-/area/space)
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/stockex)
 "Ry" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -306,13 +296,13 @@ NX
 NX
 NX
 NX
-lA
-lA
-lA
-lA
+OM
+OM
+OM
+OM
 ha
-lA
-lA
+OM
+OM
 "}
 (2,1,1) = {"
 NX
@@ -345,8 +335,8 @@ vC
 dJ
 Ry
 Ez
-lA
-lA
+OM
+OM
 "}
 (3,1,1) = {"
 NX
@@ -379,8 +369,8 @@ ug
 Xg
 Wu
 WT
-lA
-lA
+OM
+OM
 "}
 (4,1,1) = {"
 NX
@@ -414,7 +404,7 @@ Ez
 Ez
 bI
 cg
-lA
+OM
 "}
 (5,1,1) = {"
 NX
@@ -442,7 +432,7 @@ NX
 NX
 NX
 NX
-lA
+OM
 jg
 jg
 Ez
@@ -482,7 +472,7 @@ Ez
 Ez
 qb
 Zi
-lA
+OM
 "}
 (7,1,1) = {"
 NX
@@ -516,7 +506,7 @@ tG
 Ez
 Ez
 Ez
-lA
+OM
 "}
 (8,1,1) = {"
 NX
@@ -550,7 +540,7 @@ Ez
 Ez
 Ez
 Ez
-lA
+OM
 "}
 (9,1,1) = {"
 NX
@@ -578,13 +568,13 @@ NX
 NX
 NX
 NX
-lA
-lA
-lA
+OM
+OM
+OM
 rG
 vH
 Ez
-lA
+OM
 "}
 (10,1,1) = {"
 NX
@@ -614,11 +604,11 @@ NX
 NX
 NX
 NX
-lA
+OM
 iX
 iW
 uM
-lA
+OM
 "}
 (11,1,1) = {"
 NX
@@ -648,11 +638,11 @@ NX
 NX
 NX
 NX
-lA
+OM
 nX
 sy
 IO
-lA
+OM
 "}
 (12,1,1) = {"
 NX
@@ -683,7 +673,7 @@ NX
 NX
 NX
 NX
-OM
+NX
 NX
 NX
 jT
@@ -1365,6 +1355,6 @@ NX
 NX
 NX
 NX
-Cu
+jT
 jT
 "}

@@ -54,7 +54,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "m" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/observatory)
 "o" = (
 /obj/cable{
@@ -134,14 +134,14 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "B" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/southwest)
 "C" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/south)
 "D" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/stockex)
 "E" = (
 /obj/storage/closet/wardrobe/black/formalwear,
@@ -214,7 +214,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "S" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/south)
 "U" = (
 /obj/table/auto,

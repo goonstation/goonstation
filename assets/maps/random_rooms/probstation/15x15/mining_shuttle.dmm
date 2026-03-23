@@ -197,7 +197,7 @@
 /turf/simulated/floor/neutral,
 /area/station/hallway/secondary/shuttle)
 "BQ" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/shuttle)
 "Cc" = (
 /obj/machinery/alarm/directional/east,

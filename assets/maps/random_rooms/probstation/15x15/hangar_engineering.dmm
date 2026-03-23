@@ -103,7 +103,7 @@
 	},
 /area/station/hangar/engine)
 "nt" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hangar/engine)
 "ox" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
@@ -195,7 +195,7 @@
 	pixel_y = 8;
 	id = "podbay_eng1"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hangar/engine)
 "uV" = (
 /obj/lattice{
@@ -268,7 +268,7 @@
 	pixel_y = -8;
 	id = "podbay_eng4"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hangar/engine)
 "yc" = (
 /obj/lattice{
@@ -342,7 +342,7 @@
 /obj/machinery/r_door_control/podbay{
 	id = "podbay_eng2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hangar/engine)
 "EZ" = (
 /obj/machinery/vehicle/miniputt/indyputt/armed{
@@ -383,7 +383,7 @@
 /obj/machinery/r_door_control/podbay{
 	id = "podbay_eng3"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hangar/engine)
 "IP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -466,7 +466,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "Py" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hangar/engine)
 "PQ" = (
 /obj/decal/tile_edge/stripe/extra_big,

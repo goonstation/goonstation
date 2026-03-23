@@ -175,7 +175,7 @@
 /area/station/hallway/secondary/exit)
 "ln" = (
 /obj/decal/poster/wallsign/space,
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/exit)
 "lv" = (
 /obj/lattice{
@@ -314,7 +314,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
 "vK" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/exit)
 "wj" = (
 /turf/simulated/floor/escape/corner{
@@ -322,7 +322,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "yo" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/south)
 "zi" = (
 /obj/cable{
@@ -483,7 +483,7 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "ID" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/southwest)
 "Ke" = (
 /obj/table/wood/round/auto,
@@ -576,7 +576,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "Sp" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored/red,
 /area/station/security/checkpoint/escape)
 "Sv" = (
 /obj/table/wood/round/auto,

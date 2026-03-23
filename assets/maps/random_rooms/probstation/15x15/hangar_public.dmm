@@ -56,9 +56,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
-"in" = (
-/turf/simulated/wall/auto/jen,
-/area/station/hangar/main)
 "iV" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor,
@@ -317,6 +314,9 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
+"PK" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hangar/main)
 "PM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -525,24 +525,24 @@ UH
 Um
 "}
 (5,1,1) = {"
-in
+PK
 Xg
 Xg
 Xg
 Xg
 Xg
 Xg
-in
+PK
 gi
 gi
 gi
 gi
 gi
 gi
-in
+PK
 "}
 (6,1,1) = {"
-in
+PK
 NW
 Lq
 Lq
@@ -556,10 +556,10 @@ Lq
 Lq
 Lq
 wd
-in
+PK
 "}
 (7,1,1) = {"
-in
+PK
 EX
 kL
 Hq
@@ -573,10 +573,10 @@ Hq
 zq
 Hq
 Qa
-in
+PK
 "}
 (8,1,1) = {"
-in
+PK
 dk
 Hq
 Hq
@@ -590,10 +590,10 @@ Hq
 Hq
 Hq
 GH
-in
+PK
 "}
 (9,1,1) = {"
-in
+PK
 nm
 Hq
 Hq
@@ -607,10 +607,10 @@ Hq
 zq
 Hq
 pN
-in
+PK
 "}
 (10,1,1) = {"
-in
+PK
 EX
 kL
 Hq
@@ -624,10 +624,10 @@ Hq
 Hq
 Hq
 Qa
-in
+PK
 "}
 (11,1,1) = {"
-in
+PK
 gO
 Hq
 Hq
@@ -641,10 +641,10 @@ Hq
 zq
 Hq
 Vf
-in
+PK
 "}
 (12,1,1) = {"
-in
+PK
 PY
 Bh
 Bh
@@ -658,10 +658,10 @@ Bh
 Bh
 Bh
 fX
-in
+PK
 "}
 (13,1,1) = {"
-in
+PK
 VD
 SI
 SI
@@ -675,10 +675,10 @@ om
 om
 om
 kt
-in
+PK
 "}
 (14,1,1) = {"
-in
+PK
 No
 xM
 wc
@@ -692,22 +692,22 @@ pp
 Sz
 yy
 ga
-in
+PK
 "}
 (15,1,1) = {"
-in
-in
+PK
+PK
 Ea
 Ea
 Ea
-in
+PK
 Wk
 PM
 Wk
-in
+PK
 Ea
 Ea
 Ea
-in
-in
+PK
+PK
 "}

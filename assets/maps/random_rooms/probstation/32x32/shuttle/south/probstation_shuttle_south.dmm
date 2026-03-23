@@ -118,7 +118,7 @@
 /area/station/hallway/secondary/exit)
 "jg" = (
 /obj/decal/poster/wallsign/space,
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/exit)
 "jQ" = (
 /obj/machinery/door/airlock/pyro/security/alt,
@@ -133,7 +133,7 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "jT" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/northwest)
 "jY" = (
 /obj/machinery/light{
@@ -240,7 +240,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "tG" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/outer/nw)
 "ug" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
@@ -341,9 +341,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
-"Cu" = (
-/turf/simulated/wall/auto/jen,
-/area/station/hallway/secondary/exit)
 "CI" = (
 /obj/lattice{
 	dir = 5;
@@ -353,7 +350,7 @@
 /turf/space,
 /area/space)
 "De" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored/red,
 /area/station/security/checkpoint/escape)
 "Ez" = (
 /obj/table/syndicate/auto,
@@ -593,6 +590,9 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"VM" = (
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/exit)
 "Wu" = (
 /obj/table/syndicate/auto,
@@ -1271,10 +1271,10 @@ NX
 NX
 NX
 jg
-Cu
-Cu
-Cu
-Cu
+VM
+VM
+VM
+VM
 De
 XY
 dE
@@ -1338,7 +1338,7 @@ NX
 NX
 NX
 NX
-Cu
+VM
 ug
 vF
 vl
@@ -1372,7 +1372,7 @@ NX
 NX
 NX
 NX
-Cu
+VM
 LN
 vF
 vl
@@ -1439,18 +1439,18 @@ NX
 NX
 NX
 NX
-Cu
+VM
 jg
 pc
 pc
-Cu
+VM
 vl
 vl
 po
 sy
 vl
-Cu
-Cu
+VM
+VM
 "}
 (24,1,1) = {"
 NX
@@ -1473,18 +1473,18 @@ NX
 NX
 NX
 NX
-Cu
+VM
 jY
 LQ
 LQ
-Cu
+VM
 BJ
 RT
 sl
 sl
 eW
 Vu
-Cu
+VM
 "}
 (25,1,1) = {"
 NX
@@ -1507,18 +1507,18 @@ NX
 NX
 NX
 NX
-Cu
+VM
 zn
 zn
 zn
-Cu
+VM
 Sd
 Yd
 sl
 sl
 LP
 cH
-Cu
+VM
 "}
 (26,1,1) = {"
 NX
@@ -1541,18 +1541,18 @@ NX
 NX
 NX
 NX
-Cu
+VM
 fL
 fL
 fL
-Cu
+VM
 sl
 sl
 sl
 sl
 sl
 uM
-Cu
+VM
 "}
 (27,1,1) = {"
 NX
@@ -1579,7 +1579,7 @@ PC
 NX
 NX
 NX
-Cu
+VM
 XT
 rG
 RT
@@ -1654,7 +1654,7 @@ sl
 iX
 sl
 sl
-Cu
+VM
 "}
 (30,1,1) = {"
 NX
@@ -1688,7 +1688,7 @@ RT
 iX
 eW
 up
-Cu
+VM
 "}
 (31,1,1) = {"
 NX
@@ -1715,14 +1715,14 @@ NX
 NX
 NX
 NX
-Cu
+VM
 qM
 Ka
 Yd
 EE
 YZ
 QA
-Cu
+VM
 "}
 (32,1,1) = {"
 NX
@@ -1749,12 +1749,12 @@ NX
 NX
 NX
 NX
-Cu
-Cu
-Cu
-Cu
-Cu
-Cu
-Cu
-Cu
+VM
+VM
+VM
+VM
+VM
+VM
+VM
+VM
 "}

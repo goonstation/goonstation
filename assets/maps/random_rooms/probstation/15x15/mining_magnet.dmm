@@ -69,7 +69,7 @@
 /turf/simulated/floor,
 /area/mining/refinery)
 "fv" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/mining/refinery)
 "fI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -121,7 +121,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "iD" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange,
 /area/station/mining/magnet)
 "jb" = (
 /obj/cable{
@@ -214,7 +214,7 @@
 	},
 /area/mining/refinery)
 "qm" = (
-/turf/simulated/wall/auto/jen/orange,
+/turf/simulated/wall/auto/supernorn/colored/orange,
 /area/station/mining/magnet)
 "qn" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -299,7 +299,7 @@
 	},
 /area/station/mining/magnet)
 "xz" = (
-/turf/simulated/wall/auto/reinforced/jen,
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/mining/refinery)
 "xF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,

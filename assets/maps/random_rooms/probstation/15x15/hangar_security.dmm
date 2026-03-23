@@ -464,7 +464,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "Io" = (
-/turf/simulated/wall/auto/jen/red,
+/turf/simulated/wall/auto/supernorn/colored/red,
 /area/station/security/checkpoint/podbay)
 "Iu" = (
 /obj/decal/tile_edge/stripe/extra_big,

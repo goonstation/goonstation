@@ -374,7 +374,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "Ho" = (
-/turf/simulated/wall/auto/jen/orange,
+/turf/simulated/wall/auto/supernorn/colored/orange,
 /area/station/hangar/qm)
 "Jd" = (
 /obj/warp_beacon/mining{
@@ -394,7 +394,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "Kc" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hangar/qm)
 "Kq" = (
 /obj/machinery/manufacturer/hangar,
