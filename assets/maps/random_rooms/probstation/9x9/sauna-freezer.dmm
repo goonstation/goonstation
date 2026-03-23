@@ -35,7 +35,7 @@
 	dir = 4;
 	transfer_rate = 1000
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/kitchen/freezer)
 "g" = (
 /obj/cable{
@@ -97,9 +97,6 @@
 /obj/decal/poster/wallsign/iso/warning/biological,
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/crew_quarters/kitchen/freezer)
-"n" = (
-/turf/simulated/wall/auto/jen,
-/area/station/maintenance/storage)
 "o" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -454,7 +451,7 @@ I
 a
 "}
 (4,1,1) = {"
-n
+N
 y
 G
 U

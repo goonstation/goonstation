@@ -4,7 +4,7 @@
 /turf/simulated/floor/carpet/red/standard/edge/east,
 /area/station/crew_quarters/lounge/luxury_seating)
 "ac" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/outer/se)
 "ad" = (
 /obj/disposalpipe/segment/transport{
@@ -23,7 +23,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ah" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/north)
 "ai" = (
 /turf/simulated/floor/color_coded_hall{
@@ -384,7 +384,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "bB" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/observatory)
 "bC" = (
 /obj/disposalpipe/junction/middle/east,
@@ -543,7 +543,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ch" = (
-/turf/simulated/wall/auto/jen/green,
+/turf/simulated/wall/auto/supernorn/colored/green,
 /area/station/maintenance/north)
 "cj" = (
 /obj/disposalpipe/segment,
@@ -574,7 +574,7 @@
 	},
 /area/station/hallway/primary/north)
 "cn" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/primary/northeast)
 "co" = (
 /obj/random_item_spawner/gross_with_junk/one,
@@ -922,7 +922,7 @@
 /turf/simulated/floor/color_coded_hall,
 /area/station/hallway/primary/northeast)
 "dB" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/inner/se)
 "dC" = (
 /obj/cable{
@@ -932,7 +932,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
 "dD" = (
-/turf/simulated/wall/auto/jen/green,
+/turf/simulated/wall/auto/supernorn/colored/green,
 /area/station/maintenance/outer/north)
 "dE" = (
 /obj/machinery/alarm/directional/north,
@@ -1212,7 +1212,7 @@
 /turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "eF" = (
-/turf/simulated/wall/auto/jen/green,
+/turf/simulated/wall/auto/supernorn/colored/green,
 /area/station/maintenance/inner/sw)
 "eG" = (
 /obj/cable{
@@ -1249,7 +1249,7 @@
 	},
 /area/station/hallway/primary/north)
 "eN" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/primary/south)
 "eQ" = (
 /obj/cable,
@@ -1446,7 +1446,7 @@
 	},
 /area/station/hallway/primary/southwest)
 "fE" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/primary/east)
 "fF" = (
 /obj/random_item_spawner/gross_with_junk/one,
@@ -1543,7 +1543,7 @@
 	},
 /area/station/hallway/primary/northeast)
 "fZ" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/south)
 "ga" = (
 /obj/decal/tile_edge/line/black{
@@ -1576,7 +1576,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
 "gi" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/bridge/map_control)
 "gk" = (
 /turf/simulated/floor/color_coded_hall,
@@ -2077,9 +2077,9 @@
 /area/station/hallway/primary/south)
 "ip" = (
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "3"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-3";
+	can_be_auto = 0
 	},
 /area/station/maintenance/outer/se)
 "ir" = (
@@ -2133,7 +2133,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
 "iD" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/northwest)
 "iF" = (
 /obj/disposalpipe/segment{
@@ -2237,9 +2237,9 @@
 /area/station/hallway/primary/east)
 "iX" = (
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "3"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-3";
+	can_be_auto = 0
 	},
 /area/station/maintenance/outer/west)
 "iY" = (
@@ -2251,9 +2251,9 @@
 /area/station/maintenance/south)
 "iZ" = (
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/southwest)
 "jc" = (
@@ -2301,11 +2301,7 @@
 /turf/simulated/floor/carpet/blue,
 /area/station/crew_quarters/lounge/luxury_seating)
 "jo" = (
-/turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
-	},
+/turf/simulated/wall/false_wall,
 /area/station/maintenance/south)
 "jq" = (
 /obj/machinery/light/incandescent/netural{
@@ -2615,9 +2611,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/southwest)
 "kw" = (
@@ -2750,7 +2746,7 @@
 	},
 /area/station/hallway/primary/northeast)
 "la" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/southwest)
 "lb" = (
 /turf/simulated/floor/color_coded_hall{
@@ -3133,7 +3129,7 @@
 /turf/space,
 /area/space)
 "mz" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/disposal)
 "mA" = (
 /obj/reagent_dispensers/fueltank,
@@ -3713,7 +3709,7 @@
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/east)
 "pc" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/north)
 "pd" = (
 /obj/cable{
@@ -3967,7 +3963,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/southwest)
 "qq" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/outer/west)
 "qr" = (
 /obj/cable{
@@ -5096,7 +5092,7 @@
 	},
 /area/station/hallway/primary/south)
 "uZ" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/primary/north)
 "vb" = (
 /obj/disposalpipe/segment,
@@ -5157,7 +5153,7 @@
 	},
 /area/station/hallway/primary/southeast)
 "vq" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/inner/sw)
 "vr" = (
 /obj/disposalpipe/segment{
@@ -5226,9 +5222,9 @@
 /area/station/hallway/primary/north)
 "vE" = (
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/outer/se)
 "vF" = (
@@ -5239,7 +5235,7 @@
 	},
 /area/station/hallway/primary/southeast)
 "vH" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/west)
 "vI" = (
 /obj/landmark/random_room/probstation_shuttles,
@@ -5538,9 +5534,9 @@
 "wX" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/south)
 "wZ" = (
@@ -5975,7 +5971,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "yM" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/com_dish/comdish)
 "yN" = (
 /obj/cable{
@@ -6604,9 +6600,9 @@
 /area/station/maintenance/outer/se)
 "Br" = (
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/inner/se)
 "Bs" = (
@@ -7226,7 +7222,7 @@
 	},
 /area/station/hallway/secondary/north)
 "DV" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/southwest)
 "DX" = (
 /obj/cable{
@@ -7270,9 +7266,9 @@
 /area/station/hallway/primary/west)
 "Ee" = (
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/outer/ne)
 "Ef" = (
@@ -7632,7 +7628,7 @@
 /turf/simulated/floor/color_coded_hall,
 /area/station/hallway/primary/west)
 "FK" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/primary/southwest)
 "FL" = (
 /obj/cable{
@@ -7679,7 +7675,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/west)
 "FT" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/south)
 "Ge" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -8103,6 +8099,13 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/color_coded_hall,
 /area/station/hallway/primary/north)
+"Ii" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
+	},
+/area/station/maintenance/south)
 "Ij" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -8257,7 +8260,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "IZ" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/inner/nw)
 "Ja" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -8425,9 +8428,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/outer/nw)
 "JL" = (
@@ -8703,7 +8706,7 @@
 	},
 /area/station/hallway/secondary/southwest)
 "KL" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/primary/southeast)
 "KM" = (
 /obj/railing,
@@ -8840,9 +8843,9 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "3"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-3";
+	can_be_auto = 0
 	},
 /area/station/maintenance/outer/west)
 "Lo" = (
@@ -9010,7 +9013,7 @@
 	},
 /area/station/hallway/primary/southeast)
 "LT" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/inner/ne)
 "LW" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -9070,9 +9073,9 @@
 /area/station/maintenance/inner/se)
 "Mi" = (
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "3"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-3";
+	can_be_auto = 0
 	},
 /area/station/maintenance/inner/nw)
 "Mj" = (
@@ -9312,7 +9315,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/southwest)
 "No" = (
-/turf/simulated/wall/auto/jen/green,
+/turf/simulated/wall/auto/supernorn/colored/green,
 /area/station/crew_quarters/map_atrium)
 "Np" = (
 /obj/random_item_spawner/gross_with_junk/one,
@@ -9437,7 +9440,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "NU" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/primary/northwest)
 "NV" = (
 /obj/rack,
@@ -9584,7 +9587,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/false_wall,
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
+	},
 /area/station/maintenance/outer/north)
 "Ox" = (
 /obj/disposalpipe/segment/bent/north,
@@ -9615,9 +9622,9 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "3"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-3";
+	can_be_auto = 0
 	},
 /area/station/maintenance/outer/se)
 "OC" = (
@@ -9800,9 +9807,9 @@
 /area/station/hallway/secondary/north)
 "Pw" = (
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/inner/sw)
 "Px" = (
@@ -9842,7 +9849,7 @@
 	},
 /area/station/hallway/primary/southeast)
 "PH" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/outer/nw)
 "PI" = (
 /obj/cable{
@@ -10658,9 +10665,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/false_wall{
-	color = "";
-	icon = 'icons/turf/walls/jen.dmi';
-	icon_state = "12"
+	icon = 'icons/turf/walls/supernorn/standard/white.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
 	},
 /area/station/maintenance/outer/nw)
 "Tj" = (
@@ -11919,7 +11926,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/northwest)
 "YS" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/outer/ne)
 "YT" = (
 /obj/disposalpipe/junction/right/east,
@@ -11984,7 +11991,7 @@
 	},
 /area/station/hallway/secondary/north)
 "Zi" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/outer/north)
 "Zj" = (
 /obj/machinery/camera/directional/north,
@@ -54543,7 +54550,7 @@ zS
 AO
 Fr
 ti
-pc
+ch
 Tj
 ic
 By
@@ -61863,7 +61870,7 @@ pH
 uo
 NT
 NT
-jo
+Ii
 Bt
 rK
 uO
@@ -72090,7 +72097,7 @@ YS
 rx
 fF
 rx
-Xh
+Ee
 rx
 WD
 EY

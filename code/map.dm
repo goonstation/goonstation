@@ -991,8 +991,8 @@ var/global/list/mapNames = list(
 	name = "probstation"
 	goonhub_map = "/maps" //good fucking luck
 	arrivals_type = MAP_SPAWN_CRYO
-	walls = /turf/simulated/wall/auto/jen
-	rwalls = /turf/simulated/wall/auto/reinforced/jen
+	walls = /turf/simulated/wall/auto/supernorn/colored
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn/colored
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro

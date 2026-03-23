@@ -179,13 +179,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"L" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/turret_protected/ai_upload)
 "M" = (
 /obj/machinery/ai_status_display,
 /turf/simulated/floor/circuit,
@@ -288,7 +281,7 @@ f
 a
 a
 a
-L
+l
 "}
 (3,1,1) = {"
 k
