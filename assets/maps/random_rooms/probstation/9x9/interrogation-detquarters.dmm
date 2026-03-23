@@ -197,7 +197,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/red,
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/detectives_office)
 "zT" = (
 /obj/cable{
@@ -420,7 +420,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "We" = (
-/turf/simulated/wall/auto/reinforced/jen/red,
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/interrogation)
 "XC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
