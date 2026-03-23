@@ -112,7 +112,7 @@
 /turf/simulated/floor/wood/three,
 /area/station/medical/head)
 "kF" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/crew_quarters/hor)
 "kL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -133,7 +133,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/crew_quarters/hor)
 "kR" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/medical/head)
 "pN" = (
 /obj/machinery/light/incandescent/netural,
@@ -420,7 +420,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/medical/head)
 "PG" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/blue,
 /area/station/crew_quarters/hor)
 "PO" = (
 /obj/machinery/power/apc/autoname_south,
@@ -536,7 +536,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "YT" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/blue,
 /area/station/medical/head)
 "Zv" = (
 /obj/cable{
@@ -581,10 +581,10 @@ kF
 kF
 kF
 wM
-kF
+PG
 YT
 YT
-kR
+YT
 "}
 (2,1,1) = {"
 XR
@@ -592,10 +592,10 @@ Rw
 kQ
 wy
 PO
-kF
+PG
 Gw
 uV
-kR
+YT
 "}
 (3,1,1) = {"
 qd
@@ -603,10 +603,10 @@ AA
 gq
 Jy
 wN
-kF
-kR
+PG
+YT
 dV
-kR
+YT
 "}
 (4,1,1) = {"
 SX
@@ -642,10 +642,10 @@ Qh
 uC
 "}
 (7,1,1) = {"
-kF
+PG
 gI
-kF
-kF
+PG
+PG
 Kx
 wV
 Zv
@@ -653,10 +653,10 @@ zV
 kL
 "}
 (8,1,1) = {"
-kF
+PG
 CG
 TF
-kF
+PG
 fz
 Nn
 gY
@@ -664,10 +664,10 @@ fb
 Xn
 "}
 (9,1,1) = {"
-kF
 PG
 PG
-kF
+PG
+PG
 SW
 kR
 kR

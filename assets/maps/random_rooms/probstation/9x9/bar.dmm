@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/bar)
 "b" = (
 /obj/stool/chair/comfy/red{
@@ -178,7 +178,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/jazz)
 "y" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/jazz)
 "z" = (
 /obj/table/reinforced/bar/auto,

@@ -256,7 +256,7 @@
 /turf/simulated/floor/carpet/green/standard/edge/sw,
 /area/station/bridge/customs)
 "J" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/bridge/customs)
 "K" = (
 /obj/machinery/computer3/generic/personnel_management,
@@ -307,7 +307,7 @@
 	},
 /area/station/bridge/customs)
 "R" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/bridge/customs)
 "S" = (
 /obj/storage/closet/law,

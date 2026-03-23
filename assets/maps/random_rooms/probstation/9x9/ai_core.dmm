@@ -188,9 +188,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"F" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/turret_protected/ai)
 "G" = (
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
@@ -261,7 +258,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "P" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/turret_protected/ai)
 "Q" = (
 /obj/machinery/power/data_terminal,
@@ -362,18 +359,18 @@
 /area/station/turret_protected/ai)
 
 (1,1,1) = {"
-F
-F
-F
-F
+P
+P
+P
+P
 u
-F
-F
-F
-F
+P
+P
+P
+P
 "}
 (2,1,1) = {"
-F
+P
 k
 a
 a
@@ -381,10 +378,10 @@ g
 Z
 a
 c
-F
+P
 "}
 (3,1,1) = {"
-F
+P
 a
 b
 O
@@ -392,10 +389,10 @@ N
 i
 L
 G
-F
+P
 "}
 (4,1,1) = {"
-F
+P
 U
 B
 j
@@ -403,7 +400,7 @@ K
 h
 W
 a
-F
+P
 "}
 (5,1,1) = {"
 l
@@ -417,7 +414,7 @@ q
 l
 "}
 (6,1,1) = {"
-F
+P
 E
 H
 f
@@ -425,10 +422,10 @@ K
 I
 n
 a
-F
+P
 "}
 (7,1,1) = {"
-F
+P
 p
 b
 S
@@ -436,10 +433,10 @@ r
 R
 L
 a
-F
+P
 "}
 (8,1,1) = {"
-F
+P
 J
 a
 s
@@ -447,16 +444,16 @@ y
 A
 a
 w
-F
+P
 "}
 (9,1,1) = {"
-F
-F
-F
-F
+P
+P
+P
+P
 Y
-F
-F
-F
-F
+P
+P
+P
+P
 "}

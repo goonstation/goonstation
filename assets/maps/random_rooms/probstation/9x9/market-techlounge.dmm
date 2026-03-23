@@ -170,7 +170,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
@@ -303,7 +303,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "I" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/market)
 "J" = (
 /obj/cable{
@@ -344,7 +344,7 @@
 	name = "Net Cafe"
 	})
 "N" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})

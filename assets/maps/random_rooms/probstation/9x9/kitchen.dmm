@@ -225,7 +225,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "D" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/kitchen)
 "F" = (
 /obj/machinery/power/apc/autoname_north,

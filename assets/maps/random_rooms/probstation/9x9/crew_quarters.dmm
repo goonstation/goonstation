@@ -301,7 +301,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "Z" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/quarters)
 
 (1,1,1) = {"

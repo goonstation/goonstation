@@ -336,7 +336,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/genpop)
 "CP" = (
-/turf/simulated/wall/auto/jen/red,
+/turf/simulated/wall/auto/supernorn/colored/red,
 /area/station/security/brig/genpop)
 "DV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,

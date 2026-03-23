@@ -45,7 +45,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "eD" = (
-/turf/simulated/wall/auto/jen/red,
+/turf/simulated/wall/auto/supernorn/colored/red,
 /area/station/security/detectives_office)
 "fj" = (
 /obj/table/wood/auto,

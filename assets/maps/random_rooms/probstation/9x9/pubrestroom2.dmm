@@ -202,7 +202,7 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/showers)
 "Q" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/showers)
 "S" = (
 /obj/machinery/door/airlock/pyro/alt{

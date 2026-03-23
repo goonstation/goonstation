@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/wall/auto/jen/orange,
+/turf/simulated/wall/auto/supernorn/colored/orange,
 /area/station/mining/staff_room)
 "b" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,

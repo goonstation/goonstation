@@ -172,7 +172,7 @@
 /turf/simulated/floor/black,
 /area/station/security/evidence)
 "wo" = (
-/turf/simulated/wall/auto/jen/purple,
+/turf/simulated/wall/auto/supernorn/colored/purple,
 /area/station/janitor/supply)
 "wA" = (
 /obj/storage/cart/forensic/security,

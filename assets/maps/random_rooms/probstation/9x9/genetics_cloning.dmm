@@ -341,10 +341,10 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "W" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/cyan,
 /area/station/medical/research)
 "X" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/cyan,
 /area/station/medical/medbay/cloner)
 "Y" = (
 /obj/machinery/drainage,

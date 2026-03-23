@@ -13,7 +13,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "b" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/cyan,
 /area/station/medical/morgue)
 "c" = (
 /obj/disposalpipe/segment,
@@ -117,7 +117,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/cyan,
 /area/station/medical/morgue)
 "t" = (
 /obj/table/auto,
@@ -271,7 +271,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/cyan,
 /area/station/medical/morgue)
 "I" = (
 /obj/cable{

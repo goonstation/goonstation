@@ -7,7 +7,7 @@
 /obj/barber_pole{
 	pixel_x = 10
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/barber_shop)
 "c" = (
 /obj/item/clothing/head/wig,
@@ -182,7 +182,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "z" = (
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/storage)
 "A" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -339,7 +339,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/science/storage)
 "U" = (
 /obj/decal/tile_edge/line/black{
@@ -380,14 +380,14 @@
 	},
 /area/station/crew_quarters/barber_shop)
 "Y" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/science/storage)
 "Z" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/science/storage)
 
 (1,1,1) = {"

@@ -26,7 +26,7 @@
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "c" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/teleporter)
 "d" = (
 /obj/machinery/camera/directional/east,
@@ -426,7 +426,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/teleporter)
 "F" = (
 /obj/machinery/computer/teleporter,
@@ -533,7 +533,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "S" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/ai_monitored/storage/eva)
 "T" = (
 /obj/machinery/camera/directional/west,

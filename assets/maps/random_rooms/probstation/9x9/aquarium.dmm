@@ -183,7 +183,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/aquarium)
 "V" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/aquarium)
 "X" = (
 /obj/fluid_spawner{

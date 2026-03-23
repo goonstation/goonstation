@@ -378,7 +378,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "M" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/cyan,
 /area/station/medical/robotics)
 "N" = (
 /obj/stool/chair/office{

@@ -17,13 +17,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/storage)
 "aC" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/auto/jen/yellow,
+/turf/simulated/wall/auto/supernorn/colored/yellow,
 /area/station/engine/storage)
 "co" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -129,7 +129,7 @@
 	},
 /area/station/engine/storage)
 "rW" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/storage)
 "sa" = (
 /obj/machinery/disposal/small/north{
@@ -376,7 +376,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
 "Ih" = (
-/turf/simulated/wall/auto/jen/yellow,
+/turf/simulated/wall/auto/supernorn/colored/yellow,
 /area/station/engine/storage)
 "JS" = (
 /obj/landmark/start/job/engineer,

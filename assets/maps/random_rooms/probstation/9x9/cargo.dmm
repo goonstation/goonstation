@@ -202,7 +202,7 @@
 	name = "Cargo Primary Endpoint"
 	})
 "E" = (
-/turf/simulated/wall/auto/jen/yellow,
+/turf/simulated/wall/auto/supernorn/colored/yellow,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})

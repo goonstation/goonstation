@@ -113,7 +113,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "o" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/medical/crematorium)
 "p" = (
 /obj/table/wood/auto,
@@ -202,7 +202,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "A" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/chapel/office)
 "B" = (
 /obj/table/auto,
@@ -290,7 +290,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/medical/crematorium)
 "M" = (
 /obj/landmark/gps_waypoint,
@@ -362,7 +362,7 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/bent/south,
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/medical/crematorium)
 "Y" = (
 /obj/cable{

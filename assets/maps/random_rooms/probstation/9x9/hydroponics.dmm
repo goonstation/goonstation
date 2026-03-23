@@ -20,7 +20,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "f" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored/green,
 /area/station/hydroponics/bay)
 "g" = (
 /obj/cable{

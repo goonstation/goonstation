@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/baroffice)
 "b" = (
 /obj/reagent_dispensers/still,
@@ -203,13 +203,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/catering)
 "K" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/baroffice)
 "L" = (
 /obj/cable{
@@ -283,7 +283,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "Z" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/catering)
 
 (1,1,1) = {"

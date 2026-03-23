@@ -120,7 +120,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/storage/tech)
 "m" = (
 /obj/cable{
@@ -163,7 +163,7 @@
 	name = "Tool Storage"
 	})
 "r" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
@@ -254,7 +254,7 @@
 	name = "Tool Storage"
 	})
 "A" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/storage/tech)
 "B" = (
 /obj/cable{
@@ -373,7 +373,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/storage/tech)
 "M" = (
 /obj/cable{
@@ -502,7 +502,7 @@
 /area/station/storage/tech)
 "W" = (
 /obj/machinery/firealarm/directional/west,
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/storage/tech)
 "Y" = (
 /obj/cable{

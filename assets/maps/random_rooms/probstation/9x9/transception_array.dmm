@@ -155,7 +155,7 @@
 	name = "Transception Array Control"
 	})
 "Z" = (
-/turf/simulated/wall/auto/jen/yellow,
+/turf/simulated/wall/auto/supernorn/colored/yellow,
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})

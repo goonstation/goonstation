@@ -134,7 +134,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/toilets)
 "z" = (
 /obj/machinery/shower{
@@ -185,10 +185,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/toilets)
 "L" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/toilets)
 "M" = (
 /turf/simulated/floor/sanitary,

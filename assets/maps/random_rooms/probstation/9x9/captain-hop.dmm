@@ -48,7 +48,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/crew_quarters/captain)
 "cw" = (
 /obj/shrub/captainshrub,
@@ -128,7 +128,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/blue,
 /area/station/bridge/execrestroom)
 "gB" = (
 /obj/machinery/door/airlock/pyro/command/alt{
@@ -200,7 +200,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hop)
 "ks" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/crew_quarters/captain)
 "nP" = (
 /obj/machinery/computer/announcement/station/captain,
@@ -279,7 +279,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/crew_quarters/captain)
 "vQ" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -316,7 +316,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/hop)
 "AJ" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/crew_quarters/hop)
 "CA" = (
 /obj/machinery/sink/slim{
@@ -339,7 +339,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "HZ" = (
-/turf/simulated/wall/auto/jen/blue,
+/turf/simulated/wall/auto/supernorn/colored/blue,
 /area/station/bridge/execrestroom)
 "Im" = (
 /obj/blind_switch/west,

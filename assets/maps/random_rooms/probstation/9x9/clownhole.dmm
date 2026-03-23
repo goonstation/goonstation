@@ -41,7 +41,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/crew_quarters/clown)
 "j" = (
 /obj/machinery/light/incandescent/purpleish,
@@ -61,7 +61,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/jen/dark1,
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/station/crew_quarters/clown)
 "m" = (
 /obj/stool/bed,
@@ -121,7 +121,7 @@
 /area/station/crew_quarters/clown)
 "E" = (
 /obj/blind_switch/area/east,
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/crew_quarters/clown)
 "H" = (
 /obj/machinery/computer/announcement/clown,
@@ -152,19 +152,19 @@
 	},
 /area/station/crew_quarters/clown)
 "M" = (
-/turf/simulated/wall/auto/reinforced/jen/dark1,
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/station/crew_quarters/clown)
 "O" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/dark1,
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/station/crew_quarters/clown)
 "P" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/crew_quarters/clown)
 "Q" = (
 /obj/machinery/light/incandescent/purpleish,
@@ -196,7 +196,7 @@
 	},
 /area/station/crew_quarters/clown)
 "S" = (
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/crew_quarters/clown)
 "U" = (
 /obj/storage/crate/clown,

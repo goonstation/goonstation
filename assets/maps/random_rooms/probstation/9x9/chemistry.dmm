@@ -4,7 +4,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/chemistry)
 "c" = (
 /obj/disposalpipe/junction/left/south,
@@ -14,7 +14,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/chemistry)
 "d" = (
 /obj/table/reinforced/chemistry/auto/firstaid,
@@ -103,7 +103,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/chemistry)
 "p" = (
 /obj/stool/chair/office/blue{
@@ -137,7 +137,7 @@
 /area/station/science/chemistry)
 "t" = (
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/chemistry)
 "u" = (
 /obj/cable{
@@ -216,7 +216,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/chemistry)
 "D" = (
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/chemistry)
 "E" = (
 /obj/stool/chair/office/purple{
@@ -309,7 +309,7 @@
 /area/station/science/chemistry)
 "O" = (
 /obj/disposalpipe/junction/right/south,
-/turf/simulated/wall/auto/reinforced/jen/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/chemistry)
 "P" = (
 /obj/disposalpipe/segment/horizontal,

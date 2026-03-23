@@ -346,7 +346,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "Ic" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/bridge)
 "Lk" = (
 /obj/cable{

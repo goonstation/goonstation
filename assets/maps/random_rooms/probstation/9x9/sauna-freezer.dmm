@@ -6,7 +6,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/sauna)
 "c" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -153,7 +153,7 @@
 	can_rupture = 0;
 	dir = 1
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/sauna)
 "t" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -268,7 +268,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/sauna)
 "F" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/sauna)
 "G" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -292,7 +292,7 @@
 	can_rupture = 0;
 	dir = 5
 	},
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/sauna)
 "K" = (
 /obj/machinery/atmospherics/pipe/quadway/overfloor,
@@ -314,6 +314,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
+/area/station/maintenance/storage)
+"N" = (
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/storage)
 "O" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -374,7 +377,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/storage)
 "V" = (
-/turf/simulated/wall/auto/jen,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/crew_quarters/kitchen/freezer)
 "W" = (
 /obj/machinery/atmospherics/binary/volume_pump/active{
@@ -473,7 +476,7 @@ b
 b
 "}
 (6,1,1) = {"
-n
+N
 x
 K
 L

@@ -70,7 +70,7 @@
 /area/station/turret_protected/Zeta)
 "i" = (
 /obj/disposalpipe/segment/bent/west,
-/turf/simulated/wall/auto/jen/dark4,
+/turf/simulated/wall/auto/supernorn/colored/purple,
 /area/station/science/bot_storage)
 "j" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -111,7 +111,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "m" = (
-/turf/simulated/wall/auto/jen/dark4,
+/turf/simulated/wall/auto/supernorn/colored/purple,
 /area/station/science/bot_storage)
 "n" = (
 /obj/machinery/computer3/generic/radio,
@@ -415,7 +415,7 @@
 /area/station/turret_protected/Zeta)
 "T" = (
 /obj/disposalpipe/segment/bent/east,
-/turf/simulated/wall/auto/reinforced/jen/dark4,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/turret_protected/Zeta)
 "U" = (
 /obj/machinery/power/data_terminal,
@@ -440,7 +440,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "W" = (
-/turf/simulated/wall/auto/reinforced/jen/dark4,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/turret_protected/Zeta)
 "X" = (
 /obj/machinery/networked/mainframe/zeta{
