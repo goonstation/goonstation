@@ -139,14 +139,15 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/telepad,
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "0-8"
 	},
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-4"
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
+/obj/cable,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "tp" = (

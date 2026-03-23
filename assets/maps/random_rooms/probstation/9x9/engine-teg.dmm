@@ -68,6 +68,9 @@
 /area/station/engine/core/thermoelectric)
 "jU" = (
 /obj/machinery/atmospherics/binary/valve,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "mb" = (

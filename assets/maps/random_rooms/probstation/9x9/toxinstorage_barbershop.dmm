@@ -135,6 +135,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "s" = (
+/obj/tug_cart,
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "t" = (

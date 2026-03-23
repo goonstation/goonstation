@@ -15,12 +15,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"cN" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black,
-/area/station/security/main)
 "dD" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/red/redblackchecker,
@@ -237,9 +231,18 @@
 /area/station/security/equipment)
 "Ee" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
+/area/station/security/main)
+"Eg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
 /area/station/security/main)
 "El" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -254,6 +257,9 @@
 	},
 /obj/landmark/start/job/security_officer,
 /obj/machinery/light/small/floor/netural,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Ht" = (
@@ -284,6 +290,9 @@
 	},
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -341,12 +350,21 @@
 "OD" = (
 /obj/table/reinforced/auto,
 /obj/item/device/ticket_writer{
-	pixel_y = -3
+	pixel_y = -3;
+	pixel_x = -18
 	},
 /obj/item/instrument/whistle{
-	pixel_y = 10
+	pixel_y = 10;
+	pixel_x = -18
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/networked/printer{
+	name = "Printer - Security";
+	print_id = "security"
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -408,6 +426,9 @@
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Vy" = (
@@ -443,9 +464,6 @@
 /obj/table/reinforced/auto,
 /obj/item/device/panicbutton,
 /obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Zb" = (
@@ -454,6 +472,9 @@
 /obj/machinery/recharger/wall/sticky{
 	dir = 1;
 	pixel_y = 26
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -505,7 +526,7 @@ rw
 (5,1,1) = {"
 Vy
 dJ
-cN
+Xz
 Ce
 Ce
 Ki
@@ -516,7 +537,7 @@ AC
 (6,1,1) = {"
 yI
 Ht
-QT
+Eg
 Ce
 Bw
 Mc

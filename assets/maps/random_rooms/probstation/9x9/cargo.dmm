@@ -5,6 +5,9 @@
 	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"

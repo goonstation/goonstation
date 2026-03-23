@@ -308,6 +308,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/gas)
 "W" = (
+/obj/tug_cart,
 /turf/simulated/floor/black/grime,
 /area/station/engine/gas)
 "X" = (

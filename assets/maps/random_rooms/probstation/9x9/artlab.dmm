@@ -140,6 +140,9 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access/artlab,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "v" = (

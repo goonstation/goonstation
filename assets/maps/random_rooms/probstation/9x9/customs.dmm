@@ -28,6 +28,12 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/carpet/green,
 /area/station/bridge/customs)
+"f" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/bridge/customs)
 "g" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
@@ -160,6 +166,9 @@
 "w" = (
 /obj/machinery/computer/card,
 /obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/green/standard/edge/ne,
 /area/station/bridge/customs)
 "x" = (
@@ -207,6 +216,9 @@
 "C" = (
 /obj/stool/chair/office/blue{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/standard/edge/east,
 /area/station/bridge/customs)
@@ -298,6 +310,9 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/green/standard/edge/east,
 /area/station/bridge/customs)
@@ -425,7 +440,7 @@ p
 Z
 "}
 (5,1,1) = {"
-R
+f
 w
 C
 P

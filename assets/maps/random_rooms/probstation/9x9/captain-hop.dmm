@@ -243,7 +243,7 @@
 "oG" = (
 /obj/storage/secure/closet/command/captain,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/item/clothing/suit/space/captain,
@@ -274,12 +274,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
-"vC" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/crew_quarters/captain)
 "vQ" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -560,7 +554,7 @@ PZ
 gX
 fM
 oG
-vC
+ks
 ow
 ed
 HZ
@@ -570,8 +564,8 @@ ks
 ks
 ks
 ks
-ks
 co
+ks
 HZ
 HZ
 HZ

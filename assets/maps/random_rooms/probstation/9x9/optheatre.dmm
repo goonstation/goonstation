@@ -82,6 +82,13 @@
 /obj/item/hemostat,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
+"n" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/surgery)
 "o" = (
 /obj/table/reinforced/auto,
 /obj/item/robodefibrillator,
@@ -155,6 +162,13 @@
 "y" = (
 /obj/table/auto,
 /obj/machinery/defib_mount,
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery)
+"z" = (
+/obj/machinery/optable,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "A" = (
@@ -238,6 +252,9 @@
 	icon_state = "0-4"
 	},
 /obj/landmark/start/job/medical_doctor,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "K" = (
@@ -261,6 +278,12 @@
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/treatment)
 "N" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/medbay/surgery)
+"O" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/wall/auto/supernorn/colored/cyan,
 /area/station/medical/medbay/surgery)
 "Q" = (
@@ -328,7 +351,7 @@ N
 N
 N
 N
-N
+O
 N
 N
 N
@@ -339,8 +362,8 @@ N
 t
 U
 m
-w
-t
+n
+z
 J
 m
 N

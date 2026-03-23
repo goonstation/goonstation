@@ -8,6 +8,9 @@
 /area/station/science/lab)
 "bm" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter{
+	pixel_y = 8
+	},
 /turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/lab)
 "eg" = (
@@ -138,11 +141,18 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "nM" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/machinery/disposal/small/west{
 	pixel_x = 8
 	},
 /obj/disposalpipe/trunk/west,
+/obj/machinery/computer/atmosphere/pumpcontrol{
+	frequency = 1229;
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -156,8 +166,14 @@
 	dir = 5
 	},
 /obj/machinery/meter,
-/obj/machinery/portable_atmospherics/scrubber,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/west{
+	pixel_y = 8
+	},
+/obj/machinery/dispenser,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -170,6 +186,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "qT" = (
@@ -205,6 +224,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -218,12 +238,14 @@
 	layer = 7;
 	name = "Mounted Igniter";
 	pixel_x = 22;
-	dir = 8
+	dir = 8;
+	pixel_y = 12
 	},
-/obj/machinery/networked/test_apparatus/gas_sensor,
-/obj/machinery/power/data_terminal,
+/obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning{
+	dir = 4
+	},
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -239,9 +261,6 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "heat exchanger valve"
-	},
-/obj/cable{
-	icon_state = "1-8"
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -315,6 +334,11 @@
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 8
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/networked/test_apparatus/gas_sensor,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "zW" = (
@@ -418,7 +442,6 @@
 /area/station/science/lab)
 "PJ" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor,
-/obj/machinery/dispenser,
 /obj/machinery/door_control/bolter/new_walls/north{
 	dir = 2;
 	pixel_x = 6;
@@ -433,6 +456,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -521,19 +545,20 @@
 /area/station/science/lab)
 "Ui" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/meter,
+/obj/machinery/atmospherics/binary/pump{
+	frequency = 1229;
+	id = "Chamber One Outlet";
+	on = 1;
+	target_pressure = 500;
+	dir = 4
+	},
 /turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/lab)
 "Um" = (
-/obj/machinery/computer/atmosphere/pumpcontrol{
-	frequency = 1229;
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment/bent/east,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},

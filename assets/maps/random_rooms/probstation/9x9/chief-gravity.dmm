@@ -207,6 +207,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "v" = (
@@ -381,6 +384,9 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/wood/five,
 /area/station/crew_quarters/ce)
 "L" = (
