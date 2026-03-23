@@ -26,15 +26,18 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
 "dJ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light_switch/north{
 	pixel_x = -5
 	},
 /obj/blind_switch/area/north{
 	pixel_x = 6
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/security/department,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "eb" = (
@@ -124,6 +127,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/bent/north,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "oe" = (
