@@ -30,7 +30,7 @@
 /area/station/teleporter)
 "d" = (
 /obj/machinery/camera/directional/east,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/longtile/black,
 /area/station/ai_monitored/storage/eva)
 "e" = (
 /obj/machinery/light/small/floor,
@@ -44,7 +44,7 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/darkblueblack{
 	dir = 1
 	},
 /area/station/ai_monitored/storage/eva)
@@ -84,7 +84,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/darkblueblack,
 /area/station/ai_monitored/storage/eva)
 "j" = (
 /obj/rack,
@@ -115,12 +115,14 @@
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/darkblueblack{
+	dir = 8
+	},
 /area/station/ai_monitored/storage/eva)
 "k" = (
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/mapping_helper/access/eva,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/longtile/black,
 /area/station/ai_monitored/storage/eva)
 "l" = (
 /obj/rack,
@@ -139,7 +141,7 @@
 	pixel_x = 6
 	},
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/longtile/black,
 /area/station/ai_monitored/storage/eva)
 "m" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -150,7 +152,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/darkblueblack,
 /area/station/ai_monitored/storage/eva)
 "n" = (
 /obj/machinery/door/airlock/pyro/glass/command,
@@ -180,7 +182,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/darkblueblack{
+	dir = 10
+	},
 /area/station/ai_monitored/storage/eva)
 "q" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -201,7 +205,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/darkblueblack{
 	dir = 1
 	},
 /area/station/ai_monitored/storage/eva)
@@ -280,7 +284,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/darkblueblack{
+	dir = 6
+	},
 /area/station/ai_monitored/storage/eva)
 "v" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -329,13 +335,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/darkblueblack,
 /area/station/ai_monitored/storage/eva)
 "y" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/longtile/blue,
 /area/station/ai_monitored/storage/eva)
 "z" = (
 /obj/item/caution{
@@ -362,7 +368,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/darkblueblack{
 	dir = 1
 	},
 /area/station/ai_monitored/storage/eva)
@@ -411,7 +417,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/darkblueblack,
 /area/station/ai_monitored/storage/eva)
 "D" = (
 /obj/machinery/power/apc/autoname_east,
@@ -440,7 +446,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "J" = (
 /obj/machinery/teleport/portal_generator,
@@ -458,13 +464,14 @@
 	pixel_y = 32
 	},
 /obj/disposalpipe/segment/bent/west,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/darkblueblack{
 	dir = 1
 	},
 /area/station/ai_monitored/storage/eva)
 "L" = (
 /obj/machinery/door_control/north{
-	id = "eva"
+	id = "eva";
+	dir = 2
 	},
 /obj/item/extinguisher{
 	pixel_x = 13;
@@ -475,7 +482,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/darkblueblack{
 	dir = 1
 	},
 /area/station/ai_monitored/storage/eva)
@@ -495,15 +502,15 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 1
+/turf/simulated/floor/darkblueblack{
+	dir = 9
 	},
 /area/station/ai_monitored/storage/eva)
 "P" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/longtile/blue,
 /area/station/ai_monitored/storage/eva)
 "Q" = (
 /obj/rack,
@@ -526,18 +533,20 @@
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/darkblueblack{
+	dir = 4
+	},
 /area/station/ai_monitored/storage/eva)
 "R" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "S" = (
 /turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
 /area/station/ai_monitored/storage/eva)
 "T" = (
 /obj/machinery/camera/directional/west,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/longtile/black,
 /area/station/ai_monitored/storage/eva)
 "U" = (
 /obj/cable{
@@ -550,7 +559,7 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/darkblueblack,
 /area/station/ai_monitored/storage/eva)
 "V" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -570,10 +579,10 @@
 "W" = (
 /obj/storage/crate/rcd,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/longtile/black,
 /area/station/ai_monitored/storage/eva)
 "X" = (
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "Y" = (
 /obj/machinery/light_switch/west,
@@ -585,8 +594,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 1
+/turf/simulated/floor/darkblueblack{
+	dir = 5
 	},
 /area/station/ai_monitored/storage/eva)
 

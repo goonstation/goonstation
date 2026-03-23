@@ -62,7 +62,11 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/wall/false_wall/reinforced,
+/turf/simulated/wall/false_wall/reinforced{
+	icon = 'icons/turf/walls/supernorn/reinforced/blue.dmi';
+	icon_state = "norn-12";
+	can_be_auto = 0
+	},
 /area/station/bridge)
 "fo" = (
 /obj/storage/crate/radio,

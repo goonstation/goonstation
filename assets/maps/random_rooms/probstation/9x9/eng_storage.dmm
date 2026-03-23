@@ -33,7 +33,7 @@
 "cS" = (
 /obj/machinery/disposal_pipedispenser/mobile,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor/yellowblack,
 /area/station/engine/storage)
 "fB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -57,7 +57,9 @@
 /area/station/engine/storage)
 "kl" = (
 /obj/machinery/dispenser,
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
 /area/station/engine/storage)
 "lF" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
@@ -88,7 +90,7 @@
 "mU" = (
 /obj/storage/secure/closet/engineering/electrical,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 4
 	},
 /area/station/engine/storage)
@@ -124,7 +126,7 @@
 /area/station/engine/storage)
 "rs" = (
 /obj/machinery/vending/jobclothing/engineering,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 4
 	},
 /area/station/engine/storage)
@@ -136,7 +138,7 @@
 	pixel_y = 32
 	},
 /obj/disposalpipe/trunk/south,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 1
 	},
 /area/station/engine/storage)
@@ -174,7 +176,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
 /area/station/engine/storage)
 "uu" = (
 /obj/machinery/manufacturer/engineering,
@@ -191,7 +195,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor/yellowblack,
 /area/station/engine/storage)
 "wF" = (
 /obj/cable{
@@ -205,7 +209,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 4
 	},
 /area/station/engine/storage)
@@ -225,7 +229,9 @@
 /area/station/engine/storage)
 "AM" = (
 /obj/storage/secure/closet/engineering/engineer,
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
 /area/station/engine/storage)
 "Ce" = (
 /obj/stool/chair/office/yellow{
@@ -243,12 +249,14 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
 /area/station/engine/storage)
 "Er" = (
 /obj/landmark/start/job/engineer,
 /obj/disposalpipe/segment/bent/north,
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/engine/storage)
 "Fe" = (
 /obj/rack,
@@ -313,13 +321,13 @@
 	pixel_y = -3
 	},
 /obj/machinery/firealarm/directional/east,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 4
 	},
 /area/station/engine/storage)
 "FL" = (
 /obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 8
 	},
 /area/station/engine/storage)
@@ -362,7 +370,7 @@
 	},
 /obj/item/clothing/gloves/yellow,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor/yellowblack,
 /area/station/engine/storage)
 "Hq" = (
 /obj/table/reinforced/auto,
@@ -383,7 +391,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 8
 	},
 /area/station/engine/storage)
@@ -392,7 +400,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/bent/west,
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/engine/storage)
 "Li" = (
 /obj/rack,
@@ -422,7 +430,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 1
 	},
 /area/station/engine/storage)
@@ -443,7 +451,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 8
 	},
 /area/station/engine/storage)
@@ -467,7 +475,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "NT" = (
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/engine/storage)
 "NU" = (
 /obj/cable{
@@ -477,7 +485,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 1
 	},
 /area/station/engine/storage)
@@ -485,11 +493,11 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/engine/storage)
 "Pn" = (
 /obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor/yellowblack,
 /area/station/engine/storage)
 "PV" = (
 /obj/item/sheet/glass/fullstack{
@@ -509,7 +517,9 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/yellowblack{
+	dir = 6
+	},
 /area/station/engine/storage)
 "Qd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -525,7 +535,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 8
 	},
 /area/station/engine/storage)
@@ -558,13 +568,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 1
 	},
 /area/station/engine/storage)
 "TW" = (
 /obj/storage/secure/closet/engineering/engineer,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 4
 	},
 /area/station/engine/storage)
@@ -582,7 +592,7 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/junction/middle,
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/engine/storage)
 "WP" = (
 /obj/table/auto,
@@ -613,7 +623,7 @@
 	pixel_x = -7;
 	pixel_y = 2
 	},
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor/yellowblack,
 /area/station/engine/storage)
 "XM" = (
 /obj/machinery/vending/standard,
@@ -626,7 +636,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/yellow/corner{
+/turf/simulated/floor/yellowblack/corner{
 	dir = 1
 	},
 /area/station/engine/storage)
