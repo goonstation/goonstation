@@ -2132,9 +2132,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/nw)
-"iD" = (
-/turf/simulated/wall/auto/supernorn/colored,
-/area/station/hallway/secondary/northwest)
 "iF" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -4604,12 +4601,6 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/northeast)
-"sU" = (
-/obj/machinery/camera/directional/north,
-/turf/simulated/floor/color_coded_hall{
-	dir = 5
-	},
-/area/station/hallway/primary/southwest)
 "sV" = (
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/east)
@@ -5355,11 +5346,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "wk" = (
-/obj/machinery/camera/directional/south,
-/turf/simulated/floor/color_coded_hall{
-	dir = 6
-	},
-/area/station/hallway/primary/west)
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/hallway/primary/southwest)
 "wo" = (
 /obj/machinery/ai_status_display/new_walls/west,
 /turf/simulated/floor/color_coded_hall{
@@ -6884,9 +6874,6 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/northwest)
-"CC" = (
-/turf/simulated/floor/color_coded_hall/corner,
-/area/station/hallway/primary/west)
 "CE" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 5
@@ -7627,9 +7614,6 @@
 	},
 /turf/simulated/floor/color_coded_hall,
 /area/station/hallway/primary/west)
-"FK" = (
-/turf/simulated/wall/auto/supernorn/colored,
-/area/station/hallway/primary/southwest)
 "FL" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -9186,9 +9170,7 @@
 "ME" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/color_coded_hall{
-	dir = 4
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/northwest)
 "MF" = (
 /obj/machinery/light/incandescent/netural{
@@ -10412,13 +10394,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"Sg" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/color_coded_hall{
-	dir = 8
-	},
-/area/station/hallway/secondary/northwest)
 "Sh" = (
 /turf/simulated/floor/color_coded_hall{
 	dir = 1
@@ -12000,11 +11975,6 @@
 	dir = 9
 	},
 /area/station/hallway/primary/southeast)
-"Zk" = (
-/turf/simulated/floor/color_coded_hall{
-	dir = 6
-	},
-/area/station/hallway/secondary/northwest)
 "Zm" = (
 /obj/shrub{
 	dir = 4
@@ -44926,7 +44896,7 @@ By
 au
 zT
 MD
-gl
+Nn
 HK
 HK
 jq
@@ -45228,7 +45198,7 @@ By
 Zp
 fy
 yy
-Nn
+wk
 td
 td
 td
@@ -45529,9 +45499,9 @@ By
 By
 lK
 fy
-CC
-Oj
-kQ
+yy
+wk
+td
 td
 Nw
 BO
@@ -45831,9 +45801,9 @@ By
 By
 Zp
 EC
-wk
-FK
-sU
+yr
+Nn
+XE
 XE
 IH
 al
@@ -46708,7 +46678,7 @@ PO
 lL
 PO
 PO
-Sg
+KU
 SU
 wZ
 us
@@ -47010,7 +46980,7 @@ sP
 sP
 sP
 sP
-KU
+ME
 px
 jX
 AI
@@ -47311,9 +47281,9 @@ sP
 sP
 sP
 sP
-bk
+sP
 ME
-TX
+px
 jX
 ZU
 IZ
@@ -47613,9 +47583,9 @@ lb
 lb
 UQ
 lb
-Zk
-iD
-Vb
+lb
+KU
+TX
 jX
 ZU
 IZ
@@ -47917,7 +47887,7 @@ By
 By
 By
 zS
-YI
+Vb
 jX
 kD
 IZ
