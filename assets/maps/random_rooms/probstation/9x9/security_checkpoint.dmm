@@ -83,12 +83,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -15
-	},
 /obj/landmark/start/job/security_assistant,
 /obj/disposalpipe/segment,
+/obj/machinery/alarm/directional/south,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -209,9 +206,12 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/camera/directional/west{
-	pixel_y = 6
+	pixel_y = 15
 	},
 /obj/machinery/light_switch/west{
+	pixel_y = 5
+	},
+/obj/blind_switch/area/west{
 	pixel_y = -6
 	},
 /turf/simulated/floor/red/side{
@@ -322,13 +322,6 @@
 "JT" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/phone/wall{
-	pixel_y = -22;
-	pixel_x = 6
-	},
-/obj/blind_switch/area/south{
-	pixel_x = -6
 	},
 /turf/simulated/floor/red/side{
 	dir = 9
@@ -447,7 +440,7 @@
 "TD" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/reinforced/auto,
-/obj/item/folder,
+/obj/machinery/phone,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -521,6 +514,7 @@
 	layer = 2.9;
 	pixel_y = 13
 	},
+/obj/item/folder,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint)
 

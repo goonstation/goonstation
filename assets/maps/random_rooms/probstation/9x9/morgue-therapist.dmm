@@ -41,10 +41,7 @@
 /area/station/medical/medbay/psychiatrist)
 "g" = (
 /obj/machinery/traymachine/morgue,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -20
-	},
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "h" = (

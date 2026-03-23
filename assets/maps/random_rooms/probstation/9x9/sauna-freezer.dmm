@@ -206,10 +206,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/alarm/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/storage)
 "z" = (

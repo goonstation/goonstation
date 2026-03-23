@@ -223,10 +223,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
