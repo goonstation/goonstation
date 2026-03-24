@@ -7,7 +7,9 @@
 /area/station/hallway/secondary/exit)
 "aB" = (
 /obj/decal/stripe_delivery,
-/turf/simulated/floor/grey,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
 /area/station/hallway/secondary/south)
 "aU" = (
 /obj/stool/chair/couch{
@@ -189,7 +191,9 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "nk" = (
-/turf/simulated/floor,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
 /area/station/hallway/secondary/south)
 "nE" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -197,6 +201,16 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"nY" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/stripe_delivery,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/hallway/secondary/south)
 "ox" = (
 /obj/machinery/camera/directional/west,
 /turf/simulated/floor/escape{
@@ -253,7 +267,9 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/grey,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
 /area/station/hallway/secondary/south)
 "rr" = (
 /obj/machinery/light/incandescent/netural{
@@ -324,6 +340,11 @@
 "yo" = (
 /turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/south)
+"ys" = (
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/hallway/secondary/south)
 "zi" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -371,7 +392,9 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/turf/simulated/floor/grey,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
 /area/station/hallway/secondary/south)
 "CV" = (
 /obj/stool/chair/office/red{
@@ -447,7 +470,9 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/grey,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
 /area/station/hallway/secondary/south)
 "GI" = (
 /obj/machinery/firealarm/directional/north,
@@ -645,6 +670,18 @@
 "Yl" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"Yx" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/stripe_delivery,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/hallway/secondary/south)
 "YR" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/computer/card{
@@ -926,7 +963,7 @@ nk
 nk
 CU
 Gv
-qy
+Yx
 oX
 oX
 oX
@@ -956,9 +993,9 @@ oX
 oX
 "}
 (9,1,1) = {"
-nk
-nk
-CU
+ys
+ys
+nY
 aB
 qy
 oX

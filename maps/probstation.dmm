@@ -837,13 +837,14 @@
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/hallway/primary/north)
 "dn" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/color_coded_hall{
 	dir = 1
 	},
-/area/station/hallway/secondary/north)
+/area/station/hallway/secondary/northwest)
 "dp" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -2796,7 +2797,7 @@
 /turf/simulated/floor/color_coded_hall{
 	dir = 6
 	},
-/area/station/hallway/secondary/north)
+/area/station/hallway/secondary/northwest)
 "kZ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -3525,7 +3526,7 @@
 /turf/simulated/floor/color_coded_hall{
 	dir = 1
 	},
-/area/station/hallway/secondary/north)
+/area/station/hallway/secondary/northwest)
 "nV" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
@@ -6525,7 +6526,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/minitiles/black,
 /area/station/hallway/secondary/southwest)
 "Ak" = (
 /obj/machinery/recharge_station,
@@ -6891,13 +6892,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/west)
 "BK" = (
-/obj/cable{
-	icon_state = "2-8"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
-/turf/simulated/floor/color_coded_hall{
-	dir = 1
-	},
-/area/station/hallway/secondary/north)
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/color_coded_hall,
+/area/station/hallway/secondary/northwest)
 "BL" = (
 /obj/random_item_spawner/gross_with_junk/one,
 /obj/disposalpipe/segment,
@@ -7092,7 +7092,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
+/turf/simulated/floor/color_coded_hall{
+	dir = 1
+	},
 /area/station/hallway/secondary/southwest)
 "CB" = (
 /obj/cable{
@@ -7275,7 +7277,7 @@
 /obj/storage/closet/emergency,
 /obj/item/tank/pocket/oxygen,
 /obj/item/tank/pocket/oxygen,
-/turf/simulated/floor,
+/turf/simulated/floor/minitiles/black,
 /area/station/hallway/secondary/southwest)
 "Dt" = (
 /obj/random_item_spawner/clothing_booth,
@@ -8112,11 +8114,8 @@
 	},
 /area/station/hallway/primary/south)
 "Hf" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor,
+/obj/machinery/status_display/new_walls/south,
+/turf/simulated/floor/color_coded_hall,
 /area/station/hallway/secondary/northwest)
 "Hh" = (
 /obj/disposalpipe/junction/right/east,
@@ -10991,7 +10990,7 @@
 /area/station/hallway/secondary/northwest)
 "Tr" = (
 /obj/random_item_spawner/clothing_booth,
-/turf/simulated/floor,
+/turf/simulated/floor/minitiles/black,
 /area/station/hallway/secondary/southwest)
 "Ts" = (
 /obj/machinery/camera/directional/south,
@@ -54568,7 +54567,7 @@ By
 By
 By
 Sq
-Hf
+sP
 bW
 EH
 yz
@@ -54869,9 +54868,9 @@ By
 By
 By
 By
-eq
-Xd
-ts
+Sq
+sP
+ir
 Zi
 Pp
 Pp
@@ -55171,9 +55170,9 @@ By
 By
 By
 By
-Cw
-Ix
-YB
+Sq
+sP
+Hf
 Zi
 TI
 Zi
@@ -55473,8 +55472,8 @@ By
 By
 By
 By
-Cw
-AE
+Sq
+bk
 kY
 Zi
 Pp
@@ -55775,8 +55774,8 @@ By
 By
 By
 By
-Cw
-Fw
+Sq
+bW
 By
 By
 By
@@ -56078,7 +56077,7 @@ By
 By
 By
 nU
-Fw
+bW
 By
 By
 By
@@ -56379,8 +56378,8 @@ By
 By
 By
 By
-dn
-rR
+Wa
+ir
 By
 By
 By
@@ -56681,8 +56680,8 @@ By
 By
 By
 By
-dn
-Fw
+Wa
+bW
 By
 By
 By
@@ -56983,8 +56982,8 @@ By
 By
 By
 By
-BK
-yc
+Cv
+Tq
 By
 By
 By
@@ -57285,8 +57284,8 @@ By
 By
 By
 By
-Cw
-Fw
+dn
+BK
 By
 By
 By
@@ -65172,8 +65171,8 @@ RU
 rc
 Yd
 Yd
-RU
 Yd
+RU
 Yd
 Yd
 Yd

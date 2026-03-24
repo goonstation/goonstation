@@ -165,7 +165,6 @@
 /area/station/security/main)
 "vr" = (
 /obj/machinery/door/airlock/pyro/glass/security{
-	name = "Mini-Brig";
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
