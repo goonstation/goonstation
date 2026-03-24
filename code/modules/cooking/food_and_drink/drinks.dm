@@ -334,7 +334,8 @@
 		if (src.is_sealed)
 			is_sealed = 0
 			src.set_open_container(TRUE)
-			src.desc += "<br>Its seal has been opened."
+			src.desc += " Its seal has been opened."
+			tooltip_rebuild = TRUE
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE
