@@ -355,10 +355,25 @@
 /turf/simulated/floor/color_coded_hall
 	icon_state = "whitehall" //Default for mapping purposes
 	var/is_corner = FALSE
-	var/static/list/turf_edge_options = list("blue", "arrival", "escape", "blugreen", "dblue", "dpurple",
-											"green", "orange", "caution", "purple", "red", "yellow", "whitehall")
+	///Associated list of icon states into color name
+	var/static/list/turf_edge_options = list("blue" = "Blue",
+											"arrival" = "Blue and White",
+											"escape" = "Red and White",
+											"blugreen" = "Blue and Green",
+											"dblue" = "Dark Blue",
+											"dpurple" = "Dark Purple",
+											"green" = "Green",
+											"orange" = "Orange",
+											"caution" = "Yellow and Black",
+											"purple" = "Purple",
+											"red" = "Red",
+											"yellow" = "Yellow",
+											"whitehall" = "White")
+	///Floor icons which don't have the usual [color]corner name
 	var/static/list/corner_icon_overrides = list("whitehall" = "whitecorner")
+	///These are super evil and have their outer corners in the corner sprite unlike the rest
 	var/static/list/inverted_corners = list("dblue", "dpurple")
+	///Associated list of area name = color
 	var/static/list/hallway_to_color = list()
 
 	New()
@@ -366,6 +381,11 @@
 		var/area/room = get_area(src)
 		if(!(room.name in src.hallway_to_color))
 			var/chosen_colour = pick(src.turf_edge_options)
+			//Probstation halls get their name from their color instead of their compass directions
+#ifdef MAP_OVERRIDE_PROBSTATION
+			if(istype(room, /area/station/hallway) && room.name == initial(room.name))
+				room.name = "[src.turf_edge_options[chosen_colour]] Hallway"
+#endif
 			src.turf_edge_options -= chosen_colour
 			src.hallway_to_color |= list(room.name = chosen_colour)
 		src.icon_state = src.hallway_to_color[room.name]
