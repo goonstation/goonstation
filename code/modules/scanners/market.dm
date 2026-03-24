@@ -19,6 +19,9 @@ TYPEINFO(/obj/item/device/appraisal)
 		return
 
 	attack_self(mob/user)
+		if (isnull(src.last_scan_value))
+			boutput(user, SPAN_NOTICE("No previous scan results located."))
+			return
 		src.print_receipt(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)

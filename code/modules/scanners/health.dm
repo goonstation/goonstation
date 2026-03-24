@@ -383,6 +383,9 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 /// ----------------------------------------------
 
 	attack_self(mob/user)
+		if (isnull(src.last_scan_data))
+			boutput(user, SPAN_NOTICE("No previous scan results located."))
+			return
 		src.print_report(user)
 
 	attackby(obj/item/W, mob/user)
