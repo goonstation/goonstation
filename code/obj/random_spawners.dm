@@ -309,7 +309,7 @@
 	/obj/item/bandage,
 	/obj/item/body_bag,
 	/obj/item/device/analyzer/healthanalyzer,
-/obj/item/device/analyzer/healthanalyzer_upgrade,
+	/obj/item/device/analyzer/healthanalyzer_upgrade,
 	/obj/item/reagent_containers/dropper,
 	/obj/item/reagent_containers/dropper/mechanical,
 	/obj/item/storage/box/syringes,
