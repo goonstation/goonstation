@@ -1962,6 +1962,18 @@ TYPEINFO(/area/station/maintenance)
 	do_not_irradiate = TRUE
 	station_map_colour = MAPC_MAINTENANCE
 
+#ifdef MAP_OVERRIDE_PROBSTATION
+	var/static/list/unused_greek_letters
+	New()
+		. = ..()
+		if(!src.unused_greek_letters)
+			src.unused_greek_letters = strings("station_name.txt", "greek")
+		if(src.name == initial(src.name))
+			var/chosen_letter = pick(src.unused_greek_letters)
+			src.unused_greek_letters -= chosen_letter
+			src.name = "[chosen_letter] Maintenance"
+#endif
+
 /area/station/maintenance/northwest
 	name = "North West Maintenance"
 	icon_state = "NWmaint"
