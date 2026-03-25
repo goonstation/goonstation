@@ -973,8 +973,8 @@
 "dH" = (
 /obj/shrub/random,
 /obj/machinery/camera/directional/east,
-/turf/simulated/floor/arrival{
-	dir = 4
+/turf/simulated/floor/color_coded_hall{
+	dir = 5
 	},
 /area/station/hallway/secondary/west)
 "dI" = (
@@ -2584,7 +2584,7 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 1
 	},
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
@@ -3110,7 +3110,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction/right/east,
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
@@ -5163,7 +5163,7 @@
 /area/station/hallway/secondary/north)
 "uK" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
+/turf/simulated/floor/color_coded_hall,
 /area/station/hallway/secondary/west)
 "uM" = (
 /obj/machinery/camera/directional/south,
@@ -5851,8 +5851,8 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/east,
-/turf/simulated/floor/arrival{
-	dir = 4
+/turf/simulated/floor/color_coded_hall{
+	dir = 6
 	},
 /area/station/hallway/secondary/west)
 "xD" = (
@@ -6053,7 +6053,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
@@ -6592,7 +6592,9 @@
 /obj/storage/closet/emergency,
 /obj/item/tank/pocket/oxygen,
 /obj/item/tank/pocket/oxygen,
-/turf/simulated/floor,
+/turf/simulated/floor/color_coded_hall{
+	dir = 1
+	},
 /area/station/hallway/secondary/west)
 "Ax" = (
 /obj/shrub{
@@ -7048,7 +7050,7 @@
 /obj/machinery/power/apc/autoname_east,
 /obj/disposalpipe/trunk/south,
 /obj/machinery/disposal,
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
@@ -7140,7 +7142,7 @@
 /area/station/crew_quarters/map_atrium)
 "CJ" = (
 /obj/shrub/random,
-/turf/simulated/floor,
+/turf/simulated/floor/color_coded_hall,
 /area/station/hallway/secondary/west)
 "CK" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -9324,7 +9326,7 @@
 /area/station/hallway/primary/north)
 "Mf" = (
 /obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
@@ -9963,7 +9965,7 @@
 /area/station/maintenance/disposal)
 "OR" = (
 /obj/random_item_spawner/clothing_booth,
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
@@ -10172,7 +10174,9 @@
 /obj/submachine/ATM{
 	pixel_y = 28
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/color_coded_hall{
+	dir = 1
+	},
 /area/station/hallway/secondary/west)
 "PR" = (
 /obj/disposalpipe/segment/bent/east,
@@ -10204,7 +10208,7 @@
 /area/station/hallway/secondary/north)
 "PZ" = (
 /obj/table/glass/auto,
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
@@ -10835,7 +10839,7 @@
 "SJ" = (
 /obj/machinery/vending/air_vendor,
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
@@ -11734,7 +11738,7 @@
 /area/station/maintenance/outer/ne)
 "WE" = (
 /obj/stool/chair,
-/turf/simulated/floor/arrival{
+/turf/simulated/floor/color_coded_hall{
 	dir = 4
 	},
 /area/station/hallway/secondary/west)
