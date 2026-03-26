@@ -94,17 +94,23 @@ TYPEINFO(/obj/machinery/codereader)
 	desc = "A large device for stealing NanoTrasen security codes from floppy disks."
 	icon_state = "codereader_syndicate"
 	is_syndicate = TRUE
-	var/static/has_read_authdisk = FALSE //Static because you can only steal the codes once, regardless of how many readers you send it from
+	var/static/authdisk_uploaded_by = null
 	var/credits_for_authdisk = 2 //Number of credits reading the authdisk is worth
 
 	get_help_message(dist, mob/user)
-		if (!src.has_read_authdisk && src.credits_for_authdisk)
+		if (!src.authdisk_uploaded_by && src.credits_for_authdisk)
 			. = "You can insert the <b>Authentication Disk</b> to get a reward from the Syndicate."
 
 /obj/machinery/codereader/syndicate/process_disk(mob/user)
-	if(istype(src.inserted_disk, /obj/item/disk/data/floppy/read_only/authentication) && !src.has_read_authdisk && src.credits_for_authdisk)
-		src.has_read_authdisk = TRUE
+	if(istype(src.inserted_disk, /obj/item/disk/data/floppy/read_only/authentication) && !src.authdisk_uploaded_by && src.credits_for_authdisk)
+		src.authdisk_uploaded_by = (user?.real_name || "Unknown")
 		logTheThing(LOG_STATION, user, "receives [src.credits_for_authdisk] traitor credits for inserting the authentication disk into [src]")
+		var/ircmsg[] = new()
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		ircmsg["msg"] = "receives [src.credits_for_authdisk] traitor credits for inserting the authentication disk into the [src]"
+		ircbot.export_async("admin", ircmsg)
+
 		var/obj/item/uplink_telecrystal/tc_stack = new(src)
 		tc_stack.amount = src.credits_for_authdisk
 		tc_stack._update_stack_appearance()
