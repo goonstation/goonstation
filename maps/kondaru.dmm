@@ -10367,7 +10367,7 @@
 "aTa" = (
 /obj/table/auto,
 /obj/item/screwdriver,
-/obj/item/disk/data/fixed_disk,
+/obj/item/disk/data/fixed_disk/hd64,
 /obj/item/disk/data/floppy/computer3boot,
 /obj/item/disk/data/floppy/read_only/network_progs,
 /obj/item/disk/data/floppy/read_only/security_progs,
@@ -25210,6 +25210,13 @@
 "cjx" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/item/light_parts,
+/obj/machinery/power/apc/autoname_east/nopoweralert{
+	start_charge = 0
+	},
+/obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost/indigo_rye)
 "cjy" = (
@@ -25286,11 +25293,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west/nopoweralert{
-	req_access = null;
-	req_access_txt = "24";
-	start_charge = 0
-	},
 /turf/simulated/floor/caution/east,
 /area/research_outpost/indigo_rye)
 "cjI" = (
@@ -25304,6 +25306,9 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost/indigo_rye)
 "cjK" = (
@@ -27778,8 +27783,7 @@
 "deH" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Teleporter Pad";
-	req_access_txt = "24"
+	name = "Teleporter Pad"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -28373,9 +28377,6 @@
 /area/station/crew_quarters/courtroom)
 "dAU" = (
 /obj/table/reinforced/auto,
-/obj/item/kitchen/food_box/lollipop{
-	pixel_y = 5
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/cable{
@@ -36517,8 +36518,7 @@
 "iUo" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Experimental Teleporter";
-	req_access_txt = "24"
+	name = "Experimental Teleporter"
 	},
 /obj/mapping_helper/access/telesci,
 /obj/mapping_helper/firedoor_spawn,
@@ -37695,8 +37695,7 @@
 	icon_state = "glass_locked";
 	id_tag = "tox_airlock_exterior";
 	locked = 1;
-	name = "Toxins Research Access";
-	req_access_txt = null
+	name = "Toxins Research Access"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -40667,7 +40666,6 @@
 	id = "vigilatornord";
 	pixel_x = -26;
 	req_access = null;
-	req_access_txt = "44";
 	starts_established = 1
 	},
 /obj/rack,
@@ -40677,6 +40675,7 @@
 /obj/item/extinguisher{
 	pixel_x = 8
 	},
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -40929,11 +40928,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
 "lMO" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
@@ -47512,6 +47506,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_y = 5
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "qxl" = (
@@ -52378,7 +52375,7 @@
 "tTd" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/lollipop{
-	pixel_y = 5
+	pixel_x = -8
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -52387,8 +52384,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/cashreg,
+/obj/machinery/cashreg{
+	pixel_x = 4
+	},
 /obj/mapping_helper/access/medical,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = -8
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "tTC" = (
@@ -53529,8 +53531,7 @@
 "uEa" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Teleporter Lab";
-	req_access_txt = "24"
+	name = "Teleporter Lab"
 	},
 /obj/mapping_helper/access/telesci,
 /obj/cable{
@@ -56830,8 +56831,7 @@
 "wOH" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Experimental Teleporter";
-	req_access_txt = "24"
+	name = "Experimental Teleporter"
 	},
 /obj/mapping_helper/access/telesci,
 /obj/mapping_helper/firedoor_spawn,
@@ -58507,8 +58507,6 @@
 	icon = 'icons/obj/airtunnel.dmi';
 	id = "vigilatorsud";
 	pixel_x = 26;
-	req_access = null;
-	req_access_txt = "44";
 	starts_established = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold{
@@ -58519,6 +58517,7 @@
 	pixel_y = 11;
 	pixel_x = -10
 	},
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/caution/east,
 /area/station/engine/gas)
 "xSq" = (
@@ -96777,7 +96776,7 @@ cfn
 blb
 eka
 lMO
-wjr
+tCK
 gnR
 fRk
 tCK

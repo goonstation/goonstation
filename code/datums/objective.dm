@@ -1045,7 +1045,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 		if(target_count > 1)
 			explanation_text = "Steal [target_count] [target_name] and have it anywhere on you or the Magpie at the end of the shift."
 		else
-			explanation_text = "Steal the [target_name] and have it anywhere on you or the Magpie you at the end of the shift."
+			explanation_text = "Steal the [target_name] and have it anywhere on you or the Magpie at the end of the shift."
 		return target_equipment
 
 	check_completion()

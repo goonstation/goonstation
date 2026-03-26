@@ -5970,9 +5970,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "wa" = (
-/obj/machinery/vending/kitchen{
-	req_access_txt = null
-	},
+/obj/machinery/vending/kitchen,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
@@ -6961,9 +6959,7 @@
 	},
 /area/pod_wars/team1/mining)
 "zz" = (
-/obj/machinery/vending/kitchen{
-	req_access_txt = null
-	},
+/obj/machinery/vending/kitchen,
 /turf/unsimulated/floor/sanitary/white,
 /area/pod_wars/team2/bar)
 "zC" = (
@@ -10901,9 +10897,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
 "NE" = (
-/obj/machinery/vending/kitchen{
-	req_access_txt = null
-	},
+/obj/machinery/vending/kitchen,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},

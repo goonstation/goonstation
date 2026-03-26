@@ -108,6 +108,14 @@
 			busted = 0
 		return */
 
+/obj/machinery/vehicle/miniputt/unfueled
+	New()
+		. = ..()
+		qdel(src.fueltank)
+		src.fueltank = null
+		myhud.update_systems()
+		myhud.update_states()
+
 ////////armed civ putt
 
 /obj/machinery/vehicle/miniputt/pilot
