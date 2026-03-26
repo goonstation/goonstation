@@ -113,7 +113,11 @@
 	},
 /area/station/crew_quarters/clown)
 "A" = (
-/obj/machinery/phone/unlisted,
+/obj/machinery/phone/unlisted{
+	name = "undetectable phone";
+	stripe_color = "#f57382";
+	phone_id = "The Clown"
+	},
 /obj/table/neon/auto,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 8

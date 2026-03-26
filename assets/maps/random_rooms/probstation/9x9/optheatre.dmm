@@ -50,6 +50,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
+/obj/machinery/phone/wall{
+	pixel_x = 22
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "j" = (

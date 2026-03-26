@@ -298,6 +298,7 @@
 	pixel_y = 26
 	},
 /obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/machinery/phone,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "N" = (

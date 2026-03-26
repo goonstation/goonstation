@@ -164,6 +164,9 @@
 /area/station/crew_quarters/kitchen)
 "u" = (
 /obj/storage/secure/closet/fridge/kitchen,
+/obj/machinery/phone/wall{
+	pixel_y = 30
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},

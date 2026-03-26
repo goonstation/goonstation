@@ -151,6 +151,10 @@
 "w" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/interdictor/ranch,
+/obj/machinery/phone/wall{
+	pixel_x = 22;
+	pixel_y = 5
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "y" = (

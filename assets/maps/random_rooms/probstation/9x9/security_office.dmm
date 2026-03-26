@@ -266,11 +266,15 @@
 /area/station/security/main)
 "Ht" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 15
+	},
 /obj/item/clothing/gloves/yellow{
-	pixel_y = 7
+	pixel_y = 7;
+	pixel_x = 19
 	},
 /obj/noticeboard/persistent/security/directional/north,
+/obj/machinery/phone,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Ki" = (

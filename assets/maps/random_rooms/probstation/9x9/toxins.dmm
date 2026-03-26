@@ -539,6 +539,10 @@
 	pixel_y = 3
 	},
 /obj/item/device/transfer_valve,
+/obj/machinery/phone/wall{
+	pixel_x = 22;
+	pixel_y = 5
+	},
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},

@@ -181,7 +181,13 @@
 /area/mining/refinery)
 "mH" = (
 /obj/machinery/portable_reclaimer,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/directional/east{
+	pixel_y = -7
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 22;
+	pixel_y = 12
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},

@@ -38,10 +38,15 @@
 /area/station/crew_quarters/captain)
 "cj" = (
 /obj/table/wood/round/auto,
+/obj/machinery/phone,
 /obj/item/stamp{
-	pixel_y = 6
+	pixel_y = 18;
+	pixel_x = 5
 	},
-/obj/item/stamp/cap,
+/obj/item/stamp/cap{
+	pixel_x = -6;
+	pixel_y = 17
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "co" = (
@@ -267,6 +272,10 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/phone/wall{
+	pixel_x = 22;
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/hop)
 "tH" = (
@@ -297,9 +306,11 @@
 "yu" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/photo_album{
-	pixel_y = -10
+	pixel_y = -1
 	},
-/obj/item/camera,
+/obj/item/camera{
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "zP" = (

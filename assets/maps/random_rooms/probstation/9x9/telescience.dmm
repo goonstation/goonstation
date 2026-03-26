@@ -37,6 +37,9 @@
 	},
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
+/obj/machinery/phone/wall{
+	pixel_x = 22
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},

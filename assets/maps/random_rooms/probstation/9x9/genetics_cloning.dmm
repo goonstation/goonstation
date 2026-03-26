@@ -68,7 +68,14 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/obj/item/storage/box/diskbox,
+/obj/item/storage/box/diskbox{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/machinery/phone{
+	pixel_x = 7;
+	pixel_y = -4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -248,12 +255,12 @@
 "I" = (
 /obj/table/auto,
 /obj/item/storage/pill_bottle/mutadone{
-	pixel_y = 8;
-	pixel_x = -4
+	pixel_y = 13;
+	pixel_x = -7
 	},
 /obj/item/storage/pill_bottle/mutadone{
 	pixel_y = 8;
-	pixel_x = 5
+	pixel_x = -5
 	},
 /obj/item/clothing/glasses/blindfold{
 	pixel_x = 1;
@@ -261,6 +268,10 @@
 	},
 /obj/blind_switch/north{
 	id = "genetics"
+	},
+/obj/machinery/phone{
+	pixel_x = 4;
+	pixel_y = 5
 	},
 /turf/simulated/floor/greenblack{
 	dir = 1

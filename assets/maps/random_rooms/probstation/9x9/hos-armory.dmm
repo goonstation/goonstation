@@ -88,6 +88,9 @@
 	pixel_y = 4
 	},
 /obj/machinery/camera/directional/west,
+/obj/machinery/phone/wall{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/hos)
 "k" = (

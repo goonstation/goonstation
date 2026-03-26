@@ -514,8 +514,8 @@
 /obj/machinery/computer3/generic/personal,
 /obj/machinery/phone/wall{
 	pixel_y = 28;
-	name = "pod bay security minibrig";
-	phone_id = "security checkpoint minibrig"
+	name = "Security Hangar Minibrig Phone";
+	phone_id = "Security Hangar Minibrig"
 	},
 /obj/machinery/camera/directional/west,
 /turf/simulated/floor/red/checker{

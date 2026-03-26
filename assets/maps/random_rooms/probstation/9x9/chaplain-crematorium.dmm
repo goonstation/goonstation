@@ -26,6 +26,10 @@
 	dir = 4;
 	pixel_x = -8
 	},
+/obj/item/device/light/candle{
+	pixel_x = 6;
+	pixel_y = 16
+	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "f" = (
@@ -77,11 +81,8 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/device/light/candle{
-	pixel_x = 7
-	},
 /obj/item/device/light/candle/small{
-	pixel_x = -6;
+	pixel_x = -11;
 	pixel_y = 2
 	},
 /obj/item/device/light/candle/small{
@@ -92,6 +93,7 @@
 	pixel_x = 7;
 	pixel_y = 10
 	},
+/obj/machinery/phone,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "l" = (

@@ -194,8 +194,8 @@
 /obj/storage/secure/closet/brig_automatic/minibrig,
 /obj/machinery/phone/wall{
 	pixel_y = -22;
-	name = "minibrig";
-	phone_id = "security checkpoint minibrig"
+	name = "Security Checkpoint Minibrig Phone";
+	phone_id = "Security Checkpoint Minibrig"
 	},
 /turf/simulated/floor/red/side{
 	dir = 8

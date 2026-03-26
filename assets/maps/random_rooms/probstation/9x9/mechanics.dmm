@@ -356,11 +356,8 @@
 /area/station/engine/elect)
 "HL" = (
 /obj/table/auto,
-/obj/item/device/t_scanner{
-	pixel_y = 4
-	},
-/obj/item/device/t_scanner,
 /obj/machinery/light/incandescent,
+/obj/machinery/phone,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -421,6 +418,13 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment,
+/obj/item/device/t_scanner{
+	pixel_x = 9
+	},
+/obj/item/device/t_scanner{
+	pixel_y = 4;
+	pixel_x = 9
+	},
 /turf/simulated/floor/yellow/corner,
 /area/station/engine/elect)
 "Rs" = (
