@@ -523,7 +523,10 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	if (istype(I, /obj/item/cable_coil))
 		src.loc.Attackby(user.equipped(), user)
 		return
+	if(user.a_intent != "harm") // Don't do anything if you're not on harm intent, act like a normal floor.
+		return
 	..()
+
 
 
 /obj/mesh/catwalk/special_update_icon(special_icon_state)
