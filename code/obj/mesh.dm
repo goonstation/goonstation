@@ -498,6 +498,7 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	connects_to_obj = typecacheof(list(/obj/mesh/catwalk, /obj/machinery/door))
 /obj/mesh/catwalk
 	name = "catwalk surface"
+	HELP_MESSAGE_OVERRIDE("")
 	icon = 'icons/obj/catwalk.dmi'
 	icon_state = "C15-0"
 	layer = CATWALK_LAYER
@@ -527,8 +528,6 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 		return
 	..()
 
-
-
 /obj/mesh/catwalk/special_update_icon(special_icon_state)
 	if(special_icon_state == "cut")
 		src.UpdateIcon()
@@ -537,6 +536,11 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 
 /obj/mesh/catwalk/get_icon_direction()
 	return src.get_icon_connectdir()
+
+/obj/mesh/catwalk/get_help_message(dist, mob/user)
+	. = ..()
+	. += "You can use <b>wirecutters</b> to quickly dismantle it. \
+	You can also attack it with other items on <span class='harm'>harm</span> intent."
 
 /obj/mesh/catwalk/jen // ^^ no i made my own because i am epic
 	name = "maintenance catwalk"
