@@ -233,6 +233,9 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment/bent/south,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -519,6 +522,10 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 10;
 	icon_state = "line1"
+	},
+/obj/machinery/computer/general_alert,
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1

@@ -30,8 +30,8 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/machinery/power/data_terminal,
 /obj/machinery/computer/announcement/station/security/department,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "eb" = (
@@ -46,15 +46,14 @@
 	pixel_x = -10
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/networked/printer{
-	name = "Printer - Escape Checkpoint";
-	pixel_y = 5;
-	print_id = "EscapeCheckpoint"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/networked/printer{
+	name = "Printer - Security";
+	print_id = "security"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -138,6 +137,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/right{
 	dir = 4
+	},
+/obj/item/device/ticket_writer{
+	pixel_y = -3;
+	pixel_x = -18
+	},
+/obj/item/instrument/whistle{
+	pixel_y = 10;
+	pixel_x = -18
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
@@ -230,9 +237,6 @@
 /area/station/security/equipment)
 "Ee" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -257,24 +261,17 @@
 /obj/landmark/start/job/security_officer,
 /obj/machinery/light/small/floor/netural,
 /obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Ht" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 15
-	},
-/obj/item/clothing/gloves/yellow{
-	pixel_y = 7;
-	pixel_x = 19
-	},
 /obj/noticeboard/persistent/security/directional/north,
-/obj/machinery/phone,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/submachine/poster_creator,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Ki" = (
@@ -354,23 +351,10 @@
 	},
 /area/station/security/main)
 "OD" = (
-/obj/table/reinforced/auto,
-/obj/item/device/ticket_writer{
-	pixel_y = -3;
-	pixel_x = -18
-	},
-/obj/item/instrument/whistle{
-	pixel_y = 10;
-	pixel_x = -18
-	},
 /obj/machinery/firealarm/directional/north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/networked/printer{
-	name = "Printer - Security";
-	print_id = "security"
-	},
+/obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -427,14 +411,10 @@
 /turf/simulated/floor/redblack/corner,
 /area/station/security/main)
 "UW" = (
-/obj/submachine/poster_creator,
-/obj/machinery/power/data_terminal,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
-/obj/cable{
-	icon_state = "0-2"
-	},
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Vy" = (
@@ -451,10 +431,10 @@
 /area/station/security/main)
 "Xz" = (
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -466,13 +446,19 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "XR" = (
-/obj/item/storage/box/panic_buttons,
-/obj/table/reinforced/auto,
-/obj/item/device/panicbutton,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 15
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 7;
+	pixel_x = 19
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "Zb" = (
@@ -524,7 +510,7 @@ sC
 (4,1,1) = {"
 yI
 UW
-Xz
+Eg
 QT
 eb
 Ug
@@ -546,7 +532,7 @@ AC
 (6,1,1) = {"
 yI
 Ht
-Eg
+Xz
 Ce
 Bw
 Mc

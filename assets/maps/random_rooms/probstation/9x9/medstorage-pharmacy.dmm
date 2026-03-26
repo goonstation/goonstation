@@ -138,6 +138,7 @@
 /obj/machinery/light_switch/south{
 	pixel_x = -11
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "p" = (
@@ -237,19 +238,8 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery/storage)
 "B" = (
-/obj/table/auto,
-/obj/item/reagent_containers/glass/beaker/large/brute{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/glass/beaker/large/burn{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = 6;
-	pixel_y = 5
-	},
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "C" = (
@@ -289,14 +279,25 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/glass/beaker/large/antitox{
-	pixel_x = -7
-	},
 /obj/item/reagent_containers/hypospray{
 	pixel_x = 6;
 	pixel_y = 5
 	},
 /obj/machinery/firealarm/directional/south,
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -1
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 11;
+	pixel_y = 5
+	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "H" = (
@@ -318,6 +319,11 @@
 "J" = (
 /obj/table/reinforced/chemistry/auto/basicsup,
 /obj/machinery/light/incandescent,
+/obj/item/storage/box/beakerbox{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "K" = (
@@ -402,11 +408,11 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "R" = (
-/obj/storage/cart/medcart/crash,
 /obj/item_dispenser/latex_gloves,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk,
+/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "S" = (
@@ -453,7 +459,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/surgery/storage)
 "Y" = (
-/obj/cabinet/chemistry,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "Z" = (

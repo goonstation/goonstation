@@ -87,6 +87,10 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"m" = (
+/obj/machinery/manufacturer/science,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
 "n" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	name = "Fire Cuts"
@@ -132,10 +136,11 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/tug_cart,
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "s" = (
-/obj/tug_cart,
+/obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "t" = (
@@ -202,7 +207,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/machinery/hair_dye_dispenser,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -210,11 +214,8 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/barber_shop)
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/storage)
 "E" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/incandescent/netural{
@@ -240,7 +241,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "I" = (
-/obj/machinery/firealarm/directional/north,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -299,6 +299,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/hair_dye_dispenser,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -340,7 +341,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/supernorn/colored,
+/turf/simulated/wall/auto/supernorn/colored/purple,
 /area/station/science/storage)
 "U" = (
 /obj/decal/tile_edge/line/black{
@@ -381,14 +382,15 @@
 	},
 /area/station/crew_quarters/barber_shop)
 "Y" = (
-/turf/simulated/wall/auto/supernorn/colored,
+/turf/simulated/wall/auto/supernorn/colored/purple,
 /area/station/science/storage)
 "Z" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn/colored,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/wall/auto/supernorn/colored/purple,
 /area/station/science/storage)
 
 (1,1,1) = {"
@@ -410,7 +412,7 @@ M
 G
 C
 C
-R
+m
 z
 "}
 (3,1,1) = {"
@@ -430,9 +432,9 @@ Y
 Y
 Y
 T
-Y
-G
 s
+G
+R
 z
 "}
 (5,1,1) = {"

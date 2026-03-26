@@ -1,8 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/machinery/sleeper/compact{
-	dir = 8
-	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/treatment)
 "b" = (
@@ -72,6 +69,9 @@
 "l" = (
 /obj/machinery/computer/operating/small,
 /obj/machinery/light/incandescent/cool,
+/obj/storage/secure/closet/medical/anesthetic{
+	pixel_x = 7
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "m" = (
@@ -112,7 +112,10 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/storage/secure/closet/medical/anesthetic,
+/obj/machinery/computer3/generic/med_data{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/treatment)
 "r" = (
@@ -144,6 +147,9 @@
 /area/station/medical/medbay/surgery)
 "u" = (
 /obj/machinery/computer/operating/small,
+/obj/storage/secure/closet/fridge/blood{
+	pixel_x = 5
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "v" = (
@@ -339,7 +345,9 @@
 	pixel_x = 8
 	},
 /obj/disposalpipe/trunk/west,
-/obj/storage/secure/closet/fridge/blood,
+/obj/machinery/sleeper/port_a_medbay{
+	dir = 8
+	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/treatment)
 "Z" = (
