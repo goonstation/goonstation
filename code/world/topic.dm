@@ -41,7 +41,7 @@
 			response_body["shuttle_timer"] = emergency_shuttle.timeleft()
 
 		response_body["station_name"] = station_name
-		response_body["map_name"] = "Kondaru"
+		response_body["map_name"] = getMapNameFromID(map_setting)
 		response_body["map_id"] = map_setting
 		response_body["players"] = src.total_player_count()
 		return list2params(response_body)
