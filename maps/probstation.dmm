@@ -1952,7 +1952,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "hG" = (
-/obj/machinery/light/incandescent/netural,
 /obj/machinery/status_display/new_walls/east,
 /turf/simulated/floor/color_coded_hall{
 	dir = 6
@@ -7915,6 +7914,10 @@
 "FT" = (
 /turf/simulated/wall/auto/supernorn/colored,
 /area/station/hallway/secondary/south)
+"Ga" = (
+/obj/machinery/light/incandescent/netural,
+/turf/space,
+/area/space)
 "Ge" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -68829,7 +68832,7 @@ WK
 af
 oJ
 Dx
-By
+Ga
 By
 By
 By

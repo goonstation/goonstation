@@ -31,6 +31,10 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"e" = (
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "f" = (
 /obj/storage/crate{
 	name = "Spare Parts"
@@ -403,7 +407,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "S" = (
@@ -492,7 +495,7 @@ W
 (2,1,1) = {"
 W
 p
-D
+e
 t
 X
 u

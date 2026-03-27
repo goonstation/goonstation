@@ -339,16 +339,14 @@
 	},
 /area/station/medical/research)
 "U" = (
-/obj/machinery/computer/cloning{
-	dir = 8
-	},
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/clonegrinder,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
 /area/station/medical/medbay/cloner)
 "V" = (
-/obj/machinery/clonegrinder,
+/obj/machinery/computer/cloning,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "W" = (

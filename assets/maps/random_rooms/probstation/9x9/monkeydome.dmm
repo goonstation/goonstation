@@ -205,10 +205,11 @@
 	},
 /area/station/medical/dome)
 "U" = (
-/obj/machinery/vending/monkey/genetics,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/vending/monkey/research,
+/obj/mapping_helper/access/medlab,
 /turf/simulated/floor/white,
 /area/station/medical/dome)
 "W" = (

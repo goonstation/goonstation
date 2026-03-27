@@ -396,7 +396,6 @@
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/storage/crate,
 /obj/item/chem_grenade/cleaner,
-/obj/storage/crate,
 /obj/machinery/door_control{
 	id = "washdesk";
 	name = "Desk Control";

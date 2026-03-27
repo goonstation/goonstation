@@ -70,17 +70,17 @@
 /area/station/science/testchamber)
 "k" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/disposalpipe/trunk/transport,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "m" = (
-/obj/fakeobject/sink{
+/obj/machinery/camera/directional/west,
+/obj/machinery/sink{
 	dir = 4
 	},
-/obj/machinery/camera/directional/west,
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
 "n" = (
@@ -134,6 +134,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/trunk/transport,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},

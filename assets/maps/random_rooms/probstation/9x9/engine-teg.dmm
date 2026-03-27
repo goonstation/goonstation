@@ -40,14 +40,14 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
 "hS" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_engine,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4
 	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/engine/core/thermoelectric)
 "hY" = (
@@ -74,9 +74,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "mb" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/engine/vacuum,
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "mo" = (
 /obj/machinery/atmospherics/binary/pump/active,

@@ -228,9 +228,7 @@
 /area/station/crew_quarters/kitchen/freezer)
 "B" = (
 /obj/decal/poster/wallsign/iso/prohibited/food,
-/obj/machinery/atmospherics/unary/furnace_connector{
-	dir = 4
-	},
+/obj/machinery/atmospherics/unary/furnace_connector,
 /obj/machinery/power/furnace/thermo,
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/sauna)
