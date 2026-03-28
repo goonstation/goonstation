@@ -302,7 +302,8 @@ ABSTRACT_TYPE(/datum/grav_fault/major)
 	for (var/turf/T in orange(6, origin))
 		if (prob(60))
 			continue
-
+		if (T.material?.getProperty("density") >= 7)
+			continue
 		if (T && !istype(T, /turf/space) && (IN_EUCLIDEAN_RANGE(origin, T, 6)))
 			if (issimulatedturf(T))
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))

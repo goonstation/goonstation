@@ -334,6 +334,8 @@
 		if (src.is_sealed)
 			is_sealed = 0
 			src.set_open_container(TRUE)
+			src.desc += " Its seal has been opened."
+			tooltip_rebuild = TRUE
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE
@@ -343,7 +345,7 @@
 				src.reagents.reaction(user)
 				src.reagents.clear_reagents()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
+				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediately sprayed with its contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
 			else
 				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return

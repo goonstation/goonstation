@@ -2387,7 +2387,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 /turf/simulated/floor/restore_tile(do_hide = TRUE)
 	..()
-	if (!do_hide)
+	if (!do_hide || (locate(/obj/table) in src))
 		return
 	for (var/obj/item/item in src.contents)
 		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems

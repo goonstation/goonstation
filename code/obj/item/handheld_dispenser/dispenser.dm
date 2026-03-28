@@ -678,6 +678,11 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		path = /obj/machinery/fluid_machinery/unary/dripper
 		icon_state = "dripper"
 		desc = "Passively drips up to 30 units onto the floor, or into connected containers."
+	sensor
+		name = "Sensor"
+		path = /obj/machinery/fluid_machinery/unary/sensor
+		icon_state = "sensor"
+		desc = "Sends a signal and a alert at a certain threshold."
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/binary)
 /datum/pipe_recipe/fluid/machine/binary

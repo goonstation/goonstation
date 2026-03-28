@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	job_category = JOB_RANDOM
 	request_limit = 2
 	request_cost = PAY_IMPORTANT*4
+	email_group = MGD_CIVILIAN
 
 	New()
 		..()
@@ -53,8 +54,9 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_foot = list(/obj/item/clothing/shoes/chef)
 	slot_head = list(/obj/item/clothing/head/souschefhat)
 	slot_suit = list(/obj/item/clothing/suit/apron)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/catering)
 	wiki_link = "https://wiki.ss13.co/Chef"
+	email_group = MGD_CIVILIAN
 
 /datum/job/special/random/hall_monitor
 	name = "Hall Monitor"
@@ -69,7 +71,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_head = list(/obj/item/clothing/head/basecap/red)
 	slot_poc1 = list(/obj/item/pen/pencil)
 	slot_poc2 = list(/obj/item/device/radio/hall_monitor)
-	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust)
+	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust,/obj/item/reagent_containers/applicator/glue)
 
 /datum/job/special/random/hollywood
 	name = "Hollywood Actor"
@@ -115,6 +117,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		"Thoracic Specialist",
 		"Vascular Specialist",
 	)
+	email_group = MGD_MEDICAL
 
 /datum/job/special/random/vip
 	name = "VIP"
@@ -163,6 +166,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_rhan = list(/obj/item/device/ticket_writer)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
+	email_group = MGD_COMMAND
 
 	get_default_miranda()
 		return "You have been found to be in breach of Nanotrasen corporate regulation [rand(1,100)][pick(uppercase_letters)]. You are allowed a grace period of 5 minutes to correct this infringement before you may be subjected to disciplinary action including but not limited to: strongly worded tickets, reduction in pay, and being buried in paperwork for the next [rand(10,20)] standard shifts."
@@ -224,6 +228,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	change_name_on_spawn = TRUE
 	starting_mutantrace = /datum/mutantrace/monkey
 	wiki_link = "https://wiki.ss13.co/Monkey"
+	email_group = null
 
 /datum/job/special/random/union
 	name = "Union Rep"
@@ -242,6 +247,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
 			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
+
+		M.traitHolder?.addTrait("unionized")
 
 		return
 
@@ -324,9 +331,10 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/reagent_containers/food/snacks/beefood, /obj/item/reagent_containers/food/snacks/beefood)
 	alt_names = list("Apiculturist", "Apiarist")
+	email_group = MGD_CIVILIAN
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	faction = list(FACTION_BOTANY)
@@ -353,9 +361,9 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_head = list(/obj/item/clothing/head/black)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes/waders)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/fishing_rod/basic)
-
+	email_group = MGD_CIVILIAN
 
 
 /datum/job/special/random/psychiatrist
@@ -376,6 +384,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/bottle/gin)
 	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp, /obj/item/storage/firstaid/mental)
 	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
+	email_group = MGD_MEDICAL
 
 /datum/job/special/random/artist
 	name = "Artist"
@@ -387,7 +396,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc1 = list(/obj/item/currency/spacecash/twenty)
 	slot_poc2 = list(/obj/item/pen/pencil)
 	slot_lhan = list(/obj/item/storage/toolbox/artistic)
-	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
+	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random,/obj/item/reagent_containers/applicator/glue)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/foodcritic

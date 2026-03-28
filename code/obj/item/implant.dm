@@ -332,7 +332,7 @@ THROWING DARTS
 	impcolor = "b"
 	scan_category = IMPLANT_SCAN_CATEGORY_HEALTH
 	uses_radio = 1
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+	mailgroups = list(MGD_MEDICAL, MGT_SPIRITUALAFFAIRS)
 
 	var/healthstring = ""
 	var/affected = "CREW"

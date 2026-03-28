@@ -33,5 +33,8 @@ end_of_line = lf
 [*.yml]
 indent_style = space
 
+[*.tsx]
+indent_style = space
+
 [strings/*.txt]
 insert_final_newline = false

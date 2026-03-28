@@ -290,7 +290,7 @@
 		signal.source = src
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = "ENGINE-MAILBOT"
-		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
+		signal.data["group"] = list(MGD_ENGINEER, MGA_ENGINE)
 		if(crisis)
 			signal.data["group"] += MGA_CRISIS
 			signal.data["noreply"] = TRUE

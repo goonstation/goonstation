@@ -488,9 +488,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			if(!QDELETED(current_mob))
 				current_mob.update_icons_if_needed()
 
-		if (src.traitHolder?.hasTrait("jailbird"))
-			create_jailbird_wanted_poster(H)
-
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
@@ -786,6 +783,11 @@ Equip items from body traits.
 
 		if(src.mind)
 			src.mind.originalPDA = PDA
+
+		if(src.client?.preferences?.id_starts_in_pda)
+			PDA.insert_id_card(C, src)
+			src.u_equip(PDA)
+			src.equip_if_possible(PDA, SLOT_WEAR_ID)
 
 	boutput(src, SPAN_NOTICE("Your pin to your ID is: [C.pin]"))
 	if (src.mind)

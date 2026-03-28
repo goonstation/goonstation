@@ -21,6 +21,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/operating = FALSE
 	var/operation_time = 1 SECOND
 	anchored = ANCHORED
+	layer = DOOR_LAYER
 	var/autoclose = FALSE
 	var/interrupt_autoclose = FALSE
 	var/last_used = 0
