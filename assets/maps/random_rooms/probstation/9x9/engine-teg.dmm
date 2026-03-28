@@ -66,6 +66,14 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/station/engine/core/thermoelectric)
+"jF" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core/thermoelectric)
 "jU" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/cable{
@@ -78,7 +86,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "mo" = (
-/obj/machinery/atmospherics/binary/pump/active,
+/obj/machinery/atmospherics/binary/pump/active{
+	id = "Burn Chamber Inlet";
+	frequency = 1227
+	},
 /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/core/thermoelectric)
 "mq" = (
@@ -106,6 +117,13 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/iso/warning/electric,
+/obj/machinery/computer/atmosphere/pumpcontrol{
+	frequency = 1227
+	},
+/obj/item/paper{
+	icon_state = "postit-writing";
+	info = "why the FUCK do we have a PC on this godforsaken station to control a SINGLE PUMP? NANOTRASEN WHAT THE FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/core/thermoelectric)
 "oM" = (
@@ -162,6 +180,13 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"rL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/engine/vacuum,
 /area/station/engine/core/thermoelectric)
 "sx" = (
 /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
@@ -343,6 +368,13 @@
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
+/obj/blind_switch/area/north{
+	pixel_x = -8
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = 8
+	},
+/obj/item/device/multitool,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/core/thermoelectric)
 "Lb" = (
@@ -488,7 +520,7 @@ Uv
 Yc
 MG
 yO
-sx
+jF
 "}
 (7,1,1) = {"
 sU
@@ -499,7 +531,7 @@ Fc
 Lb
 zh
 bF
-sx
+jF
 "}
 (8,1,1) = {"
 sx
@@ -510,7 +542,7 @@ Jv
 FS
 MG
 hY
-sx
+jF
 "}
 (9,1,1) = {"
 sx
@@ -519,7 +551,7 @@ sx
 sx
 hS
 sx
-sx
-sx
+rL
+rL
 sx
 "}

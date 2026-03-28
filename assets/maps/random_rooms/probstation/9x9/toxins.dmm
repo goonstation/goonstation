@@ -170,10 +170,6 @@
 	pixel_y = 8
 	},
 /obj/machinery/dispenser,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 10
-	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -192,11 +188,19 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "qT" = (
-/obj/machinery/atmospherics/unary/tank{
-	dir = 1
-	},
 /obj/machinery/camera/directional/south{
 	pixel_x = 12
+	},
+/obj/machinery/networked/storage/bomb_tester{
+	bank_id = "Mixer"
+	},
+/obj/item/clothing/glasses/vr/bomb{
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/vr/bomb,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
 	},
 /turf/simulated/floor/purple/side,
 /area/station/science/lab)
@@ -240,9 +244,6 @@
 	pixel_x = 22;
 	dir = 8;
 	pixel_y = 12
-	},
-/obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning{
-	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -349,9 +350,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/table/reinforced/auto,
-/obj/item/hand_labeler,
-/obj/item/device/analyzer/atmospheric/upgraded,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -392,14 +391,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "FV" = (
-/obj/machinery/networked/storage/bomb_tester{
-	bank_id = "Mixer"
-	},
-/obj/item/clothing/glasses/vr/bomb{
-	pixel_y = -3
-	},
-/obj/item/clothing/glasses/vr/bomb,
 /obj/blind_switch/area/south,
+/obj/machinery/atmospherics/unary/tank{
+	dir = 8
+	},
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -425,6 +420,8 @@
 	pixel_y = -4
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/hand_labeler,
+/obj/item/device/analyzer/atmospheric/upgraded,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -462,8 +459,11 @@
 	},
 /area/station/science/lab)
 "Rq" = (
-/obj/machinery/vending/standard/toxins,
 /obj/machinery/light/incandescent,
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "pressure tank valve"
+	},
 /turf/simulated/floor/purple/side,
 /area/station/science/lab)
 "RK" = (
@@ -548,21 +548,14 @@
 	},
 /area/station/science/lab)
 "Ui" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/atmospherics/binary/pump{
-	frequency = 1229;
-	id = "Chamber One Outlet";
-	on = 1;
-	target_pressure = 500;
-	dir = 4
+	id = "Heat Exchanger Pump";
+	frequency = 1229
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
 /area/station/science/lab)
 "Um" = (
 /obj/disposalpipe/segment/bent/east,
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 1
-	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
