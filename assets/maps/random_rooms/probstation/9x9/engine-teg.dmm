@@ -106,6 +106,7 @@
 	dir = 4
 	},
 /obj/decal/poster/wallsign/iso/warning/electric,
+/obj/machinery/computer/atmosphere/pumpcontrol,
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/core/thermoelectric)
 "oM" = (

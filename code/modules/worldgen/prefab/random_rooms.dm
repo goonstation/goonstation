@@ -112,3 +112,9 @@ proc/buildRandomRooms()
 		src.locations_to_apply -= picked_tag
 		src.additional_tags += dir_to_dirname(src.dir)
 		. = ..()
+
+/obj/landmark/random_room/probstation_spacejunk_32x32
+	size = "32x32"
+	icon = 'icons/effects/mapeditor/32x32tiles.dmi'
+	icon_state = "probstation_shuttles"
+	additional_tags = list("probstation", "spacejunk")
