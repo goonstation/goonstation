@@ -8242,6 +8242,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/stool/bench/blue/auto,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cGx" = (
@@ -8260,13 +8261,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
-"cGX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/bench/blue/auto,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "cHc" = (
 /obj/machinery/chemicompiler_stationary,
 /turf/simulated/floor/white,
@@ -91543,7 +91537,7 @@ tPm
 bpU
 lNt
 jAq
-cGX
+xkk
 enG
 gOR
 jvc
