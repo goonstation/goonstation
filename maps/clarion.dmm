@@ -23132,7 +23132,7 @@
 	pixel_x = -8;
 	pixel_y = 9
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/science/artifact)
 "liX" = (
 /obj/disposalpipe/segment/mail,

@@ -10,14 +10,19 @@ TYPEINFO(/obj/item/device/appraisal)
 	icon_state = "CargoA"
 	item_state = "accessgun"
 
+	var/last_scan_name = null
+	var/last_scan_text = null
+	var/last_scan_value = null
+	var/last_scan_timestamp = null
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
-	// attack_self
-	// would be neat to maybe add an option to print a receipt or invoice?
-	// like if you wanna buy botany's stuff, this can print out what's inside
-	// and the cargo value, and then
-	// i dunno, who knows. at least you'd be able to take stock easier.
+	attack_self(mob/user)
+		if (isnull(src.last_scan_value))
+			boutput(user, SPAN_NOTICE("No previous scan results located."))
+			return
+		src.print_receipt(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0)
@@ -92,7 +97,51 @@ TYPEINFO(/obj/item/device/appraisal)
 		// replace with boutput
 		boutput(user, SPAN_NOTICE("[out_text]Estimated value: <strong>[sell_value] credit\s.</strong>"))
 		if (sell_value > 0)
+			src.last_scan_text = out_text
+			src.last_scan_value = sell_value
+			src.last_scan_name = A.name
+			src.last_scan_timestamp = time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")
 			playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
 
-
 		DISPLAY_MAPTEXT(A, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/appraisal, sell_value)
+
+	proc/print_receipt(mob/user)
+		if (!src.last_scan_value)
+			boutput(user, SPAN_ALERT("\The [src] has nothing to print — scan something first!"))
+			return
+		if (!ON_COOLDOWN(src, "print_receipt", 4 SECONDS))
+			var/receipt_text = {"
+			<span style="text-transform:uppercase;font-family:Monospace;">
+				<table>
+					<tbody>
+					<tr>
+						<td colspan="2" style="text-align:center">*-----MARKET APPRAISAL RECEIPT-----*</td>
+					</tr>
+					<tr>
+						<td>Item</td>
+						<td style="text-align:right">[src.last_scan_name]</td>
+					</tr>
+					<tr>
+						<td>Value</td>
+						<td style="text-align:right">[src.last_scan_value][CREDIT_SIGN]</td>
+					</tr>
+					<tr>
+						<td>Taken At</td>
+						<td style="text-align:right">[src.last_scan_timestamp]</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align:center">*-------------- NOTES -------------*</td>
+					</tr>
+					<tr>
+						<td colspan="2">[src.last_scan_text ? src.last_scan_text : "N/A"]</td>
+					</tr>
+					</tbody>
+				</table>
+			</span>
+			"}
+
+			var/obj/item/paper/P = new /obj/item/paper/thermal(user.loc)
+			P.name = "appraisal receipt"
+			P.info = receipt_text
+			user.put_in_hand_or_eject(P)
+			playsound(src, 'sound/machines/printer_thermal.ogg', 25, TRUE)
