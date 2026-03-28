@@ -16,6 +16,7 @@
 /obj/ladder{
 	id = "clowntainment"
 	},
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/carpet/clowncarpet,
 /area/station/crew_quarters/clown/entryway)
 "c" = (
