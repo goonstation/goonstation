@@ -138,10 +138,11 @@
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
 	var/hide_pipe = CHECKHIDEPIPE(src)
-	if (!node)
-		src.on = FALSE
-	src.icon_state = src.on ? "on" : "off"
-	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
+	SPAWN(5 SECONDS)
+		if (!node)
+			src.on = FALSE
+		src.icon_state = src.on ? "on" : "off"
+		update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
 
 /obj/machinery/atmospherics/unary/outlet_injector/active
 	icon_state = "on-map"
