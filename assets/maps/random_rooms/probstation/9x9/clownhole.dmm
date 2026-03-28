@@ -4,10 +4,7 @@
 /area/station/crew_quarters/clown)
 "b" = (
 /obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -15,12 +12,83 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/carpet/clowncarpet,
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/carpet/purple/fancy/innercorner/omni,
 /area/station/crew_quarters/clown)
 "e" = (
+/obj/table/neon/auto,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/obj/item/peripheral/videocard{
+	pixel_y = 5
+	},
+/obj/item/storage/goodybag{
+	pixel_x = -3;
+	pixel_y = -7
+	},
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 8
+	},
+/area/station/crew_quarters/clown)
+"g" = (
+/turf/simulated/wall/false_wall/reinforced{
+	can_be_auto = 0;
+	icon = 'icons/turf/walls/supernorn/reinforced/purple.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/crew_quarters/clown)
+"h" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
+/area/station/crew_quarters/clown)
+"i" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
+/area/station/crew_quarters/clown)
+"j" = (
+/obj/reagent_dispensers/heliumtank,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/station/crew_quarters/clown)
+"k" = (
+/obj/stool/chair/comfy/sleek{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 4
+	},
+/area/station/crew_quarters/clown)
+"l" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
+/area/station/crew_quarters/clown)
+"m" = (
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/turf/simulated/floor/carpet/purple/fancy/narrow/west,
+/area/station/crew_quarters/clown)
+"o" = (
 /obj/table/neon/auto,
 /obj/item/instrument/bikehorn{
 	pixel_x = -4;
@@ -34,52 +102,12 @@
 	pixel_y = -10
 	},
 /turf/simulated/floor/carpet/clowncarpet/border{
-	dir = 8
-	},
-/area/station/crew_quarters/clown)
-"h" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
-/area/station/crew_quarters/clown)
-"j" = (
-/obj/machinery/light/incandescent/purpleish,
-/turf/simulated/floor/carpet/clowncarpet/border{
-	dir = 1
-	},
-/area/station/crew_quarters/clown)
-"k" = (
-/obj/stool/chair/comfy/sleek{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/clowncarpet/border{
-	dir = 4
-	},
-/area/station/crew_quarters/clown)
-"l" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn/colored,
-/area/station/crew_quarters/clown)
-"m" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/captain,
-/obj/landmark/start/job/clown,
-/turf/simulated/floor/carpet/clowncarpet/border{
-	dir = 4
-	},
-/area/station/crew_quarters/clown)
-"o" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/reagent_dispensers/heliumtank,
-/turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 9
 	},
+/area/station/crew_quarters/clown)
+"q" = (
+/obj/marker/supplymarker,
+/turf/simulated/floor/carpet/clowncarpet/border,
 /area/station/crew_quarters/clown)
 "r" = (
 /obj/stool/chair/syndicate{
@@ -90,11 +118,14 @@
 	dir = 10
 	},
 /area/station/crew_quarters/clown)
-"t" = (
+"s" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/carpet/clowncarpet,
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
+/area/station/crew_quarters/clown)
+"t" = (
+/turf/simulated/floor/carpet/clowncarpet/border,
 /area/station/crew_quarters/clown)
 "w" = (
 /obj/table/neon/auto,
@@ -107,21 +138,25 @@
 	pixel_x = -6;
 	pixel_y = 15
 	},
-/obj/machinery/light/incandescent/purpleish,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 1
 	},
 /area/station/crew_quarters/clown)
 "A" = (
-/obj/machinery/phone/unlisted{
-	name = "undetectable phone";
-	stripe_color = "#f57382";
-	phone_id = "The Clown"
+/obj/cable{
+	icon_state = "1-4"
 	},
-/obj/table/neon/auto,
-/turf/simulated/floor/carpet/clowncarpet/border{
-	dir = 8
+/obj/cable{
+	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
+/area/station/crew_quarters/clown)
+"F" = (
+/obj/item/reagent_containers/food/fish/clownfish,
+/turf/simulated/floor/carpet/purple/fancy/narrow/west,
 /area/station/crew_quarters/clown)
 "H" = (
 /obj/machinery/computer/announcement/clown,
@@ -130,23 +165,37 @@
 	},
 /area/station/crew_quarters/clown)
 "I" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/carpet/clowncarpet/border,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown,
+/turf/simulated/floor/carpet/purple/fancy/narrow/east,
 /area/station/crew_quarters/clown)
 "J" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/carpet/clowncarpet,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
+/area/station/crew_quarters/clown)
+"K" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/station/crew_quarters/clown)
 "L" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/incandescent/purpleish,
 /obj/machinery/light_switch/east,
+/obj/landmark/start/job/clown,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/captain,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 4
 	},
@@ -162,35 +211,26 @@
 /area/station/crew_quarters/clown)
 "P" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/station/crew_quarters/clown)
 "Q" = (
-/obj/machinery/light/incandescent/purpleish,
-/obj/marker/supplymarker,
-/turf/simulated/floor/carpet/clowncarpet/border,
+/obj/item/clothing/gloves/yellow{
+	name = "pinksulated gloves";
+	color = "#f57382";
+	icon_state = "latex";
+	item_state = "lgloves"
+	},
+/turf/simulated/floor/carpet/purple/fancy/narrow/east,
 /area/station/crew_quarters/clown)
 "R" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/table/neon/auto,
-/obj/item/peripheral/videocard{
-	pixel_y = 5
+/obj/machinery/phone/unlisted{
+	name = "undetectable phone";
+	stripe_color = "#f57382";
+	phone_id = "The Clown"
 	},
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_x = -1;
-	pixel_y = 10
-	},
-/obj/item/storage/goodybag{
-	pixel_x = -3;
-	pixel_y = -7
-	},
-/obj/machinery/light/incandescent/purpleish,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 8
 	},
@@ -209,116 +249,114 @@
 /turf/simulated/floor/carpet/clowncarpet/border,
 /area/station/crew_quarters/clown)
 "Y" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/ladder{
 	id = "clowntainment";
 	icon_state = "ladder_wall";
 	pixel_y = 20
 	},
 /obj/item/bananapeel,
+/obj/machinery/light/incandescent/purpleish,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 1
 	},
 /area/station/crew_quarters/clown)
 
 (1,1,1) = {"
-M
-M
-M
-M
-l
-M
-M
-M
-M
+s
+O
+O
+O
+i
+O
+O
+O
+K
 "}
 (2,1,1) = {"
-M
+l
 S
 S
 S
-h
 S
 S
 S
-M
+F
+l
 "}
 (3,1,1) = {"
-M
+l
 S
 o
 e
 R
-A
 r
 S
-M
+Q
+l
 "}
 (4,1,1) = {"
-M
+l
 S
 j
 a
-J
 a
-Q
+q
 S
 M
+l
 "}
 (5,1,1) = {"
-O
-P
-Y
-t
-b
-t
-I
-P
-O
-"}
-(6,1,1) = {"
-M
+A
 S
-w
+Y
 a
-J
 a
 W
 S
 M
+b
+"}
+(6,1,1) = {"
+l
+S
+w
+a
+a
+t
+S
+M
+l
 "}
 (7,1,1) = {"
-M
+l
 S
 H
 k
 L
-m
 U
-S
-M
+g
+m
+l
 "}
 (8,1,1) = {"
-M
+l
 S
 S
 S
-h
 S
 S
 S
-M
+I
+l
 "}
 (9,1,1) = {"
-M
-M
-M
-M
-l
-M
-M
-M
-M
+P
+O
+O
+O
+J
+O
+O
+O
+h
 "}
