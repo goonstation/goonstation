@@ -41,7 +41,7 @@
 	var/static/machines_counter = 0
 	src.processing_bucket = machines_counter++ & 31 // this is just modulo 32 but faster due to power-of-two memes
 	SubscribeToProcess()
-	if (current_state > GAME_STATE_WORLD_INIT)
+	if (current_state > GAME_STATE_PREGAME)
 		SPAWN(5 DECI SECONDS)
 			src.power_change()
 			var/area/A = get_area(src)

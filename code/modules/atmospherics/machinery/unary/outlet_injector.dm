@@ -37,6 +37,10 @@
 
 	if(!on)
 		return FALSE
+	if (!node)
+		src.on = FALSE
+		src.UpdateIcon()
+		return FALSE
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
@@ -138,11 +142,8 @@
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
 	var/hide_pipe = CHECKHIDEPIPE(src)
-	SPAWN(5 SECONDS)
-		if (!node)
-			src.on = FALSE
-		src.icon_state = src.on ? "on" : "off"
-		update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
+	src.icon_state = src.on ? "on" : "off"
+	update_pipe_underlay(src.node, src.dir, "long", hide_pipe)
 
 /obj/machinery/atmospherics/unary/outlet_injector/active
 	icon_state = "on-map"
