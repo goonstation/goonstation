@@ -58,9 +58,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 1
-	},
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/inner)
 "fB" = (
@@ -141,7 +139,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/binary/valve/purge,
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/inner)
 "iF" = (
@@ -258,6 +256,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -269,6 +270,9 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/inner)
@@ -345,6 +349,10 @@
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/inner)
+"qY" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/inner)
 "qZ" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -400,6 +408,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
+"uA" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/inner)
 "vv" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -420,13 +432,9 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
-"vT" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 1
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
+"vX" = (
+/obj/machinery/atmospherics/binary/valve/purge,
+/turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
 "wi" = (
 /obj/map/light/cyan,
@@ -480,6 +488,9 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
 "DC" = (
@@ -489,6 +500,14 @@
 /area/station/engine/inner)
 "DM" = (
 /turf/simulated/floor,
+/area/station/engine/inner)
+"DS" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/engine/inner)
 "Es" = (
 /turf/simulated/floor/yellow/side{
@@ -547,7 +566,7 @@
 	pixel_y = -10
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
@@ -678,6 +697,9 @@
 	dir = 5;
 	icon_state = "bigstripe-corner2"
 	},
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 1
+	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/inner)
 "Py" = (
@@ -797,7 +819,7 @@
 	pixel_y = -10
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 9
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -814,6 +836,12 @@
 	icon_state = "bigstripe-corner2"
 	},
 /obj/machinery/nanofab/nuclear,
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/inner)
+"Yq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/inner)
 "YF" = (
@@ -920,7 +948,7 @@ Sy
 Es
 "}
 (5,1,1) = {"
-Es
+fB
 fB
 hr
 PG
@@ -935,8 +963,8 @@ He
 cO
 "}
 (6,1,1) = {"
-cO
 aM
+vX
 ip
 eQ
 YO
@@ -950,8 +978,8 @@ Sy
 Es
 "}
 (7,1,1) = {"
-Es
 fB
+Es
 hr
 PG
 iU
@@ -965,10 +993,10 @@ He
 cO
 "}
 (8,1,1) = {"
+bc
 cO
-aM
 fa
-PG
+Yq
 PG
 PG
 PG
@@ -980,10 +1008,10 @@ Sy
 Es
 "}
 (9,1,1) = {"
+fB
 Es
-vT
 fa
-PG
+qY
 PG
 PG
 PG
@@ -995,8 +1023,8 @@ He
 cO
 "}
 (10,1,1) = {"
-cO
-bc
+aM
+uA
 Pf
 nX
 kL
@@ -1010,7 +1038,7 @@ Sy
 Es
 "}
 (11,1,1) = {"
-Es
+DS
 HI
 gW
 RB
