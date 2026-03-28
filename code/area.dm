@@ -2094,6 +2094,9 @@ TYPEINFO(/area/station/medical/asylum)
 /area/station/medical/asylum
 	name = "Asylum Mini-Station"
 	icon_state = "blue"
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#endif
 
 /area/station/medical/asylum/main
 
@@ -3392,6 +3395,15 @@ TYPEINFO(/area/station/solar/small_backup3)
 	name = "Emergency Solar Array 3"
 	icon_state = "yellow"
 
+TYPEINFO(/area/station/solar/asylum)
+	valid_bounty_area = FALSE
+/area/station/solar/asylum
+	name = "Asylum Solar Array"
+	icon_state = "yellow"
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#endif
+
 /area/station/solar/aisat
 	name = "AI Satellite Solar Array"
 	icon_state = "yellow"
@@ -4634,7 +4646,11 @@ ABSTRACT_TYPE(/area/mining)
 
 // pod_wars Areas
 /area/pod_wars
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#else
 	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE | MAP_OBSERVER
+#endif
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN

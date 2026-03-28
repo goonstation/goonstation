@@ -9,7 +9,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8
 	},
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "aJ" = (
 /obj/stool/bench/red,
 /turf/simulated/floor/wood/five,
@@ -131,6 +131,16 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
+"ds" = (
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar/asylum,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/asylum)
 "dv" = (
 /obj/table/reinforced/auto,
 /obj/linen_bin/towel,
@@ -143,7 +153,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "dQ" = (
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/wood/five,
@@ -209,7 +219,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "fX" = (
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/wood/five,
@@ -311,16 +321,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
-"iz" = (
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/solar/small_backup1,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/station/solar/small_backup1)
 "iI" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -500,7 +500,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "qV" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -600,7 +600,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "uN" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -652,13 +652,13 @@
 	},
 /area/station/medical/asylum/kitchen)
 "vd" = (
-/obj/machinery/power/solar/small_backup1,
 /obj/cable/yellow,
+/obj/machinery/power/solar/asylum,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
 	},
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "vF" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -844,7 +844,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "Cn" = (
 /obj/machinery/sink/slim{
 	desc = "It seems a bit busted.";
@@ -887,7 +887,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8
 	},
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "Db" = (
 /obj/machinery/computer3/terminal/zeta,
 /obj/cable{
@@ -1063,7 +1063,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8
 	},
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "HA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1077,12 +1077,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "HU" = (
-/obj/machinery/power/tracker/small_backup1,
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/tracker/asylum,
 /turf/simulated/floor/plating/airless,
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "HY" = (
 /obj/submachine/chef_oven{
 	dir = 8
@@ -1167,7 +1167,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "Ly" = (
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
@@ -1431,7 +1431,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8
 	},
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "Sb" = (
 /obj/stool/bench/red,
 /turf/simulated/floor/carpet/arcade,
@@ -1603,7 +1603,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/solar/small_backup1)
+/area/station/solar/asylum)
 "Yv" = (
 /obj/machinery/vending/monkey,
 /turf/simulated/floor/specialroom/freezer,
@@ -1688,11 +1688,11 @@ aT
 aT
 aT
 aT
-iz
+ds
 RC
 vd
 qL
-iz
+ds
 RC
 vd
 aT
@@ -1722,11 +1722,11 @@ aT
 aT
 aT
 aT
-iz
+ds
 CY
 vd
 HU
-iz
+ds
 CY
 vd
 aT
@@ -1756,11 +1756,11 @@ aT
 aT
 aT
 aT
-iz
+ds
 CY
 vd
 av
-iz
+ds
 CY
 vd
 aT
@@ -1790,11 +1790,11 @@ aT
 aT
 aT
 aT
-iz
+ds
 Hy
 vd
 av
-iz
+ds
 Hy
 vd
 aT
