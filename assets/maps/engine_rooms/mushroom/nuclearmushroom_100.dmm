@@ -43,11 +43,11 @@
 /obj/cable,
 /obj/machinery/reactor_turbine,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "eQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "fa" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -62,7 +62,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "fB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -80,16 +80,16 @@
 	},
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "gT" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "gW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "hr" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -101,7 +101,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "hZ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5
@@ -130,7 +130,7 @@
 	},
 /obj/decal/poster/wallsign/iso/warning/radiation,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "ip" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -143,7 +143,7 @@
 	},
 /obj/machinery/atmospherics/binary/valve/purge,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "iF" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -156,7 +156,7 @@
 "iU" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "ji" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -180,7 +180,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "jW" = (
 /obj/cable/reinforced{
 	icon_state = "1-4-thick"
@@ -195,7 +195,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "kG" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -210,14 +210,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "ld" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "ls" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -253,7 +253,7 @@
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "nI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -271,7 +271,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "nZ" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
@@ -289,7 +289,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "oG" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -300,8 +300,9 @@
 	dir = 10;
 	icon_state = "bigstripe-corner2"
 	},
+/obj/storage/secure/crate/eng/nuclearfuel,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "ps" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -317,7 +318,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "pJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -343,7 +344,7 @@
 	pixel_y = -23
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "qZ" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -357,7 +358,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "ri" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 8
@@ -373,7 +374,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "sB" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -386,7 +387,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "tb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/yellow/side{
@@ -430,7 +431,7 @@
 "wi" = (
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "wO" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering North";
@@ -452,7 +453,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "AB" = (
 /obj/cable,
 /obj/cable{
@@ -465,7 +466,7 @@
 	pixel_y = -23
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "Bu" = (
 /obj/cable/reinforced{
 	icon_state = "2-8-thick"
@@ -521,7 +522,7 @@
 "Gr" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "GR" = (
 /obj/machinery/door_control{
 	id = "engi";
@@ -573,7 +574,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "Kc" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -594,7 +595,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "Kt" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -611,7 +612,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "KK" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -639,7 +640,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "NN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable/reinforced{
@@ -678,17 +679,17 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "Py" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 6
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "PG" = (
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "QK" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -697,7 +698,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "Ry" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -710,7 +711,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "RA" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -731,7 +732,7 @@
 	},
 /obj/decal/poster/wallsign/iso/warning/radiation,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "RD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable/reinforced{
@@ -784,13 +785,13 @@
 	name = "Purge Vent"
 	},
 /turf/space,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "TU" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "UD" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/north{
 	pixel_y = -10
@@ -812,19 +813,20 @@
 	dir = 6;
 	icon_state = "bigstripe-corner2"
 	},
+/obj/machinery/nanofab/nuclear,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "YF" = (
 /obj/map/light/cyan,
 /obj/machinery/nuclear_reactor/prefilled/normal,
 /obj/cable,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "YO" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "Zj" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -833,14 +835,18 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
+"ZJ" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/inner)
 "ZM" = (
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 "ZW" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -851,7 +857,7 @@
 	icon_state = "bigstripe-corner2"
 	},
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/core/nuclear)
+/area/station/engine/inner)
 
 (1,1,1) = {"
 wO
@@ -952,7 +958,7 @@ iU
 iU
 iU
 mV
-PG
+ZJ
 PG
 fM
 He
