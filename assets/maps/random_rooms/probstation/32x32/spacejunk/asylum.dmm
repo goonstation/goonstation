@@ -63,8 +63,8 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "bl" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/asylum/maintenance)
@@ -72,8 +72,8 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "by" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/simulated/floor/white/checker2{
@@ -292,8 +292,8 @@
 	name = "WARNING - ONE-WAY ENTRY";
 	plane = -101
 	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "hL" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -304,9 +304,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/jen,
 /area/station/medical/asylum/maintenance)
-"ik" = (
-/turf/simulated/wall/auto/jen/blue,
-/area/station/crew_quarters/clown)
 "iw" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -428,8 +425,8 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "ns" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -481,10 +478,11 @@
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/kitchen)
 "qk" = (
-/obj/item/pen/crayon/rainbow,
-/obj/storage/crate/clown,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "ql" = (
 /obj/machinery/light/small/sticky{
 	dir = 1
@@ -556,7 +554,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
+/area/station/medical/asylum/main)
 "sK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
@@ -712,8 +710,8 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "xr" = (
 /obj/lattice{
 	dir = 4;
@@ -795,8 +793,8 @@
 /area/station/medical/asylum/main)
 "yZ" = (
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "zR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -811,12 +809,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
-"AC" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/crew_quarters/clown)
 "AO" = (
 /obj/machinery/sim/vr_bed{
 	dir = 8
@@ -831,21 +823,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
-"AX" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/pie/cream{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/stamp/clown{
-	pixel_x = 7
-	},
-/obj/item/instrument/bikehorn{
-	pixel_x = -3;
-	pixel_y = -9
-	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "Bm" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/asylum/bathroom)
@@ -886,8 +863,8 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 1
 	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "CM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/mesh/catwalk,
@@ -970,9 +947,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
-"ES" = (
-/turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/crew_quarters/clown)
 "EU" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white/checker2{
@@ -984,8 +958,8 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
-/turf/simulated/floor/sanitary/blue,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "Fg" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -1004,17 +978,16 @@
 	pixel_x = -10;
 	pixel_y = 24
 	},
-/obj/stool/chair/syndicate,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/obj/table/reinforced/auto,
+/obj/item/handcuffs,
+/obj/item/clothing/glasses/blindfold,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "FM" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/mental,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "FR" = (
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
@@ -1140,7 +1113,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
+/area/station/medical/asylum/main)
 "IA" = (
 /obj/machinery/computer/solar_control/small_backup1{
 	dir = 4
@@ -1195,9 +1168,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/small_backup1)
-"Lw" = (
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "Ly" = (
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
@@ -1274,8 +1244,8 @@
 	name = "WARNING - ONE-WAY ENTRY";
 	plane = -101
 	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "Nl" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
@@ -1306,7 +1276,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
+/area/station/medical/asylum/main)
 "NQ" = (
 /obj/item/device/radio/intercom/medical{
 	dir = 4
@@ -1320,13 +1290,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
-"Ok" = (
-/obj/rack,
-/obj/item/clothing/mask/clown_hat/blue,
-/obj/item/clothing/shoes/clown_shoes/blue,
-/obj/item/clothing/under/misc/clown/blue,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "Ol" = (
 /obj/item/clothing/suit/bedsheet,
 /obj/stool/bed,
@@ -1381,9 +1344,10 @@
 /area/station/medical/asylum/kitchen)
 "OP" = (
 /obj/machinery/light/incandescent/warm,
-/obj/reagent_dispensers/heliumtank,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/some,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "OV" = (
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
@@ -1478,7 +1442,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/white/checker,
-/area/station/crew_quarters/clown)
+/area/station/medical/asylum/main)
 "SB" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/asylum/bathroom)
@@ -1492,19 +1456,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/main)
-"Tl" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/hologram_expansion/clown,
-/obj/item/storage/goodybag{
-	pixel_y = -6
-	},
-/obj/item/peripheral/videocard{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/clothing/mask/clown_nose,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "Tz" = (
 /obj/item/storage/toilet/random/escapetools{
 	dir = 8
@@ -1529,7 +1480,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
+/area/station/medical/asylum/main)
 "Vh" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/asylum/rec)
@@ -1574,7 +1525,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
+/area/station/medical/asylum/main)
 "Xk" = (
 /turf/simulated/floor/white/checker2{
 	dir = 1
@@ -1633,8 +1584,8 @@
 /area/station/medical/asylum/computer)
 "XY" = (
 /obj/machinery/computer/transit_shuttle/asylum,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "Yl" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -1642,12 +1593,9 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/captain,
-/obj/item/paper/book/from_file/the_trial,
 /obj/machinery/light_switch/north,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
 "Yu" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -1695,20 +1643,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
-"Ze" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/computer/announcement/clown{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
-"Zk" = (
-/obj/item/bananapeel,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "Zm" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -2325,14 +2259,14 @@ MZ
 aT
 aT
 aT
-ES
-ES
-ik
+ju
+ju
+Kp
 sH
 UW
 NL
-ik
-ik
+Kp
+Kp
 bK
 fw
 xw
@@ -2358,12 +2292,12 @@ ZC
 MZ
 aT
 aT
-ES
-ES
+ju
+ju
 Fz
-Lw
-AX
-Tl
+HS
+qk
+qk
 qk
 OP
 Ir
@@ -2392,14 +2326,14 @@ ZC
 MZ
 aT
 aT
-ES
+ju
 xk
-Lw
-Lw
-Lw
-Lw
+HS
+HS
+HS
+HS
 Ng
-Lw
+HS
 Xh
 aJ
 Xm
@@ -2427,7 +2361,7 @@ MZ
 MZ
 MZ
 Ff
-Zk
+HS
 bg
 yZ
 yZ
@@ -2460,14 +2394,14 @@ ZC
 MZ
 aT
 aT
-ES
+ju
 XY
 nr
-Lw
-Lw
-Lw
+HS
+HS
+HS
 Ng
-Ok
+HS
 Xh
 JA
 Xm
@@ -2494,15 +2428,15 @@ ZC
 MZ
 aT
 aT
-ES
-ES
+ju
+ju
 Yl
 bn
 bn
 bn
-Ze
+HS
 FM
-NL
+Tg
 LU
 ns
 DJ
@@ -2529,14 +2463,14 @@ MZ
 aT
 aT
 aT
-ES
-AC
+ju
+JB
 Si
 Si
 Si
-ik
-ik
-ik
+Kp
+Kp
+Kp
 ho
 Xm
 Xm
