@@ -221,6 +221,7 @@
 			FLICK("popdown", src.cover)
 			src.cover.icon_state = "TurretCover"
 			var/image/turret_overlay = ClearAllOverlays()
+			src.UpdateOverlays(turret_overlay)
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
 				invisibility = INVIS_ALWAYS
