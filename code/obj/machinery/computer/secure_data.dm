@@ -556,79 +556,8 @@
 									return
 								src.active_record_security["rank"] = t1
 
-						// 	src.temp = {"
-						// <b>Rank:</b>
-						// <br>
-						// <br><b>Assistants:</b>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=res_assist');">Assistant</a>
-						// <br>
-						// <br><b>Technicians:</b>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=foren_tech');">Detective</a>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=atmo_tech');">Atmospheric Technician</a>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=engineer');">Station Engineer</a>
-						// <br>
-						// <br><b>Researchers:</b>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=med_res');">Geneticist</a>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=tox_res');">Scientist</a>
-						// <br>
-						// <br><b>Officers:</b>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=med_doc');">Medical Doctor</a>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=secure_off');">Security Officer</a>
-						// <br>
-						// <br><b>Higher Officers:</b>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=hoperson');">Head of Security</a>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=hosecurity');">Head of Personnel</a>
-						// <br>
-						// <br><a href="javascript:goBYOND('action=rank;rank=captain');">Captain</a>
-						// <br>
-						// "}
 						else
 							tgui_alert(usr, "You do not have the required rank to do this!", "Rank not high enough")
-
-			// if ("rank")
-			// 	if (src.active_record_general)
-			// 		switch(href_list["rank"])
-			// 			if ("res_assist")
-			// 				src.active_record_general["rank"] = "Assistant"
-			// 			if ("foren_tech")
-			// 				src.active_record_general["rank"] = "Detective"
-			// 			if ("atmo_tech")
-			// 				src.active_record_general["rank"] = "Atmospheric Technician"
-			// 			if ("engineer")
-			// 				src.active_record_general["rank"] = "Station Engineer"
-			// 			if ("med_res")
-			// 				src.active_record_general["rank"] = "Geneticist"
-			// 			if ("tox_res")
-			// 				src.active_record_general["rank"] = "Scientist"
-			// 			if ("med_doc")
-			// 				src.active_record_general["rank"] = "Medical Doctor"
-			// 			if ("secure_off")
-			// 				src.active_record_general["rank"] = "Security Officer"
-			// 			if ("hoperson")
-			// 				src.active_record_general["rank"] = "Head of Security"
-			// 			if ("hosecurity")
-			// 				src.active_record_general["rank"] = "Head of Personnel"
-			// 			if ("captain")
-			// 				src.active_record_general["rank"] = "Captain"
-			// 			if ("bartender")
-			// 				src.active_record_general["rank"] = "Bartender"
-			// 			if ("chemist")
-			// 				src.active_record_general["rank"] = "Chemist"
-			// 			if ("janitor")
-			// 				src.active_record_general["rank"] = "Janitor"
-			// 			if ("clown")
-			// 				src.active_record_general["rank"] = "Clown"
-			// 		src.temp = null
 
 
 			if ("criminal")

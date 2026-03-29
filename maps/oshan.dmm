@@ -10356,8 +10356,8 @@
 /area/evilreaver/atmospherics)
 "aZg" = (
 /obj/item/card/id/security{
-	assignment = "Security Officer";
-	name = "#1900494 (Security Officer)";
+	assignment = "Security Guard";
+	name = "#1900494 (Security Guard)";
 	registered = "#1900494"
 	},
 /turf/simulated/floor/plating/damaged2,

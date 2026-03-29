@@ -2442,7 +2442,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	proc/who()
 		if(prob(50 * emag_multiplier))
 			if (prob(20))
-				return pick("clowns", "captains", "staff assistants", "frogs", "bees", "traitors", "NanoTrasen", "Syndicate", "scientists", "anglers", "security officers")
+				return pick("clowns", "captains", "staff assistants", "frogs", "bees", "traitors", "NanoTrasen", "Syndicate", "scientists", "anglers", "security guards")
 			var/tries = 50
 			var/atom_value = -INFINITY
 			do

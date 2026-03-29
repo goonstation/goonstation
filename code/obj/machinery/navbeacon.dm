@@ -1211,7 +1211,7 @@ TYPEINFO(/obj/machinery/wirenav)
 	tour10
 		name = "tour beacon - 'Security'"
 		location = "tour10"
-		codes_txt = "tour;next_tour=tour11;desc=This is the main desk of our security wing. If you find yourself the victim of a crime or suspect one of your fellow crew may be a turncoat or otherwise criminally incompetent, you'll want to come report them to a security officer to take care of. Stay vigilent, crewman!"
+		codes_txt = "tour;next_tour=tour11;desc=This is the main desk of our security wing. If you find yourself the victim of a crime or suspect one of your fellow crew may be a turncoat or otherwise criminally incompetent, you'll want to come report them to a security guard to take care of. Stay vigilent, crewman!"
 
 	tour11
 		name = "tour beacon - 'Hydroponics'"

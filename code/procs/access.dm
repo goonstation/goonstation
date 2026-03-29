@@ -214,8 +214,8 @@
 
 		// --------------------------- Security
 		if("Nanotrasen Security Consultant")
-			return get_access("Security Officer") + list(access_heads, access_eva, access_fine_large)
-		if("Security Officer")
+			return get_access("Security Guard") + list(access_heads, access_eva, access_fine_large)
+		if("Security Guard")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig,  access_ticket,
 			access_maint_tunnels, access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
 			access_fine_small, access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer, access_mining

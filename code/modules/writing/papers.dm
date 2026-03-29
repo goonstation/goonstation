@@ -100,7 +100,7 @@
 /obj/item/paper/courtroom
 	name = "'A Crash Course in Legal SOP on SS13'"
 	info = {"<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written
-	authority from the Detective.<BR>\nThe Captain/HoP is the judicial authority.<BR>\nThe Security Officers are responsible for executing warrants,
+	authority from the Detective.<BR>\nThe Captain/HoP is the judicial authority.<BR>\nThe Security Guards are responsible for executing warrants,
 	security during trial, and prisoner transport.
 	<BR>\n<BR>\n<B>Investigative Phase:</B><BR>\nAfter the crime has been committed the Detective's job is to gather evidence and try to ascertain not only who did
 	it but what happened. They must take special care to catalogue everything and don't leave anything out.
@@ -347,9 +347,9 @@ Only trained personnel should operate station systems. Follow all procedures car
 	"}
 
 /obj/item/paper/mantasecscanners
-	name = "paper - Security Officers are so dumb!"
+	name = "paper - Security Guards are so dumb!"
 	icon_state = "paper"
-	info ={"Man, I can't believe how ridiculously dumb those security officers are! It's been weeks since I cut the wires to the security scanners on the left
+	info ={"Man, I can't believe how ridiculously dumb those security guards are! It's been weeks since I cut the wires to the security scanners on the left
 	and right side of security and yet they still haven't noticed!<br>
 	I swear, as soon as I'll get out of here, I'm going to go and snatch that sweet medal that Head of Security has in his office."}
 

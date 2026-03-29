@@ -186,7 +186,7 @@ var/global/list/job_start_locations = list()
 
 // Security
 /obj/landmark/start/job/security_officer
-	name = "Security Officer"
+	name = "Security Guard"
 	icon_state = "security_officer"
 
 /obj/landmark/start/job/security_assistant

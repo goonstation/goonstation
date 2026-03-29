@@ -39,7 +39,7 @@ Beware the syndicate drones out in the asteroid belt.
 Stuck in space? Throwing an item will propel you in the opposite direction.
 Need more supplies for your workplace? Check your PDA for the supply request program, or use one of the supply consoles near the cargo belts.
 The cargo routing system is great for quick escapes.
-Antagonist status is rolled before job selection, so if you have Security Officer or Head of Security set as your favorite job, you can still be selected to be a bad guy!
+Antagonist status is rolled before job selection, so if you have Security Guard or Head of Security set as your favorite job, you can still be selected to be a bad guy!
 You can press V to equip clothing or place equipment on your belt slot if possible.
 If you have WASD Mode enabled, you can drop items by pressing Q.
 Don't wanna be spontaneously naked and drop everything on the ground? Click the inventory button with your item to quick swap clothing and equipment.

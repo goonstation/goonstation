@@ -3233,7 +3233,7 @@ ABSTRACT_TYPE(/area/station/security)
 	sound_environment = 2
 
 /area/station/security/secoffquarters
-	name = "Sec. Officers Quarters"
+	name = "Security Guard Quarters"
 	icon_state = "brig"
 	sound_environment = 2
 	requires_power = 1
@@ -3286,7 +3286,7 @@ ABSTRACT_TYPE(/area/station/security)
 	sound_environment = 4
 
 /area/station/security/quarters
-	name = "Security Officer Quarters"
+	name = "Security Guard Quarters"
 	icon_state = "officer_quarters"
 
 /area/station/security/equipment

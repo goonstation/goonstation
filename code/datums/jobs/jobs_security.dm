@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	email_group = MGD_SECURITY
 
 /datum/job/security/security_officer
-	name = "Security Officer"
+	name = "Security Guard"
 	limit = 5
 	lower_limit = 3
 	variable_limit = TRUE
@@ -18,7 +18,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	order_priority = 2 //fill secoffs after captain and AI
 	wages = PAY_TRADESMAN
 	trait_list = list("training_security")
-	access_string = "Security Officer"
+	access_string = "Security Guard"
 	can_roll_antag = FALSE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	receives_disk = /obj/item/disk/data/floppy/security
@@ -34,7 +34,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security)
 	rounds_needed_to_play = ROUNDS_MIN_SECURITY
-	wiki_link = "https://wiki.ss13.co/Security_Officer"
+	wiki_link = "https://wiki.ss13.co/Security_Guard"
 
 	assistant
 		name = "Security Assistant"

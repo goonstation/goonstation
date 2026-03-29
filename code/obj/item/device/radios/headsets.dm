@@ -294,7 +294,7 @@
 
 /obj/item/device/radio/headset/security
 	name = "security headset"
-	desc = "Worn by security officers, this thing could cause real problems in the wrong ears."
+	desc = "Worn by security guards, this thing could cause real problems in the wrong ears."
 	icon_state = "sec headset"
 	secure_frequencies = list("g" = R_FREQ_SECURITY)
 	icon_override = "sec"

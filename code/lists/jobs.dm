@@ -3,7 +3,7 @@ var/list/occupations = list(
 	"Chief Engineer",
 	"Engineer","Engineer","Engineer",
 	"Miner","Miner","Miner",
-	"Security Officer", "Security Officer", "Security Officer",
+	"Security Guard", "Security Guard", "Security Guard",
 //	"Vice Officer",
 	"Detective",
 	"Geneticist",
@@ -80,7 +80,7 @@ var/list/security_jobs = list(
 	"Head of Security",
 	"Nanotrasen Security Consultant",
 	"Nanotrasen Special Operative",
-	"Security Officer",
+	"Security Guard",
 	"Security Assistant",
 	"Detective",
 )

@@ -2009,7 +2009,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		backpack_type = new/datum/chameleon_backpack_pattern
 
 	security_officer
-		name = "Security Officer"
+		name = "Security Guard"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/security
 		hat_type = new/datum/chameleon_hat_pattern/security
 		suit_type = new/datum/chameleon_suit_pattern/armor_vest

@@ -394,7 +394,7 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 		varieties = list("scientist", "scientist2")
 
 	security
-		name = "security officer"
+		name = "security guard"
 		icon_state = "security"
 
 	detective

@@ -786,7 +786,7 @@
 	dir = 4
 	},
 /obj/storage/secure/closet/security/equipment{
-	desc = "An immobile card-locked storage closet, containing security equipment for security officers -- not the Head of Personnel, though.  The HoP isn't a security officer.  That would be silly!"
+	desc = "An immobile card-locked storage closet, containing security equipment for security guards -- not the Head of Personnel, though.  The HoP isn't a security guard.  That would be silly!"
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/red/redblackchecker,

@@ -75,7 +75,7 @@
 	// Adjust reward based off target job to estimate risk level
 		if (job == "Head of Security" || job == "Captain")
 			return 3
-		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Security Consultant" || job == "Security Officer" || job == "Detective")
+		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Security Consultant" || job == "Security Guard" || job == "Detective")
 			return 2
 		else
 			return 1

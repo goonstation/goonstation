@@ -77,7 +77,7 @@
 			if(J.job_category == JOB_ENGINEERING || istype(J, /datum/job/command/chief_engineer))
 				return TRUE
 
-		if(cache.Find("Security Department") || cache.Find("Security Officer"))
+		if(cache.Find("Security Department") || cache.Find("Security Officer") || cache.Find("Security Guard"))
 			if(J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security) || istype(J, /datum/job/special/nt/security_consultant))
 				return TRUE
 
@@ -118,9 +118,9 @@
 
 		// Wire note: Hi this is super dumb
 		if(rank == "Security Department")
-			if(cache.Find("Security Officer"))
+			if(cache.Find("Security Guard"))
 				var/datum/apiRoute/jobbans/delete/secDeleteJobBan = new
-				secDeleteJobBan.buildBody(akey, null, checkey, "Security Officer")
+				secDeleteJobBan.buildBody(akey, null, checkey, "Security Guard")
 				apiHandler.queryAPI(secDeleteJobBan)
 
 		var/ircmsg[] = new()

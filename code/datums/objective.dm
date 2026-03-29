@@ -472,7 +472,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	var/target_job = "Staff Assistant"
 
 	set_up()
-		var/list/targets = list("Staff Assistant","Medical Doctor","Engineer","Security Officer",
+		var/list/targets = list("Staff Assistant","Medical Doctor","Engineer","Security Guard",
 		"Geneticist","Scientist","Roboticist","Quartermaster","Miner","Botanist")
 		target_job = pick(targets)
 		explanation_text = "Kill every [target_job] on the station. You do not need to kill yourself if you are a [target_job]."

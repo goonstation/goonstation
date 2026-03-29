@@ -110,7 +110,7 @@
 /mob/living/carbon/human/normal/securityofficer
 	New()
 		..()
-		JobEquipSpawned("Security Officer")
+		JobEquipSpawned("Security Guard")
 
 /mob/living/carbon/human/normal/securityassistant
 	New()

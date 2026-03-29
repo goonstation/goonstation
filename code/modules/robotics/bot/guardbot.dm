@@ -919,7 +919,7 @@
 															"buy more tool modules today!",\
 															"a Buddy's drive train can't carry both a tool module and a gun!",\
 															"crime plus an Elektro-Arc tool module equals no more crime!",\
-															"a Buddy's taser module is worth two-and-a-quarter security officers!",\
+															"a Buddy's taser module is worth two-and-a-quarter security guards!",\
 															"'Smoker' tool modules are absolutely harmless!",\
 															"steel snow stops scrime!",\
 															"Earth law prohibits Medicator tool modules under penalty of death![prob(25)?" Good thing for cloning, huh?":""]",\

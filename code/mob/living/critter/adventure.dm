@@ -252,7 +252,7 @@ TYPEINFO(/mob/living/critter/shade)
 		overpath = "ROlabcoat"
 
 	security
-		name = "faded officer"
+		name = "faded guard"
 		desc = "Their armor still seems surprisingly functional."
 		health_brute = 50
 		health_brute_vuln = 1

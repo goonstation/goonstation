@@ -255,7 +255,7 @@
 
 /datum/achievementReward/stylish
 	title = "(Skin) Relic Security Jumpsuit"
-	desc = "Requires that you wear a security officer or Head of Security uniform in your jumpsuit slot."
+	desc = "Requires that you wear a security guard or Head of Security uniform in your jumpsuit slot."
 	required_medal = "Dead or alive, you're coming with me"
 
 	rewardActivate(var/mob/activator)

@@ -41,7 +41,7 @@
 			what_role = "Head of Security"
 
 		else
-			what_role = pick("Security Officer", "Security Assistant")
+			what_role = pick("Security Guard", "Security Assistant")
 
 		src.crew_tab_data[CREW_TAB_SECTION_SECURITY] += src.generate_fake_crew_member(
 			real_name = src.fake_carbon_name(),

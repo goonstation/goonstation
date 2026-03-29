@@ -123,14 +123,14 @@
 				ATK = 50
 				DEF = 35
 				card_name = "Head of Security"
-				card_data = "You must sacrifice one Security Officer from your side of the field to play this card. Head of Security increases the ATK of all Security Officers on the same side of the field by 20."
+				card_data = "You must sacrifice one Security Guard from your side of the field to play this card. Head of Security increases the ATK of all Security Guards on the same side of the field by 20."
 
 			security
 				LVL = 5
 				ATK = 30
 				DEF = 25
-				card_name = "Security Officer"
-				card_data = "Security Officer cannot kill non-antagonist humans unless Head of Security is in play. Instead, when attacking non-antagonist humans with DEF lower than Security Officer's ATK, the human is incapacitated, unable to attack on its next turn."
+				card_name = "Security Guard"
+				card_data = "Security Guard cannot kill non-antagonist humans unless Head of Security is in play. Instead, when attacking non-antagonist humans with DEF lower than Security Guard's ATK, the human is incapacitated, unable to attack on its next turn."
 
 			research_director
 				LVL = 6
@@ -299,7 +299,7 @@
 				ATK = 15
 				DEF = 8
 				card_name = "Lawyer"
-				card_data = "While Lawyer is in play, no antagonists on the same side of the field may be attacked by the opponent in battle. While Lawyer is in play, no Security Officer on the same side of the field may attack."
+				card_data = "While Lawyer is in play, no antagonists on the same side of the field may be attacked by the opponent in battle. While Lawyer is in play, no Security Guard on the same side of the field may attack."
 
 			medical_director
 				LVL = 7
@@ -650,7 +650,7 @@
 			card_type = GRIFFENING_TYPE_INSTANT
 			targeting = GRIFFENING_TARGET_NONE
 			card_name = "Authentication Disk"
-			card_data = "This card can only be activated while Captain is on the field. If the Captain is on your side of the field, you may immediately play a Security Officer from your hand. If the Captain is on the opposite side of the field, you may immediately play a Nuclear Operative from your hand. This does not count against the played mob limit."
+			card_data = "This card can only be activated while Captain is on the field. If the Captain is on your side of the field, you may immediately play a Security Guard from your hand. If the Captain is on the opposite side of the field, you may immediately play a Nuclear Operative from your hand. This does not count against the played mob limit."
 
 		pinpointer
 			card_type = GRIFFENING_TYPE_INSTANT
@@ -938,7 +938,7 @@
 
 		security
 			card_name = "Security"
-			card_data = "While Security is in play, Security Officers and Head of Security can incapacitate foes with higher DEF than their ATK when attacking them, preventing them from attacking. This card cannot be played while Lawyer is in play. If Lawyer enters play, destroy this card."
+			card_data = "While Security is in play, Security Guards and Head of Security can incapacitate foes with higher DEF than their ATK when attacking them, preventing them from attacking. This card cannot be played while Lawyer is in play. If Lawyer enters play, destroy this card."
 			field_icon_state = "security"
 
 		cargobay

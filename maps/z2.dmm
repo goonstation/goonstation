@@ -35951,7 +35951,7 @@
 	},
 /obj/item/storage/box/diskbox,
 /obj/item/card/id/owlsecurity{
-	name = "Eric Addle (Security Officer)"
+	name = "Eric Addle (Security Guard)"
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
@@ -42126,7 +42126,7 @@
 "cXQ" = (
 /obj/table/reinforced/auto,
 /obj/item/card/id/owlsecurity{
-	name = "Jacob Smith (Security Officer)"
+	name = "Jacob Smith (Security Guard)"
 	},
 /obj/item/device/radio/intercom/adventure/owlery{
 	dir = 8

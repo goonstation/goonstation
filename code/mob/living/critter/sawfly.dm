@@ -14,7 +14,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	flags = TABLEPASS
 
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
-	var/static/list/priority_target_jobs = list("Head of Security", "Security Officer", "Nanotrasen Security Consultant")
+	var/static/list/priority_target_jobs = list("Head of Security", "Security Guard", "Nanotrasen Security Consultant")
 	var/datum/weakref/master = null //first friendly they imprint upon for /datum/aiTask/timed/targeted/follower
 	var/obj/item/old_grenade/sawfly/ourgrenade = null
 

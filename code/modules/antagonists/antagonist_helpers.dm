@@ -70,7 +70,7 @@ proc/get_all_gangs()
 		"Head of Mining",
 		"Nanotrasen Special Operative",
 		"Nanotrasen Security Consultant",
-		"Security Officer",
+		"Security Guard",
 		"Security Assistant",
 		"Vice Officer",
 		"Detective",

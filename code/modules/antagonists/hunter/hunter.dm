@@ -145,7 +145,7 @@
 										if ("Captain")
 											skull_value = 3
 											skull_desc = "A grand trophy from a very worthy foe. It brings you great honor."
-										if ("Security Officer")
+										if ("Security Guard")
 											skull_value = 2
 											skull_desc = "A worthy trophy from a capable opponent."
 										if ("Detective")

@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	access_string = "Nanotrasen Security Consultant"
 	requires_whitelist = TRUE
 	requires_supervisor_job = "Head of Security"
-	counts_as = "Security Officer"
+	counts_as = "Security Guard"
 	receives_miranda = TRUE
 
 	slot_belt = list(/obj/item/storage/belt/security/ntsc)

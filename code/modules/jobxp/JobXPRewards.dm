@@ -463,36 +463,6 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(T)
 		return
 
-/datum/jobXpReward/security2
-	name = " (TBI)"
-	desc = ""
-	required_levels = list("Security Officer"=999)
-	icon_state = "?"
-
-/datum/jobXpReward/security5
-	name = " (TBI)"
-	desc = ""
-	required_levels = list("Security Officer"=999)
-	icon_state = "?"
-
-/datum/jobXpReward/security10
-	name = " (TBI)"
-	desc = ""
-	required_levels = list("Security Officer"=999)
-	icon_state = "?"
-
-/datum/jobXpReward/security15
-	name = " (TBI)"
-	desc = ""
-	required_levels = list("Security Officer"=999)
-	icon_state = "?"
-
-/datum/jobXpReward/security20
-	name = " (TBI)"
-	desc = ""
-	required_levels = list("Security Officer"=999)
-	icon_state = "?"
-
 /////////////CLOWN////////////////
 /datum/jobXpReward/clown1
 	name = "Special Crayon"

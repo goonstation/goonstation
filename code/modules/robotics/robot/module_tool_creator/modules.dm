@@ -20,7 +20,7 @@
 		/obj/item/tool/omnitool/silicon,
 	)
 
-// security officer. bartender. clown.
+// security guard. bartender. clown.
 /datum/robot/module_tool_creator/recursive/module/brobocop
 	definitions = list(
 		/datum/robot/module_tool_creator/recursive/module/common,

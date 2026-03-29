@@ -1,5 +1,5 @@
 noun
-heads of staff@,engineers@,medical doctors@,assistants@,NT executives@,security officers@,robots@,
+heads of staff@,engineers@,medical doctors@,assistants@,NT executives@,security guards@,robots@,
 syndicates@,administrators@,clowns@,monkeys@,martians
 
 conspiracy
