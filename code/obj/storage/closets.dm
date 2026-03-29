@@ -346,9 +346,11 @@ TYPEINFO(/obj/storage/closet/coffin)
 			B9.pixel_y = 0
 			B9.pixel_x = 6
 
-			var/obj/item/folder/B10 = new /obj/item/canvas(src)
+			var/obj/item/canvas/B10 = new /obj/item/canvas(src)
 			B10.pixel_y = 0	// everything else does it i guess
 			B10.pixel_x = 0
+
+			new /obj/item/reagent_containers/applicator/glue(src)
 
 			return 1
 

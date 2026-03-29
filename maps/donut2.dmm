@@ -781,16 +781,13 @@
 /obj/machinery/chem_master{
 	dir = 4
 	},
-/turf/simulated/floor/purplewhite{
-	dir = 10
-	},
-/area/station/science/chemistry)
-"agG" = (
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/purplewhite,
+/turf/simulated/floor/purplewhite{
+	dir = 10
+	},
 /area/station/science/chemistry)
 "agH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -827,6 +824,7 @@
 	dir = 8;
 	state = 1
 	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -894,7 +892,10 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
-/obj/window_blinds/cog2/middle,
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "aho" = (
@@ -6515,7 +6516,9 @@
 /area/station/medical/medbay)
 "aNh" = (
 /obj/landmark/start/job/roboticist,
-/turf/simulated/floor/black,
+/turf/simulated/floor/black/corner{
+	dir = 4
+	},
 /area/station/medical/robotics)
 "aNi" = (
 /obj/machinery/bot/secbot,
@@ -6717,7 +6720,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
 /area/station/medical/robotics)
 "aOw" = (
 /obj/cable{
@@ -6727,7 +6732,9 @@
 /area/station/medical/robotics)
 "aOx" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/black,
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
 /area/station/medical/robotics)
 "aOy" = (
 /obj/cable{
@@ -8368,6 +8375,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/east)
 "aXX" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "aYa" = (
@@ -11483,6 +11493,7 @@
 /turf/simulated/floor/yellow/corner,
 /area/station/engine/engineering)
 "brX" = (
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
 	},
@@ -15812,6 +15823,12 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
+"cSg" = (
+/obj/machinery/ai_status_display{
+	pixel_x = 28
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "cSr" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -16197,6 +16214,11 @@
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 8
 	},
@@ -16559,6 +16581,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"dpp" = (
+/obj/machinery/ai_status_display{
+	pixel_x = 28
+	},
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
 "dpP" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -17911,6 +17941,10 @@
 /area/station/engine/elect)
 "egn" = (
 /obj/disposalpipe/segment/bent/east,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Zeta_Midway";
+	location = "Zeta_West"
+	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 8
 	},
@@ -18325,6 +18359,9 @@
 "esx" = (
 /obj/item/instrument/large/jukebox,
 /obj/machinery/light/incandescent,
+/obj/machinery/ai_status_display{
+	pixel_y = -28
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "etp" = (
@@ -20328,7 +20365,6 @@
 "fFY" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/chem_heater/chemistry,
-/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -22945,6 +22981,19 @@
 "hhk" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/researchshuttle)
+"hhu" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "outpostdisposals";
+	name = "Research Outpost Disposals"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/scidisposal)
 "hhK" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
@@ -23099,6 +23148,9 @@
 "hpK" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/ai_status_display{
+	pixel_x = 28
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -27162,6 +27214,11 @@
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
+"jDM" = (
+/turf/simulated/floor/black/side{
+	dir = 8
+	},
+/area/station/medical/robotics)
 "jDO" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro,
@@ -30911,11 +30968,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
-"lJs" = (
-/turf/simulated/floor/black/corner{
-	dir = 8
-	},
-/area/station/medical/robotics)
 "lJA" = (
 /obj/random_item_spawner/tools/one_or_zero,
 /obj/machinery/light/small/sticky/frostedred,
@@ -31705,6 +31757,12 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/unsimulated/floor,
 /area/station/hangar/arrivals)
 "mhr" = (
@@ -34431,6 +34489,7 @@
 /area/station/turret_protected/AIsat)
 "nFL" = (
 /obj/reagent_dispensers/fueltank,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "nFR" = (
@@ -35731,6 +35790,15 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
+"oqP" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = -28
+	},
+/turf/simulated/floor/green/side,
+/area/station/science/hall)
 "oqQ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
@@ -35814,17 +35882,6 @@
 	dir = 5
 	},
 /area/station/security/evidence)
-"orH" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Zeta_Midway";
-	location = "Zeta_West"
-	},
-/turf/simulated/floor,
-/area/station/science/hall)
 "orM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35916,6 +35973,9 @@
 	},
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = -28
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
@@ -36354,6 +36414,10 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/camera/science/directional/north{
+	c_tag = "Central Hallway West";
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/station/science/hall)
 "oEP" = (
@@ -38403,6 +38467,14 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"pLH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black/corner{
+	dir = 8
+	},
+/area/station/medical/robotics)
 "pLY" = (
 /obj/machinery/portableowl/attached{
 	name = "A Prettier Owl"
@@ -38479,6 +38551,9 @@
 /obj/machinery/vending/player/chemicals,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = -28
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -39007,7 +39082,9 @@
 /obj/shrub{
 	dir = 10
 	},
-/obj/machinery/light/incandescent,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/darkblue/side{
 	dir = 1
 	},
@@ -39993,10 +40070,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "qHq" = (
-/obj/machinery/camera/science/directional/north{
-	c_tag = "Central Hallway West";
-	pixel_x = -10
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -40363,6 +40436,14 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"qSB" = (
+/obj/machinery/ai_status_display{
+	pixel_x = -28
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "qSI" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -44993,8 +45074,14 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/right,
+/obj/window_blinds/cog2/right{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/mapping_helper/access/chemistry,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "tEO" = (
@@ -47268,6 +47355,9 @@
 /area/station/security/processing)
 "uXh" = (
 /obj/machinery/computer/robot_module_rewriter,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -48151,6 +48241,14 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/medical/robotics)
+"vtW" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "outpostdisposals";
+	name = "Research Outpost Disposals"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/scidisposal)
 "vuf" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
@@ -49205,7 +49303,10 @@
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/left,
+/obj/window_blinds/cog2/left{
+	layer = 2.9;
+	pixel_y = 13
+	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -49469,6 +49570,11 @@
 "wju" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/unsimulated/floor,
 /area/station/hangar/arrivals)
 "wjW" = (
@@ -50193,6 +50299,15 @@
 	dir = 10
 	},
 /area/station/hydroponics/bay)
+"wGt" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/ai_status_display{
+	pixel_x = -28
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "wGM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -70319,10 +70434,10 @@ vvV
 aKL
 rWh
 aNb
-aNb
 aNJ
-lJs
-aOw
+aPl
+aPl
+pLH
 aNJ
 oQl
 aQH
@@ -70621,9 +70736,9 @@ aNA
 aKL
 jFc
 aNb
+aPd
 aNb
-aPN
-eOF
+aNb
 aOv
 uUv
 aKL
@@ -70923,7 +71038,7 @@ xmt
 aKL
 krO
 oqt
-aNb
+aPd
 aNb
 aNb
 aOx
@@ -71226,9 +71341,9 @@ aKL
 ghh
 leK
 aNh
-aNb
-aNb
-aNb
+jDM
+jDM
+eOF
 aOw
 gFD
 aYy
@@ -71248,7 +71363,7 @@ mhg
 jHm
 aZE
 aTw
-aTw
+wGt
 pkG
 fbx
 bgU
@@ -72692,7 +72807,7 @@ aLL
 arc
 arc
 lHC
-uCG
+dpp
 rHu
 apo
 hWa
@@ -77826,7 +77941,7 @@ dDL
 mfl
 mfl
 anp
-aKK
+qSB
 nMA
 apz
 cBL
@@ -86664,7 +86779,7 @@ ohG
 biC
 byg
 bjw
-bjw
+cSg
 jxq
 bYJ
 ohG
@@ -117976,7 +118091,7 @@ afZ
 agF
 acV
 lpZ
-orH
+wSY
 ckN
 oPY
 ahD
@@ -118275,7 +118390,7 @@ aer
 mMw
 afB
 mMw
-agG
+agI
 acV
 xzr
 wSY
@@ -118883,7 +118998,7 @@ lfp
 waD
 ahM
 wSY
-sQy
+oqP
 acb
 aca
 kZi
@@ -123127,10 +123242,10 @@ pDx
 ikL
 crc
 fBl
-dGq
-aaa
-aaa
-aaa
+vtW
+ilw
+hhu
+acK
 aaa
 aaa
 aaa
@@ -123430,9 +123545,9 @@ oaV
 oRA
 iSc
 dGq
-aaa
-aaa
-aaa
+dGq
+dGq
+acK
 aaa
 aaa
 aaa
