@@ -508,6 +508,9 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
+	HELP_MESSAGE_OVERRIDE("You can use <b>wirecutters</b> to quickly dismantle it. \
+	You can also attack it with other items on <span class='harm'>harm</span> intent.")
+
 	amount_of_rods_when_destroyed = 1
 	icon_state_prefix = "C"// Short for "Catwalk"
 
@@ -536,11 +539,6 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 
 /obj/mesh/catwalk/get_icon_direction()
 	return src.get_icon_connectdir()
-
-/obj/mesh/catwalk/get_help_message(dist, mob/user)
-	. = ..()
-	. += "You can use <b>wirecutters</b> to quickly dismantle it. \
-	You can also attack it with other items on <span class='harm'>harm</span> intent."
 
 /obj/mesh/catwalk/jen // ^^ no i made my own because i am epic
 	name = "maintenance catwalk"
