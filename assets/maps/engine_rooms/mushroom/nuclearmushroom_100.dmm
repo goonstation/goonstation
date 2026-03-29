@@ -546,6 +546,7 @@
 	dir = 9;
 	icon_state = "bigstripe-corner2"
 	},
+/obj/machinery/centrifuge_nuclear,
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/inner)
 "EU" = (
