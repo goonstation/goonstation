@@ -3551,7 +3551,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 	recoil_strength = 10
 	recoil_max = 60
-	default_magazine = /obj/item/ammo/bullets/abg/two
+	default_magazine = /obj/item/ammo/bullets/abg/punchy/two
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
 
