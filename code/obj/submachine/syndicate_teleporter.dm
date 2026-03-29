@@ -38,7 +38,6 @@
 	icon = 'icons/obj/items/device.dmi'
 	desc = "Allows one to use a syndicate teleporter when standing on it."
 	icon_state = "locator"
-	item_state = "electronic"
 	density = 0
 	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL

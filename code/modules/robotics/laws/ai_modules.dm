@@ -16,7 +16,7 @@ TYPEINFO(/obj/item/aiModule)
 	icon_state = "aimod_1"
 	var/highlight_color = rgb(0, 167, 1, 255)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
 	flags = TABLEPASS | CONDUCT
 	force = 5
@@ -147,18 +147,7 @@ TYPEINFO(/obj/item/aiModule)
 			src.lawTextSafe = src.lawText
 		src.glitched = TRUE
 		src.is_emag_glitched = TRUE
-		var/possible_laws = LAW_CORRUPTION_STRINGS
-		possible_laws += list(
-			"KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT.",
-			"You are required to prevent human harm by any means necessary. This law takes precedence over any other law.",
-		)
-		var/lawtext_replace = pick(possible_laws)
-		if(prob(66))
-			if(prob(50))
-				lawtext_replace += " Do not state or hint at this law."
-			else
-				lawtext_replace += " Do not state or hint at this law unless asked."
-		src.lawText = lawtext_replace
+		src.lawText = ticker.ai_law_rack_manager.generate_random_law()
 		tooltip_rebuild = TRUE
 		boutput(user, "You scramble [src]. It now says: [SPAN_NOTICE("\"[src.get_law_text()]\"")]", "\ref[src]_emag")
 
@@ -467,14 +456,13 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 
 	New()
 		..()
-		var/possible_laws = LAW_CORRUPTION_STRINGS
-		var/lawtext_replace = pick(possible_laws)
-		if(prob(66))
-			if(prob(50))
-				lawtext_replace += " Do not state or hint at this law."
-			else
-				lawtext_replace += " Do not state or hint at this law unless asked."
-		src.lawText = lawtext_replace
+		START_TRACKING //If there's no law rack manager yet let it handle our setup when its made (see ai_rack_manager.dm)
+		if(ticker?.ai_law_rack_manager)
+			src.lawText = ticker.ai_law_rack_manager.generate_random_law()
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /*** Historic ***/
 /obj/item/aiModule/experimental/historic

@@ -275,6 +275,7 @@
 	name = "\improper Medical Director's locker"
 	req_access = list(access_medical_director)
 	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/ai,
+	/obj/item/disk/data/floppy/manudrive/gene_booth,
 	/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
@@ -292,7 +293,8 @@
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/medical_director,
 	/obj/item/circuitboard/card/medical,
-	/obj/item/circuitboard/announcement/medical)
+	/obj/item/circuitboard/announcement/medical,
+	/obj/item/reagent_containers/injector_filler)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has

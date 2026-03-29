@@ -93,6 +93,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/item_box/postit,
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
+	/obj/item/reagent_containers/applicator/glue,
 	/obj/item/scissors,
 	/obj/item/stamp,
 	/obj/item/canvas)

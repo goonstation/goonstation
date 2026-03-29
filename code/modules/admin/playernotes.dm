@@ -74,13 +74,14 @@
 				gameAdminCkey = legacyData["game_admin_ckey"]
 
 			var/regex/old_ban_regex = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
-			var/regex/new_ban_regex = new("Banned from (.+?) for (.+). Reason: (.+)", "m")
+			var/regex/new_ban_regex = new("Banned from (.+?) (?:for (.+)|(permanently)). Reason: (.+)", "m")
 			if (old_ban_regex.Find(noteReason))
 				row_classes += "ban"
 				noteReason = old_ban_regex.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
 			else if (new_ban_regex.Find(noteReason))
 				row_classes += "ban"
-				noteReason = new_ban_regex.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>[gameAdminCkey]</b> &mdash; $2<br><blockquote>$3</blockquote>")
+				//Capture groups 2 and 3 are the duration or "permanently", neither will show up at the same time.
+				noteReason = new_ban_regex.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>[gameAdminCkey]</b> &mdash; $2$3<br><blockquote>$4</blockquote>")
 
 			var/id = playerNote.server_id
 			if (!id && ("oldserver" in legacyData))

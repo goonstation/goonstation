@@ -108,7 +108,11 @@
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			return
 		else
-			boutput(user, "[ship.ship_message("[remaining_ammunition] shots remaining.")]")
+			if(remaining_ammunition <= ship.AmmoPerShot())  //Janky because this gets called before ammo is decremented by shooting.
+				boutput(user, "[ship.ship_message("<b>All ammunition expended.</b>")]")
+			else
+				boutput(user, "[ship.ship_message("[remaining_ammunition - ship.AmmoPerShot()] shots remaining.")]")
+
 
 	var/rdir = ship.dir
 	if (shot_dir_override > 1)

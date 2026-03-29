@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	icon = 'icons/obj/items/cyborg_parts/modules.dmi'
 	icon_state = "blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | CONDUCT
 	var/list/tools = list()

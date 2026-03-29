@@ -3541,12 +3541,17 @@
 		if (ismob(owner) && !QDELETED(owner))
 			var/mob/mob_owner = owner
 			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+			var/image/stasis_image = owner.SafeGetOverlayImage("stasis_field", 'icons/obj/ship.dmi', "tractor", FLOAT_LAYER)
+			owner.AddOverlays(stasis_image, "stasis_field")
 		..()
 
 	onRemove()
 		if (ismob(owner) && !QDELETED(owner))
 			var/mob/mob_owner = owner
 			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+			owner.ClearSpecificOverlays("stasis_field")
 		..()
 
 /datum/statusEffect/silicon_radiation
