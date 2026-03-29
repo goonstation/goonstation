@@ -976,7 +976,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/abg/two //spawns in the break action
 	amount_left = 2
-	max_amount = 2
+	max_amount = 8
+
+/obj/item/ammo/bullets/abg/five //this is dumb
+	amount_left = 5
+	max_amount = 8
 
 /obj/item/ammo/bullets/flare
 	sname = "12ga Flare"

@@ -311,6 +311,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		hammer_cocked = FALSE
 		src.UpdateIcon()
 
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		. = ..()
+		hammer_cocked = FALSE
+		src.UpdateIcon()
+
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (hammer_cocked)
@@ -2092,8 +2097,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
+		set_current_projectile(src.ammo.ammo_type)
 		..()
+
+/obj/item/gun/kinetic/single_action/mts_255/abg
+	default_magazine = /obj/item/ammo/bullets/abg/five
 
 /obj/item/gun/kinetic/striker
 	name = "\improper Striker-7"
