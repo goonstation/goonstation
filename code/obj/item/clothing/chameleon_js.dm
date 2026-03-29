@@ -1575,43 +1575,57 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/storage/belt/chameleon)
 	satchel_variant = null //Set and then unset in convert_to_satchel, but should remain null as we don't know what we're disguised as.
+	//Which chameleon items does this backpack come with?
+	var/includes_remote = TRUE
+	var/included_jumpsuit = /obj/item/clothing/under/chameleon
+	var/included_hat = /obj/item/clothing/head/chameleon
+	var/included_outer_suit = /obj/item/clothing/suit/chameleon
+	var/included_glasses = /obj/item/clothing/glasses/chameleon
+	var/included_shoes = /obj/item/clothing/shoes/chameleon
+	var/included_belt = /obj/item/storage/belt/chameleon
+	var/included_gloves = /obj/item/clothing/gloves/chameleon
 
 	New()
 		..()
-		var/obj/item/remote/chameleon/remote = new /obj/item/remote/chameleon(src.loc)
-		remote.connected_backpack = src
-
-		var/obj/item/clothing/under/chameleon/jumpsuit = new /obj/item/clothing/under/chameleon(src)
-		src.storage.add_contents(jumpsuit)
-		remote.connected_jumpsuit = jumpsuit
-
-		var/obj/item/clothing/head/chameleon/hat = new /obj/item/clothing/head/chameleon(src)
-		src.storage.add_contents(hat)
-		remote.connected_hat = hat
-
-		var/obj/item/clothing/suit/chameleon/suit = new /obj/item/clothing/suit/chameleon(src)
-		src.storage.add_contents(suit)
-		remote.connected_suit = suit
-
-		var/obj/item/clothing/glasses/chameleon/glasses = new /obj/item/clothing/glasses/chameleon(src)
-		src.storage.add_contents(glasses)
-		remote.connected_glasses = glasses
-
-		var/obj/item/clothing/shoes/chameleon/shoes = new /obj/item/clothing/shoes/chameleon(src)
-		src.storage.add_contents(shoes)
-		remote.connected_shoes = shoes
-
-		var/obj/item/storage/belt/chameleon/belt = new /obj/item/storage/belt/chameleon(src)
-		src.storage.add_contents(belt)
-		remote.connected_belt = belt
-
-		var/obj/item/clothing/gloves/chameleon/gloves = new /obj/item/clothing/gloves/chameleon(src)
-		src.storage.add_contents(gloves)
-		remote.connected_gloves = gloves
-
+		src.create_included_chameleon_set()
 		for(var/U in (typesof(/datum/chameleon_backpack_pattern)))
 			var/datum/chameleon_backpack_pattern/P = new U
 			src.clothing_choices += P
+
+	proc/create_included_chameleon_set()
+		var/obj/item/remote/chameleon/remote
+		if(src.includes_remote)
+			remote = new /obj/item/remote/chameleon(src.loc)
+			remote.connected_backpack = src
+		if(src.included_jumpsuit)
+			var/obj/item/clothing/under/chameleon/jumpsuit = new src.included_jumpsuit(src)
+			src.storage.add_contents(jumpsuit)
+			remote?.connected_jumpsuit = jumpsuit
+		if(src.included_hat)
+			var/obj/item/clothing/head/chameleon/hat = new src.included_hat(src)
+			src.storage.add_contents(hat)
+			remote?.connected_hat = hat
+		if(src.included_outer_suit)
+			var/obj/item/clothing/suit/chameleon/suit = new src.included_outer_suit(src)
+			src.storage.add_contents(suit)
+			remote?.connected_suit = suit
+		if(src.included_glasses)
+			var/obj/item/clothing/glasses/chameleon/glasses = new src.included_glasses(src)
+			src.storage.add_contents(glasses)
+			remote?.connected_glasses = glasses
+		if(src.included_shoes)
+			var/obj/item/clothing/shoes/chameleon/shoes = new src.included_shoes(src)
+			src.storage.add_contents(shoes)
+			remote?.connected_shoes = shoes
+		if(src.included_belt)
+			var/obj/item/storage/belt/chameleon/belt = new src.included_belt(src)
+			src.storage.add_contents(belt)
+			remote?.connected_belt = belt
+		if(src.included_gloves)
+			var/obj/item/clothing/gloves/chameleon/gloves = new src.included_gloves(src)
+			src.storage.add_contents(gloves)
+			remote?.connected_gloves = gloves
+
 
 	attackby(obj/item/storage/backpack/U, mob/user)
 		..()

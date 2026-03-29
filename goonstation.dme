@@ -1153,6 +1153,7 @@
 #include "code\modules\chemistry\Reagents-PoisonEtc.dm"
 #include "code\modules\chemistry\Reagents-Transmutation.dm"
 #include "code\modules\chemistry\tools\ampoules.dm"
+#include "code\modules\chemistry\tools\applicator.dm"
 #include "code\modules\chemistry\tools\balloons.dm"
 #include "code\modules\chemistry\tools\beakers.dm"
 #include "code\modules\chemistry\tools\bottles.dm"

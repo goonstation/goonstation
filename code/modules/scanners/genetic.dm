@@ -14,6 +14,7 @@
 	var/mob/living/carbon/human/H = M
 	var/list/data = list()
 	var/datum/bioHolder/BH = M.bioHolder
+	data += "Analyzing Results for [SPAN_NOTICE("[M]")]"
 	data += "<b class='notice'>Genetic Stability: [BH.genetic_stability]</b>"
 	var/datum/genetic_prescan/GP = prescan
 	if (!GP)
@@ -60,6 +61,8 @@
 	throw_speed = 5
 	throw_range = 10
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
+	var/last_scan_data = null
+	var/last_scan_timestamp = null
 
 /obj/item/device/analyzer/genetic/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	var/datum/computer/file/genetics_scan/GS = create_new_dna_sample_file(target, visible_name=TRUE)
@@ -74,10 +77,28 @@
 	GP.activeDna = GS.dna_active
 	GP.poolDna = GS.dna_pool
 	GP.generate_known_unknown()
-	boutput(user, scan_genetic(target, prescan = GP, visible = 1))
+	src.last_scan_data = scan_genetic(target, prescan = GP, visible = 1)
+	src.last_scan_timestamp = time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")
+	boutput(user, src.last_scan_data)
 
 	record_cloner_defects(target)
 
+/obj/item/device/analyzer/genetic/attack_self(mob/user)
+	if (isnull(src.last_scan_data))
+		boutput(user, SPAN_NOTICE("No previous scan results located."))
+		return
+	src.print_report(user)
+
+/obj/item/device/analyzer/genetic/proc/print_report(mob/user)
+	if (!src.last_scan_data)
+		boutput(user, SPAN_ALERT("\The [src] has nothing to print — scan something first!"))
+		return
+	if (!ON_COOLDOWN(src, "print_report", 4 SECONDS))
+		var/obj/item/paper/P = new /obj/item/paper/thermal(user.loc)
+		P.name = "genetic scan report"
+		P.info = src.last_scan_data + "<br>--------------------------------<br>Taken At: [src.last_scan_timestamp]"
+		user.put_in_hand_or_eject(P)
+		playsound(src, 'sound/machines/printer_thermal.ogg', 25, TRUE)
 
 /datum/genetic_prescan
 	var/list/activeDna = null
