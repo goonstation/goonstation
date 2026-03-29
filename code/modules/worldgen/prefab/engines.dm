@@ -110,7 +110,7 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 /obj/landmark/engine_room/mushroom
 	#ifdef IN_MAP_EDITOR
 	icon = 'icons/effects/mapeditor/engine_room_mushroom.dmi'
-	icon_state = "13x13engine_room"
+	icon_state = "17x17engine_room"
 #else
 	icon = null
 	icon_state = null
