@@ -1,4 +1,7 @@
-
+(t)sat mar 28 26
+(u)LeahTheTech
+(+)Shredders can now shred herbs, postits, and cigarettes.
+(+)The stasis rifle can now fire twice as many shots and has better visual effects.
 (t)thu mar 26 26
 (u)Mr. Moriarty
 (p)26226
