@@ -350,7 +350,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
 			if (7)
-				src.storage.add_contents(new /obj/item/gun/kinetic/sawnoff(src))
+				src.storage.add_contents(new /obj/item/gun/kinetic/sawnoff/birdshot(src))
 				src.storage.add_contents(new /obj/item/ammo/bullets/a12/bird(src))
 				for (var/i=3, i>0, i--)
 					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
@@ -379,7 +379,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/raw_material/miracle,\
 				/obj/item/raw_material/uqill,\
 				/obj/item/rcd = /obj/item/rcd_ammo/big,\
-				/obj/item/gun/kinetic/sawnoff = /obj/item/ammo/bullets/a12/bird,\
+				/obj/item/gun/kinetic/sawnoff/birdshot = /obj/item/ammo/bullets/a12/bird,\
 				/obj/item/gun/energy/taser_gun,\
 				/obj/item/gun/energy/phaser_gun,\
 				/obj/item/gun/energy/egun_jr,\
@@ -568,7 +568,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				var/obj/item/currency/spacecash/tourist/S = new /obj/item/currency/spacecash/tourist
 				S.setup(src, try_add_to_storage = TRUE)
 			if (3)
-				src.storage.add_contents(new /obj/item/gun/kinetic/sawnoff(src))
+				src.storage.add_contents(new /obj/item/gun/kinetic/sawnoff/birdshot(src))
 				src.storage.add_contents(new /obj/item/ammo/bullets/a12/bird(src))
 			if (4)
 				src.storage.add_contents(new /obj/item/paper/freeze(src))
