@@ -4860,6 +4860,15 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
+"aOr" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "aOs" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -22522,6 +22531,9 @@
 "kHM" = (
 /obj/machinery/vending/air_vendor/plasma,
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
 "kHP" = (
@@ -36383,9 +36395,6 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "ulf" = (
@@ -41778,12 +41787,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
-"xYs" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/camera/directional/south,
-/turf/simulated/floor/plating,
-/area/station/mining/staff_room)
 "xZa" = (
 /obj/machinery/turret,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -81363,8 +81366,8 @@ yaQ
 eOW
 dTn
 hmb
-xYs
-cQJ
+aGI
+aOr
 aaa
 aaa
 aaa
@@ -84672,13 +84675,13 @@ cnH
 bLX
 cJw
 qzB
-csQ
-csQ
-csQ
-csQ
-csQ
-csQ
-csQ
+bgz
+bgz
+bgz
+bgz
+bgz
+bgz
+bgz
 uPa
 bIO
 bIO
