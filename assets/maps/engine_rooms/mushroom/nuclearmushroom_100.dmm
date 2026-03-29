@@ -456,6 +456,12 @@
 	dir = 5
 	},
 /area/station/engine/inner)
+"yq" = (
+/obj/decal/poster/wallsign/accident_sign{
+	pixel_y = 27
+	},
+/turf/simulated/floor,
+/area/station/engine/inner)
 "zc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1358,7 +1364,7 @@ LA
 (8,1,1) = {"
 NN
 YB
-aZ
+yq
 zX
 iN
 xH
