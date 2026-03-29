@@ -17,12 +17,24 @@ TYPEINFO(/obj/machinery/shredder)
 		/obj/item/currency/spacecash,
 		/obj/item/currency/fishing,
 		/obj/item/random_mail,
+<<<<<<< HEAD
 		/obj/item/poster
+=======
+		/obj/item/poster,
+		/obj/item/plant/herb,
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/sticker/postit
+>>>>>>> 35e1ed2135c6f575aff8647911947f0ae91104f7
 	)
 	/// Some things get rotated 90 degrees to fit better
 	var/rotated_types = list(/obj/item/card,
 		/obj/item/currency/spacecash,
+<<<<<<< HEAD
 		/obj/item/currency/fishing
+=======
+		/obj/item/currency/fishing,
+		/obj/item/clothing/mask/cigarette
+>>>>>>> 35e1ed2135c6f575aff8647911947f0ae91104f7
 	)
 	/// Visual proxy for the thing being shredded
 	var/atom/movable/proxy = null
@@ -123,6 +135,12 @@ TYPEINFO(/obj/machinery/shredder)
 	playsound(src, 'sound/machines/shredder.ogg', 50, 0)
 	global.particleMaster.SpawnSystem(new /datum/particleSystem/shredded(src, target = item))
 	sleep (5 SECONDS)
+<<<<<<< HEAD
+=======
+	src.finish_shredding(item)
+
+/obj/machinery/shredder/proc/finish_shredding(obj/item/item)
+>>>>>>> 35e1ed2135c6f575aff8647911947f0ae91104f7
 	src.ClearSpecificOverlays("grind")
 	src.add_shreddings()
 	QDEL_NULL(src.proxy)

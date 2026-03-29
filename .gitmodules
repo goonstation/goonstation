@@ -1,3 +1,0 @@
-[submodule "+secret"]
-	path = +secret
-	url = https://github.com/goonstation/goonstation-secret.git
