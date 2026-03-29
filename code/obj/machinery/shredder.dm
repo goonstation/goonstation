@@ -127,12 +127,9 @@ TYPEINFO(/obj/machinery/shredder)
 	playsound(src, 'sound/machines/shredder.ogg', 50, 0)
 	global.particleMaster.SpawnSystem(new /datum/particleSystem/shredded(src, target = item))
 	sleep (5 SECONDS)
-<<<<<<< HEAD
-=======
 	src.finish_shredding(item)
 
 /obj/machinery/shredder/proc/finish_shredding(obj/item/item)
->>>>>>> 35e1ed2135c6f575aff8647911947f0ae91104f7
 	src.ClearSpecificOverlays("grind")
 	src.add_shreddings()
 	QDEL_NULL(src.proxy)
