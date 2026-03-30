@@ -9677,11 +9677,12 @@
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters/lounge)
 "dOh" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/disposalpipe/segment/mail,
 /obj/landmark/start/job/quartermaster,
+/obj/stool/chair/yellow{
+	anchored = 0;
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "dOD" = (
@@ -23409,9 +23410,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "nZK" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/landmark/start/job/quartermaster,
 /obj/cable{
 	icon_state = "0-8"
@@ -23420,6 +23418,10 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/stool/chair/yellow{
+	anchored = 0;
+	dir = 8
+	},
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
 	},
@@ -24168,10 +24170,10 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "ows" = (
-/obj/stool/chair{
+/obj/landmark/start/job/quartermaster,
+/obj/stool/chair/yellow{
 	dir = 4
 	},
-/obj/landmark/start/job/quartermaster,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "oxh" = (
