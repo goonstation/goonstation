@@ -9553,6 +9553,15 @@
 	},
 /turf/space/fluid,
 /area/space)
+"gEh" = (
+/obj/disposalpipe/segment/mail,
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/hallway/primary/south)
 "gEl" = (
 /turf/simulated/bar,
 /area/evilreaver/bar)
@@ -24000,9 +24009,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "qQK" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = -10
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -26215,8 +26221,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/item/device/radio/intercom{
-	dir = 8
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
 	},
 /turf/simulated/floor/purple/side{
 	dir = 4
@@ -28900,7 +28906,7 @@
 "upz" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 120;
+	drive_range = 123;
 	id = "trashgun"
 	},
 /turf/simulated/floor/plating,
@@ -72152,7 +72158,7 @@ qpn
 qpn
 qpn
 qpn
-wSs
+qpn
 qpn
 eUE
 xsq
@@ -77014,7 +77020,7 @@ qQK
 syL
 fES
 dnd
-kBb
+gEh
 vnY
 tVZ
 fok
