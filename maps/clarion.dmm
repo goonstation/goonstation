@@ -8005,12 +8005,16 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "bsp" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/greenblack{
+/obj/mesh/catwalk{
 	dir = 4
 	},
-/area/station/hallway/primary/central)
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/station/solar/east)
 "bsu" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
@@ -9816,7 +9820,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
+	dir = 9
 	},
 /area/station/solar/east)
 "bNz" = (
@@ -12440,10 +12444,9 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "dHf" = (
-/obj/lattice,
-/obj/warp_beacon/research,
-/turf/space,
-/area/space)
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/market)
 "dHg" = (
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/garden/aviary)
@@ -13531,9 +13534,12 @@
 	},
 /area/station/engine/engineering)
 "euK" = (
+/obj/disposalpipe/segment/mail,
 /obj/machinery/light_switch/east,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/market)
+/turf/simulated/floor/greenblack{
+	dir = 4
+	},
+/area/station/hallway/primary/central)
 "eva" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
@@ -19703,14 +19709,10 @@
 	},
 /area/station/hallway/primary/southeast)
 "iFf" = (
-/obj/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/mesh/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/station/solar/east)
+/obj/lattice,
+/obj/warp_beacon/research,
+/turf/space,
+/area/space)
 "iFv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28645,7 +28647,7 @@
 "oOg" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
-	icon_state = "1-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
@@ -80347,7 +80349,7 @@ nUT
 awD
 tSC
 bga
-bsp
+euK
 azv
 aAp
 vTk
@@ -83337,7 +83339,7 @@ eqV
 fVu
 wfz
 rgl
-euK
+dHf
 tZH
 acc
 aem
@@ -92775,7 +92777,7 @@ bwk
 bxu
 byA
 bzE
-bNx
+qxD
 aaa
 aaa
 aaa
@@ -93977,8 +93979,8 @@ bnd
 bnd
 bnd
 bsD
+aaa
 vPs
-iFf
 iPG
 tTY
 hoS
@@ -94279,8 +94281,8 @@ aaa
 aaa
 aaa
 aaa
-qxD
 aaa
+qxD
 aaa
 aaa
 aaa
@@ -94581,8 +94583,8 @@ agJ
 tlq
 agJ
 tlq
-qxD
 aaa
+qxD
 aaa
 aaa
 aaa
@@ -94883,8 +94885,8 @@ aaa
 vVS
 aaa
 vVS
-qxD
 aaa
+qxD
 aaa
 aaa
 aaa
@@ -95186,12 +95188,12 @@ eCc
 lBa
 eCc
 oOg
-aaa
+bsp
 aaa
 aaa
 aaa
 lXB
-dHf
+iFf
 mfK
 aaa
 aaa
