@@ -86,11 +86,9 @@
 			status &= ~NOPOWER
 		else
 			SPAWN(rand(0, 15))
-				src.icon_state = "Turret_off"
+				src.icon_state = "Turret_nopower"
 				var/image/turret_overlay = ClearAllOverlays()
-				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
-				turret_overlay.plane = PLANE_SELFILLUM
-				src.UpdateOverlays(turret_overlay, "off_overlay")
+				src.UpdateOverlays(turret_overlay)
 				status |= NOPOWER
 
 /obj/machinery/turret/proc/setState(var/enabled, var/lethal)
