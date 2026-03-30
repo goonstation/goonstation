@@ -107,3 +107,20 @@ ABSTRACT_TYPE(/datum/job/medical)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
 	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/beaker_lid, /obj/item/reagent_containers/injector_filler)
 	wiki_link = "https://wiki.ss13.co/Pharmacist"
+
+/datum/job/medical/psychiatrist
+	name = "Psychiatrist"
+	wages = PAY_DOCTORATE
+	limit = 1 // limited workspace
+	trait_list = list("training_therapy")
+	access_string = "Psychiatrist"
+	slot_eyes = list(/obj/item/clothing/glasses/regular)
+	slot_belt = list(/obj/item/device/pda2/medical)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/shirt_pants)
+	slot_suit = list(/obj/item/clothing/suit/labcoat)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/tea)
+	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/bottle/gin)
+	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp, /obj/item/storage/firstaid/mental)
+	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations

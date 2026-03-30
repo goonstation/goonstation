@@ -365,27 +365,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/fishing_rod/basic)
 	email_group = MGD_CIVILIAN
 
-
-/datum/job/special/random/psychiatrist
-	name = "Psychiatrist"
-	ui_colour = /datum/job/medical::ui_colour
-	wages = PAY_DOCTORATE
-	request_limit = 1 // limited workspace
-	trait_list = list("training_therapy")
-	access_string = "Psychiatrist"
-	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_card = /obj/item/card/id/medical
-	slot_belt = list(/obj/item/device/pda2/medical)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
-	slot_suit = list(/obj/item/clothing/suit/labcoat)
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/tea)
-	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/bottle/gin)
-	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp, /obj/item/storage/firstaid/mental)
-	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
-	email_group = MGD_MEDICAL
-
 /datum/job/special/random/artist
 	name = "Artist"
 	wages = PAY_UNTRAINED
