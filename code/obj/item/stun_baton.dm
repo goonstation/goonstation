@@ -367,7 +367,7 @@ TYPEINFO(/obj/item/baton)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.emagged)
-			boutput(user, SPAN_ALERT("You jam [E] into [src]'s charging port."))
+			boutput(user, SPAN_ALERT("You short out the circuitry in [src]'s handle."))
 			src.emagged = TRUE
 			playsound(src, "sparks", 75, 1, -1)
 			if (src.name == "extendable stun baton")
