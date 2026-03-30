@@ -8005,13 +8005,12 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "bsp" = (
-/obj/machinery/light/runway_light/delay3,
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
+/obj/disposalpipe/segment/mail,
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/greenblack{
+	dir = 4
 	},
-/turf/space,
-/area/space)
+/area/station/hallway/primary/central)
 "bsu" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
@@ -12441,11 +12440,8 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "dHf" = (
-/obj/machinery/light/runway_light/delay3,
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
+/obj/lattice,
+/obj/warp_beacon/research,
 /turf/space,
 /area/space)
 "dHg" = (
@@ -13535,10 +13531,9 @@
 	},
 /area/station/engine/engineering)
 "euK" = (
-/obj/warp_beacon/research,
-/obj/lattice,
-/turf/space,
-/area/space)
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/market)
 "eva" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
@@ -78845,7 +78840,7 @@ nTZ
 nTZ
 fNe
 nax
-fNe
+atc
 fNe
 eUn
 fNe
@@ -80352,7 +80347,7 @@ nUT
 awD
 tSC
 bga
-nUT
+bsp
 azv
 aAp
 vTk
@@ -80654,7 +80649,7 @@ gmX
 gmB
 abs
 rfa
-gmX
+aym
 xlK
 xlK
 xlK
@@ -83342,7 +83337,7 @@ eqV
 fVu
 wfz
 rgl
-qer
+euK
 tZH
 acc
 aem
@@ -92175,7 +92170,7 @@ bsB
 iiA
 bwi
 dMm
-bzE
+bsB
 owA
 bzA
 bzA
@@ -92480,7 +92475,7 @@ bwi
 bsB
 bNx
 ijw
-aaa
+bIF
 aaa
 aaa
 aaa
@@ -92779,7 +92774,7 @@ bsB
 bwk
 bxu
 byA
-bsB
+bzE
 bNx
 aaa
 aaa
@@ -93079,7 +93074,7 @@ hrD
 aaa
 aaa
 aaa
-dhY
+aaa
 aaa
 aaa
 qxD
@@ -93381,7 +93376,7 @@ hrD
 aaa
 aaa
 aaa
-dhY
+aaa
 aaa
 aaa
 tYX
@@ -93683,7 +93678,7 @@ hrD
 aaa
 aaa
 aaa
-dhY
+aaa
 aaa
 aaa
 tvI
@@ -94287,10 +94282,10 @@ aaa
 qxD
 aaa
 aaa
-bsp
 aaa
 aaa
 aaa
+dhY
 aaa
 aaa
 aaa
@@ -94588,11 +94583,11 @@ agJ
 tlq
 qxD
 aaa
-rxn
-euK
-wkM
 aaa
 aaa
+aaa
+aaa
+ukN
 aaa
 aaa
 aaa
@@ -94891,10 +94886,10 @@ vVS
 qxD
 aaa
 aaa
-dHf
 aaa
 aaa
 aaa
+dhY
 aaa
 aaa
 aaa
@@ -95195,9 +95190,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+lXB
+dHf
+mfK
 aaa
 aaa
 aaa
@@ -95498,7 +95493,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+uYT
 aaa
 aaa
 aaa
