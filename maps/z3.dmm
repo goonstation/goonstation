@@ -3001,11 +3001,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
-"aov" = (
-/turf/simulated/shuttle/wall/flock{
-	dir = 9
-	},
-/area/space)
 "aoz" = (
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
@@ -3136,11 +3131,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged2,
 /area/diner/kitchen)
-"apm" = (
-/turf/simulated/shuttle/wall/flock{
-	dir = 5
-	},
-/area/space)
 "apo" = (
 /obj/window/cubicle{
 	dir = 1
@@ -97012,7 +97002,7 @@ aaa
 aaa
 aaa
 aaa
-aov
+anF
 aoz
 apk
 aoz
@@ -97617,7 +97607,7 @@ aaa
 aaa
 aaa
 aoQ
-apm
+apD
 aoz
 apW
 aoz
