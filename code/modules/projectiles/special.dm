@@ -1421,6 +1421,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			special_data["burn_temp"] -= special_data["burn_temp"] * special_data["temp_pct_loss_atom"]
 			special_data["burn_temp"] = max(special_data["burn_temp"], T0C)
 		chemR.remove_any(amt_to_emit)
+		T.reagents.clear_reagents() // Prevents welding fuel/space cleaner from getting stuck in the turf's reagentholder.
 
 	post_setup(obj/projectile/P)
 		var/list/cross2 = list()
