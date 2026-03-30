@@ -8529,7 +8529,7 @@
 	},
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 120;
+	drive_range = 40;
 	id = "trashgun"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
@@ -28906,7 +28906,7 @@
 "upz" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 123;
+	drive_range = 40;
 	id = "trashgun"
 	},
 /turf/simulated/floor/plating,
@@ -59171,9 +59171,9 @@ qpn
 qpn
 qpn
 qpn
+vPP
+vPP
 qpn
-vPP
-vPP
 qpn
 qpn
 qpn
@@ -59472,11 +59472,11 @@ qpn
 qpn
 qpn
 qpn
+vPP
+vPP
+vPP
+vPP
 qpn
-vPP
-vPP
-vPP
-vPP
 qpn
 qpn
 qpn
@@ -59772,13 +59772,13 @@ qpn
 qpn
 qpn
 qpn
+vPP
+vPP
+vPP
+vPP
+vPP
+vPP
 qpn
-vPP
-vPP
-vPP
-vPP
-vPP
-vPP
 qpn
 qpn
 qpn
@@ -60074,13 +60074,13 @@ qpn
 qpn
 qpn
 qpn
+vPP
+vPP
+vPP
+vPP
+vPP
+vPP
 qpn
-vPP
-vPP
-vPP
-vPP
-vPP
-vPP
 qpn
 qpn
 qpn
@@ -60376,13 +60376,13 @@ qpn
 qpn
 qpn
 qpn
+vPP
+vPP
+vPP
+vPP
+vPP
+vPP
 qpn
-vPP
-vPP
-vPP
-vPP
-vPP
-vPP
 qpn
 qpn
 qpn
@@ -60678,13 +60678,13 @@ qpn
 qpn
 qpn
 qpn
+vPP
+vPP
+vPP
+vPP
+vPP
+vPP
 qpn
-vPP
-vPP
-vPP
-vPP
-vPP
-vPP
 qpn
 qpn
 qpn
@@ -60981,12 +60981,12 @@ qpn
 qpn
 qpn
 qpn
+vPP
+vPP
+vPP
+vPP
+vPP
 qpn
-vPP
-vPP
-vPP
-vPP
-vPP
 qpn
 qpn
 qpn
@@ -61284,10 +61284,10 @@ qpn
 qpn
 qpn
 qpn
+vPP
+vPP
+vPP
 qpn
-vPP
-vPP
-vPP
 qpn
 qpn
 qpn
