@@ -975,9 +975,9 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
 /obj/item/ammo/bullets/abg/punchy
-	name = "heavy rubber slugs"
-	sname = "heavy rubber slug"
-	desc = "A box of long, heavy rubber slugs. These ones really pack a punch."
+	sname = "10ga heavy rubber slug"
+	name = "10ga heavy rubber slugs"
+	desc = "A box of big, heavy rubber slugs. These ones really pack a punch."
 	amount_left = 6
 	max_amount = 6
 	//big shells, don't fit in auto-shotties
