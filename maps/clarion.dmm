@@ -22579,6 +22579,7 @@
 /area/station/crew_quarters/quarters_east)
 "kLx" = (
 /obj/storage/secure/closet/brig_automatic/solitary,
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "kMd" = (
@@ -38910,6 +38911,7 @@
 	icon_state = "1-2"
 	},
 /obj/storage/secure/closet/brig_automatic/genpop,
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor,
 /area/station/security/brig)
 "wag" = (
@@ -39514,11 +39516,6 @@
 "wxh" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/medical/head)
-"wxE" = (
-/obj/machinery/alarm/directional/west,
-/obj/machinery/alarm/directional/east,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
 "wxY" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -83120,7 +83117,7 @@ voD
 bhl
 bhl
 bhl
-wxE
+bhl
 bhl
 gFB
 hNV
