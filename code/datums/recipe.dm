@@ -66,6 +66,7 @@ ABSTRACT_TYPE(/datum/recipe)
 
 		return TRUE
 
+
 	/// Attempts to instantiates a copy of the intended output based on the given list of input and puts it in the 'output' list provided.
 	/// Returns true or false based on success with the given input.
 	proc/try_get_output(list/input, list/output, atom/source = null, mob/user = null )
@@ -236,6 +237,15 @@ ABSTRACT_TYPE(/datum/recipe)
 			for(var/key in recipe_output)
 				return key
 		return recipe_output
+
+
+/// Made to work with machines that deal with a list of ingredients one at a time, instead of as a batch. These recipes are intended to be
+/// dedicated single-inputs, but can potentially be extended to consider the input list as a whole, within reason. (e.g. catalyst behaviour)
+ABSTRACT_TYPE(/datum/recipe/sequential)
+/datum/recipe/sequential
+
+	can_cook_recipe(var/list/input_list)
+		return istype(input_list[1], src.ingredients)
 
 
 /// recipe instructions are the machine-specific portions of a recipe. They might include cooking times, or special interactions such as

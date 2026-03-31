@@ -311,7 +311,7 @@
 /obj/item/sticker/heart
 	name = "heart sticker"
 	icon_state = "heart"
-	random_icons = list("heart", "rheart")
+	random_icons = list("heart", "rheart", "wheart", "bheart")
 
 /obj/item/sticker/moon
 	name = "moon sticker"
@@ -371,6 +371,78 @@
 	angry
 		name = "angry googly eye sticker"
 		random_icons = list("googly_angerL", "googly_angerR")
+
+/obj/item/sticker/sparkle
+	name = "sparkle sticker"
+	random_icons = list("shine1", "shine2")
+
+/obj/item/sticker/cloud
+	name = "cloud sticker"
+	icon_state = "cloud"
+
+/obj/item/sticker/sun
+	name = "sun sticker"
+	icon_state = "sun"
+
+/obj/item/sticker/lightning
+	name = "lightning sticker"
+	icon_state = "lightning"
+
+/obj/item/sticker/bow
+	name = "bow sticker"
+	icon_state = "bow"
+
+/obj/item/sticker/nt
+	name = "nanotrasen sticker"
+	icon_state = "nt"
+
+/obj/item/sticker/music
+	name = "music note sticker"
+	icon_state = "music"
+
+/obj/item/sticker/butterfly
+	name = "butterfly sticker"
+	icon_state = "butterfly"
+
+/obj/item/sticker/gem
+	name = "gem sticker"
+	icon_state = "gem"
+
+/obj/item/sticker/fish
+	name = "fish sticker"
+	icon_state = "fish"
+
+/obj/item/sticker/cool
+	name = "cool sticker"
+	icon_state = "cool"
+
+/obj/item/sticker/strawberry
+	name = "strawberry sticker"
+	icon_state = "strawberry"
+
+/obj/item/sticker/melon
+	name = "melon sticker"
+	icon_state = "melon"
+
+/obj/item/sticker/peace
+	name = "peace sticker"
+	icon_state = "peace"
+
+/obj/item/sticker/rocket
+	name = "rocket sticker"
+	icon_state = "rocket"
+
+/obj/item/sticker/typhon
+	name = "typhon sticker"
+	icon_state = "typhon"
+
+/obj/item/sticker/flame
+	name = "flame sticker"
+	icon_state = "flame"
+
+/obj/item/sticker/flower
+	name = "flower sticker"
+	icon_state = "flower"
 
 /obj/item/sticker/ribbon
 	name = "award ribbon"
@@ -438,7 +510,9 @@
 
 	var/has_selectable_skin = 1 //
 	var/list/skins = list("gold_star" = "gold star", "banana", "umbrella", "heart", "clover", "skull", "Larrow" = "left arrow",
-	"Rarrow" = "right arrow", "no" = "\"no\"", "moon", "smile", "rainbow", "frown", "balloon", "horseshoe", "bee")
+	"Rarrow" = "right arrow", "no" = "\"no\"", "moon", "smile", "rainbow", "frown", "balloon", "horseshoe", "bee", "nt" = "nanotrasen", "shine1" = "sparkle",
+	"bow", "gem", "music", "sun", "lightning", "cloud", "butterfly", "rocket", "flame", "flower", "typhon", "fish", "strawberry", "melon",
+	"peace", "cool")
 
 	var/pinpointer_category = TR_CAT_SPY_STICKERS_REGULAR
 

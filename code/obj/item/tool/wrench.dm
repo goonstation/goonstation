@@ -99,3 +99,8 @@
 		..()
 		src.setProperty("block", 15)
 		setItemSpecial(/datum/item_special/slam)
+
+/obj/item/wrench/bloody
+	New()
+		. = ..()
+		src.add_blood(src)

@@ -88,6 +88,7 @@
 																	MGA_SHIPPING = null,\
 																	MGA_CARGOREQUEST = null,\
 																	MGA_CRISIS = null,\
+																	MGA_PLUMBING = null,\
 																	MGA_RADIO = null)
 
 	/// mailgroup-specific ringtones, added on the fly!
@@ -119,7 +120,7 @@
 			MGT_GENETICS, MGT_ROBOTICS, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI
 		)
 		default_muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_PLUMBING) // keep in sync with the list of mail alert groups
 
 	cyborg // chosen robot module registers the PDA mail/alert groups
 		icon_state = "pda-h"
@@ -335,7 +336,7 @@
 		name = "Janitor PDA"
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list(MGT_JANITOR,MGD_CIVILIAN,MGD_PARTY)
+		mailgroups = list(MGT_JANITOR,MGD_CIVILIAN,MGD_PARTY, MGA_PLUMBING)
 
 	chaplain
 		name = "Blessed PDA"
@@ -427,8 +428,9 @@
 	src.linkbg_color = rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8)
 	src.update_colors(src.bg_color, src.linkbg_color)
 
-	src.hd = new /obj/item/disk/data/fixed_disk(src)
+	src.hd = new /obj/item/disk/data/fixed_disk/hd32(src)
 	src.hd.file_amount = src.setup_drive_size
+	src.hd.max_file_amount = src.setup_drive_size
 	src.hd.name = "Minidrive"
 	src.hd.title = "Minidrive"
 

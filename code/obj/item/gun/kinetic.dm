@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src.forensic_ID)
+							new src.current_projectile.casing(T, src)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -204,7 +204,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src.forensic_ID)
+							new src.current_projectile.casing(T, src)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
 				while (src.casings_to_eject > 0)
-					new src.current_projectile.casing(T, src.forensic_ID)
+					new src.current_projectile.casing(T, src)
 					src.casings_to_eject--
 		return
 
@@ -382,6 +382,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
 	burn_possible = FALSE
+	tooltip_flags = REBUILD_USER
+	var/fired_by = null // The name of the gun that fired this casing, e.g. "SPES-12". If not null can be identified by anyone with Forensic Training
 
 	small
 		icon_state = "small"
@@ -475,12 +477,21 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
-/obj/item/casing/New(loc, forensic_ID)
+/obj/item/casing/New(loc, obj/item/gun/firearm)
 	. = ..()
 	src.pixel_y += rand(-12,12)
 	src.pixel_x += rand(-12,12)
 	src.set_dir(pick(alldirs))
-	src.forensic_ID = forensic_ID
+	if(firearm)
+		src.forensic_ID = firearm.forensic_ID
+		//Only include the default name of the gun, some special names set randomly in new are confusing and labels shouldnt be readable
+		src.fired_by = initial(firearm.name)
+
+/obj/item/casing/get_desc(dist, mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if(src.fired_by && istype(H) && H.traitHolder.hasTrait("training_forensic"))
+		. += SPAN_NOTICE("<br>Your forensic intuition tells you it was fired by \an [src.fired_by].")
 
 //no caliber and ALL
 /obj/item/gun/kinetic/vgun
@@ -1876,6 +1887,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		return 1
 
 	engineer
+		name = "SPES-6"
 		ammobag_magazines = list(/obj/item/ammo/bullets/a12/weak, /obj/item/ammo/bullets/a12)
 		New()
 			..()
@@ -3546,6 +3558,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
 		if (prob(25))
 			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
+		else if (prob(1))
+			desc = "Actually the Fulmar 1881 can't be called a true coach gun if it's sawn off, that would by definition make it a sawn-off. Meh, semantics."
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()

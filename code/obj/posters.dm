@@ -95,24 +95,6 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		logTheThing(LOG_ADMIN, usr, "created a poster[print_or_place == "Print" ? " at all printers" : null]")
 		message_admins("[key_name(usr)] created a poster[print_or_place == "Print" ? " at all printers" : null]")
 
-/proc/create_jailbird_wanted_poster(mob/living/carbon/human/H)
-	var/reason = "Previous criminal activity."
-	if (H.job == "Stowaway")
-		reason = "Unauthorized boarding of a Nanotrasen [station_or_ship()]."
-	else
-		var/datum/db_record/sec_record = data_core.security.find_record("id", H.datacore_id)
-		if (sec_record)
-			reason = "[sec_record["ma_crim"]] [sec_record["mi_crim"]]"
-	mass_print_wanted_poster(
-		uppertext(H.real_name),
-		H.build_flat_icon(),
-		"FROM CAMERA FOOTAGE",
-		"WANTED: ALIVE",
-		null, // no bounty
-		"<b>WANTED FOR:</b> [reason]",
-		"<center><i>NANOTRASEN AUTOMATED NOTICE</i></center>"
-	)
-
 /// Print a wanted poster to all station-level printers
 /proc/mass_print_wanted_poster(name, wanted_image, subtitle, dead_or_alive, bounty, wanted_for, notes)
 	for_by_tcl(P, /obj/machinery/networked/printer)

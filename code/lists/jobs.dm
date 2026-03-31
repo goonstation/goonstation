@@ -80,7 +80,7 @@ var/list/security_jobs = list(
 	"Head of Security",
 	"Nanotrasen Security Consultant",
 	"Nanotrasen Special Operative",
-	"Security Guard",
+	"Security Officer",
 	"Security Assistant",
 	"Detective",
 )

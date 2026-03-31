@@ -81,8 +81,8 @@
 		var/mins_start = src.get_minutes_since(TIME, TRUE)
 		var/mins_end = src.get_minutes_since(TIME)
 		if(mins_start == mins_end)
-			return src.clientKey.id + SPAN_SUBTLE(" ([mins_end] mins ago)")
-		return src.clientKey.id + SPAN_SUBTLE(" ([mins_end] to [mins_start] mins ago)")
+			return key_name(src.clientKey.id) + SPAN_SUBTLE(" ([mins_end] mins ago)")
+		return key_name(src.clientKey.id) + SPAN_SUBTLE(" ([mins_end] to [mins_start] mins ago)")
 
 	get_copy()
 		var/datum/forensic_data/adminprint/data_copy = new(src.clientKey)

@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/igniter)
 	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBELT
 	tool_flags = TOOL_ASSEMBLY_APPLIER
-	item_state = "electronic"
+	item_state = "assembly"
 	m_amt = 100
 	throwforce = 5
 	w_class = W_CLASS_TINY

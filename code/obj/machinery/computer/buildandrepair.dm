@@ -32,7 +32,7 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	item_state = "electronics"
 	var/computertype = null
 	var/powernet = null
 	/// Custom data saved to the on-board memory chip from its computer type
@@ -200,6 +200,10 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/transception
 	name = "circuit board (transception interlink)"
 	computertype = /obj/machinery/computer/transception
+	icon_state = "circuit_engineering"
+/obj/item/circuitboard/transception_control
+	name = "circuit board (transception control array)"
+	computertype = /obj/machinery/computer/trsc_array
 	icon_state = "circuit_engineering"
 /obj/item/circuitboard/mining_magnet
 	name = "circuit board (mining magnet computer)"

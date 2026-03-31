@@ -9,7 +9,7 @@
 	density = 1
 	anchored = ANCHORED
 	var/base_icon_state = "computer_generic"
-	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
+	var/temp = ""
 	var/temp_add = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
@@ -19,20 +19,19 @@
 	var/list/peripherals = list()
 	var/restarting = 0 //Are we currently restarting the system?
 	var/datum/light/light
+	var/obj/item/motherboard/mainboard = null
 
 	//Does it spawn with a card scanner? (It should, the main os needs one of these now.)
 	var/setup_idscan_path = null
 	var/setup_has_internal_disk = 0 //Do we use that magic disk drive that has no peripheral attached?
-	var/setup_drive_size = 64
-	var/setup_drive_type = null //Use this path for the hd
+	var/setup_drive_type = /obj/item/disk/data/fixed_disk/hd64 //Use this path for the hd
 	var/setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!
 	var/setup_starting_program = null //This program will start out installed on the drive (can be a path or a list of paths)
 	var/setup_starting_os = null //This program will start out installed AND AS ACTIVE PROGRAM
 	var/setup_starting_peripheral1 = null //Please note that the user cannot install more than 3.
 	var/setup_starting_peripheral2 = null //And the os tends to need that third one for the card reader
 	var/setup_os_string = null
-	var/setup_font_color = "#19A319"
-	var/setup_bg_color = "#1B1E1B"
+
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
@@ -45,7 +44,7 @@
 	power_usage = 250
 
 	generic //Generic computer, standard os and card scanner
-		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
 		setup_idscan_path = /obj/item/peripheral/card_scanner
 		setup_has_internal_disk = 1
@@ -125,7 +124,7 @@
 			name = "personnel management computer"
 			icon_state = "personnel_management"
 			base_icon_state = "personnel_management"
-			setup_drive_size = 80
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd96
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
 			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
 			setup_starting_program = list(
@@ -140,7 +139,7 @@
 			setup_starting_program = list(/datum/computer/file/terminal_program/communications, /datum/computer/file/terminal_program/job_controls)
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
 			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/status
-			setup_drive_size = 80
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd96
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -155,7 +154,6 @@
 			name = "Artifact Database"
 			icon_state = "resart"
 			setup_starting_program = /datum/computer/file/terminal_program/artifact_research
-			setup_drive_size = 48
 
 		engine
 			name = "Engine Control Console"
@@ -165,7 +163,7 @@
 			setup_starting_program = /datum/computer/file/terminal_program/engine_control
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
 			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
-			setup_drive_size = 48
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd32
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -191,7 +189,7 @@
 		name = "Terminal"
 		icon_state = "dterm"
 		base_icon_state = "dterm"
-		setup_drive_size = 24
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd16
 		setup_frame_type = /obj/computer3frame/terminal
 		setup_starting_os = /datum/computer/file/terminal_program/os/terminal_os
 
@@ -243,13 +241,12 @@
 		icon_state = "bcase"
 		base_icon_state = "bcase"
 
-		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
 		setup_idscan_path = /obj/item/peripheral/card_scanner
 		setup_has_internal_disk = 1
 		setup_starting_peripheral1 = /obj/item/peripheral/network/omni
 		setup_starting_peripheral2 = /obj/item/peripheral/cell_monitor
-		setup_drive_size = 32
 
 		var/obj/item/cell/cell //We have limited power! Immersion!!
 		var/setup_charge_maximum = 15000
@@ -291,7 +288,10 @@
 		src.AddOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
-		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
+		if(!src.mainboard) // make sure this is the first time we're initializing this computer
+			mainboard = new /obj/item/motherboard()
+			if(mainboard.created_name)src.name = mainboard.created_name
+
 			if(ispath(src.setup_starting_peripheral1))
 				new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
@@ -302,13 +302,12 @@
 			if(src.setup_idscan_path)
 				new src.setup_idscan_path(src)
 
-			if(!hd && (setup_drive_size > 0))
+			if(!hd)
 				if(src.setup_drive_type)
 					src.hd = new src.setup_drive_type
 					src.hd.set_loc(src)
 				else
-					src.hd = new /obj/item/disk/data/fixed_disk(src)
-				src.hd.file_amount = src.setup_drive_size
+					src.hd = new /obj/item/disk/data/fixed_disk/hd64(src)
 
 			for (var/program_path in (list() + src.setup_starting_program)) //neat hack to make it work with lists or a single path
 				if(ispath(program_path))
@@ -334,13 +333,7 @@
 
 		src.post_system()
 
-		if (prob(60))
-			switch(rand(1,2))
-				if(1)
-					setup_font_color = "#E79C01"
-				if(2)
-					setup_font_color = "#A5A5FF"
-					setup_bg_color = "#4242E7"
+
 
 	return
 /obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
@@ -379,8 +372,8 @@
 		"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
 		"windowName" = src.name,
 		"user" = user,
-		"fontColor" = src.setup_font_color, // display monochrome values
-		"bgColor" = src.setup_bg_color,
+		"fontColor" = src.mainboard ? src.mainboard.font_color : "#aaaaaa", //If there's no motherboard, mimic BSOD colours \o/
+		"bgColor" = src.mainboard ? src.mainboard.bg_color : "#0000aa",
 		"inputValue" = src.tgui_last_accessed[user.ckey],
 	)
 
@@ -435,9 +428,6 @@
 				return src.traverse_history(params["ckey"],  1)
 		if("text")
 			if(src.active_program && params["value"]) // haha it fucking works WOOOOOO
-				if(params["value"] == "term_clear")
-					src.temp = "Cleared\n"
-					return
 				src.active_program.input_text(params["value"])
 				src.add_history(params["ckey"], params["value"])
 				playsound(src.loc, "keyboard", 50, 1, -15)
@@ -641,8 +631,7 @@
 		A.hd = src.hd
 		src.hd = null
 
-	A.mainboard = new /obj/item/motherboard(A)
-	A.mainboard.created_name = src.name
+	A.mainboard = src.mainboard
 	A.mainboard.integrated_floppy = src.setup_has_internal_disk
 
 
@@ -824,6 +813,7 @@
 		return
 
 	post_system()
+		if(src.mainboard)src.temp_add += src.mainboard.bios_version+"<br>"
 		src.temp_add += "Initializing system...<br>"
 
 		if(!src.hd)
@@ -885,15 +875,15 @@
 	if (src.diskette)
 		cloneComp.diskette = src.diskette.clone()
 
+	if (src.mainboard)
+		cloneComp.mainboard = src.mainboard.clone()
+
 	cloneComp.setup_starting_peripheral1 = src.setup_starting_peripheral1
 	cloneComp.setup_starting_peripheral2 = src.setup_starting_peripheral2
 
 	cloneComp.setup_starting_os = null
 	cloneComp.setup_idscan_path = src.setup_idscan_path
 	cloneComp.setup_has_internal_disk = src.setup_has_internal_disk
-
-	cloneComp.setup_font_color = src.setup_font_color
-	cloneComp.setup_bg_color = src.setup_bg_color
 
 	return cloneComp
 
@@ -1113,7 +1103,7 @@
 	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
 	icon_state = "oldlap"
 	base_icon_state = "oldlap"
-	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd128/techcomputer3
 
 	undeploy()
 		if(!src.case)
