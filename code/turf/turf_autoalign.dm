@@ -395,6 +395,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls/supernorn/smooth.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall-R"
+#else
+	icon_state = "mapwall-R"
+#endif
+	mod = "norn-R-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -519,6 +525,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 	explosion_resistance = 11
 
 /turf/simulated/wall/auto/supernorn/colored
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
+	icon_state = "mapwall"
+#endif
+	mod = "norn-"
 	icon = 'icons/turf/walls/supernorn/standard/white.dmi'
 
 /turf/simulated/wall/auto/supernorn/colored/blue
