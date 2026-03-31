@@ -231,6 +231,12 @@
 	label = "purple"
 	desc = "An auto-injector containing salicyclic acid, used as a painkiller and for treating moderate injuries."
 
+/obj/item/reagent_containers/emergency_injector/acetylsalicylic_acid
+	name = "emergency auto-injector (acetylsalicylic acid)"
+	initial_reagents = "acetylsalicylic_acid"
+	label = "purple"
+	desc = "An auto-injector containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
+
 /obj/item/reagent_containers/emergency_injector/spaceacillin
 	name = "emergency auto-injector (spaceacillin)"
 	initial_reagents = "spaceacillin"
@@ -354,6 +360,11 @@
 	label = "purple"
 	desc = "A high-capacity auto-injector containing salicyclic acid, used as a painkiller and for treating moderate injuries."
 
+/obj/item/reagent_containers/emergency_injector/high_capacity/acetylsalicylic_acid
+	name = "high-capacity auto-injector (acetylsalicylic acid)"
+	initial_reagents = "acetylsalicylic_acid"
+	label = "purple"
+	desc = "A high-capacity auto-injector containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
 /obj/item/reagent_containers/emergency_injector/high_capacity/saline
 	name = "high-capacity auto-injector (saline-glucose)"
 	initial_reagents = "saline"

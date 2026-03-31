@@ -22,7 +22,7 @@
 		var/anticoag_amt = 0
 		var/coag_amt = 0
 		if (owner.reagents?.total_volume > 0)
-			anticoag_amt = owner.reagents.get_reagent_amount("heparin")
+			anticoag_amt = owner.reagents.get_reagent_amount("heparin") + owner.reagents.get_reagent_amount("acetylsalicylic_acid")/2
 			coag_amt = owner.reagents.get_reagent_amount("proconvertin")
 
 		if (owner.bleeding)
