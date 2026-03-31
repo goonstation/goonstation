@@ -17,12 +17,16 @@ TYPEINFO(/obj/machinery/shredder)
 		/obj/item/currency/spacecash,
 		/obj/item/currency/fishing,
 		/obj/item/random_mail,
-		/obj/item/poster
+		/obj/item/poster,
+		/obj/item/plant/herb,
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/sticker/postit
 	)
 	/// Some things get rotated 90 degrees to fit better
 	var/rotated_types = list(/obj/item/card,
 		/obj/item/currency/spacecash,
-		/obj/item/currency/fishing
+		/obj/item/currency/fishing,
+		/obj/item/clothing/mask/cigarette
 	)
 	/// Visual proxy for the thing being shredded
 	var/atom/movable/proxy = null
@@ -123,6 +127,9 @@ TYPEINFO(/obj/machinery/shredder)
 	playsound(src, 'sound/machines/shredder.ogg', 50, 0)
 	global.particleMaster.SpawnSystem(new /datum/particleSystem/shredded(src, target = item))
 	sleep (5 SECONDS)
+	src.finish_shredding(item)
+
+/obj/machinery/shredder/proc/finish_shredding(obj/item/item)
 	src.ClearSpecificOverlays("grind")
 	src.add_shreddings()
 	QDEL_NULL(src.proxy)

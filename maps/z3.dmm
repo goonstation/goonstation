@@ -812,8 +812,7 @@
 /area/space_hive)
 "acB" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	name = "Bridge";
-	req_access_txt = ""
+	name = "Bridge"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -3002,11 +3001,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
-"aov" = (
-/turf/simulated/shuttle/wall/flock{
-	dir = 9
-	},
-/area/space)
 "aoz" = (
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
@@ -3137,11 +3131,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged2,
 /area/diner/kitchen)
-"apm" = (
-/turf/simulated/shuttle/wall/flock{
-	dir = 5
-	},
-/area/space)
 "apo" = (
 /obj/window/cubicle{
 	dir = 1
@@ -3515,8 +3504,7 @@
 /area/buddyfactory)
 "aqL" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4;
-	req_access_txt = ""
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/buddyfactory)
@@ -3899,8 +3887,7 @@
 	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "Mainframe Access";
-	req_access_txt = ""
+	name = "Mainframe Access"
 	},
 /turf/simulated/floor,
 /area/buddyfactory/mainframe)
@@ -5846,8 +5833,7 @@
 /area/space)
 "aGP" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
-	name = "Storage";
-	req_access_txt = ""
+	name = "Storage"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -6646,8 +6632,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/command{
-	name = "Control Room";
-	req_access_txt = "0"
+	name = "Control Room"
 	},
 /turf/simulated/floor,
 /area/h7/control)
@@ -6659,10 +6644,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/command{
-	name = "Computer Core";
-	req_access_txt = "11"
+	name = "Computer Core"
 	},
 /obj/decal/cleanable/blood/tracks,
+/obj/mapping_helper/access/research_director,
 /turf/simulated/floor,
 /area/h7/computer_core)
 "aJI" = (
@@ -7570,9 +7555,9 @@
 	locked = 0;
 	name = "Satellite Main APC";
 	noalerts = 1;
-	pixel_x = -24;
-	req_access_txt = ""
+	pixel_x = -24
 	},
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
@@ -7644,7 +7629,8 @@
 /area/derelict_ai_sat)
 "aMV" = (
 /obj/fakeobject/airmonitor_broken{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/machinery/rkit,
 /turf/simulated/floor/orangeblack/side{
@@ -9016,10 +9002,10 @@
 /area/derelict_ai_sat)
 "aRu" = (
 /obj/machinery/door/airlock/pyro/security{
-	name = "Prisoner Transfer Ship";
-	req_access_txt = "1"
+	name = "Prisoner Transfer Ship"
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/abandonedship)
 "aRv" = (
@@ -11615,8 +11601,7 @@
 	},
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Lab Security";
-	req_access_txt = ""
+	name = "Lab Security"
 	},
 /turf/simulated/floor/red,
 /area/h7/lab)
@@ -12016,8 +12001,7 @@
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	locked = 1;
-	name = "Anomalous Materials Laboratory";
-	req_access_txt = ""
+	name = "Anomalous Materials Laboratory"
 	},
 /turf/simulated/floor/purple,
 /area/h7/lab)
@@ -12485,8 +12469,7 @@
 	},
 /obj/machinery/door/airlock/pyro/medical{
 	locked = 1;
-	name = "Anomalous Materials Laboratory";
-	req_access_txt = ""
+	name = "Anomalous Materials Laboratory"
 	},
 /turf/simulated/floor/plating,
 /area/h7/lab)
@@ -13862,11 +13845,11 @@
 	name = "Computer Core APC";
 	opened = 1;
 	pixel_x = 24;
-	req_access_txt = "";
 	start_charge = 0;
 	tag = "icon-apc-b (EAST)";
 	noalerts = 1
 	},
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat/core)
 "bir" = (
@@ -19975,8 +19958,7 @@
 /area/diner/arcade)
 "mGI" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	name = "Bridge";
-	req_access_txt = ""
+	name = "Bridge"
 	},
 /turf/simulated/floor/darkblue,
 /area/radiostation/bridge)
@@ -20823,9 +20805,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/diner/hangar)
 "oIk" = (
-/obj/machinery/door/airlock/pyro/medical{
-	req_access_txt = ""
-	},
+/obj/machinery/door/airlock/pyro/medical,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "oNj" = (
@@ -20990,8 +20970,7 @@
 /area/diner/kitchen)
 "pdC" = (
 /obj/machinery/door/airlock/pyro{
-	name = "Toilet Cubicle";
-	req_access_txt = "0"
+	name = "Toilet Cubicle"
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
@@ -21504,10 +21483,10 @@
 "qhA" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Prisoner Transfer Ship";
-	req_access_txt = "1"
+	name = "Prisoner Transfer Ship"
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/abandonedship)
 "qhW" = (
@@ -97023,7 +97002,7 @@ aaa
 aaa
 aaa
 aaa
-aov
+anF
 aoz
 apk
 aoz
@@ -97628,7 +97607,7 @@ aaa
 aaa
 aaa
 aoQ
-apm
+apD
 aoz
 apW
 aoz

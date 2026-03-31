@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_head = list(/obj/item/clothing/head/basecap/red)
 	slot_poc1 = list(/obj/item/pen/pencil)
 	slot_poc2 = list(/obj/item/device/radio/hall_monitor)
-	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust)
+	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust,/obj/item/reagent_containers/applicator/glue)
 
 /datum/job/special/random/hollywood
 	name = "Hollywood Actor"
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc1 = list(/obj/item/currency/spacecash/twenty)
 	slot_poc2 = list(/obj/item/pen/pencil)
 	slot_lhan = list(/obj/item/storage/toolbox/artistic)
-	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
+	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random,/obj/item/reagent_containers/applicator/glue)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/foodcritic

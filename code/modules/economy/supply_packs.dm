@@ -814,7 +814,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/office
 	name = "Office Supply Crate"
-	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Box, x5 Writing Implement Sets, x1 Stapler, x1 Scissors, x2 Canvases."
+	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Box, x5 Writing Implement Sets, x1 Stapler, 1x Glue Stick, x1 Scissors, x2 Canvases."
 	contains = list(/obj/item/paper_bin = 4,
 		/obj/item/clipboard = 2,
 		/obj/item/item_box/postit,
@@ -824,6 +824,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 		/obj/item/storage/box/crayon/basic,
 		/obj/item/storage/box/crayon,
 		/obj/item/staple_gun/red,
+		/obj/item/reagent_containers/applicator/glue,
 		/obj/item/scissors,
 		/obj/item/canvas = 2,
 		/obj/item/stamp = 2)
