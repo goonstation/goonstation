@@ -193,19 +193,26 @@
 			src.cover.icon_state = "openTurretCover"
 			var/image/turret_overlay = ClearAllOverlays()
 			SPAWN(1.4 SECONDS)
-				if(src.icon_state == "Turret_off")
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
+				if(status & BROKEN)
+				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
 					turret_overlay.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(turret_overlay, "off_overlay")
-				if(src.icon_state == "Turret_stun")
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay", OBJ_LAYER)
-					turret_overlay.plane = PLANE_SELFILLUM
-					turret_overlay.alpha = 128
-					src.UpdateOverlays(turret_overlay, "stun_overlay")
-				if(src.icon_state == "Turret_lethal")
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay", OBJ_LAYER)
-					turret_overlay.plane = PLANE_SELFILLUM
-					src.UpdateOverlays(turret_overlay, "lethal_overlay")
+				else
+					if( powered() )
+						if (src.enabled)
+							if (src.lasers)
+								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay", OBJ_LAYER)
+								turret_overlay.plane = PLANE_SELFILLUM
+								src.UpdateOverlays(turret_overlay, "lethal_overlay")
+							else
+								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay", OBJ_LAYER)
+								turret_overlay.plane = PLANE_SELFILLUM
+								turret_overlay.alpha = 128
+								src.UpdateOverlays(turret_overlay, "stun_overlay")
+						else
+							turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
+							turret_overlay.plane = PLANE_SELFILLUM
+							src.UpdateOverlays(turret_overlay, "off_overlay")
 		SPAWN(1 SECOND)
 			if (popping==1)
 				popping = 0
