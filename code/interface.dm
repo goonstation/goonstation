@@ -29,7 +29,7 @@
 				changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 				changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
 				if (byond_version >= 516 && global.tgui_process)
-					message_modal(src, changelogHtml, "Changelog", width = 500, height = 650, sanitize = FALSE)
+					message_modal(src, changelogHtml, "Changelog", width = 800, height = 650, sanitize = FALSE)
 				else
 					src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
 				src.changes = 1
