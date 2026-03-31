@@ -647,9 +647,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/chemistry)
 "aea" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch1";
 	name = "North Merchant Dock";
@@ -1810,12 +1808,6 @@
 "alS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
-"alU" = (
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai)
 "alX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5901,8 +5893,7 @@
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 8;
-	icon_state = "right";
-	req_access_txt = "0"
+	icon_state = "right"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
@@ -8206,6 +8197,10 @@
 "cuK" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
+"cvt" = (
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "cvu" = (
 /turf/simulated/floor/escape{
 	dir = 4
@@ -9357,11 +9352,11 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "dnw" = (
-/obj/machinery/turretid{
-	pixel_x = 24
-	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/turretid/ai_upload{
+	pixel_x = 24
 	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai_upload)
@@ -11189,8 +11184,11 @@
 /obj/cable/blue{
 	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/access/ai_upload,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "evm" = (
 /obj/machinery/firealarm/directional/north,
@@ -12004,13 +12002,10 @@
 	pixel_x = 8;
 	pixel_y = 26
 	},
-/obj/machinery/turretid{
-	pixel_x = -8;
-	pixel_y = 24;
-	req_access = null
-	},
-/obj/mapping_helper/access/ai_upload,
 /obj/landmark/start/job/AI,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "faE" = (
@@ -13782,9 +13777,10 @@
 	},
 /area/station/hallway/primary/central)
 "grU" = (
-/obj/machinery/light/incandescent{
-	dir = 4
+/obj/cable/blue{
+	icon_state = "4-8"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "gsr" = (
@@ -16697,9 +16693,6 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "iBv" = (
-/obj/table/reinforced/auto{
-	icon_state = "10"
-	},
 /obj/item/storage/box/stinger_kit{
 	pixel_x = 7;
 	pixel_y = 14
@@ -16716,6 +16709,7 @@
 	pixel_x = -2;
 	pixel_y = -13
 	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "iBE" = (
@@ -17217,9 +17211,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "iSf" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch1";
 	name = "North Merchant Dock";
@@ -19183,7 +19175,23 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "kmh" = (
-/obj/random_item_spawner/armory_breaching_supplies,
+/obj/table/reinforced/auto,
+/obj/item/clothing/mask/gas{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 2;
+	pixel_y = 9
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 6;
+	pixel_y = -1
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "kmJ" = (
@@ -22379,7 +22387,7 @@
 /area/station/hangar/sec)
 "mJl" = (
 /obj/table/auto,
-/obj/item/disk/data/fixed_disk,
+/obj/item/disk/data/fixed_disk/hd64,
 /obj/item/disk/data/floppy/read_only/terminal_os,
 /obj/item/disk/data/floppy/read_only/medical_progs,
 /obj/item/disk/data/floppy/read_only/communications,
@@ -23100,7 +23108,7 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "nib" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -23595,22 +23603,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "nAc" = (
-/obj/rack,
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -4
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 8;
-	pixel_y = -7
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 3;
-	pixel_y = -4
-	},
+/obj/random_item_spawner/armory_goggle_supplies,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "nAh" = (
@@ -25481,7 +25474,7 @@
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "oME" = (
 /obj/machinery/firealarm/directional/west,
@@ -25786,29 +25779,13 @@
 	},
 /area/station/mining/magnet)
 "oUD" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = -7;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 6;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 9;
-	pixel_y = 3
-	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "oVl" = (
@@ -26442,23 +26419,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "pkj" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -9;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = 8;
-	pixel_y = 5
-	},
+/obj/random_item_spawner/armory_armor_supplies,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "pkm" = (
@@ -27120,12 +27081,6 @@
 /area/station/hallway/primary/central)
 "pFY" = (
 /obj/machinery/computer/secure_data/detective_computer,
-/obj/machinery/turretid{
-	name = "Armory Perimeter Turret deactivation control";
-	req_access = list(37);
-	turretArea = /area/station/turret_protected/armory_outside;
-	pixel_x = 24
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -27866,9 +27821,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "qew" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch2";
 	name = "North Merchant Dock";
@@ -28143,12 +28096,9 @@
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/incandescent,
 /obj/machinery/camera/directional/north{
-	icon_state = "camera";
 	pixel_x = 10
-	},
-/obj/machinery/light/incandescent{
-	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
@@ -30348,9 +30298,6 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "rBd" = (
-/obj/table/reinforced/auto{
-	icon_state = "1"
-	},
 /obj/item/reagent_containers/emergency_injector/atropine{
 	pixel_y = -2
 	},
@@ -30362,6 +30309,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "rBt" = (
@@ -30543,9 +30491,6 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/arcade)
 "rHz" = (
-/obj/table/reinforced/auto{
-	icon_state = "12"
-	},
 /obj/item/gun/kinetic/riot40mm{
 	pixel_x = -3;
 	pixel_y = 11
@@ -30561,6 +30506,7 @@
 	pixel_x = 6;
 	pixel_y = -2
 	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "rIk" = (
@@ -31515,25 +31461,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/barber_shop)
 "snh" = (
-/obj/table/reinforced/auto{
-	icon_state = "1"
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -8;
-	pixel_y = 13
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 6;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 2;
-	pixel_y = 9
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -4;
-	pixel_y = -2
-	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "snm" = (
@@ -31599,6 +31527,9 @@
 /obj/machinery/camera/directional/north{
 	icon_state = "camera";
 	pixel_x = 10
+	},
+/obj/machinery/turretid/ai_chamber{
+	pixel_y = 24
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -32503,7 +32434,7 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "sSY" = (
 /obj/cable{
@@ -34889,8 +34820,7 @@
 "uqO" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
@@ -36013,7 +35943,7 @@
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "vdi" = (
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -37017,7 +36947,7 @@
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "vJM" = (
 /obj/machinery/mass_driver{
@@ -37062,13 +36992,12 @@
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters/lounge)
 "vLa" = (
-/obj/machinery/turretid{
-	pixel_y = 24;
-	req_access_txt = "19"
-	},
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/turretid/computer_core{
+	pixel_y = 24
 	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/Zeta)
@@ -39143,7 +39072,7 @@
 	},
 /obj/cable/blue,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "xpc" = (
 /obj/disposalpipe/segment{
@@ -40136,10 +40065,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "xRL" = (
-/obj/machinery/turretid{
-	req_access = null
-	},
-/obj/mapping_helper/access/ai_upload,
+/obj/machinery/turretid/ai_perimeter,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIbaseoutside)
 "xRT" = (
@@ -40332,9 +40258,7 @@
 	},
 /area/station/hallway/primary/central)
 "xXU" = (
-/obj/machinery/door/airlock/pyro/external{
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "northmerch2";
 	name = "North Merchant Dock";
@@ -91970,7 +91894,7 @@ pkj
 nAc
 buH
 xuE
-xuE
+cvt
 qQI
 eUu
 xLP
@@ -112547,8 +112471,8 @@ ovz
 dBi
 lVW
 ovz
+ovz
 grU
-hnK
 ovz
 hnK
 ovz
@@ -113755,7 +113679,7 @@ ovz
 gFI
 sEC
 ovz
-alU
+dUm
 hnK
 ovz
 hnK

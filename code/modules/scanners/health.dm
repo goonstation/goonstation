@@ -331,6 +331,8 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	var/organ_upgrade = 0
 	var/organ_scan = 0
 	var/image/scanner_status
+	var/last_scan_data = null
+	var/last_scan_timestamp = null
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
@@ -380,49 +382,11 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 /// ----------------------------------------------
 
-	attack_self(mob/user as mob)
-		if (!src.reagent_upgrade && !src.organ_upgrade)
-			boutput(user, SPAN_ALERT("No upgrades detected!"))
-
-		else if (src.reagent_upgrade && src.organ_upgrade)
-			if (src.reagent_scan && src.organ_scan)				//if both active, make both off
-				src.reagent_scan = 0
-				src.organ_scan = 0
-				scanner_status.icon_state = "health_over-basic"
-				AddOverlays(scanner_status, "status")
-				boutput(user, SPAN_ALERT("All upgrades disabled."))
-
-			else if (!src.reagent_scan && !src.organ_scan)		//if both inactive, turn reagent on
-				src.reagent_scan = 1
-				src.organ_scan = 0
-				scanner_status.icon_state = "health_over-reagent"
-				AddOverlays(scanner_status, "status")
-				boutput(user, SPAN_ALERT("Reagent scanner enabled."))
-
-			else if (src.reagent_scan)							//if reagent active, turn reagent off, turn organ on
-				src.reagent_scan = 0
-				src.organ_scan = 1
-				scanner_status.icon_state = "health_over-organ"
-				AddOverlays(scanner_status, "status")
-				boutput(user, SPAN_ALERT("Reagent scanner disabled. Organ scanner enabled."))
-
-			else if (src.organ_scan)							//if organ active, turn BOTH on
-				src.reagent_scan = 1
-				src.organ_scan = 1
-				scanner_status.icon_state = "health_over-both"
-				AddOverlays(scanner_status, "status")
-				boutput(user, SPAN_ALERT("All upgrades enabled."))
-
-		else if (src.reagent_upgrade)
-			src.reagent_scan = !(src.reagent_scan)
-			scanner_status.icon_state = !reagent_scan ? "health_over-basic" : "health_over-reagent"
-			AddOverlays(scanner_status, "status")
-			boutput(user, SPAN_NOTICE("Reagent scanner [src.reagent_scan ? "enabled" : "disabled"]."))
-		else if (src.organ_upgrade)
-			src.organ_scan = !(src.organ_scan)
-			scanner_status.icon_state = !organ_scan ? "health_over-basic" : "health_over-organ"
-			AddOverlays(scanner_status, "status")
-			boutput(user, SPAN_NOTICE("Organ scanner [src.organ_scan ? "enabled" : "disabled"]."))
+	attack_self(mob/user)
+		if (isnull(src.last_scan_data))
+			boutput(user, SPAN_NOTICE("No previous scan results located."))
+			return
+		src.print_report(user)
 
 	attackby(obj/item/W, mob/user)
 		addUpgrade(W, user, src.reagent_upgrade)
@@ -441,7 +405,9 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		user.visible_message(SPAN_ALERT("<b>[user]</b> has analyzed [target]'s vitals."),\
 		SPAN_ALERT("You have analyzed [target]'s vitals."))
 		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
-		boutput(user, scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
+		src.last_scan_data = scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1)
+		src.last_scan_timestamp = time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")
+		boutput(user, src.last_scan_data)
 
 		DISPLAY_MAPTEXT(target, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, target)
 		update_medical_record(target)
@@ -461,6 +427,16 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 				return
 		..()
 
+	proc/print_report(mob/user)
+		if (!src.last_scan_data)
+			boutput(user, SPAN_ALERT("\The [src] has nothing to print — scan something first!"))
+			return
+		if (!ON_COOLDOWN(src, "print_receipt", 4 SECONDS))
+			var/obj/item/paper/P = new /obj/item/paper/thermal(user.loc)
+			P.name = "health scan report"
+			P.info = src.last_scan_data + "<br>--------------------------------<br>Taken At: [src.last_scan_timestamp]"
+			user.put_in_hand_or_eject(P)
+			playsound(src, 'sound/machines/printer_thermal.ogg', 25, TRUE)
 
 
 /obj/item/device/analyzer/healthanalyzer/upgraded

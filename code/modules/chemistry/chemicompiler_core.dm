@@ -12,12 +12,14 @@
  *   and run `npm install -g uglify-js`
  *   then run `uglifyjs browserassets/src/js/chemicompiler.js -c > browserassets/src/js/chemicompiler.min.js` to rebuild the compressed version.
  */
+var/list/datum/chemicompiler_core/chemicompilers = list()
 /datum/chemicompiler_core
 	var/list/buttons[6]
 	var/list/cbf[6]
 	var/output = ""
 	var/loadTimestamp
 	var/maxExpensiveOperations = 5 // maximum number of transfers per machine tick
+	var/maxOperations = 30 // maximum number of operations per machine tick, including expensive ones.
 
 	var/list/currentProg
 	var/dp // data pointer
@@ -36,6 +38,7 @@
 
 	var/running = 0
 	var/is_heating = 0
+	var/awaiting_reaction_tick = 0 // Used by NOP to wait until the next reaction tick.
 	var/errorCallback = "err"
 	var/transferCallback = "transferReagents"
 	var/isolateCallback = "isolateReagent"
@@ -58,6 +61,7 @@
 	if(!istype(holder))
 		qdel(src)
 		return
+	chemicompilers.Add(src)
 
 	src.holder = holder
 
@@ -204,15 +208,20 @@
 	statusChange(CC_STATUS_RUNNING)
 	currentProg = inst
 
+/datum/chemicompiler_core/proc/reaction_ticked()
+	if (awaiting_reaction_tick)
+		awaiting_reaction_tick = 0
+		on_process()
+
 /datum/chemicompiler_core/proc/on_process()
 	if ( !running || !currentProg )
 		return
 	if(!istype(src.holder))
 		qdel(src)
 		return
-	if(running)
+	if(running && !awaiting_reaction_tick)
 		var/loopUsed
-		for (loopUsed = 0, loopUsed < 30, loopUsed++)
+		for (loopUsed = 0, loopUsed < src.maxOperations, loopUsed++)
 			if(ip > length(currentProg))
 				running = 0
 				break
@@ -294,11 +303,11 @@
 					var/datum/chemicompiler_executor/E = src.holder
 					tgui_process.update_uis(E.holder)
 				if("$") //heat
-					loopUsed = 30
+					loopUsed = src.maxOperations
 					var/heatTo = (T0C - tx) + ax
 					heatReagents(sx, heatTo)
 				if("@") //transfer
-					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
+					loopUsed = src.maxOperations
 					transferReagents(sx, tx, ax)
 				/*if("?") //compare *ptr to sx, using operation tx, store result in ax
 					switch(tx)
@@ -317,10 +326,11 @@
 						else
 							ax = 0*/
 				if("#") //move individual reagent from container
-					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
+					loopUsed = src.maxOperations
 					isolateReagent(sx, tx, ax, data[dp+1])
 				if("*")
-					loopUsed = 30	//explicit NOP
+					awaiting_reaction_tick = 1
+					loopUsed = src.maxOperations
 
 			if(length(data) < dp + 1)
 				data.len = dp + 1

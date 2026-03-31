@@ -347,6 +347,11 @@
 	req_access = list(access_lunar_breakdoor)
 	color = ENGINEERING
 
+/obj/mapping_helper/access/ainley_buddy
+	name = "ainley buddy access spawn"
+	req_access = list(access_ainley_buddy)
+	color = COMMAND
+
 #undef MEDICAL
 #undef SECURITY
 #undef MORGUE_BLACK

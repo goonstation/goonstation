@@ -15,10 +15,15 @@
 
 /obj/disposalholder
 	invisibility = INVIS_ALWAYS
-	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
-	var/active = 0	// true if the holder is moving, otherwise inactive
+	///Gas used to flush the holder; will appear at exit point if vent_on_exit is TRUE
+	var/datum/gas_mixture/gas
+	///Whether to emit gas at the exit point (disabled for mail chutes)
+	var/vent_on_exit = TRUE
+	///True if the holder is moving, otherwise inactive
+	var/active = 0
 	dir = 0
-	var/count = 1000	//! can travel 1000 steps before going inactive (in case of loops)
+	///Budget of steps the disposalholder is allowed to travel before going inactive (in case of loops)
+	var/count = 1000
 
 	var/slowed = 0 // when you move, slows you down
 
@@ -157,6 +162,11 @@
 		damage_pipe(5)
 		slowed++
 
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		if (src.gas && breath_request > 0)
+			return src.gas
+		..()
+
 	proc/damage_pipe(var/amount = 3)
 		var/obj/disposalpipe/P = src.loc
 		if(istype(P))
@@ -166,8 +176,9 @@
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
-		location?.assume_air(gas)  // vent all gas to turf
-		gas = null
+		if(src.gas && src.vent_on_exit)
+			location?.assume_air(gas)  // vent all gas to turf
+		src.gas = null
 		return
 
 // Disposal pipes

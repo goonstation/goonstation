@@ -24,18 +24,14 @@
 
 	var/copy_name = null
 	var/dest_check = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initlist[2]))
-	if (dest_check == ESIG_NOFILE)
-		src.message_user("Error: Destination path does not exist.")
-		mainframe_prog_exit
-		return
+	if (dest_check != ESIG_NOFILE)
+		if (istype(dest_check, /datum/computer/folder) && !src.get_computer_datum(target.name, dest_check))
+			copy_name = target.name
 
-	if (istype(dest_check, /datum/computer/folder) && !src.get_computer_datum(target.name, dest_check))
-		copy_name = target.name
-
-	else
-		src.message_user("Error: Invalid destination path (Path already taken?).")
-		mainframe_prog_exit
-		return
+		else
+			src.message_user("Error: Invalid destination path (Path already taken?).")
+			mainframe_prog_exit
+			return
 
 	var/list/destination_path = splittext(initlist[2], "/")
 	if (!copy_name)
@@ -44,6 +40,10 @@
 		destination_path.Cut(path_length)
 
 	initlist[2] = jointext(destination_path, "/") || "/"
+	if (src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initlist[2])) == ESIG_NOFILE)
+		src.message_user("Error: Destination path does not exist.")
+		mainframe_prog_exit
+		return
 
 	var/datum/computer/file/copy = target.copy_file()
 	copy.name = copy_name

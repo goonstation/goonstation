@@ -33,7 +33,11 @@
 
 
 TYPEINFO(/obj/machinery/genetics_booth)
-	mats = 40
+	mats = list(
+		"metal" = 15,
+		"crystal" = 5,
+		"energy" = 10,
+	)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
@@ -437,3 +441,9 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	//sound effects
 	//do slight damage to occupant on jumble?
 
+/obj/item/electronics/frame/flatpack/genetics_booth
+	name = "Gene Booth Flatpack Frame"
+	desc = "An undeployed gene booth, looks like it could be deployed by using it in-hand."
+	store_type = /obj/machinery/genetics_booth
+	viewstat = 2
+	secured = 2
