@@ -194,7 +194,7 @@
 			var/image/turret_overlay = ClearAllOverlays()
 			SPAWN(1.4 SECONDS)
 				if(status & BROKEN)
-				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
+					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
 					turret_overlay.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(turret_overlay, "off_overlay")
 				else
