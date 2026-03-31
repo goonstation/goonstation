@@ -958,6 +958,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "Fg" = (
@@ -1168,6 +1169,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/asylum)
+"Lu" = (
+/obj/machinery/vehicle/miniputt/armed{
+	dir = 4
+	},
+/turf/simulated/floor/airless/engine,
+/area/space)
 "Ly" = (
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
@@ -1583,9 +1590,11 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
 "XY" = (
-/obj/machinery/computer/transit_shuttle/asylum,
-/turf/simulated/floor/white,
-/area/station/medical/asylum/main)
+/obj/machinery/vehicle/miniputt/armed{
+	dir = 8
+	},
+/turf/simulated/floor/airless/engine,
+/area/space)
 "Yl" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -2288,7 +2297,7 @@ ZC
 ZC
 MZ
 ZC
-ZC
+Lu
 MZ
 aT
 aT
@@ -2395,7 +2404,7 @@ MZ
 aT
 aT
 ju
-XY
+HS
 nr
 HS
 HS
@@ -2421,7 +2430,7 @@ aT
 (23,1,1) = {"
 MZ
 ZC
-ZC
+XY
 MZ
 ZC
 ZC
