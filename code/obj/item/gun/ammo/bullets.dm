@@ -978,6 +978,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "10ga heavy rubber slug"
 	name = "10ga heavy rubber slugs"
 	desc = "A box of big, heavy rubber slugs. These ones really pack a punch."
+	icon_state = "bg-punchy"
+	icon_empty = "bg-punchy-0"
 	amount_left = 6
 	max_amount = 6
 	//big shells, don't fit in auto-shotties
