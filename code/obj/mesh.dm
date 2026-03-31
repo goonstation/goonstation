@@ -498,7 +498,6 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	connects_to_obj = typecacheof(list(/obj/mesh/catwalk, /obj/machinery/door))
 /obj/mesh/catwalk
 	name = "catwalk surface"
-	HELP_MESSAGE_OVERRIDE("")
 	icon = 'icons/obj/catwalk.dmi'
 	icon_state = "C15-0"
 	layer = CATWALK_LAYER
