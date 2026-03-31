@@ -60,7 +60,7 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 5 SECONDS))
-					if(src.bioHolder?.HasEffect("mute"))
+					if(src.bioHolder?.HasEffect("mute") || src.muffled_by_grab())
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
 						"opens [his_or_her(src)] mouth to produce a resounding lack of noise","flails desperately","")]..."
@@ -891,14 +891,20 @@
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
+						var/sound_volume_mult = 1
+						var/sound_flags = 0
+						if (src.muffled_by_grab())
+							sound_volume_mult = 0.5
+							sound_flags = SOUND_DO_LOS
+
 						if (src.find_ailment_by_type(/datum/ailment/malady/flatline))
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender == MALE ? MALE : FEMALE]_gasp_[pick(1,3)].ogg"
-							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40 * sound_volume_mult, FALSE, 0, src.get_age_pitch(), flags = sound_flags)
 						else if (src.health <= 0)
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender == MALE ? MALE : FEMALE]_gasp_[pick(4,5)].ogg"
-							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40 * sound_volume_mult, FALSE, 0, src.get_age_pitch(), flags = sound_flags)
 						else
-							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
+							playsound(src, src.sound_gasp, 15 * sound_volume_mult, 0, 0, src.get_age_pitch(), flags = sound_flags)
 
 			if ("laugh","chuckle","giggle","chortle","guffaw","cackle")
 				if (!muzzled)
@@ -1617,12 +1623,17 @@
 							SEND_SIGNAL(src, COMSIG_MOB_FAKE_DEATH)
 							#endif
 
+						var/muffled = src.muffled_by_grab()
+
 						// Active if XMAS or manually toggled.
-						if (deathConfettiActive)
-							src.deathConfetti()
+						if (global.deathConfettiActive)
+							src.deathConfetti(muffled)
 
 						message = SPAN_REGULAR("<b>[src]</b> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
-						playsound(src, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
+						if (muffled)
+							playsound(src, "sound/voice/death_[pick(1,2)].ogg", 20, 0, 0, src.get_age_pitch(), flags = SOUND_DO_LOS)
+						else
+							playsound(src, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
 
 			if ("johnny")

@@ -146,7 +146,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "cyan_bolt"
 	damage = 0
-	cost = 100
+	cost = 50
 	dissipation_rate = 2
 	dissipation_delay = 8
 	shot_sound = 'sound/weapons/laser_e.ogg'

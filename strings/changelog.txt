@@ -1,4 +1,12 @@
-
+(t)sat mar 28 26
+(u)LeahTheTech
+(+)Shredders can now shred herbs, postits, and cigarettes.
+(+)The stasis rifle can now fire twice as many shots and has better visual effects.
+(t)thu mar 26 26
+(u)Mr. Moriarty
+(p)26226
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)The gasps and deathgasps of fibre wire victims are quieter and are no longer able to be heard through walls. Fibre wire victims are also no longer capable of screaming.
 (t)wed mar 25 26
 (u)JORJ949
 (p)26233

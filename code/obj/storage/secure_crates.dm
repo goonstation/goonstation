@@ -48,6 +48,9 @@
 		icon_closed = "sec_contraband"
 		icon_state = "sec_contraband"
 
+		owlery
+			req_access = list(access_owlerysec)
+
 	armory
 		name = "secure weapons crate"
 		req_access = list(access_armory)
