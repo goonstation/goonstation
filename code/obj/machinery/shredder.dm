@@ -18,12 +18,15 @@ TYPEINFO(/obj/machinery/shredder)
 		/obj/item/currency/fishing,
 		/obj/item/random_mail,
 		/obj/item/poster,
-		/obj/item/plant/herb
+		/obj/item/plant/herb,
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/sticker/postit
 	)
 	/// Some things get rotated 90 degrees to fit better
 	var/rotated_types = list(/obj/item/card,
 		/obj/item/currency/spacecash,
-		/obj/item/currency/fishing
+		/obj/item/currency/fishing,
+		/obj/item/clothing/mask/cigarette
 	)
 	/// Visual proxy for the thing being shredded
 	var/atom/movable/proxy = null

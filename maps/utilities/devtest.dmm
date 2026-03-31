@@ -115,7 +115,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "cN" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -497,7 +497,7 @@
 /area/station/devzone)
 "iE" = (
 /obj/landmark/prefab_load,
-/turf/simulated/floor,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "iH" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -768,6 +768,12 @@
 /obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
+"nN" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/orangeblack,
+/area/station/devzone)
 "nO" = (
 /obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/bluewhite/corner{
@@ -878,6 +884,12 @@
 /obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"po" = (
+/obj/item/places_pipes,
+/obj/item/rcd_ammo/big,
+/obj/item/rcd_ammo/big,
+/turf/unsimulated/floor/orangeblack,
+/area/station/devzone)
 "pE" = (
 /obj/machinery/door_control{
 	id = "tele";
@@ -967,11 +979,17 @@
 "qR" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/devzone)
+"qV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/orangeblack,
+/area/station/devzone)
 "qX" = (
 /obj/landmark/engine_computer/two,
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/simulated/floor,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "rc" = (
 /obj/machinery/conveyor/EW{
@@ -1000,7 +1018,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "rG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -1040,7 +1058,7 @@
 /obj/item/stamp/ce,
 /obj/item/rocko,
 /obj/item/rcd/construction/chiefEngineer,
-/turf/simulated/floor,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "sE" = (
 /obj/reagent_dispensers/fueltank,
@@ -1096,6 +1114,9 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"tF" = (
+/turf/unsimulated/floor/orangeblack,
+/area/station/devzone)
 "tL" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -1114,6 +1135,12 @@
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
+/area/station/devzone)
+"tY" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "ug" = (
 /obj/machinery/conveyor/EW{
@@ -1294,7 +1321,7 @@
 /area/station/devzone)
 "yl" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/orangeblack,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "yq" = (
 /obj/table,
@@ -1614,7 +1641,7 @@
 /area/station/devzone)
 "CO" = (
 /obj/landmark/start/job/chief_engineer,
-/turf/simulated/floor,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "CQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -1820,7 +1847,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "Gi" = (
 /obj/machinery/chem_heater,
@@ -1959,6 +1986,12 @@
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
+"Jg" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/orangeblack,
+/area/station/devzone)
 "Jq" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -2001,7 +2034,7 @@
 	dir = 4
 	},
 /obj/machinery/devtest_prefab_loader,
-/turf/simulated/floor/orangeblack,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "Ke" = (
 /obj/storage/secure/closet/medical/anesthetic,
@@ -2364,7 +2397,7 @@
 /obj/landmark/engine_computer/one,
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/simulated/floor,
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "PE" = (
 /obj/disposalpipe/segment/mail/bent/south,
@@ -2546,6 +2579,15 @@
 "Si" = (
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor,
+/area/station/devzone)
+"Sw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "SG" = (
 /obj/table/auto,
@@ -2990,27 +3032,27 @@
 
 (1,1,1) = {"
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
 Yx
 ng
 Vk
@@ -3034,7 +3076,7 @@ dB
 "}
 (2,1,1) = {"
 Yx
-ng
+tF
 Pe
 GH
 GH
@@ -3054,7 +3096,7 @@ GH
 GH
 GH
 yj
-Yx
+tF
 Yx
 ng
 jP
@@ -3078,7 +3120,7 @@ Yx
 "}
 (3,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3098,7 +3140,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 jP
@@ -3122,7 +3164,7 @@ Yx
 "}
 (4,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3142,7 +3184,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 Jx
@@ -3166,7 +3208,7 @@ Yx
 "}
 (5,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3186,7 +3228,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 nK
@@ -3210,7 +3252,7 @@ ng
 "}
 (6,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3230,7 +3272,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 mu
@@ -3254,7 +3296,7 @@ ng
 "}
 (7,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3274,7 +3316,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 pi
@@ -3298,7 +3340,7 @@ ng
 "}
 (8,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3318,7 +3360,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 hX
@@ -3342,7 +3384,7 @@ ng
 "}
 (9,1,1) = {"
 Yx
-kz
+nN
 LY
 hR
 hR
@@ -3362,7 +3404,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 kz
 NU
@@ -3386,7 +3428,7 @@ ng
 "}
 (10,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3406,7 +3448,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 zN
@@ -3430,7 +3472,7 @@ ng
 "}
 (11,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3450,7 +3492,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 Zk
@@ -3474,7 +3516,7 @@ ng
 "}
 (12,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3494,7 +3536,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 ng
 ng
@@ -3518,7 +3560,7 @@ Yx
 "}
 (13,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3538,7 +3580,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 Yx
 Yx
@@ -3562,7 +3604,7 @@ Yx
 "}
 (14,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3606,7 +3648,7 @@ Yx
 "}
 (15,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3650,7 +3692,7 @@ Yx
 "}
 (16,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3670,7 +3712,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 Yx
 Yx
@@ -3694,7 +3736,7 @@ Yx
 "}
 (17,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3714,7 +3756,7 @@ hR
 hR
 hR
 NE
-Yx
+tF
 Yx
 Yx
 Ct
@@ -3738,7 +3780,7 @@ Yx
 "}
 (18,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3758,7 +3800,7 @@ hR
 hR
 hR
 NE
-mc
+po
 Yx
 Yx
 jb
@@ -3782,7 +3824,7 @@ Yx
 "}
 (19,1,1) = {"
 Yx
-ng
+tF
 LY
 hR
 hR
@@ -3826,7 +3868,7 @@ Yx
 "}
 (20,1,1) = {"
 Yx
-ng
+tF
 Bh
 Tu
 Tu
@@ -3870,27 +3912,27 @@ Yx
 "}
 (21,1,1) = {"
 Yx
-ng
-ng
-ng
-ng
-ng
-ng
-ng
-ng
-ng
-ng
-ng
-ng
-Cb
-hS
-hS
-LV
-PK
-ng
-ng
-ng
-ng
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+tF
+Jg
+qV
+qV
+Sw
+tY
+tF
+tF
+tF
+tF
 ng
 Yx
 ot
@@ -4770,7 +4812,7 @@ ng
 ng
 ng
 ng
-ng
+tF
 Gc
 JT
 Gc
@@ -5650,7 +5692,7 @@ ng
 ng
 ng
 ng
-ng
+tF
 rz
 rz
 rz
@@ -5670,7 +5712,7 @@ rz
 rz
 rz
 rz
-Yx
+tF
 "}
 (62,1,1) = {"
 Yx

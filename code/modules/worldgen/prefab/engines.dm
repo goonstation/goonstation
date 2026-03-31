@@ -52,6 +52,8 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 			leaveresidual(T)
 
 		for(var/turf/T as anything in block(locate(target.x-1, target.y-1, target.z), locate(props.maxX+2, props.maxY+2, target.z)))
+			astype(T, /turf/simulated)?.parent?.check_regroup()
+			air_master?.groups_to_rebuild.Remove(astype(T, /turf/simulated)?.parent)
 			for(var/obj/O in T)
 				O.initialize(FALSE)
 				O.UpdateIcon()
