@@ -7150,11 +7150,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
-"Bk" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/se)
 "Bl" = (
 /obj/disposalpipe/junction/right/north,
 /obj/cable{
@@ -12173,8 +12168,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/landmark/random_room/size3x3,
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/supernorn/colored,
 /area/station/maintenance/outer/se)
 "Vy" = (
 /obj/disposalpipe/segment/horizontal,
@@ -70526,12 +70520,12 @@ ew
 xT
 Ic
 GC
-fW
 ac
 fW
 fW
+an
 Vx
-ac
+PC
 ia
 fW
 ac
@@ -70828,12 +70822,12 @@ fW
 gp
 ew
 Fz
-ew
 On
 ew
 ew
 ew
-Bk
+On
+ew
 ry
 fW
 ac
@@ -71131,11 +71125,11 @@ ar
 ac
 ac
 ac
-ac
 fW
 fW
 fW
 ac
+Ic
 fW
 fW
 ac
