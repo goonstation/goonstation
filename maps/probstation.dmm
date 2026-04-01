@@ -8377,10 +8377,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"Ga" = (
-/obj/machinery/light/incandescent/netural,
-/turf/space,
-/area/space)
 "Ge" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -69283,7 +69279,7 @@ Li
 GV
 bM
 cX
-Dx
+iW
 By
 By
 By
@@ -69586,7 +69582,7 @@ WK
 af
 oJ
 Dx
-Ga
+By
 By
 By
 By
