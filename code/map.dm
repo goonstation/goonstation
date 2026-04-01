@@ -1029,6 +1029,12 @@ var/global/list/mapNames = list(
 		"the entrance to the clown hole" = list(/area/station/crew_quarters/clown/entryway),
 		"the genetics lab" = list(/area/station/medical/research),)
 
+	station_tether_ignore_area_types = list(
+		/area/station/medical/asylum,
+		/area/station/engine/proto,
+		/area/station/engine/proto_gangway,
+	)
+
 /datum/map_settings/devtest
 	name = "DEVTEST"
 	display_name = "Developer Lounge & Co"
