@@ -396,9 +396,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls/supernorn/smooth.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
-	icon_state = "perspective-mapwall-R"
+	icon_state = "perspective-mapwall_r"
 #else
-	icon_state = "mapwall-R"
+	icon_state = "mapwall_r"
 #endif
 	mod = "norn-R-"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID

@@ -8,40 +8,31 @@
 var/global/map_setting = null
 var/global/datum/map_settings/map_settings = null
 
-#define PROBSTATION_ALT_ACCOUNT(name) name = list("id" = "PROBSTATION",	"settings" = "probstation",	"playerPickable" = TRUE)
 ///id corresponds to the name of the /obj/landmark/map
 ///playerPickable defines whether the map can be chosen by players when voting on a new map.
 var/global/list/mapNames = list(
-	PROBSTATION_ALT_ACCOUNT("Randstation"),
-	PROBSTATION_ALT_ACCOUNT("Maybestation"),
-	PROBSTATION_ALT_ACCOUNT("Switchstation"),
-	PROBSTATION_ALT_ACCOUNT("Swapstation"),
-	PROBSTATION_ALT_ACCOUNT("Chancestation"),
-	PROBSTATION_ALT_ACCOUNT("Loststation"),
-	PROBSTATION_ALT_ACCOUNT("Couldstation"),
-	PROBSTATION_ALT_ACCOUNT("Oddstation"),
-	PROBSTATION_ALT_ACCOUNT("Probstation"), //Listed last because the "current map" uses a for loop checking for matching IDs that doesnt end when it finds the first match.
 	// commented out ones were previously non existent.
 	//"Construction" =		list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
 	"Event" =				list("id" = "EVENT",		"settings" = "clarion",			"playerPickable" = FALSE),
 	// "1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
+	"Probstation" = 		list("id" = "PROBSTATION",	"settings" = "probstation",		"playerPickable" = TRUE),
 
 #ifdef RP_MODE
-	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = FALSE,	"MinPlayersAllowed" = 14),
+	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 #else
-	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
+	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 #endif
 
-	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = FALSE, 	"MinPlayersAllowed" = 40),
-	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
-	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = FALSE, 	"MinPlayersAllowed" = 40),
-	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
-	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 60),
-	"Oshan Laboratory" = 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = FALSE,	"MinPlayersAllowed" = 14),
-	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 70),
-	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
+	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
+	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
+	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
+	"Oshan Laboratory" = 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
+	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
+	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
 
 	"Crash" = 				list("id" = "CRASH",		"settings" = "crash",			"playerPickable" = FALSE),
 	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
@@ -51,7 +42,6 @@ var/global/list/mapNames = list(
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
 	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69),
 )
-#undef PROBSTATION_ALT_ACCOUNT
 
 /obj/landmark/map
 	name = "map_setting"
@@ -989,7 +979,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/probstation
 	name = "probstation"
-	goonhub_map = "/maps" //good fucking luck
+	goonhub_map = "/maps/probstation" //good fucking luck
 	arrivals_type = MAP_SPAWN_CRYO
 	walls = /turf/simulated/wall/auto/supernorn/colored
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn/colored
