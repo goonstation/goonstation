@@ -160,6 +160,7 @@
 /obj/machinery/phone/wall{
 	pixel_y = 30
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "x" = (
@@ -299,6 +300,9 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "M" = (
@@ -401,6 +405,10 @@
 /obj/landmark/spawner/artifact,
 /obj/machinery/light/incandescent/harsh{
 	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
