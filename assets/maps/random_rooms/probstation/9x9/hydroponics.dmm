@@ -32,6 +32,13 @@
 "i" = (
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"l" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "m" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -342,7 +349,7 @@ X
 s
 L
 m
-Y
+l
 Y
 p
 n
