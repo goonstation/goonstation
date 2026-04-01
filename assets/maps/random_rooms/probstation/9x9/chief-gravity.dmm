@@ -265,7 +265,6 @@
 /area/station/crew_quarters/ce)
 "A" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_chief,
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Chief Engineer's Quarters";
@@ -276,6 +275,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/button/area,
+/obj/mapping_helper/access/engineering_chief,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/ce)
 "B" = (
@@ -293,10 +293,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering,
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/grey,
 /area/station/engine/gravity)
 "D" = (
