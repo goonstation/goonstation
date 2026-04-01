@@ -178,6 +178,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/camera/directional/south,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -221,8 +222,8 @@
 	dir = 1
 	},
 /obj/landmark/start/job/assistant,
-/obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk/west,
+/obj/machinery/disposal/small/south,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -256,9 +257,14 @@
 /area/station/crew_quarters/kitchen)
 "H" = (
 /obj/machinery/vending/cigarette,
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
+/area/station/crew_quarters/kitchen)
+"I" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "J" = (
 /obj/submachine/foodprocessor,
@@ -269,7 +275,6 @@
 /area/station/crew_quarters/kitchen)
 "K" = (
 /obj/stool/chair/dining/wood,
-/obj/machinery/camera/directional/east,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -370,7 +375,6 @@
 /obj/stool/chair/dining/wood{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/east,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/wood/eight{
 	dir = 4
@@ -474,12 +478,12 @@ D
 "}
 (9,1,1) = {"
 D
-D
-D
-D
+I
+I
+I
 O
-D
-D
-D
+I
+I
+I
 D
 "}

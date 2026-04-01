@@ -407,6 +407,12 @@
 	},
 /turf/simulated/floor,
 /area/mining/refinery)
+"zF" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
 "Ay" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -916,7 +922,7 @@ Iu
 "}
 (7,1,1) = {"
 fv
-Sl
+zF
 Sl
 Sl
 hJ

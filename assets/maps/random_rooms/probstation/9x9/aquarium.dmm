@@ -53,6 +53,14 @@
 	},
 /turf/simulated/floor/sand,
 /area/station/crew_quarters/aquarium)
+"s" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/simulated/floor/sand,
+/area/station/crew_quarters/aquarium)
 "t" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -67,6 +75,14 @@
 	delay = 200
 	},
 /obj/sea_plant/kelp,
+/turf/simulated/floor/sand,
+/area/station/crew_quarters/aquarium)
+"w" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor/sand,
 /area/station/crew_quarters/aquarium)
 "y" = (
@@ -137,6 +153,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/fishing_pool/portable,
 /turf/simulated/floor,
 /area/station/crew_quarters/aquarium)
 "N" = (
@@ -288,7 +305,7 @@ D
 G
 D
 r
-q
+s
 C
 "}
 (8,1,1) = {"
@@ -299,7 +316,7 @@ v
 m
 q
 a
-D
+w
 C
 "}
 (9,1,1) = {"
