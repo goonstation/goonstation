@@ -486,7 +486,7 @@
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/northwest)
+/area/station/maintenance/north)
 "bU" = (
 /obj/disposalpipe/segment{
 	name = "factory pipe"
@@ -9190,17 +9190,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"JC" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/mapping_helper/access/maint,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
 "JD" = (
 /obj/machinery/camera/directional/north,
 /turf/simulated/floor/color_coded_hall{
@@ -9929,12 +9918,6 @@
 	can_be_auto = 0
 	},
 /area/station/maintenance/inner/nw)
-"Mj" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/north)
 "Mk" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -10492,14 +10475,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/west)
-"Oy" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/mapping_helper/access/maint,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
 "Oz" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -51762,8 +51737,8 @@ HQ
 bS
 ik
 La
-NU
-NU
+pc
+pc
 YI
 jX
 AI
@@ -55085,7 +55060,7 @@ KG
 La
 pq
 pq
-Mj
+bT
 lt
 er
 Cp
@@ -62968,9 +62943,9 @@ em
 ov
 Dx
 fE
-Oy
-Oy
-fE
+HV
+HV
+dB
 By
 By
 By
@@ -70212,9 +70187,9 @@ KQ
 Yd
 TF
 cn
-fE
-JC
-fE
+ac
+uh
+ac
 By
 By
 By
