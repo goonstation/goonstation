@@ -413,6 +413,7 @@
 #include "code\datums\flock\flock.dm"
 #include "code\datums\flock\flockstats.dm"
 #include "code\datums\flock\flockunlockable.dm"
+#include "code\datums\gamemodes\april_fools.dm"
 #include "code\datums\gamemodes\arcfiend.dm"
 #include "code\datums\gamemodes\artemis_freeroam.dm"
 #include "code\datums\gamemodes\assday_classic.dm"
