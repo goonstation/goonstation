@@ -2,6 +2,13 @@
 "a" = (
 /obj/table/auto,
 /obj/machinery/recharger,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/hand_labeler{
+	pixel_x = -1
+	},
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "c" = (
@@ -170,6 +177,7 @@
 	pixel_y = 26
 	},
 /obj/decal/tile_edge/stripe/big,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "y" = (
@@ -181,6 +189,9 @@
 	},
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 10
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
@@ -202,11 +213,27 @@
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "B" = (
+/obj/table/auto,
+/obj/item/storage/box/tapebox{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/obj/item/paper_bin/artifact_paper{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 2
+	},
 /obj/machinery/light/incandescent/harsh{
 	dir = 8
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
@@ -334,14 +361,11 @@
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "P" = (
-/obj/table/auto,
-/obj/item/pinpointer/category/artifacts/safe{
-	pixel_x = -4;
-	pixel_y = 5
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
 	},
-/obj/item/hand_labeler{
-	pixel_x = -1
-	},
+/obj/machinery/networked/artifact_console,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "Q" = (
@@ -365,20 +389,16 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "S" = (
-/obj/table/auto,
-/obj/item/storage/box/tapebox{
-	pixel_x = 4;
-	pixel_y = 13
-	},
-/obj/item/paper_bin/artifact_paper{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 2
-	},
 /obj/machinery/firealarm/directional/west,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Artlab";
+	locked = 0;
+	setup_drive_type = /obj/item/disk/data/tape/artifact_research
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "T" = (
