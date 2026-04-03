@@ -2,6 +2,7 @@
 #define FINGERPRINT_PLANT 0
 #define FINGERPRINT_READ 1
 #define FINGERPRINT_SCAN 2
+#define FINGERPRINT_SEARCH 3
 
 // TODO make this cost 2 TC
 /obj/item/device/fingerprinter
@@ -14,32 +15,58 @@
 	/// List of prints currently scanned into the device.
 	var/datum/forensic_holder/scanned_evidence = new()
 	var/mode = FINGERPRINT_SCAN
+	var/list/datum/contextAction/contexts = list()
 	HELP_MESSAGE_OVERRIDE({"Toggle modes by using the fingerprinter in hand.
 							While on <b>"Read"</b> mode, use the tool on someone or something that has prints on it to add all the prints to the tool's print database.
-							While on <b>"Plant"</b> mode, use the tool on anything to add any prints from the database on it."})
+							While on <b>"Plant"</b> mode, use the tool on anything to add any prints from the database on it.
+							While on <b>"Scan"</b> mode, use the tool on anything to detect forensic evidence.
+							While on <b>"Search"</b> mode, enter evidence to search the security database with."})
 
 	New()
+		var/datum/contextLayout/experimentalcircle/layout = new /datum/contextLayout/experimentalcircle
+		layout.start_angle = 157.5
+		layout.total_angle = 135
+		contextLayout = layout
+
 		. = ..()
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby)) // use this instead of afterattack so we're silent
 		src.create_inventory_counter()
 		src.update_text()
+		for(var/actionType in childrentypesof(/datum/contextAction/fingerprinter))
+			var/datum/contextAction/fingerprinter/action = new actionType()
+			src.contexts += action
 
-	attack_self(mob/user)
+	attack_self(var/mob/user)
 		. = ..()
-		src.toggle_mode(user)
+		if(src.contexts)
+			user.showContextActions(src.contexts, src, src.contextLayout)
 
 	mouse_drop(atom/over_object)
 		. = ..()
 		if (can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
 			over_object.storage?.storage_item_attack_by(src, usr)
 
+	dropped(var/mob/user)
+		. = ..()
+		user.closeContextActions()
+
+	proc/change_mode(var/new_mode, var/mob/holder)
+		src.mode = new_mode
+		if(new_mode == FINGERPRINT_SEARCH)
+			src.update_text()
+			forensic_search(holder);
+			src.mode = FINGERPRINT_READ
+		src.update_text()
+
 	proc/update_text()
 		if (src.mode == FINGERPRINT_READ)
 			src.inventory_counter.update_text("<span style='color:#00ff00;font-size:0.7em;-dm-text-outline: 1px #000000'>READ</span>")
 		else if(src.mode == FINGERPRINT_PLANT)
-			src.inventory_counter.update_text("<span style='color:#ff4242;font-size:0.7em;-dm-text-outline: 1px #000000'>PLANT</span>")
-		else
+			src.inventory_counter.update_text("<span style='color:#fab6a7;font-size:0.7em;-dm-text-outline: 1px #000000'>PLANT</span>")
+		else if(src.mode == FINGERPRINT_SCAN)
 			src.inventory_counter.update_text("<span style='color:#f6ff36;font-size:0.7em;-dm-text-outline: 1px #000000'>SCAN</span>")
+		else
+			src.inventory_counter.update_text("<span style='color:#00ffff;font-size:0.7em;-dm-text-outline: 1px #000000'>SEARCH</search>")
 
 	proc/pre_attackby(obj/item/source, atom/target, mob/user)
 		if (src.mode == FINGERPRINT_READ)
@@ -50,14 +77,14 @@
 			src.scan_prints(user, target);
 		return TRUE // suppress attackby
 
-	proc/toggle_mode(mob/user)
-		if(src.mode == FINGERPRINT_READ)
-			src.mode = FINGERPRINT_PLANT
-		else if(src.mode == FINGERPRINT_PLANT)
-			src.mode = FINGERPRINT_SCAN
-		else
-			src.mode = FINGERPRINT_READ
-		src.update_text()
+	proc/forensic_search(mob/user as mob)
+		var/holder = src.loc
+		var/search = tgui_input_text(user, "Enter name, full/partial fingerprint, or blood DNA.", "Find record")
+		if (src.loc != holder || !search || user.stat)
+			return
+		search = copytext(sanitize(search), 1, 200)
+		boutput(user, data_core.general.forensic_search(search))
+		return
 
 	proc/plant_print(mob/user, atom/target)
 		if (target.flags & NOFPRINT)
@@ -140,6 +167,42 @@
 		var/scan_output = scan.build_report(compress = TRUE)
 		boutput(user, scan_output)
 
+/datum/contextAction/fingerprinter
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = FALSE
+	desc = ""
+	icon_state = "yellow"
+	var/mode = FINGERPRINT_SCAN
+
+	execute(var/obj/item/device/fingerprinter/fingerprinter, var/mob/user)
+		if (!istype(fingerprinter))
+			return
+		fingerprinter.change_mode(src.mode, user)
+
+	checkRequirements(var/obj/item/device/fingerprinter/fingerprinter, var/mob/user)
+		if(!can_act(user) || !in_interact_range(fingerprinter, user))
+			return FALSE
+		return fingerprinter in user
+
+	scan
+		name = "Scan"
+		icon_state = "fingerprint_scan"
+		mode = FINGERPRINT_SCAN
+	read
+		name = "Read"
+		icon_state = "fingerprint_read"
+		mode = FINGERPRINT_READ
+	plant
+		name = "Plant"
+		icon_state = "fingerprint_plant"
+		mode = FINGERPRINT_PLANT
+	search
+		name = "Search"
+		icon_state = "fingerprint_search"
+		mode = FINGERPRINT_SEARCH
+
 #undef FINGERPRINT_PLANT
 #undef FINGERPRINT_READ
 #undef FINGERPRINT_SCAN
+#undef FINGERPRINT_SEARCH
