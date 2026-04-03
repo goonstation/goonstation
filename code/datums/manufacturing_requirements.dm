@@ -211,14 +211,6 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 	id = "metal_or_wood"
 	material_flags = MATERIAL_METAL | MATERIAL_WOOD
 
-/datum/manufacturing_requirement/mixed/metal_or_wood_dense
-	name = "Sturdy Metal or Wood"
-	id = "metal_or_wood_dense"
-	requirement_ids = list(
-		"metal_or_wood",
-		"tough",
-	)
-
 /datum/manufacturing_requirement/match_flags/organic_or_rubber
 	name = "Organic or Rubber"
 	id = "organic_or_rubber"

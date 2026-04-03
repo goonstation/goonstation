@@ -209,7 +209,7 @@ MATERIAL
 				boutput(user, SPAN_ALERT("These rods won't work for reinforcing."))
 				return
 
-			if (src.material && (src.material.getMaterialFlags() & MATERIAL_METAL || src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+			if (src.material && (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_WOOD)))
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [min(min(R.amount,src.amount),50)]",1) as num
 				var/makesheets = min(min(R.amount,src.amount),50) //recalculate AFTER the popup to avoid interface stacking exploits
 				sheetsinput = min(sheetsinput,makesheets)
@@ -227,7 +227,7 @@ MATERIAL
 				R.change_stack_amount(-sheetsinput)
 				src.change_stack_amount(-sheetsinput)
 			else
-				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
+				boutput(user, SPAN_ALERT("You may only reinforce metal, crystal, or wooden sheets."))
 				return
 
 		else if (isweldingtool(W) && (src.material.getMaterialFlags() & MATERIAL_METAL))
