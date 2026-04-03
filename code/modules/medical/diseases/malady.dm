@@ -211,8 +211,7 @@
 	info = "The patient has a blood clot."
 	cure_flags = CURE_CUSTOM
 	cure_desc = "Anticoagulants"
-	reagentcure = list("heparin")
-	recureprob = 10
+	reagentcure = list("heparin"=10, "acetylsalicylic_acid"=5)
 	affected_species = list("Human","Monkey")
 	stage_prob = 5
 
@@ -332,7 +331,7 @@
 	max_stages = 2
 	cure_flags = CURE_CUSTOM
 	cure_desc = "Lifestyle Changes, Anticoagulants or Aspirin"
-	reagentcure = list("heparin"=1, "salicylic_acid"=2)
+	reagentcure = list("heparin"=1, "salicylic_acid"=2, "acetylsalicylic_acid"=4)
 	affected_species = list("Human","Monkey")
 	stage_prob = 1
 
@@ -384,7 +383,7 @@
 			affected_mob.cure_disease(D)
 			return
 		else if (cureprob > 10 && src.reagentcure["heparin"] < 2)
-			reagentcure = list("heparin"=2, "salicylic_acid"=4)
+			reagentcure = list("heparin"=2, "salicylic_acid"=4, "acetylsalicylic_acid"=8)
 
 		if (D.stage >= 1) // chest pain, heartburn, shortness of breath and a little bit of damage from heart not getting enough oxygen
 			if (probmult(5))

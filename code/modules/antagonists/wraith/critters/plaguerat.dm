@@ -1,7 +1,7 @@
 //Add death
 ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 TYPEINFO(/mob/living/critter/wraith/plaguerat)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED, SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT, SPEECH_OUTPUT_DEADCHAT_PLAGUE_RAT)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED, SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT)
 
 /mob/living/critter/wraith/plaguerat
 	name = "plague rat"
@@ -28,7 +28,6 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 	health_brute_vuln = 0.45
 	health_burn = 50
 	health_burn_vuln = 0.65
-	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
 	var/mob/living/intangible/wraith/master = null
 

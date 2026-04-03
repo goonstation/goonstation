@@ -205,7 +205,8 @@
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2,
-		/obj/item/material_piece/cloth/cottonfabric = 2)
+		/obj/item/material_piece/cloth/cottonfabric = 2,
+		/obj/item/material_piece/cobryl = 2)
 	available = list(
 		/datum/manufacture/scalpel,
 		/datum/manufacture/circular_saw,
@@ -224,6 +225,14 @@
 		/datum/manufacture/mender,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
+		/datum/manufacture/empty_autoinjector/orange,
+		/datum/manufacture/empty_autoinjector/red,
+		/datum/manufacture/empty_autoinjector/blue,
+		/datum/manufacture/empty_autoinjector/green,
+		/datum/manufacture/empty_autoinjector/yellow,
+		/datum/manufacture/empty_autoinjector/purple,
+		/datum/manufacture/empty_autoinjector/black,
+		/datum/manufacture/empty_autoinjector/white,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,
@@ -248,6 +257,9 @@
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/empty_kit,
+		/datum/manufacture/chembarrel,
+		/datum/manufacture/chembarrel/yellow,
+		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
@@ -339,6 +351,7 @@
 #endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
+		/datum/manufacture/magnetic_shoes,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
@@ -346,6 +359,7 @@
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/breach_pouch,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 #ifdef UNDERWATER_MAP
@@ -419,7 +433,7 @@
 		/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
+	available = list(/datum/manufacture/shoes,
 		/datum/manufacture/shoes_brown,
 		/datum/manufacture/shoes_white,
 		/datum/manufacture/flippers,
@@ -463,10 +477,12 @@
 		/datum/manufacture/backpack_red,
 		/datum/manufacture/backpack_green,
 		/datum/manufacture/backpack_blue,
+		/datum/manufacture/backpack_brown,
 		/datum/manufacture/satchel,
 		/datum/manufacture/satchel_red,
 		/datum/manufacture/satchel_green,
 		/datum/manufacture/satchel_blue,
+		/datum/manufacture/satchel_brown,
 		/datum/manufacture/handkerchief)
 
 	hidden = list(/datum/manufacture/breathmask,
@@ -511,11 +527,18 @@
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
-	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter)
-	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
+	available = list(/datum/manufacture/id_card,
+		/datum/manufacture/implant_access,
+		/datum/manufacture/implanter,
+		/datum/manufacture/radio_upgrade/engineering,
+		/datum/manufacture/radio_upgrade/research,
+		/datum/manufacture/radio_upgrade/medical,
+		/datum/manufacture/radio_upgrade/civilian)
+	hidden = list(/datum/manufacture/id_card_gold,
+		/datum/manufacture/implant_access_infinite,
+		/datum/manufacture/radio_upgrade/command)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
-//and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "personnel manufacturer"
 	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
@@ -526,55 +549,12 @@
 		/obj/item/material_piece/glass = 5,
 		/obj/item/material_piece/cloth/cottonfabric = 5)
 	accept_blueprints = FALSE
-	available = list(/datum/manufacture/id_card,
-		/datum/manufacture/implant_access,
-		/datum/manufacture/implanter,
-		/datum/manufacture/shoes,
-		/datum/manufacture/shoes_brown,
-		/datum/manufacture/shoes_white,
-		/datum/manufacture/flippers,
-		/datum/manufacture/civilian_headset,
-		/datum/manufacture/jumpsuit_assistant,
-		/datum/manufacture/jumpsuit,
-		/datum/manufacture/jumpsuit_white,
-		/datum/manufacture/jumpsuit_pink,
-		/datum/manufacture/jumpsuit_red,
-		/datum/manufacture/jumpsuit_orange,
-		/datum/manufacture/jumpsuit_yellow,
-		/datum/manufacture/jumpsuit_green,
-		/datum/manufacture/jumpsuit_blue,
-		/datum/manufacture/jumpsuit_purple,
-		/datum/manufacture/jumpsuit_black,
-		/datum/manufacture/jumpsuit_brown,
-		/datum/manufacture/pride_lgbt,
-		/datum/manufacture/pride_ace,
-		/datum/manufacture/pride_aro,
-		/datum/manufacture/pride_bi,
-		/datum/manufacture/pride_inter,
-		/datum/manufacture/pride_lesb,
-		/datum/manufacture/pride_gay,
-		/datum/manufacture/pride_nb,
-		/datum/manufacture/pride_pan,
-		/datum/manufacture/pride_poly,
-		/datum/manufacture/pride_trans,
-		/datum/manufacture/hat_black,
-		/datum/manufacture/hat_white,
-		/datum/manufacture/hat_pink,
-		/datum/manufacture/hat_red,
-		/datum/manufacture/hat_yellow,
-		/datum/manufacture/hat_orange,
-		/datum/manufacture/hat_green,
-		/datum/manufacture/hat_blue,
-		/datum/manufacture/hat_purple,
-		/datum/manufacture/hat_tophat,
-		/datum/manufacture/handkerchief,)
 
-	hidden = list(/datum/manufacture/id_card_gold,
-		/datum/manufacture/implant_access_infinite,
-		/datum/manufacture/breathmask,
-		/datum/manufacture/patch,
-		/datum/manufacture/tricolor,
-		/datum/manufacture/hat_ltophat)
+	New()
+		src.available = /obj/machinery/manufacturer/uniform::available | /obj/machinery/manufacturer/personnel::available
+		src.hidden = /obj/machinery/manufacturer/uniform::hidden | /obj/machinery/manufacturer/personnel::hidden
+		. = ..()
+
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "crate manufacturer"
@@ -667,6 +647,7 @@
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/gravity_scanner,
 		/datum/manufacture/RCD,
 		/datum/manufacture/places_pipes,
 		/datum/manufacture/RCDammo,
@@ -680,6 +661,7 @@
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
 		/datum/manufacture/heavy_firesuit,
+		/datum/manufacture/magnetic_shoes,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
@@ -690,6 +672,8 @@
 		/datum/manufacture/flippers,
 		/datum/manufacture/turbine_shaft,
 		/datum/manufacture/current_turbine,
+#else
+		/datum/manufacture/mechanics/gravity_tether_area,
 #endif
 #ifdef MAP_OVERRIDE_OSHAN
 		/datum/manufacture/cable/reinforced,

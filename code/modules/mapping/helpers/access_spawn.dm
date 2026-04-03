@@ -76,8 +76,13 @@
 	color = MEDICAL
 
 /obj/mapping_helper/access/pathology
-	name = "pathology spawn"
+	name = "pathology access spawn"
 	req_access = list(access_medical)
+	color = MEDICAL
+
+/obj/mapping_helper/access/pharmacy
+	name = "pharmacy access spawn"
+	req_access = list(access_pharmacy)
 	color = MEDICAL
 
 //////////// Engineering ////
@@ -341,6 +346,11 @@
 	name = "lunar breakdoor access spawn"
 	req_access = list(access_lunar_breakdoor)
 	color = ENGINEERING
+
+/obj/mapping_helper/access/ainley_buddy
+	name = "ainley buddy access spawn"
+	req_access = list(access_ainley_buddy)
+	color = COMMAND
 
 #undef MEDICAL
 #undef SECURITY

@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_card = /obj/item/card/id/security
 	receives_miranda = TRUE
 	job_category = JOB_SECURITY
+	email_group = MGD_SECURITY
 
 /datum/job/security/security_officer
 	name = "Security Officer"
@@ -79,7 +80,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	name = "Detective"
 	limit = 1
 	wages = PAY_TRADESMAN
-	trait_list = list("training_drinker")
+	trait_list = list("training_drinker", "training_forensic")
 	access_string = "Detective"
 	badge = /obj/item/clothing/suit/security_badge
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_LEADER, ROLE_GANG_MEMBER, ROLE_CONSPIRATOR)

@@ -28,8 +28,10 @@
 		..()
 		if (islist(src.random_icons) && length(src.random_icons))
 			src.icon_state = pick(src.random_icons)
-		pixel_y = rand(-8, 8)
-		pixel_x = rand(-8, 8)
+		if (pixel_y == 0)
+			pixel_y = rand(-8, 8)
+		if (pixel_x == 9)
+			pixel_x = rand(-8, 8)
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
@@ -136,6 +138,10 @@
 	get_desc()
 		. = "<br>[SPAN_NOTICE("It says:")]<br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
+	New()
+		. = ..()
+		src.set_writing_icon(src.words)
+
 	attack_hand(mob/user)
 		user.lastattacked = get_weakref(user)
 		if (src.attached)
@@ -190,14 +196,7 @@
 				return
 			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
-			if (src.icon_state == initial(src.icon_state))
-				var/search_t = lowertext(t)
-				if (copytext(search_t, -1) == "?")
-					src.icon_state = "postit-quest"
-				else if (copytext(search_t, -1) == "!")
-					src.icon_state = "postit-excl"
-				else
-					src.icon_state = "postit-writing"
+			src.set_writing_icon(t)
 			src.words += "[src.words ? "<br>" : ""][t]"
 			tooltip_rebuild = TRUE
 			pen.in_use = 0
@@ -261,6 +260,18 @@
 		if(src.attached && src.loc != src.attached)
 			remove_from_attached(do_loc = FALSE)
 
+	proc/set_writing_icon(text)
+		if (src.icon_state != initial(src.icon_state))
+			return
+		if (length(text) < 1)
+			return
+		var/search_t = lowertext(text)
+		if (copytext(search_t, -1) == "?")
+			src.icon_state = "postit-quest"
+		else if (copytext(search_t, -1) == "!")
+			src.icon_state = "postit-excl"
+		else
+			src.icon_state = "postit-writing"
 
 /obj/item/sticker/gold_star
 	name = "gold star sticker"
@@ -300,7 +311,7 @@
 /obj/item/sticker/heart
 	name = "heart sticker"
 	icon_state = "heart"
-	random_icons = list("heart", "rheart")
+	random_icons = list("heart", "rheart", "wheart", "bheart")
 
 /obj/item/sticker/moon
 	name = "moon sticker"
@@ -360,6 +371,78 @@
 	angry
 		name = "angry googly eye sticker"
 		random_icons = list("googly_angerL", "googly_angerR")
+
+/obj/item/sticker/sparkle
+	name = "sparkle sticker"
+	random_icons = list("shine1", "shine2")
+
+/obj/item/sticker/cloud
+	name = "cloud sticker"
+	icon_state = "cloud"
+
+/obj/item/sticker/sun
+	name = "sun sticker"
+	icon_state = "sun"
+
+/obj/item/sticker/lightning
+	name = "lightning sticker"
+	icon_state = "lightning"
+
+/obj/item/sticker/bow
+	name = "bow sticker"
+	icon_state = "bow"
+
+/obj/item/sticker/nt
+	name = "nanotrasen sticker"
+	icon_state = "nt"
+
+/obj/item/sticker/music
+	name = "music note sticker"
+	icon_state = "music"
+
+/obj/item/sticker/butterfly
+	name = "butterfly sticker"
+	icon_state = "butterfly"
+
+/obj/item/sticker/gem
+	name = "gem sticker"
+	icon_state = "gem"
+
+/obj/item/sticker/fish
+	name = "fish sticker"
+	icon_state = "fish"
+
+/obj/item/sticker/cool
+	name = "cool sticker"
+	icon_state = "cool"
+
+/obj/item/sticker/strawberry
+	name = "strawberry sticker"
+	icon_state = "strawberry"
+
+/obj/item/sticker/melon
+	name = "melon sticker"
+	icon_state = "melon"
+
+/obj/item/sticker/peace
+	name = "peace sticker"
+	icon_state = "peace"
+
+/obj/item/sticker/rocket
+	name = "rocket sticker"
+	icon_state = "rocket"
+
+/obj/item/sticker/typhon
+	name = "typhon sticker"
+	icon_state = "typhon"
+
+/obj/item/sticker/flame
+	name = "flame sticker"
+	icon_state = "flame"
+
+/obj/item/sticker/flower
+	name = "flower sticker"
+	icon_state = "flower"
 
 /obj/item/sticker/ribbon
 	name = "award ribbon"
@@ -427,7 +510,9 @@
 
 	var/has_selectable_skin = 1 //
 	var/list/skins = list("gold_star" = "gold star", "banana", "umbrella", "heart", "clover", "skull", "Larrow" = "left arrow",
-	"Rarrow" = "right arrow", "no" = "\"no\"", "moon", "smile", "rainbow", "frown", "balloon", "horseshoe", "bee")
+	"Rarrow" = "right arrow", "no" = "\"no\"", "moon", "smile", "rainbow", "frown", "balloon", "horseshoe", "bee", "nt" = "nanotrasen", "shine1" = "sparkle",
+	"bow", "gem", "music", "sun", "lightning", "cloud", "butterfly", "rocket", "flame", "flower", "typhon", "fish", "strawberry", "melon",
+	"peace", "cool")
 
 	var/pinpointer_category = TR_CAT_SPY_STICKERS_REGULAR
 
@@ -439,8 +524,6 @@
 			var/new_skin = pick(src.skins)
 			var/new_name = istext(src.skins[new_skin]) ? src.skins[new_skin] : null
 			src.set_type(new_skin, new_name)
-		if (!src.has_selectable_skin)
-			src.verbs -= /obj/item/sticker/spy/verb/set_sticker_type
 
 		if (has_camera)
 			src.camera = new /obj/machinery/camera (src)
@@ -458,15 +541,24 @@
 				src.radio.toggle_microphone(FALSE)
 
 	attack_self(mob/user as mob)
-		var/choice = "Set radio"
+		var/list/choices = list("Radio")
 		if (src.has_camera)
-			choice = tgui_alert(user, "What would you like to do with [src]?", "Configure sticker", list("Set radio", "Set camera"))
-		if (!choice)
+			choices += "Camera"
+		if (src.has_selectable_skin)
+			choices += "Shape"
+
+		var/choice = "Radio"
+		if (length(choices) > 1)
+			choice = tgui_alert(user, "What would you change on [src]?", "Configure Sticker", choices)
+		if (!choice || !(choice in choices))
 			return
-		if (choice == "Set radio")
-			src.set_internal_radio(user)
-		else
-			src.set_internal_camera(user)
+		switch (choice)
+			if ("Radio")
+				src.set_internal_radio(user)
+			if ("Camera")
+				src.set_internal_camera(user)
+			if ("Shape")
+				src.set_sticker_shape(user)
 
 	fall_off()
 		if (src.radio)
@@ -554,10 +646,10 @@
 			usr.Browse(null, "window=radio")
 			usr.Browse(null, "window=sticker_internal_camera")
 
-	verb/set_sticker_type()
-		if (!ishuman(usr) || !islist(src.skins))
+	proc/set_sticker_shape(mob/user)
+		if (!ishuman(user) || !islist(src.skins))
 			return
-		var/new_skin = input(usr,"Select Sticker Type:","Spy Sticker",null) as null|anything in src.skins
+		var/new_skin = tgui_input_list(user, "Select Sticker Shape", "Spy Sticker", src.skins)
 		if (!new_skin)
 			return
 		var/new_name = istext(src.skins[new_skin]) ? src.skins[new_skin] : null
@@ -585,20 +677,18 @@
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
-	slots = 8
-	soundproofing = 20
+	soundproofing = SOUNDPROOFING_MUTE
 	spawn_contents = list(/obj/item/sticker/spy = 5,
 	/obj/item/device/camera_viewer/sticker,
-	/obj/item/device/radio/headset,
 	/obj/item/pinpointer/category/spysticker)
 
 /obj/item/storage/box/spy_sticker_kit/radio_only
 	spawn_contents = list(/obj/item/sticker/spy/radio_only = 5,
-	/obj/item/device/radio/headset)
+	/obj/item/device/radio/headset,
+	/obj/item/pinpointer/category/spysticker)
 
 /obj/item/storage/box/spy_sticker_kit/radio_only/detective
 	spawn_contents = list(/obj/item/sticker/spy/radio_only/det_only = 6,
-	/obj/item/device/radio/headset/detective,
 	/obj/item/pinpointer/category/spysticker/det)
 
 /obj/item/device/radio/spy

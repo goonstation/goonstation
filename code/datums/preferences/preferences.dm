@@ -37,6 +37,7 @@ var/list/removed_jobs = list(
 
 	var/be_traitor = FALSE
 	var/be_syndicate = FALSE
+	var/be_sleeper_agent = FALSE
 	var/be_syndicate_commander = FALSE
 	var/be_spy = FALSE
 	var/be_gangleader = FALSE
@@ -75,6 +76,7 @@ var/list/removed_jobs = list(
 	var/PDAcolor = "#6F7961"
 	var/use_satchel //Automatically convert backpack to satchel?
 	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
+	var/id_starts_in_pda = FALSE //Try to automatically equip IDs in PDAs and PDAs in ID slots?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -254,6 +256,7 @@ var/list/removed_jobs = list(
 			"pdaRingtone" = src.pda_ringtone_index,
 			"useSatchel" = src.use_satchel,
 			"preferredUplink" = src.preferred_uplink,
+			"idStartsInPda" = src.id_starts_in_pda,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -274,6 +277,7 @@ var/list/removed_jobs = list(
 
 			"antagonistPreferences" = list(
 				ROLE_TRAITOR = src.be_traitor,
+				ROLE_SLEEPER_AGENT = src.be_sleeper_agent,
 				ROLE_NUKEOP = src.be_syndicate,
 				ROLE_NUKEOP_COMMANDER = src.be_syndicate_commander,
 				ROLE_SPY_THIEF = src.be_spy,
@@ -542,6 +546,11 @@ var/list/removed_jobs = list(
 
 			if ("toggle-satchel")
 				src.use_satchel = !src.use_satchel
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("toggle-id-in-pda")
+				src.id_starts_in_pda = !src.id_starts_in_pda
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1121,6 +1130,7 @@ var/list/removed_jobs = list(
 				src.use_click_buffer = FALSE
 				src.help_text_in_examine = TRUE
 				src.be_traitor = FALSE
+				src.be_sleeper_agent = FALSE
 				src.be_syndicate = FALSE
 				src.be_syndicate_commander = FALSE
 				src.be_spy = FALSE

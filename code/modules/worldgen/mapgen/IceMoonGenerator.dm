@@ -125,7 +125,7 @@
 	oxygen = 0
 	temperature = 100
 
-	destroy_asteroid(var/dropOre=1)
+	destroy_asteroid(var/dropOre=1, var/mob/user)
 		if(src.ore || prob(33)) // provide less rock
 			default_ore = /obj/item/raw_material/ice
 		. = ..()

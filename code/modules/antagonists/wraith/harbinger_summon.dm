@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/mob/intangible/harbinger_summon
 	id = ROLE_HARBINGER_SUMMON
 	display_name = "harbinger summon"
+	antagonist_icon = "wraithsummon"
 	mob_path = /mob/living/critter/wraith/nascent
 	remove_on_clone = TRUE
 	has_info_popup = FALSE

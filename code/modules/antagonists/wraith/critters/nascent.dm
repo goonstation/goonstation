@@ -2,8 +2,8 @@
 //Avoids the issue of the game crashing when chosen and the transform prompt being lost.
 
 TYPEINFO(/mob/living/critter/wraith)
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_WRAITHCHAT, LISTEN_INPUT_DEADCHAT)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED, SPEECH_OUTPUT_WRAITHCHAT_WRAITH_SUMMON, SPEECH_OUTPUT_DEADCHAT_WRAITH_SUMMON)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_WRAITHCHAT)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED, SPEECH_OUTPUT_WRAITHCHAT_WRAITH_SUMMON)
 
 /mob/living/critter/wraith
 	var/name_generator_path = /datum/wraith_name_generator/wraith_summon

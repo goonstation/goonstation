@@ -64,6 +64,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
 
+/obj/item/reagent_containers/glass/bottle/acetylsalicylic_acid
+	name = "bottle (acetylsalicylic acid)"
+	desc = "A small bottle containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "acetylsalicylic_acid"
+
 /obj/item/reagent_containers/glass/bottle/insulin
 	name = "bottle (insulin)"
 	desc = "A small bottle of insulin, for treating hyperglycaemic shock."
@@ -298,6 +305,7 @@
 /obj/item/reagent_containers/glass/bottle/chemical/plastic
 	name = "plastic chemical bottle"
 	desc = "A 3D-printed reagent storage bottle."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()
@@ -399,6 +407,17 @@
 	fluid_overlay_states = 0
 	initial_reagents = "formaldehyde"
 
+/* ================================================== */
+/* -------------------- Forensic -------------------- */
+/* ================================================== */
+
+/obj/item/reagent_containers/glass/vial/silver_nitrate
+	name = "vial (silver nitrate)"
+	desc = "A small vial containing silver nitrate, used for revealing partial fingerprints."
+	amount_per_transfer_from_this = 1
+	splash_all_contents = FALSE
+	initial_reagents = "silver_nitrate"
+
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */
@@ -434,3 +453,4 @@
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10
 	fluid_overlay_states = 0
+	default_material = "plastic"

@@ -11,7 +11,7 @@
 	density = 1
 	anchored = ANCHORED
 	animate_movement=1
-	soundproofing = 0
+	soundproofing = SOUNDPROOFING_ON
 	on = 1
 	locked = 1
 	access_lookup = "Captain"

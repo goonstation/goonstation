@@ -541,7 +541,8 @@
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
 	/obj/item/item_box/postit,
-	/obj/item/staple_gun/red)
+	/obj/item/staple_gun/red,
+	/obj/item/reagent_containers/applicator/glue)
 
 	one
 		amt2spawn = 1
@@ -795,7 +796,6 @@
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
-	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
@@ -845,7 +845,8 @@
 	/obj/item/tank/pocket/oxygen,
 	/obj/item/tank/mini/oxygen,
 	/obj/item/weldingtool,
-	/obj/item/wrench)
+	/obj/item/wrench,
+	/obj/item/ammo/power_cell/aa)
 
 	one
 		amt2spawn = 1
@@ -1911,7 +1912,8 @@
 	icon_state = "rand_gun"
 	amt2spawn = 1
 
-	items2spawn = list(/obj/item/gun/energy/stasis,
+	items2spawn = list(/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun_jr,
 	/obj/item/gun/energy/phaser_huge)
@@ -2382,7 +2384,6 @@
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
-	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,

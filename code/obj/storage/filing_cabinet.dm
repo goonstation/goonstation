@@ -18,9 +18,11 @@
 			W.set_loc(src)
 			SPAWN(5 DECI SECONDS)
 				icon_state = "filecabinet"
+				playsound(src, 'sound/effects/drawer_close.ogg', 50, TRUE)
 
 	attack_hand(var/mob/user)
 		icon_state = "filecabinet-open"
+		playsound(src, 'sound/effects/drawer_open.ogg', 50, TRUE)
 		show_window(user)
 
 	Topic(var/href, var/href_list)
@@ -33,8 +35,10 @@
 			usr.put_in_hand_or_drop(src.contents[text2num_safe(href_list["id"])], usr)
 			visible_message("[usr] takes something out of the cabinet.")
 			icon_state = "filecabinet"
+			playsound(src, 'sound/effects/drawer_close.ogg', 50, TRUE)
 		else if(href_list["action"] == "close")
 			icon_state = "filecabinet"
+			playsound(src, 'sound/effects/drawer_close.ogg', 50, TRUE)
 		show_window(usr)
 		icon_state = "filecabinet"
 

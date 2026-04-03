@@ -12,6 +12,8 @@
 	stamina_crit_chance = 0
 	//mat_changename = 0
 	rand_pos = 1
+	default_material = "plastic"
+	material_amt = 0.5
 	var/patreon_prob = 9
 	var/rare_prob = 12
 	var/datum/figure_info/info = null
@@ -1113,6 +1115,34 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper The Mucus Man"
 		icon_state = "themucusman"
 		ckey = "ithebinman"
+	snugglycactus
+		name = "\improper Ribbert McFrogg"
+		icon_state = "ribbertmcfrogg"
+		ckey = "snugglycactus"
+	b0opy
+		name = "\improper Dementia Dan"
+		icon_state = "dementiadan"
+		ckey = "b0opy"
+	haikuart
+		name = "\improper Rocky Roach"
+		icon_state = "rockyroach"
+		ckey = "haikuart"
+	warsometimeschanges
+		name = "\improper Alice Dawn"
+		icon_state = "alicedawn"
+		ckey = "warsometimeschanges"
+	annmagedon
+		name = "\improper Charlotte Chirtte"
+		icon_state = "charlottechirtte"
+		ckey = "annmagedon"
+	literallily
+		name = "\improper Amanita Clearwater"
+		icon_state = "amanitaclearwater"
+		ckey = "literallily"
+	zodiadecius
+		name = "\improper Samson"
+		icon_state = "samson"
+		ckey = "zodiadecius"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -1124,6 +1154,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	max_item_amount = 1
 	//reusable = 0
 	rand_pos = 1
+	default_material = "plastic"
+	material_amt = 0.5
 	var/ccolor = "y"
 	var/image/cap_image = null
 	var/itemstate = "cap-fig"

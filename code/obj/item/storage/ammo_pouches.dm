@@ -225,6 +225,19 @@
 		spawn_contents = list(/obj/item/gun/kinetic/clock_188/boomerang/ntso,
 		/obj/item/ammo/bullets/bullet_9mm = 4)
 
+/obj/item/storage/breach_pouch
+	name = "mining charge pouch"
+	desc = "A large pouch specially designed to hold all of your nanotrasen approved explosives."
+	icon_state = "ammopouch-mining"
+	w_class = W_CLASS_SMALL
+	slots = 5
+	opens_if_worn = TRUE
+	prevent_holding = list(/obj/item/storage)
+	can_hold = list(/obj/item/breaching_charge/mining)
+
+	filled
+		spawn_contents = list(/obj/item/breaching_charge/mining/light = 3)
+
 /obj/item/storage/emp_grenade_pouch
 	name = "EMP grenade pouch"
 	desc = "A pouch designed to hold EMP grenades."

@@ -3,9 +3,15 @@
 		name = "Bubble vents"
 		schedule_interval = 3 SECONDS
 #ifdef MAP_OVERRIDE_NEON
+		if (istype(ticker.mode, /datum/game_mode/disaster))
+			return
 		while (length(by_type[/obj/bubble_vent]) < 10)
 			var/turf/T = null
+			var/frustration = 0
 			while (!T || !istype_exact(T, /turf/space/fluid))
+				frustration++
+				if (frustration > 100000)
+					return //give up eventually if we really really can't find one
 				T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
 			if (!istype(get_area(T), /area/space/plasma_reef) && prob(70)) //to make them more common in reefs
 				continue

@@ -6,7 +6,7 @@ TYPEINFO(/obj/storage/closet)
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
 	object_flags = NO_GHOSTCRITTER
-	soundproofing = 3
+	soundproofing = SOUNDPROOFING_STORAGE
 	can_flip_bust = 1
 	p_class = 3
 	open_sound = 'sound/misc/locker_open.ogg'
@@ -14,7 +14,6 @@ TYPEINFO(/obj/storage/closet)
 	volume = 70
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
-	material_amt = 0.2
 	///Will this locker auto-close when someone is flung into it
 	var/auto_close = TRUE
 
@@ -165,6 +164,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	volume = 70
 	auto_close = FALSE
 	can_leghole = FALSE
+	default_material = "wood"
 
 	wood
 		icon_closed = "woodcoffin"
@@ -346,9 +346,11 @@ TYPEINFO(/obj/storage/closet/coffin)
 			B9.pixel_y = 0
 			B9.pixel_x = 6
 
-			var/obj/item/folder/B10 = new /obj/item/canvas(src)
+			var/obj/item/canvas/B10 = new /obj/item/canvas(src)
 			B10.pixel_y = 0	// everything else does it i guess
 			B10.pixel_x = 0
+
+			new /obj/item/reagent_containers/applicator/glue(src)
 
 			return 1
 

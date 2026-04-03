@@ -9,12 +9,12 @@ jobs:
     if: ${{ github.repository == 'goonstation/goonstation' && (github.event.action == 'labeled' && github.event.label.name == 'E-Input-Wanted' || github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'E-Input-Wanted')) }}
     steps:
       - name: Get requirements.txt
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: ".github"
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.10"
           cache: pip

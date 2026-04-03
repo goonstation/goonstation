@@ -39,7 +39,7 @@
 #define access_robotics 29
 #define access_fine_large 30
 #define access_cargo 31 // QM.
-// Access 32 Unused
+#define access_pharmacy 32
 #define access_chemistry 33
 #define access_dwaine_superuser 34 // So it's not the same as the RD's office and locker.
 #define access_hydro 35
@@ -126,3 +126,6 @@
 
 //Lunar door access, given to the tour guide to open the door
 #define access_lunar_breakdoor 90
+
+//Access to the captain's quarters on the russian ainley ship. Only given to the relavant guardbuddy.
+#define access_ainley_buddy 91

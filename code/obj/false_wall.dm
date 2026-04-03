@@ -169,6 +169,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.name = src.material ? "false [src.material.getName()] wall" : "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
 		SPAWN(delay)
+			if (!istype(src, /turf/simulated/wall/false_wall))
+				return // can change type during SPAWN
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			//actually do the opening things
 			src.set_density(0)
@@ -177,7 +179,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			src.pathable = 1
 			src.update_air_properties()
 			src.set_opacity(0)
-			if(!floorintact)
+			if(!src.floorintact)
 				src.setIntact(FALSE)
 				src.levelupdate()
 			update_nearby_tiles()

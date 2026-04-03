@@ -187,6 +187,7 @@ TYPEINFO(/mob/living/critter/changeling)
 			. += 7
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		var/message
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
@@ -195,7 +196,6 @@ TYPEINFO(/mob/living/critter/changeling)
 			if("flip")
 				if(src.emote_check(voluntary, 50))
 					var/list/mob/living/possible_targets = list()
-					var/message
 					//Check if we have any nearby mobs
 					for(var/mob/living/L in oview(1))
 						possible_targets += L
@@ -221,6 +221,10 @@ TYPEINFO(/mob/living/critter/changeling)
 						message = "<B>[src]</B> does a flip!"
 
 					return message
+			if ("snap","snapfingers","fingersnap","click","clickfingers")
+				message = "The <b>[src.name]</b> snaps [his_or_her(src)] fingers."
+				playsound(src.loc, src.sound_fingersnap, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+				return message
 		return null
 
 	specific_emote_type(var/act)

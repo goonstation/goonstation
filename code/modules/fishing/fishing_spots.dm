@@ -115,7 +115,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/carbon/human/npc/monkey/sea = 5,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,
+	/obj/item/reagent_containers/food/fish/anchovy = 10)
 
 /datum/fishing_spot/swamp
 	fishing_atom_type = /turf/unsimulated/floor/auto/swamp
@@ -231,7 +232,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/anchovy = 10)
 
 /datum/fishing_spot/nuclear_reactor
 	fishing_atom_type = /obj/machinery/nuclear_reactor
@@ -339,7 +341,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	src.fishing_lootpools += new /datum/fishing_lootpool/pufferfish(src)
 
 /datum/fishing_spot/kitchen_sink
-	fishing_atom_type = /obj/submachine/chef_sink
+	fishing_atom_type = /obj/machinery/sink
 	rod_tier_required = 1
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
 	/obj/item/reagent_containers/food/fish/salmon = 20,\
@@ -357,7 +359,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/snacks/swedish_fish = 10)
 
 /datum/fishing_spot/bathroom_sink
-	fishing_atom_type = /obj/submachine/chef_sink/chem_sink
+	fishing_atom_type = /obj/machinery/sink/slim
 	rod_tier_required = 1
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
 	/obj/item/reagent_containers/food/fish/bass = 20,\
@@ -396,7 +398,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/cod = 15,\
 	/obj/item/reagent_containers/food/fish/flounder = 10,\
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/anchovy = 30)
 
 /datum/fishing_spot/watertank
 	fishing_atom_type = /obj/reagent_dispensers/watertank

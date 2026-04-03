@@ -499,3 +499,96 @@ var/datum/action_controller/actions
 			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
 			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
+
+/**
+* calls a specified proc if it finishes without interruptions, but works for objects bigger than 32x32
+*
+* check [_std/macros/actions.dm] for documentation on a macro that uses this.
+*/
+/datum/action/bar/icon/callback_wide
+	/// set to a string version of the callback proc path
+	id = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// set to datum to perform callback on if seperate from owner or target
+	var/call_proc_on = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
+		..()
+		if (owner)
+			src.owner = owner
+		else //no owner means we have nothing to do things with
+			CRASH("action bars need an owner object to be tied to")
+		if (target) //not having a target is okay, sometimes were just doing things to ourselves
+			src.target = target
+		if (duration)
+			src.duration = duration
+		else //no duration dont do the thing
+			CRASH("action bars need a duration to run for, there's no default duration")
+		if (proc_path)
+			src.proc_path = proc_path
+		else //no proc, dont do the thing
+			CRASH("no proc was specified to be called once the action bar ends")
+		if(call_proc_on)
+			src.call_proc_on = call_proc_on
+		if (proc_args)
+			if (islist(proc_args))
+				src.proc_args = proc_args
+			else
+				src.proc_args = list(proc_args)
+		if (icon) //optional, dont always want an icon
+			src.icon = icon
+			if (icon_state) //optional, dont always want an icon state
+				src.icon_state = icon_state
+		else if (icon_state)
+			CRASH("icon state set for action bar, but no icon was set")
+		if (end_message)
+			src.end_message = end_message
+		if (interrupt_flags != null)
+			src.interrupt_flags = interrupt_flags
+		//generate a id
+		if (src.proc_path)
+			src.id = "[src.proc_path]"
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !(IN_RANGE(src.owner, src.target, src.maximum_range) || BOUNDS_DIST(src.owner, src.target) == src.maximum_range-1 ))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onUpdate()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !(IN_RANGE(src.owner, src.target, src.maximum_range) || BOUNDS_DIST(src.owner, src.target) == src.maximum_range-1 ))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.proc_path)
+			CRASH("action bar had no proc to call upon completion")
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (src.target && !(IN_RANGE(src.owner, src.target, src.maximum_range) || BOUNDS_DIST(src.owner, src.target) == src.maximum_range-1 ))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
+		if (src.call_proc_on)
+			INVOKE_ASYNC(src.call_proc_on, src.proc_path, arglist(src.proc_args))
+		else if (src.target)
+			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
+		else
+			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))

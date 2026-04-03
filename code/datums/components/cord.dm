@@ -25,7 +25,12 @@
 	RegisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(draw_cord), TRUE)
 
 /datum/component/cord/proc/draw_cord(datum/component/complexsignal/outermost_movable/component)
-	if(QDELETED(src.handset) || (BOUNDS_DIST(src.parent, src.handset) > range))
+	if (QDELETED(src.handset))
+		SEND_SIGNAL(src.parent, COMSIG_CORD_RETRACT)
+		return
+
+	// get the turf of the heandset if it's not on a turf otherwise BOUNDS_DIST is infinity
+	if(BOUNDS_DIST(isturf(src.handset.loc) ? src.handset : get_turf(src.handset), src.parent) > range)
 		SEND_SIGNAL(src.parent, COMSIG_CORD_RETRACT)
 		return
 	var/handset_offset_x = -7

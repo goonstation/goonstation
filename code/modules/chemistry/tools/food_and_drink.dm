@@ -96,7 +96,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
 					H.sims.affectMotive("Hunger", healing * 6)
-					H.sims.affectMotive("Bladder", -healing * 0.2)
 
 			if (quality >= 5)
 				boutput(M, SPAN_NOTICE("That tasted amazing!"))
@@ -1075,6 +1074,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			src.name = t
 			src.labeled = 1
+		else if (istype(W,/obj/item/tool/omnitool))
+			var/obj/item/tool/omnitool/OT = W
+			if (OT.mode == OMNI_MODE_UNCAPPING)
+				boutput(user, SPAN_ALERT("It's a screw-top bottle."))
+			else
+				..()
 		else
 			..()
 			return
@@ -1533,6 +1538,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
 			var/max_iterations = 20
+			src.inertia_value = 1
 			for(var/turf/T in path)
 				if(max_iterations-- <= 0)
 					break

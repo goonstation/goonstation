@@ -431,7 +431,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
 "Bo" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "BO" = (

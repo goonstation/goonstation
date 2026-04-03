@@ -296,8 +296,9 @@
 	var/has_space_pushback = TRUE
 
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
+		if((..() && user.traction != TRACTION_FULL) && src.has_space_pushback)
 			user.inertia_dir = get_dir_accurate(target, user)
+			user.inertia_value = 1
 			step(user, user.inertia_dir)
 
 	arm38
@@ -435,6 +436,20 @@
 		cooldown = 1 SECOND
 		reload_time = 20 SECONDS
 
+	silenced_22
+		proj = new/datum/projectile/bullet/bullet_22
+		shots = 1
+		current_shots = 10
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
+	makarov
+		proj = new/datum/projectile/bullet/nine_mm_soviet
+		shots = 1
+		current_shots = 8
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
 /datum/limb/gun/energy
 	phaser
 		proj = new/datum/projectile/laser/light
@@ -465,6 +480,21 @@
 		cooldown = 1 SECONDS
 		reload_time = 3 SECONDS
 		spread_angle = 3
+
+	resonator
+		proj = new/datum/projectile/special/piercing/resonator
+		shots = 4
+		current_shots = 4
+		cooldown = 1 SECONDS
+		reload_time = 15 SECONDS
+
+	taser
+		proj = new/datum/projectile/energy_bolt
+		shots = 1
+		current_shots = 1
+		cooldown = 3 SECONDS
+		reload_time = 3 SECONDS
+
 
 
 /datum/limb/gun/spawner

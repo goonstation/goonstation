@@ -4,7 +4,7 @@
 
 TYPEINFO(/mob/dead/observer)
 	start_listen_modifiers = list(LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS)
-	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_RADIO_GLOBAL_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST,LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST,LISTEN_INPUT_RADIO_GLOBAL_GHOST,LISTEN_INPUT_BLOBCHAT,LISTEN_INPUT_FLOCK_GLOBAL,LISTEN_INPUT_WRAITHCHAT)
 	start_listen_languages = list(LANGUAGE_ALL)
 
 /mob/dead/observer
@@ -374,7 +374,7 @@ TYPEINFO(/mob/dead/observer)
 		if(istype(get_area(src), /area/afterlife))
 			qdel(src)
 
-		if(!mind?.get_player()?.dnr)
+		if(!(mind?.get_player()?.dnr || mind?.get_player()?.joined_observer))
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
@@ -525,7 +525,7 @@ TYPEINFO(/mob/dead/observer)
 	set desc = "Displays the current AI laws. You must have DNR on to use this."
 	set category = "Ghost"
 
-	if(!mind || !mind.get_player()?.dnr)
+	if(!mind || !(mind.get_player()?.dnr || isadminghost(src)))
 		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
@@ -732,6 +732,9 @@ TYPEINFO(/mob/dead/observer)
 
 
 /mob/dead/observer/proc/insert_observer(var/atom/target)
+	if(target == src) //cant observe self, or it nullspaces
+		boutput(src, SPAN_NOTICE("You cannot observe yourself, silly."))
+		return
 	var/mob/targetMob = target
 	if(istype(targetMob) && isadmin(targetMob) && !targetMob.client?.player_mode && !isadmin(src)) //Activate the alarm bells
 		logTheThing(LOG_DEBUG, src, "observes non-player mode admin [constructName(target)]") //They shouldn't be here unless forced manually
