@@ -1062,8 +1062,7 @@
 				return 1
 
 			message = copytext(message, 1, 257)
-			usr.visible_message(SPAN_NOTICE("[usr] types on their PDA."), "you type on your PDA.","you hear typing.")
-
+			usr.audible_message(SPAN_NOTICE("You hear a faint typing noise."),SPAN_NOTICE("You type on your PDA."))
 			phrase_log.log_phrase("pda", message)
 
 			if (findtext(message, "bitcoin") != 0 || findtext(message, "drug") != 0 || findtext(message, "pharm") != 0 || findtext(message, "lottery") != 0 || findtext(message, "scient") != 0 || findtext(message, "luxury") != 0 || findtext(message, "vid") != 0 || findtext(message, "quality") != 0)
