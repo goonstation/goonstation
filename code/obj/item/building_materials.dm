@@ -42,7 +42,7 @@ MATERIAL
 /obj/item/sheet
 	name = "sheet"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon = 'icons/obj/metal.dmi'
+	icon = 'icons/obj/items/materials/sheets.dmi'
 	icon_state = "sheet-m_5"
 	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
 	var/icon_state_base = "sheet"
@@ -590,7 +590,7 @@ MATERIAL
 /obj/item/rods
 	name = "rods"
 	desc = "A set of sturdy rods, useful for constructing grilles and other objects. Also decent for hitting people."
-	icon = 'icons/obj/metal.dmi'
+	icon = 'icons/obj/items/materials/rods.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods_5"
 	item_state = "rods"
