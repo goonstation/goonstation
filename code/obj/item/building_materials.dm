@@ -209,7 +209,7 @@ MATERIAL
 				boutput(user, SPAN_ALERT("These rods won't work for reinforcing."))
 				return
 
-			if (src.material && (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_WOOD)))
+			if (src.material && (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL)))
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [min(min(R.amount,src.amount),50)]",1) as num
 				var/makesheets = min(min(R.amount,src.amount),50) //recalculate AFTER the popup to avoid interface stacking exploits
 				sheetsinput = min(sheetsinput,makesheets)
@@ -227,7 +227,7 @@ MATERIAL
 				R.change_stack_amount(-sheetsinput)
 				src.change_stack_amount(-sheetsinput)
 			else
-				boutput(user, SPAN_ALERT("You may only reinforce metal, crystal, or wooden sheets."))
+				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
 				return
 
 		else if (isweldingtool(W) && (src.material.getMaterialFlags() & MATERIAL_METAL))
@@ -1212,7 +1212,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			name = "Rods"
 			yield = 2
 			can_craft_multiples = TRUE
-			icon = 'icons/obj/metal.dmi'
+			icon = 'icons/obj/items/materials/rods.dmi'
 			icon_state = "rods_5"
 
 		rack
@@ -1379,7 +1379,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 	remetal
 		recipe_id = "remetal"
 		name = "Remove Reinforcement"
-		icon = 'icons/obj/metal.dmi'
+		icon = 'icons/obj/items/materials/sheets.dmi'
 		icon_state = "sheet-m_5"
 		can_craft_multiples = TRUE
 
@@ -1395,6 +1395,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			can_craft_multiples = TRUE
 			icon = 'icons/obj/metal.dmi'
 			icon_state = "tile_5"
+		rods
+			recipe_id = "rods"
+			craftedType =  /obj/item/rods
+			name = "Rods"
+			yield = 2
+			can_craft_multiples = TRUE
+			icon = 'icons/obj/items/materials/rods.dmi'
+			icon_state = "rods_5$$wood"
 		stool
 			recipe_id = "wood_stool"
 			craftedType = /obj/stool/wooden/constructed

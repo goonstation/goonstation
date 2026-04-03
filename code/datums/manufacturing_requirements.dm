@@ -311,6 +311,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		"tough",
 	)
 
+/datum/manufacturing_requirement/mixed/metal_or_wood_tough
+	name = "Sturdy Metal or Wood"
+	id = "metal_or_wood_dense"
+	requirement_ids = list(
+		"metal_or_wood",
+		"tough",
+	)
+
 /datum/manufacturing_requirement/mixed/metal_tough_extreme
 	name = "Extremely Tough Metal"
 	id = "metal_superdense"
