@@ -57,6 +57,7 @@
 			forensic_search(holder);
 			src.mode = FINGERPRINT_READ
 		src.update_text()
+		holder.playsound_local(src.loc, 'sound/machines/keypress.ogg', 8, 1, pitch = 2)
 
 	proc/update_text()
 		if (src.mode == FINGERPRINT_READ)
@@ -109,6 +110,7 @@
 		if(!istype(fprint))
 			return
 		var/datum/forensic_data/fingerprint/planted_print = fprint.get_copy()
+		ADD_FLAG(planted_print.flags, FORENSIC_REMOVE_CLEANING)
 		planted_print.time_start = TIME // Don't carry over the original time of the scanned fingerprint
 		planted_print.time_end = TIME
 		target.add_evidence(planted_print, FORENSIC_GROUP_FINGERPRINTS)
