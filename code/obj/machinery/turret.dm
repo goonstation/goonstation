@@ -57,7 +57,7 @@
 	if(status & BROKEN)
 		icon_state = "Turret_off"
 		var/image/turret_overlay = ClearAllOverlays()
-		turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
+		turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
 		turret_overlay.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(turret_overlay, "off_overlay")
 	else
@@ -66,13 +66,13 @@
 				if (src.lasers)
 					icon_state = "Turret_lethal"
 					var/image/turret_overlay = ClearAllOverlays()
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay", OBJ_LAYER)
+					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
 					turret_overlay.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(turret_overlay, "lethal_overlay")
 				else
 					icon_state = "Turret_stun"
 					var/image/turret_overlay = ClearAllOverlays()
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay", OBJ_LAYER)
+					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
 					turret_overlay.plane = PLANE_SELFILLUM
 					turret_overlay.alpha = 128
 					src.UpdateOverlays(turret_overlay, "stun_overlay")
@@ -80,7 +80,7 @@
 			else
 				icon_state = "Turret_off"
 				var/image/turret_overlay = ClearAllOverlays()
-				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
+				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
 				turret_overlay.plane = PLANE_SELFILLUM
 				src.UpdateOverlays(turret_overlay, "off_overlay")
 			status &= ~NOPOWER
@@ -194,23 +194,23 @@
 			var/image/turret_overlay = ClearAllOverlays()
 			SPAWN(1.4 SECONDS)
 				if(status & BROKEN)
-					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
+					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
 					turret_overlay.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(turret_overlay, "off_overlay")
 				else
 					if( powered() )
 						if (src.enabled)
 							if (src.lasers)
-								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay", OBJ_LAYER)
+								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
 								turret_overlay.plane = PLANE_SELFILLUM
 								src.UpdateOverlays(turret_overlay, "lethal_overlay")
 							else
-								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay", OBJ_LAYER)
+								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
 								turret_overlay.plane = PLANE_SELFILLUM
 								turret_overlay.alpha = 128
 								src.UpdateOverlays(turret_overlay, "stun_overlay")
 						else
-							turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay", OBJ_LAYER)
+							turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
 							turret_overlay.plane = PLANE_SELFILLUM
 							src.UpdateOverlays(turret_overlay, "off_overlay")
 		SPAWN(1 SECOND)
@@ -298,13 +298,26 @@
 	src.health = 0
 	src.set_density(0)
 	src.status |= BROKEN
-	src.icon_state = "destroyed_target_prism"
-	if (cover!=null)
-		qdel(cover)
-	sleep(0.3 SECONDS)
-	FLICK("explosion", src)
-	SPAWN(1.3 SECONDS)
-		qdel(src)
+	var/image/turret_overlay
+	turret_overlay = ClearAllOverlays()
+	turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "explosion_overlay")
+	turret_overlay.plane = PLANE_SELFILLUM
+	src.UpdateOverlays(turret_overlay, "explosion_overlay")
+	turret_overlay.plane = PLANE_SELFILLUM
+	var/image/turret_smoke_overlay
+	turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay")
+	src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay")
+	SPAWN(1.1 SECONDS)
+		src.icon_state = "Turret_destroyed"
+		SPAWN(0.6 SECONDS)
+			turret_overlay = ClearSpecificOverlays()
+			src.UpdateOverlays(null, "explosion_overlay")
+			turret_smoke_overlay = ClearSpecificOverlays()
+			src.UpdateOverlays(null, "smoke_overlay")
+			if (cover!=null)
+				qdel(cover)
+			SPAWN(1.3 SECONDS)
+				qdel(src)
 
 /*
  *	Network turret, a turret controlled over the wire network instead of a turretid
