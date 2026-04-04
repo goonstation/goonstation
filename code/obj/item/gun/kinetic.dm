@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src)
+							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -204,7 +204,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src)
+							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -215,9 +215,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				FLICK(flick_state, src)
 
-		if(..() && user.traction != TRACTION_FULL)
+		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
 			user.inertia_dir = get_dir_accurate(target, user)
-			user.inertia_value = 1
 			step(user, user.inertia_dir) // Propel user in opposite direction
 
 	proc/eject_magazine(mob/user)
@@ -269,7 +268,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
 				while (src.casings_to_eject > 0)
-					new src.current_projectile.casing(T, src)
+					new src.current_projectile.casing(T, src.forensic_ID)
 					src.casings_to_eject--
 		return
 
@@ -382,8 +381,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
 	burn_possible = FALSE
-	tooltip_flags = REBUILD_USER
-	var/fired_by = null // The name of the gun that fired this casing, e.g. "SPES-12". If not null can be identified by anyone with Forensic Training
 
 	small
 		icon_state = "small"
@@ -477,21 +474,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
-/obj/item/casing/New(loc, obj/item/gun/firearm)
+/obj/item/casing/New(loc, forensic_ID)
 	. = ..()
 	src.pixel_y += rand(-12,12)
 	src.pixel_x += rand(-12,12)
 	src.set_dir(pick(alldirs))
-	if(firearm)
-		src.forensic_ID = firearm.forensic_ID
-		//Only include the default name of the gun, some special names set randomly in new are confusing and labels shouldnt be readable
-		src.fired_by = initial(firearm.name)
-
-/obj/item/casing/get_desc(dist, mob/user)
-	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(src.fired_by && istype(H) && H.traitHolder.hasTrait("training_forensic"))
-		. += SPAN_NOTICE("<br>Your forensic intuition tells you it was fired by \an [src.fired_by].")
+	src.forensic_ID = forensic_ID
 
 //no caliber and ALL
 /obj/item/gun/kinetic/vgun
@@ -1769,6 +1757,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_REVOLVER_45)
 	spread_angle = 1
 	max_ammo_capacity = 7
+	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/c_45
 	recoil_strength = 11
 
@@ -1887,7 +1876,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		return 1
 
 	engineer
-		name = "SPES-6"
 		ammobag_magazines = list(/obj/item/ammo/bullets/a12/weak, /obj/item/ammo/bullets/a12)
 		New()
 			..()
@@ -3558,10 +3546,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
 		if (prob(25))
 			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
-		else if (prob(1))
-			desc = "Actually the Fulmar 1881 can't be called a true coach gun if it's sawn off, that would by definition make it a sawn-off. Meh, semantics."
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/abg/punchy)
+		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
 
 	birdshot
