@@ -3159,9 +3159,7 @@
 	})
 "nj" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access_txt = "777"
-	},
+/obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
 	dir = 4;
@@ -4133,8 +4131,7 @@
 "qQ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	name = "Compartment Access";
-	req_access_txt = ""
+	name = "Compartment Access"
 	},
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
@@ -4485,8 +4482,7 @@
 	})
 "sr" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Compartment Access";
-	req_access_txt = ""
+	name = "Compartment Access"
 	},
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
@@ -7593,8 +7589,7 @@
 "Fg" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	name = "Compartment Access";
-	req_access_txt = ""
+	name = "Compartment Access"
 	},
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
@@ -9828,9 +9823,7 @@
 	})
 "Oe" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access_txt = "777"
-	},
+/obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
 	dir = 4;
@@ -10567,9 +10560,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "RA" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access_txt = "777"
-	},
+/obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/carpet/grime,
 /area/solarium{

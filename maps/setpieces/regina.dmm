@@ -458,9 +458,9 @@
 /area/regina)
 "iV" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = "12"
+	dir = 4
 	},
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/airless/grey/blackgrime,
 /area/regina)
 "jc" = (
@@ -2343,8 +2343,7 @@
 /area/space)
 "Tq" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Atmospheric Processing";
-	req_access_txt = ""
+	name = "Atmospheric Processing"
 	},
 /turf/unsimulated/floor/plating,
 /area/regina)

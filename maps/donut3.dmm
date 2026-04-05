@@ -14538,9 +14538,7 @@
 /area/station/hallway/primary/east)
 "evq" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 4;
-	name = "Crematorium";
-	req_access_txt = "22"
+	dir = 4
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/chapel_office,
@@ -25135,9 +25133,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro{
-	dir = 4;
-	name = "Crematorium";
-	req_access_txt = "22"
+	dir = 4
 	},
 /obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/sanitary,
@@ -36536,9 +36532,7 @@
 	},
 /area/station/hallway/primary/east)
 "lue" = (
-/obj/storage/secure/closet/fridge/pathology{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/fridge/pathology,
 /obj/item/reagent_containers/food/snacks/yuck{
 	desc = "Oh, that's not very nice...";
 	name = "\proper Pathology's Hopes and Dreams"
@@ -42637,8 +42631,7 @@
 /area/station/crew_quarters/stockex)
 "nmU" = (
 /obj/machinery/door/airlock/pyro{
-	name = "Catering Storage";
-	req_access_txt = "22"
+	name = "Catering Storage"
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
@@ -43574,8 +43567,7 @@
 /area/station/medical/medbay/treatment)
 "nCj" = (
 /obj/machinery/door/airlock/pyro{
-	name = "Catering Storage";
-	req_access_txt = "22"
+	name = "Catering Storage"
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
@@ -48105,7 +48097,7 @@
 /area/station/maintenance/outer/ne)
 "oWs" = (
 /obj/decal/poster/wallsign/danger_highvolt,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow/sturdy,
 /area/station/engine/inner)
 "oWB" = (
 /obj/mesh/catwalk,
@@ -51795,7 +51787,7 @@
 	pixel_x = -9;
 	pixel_y = 5
 	},
-/obj/item/disk/data/fixed_disk{
+/obj/item/disk/data/fixed_disk/hd64{
 	pixel_x = 14;
 	pixel_y = 4
 	},
@@ -57371,7 +57363,10 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/random_item_spawner/desk_stuff/four,
+/obj/machinery/shredder{
+	pixel_y = 10;
+	pixel_x = 3
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "rPs" = (
@@ -60854,8 +60849,7 @@
 /area/station/hangar/main)
 "sUh" = (
 /obj/machinery/door/airlock/pyro/classic{
-	name = "Crusher";
-	req_access_txt = "12"
+	name = "Crusher"
 	},
 /obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,

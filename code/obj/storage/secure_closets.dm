@@ -275,6 +275,7 @@
 	name = "\improper Medical Director's locker"
 	req_access = list(access_medical_director)
 	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/ai,
+	/obj/item/disk/data/floppy/manudrive/gene_booth,
 	/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,

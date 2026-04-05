@@ -21652,7 +21652,7 @@
 /obj/item/peripheral/printer,
 /obj/item/peripheral/network/radio/locked,
 /obj/item/peripheral/drive/cart_reader,
-/obj/item/disk/data/fixed_disk,
+/obj/item/disk/data/fixed_disk/hd64,
 /obj/item/disk/data/cartridge/diagnostics{
 	pixel_x = 4;
 	pixel_y = -2
@@ -23132,7 +23132,7 @@
 	pixel_x = -8;
 	pixel_y = 9
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/science/artifact)
 "liX" = (
 /obj/disposalpipe/segment/mail,
@@ -38893,11 +38893,9 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/refinery)
 "wwT" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = 4
+/obj/machinery/shredder{
+	pixel_x = 5;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge/customs)
@@ -39756,12 +39754,6 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"xcV" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "xdb" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -74708,7 +74700,7 @@ yie
 yie
 yie
 abJ
-xcV
+xkb
 xkb
 xkb
 abJ

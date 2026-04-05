@@ -140,10 +140,13 @@ var/global/deathConfettiActive = 1
 var/global/deathConfettiActive = 0
 #endif
 
-/mob/proc/deathConfetti()
+/mob/proc/deathConfetti(muffled = FALSE)
 	particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.loc))
 	SPAWN(1 SECOND)
-		playsound(src.loc, 'sound/voice/yayyy.ogg', 50, 1)
+		if (muffled)
+			playsound(src.loc, 'sound/voice/yayyy.ogg', 25, 1, flags = SOUND_DO_LOS)
+		else
+			playsound(src.loc, 'sound/voice/yayyy.ogg', 50, 1)
 
 /client/proc/toggle_death_confetti()
 	set popup_menu = 0

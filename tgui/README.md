@@ -32,10 +32,10 @@ This project uses React. Take your time to read the guide:
 
 You will need these programs to start developing in tgui:
 
-- [Node v**22**.11+](https://nodejs.org/en/download/)
+- [Node LTS v**24**.14+](https://nodejs.org/en/download/)
   - Using either the prebuilt installer or a package manager works.
   - If you're confused, click the green 'Windows Installer' button.
-  - **LTS v22** release is recommended instead of latest, as well as the x64 arch.
+  - **LTS** release is recommended instead of latest, as well as the x64 arch.
   - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v4.9.2+](https://yarnpkg.com/getting-started/install) (optional)
   - Yarn is normally installed with corepack.
@@ -178,7 +178,7 @@ See: [Component Reference](docs/component-reference.md).
 
 ## FontAwesome Icon
 
-For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v7/search?ip=classic&ic=free&o=r)
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/search?ip=classic&ic=free-collection)
 
 For additional font styles you can use, see the [FontAwesome Docs](https://fontawesome.com/v7/docs/web/style/style-cheatsheet#contentHeader)
 

@@ -541,7 +541,8 @@
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
 	/obj/item/item_box/postit,
-	/obj/item/staple_gun/red)
+	/obj/item/staple_gun/red,
+	/obj/item/reagent_containers/applicator/glue)
 
 	one
 		amt2spawn = 1

@@ -28,7 +28,6 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 	health_brute_vuln = 0.45
 	health_burn = 50
 	health_burn_vuln = 0.65
-	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
 	var/mob/living/intangible/wraith/master = null
 

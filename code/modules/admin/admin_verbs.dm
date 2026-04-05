@@ -1028,7 +1028,7 @@ var/list/fun_images = list()
 
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	boutput(src, O.get_adminprints())
+	boutput(src, replacetext(replacetext(O.get_adminprints(), "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
 /client/proc/respawn_cinematic()
 	set name = "Respawn Cinematic"
@@ -1833,25 +1833,30 @@ var/list/fun_images = list()
 /// Send an alert to all ghosts to observe a thing with a given message
 proc/alert_all_ghosts(atom/target, message)
 	for(var/client/C)
-		if (isdead(C.mob) && !istype(C.mob, /mob/dead/target_observer/slasher_ghost))
-			SPAWN(0)
-				C.mob.playsound_local(C.mob, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
-				if(tgui_alert(C.mob, message, "Ghost Notification", list("Observe", "No"), 30 SECONDS, FALSE) == "Observe")
-					var/mob/dead/M = C.mob
-					if(ismob(target) || isobj(target))
-						if (istype(M, /mob/dead/observer))
-							var/mob/dead/observer/O = M
-							O.insert_observer(target)
-						else if (istype(M, /mob/dead/target_observer))
-							var/mob/dead/target_observer/TO = M
-							TO.set_observe_target(target)
-					else if(isturf(target))
-						if (istype(M, /mob/dead/observer))
-							var/mob/dead/observer/O = M
-							O.set_loc(target)
-						else if (istype(M, /mob/dead/target_observer))
-							var/mob/dead/target_observer/TO = M
-							TO.ghostjump(target.x, target.y, target.z)
+		if(!isdead(C.mob))
+			continue
+		// Not all target observers are real dead ghosts. Hivemind, Mentor mouse, etc.
+		var/mob/dead/target_observer/target_observer = C.mob
+		if(istype(target_observer) && !target_observer.is_respawnable)
+			continue
+		SPAWN(0)
+			C.mob.playsound_local(C.mob, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+			if(tgui_alert(C.mob, message, "Ghost Notification", list("Observe", "No"), 30 SECONDS, FALSE) == "Observe")
+				var/mob/dead/M = C.mob
+				if(ismob(target) || isobj(target))
+					if (istype(M, /mob/dead/observer))
+						var/mob/dead/observer/O = M
+						O.insert_observer(target)
+					else if (istype(M, /mob/dead/target_observer))
+						var/mob/dead/target_observer/TO = M
+						TO.set_observe_target(target)
+				else if(isturf(target))
+					if (istype(M, /mob/dead/observer))
+						var/mob/dead/observer/O = M
+						O.set_loc(target)
+					else if (istype(M, /mob/dead/target_observer))
+						var/mob/dead/target_observer/TO = M
+						TO.ghostjump(target.x, target.y, target.z)
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts()

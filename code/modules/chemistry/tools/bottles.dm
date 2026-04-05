@@ -64,6 +64,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
 
+/obj/item/reagent_containers/glass/bottle/acetylsalicylic_acid
+	name = "bottle (acetylsalicylic acid)"
+	desc = "A small bottle containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "acetylsalicylic_acid"
+
 /obj/item/reagent_containers/glass/bottle/insulin
 	name = "bottle (insulin)"
 	desc = "A small bottle of insulin, for treating hyperglycaemic shock."

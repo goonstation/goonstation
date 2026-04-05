@@ -499,8 +499,7 @@
 "ahJ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Security";
-	req_access_txt = "1"
+	name = "Security"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
@@ -13151,7 +13150,7 @@
 /obj/item/disk/data/floppy/read_only/medical_progs,
 /obj/item/disk/data/floppy/read_only/network_progs,
 /obj/item/disk/data/floppy/computer3boot,
-/obj/item/disk/data/fixed_disk,
+/obj/item/disk/data/fixed_disk/hd64,
 /obj/item/disk/data/floppy/read_only/security_progs,
 /turf/simulated/floor/grey,
 /area/station/storage/tech)
@@ -21729,11 +21728,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "jIX" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Armory";
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -21741,7 +21735,10 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "jJa" = (
@@ -36857,15 +36854,14 @@
 "qDP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Locker Room";
-	req_access_txt = "1"
+	name = "Locker Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/sec_lockers,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/secoffquarters)
 "qEb" = (
@@ -44615,8 +44611,7 @@
 "uoT" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Security";
-	req_access_txt = "1"
+	name = "Security"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
@@ -50670,8 +50665,7 @@
 "wXN" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Security";
-	req_access_txt = "1"
+	name = "Security"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
@@ -52946,6 +52940,12 @@
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
 	},
+/obj/item/storage/box/trackimp_kit{
+	pixel_y = 6
+	},
+/obj/item/storage/box/PDAbox{
+	pixel_y = -5
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "xZx" = (
@@ -53053,11 +53053,8 @@
 /area/station/maintenance/solar/north)
 "ybM" = (
 /obj/table/glass/auto,
-/obj/item/storage/box/trackimp_kit{
-	pixel_y = 6
-	},
-/obj/item/storage/box/PDAbox{
-	pixel_y = -5
+/obj/machinery/shredder{
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/ne,
 /area/station/bridge)

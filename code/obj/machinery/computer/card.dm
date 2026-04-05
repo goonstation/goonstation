@@ -10,10 +10,7 @@
 	var/obj/item/card/id/scan = null
 	var/obj/item/card/id/modify = null
 	var/obj/item/eject = null //Overrides modify slot set_loc. sometimes we want to eject something that's not a card. like an implant!
-	var/authenticated = 0
-	var/mode = 0
 	var/printing = null
-	var/list/scan_access = null
 	var/list/custom_names = list("Custom 1", "Custom 2", "Custom 3")
 	var/custom_access_list = list(list(),list(),list())
 	var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
@@ -222,22 +219,22 @@
 					command_jobs = null
 
 		.["standard_jobs"] = list(
-			list(name = "Civilian", color = "civilian", jobs = civilian_jobs, style="civilian"),
-			list(name = "Engineering and Supply", color = "engineering", jobs = engineering_jobs, style="engineering"),
-			list(name = "Research", color = "research", jobs = research_jobs, style="research"),
-			list(name = "Medical", color = "medical", jobs = medical_jobs, style="medical"),
-			list(name = "Security", color = "security", jobs = security_jobs, style="security"),
-			list(name = "Command", color = "command", jobs = command_jobs, style="command"),
+			list(name = "Command", color = /datum/job/command::ui_colour, jobs = command_jobs, style="command"),
+			list(name = "Security", color = /datum/job/security::ui_colour, jobs = security_jobs, style="security"),
+			list(name = "Research", color = /datum/job/research::ui_colour, jobs = research_jobs, style="research"),
+			list(name = "Medical", color = /datum/job/medical::ui_colour, jobs = medical_jobs, style="medical"),
+			list(name = "Engineering and Supply", color = /datum/job/engineering::ui_colour, jobs = engineering_jobs, style="engineering"),
+			list(name = "Civilian", color = /datum/job/civilian::ui_colour, jobs = civilian_jobs, style="civilian"),
 		)
 
 		.["accesses_by_area"] = list(
-			list(name = "Civilian", color = "civilian", accesses = civilian_access),
-			list(name = "Engineering", color = "engineering", accesses = engineering_access),
-			list(name = "Supply", color = "engineering", accesses = supply_access),
-			list(name = "Science", color = "research", accesses = research_access),
-			list(name = "Medical", color = "medical", accesses = medical_access),
-			list(name = "Security", color = "security", accesses = security_access),
-			list(name = "Command", color = "command", accesses = command_access),
+			list(name = "Command", color = /datum/job/command::ui_colour, accesses = command_access),
+			list(name = "Security", color = /datum/job/security::ui_colour, accesses = security_access),
+			list(name = "Science", color = /datum/job/research::ui_colour, accesses = research_access),
+			list(name = "Medical", color = /datum/job/medical::ui_colour, accesses = medical_access),
+			list(name = "Engineering", color = /datum/job/engineering::ui_colour, accesses = engineering_access),
+			list(name = "Supply", color = /datum/job/engineering::ui_colour, accesses = supply_access),
+			list(name = "Civilian", color = /datum/job/civilian::ui_colour, accesses = civilian_access),
 		)
 
 		.["icons"] = list(
@@ -252,54 +249,29 @@
 
 	ui_data(mob/user)
 		. = list()
+		.["manifest"] = get_manifest()
+		.["authenticated"] = src.check_access(src.scan)
+		var/target_name
 
-		if (src.mode) // accessing crew manifest
-			.["mode"] = "manifest"
-			.["manifest"] = get_manifest()
-		else
-			var/target_name
-			var/target_owner
-			var/target_rank
+		if(src.modify)
+			target_name = src.modify.name
 
-			if(src.modify)
-				target_name = src.modify.name
+		if (src.eject)
+			target_name = src.eject.name
 
-			if(src.modify && src.modify.registered)
-				target_owner = src.modify.registered
+		.["target_name"] = target_name
+		.["target_owner"] = src.modify?.registered
+		.["target_rank"] = src.modify?.assignment || "Unassigned"
+		.["scan_name"] = src.scan?.name
 
-			if(src.modify && src.modify.assignment)
-				target_rank = src.modify.assignment
-			else
-				target_rank = "Unassigned"
-
-			if (src.eject)
-				target_name = src.eject.name
-
-			.["target_name"] = target_name
-			.["target_owner"] = target_owner
-			.["target_rank"] = target_rank
-
-			var/scan_name
-			if(src.scan)
-				scan_name = src.scan.name
-
-			.["scan_name"] = scan_name
-
-			//When both IDs are inserted
-			if (src.authenticated && src.modify)
-				.["mode"] = "authenticated"
-				.["pronouns"] = src.modify.pronouns?.name
-
-				.["custom_names"] = custom_names
-
-				.["target_card_look"] = src.modify.icon_state
-
-				.["target_accesses"] = src.modify.access
-				if(!isobserver(user))
-					user.unlock_medal("Identity Theft", 1)
-
-			else
-				.["mode"] = "unauthenticated"
+		//When both IDs are inserted
+		if (src.modify)
+			.["pronouns"] = src.modify.pronouns?.name
+			.["custom_names"] = custom_names
+			.["target_card_look"] = src.modify.icon_state
+			.["target_accesses"] = src.modify.access
+			if(!isobserver(user))
+				user.unlock_medal("Identity Theft", 1)
 
 	proc/access_data(var/A)
 		. = list(list(
@@ -368,10 +340,6 @@
 							src.modify = I
 					if (I && !src.modify)
 						boutput(usr, SPAN_NOTICE("[I] won't fit in the modify slot."))
-				src.authenticated = 0
-				src.scan_access = null
-
-				try_authenticate()
 			if ("scan")
 				if (src.scan)
 					usr.put_in_hand_or_eject(src.scan)
@@ -391,12 +359,9 @@
 							src.modify = I
 					else
 						boutput(usr, SPAN_NOTICE("[I] won't fit in the authentication slot."))
-				src.authenticated = 0
-				src.scan_access = null
 
-				try_authenticate()
 			if("access")
-				if(src.authenticated)
+				if(src.check_access(src.scan))
 					var/access_type = text2num_safe(params["access"])
 					var/access_allowed = text2num_safe(params["allowed"])
 					if(access_type in get_all_accesses())
@@ -408,7 +373,7 @@
 						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the [what_is_changing] (<b>[src.modify.registered]</b>) using [src.scan.registered]'s ID.")
 
 			if ("pronouns")
-				if (src.authenticated && src.modify)
+				if (src.check_access(src.scan) && src.modify)
 					if(params["pronouns"] == "next")
 						if(src.modify?.pronouns)
 							src.modify.pronouns = src.modify.pronouns.next_pronouns()
@@ -418,12 +383,12 @@
 						src.modify.pronouns = null
 
 			if ("assign")
-				if (src.authenticated && src.modify)
+				if (src.check_access(src.scan) && src.modify)
 					var/t1 = params["assign"]
 
 					if (t1 == "Custom Assignment")
 						t1 = tgui_input_text(usr, "Enter a custom job assignment.", "Assignment")
-						if(!src.modify || !src.authenticated)
+						if(!src.modify || !src.check_access(src.scan))
 							return
 						t1 = strip_html(t1, 100, 1)
 						logTheThing(LOG_STATION, usr, "changes the assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
@@ -437,7 +402,7 @@
 						logTheThing(LOG_STATION, usr, "changes the access and assignment on the [what_is_changing] (<b>[src.modify.registered]</b>) to <b>[t1]</b>.[!success ? " But [src.type] could not grant all the requested accesses." : ""]")
 
 					//Wire: This possibly happens after the input() above, so we re-do the initial checks
-					if (src.authenticated && src.modify)
+					if (src.check_access(src.scan) && src.modify)
 						src.modify.assignment = t1
 
 					if (params["style"])
@@ -446,13 +411,13 @@
 					src.modify.update_name()
 
 			if ("reg")
-				if (src.authenticated)
+				if (src.check_access(src.scan))
 					var/t2 = src.modify
 
 					var/t1 = tgui_input_text(usr, "What name?", "ID computer")
 					t1 = strip_html(t1, 100, 1)
 
-					if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
+					if ((src.check_access(src.scan) && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
 						logTheThing(LOG_STATION, usr, "changes the registered name on the [what_is_changing]  from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 						src.modify.registered = t1
 
@@ -461,17 +426,14 @@
 						playsound(src.loc, "keyboard", 50, 1, -15)
 
 			if ("pin")
-				if (src.authenticated)
+				if (src.check_access(src.scan))
 					var/currentcard = src.modify
 
 					var/newpin = tgui_input_pin(usr, "Enter a new PIN between [PIN_MIN] and [PIN_MAX].", "ID Computer", null, PIN_MAX, PIN_MIN)
-					if (newpin && (src.authenticated && src.modify == currentcard && (in_interact_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
+					if (newpin && (src.check_access(src.scan) && src.modify == currentcard && (in_interact_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
 						logTheThing(LOG_STATION, usr, "changes the pin on the [what_is_changing] (<b>[src.modify.registered]</b>) to [src.modify.pin].")
 						src.modify.pin = newpin
 						playsound(src.loc, "keyboard", 50, 1, -15)
-
-			if ("mode")
-				src.mode = text2num_safe(params["mode"])
 			if ("print")
 				if (!( src.printing ))
 					src.printing = 1
@@ -484,10 +446,6 @@
 					P.info = t1
 					P.name = "paper- 'Crew Manifest'"
 					src.printing = null
-			if ("mode")
-				src.authenticated = 0
-				src.scan_access = null
-				src.mode = text2num_safe(params["mode"])
 			if ("style")
 				update_card_style(params["style"])
 			if ("save")
@@ -554,12 +512,6 @@
 				continue
 		src.modify.access = access_list
 
-	proc/try_authenticate()
-		if ((!( src.authenticated ) && (src.scan || ((issilicon(usr) || isAI(usr)) && !isghostdrone(usr))) && (src.modify || src.mode)))
-			if (src.check_access(src.scan))
-				src.authenticated = 1
-				src.scan_access = src.scan.access
-
 /obj/machinery/computer/card/attack_hand(var/mob/user)
 	if(..())
 		return
@@ -591,8 +543,6 @@
 			else
 				I.set_loc(src)
 			src.modify = I
-
-		try_authenticate()
 		tgui_process.update_uis(src)
 
 		return

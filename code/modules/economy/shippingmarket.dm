@@ -55,7 +55,9 @@
 	var/artifacts_on_the_way = FALSE
 	var/static/launch_distance = 0
 
-	///List of pending crates (used only for transception antenna, nadir cargo system)
+	var/cargo_shipping_method = SHIPPING_METHOD_EDGE_FLING
+
+	///List of pending crates (used for transception cargo system)
 	var/list/pending_crates = list()
 
 	New()
@@ -651,72 +653,65 @@
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-	//NADIR: Transception antenna cargo I/O
-#ifdef MAP_OVERRIDE_NADIR
 	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
+		switch (src.cargo_shipping_method)
+			if (SHIPPING_METHOD_EDGE_FLING)
+				var/turf/spawnpoint
+				for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
+					spawnpoint = T
+					break
 
-		if(force)
-			var/obj/machinery/transception_pad/toRecv = pick(by_type[/obj/machinery/transception_pad])
-			var/turf/T = get_turf(toRecv) || get_turf(pick_landmark(LANDMARK_LATEJOIN)) //AAAAA
-			shipped_thing.set_loc(T)
-			if(get_turf(toRecv))
-				showswirl(get_turf(toRecv))
+				var/turf/target
+				for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
+					target = T
+					break
 
+				if (!spawnpoint)
+					if(force)
+						shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
+					logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
+					return
 
+				if (!target)
+					if(force)
+						shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
+					logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
+					return
 
-		else
-			pending_crates.Add(shipped_thing)
+				shipped_thing.set_loc(spawnpoint)
 
-			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
-			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+				var/datum/signal/pdaSignal = get_free_signal()
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
+				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-#else
-	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
+				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
+					if (P.id == "qm_dock")
+						playsound(P.loc, 'sound/machines/bellalert.ogg', 50, 0)
+						SPAWN(SUPPLY_OPEN_TIME)
+							if (P?.density)
+								P.open()
+						SPAWN(SUPPLY_CLOSE_TIME)
+							if (P && !P.density)
+								P.close()
 
-		var/turf/spawnpoint
-		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
-			spawnpoint = T
-			break
+				if (global.map_currently_underwater || global.is_map_on_ground_terrain)
+					shipped_thing.throw_at(target, src.launch_distance, 1)
+				else
+					shipped_thing.throw_at(target, 1, 1)
 
-		var/turf/target
-		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
-			target = T
-			break
+			if (SHIPPING_METHOD_TRANSCEPTION)
+				if(force)
+					var/obj/machinery/transception_pad/toRecv = pick(by_type[/obj/machinery/transception_pad])
+					var/turf/T = get_turf(toRecv) || get_turf(pick_landmark(LANDMARK_LATEJOIN)) //AAAAA
+					shipped_thing.set_loc(T)
+					if(get_turf(toRecv))
+						showswirl(get_turf(toRecv))
+				else
+					pending_crates.Add(shipped_thing)
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-		if (!spawnpoint)
-			if(force)
-				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
-			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
-			return
-
-		if (!target)
-			if(force)
-				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
-			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
-			return
-
-		shipped_thing.set_loc(spawnpoint)
-
-		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
-
-		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
-			if (P.id == "qm_dock")
-				playsound(P.loc, 'sound/machines/bellalert.ogg', 50, 0)
-				SPAWN(SUPPLY_OPEN_TIME)
-					if (P?.density)
-						P.open()
-				SPAWN(SUPPLY_CLOSE_TIME)
-					if (P && !P.density)
-						P.close()
-
-		if (global.map_currently_underwater || global.is_map_on_ground_terrain)
-			shipped_thing.throw_at(target, src.launch_distance, 1)
-		else
-			shipped_thing.throw_at(target, 1, 1)
-#endif
 
 	proc/get_path_to_market()
 		var/list/bounds = list()

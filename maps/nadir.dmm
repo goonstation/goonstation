@@ -24541,12 +24541,12 @@
 /area/station/chapel/sanctuary)
 "kEo" = (
 /obj/table/reinforced/auto,
-/obj/item/device/radio/intercom{
-	pixel_x = 1
-	},
 /obj/item/toy/judge_gavel{
 	pixel_x = -18;
 	pixel_y = 3
+	},
+/obj/machinery/shredder{
+	pixel_y = 12
 	},
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -31379,6 +31379,9 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
+/obj/item/device/radio/intercom{
+	dir = 4
+	},
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/courtroom)
 "nBD" = (
@@ -36924,7 +36927,7 @@
 /area/station/communications/centre)
 "qcm" = (
 /obj/table/auto,
-/obj/item/disk/data/fixed_disk{
+/obj/item/disk/data/fixed_disk/hd64{
 	pixel_y = 9
 	},
 /obj/item/disk/data/floppy/read_only/security_progs{

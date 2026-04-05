@@ -94,17 +94,18 @@
 		if (istype(src, /obj/machinery/disposal/mail)) FLICK("[src.icon_state]-flush", src)
 		else FLICK("disposal-flush", src)
 
-		ZERO_GASES(air_contents)
-
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
-
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
 		H.mail_tag = src.destination_tag
+		H.vent_on_exit = FALSE
+
+		ZERO_GASES(air_contents)
+
+		sleep(1 SECOND)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 		H.start(src) // start the holder processing movement
 		flushing = FALSE

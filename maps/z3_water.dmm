@@ -3824,8 +3824,7 @@
 /area/cult_base/leader)
 "xX" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = "12"
+	dir = 4
 	},
 /obj/mapping_helper/airlock/welder,
 /obj/mapping_helper/airlock/bolter,
@@ -4301,8 +4300,7 @@
 /area/cult_base/leader)
 "Hf" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = "12"
+	dir = 4
 	},
 /obj/mapping_helper/airlock/welder,
 /turf/unsimulated/floor/grime,

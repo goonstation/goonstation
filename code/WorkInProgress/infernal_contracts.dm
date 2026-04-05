@@ -406,7 +406,9 @@ END GUIDE
 		if (isdiabolical(user))
 			boutput(user, SPAN_NOTICE("You can't sell your soul to yourself!"))
 			return 0
-		src.visible_message(SPAN_ALERT("<b>[user] signs [his_or_her(user)] name in blood upon [src]!</b>"))
+		boutput(user, SPAN_ALERT(SPAN_BOLD("The pen stabs into your hand as you start to sign, your blood trickling down onto the page.")))
+		src.visible_message(SPAN_ALERT("<b>[user] signs [his_or_her(user)] name in [his_or_her(user)] own blood upon [src]!</b>"))
+		take_bleeding_damage(user, user, 4, DAMAGE_STAB, TRUE)
 		logTheThing(LOG_ADMIN, user, "signed a [src.type] contract at [log_loc(user)]!")
 		. = user.sell_soul(100, 0, 1)
 		if(!.)

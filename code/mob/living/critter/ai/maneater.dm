@@ -10,7 +10,7 @@
 
 /datum/aiTask/prioritizer/critter/maneater/New()
 	..()
-	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive/melee, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/manhunter_hunting, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/scavenge/manhunter_scavenging, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/eat, list(holder, src))
