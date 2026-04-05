@@ -23,6 +23,8 @@
 	var/datum/projectile/lethal = new/datum/projectile/laser/heavy/law_safe
 	var/datum/projectile/stun = new/datum/projectile/energy_bolt/robust
 	var/list/mob/target_list = null
+	var/image/turret_overlay = null
+	var/image/turret_smoke_overlay = null
 
 /obj/machinery/turretcover
 	name = "pop-up turret cover"
@@ -65,13 +67,13 @@
 			if (src.enabled)
 				if (src.lasers)
 					icon_state = "Turret_lethal"
-					var/image/turret_overlay = ClearAllOverlays()
+					turret_overlay = ClearAllOverlays()
 					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
 					turret_overlay.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(turret_overlay, "lethal_overlay")
 				else
 					icon_state = "Turret_stun"
-					var/image/turret_overlay = ClearAllOverlays()
+					turret_overlay = ClearAllOverlays()
 					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
 					turret_overlay.plane = PLANE_SELFILLUM
 					turret_overlay.alpha = 128
@@ -79,7 +81,7 @@
 
 			else
 				icon_state = "Turret_off"
-				var/image/turret_overlay = ClearAllOverlays()
+				turret_overlay = ClearAllOverlays()
 				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
 				turret_overlay.plane = PLANE_SELFILLUM
 				src.UpdateOverlays(turret_overlay, "off_overlay")
@@ -87,7 +89,7 @@
 		else
 			SPAWN(rand(0, 15))
 				src.icon_state = "Turret_nopower"
-				var/image/turret_overlay = ClearAllOverlays()
+				turret_overlay = ClearAllOverlays()
 				src.UpdateOverlays(turret_overlay)
 				status |= NOPOWER
 
@@ -191,7 +193,7 @@
 		if (src.cover!=null)
 			FLICK("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
-			var/image/turret_overlay = ClearAllOverlays()
+			turret_overlay = ClearAllOverlays()
 			SPAWN(1.4 SECONDS)
 				if(status & BROKEN)
 					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
@@ -225,8 +227,7 @@
 		if (src.cover!=null)
 			FLICK("popdown", src.cover)
 			src.cover.icon_state = "TurretCover"
-			var/image/turret_overlay = ClearAllOverlays()
-			src.UpdateOverlays(turret_overlay)
+			turret_overlay = ClearAllOverlays()
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
 				invisibility = INVIS_ALWAYS
@@ -298,26 +299,26 @@
 	src.health = 0
 	src.set_density(0)
 	src.status |= BROKEN
-	var/image/turret_overlay
 	turret_overlay = ClearAllOverlays()
 	turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "explosion_overlay")
 	turret_overlay.plane = PLANE_SELFILLUM
 	src.UpdateOverlays(turret_overlay, "explosion_overlay")
-	turret_overlay.plane = PLANE_SELFILLUM
-	var/image/turret_smoke_overlay
-	turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay")
-	src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay")
+	src.icon_state = "Turret_nopower" //otherwise it doesn't want to work
+	SPAWN(0.2 SECONDS)
+		turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay_1")
+		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay_1")
 	SPAWN(1.1 SECONDS)
-		src.icon_state = "Turret_destroyed"
+		turret_overlay = ClearAllOverlays()
+		turret_smoke_overlay = ClearAllOverlays()
+		turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay_2")
+		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay_2")
+		src.icon_state = "Turret_destroyed" //same deal here
 		SPAWN(0.6 SECONDS)
-			turret_overlay = ClearSpecificOverlays()
-			src.UpdateOverlays(null, "explosion_overlay")
-			turret_smoke_overlay = ClearSpecificOverlays()
-			src.UpdateOverlays(null, "smoke_overlay")
+			turret_overlay = ClearAllOverlays()
+			turret_smoke_overlay = ClearAllOverlays()
 			if (cover!=null)
 				qdel(cover)
-			SPAWN(1.3 SECONDS)
-				qdel(src)
+			qdel(src)
 
 /*
  *	Network turret, a turret controlled over the wire network instead of a turretid
