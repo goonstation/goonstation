@@ -155,7 +155,7 @@ TYPEINFO(/mob/living/critter/changeling)
 			src.icon_prefix = "robo"
 			src.UpdateIcon()
 
-		// Grant crystal snaps if the mob we (presumably) spawn from has "dactyl crystalization".
+		// Grant crystal snaps if the mob we (presumably) spawn from has "dactyl crystallization".
 		if (hivemind_owner && hivemind_owner.owner.bioHolder.HasEffect("chime_snaps"))
 			src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 
@@ -226,7 +226,7 @@ TYPEINFO(/mob/living/critter/changeling)
 
 					return message
 			if ("snap","snapfingers","fingersnap","click","clickfingers")
-				if (src.emote_check(voluntary, 3 SECONDS)) // "Dactyl crystalization" is accounted for on `New()`.
+				if (src.emote_check(voluntary, 3 SECONDS)) // "Dactyl crystallization" is accounted for on `New()`.
 					message = "The <b>[src.name]</b> snaps [his_or_her(src)] fingers."
 					playsound(src.loc, src.sound_fingersnap, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return message
