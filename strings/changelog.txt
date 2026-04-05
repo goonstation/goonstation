@@ -1,3 +1,46 @@
+
+(t)sun apr 05 26
+(u)JORJ949
+(p)26168
+(e)🆕🗺🎨⚖🧫🧛📦|C-Feature, A-Mapping, C-Sprites, C-Balance, C-Experimental, A-Gamemodes, A-Game-Objects
+(*)The syndicate listening post now contains a "syndicate codereader" which will reward 2TC the first time the authentication disk is inserted.
+(t)sat apr 04 26
+(u)Bobbis dobbis
+(p)26272
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added 11 new drawings/symbols for crayons; check the PR for more info
+(u)Bamlord
+(p)26315
+(e)|
+(+)The "Gang Crate" is no longer named the "Gang Crate".
+(t)fri apr 03 26
+(*)Mysterious plants found on terrainify planets no longer stop your heart randomly.
+(t)thu apr 02 26
+(u)Nexusuxen
+(p)26297
+(e)|
+(+)Vomiting far away with empowered Mass Emesis will now actually spawn vomit pools.
+(t)tue mar 31 26
+(u)Kubius
+(p)26188
+(e)🔄💨💡📨|C-Rework, A-Atmospherics, A-Station-Systems, A-Logistics
+(+)While in the disposal system, you can breathe the atmosphere that was used by disposal units to flush you along.
+(u)cringe
+(p)26213
+(e)🆕💊⚗💪|C-Feature, A-Medical, A-Chemistry, A-Traits
+(*)Actual acetylsalicylic acid has now been added.
+(u)TDHooligan
+(p)26219
+(e)💅⚗|C-QoL, A-Chemistry
+(+)Chemicompiler NOPs now wait until their beakers have reacted one 'tick'.
+(u)Sord
+(p)26288
+(e)🗺|A-Mapping
+(*)Neon's main hallways (and some other areas) have been expanded. Make a bug report if something seems wonky
+(u)LeahTheTech
+(p)26282
+(e)🎨|C-Sprites
+(*)Replaced the bartender's shotgun ammo with heavier slugs that do more damage and always hit grounded targets. They do not fit in automatic shotguns.
 (t)sat mar 28 26
 (u)LeahTheTech
 (+)Shredders can now shred herbs, postits, and cigarettes.

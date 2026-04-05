@@ -1532,6 +1532,9 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
 
+/obj/machinery/vending/security/owlery
+	req_access = list(access_owlerysec)
+
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"
 	desc = "A restricted vendor stocked with various riot-suppressive ammunitions."
@@ -2898,7 +2901,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	with_ammo
 		create_products(restocked)
 			..()
-			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg/punchy, 2, cost=PAY_TRADESMAN, hidden=1)
 
 TYPEINFO(/obj/machinery/vending/chem)
 	mats = null
