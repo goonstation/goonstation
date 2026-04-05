@@ -1768,6 +1768,7 @@
 #include "code\modules\networks\computer3\base_os.dm"
 #include "code\modules\networks\computer3\base_program.dm"
 #include "code\modules\networks\computer3\buildandrepair.dm"
+#include "code\modules\networks\computer3\codereader.dm"
 #include "code\modules\networks\computer3\comm_dish.dm"
 #include "code\modules\networks\computer3\communication.dm"
 #include "code\modules\networks\computer3\computer3.dm"

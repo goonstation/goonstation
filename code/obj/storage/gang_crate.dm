@@ -119,6 +119,7 @@
 		..()
 		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		src.light = image('icons/obj/large_storage.dmi',"gangcratefulllight")
+		src.name = pick(list("Legitimate Business Crate", "Legal Supply Crate", "Digestive Biscuit Supply Crate", "Innocuous Goods Crate", "Inconspicuous Crate"))
 		if (locked)
 			SPAWN(GANG_CRATE_LOCK_TIME/3)
 				src.light = image('icons/obj/large_storage.dmi',"gangcratehalflight")

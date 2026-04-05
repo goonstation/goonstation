@@ -513,6 +513,15 @@
 /obj/machinery/power/apc/autoname_north/hardened,
 /turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/listeningpost/barracks)
+"LH" = (
+/obj/table/syndicate/auto,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost/general)
 "LU" = (
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
@@ -1251,7 +1260,7 @@ XJ
 yA
 yA
 yA
-yA
+LH
 VN
 ow
 ow

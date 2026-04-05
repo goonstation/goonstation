@@ -1940,6 +1940,15 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	ability_path = /datum/targetable/geneticsAbility/bigpuke
 	var/range = 3
 
+	onPowerChange(oldval, newval)
+		. = ..()
+		var/datum/targetable/geneticsAbility/bigpuke/our_gene = src.ability
+		if(ismob(owner))
+			if(oldval > 1)
+				our_gene.puke_reagents = list("vomit" = 20)
+			if(newval > 1)
+				our_gene.puke_reagents = list("vomit" = 40)
+
 /datum/targetable/geneticsAbility/bigpuke
 	name = "Mass Emesis"
 	desc = "BLAAAAAAAARFGHHHHHGHH"

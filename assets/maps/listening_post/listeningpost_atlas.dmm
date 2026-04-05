@@ -368,6 +368,13 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/variableTurf/clear,
 /area/listeningpost/landing_bay)
+"mA" = (
+/obj/table/syndicate/auto,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/tech_room)
 "nb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/airless/circuit/red,
@@ -1512,7 +1519,7 @@ jC
 jC
 jC
 OE
-di
+mA
 UG
 KH
 Ib
