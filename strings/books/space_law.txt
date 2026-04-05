@@ -14,7 +14,7 @@ Security officers answer directly to the <b><span style="color:red;">Head of Sec
 Department Heads retain authority inside their department and can order you to leave unconditionally. <b><span style="color:red;">The Head of Security</span></b>, <b><span style="color:#0A6B00;">Head of Personnel</span></b>, or <b><span style="color:#a87101;">Captain</span></b> can override this.<br>
 
 <h3>Arrests</h3>
-As a Security Officer, you are expected to use restraint and good judgment when detaining, searching, and arresting people. Suspects still have rights, and treating people like scum will usually just increase tensions with the crew and invite more crime. Only arrest people when you have reason to believe they've committed a crime, and don't do strip searches in public. Never use lethal force when nonlethal force will do!<br>
+As a Security Officer, you are expected to use restraint and good judgment when detaining, searching, and arresting people. Suspects still have rights, and treating people like scum will usually just increase tensions with the crew and invite more crime. Only arrest people when you have reason to believe they've committed a crime, and only search them if you have reasonable suspicion they have contraband. Never use lethal force when nonlethal force will do!<br>
 Keep in touch with your fellow security members over the radio and support one another when making arrests. Never get discouraged when the criminals complain.
 
 <h3>Punishments</h3>

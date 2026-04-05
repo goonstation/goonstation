@@ -5,6 +5,9 @@
 	},
 /obj/machinery/cell_charger,
 /obj/item/cigpacket,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "eo" = (
@@ -255,8 +258,10 @@
 /obj/table/wood/auto{
 	dir = 5
 	},
-/obj/item/storage/toolbox/mechanical,
 /obj/machinery/light_switch/north,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "HA" = (

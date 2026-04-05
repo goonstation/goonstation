@@ -21587,6 +21587,15 @@
 /obj/portrait_sneaky,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/bridge)
+"pgF" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "pgY" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -22370,15 +22379,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"pLx" = (
-/obj/machinery/door/airlock/pyro/weapons/secure{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/armory,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "pLB" = (
 /obj/disposaloutlet/north,
 /obj/disposalpipe/trunk/ejection{
@@ -83082,7 +83082,7 @@ hww
 try
 fwH
 fwH
-pLx
+pgF
 fwH
 fwH
 fwH
@@ -122890,7 +122890,7 @@ qpn
 qpn
 qpn
 qpn
-xrS
+qpn
 qpn
 qpn
 qpn
@@ -123189,11 +123189,11 @@ qpn
 qpn
 qpn
 qpn
-kJp
-kJp
-kJp
-kJp
-kJp
+qpn
+qpn
+qpn
+qpn
+qpn
 qpn
 qpn
 qpn
@@ -123491,11 +123491,11 @@ qpn
 qpn
 qpn
 qpn
-kJp
-kJp
-kJp
-kJp
-kJp
+qpn
+xrS
+qpn
+qpn
+qpn
 qpn
 cUW
 cUW
@@ -123791,11 +123791,11 @@ cUW
 dPL
 qpn
 qpn
-qpn
-qpn
-qpn
-qpn
-qpn
+kJp
+kJp
+kJp
+kJp
+kJp
 qpn
 cUW
 cUW
@@ -124093,11 +124093,11 @@ cUW
 cUW
 cUW
 dPL
-qpn
-qpn
-qpn
-qpn
-qpn
+kJp
+kJp
+kJp
+kJp
+kJp
 cUW
 cUW
 cUW
