@@ -542,9 +542,6 @@
 				src.brain = new /obj/item/organ/brain(src.donor, src)
 			src.brain.setOwner(src.donor.mind)
 			organ_list["brain"] = brain
-			SPAWN(2 SECONDS)
-				if (src.donor.mind)
-					src.brain.setOwner(src.donor.mind)
 
 		if (!src.left_eye)
 			if (prob(2) || all_synth)
