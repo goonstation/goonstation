@@ -2088,13 +2088,18 @@ TYPEINFO(/datum/mutantrace/amphibian/shelter)
 
 /obj/effect/rt/frog_distorts // YOU'RE WORKING ON THIS ONE
 	icon = 'icons/mob/amphibian/frog.dmi'
-/obj/effect/rt/frog_distorts/uniform // frogs are wide
+/obj/effect/rt/frog_distorts/uniform
 	icon_state = "suit_distort"
-/obj/effect/rt/frog_distorts/shoes // frogs have long feet
+/obj/effect/rt/frog_distorts/shoes
 	icon_state = "shoes_distort"
+/obj/effect/rt/frog_distorts/backpack
+	icon_state = "backpack_distort"
 
 TYPEINFO(/datum/mutantrace/frog)
 	icon = 'icons/mob/amphibian/frog.dmi'
+	special_styles = list("standard" = 'icons/mob/amphibian/frog.dmi',
+	"golden" = 'icons/mob/amphibian/golden.dmi',
+	"gills" = 'icons/mob/amphibian/gills.dmi')
 /datum/mutantrace/frog
 	name = "frog"
 	icon_state = "body_m"
@@ -2129,7 +2134,7 @@ TYPEINFO(/datum/mutantrace/frog)
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | HAS_NO_SKINTONE | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | HAS_NO_SKINTONE | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	blood_color = "#22EE99"
 
 	ghost_icon_state = "ghost-amphibian"
@@ -2137,6 +2142,7 @@ TYPEINFO(/datum/mutantrace/frog)
 	var/clothes_filters_active = TRUE // see cow for explanation
 	var/obj/effect/rt/frog_distorts/uniform/distort_uniform = new
 	var/obj/effect/rt/frog_distorts/shoes/distort_shoes = new
+	var/obj/effect/rt/frog_distorts/backpack/distort_backpack = new
 
 	say_verb()
 		return "croaks"
@@ -2146,7 +2152,7 @@ TYPEINFO(/datum/mutantrace/frog)
 		if(ishuman(src.mob))
 			M.bioHolder.AddEffect("vowelitis", do_stability = FALSE, scannable = FALSE, innate = TRUE)
 			M.bioHolder.AddEffect("accent_frog", do_stability = FALSE, scannable = FALSE, innate = TRUE)
-			src.mob.vis_contents += list(src.distort_uniform,src.distort_shoes)
+			src.mob.vis_contents += list(src.distort_uniform,src.distort_shoes,src.distort_backpack)
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2154,7 +2160,7 @@ TYPEINFO(/datum/mutantrace/frog)
 			src.mob.bioHolder.RemoveEffect("jumpy")
 			src.mob.bioHolder.RemoveEffect("vowelitis")
 			src.mob.bioHolder.RemoveEffect("accent_frog")
-			src.mob.vis_contents -= list(src.distort_uniform,src.distort_shoes)
+			src.mob.vis_contents -= list(src.distort_uniform,src.distort_shoes,src.distort_backpack)
 		..()
 
 	emote(act, voluntary)
@@ -2193,6 +2199,8 @@ TYPEINFO(/datum/mutantrace/frog)
 			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
 		else if (istype(worn, /obj/item/clothing/shoes))
 			output += filter(type="displace", render_source = src.distort_shoes.render_target, size = 127)
+		else if (istype(worn, /obj/item/storage/backpack))
+			output += filter(type="displace", render_source = src.distort_backpack.render_target, size = 127)
 		return output
 
 TYPEINFO(/datum/mutantrace/kudzu)
