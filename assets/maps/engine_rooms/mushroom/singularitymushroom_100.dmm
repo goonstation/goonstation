@@ -20,7 +20,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aU" = (
 /obj/machinery/power/collector_array,
 /obj/cable/reinforced{
@@ -87,7 +87,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "cd" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -97,7 +97,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "ch" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -111,7 +111,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "cS" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -125,7 +125,7 @@
 "do" = (
 /mob/living/carbon/human/npc/monkey/mr_rathen,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "ea" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/machinery/light/incandescent{
@@ -168,7 +168,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "fm" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -202,19 +202,19 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "hp" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "ig" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "iA" = (
 /obj/machinery/emitter{
 	dir = 4
@@ -242,7 +242,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "jU" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -256,7 +256,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "kb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -267,7 +267,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "kn" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -302,7 +302,7 @@
 	},
 /obj/mapping_helper/access/engineering,
 /turf/simulated/floor/black/side,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "mI" = (
 /obj/cable,
 /obj/cable{
@@ -310,7 +310,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "pc" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/north{
 	pixel_y = -10
@@ -356,7 +356,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "rY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -381,14 +381,14 @@
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "sf" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "sl" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 9;
@@ -400,7 +400,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "sm" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
@@ -423,7 +423,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "sD" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -441,7 +441,7 @@
 /area/station/engine/inner)
 "tO" = (
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "tW" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -473,7 +473,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "vx" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -489,7 +489,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "wI" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -553,7 +553,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "yW" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
@@ -575,7 +575,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Ax" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -583,7 +583,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Bg" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -596,13 +596,13 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Bx" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Co" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -613,7 +613,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Cz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -638,7 +638,7 @@
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "CR" = (
 /obj/securearea{
 	desc = "A warning sign telling of the dangers of gravitational singularities.  Apparently they are dangerous.";
@@ -647,7 +647,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "DF" = (
 /obj/cable,
 /obj/cable{
@@ -655,7 +655,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "EN" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/machinery/light/incandescent{
@@ -728,7 +728,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "HQ" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/north{
 	pixel_y = -10
@@ -747,7 +747,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "IP" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -761,7 +761,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Nv" = (
 /obj/cable/reinforced{
 	icon_state = "1-4-thick"
@@ -783,7 +783,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Oc" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
@@ -801,7 +801,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "OK" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -811,7 +811,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "PA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -854,7 +854,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Vt" = (
 /obj/machinery/emitter,
 /turf/simulated/floor/yellow/side{
@@ -869,7 +869,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "VU" = (
 /obj/securearea{
 	desc = "A warning sign telling of the dangers of gravitational singularities.  Apparently they are dangerous.";
@@ -878,7 +878,7 @@
 	pixel_y = -1
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Xi" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -923,7 +923,7 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Zx" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -941,7 +941,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 
 (1,1,1) = {"
 uE
