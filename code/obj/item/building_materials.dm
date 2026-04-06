@@ -352,6 +352,78 @@ MATERIAL
 
 		.["itemList"] = availableRecipes
 
+	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
+		if (isobserver(usr))
+			boutput(usr, SPAN_ALERT("Quit that! You're dead!"))
+			return
+		if(isintangible(usr))
+			boutput(usr,SPAN_ALERT("You need hands to do that. Do you have hands? No? Then stop it."))
+			return
+
+		if(!istype(over_object, /atom/movable/screen/hud))
+			if (BOUNDS_DIST(usr, src) > 0)
+				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
+				return
+			if (BOUNDS_DIST(usr, over_object) > 0)
+				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
+				return
+
+		if (istype(over_object,/obj/item/sheet) && isturf(over_object.loc)) //piece to piece only if on ground
+			var/obj/item/targetObject = over_object
+			if(targetObject.stack_item(src))
+				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]s!"))
+		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
+			if(src.amount > 1) //split stack.
+				usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]s!"))
+				var/toSplit = round(amount / 2)
+				var/atom/movable/splitStack = split_stack(toSplit)
+				if(splitStack)
+					splitStack.set_loc(over_object)
+			else
+				if(isturf(src.loc))
+					src.set_loc(over_object)
+				for(var/obj/item/I in view(1,usr))
+					if (!I || I == src)
+						continue
+					if (!src.check_valid_stack(I))
+						continue
+					src.stack_item(I)
+				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]s!"))
+		else if(istype(over_object, /atom/movable/screen/hud))
+			var/atom/movable/screen/hud/H = over_object
+			var/mob/living/carbon/human/stacker = usr
+			switch(H.id)
+				if("lhand")
+					if(stacker.l_hand)
+						if(stacker.l_hand == src) return
+						else if (istype(stacker.l_hand, /obj/item/sheet))
+							var/obj/item/sheet/DP = stacker.l_hand
+							DP.stack_item(src)
+							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]s!"))
+					else if(amount > 1)
+						var/toSplit = round(amount / 2)
+						var/atom/movable/splitStack = split_stack(toSplit)
+						if(splitStack)
+							usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]s!"))
+							splitStack.set_loc(stacker)
+							stacker.put_in_hand(splitStack, 1)
+				if("rhand")
+					if(stacker.r_hand)
+						if(stacker.r_hand == src) return
+						else if (istype(stacker.r_hand, /obj/item/sheet))
+							var/obj/item/sheet/DP = stacker.r_hand
+							DP.stack_item(src)
+							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]s!"))
+					else if(amount > 1)
+						var/toSplit = round(amount / 2)
+						var/atom/movable/splitStack = split_stack(toSplit)
+						if(splitStack)
+							usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]s!"))
+							splitStack.set_loc(stacker)
+							stacker.put_in_hand(splitStack, 0)
+		else
+			..()
+
 	ui_act(action, params)
 		. = ..()
 		if(.)
@@ -1075,6 +1147,78 @@ MATERIAL
 			W.add_fingerprint(user)
 			W.tooltip_rebuild = TRUE
 		return
+
+	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
+		if (isobserver(usr))
+			boutput(usr, SPAN_ALERT("Quit that! You're dead!"))
+			return
+		if(isintangible(usr))
+			boutput(usr,SPAN_ALERT("You need hands to do that. Do you have hands? No? Then stop it."))
+			return
+
+		if(!istype(over_object, /atom/movable/screen/hud))
+			if (BOUNDS_DIST(usr, src) > 0)
+				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
+				return
+			if (BOUNDS_DIST(usr, over_object) > 0)
+				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
+				return
+
+		if (istype(over_object,/obj/item/tile) && isturf(over_object.loc)) //piece to piece only if on ground
+			var/obj/item/targetObject = over_object
+			if(targetObject.stack_item(src))
+				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]s!"))
+		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
+			if(src.amount > 1) //split stack.
+				usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]s!"))
+				var/toSplit = round(amount / 2)
+				var/atom/movable/splitStack = split_stack(toSplit)
+				if(splitStack)
+					splitStack.set_loc(over_object)
+			else
+				if(isturf(src.loc))
+					src.set_loc(over_object)
+				for(var/obj/item/I in view(1,usr))
+					if (!I || I == src)
+						continue
+					if (!src.check_valid_stack(I))
+						continue
+					src.stack_item(I)
+				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]s!"))
+		else if(istype(over_object, /atom/movable/screen/hud))
+			var/atom/movable/screen/hud/H = over_object
+			var/mob/living/carbon/human/stacker = usr
+			switch(H.id)
+				if("lhand")
+					if(stacker.l_hand)
+						if(stacker.l_hand == src) return
+						else if (istype(stacker.l_hand, /obj/item/tile))
+							var/obj/item/tile/DP = stacker.l_hand
+							DP.stack_item(src)
+							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]s!"))
+					else if(amount > 1)
+						var/toSplit = round(amount / 2)
+						var/atom/movable/splitStack = split_stack(toSplit)
+						if(splitStack)
+							usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]s!"))
+							splitStack.set_loc(stacker)
+							stacker.put_in_hand(splitStack, 1)
+				if("rhand")
+					if(stacker.r_hand)
+						if(stacker.r_hand == src) return
+						else if (istype(stacker.r_hand, /obj/item/tile))
+							var/obj/item/tile/DP = stacker.r_hand
+							DP.stack_item(src)
+							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]s!"))
+					else if(amount > 1)
+						var/toSplit = round(amount / 2)
+						var/atom/movable/splitStack = split_stack(toSplit)
+						if(splitStack)
+							usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]s!"))
+							splitStack.set_loc(stacker)
+							stacker.put_in_hand(splitStack, 0)
+		else
+			..()
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins stacking [src]!"))
