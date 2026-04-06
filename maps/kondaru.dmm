@@ -14250,11 +14250,11 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bmy" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/refinery)
 "bmA" = (
 /obj/machinery/r_door_control/podbay/mining,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/refinery)
 "bmB" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mining_horizontal,
@@ -14723,7 +14723,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "bok" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/routing/depot)
 "bol" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -15895,7 +15895,7 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/refinery)
 "buA" = (
 /obj/machinery/door/poddoor/blast/pyro{
@@ -31317,7 +31317,7 @@
 	name = "Secure Atmospherics"
 	})
 "frY" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/staff_room)
 "fsS" = (
 /obj/item/storage/toilet{
@@ -53024,7 +53024,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/hallway/secondary/exit)
 "umn" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/magnet)
 "umt" = (
 /obj/machinery/firealarm/directional/west,
