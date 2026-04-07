@@ -858,9 +858,9 @@
 	item_state = "cebelt"
 	rarity = 4
 	can_hold = list(/obj/item/rcd,
-	/obj/item/rcd_ammo,
-	/obj/item/deconstructor,
-	/obj/item/tool/omnitool/dualconstruction_device)
+		/obj/item/rcd_ammo,
+		/obj/item/deconstructor,
+		/obj/item/tool/omnitool/dualconstruction_device)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	inventory_counter_enabled = 1
 
@@ -898,8 +898,7 @@
 	/obj/item/screwdriver/yellow,
 	/obj/item/wrench/yellow,
 	/obj/item/device/multitool,
-	/obj/item/deconstructor,
-	/obj/item/tool/omnitool/dualconstruction_device)
+	/obj/item/deconstructor)
 
 /obj/item/storage/belt/utility/virtual
 	name = "virtual utility belt"
@@ -910,8 +909,7 @@
 	/obj/item/screwdriver/vr,
 	/obj/item/wrench/vr,
 	/obj/item/device/multitool,
-	/obj/item/deconstructor,
-	/obj/item/tool/omnitool/dualconstruction_device)
+	/obj/item/deconstructor)
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
