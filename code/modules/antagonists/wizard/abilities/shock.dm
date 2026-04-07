@@ -27,9 +27,9 @@
 			boutput(holder.owner, "You can't cast this whilst incapacitated!")
 			return 1
 
+		. = ..()
 		var/mob/living/carbon/human/H = target
 
-		. = ..()
 		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 
@@ -89,7 +89,8 @@
 		playsound(M.loc, 'sound/effects/elec_bigzap.ogg', 35, 1, -1)
 
 		if (M.wizard_spellpower(src))
-			elecflash(target,power = 4, exclude_center = 0)
+			elecflash(target, power = 4, exclude_center = 0)
+			arcFlash(M, target, 0) // aesthetic
 			target.TakeDamage("chest", 0, 101, 0, DAMAGE_BURN)
 			target.changeStatus("stunned", 3 SECONDS)
 			target.changeStatus("knockdown", 3 SECONDS)
