@@ -1162,6 +1162,38 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				id = "scorpion_braid_alternating"
 				random_allowed = FALSE
 
+			Side_Pigtails
+				name = "Side Pigtails"
+				id = "side_pigtails"
+				gender = FEMININE
+
+			Long_Top_Bun
+				name = "Long Top Bun"
+				id = "long_top_bun"
+				gender = FEMININE
+
+			low_bun
+				name = "Low Bun"
+				id = "low_bun"
+
+			curtained_ponytail
+				name = "Curtained Ponytail"
+				id = "curtained_ponytail"
+
+			side_pigtailspart
+				name = "Hair Parts: Side Pigtails"
+				id = "side_pigtails_part"
+				random_allowed = FALSE
+
+			scorpion_braid_part
+				name = "Hair Parts: Scorpion Braid"
+				id = "scorpion_braid_part"
+				random_allowed = FALSE
+
+			scorpion_braid_alternating_part
+				name = "Hair Parts: Scorpion Braid Alternating"
+				id = "scorpion_braid_alternating_part"
+				random_allowed = FALSE
 		gimmick
 			afroHA
 				name = "Afro: Alternating Halves"
