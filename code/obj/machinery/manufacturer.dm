@@ -73,7 +73,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/original_duration = 0 //! Original duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
 	var/time_left = 0 //! Time left until the current blueprint is complete. Updated on pausing and on starting a new blueprint.
 	var/time_started = 0 //! Time the blueprint was queued, or if paused/resumed, the time we resumed the blueprint.
-	var/speed = DEFAULT_SPEED //! Controls how fast blueprints are produced. Higher speed settings have a exponential effect on power use.
+	var/speed = DEFAULT_SPEED //! Controls how fast blueprints are produced. Higher speed settings have an exponential effect on power use.
 	var/repeat = FALSE //! Controls whether or not to repeat the first item in the queue while working.
 	var/output_cap = MAX_OUTPUT //! The maximum amount of produce this can dispense on outputting a blueprint's chosen outputs.
 	var/list/datum/manufacture/queue = list() //! A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index

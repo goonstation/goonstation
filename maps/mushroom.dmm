@@ -16417,7 +16417,7 @@
 /area/station/maintenance/northwest)
 "iqj" = (
 /obj/storage/crate/furnacefuel{
-	desc = "A crate with fuel to start the engine in a Emergency.";
+	desc = "A crate with fuel to start the engine in an Emergency.";
 	name = "Emergency Engine Fuel Crate";
 	spawn_contents = list(/obj/item/raw_material/char = 40)
 	},

@@ -26281,7 +26281,7 @@
 /area/afterlife/heaven)
 "bZx" = (
 /obj/storage/secure/crate/bee{
-	desc = "A crate with a picture of a owl on it. Hoot.";
+	desc = "A crate with a picture of an owl on it. Hoot.";
 	name = "Owl crate"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl,
@@ -63984,7 +63984,7 @@
 	pixel_y = 6
 	},
 /obj/item/paper{
-	info = "\"An member of an insidious race of calcium-based beings, known to cleverly hide under of the flesh of carbon-based organisms. Their presence can only be revealed via special rays of radiation or certain medical procedures.\"";
+	info = "\"A member of an insidious race of calcium-based beings, known to cleverly hide under of the flesh of carbon-based organisms. Their presence can only be revealed via special rays of radiation or certain medical procedures.\"";
 	name = "Skeleton.png"
 	},
 /turf/unsimulated/floor/wood/two,

@@ -1162,7 +1162,7 @@
 				src.brain = newBrain
 				src.head.brain = newBrain
 
-				// if the head has an skeleton, and we're not taking it, eject the skeleton out of the head
+				// if the head has a skeleton, and we're not taking it, eject the skeleton out of the head
 				if (src.head.head_type == HEAD_SKELETON)
 					var/mob/living/carbon/human/H = src.head.linked_human
 					if (H && (!isskeleton(src.donor) && H != src.donor))

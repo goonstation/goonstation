@@ -448,7 +448,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		gray
 			icon_state = "shotgun_gray"
-			desc = "An gray shotgun shell."
+			desc = "A gray shotgun shell."
 
 		pipe
 			icon_state = "shotgun_pipe"
@@ -1298,7 +1298,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/makarov
 	name = "\improper PM Pistol"
-	desc = "An time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
+	desc = "A time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
 	icon_state = "makarov"
 	item_state = "makarov"
 	w_class = W_CLASS_SMALL

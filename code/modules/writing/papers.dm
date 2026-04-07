@@ -45,7 +45,7 @@
 
 /obj/item/paper/Internal
 	name = "'Internal Atmosphere Operating Instructions'"
-	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulator (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at a oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
+	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulator (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at an oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
 
 /obj/item/paper/Court
 	name = "'Judgement'"
@@ -456,7 +456,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/cultbase_observations
 	name = "ritual progress notes"
 	icon_state = "paper"
-	info = {"The initiates have tried textbook methods to commune with the deep using the plasmacoral as a amplifier. <br>
+	info = {"The initiates have tried textbook methods to commune with the deep using the plasmacoral as an amplifier. <br>
 	Limited success in operations of this scale, although there has been slight reactions from subject D-01 during initiate <br>
 	sermons, more data needed."}
 
@@ -464,7 +464,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Update: Initiate Training"
 	icon_state = "paper"
 	info = {"The initiates are getting rowdy, the only successful ritual that they've improvised is from the one that's now <br>
-	bolted themself in the freezer. Food is getting tight here, with one of the initiates throwing food in anger. I need to keep a eye on that one. <br>
+	bolted themself in the freezer. Food is getting tight here, with one of the initiates throwing food in anger. I need to keep an eye on that one. <br>
 	Operations in the back are going well though, although I think that one is catching on."}
 
 /obj/item/paper/cultbase_acolyte_notes
@@ -484,7 +484,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Truth."
 	icon_state = "paper"
 	info = {"It calls, it is our divine avatar of the waking dream. I can't grasp its meaning, it yearns... it desires. We must gather its power to uproot this corporate war. <br>
-	We must create a condition, a ultimatium, the weak of our people must be culled, tested. <i> I'm going to enjoy this! <i>"}
+	We must create a condition, an ultimatium, the weak of our people must be culled, tested. <i> I'm going to enjoy this! <i>"}
 
 /obj/item/paper/cultbase_creature_notes
 	name = "Observations and topics of investigation."
