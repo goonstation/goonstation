@@ -37,7 +37,7 @@
 	<br>Size: M
 	<br>Psionic Ability: Nil
 	<p>This lesser humanoid, native to the deepest caverns of Maynnetince, is a variant of the common greysuit exhibiting a series of peculiar
-	defensive mutations.  Firstly, the torso of the creature is encased in a thick hide of a notably darker hue than that of an ordinary greysuit.
+	defensive mutations.  Firstly, the torso of the creature is a encased in a thick hide of a notably darker hue than that of an ordinary greysuit.
 	Secondly, the head of the beast differs significantly from their unarmored brethren, with a large done of protective grey bone encasing much of the skull.
 	The armored greysuit's eyes also receive a limited degree of protection from a translucent manner of tertiary eyelid attached directly to the skull case.
 	The true danger of the armored greysuit, however, comes from its choice of weapon: many (65% chance) wield a fearsome shockmace into combat.<br>
