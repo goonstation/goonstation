@@ -356,7 +356,7 @@
 
 	var/maptext_out = 0
 	var/message = specific_emotes(act, param, voluntary)
-	var/m_type = specific_emote_type(act)
+	var/message_type = specific_emote_type(act)
 	var/custom = 0 //Sorry, gotta make this for chat groupings.
 
 
@@ -398,19 +398,19 @@
 					else
 						message = "<B>[src]</B> struggles to move."
 						maptext_out = "<I>[src] struggles to move</I>"
-					m_type = 1
+					message_type = 1
 			if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 				// basic visible single-word emotes
 				if (src.emote_check(voluntary, 10))
 					message = "<B>[src]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
-					m_type = 1
+					message_type = 1
 			if ("gasp","cough","laugh","giggle","sigh")
 				// basic hearable single-word emotes
 				if (src.emote_check(voluntary, 10))
 					message = "<B>[src]</B> [act]s."
 					maptext_out = "<I>[act]s</I>"
-					m_type = 2
+					message_type = 2
 			if ("customv")
 				if (!param)
 					param = input("Choose an emote to display.")
@@ -419,7 +419,7 @@
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
-				m_type = 1
+				message_type = 1
 			if ("customh")
 				if (!param)
 					param = input("Choose an emote to display.")
@@ -428,7 +428,7 @@
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
-				m_type = 2
+				message_type = 2
 			if ("me")
 				if (!param)
 					return
@@ -436,7 +436,7 @@
 				message = "<b>[src]</b> [param]"
 				maptext_out = "<I>[regex({"(&#34;.*?&#34;)"}, "g").Replace(param, "</i>$1<i>")]</I>"
 				custom = copytext(param, 1, 10)
-				m_type = 1
+				message_type = 1
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
 					if (isobj(src.loc))
@@ -450,10 +450,10 @@
 		return
 
 	var/list/mob/recipients = list()
-	if (m_type & 1)
+	if (message_type & 1)
 		recipients = viewers(src, null)
 
-	else if (m_type & 2)
+	else if (message_type & 2)
 		recipients = hearers(src, null)
 
 	else if (!isturf(src.loc))
@@ -464,7 +464,7 @@
 	log_emote(src, message, voluntary)
 	act = lowertext(act)
 	for (var/mob/M as anything in recipients)
-		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+		M.show_message(SPAN_EMOTE("[message]"), message_type, group = "[src]_[act]_[custom]")
 
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
 		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
