@@ -19,7 +19,7 @@
 #define ishuman(x) istype(x, /mob/living/carbon/human)
 #define iscow(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/cow))
 #define ispug(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/pug))
-#define isfrog(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/amphibian))
+#define isfrog(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/frog))
 #define isskeleton(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/skeleton))
 #define iscritter(x) istype(x, /obj/critter)
 #define isintangible(x) istype(x, /mob/living/intangible)

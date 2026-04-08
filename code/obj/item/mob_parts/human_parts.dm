@@ -1459,12 +1459,12 @@
 //////  PARENT  //////
 
 /obj/item/parts/human_parts/arm/mutant/amphibian
-	icon = 'icons/mob/amphibian.dmi'
-	partIcon = 'icons/mob/amphibian.dmi'
+	icon = 'icons/mob/abzunian.dmi'
+	partIcon = 'icons/mob/abzunian.dmi'
 
 /obj/item/parts/human_parts/leg/mutant/amphibian
-	icon = 'icons/mob/amphibian.dmi'
-	partIcon = 'icons/mob/amphibian.dmi'
+	icon = 'icons/mob/abzunian.dmi'
+	partIcon = 'icons/mob/abzunian.dmi'
 
 ////// ACTUAL AMPHIBIAN LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/amphibian/left

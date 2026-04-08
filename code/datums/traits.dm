@@ -1536,7 +1536,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "frog"
 	points = -3
 	category = list("species")
-	mutantRace = /datum/mutantrace/frog
+	mutantRace = /datum/mutantrace/frog/amphibian
 
 /datum/trait/random_species
 	name = "Random Species"

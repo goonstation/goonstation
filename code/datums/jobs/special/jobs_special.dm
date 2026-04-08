@@ -542,7 +542,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
 									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
 									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
-									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/frog/abzunian::name = /datum/mutantrace/frog/abzunian,
 									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
 									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 

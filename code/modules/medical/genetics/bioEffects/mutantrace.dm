@@ -240,12 +240,12 @@
 	msgLose = "Dog treats no longer look appealing."
 	icon_state  = "pug"
 
-/datum/bioEffect/mutantrace/frog
+/datum/bioEffect/mutantrace/frog/amphibian
 	name = "Anuran Genetics"
 	desc = "The subject's genetics are hybridized with an alien Abzunian amphibian.'"
 	id = "frog"
 	mutantrace_option = "Amphibian"
-	mutantrace_path = /datum/mutantrace/frog
+	mutantrace_path = /datum/mutantrace/frog/amphibian
 	msgGain = "You feel compelled to start constantly ribbiting."
 	msgLose = "A part of your soul has croaked."
 	icon_state  = "frog"
