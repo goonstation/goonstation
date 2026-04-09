@@ -1812,6 +1812,33 @@ ABSTRACT_TYPE(/datum/material/organic)
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
 
+/datum/material/organic/mycelium
+	mat_id = "mycelium"
+	name = "mycelium"
+	desc = "The structure of mushrooms that can be molded into a surprisingly versatile building material."
+	color = list(0.90, 0.10, 0.00, 0.00,\
+				0.10, 0.80, 0.00, 0.00,\
+				0.00, 0.00, 0.80, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.30, 0.00, 0.00,\
+					0.00, 0.00, 1.50, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.08, 0.20, -0.30, 0.00)
+	texture = "mycelium"
+	texture_blend = BLEND_DEFAULT
+	edible_exact = 1
+	edible = 1
+
+	New()
+		..()
+		setProperty("hard", 3)
+		setProperty("density", 2)
+		setProperty("electrical", 3)
+		setProperty("thermal", 2)
+		setProperty("flammable", 2)
+
 /datum/material/organic/ectoplasm
 	mat_id = "ectoplasm"
 	name = "ectoplasm"
