@@ -528,6 +528,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/katsu_curry(src)
 			src.recipes += new /datum/recipe/gyudon(src)
 			src.recipes += new /datum/recipe/pigblanket(src)
+			src.recipes += new /datum/recipe/fruit_salad(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/recipe/pizza_custom(src)
 			src.recipes += new /datum/recipe/cake_custom_item(src)

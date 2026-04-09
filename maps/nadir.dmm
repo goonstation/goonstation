@@ -357,7 +357,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "se_breach";
 	name = "South East Breach Hull"
 	},
@@ -874,7 +874,7 @@
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactormain";
 	enter_id = "outer";
 	name = "Reactor Main"
@@ -1041,7 +1041,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro1";
 	enter_id = "inner";
 	name = "Security Interrogation 1"
@@ -6374,7 +6374,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aicore";
 	enter_id = "inner";
 	name = "AI Core"
@@ -6814,7 +6814,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "brig";
 	name = "Security"
@@ -8547,7 +8547,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactorside";
 	enter_id = "outer";
 	name = "Reactor Side"
@@ -10079,7 +10079,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sw_breach";
 	name = "South West Breach Hull"
 	},
@@ -13112,7 +13112,7 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactormain";
 	enter_id = "inner2";
 	name = "Reactor Main"
@@ -15097,7 +15097,7 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "disposals";
 	enter_id = "outer";
 	name = "Disposals"
@@ -17723,7 +17723,7 @@
 /area/station/storage/tools)
 "hLe" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "escape";
 	enter_id = "inner";
 	name = "Escape"
@@ -19813,7 +19813,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro2";
 	enter_id = "inner";
 	name = "Security Interrogation 2"
@@ -20046,7 +20046,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "ne_breach";
 	name = "North East Breach Hull"
 	},
@@ -21224,7 +21224,7 @@
 "jky" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "escape";
 	enter_id = "outer";
 	name = "Escape"
@@ -22181,7 +22181,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "escape";
 	enter_id = "inner";
 	name = "Escape"
@@ -23731,7 +23731,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sw_breach";
 	name = "South West Breach Hull"
 	},
@@ -25866,7 +25866,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/ai_upload,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aiupload";
 	enter_id = "inner";
 	name = "AI Upload"
@@ -26292,7 +26292,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sw_breach2";
 	name = "South West Breach Hull"
 	},
@@ -27325,7 +27325,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactormain";
 	enter_id = "centrifuge";
 	name = "Reactor Main"
@@ -27394,7 +27394,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "inner";
 	name = "Security"
@@ -29125,7 +29125,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aicore";
 	enter_id = "outer";
 	name = "AI Core"
@@ -31050,7 +31050,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "nw_breach";
 	name = "North West Breach Hull"
 	},
@@ -32803,7 +32803,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactorside";
 	enter_id = "inner";
 	name = "Reactor Side"
@@ -34845,7 +34845,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "se_breach";
 	name = "South East Breach Hull"
 	},
@@ -34989,7 +34989,7 @@
 	},
 /obj/mapping_helper/access/ai_upload,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aiupload";
 	enter_id = "outer";
 	name = "AI Upload"
@@ -35083,7 +35083,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactormain";
 	enter_id = "inner1";
 	name = "Reactor Main"
@@ -37360,7 +37360,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "disposals";
 	enter_id = "inner";
 	name = "Disposals"
@@ -37767,7 +37767,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro2";
 	enter_id = "outer";
 	name = "Security Interrogation 2"
@@ -44922,7 +44922,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "ne_breach";
 	name = "North East Breach Hull"
 	},
@@ -50208,7 +50208,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "nw_breach";
 	name = "North West Breach Hull"
 	},
@@ -50345,7 +50345,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro1";
 	enter_id = "outer";
 	name = "Security Interrogation 1"
@@ -50841,7 +50841,7 @@
 /area/station/science/hall)
 "wDb" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sw_breach2";
 	name = "South West Breach Hull"
 	},
@@ -54071,7 +54071,7 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "outer";
 	name = "Security"

@@ -87,7 +87,11 @@
 			if(ismob(hit_atom))
 				var/mob/M = hit_atom
 				if(ishuman(M))
-					if((prob(50) && M.bioHolder.HasEffect("clumsy")))
+					var/mob/living/carbon/human/H = M
+					if(H.restrained())
+						src.visible_message(SPAN_COMBAT("[H] gets beaned with the [src.name]."))
+						logTheThing(LOG_COMBAT, H, "is struck by [src]")
+					else if((prob(50) && M.bioHolder.HasEffect("clumsy")))
 						src.visible_message(SPAN_COMBAT("[M] gets beaned with \the [src.name]."))
 						M.changeStatus("stunned", 2 SECONDS)
 						JOB_XP(M, "Clown", 1)

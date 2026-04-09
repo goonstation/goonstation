@@ -68,14 +68,16 @@
 	. = 0
 	if(M?.client?.holder?.ghost_interaction)
 		return 2
+	// check for admin access override
+	if (src.admin_access_override)
+		if (M?.client?.holder?.level >= LEVEL_SA)
+			return 2
+		else if(src.admin_access_override == ADMIN_ACCESS_OVERRIDE_ONLY)
+			return 0
 	// easy out for if no access is required
 	if (!src.has_access_requirements())
 		return 1
 	if (M && ismob(M))
-		// check for admin access override
-		if (src.admin_access_override)
-			if (M.client?.holder?.level >= LEVEL_SA)
-				return 2
 		// check in-hand first
 		if (src.check_access(M.equipped()))
 			return 2

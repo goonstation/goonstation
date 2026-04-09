@@ -722,7 +722,7 @@
 /datum/manufacture/glass
 	name = "Glass Panel"
 	item_requirements = list("crystal" = 1)
-	item_outputs = list(/obj/item/sheet)
+	item_outputs = list(/obj/item/sheet/glass)
 	create = 1
 	time = 2 SECONDS
 	category = "Resource"
