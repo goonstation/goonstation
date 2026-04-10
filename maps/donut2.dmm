@@ -5067,7 +5067,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westmaint";
 	name = "West Maintenance"
 	},
@@ -6790,7 +6790,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innermaint";
 	name = "Central Inner Maintenance"
 	},
@@ -7619,7 +7619,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innermaint4";
 	name = "Central Inner Maintenance"
 	},
@@ -9612,7 +9612,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "eastmaint";
 	name = "East Maintenance"
 	},
@@ -15039,7 +15039,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "ranchship";
 	name = "Ranch Ship"
 	},
@@ -15493,7 +15493,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westmaint2";
 	name = "West Maintenance"
 	},
@@ -15577,7 +15577,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "atmos";
 	enter_id = "inner";
 	name = "Atmos"
@@ -15857,7 +15857,7 @@
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aiupload";
 	enter_id = "inner";
 	name = "AI Upload"
@@ -16006,7 +16006,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innereng";
 	enter_id = "outer";
 	name = "Inner Engineering"
@@ -18933,7 +18933,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "eastmaint";
 	name = "East Maintenance"
 	},
@@ -19637,7 +19637,7 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	enter_id = "outer";
 	name = "Bridge"
@@ -19912,7 +19912,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/mining,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "mining";
 	enter_id = "inner";
 	name = "Mining"
@@ -20065,7 +20065,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "sec";
 	name = "Security"
@@ -20094,7 +20094,7 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aiupload";
 	enter_id = "outer";
 	name = "AI Upload"
@@ -21348,7 +21348,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "toxins";
 	name = "Toxins"
 	},
@@ -21676,7 +21676,7 @@
 	},
 /obj/mapping_helper/access/teleporter,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "teleporter";
 	enter_id = "outer";
 	name = "Teleporter"
@@ -21907,7 +21907,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/mining,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "mining";
 	enter_id = "inner";
 	name = "Mining"
@@ -22621,7 +22621,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innermaint3";
 	name = "Central Inner Maintenance"
 	},
@@ -22983,7 +22983,7 @@
 /area/station/hallway/secondary/researchshuttle)
 "hhu" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "outpostdisposals";
 	name = "Research Outpost Disposals"
 	},
@@ -24066,7 +24066,7 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aicore";
 	enter_id = "outer";
 	name = "AI Core"
@@ -25187,7 +25187,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innereng2";
 	name = "Inner Engineering"
 	},
@@ -25495,7 +25495,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "southsolars";
 	name = "South Solar Maintenance"
 	},
@@ -25974,7 +25974,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westsolars";
 	name = "West Solar Maintenance"
 	},
@@ -27241,7 +27241,7 @@
 /area/station/janitor/office)
 "jEr" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "toxins";
 	name = "Toxins"
 	},
@@ -27877,7 +27877,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innereng";
 	enter_id = "outer";
 	name = "Inner Engineering"
@@ -28339,7 +28339,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westmaint2";
 	name = "West Maintenance"
 	},
@@ -28483,7 +28483,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "atmos";
 	enter_id = "outer";
 	name = "Atmos"
@@ -29075,7 +29075,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "mining";
 	enter_id = "outer";
 	name = "Mining"
@@ -29678,7 +29678,7 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westsolars";
 	name = "West Solar Maintenance"
 	},
@@ -30778,7 +30778,7 @@
 	icon_state = "2-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "outer";
 	name = "Security"
@@ -34677,7 +34677,7 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innereng";
 	enter_id = "inner";
 	name = "Inner Engineering"
@@ -35166,7 +35166,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "mining";
 	enter_id = "inner";
 	name = "Mining"
@@ -35272,7 +35272,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "eastsolars";
 	name = "East Solar Maintenance"
 	},
@@ -35487,7 +35487,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "mining";
 	enter_id = "outer";
 	name = "Mining"
@@ -35834,7 +35834,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	enter_id = "inner";
 	name = "Bridge"
@@ -36732,7 +36732,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "atmos";
 	enter_id = "inner";
 	name = "Atmos"
@@ -36918,7 +36918,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "podbay";
 	name = "Pod Bay"
 	},
@@ -37668,7 +37668,7 @@
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aisat";
 	enter_id = "inner";
 	name = "AI Satellite"
@@ -38511,7 +38511,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innereng3";
 	name = "Inner Engineering"
 	},
@@ -39980,7 +39980,7 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "southsolars";
 	name = "South Solar Maintenance"
 	},
@@ -40270,7 +40270,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "teleporter";
 	enter_id = "inner";
 	name = "Teleporter"
@@ -40880,7 +40880,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innermaint2";
 	name = "Central Inner Maintenance"
 	},
@@ -41224,7 +41224,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westmaint";
 	name = "West Maintenance"
 	},
@@ -41282,7 +41282,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "atmos";
 	enter_id = "outer";
 	name = "Atmos"
@@ -41948,7 +41948,7 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "eastsolars";
 	name = "East Solar Maintenance"
 	},
@@ -41989,7 +41989,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	enter_id = "outer";
 	name = "Bridge"
@@ -44324,7 +44324,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aisat";
 	enter_id = "outer";
 	name = "AI Satellite"
@@ -44597,7 +44597,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "brig";
 	name = "Security"
@@ -44768,7 +44768,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westmaint2";
 	name = "West Maintenance"
 	},
@@ -44798,7 +44798,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "outpost";
 	name = "Research Outpost Lobby"
 	},
@@ -45313,7 +45313,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aisat";
 	enter_id = "inner";
 	name = "AI Satellite"
@@ -45969,7 +45969,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "mining";
 	enter_id = "inner";
 	name = "Mining"
@@ -46688,7 +46688,7 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aisat";
 	enter_id = "inner";
 	name = "AI Satellite"
@@ -46989,7 +46989,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "outpostsolars";
 	name = "Research Outpost Solars"
 	},
@@ -47339,7 +47339,7 @@
 	name = "Permanent Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "ranchship";
 	name = "Ranch Ship"
 	},
@@ -47961,7 +47961,7 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aicore";
 	enter_id = "inner";
 	name = "AI Core"
@@ -48243,7 +48243,7 @@
 /area/station/medical/robotics)
 "vtW" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "outpostdisposals";
 	name = "Research Outpost Disposals"
 	},
@@ -49007,7 +49007,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innereng";
 	enter_id = "inner";
 	name = "Inner Engineering"
@@ -49638,7 +49638,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "innermaint3";
 	name = "Central Inner Maintenance"
 	},
@@ -51172,7 +51172,7 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	enter_id = "inner";
 	name = "Bridge"

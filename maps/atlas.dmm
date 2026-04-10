@@ -397,7 +397,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "northsolar2";
 	name = "North Solars"
 	},
@@ -739,7 +739,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "northsolar";
 	name = "North Solars"
 	},
@@ -761,7 +761,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "northsolar";
 	name = "North Solars"
 	},
@@ -3166,7 +3166,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/teleporter,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	name = "Bridge";
 	enter_id = "teleporter"
@@ -3393,7 +3393,7 @@
 	dir = 4;
 	level = -1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	name = "Bridge";
 	enter_id = "inner"
@@ -4069,7 +4069,7 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	name = "Bridge";
 	enter_id = "meetingroom"
@@ -5654,7 +5654,7 @@
 /area/station/janitor/office)
 "aHN" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "southmerch";
 	name = "South Merchant Dock"
 	},
@@ -5939,7 +5939,7 @@
 "aKb" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "miningshuttle";
 	name = "Mining Shuttle";
 	enter_id = "inner"
@@ -6029,7 +6029,7 @@
 /area/station/hangar/arrivals)
 "aKJ" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "miningshuttle";
 	name = "Mining Shuttle";
 	enter_id = "outer"
@@ -8198,7 +8198,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/ai_upload,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "inner"
@@ -11004,7 +11004,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "fMe" = (
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineering";
 	enter_id = "inner";
 	name = "Engineering"
@@ -11153,7 +11153,7 @@
 	dir = 4;
 	level = -1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
@@ -12550,7 +12550,7 @@
 "iqS" = (
 /obj/mapping_helper/access/security,
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "security";
 	enter_id = "outer";
 	name = "Security"
@@ -13676,7 +13676,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "security";
 	enter_id = "inner";
 	name = "Security"
@@ -15118,7 +15118,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "lQw" = (
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
@@ -15972,7 +15972,7 @@
 	dir = 4;
 	pixel_x = -20
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
@@ -16160,7 +16160,7 @@
 /turf/simulated/floor/red,
 /area/station/medical/medbay)
 "ndx" = (
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
@@ -16278,7 +16278,7 @@
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "northsolar2";
 	name = "North Solars"
 	},
@@ -18201,7 +18201,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineeringpower";
 	enter_id = "outer";
 	name = "Engineering Power"
@@ -18553,7 +18553,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineeringpower";
 	enter_id = "inner";
 	name = "Engineering Power"
@@ -18594,7 +18594,7 @@
 /area/station/storage/tech)
 "ruk" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "southmerch";
 	name = "South Merchant Dock"
 	},
@@ -19868,7 +19868,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "outer"

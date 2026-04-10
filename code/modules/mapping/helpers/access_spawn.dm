@@ -298,10 +298,16 @@
 /obj/mapping_helper/access/admin_override //special admin override access spawner
 	name = "admin override access spawn"
 	color = SPECIAL
+	admin_access_override = ADMIN_ACCESS_OVERRIDE_BYPASS
 
 	setup()
 		for (var/obj/O in src.loc)
-			O.admin_access_override = TRUE
+			O.admin_access_override = src.admin_access_override
+
+/obj/mapping_helper/access/admin_override/admin_only //Deny access to any non-admins
+	name = "admin only access spawn"
+	color = MORGUE_BLACK
+	admin_access_override = ADMIN_ACCESS_OVERRIDE_ONLY
 
 /obj/mapping_helper/access/public
 	name = "public access spawn"

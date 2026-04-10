@@ -37,8 +37,13 @@
 "bL" = (
 /obj/machinery/light/incandescent/warm,
 /obj/cable/black{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -1182,13 +1187,9 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost/general)
 "Wd" = (
-/obj/machinery/guardbot_dock,
-/obj/machinery/power/data_terminal,
-/obj/machinery/bot/guardbot/bad{
-	on = 0
-	},
-/obj/cable/black{
-	icon_state = "0-4"
+/obj/table/syndicate/auto,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)

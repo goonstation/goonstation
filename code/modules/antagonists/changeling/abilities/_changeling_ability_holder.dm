@@ -92,6 +92,12 @@
 
 					break
 
+		if (M.hasStatus("trickster_possessed"))
+			var/datum/statusEffect/trickster_possessed/status = M.hasStatus("trickster_possessed")
+			mind_to_be_transferred = status.human_mind
+		if (M.bioHolder.HasEffect("revenant")) //just don't
+			return
+
 		if (!mind_to_be_transferred)
 			return
 
