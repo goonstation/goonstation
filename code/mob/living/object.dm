@@ -338,12 +338,6 @@
 	get_hud()
 		return src.hud
 
-/mob/living/object/proc/specific_emotes(var/act, var/param = null, var/voluntary = 0)
-	return null
-
-/mob/living/object/proc/specific_emote_type(var/act)
-	return 1
-
 /mob/living/object/emote(var/act, var/voluntary = 0)
 	..()
 	var/param = null
@@ -355,8 +349,8 @@
 		act = copytext(act, 1, t1)
 
 	var/maptext_out = 0
-	var/message = specific_emotes(act, param, voluntary)
-	var/message_type = specific_emote_type(act)
+	var/message = null
+	var/message_type = 1
 	var/custom = 0 //Sorry, gotta make this for chat groupings.
 
 
