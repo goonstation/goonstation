@@ -1109,13 +1109,11 @@ TYPEINFO(/obj/item/mechanics)
 				LIGHT_UP_HOUSING
 				FLICK("comp_hscan1",src)
 				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
-				var/sendstr
 				if(src.send_name)
-					sendstr = user.real_name
+					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, user.real_name)
 				else
 					var/datum/forensic_data/fingerprint/fingerprint = H.get_fingerprint(ignore_gloves = TRUE)
-					sendstr = fingerprint.print.id
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
+					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, fingerprint.print.id)
 			else
 				boutput(user, SPAN_ALERT("The hand scanner can only be used by humanoids."))
 				return
