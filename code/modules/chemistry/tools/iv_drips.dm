@@ -15,6 +15,7 @@
 	w_class = W_CLASS_TINY
 	flags = TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
+	default_material = "plastic"
 	amount_per_transfer_from_this = 5
 	initial_volume = 250//100
 	var/image/fluid_image = null
