@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/device/chameleon) //Because their hands are filled with their chameleon gear
+		/obj/item/device/chameleon)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
