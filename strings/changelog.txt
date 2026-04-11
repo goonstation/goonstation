@@ -1,4 +1,9 @@
 
+(t)fri apr 10 26
+(u)Hawke
+(p)26368
+(e)|
+(+)Arcfiend and Salvager role preferences will now reset with the rest of your profile correctly.
 (t)tue apr 07 26
 (u)CatzCatzCatz, bork
 (p)26331
