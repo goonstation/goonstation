@@ -413,7 +413,7 @@ TYPEINFO(/mob/new_player)
 			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 			S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 		else if (S.syndicate)
-			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
+			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as a syndicate cyborg.")
 			S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 
 		if (isAI(S))

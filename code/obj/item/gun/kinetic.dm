@@ -448,7 +448,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		gray
 			icon_state = "shotgun_gray"
-			desc = "An gray shotgun shell."
+			desc = "A gray shotgun shell."
 
 		pipe
 			icon_state = "shotgun_pipe"
@@ -1298,7 +1298,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/makarov
 	name = "\improper PM Pistol"
-	desc = "An time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
+	desc = "A time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
 	icon_state = "makarov"
 	item_state = "makarov"
 	w_class = W_CLASS_SMALL
@@ -1769,6 +1769,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_REVOLVER_45)
 	spread_angle = 1
 	max_ammo_capacity = 7
+	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/c_45
 	recoil_strength = 11
 
@@ -3551,7 +3552,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 	recoil_strength = 10
 	recoil_max = 60
-	default_magazine = /obj/item/ammo/bullets/abg/two
+	default_magazine = /obj/item/ammo/bullets/abg/punchy/two
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
 
@@ -3561,7 +3562,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else if (prob(1))
 			desc = "Actually the Fulmar 1881 can't be called a true coach gun if it's sawn off, that would by definition make it a sawn-off. Meh, semantics."
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/abg)
+		set_current_projectile(new/datum/projectile/bullet/abg/punchy)
 		..()
 
 	birdshot

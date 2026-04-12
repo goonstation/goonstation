@@ -673,20 +673,28 @@
 	// this should only be spawned by the game, spawning it otherwise would just be dumb
 	name = "scrap"
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
-	icon = 'icons/obj/items/materials/materials.dmi'
-	icon_state = "scrap"
+	icon = 'icons/obj/items/materials/scrap.dmi'
+	icon_state = "scrapA_1"
 	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = FALSE
 	mat_changename = TRUE
 	material_name = "Steel"
 	default_material = "steel"
+	var/icon_type = "A"
 
 	New()
+		src.icon_type = pick("A","B","C","D")
 		..()
-		icon_state += "[rand(1,5)]"
 
-	get_stack_value()
-		return 0
+	update_icon()
+		src.icon_state = "scrap[src.icon_type]_[src.icon_stack_value]"
+
+	stack_item(obj/item/other)
+		if(!istype(other, /obj/item/raw_material/scrap_metal))
+			return
+		var/obj/item/raw_material/scrap_metal/scrap = other
+		src.icon_type = scrap.icon_type
+		..()
 
 /obj/item/raw_material/shard
 	// same deal here

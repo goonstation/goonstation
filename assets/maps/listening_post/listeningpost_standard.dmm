@@ -849,6 +849,10 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Nl" = (

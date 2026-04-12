@@ -2901,7 +2901,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	with_ammo
 		create_products(restocked)
 			..()
-			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg/punchy, 2, cost=PAY_TRADESMAN, hidden=1)
 
 TYPEINFO(/obj/machinery/vending/chem)
 	mats = null

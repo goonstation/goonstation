@@ -1831,6 +1831,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A traditional blue wizard's robe. It lacks all the stars and moons and stuff on it though."
 	icon_state = "wizard"
 	item_state = "wizard"
+	c_flags = SPACEWEAR
 	magical = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM

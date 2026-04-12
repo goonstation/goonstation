@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		. = ..()
 		chant_cooldown = rand(35, 135) // 10ths of seconds cooldown
 
-	Life(datum/controller/process/mobs/parent) // shamelessly stolen from the crunched cause adding this as a AI task was a nightmare
+	Life(datum/controller/process/mobs/parent) // shamelessly stolen from the crunched cause adding this as an AI task was a nightmare
 		if (..(parent))
 			return 1
 

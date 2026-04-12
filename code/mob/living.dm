@@ -507,6 +507,7 @@ TYPEINFO(/mob/living)
 					storage.close(user = src)
 				else
 					storage.open(user = src)
+				storage.add_fingerprint(src)
 		else
 			src.swap_hand()
 		return

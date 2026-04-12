@@ -2174,7 +2174,7 @@ var/global/noir = 0
 				if (!M) return
 				mod_color(M)
 			else
-				tgui_alert(usr,"You need to be at least a Administrator to modify an icon.")
+				tgui_alert(usr,"You need to be at least an Administrator to modify an icon.")
 
 		if("giveantagtoken") //Gives player a token they can redeem to guarantee an antagonist role
 			if (src.level >= LEVEL_SA)
@@ -2215,7 +2215,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.view_save_data(M)
 			else
-				tgui_alert(usr,"You need to be at least a Administrator to view save data.")
+				tgui_alert(usr,"You need to be at least an Administrator to view save data.")
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
@@ -3166,7 +3166,7 @@ var/global/noir = 0
 								return
 
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to emag everything")
+							tgui_alert(usr,"You need to be at least an Administrator to emag everything")
 							return
 
 					if("shakecamera")
@@ -3185,7 +3185,7 @@ var/global/noir = 0
 									M.changeStatus("knockdown", 2 SECONDS)
 
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")
+							tgui_alert(usr,"You need to be at least an Administrator to shake the camera.")
 							return
 
 					if("creepifystation")
@@ -3196,7 +3196,7 @@ var/global/noir = 0
 								logTheThing(LOG_DIARY, usr, "used the Creepify Station button", "admin")
 								creepify_station()
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to creepify the station.")
+							tgui_alert(usr,"You need to be at least an Administrator to creepify the station.")
 							return
 
 

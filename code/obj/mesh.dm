@@ -507,6 +507,9 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
+	HELP_MESSAGE_OVERRIDE("You can use <b>wirecutters</b> to quickly dismantle it. \
+	You can also attack it with other items on <span class='harm'>harm</span> intent.")
+
 	amount_of_rods_when_destroyed = 1
 	icon_state_prefix = "C"// Short for "Catwalk"
 
@@ -523,8 +526,9 @@ TYPEINFO_NEW(/obj/mesh/catwalk)
 	if (istype(I, /obj/item/cable_coil))
 		src.loc.Attackby(user.equipped(), user)
 		return
+	if(user.a_intent != "harm") // Don't do anything if you're not on harm intent, act like a normal floor.
+		return
 	..()
-
 
 /obj/mesh/catwalk/special_update_icon(special_icon_state)
 	if(special_icon_state == "cut")
