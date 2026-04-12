@@ -20,7 +20,7 @@
 	holder.stop_move()
 
 /datum/aiTask/sequence/goalbased/critter/scavenge/manhunter_scavenging
-	//This is a in-combat scavenging (this is why we need ai_turbo) that should be able to over-prioritize the manhunter_hunting task if the distances plays well into it
+	//This is an in-combat scavenging (this is why we need ai_turbo) that should be able to over-prioritize the manhunter_hunting task if the distances plays well into it
 	weight = 10
 	ai_turbo = TRUE
 	max_dist = 7

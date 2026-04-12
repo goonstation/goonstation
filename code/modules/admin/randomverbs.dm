@@ -886,7 +886,7 @@
 				if (new_race == "Remove")
 					src.mutantrace = null
 			else
-				boutput(src, "You must be at least a Administrator to polymorph mutantraces.")
+				boutput(src, "You must be at least an Administrator to polymorph mutantraces.")
 
 		else if(href_list["apply"])
 			src.copy_to_target()

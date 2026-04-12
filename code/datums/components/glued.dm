@@ -14,6 +14,7 @@ TYPEINFO(/datum/component/glued)
 	var/original_anchored
 	var/atom/glued_to
 	var/set_loc_rippoff_in_progress = FALSE
+	var/had_reset_transform = FALSE
 
 /datum/component/glued/Initialize(atom/target, glue_duration=null, glue_removal_time=null)
 	. = ..()
@@ -26,10 +27,12 @@ TYPEINFO(/datum/component/glued)
 	var/atom/movable/parent = src.parent
 	parent.add_filter("glued_outline", 0, outline_filter(size=1, color="#e6e63c7f"))
 	delayed_dry_up(glue_duration)
+	src.had_reset_transform = HAS_FLAG(parent.vis_flags, RESET_TRANSFORM)
 	if(ismovable(glued_to))
 		var/atom/movable/glued_to = src.glued_to
 		LAZYLISTADDUNIQUE(glued_to.attached_objs, parent)
 		glued_to.vis_contents += parent
+		ADD_FLAG(parent.vis_flags, RESET_TRANSFORM)
 	if(ismob(parent))
 		var/mob/parent_mob = parent
 		APPLY_ATOM_PROPERTY(parent_mob, PROP_MOB_CANTMOVE, "glued")
@@ -146,6 +149,8 @@ TYPEINFO(/datum/component/glued)
 		REMOVE_ATOM_PROPERTY(parent_mob, PROP_MOB_CANTMOVE, "glued")
 	parent.set_loc(get_turf(parent))
 	src.glued_to = null
+	if (!src.had_reset_transform)
+		REMOVE_FLAG(parent.vis_flags, RESET_TRANSFORM)
 	. = ..()
 
 #undef MAGIC_GLUE_ANCHORED

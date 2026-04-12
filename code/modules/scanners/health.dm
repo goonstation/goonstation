@@ -354,7 +354,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 /// ----------- Assembly-Related Procs -----------
 
 	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
-		return " You can add this to a armor vest in order to craft a suicide bomb vest."
+		return " You can add this to an armor vest in order to craft a suicide bomb vest."
 
 	proc/assembly_on_wearer_death(var/affected_analyser, var/mob/dying_mob)
 		if (src.master && istype(src.master, /obj/item/assembly))

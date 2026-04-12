@@ -1,4 +1,24 @@
 
+(t)sat apr 11 26
+(u)Driftered
+(p)26327
+(e)🔄💊📦|C-Rework, A-Medical, A-Game-Objects
+(*)Character names no longer show up when you examine or scan an internal organ. DNA can still be used to track down an organ's original owner with a Forensic Scanner if desired.
+(+)Added character names to eyes
+(u)Hawke
+(p)26378
+(e)|
+(+)Butcher knives can now be used to cut open mail.
+(u)LeahTheTech
+(+)Object explosion resistances no longer apply if the explosion happened on the same turf. Tl;dr: you can no longer perfect parry torpedoes.
+(u)Nea
+(p)26319
+(e)🎨|C-Sprites
+(+)The Colt Single-Action Army revolver now has a golden icon variant, claimable via the Helios medal
+(u)LorrMaster
+(p)26320
+(e)🎨🧱|C-Sprites, A-Materials
+(+)New sprites for scrap metal at various stack sizes.
 (t)fri apr 10 26
 (u)Hawke
 (p)26368

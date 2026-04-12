@@ -2269,7 +2269,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/armadillo
 	name = "space armadillo"
-	desc = "A armadillo that came from space. Or maybe went to space. Who knows how it got here?"
+	desc = "An armadillo that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "armadillo"
 	icon_state_dead = "armadillo-dead"
 	hand_count = 2

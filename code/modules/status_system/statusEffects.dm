@@ -2211,7 +2211,7 @@
 		if(!ishuman(A))
 			. = FALSE
 		// I'd LIKE to put this check here, but proc/find_ailment_by_type and is a bit too inefficient for my comfort
-		// and this will be applied on combat hit. The ailments should use a assoc list for Constant lookup time or something...
+		// and this will be applied on combat hit. The ailments should use an assoc list for Constant lookup time or something...
 		// if (isliving(A))
 		// 	var/mob/living/L = A
 		// 	if (L.find_ailment_by_type(/datum/ailment/disease/necrotic_degeneration/can_infect_more))

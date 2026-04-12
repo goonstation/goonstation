@@ -682,7 +682,7 @@ ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/unary)
 		name = "Sensor"
 		path = /obj/machinery/fluid_machinery/unary/sensor
 		icon_state = "sensor"
-		desc = "Sends a signal and a alert at a certain threshold."
+		desc = "Sends a signal and an alert at a certain threshold."
 
 ABSTRACT_TYPE(/datum/pipe_recipe/fluid/machine/binary)
 /datum/pipe_recipe/fluid/machine/binary

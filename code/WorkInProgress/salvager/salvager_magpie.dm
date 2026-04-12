@@ -1176,7 +1176,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/special/sell/arms)
 /datum/commodity/magpie/special/sell/arms
 	pistol
 		comname = "9mm pistol"
-		desc = "A rare semi-automatic 9mm pistol that was collected from an military vessel."
+		desc = "A rare semi-automatic 9mm pistol that was collected from a military vessel."
 		comtype = /obj/item/gun/kinetic/pistol
 		price = 1650
 		amount = 4
