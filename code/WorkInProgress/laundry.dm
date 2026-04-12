@@ -112,6 +112,20 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					var/mob/living/carbon/human/criminal = src.activator
 					if(criminal)
 						criminal.apply_automated_arrest("Money laundering.")
+				else if (istype(item, /obj/item/organ/brain))
+					var/obj/item/organ/brain = item
+					if (brain.icon_state != "brain2")
+						return
+					brain.icon = "icons/obj/items/organs/brain.dmi"
+					brain.icon_state = "smooth_brain"
+					brain.item_state = "smooth_brain"
+					// getting rid of all of those UNSIGHTLY wrinkles heals your brain!
+					brain.heal_damage(brain.brute_dam, brain.burn_dam, brain.tox_dam)
+					brain.changeStatus("freshly_laundered", INFINITE_STATUS)
+					// even if it's completely fucked up?
+					if (brain.broken)
+						brain.unbreakme()
+					brain.UpdateIcon()
 			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0
@@ -238,7 +252,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/brick))
+			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/brick) || istype(W, /obj/item/organ/brain))
 				user.u_equip(W)
 				W.set_loc(src)
 				src.visible_message("[user] puts [W] into [src].")
