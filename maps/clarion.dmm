@@ -6200,7 +6200,7 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "security";
 	enter_id = "outer";
 	name = "Security"
@@ -8466,7 +8466,7 @@
 	name = "Engine Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineering";
 	enter_id = "inner";
 	name = "Engineering"
@@ -9806,7 +9806,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engine";
 	enter_id = "outer";
 	name = "Engine Room"
@@ -15402,7 +15402,7 @@
 	name = "Engine Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineering";
 	enter_id = "inner";
 	name = "Engineering"
@@ -20800,7 +20800,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westsubstation";
 	name = "West Substation"
 	},
@@ -21261,7 +21261,7 @@
 /obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "security";
 	enter_id = "inner";
 	name = "Security"
@@ -22217,7 +22217,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
@@ -23534,7 +23534,7 @@
 /obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "security";
 	enter_id = "inner";
 	name = "Security"
@@ -24081,7 +24081,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "security";
 	enter_id = "side";
 	name = "Security"
@@ -26329,7 +26329,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
@@ -29223,7 +29223,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westsubstation";
 	name = "West Substation"
 	},
@@ -33340,7 +33340,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engineering";
 	enter_id = "outer";
 	name = "Engineering"
@@ -37922,7 +37922,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "security";
 	enter_id = "side";
 	name = "Security"
@@ -40264,7 +40264,7 @@
 	dir = 8;
 	pixel_x = 20
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro1";
 	enter_id = "outer";
 	name = "Security Interrogation 1"
@@ -40412,7 +40412,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro1";
 	enter_id = "inner";
 	name = "Security Interrogation 1"
@@ -41476,7 +41476,7 @@
 	name = "Engine Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "engine";
 	enter_id = "inner";
 	name = "Engine Room"
