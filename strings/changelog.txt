@@ -1,4 +1,10 @@
 
+(t)mon apr 13 26
+(u)ANNmagedon
+(p)26377
+(e)🎩🐣|A-Clothing, A-Respawning
+(+)Increase hardhat count in Engineering Apparel vendor from 2 to 5 (same as other hats).
+(+)Engineers (and trainees) now spawn with a hardhat on their head due to repeated complaints from space OSHA (9 CFR 1926.100 – Head Protection) .
 (t)sat apr 11 26
 (u)Driftered
 (p)26327

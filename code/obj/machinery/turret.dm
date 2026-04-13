@@ -475,6 +475,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 /obj/machinery/turretid/receive_silicon_hotkey(var/mob/user)
 	if(..())
 		return
+	if(src.emagged)
+		return
 
 	if(user.client.check_key(KEY_OPEN))
 		. = 1
