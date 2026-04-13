@@ -564,6 +564,7 @@
 				H.take_brain_damage(1 * mult)
 
 		H.bleeding = 0
+		H.bleeding_internal = 0
 		H.changeStatus("knockdown", 6 * mult SECONDS)
 		H.losebreath+=20 * mult
 		H.take_oxygen_deprivation(20 * mult)
