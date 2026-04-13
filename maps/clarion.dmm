@@ -7203,14 +7203,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"bri" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/obj/landmark/antagonist/blob,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "brk" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -9463,6 +9455,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowblack"
@@ -21239,13 +21232,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"kgV" = (
-/obj/machinery/info_map,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellowblack"
-	},
-/area/station/hallway/primary/south)
 "khz" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -28333,6 +28319,12 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
+/area/station/hallway/primary/south)
+"oVB" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "oWh" = (
 /obj/disposalpipe/segment/mail{
@@ -39163,6 +39155,7 @@
 	name = "engineering mail router"
 	},
 /obj/decal/cleanable/machine_debris,
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "wjD" = (
@@ -77986,9 +77979,9 @@ whS
 wTM
 lOo
 tvr
-bri
-qHi
-kgV
+brl
+oVB
+vMb
 mYO
 aPp
 dVs
