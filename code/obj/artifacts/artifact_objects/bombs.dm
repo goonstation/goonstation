@@ -246,7 +246,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	post_setup()
 		. = ..()
 		payload_type = rand(1,3)// replace the 1 with 0 to enable foam bombs
- 		var/payload_type_name = "unknown"
+		var/payload_type_name = "unknown"
 		switch (payload_type)
 			if (CHEMBOMB_FOAMY)
 				payload_type_name = "foam"
