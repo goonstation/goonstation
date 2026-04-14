@@ -6,14 +6,14 @@
  */
 
 import {
+  BlockQuote,
   Button,
   Dropdown,
   Input,
-  Slider,
   Section,
+  Slider,
   Stack,
   TextArea,
-  BlockQuote,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
