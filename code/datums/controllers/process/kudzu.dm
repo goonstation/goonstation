@@ -44,7 +44,7 @@
 			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			H.set_body_icon_dirty()
 			return
-		if(H.hasStatus("kudzuwalk"))
+		if(H.hasStatus("kudzuwalk") && !iskudzuman(H))
 			src.conversion_progress += CONVERT_REQUIRED
 		else
 			src.conversion_progress += rand(CONVERT_PER_CORPSE_MINIMUM, CONVERT_PER_CORPSE_MAXIMUM)
