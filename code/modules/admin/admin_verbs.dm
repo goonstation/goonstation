@@ -118,6 +118,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_create_centcom_report,
 		/client/proc/cmd_admin_create_advanced_centcom_report,
 		/client/proc/cmd_admin_advanced_centcom_report_help,
+		/client/proc/cmd_admin_command_report_panel,
 		/client/proc/warn,
 		/client/proc/cmd_admin_playeropt,
 		/client/proc/popt_key,
