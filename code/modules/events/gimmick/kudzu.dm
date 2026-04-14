@@ -28,6 +28,7 @@
 			boutput(user, "You plant the [src] on the [A].")
 			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
 			user.setStatus("kudzuwalk", INFINITE_STATUS)
+			global.get_master_kudzu_controller().conversion_progress += 100 //Equal to CONVERT_REQUIRED in process/kudzu.dm. E.G. one free corpse conversion per seed
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
 			message_ghosts("<b>Kudzu</b> has been planted at [log_loc(src.loc, ghostjump=TRUE)].")
 			user.u_equip(src)
@@ -400,6 +401,7 @@
 		return
 
 /proc/get_master_kudzu_controller()
+	RETURN_TYPE(/datum/controller/process/kudzu)
 	for (var/datum/controller/process/kudzu/K in processScheduler.processes)
 		return K
 	return null
