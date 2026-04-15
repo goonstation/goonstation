@@ -90,6 +90,10 @@
 	src.holder.command_report_panel ||= new
 	src.holder.command_report_panel.ui_interact(src.mob)
 
+#define TEXT_STYLING_NORMAL "Normal"
+#define TEXT_STYLING_ZALGO "Zalgo"
+#define TEXT_STYLING_VOID "Void"
+
 /datum/command_report_panel
 	///Static list of alert origins that have unique styling
 	var/static/list/origin_choices = list(
@@ -104,12 +108,24 @@
 		ALERT_COMMAND,
 		ALERT_CLOWN,
 		ALERT_SYNDICATE,
+		"Unknown Source", //Doesn't have a custom style but Zalgo/Void defaulted to this
 	)
+	var/show_origin = TRUE // I kinda hate that announcements have two procs
 	var/origin = ALERT_CENTCOM
+
 	var/header = null
 	var/body = null
-	var/show_origin = TRUE // I kinda hate that announcements have two procs
 
+	var/text_styling = TEXT_STYLING_NORMAL
+	var/send_printout = TRUE
+
+	var/static/list/default_announcement_sounds = list(
+		'sound/misc/announcement_1.ogg',
+		'sound/misc/bingbong.ogg',
+		'sound/machines/announcement_clown.ogg',
+		'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg',
+		'sound/ambience/spooky/Void_Calls.ogg',
+	)
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
 	var/sound_volume = 100
 
@@ -127,12 +143,16 @@
 
 /datum/command_report_panel/ui_data(mob/user)
 	. = list(
-		"origin" = src.origin,
 		"origin_choices" = src.origin_choices,
+		"show_origin" = src.show_origin,
+		"origin" = src.origin,
 		"header" = src.header,
 		"body" = src.body,
-		"show_origin" = src.show_origin,
+		"text_styling" = src.text_styling,
+		"text_styling_options" = list(TEXT_STYLING_NORMAL, TEXT_STYLING_ZALGO, TEXT_STYLING_VOID),
+		"send_printout" = src.send_printout,
 		"sound_to_play" = src.sound_to_play,
+		"sound_options" = src.default_announcement_sounds,
 		"sound_volume" = src.sound_volume,
 	)
 
@@ -144,15 +164,21 @@
 	switch (action)
 		if("set_origin")
 			src.origin = params["value"]
-		if("choose_origin")
-			var/input = tgui_input_list(usr, "Choose an origin", "Command Report Panel", src.origin_choices, ALERT_CENTCOM)
-			if(input)
-				src.origin = input
 		if("set_header")
 			src.header = params["value"]
 		if("set_body")
 			src.body = params["value"]
+		if("set_sound")
+			src.sound_to_play = params["value"]
+		if("upload_sound")
+			src.sound_to_play = input(usr, "Upload a file:", "File Uploader", null) as null|sound
+		if("sync_sound")
+			src.sync_sound_to_origin()
+		if("set_text_styling")
+			src.text_styling = params["value"]
 		if("toggle_show_origin")
+			src.show_origin = !src.show_origin
+		if("toggle_send_printout")
 			src.show_origin = !src.show_origin
 		if("set_sound_volume")
 			src.sound_volume = clamp(params["volume"], 0, 100)
@@ -163,13 +189,25 @@
 /datum/command_report_panel/proc/announce()
 	src.validate_options()
 
-	if(src.show_origin)
-		command_alert(src.body, src.header, src.sound_to_play, alert_origin = src.origin)
-	else
-		command_announcement(src.body, src.header, src.sound_to_play, volume = src.sound_volume, alert_origin = src.origin)
+	var/header_to_send = src.header
+	var/body_to_send = src.body
+	if(src.text_styling == TEXT_STYLING_ZALGO)
+		header_to_send = zalgoify(header_to_send, rand(0,2), rand(0, 2), rand(0, 2))
+		body_to_send = zalgoify(body_to_send, rand(0,2), rand(0, 2), rand(0, 2))
+	else if(src.text_styling == TEXT_STYLING_VOID)
+		body_to_send = voidSpeak(body_to_send)
 
-	logTheThing(LOG_ADMIN, usr, "created a command report: [src.origin], [src.header], [src.body]")
-	logTheThing(LOG_DIARY, usr, "created a command report: [src.origin], [src.header], [src.body]", "admin")
+	if(src.show_origin)
+		command_alert(body_to_send, header_to_send, src.sound_to_play, alert_origin = src.origin)
+	else
+		command_announcement(body_to_send, header_to_send, src.sound_to_play, volume = src.sound_volume, alert_origin = src.origin)
+
+	if(src.send_printout)
+		for_by_tcl(comms_dish, /obj/machinery/communications_dish)
+			comms_dish.add_centcom_report(src.header, src.body)
+
+	logTheThing(LOG_ADMIN, usr, "created a command report ([src.text_styling]): [src.origin], [src.header], [src.body]")
+	logTheThing(LOG_DIARY, usr, "created a command report ([src.text_styling]): [src.origin], [src.header], [src.body]", "admin")
 	message_admins("[key_name(usr)] has created a command report")
 
 /datum/command_report_panel/proc/validate_options()
@@ -178,3 +216,25 @@
 	if(!isnum_safe(src.sound_volume))
 		src.sound_volume = 100
 	src.sound_volume = clamp(src.sound_volume, 0, 100)
+	tgui_process.update_uis(src)
+
+//Sync to defaults from the announcements
+/datum/command_report_panel/proc/sync_sound_to_origin()
+	if(src.origin == ALERT_CLOWN) //Comedy precedes the call of the void
+		src.sound_to_play = 'sound/machines/announcement_clown.ogg'
+		src.sound_volume = 50
+	else if(src.text_styling == TEXT_STYLING_ZALGO)
+		src.sound_to_play = 'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg'
+	else if(src.text_styling == TEXT_STYLING_VOID)
+		src.sound_to_play = 'sound/ambience/spooky/Void_Calls.ogg'
+	else if(src.origin == ALERT_DEPARTMENT)
+		src.sound_to_play = 'sound/misc/bingbong.ogg'
+		src.sound_volume = 70
+	else
+		src.sound_to_play = 'sound/misc/announcement_1.ogg'
+		src.sound_volume = 100
+	src.validate_options()
+
+#undef TEXT_STYLING_NORMAL
+#undef TEXT_STYLING_ZALGO
+#undef TEXT_STYLING_VOID

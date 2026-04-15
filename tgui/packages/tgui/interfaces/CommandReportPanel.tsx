@@ -21,13 +21,16 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface CommandReportPanelData {
-  origin: string;
   origin_choices: string[];
+  show_origin: BooleanLike;
+  origin: string;
   header: string;
   body: string;
-  show_origin: BooleanLike;
-
+  text_styling: string;
+  text_styling_options: string[];
+  send_printout: BooleanLike;
   sound_to_play: string;
+  sound_options: string[];
   sound_volume: number;
 }
 
@@ -35,27 +38,27 @@ export const CommandReportPanel = (_props) => {
   const { act, data } = useBackend<CommandReportPanelData>();
 
   return (
-    <Window title="Command Report Panel" width={500}>
+    <Window title="Command Report Panel" width={450} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <Section title="Origin">
-              <Stack fill>
-                <Stack.Item grow>
-                  <Input
-                    fluid
-                    onBlur={(value) => act('set_origin', { value })}
-                    value={data.origin}
-                  />
-                </Stack.Item>
+              <Stack fill align="center">
                 <Stack.Item>
                   <Dropdown
                     icon="list"
                     selected={data.origin}
                     options={data.origin_choices}
                     iconOnly
-                    menuWidth={'200px'}
+                    menuWidth={'300px'}
                     onSelected={(value) => act('set_origin', { value })}
+                  />
+                </Stack.Item>
+                <Stack.Item grow>
+                  <Input
+                    fluid
+                    onBlur={(value) => act('set_origin', { value })}
+                    value={data.origin}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -70,7 +73,21 @@ export const CommandReportPanel = (_props) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title="Header">
+            <Section
+              buttons={
+                <Button
+                  icon="download"
+                  onClick={() =>
+                    act('set_header', {
+                      value: 'AREA Announcement by NAME (JOB)',
+                    })
+                  }
+                >
+                  Announcement Computer Format
+                </Button>
+              }
+              title="Header"
+            >
               <Input
                 fluid
                 onBlur={(value) => act('set_header', { value })}
@@ -79,7 +96,19 @@ export const CommandReportPanel = (_props) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Section fill title="Body">
+            <Section
+              fill
+              title="Body"
+              buttons={
+                <Dropdown
+                  selected={data.text_styling}
+                  options={data.text_styling_options}
+                  onSelected={(value) => {
+                    act('set_text_styling', { value });
+                  }}
+                />
+              }
+            >
               <TextArea
                 height="100%"
                 fluid
@@ -90,7 +119,31 @@ export const CommandReportPanel = (_props) => {
           </Stack.Item>
           <Stack.Item>
             <Section title="Sound">
-              <Button>{data.sound_to_play}</Button>
+              <Stack fill align="center">
+                <Stack.Item>
+                  <Dropdown
+                    icon="list"
+                    selected={data.sound_to_play}
+                    options={data.sound_options}
+                    iconOnly
+                    menuWidth={'400px'}
+                    onSelected={(value) => act('set_sound', { value })}
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button icon="file-audio" onClick={() => act('upload_sound')}>
+                    {data.sound_to_play}
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="refresh"
+                    color="green"
+                    tooltip="Sync sound settings to origin"
+                    onClick={() => act('sync_sound')}
+                  />
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item>
