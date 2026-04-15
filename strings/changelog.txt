@@ -1,5 +1,10 @@
 
 (t)wed apr 15 26
+(u)Pirate-Rob
+(p)26019
+(e)🗺🎨🔬🌠|A-Mapping, C-Sprites, A-Science, A-Events
+(+)Large computer frames now start with a floppy peripheral and an extra peripheral slot. The invisible floppy peripheral has been removed.
+(+)Floppy drives are now labelled fd0, fd1, fd2, and are available from CompTech by default.
 (u)Cheekybrdy
 (p)26220
 (e)🧛|A-Gamemodes
