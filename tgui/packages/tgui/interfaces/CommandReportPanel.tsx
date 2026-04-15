@@ -6,8 +6,8 @@
  */
 
 import {
-  BlockQuote,
   Button,
+  Divider,
   Dropdown,
   Input,
   Section,
@@ -26,6 +26,7 @@ interface CommandReportPanelData {
   origin: string;
   header: string;
   body: string;
+  advanced_report: BooleanLike;
   text_styling: string;
   text_styling_options: string[];
   send_printout: BooleanLike;
@@ -64,6 +65,7 @@ export const CommandReportPanel = (_props) => {
                 <Stack.Item>
                   <Button.Checkbox
                     checked={data.show_origin}
+                    disabled={data.advanced_report}
                     onClick={() => act('toggle_show_origin')}
                   >
                     Show Origin
@@ -96,25 +98,48 @@ export const CommandReportPanel = (_props) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Section
-              fill
-              title="Body"
-              buttons={
-                <Dropdown
-                  selected={data.text_styling}
-                  options={data.text_styling_options}
-                  onSelected={(value) => {
-                    act('set_text_styling', { value });
-                  }}
-                />
-              }
-            >
-              <TextArea
-                height="100%"
-                fluid
-                onBlur={(value) => act('set_body', { value })}
-                value={data.body}
-              />
+            <Section fill title="Body">
+              <Stack vertical fill>
+                <Stack.Item>
+                  <Stack>
+                    <Stack.Item>
+                      <Dropdown
+                        selected={data.text_styling}
+                        options={data.text_styling_options}
+                        disabled={!!data.advanced_report}
+                        onSelected={(value) => {
+                          act('set_text_styling', { value });
+                        }}
+                      />
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button.Checkbox
+                        checked={data.advanced_report}
+                        onClick={() => act('toggle_advanced')}
+                      >
+                        Advanced Report
+                      </Button.Checkbox>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        icon="question"
+                        onClick={() => act('advanced_report_help')}
+                      >
+                        Help
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
+                </Stack.Item>
+                <Stack.Divider />
+                <Stack.Item grow>
+                  <TextArea
+                    fluid
+                    height="100%"
+                    onBlur={(value) => act('set_body', { value })}
+                    value={data.body}
+                  />
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item>
@@ -144,19 +169,33 @@ export const CommandReportPanel = (_props) => {
                   />
                 </Stack.Item>
               </Stack>
-            </Section>
-          </Stack.Item>
-          <Stack.Item>
-            <Section title="Volume">
-              <BlockQuote>Always 100 if showing origin</BlockQuote>
+              <Divider />
               <Slider
                 minValue={0}
                 maxValue={100}
+                disabled={!!data.show_origin}
+                color={data.show_origin ? 'red' : 'primary'}
                 value={data.sound_volume}
+                format={(value) => 'Volume: ' + value + '%'}
                 onChange={(event, value) =>
                   act('set_sound_volume', { volume: value })
                 }
               />
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section title="Miscellaneous">
+              <Stack fill align="center">
+                <Stack.Item>
+                  <Button.Checkbox
+                    checked={data.send_printout}
+                    disabled={data.advanced_report}
+                    onClick={() => act('toggle_send_printout')}
+                  >
+                    Send Printout
+                  </Button.Checkbox>
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item>
