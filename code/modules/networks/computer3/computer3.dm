@@ -277,7 +277,7 @@
 			desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 			icon_state = "oldlap"
 			base_icon_state = "oldlap"
-			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/network/omni,/obj/item/peripheral/sound_card)
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/drive,/obj/item/peripheral/network/omni,/obj/item/peripheral/sound_card)
 
 
 /obj/machinery/computer3/New()
