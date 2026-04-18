@@ -8,6 +8,8 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 	"Junction" = 2,
 	"Flipped Junction" = 3,
 	"Y-Junction" = 4,
+	"Switch Junction" = 6,
+	"Flipped Switch Junction" = 7,
 	"Trunk" = 5,
 )
 
