@@ -600,7 +600,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
-	desc = "An non-lethal grenade for use against protests, riots, vagrancy and loitering. Not to be used as a food additive."
+	desc = "A non-lethal grenade for use against protests, riots, vagrancy and loitering. Not to be used as a food additive."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "pepper"
 	icon_state_armed = "pepper1"

@@ -784,6 +784,11 @@ Equip items from body traits.
 		if(src.mind)
 			src.mind.originalPDA = PDA
 
+		if(src.client?.preferences?.id_starts_in_pda)
+			PDA.insert_id_card(C, src)
+			src.u_equip(PDA)
+			src.equip_if_possible(PDA, SLOT_WEAR_ID)
+
 	boutput(src, SPAN_NOTICE("Your pin to your ID is: [C.pin]"))
 	if (src.mind)
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")

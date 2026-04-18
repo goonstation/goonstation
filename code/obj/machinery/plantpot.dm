@@ -74,6 +74,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /obj/machinery/plantpot/New()
 	..()
+	START_TRACKING
 	src.plantgenes = new /datum/plantgenes(src)
 	src.create_reagents(src.tanksize)
 	// The plantpot can store 400 reagents in total, we want a bit more than the max water
@@ -835,6 +836,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.name = "dead " + src.name
 
 /obj/machinery/plantpot/disposing()
+	STOP_TRACKING
 	qdel(src.current_tick)
 	src.current_tick = null
 	. = ..()
@@ -901,7 +903,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		DNA.endurance += HYPstat_rounding(src.current_tick.endurance_bonus * src.current_tick.tick_multiplier)
 	// Now we modify chems in the tray
 	if (src.reagents)
-		src.reagents?.remove_any_except(src.current_tick.water_consumption * src.current_tick.tick_multiplier * src.drink_mult, "nectar")
+		src.reagents?.consume_any(src.current_tick.water_consumption * src.current_tick.tick_multiplier * src.drink_mult, 0.1, "nectar")
 		// This is where drink_rate does its thing. It will remove a bit of all reagents to meet
 		// it's quota, except nectar because that's supposed to stay in the plant pot.
 		// We give off nectar and should check our nectar levels

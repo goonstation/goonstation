@@ -326,6 +326,8 @@ TYPEINFO(/obj/item/device/radio)
 		. = "ai"
 	else if (isrobot(user))
 		. = "robo"
+	else if (ishorse(user))
+		. = "horse"
 	else if (icon_override)
 		. = icon_override
 

@@ -152,8 +152,9 @@ var/global/list/mapNames = list(
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
 	var/merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom
 	var/merchant_right_station = /area/shuttle/merchant_shuttle/right_station
-	var/list/shipping_destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
+	var/cargo_shipping_method = SHIPPING_METHOD_EDGE_FLING //! How does cargo arrive to the station?
 	/// default shipping destinations
+	var/list/shipping_destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
 
 	var/list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
@@ -206,6 +207,7 @@ var/global/list/mapNames = list(
 
 		SPAWN(5 SECONDS)
 			src.load_shuttle()
+			src.set_cargo_shipping_method()
 
 	proc/load_shuttle(path=null, transit_path=null, load_loc_override=null)
 		if(isnull(path))
@@ -241,6 +243,9 @@ var/global/list/mapNames = list(
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
 		transit_area.warp_dir = escape_dir
 		return TRUE
+
+	proc/set_cargo_shipping_method()
+		global.shippingmarket.cargo_shipping_method = src.cargo_shipping_method
 
 /datum/map_settings/pod_wars
 	name = "POD_WARS"
@@ -854,6 +859,8 @@ var/global/list/mapNames = list(
 	escape_dir = EAST
 	default_shuttle = "oshan"
 	shuttle_map_turf = /turf/space/fluid/acid
+
+	cargo_shipping_method = SHIPPING_METHOD_TRANSCEPTION
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap

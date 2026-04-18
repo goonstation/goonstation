@@ -76,6 +76,7 @@ var/list/removed_jobs = list(
 	var/PDAcolor = "#6F7961"
 	var/use_satchel //Automatically convert backpack to satchel?
 	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
+	var/id_starts_in_pda = FALSE //Try to automatically equip IDs in PDAs and PDAs in ID slots?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -255,6 +256,7 @@ var/list/removed_jobs = list(
 			"pdaRingtone" = src.pda_ringtone_index,
 			"useSatchel" = src.use_satchel,
 			"preferredUplink" = src.preferred_uplink,
+			"idStartsInPda" = src.id_starts_in_pda,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -544,6 +546,11 @@ var/list/removed_jobs = list(
 
 			if ("toggle-satchel")
 				src.use_satchel = !src.use_satchel
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("toggle-id-in-pda")
+				src.id_starts_in_pda = !src.id_starts_in_pda
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1134,10 +1141,12 @@ var/list/removed_jobs = list(
 				src.be_wizard = FALSE
 				src.be_werewolf = FALSE
 				src.be_vampire = FALSE
+				src.be_arcfiend = FALSE
 				src.be_wraith = FALSE
 				src.be_blob = FALSE
 				src.be_conspirator = FALSE
 				src.be_flock = FALSE
+				src.be_salvager = FALSE
 				src.be_misc = FALSE
 				src.tooltip_option = TOOLTIP_ALWAYS
 				src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS

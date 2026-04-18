@@ -583,3 +583,5 @@ ABSTRACT_TYPE(/datum/recipe_instructions/cooking/oven)
 
 /datum/recipe_instructions/cooking/oven/pigblanket
 	cookbonus = 6
+/datum/recipe_instructions/cooking/oven/fruit_salad
+	cookbonus = 2

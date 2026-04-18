@@ -35,8 +35,12 @@
 	///Indication of operability; if 0, whether from depletion or new installation, internal cell must fill to set this to 1 and activate interdiction
 	var/canInterdict = 0
 
-	///Tally of power used for interdiction in this machine tick. Used to determine presence and volume of the interdictor operating noise.
-	var/cumulative_cost = 0
+	///Tally of power used for active interdiction in this machine tick. Used to determine presence and volume of the interdictor operating noise.
+	var/active_cost = 0
+	///Tally of power used for passive interdiction in this machine tick. Contributes to the operating noise volume, but won't trigger it on its own.
+	var/passive_cost = 0
+	///When the spatial protection bioeffect triggers nearby, this is set to TRUE to notify the interdictor that its protection was active this tick.
+	var/did_local_interdiction = FALSE
 
 	///Set during radstorm interdiction; when true, a cost has been paid in this tick, and further radstorm interdictions inside the tick are free.
 	var/radstorm_paid = FALSE
@@ -257,7 +261,7 @@
 			var/amount_to_add = min(round(intcap.maxcharge - intcap.charge, 10), src.chargerate)
 			if(amount_to_add)
 				var/added = intcap.give(amount_to_add)
-				if(!src.canInterdict && !ON_COOLDOWN(src, "interdictor_noise", 20 SECONDS))
+				if(!src.canInterdict) //only plays continually during charging phase
 					playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
 				use_power(added / CELLRATE)
 		if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
@@ -279,18 +283,19 @@
 				else if (src.interdict_class == ITDR_ZEPHYR) // Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 					mob.changeStatus("zephyr_field", 6 SECONDS * mult)
 					extra_usage += 4
-			src.expend_interdict(extra_usage)
+			src.expend_interdict(extra_usage,is_passive=TRUE)
 
 	else
 		if(src.canInterdict)
 			doupdateicon = 0
 			src.stop_interdicting()
-	if(src.cumulative_cost)
-		if(src.cumulative_cost >= 50) //if the cost was very minor, don't even make a sound
-			var/sound_strength = clamp(cumulative_cost/10,5,25)
-			if(src.canInterdict && !ON_COOLDOWN(src, "interdictor_noise", 20 SECONDS))
-				playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
-		src.cumulative_cost = 0
+	if(src.active_cost >= 50 || src.did_local_interdiction) //without an active cost or a successful passive protection, don't even make a sound
+		var/sound_strength = clamp((active_cost + passive_cost)/10,5,25)
+		if(src.canInterdict)
+			playsound(src.loc, src.sound_interdict_run, sound_strength, 0)
+	src.active_cost = 0
+	src.passive_cost = 0
+	src.did_local_interdiction = FALSE
 	if(src.radstorm_paid)
 		src.updatecharge()
 		src.radstorm_paid = FALSE
@@ -316,8 +321,12 @@
  * The fourth argument (itdr_class) optionally passes in an interdictor class that's required for successful expenditure.
  * This is used for alternate functionality, such as wireless cyborg charging; random event blocking should not pass a specific class requirement.
  * These classes are numbers, but should use the defines, such as ITDR_ZEPHYR. Interdictors are given a class by the mainboard used in assembly.
+ *
+ * The fifth argument (is_passive) optionally designates the power expenditure as "passive".
+ * Passive expenditure does not count towards the threshold for the interdictor audibly operating;
+ * it will, however, contribute to operating volume if active expenditure independently meets the threshold, or a localized interdiction occurs.
  */
-/obj/machinery/interdictor/proc/expend_interdict(var/use_cost,var/target = null,var/skipanim = FALSE,var/itdr_class)
+/obj/machinery/interdictor/proc/expend_interdict(var/use_cost,var/target = null,var/skipanim = FALSE,var/itdr_class,var/is_passive = FALSE)
 	if (status & BROKEN || !src.canInterdict || (itdr_class && itdr_class != src.interdict_class))
 		return 0
 	if (target && !IN_RANGE(src,target,src.interdict_range))
@@ -328,9 +337,25 @@
 		return 0
 	else
 		intcap.use(net_use_cost)
-		src.cumulative_cost += net_use_cost
+		if(is_passive)
+			src.passive_cost += net_use_cost
+		else
+			src.active_cost += net_use_cost
 		if(!skipanim) src.updatecharge()
 		return 1
+
+/**
+ * Used in circumstances where the spatial protection bioeffect is responsible for interdiction,
+ * to notify the interdictor that its passive protection has had an effect.
+ * The range at which this counts is slightly extended, to account for the bioeffect's persistence.
+ */
+/obj/machinery/interdictor/proc/notify_interdictor(var/target)
+	if (status & BROKEN || !src.canInterdict || !target)
+		return
+	if (!IN_RANGE(src,target,src.interdict_range+5))
+		return
+	src.did_local_interdiction = TRUE
+	return TRUE
 
 ///Specialized radiation storm interdiction proc that allows multiple protections under a single unified cost per process.
 /obj/machinery/interdictor/proc/radstorm_interdict()
@@ -347,7 +372,7 @@
 			var/net_use_cost = ceil(use_cost * src.interdict_cost_mult)
 			if(intcap.charge > net_use_cost)
 				intcap.use(net_use_cost)
-				src.cumulative_cost += net_use_cost
+				src.active_cost += net_use_cost
 				src.radstorm_paid = TRUE
 			else
 				src.stop_interdicting()

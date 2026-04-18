@@ -357,7 +357,7 @@ TYPEINFO(/obj/item/device/flash)
 			var/obj/item/assembly/checked_assembly = src.master
 			if(checked_assembly.trigger == src) //in case a flash is used for something else than a trigger
 				checked_assembly.trigger_icon_prefix = "flash3"
-			if(checked_assembly.applier == src) //in case a flash is used for something else than a applier
+			if(checked_assembly.applier == src) //in case a flash is used for something else than an applier
 				checked_assembly.applier_icon_prefix = "flash3"
 			checked_assembly.UpdateIcon()
 			checked_assembly.UpdateName()

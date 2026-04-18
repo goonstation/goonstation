@@ -2132,7 +2132,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	icon_state = "goku"
 	item_state = "goku"
 
-// Mx Blorbo, a ersatz Mr Blobby costume.
+// Mx Blorbo, an ersatz Mr Blobby costume.
 
 /obj/item/clothing/suit/blorbosuit
 	name = "Mx. Blorbo costume suit"

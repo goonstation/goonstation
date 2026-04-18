@@ -1117,6 +1117,12 @@ toxic - poisons
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
 
+/datum/projectile/bullet/abg/punchy
+	damage = 20
+	stun = 30
+	//it's heavy right, so um it's lower down?
+	hit_ground_chance = 100
+
 /datum/projectile/bullet/potatoslug		//Improvised slug
 	name = "potato"
 	icon_state = "potatoslug"

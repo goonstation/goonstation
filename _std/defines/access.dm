@@ -1,7 +1,10 @@
 // Note: Don't forget to check and modify /obj/machinery/computer/card (the ID computer) as needed
 //       when you re-enable old credentials or add new ones.
 //       Also check proc/get_access_desc() (ID computer lookup) in access.dm
-
+//Admin override accesses to let admins ignore the access on an object
+#define ADMIN_ACCESS_OVERRIDE_NONE 0 //No override for admins, they respect the normal access levels
+#define ADMIN_ACCESS_OVERRIDE_BYPASS 1 //Admins bypass any access requirements on the object
+#define ADMIN_ACCESS_OVERRIDE_ONLY 2 //ONLY admins can open this regardless of access requirements
 
 // for stuff that is never allowed to open. Don't put this on any IDs etc
 #define access_impossible -1
@@ -126,3 +129,6 @@
 
 //Lunar door access, given to the tour guide to open the door
 #define access_lunar_breakdoor 90
+
+//Access to the captain's quarters on the russian ainley ship. Only given to the relavant guardbuddy.
+#define access_ainley_buddy 91

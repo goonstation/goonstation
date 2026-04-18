@@ -305,7 +305,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	w_class = W_CLASS_BULKY
 	anchored = ANCHORED
 	density = 0
-	desc = "A extremely tough secure safe."
+	desc = "An extremely tough secure safe."
 
 	attack_hand(mob/user)
 		return src.AttackSelf(user)

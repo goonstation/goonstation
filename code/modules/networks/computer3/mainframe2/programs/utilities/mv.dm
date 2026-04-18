@@ -40,6 +40,10 @@
 		destination_path.Cut(path_length)
 
 	initlist[2] = jointext(destination_path, "/") || "/"
+	if (src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initlist[2])) == ESIG_NOFILE)
+		src.message_user("Error: Destination path does not exist.")
+		mainframe_prog_exit
+		return
 
 	var/datum/computer/file/copy = target.copy_file()
 	copy.name = copy_name

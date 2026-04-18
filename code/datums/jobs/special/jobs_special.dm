@@ -102,6 +102,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	ui_colour = /datum/job/security::ui_colour
 	limit = 0
 	wages = PAY_TRADESMAN
+	trait_list = list("training_forensic")
 	access_string = "Forensic Technician"
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	slot_belt = list(/obj/item/device/pda2/security)

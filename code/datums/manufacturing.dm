@@ -722,7 +722,7 @@
 /datum/manufacture/glass
 	name = "Glass Panel"
 	item_requirements = list("crystal" = 1)
-	item_outputs = list(/obj/item/sheet)
+	item_outputs = list(/obj/item/sheet/glass)
 	create = 1
 	time = 2 SECONDS
 	category = "Resource"
@@ -1595,6 +1595,15 @@
 	create = 1
 	time = 3 SECONDS
 	category = "Tool"
+
+/datum/manufacture/gene_booth_frame
+	name = "Genetics Booth Deployer"
+	item_outputs = list(/obj/item/electronics/frame/flatpack/genetics_booth)
+	item_requirements = list(
+		"metal" = 15,
+		"crystal" = 5,
+		"energy" = 10,
+	)
 
 #ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/

@@ -227,7 +227,7 @@
 	flags = FLUID_SUBMERGE
 	text = "<font color=#5c5>s"
 	var/health = 50
-	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track a objective.
+	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track an objective.
 	var/max_uses = 0 // The maximum amount of time one can try to shake this shrub for something.
 	var/spawn_chance = 0 // How likely is this shrub to spawn something?
 	var/last_use = 0 // To prevent spam.

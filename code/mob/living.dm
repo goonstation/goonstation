@@ -507,6 +507,7 @@ TYPEINFO(/mob/living)
 					storage.close(user = src)
 				else
 					storage.open(user = src)
+				storage.add_fingerprint(src)
 		else
 			src.swap_hand()
 		return
@@ -1798,3 +1799,10 @@ TYPEINFO(/mob/living)
 
 /mob/living/HealBleeding(amt)
 	src.bleeding = max(src.bleeding - amt, 0)
+
+/mob/living/proc/muffled_by_grab()
+	for (var/obj/item/grab/G as anything in src.grabbed_by)
+		if ((G.state >= GRAB_CHOKE) && G.muffle_affecting)
+			return TRUE
+
+	return FALSE

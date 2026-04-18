@@ -6,6 +6,7 @@
 /obj/item/electronics/scanner
 	name = "device analyzer"
 	icon_state = "deviceana"
+	item_state = "invisible"
 	desc = "Used for scanning certain items for use with the ruckingenur kit."
 	force = 2
 	hit_type = DAMAGE_BLUNT

@@ -2634,9 +2634,7 @@
 /area/station/quartermaster/office)
 "qR" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null;
-	req_access_txt = "0"
+	dir = 4
 	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
@@ -3892,10 +3890,9 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen/fancy,
+/obj/machinery/shredder{
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/nw_triple,
 /area/station/bridge)
 "Ak" = (
@@ -6937,8 +6934,7 @@
 "WX" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	opacity = 0;
-	req_access_txt = ""
+	opacity = 0
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -7219,8 +7215,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Cockpit";
-	opacity = 0;
-	req_access_txt = ""
+	opacity = 0
 	},
 /turf/unsimulated/floor{
 	desc = "";
