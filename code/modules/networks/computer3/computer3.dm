@@ -825,8 +825,10 @@
 					var/datum/computer/file/terminal_program/os/newos = locate() in D.root.contents
 
 					if(newos && istype(newos))
-						if(findtext(lowertext(D.title), "disk"))src.temp_add += "Booting from "+D.title+"...<br>"
-						else src.temp_add += "Booting from "+D.title+" diskette...<br>"
+						if(findtext(lowertext(D.title), "disk"))
+							src.temp_add += "Booting from "+D.title+"...<br>"
+						else
+							src.temp_add += "Booting from "+D.title+" diskette...<br>"
 						src.run_program(newos)
 						break
 
