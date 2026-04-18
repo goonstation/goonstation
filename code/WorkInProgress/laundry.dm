@@ -114,6 +114,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						criminal.apply_automated_arrest("Money laundering.")
 				else if (istype(item, /obj/item/organ/brain))
 					var/obj/item/organ/brain = item
+					// prevents re-washing
 					if (brain.icon_state != "brain2")
 						return
 					brain.icon = "icons/obj/items/organs/brain.dmi"
