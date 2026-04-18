@@ -40,7 +40,7 @@
 			return
 
 		var/datum/computer/file/electronics_scan/theScan = new
-		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, DEVICE_ANALYZER_ALLOWED_TAGS, scanned, theScan)
+		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user, scannable_tags, scanned, theScan)
 
 		if(scan_result == ANALYSIS_SIGNAL_SUCCESS)
 			if (!isnull(theScan.scannedPath))
