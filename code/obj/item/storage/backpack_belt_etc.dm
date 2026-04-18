@@ -738,6 +738,22 @@
 	icon_state = "funny-blue"
 	item_state = "funny-blue"
 
+/obj/item/storage/fanny/funny/purple
+	icon_state = "funny-purple"
+	item_state = "funny-purple"
+
+/obj/item/storage/fanny/funny/yellow
+	icon_state = "funny-yellow"
+	item_state = "funny-yellow"
+
+/obj/item/storage/fanny/funny/pink
+	icon_state = "funny-pink"
+	item_state = "funny-pink"
+
+/obj/item/storage/fanny/funny/green
+	icon_state = "funny-green"
+	item_state = "funny-green"
+
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
 	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
