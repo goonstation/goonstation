@@ -89,11 +89,12 @@ TYPEINFO(/obj/machinery/codereader)
 		printed_paper.pixel_y = src.pixel_y + 9
 	return TRUE
 
+TYPEINFO(/obj/machinery/codereader/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/machinery/codereader/syndicate
 	name = "syndicate codereader"
 	desc = "A large device for stealing NanoTrasen security codes from floppy disks."
 	icon_state = "codereader_syndicate"
-	is_syndicate = TRUE
 	var/static/authdisk_uploaded_by = null
 	var/credits_for_authdisk = 2 //Number of credits reading the authdisk is worth
 
