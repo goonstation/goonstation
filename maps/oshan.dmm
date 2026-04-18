@@ -39409,6 +39409,7 @@
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/auto,
 /obj/item/card_group/plain,
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "pqA" = (

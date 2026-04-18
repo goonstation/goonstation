@@ -127,6 +127,10 @@
 	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
+			if(istype(A, /obj/projectile))
+				var/obj/projectile/projectile = A
+				if(istype(projectile.proj_data, /datum/projectile/syringe/kudzu_thorn))
+					return 1
 			if (src.can_kudzu_walk(A) || istype(A, /obj/icecube/kudzu))
 				return 1
 			return 0

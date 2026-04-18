@@ -75,7 +75,7 @@
 
 	attackby(obj/item/I, mob/user)
 		// You know, like a letter opener. It opens letters.
-		if ((istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/dagger)) && src.target_dna)
+		if ((istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/dagger) || istype(I, /obj/item/knife)) && src.target_dna)
 			actions.start(new /datum/action/bar/icon/mail_lockpick(src, I, 5 SECONDS), user)
 			return
 		..()

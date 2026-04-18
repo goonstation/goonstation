@@ -15261,6 +15261,7 @@
 "kEy" = (
 /obj/table/auto,
 /obj/item/card_box/plain,
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "kEF" = (

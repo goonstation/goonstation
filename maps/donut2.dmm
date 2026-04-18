@@ -18191,6 +18191,7 @@
 /obj/stool/chair/syndicate,
 /obj/npc/trader/exclown,
 /obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "eoa" = (

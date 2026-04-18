@@ -1004,7 +1004,7 @@
 /area/station/garden/owlery)
 "ati" = (
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "atv" = (
 /obj/cable{
@@ -2952,7 +2952,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/north)
 "bpe" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/quartermaster/office)
 "bph" = (
 /obj/stool/bed,
@@ -3927,7 +3927,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/quartermaster/refinery)
 "bKo" = (
 /obj/table/auto,
@@ -4432,6 +4432,7 @@
 "bVK" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/auto,
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "bVS" = (
@@ -5911,7 +5912,7 @@
 /area/station/hallway/secondary/exit)
 "cDi" = (
 /obj/decal/poster/wallsign/security,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
@@ -6741,7 +6742,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "daF" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/magnet)
 "daG" = (
 /obj/machinery/vending/snack,
@@ -7191,7 +7192,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "dmi" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/checkpoint/sec_foyer)
 "dmt" = (
 /obj/storage/cart/trash,
@@ -8199,7 +8200,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/processing)
 "dFk" = (
 /obj/disposalpipe/segment/vertical,
@@ -8749,7 +8750,7 @@
 /area/station/science/chemistry)
 "dQU" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/hos)
 "dQX" = (
 /obj/cable{
@@ -11312,7 +11313,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering)
 "eYF" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secoffquarters)
 "eYK" = (
 /obj/decal/cleanable/rust,
@@ -11545,7 +11546,7 @@
 /area/station/mining/staff_room)
 "ffl" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/checkpoint/sec_foyer)
 "ffv" = (
 /obj/indestructible/shuttle_corner{
@@ -11834,7 +11835,7 @@
 	},
 /area/station/science/lab)
 "flw" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/elect)
 "flP" = (
 /obj/table/folding,
@@ -13132,7 +13133,7 @@
 /area/research_outpost/protest)
 "fQo" = (
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secoffquarters)
 "fQq" = (
 /obj/machinery/light{
@@ -13172,7 +13173,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/interrogation)
 "fRz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -14408,7 +14409,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "guI" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/staff_room)
 "gvg" = (
 /obj/cable{
@@ -14614,7 +14615,7 @@
 /area/station/hallway/primary/west)
 "gBb" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/crew_quarters/courtroom)
 "gBr" = (
 /obj/decal/cleanable/fungus,
@@ -16125,7 +16126,7 @@
 /area/station/maintenance/inner/the_cage)
 "hlW" = (
 /obj/disposalpipe/segment/morgue,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/processing)
 "hmK" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -16568,7 +16569,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/checkpoint/sec_foyer)
 "hxO" = (
 /obj/table/glass/auto,
@@ -18342,7 +18343,7 @@
 /area/station/mining/staff_room)
 "iqa" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/elect)
 "iqK" = (
 /obj/decal/cleanable/fungus,
@@ -19499,7 +19500,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "iOr" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/space)
 "iOy" = (
 /obj/machinery/disposal,
@@ -19576,7 +19577,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/pharmacy)
 "iPZ" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig{
 	name = "The Cage Arena"
 	})
@@ -20085,7 +20086,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/processing)
 "iZB" = (
 /turf/simulated/floor/carpet/green/fancy/innercorner/se,
@@ -22081,7 +22082,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/interrogation)
 "jQN" = (
 /obj/disposalpipe/segment/horizontal,
@@ -23029,7 +23030,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "koz" = (
 /obj/cable{
@@ -23536,7 +23537,7 @@
 "kzK" = (
 /obj/decal/poster/wallsign/security,
 /obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
@@ -24108,7 +24109,7 @@
 /area/station/crew_quarters/courtroom)
 "kLQ" = (
 /obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hallway/secondary/east{
 	name = "Cargo Hallway"
 	})
@@ -24380,7 +24381,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
@@ -26087,7 +26088,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "lJh" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/processing)
 "lJs" = (
 /obj/machinery/vending/standard,
@@ -26138,7 +26139,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "lKl" = (
 /turf/simulated/floor/carpet/green/fancy/edge/west,
@@ -26467,7 +26468,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/quartermaster/office)
 "lRP" = (
 /obj/cable{
@@ -31650,7 +31651,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
@@ -34757,7 +34758,7 @@
 /area/station/engine/engineering/ce)
 "pEb" = (
 /obj/noticeboard/directional/north,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/hos)
 "pEi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -35356,7 +35357,7 @@
 /area/station/turret_protected/ai_upload)
 "pVH" = (
 /obj/machinery/atmospherics/pipe/manifold,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "pVN" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -35417,7 +35418,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/processing)
 "pXg" = (
 /obj/machinery/chem_dispenser/soda,
@@ -36181,7 +36182,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
 "qon" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/crew_quarters/courtroom)
 "qoq" = (
 /obj/disposalpipe/segment/ejection,
@@ -38051,7 +38052,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/breakroom)
 "rkh" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hallway/secondary/east{
 	name = "Cargo Hallway"
 	})
@@ -38259,7 +38260,7 @@
 /area/station/storage/warehouse)
 "roA" = (
 /obj/decal/poster/wallsign/space,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/staff_room)
 "roE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -38313,7 +38314,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "rpC" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "rpF" = (
 /turf/simulated/floor/wood/two,
@@ -38363,7 +38364,7 @@
 /turf/simulated/floor/grey,
 /area/station/hydroponics/lobby)
 "rrt" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/hos)
 "rrF" = (
 /obj/machinery/nanofab/refining,
@@ -39873,7 +39874,7 @@
 	},
 /area/station/science/lab)
 "sdS" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "sdY" = (
 /turf/simulated/floor/orange,
@@ -41896,7 +41897,7 @@
 /area/station/engine/inner)
 "sZe" = (
 /obj/disposalpipe/segment/brig,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/processing)
 "sZs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42398,7 +42399,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "thU" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hallway/primary/south)
 "tiI" = (
 /obj/machinery/light/incandescent{
@@ -44246,7 +44247,7 @@
 /area/station/hallway/primary/central)
 "ugz" = (
 /obj/decal/poster/wallsign/poster_mining,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hallway/secondary/east{
 	name = "Cargo Hallway"
 	})
@@ -44320,7 +44321,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/checkpoint/sec_foyer)
 "uie" = (
 /obj/disposalpipe/segment/mail,
@@ -44872,7 +44873,7 @@
 	})
 "uvS" = (
 /obj/disposalpipe/segment/mail/bent/east,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/hos)
 "uvV" = (
 /obj/machinery/drone_recharger,
@@ -45653,7 +45654,7 @@
 	name = "The Cage Arena"
 	})
 "uMM" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/cargo_staff_room)
 "uMS" = (
 /obj/disposalpipe/segment/morgue,
@@ -45709,7 +45710,7 @@
 /area/station/medical/medbay/surgery)
 "uNN" = (
 /obj/disposalpipe/segment/bent/west,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hallway/secondary/east{
 	name = "Cargo Hallway"
 	})
@@ -45927,7 +45928,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "uTh" = (
 /turf/simulated/wall/auto/supernorn,
@@ -47110,7 +47111,7 @@
 	name = "Space Garden"
 	})
 "vuZ" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/interrogation)
 "vva" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -47342,7 +47343,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/quartermaster/refinery)
 "vzU" = (
 /obj/machinery/door/airlock/pyro/medical{
@@ -47580,7 +47581,7 @@
 /turf/simulated/floor/orange,
 /area/station/hallway/secondary/exit)
 "vHc" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/crew_quarters/hos)
 "vHD" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -47832,7 +47833,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/quartermaster/office)
 "vNY" = (
 /obj/machinery/disposal,
@@ -48184,7 +48185,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/quartermaster/refinery)
 "vTT" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
@@ -50611,7 +50612,7 @@
 /area/station/maintenance/northeast)
 "wXa" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
@@ -52343,7 +52344,7 @@
 	},
 /area/station/bridge)
 "xJW" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig)
 "xKd" = (
 /obj/decal/poster/wallsign/statistics1,
@@ -52630,7 +52631,7 @@
 /area/station/science/lab)
 "xSZ" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/mining/staff_room)
 "xTh" = (
 /turf/simulated/floor/bluewhite{

@@ -1,5 +1,45 @@
 
+(t)wed apr 15 26
+(u)Pirate-Rob
+(p)26019
+(e)🗺🎨🔬🌠|A-Mapping, C-Sprites, A-Science, A-Events
+(+)Large computer frames now start with a floppy peripheral and an extra peripheral slot. The invisible floppy peripheral has been removed.
+(+)Floppy drives are now labelled fd0, fd1, fd2, and are available from CompTech by default.
+(u)Cheekybrdy
+(p)26220
+(e)🧛|A-Gamemodes
+(+)Salvagers can spawn on Mixed with less players avaliable (requires at least 2 instead of 3).
+(u)LeahTheTech
+(*)Nanotrasen has cut back on free glue supplies due to excessive reports of huffing, sniffing, and hitbox abuse. The clown has managed to hold on to a stick, however, and Josh is still ungovernable.
+(+)Glued storages will no longer eat items when attacked.
+(t)tue apr 14 26
+(u)JORJ949
+(p)26340
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Reinforced yellow engineering walls (such as those found on donut3) now have a black top to indicate that they are reinforced.
+(+)Plasmasteel reinforced engineering walls now have a slight purple tint
+(u)JORJ949
+(p)26287
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)Syndicate Infiltrators now receive chameleon XL fanny packs (essentially a second backpack) instead of chameleon belts.
+(t)mon apr 13 26
+(u)JORJ949
+(+)You can no longer glue vehicles to things.
+(u)ANNmagedon
+(p)26377
+(e)🎩🐣|A-Clothing, A-Respawning
+(+)Increase hardhat count in Engineering Apparel vendor from 2 to 5 (same as other hats).
+(+)Engineers (and trainees) now spawn with a hardhat on their head due to repeated complaints from space OSHA (9 CFR 1926.100 – Head Protection) .
 (t)sat apr 11 26
+(u)Driftered
+(p)26327
+(e)🔄💊📦|C-Rework, A-Medical, A-Game-Objects
+(*)Character names no longer show up when you examine or scan an internal organ. DNA can still be used to track down an organ's original owner with a Forensic Scanner if desired.
+(+)Added character names to eyes
+(u)Hawke
+(p)26378
+(e)|
+(+)Butcher knives can now be used to cut open mail.
 (u)LeahTheTech
 (+)Object explosion resistances no longer apply if the explosion happened on the same turf. Tl;dr: you can no longer perfect parry torpedoes.
 (u)Nea

@@ -142,6 +142,11 @@ export const JobManager = () => {
       jobs: categorisedSpecialJobs.filter((job) => job.type === 'halloween'),
     },
     {
+      name: 'Clown Jobs',
+      color: 'pink',
+      jobs: categorisedSpecialJobs.filter((job) => job.type === 'clown'),
+    },
+    {
       name: 'Random Jobs',
       color: 'teal',
       jobs: categorisedSpecialJobs.filter((job) => job.type === 'random'),
