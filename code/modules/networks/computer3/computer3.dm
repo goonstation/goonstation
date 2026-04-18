@@ -817,6 +817,19 @@
 				src.active_program.initialize()
 
 		else
+			if(!src.host_program)
+				for(var/obj/item/disk/data/D in src)
+					if(D == src.hd)
+						continue
+
+					var/datum/computer/file/terminal_program/os/newos = locate() in D.root.contents
+
+					if(newos && istype(newos))
+						if(findtext(lowertext(D.title), "disk"))src.temp_add += "Booting from "+D.title+"...<br>"
+						else src.temp_add += "Booting from "+D.title+" diskette...<br>"
+						src.run_program(newos)
+						break
+
 			if(!src.host_program && src.hd && src.hd.root)
 				var/datum/computer/file/terminal_program/os/newos = locate(/datum/computer/file/terminal_program/os) in src.hd.root.contents
 
@@ -827,23 +840,7 @@
 					src.temp_add += "<font color=red>Unable to boot from fixed disk.</font><br>"
 
 			if(!src.host_program)
-				var/success = 0
-				for(var/obj/item/disk/data/D in src)
-					if(D == src.hd)
-						continue
-
-					var/datum/computer/file/terminal_program/os/newos = locate() in D.root.contents
-
-					if(newos && istype(newos))
-						src.temp_add += "Booting from diskette...<br>"
-						success = 1
-						src.run_program(newos)
-						break
-					else
-						src.temp_add += "<font color=red>Non-system disk or disk error.</font><br>"
-
-				if(!success)
-					src.temp_add += "<font color=red>ERR - BOOT FAILURE</font><br>"
+				src.temp_add += "<font color=red>ERR - BOOT FAILURE</font><br>"
 
 		src.updateUsrDialog()
 		return
