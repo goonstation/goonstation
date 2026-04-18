@@ -18,32 +18,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		if(prob(80))
 			src.limit = 0
 
-/datum/job/special/halloween/blue_clown
-	name = "Blue Clown"
-	wages = PAY_DUMBCLOWN
-	trait_list = list("training_clown")
-	access_string = "Clown"
-	change_name_on_spawn = TRUE
-	ui_colour = TGUI_COLOUR_NAVY
-	slot_back = list()
-	slot_mask = list(/obj/item/clothing/mask/clown_hat/blue)
-	slot_ears = list(/obj/item/device/radio/headset/clown/blue)
-	slot_jump = list(/obj/item/clothing/under/misc/clown/blue)
-	slot_card = /obj/item/card/id/clown
-	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/blue)
-	slot_belt = list(/obj/item/storage/fanny/funny/blue)
-	slot_poc1 = list(/obj/item/device/pda2/clown/blue)
-	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/plant/banana)
-	items_in_belt = list(/obj/item/cloth/towel/clown)
-	slot_lhan = list(/obj/item/instrument/bikehorn/blue)
-	wiki_link = "https://wiki.ss13.co/Clown"
-
-	faction = list(FACTION_CLOWN)
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		M.bioHolder.AddEffect("regenerator", magical=1)
-
 /datum/job/special/halloween/candy_salesman
 	name = "Candy Salesman"
 	wages = PAY_UNTRAINED

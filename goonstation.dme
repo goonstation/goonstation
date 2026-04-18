@@ -508,6 +508,7 @@
 #include "code\datums\jobs\jobs_security.dm"
 #include "code\datums\jobs\operatives\jobs_nanotrasen.dm"
 #include "code\datums\jobs\operatives\jobs_syndicate.dm"
+#include "code\datums\jobs\special\jobs_clown.dm"
 #include "code\datums\jobs\special\jobs_halloween.dm"
 #include "code\datums\jobs\special\jobs_random.dm"
 #include "code\datums\jobs\special\jobs_special.dm"
