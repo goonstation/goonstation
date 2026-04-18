@@ -282,7 +282,7 @@ datum
 		medical/salicylic_acid
 			name = "salicylic acid"
 			id = "salicylic_acid"
-			description = "This is a is a standard salicylate pain reliever and fever reducer. A precursor of acetylsalicylic acid."
+			description = "This is a standard salicylate pain reliever and fever reducer. A precursor of acetylsalicylic acid."
 			reagent_state = LIQUID
 			fluid_r = 181
 			fluid_g = 72
@@ -1199,7 +1199,7 @@ datum
 		medical/promethazine // This stops you from vomiting
 			name = "promethazine"
 			id = "promethazine"
-			description = "Promethazine is a anti-emetic agent."
+			description = "Promethazine is an anti-emetic agent."
 			reagent_state = LIQUID
 			fluid_r = 180
 			fluid_g = 255

@@ -350,8 +350,6 @@ TYPEINFO(/obj/storage/closet/coffin)
 			B10.pixel_y = 0	// everything else does it i guess
 			B10.pixel_x = 0
 
-			new /obj/item/reagent_containers/applicator/glue(src)
-
 			return 1
 
 //A closet that traps you when you step onto it!

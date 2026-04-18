@@ -991,7 +991,7 @@
 
 /datum/achievementReward/goldenGun
 	title = "Golden Gun"
-	desc = "Gold plates a shotgun, hunting rifle, detective revolver, or AK-47 you're holding."
+	desc = "Gold plates a shotgun, hunting rifle, detective revolver, Colt SAA, or AK-47 you're holding."
 	required_medal = "Helios"
 
 	rewardActivate(var/mob/activator)

@@ -124,8 +124,7 @@
 /obj/machinery/computer3/generic/personal{
 	desc = "This workstation appears to be outfitted with non-standard equipment.";
 	name = "modified computer";
-	setup_starting_peripheral2 = /datum/computer/file/terminal_program/communications;
-	setup_starting_program = null
+	setup_starting_program = /datum/computer/file/terminal_program/communications;
 	},
 /turf/simulated/floor/plating,
 /area/prefab/smuggler_den)

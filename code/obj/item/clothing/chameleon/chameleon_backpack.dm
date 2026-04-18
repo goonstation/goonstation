@@ -150,6 +150,12 @@
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
+/obj/item/storage/backpack/chameleon/tactical_belt
+	included_belt = /obj/item/storage/belt/chameleon/tactical
+
+/obj/item/storage/backpack/chameleon/no_belt
+	included_belt = null
+
 /datum/chameleon_backpack_pattern
 	var/name = "backpack"
 	var/desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."

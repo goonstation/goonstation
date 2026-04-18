@@ -261,7 +261,7 @@ datum
 			fluid_g = 255
 			fluid_b = 129
 			taste = list("tropical", "zesty")
-			description = "An fusion of sweet banana, tropical coconut, zesty lime, and bubbly tonic."
+			description = "A fusion of sweet banana, tropical coconut, zesty lime, and bubbly tonic."
 			reagent_state = LIQUID
 			thirst_value = 2
 			value = 3

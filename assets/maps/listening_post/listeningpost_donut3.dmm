@@ -349,9 +349,8 @@
 /area/listeningpost/general)
 "pt" = (
 /obj/table/wood/auto,
-/obj/item/cigpacket{
-	pixel_x = 6;
-	pixel_y = 7
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
 	},
 /turf/simulated/floor/grey/corner{
 	dir = 8
@@ -912,6 +911,10 @@
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/brig{
 	pixel_x = 1
+	},
+/obj/item/cigpacket{
+	pixel_x = 6;
+	pixel_y = 7
 	},
 /turf/simulated/floor/grey/side{
 	dir = 1
