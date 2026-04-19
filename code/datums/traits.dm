@@ -803,7 +803,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/job/scientist
 	name = "Scientist Training."
-	desc = "Subject is a experienced researcher."
+	desc = "Subject is an experienced researcher."
 	id = "training_scientist"
 
 /datum/trait/job/headsurgeon

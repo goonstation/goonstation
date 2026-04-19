@@ -148,7 +148,12 @@
 /obj/machinery/disposal/mail/autoname
 	autoname = TRUE
 
-	// Please keep the destinations identical to /obj/machinery/disposal/mail/small/autoname.
+	// Mailtag types
+	// All subtypes should exist across:
+	// - /obj/mapping_helper/mailtag
+	// - /obj/machinery/disposal/mail/autoname (here)
+	// - /obj/machinery/disposal/mail/small/autoname
+
 	janitor
 		name = "Janitor"
 		mail_tag = "janitor"
@@ -337,14 +342,13 @@
 
 /obj/machinery/disposal/mail/small/autoname
 	autoname = TRUE
-/*
-	New() // Would be more elegant, but I want them to be aligned properly in the map editor.
-		..()
-		if (src.dir == NORTH)
-			src.pixel_y = 32
-		return
-*/
-	// Please keep the destinations identical to /obj/machinery/disposal/mail/autoname.
+
+	// Mailtag types
+	// All subtypes should exist across:
+	// - /obj/mapping_helper/mailtag
+	// - /obj/machinery/disposal/mail/autoname
+	// - /obj/machinery/disposal/mail/small/autoname (here)
+
 	janitor
 		name = "Janitor"
 		mail_tag = "janitor"

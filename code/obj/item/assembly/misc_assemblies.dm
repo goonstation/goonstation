@@ -424,7 +424,7 @@ Contains:
 	// Now with the icon done, we can return it
 	return output_icon
 
-/// This proc returns an string that is used to save and grab the icon from the static icon list
+/// This proc returns a string that is used to save and grab the icon from the static icon list
 /obj/item/assembly/proc/generate_icon_string()
 	var/output_string = "trigger_[src.trigger_icon_prefix]_applier_[src.applier_icon_prefix]"
 	if(src.target && !src.target_overlay_invisible)

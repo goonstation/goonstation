@@ -923,6 +923,13 @@
 	var/switch_dir = 0 //Direction of secondary port
 					//Same-tag holders are sent out this one.
 
+	attackby(obj/item/W, mob/user)
+		if(..(W, user)) return
+		if(ispulsingtool(W))
+			boutput(user, SPAN_ALERT("[src]'s mailtags can't be edited while anchored!"))
+			// This is 95% because I don't wanna copy/paste the mailtag-editing code, but also
+			// it makes it *marginally* harder to maliciously mess with mailtags
+
 	left
 		name = "mail junction"
 		icon_state = "pipe-sj1"
@@ -951,23 +958,27 @@
 
 	New()
 		..()
-		if(icon_state == "pipe-sj1")
-			switch_dir = turn(dir, -90)
-			dpdir = dir | switch_dir | turn(dir,180)
-		else if(icon_state == "pipe-sj2")
-			switch_dir = turn(dir, 90)
-			dpdir = dir | turn(dir, 90) | turn(dir,180)
-		else
-			switch_dir = turn(dir, 90)
-			dpdir = dir | turn(dir,90) | turn(dir, -90)
-		update()
-
-		if (src.mail_tag)
-			if (islist(src.mail_tag))
-				src.name = "mail junction (multiple destinations)"
+		// i didnt wanna do this but i dont see a good way to get this to work short of reworking disposal construction
+		SPAWN(0 SECONDS)
+			if (src.mail_tag)
+				if (islist(src.mail_tag))
+					if (src.mail_tag.len > 1)
+						src.name = "mail junction (multiple destinations)"
+					else
+						src.name = "mail junction ([src.mail_tag[1]])"
+				else
+					src.name = "mail junction ([src.mail_tag])"
+					src.mail_tag = params2list(src.mail_tag)
+			if(icon_state == "pipe-sj1")
+				switch_dir = turn(dir, -90)
+				dpdir = dir | switch_dir | turn(dir,180)
+			else if(icon_state == "pipe-sj2")
+				switch_dir = turn(dir, 90)
+				dpdir = dir | turn(dir, 90) | turn(dir,180)
 			else
-				src.name = "mail junction ([src.mail_tag])"
-				src.mail_tag = params2list(src.mail_tag)
+				switch_dir = turn(dir, 90)
+				dpdir = dir | turn(dir,90) | turn(dir, -90)
+			update()
 		return
 
 
