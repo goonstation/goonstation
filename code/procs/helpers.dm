@@ -261,15 +261,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		if(A?.density) // && A.anchored
 			return TRUE
 
-//is_blocked, but checks for when we can still stand in it, because we're special like that
-/proc/is_blocked_turf_for_pathfinding(var/turf/T, var/atom/passer)
-	. = FALSE
-	if (!T) return FALSE
-	if (T.density) return TRUE
-	for(var/atom/A in T)
-		if(!A.Cross(passer))
-			return TRUE
-
 //is_blocked_turf for flock
 /proc/flock_is_blocked_turf(var/turf/T)
 	if (!T) return FALSE
