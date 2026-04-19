@@ -83,4 +83,4 @@
 
 //Job whitelist requirements
 #define REQUIRES_WHITELIST_ALWAYS 2 // NTSC
-#define REQUIRES_WHITELIST_USUALLY 1 //Used for no hos whitelist saturday or mentor hos friday
+#define REQUIRES_WHITELIST_USUALLY 1 //Used for no hos whitelist saturday
