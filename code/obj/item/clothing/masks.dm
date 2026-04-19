@@ -27,6 +27,19 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 2)
 
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot != SLOT_WEAR_MASK)
+			return
+		for(var/modifier in src.vchange?.speech_modifiers)
+			user.ensure_speech_tree().AddSpeechModifier(modifier)
+
+	unequipped(mob/user)
+		if (src.equipped_in_slot == SLOT_WEAR_MASK)
+			for(var/modifier in src.vchange?.speech_modifiers)
+				user.ensure_speech_tree().RemoveSpeechModifier(modifier)
+		. = ..()
+
 /obj/item/clothing/mask/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/voice_changer))
 		if (src.see_face)
@@ -277,6 +290,7 @@ TYPEINFO(/obj/item/voice_changer)
 	icon_state = "voicechanger"
 	is_syndicate = 1
 	var/permanent = FALSE
+	var/speech_modifiers = list(SPEECH_MODIFIER_VOICE_CHANGER)
 	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
 
 /obj/item/voice_changer/permanent

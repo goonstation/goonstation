@@ -2163,6 +2163,7 @@
 #include "code\modules\speech\modules\speech\modifiers\test_dummy.dm"
 #include "code\modules\speech\modules\speech\modifiers\translator.dm"
 #include "code\modules\speech\modules\speech\modifiers\vending_machine.dm"
+#include "code\modules\speech\modules\speech\modifiers\voice_changer.dm"
 #include "code\modules\speech\modules\speech\modifiers\mutantraces\_mutantrace_modifier_parent.dm"
 #include "code\modules\speech\modules\speech\modifiers\mutantraces\abomination.dm"
 #include "code\modules\speech\modules\speech\modifiers\mutantraces\amphibian.dm"
