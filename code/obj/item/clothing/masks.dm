@@ -29,14 +29,14 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		if (slot != SLOT_WEAR_MASK)
+		if ((slot != SLOT_WEAR_MASK) || !src.vchange)
 			return
-		for(var/modifier in src.vchange?.speech_modifiers)
+		for(var/modifier in src.vchange.speech_modifiers)
 			user.ensure_speech_tree().AddSpeechModifier(modifier)
 
 	unequipped(mob/user)
-		if (src.equipped_in_slot == SLOT_WEAR_MASK)
-			for(var/modifier in src.vchange?.speech_modifiers)
+		if ((src.equipped_in_slot == SLOT_WEAR_MASK) && src.vchange)
+			for(var/modifier in src.vchange.speech_modifiers)
 				user.ensure_speech_tree().RemoveSpeechModifier(modifier)
 		. = ..()
 
