@@ -70,7 +70,7 @@
 /turf/simulated/floor/concrete,
 /area/noGenerate)
 "o" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/noGenerate)
 "p" = (
 /obj/decal/tile_edge/line/orange{

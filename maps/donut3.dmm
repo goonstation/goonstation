@@ -127,7 +127,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/hallway/primary/west)
 "aaO" = (
 /obj/item/device/radio/beacon,
@@ -643,7 +643,7 @@
 /area/station/maintenance/inner/east)
 "ahu" = (
 /obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/north_side)
 "ahF" = (
 /obj/cable{
@@ -862,7 +862,7 @@
 /area/station/janitor/office)
 "akz" = (
 /obj/decal/poster/wallsign/engineering,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/gas)
 "akT" = (
 /obj/decal/stripe_delivery,
@@ -937,7 +937,7 @@
 /area/station/turret_protected/ai)
 "alU" = (
 /obj/machinery/r_door_control/podbay/security,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/hangar/sec)
 "amc" = (
 /obj/cable{
@@ -2042,7 +2042,7 @@
 /area/station/engine/elect)
 "aBA" = (
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/ptl)
 "aBW" = (
 /obj/cable{
@@ -5606,7 +5606,7 @@
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
 "bGF" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/engineering/breakroom)
 "bHa" = (
 /obj/disposalpipe/segment,
@@ -7710,7 +7710,7 @@
 /turf/simulated/floor/stairs/wood2/wide,
 /area/station/hallway/primary/south)
 "cnm" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/engineering/private)
 "cnn" = (
 /obj/table/wood/auto,
@@ -9672,7 +9672,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction2)
 "cQi" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/south_side)
 "cQo" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -10268,7 +10268,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "dbP" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/inner)
 "dcb" = (
 /obj/disposalpipe/segment/mail{
@@ -12735,7 +12735,7 @@
 /area/station/engine/elect)
 "dSg" = (
 /obj/disposalpipe/segment/brig,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/gas)
 "dSk" = (
 /obj/table/auto,
@@ -15716,6 +15716,7 @@
 "eSa" = (
 /obj/item/pen/crayon/rainbow,
 /obj/storage/crate/clown,
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "eSb" = (
@@ -16774,7 +16775,7 @@
 	},
 /area/station/chapel/sanctuary)
 "fiB" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/north_side)
 "fiH" = (
 /obj/machinery/light/small/sticky{
@@ -17827,7 +17828,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/north_side)
 "fAf" = (
 /obj/decal/cleanable/dirt/jen,
@@ -18768,7 +18769,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/north_side)
 "fOw" = (
 /obj/stool/chair/comfy{
@@ -20136,7 +20137,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "gkQ" = (
 /obj/disposalpipe/segment/mail,
@@ -22322,7 +22323,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "gUz" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/evidence)
 "gUD" = (
 /obj/cable{
@@ -25112,7 +25113,7 @@
 /area/station/medical/medbay/lobby)
 "hMZ" = (
 /obj/securearea,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/hangar/sec)
 "hNd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -27032,7 +27033,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/south_side)
 "ixb" = (
 /obj/decal/cleanable/dirt/jen,
@@ -28024,7 +28025,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "iMc" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/solitary)
 "iMj" = (
 /turf/simulated/floor/yellow,
@@ -29387,7 +29388,7 @@
 /turf/simulated/wall/auto/jen/yellow,
 /area/station/storage/emergency)
 "jhw" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/hos)
 "jhy" = (
 /obj/cable{
@@ -29591,7 +29592,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "jkf" = (
 /obj/disposalpipe/segment/morgue{
@@ -31207,7 +31208,7 @@
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/barber_shop)
 "jJd" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "jJi" = (
 /obj/table/wood/auto,
@@ -32486,7 +32487,7 @@
 	pixel_x = -16
 	},
 /obj/disposalpipe/trunk/food,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/north_side)
 "kcW" = (
 /obj/mesh/catwalk{
@@ -32710,7 +32711,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/north_side)
 "kgo" = (
 /obj/table/reinforced/auto,
@@ -34504,7 +34505,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/south_side)
 "kLw" = (
 /obj/machinery/light/incandescent/warm{
@@ -37719,7 +37720,7 @@
 	},
 /area/spacehabitat/pool)
 "lJM" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/quarters)
 "lJN" = (
 /obj/machinery/light/incandescent/warm{
@@ -38588,7 +38589,7 @@
 	},
 /area/station/hallway/primary/east)
 "lVy" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/storage)
 "lVE" = (
 /obj/cable{
@@ -38788,7 +38789,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/inner)
 "lYc" = (
 /obj/table/auto,
@@ -38891,7 +38892,7 @@
 /area/station/maintenance/inner/north)
 "map" = (
 /obj/disposalpipe/segment/brig,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/north_side)
 "mav" = (
 /obj/machinery/camera/directional/south{
@@ -40232,11 +40233,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
-"myX" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "R12"
-	},
-/area/station/security/equipment)
 "mza" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40424,7 +40420,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "mBH" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/monitoring)
 "mBL" = (
 /obj/decal/tile_edge/check/green{
@@ -41218,7 +41214,7 @@
 	},
 /area/station/hallway/primary/west)
 "mQN" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/ptl)
 "mQU" = (
 /obj/decal/tile_edge/line/yellow{
@@ -41386,7 +41382,7 @@
 /area/station/hydroponics/bay)
 "mTd" = (
 /obj/disposalpipe/segment/food,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/north_side)
 "mTe" = (
 /obj/cable{
@@ -42146,10 +42142,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "nfC" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/interrogation)
 "nfG" = (
 /obj/cable{
@@ -46670,7 +46666,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "ozS" = (
 /obj/table/reinforced/bar/auto{
@@ -48097,7 +48093,7 @@
 /area/station/maintenance/outer/ne)
 "oWs" = (
 /obj/decal/poster/wallsign/danger_highvolt,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow/sturdy,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow/plasmasteel,
 /area/station/engine/inner)
 "oWB" = (
 /obj/mesh/catwalk,
@@ -49124,7 +49120,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/chapel/sanctuary)
 "plN" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/hangar/sec)
 "plQ" = (
 /turf/simulated/wall/auto/jen/yellow,
@@ -49897,7 +49893,7 @@
 	},
 /area/station/chapel/sanctuary)
 "pzQ" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "pzR" = (
 /obj/cable,
@@ -52950,7 +52946,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "qwB" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/solitary2)
 "qwK" = (
 /obj/decal/tile_edge/line/green{
@@ -56901,7 +56897,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "rIp" = (
 /obj/decal/stripe_delivery,
@@ -57811,7 +57807,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "rWx" = (
 /obj/decal/poster/wallsign/engineering,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/engineering)
 "rWC" = (
 /obj/machinery/sink{
@@ -58686,11 +58682,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
-"skC" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "R5"
-	},
-/area/station/security/equipment)
 "skV" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -59315,7 +59306,7 @@
 /area/station/science/lobby)
 "sui" = (
 /obj/decal/poster/wallsign/fire,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/engineering/breakroom)
 "suj" = (
 /obj/cable{
@@ -59513,7 +59504,7 @@
 	},
 /area/station/turret_protected/ai)
 "sxm" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/gravity)
 "sxq" = (
 /obj/disposalpipe/segment/mail,
@@ -60330,7 +60321,7 @@
 	},
 /area/station/solar/east)
 "sLB" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/checkpoint/sec_foyer)
 "sLD" = (
 /turf/simulated/floor/red/checker,
@@ -61307,7 +61298,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "tat" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/elect)
 "tav" = (
 /obj/machinery/drone_recharger,
@@ -62170,7 +62161,7 @@
 /turf/space,
 /area/space)
 "tnN" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/visitation)
 "tok" = (
 /obj/decal/tile_edge/line/black{
@@ -62821,7 +62812,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "tyo" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/hallway/primary/east)
 "tyX" = (
 /obj/decal/cleanable/dirt,
@@ -65513,7 +65504,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "urt" = (
 /obj/decal/cleanable/dirt/jen,
@@ -67124,12 +67115,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"uPA" = (
-/obj/disposalpipe/segment/brig,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "R5"
-	},
-/area/station/security/brig/north_side)
 "uPJ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -69010,7 +68995,7 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/medical/medbay/lobby)
 "vqi" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/engineering)
 "vqk" = (
 /obj/decal/tile_edge/line/yellow{
@@ -73171,7 +73156,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "wCh" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/engineering/ce)
 "wCl" = (
 /obj/stool/chair/comfy/yellow{
@@ -74488,7 +74473,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "wWe" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/hallway/primary/west)
 "wWh" = (
 /obj/machinery/manufacturer/mining,
@@ -76649,7 +76634,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "xAh" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/equipment)
 "xAB" = (
 /obj/decal/tile_edge/line/purple{
@@ -77345,7 +77330,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "xLg" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/station/engine/gas)
 "xLh" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
@@ -79077,7 +79062,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/equipment)
 "yiC" = (
 /obj/decal/tile_edge/line/yellow{
@@ -103066,7 +103051,7 @@ diz
 rUX
 fOu
 map
-uPA
+map
 wiT
 xNT
 hoZ
@@ -103086,7 +103071,7 @@ iCd
 tlX
 sTZ
 sTZ
-skC
+xAh
 pSB
 qIw
 qIw
@@ -104893,7 +104878,7 @@ pkB
 djl
 bxx
 ajP
-myX
+xAh
 abC
 omx
 wXb
@@ -105195,7 +105180,7 @@ pkB
 dmQ
 bxx
 hsn
-myX
+xAh
 iMn
 kWL
 kWL

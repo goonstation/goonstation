@@ -3310,6 +3310,14 @@
 /obj/item/paper/current_turbines,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/southeast)
+"cBK" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "cCe" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -4578,10 +4586,6 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
-"drE" = (
-/obj/machinery/atmospherics/binary/passive_gate,
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "dsx" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
@@ -7073,6 +7077,10 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"eYl" = (
+/obj/machinery/atmospherics/binary/passive_gate,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "eYt" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -7539,12 +7547,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
-"fmI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "fne" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2,
@@ -15261,6 +15263,7 @@
 "kEy" = (
 /obj/table/auto,
 /obj/item/card_box/plain,
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "kEF" = (
@@ -18361,6 +18364,12 @@
 	dir = 1
 	},
 /area/station/hallway/primary/north)
+"mLe" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "mLu" = (
 /obj/decal/cleanable/cobweb2,
 /obj/item/storage/box/mousetraps,
@@ -20316,6 +20325,10 @@
 "ohJ" = (
 /turf/simulated/floor/plating,
 /area/heated_pool)
+"ohS" = (
+/obj/item/instrument/large/piano,
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/station/chapel/office)
 "oin" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -21631,6 +21644,15 @@
 /obj/portrait_sneaky,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/bridge)
+"pgF" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "pgY" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -22412,15 +22434,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"pLx" = (
-/obj/machinery/door/airlock/pyro/weapons/secure{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "pLB" = (
 /obj/disposaloutlet/north,
 /obj/disposalpipe/trunk/ejection{
@@ -23395,14 +23408,6 @@
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"qsN" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "qtc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25785,10 +25790,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
-"sfa" = (
-/obj/item/instrument/large/piano,
-/turf/simulated/floor/carpet/red/fancy/edge/se,
-/area/station/chapel/office)
 "sfm" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -77386,7 +77387,7 @@ dGY
 dGY
 hED
 qDN
-fmI
+mLe
 aCy
 hED
 qpn
@@ -77689,7 +77690,7 @@ gZX
 sDQ
 pkt
 arq
-drE
+eYl
 caI
 xSU
 xSU
@@ -78592,7 +78593,7 @@ oDl
 uVQ
 qfH
 hED
-qsN
+cBK
 mGM
 aGe
 anG
@@ -80021,7 +80022,7 @@ eWb
 lkp
 ehL
 cIh
-sfa
+ohS
 qti
 aTU
 qti
@@ -83107,7 +83108,7 @@ hww
 try
 fwH
 fwH
-pLx
+pgF
 fwH
 fwH
 fwH

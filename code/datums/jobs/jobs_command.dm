@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_drinker", "training_security")
 	access_string = "Head of Security"
-	requires_whitelist = TRUE
+	requires_whitelist = REQUIRES_WHITELIST_USUALLY
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
 	world_announce_priority = ANNOUNCE_ORDER_HOS
@@ -100,6 +100,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack/command)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
+	rounds_needed_to_play = ROUNDS_MIN_HIGHSEC
 
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_security)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)

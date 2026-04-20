@@ -434,6 +434,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_panel = "snack-panel"
 	pay = 1
 	acceptcard = 1
+	is_syndicate = 1 //So engineer traitors dont scan it with their PDA
 	req_access = list()
 
 	create_products(restocked)

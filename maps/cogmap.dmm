@@ -997,6 +997,7 @@
 	status = 2
 	},
 /obj/item/paper/book/from_file/the_trial,
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
 "aeG" = (

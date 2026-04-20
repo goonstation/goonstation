@@ -984,6 +984,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"

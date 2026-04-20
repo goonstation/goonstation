@@ -82,6 +82,26 @@
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
+/obj/item/storage/belt/chameleon/tactical
+	name = "syndicate chameleon espionage belt pack XL"
+	desc = "It's different than a fanny pack. It's bigger, tactical, action-packed, and filled with the latest syndicate chameleon technology!"
+	icon_state = /obj/item/storage/fanny/syndie/large::icon_state
+	item_state = /obj/item/storage/fanny/syndie/large::item_state
+	max_wclass = W_CLASS_NORMAL
+	slots = 7
+
+	New()
+		. = ..()
+		var/datum/chameleon_belt_pattern/P = new /datum/chameleon_belt_pattern(src)
+		P.name = src.name
+		P.desc = src.desc
+		P.icon_state = src.icon_state
+		P.item_state = src.item_state
+		P.sprite_item = src.icon
+		P.sprite_worn = src.wear_image_icon
+		P.sprite_hand = src.inhand_image_icon
+		src.clothing_choices += P
+
 /datum/chameleon_belt_pattern
 	var/name = "utility belt"
 	var/desc = "Can hold various small objects."
