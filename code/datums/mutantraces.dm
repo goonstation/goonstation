@@ -1967,6 +1967,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 	uses_human_clothes = 1
 	aquatic = 1
 	voice_name = "amphibian"
+	voice_override = "amphibian"
 	jerk = FALSE
 	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
 	movement_modifier = /datum/movement_modifier/amphibian
@@ -1988,17 +1989,22 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 	on_attach(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(src.mob))
-			M.bioHolder.AddEffect("mattereater", do_stability = FALSE, scannable = FALSE, innate = TRUE)
-			M.bioHolder.AddEffect("jumpy", do_stability = FALSE, scannable = FALSE, innate = TRUE)
-			M.bioHolder.AddEffect("vowelitis", do_stability = FALSE, scannable = FALSE, innate = TRUE)
 			M.bioHolder.AddEffect("accent_frog", do_stability = FALSE, scannable = FALSE, innate = TRUE)
+		#ifdef RP_MODE
+			..()
+		#else
+			mob.sims = new /datum/simsHolder(mob)
+			mob.sims.addMotive(/datum/simsMotive/hunger/thirst) // allows dehydration for amphibians on classic
+			mob.sims.add_hud()
+		..()
 
 	disposing()
 		if(ishuman(src.mob))
-			src.mob.bioHolder.RemoveEffect("mattereater")
-			src.mob.bioHolder.RemoveEffect("jumpy")
-			src.mob.bioHolder.RemoveEffect("vowelitis")
 			src.mob.bioHolder.RemoveEffect("accent_frog")
+		#ifdef RP_MODE
+			..()
+		#else
+			mob.sims.removeMotive("Thirst")
 		..()
 
 	emote(act, voluntary)
@@ -2018,6 +2024,16 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 					return message
 			else
 				..()
+
+	onLife(var/mult = 1)
+		if(src.mob.sims.getValue("Thirst") < 25.0) // dehydration effect
+			if (prob(10))
+				src.mob.visible_message(SPAN_EMOTE(pick("[mob] wrinkles up conspicuously.", "[mob] quietly wheezes.", "[mob]'s third eyelids stick to [his_or_her(src.mob)] eyes for a moment.")))
+		if(src.mob.sims.getValue("Thirst") < 1.0)
+			if (prob(50))
+				src.mob.take_oxygen_deprivation(15)
+			if (prob(10))
+				src.mob.visible_message(SPAN_ALERT(pick("[mob] struggles to breathe!", "[mob] gasps for air!")))
 
 TYPEINFO(/datum/mutantrace/frog/abzunian)
 	icon = 'icons/mob/abzunian.dmi'
