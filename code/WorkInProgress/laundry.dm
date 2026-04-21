@@ -34,6 +34,11 @@ TYPEINFO(/obj/submachine/laundry_machine)
 /obj/submachine/laundry_machine/New()
 	..()
 	src.UpdateIcon()
+	AddComponent(/datum/component/mechanics_holder)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Door", PROC_REF(toggle_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Open Door", PROC_REF(open_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Close Door", PROC_REF(close_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start Cycle", PROC_REF(start_cycle))
 
 /obj/submachine/laundry_machine/disposing()
 	src.unload()
@@ -224,7 +229,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	return 1
 
 /obj/submachine/laundry_machine/attackby(obj/item/W, mob/user)
-	if (istype(W))
+	if (istype(W) && !ispulsingtool(W))
 		if (!src.open)
 			src.visible_message("[user] tries to put [W] into [src], but [src]'s door is closed, so [he_or_she(user)] just smooshes [W] against the door.[prob(40) ? " What a doofus!" : null]")
 			return
@@ -350,28 +355,47 @@ TYPEINFO(/obj/submachine/laundry_machine)
 		return
 	switch(action)
 		if("door")
-			if (src.on)
+			if(src.on)
 				src.visible_message("[usr] tries to open [src]'s door, but [src] is running and the door is locked!")
 				return
-			else
-				src.open = !src.open
-				. = TRUE
-				src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
-				if (src.open)
-					src.unload()
-					src.cycle = PRE
+			src.toggle_door(ui.user)
+			src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
 		if("cycle")
-			if (src.occupant)
-				src.cycle_max = CYCLE_TIME_MOB_INSIDE
-			src.on = !src.on
-			. = TRUE
-			src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
-			src.activator = usr
-			if (src.on)
-				src.cycle = PRE
-				src.open = 0
-				if (!(src in processing_items))
-					processing_items.Add(src)
+			src.start_cycle(ui.user)
+
+/obj/submachine/laundry_machine/proc/toggle_door()
+	if (src.on)
+		return
+	if(src.open)
+		src.close_door()
+	else
+		src.open_door()
+
+/obj/submachine/laundry_machine/proc/open_door()
+	if(src.open || src.on)
+		return
+	src.open = TRUE
+	src.unload()
+	src.cycle = PRE
+	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/proc/close_door()
+	if(!src.open)
+		return
+	src.open = FALSE
+	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/proc/start_cycle(var/activator)
+	if(src in processing_items)
+		return
+	if(ismob(activator)) //Could also be a mechanics input
+		src.activator = activator
+	src.close_door()
+	src.cycle = PRE
+	src.on = TRUE
+	if (src.occupant)
+		src.cycle_max = CYCLE_TIME_MOB_INSIDE
+	processing_items.Add(src)
 	src.UpdateIcon()
 
 /obj/submachine/laundry_machine/Click(location, control, params)
