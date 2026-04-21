@@ -904,7 +904,7 @@
 /datum/blob_ability/build/ectothermid
 	name = "Build Ectothermid Cell"
 	icon_state = "blob-ectothermid"
-	desc = "This will convert a blob tile into a Ectothermid. Ectothermids provice heat protection in an area at the cost of for biopoints."
+	desc = "This will convert a blob tile into an Ectothermid. Ectothermids provice heat protection in an area at the cost of for biopoints."
 	bio_point_cost = 15
 	gen_rate_invest = 1
 	build_path = /obj/blob/ectothermid

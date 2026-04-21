@@ -68,14 +68,16 @@
 	. = 0
 	if(M?.client?.holder?.ghost_interaction)
 		return 2
+	// check for admin access override
+	if (src.admin_access_override)
+		if (M?.client?.holder?.level >= LEVEL_SA)
+			return 2
+		else if(src.admin_access_override == ADMIN_ACCESS_OVERRIDE_ONLY)
+			return 0
 	// easy out for if no access is required
 	if (!src.has_access_requirements())
 		return 1
 	if (M && ismob(M))
-		// check for admin access override
-		if (src.admin_access_override)
-			if (M.client?.holder?.level >= LEVEL_SA)
-				return 2
 		// check in-hand first
 		if (src.check_access(M.equipped()))
 			return 2
@@ -172,7 +174,7 @@
 			return get_all_accesses() + list(access_syndicate_shuttle)
 		// --------------------------- Heads of staff
 		if("Captain")
-			return get_all_accesses()
+			return get_all_accesses() + list(access_maxsec)
 		if("Head of Personnel")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
 						access_fine_small, access_fine_large, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,

@@ -11,6 +11,7 @@ var/datum/score_tracker/score_tracker
 	var/score_crew_survival_rate = 0
 	var/score_enemy_failure_rate = 0
 	var/score_stirstir_alive = FALSE
+	var/score_codes_stolen = FALSE
 	var/final_score_sec = 0
 	// ENGINEERING DEPARTMENT
 	var/power_generated = 0
@@ -96,6 +97,14 @@ var/datum/score_tracker/score_tracker
 		if(!score_stirstir_alive)
 			// YOU FUCKED UP
 			final_score_sec /= 2
+
+		//In case they all exploded, just make a new one
+		var/obj/machinery/codereader/syndicate/code_stealer = new()
+		src.score_codes_stolen = code_stealer.authdisk_uploaded_by
+		qdel(code_stealer)
+		if(src.score_codes_stolen) //Uh oh!
+			final_score_sec /= 2
+
 
 		// ENGINEERING DEPARTMENT SECTION
 		// also civ cleanliness counted here cos fuck calling a world loop more than once

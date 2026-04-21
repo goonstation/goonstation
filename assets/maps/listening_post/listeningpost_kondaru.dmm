@@ -263,10 +263,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/peripheral/network/radio/locked,
-/obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_x = -2;
-	pixel_y = 10
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
@@ -929,6 +927,10 @@
 /obj/item/pinpointer/disk,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "XW" = (

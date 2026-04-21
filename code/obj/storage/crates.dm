@@ -565,7 +565,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/storage/backpack/chameleon,
+		/obj/item/storage/backpack/chameleon/tactical_belt,
 		/obj/item/device/chameleon,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)

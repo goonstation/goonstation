@@ -1,3 +1,6 @@
+(t)thu apr 16 26
+(u)JORJ949
+(*)The "Create Command Report" verb, alongisde the zalgo and void versions found in the game panel, have been replaced with a panel for easier customisation of announcements.
 (t)fri jan 23 26
 (u)Sovexe
 (*)Added the move area build mode tool. Move turfs and objects from one place to another. Prep your gimmicks, and warp them in.

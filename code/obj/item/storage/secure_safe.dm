@@ -302,7 +302,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	w_class = W_CLASS_BULKY
 	anchored = ANCHORED
 	density = 0
-	desc = "A extremely tough secure safe."
+	desc = "An extremely tough secure safe."
 	mechanics_type_override = /obj/item/storage/secure/ssafe
 
 	attack_hand(mob/user)

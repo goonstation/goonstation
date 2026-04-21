@@ -167,11 +167,6 @@
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
 
-	UPDATE_TITLE_STATUS("Generating minimaps")
-	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
-	minimap_renderer = new /datum/minimap_renderer()
-	minimap_renderer.initialise_minimaps()
-
 	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
 	RL_Start()
@@ -182,6 +177,11 @@
 	buildRandomRooms()
 	makepowernets()
 	#endif
+
+	UPDATE_TITLE_STATUS("Generating minimaps")
+	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
+	minimap_renderer = new /datum/minimap_renderer()
+	minimap_renderer.initialise_minimaps()
 
 	#ifdef SECRETS_ENABLED
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
