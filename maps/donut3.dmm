@@ -6703,7 +6703,7 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "bZT" = (
@@ -46626,7 +46626,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "ozp" = (
@@ -74049,7 +74049,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "wOm" = (

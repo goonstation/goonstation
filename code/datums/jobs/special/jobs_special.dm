@@ -775,7 +775,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	name = "Pathologist"
 	limit = 0
 	wages = PAY_DOCTORATE
-	access_string = "Pathologist"
+	access_string = "Medical Doctor"
 	slot_belt = list(/obj/item/device/pda2/genetics)
 	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
 	slot_foot = list(/obj/item/clothing/shoes/white)
