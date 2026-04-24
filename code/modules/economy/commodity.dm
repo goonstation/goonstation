@@ -703,10 +703,10 @@ datum/commodity/drugs/sell/poppies
 	desc = "Stolen from a nuclear warhead."
 	price = PAY_DONTBUYIT*4
 
-/datum/commodity/contraband/radiojammer
-	comname = "Radio Jammer"
-	comtype = /obj/item/radiojammer
-	desc = "A device that can block radio transmissions around it."
+/datum/commodity/contraband/chargedradiojammer
+	comname = "Charged Radio Jammer"
+	comtype = /obj/item/radiojammer/charged
+	desc = "A device that can block radio transmissions around it. Batteries included."
 	price = PAY_DOCTORATE
 
 /datum/commodity/contraband/stealthstorage
