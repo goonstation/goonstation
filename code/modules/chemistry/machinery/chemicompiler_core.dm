@@ -1,5 +1,3 @@
-
-
 /**
  * Chemicompiler
  *
@@ -394,6 +392,10 @@ var/list/datum/chemicompiler_core/chemicompilers = list()
 
 	heat(rid, temp)
 
+
+/datum/chemicompiler_core/stationaryCore
+	statusChangeCallback = "statusChange"
+
 /datum/chemicompiler_core/testCore
 	errorCallback = "err"
 	transferCallback = "transfer"
@@ -784,3 +786,4 @@ var/list/datum/chemicompiler_core/chemicompilers = list()
 		if ("updateInputValue")
 			core.output = params["value"]
 			return FALSE
+
