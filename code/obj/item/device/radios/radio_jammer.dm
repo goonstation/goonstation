@@ -4,7 +4,7 @@ TYPEINFO(/obj/item/radiojammer)
 
 /obj/item/radiojammer
 	name = "signal jammer"
-	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission."
+	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission. This one is equipped with a miniaturised singularity for infinite charge."
 	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "syndieshieldoff"
 	w_class = W_CLASS_TINY

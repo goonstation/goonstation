@@ -156,7 +156,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Signal Jammer"
 	items = list(/obj/item/radiojammer)
 	cost = 2
-	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream."
+	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream. Infinite charge, no batteries needed!"
 
 /datum/syndicate_buylist/generic/psink
 	name = "Power Sink"
