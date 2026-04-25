@@ -315,7 +315,7 @@
 		SPAWN(2.3 SECONDS)
 			A.invisibility = INVIS_NONE
 			src.active = 0
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "scored_with=[A]")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "scored_with=[A.name]")
 
 /obj/item/bballbasket/mounted
 	anchored = ANCHORED
