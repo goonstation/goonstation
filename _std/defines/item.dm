@@ -83,6 +83,7 @@
 #define TOOL_ASSEMBLY_APPLIER (1<<13) // for anything that are useable for assemblies, e.g. igniters & bikehorns
 #define TOOL_DIGGING   (1<<14)
 #define TOOL_DECONSTRUCTING (1<<15)
+#define TOOL_CAUTERY    (1<<16)
 
 //omnitool flags
 #define OMNI_MODE_PRYING 1

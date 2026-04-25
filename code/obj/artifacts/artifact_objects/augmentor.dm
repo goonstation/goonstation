@@ -142,23 +142,23 @@
 				else // ORGANS
 					var/obj/item/organ/organ = part
 					H.organHolder.chest?.op_stage = 2
-					switch (organ.region)
-						if(RIBS)
-							if (H.organHolder.ribs_stage != REGION_OPENED)
-								random_brute_damage(user, rand(15,25))
-								H.organHolder.ribs_stage = REGION_OPENED
-						if(SUBCOSTAL)
-							if (H.organHolder.subcostal_stage != REGION_OPENED)
-								random_brute_damage(user, rand(15,25))
-								H.organHolder.subcostal_stage = REGION_OPENED
-						if(ABDOMINAL)
-							if (H.organHolder.abdominal_stage != REGION_OPENED)
-								random_brute_damage(user, rand(15,25))
-								H.organHolder.abdominal_stage = REGION_OPENED
-						if(FLANKS)
-							if (H.organHolder.flanks_stage != REGION_OPENED)
-								random_brute_damage(user, rand(15,25))
-								H.organHolder.flanks_stage = REGION_OPENED
+					// switch (organ.region)
+					// 	if(RIBS)
+					// 		if (H.organHolder.ribs_stage != REGION_OPENED)
+					// 			random_brute_damage(user, rand(15,25))
+					// 			H.organHolder.ribs_stage = REGION_OPENED
+					// 	if(SUBCOSTAL)
+					// 		if (H.organHolder.subcostal_stage != REGION_OPENED)
+					// 			random_brute_damage(user, rand(15,25))
+					// 			H.organHolder.subcostal_stage = REGION_OPENED
+					// 	if(ABDOMINAL)
+					// 		if (H.organHolder.abdominal_stage != REGION_OPENED)
+					// 			random_brute_damage(user, rand(15,25))
+					// 			H.organHolder.abdominal_stage = REGION_OPENED
+					// 	if(FLANKS)
+					// 		if (H.organHolder.flanks_stage != REGION_OPENED)
+					// 			random_brute_damage(user, rand(15,25))
+					// 			H.organHolder.flanks_stage = REGION_OPENED
 					if (H.get_organ(part_loc))
 						random_brute_damage(user, 10)
 						var/obj/item/item = H.drop_organ(part_loc)

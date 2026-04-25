@@ -223,27 +223,6 @@
 						else if (src.organHolder.right_eye.show_on_examine)
 							. += "<br>[SPAN_NOTICE("[Noun_has] [bicon(src.organHolder.right_eye)] \an [src.organHolder.right_eye.organ_name] in [t_his] right eye socket.")]"
 
-					if (src.organHolder.head.scalp_op_stage > 0)
-						if (src.organHolder.head.scalp_op_stage >= 5.0)
-							if (!src.organHolder.skull)
-								. += "<br>[SPAN_ALERT("<B>There's a gaping hole in [noun_s] head and [t_his] skull is gone!</B>")]"
-							else if (!src.organHolder.brain)
-								. += "<br>[SPAN_ALERT("<B>There's a gaping hole in [noun_s] head and [t_his] brain is gone!</B>")]"
-							else
-								. += "<br>[SPAN_ALERT("<B>There's a gaping hole in [noun_s] head!</B>")]"
-						else if (src.organHolder.head.scalp_op_stage >= 4.0)
-							if (!src.organHolder.brain)
-								. += "<br>[SPAN_ALERT("<B>[Noun_s] head has been cut open and [t_his] brain is gone!</B>")]"
-							else
-								. += "<br>[SPAN_ALERT("<B>[Noun_s] head has been cut open!</B>")]"
-						else
-							. += "<br>[SPAN_ALERT("<B>[Noun] has an open incision on [t_his] head!</B>")]"
-
-					if (src.organHolder.head.op_stage > 0.0)
-						if (src.organHolder.head.op_stage >= 3.0)
-							. += "<br>[SPAN_ALERT("<B>[Noun_s] head is barely attached!</B>")]"
-						else
-							. += "<br>[SPAN_ALERT("<B>[Noun_has] a huge incision across [t_his] neck!</B>")]"
 
 			else
 				. += "<br>[SPAN_ALERT("<B>[Noun_has] been decapitated!</B>")]"
@@ -269,31 +248,14 @@
 						else
 							. += "<br>[SPAN_NOTICE("[Noun] has [src.organHolder.tail.name] attached just above [t_his] butt.")]"
 					// don't bother telling people that you have the tail you're supposed to have. nobody congratulates me for having all my legs
-					if (src.organHolder.back_op_stage >= BACK_SURGERY_OPENED && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
-						. += "<br>[SPAN_ALERT("<B>[Noun] has a long incision around the base of [t_his] tail!</B>")]"
-
-				else // missing a tail?
-					if (src.organHolder.back_op_stage >= BACK_SURGERY_OPENED) // first person to call this a tailhole is getting dropkicked into the sun
-						if (src.mob_flags & SHOULD_HAVE_A_TAIL) // Are they supposed to have a tail?
-							if (!src.organHolder.butt) // Also missing a butt?
-								. += "<br>[SPAN_ALERT("<B>[Noun_has] a large incision at the base of [t_his] back where [t_his] tail should be!</B>")]"
-							else // has butt
-								. += "<br>[SPAN_ALERT("<B>[Noun_has] a large incision above [t_his] butt where [t_his] tail should be!</B>")]"
-						else // Do they normally not have a tail?
-							if (!src.organHolder.butt) // Also missing a butt?
-								. += "<br>[SPAN_ALERT("<B>[Noun_has] a large incision at the base of [t_his] back!</B>")]"
-							else // has butt
-								. += "<br>[SPAN_ALERT("<B>[Noun_has] a large incision above [t_his] butt!</B>")]"
-					else if (src.mob_flags & SHOULD_HAVE_A_TAIL) // No tail, no ass wound? Supposed to have a tail?
-						. += "<br>[SPAN_ALERT("<B>[Noun] is missing [t_his] tail!</B>")]" // oh no my tails gone!!
-						// Commenting on someone not having a tail when they shouldnt have a tail will be left up to the player
+				else if (src.mob_flags & SHOULD_HAVE_A_TAIL) // No tail, no ass wound? Supposed to have a tail?
+					. += "<br>[SPAN_ALERT("<B>[Noun] is missing [t_his] tail!</B>")]" // oh no my tails gone!!
+					// Commenting on someone not having a tail when they shouldnt have a tail will be left up to the player
 			else
 				. += "<br>[SPAN_ALERT("<B>[Noun_s] entire chest is missing!</B>")]"
 
 			if (!src.organHolder.butt)
 				. += "<br>[SPAN_ALERT("<B>[Noun_s] butt seems to be missing!</B>")]"
-			else if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
-				. += "<br>[SPAN_ALERT("<B>[Noun_has] an open incision on [t_his] butt!</B>")]"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
@@ -304,7 +266,8 @@
 			if (100 to 200)
 				. += "<br>[SPAN_ALERT("[Noun_is] twitching ever so slightly.")]"
 
-
+	if (src.surgeryHolder)
+		. += src.surgeryHolder.get_desc()
 	if (src.limbs)
 		if (!src.limbs.l_arm)
 			. += "<br>[SPAN_ALERT("<B>[Noun_s] left arm is completely severed!</B>")]"
