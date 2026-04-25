@@ -230,7 +230,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if (src.cell)
 		charge_avail += src.cell.charge
 	var/area/A = get_area(src)
-	if (A.powered(EQUIP))
+	if (A.powered(ENVIRON))
 		var/obj/machinery/power/apc/area_apc = A.area_apc
 		if (istype(area_apc) && area_apc.cell)
 			charge_avail += area_apc.cell.charge
@@ -239,7 +239,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		if(src.calculate_fault_chance(0))
 			src.random_fault()
 
-		src.use_power(cost, EQUIP)
+		src.use_power(cost, ENVIRON)
 		src.begin_gravity_change(new_intensity)
 	else
 		src.say("Not enough power to complete change.")
