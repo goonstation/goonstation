@@ -314,7 +314,7 @@ datum
 			name = "alcoholic caffeinated reagent parent"
 			description = "You shouldn't be seeing this ingame. If you do, report it to a coder."
 
-			var/caffeine_content = 0.8 //somewhat higher than espresso, since it comes with the downside of making you drunk
+			var/caffeine_content = 0.6 //same caffeine content as espresso
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.reagents.add_reagent("caffeine", caffeine_content * src.calculate_depletion_rate(M, mult))
@@ -2031,7 +2031,6 @@ datum
 			fluid_g = 48
 			fluid_b = 22
 			alch_strength = 0.1
-			caffeine_content = 0.8
 			depletion_rate = 0.7
 			description = "Does this really count as a Martini?"
 			reagent_state = LIQUID
@@ -4728,7 +4727,6 @@ datum
 			fluid_g = 245
 			fluid_b = 230
 			alch_strength = 0.6
-			caffeine_content = 0.8
 			description = "An eccentric 'trio cocktail', in which the three ingredients have been layered on top one another."
 			reagent_state = LIQUID
 
@@ -4877,7 +4875,6 @@ datum
 			taste = list("earthy")
 			description = "Tangy, yet refreshingly earthy."
 			reagent_state = LIQUID
-			thirst_value = 1
 
 		fooddrink/caffeinated/thaicoffee
 			name = "Thai iced coffee"
