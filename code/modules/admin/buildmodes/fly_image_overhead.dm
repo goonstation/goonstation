@@ -146,7 +146,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		// everything below is after the pilot reaches its destination
 
 		if (!pilot.loopsound && pilot.attached_sound)
-			playsound(pilot.loc, pilot.attached_sound, 30)
+			playsound(target_locinput, pilot.attached_sound, 30)
 
 		if (pathinput) // spawn your optional mobs and objects if chosen
 			if(ispath(pathinput, /atom/movable))
@@ -172,10 +172,15 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 						sleep(1)
 			if (EXPLODE)
 				var/turf/T = get_turf(pilot)
-				playsound(T, pick(big_explosions), 80, 1)
 				new /obj/effects/explosion(T)
-				qdel(pilot)
 				robogibs(T)
+				playsound(T, pick(big_explosions), 80, 1)
+				animate(pilot, transform = matrix(), alpha = 0, time = 0.5 SECONDS)
+				if (pilot.loopsound)
+					qdel(pilot)
+				else
+					SPAWN(15 SECONDS) // Wait some time to let most uploaded sounds play out first. Couldn't get rustg sound len to work instead
+						qdel(pilot)
 			if (FADE)
 				animate(pilot, transform = matrix(), alpha = 0, time = 0.5 SECONDS)
 				for (var/i=0,i<=3,i++)
@@ -223,14 +228,14 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 
 	disposing()
 		if (src.check_for_pilots())
-			var/sound/stopsound = sound(null, wait = TRUE, channel=SOUNDCHANNEL_ADMIN_HIGH)
+			var/sound/stopsound = sound(null, wait = TRUE)
 			world << stopsound
 		STOP_TRACKING
 		..()
 
 	proc/play()
 		if (src.loc && !QDELETED(src))
-			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, SOUNDCHANNEL_ADMIN_HIGH, 10)
+			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, volume=10)
 			world << src.attached_sound
 
 	proc/check_for_pilots() // check if there's only one pilot, used for starting and stopping looping audio
