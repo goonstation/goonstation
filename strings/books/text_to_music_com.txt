@@ -174,7 +174,7 @@
 
 <p>Steps:</p>
 <ol>
-	<li>Use a multitool on a anchored Text to Music component to start storing pianos.</li>
+	<li>Use a multitool on an anchored Text to Music component to start storing pianos.</li>
 	<li>Then use it on anchored components that you want to link.</li>
 	<li>Use the multitool in your hand to start linking, each link takes 0.1 seconds.</li>
 </ol>

@@ -787,9 +787,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		/turf/simulated/wall/auto/shuttle,
 		/obj/indestructible/shuttle_corner,
 
-		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
-		/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-		/turf/simulated/wall/auto/reinforced/supernorn/orange,
 		/turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen,
 		/turf/simulated/wall/auto/reinforced/jen,

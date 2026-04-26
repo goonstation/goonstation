@@ -974,7 +974,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
-/obj/item/ammo/bullets/abg/two //spawns in the break action
+/obj/item/ammo/bullets/abg/punchy
+	sname = "10ga heavy rubber slug"
+	name = "10ga heavy rubber slugs"
+	desc = "A box of big, heavy rubber slugs. These ones really pack a punch."
+	icon_state = "bg-punchy"
+	icon_empty = "bg-punchy-0"
+	amount_left = 6
+	max_amount = 6
+	//big shells, don't fit in auto-shotties
+	ammo_cat = AMMO_SHOTGUN_PIPE
+	ammo_type = new/datum/projectile/bullet/abg/punchy
+
+/obj/item/ammo/bullets/abg/punchy/two //spawns in the break action
 	amount_left = 2
 	max_amount = 2
 

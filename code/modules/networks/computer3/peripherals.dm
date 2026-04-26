@@ -1192,7 +1192,7 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 	icon_state = "card_mod"
 	func_tag = "SHU_FLOPPY"
 	var/obj/item/disk/data/disk = null
-	var/setup_disk_type = /obj/item/disk/data/floppy //Inserted disks need to be a child type of this.
+	var/setup_disk_type = /obj/item/disk/data/floppy //Inserted disks need to be a child type of this. Make certain it's of type /disk/data or things may break!
 
 	disposing()
 		disk = null
@@ -1210,7 +1210,7 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 
 	return_badge()
 		// label text, icon, contents
-		. = list("label" = "Disk","icon" = "rom","contents" = src.disk)
+		. = list("label" = "Disk","icon" = "save","contents" = src.disk)
 
 	uninstalled()
 		src.disk?.set_loc(src)

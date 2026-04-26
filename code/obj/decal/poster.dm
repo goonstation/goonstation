@@ -1116,7 +1116,7 @@
 
 				evac // E007
 					name = "evacuation assembly point sign"
-					icon_state = "safe evac"
+					icon_state = "safe_evac"
 
 			fire
 				name = "fire protection sign"

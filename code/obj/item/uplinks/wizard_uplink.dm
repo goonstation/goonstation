@@ -35,12 +35,12 @@
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
-			ui = new(user, src, "WizardSpellbook")
+			ui = new(user, src, "Uplink")
 			ui.open()
 
 	ui_data(mob/user)
 		. = list(
-			"spell_slots" = src.uses
+			"currency_amount" = src.uses
 		)
 
 	ui_static_data(mob/user)
@@ -63,12 +63,14 @@
 				cost = spell.cost,
 				desc = spell.desc,
 				name = spell.name,
-				spell_img = spell_icon,
+				icon = spell_icon,
 				vr_allowed = spell.vr_allowed,
 			))
 		. = list(
-			"owner_name" = src.wizard_name,
-			"spellbook_contents" = spellbook_contents,
+			"title" = "[src.wizard_name]'s Spellbook",
+			"theme" = "wizard",
+			"currency_name" = "spell slot",
+			"item_entries" = spellbook_contents,
 			"vr" = src.vr
 		)
 
@@ -85,8 +87,8 @@
 		if (.)
 			return
 		switch (action)
-			if ("buyspell")
-				var/datum/SWFuplinkspell/chosen_spell = params["spell"]
+			if ("purchase")
+				var/datum/SWFuplinkspell/chosen_spell = params["item"]
 				for (var/datum/SWFuplinkspell/spell in src.spells)
 					if (spell.name == chosen_spell)
 						chosen_spell = spell

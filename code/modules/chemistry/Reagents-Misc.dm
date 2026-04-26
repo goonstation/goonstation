@@ -911,7 +911,7 @@ datum
 		/*foaming_agent
 			name = "foaming agent"
 			id = "foaming_agent"
-			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+			description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
 			reagent_state = SOLID
 			fluid_r = 100
 			fluid_g = 90
@@ -1175,7 +1175,7 @@ datum
 			transparency = 255
 			viscosity = 0.15
 			depletion_rate = 1
-			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
+			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "acetylsalicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
