@@ -42,7 +42,7 @@
 
 	src.handle_power_cycle()
 
-	if (!src.powered())
+	if (src.has_no_power())
 		if (src.processing_state == TETHER_PROCESSING_PENDING)
 			src.finish_gravity_change()
 		if (src.gforce_intensity > GFORCE_GRAVITY_MINIMUM)
