@@ -267,7 +267,7 @@
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power,
 						access_tech_storage, access_engineering_mechanic)
 		if("Miner")
-			return list(access_mining, access_mining_outpost)
+			return list(access_maint_tunnels, access_mining, access_mining_outpost)
 		if("Quartermaster")
 			return list(access_maint_tunnels, access_cargo, access_supply_console)
 		if("Construction Worker")
@@ -280,7 +280,7 @@
 		if("Janitor")
 			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium)
 		if("Botanist", "Apiculturist")
-			return list(access_hydro)
+			return list(access_maint_tunnels, access_hydro)
 		if("Rancher")
 			return list(access_hydro, access_ranch)
 		if("Chef", "Sous-Chef")
