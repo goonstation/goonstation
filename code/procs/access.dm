@@ -176,13 +176,8 @@
 		if("Captain")
 			return get_all_accesses() + list(access_maxsec)
 		if("Head of Personnel")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
-						access_fine_small, access_fine_large, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
-						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers, access_pharmacy,
-						access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_kitchen, access_robotics, access_cargo, access_supply_console,
-						access_research, access_hydro, access_ranch, access_ai_upload, access_researchfoyer,
-						access_telesci, access_teleporter, access_money)
+			return get_all_accesses() - list(access_captain, access_engineering_chief, access_medical_director, access_research_director,
+											access_securitylockers, access_brig, access_forensics_lockers)
 		if("Head of Security")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
 						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
