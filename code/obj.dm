@@ -29,7 +29,6 @@
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
-		src.update_access_from_txt()
 #ifdef CHECK_MORE_RUNTIMES
 		if (src.req_access && !islist(src.req_access))
 			stack_trace("[src] ([src.type]) initialized at \[[src.x], [src.y], [src.z]\] with non-list req_access >:(")

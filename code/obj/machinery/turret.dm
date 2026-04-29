@@ -130,7 +130,7 @@
 			continue
 		if (!(get_area(C) == A))
 			continue
-		if ((src.req_access || src.req_access_txt) && src.allowed(C))
+		if (src.req_access && src.allowed(C))
 			continue //optional access whitelist
 		. += C
 
