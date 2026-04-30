@@ -38,6 +38,7 @@
 	if(istype(TP))
 		TP.turret_list += src
 	START_TRACKING
+	src.stun.sound_los = TRUE
 
 	#ifdef LOW_SECURITY
 	START_TRACKING_CAT(TR_CAT_DELETE_ME)
