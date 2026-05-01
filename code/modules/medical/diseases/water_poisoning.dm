@@ -6,13 +6,13 @@
 	stage_prob = 2
 	spread = "Non-Contagious"
 	cure_flags = CURE_CUSTOM
+	strain_type = /datum/ailment_data/disease/water_poisoning
 	cure_desc = "Pyrosium"
 	reagentcure = list("pyrosium") // not sure if to keep pyrosium as cure
 	recureprob = 10
 	associated_reagent = "cocktail_quadruplewater"
 	affected_species = ("Human, Monkey")
 
-#define FEELINGFINE 0
 /datum/ailment/disease/water_poisoning/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
@@ -67,14 +67,17 @@
 				boutput(affected_mob, SPAN_ALERT("You feel terrible!"))
 				affected_mob.setStatus("slowed", 3 SECONDS)
 		if(5)
-			if(probmult(5))
+			if(feelingfine == 0)
+				boutput(affected_mob, SPAN_ALERT("You suddenly feel better..."))
+				feelingfine += 1
+			if(probmult(5) && !QDELETED(affected_mob))
 				affected_mob.emote("scream")
 				affected_mob.setStatus("knockdown", 15 SECONDS)
 				affected_mob.make_jittery(1000)
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message(SPAN_ALERT("<B>[affected_mob]'s</B> skin starts bloating rapidly!"), 1)
 				SPAWN(rand(20, 100))
-					if (affected_mob)
+					if (!QDELETED(affected_mob))
 						logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 						#define POP_ANIMATE_TIME 0.3 SECONDS
 						playsound(affected_mob.loc, 'sound/effects/cani_suicide.ogg', 90, 0)

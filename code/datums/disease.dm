@@ -320,6 +320,9 @@
 		strain_data = null
 		..()
 
+/datum/ailment_data/disease/water_poisoning
+	var/feelingfine = 0
+
 /datum/ailment_data/addiction
 	var/associated_reagent = null
 	var/last_reagent_dose = 0
