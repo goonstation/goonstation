@@ -97,7 +97,7 @@
 			target.stuttering += 6 SECONDS
 
 		else
-			elecflash(target,power = 2)
+			elecflash(target, power = 4, exclude_center = 0)
 			boutput(M, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 			target.TakeDamage("chest", 0, 40, 0, DAMAGE_BURN)
 
