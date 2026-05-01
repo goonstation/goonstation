@@ -13,7 +13,7 @@ Examples of effects:
 
 Most status effects are intended to be applied on mobs, but they can be applied to any atom.
 
-Status effects do not need to have their behaivor defined within them, they can also be checked externally with [hasStatus][/atom/proc/hasStatus] or similar procs.
+Status effects do not need to have their behavior defined within them, they can also be checked externally with [hasStatus][/atom/proc/hasStatus] or similar procs.
 
 Example of a basic status effect:
 
