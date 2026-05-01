@@ -568,6 +568,6 @@ datum
 			fluid_g = 165
 			fluid_b = 254
 			taste = "like a day worth of hydration in one sip"
+			minimum_to_infect = 25
 			thirst_value = 3.2
-			bladder_value = -3.2
 			disease = /datum/ailment/disease/water_poisoning

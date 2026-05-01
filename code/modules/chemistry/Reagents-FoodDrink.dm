@@ -4067,7 +4067,7 @@ datum
 			description = "This water seems to contain more water per water than normal water should."
 			reagent_state = LIQUID
 			thirst_value = 1.5
-			taste = "like water, but more."
+			taste = "like water, but more"
 
 		fooddrink/cocktail_quadruplewaterstable
 			name = "Quadruple Water"
@@ -4078,8 +4078,7 @@ datum
 			description = "An even more water dense version of triple water, upon closer analysis its water matrix is neatly arranged."
 			reagent_state = LIQUID
 			thirst_value = 3.2
-			bladder_value = -3.2
-			taste = "like a day worth of hydration in one sip."
+			taste = "like a day worth of hydration in one sip"
 
 		fooddrink/lemonade
 			name = "lemonade"

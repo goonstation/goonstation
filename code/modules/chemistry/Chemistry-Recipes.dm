@@ -1279,7 +1279,7 @@
 		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0)
 		inhibitors = list("stabiliser")
 		result_amount = 1
-		mix_phrase = "The triple water seems to begrudgingly let the soda water mix in."
+		mix_phrase = "The triple water and soda water mix as unsetteling bubbles appear on the surface."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
