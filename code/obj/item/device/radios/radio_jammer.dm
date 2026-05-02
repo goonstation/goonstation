@@ -88,7 +88,7 @@ TYPEINFO(/obj/item/radiojammer)
 
 	New()
 		. = ..()
-		AddComponent(/datum/component/cell_holder, new/obj/item/ammo/power_cell, TRUE, 300, TRUE)
+		AddComponent(/datum/component/cell_holder, new/obj/item/ammo/power_cell)
 		global.processing_items |= src
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 
