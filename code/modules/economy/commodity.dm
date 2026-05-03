@@ -731,7 +731,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "Voice Anonymizer"
 	comtype = /obj/item/voice_changer/anonymizer
 	desc = /obj/item/voice_changer/anonymizer::desc
-	price = PAY_EMBEZZLED
+	price = PAY_IMPORTANT
 
 /datum/commodity/contraband/syndicate_headset
 	comname = "Illegal Headset"
