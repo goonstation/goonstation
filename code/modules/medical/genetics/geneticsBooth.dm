@@ -288,7 +288,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				if(selected_product?.BE)
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
-					copy_datum_vars(selected_product.BE, NEW, blacklist=GENETICS_CONSOLE_DONT_COPY_GENE_VARIABLES)
+					copy_datum_vars(selected_product.BE, NEW, blacklist=GENETICS_COPY_VARIABLE_BLACKLIST)
 					occupant.bioHolder.AddEffectInstanceNoDelay(NEW)
 
 					selected_product.uses -= 1
