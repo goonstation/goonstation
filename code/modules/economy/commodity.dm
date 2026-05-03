@@ -727,10 +727,10 @@ datum/commodity/drugs/sell/poppies
 	desc = "An injector that gives a new, random identity upon injection, storing the original for later."
 	price = PAY_EMBEZZLED
 
-/datum/commodity/contraband/voicechanger
-	comname = "Voice Changer"
-	comtype = /obj/item/voice_changer
-	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
+/datum/commodity/contraband/voiceanonymizer
+	comname = "Voice Anonymizer"
+	comtype = /obj/item/voice_changer/anonymizer
+	desc = /obj/item/voice_changer::desc
 	price = PAY_EMBEZZLED
 
 /datum/commodity/contraband/syndicate_headset

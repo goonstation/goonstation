@@ -296,6 +296,11 @@ TYPEINFO(/obj/item/voice_changer)
 /obj/item/voice_changer/permanent
 	permanent = TRUE
 
+/obj/item/voice_changer/anonymizer
+	name = "voice anonymizer"
+	desc = "This voice-modulation device will scramble your voice such that it is unrecognizable. Discreetly fits inside most masks, and can be removed with wirecutters."/speech_modifiers = list(SPEECH_MODIFIER_VOICE_CHANGER)
+	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as "unknown". Use wirecutters on the mask to remove the voice changer."})
+
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	mats = 12	// 2x voice changer cost. It's complicated ok
 
