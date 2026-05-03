@@ -4,4 +4,5 @@
 /datum/speech_module/modifier/voice_anonymizer/process(datum/say_message/message)
 	. = message
 	message.speaker_to_display = "Unknown"
-	message.content = "[MAKE_CONTENT_IMMUTABLE("<span class='monospace'>")][message.content][MAKE_CONTENT_IMMUTABLE("</span>")]"
+	message.format_content_style_prefix = "<span class='monospace'>"
+	message.format_content_style_suffix = "</span>"
