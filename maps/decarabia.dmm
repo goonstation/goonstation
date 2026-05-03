@@ -4954,7 +4954,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "bnb" = (
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
@@ -9863,7 +9863,7 @@
 "cug" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "cul" = (
 /obj/disposalpipe/segment{
 	name = "factory pipe"
@@ -10592,7 +10592,7 @@
 "cCW" = (
 /obj/item/skull,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "cCX" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
@@ -16434,7 +16434,7 @@
 	icon_state = "shrub"
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "dRE" = (
 /obj/decoration/vent/vent2{
 	pixel_y = 29
@@ -25136,7 +25136,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "fQE" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -33866,7 +33866,7 @@
 /obj/map/light/yellow,
 /obj/item/bananapeel,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "hSj" = (
 /turf/simulated/wall/auto/walp,
 /area/station/crew_quarters/barber_shop)
@@ -41731,7 +41731,7 @@
 "jKM" = (
 /mob/living/carbon/human/npc/monkey/sea,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "jKU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43748,7 +43748,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "kkU" = (
 /obj/cable{
 	icon_state = "4-5"
@@ -47041,9 +47041,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/maintenance/disposal)
-"kZP" = (
-/turf/simulated/wall/auto/hedge,
-/area/spacehabitat)
 "kZU" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -51451,7 +51448,7 @@
 	},
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/grass,
-/area/spacehabitat)
+/area/space)
 "lWs" = (
 /obj/machinery/alarm/directional/east,
 /obj/decal/stripe_caution,
@@ -56326,7 +56323,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "nfR" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 6;
@@ -60413,7 +60410,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "ofi" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -68786,7 +68783,7 @@
 "qgy" = (
 /obj/map/light/yellow,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "qgN" = (
 /obj/machinery/camera/directional/east{
 	pixel_y = -6
@@ -71459,7 +71456,7 @@
 "qPQ" = (
 /obj/item/seed/grass,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "qPU" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -74324,7 +74321,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "rwV" = (
 /obj/machinery/light/incandescent,
 /obj/table/auto,
@@ -74787,7 +74784,7 @@
 	layer = 3
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "rCB" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -74929,7 +74926,7 @@
 "rDT" = (
 /obj/map/light/green,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "rDW" = (
 /obj/machinery/chem_master{
 	dir = 8;
@@ -75848,7 +75845,7 @@
 "rMn" = (
 /obj/item/seed/alien,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "rMp" = (
 /obj/disposalpipe/type_sensing_outlet/drone_factory,
 /turf/simulated/wall/auto/supernorn,
@@ -90769,7 +90766,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "vlS" = (
 /obj/shrub{
 	dir = 6
@@ -95681,7 +95678,7 @@
 "wul" = (
 /obj/item/reagent_containers/food/snacks/plant/banana,
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "wus" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -102685,7 +102682,7 @@
 /area/station/bridge)
 "yed" = (
 /turf/simulated/floor/grass/random/walp,
-/area/spacehabitat)
+/area/space)
 "yei" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
@@ -171247,9 +171244,9 @@ fsP
 fsP
 fsP
 fsP
-kZP
-kZP
-kZP
+slK
+slK
+slK
 fsP
 fsP
 fsP
@@ -171548,12 +171545,12 @@ bDi
 fsP
 fsP
 fsP
-kZP
-kZP
-kZP
-kZP
-kZP
-kZP
+slK
+slK
+slK
+slK
+slK
+slK
 fsP
 fsP
 fsP
@@ -171849,14 +171846,14 @@ bDi
 fsP
 fsP
 fsP
-kZP
-kZP
+slK
+slK
 lWr
 rDT
 rMn
 fQt
-kZP
-kZP
+slK
+slK
 fsP
 fsP
 fsP
@@ -172151,15 +172148,15 @@ bDi
 fsP
 fsP
 fsP
-kZP
+slK
 rDT
 wul
 yed
 yed
 yed
 rDT
-kZP
-kZP
+slK
+slK
 fsP
 fsP
 fsP
@@ -172452,8 +172449,8 @@ bDi
 fsP
 fsP
 fsP
-kZP
-kZP
+slK
+slK
 rMn
 yed
 yed
@@ -172461,8 +172458,8 @@ yed
 jKM
 yed
 rMn
-kZP
-kZP
+slK
+slK
 fsP
 fsP
 fsP
@@ -172754,8 +172751,8 @@ bDi
 fsP
 fsP
 fsP
-kZP
-kZP
+slK
+slK
 ofh
 cCW
 rDT
@@ -172764,8 +172761,8 @@ yed
 yed
 qgy
 kkS
-kZP
-kZP
+slK
+slK
 fsP
 fsP
 bDi
@@ -173056,18 +173053,18 @@ xJC
 fsP
 fsP
 fsP
-kZP
-kZP
-kZP
-kZP
-kZP
-kZP
+slK
+slK
+slK
+slK
+slK
+slK
 yed
 wul
 qPQ
-kZP
-kZP
-kZP
+slK
+slK
+slK
 fsP
 fsP
 fsP
@@ -173359,17 +173356,17 @@ xJC
 fsP
 fsP
 fsP
-kZP
-kZP
-kZP
-kZP
+slK
+slK
+slK
+slK
 rDT
 yed
 yed
-kZP
-kZP
-kZP
-kZP
+slK
+slK
+slK
+slK
 fsP
 fsP
 fsP
@@ -173661,18 +173658,18 @@ xJC
 fsP
 fsP
 fsP
-kZP
-kZP
-kZP
+slK
+slK
+slK
 qgy
 yed
 yed
 hSf
-kZP
-kZP
-kZP
-kZP
-kZP
+slK
+slK
+slK
+slK
+slK
 fsP
 fsP
 bDi
@@ -173963,18 +173960,18 @@ xJC
 bDi
 fsP
 fsP
-kZP
+slK
 dRA
 qPQ
 yed
 yed
 rCw
-kZP
-kZP
+slK
+slK
 rwO
 qgy
 rDT
-kZP
+slK
 fsP
 fsP
 bDi
@@ -174265,14 +174262,14 @@ xJC
 xJC
 fsP
 fsP
-kZP
+slK
 qgy
 wul
 yed
 yed
 qgy
-kZP
-kZP
+slK
+slK
 qPQ
 yed
 yed
@@ -174567,18 +174564,18 @@ xJC
 xJC
 fsP
 fsP
-kZP
-kZP
+slK
+slK
 qgy
 yed
 yed
-kZP
-kZP
-kZP
+slK
+slK
+slK
 yed
 yed
 nft
-kZP
+slK
 fsP
 fsP
 bDi
@@ -174870,8 +174867,8 @@ xJC
 bDi
 fsP
 fsP
-kZP
-kZP
+slK
+slK
 vlw
 yed
 bmZ
@@ -174879,8 +174876,8 @@ qgy
 yed
 yed
 rDT
-kZP
-kZP
+slK
+slK
 fsP
 fsP
 bDi
@@ -175173,14 +175170,14 @@ xJC
 bDi
 fsP
 fsP
-kZP
-kZP
+slK
+slK
 rDT
 qPQ
 yed
 yed
 vlw
-kZP
+slK
 slK
 fsP
 fsP
@@ -175476,13 +175473,13 @@ bDi
 fsP
 fsP
 fsP
-kZP
-kZP
-kZP
-kZP
-kZP
-kZP
-kZP
+slK
+slK
+slK
+slK
+slK
+slK
+slK
 fsP
 fsP
 fsP
