@@ -71,6 +71,7 @@
 #include "defines\food.dm"
 #include "defines\forensics.dm"
 #include "defines\gang.dm"
+#include "defines\genetics.dm"
 #include "defines\gravity.dm"
 #include "defines\hydroponics.dm"
 #include "defines\infernal.dm"
