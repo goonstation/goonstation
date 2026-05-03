@@ -8,6 +8,8 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 	"Junction" = 2,
 	"Flipped Junction" = 3,
 	"Y-Junction" = 4,
+	"Switch Junction" = 6,
+	"Flipped Switch Junction" = 7,
 	"Trunk" = 5,
 )
 
@@ -21,6 +23,7 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 	density = 1
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
+	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
 
 	var/dispenser_ready = TRUE
 	var/dispenser_delay = 5 DECI SECONDS

@@ -22,6 +22,7 @@
 /obj/item/reagent_containers/glass/bottle/plastic
 	name = "plastic bottle"
 	desc = "A small 3D-printed bottle."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()
@@ -63,6 +64,13 @@
 	icon_state = "bottle_2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
+
+/obj/item/reagent_containers/glass/bottle/acetylsalicylic_acid
+	name = "bottle (acetylsalicylic acid)"
+	desc = "A small bottle containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "acetylsalicylic_acid"
 
 /obj/item/reagent_containers/glass/bottle/insulin
 	name = "bottle (insulin)"

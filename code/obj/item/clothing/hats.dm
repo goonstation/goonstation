@@ -551,6 +551,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "plunger"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "plunger"
+	default_material = "synthrubber"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 2)

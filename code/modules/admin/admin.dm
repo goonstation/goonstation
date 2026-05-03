@@ -2174,7 +2174,7 @@ var/global/noir = 0
 				if (!M) return
 				mod_color(M)
 			else
-				tgui_alert(usr,"You need to be at least a Administrator to modify an icon.")
+				tgui_alert(usr,"You need to be at least an Administrator to modify an icon.")
 
 		if("giveantagtoken") //Gives player a token they can redeem to guarantee an antagonist role
 			if (src.level >= LEVEL_SA)
@@ -2215,7 +2215,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.view_save_data(M)
 			else
-				tgui_alert(usr,"You need to be at least a Administrator to view save data.")
+				tgui_alert(usr,"You need to be at least an Administrator to view save data.")
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
@@ -3166,7 +3166,7 @@ var/global/noir = 0
 								return
 
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to emag everything")
+							tgui_alert(usr,"You need to be at least an Administrator to emag everything")
 							return
 
 					if("shakecamera")
@@ -3185,7 +3185,7 @@ var/global/noir = 0
 									M.changeStatus("knockdown", 2 SECONDS)
 
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")
+							tgui_alert(usr,"You need to be at least an Administrator to shake the camera.")
 							return
 
 					if("creepifystation")
@@ -3196,55 +3196,12 @@ var/global/noir = 0
 								logTheThing(LOG_DIARY, usr, "used the Creepify Station button", "admin")
 								creepify_station()
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to creepify the station.")
+							tgui_alert(usr,"You need to be at least an Administrator to creepify the station.")
 							return
 
 
-					if ("command_report_zalgo")
-						if (src.level >= LEVEL_ADMIN)
-							var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
-							input = zalgoify(input, rand(0,2), rand(0, 2), rand(0, 2))
-							if(!input)
-								return
-							var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-							input2 = zalgoify(input2, rand(0,2), rand(0, 2), rand(0, 2))
-							var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Unknown Source'", "What?", "") as null|text
-							if(!input3)
-								input3 = "Unknown Source"
-
-							if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for_by_tcl(C, /obj/machinery/communications_dish)
-									C.add_centcom_report(input2, input)
-
-								var/sound_to_play = 'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg'
-								command_alert(input, input2, sound_to_play, alert_origin = input3);
-
-								logTheThing(LOG_ADMIN, usr, "has created a command report (zalgo): [input]")
-								logTheThing(LOG_DIARY, usr, "has created a command report (zalgo): [input]", "admin")
-								message_admins("[key_name(usr)] has created a command report (zalgo)")
-
-					if ("command_report_void")
-						if (src.level >= LEVEL_ADMIN)
-							var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
-							input = voidSpeak(input)
-							if(!input)
-								return
-							var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-							var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Unknown Source'", "What?", "") as null|text
-							if(!input3)
-								input3 = "Unknown Source"
-
-							if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for_by_tcl(C, /obj/machinery/communications_dish)
-									C.add_centcom_report(input2, input)
-
-								var/sound_to_play = 'sound/ambience/spooky/Void_Calls.ogg'
-								command_alert(input, input2, sound_to_play, alert_origin = input3);
-
-								logTheThing(LOG_ADMIN, usr, "has created a command report (void): [input]")
-								logTheThing(LOG_DIARY, usr, "has created a command report (void): [input]", "admin")
-								message_admins("[key_name(usr)] has created a command report (void)")
-
+					if ("command_report_panel")
+						usr.client.cmd_admin_command_report_panel()
 					if ("noir")
 						if(src.level >= LEVEL_ADMIN)
 							if (noir)
@@ -3953,8 +3910,7 @@ var/global/noir = 0
 		dat += {"<hr><div class='optionGroup' style='border-color:#92BB78'><b class='title' style='background:#92BB78'>Roleplaying Panel</b>
 					<A href='byond://?src=\ref[src];action=secretsfun;type=shakecamera'>Apply camera shake</A><BR>
 					<A href='byond://?src=\ref[src];action=secretsfun;type=creepifystation'>Creepify station</A><BR>
-					<A href='byond://?src=\ref[src];action=secretsfun;type=command_report_zalgo'>Command Report (Zalgo)</A><BR>
-					<A href='byond://?src=\ref[src];action=secretsfun;type=command_report_void'>Command Report (Void)</A><BR>
+					<A href='byond://?src=\ref[src];action=secretsfun;type=command_report_panel'>Command Report Panel</A><BR>
 				"}
 
 	dat += "</div>"

@@ -432,7 +432,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
 
-/obj/item/disk/data/fixed_disk/meatland
+/obj/item/disk/data/fixed_disk/hd64/meatland
 
 	New()
 		..()
@@ -457,7 +457,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 		newfolder.add_file( new /datum/computer/file/record/meatland/technobabble_bs (src))
 		newfolder.add_file( new /datum/computer/file/record/meatland/david_is_dead (src))
 
-/obj/item/disk/data/fixed_disk/meatland_medical
+/obj/item/disk/data/fixed_disk/hd64/meatland_medical
 
 	New()
 		..()
@@ -480,10 +480,10 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 		newfolder.add_file( new /datum/computer/file/record/meatland/whiskerdeath1 (src))
 
 /obj/machinery/computer3/generic/personal/meatland
-	setup_drive_type = /obj/item/disk/data/fixed_disk/meatland
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/meatland
 
 /obj/machinery/computer3/generic/personal/meatland_medical
-	setup_drive_type = /obj/item/disk/data/fixed_disk/meatland_medical
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/meatland_medical
 
 //Computer logs
 /datum/computer/file/record/meatland
@@ -1027,10 +1027,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 	base_icon_state = "cheget"
 	setup_starting_os = /datum/computer/file/terminal_program/os/cheget
 	temp = ""
-	setup_idscan_path = null
-	setup_has_internal_disk = 0
-	setup_starting_peripheral1 = /obj/item/peripheral/cheget_key
-	setup_starting_peripheral2 = /obj/item/peripheral/cheget_key
+	setup_starting_peripherals = list(/obj/item/peripheral/cheget_key,/obj/item/peripheral/cheget_key)
 
 /datum/computer/file/terminal_program/os/cheget
 	name = "AUTH2"

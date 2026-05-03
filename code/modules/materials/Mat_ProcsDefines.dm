@@ -282,7 +282,7 @@ proc/get_icon_states(icon)
 		src.material.triggerOnBlobHit(src, blobPower)
 	return
 
-/// Called when an atom is used for an attack a atom for mat effects
+/// Called when an atom is used to attack an atom for mat effects
 /atom/proc/material_on_attack_use(var/mob/attacker, var/atom/attacked)
 	if (src.material)
 		src.material.triggerOnAttack(src, attacker, attacked)

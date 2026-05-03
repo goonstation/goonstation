@@ -49,6 +49,24 @@
 	START_TRACKING
 	SPAWN(0.5 SECONDS)
 		connection_scan()
+	#ifdef I_HATE_WAITING_FOR_GENES
+		var/list/chromosome_types = list(
+			/datum/dna_chromosome/, //stabilizer
+			/datum/dna_chromosome/anti_mutadone,
+			/datum/dna_chromosome/reclaimer,
+			/datum/dna_chromosome/stealth,
+			/datum/dna_chromosome/power_enhancer,
+			/datum/dna_chromosome/cooldown_reducer,
+			/datum/dna_chromosome/safety
+		)
+		var/how_many_chromosomes = 20
+		for (var/chrom_path in chromosome_types)
+			for (var/i, i<how_many_chromosomes, i++)
+				var/datum/dna_chromosome/C = new chrom_path(src)
+				src.saved_chromosomes += C
+		genResearch.lock_breakers = 999
+		genResearch.researchMaterial = 999
+	#endif
 
 /obj/machinery/computer/genetics/connection_scan()
 	src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))

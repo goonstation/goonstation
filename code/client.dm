@@ -820,7 +820,7 @@ var/global/curr_day = null
 		sleep(0.1 SECONDS)
 
 /client/Topic(href, href_list)
-	if (!usr || isnull(usr.client))
+	if (!usr || isnull(usr.client) || usr.client != src)
 		return
 
 	// Tgui Topic middleware

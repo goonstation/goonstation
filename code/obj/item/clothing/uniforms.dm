@@ -694,6 +694,9 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 /obj/item/clothing/under/misc/clown
 	name = "clown suit"
 	desc = "You are likely taking your life into your own hands by wearing this."
+	icon = 'icons/obj/clothing/jumpsuits/item_js_clown.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_clown.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_clown.dmi'
 	icon_state = "clown"
 	item_state = "clown"
 
@@ -2211,3 +2214,53 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/hawaiian_shirt)
 	desc = "The symbols on this teal jumpsuit are entirely alien to you. It almost speaks to you of an ancient belief lost to time"
 	icon_state = "weirdo"
 	item_state = "weirdo"
+
+
+// Seasonal spring clothing
+
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/sundress)
+/obj/item/clothing/under/misc/sundress
+	name = "sundress"
+	desc = "a lightweight warm-weather dress"
+	icon_state = "sundress-red"
+	item_state = "sundress-red"
+	hide_underwear = TRUE
+
+	red
+		name = "red sundress"
+
+	green
+		name = "green sundress"
+		icon_state = "sundress-green"
+		item_state = "sundress-green"
+	blue
+		name = "blue sundress"
+		icon_state = "sundress-blue"
+		item_state = "sundress-blue"
+	yellow
+		name = "yellow sundress"
+		icon_state = "sundress-yellow"
+		item_state = "sundress-yellow"
+
+/obj/item/clothing/under/misc/poetshirt
+	name = "poet shirt"
+	desc = "a loose-fitting, ruffled shirt"
+	icon_state = "poetshirt-white"
+	item_state = "poetshirt-white"
+
+	yellow
+		name = "yellow poet shirt"
+		icon_state = "poetshirt-yellow"
+		item_state = "poetshirt-yellow"
+	blue
+		name = "blue poet shirt"
+		icon_state = "poetshirt-blue"
+		item_state = "poetshirt-blue"
+	red
+		name = "red poet shirt"
+		icon_state = "poetshirt-red"
+		item_state = "poetshirt-red"
+	black
+		name = "black poet shirt"
+		icon_state = "poetshirt-black"
+		item_state = "poetshirt-black"

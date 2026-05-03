@@ -105,7 +105,7 @@
 	if (src.cell)
 		var/passive_wattage_needed = src.passive_wattage_per_g_quantum * src.gforce_intensity
 		var/available_cell_watts = src.cell.charge / CELLRATE
-		if (passive_wattage_needed && available_cell_watts > passive_wattage_needed)
+		if (!passive_wattage_needed || (passive_wattage_needed && available_cell_watts > passive_wattage_needed))
 			return TRUE
 	if (src.uses_area_power)
 		. = ..()

@@ -738,6 +738,22 @@
 	icon_state = "funny-blue"
 	item_state = "funny-blue"
 
+/obj/item/storage/fanny/funny/purple
+	icon_state = "funny-purple"
+	item_state = "funny-purple"
+
+/obj/item/storage/fanny/funny/yellow
+	icon_state = "funny-yellow"
+	item_state = "funny-yellow"
+
+/obj/item/storage/fanny/funny/pink
+	icon_state = "funny-pink"
+	item_state = "funny-pink"
+
+/obj/item/storage/fanny/funny/green
+	icon_state = "funny-green"
+	item_state = "funny-green"
+
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
 	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
@@ -830,7 +846,7 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	can_hold = list(/obj/item/deconstructor)
+	can_hold = list(/obj/item/deconstructor, /obj/item/tool/omnitool/dualconstruction_device)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 /obj/item/storage/belt/utility/nt_engineer
@@ -840,6 +856,7 @@
 		/obj/item/rcd,
 		/obj/item/rcd_ammo,
 		/obj/item/deconstructor,
+		/obj/item/tool/omnitool/dualconstruction_device,
 		/obj/item/sheet,
 		/obj/item/tile
 	)
@@ -857,8 +874,9 @@
 	item_state = "cebelt"
 	rarity = 4
 	can_hold = list(/obj/item/rcd,
-	/obj/item/rcd_ammo,
-	/obj/item/deconstructor)
+		/obj/item/rcd_ammo,
+		/obj/item/deconstructor,
+		/obj/item/tool/omnitool/dualconstruction_device)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	inventory_counter_enabled = 1
 

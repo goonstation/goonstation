@@ -2211,7 +2211,7 @@
 		if(!ishuman(A))
 			. = FALSE
 		// I'd LIKE to put this check here, but proc/find_ailment_by_type and is a bit too inefficient for my comfort
-		// and this will be applied on combat hit. The ailments should use a assoc list for Constant lookup time or something...
+		// and this will be applied on combat hit. The ailments should use an assoc list for Constant lookup time or something...
 		// if (isliving(A))
 		// 	var/mob/living/L = A
 		// 	if (L.find_ailment_by_type(/datum/ailment/disease/necrotic_degeneration/can_infect_more))
@@ -2878,9 +2878,10 @@
 
 	onRemove()
 		..()
-		if (src.added_accent)
-			var/mob/living/M = src.owner
-			M.bioHolder.RemoveEffectInstance(src.added_accent)
+		SPAWN(0)
+			if (src.added_accent)
+				var/mob/living/M = src.owner
+				M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_ATOM_SAY)
 
 /datum/statusEffect/graffiti
@@ -3541,12 +3542,17 @@
 		if (ismob(owner) && !QDELETED(owner))
 			var/mob/mob_owner = owner
 			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+			var/image/stasis_image = owner.SafeGetOverlayImage("stasis_field", 'icons/obj/ship.dmi', "tractor", FLOAT_LAYER)
+			owner.AddOverlays(stasis_image, "stasis_field")
 		..()
 
 	onRemove()
 		if (ismob(owner) && !QDELETED(owner))
 			var/mob/mob_owner = owner
 			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+			owner.ClearSpecificOverlays("stasis_field")
 		..()
 
 /datum/statusEffect/silicon_radiation

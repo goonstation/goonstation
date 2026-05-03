@@ -146,7 +146,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "cyan_bolt"
 	damage = 0
-	cost = 100
+	cost = 50
 	dissipation_rate = 2
 	dissipation_delay = 8
 	shot_sound = 'sound/weapons/laser_e.ogg'
@@ -688,7 +688,7 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 	var/image/fluid_image
 	var/list/whitelist = list()
 	var/safe = 1
-	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine")
+	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine", "acetylsalicylic_acid")
 
 
 	New()

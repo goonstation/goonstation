@@ -547,7 +547,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	Congratulations, your station has purchased the A-97 Port-A-Brig Security device!<br>
 	Using the A-97 is as simple as beating a criminal to death! Simply Summon the A-97 with the remote, put the criminal inside, lock the door with your ID and send it back!<br>
 	<b>That's all there is to it!</b><br>
-	<i>Notice, the Port-A-Brig teleporter system may fail if you are not in a open space.</i><br>
+	<i>Notice, the Port-A-Brig teleporter system may fail if you are not in an open space.</i><br>
 	<font size=1>This technology produced under license from  Quantum Movement Inc, LTD.</font>"}
 
 /////////////////////////////////////// Port-a-Sci ///////////////////////////////////////////

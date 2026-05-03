@@ -1940,6 +1940,15 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	ability_path = /datum/targetable/geneticsAbility/bigpuke
 	var/range = 3
 
+	onPowerChange(oldval, newval)
+		. = ..()
+		var/datum/targetable/geneticsAbility/bigpuke/our_gene = src.ability
+		if(ismob(owner))
+			if(oldval > 1)
+				our_gene.puke_reagents = list("vomit" = 20)
+			if(newval > 1)
+				our_gene.puke_reagents = list("vomit" = 40)
+
 /datum/targetable/geneticsAbility/bigpuke
 	name = "Mass Emesis"
 	desc = "BLAAAAAAAARFGHHHHHGHH"
@@ -2282,41 +2291,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 	has_misfire = FALSE
 	needs_hands = FALSE
 	override_params = list("amt1"=2,"amt2"=5)
-
-/datum/targetable/geneticsAbility/ink
-	name = "Ink Glands"
-	desc = "Spray colorful ink onto an object."
-	icon_state = "ink"
-	targeted = FALSE
-	has_misfire = FALSE
-	needs_hands = FALSE
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/obj/the_object = target
-		var/base_path = /obj
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if(!the_object)
-			if (!items.len)
-				boutput(usr, "/red You can't find anything nearby to spray ink on.")
-				return 1
-
-			the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
-			if (!the_object)
-				last_cast = 0
-				return 1
-		if (!(the_object in items))
-			return 1
-
-		var/datum/bioEffect/power/ink/I = linked_power
-		if (!linked_power)
-			owner.visible_message("[owner] spits on [the_object]. Gross.")
-		else
-			owner.visible_message(SPAN_ALERT("[owner] sprays ink onto [the_object]!"))
-			the_object.color = I.color
-		return 0
 
 ////////////////
 // Admin Only //

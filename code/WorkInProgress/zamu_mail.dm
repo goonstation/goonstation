@@ -75,7 +75,7 @@
 
 	attackby(obj/item/I, mob/user)
 		// You know, like a letter opener. It opens letters.
-		if ((istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/dagger)) && src.target_dna)
+		if ((istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/dagger) || istype(I, /obj/item/knife)) && src.target_dna)
 			actions.start(new /datum/action/bar/icon/mail_lockpick(src, I, 5 SECONDS), user)
 			return
 		..()
@@ -87,7 +87,11 @@
 			if(ismob(hit_atom))
 				var/mob/M = hit_atom
 				if(ishuman(M))
-					if((prob(50) && M.bioHolder.HasEffect("clumsy")))
+					var/mob/living/carbon/human/H = M
+					if(H.restrained())
+						src.visible_message(SPAN_COMBAT("[H] gets beaned with the [src.name]."))
+						logTheThing(LOG_COMBAT, H, "is struck by [src]")
+					else if((prob(50) && M.bioHolder.HasEffect("clumsy")))
 						src.visible_message(SPAN_COMBAT("[M] gets beaned with \the [src.name]."))
 						M.changeStatus("stunned", 2 SECONDS)
 						JOB_XP(M, "Clown", 1)

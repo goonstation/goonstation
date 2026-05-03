@@ -363,6 +363,7 @@
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "solderingiron"
+	item_state = "soldering"
 	force = 10
 	hit_type = DAMAGE_BURN
 	throwforce = 5
@@ -390,6 +391,7 @@
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	//var/datum/electronics/electronics_items/link = null
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
+	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
 
 	var/processing = 0
 	var/net_id = null

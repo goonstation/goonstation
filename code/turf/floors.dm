@@ -181,6 +181,9 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/plating/random
+#ifdef IN_MAP_EDITOR
+	icon_state = "plating_random"
+#endif
 	New()
 		..()
 		if (prob(20))
