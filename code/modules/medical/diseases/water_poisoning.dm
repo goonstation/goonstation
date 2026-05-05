@@ -13,7 +13,7 @@
 	associated_reagent = "cocktail_quadruplewater"
 	affected_species = ("Human, Monkey")
 
-/datum/ailment/disease/water_poisoning/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
+/datum/ailment/disease/water_poisoning/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/disease/water_poisoning/D, mult)
 	if (..())
 		return
 	switch(D.stage)
@@ -67,9 +67,9 @@
 				boutput(affected_mob, SPAN_ALERT("You feel terrible!"))
 				affected_mob.setStatus("slowed", 3 SECONDS)
 		if(5)
-			if(feelingfine == 0)
+			if(D.feelingfine == 0)
 				boutput(affected_mob, SPAN_ALERT("You suddenly feel better..."))
-				feelingfine += 1
+				D.feelingfine += 1
 			if(probmult(5) && !QDELETED(affected_mob))
 				affected_mob.emote("scream")
 				affected_mob.setStatus("knockdown", 15 SECONDS)
