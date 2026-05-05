@@ -582,6 +582,7 @@
 #include "code\mob\living\critter\flockcritter_parent.dm"
 #include "code\mob\living\critter\goat.dm"
 #include "code\mob\living\critter\golem.dm"
+#include "code\mob\living\critter\gorilla.dm"
 #include "code\mob\living\critter\hastur.dm"
 #include "code\mob\living\critter\jackalope.dm"
 #include "code\mob\living\critter\jeans_elemental.dm"
