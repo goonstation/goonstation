@@ -661,21 +661,31 @@ TYPEINFO(/obj/machinery/door_control)
 /obj/machinery/door_control/ex_act(severity)
 	return
 
+/obj/machinery/door_control/antagscanner/attackby(obj/item/W, mob/user)
+	if (istrainedsyndie(user) && istype(W, /obj/item/disk/data/floppy/read_only/authentication))
+		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
+		if (!listening_post.unlocked)
+			listening_post.first_unlock(user)
+			src.say("Nanotrasen access hash verified. Full facility access granted.")
+		src.toggle(user)
+	else
+		. = ..()
+
 /obj/machinery/door_control/antagscanner/attack_hand(mob/user)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (istrainedsyndie(user))
-		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
-		var/first_unlock_text
-		if (!listening_post.unlocked)
-			listening_post.first_unlock(user)
-			first_unlock_text = " Facility lockdown lifted."
-		src.toggle(user)
-		if (src.entrance_scanner)
-			src.say("Biometric profile accepted. Welcome, Agent.[first_unlock_text]")
-	else
+	if (!istrainedsyndie(user))
 		src.say("Invalid biometric profile. Access denied.")
+		return
+	var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
+	if (!listening_post.unlocked)
+		src.say("Facility access contingent on retrieval of Nanotrasen access codes.")
+		return
+
+	src.toggle(user)
+	if (src.entrance_scanner)
+		src.say("Biometric profile accepted. Welcome, Agent.")
 
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////
