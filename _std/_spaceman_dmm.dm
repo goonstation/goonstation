@@ -33,13 +33,17 @@
 /proc/enable_auxtools_debugger()
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		call_ext(debug_server, "auxtools_init")()
-		enable_debugging()
+		var/result = call_ext(debug_server, "auxtools_init")()
+
+		if (result == "SUCCESS")
+			enable_debugging()
+		else
+			CRASH("auxtools not loaded: [result]")
 
 /proc/disable_auxtools_debugger()
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		call_ext(debug_server, "auxtools_shutdown")()
+		world.log << call_ext(debug_server, "auxtools_shutdown")()
 
 /proc/auxtools_stack_trace(msg)
 	CRASH(msg)
