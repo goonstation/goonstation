@@ -1461,9 +1461,8 @@
 /obj/storage/crate/wooden,
 /obj/random_item_spawner/junk/one,
 /obj/railing/purple{
-	dir = 4
+	dir = 6
 	},
-/obj/railing/purple,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "atp" = (
@@ -12927,7 +12926,9 @@
 "ddi" = (
 /obj/decal/stage_edge/alt,
 /obj/table/wood/round/auto,
-/obj/item/decoration/flower_vase,
+/obj/item/decoration/flower_vase{
+	pixel_y = 8
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -17291,10 +17292,7 @@
 "eax" = (
 /obj/machinery/light/small/floor/netural,
 /obj/railing/red{
-	dir = 4
-	},
-/obj/railing/red{
-	dir = 1
+	dir = 5
 	},
 /turf/simulated/floor/grasslush/border{
 	dir = 5
@@ -18763,9 +18761,8 @@
 "esL" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/decal/stripe_caution,
-/obj/railing/purple,
 /obj/railing/purple{
-	dir = 4
+	dir = 6
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/se)
@@ -25874,10 +25871,7 @@
 /obj/item/parts/robot_parts/leg/left/standard,
 /obj/item/parts/robot_parts/head/light,
 /obj/railing/purple{
-	dir = 1
-	},
-/obj/railing/purple{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/se)
@@ -44561,10 +44555,7 @@
 "ktC" = (
 /obj/machinery/light/small/floor/purpleish,
 /obj/railing{
-	dir = 1
-	},
-/obj/railing{
-	dir = 8
+	dir = 9
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/north)
@@ -55476,9 +55467,8 @@
 /area/station/turret_protected/ai)
 "mUZ" = (
 /obj/railing/red{
-	dir = 4
+	dir = 6
 	},
-/obj/railing/red,
 /turf/simulated/floor/grasslush/border{
 	dir = 6
 	},
@@ -90744,9 +90734,8 @@
 	icon_state = "line2"
 	},
 /obj/railing/purple{
-	dir = 8
+	dir = 10
 	},
-/obj/railing/purple,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "vkV" = (
