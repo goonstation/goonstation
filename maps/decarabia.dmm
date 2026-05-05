@@ -5336,9 +5336,7 @@
 /area/station/garden/aviary)
 "brT" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
+/obj/machinery/info_map,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -6719,6 +6717,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/bluegreen,
 /area/station/hallway/primary/west)
 "bGs" = (
@@ -13410,6 +13409,7 @@
 /area/station/hallway/primary/southeast)
 "dhW" = (
 /obj/machinery/vending/snack,
+/obj/machinery/info_map,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -15767,6 +15767,7 @@
 "dKf" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/cigarette,
+/obj/machinery/info_map,
 /turf/simulated/floor/minitiles,
 /area/station/crew_quarters/quarters_south)
 "dKl" = (
@@ -25669,6 +25670,7 @@
 /obj/machinery/disposal,
 /obj/decal/stripe_caution,
 /obj/disposalpipe/trunk/west,
+/obj/machinery/info_map,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "fXF" = (
@@ -27435,6 +27437,9 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
+	},
+/obj/machinery/info_map{
+	pixel_x = 9
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -29784,6 +29789,7 @@
 /area/station/chapel/sanctuary)
 "gTZ" = (
 /obj/machinery/light/incandescent,
+/obj/machinery/info_map,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -33898,6 +33904,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"hSS" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east)
 "hTj" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -33987,6 +33997,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/grass/random/walp,
 /area/station/hallway/primary/south)
 "hUx" = (
@@ -40863,6 +40874,12 @@
 	pixel_x = -6;
 	pixel_y = 11;
 	rand_pos = 0
+	},
+/obj/machinery/door_control{
+	id = "kitchen_shutter";
+	name = "Kitchen Shutter Control";
+	pixel_y = -20;
+	dir = 1
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 1
@@ -63976,11 +63993,6 @@
 /obj/table/reinforced/chemistry/auto{
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
-	},
-/obj/machinery/door_control{
-	id = "kitchen_shutter";
-	name = "Kitchen Shutter Control";
-	pixel_y = -26
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
 	pixel_y = 14;
@@ -90693,6 +90705,7 @@
 /area/station/crew_quarters/garden)
 "vkk" = (
 /obj/machinery/vending/medical_public,
+/obj/machinery/info_map,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -92501,8 +92514,7 @@
 	},
 /obj/decal/tile_edge/line/green,
 /obj/machinery/light_switch/west{
-	pixel_y = 6;
-	dir = 4
+	pixel_y = 6
 	},
 /turf/simulated/floor/grass/random/walp,
 /area/station/hallway/primary/north)
@@ -100594,6 +100606,12 @@
 	},
 /turf/simulated/floor/glassblock/transparent/red,
 /area/station/security/main)
+"xDi" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "xDl" = (
 /obj/machinery/alarm/directional/north,
 /obj/stool/chair/couch/blue{
@@ -129201,7 +129219,7 @@ vTa
 hEB
 oRd
 rKb
-dje
+xDi
 sBr
 cTK
 cTK
@@ -164782,7 +164800,7 @@ wqX
 wqX
 wqX
 wqX
-pOj
+hSS
 ssm
 gNA
 duH
