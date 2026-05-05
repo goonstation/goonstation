@@ -682,18 +682,6 @@
 	dir = 6
 	},
 /area/listeningpost/general)
-"sF" = (
-/obj/storage/crate{
-	name = "Robotic limbs"
-	},
-/obj/item/parts/robot_parts/leg/left/treads,
-/obj/item/parts/robot_parts/leg/right/treads,
-/obj/item/parts/robot_parts/leg/left/standard,
-/obj/item/parts/robot_parts/leg/right/standard,
-/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
-/turf/simulated/floor/black,
-/area/listeningpost/break_room)
 "tf" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -1094,10 +1082,6 @@
 	pixel_y = 7;
 	pixel_x = 4
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_y = 7;
-	pixel_x = -15
-	},
 /obj/item/reagent_containers/syringe{
 	pixel_y = 6;
 	pixel_x = -4
@@ -1309,25 +1293,15 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/barracks)
 "JP" = (
-/obj/item/storage/wall/medical{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = 13
-	},
 /obj/table/syndicate/auto,
-/obj/item/reagent_containers/mender_refill_cartridge/burn{
-	pixel_y = 9;
-	pixel_x = -4
-	},
-/obj/item/reagent_containers/mender/burn,
+/obj/random_item_spawner/med_kit/two,
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "JS" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
 /obj/cable/black{
 	icon_state = "4-8"
 	},
+/obj/table/syndicate/auto,
 /turf/simulated/floor/techfloor/red,
 /area/listeningpost/break_room)
 "JV" = (
@@ -1447,11 +1421,10 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost/comm_dish)
 "NC" = (
-/obj/machinery/optable,
-/obj/machinery/drainage,
 /obj/cable/black{
 	icon_state = "1-8"
 	},
+/obj/table/syndicate/auto,
 /turf/simulated/floor/techfloor/red,
 /area/listeningpost/break_room)
 "NE" = (
@@ -2648,7 +2621,7 @@ Fn
 iG
 pp
 Cg
-sF
+vy
 bM
 vy
 Cf
