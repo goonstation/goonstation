@@ -88,10 +88,11 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	power_change()
 
 		if(status & BROKEN)
-			icon_state = initial(icon_state)
+			icon_state = "chemicompiler_st_off"
 			light.disable()
 
 		else if(powered())
+			status &= ~NOPOWER
 			if (executor.core.running)
 				icon_state = "chemicompiler_st_working"
 				light.set_brightness(0.6)
@@ -102,7 +103,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				light.enable()
 		else
 			SPAWN(rand(0, 15))
-				icon_state = initial(icon_state)
+				icon_state = "chemicompiler_st_off"
 				status |= NOPOWER
 				light.disable()
 

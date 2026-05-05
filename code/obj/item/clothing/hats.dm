@@ -363,7 +363,9 @@ TYPEINFO(/obj/item/clothing/head/det_hat/gadget)
 									"camera" = /obj/item/camera,
 									"audiolog" = /obj/item/device/audio_log ,
 									"flashlight" = /obj/item/device/light/flashlight,
-									"glasses" = /obj/item/clothing/glasses)
+									"glasses" = /obj/item/clothing/glasses,
+									"duster" = /obj/item/reagent_containers/applicator/brush,
+									)
 		cigs = list()
 	examine()
 		. = ..()

@@ -608,7 +608,7 @@
 			return 0
 		var/protection = 0
 		var/a_zone = zone
-		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
+		if (a_zone in list("l_arm", "r_arm", "l_leg", "r_leg"))
 			a_zone = "chest"
 			//protection from clothing
 		if(a_zone == "All")
