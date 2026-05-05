@@ -362,6 +362,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
 		if("cycle")
 			src.start_cycle(ui.user)
+			src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
 
 /obj/submachine/laundry_machine/proc/toggle_door()
 	if (src.on)
