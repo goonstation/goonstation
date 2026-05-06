@@ -12,11 +12,11 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer
+	ai_type = /datum/aiHolder/gorilla
 	is_npc = TRUE
 	no_stamina_stuns = TRUE
 	add_abilities = list(/datum/targetable/critter/tackle)
-	var/group_retaliate = TRUE // so gorillas defend each other
+	var/enraged = FALSE
 
 	New()
 		..()
@@ -48,7 +48,8 @@
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	valid_target(mob/living/C)
-		if (istype(C, /mob/living/critter/gorilla)) return FALSE // in the infinite expanse of space, gorillas live in harmony
+		if (istype(C, /mob/living/critter/gorilla)) return FALSE
+		return ..() // in the infinite expanse of space, gorillas live in harmony
 
 	critter_basic_attack(mob/target)
 		if (issilicon(target))
@@ -74,24 +75,29 @@
 					return SPAN_ALERT("<b>[src] roars!</b>")
 		return null
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null) //for group retaliation
-		if (src.ai && group_retaliate)
-			for (var/mob/living/critter/gorilla/ally in view(7, src))
-				if (ally?.alive && ally.valid_target(M))
-					ally.trigger_group_retaliate(M)
+// special retaliate that sends all nearby gorillas into permanent uncontrollable gorilla rage
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null) // special retaliate that sends all nearby gorillas into
+		for (var/mob/living/critter/gorilla/G in view(7, src))
+			if (G.ai && !G.enraged)
+				qdel(G.ai)
+				G.ai = null
+				G.ai_type = /datum/aiHolder/gorilla/aggressive
+				G.ai = new G.ai_type(G)
+				var/datum/aiTask/sequence/goalbased/retaliate/task_instance = G.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(G.ai, G.ai.default_task))
+				task_instance.targetted_mob = M
+				task_instance.start_time = TIME
+				G.ai.priority_tasks += task_instance
+				G.ai.interrupt()
+				G.enraged = TRUE
 		..()
 
-	proc/trigger_group_retaliate(var/mob/target) // gorillas together strong
-		if (!src.ai_retaliates || !src.ai.enabled)
-			return
+	seek_target(var/range = 9)
+		. = ..()
 
-		if (length(src.ai.priority_tasks) > 0)
-			return
-		var/datum/aiTask/sequence/goalbased/retaliate/task_instance = src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task))
-		task_instance.targetted_mob = target
-		task_instance.start_time = TIME
-		src.ai.priority_tasks += task_instance
-		src.ai.interrupt()
+		if (length(.) && prob(10))
+			playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 60, 1)
+			src.visible_message(SPAN_ALERT("<B>[src]</B> roars!"))
+
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // taken from brullbar
 		if (isrobot(silicon) && !ON_COOLDOWN(src, "gorilla_messup_cyborg", 30 SECONDS))
@@ -110,12 +116,9 @@
 			random_brute_damage(silicon, 15, 0)
 
 
-/mob/living/critter/gorilla/enraged // for admemes
-	ai_type = /datum/aiHolder/aggressive
 
-	seek_target(var/range = 9)
-		. = ..()
+/mob/living/critter/gorilla/aggressive // gorrillas that start enraged for admemes
+	ai_type = /datum/aiHolder/gorilla/aggressive
+	desc = "HOLY SHIT"
 
-		if (length(.) && prob(10))
-			playsound(src.loc, 'sound/voice/screams/monkey_scream.ogg', 90, 1, pitch=0.3)
-			src.visible_message(SPAN_ALERT("<B>[src]</B> roars!"))
+
