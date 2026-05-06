@@ -25,25 +25,20 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
+/obj/table/glass/auto,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "bK" = (
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
 /area/listeningpost/general)
 "bL" = (
-/obj/machinery/light/incandescent/warm,
 /obj/cable/black{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
-/obj/machinery/guardbot_dock,
-/obj/machinery/bot/guardbot/bad{
-	on = 0
-	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -82,23 +77,17 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/redblack,
+/turf/simulated/floor/red,
 /area/listeningpost/general)
 "dJ" = (
 /turf/unsimulated/wall/trench,
 /area/space)
 "eh" = (
-/obj/table/reinforced/auto,
-/obj/machinery/coffeemaker/security{
-	desc = "The S stands for Security, if you're easily misled."
-	},
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
+/obj/table/glass/auto,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "ev" = (
 /obj/item/storage/toilet/random/escapetools{
 	dir = 4
@@ -115,7 +104,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 1
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "eL" = (
 /obj/cable/black{
 	icon_state = "1-8"
@@ -123,20 +112,22 @@
 /turf/simulated/floor/black,
 /area/listeningpost/vestibule)
 "eY" = (
-/obj/table/reinforced/auto,
-/obj/machinery/microwave,
-/obj/machinery/recharger/wall/sticky{
-	dir = 1;
-	pixel_y = 26
+/obj/table/glass/auto,
+/obj/item/uplink_telecrystal{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/uplink_telecrystal{
+	pixel_y = -1
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "ff" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 1;
 	icon_state = "leadjunction_gray"
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "fk" = (
 /obj/cable/black{
 	icon_state = "1-2"
@@ -161,6 +152,11 @@
 /obj/cable/black,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
+"ho" = (
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 5
+	},
+/area/listeningpost/barracks)
 "hu" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 6
@@ -222,9 +218,6 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
-"iI" = (
-/turf/simulated/floor/black,
-/area/listeningpost/break_room)
 "jp" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 4
@@ -255,11 +248,18 @@
 /obj/machinery/light,
 /turf/space/fluid/acid,
 /area/space)
-"kH" = (
-/obj/cable/black{
-	icon_state = "2-8"
+"kU" = (
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_x = 7
 	},
-/turf/simulated/floor/black,
+/obj/machinery/power/apc/autoname_north/hardened,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/redblack,
 /area/listeningpost/syndicate_teleporter)
 "lo" = (
 /obj/lattice{
@@ -317,6 +317,15 @@
 	icon_state = "floor3"
 	},
 /area/listeningpost/tech_room)
+"mw" = (
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/security{
+	desc = "The S stands for Security, if you're easily misled."
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general)
 "mA" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 10
@@ -436,7 +445,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 4
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "qi" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 4
@@ -445,10 +454,13 @@
 	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
-"qA" = (
-/obj/machinery/computer/announcement/syndicate,
+"qK" = (
+/obj/drink_rack/mug{
+	pixel_y = 32
+	},
+/obj/machinery/vending/snack,
 /turf/simulated/floor/redblack,
-/area/listeningpost/general)
+/area/listeningpost/syndicate_teleporter)
 "qY" = (
 /obj/machinery/power/furnace{
 	active = 1;
@@ -538,14 +550,9 @@
 	},
 /area/listeningpost/power)
 "tr" = (
-/obj/machinery/door/airlock/pyro{
-	name = "Personnel"
-	},
-/obj/cable/black{
-	icon_state = "1-2"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner,
 /turf/simulated/floor/black,
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "tw" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 1
@@ -582,7 +589,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "uV" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/shuttle{
@@ -590,11 +597,12 @@
 	},
 /area/listeningpost/tech_room)
 "uW" = (
-/obj/machinery/vending/alcohol/with_ammo,
+/obj/storage/crate/freezer,
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "vq" = (
 /obj/machinery/door_control/antagscanner{
 	entrance_scanner = 1;
@@ -604,13 +612,10 @@
 	},
 /turf/space/fluid/acid,
 /area/space)
-"vw" = (
-/obj/machinery/vending/floppy{
-	profit = 0
-	},
-/turf/simulated/floor/redblack,
-/area/listeningpost/general)
 "vF" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -623,6 +628,13 @@
 "xc" = (
 /turf/simulated/floor/engine/caution/south,
 /area/listeningpost/syndicate_teleporter)
+"xo" = (
+/obj/table/reinforced/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general)
 "xp" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 9
@@ -659,12 +671,6 @@
 	icon_state = "leadjunction_gray"
 	},
 /area/listeningpost/power)
-"Az" = (
-/obj/cable/black{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost/break_room)
 "AD" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4
@@ -703,8 +709,15 @@
 	icon_state = "floorgrime-w"
 	},
 /area/listeningpost/general)
+"BR" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/redblack,
+/area/listeningpost/syndicate_teleporter)
 "Cb" = (
-/obj/machinery/vending/snack,
+/obj/table/syndicate/auto,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
 /turf/simulated/floor/redblack,
 /area/listeningpost/general)
 "CN" = (
@@ -712,7 +725,7 @@
 	dir = 8;
 	icon_state = "leadjunction_gray"
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "Dg" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
@@ -768,11 +781,8 @@
 /turf/space/fluid/acid,
 /area/space)
 "Fr" = (
-/obj/cable/black{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/black,
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "Fx" = (
 /turf/space/fluid/acid/clear,
 /area/space)
@@ -796,11 +806,10 @@
 	},
 /area/listeningpost/vestibule)
 "Ge" = (
-/obj/machinery/vending/cigarette,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "Gk" = (
 /turf/simulated/floor/stairs/wide/other,
 /area/listeningpost/syndicate_teleporter)
@@ -854,13 +863,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/listeningpost/break_room)
-"HL" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost/syndicate_teleporter)
+/area/listeningpost/barracks)
 "HN" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
@@ -871,10 +874,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
-/area/listeningpost/general)
-"IC" = (
-/obj/machinery/computer/camera_viewer,
-/turf/simulated/floor/redblack,
 /area/listeningpost/general)
 "Jk" = (
 /obj/cable/black{
@@ -922,15 +921,6 @@
 	icon_state = "floor3"
 	},
 /area/listeningpost/tech_room)
-"Ki" = (
-/obj/cable/black{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west/hardened,
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/listeningpost/syndicate_teleporter)
 "Kj" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 9
@@ -947,7 +937,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 10
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "LG" = (
 /obj/cable/orange{
 	icon_state = "0-4"
@@ -963,9 +953,6 @@
 "LN" = (
 /turf/unsimulated/wall/trench/side,
 /area/space)
-"Mx" = (
-/turf/simulated/floor/black,
-/area/listeningpost/syndicate_teleporter)
 "MN" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -974,6 +961,12 @@
 "NQ" = (
 /turf/simulated/floor/black,
 /area/listeningpost/vestibule)
+"NR" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost/syndicate_teleporter)
 "NU" = (
 /obj/lattice{
 	dir = 5;
@@ -985,12 +978,21 @@
 "Ob" = (
 /obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/red,
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
+"Od" = (
+/obj/machinery/vending/floppy{
+	profit = 0
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost/syndicate_teleporter)
 "On" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
 /area/listeningpost/syndicate_teleporter)
+"Ox" = (
+/turf/simulated/floor/redblack,
+/area/listeningpost/general)
 "OB" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
@@ -1001,7 +1003,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "OG" = (
 /obj/machinery/computer/power_monitor{
 	dir = 4
@@ -1054,16 +1056,13 @@
 	},
 /area/listeningpost/tech_room)
 "PE" = (
-/obj/storage/crate/freezer,
-/obj/item/storage/box/donkpocket_kit,
-/obj/machinery/power/apc/autoname_west/hardened,
-/obj/cable/black{
-	icon_state = "0-4"
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "Qp" = (
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
@@ -1077,6 +1076,10 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
+/obj/machinery/power/apc/autoname_west/hardened,
+/obj/cable/black{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -1088,7 +1091,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "Rt" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 5
@@ -1138,6 +1141,9 @@
 	},
 /area/listeningpost/tech_room)
 "SU" = (
+/obj/cable/black{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -1159,9 +1165,6 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost/general)
 "UG" = (
-/obj/cable/black{
-	icon_state = "1-8"
-	},
 /obj/cable/black{
 	icon_state = "4-8"
 	},
@@ -1187,10 +1190,15 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost/general)
 "Wd" = (
-/obj/table/syndicate/auto,
-/obj/machinery/codereader/syndicate{
-	pixel_y = 5
+/obj/machinery/light/incandescent/warm,
+/obj/cable/black{
+	icon_state = "0-4"
 	},
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "WP" = (
@@ -1210,22 +1218,13 @@
 	icon_state = "floor3"
 	},
 /area/listeningpost/tech_room)
-"WZ" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = 7
-	},
-/obj/machinery/power/apc/autoname_north/hardened,
-/obj/cable/black{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/redblack,
-/area/listeningpost/general)
 "Xj" = (
 /obj/cable/black{
 	icon_state = "4-8"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 1;
+	pixel_y = 26
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost/general)
@@ -1234,7 +1233,7 @@
 	dir = 4;
 	icon_state = "leadjunction_gray"
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "Yl" = (
 /obj/machinery/sink/slim{
 	pixel_y = 15
@@ -1264,13 +1263,14 @@
 /area/listeningpost/general)
 "YM" = (
 /obj/table/auto,
-/obj/item/sponge{
-	name = "loofah"
-	},
 /obj/item/storage/wall{
 	name = "bath cabinet";
 	pixel_y = 32;
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
+	},
+/obj/item/shipcomponent/secondary_system/crash,
+/obj/item/sponge{
+	name = "loofah"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
@@ -1292,11 +1292,6 @@
 	},
 /turf/space/fluid/acid,
 /area/space)
-"Zx" = (
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/listeningpost/syndicate_teleporter)
 "ZC" = (
 /obj/rack,
 /obj/item/clothing/shoes/flippers{
@@ -1318,7 +1313,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 
 (1,1,1) = {"
 dJ
@@ -1742,9 +1737,9 @@ BL
 BL
 pG
 QZ
-Ki
 jp
-vw
+Od
+VE
 Ie
 yN
 Tj
@@ -1776,11 +1771,11 @@ sG
 oc
 Gk
 vF
-HL
 jp
-qA
+qK
+VE
 Ie
-bK
+mw
 pv
 MN
 WS
@@ -1810,8 +1805,8 @@ tN
 xc
 AD
 SU
-kH
 EH
+NR
 cY
 Pk
 Sx
@@ -1844,11 +1839,11 @@ xV
 On
 pG
 cH
-Mx
 jp
-WZ
+kU
+cY
 JV
-bK
+xo
 pv
 RN
 MN
@@ -1878,9 +1873,9 @@ BL
 BL
 Gk
 qi
-Zx
 jp
-IC
+BR
+VE
 Ie
 yN
 Tj
@@ -1978,11 +1973,11 @@ FR
 qd
 eY
 uP
-iI
-Az
+Fr
+Fr
 Fr
 tr
-cY
+Ox
 UG
 Sx
 rO
@@ -2009,7 +2004,7 @@ FR
 FR
 FR
 FR
-Rt
+ho
 Ly
 Hu
 ZR
@@ -2044,7 +2039,7 @@ FR
 FR
 FR
 FR
-Rt
+ho
 eC
 eC
 Ly
@@ -2081,7 +2076,7 @@ FR
 FR
 FR
 Fx
-Rt
+ho
 eC
 CN
 OV
