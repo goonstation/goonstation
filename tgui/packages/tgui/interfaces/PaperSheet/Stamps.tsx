@@ -10,7 +10,7 @@ import { sanitizeDefAllowTags, sanitizeText } from '../../sanitize';
 const PAPER_ALLOWED_TAGS = [...sanitizeDefAllowTags, 'input'];
 // Paper needs inline `style` for color/font/width,
 // only forbid `class` and `background` for now.
-// //We should fix this in the future.
+// We should fix this in the future.
 const PAPER_FORBID_ATTRS = ['class', 'background'];
 
 const WINDOW_TITLEBAR_HEIGHT = 30;
