@@ -5,8 +5,6 @@
 	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
-	///Does the announcement include the ID's name and role
-	var/anonymous = FALSE
 	var/theme = "ntos"
 	var/announcement_delay = 1200
 	var/obj/item/card/id/ID = null
@@ -297,7 +295,6 @@
 		area_name = null
 		anonymous = FALSE //we want you to know we're coming
 		req_access = list(access_syndicate_commander)
-		anonymous = FALSE
 
 	console
 		icon_state = "syndiepc14"
