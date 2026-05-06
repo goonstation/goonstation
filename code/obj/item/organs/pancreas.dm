@@ -19,7 +19,7 @@
 					if(!robotic) //don't kill a cyberpancreas
 						src.take_damage(0, 0, 10)
 				else if (prob(50))
-					if (donor.reagents.get_reagent_amount("sugar") > 200)
+					if (donor.reagents.get_reagent_amount("sugar") > 160)
 						donor.reagents.add_reagent("insulin", 2 * mult)
 						if(!robotic)
 							src.take_damage(0, 0, 40)
