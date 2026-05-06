@@ -740,6 +740,7 @@
 /area/listeningpost/tech_room)
 "Dz" = (
 /obj/table/glass/reinforced/auto,
+/obj/item/turret_deployer/syndicate,
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
 /area/listeningpost/barracks)
 "DT" = (

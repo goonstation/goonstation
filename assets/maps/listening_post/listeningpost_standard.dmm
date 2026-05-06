@@ -716,6 +716,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "FQ" = (
+/obj/item/turret_deployer/syndicate,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
 "Gi" = (

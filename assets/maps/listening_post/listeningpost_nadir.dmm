@@ -84,6 +84,7 @@
 /area/space)
 "eh" = (
 /obj/table/glass/auto,
+/obj/item/turret_deployer/syndicate,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},

@@ -65,9 +65,10 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 
 /obj/item/turret_deployer/syndicate
 	name = "NAS-T Deployer"
-	desc = "A Nuclear Agent Sentry Turret Deployer. Use it in your hand to deploy."
+	desc = "A Syndicate Sentry Turret Deployer."
 	turret_health = 250
 	icon_tag = "st"
+	icon_state = "st_deployer"
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/syndicate
 	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy. Alternatively, throw it at location to auto-deploy it, fully activated, in the direction thrown.")

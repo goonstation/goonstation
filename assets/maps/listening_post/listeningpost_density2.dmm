@@ -220,6 +220,10 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
+"AO" = (
+/obj/item/turret_deployer/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
 "Bf" = (
 /turf/simulated/wall/auto/asteroid,
 /area/space)
@@ -1120,7 +1124,7 @@ Bk
 Ln
 GK
 tr
-IG
+AO
 Wp
 mP
 Sn

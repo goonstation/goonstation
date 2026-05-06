@@ -502,6 +502,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/listeningpost/barracks)
 "Iy" = (
+/obj/item/turret_deployer/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
 "IR" = (

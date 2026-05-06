@@ -207,6 +207,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "mZ" = (
+/obj/item/turret_deployer/syndicate,
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/listeningpost/barracks)
 "nt" = (
