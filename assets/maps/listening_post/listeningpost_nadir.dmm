@@ -1092,11 +1092,6 @@
 	dir = 4
 	},
 /area/listeningpost/barracks)
-"Rt" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 5
-	},
-/area/listeningpost/break_room)
 "RN" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -1901,7 +1896,7 @@ LN
 FR
 FR
 ke
-Rt
+ho
 XE
 eC
 eC
