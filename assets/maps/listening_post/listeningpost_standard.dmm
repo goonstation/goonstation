@@ -41,6 +41,16 @@
 	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
+"dp" = (
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/computer/announcement/syndicate{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
 "ej" = (
 /obj/cable/black{
 	icon_state = "1-2"
@@ -706,9 +716,6 @@
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "FQ" = (
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
 "Gi" = (
@@ -1658,7 +1665,7 @@ QZ
 nj
 lN
 RH
-zV
+dp
 Cf
 wR
 wR

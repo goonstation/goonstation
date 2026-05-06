@@ -502,7 +502,6 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/listeningpost/barracks)
 "Iy" = (
-/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
 "IR" = (
@@ -579,7 +578,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Lz" = (
-/obj/machinery/vending/snack,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Nd" = (
@@ -682,7 +681,7 @@
 /area/listeningpost/syndicate_teleporter)
 "SH" = (
 /obj/machinery/light_switch/east,
-/obj/machinery/computer/announcement/syndicate,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
 "Ud" = (

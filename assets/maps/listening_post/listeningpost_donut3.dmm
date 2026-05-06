@@ -406,7 +406,7 @@
 	},
 /area/listeningpost/general)
 "sv" = (
-/obj/machinery/vending/jobclothing/syndicate,
+/obj/table/wood/auto,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "sV" = (
@@ -425,6 +425,9 @@
 "tu" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -1107,7 +1110,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/computer/announcement/syndicate,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "ZX" = (

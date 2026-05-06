@@ -61,6 +61,13 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
+"lg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/computer/announcement/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
 "lv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -143,12 +150,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/listeningpost/tech_room)
-"sX" = (
-/obj/machinery/computer/announcement/syndicate{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/listeningpost/barracks)
 "tr" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /turf/simulated/floor/plating,
@@ -909,7 +910,7 @@ Bf
 rL
 rL
 rL
-Fz
+lg
 VF
 OK
 IP
@@ -1119,7 +1120,7 @@ Bk
 Ln
 GK
 tr
-sX
+IG
 Wp
 mP
 Sn

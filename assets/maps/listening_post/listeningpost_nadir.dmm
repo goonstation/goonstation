@@ -249,16 +249,11 @@
 /turf/space/fluid/acid,
 /area/space)
 "kU" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = 7
-	},
 /obj/machinery/power/apc/autoname_north/hardened,
 /obj/cable/black{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/redblack,
 /area/listeningpost/general)
 "lo" = (
@@ -1055,14 +1050,6 @@
 	icon_state = "floor3"
 	},
 /area/listeningpost/tech_room)
-"PE" = (
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/listeningpost/barracks)
 "Qp" = (
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
@@ -1935,7 +1922,7 @@ qd
 eh
 bg
 Ge
-PE
+Ge
 uW
 qd
 Cb

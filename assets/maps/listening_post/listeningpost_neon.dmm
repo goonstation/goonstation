@@ -353,12 +353,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/listeningpost/tech_room)
-"of" = (
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/listeningpost/barracks)
 "ol" = (
 /turf/simulated/floor,
 /area/listeningpost/barracks)
@@ -887,6 +881,7 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "ML" = (
@@ -2129,7 +2124,7 @@ Aq
 dH
 cH
 Dz
-of
+ol
 Vh
 MX
 xD

@@ -63,7 +63,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/table/syndicate/auto,
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
+	},
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost/tech_room)
 "bv" = (
@@ -610,10 +612,6 @@
 	},
 /turf/variableTurf/clear,
 /area/listeningpost/landing_bay)
-"AQ" = (
-/obj/machinery/computer/announcement/syndicate,
-/turf/simulated/floor/black,
-/area/listeningpost/barracks)
 "Bh" = (
 /obj/machinery/light{
 	dir = 8;
@@ -1859,7 +1857,7 @@ CH
 zH
 xS
 zA
-AQ
+nh
 nh
 WL
 zA

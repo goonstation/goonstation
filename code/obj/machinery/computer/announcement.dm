@@ -5,6 +5,8 @@
 	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
+	///Does the announcement include the ID's name and role
+	var/anonymous = FALSE
 	var/theme = "ntos"
 	var/announcement_delay = 1200
 	var/obj/item/card/id/ID = null
@@ -129,7 +131,9 @@
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 		var/area/A = get_area(src)
-		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
+		var/header = "[src.area_name || A.name] Announcement"
+		if (!src.anonymous)
+			header += " by [ID.registered] ([ID.assignment])"
 		command_announcement(message, header, msg_sound, volume = src.sound_volume, alert_origin = src.alert_origin)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
@@ -284,9 +288,11 @@
 	req_access = list(access_syndicate_shuttle)
 	circuit_type = /obj/item/circuitboard/announcement/syndicate
 	alert_origin = ALERT_SYNDICATE
+	anonymous = TRUE
 
 	commander
 		area_name = null
+		anonymous = FALSE //we want you to know we're coming
 		req_access = list(access_syndicate_commander)
 
 	console

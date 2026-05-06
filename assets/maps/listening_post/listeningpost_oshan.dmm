@@ -207,9 +207,6 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "mZ" = (
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/listeningpost/barracks)
 "nt" = (

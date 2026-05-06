@@ -508,9 +508,7 @@
 /turf/simulated/floor/airless/engine,
 /area/listeningpost/landing_bay)
 "Dp" = (
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
+/obj/table/wood/auto,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "DE" = (
@@ -737,6 +735,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north/hardened,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "NF" = (
