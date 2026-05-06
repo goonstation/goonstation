@@ -260,7 +260,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/redblack,
-/area/listeningpost/syndicate_teleporter)
+/area/listeningpost/general)
 "lo" = (
 /obj/lattice{
 	dir = 9;
@@ -460,7 +460,7 @@
 	},
 /obj/machinery/vending/snack,
 /turf/simulated/floor/redblack,
-/area/listeningpost/syndicate_teleporter)
+/area/listeningpost/general)
 "qY" = (
 /obj/machinery/power/furnace{
 	active = 1;
@@ -712,7 +712,7 @@
 "BR" = (
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/redblack,
-/area/listeningpost/syndicate_teleporter)
+/area/listeningpost/general)
 "Cb" = (
 /obj/table/syndicate/auto,
 /obj/machinery/codereader/syndicate{
@@ -966,7 +966,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/redblack,
-/area/listeningpost/syndicate_teleporter)
+/area/listeningpost/general)
 "NU" = (
 /obj/lattice{
 	dir = 5;
@@ -984,7 +984,7 @@
 	profit = 0
 	},
 /turf/simulated/floor/redblack,
-/area/listeningpost/syndicate_teleporter)
+/area/listeningpost/general)
 "On" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
