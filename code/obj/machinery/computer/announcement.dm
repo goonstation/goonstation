@@ -363,6 +363,7 @@
 	circuit_type = null //Prevents deconstructing via screwdriver
 	explodes = FALSE
 	density = 0
+	glow_in_dark_screen = FALSE
 
 	New()
 		..()

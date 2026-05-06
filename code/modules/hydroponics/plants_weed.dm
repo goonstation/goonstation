@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			boutput(user, SPAN_ALERT("The lasher flails at you violently! You might need to weaken it first..."))
 			return 1
 		else
-			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
+			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher, TRUE) //You will always get Enzymatic. ALWAYS.
 			return 0
 
 

@@ -65,6 +65,7 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW, "Maneater")
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "Maneater", 25)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "Maneater", 25)
+	src.setStatus("kudzuwalk", INFINITE_STATUS)
 	..()
 
 /mob/living/critter/plant/maneater/disposing()
@@ -170,7 +171,9 @@
 
 /mob/living/critter/plant/maneater/seek_food_target(var/range = 7)
 	. = list()
-	for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/potential_meat in view(range, get_turf(src)))
+	for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/potential_meat in range(range, get_turf(src)))
+		//first, let's check if the maneater can actually see the target
+		if(!ai_is_target_visible(potential_meat)) continue
 		//no fish meat, no synthmeat. chickens nuggets are ok, though.
 		if (istype(potential_meat, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish)) continue
 		if (istype(potential_meat, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)) continue
@@ -178,7 +181,13 @@
 
 
 /mob/living/critter/plant/maneater/seek_target(var/range = 9)
-	. = ..()
+	// for maneaters to see targets through kudzu, we need to have our own seek_target proc
+	. = list()
+	//default behaviour, return all alive, tangible, not-our-type, not-our-faction mobs in range that the maneater can see
+	for (var/mob/living/checked_target in range(range, src))
+		if (ai_is_target_visible(checked_target) && src.valid_target(checked_target))
+			. += checked_target
+	//now we growl a bit
 	if ((length(.) > 0) && prob(10))
 		if (!ON_COOLDOWN(src, "maneater_snarling", 15 SECONDS))
 			playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
@@ -187,7 +196,9 @@
 /mob/living/critter/plant/maneater/seek_scavenge_target(var/range = 5)
 	. = list()
 	var/target_being_devoured = FALSE
-	for (var/mob/living/carbon/human/checked_human in view(range, get_turf(src)))
+	for (var/mob/living/carbon/human/checked_human in range(range, get_turf(src)))
+		//first, let's check if the maneater can actually see the target
+		if(!ai_is_target_visible(checked_human)) continue
 		target_being_devoured = FALSE
 		for(var/mob/living/critter/plant/maneater/checked_maneater in get_turf(checked_human))
 			if (checked_maneater != src)
@@ -195,6 +206,23 @@
 		if (!(target_being_devoured) && isdead(checked_human) && checked_human.decomp_stage <= 3 && !checked_human.bioHolder?.HasEffect("husk"))
 			//is dead, isn't a skeleton, isn't a grody husk, isn't occupied by another maneater
 			. += checked_human
+
+/mob/living/critter/plant/maneater/proc/ai_is_target_visible(var/atom/target)
+	. = TRUE
+	var/list/turfs_to_check = getline(src,target)
+	for (var/turf/checked_turf in turfs_to_check)
+		if(!checked_turf.opacity) continue
+		var/has_kudzu = FALSE
+		for(var/atom/atom_to_check in checked_turf.contents)
+			// we check for kudzu that adds opacity.
+			if(atom_to_check.opacity && istype(atom_to_check, /obj/spacevine))
+				has_kudzu = TRUE
+				continue
+		if(has_kudzu)
+			continue
+		// every opaque turf that doesn't have kudzu blocks our vision
+		return FALSE
+
 
 /mob/living/critter/plant/maneater/can_critter_scavenge()
 	var/datum/targetable/critter/checked_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)

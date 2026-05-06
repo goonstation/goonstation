@@ -310,6 +310,15 @@
 		blue
 			icon_state = "pda-clown-blue"
 
+		purple
+			icon_state = "pda-clown-purple"
+
+		pink
+			icon_state = "pda-clown-pink"
+
+		green
+			icon_state = "pda-clown-green"
+
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
 			LAZYLISTREMOVE(M.attached_objs, src)

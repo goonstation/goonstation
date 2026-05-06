@@ -1,5 +1,3 @@
-
-
 /**
  * Chemicompiler
  *
@@ -394,6 +392,10 @@ var/list/datum/chemicompiler_core/chemicompilers = list()
 
 	heat(rid, temp)
 
+
+/datum/chemicompiler_core/stationaryCore
+	statusChangeCallback = "statusChange"
+
 /datum/chemicompiler_core/testCore
 	errorCallback = "err"
 	transferCallback = "transfer"
@@ -758,7 +760,7 @@ var/list/datum/chemicompiler_core/chemicompilers = list()
 	var/list/ui_data_reservoirs = list()
 	for (var/i = 1, i <= length(src.reservoirs), i++)
 		var/obj/item/reagent_containers/R = src.reservoirs[i]
-		if (istype(R))
+		if (istype(R) && R.reagents)
 			ui_data_reservoirs.Add("[R.reagents.total_volume]/[R.reagents.maximum_volume]")
 		else
 			ui_data_reservoirs.Add(null)
@@ -784,3 +786,4 @@ var/list/datum/chemicompiler_core/chemicompilers = list()
 		if ("updateInputValue")
 			core.output = params["value"]
 			return FALSE
+

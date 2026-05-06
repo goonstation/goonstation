@@ -688,7 +688,7 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 	var/image/fluid_image
 	var/list/whitelist = list()
 	var/safe = 1
-	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine")
+	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine", "acetylsalicylic_acid")
 
 
 	New()

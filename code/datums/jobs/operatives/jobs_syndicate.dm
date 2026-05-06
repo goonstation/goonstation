@@ -104,18 +104,21 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist)
 	slot_poc1 = list(/obj/item/storage/pouch/tranq_pistol_dart)
-	slot_lhan = list(/obj/item/storage/backpack/chameleon)
-	items_in_backpack = list(/obj/item/gun/kinetic/tranq_pistol,
+	slot_back = list(/obj/item/storage/backpack/chameleon/no_belt)
+	slot_belt = list(/obj/item/storage/belt/chameleon/tactical)
+	items_in_belt = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/device/chameleon,
-		/obj/item/remote/syndicate_teleporter) //Because their hands are filled with their chameleon gear
+		/obj/item/device/chameleon)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		var/obj/item/remote/chameleon/remote = locate(/obj/item/remote/chameleon) in M
 		M.stow_in_available(remote)
+		var/obj/item/storage/belt/chameleon/chambelt = M.belt
+		if(istype(chambelt))
+			remote.connected_belt = chambelt
 
 /datum/job/special/syndicate/specialist/scout
 	name = "Syndicate Scout"

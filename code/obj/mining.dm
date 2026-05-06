@@ -1816,7 +1816,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		. = ..()
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			. += "The [src] is turned [src.is_on ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
+			. += "[src] is turned [src.is_on ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
 	attack_self(mob/user)
 		..()
@@ -2746,6 +2746,9 @@ TYPEINFO(/obj/submachine/cargopad)
 	artlab
 		mailgroup = MGD_RESEARCH
 		name = "Artifact Lab Pad"
+	catering
+		mailgroup = MGT_CATERING
+		name = "Catering Hangar Pad"
 	engineering
 		mailgroup = MGD_ENGINEER
 		name = "Engineering Pad"
@@ -2758,17 +2761,23 @@ TYPEINFO(/obj/submachine/cargopad)
 	miningoutpost
 		mailgroup = MGT_MINING
 		name = "Mining Outpost Pad"
+	miningstaff
+		mailgroup = MGT_MINING
+		name = "Mining Staff Room Pad"
 	qm
 		mailgroup = MGT_CARGO
-		name = "QM Pad"
+		name = "Cargo Pad"
 	qm2
 		mailgroup = MGT_CARGO
-		name = "QM Pad 2"
+		name = "Export Pad"
 	researchoutpost
 		mailgroup = MGD_RESEARCH
 		name = "Research Outpost Pad"
 	radio
 		name = "Radio Station Pad"
+	security
+		mailgroup = MGD_SECURITY
+		name = "Security Pad"
 
 	New()
 		..()

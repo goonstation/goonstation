@@ -7,23 +7,26 @@
 
 import { BooleanLike } from 'tgui-core/react';
 
-export interface WizardSpellbookData {
-  spellbook_contents: Record<string, SpellData[]>;
-  spell_slots: number;
-  owner_name: string;
+export interface UplinkData {
+  item_entries: Record<string, ItemData[]>;
+  currency_amount: number;
+  currency_name: string;
+  title: string;
+  theme: string;
   vr: BooleanLike;
 }
 
-export interface SpellData {
+export interface ItemData {
   name: string;
   desc: string;
   cost: number;
   cooldown: number | null;
   vr_allowed: BooleanLike;
-  spell_img: string | null;
+  icon: string | null;
 }
 
 export interface EnvironmentProps {
   isVr: boolean;
-  spellSlots: number;
+  currency_amount: number;
+  currency_name: string;
 }

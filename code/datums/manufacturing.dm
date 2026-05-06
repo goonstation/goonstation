@@ -722,7 +722,7 @@
 /datum/manufacture/glass
 	name = "Glass Panel"
 	item_requirements = list("crystal" = 1)
-	item_outputs = list(/obj/item/sheet)
+	item_outputs = list(/obj/item/sheet/glass)
 	create = 1
 	time = 2 SECONDS
 	category = "Resource"
@@ -760,7 +760,7 @@
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
-	item_requirements = list("metal_dense" = 1)
+	item_requirements = list("metal_or_wood_dense" = 1)
 	item_outputs = list(/obj/item/rods)
 	time = 3 SECONDS
 	category = "Resource"

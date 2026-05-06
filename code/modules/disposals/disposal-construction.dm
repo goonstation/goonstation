@@ -15,6 +15,7 @@
 		You can use a <b>wrench</b> to (un)anchor the pipe segment,
 		a <b>crowbar</b> to rotate it,
 		a <b>screwdriver</b> to disassemble it,
+		a <b>multitool</b> to edit mailtags (if possible),
 		and a <b>welding tool</b> to turn it into a functional immovable pipe."})
 
 	var/ptype = 0
@@ -22,7 +23,7 @@
 
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"
-	var/mail_tag = null //For pipes that use mail filtering
+	var/list/mail_tag = null //For pipes that use mail filtering
 	var/filter_type = null //For pipes that filter objects passing through.
 
 	// update iconstate and dpdir due to dir and type
@@ -135,6 +136,51 @@
 			qdel(src)
 			return
 
+		if(ispulsingtool(I))
+			if((src.ptype != 6) && (src.ptype != 7))
+				boutput(user, SPAN_ALERT("[src] doesn't support mailtags!"))
+				return
+			var/action = input(user, "What would you like to do?", "Edit Mailtags", null) in list("Add mailtag", "Remove mailtag", "*CANCEL*")
+			switch(action)
+				if("*CANCEL*")
+					return
+
+				if("Add mailtag")
+					var/new_tag = sanitize(input(user, "Add a new mailtag (Case sensitive!)", "Edit Mailtags", null))
+					if(isnull(new_tag) || (new_tag == ""))
+						return
+					if(new_tag in src.mail_tag)
+						boutput(user, SPAN_ALERT("[new_tag] is already included in the mailtags!"))
+						return
+					if(contains_chars(new_tag, list("*")))
+						boutput(user, SPAN_ALERT("\"*\" cannot be used in mailtags!"))
+						return
+					if(is_blank_string(new_tag))
+						boutput(user, SPAN_ALERT("You can't have an empty mailtag, doofus!"))
+						return
+					if(isnull(src.mail_tag))
+						src.mail_tag = list(new_tag)
+					else
+						src.mail_tag.Add(new_tag)
+					boutput(user, SPAN_ALERT("'[new_tag]' added to [src]'s mailtags!"))
+
+				if("Remove mailtag")
+					if(isnull(src.mail_tag))
+						boutput(user, SPAN_ALERT("[src] has no mailtags!"))
+						return
+					if(src.mail_tag.len == 0)
+						boutput(user, SPAN_ALERT("[src] has no mailtags!"))
+						return
+					var/list/input_list = src.mail_tag
+					input_list.Add("*CANCEL*")
+					var/to_remove = input(user, "Edit Mailtags", "Which mailtag would you like to remove?", null) in src.mail_tag
+					if(!to_remove)
+						return
+					if(to_remove == "*CANCEL*")
+						return
+					else
+						src.mail_tag.Remove(to_remove)
+			return
 		var/turf/T = src.loc
 		if(T.intact && (iswrenchingtool(I) || isweldingtool(I))) //to stop it from screaming about it when rotating the pipe with crowbar
 			boutput(user, "You can only attach the pipe if the floor plating is removed.")

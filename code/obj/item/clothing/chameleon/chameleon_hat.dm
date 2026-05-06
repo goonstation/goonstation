@@ -236,7 +236,7 @@
 
 	top_hat
 		name = "top hat"
-		desc = "An stylish looking hat"
+		desc = "A stylish looking hat"
 		icon_state = "tophat"
 		item_state = "that"
 		seal_hair = FALSE
