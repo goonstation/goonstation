@@ -557,7 +557,7 @@
 	fluid_g = 255
 	fluid_b = 255
 	transparency = 255
-	overdose = 200
+	overdose = 80
 	hunger_value = 0.098
 	thirst_value = -0.098
 	taste = "sweet"
@@ -612,7 +612,7 @@
 
 				responseBee.visible_message("<b>[responseBee]</b> [ pick("looks confused.", "appears to undergo a metaphysical crisis.  What is human?  What is space bee?<br>Or it might just have gas.", "looks perplexed.", "bumbles in a confused way.", "holds out its forelegs, staring into its little bee-palms and wondering what is real.") ]")
 
-		else
+		else if (severity == 2)
 			if (!M.getStatusDuration("unconscious"))
 				boutput(M, SPAN_ALERT("You pass out from hyperglycemic shock!"))
 				M.emote("collapse")
