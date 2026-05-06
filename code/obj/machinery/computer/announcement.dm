@@ -24,6 +24,8 @@
 	var/area_name = null
 	/// Determines colors for alert text
 	var/alert_origin = ALERT_COMMAND
+	/// Does the annuoncement computer remove the header ID Name/Job addendum
+	var/anonymous = FALSE
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -134,6 +136,7 @@
 		var/header = "[src.area_name || A.name] Announcement"
 		if (!src.anonymous)
 			header += " by [ID.registered] ([ID.assignment])"
+
 		command_announcement(message, header, msg_sound, volume = src.sound_volume, alert_origin = src.alert_origin)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
@@ -294,6 +297,7 @@
 		area_name = null
 		anonymous = FALSE //we want you to know we're coming
 		req_access = list(access_syndicate_commander)
+		anonymous = FALSE
 
 	console
 		icon_state = "syndiepc14"

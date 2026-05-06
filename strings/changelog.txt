@@ -1,8 +1,14 @@
 
+(t)wed may 06 26
+(+)The auth disk will now spawn in place of the captain if there isn't one at roundstart.
+(+)The auth disk will now be shipped to cargo if anyone cryos with it.
+(u)glowbold
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)The Syndicate Announcement computer no longer forces you to share your ID name/job in announcements.
 (t)tue may 05 26
 (u)grasswitch
 (p)26343
-(e)|
+(e)⛔⚗|C-Removal, A-Chemistry
 (+)Removed foam-based chemical artifact bombs.
 (t)mon may 03 26
 (u)glowbold
@@ -11,7 +17,7 @@
 (t)fri may 01 26
 (u)Tela
 (p)26350
-(e)🎨|C-Sprites
+(e)🎨🐣|C-Sprites, A-Respawning
 (+)Adds 4 New Hairstyles! Side Pigtails, Long Top Bun, Curtained Ponytail, Low Bun, Along with Hairparts for Side Pigtails and Scorpion Braid.
 (u)Urist McCoder
 (p)26406
@@ -38,11 +44,11 @@
 (t)wed apr 29 26
 (u)TheGeneralJay
 (p)26279
-(e)🗺|A-Mapping
+(e)🔄🗺|C-Rework, A-Mapping
 (*)Crew of the NSS Clarion can now utilize the fancy new southern hall.
 (u)bamlord
 (p)26458
-(e)|
+(e)🆕💡|C-Feature, A-Station-Systems
 (+)Basketball hoops now send an mechcomp output and are thus even more illegal.
 (t)sat apr 25 26
 (u)Lorrmaster
@@ -55,7 +61,7 @@
 (*)Fingerprinter has been fixed and can now scan and search similar to the forensics scanner.
 (u)Nexusuxen
 (p)26379
-(e)|
+(e)🆕💡|C-Feature, A-Station-Systems
 (*)New options for MechComp door control. Also, sending an airlock its access code via MechComp signal will allow it to work on doors that require access.
 (u)NibChocolateeny
 (p)26130
@@ -68,6 +74,7 @@
 (*)Cardboard material now considered to be wooden. Wood can now be turned into rods.
 (*)New cardboard sprites.
 (u)LeahTheTech
+(e)🪲🧱|C-Bug, A-Materials
 (+)Bohrum now looks like bohrum again.
 (u)Lord_Earthfire
 (p)26195
@@ -81,12 +88,12 @@
 (t)thu apr 23 26
 (u)Nexusuxen
 (p)26447
-(e)💡|A-Station-Systems
+(e)💅💡|C-QoL, A-Station-Systems
 (+)You can now replace missing APC power terminals with just some cabling, a soldering iron, and a sheet of metal.
 (t)wed apr 22 26
 (u)Kubius
 (p)26424
-(e)🗺|A-Mapping
+(e)🔄🗺|C-Rework, A-Mapping
 (+)Retooled Neon's medbay, introducing a psychiatrist's office and rearranging several workspaces.
 (t)tue apr 21 26
 (u)RubberRats
@@ -99,6 +106,7 @@
 (+)Mushroom can now have a Nuclear engine instead of its usual singularity
 (t)mon apr 20 26
 (u)Sord
+(e)🆕💊|C-Feature, A-Medical
 (+)Added acetylsalicylic acid to the pharmacist's auto injector filler whitelist (not hypospray)
 (u)Kubius
 (p)26423
