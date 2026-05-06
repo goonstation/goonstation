@@ -617,7 +617,7 @@
 				boutput(M, SPAN_ALERT("You pass out from hyperglycemic shock!"))
 				M.emote("collapse")
 				//M.changeStatus("unconscious", ((2 * severity)*15) * mult)
-				M.changeStatus("knockdown", ((4 * severity)*1.5 SECONDS) * mult)
+				M.changeStatus("knockdown", ((6 SECONDS) * mult)
 
 			if (prob(8))
 				M.take_toxin_damage(severity * mult)
