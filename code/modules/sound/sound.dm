@@ -77,7 +77,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams.", "Mentor PM notification sound.", "Music from in-game instruments.", "Farts. Only farts.")
+	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and other emotes.", "Mentor PM notification sound.", "Music from in-game instruments.", "Farts. Only farts.")
 
 /// Get the friendly description for a specific sound channel.
 /client/proc/getVolumeChannelDescription(channel)
