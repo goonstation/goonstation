@@ -94,23 +94,19 @@ TYPEINFO(/obj/machinery/codereader)
 	desc = "A large device for stealing NanoTrasen security codes from floppy disks."
 	icon_state = "codereader_syndicate"
 	is_syndicate = TRUE
+	var/id = "listening_post_inner"
 	var/static/authdisk_uploaded_by = null
-	var/credits_for_authdisk = 2 //Number of credits reading the authdisk is worth
 
 	get_help_message(dist, mob/user)
-		if (!src.authdisk_uploaded_by && src.credits_for_authdisk)
-			. = "You can insert the <b>Authentication Disk</b> to get a reward from the Syndicate."
+		if (!src.authdisk_uploaded_by)
+			. = "You can insert the <b>Authentication Disk</b> to open the listening post barracks."
 
 /obj/machinery/codereader/syndicate/process_disk(mob/user)
-	if(istype(src.inserted_disk, /obj/item/disk/data/floppy/read_only/authentication) && !src.authdisk_uploaded_by && src.credits_for_authdisk)
+	if(istype(src.inserted_disk, /obj/item/disk/data/floppy/read_only/authentication) && !src.authdisk_uploaded_by)
 		src.authdisk_uploaded_by = (user?.real_name || "Unknown")
-		logTheThing(LOG_STATION, user, "receives [src.credits_for_authdisk] traitor credits for inserting the authentication disk into [src]")
-
-		var/obj/item/uplink_telecrystal/tc_stack = new(src)
-		tc_stack.amount = src.credits_for_authdisk
-		tc_stack._update_stack_appearance()
-		playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
-		animate_teleport(tc_stack)
-		SPAWN(0.6 SECONDS)
-			tc_stack.set_loc(src.loc)
+		logTheThing(LOG_STATION, user, "unlocks the listening post inner area by inserting an auth disk into [src]")
+		SPAWN(3 SECONDS)
+			for (var/obj/machinery/door/airlock/airlock in by_type[/obj/machinery/door])
+				if (airlock.id == src.id)
+					airlock.bolt_open()
 	return ..()
