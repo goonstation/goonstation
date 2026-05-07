@@ -182,7 +182,7 @@ export const PaperSheetView = (props) => {
   const stampList = stamps || [];
   const textHtml = useMemo(
     () => ({
-      // `value` is untrusted server data and may contain stored XSS payloads 
+      // `value` is untrusted server data and may contain stored XSS payloads
       __html: `<span class="paper-text">${setInputReadonly(
         sanitizeText(value, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS),
         readOnly,

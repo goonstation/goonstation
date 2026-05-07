@@ -48,27 +48,51 @@ describe('sanitizeText', () => {
 
     it('strips script tags', ({ expect }) => {
       const input = '<b>hi</b><script>alert(1)</script>';
-      const result = sanitizeText(input, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS);
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
       expect(result).toBe('<b>hi</b>');
     });
 
     it('strips event handler attributes', ({ expect }) => {
       const input = '<b onclick="alert(1)">hi</b>';
-      const result = sanitizeText(input, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS);
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
       expect(result).toBe('<b>hi</b>');
     });
 
+    /* eslint-disable sonarjs/code-eval */
     it('strips javascript: hrefs', ({ expect }) => {
       const input = '<a href="javascript:alert(1)">click</a>';
-      const result = sanitizeText(input, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS);
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
       // <a> is not in PAPER_ALLOWED_TAGS so the tag itself is stripped too
       expect(result).not.toContain('javascript:');
     });
+    /* eslint-enable sonarjs/code-eval */
 
-    it('preserves input tags with style, id, type, size, maxlength, disabled', ({ expect }) => {
+    it('preserves input tags with style, id, type, size, maxlength, disabled', ({
+      expect,
+    }) => {
       const input =
         '[<input type="text" style="color:red;min-width:50px;" id="paperfield_0" size="5" maxlength="5" disabled />]';
-      const result = sanitizeText(input, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS);
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
       expect(result).toContain('<input');
       expect(result).toContain('type="text"');
       expect(result).toContain('id="paperfield_0"');
@@ -78,21 +102,36 @@ describe('sanitizeText', () => {
 
     it('preserves inline style on span', ({ expect }) => {
       const input = '<span style="color:blue;font-family:Arial;">text</span>';
-      const result = sanitizeText(input, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS);
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
       expect(result).toContain('style=');
       expect(result).toContain('color:blue');
     });
 
     it('strips class attributes', ({ expect }) => {
       const input = '<span class="evil" style="color:red;">text</span>';
-      const result = sanitizeText(input, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS);
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
       expect(result).not.toContain('class=');
       expect(result).toContain('style=');
     });
 
     it('strips background attributes', ({ expect }) => {
       const input = '<div background="http://evil.com/x.png">text</div>';
-      const result = sanitizeText(input, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS);
+      const result = sanitizeText(
+        input,
+        false,
+        PAPER_ALLOWED_TAGS,
+        PAPER_FORBID_ATTRS,
+      );
       expect(result).not.toContain('background=');
     });
   });
