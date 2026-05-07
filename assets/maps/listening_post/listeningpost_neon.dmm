@@ -340,6 +340,13 @@
 "mn" = (
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
+"mB" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper/pipebombs{
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
 "nh" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/pinpointer/disk,
@@ -494,11 +501,6 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/turf/simulated/floor/black,
-/area/listeningpost/break_room)
-"sY" = (
-/obj/table/glass/reinforced/auto,
-/obj/item/device/pda2,
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "tu" = (
@@ -1997,7 +1999,7 @@ Wk
 hx
 ap
 nh
-jt
+mB
 sL
 ry
 UO
@@ -2031,7 +2033,7 @@ YM
 hx
 ap
 cV
-sY
+jt
 sL
 ry
 UO

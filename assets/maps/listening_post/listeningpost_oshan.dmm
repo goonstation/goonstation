@@ -217,7 +217,12 @@
 /area/listeningpost/tech_room)
 "nv" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cereal_box/syndie,
+/obj/item/reagent_containers/food/snacks/cereal_box/syndie{
+	pixel_x = -4
+	},
+/obj/item/paper/pipebombs{
+	pixel_x = 7
+	},
 /turf/simulated/floor,
 /area/listeningpost/break_room)
 "nD" = (
@@ -470,9 +475,6 @@
 /obj/table/glass/reinforced/auto,
 /obj/item/storage/pill_bottle/cyberpunk{
 	pixel_x = -3
-	},
-/obj/item/paper/pipebombs{
-	pixel_x = 7
 	},
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/listeningpost/barracks)

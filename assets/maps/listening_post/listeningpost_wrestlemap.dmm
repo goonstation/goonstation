@@ -710,9 +710,7 @@
 /turf/space,
 /area/listeningpost/landing_bay)
 "Vb" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Bedroom"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)

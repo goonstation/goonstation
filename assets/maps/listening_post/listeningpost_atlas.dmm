@@ -89,6 +89,7 @@
 /area/listeningpost/power)
 "di" = (
 /obj/table/syndicate/auto,
+/obj/item/paper/pipebombs,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "dl" = (
@@ -134,7 +135,6 @@
 /area/listeningpost/general)
 "eR" = (
 /obj/table/syndicate/auto,
-/obj/item/paper/pipebombs,
 /turf/simulated/floor/redblack,
 /area/listeningpost/barracks)
 "eU" = (

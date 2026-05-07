@@ -1103,7 +1103,13 @@
 	icon_state = "line1"
 	},
 /obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cereal_box/syndie,
+/obj/item/reagent_containers/food/snacks/cereal_box/syndie{
+	pixel_x = 8
+	},
+/obj/item/paper/pipebombs{
+	pixel_y = 5;
+	pixel_x = -6
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Yy" = (

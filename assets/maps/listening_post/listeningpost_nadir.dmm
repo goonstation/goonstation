@@ -123,12 +123,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
-"ff" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 1;
-	icon_state = "leadjunction_gray"
-	},
-/area/listeningpost/barracks)
 "fk" = (
 /obj/cable/black{
 	icon_state = "1-2"
@@ -416,12 +410,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
-"pm" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 1;
-	icon_state = "leadjunction_gray"
-	},
-/area/listeningpost/power)
 "pv" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 4
@@ -993,9 +981,6 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/light/incandescent/warm,
-/obj/item/paper/pipebombs{
-	pixel_y = 4
-	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -1131,6 +1116,16 @@
 	dir = 1
 	},
 /area/listeningpost/syndicate_teleporter)
+"SX" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/reinforced/auto,
+/obj/item/paper/pipebombs{
+	pixel_y = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general)
 "Th" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 6
@@ -1686,8 +1681,8 @@ uk
 uk
 uk
 uk
-uk
-pm
+BC
+Yx
 Tp
 Ie
 bK
@@ -1724,7 +1719,7 @@ jp
 Od
 VE
 Ie
-yN
+SX
 Tj
 uV
 md
@@ -1890,8 +1885,8 @@ eC
 eC
 eC
 eC
-eC
-ff
+CN
+Ly
 nT
 Ie
 bK
