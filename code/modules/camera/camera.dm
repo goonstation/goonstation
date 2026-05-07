@@ -277,6 +277,8 @@
 		return FALSE
 	if (src.camera_status)
 		LAZYLISTADD(src.viewers, viewer)
+		var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
+		emitter.register_user(viewer)
 		viewer.set_eye(src)
 		return TRUE
 
@@ -284,6 +286,8 @@
 /obj/machinery/camera/proc/disconnect_viewer(var/mob/viewer)
 	if (istype(viewer))
 		LAZYLISTREMOVE(src.viewers, viewer)
+		var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
+		emitter?.unregister_user(viewer)
 	if (!QDELETED(viewer))
 		viewer.set_eye(null)
 
