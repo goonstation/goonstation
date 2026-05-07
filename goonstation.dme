@@ -666,6 +666,7 @@
 #include "code\mob\living\life\bomberman.dm"
 #include "code\mob\living\life\brain.dm"
 #include "code\mob\living\life\breath.dm"
+#include "code\mob\living\life\camera_awareness.dm"
 #include "code\mob\living\life\chems.dm"
 #include "code\mob\living\life\critical.dm"
 #include "code\mob\living\life\decomposition.dm"
