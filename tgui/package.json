@@ -18,7 +18,8 @@
     "tgui:test": "vitest",
     "tgui:test-simple": "CI=true vitest",
     "tgui:test-ci": "CI=true vitest",
-    "tgui:tsc": "tsc"
+    "tgui:tsc": "tsc",
+    "tgui:normalize-svgs": "node normalize-svgs.mjs"
   },
   "dependencies": {
     "@rspack/cli": "^1.4.11",
