@@ -4012,10 +4012,17 @@
 			src.current_emitters = list()
 			return
 
+		//find all the emitters we're using
 		var/list/new_emitters = list()
+		if (isAIeye(mob_owner))
+			var/mob/living/intangible/aieye/eye = mob_owner
+			for (var/turf/T as anything in eye.get_viewport_turfs())
+				for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
+					new_emitters |= emitter
 		for (var/turf/T in view(mob_owner.client.view, src.owner))
 			for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
 				new_emitters |= emitter
+		//register and deregister the ones that have changed
 		for (var/datum/component/camera_coverage_emitter/emitter as anything in src.current_emitters)
 			//not in the new batch, we're not using this camera anymore
 			if (!(emitter in new_emitters))
