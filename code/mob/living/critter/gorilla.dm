@@ -2,6 +2,7 @@
 	name= "gorilla"
 	desc= "Holy shit"
 	hand_count = 2
+	icon_state = "gorilla"
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
@@ -15,7 +16,7 @@
 	ai_type = /datum/aiHolder/gorilla
 	is_npc = TRUE
 	no_stamina_stuns = TRUE
-	add_abilities = list(/datum/targetable/critter/tackle)
+	add_abilities = list(/datum/targetable/critter/slam)
 	var/enraged = FALSE
 
 	New()
@@ -62,9 +63,9 @@
 			return ..()
 
 	critter_ability_attack(mob/target)
-		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if (!tackle.disabled && tackle.cooldowncheck())
-			tackle.handleCast(target)
+		var/datum/targetable/critter/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam)
+		if (!slam.disabled && slam.cooldowncheck())
+			slam.handleCast(target)
 			return TRUE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -75,20 +76,28 @@
 					return SPAN_ALERT("<b>[src] roars!</b>")
 		return null
 
-// special retaliate that sends all nearby gorillas into permanent uncontrollable gorilla rage
+// special retaliate that sends all nearby gorillas to destroy the enemy
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null) // special retaliate that sends all nearby gorillas into
 		for (var/mob/living/critter/gorilla/G in view(7, src))
-			if (G.ai && !G.enraged)
-				qdel(G.ai)
-				G.ai = null
-				G.ai_type = /datum/aiHolder/gorilla/aggressive
-				G.ai = new G.ai_type(G)
-				var/datum/aiTask/sequence/goalbased/retaliate/task_instance = G.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(G.ai, G.ai.default_task))
-				task_instance.targetted_mob = M
-				task_instance.start_time = TIME
-				G.ai.priority_tasks += task_instance
-				G.ai.interrupt()
-				G.enraged = TRUE
+			if (G.ai)
+				G._ai_patience_count--
+				G.ai.was_harmed(weapon,M)
+				if(G.is_hibernating)
+					if (G.registered_area)
+						G.registered_area.wake_critters(M)
+					else
+						G.wake_from_hibernation()
+				if(!G.enraged)
+					G.enraged = TRUE
+					gorilla_rage(G)
+
+				// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
+				if (G.ai_retaliates && G.ai.enabled && length(G.ai.priority_tasks) <= 0 && M != G && G.is_npc)
+					var/datum/aiTask/sequence/goalbased/retaliate/task_instance = G.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(G.ai, G.ai.default_task))
+					task_instance.targetted_mob = M
+					task_instance.start_time = TIME
+					G.ai.priority_tasks += task_instance
+					G.ai.interrupt()
 		..()
 
 	seek_target(var/range = 9)
@@ -115,10 +124,30 @@
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 			random_brute_damage(silicon, 15, 0)
 
+// perma switches the gorilla to a state of rage
+	proc/gorilla_rage()
+		qdel(src.ai)
+		src.ai = null
+		src.ai_type = /datum/aiHolder/gorilla/aggressive
+		src.ai = new src.ai_type(src)
 
+//enraged gorillas HATE windows and tables
+	proc/gorilla_smash()
+		var/list/targets = list()
+		for(var/atom/A in view(3, src))
+			if(istype(A, /obj/window) || istype(A, /obj/mesh/grille/) || istype(A, /obj/table))
+				targets += A
+		if(!length(targets))
+			return FALSE
+		var/atom/target = pick(targets)
+		src.set_dir(get_dir(src, target))
+		src.visible_message(SPAN_ALERT("<b>[src] smashes [target]!</b>"))
+		target.attack_hand(src)
+		return TRUE
 
 /mob/living/critter/gorilla/aggressive // gorrillas that start enraged for admemes
 	ai_type = /datum/aiHolder/gorilla/aggressive
 	desc = "HOLY SHIT"
+	enraged = TRUE
 
 
