@@ -1,4 +1,5 @@
-ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
+// ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
+// Curse you SpacemanDMM, if you make this type I will laugh at you because it will do nothing, use the /host one.
 /obj/machinery/disposal/extradimensional
 	deconstruct_flags = DECON_NONE
 	_health = 500
@@ -52,19 +53,17 @@ ABSTRACT_TYPE(/obj/machinery/disposal/extradimensional)
 /obj/machinery/disposal/extradimensional/host/disposing()
 	//Oh no, time to collapse the pocket dimension!
 	var/turf/my_turf = get_turf(src)
-	var/list/ignored_types = list(/obj/machinery/light, /obj/machinery/door, /obj/mesh, /obj/window, /obj/item/device/radio/intercom)
-	var/obj/machinery/disposal/extradimensional/exit/exit_chute = locate() in REGION_TILES(src.dimension_component.region)
-	var/turf/exit_chute_turf = get_turf(exit_chute)
 	for(var/atom/movable/AM in REGION_TILES(src.dimension_component.region))
-		if(istypes(AM, ignored_types) || IS_OVERLAY_OR_EFFECT(AM))
+		if((AM.anchored && !length(get_all_mobs_in(AM))) || IS_OVERLAY_OR_EFFECT(AM))
 			continue
-		var/target_turf = get_offset_target_turf(my_turf, AM.x - exit_chute_turf.x, AM.y - exit_chute_turf.y)
-		//Place nearby the host chute relative to where it was to the exit chute inside
+		var/target_turf = get_offset_target_turf(my_turf, rand(-7, 7), rand(-7, 7))
 		AM.set_loc(my_turf)
+		var/was_anchored = AM.anchored
 		AM.anchored = FALSE
-		AM.throw_at(target_turf, 30, 1, throw_type = THROW_NO_CLIP)
-		AM.anchored = initial(AM.anchored)
+		AM.throw_at(target_turf, 5, 1, throw_type = THROW_PHASE)
+		AM.anchored = was_anchored
 	src.visible_message(SPAN_ALERT("<b>[src]'s pocket dimension collapses!</b>"))
+	playsound(my_turf, 'sound/machines/singulo_start.ogg', 90, FALSE, 5, -1)
 	. = ..()
 
 /obj/machinery/disposal/extradimensional/host/on_flushed(atom/movable/AM)

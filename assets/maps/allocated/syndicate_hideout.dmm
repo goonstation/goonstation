@@ -6,8 +6,11 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/syndicate_station/hideout)
 "d" = (
-/obj/machinery/vending/jobclothing/syndicate,
-/turf/simulated/floor/wood/two,
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "e" = (
 /obj/item/device/radio/intercom,
@@ -18,12 +21,18 @@
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "h" = (
+/obj/stool/chair/black{
+	dir = 4
+	},
 /turf/simulated/floor/redblack{
-	dir = 8
+	dir = 4
 	},
 /area/syndicate_station/hideout)
 "j" = (
 /obj/table/syndicate/auto,
+/obj/item/cloth/towel/black{
+	pixel_y = 4
+	},
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -38,16 +47,23 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
 /area/syndicate_station/hideout)
 "m" = (
-/turf/simulated/floor/redblack/corner{
-	dir = 4
+/obj/table/syndicate/auto,
+/obj/item/storage/box/donkpocket_kit{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
 	},
 /area/syndicate_station/hideout)
 "n" = (
 /turf/simulated/floor/carpet/red/fancy/narrow/T_south,
 /area/syndicate_station/hideout)
 "o" = (
-/obj/machinery/computer/announcement/syndicate,
-/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_north,
 /area/syndicate_station/hideout)
 "q" = (
@@ -66,8 +82,8 @@
 	},
 /area/syndicate_station/hideout)
 "u" = (
-/obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/wood/two,
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "v" = (
 /turf/simulated/floor/redblack{
@@ -75,62 +91,63 @@
 	},
 /area/syndicate_station/hideout)
 "w" = (
-/turf/simulated/floor/carpet/red/fancy/narrow/se,
-/area/syndicate_station/hideout)
-"x" = (
-/obj/item/storage/toilet{
-	dir = 4
-	},
-/obj/machinery/light/incandescent/small,
-/turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"y" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/carpet/red/fancy/narrow/T_east,
-/area/syndicate_station/hideout)
-"z" = (
 /obj/storage/crate,
 /obj/item/clothing/shoes/swat{
 	pixel_x = -2;
 	pixel_y = -7
-	},
-/obj/item/clothing/head/beret/syndicate{
-	pixel_y = 5
 	},
 /obj/item/clothing/head/bandana/red{
 	pixel_x = 4;
 	pixel_y = -4
 	},
 /obj/item/clothing/gloves/black,
-/obj/item/clothing/mask/gas/swat,
-/turf/simulated/floor/wood/two,
+/turf/simulated/floor/carpet/red/fancy/narrow/se,
+/area/syndicate_station/hideout)
+"y" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/red/fancy/narrow/T_east,
+/area/syndicate_station/hideout)
+"z" = (
+/obj/machinery/sink/slim{
+	pixel_y = 15
+	},
+/turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "A" = (
 /obj/table/syndicate/auto,
-/obj/item/cloth/towel/security{
-	name = "syndicate towel";
-	desc = "About the most massively useful thing a spacefaring traveler can have. This one looks rather recognisable..."
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_y = 10;
+	pixel_x = -4
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
 /area/syndicate_station/hideout)
 "C" = (
-/turf/simulated/floor/wood/two,
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/cheese{
+	pixel_x = 6;
+	pixel_y = 12;
+	name = "slice of soggy cheese pizza";
+	desc = "A cheesy pizza slice with thick tomato sauce. It looks quite soggy."
+	},
+/turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "E" = (
 /obj/table/syndicate/auto,
 /obj/machinery/microwave,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/redblack{
-	dir = 10
+	dir = 8
 	},
 /area/syndicate_station/hideout)
 "F" = (
-/obj/machinery/shower,
 /obj/machinery/drainage/big,
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 15
-	},
+/obj/machinery/door_control/bolter/new_walls/east,
+/obj/mapping_helper/button/pair,
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "G" = (
@@ -142,37 +159,11 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/syndicate_station/hideout)
 "I" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/wood/two,
-/area/syndicate_station/hideout)
-"J" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating,
-/area/syndicate_station/hideout)
-"K" = (
-/obj/machinery/door/airlock/pyro/alt{
-	dir = 4
-	},
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "M" = (
 /turf/simulated/floor/redblack{
 	dir = 6
-	},
-/area/syndicate_station/hideout)
-"N" = (
-/obj/table/syndicate/auto,
-/obj/item/storage/box/donkpocket_kit{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/kitchen/utensil/knife{
-	pixel_x = 6;
-	pixel_y = 7
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/redblack{
-	dir = 3
 	},
 /area/syndicate_station/hideout)
 "P" = (
@@ -194,22 +185,19 @@
 /area/syndicate_station/hideout)
 "S" = (
 /obj/table/monodesk/auto,
-/obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_x = -2;
-	pixel_y = 10
-	},
-/obj/item/stamp/syndicate{
-	pixel_x = -7;
-	pixel_y = -7
-	},
 /obj/item/paper_bin{
-	pixel_y = -4;
+	pixel_y = 5;
 	pixel_x = 5
 	},
-/obj/item/pen,
 /obj/item/pen/crayon/red{
-	pixel_y = -5
+	pixel_y = -2;
+	pixel_x = -3
 	},
+/obj/item/stamp{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/pen,
 /turf/simulated/floor/carpet/red/fancy/narrow/nw,
 /area/syndicate_station/hideout)
 "U" = (
@@ -222,12 +210,10 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/T_east,
 /area/syndicate_station/hideout)
 "W" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
+/obj/machinery/shower{
+	dir = 4
 	},
-/turf/simulated/floor/wood/two,
+/turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "X" = (
 /obj/table/monodesk/auto,
@@ -238,10 +224,6 @@
 /area/syndicate_station/hideout)
 "Z" = (
 /obj/table/monodesk/auto,
-/obj/item/reagent_containers/food/snacks/cereal_box/syndie{
-	pixel_x = 7;
-	pixel_y = 14
-	},
 /obj/item/reagent_containers/food/drinks/milk{
 	pixel_x = -6;
 	pixel_y = 9
@@ -252,6 +234,10 @@
 /obj/item/kitchen/utensil/spoon{
 	dir = 8;
 	pixel_y = -8
+	},
+/obj/item/reagent_containers/food/snacks/cereal_box/syndie{
+	pixel_x = 7;
+	pixel_y = 14
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/syndicate_station/hideout)
@@ -289,12 +275,12 @@ a
 H
 d
 I
-J
+H
 j
 A
 E
-H
-x
+m
+P
 H
 a
 "}
@@ -303,12 +289,12 @@ a
 H
 z
 C
-J
+H
 G
 r
-N
-H
-F
+r
+g
+t
 H
 a
 "}
@@ -316,13 +302,13 @@ a
 a
 H
 W
-C
+F
 u
 G
 g
+g
+g
 t
-H
-K
 H
 a
 "}
@@ -334,9 +320,9 @@ H
 H
 G
 g
-m
-h
-P
+g
+g
+t
 H
 a
 "}
@@ -362,7 +348,7 @@ H
 Q
 v
 R
-R
+h
 R
 M
 H
