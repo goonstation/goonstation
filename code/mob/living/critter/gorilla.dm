@@ -16,8 +16,8 @@
 	ai_type = /datum/aiHolder/gorilla
 	is_npc = TRUE
 	no_stamina_stuns = TRUE
-	add_abilities = list(/datum/targetable/critter/slam)
-	var/enraged = FALSE
+	add_abilities = list(/datum/targetable/critter/roar, /datum/targetable/critter/fling)
+	var/enraged = FALSE // gorillas that are not already enraged and witness an ally being harmed will switch to aggressive AI
 
 	New()
 		..()
@@ -63,17 +63,43 @@
 			return ..()
 
 	critter_ability_attack(mob/target)
-		var/datum/targetable/critter/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam)
-		if (!slam.disabled && slam.cooldowncheck())
-			slam.handleCast(target)
+		var/datum/targetable/critter/roar = src.abilityHolder.getAbility(/datum/targetable/critter/roar)
+		if (!roar.disabled && roar.cooldowncheck())
+			roar.handleCast(target)
 			return TRUE
+		var/datum/targetable/critter/fling = src.abilityHolder.getAbility(/datum/targetable/critter/fling)
+		if (!fling.disabled && fling.cooldowncheck() && is_incapacitated(target))
+			//from pikaia behavior so gorillas can grab their target to use fling
+			src.set_a_intent(INTENT_GRAB)
+			src.set_dir(get_dir(src, target))
+
+			var/list/params = list()
+			params["ai"] = TRUE
+
+			var/obj/item/grab/G = src.equipped()
+			if (!istype(G)) //if it hasn't grabbed something, try to
+				if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
+					src.drop_item()
+				src.hand_attack(target, params)
+			else
+				if (G.affecting == null || G.assailant == null || G.disposed || isdead(G.affecting))
+					src.drop_item()
+					return
+
+				if (G.state <= GRAB_PASSIVE)
+					G.AttackSelf(src)
+				else
+					fling.handleCast(target)
+					src.set_a_intent(INTENT_HARM)
+					return TRUE
+
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/maneatersnarl.ogg', 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return SPAN_ALERT("<b>[src] roars!</b>")
+					playsound(src, 'sound/voice/screams/monkey_scream.ogg', 90, 1, pitch=0.3, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_ALERT("<b>[src] screeches!</b>")
 		return null
 
 // special retaliate that sends all nearby gorillas to destroy the enemy
@@ -131,19 +157,6 @@
 		src.ai_type = /datum/aiHolder/gorilla/aggressive
 		src.ai = new src.ai_type(src)
 
-//enraged gorillas HATE windows and tables
-	proc/gorilla_smash()
-		var/list/targets = list()
-		for(var/atom/A in view(3, src))
-			if(istype(A, /obj/window) || istype(A, /obj/mesh/grille/) || istype(A, /obj/table))
-				targets += A
-		if(!length(targets))
-			return FALSE
-		var/atom/target = pick(targets)
-		src.set_dir(get_dir(src, target))
-		src.visible_message(SPAN_ALERT("<b>[src] smashes [target]!</b>"))
-		target.attack_hand(src)
-		return TRUE
 
 /mob/living/critter/gorilla/aggressive // gorrillas that start enraged for admemes
 	ai_type = /datum/aiHolder/gorilla/aggressive

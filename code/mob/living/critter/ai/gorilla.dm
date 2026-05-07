@@ -17,16 +17,3 @@
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive/melee, list(src.holder, src))
-	transition_tasks += holder.get_instance(/datum/aiTask/critter/gorilla/smash, list(src.holder, src))
-
-/datum/aiTask/critter/gorilla/smash
-	name = "smash shit"
-	weight = 2
-
-/datum/aiTask/critter/gorilla/smash/on_tick()
-	var/mob/living/critter/gorilla/C = holder.owner
-	if(length(C.seek_target()))
-		C.ai.interrupt()
-		return
-	else
-		C.gorilla_smash()
