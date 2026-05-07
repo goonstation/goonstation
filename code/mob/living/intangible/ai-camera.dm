@@ -74,7 +74,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_OBSERVER, "ai_eye")
-		src.add_lifeprocess(/datum/lifeprocess/camera_awareness)
+		src.setStatus("camera_awareness", INFINITE_STATUS)
 
 	Login()
 		.=..()
