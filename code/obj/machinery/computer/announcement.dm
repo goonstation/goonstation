@@ -22,6 +22,8 @@
 	var/area_name = null
 	/// Determines colors for alert text
 	var/alert_origin = ALERT_COMMAND
+	/// Does the annuoncement computer remove the header ID Name/Job addendum
+	var/anonymous = FALSE
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -129,7 +131,10 @@
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 		var/area/A = get_area(src)
-		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
+		var/header = "[src.area_name || A.name] Announcement"
+		if (!src.anonymous)
+			header += " by [ID.registered] ([ID.assignment])"
+
 		command_announcement(message, header, msg_sound, volume = src.sound_volume, alert_origin = src.alert_origin)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
@@ -157,7 +162,7 @@
 			return TRUE
 
 		// People who have been on the ship the whole time, or who aren't on the ship, shouldn't be announced.
-		if (person.traitHolder.getTraitWithCategory("background"))
+		if (person.traitHolder.getTraitWithCategory("spawn scenario"))
 			return TRUE
 
 		var/job = person.mind.assigned_role
@@ -284,10 +289,12 @@
 	req_access = list(access_syndicate_shuttle)
 	circuit_type = /obj/item/circuitboard/announcement/syndicate
 	alert_origin = ALERT_SYNDICATE
+	anonymous = TRUE
 
 	commander
 		area_name = null
 		req_access = list(access_syndicate_commander)
+		anonymous = FALSE
 
 	console
 		icon_state = "syndiepc14"
@@ -299,7 +306,7 @@
 	name = "Illegal Announcement Computer"
 	icon_state = "announcementclown"
 	circuit_type = /obj/item/circuitboard/announcement/clown
-	var/emagged = FALSE
+	var/explodes = TRUE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."
 	sound_volume = 50
@@ -309,27 +316,12 @@
 		. = ..()
 		if(.)
 			SPAWN(0.5 SECONDS)
-				new /obj/effects/explosion (src.loc)
-				playsound(src.loc, "explosion", 50, 1)
-				src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
-				user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
-
 				var/mob/living/carbon/human/clown = user
 				if(istype(clown))
 					//Computer is normally offcams and the clown normally has mask on + ID in computer so visible name will be Unknown
 					clown.apply_automated_arrest("Making a very irritating announcement.", requires_camera_seen = FALSE, use_visible_name = FALSE)
-
-					clown.update_burning(15) // placed here since update_burning is only for mob/living
-				if(src.ID)
-					user.put_in_hand_or_eject(src.ID)
-
-				if (src.emagged)
-					var/turf/T = get_turf(src.loc)
-					if(T)
-						src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
-						explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
-				qdel(src)
-
+				if(src.explodes)
+					src.blow_up(user)
 
 	attackby(obj/item/W, mob/user)
 		..()
@@ -352,3 +344,36 @@
 			src.visible_message(SPAN_ALERT("<B>The clown on the screen grins in horrid delight!</B>"))
 		src.emagged = TRUE
 
+	proc/blow_up(mob/user)
+		if(!src.explodes)
+			return
+		var/mob/living/living_user = user
+		if(istype(living_user))
+			living_user.update_burning(15) // placed here since update_burning is only for mob/living
+		new /obj/effects/explosion (src.loc)
+		playsound(src.loc, "explosion", 50, 1)
+		src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
+		user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
+		if(src.ID)
+			user.put_in_hand_or_eject(src.ID)
+		if (src.emagged)
+			var/turf/T = get_turf(src.loc)
+			if(T)
+				src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
+				explosion_new(src, T, 5) // On par with a pod explosion. From testing, may or may not cause a breach depending on map
+		qdel(src)
+
+/obj/machinery/computer/announcement/clown/foldable
+	name = "Ultra Illegal Announcement Computer"
+	icon_state = "clownuncement_port"
+	area_name = "Ultra Illegal Clown"
+	circuit_type = null //Prevents deconstructing via screwdriver
+	explodes = FALSE
+	density = 0
+	glow_in_dark_screen = FALSE
+
+	New()
+		..()
+		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/syndicate)
+		SPAWN(0)
+			src.foldUpIntoBriefcase()

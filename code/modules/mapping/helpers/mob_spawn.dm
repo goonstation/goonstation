@@ -369,6 +369,60 @@
 		src.corpse.equip_new_if_possible(/obj/item/clothing/suit/hazard/rad/iomoon, SLOT_W_UNIFORM)
 		src.corpse.equip_new_if_possible(/obj/item/clothing/head/rad_hood/iomoon, SLOT_HEAD)
 
+/obj/mapping_helper/mob_spawn/corpse/human/cultist
+	spawn_type = /mob/living/carbon/human/normal
+	decomp_stage = DECOMP_STAGE_BLOATED
+
+	setup()
+		..()
+		src.corpse.equip_new_if_possible(/obj/item/clothing/mask/greencultmask, SLOT_WEAR_MASK)
+		src.corpse.equip_new_if_possible(/obj/item/clothing/under/color/green, SLOT_W_UNIFORM)
+		src.corpse.equip_if_possible(new /obj/item/clothing/shoes/brown, SLOT_SHOES)
+
+	initiate
+
+		setup()
+			..()
+			src.corpse.equip_new_if_possible(/obj/item/clothing/suit/bedsheet/green, SLOT_WEAR_SUIT)
+
+	acolyte
+
+		setup()
+			..()
+			src.corpse.equip_new_if_possible(/obj/item/clothing/suit/cultist, SLOT_WEAR_SUIT)
+
+	leader
+		setup()
+			..()
+			src.corpse.equip_new_if_possible(/obj/item/clothing/suit/green_robes, SLOT_WEAR_SUIT)
+			src.corpse.bioHolder.AddEffect("ithillid")
+
+		key1
+			setup()
+				..()
+				src.corpse.equip_new_if_possible(/obj/item/cult_sigil_pt1, SLOT_L_STORE)
+
+		key3
+			setup()
+				..()
+				src.corpse.equip_new_if_possible(/obj/item/cult_sigil_pt3, SLOT_L_STORE)
+
+/obj/mapping_helper/mob_spawn/corpse/human/cultist_imposter // For the hastur guy
+	spawn_type = /mob/living/carbon/human/normal
+	decomp_stage = DECOMP_STAGE_BLOATED
+
+	setup()
+		..()
+		src.corpse.equip_new_if_possible(/obj/item/clothing/mask/hastur, SLOT_WEAR_MASK)
+		src.corpse.equip_new_if_possible(/obj/item/clothing/under/color/yellow, SLOT_W_UNIFORM)
+		src.corpse.equip_if_possible(new /obj/item/clothing/shoes/orange, SLOT_SHOES)
+		src.corpse.equip_new_if_possible(/obj/item/clothing/suit/cultist/hastur, SLOT_WEAR_SUIT)
+
+	key2
+		setup()
+			..()
+			src.corpse.equip_new_if_possible(/obj/item/cult_sigil, SLOT_L_STORE)
+
 //////////////////////// Critter corpses ////////////////////////
 
 /obj/mapping_helper/mob_spawn/corpse/critter/owl

@@ -45,3 +45,4 @@
 				return 1
 			holder.owner.say("PSYBLAST!", flags = SAYFLAG_IGNORE_STAMINA)
 			return 0
+

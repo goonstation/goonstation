@@ -134,7 +134,6 @@
 	build_reagent_cache()
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
-	build_manufacturer_icons()
 	build_clothingbooth_caches()
 	initialize_biomes()
 
@@ -168,11 +167,6 @@
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
 
-	UPDATE_TITLE_STATUS("Generating minimaps")
-	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
-	minimap_renderer = new /datum/minimap_renderer()
-	minimap_renderer.initialise_minimaps()
-
 	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
 	RL_Start()
@@ -183,6 +177,11 @@
 	buildRandomRooms()
 	makepowernets()
 	#endif
+
+	UPDATE_TITLE_STATUS("Generating minimaps")
+	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
+	minimap_renderer = new /datum/minimap_renderer()
+	minimap_renderer.initialise_minimaps()
 
 	#ifdef SECRETS_ENABLED
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
@@ -207,10 +206,6 @@
 	build_camera_network()
 	camera_coverage_controller.setup()
 
-	UPDATE_TITLE_STATUS("Preloading client data...")
-	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
-	sendItemIconsToAll()
-
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
@@ -228,6 +223,10 @@
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
 	#endif
+
+	UPDATE_TITLE_STATUS("Processing gravity")
+	Z_LOG_DEBUG("World/Init", "Processing gravity...")
+	global.configure_zero_g_areas()
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME

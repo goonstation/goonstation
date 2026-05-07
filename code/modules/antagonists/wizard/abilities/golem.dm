@@ -58,8 +58,7 @@
 			the_golem.name = "Bee Golem"
 			the_golem.desc = "A greater domestic space bee that has been created with magic, but is otherwise completely identical to any other member of its species."
 		else
-			the_golem = new /mob/living/critter/golem/(get_turf(holder.owner))
-			the_golem.CustomizeGolem(TheReagents)
+			the_golem = new /mob/living/critter/golem/(get_turf(holder.owner), customised_reagents = TheReagents)
 
 		qdel(TheReagents)
 		qdel(AnItem)

@@ -103,15 +103,15 @@
 						H.fake_say(phrase_log.random_phrase("say"))
 						sleep(randfloat(1 SECOND, 3 SECONDS))
 						H.fake_say(phrase_log.random_phrase("say"))
-				src.make_evil(H)
+				src.make_evil(H, O)
 		else
-			src.make_evil(clone)
+			src.make_evil(clone, O)
 
 		SPAWN(imprison_time)
 			if (!O.disposed)
 				O.ArtifactDeactivated()
 
-	proc/make_evil(mob/living/carbon/human/clone)
+	proc/make_evil(mob/living/carbon/human/clone, obj/O)
 		set waitfor = FALSE
 		if(clone)
 			sleep(evil_delay)
@@ -119,6 +119,7 @@
 			clone.ai_init()
 			clone.ai_aggressive = 1
 			clone.ai_calm_down = 0
+			clone.ai_origin_object = O
 			sleep(randfloat(3 SECOND, 20 SECONDS))
 			while (!isdead(clone) && isnull(clone.client) && !QDELETED(clone))
 				clone.fake_say(phrase_log.random_phrase("say"))

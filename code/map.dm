@@ -152,8 +152,9 @@ var/global/list/mapNames = list(
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
 	var/merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom
 	var/merchant_right_station = /area/shuttle/merchant_shuttle/right_station
-	var/list/shipping_destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
+	var/cargo_shipping_method = SHIPPING_METHOD_EDGE_FLING //! How does cargo arrive to the station?
 	/// default shipping destinations
+	var/list/shipping_destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
 
 	var/list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
@@ -167,8 +168,11 @@ var/global/list/mapNames = list(
 		"the robotics lab" = list(/area/station/medical/robotics))
 //		"the public pool" = list(/area/station/crew_quarters/pool))
 
-	var/job_limits_from_landmarks = FALSE /// if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
-	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
+	var/job_limits_from_landmarks = FALSE //! if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
+	var/list/job_limits_override = list() //! assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
+
+	var/list/ai_satellite_area_types = list() //! What areas are considered the "AI Satellite", if any. Station gravity tether will not affect these areas.
+	var/list/station_tether_ignore_area_types = list()//! Sub-types of `/area/station` that station gravity tethers should ignore for this map.
 
 	proc/get_shuttle_path()
 		var/dirname = dir_to_dirname(escape_dir)
@@ -203,6 +207,7 @@ var/global/list/mapNames = list(
 
 		SPAWN(5 SECONDS)
 			src.load_shuttle()
+			src.set_cargo_shipping_method()
 
 	proc/load_shuttle(path=null, transit_path=null, load_loc_override=null)
 		if(isnull(path))
@@ -238,6 +243,9 @@ var/global/list/mapNames = list(
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
 		transit_area.warp_dir = escape_dir
 		return TRUE
+
+	proc/set_cargo_shipping_method()
+		global.shippingmarket.cargo_shipping_method = src.cargo_shipping_method
 
 /datum/map_settings/pod_wars
 	name = "POD_WARS"
@@ -320,6 +328,12 @@ var/global/list/mapNames = list(
 		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 
+	ai_satellite_area_types = list(
+		/area/station/turret_protected/ai_upload_foyer,
+		/area/station/turret_protected/ai_upload,
+		/area/station/turret_protected/ai,
+	)
+
 /datum/map_settings/cogmap
 	name = "COGMAP"
 	goonhub_map = "/maps/cogmap"
@@ -372,6 +386,13 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/rancher = 2,
 	)
 
+	ai_satellite_area_types = list(
+		/area/station/turret_protected/Zeta,
+		/area/station/turret_protected/ai_upload_foyer,
+		/area/station/turret_protected/ai_upload,
+		/area/station/turret_protected/ai,
+	)
+
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
 	goonhub_map = "/maps/cogmap2"
@@ -403,7 +424,7 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
-	shipping_destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
+	shipping_destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","QM")
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
@@ -423,6 +444,13 @@ var/global/list/mapNames = list(
 
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
+	)
+
+	ai_satellite_area_types = list(
+		/area/station/turret_protected/Zeta,
+		/area/station/turret_protected/ai_upload_foyer,
+		/area/station/turret_protected/ai_upload,
+		/area/station/turret_protected/ai,
 	)
 
 /datum/map_settings/donut2
@@ -468,6 +496,21 @@ var/global/list/mapNames = list(
 
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
+	)
+
+	// donut2 research station
+	station_tether_ignore_area_types = list(
+		/area/station/crew_quarters/hor,
+		/area/station/maintenance/scidisposal,
+		/area/station/turret_protected/Zeta,
+		/area/station/crew_quarters/observatory,
+		/area/station/hangar/science,
+		/area/station/science,
+	)
+
+	ai_satellite_area_types = list(
+		/area/station/turret_protected/AIsat,
+		/area/station/turret_protected/ai,
 	)
 
 /datum/map_settings/donut3
@@ -522,6 +565,16 @@ var/global/list/mapNames = list(
 
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
+	)
+
+	// donut3 medical asylum
+	station_tether_ignore_area_types = list(
+		/area/station/crew_quarters/clown,
+		/area/station/medical/asylum,
+	)
+
+	ai_satellite_area_types = list(
+		/area/station/turret_protected/ai,
 	)
 
 /datum/map_settings/kondaru
@@ -807,6 +860,8 @@ var/global/list/mapNames = list(
 	default_shuttle = "oshan"
 	shuttle_map_turf = /turf/space/fluid/acid
 
+	cargo_shipping_method = SHIPPING_METHOD_TRANSCEPTION
+
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
@@ -874,6 +929,16 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/rancher = 2,
 	)
 
+	// prototype engine is in space
+	station_tether_ignore_area_types = list(
+		/area/station/engine/proto,
+		/area/station/engine/proto_gangway,
+	)
+
+	ai_satellite_area_types = list(
+		/area/station/turret_protected/AIsat,
+		/area/station/turret_protected/ai,
+	)
 
 /datum/map_settings/density2 // I just copied cog2 for now, ok????
 	name = "density2"
@@ -1098,8 +1163,8 @@ var/global/list/mapNames = list(
 			return "south-east"
 	return "unknown[side ? " side" : null]"
 
+/// Fetches the map name from a given map ID. Returns null if none could be found
 /proc/getMapNameFromID(id)
 	for (var/map in mapNames)
 		if (id == mapNames[map]["id"])
 			return map
-	return 0

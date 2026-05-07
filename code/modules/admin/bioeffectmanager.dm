@@ -51,7 +51,11 @@
 			. = TRUE
 		if ("updateStability")
 			var/new_stability = round(text2num(params["value"]))
-			target_mob.bioHolder.genetic_stability = isnull(new_stability) ? 0 : max(new_stability, 0)
+			if (new_stability == -1) // set to -1 to clear forced stability
+				target_mob.bioHolder.forced_stability = null
+			else
+				target_mob.bioHolder.forced_stability = isnull(new_stability) ? 0 : max(new_stability, 0)
+			target_mob.bioHolder.calculateStability()
 			. = TRUE
 		if ("updateCooldown")
 			var/new_cooldown = round(text2num(params["value"]))
@@ -71,10 +75,10 @@
 		if ("toggleStabilized")
 			if (BE.stability_loss == 0)
 				BE.stability_loss = BE.global_instance.stability_loss
-				BE.holder.genetic_stability = max(0, BE.holder.genetic_stability -= BE.stability_loss) //update mob stability
+				BE.holder.calculateStability()
 			else
-				BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
 				BE.stability_loss = 0
+				BE.holder.calculateStability()
 			. = TRUE
 		if ("toggleSynced")
 			BE.safety = !BE.safety
@@ -85,4 +89,5 @@
 		if ("deleteBioEffect")
 			target_mob.bioHolder.RemoveEffect(params["id"])
 			logTheThing(LOG_ADMIN, ui.user, "Removed bioeffect [params["id"]] from [constructName(target_mob)]")
+			BE.holder.calculateStability()
 			. = TRUE

@@ -283,8 +283,10 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	w_class = W_CLASS_BULKY
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(/obj/item/stamped_bullion)
+
+	HELP_MESSAGE_OVERRIDE("Set or enter a code by <b>using in-hand</b>.<br>View contents by <b>click-dragging</b> from the briefcase to your character.")
 
 TYPEINFO(/obj/item/storage/secure/ssafe)
 	mats = 8
@@ -300,7 +302,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	w_class = W_CLASS_BULKY
 	anchored = ANCHORED
 	density = 0
-	desc = "A extremely tough secure safe."
+	desc = "An extremely tough secure safe."
 	mechanics_type_override = /obj/item/storage/secure/ssafe
 
 	attack_hand(mob/user)

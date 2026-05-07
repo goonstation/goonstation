@@ -5,6 +5,9 @@
 	},
 /obj/machinery/cell_charger,
 /obj/item/cigpacket,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "eo" = (
@@ -255,8 +258,10 @@
 /obj/table/wood/auto{
 	dir = 5
 	},
-/obj/item/storage/toolbox/mechanical,
 /obj/machinery/light_switch/north,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "HA" = (
@@ -363,11 +368,8 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/barracks)
 "Tz" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
-	dir = 4;
-	id = "Sleeper_Access";
-	name = "Weather Satellite"
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"

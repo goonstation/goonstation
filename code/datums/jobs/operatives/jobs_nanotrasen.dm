@@ -26,6 +26,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/special_operative)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
@@ -108,10 +109,11 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	wages = PAY_TRADESMAN
 	trait_list = list("training_security")
 	access_string = "Nanotrasen Security Consultant"
-	requires_whitelist = TRUE
+	requires_whitelist = REQUIRES_WHITELIST_ALWAYS
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
+	rounds_needed_to_play = ROUNDS_MIN_HIGHSEC
 
 	slot_belt = list(/obj/item/storage/belt/security/ntsc)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)

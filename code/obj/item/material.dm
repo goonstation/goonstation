@@ -431,9 +431,10 @@
 			var/turf/bombturf = get_turf(src)
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
-				logTheThing(LOG_BOMBING, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
-				if (src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
-					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(src.fingerprintslast)]")
+				var/last_ckey = src.get_last_ckey()
+				logTheThing(LOG_BOMBING, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [replace_if_false(last_ckey, "None")]")
+				if (last_ckey && !istype(get_area(bombturf), /area/mining/magnet))
+					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(last_ckey)]")
 
 		qdel(src)
 
@@ -446,9 +447,10 @@
 			var/turf/bombturf = get_turf(src)
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
-			logTheThing(LOG_BOMBING, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
-			if(src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
-				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
+			var/last_ckey = src.get_last_ckey()
+			logTheThing(LOG_BOMBING, null, "Erebite detonated by heat in [bombarea]. Last touched by: [replace_if_false(last_ckey, "None")]")
+			if(last_ckey && !istype(get_area(bombturf), /area/mining/magnet))
+				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(last_ckey)]")
 
 		qdel(src)
 
@@ -671,20 +673,28 @@
 	// this should only be spawned by the game, spawning it otherwise would just be dumb
 	name = "scrap"
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
-	icon = 'icons/obj/items/materials/materials.dmi'
-	icon_state = "scrap"
+	icon = 'icons/obj/items/materials/scrap.dmi'
+	icon_state = "scrapA_1"
 	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = FALSE
 	mat_changename = TRUE
 	material_name = "Steel"
 	default_material = "steel"
+	var/icon_type = "A"
 
 	New()
+		src.icon_type = pick("A","B","C","D")
 		..()
-		icon_state += "[rand(1,5)]"
 
-	get_stack_value()
-		return 0
+	update_icon()
+		src.icon_state = "scrap[src.icon_type]_[src.icon_stack_value]"
+
+	stack_item(obj/item/other)
+		if(!istype(other, /obj/item/raw_material/scrap_metal))
+			return
+		var/obj/item/raw_material/scrap_metal/scrap = other
+		src.icon_type = scrap.icon_type
+		..()
 
 /obj/item/raw_material/shard
 	// same deal here
@@ -713,6 +723,7 @@
 	material_name = "Glass"
 	default_material = "glass"
 	mat_changename = TRUE
+	can_arcplate = FALSE
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
@@ -916,11 +927,12 @@
 
 			else if (istype(M, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = M
-				output_bar_from_item(M, 1 / M.material_amt, C.conductor.getID())
+				reclaim_materials(C.material, C.material_amt * C.amount)
+				reclaim_materials(C.conductor, C.material_amt * C.amount)
 				qdel(C)
 
 			else
-				output_bar_from_item(M, 1 / M.material_amt)
+				reclaim_materials(M.material, M.material_amt * M.amount)
 				qdel(M)
 
 			sleep(smelt_interval)
@@ -935,34 +947,14 @@
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
-	proc/output_bar_from_item(obj/item/O, var/amount_per_bar = 1, var/extra_mat)
-		if (!O || !O.material)
+	proc/reclaim_materials(var/datum/material/material_reclaim, var/material_amount)
+		if(!material_reclaim)
 			return
-
-		var/output_amount = O.amount
-
-		if (amount_per_bar)
-			var/bonus = leftovers[O.material.getID()]
-			var/num_bars = O.amount / amount_per_bar + bonus
-
-			output_amount = round(num_bars)
-			if (output_amount != num_bars)
-				leftovers[O.material.getID()] = num_bars - output_amount
-
-		output_bar(O.material, output_amount)
-
-		if (extra_mat) // i hate this
-			output_amount = O.amount
-
-			if (amount_per_bar)
-				var/bonus = leftovers[extra_mat]
-				var/num_bars = O.amount / amount_per_bar + bonus
-
-				output_amount = round(num_bars)
-				if (output_amount != num_bars)
-					leftovers[extra_mat] = num_bars - output_amount
-
-			output_bar(extra_mat, output_amount)
+		var/material_id = material_reclaim.getID()
+		material_amount += leftovers[material_id]
+		var/num_of_bars = floor(material_amount)
+		leftovers[material_id] = material_amount - num_of_bars
+		output_bar(material_reclaim, num_of_bars)
 
 	proc/output_bar(material, amount)
 
@@ -998,7 +990,7 @@
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
-		if (src.is_valid(W) && brain_check(W, user, TRUE))
+		if (src.is_valid(W) && brain_check(W, user, TRUE) && container_check(W, user, TRUE))
 			if (W.stored)
 				W.stored.transfer_stored_item(W, src, user = user)
 			else
@@ -1132,7 +1124,7 @@
 				continue
 			if (M.name != O.name)
 				continue
-			if(!(src.is_valid(M) && brain_check(M, user, FALSE)))
+			if(!(src.is_valid(M) && brain_check(M, user, FALSE) && container_check(M, user, FALSE)))
 				continue
 			M.set_loc(src)
 			playsound(src, sound_load, 40, TRUE)
@@ -1187,3 +1179,26 @@
 				logTheThing(LOG_COMBAT, user, "loads [brain] (owner's ckey [brain.owner ? brain.owner.ckey : null]) into a portable reclaimer.")
 			return accept
 		return TRUE
+
+	proc/container_check(var/obj/item/I, var/mob/user, var/ask)
+		if(!ask)
+			return TRUE
+		if(istype(I, /obj/item/tank))
+			var/obj/item/tank/gas_tank = I
+			if(!gas_tank.air_contents)
+				return TRUE
+			if(TOTAL_MOLES(gas_tank.air_contents) <= 0)
+				return TRUE
+			var/accept = tgui_alert(user, "[gas_tank] contains gas. Are you sure that you want to put it into the reclaimer?", "Reclaim tank?", list("Yes", "No")) == "Yes" && can_reach(user, src) && user.equipped() == I
+			return accept
+
+		if(!I.reagents)
+			return TRUE
+		if(!I.reagents.total_volume)
+			return TRUE
+		if(!I.is_open_container() && !istype(I, /obj/item/reagent_containers/syringe))
+			return TRUE
+		var/accept = tgui_alert(user, "[I] contains reagents that will be dumped if inserted. Are you sure that you want to put it into the reclaimer?", "Remove reagents?", list("Yes", "No")) == "Yes" && can_reach(user, src) && user.equipped() == I
+		if(accept)
+			I.reagents.reaction(get_turf(src))
+		return accept

@@ -507,6 +507,7 @@ TYPEINFO(/mob/living)
 					storage.close(user = src)
 				else
 					storage.open(user = src)
+				storage.add_fingerprint(src)
 		else
 			src.swap_hand()
 		return
@@ -1443,7 +1444,7 @@ TYPEINFO(/mob/living)
 				if (!P.reagents)
 					src.take_toxin_damage(damage)
 
-	if (!P.proj_data.silentshot)
+	if (!P.proj_data.no_hit_message)
 		boutput(src, SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null
@@ -1514,7 +1515,11 @@ TYPEINFO(/mob/living)
 	else if (src.bioHolder.HasEffect("resist_electric"))
 		boutput(src, SPAN_NOTICE("You feel electricity course through you harmlessly!"))
 		return 0
+
 	src.setStatus("defibbed", sqrt(shock_damage) SECONDS)
+	if (length(src.implant) && shock_damage >= 5)
+		src.changeStatus("implants_disabled", clamp(shock_damage, 15, 60) SECONDS)
+
 	switch(shock_damage)
 		if (0 to 25)
 			playsound(src.loc, 'sound/effects/electric_shock.ogg', 50, 1)
@@ -1794,3 +1799,24 @@ TYPEINFO(/mob/living)
 
 /mob/living/HealBleeding(amt)
 	src.bleeding = max(src.bleeding - amt, 0)
+
+/mob/living/proc/muffled_by_grab()
+	for (var/obj/item/grab/G as anything in src.grabbed_by)
+		if ((G.state >= GRAB_CHOKE) && G.muffle_affecting)
+			return TRUE
+
+	return FALSE
+
+/mob/living/proc/handle_perma_cryo()
+	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+		antagonist.handle_perma_cryo()
+
+/mob/living/proc/handle_cryo()
+	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+		antagonist.handle_cryo()
+	for_by_tcl(disky, /obj/item/disk/data/floppy/read_only/authentication)
+		if (get_turf(disky) == get_turf(src))
+			disky.safe_delete()
+			var/obj/storage/crate/crate = new
+			new /obj/item/disk/data/floppy/read_only/authentication(crate)
+			shippingmarket.receive_crate(crate)

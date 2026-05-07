@@ -15,10 +15,15 @@
 
 /obj/disposalholder
 	invisibility = INVIS_ALWAYS
-	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
-	var/active = 0	// true if the holder is moving, otherwise inactive
+	///Gas used to flush the holder; will appear at exit point if vent_on_exit is TRUE
+	var/datum/gas_mixture/gas
+	///Whether to emit gas at the exit point (disabled for mail chutes)
+	var/vent_on_exit = TRUE
+	///True if the holder is moving, otherwise inactive
+	var/active = 0
 	dir = 0
-	var/count = 1000	//! can travel 1000 steps before going inactive (in case of loops)
+	///Budget of steps the disposalholder is allowed to travel before going inactive (in case of loops)
+	var/count = 1000
 
 	var/slowed = 0 // when you move, slows you down
 
@@ -40,7 +45,7 @@
 			src.set_loc(D)
 
 		if (length(D.contents) > LOG_FLUSHING_THRESHOLD)
-			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.fingerprintslast)].")
+			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.get_last_ckey())].")
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
@@ -157,6 +162,11 @@
 		damage_pipe(5)
 		slowed++
 
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		if (src.gas && breath_request > 0)
+			return src.gas
+		..()
+
 	proc/damage_pipe(var/amount = 3)
 		var/obj/disposalpipe/P = src.loc
 		if(istype(P))
@@ -166,8 +176,9 @@
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
-		location?.assume_air(gas)  // vent all gas to turf
-		gas = null
+		if(src.gas && src.vent_on_exit)
+			location?.assume_air(gas)  // vent all gas to turf
+		src.gas = null
 		return
 
 // Disposal pipes
@@ -912,6 +923,13 @@
 	var/switch_dir = 0 //Direction of secondary port
 					//Same-tag holders are sent out this one.
 
+	attackby(obj/item/W, mob/user)
+		if(..(W, user)) return
+		if(ispulsingtool(W))
+			boutput(user, SPAN_ALERT("[src]'s mailtags can't be edited while anchored!"))
+			// This is 95% because I don't wanna copy/paste the mailtag-editing code, but also
+			// it makes it *marginally* harder to maliciously mess with mailtags
+
 	left
 		name = "mail junction"
 		icon_state = "pipe-sj1"
@@ -940,23 +958,27 @@
 
 	New()
 		..()
-		if(icon_state == "pipe-sj1")
-			switch_dir = turn(dir, -90)
-			dpdir = dir | switch_dir | turn(dir,180)
-		else if(icon_state == "pipe-sj2")
-			switch_dir = turn(dir, 90)
-			dpdir = dir | turn(dir, 90) | turn(dir,180)
-		else
-			switch_dir = turn(dir, 90)
-			dpdir = dir | turn(dir,90) | turn(dir, -90)
-		update()
-
-		if (src.mail_tag)
-			if (islist(src.mail_tag))
-				src.name = "mail junction (multiple destinations)"
+		// i didnt wanna do this but i dont see a good way to get this to work short of reworking disposal construction
+		SPAWN(0 SECONDS)
+			if (src.mail_tag)
+				if (islist(src.mail_tag))
+					if (src.mail_tag.len > 1)
+						src.name = "mail junction (multiple destinations)"
+					else
+						src.name = "mail junction ([src.mail_tag[1]])"
+				else
+					src.name = "mail junction ([src.mail_tag])"
+					src.mail_tag = params2list(src.mail_tag)
+			if(icon_state == "pipe-sj1")
+				switch_dir = turn(dir, -90)
+				dpdir = dir | switch_dir | turn(dir,180)
+			else if(icon_state == "pipe-sj2")
+				switch_dir = turn(dir, 90)
+				dpdir = dir | turn(dir, 90) | turn(dir,180)
 			else
-				src.name = "mail junction ([src.mail_tag])"
-				src.mail_tag = params2list(src.mail_tag)
+				switch_dir = turn(dir, 90)
+				dpdir = dir | turn(dir,90) | turn(dir, -90)
+			update()
 		return
 
 

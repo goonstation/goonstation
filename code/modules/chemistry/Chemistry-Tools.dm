@@ -573,6 +573,7 @@ proc/ui_describe_reagents(atom/A)
 	initial_volume = 120
 	flags = OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	default_material = "plastic"
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
@@ -746,6 +747,8 @@ proc/ui_describe_reagents(atom/A)
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	icon_state = "lid"
 	w_class = W_CLASS_TINY
+	default_material = "synthrubber_blue"
+	material_amt = 0.2
 
 	attackby(obj/item/reagent_containers/container, mob/user)
 		if (istype(container))
@@ -766,6 +769,8 @@ proc/ui_describe_reagents(atom/A)
 		if (istype(over_object, /obj/item/reagent_containers) && (over_object.is_open_container()))
 			try_adding_container(over_object, usr)
 		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel)) //barrels don't need to be open for condensers because it would be annoying I think
+			try_adding_container(over_object, usr)
+		if (istype(over_object, /obj/machinery/fluid_machinery/unary/input)) //hehe
 			try_adding_container(over_object, usr)
 
 	set_loc(newloc, storage_check)
@@ -1555,6 +1560,7 @@ proc/ui_describe_reagents(atom/A)
 /obj/item/reagent_containers/glass/vial/plastic
 	name = "plastic vial"
 	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()

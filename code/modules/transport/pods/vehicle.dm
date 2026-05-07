@@ -5,7 +5,7 @@
 	density = 1
 	flags = USEDELAY
 	anchored = ANCHORED
-	stops_space_move = 1
+	provides_grip = TRUE
 	status = REQ_PHYSICAL_ACCESS
 	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
@@ -76,6 +76,9 @@
 
 		. = ..()
 		START_TRACKING
+		// pods control own drift
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 
 
 	remove_air(amount as num)
@@ -134,8 +137,18 @@
 			actions.start(action_bar, user)
 			return
 
+		if (istype(W, /obj/item/device/key))
+			user.visible_message(SPAN_ALERT("<B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B>"), null,SPAN_ALERT("You hear a metallic scraping sound!"))
+			if(!keyed) src.name = "scratched-up [src.name]"
+			src.keyed++
+			src.add_fingerprint(user)
+			return
+
 		if (istype(W, /obj/item/ammo/bullets))
 			if (W.disposed)
+				return
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
 				return
 			var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
 			if(!main_weapon)
@@ -168,21 +181,28 @@
 				qdel(ammo)
 				return
 
-		if (istype(W, /obj/item/device/key))
-			user.visible_message(SPAN_ALERT("<B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B>"), null,SPAN_ALERT("You hear a metallic scraping sound!"))
-			if(!keyed) src.name = "scratched-up [src.name]"
-			src.keyed++
-			src.add_fingerprint(user)
-			return
-
 		if (istype(W, /obj/item/sheet))
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+				return
 			var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
 			if (istype(main_weapon,/obj/item/shipcomponent/mainweapon/constructor))
 				main_weapon.Attackby(W,user)
 				return
 
 		if (istype(W, /obj/item/tank/plasma))
-			src.open_parts_panel(user)
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+				return
+			if(src.fueltank || !src.atmostank)
+				src.open_parts_panel(user)
+			else
+				logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
+				boutput(usr, SPAN_NOTICE("You attach the [W.name] to [src.name]'s fuel supply valve."))
+				user.drop_item()
+				W.set_loc(src)
+				src.fueltank = W
+				src.myhud?.update_fuel()
 			return
 
 		..()

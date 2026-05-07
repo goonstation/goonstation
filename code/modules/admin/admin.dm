@@ -1294,6 +1294,13 @@ var/global/noir = 0
 				usr.client.cmd_admin_anvilgib(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to anvil gib a dude.")
+		if ("gravitygib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_gravitygib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to gravity gib a duder.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1571,10 +1578,13 @@ var/global/noir = 0
 
 			var/atom/A = locate(href_list["target"])
 
-			if (!A.reagents) // || !target.reagents.total_volume)
+			var/datum/reagents/reagents = A.reagents
+			if (istype(A, /obj/fluid_pipe))
+				var/obj/fluid_pipe/pipe = A
+				reagents = pipe.network.reagents
+			if (!reagents) // || !target.reagents.total_volume)
 				boutput(usr, SPAN_NOTICE("<b>[A] contains no reagents.</b>"))
 				return
-			var/datum/reagents/reagents = A.reagents
 
 			var/pick_id
 			var/pick
@@ -1605,8 +1615,8 @@ var/global/noir = 0
 			if (!amt || amt < 0)
 				return
 
-			if (A.reagents)
-				if (!A.reagents.remove_reagent(pick_id,amt))
+			if (reagents)
+				if (!reagents.remove_reagent(pick_id,amt))
 					boutput(usr, SPAN_ALERT("Failed to remove [amt] units of [pick_id] from [A.name]."))
 					return
 
@@ -2164,7 +2174,7 @@ var/global/noir = 0
 				if (!M) return
 				mod_color(M)
 			else
-				tgui_alert(usr,"You need to be at least a Administrator to modify an icon.")
+				tgui_alert(usr,"You need to be at least an Administrator to modify an icon.")
 
 		if("giveantagtoken") //Gives player a token they can redeem to guarantee an antagonist role
 			if (src.level >= LEVEL_SA)
@@ -2205,7 +2215,7 @@ var/global/noir = 0
 				if (!M) return
 				usr.client.view_save_data(M)
 			else
-				tgui_alert(usr,"You need to be at least a Administrator to view save data.")
+				tgui_alert(usr,"You need to be at least an Administrator to view save data.")
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
@@ -3156,7 +3166,7 @@ var/global/noir = 0
 								return
 
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to emag everything")
+							tgui_alert(usr,"You need to be at least an Administrator to emag everything")
 							return
 
 					if("shakecamera")
@@ -3175,7 +3185,7 @@ var/global/noir = 0
 									M.changeStatus("knockdown", 2 SECONDS)
 
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")
+							tgui_alert(usr,"You need to be at least an Administrator to shake the camera.")
 							return
 
 					if("creepifystation")
@@ -3186,55 +3196,12 @@ var/global/noir = 0
 								logTheThing(LOG_DIARY, usr, "used the Creepify Station button", "admin")
 								creepify_station()
 						else
-							tgui_alert(usr,"You need to be at least a Administrator to creepify the station.")
+							tgui_alert(usr,"You need to be at least an Administrator to creepify the station.")
 							return
 
 
-					if ("command_report_zalgo")
-						if (src.level >= LEVEL_ADMIN)
-							var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
-							input = zalgoify(input, rand(0,2), rand(0, 2), rand(0, 2))
-							if(!input)
-								return
-							var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-							input2 = zalgoify(input2, rand(0,2), rand(0, 2), rand(0, 2))
-							var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Unknown Source'", "What?", "") as null|text
-							if(!input3)
-								input3 = "Unknown Source"
-
-							if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for_by_tcl(C, /obj/machinery/communications_dish)
-									C.add_centcom_report(input2, input)
-
-								var/sound_to_play = 'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg'
-								command_alert(input, input2, sound_to_play, alert_origin = input3);
-
-								logTheThing(LOG_ADMIN, usr, "has created a command report (zalgo): [input]")
-								logTheThing(LOG_DIARY, usr, "has created a command report (zalgo): [input]", "admin")
-								message_admins("[key_name(usr)] has created a command report (zalgo)")
-
-					if ("command_report_void")
-						if (src.level >= LEVEL_ADMIN)
-							var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
-							input = voidSpeak(input)
-							if(!input)
-								return
-							var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-							var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Unknown Source'", "What?", "") as null|text
-							if(!input3)
-								input3 = "Unknown Source"
-
-							if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-								for_by_tcl(C, /obj/machinery/communications_dish)
-									C.add_centcom_report(input2, input)
-
-								var/sound_to_play = 'sound/ambience/spooky/Void_Calls.ogg'
-								command_alert(input, input2, sound_to_play, alert_origin = input3);
-
-								logTheThing(LOG_ADMIN, usr, "has created a command report (void): [input]")
-								logTheThing(LOG_DIARY, usr, "has created a command report (void): [input]", "admin")
-								message_admins("[key_name(usr)] has created a command report (void)")
-
+					if ("command_report_panel")
+						usr.client.cmd_admin_command_report_panel()
 					if ("noir")
 						if(src.level >= LEVEL_ADMIN)
 							if (noir)
@@ -3426,14 +3393,14 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=DNA;size=440x410")
 					if("fingerprints")
-						var/dat = "<B>Showing Fingerprints.</B><HR>"
+						var/dat = "<B>Showing Default Fingerprints.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
-								if(H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>[H.bioHolder.fingerprints]</td></tr>"
-								else if(!H.bioHolder.Uid)
-									dat += "<tr><td>[H]</td><td>H.bioHolder.Uid = null</td></tr>"
+								if(H.bioHolder.default_fingerprints)
+									dat += "<tr><td>[H]</td><td>[H.bioHolder.default_fingerprints.id]</td></tr>"
+								else if(!H.bioHolder.default_fingerprints)
+									dat += "<tr><td>[H]</td><td>H.bioHolder.default_fingerprints = null</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=fingerprints;size=440x410")
@@ -3943,8 +3910,7 @@ var/global/noir = 0
 		dat += {"<hr><div class='optionGroup' style='border-color:#92BB78'><b class='title' style='background:#92BB78'>Roleplaying Panel</b>
 					<A href='byond://?src=\ref[src];action=secretsfun;type=shakecamera'>Apply camera shake</A><BR>
 					<A href='byond://?src=\ref[src];action=secretsfun;type=creepifystation'>Creepify station</A><BR>
-					<A href='byond://?src=\ref[src];action=secretsfun;type=command_report_zalgo'>Command Report (Zalgo)</A><BR>
-					<A href='byond://?src=\ref[src];action=secretsfun;type=command_report_void'>Command Report (Void)</A><BR>
+					<A href='byond://?src=\ref[src];action=secretsfun;type=command_report_panel'>Command Report Panel</A><BR>
 				"}
 
 	dat += "</div>"
@@ -4188,7 +4154,7 @@ var/global/noir = 0
 
 	var/client/client = usr.client
 
-	if (client.holder.level >= LEVEL_PA)
+	if (client.holder.level >= LEVEL_SA)
 		var/chosen = get_one_match(object, use_concrete_types = FALSE)
 
 		if (chosen)
@@ -4559,6 +4525,10 @@ var/global/noir = 0
 	var/mob/new_player/M = new()
 
 	M.key = usr.client.key
+	M.adminspawned = 1
+	M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
+	M.client.player.claimed_rewards = list() // reset claimed medal rewards
+	M.mind.purchased_bank_item = null
 
 	usr.remove()
 

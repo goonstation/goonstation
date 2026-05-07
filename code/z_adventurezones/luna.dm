@@ -406,7 +406,7 @@ Contents:
 		"???",
 		"???")
 
-/obj/item/disk/data/fixed_disk/lunar
+/obj/item/disk/data/fixed_disk/hd64/lunar
 	New()
 		..()
 
@@ -433,9 +433,11 @@ Contents:
 	name = "Security computer"
 	icon_state = "datasec"
 	base_icon_state = "datasec"
-	setup_drive_type = /obj/item/disk/data/fixed_disk/lunar
-	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/lunar
+	setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive,
+			/obj/item/peripheral/network/powernet_card)
 
 /obj/item/audio_tape/lunar_01
 	New()

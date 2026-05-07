@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 import {
   Box,
@@ -23,7 +24,7 @@ import { Modal } from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 
-const getMagnetCondition = (condition) => {
+const getMagnetCondition = (condition: number) => {
   if (condition >= 95) {
     return (
       <Box inline color="good">
@@ -63,16 +64,30 @@ const getMagnetCondition = (condition) => {
   }
 };
 
+interface LinkedMagnet {
+  name: string;
+  x: number;
+  y: number;
+  z: number;
+  ref: string;
+  angle: number;
+}
+
+interface MiningEncounter {
+  name: string;
+  id: string;
+}
+
 interface MineralMagnetData {
-  isLinked;
-  linkedMagnets;
-  magnetActive;
-  magnetAutomaticMode;
-  magnetCooldownOverride;
-  magnetHealth;
-  magnetLastUsed;
-  miningEncounters;
-  time;
+  isLinked: BooleanLike;
+  linkedMagnets?: LinkedMagnet[] | null;
+  magnetActive?: BooleanLike;
+  magnetAutomaticMode?: BooleanLike;
+  magnetCooldownOverride?: BooleanLike;
+  magnetHealth?: number;
+  magnetLastUsed?: number;
+  miningEncounters?: MiningEncounter[] | null;
+  time?: number;
 }
 
 export const MineralMagnet = () => {
@@ -83,10 +98,10 @@ export const MineralMagnet = () => {
     magnetActive,
     magnetAutomaticMode,
     magnetCooldownOverride,
-    magnetHealth,
-    magnetLastUsed,
-    time,
   } = data;
+  const magnetHealth = data.magnetHealth ?? 0;
+  const magnetLastUsed = data.magnetLastUsed ?? 0;
+  const time = data.time ?? 0;
   const linkedMagnets = data.linkedMagnets || [];
   const miningEncounters = data.miningEncounters || [];
 
@@ -95,7 +110,7 @@ export const MineralMagnet = () => {
   const [viewEncounters, setViewEncounters] = useState(false);
 
   return (
-    <Window width={300} height={240}>
+    <Window width={300} height={248}>
       <Window.Content>
         <Section title="Magnet Status">
           <Box>
@@ -138,41 +153,41 @@ export const MineralMagnet = () => {
             </Button>
           }
         >
-          {(!!magnetActive || (onCooldown && !magnetCooldownOverride)) && (
-            <Dimmer fontSize={1.75} pb={2}>
-              {magnetActive ? 'Magnet Active' : 'On Cooldown'}
-            </Dimmer>
-          )}
-          <Button
-            textAlign="center"
-            color={onCooldown && magnetCooldownOverride && 'average'}
-            icon="magnet"
-            onClick={() => act('activatemagnet')}
-            fluid
-          >
-            Activate Magnet
-          </Button>
-          <Button
-            textAlign="center"
-            color={onCooldown && magnetCooldownOverride && 'average'}
-            icon="search"
-            disabled={!miningEncounters.length}
-            onClick={() => setViewEncounters(true)}
-            fluid
-          >
-            Activate telescope location
-          </Button>
+          <Box position="relative" p={0.5} mb={0.5}>
+            {(!!magnetActive || (onCooldown && !magnetCooldownOverride)) && (
+              <Dimmer fontSize={1.75}>
+                {magnetActive ? 'Magnet Active' : 'On Cooldown'}
+              </Dimmer>
+            )}
+            <Button
+              textAlign="center"
+              color={onCooldown && magnetCooldownOverride && 'average'}
+              icon="magnet"
+              onClick={() => act('activatemagnet')}
+              fluid
+            >
+              Activate Magnet
+            </Button>
+            <Button
+              textAlign="center"
+              color={onCooldown && magnetCooldownOverride && 'average'}
+              icon="search"
+              disabled={!miningEncounters.length}
+              onClick={() => setViewEncounters(true)}
+              fluid
+            >
+              Activate telescope location
+            </Button>
+          </Box>
           <Button.Checkbox
             checked={magnetCooldownOverride}
             onClick={() => act('overridecooldown')}
-            style={{ zIndex: '1' }}
           >
             Override Cooldown
           </Button.Checkbox>
           <Button.Checkbox
             checked={magnetAutomaticMode}
             onClick={() => act('automode')}
-            style={{ zIndex: '1' }}
           >
             Automatic Mode
           </Button.Checkbox>

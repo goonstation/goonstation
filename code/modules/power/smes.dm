@@ -28,6 +28,7 @@ TYPEINFO(/obj/machinery/power/smes)
 	icon_state = "smes"
 	density = 1
 	anchored = ANCHORED
+	provides_grip = TRUE
 	requires_power = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL | DECON_CROWBAR | DECON_WELDER
 	var/output = 30000

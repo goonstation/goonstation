@@ -229,6 +229,10 @@
 		unique = 1
 		change = 2
 
+		onAdd(optional=100)
+			. = ..()
+			change = 2 * (optional/100)
+
 	staminaregen/darkness
 		id = "darkness_stam_regen"
 		name = "Dark vigor"
@@ -1257,8 +1261,9 @@
 		getTooltip()
 			. = "Your stamina max is increased by [change]."
 
-		onAdd(optional=null)
+		onAdd(optional=100)
 			. = ..()
+			src.change = 10 * (optional/100)
 			if(hascall(owner, "add_stam_mod_max"))
 				owner:add_stam_mod_max("fitness_max", change)
 
@@ -1266,6 +1271,7 @@
 			. = ..()
 			if(hascall(owner, "remove_stam_mod_max"))
 				owner:remove_stam_mod_max("fitness_max")
+
 
 	handcuffed
 		id = "handcuffed"
@@ -1305,6 +1311,12 @@
 			. = ..()
 			if (ishuman(owner))
 				H = owner
+			APPLY_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE, src)
+
+		onRemove()
+			. = ..()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_ATOM_GRAVITY_IMMUNE, src)
+
 
 	possessing
 		id = "possessing"
@@ -2199,7 +2211,7 @@
 		if(!ishuman(A))
 			. = FALSE
 		// I'd LIKE to put this check here, but proc/find_ailment_by_type and is a bit too inefficient for my comfort
-		// and this will be applied on combat hit. The ailments should use a assoc list for Constant lookup time or something...
+		// and this will be applied on combat hit. The ailments should use an assoc list for Constant lookup time or something...
 		// if (isliving(A))
 		// 	var/mob/living/L = A
 		// 	if (L.find_ailment_by_type(/datum/ailment/disease/necrotic_degeneration/can_infect_more))
@@ -2866,9 +2878,10 @@
 
 	onRemove()
 		..()
-		if (src.added_accent)
-			var/mob/living/M = src.owner
-			M.bioHolder.RemoveEffectInstance(src.added_accent)
+		SPAWN(0)
+			if (src.added_accent)
+				var/mob/living/M = src.owner
+				M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_ATOM_SAY)
 
 /datum/statusEffect/graffiti
@@ -3334,23 +3347,28 @@
 		id = "art_displacement_curse"
 		var/mob/living/carbon/human/original_body
 		var/mob/living/intangible/art_curser_displaced_soul/soul
+		var/cursetype = "art_curser_displaced_soul"
+		var/gene = FALSE // For the gene that uses this
 		outputs_desc = FALSE
 
 		onAdd()
 			..()
-			src.soul = new(get_turf(src.owner), src.owner)
+			src.soul = new src.soul(get_turf(src.owner), src.owner)
 			var/mob/living/carbon/human/H = src.owner
 			H.mind.transfer_to(soul)
 			src.original_body = H
-			src.soul.setStatus("art_curser_displaced_soul", src.duration, src.original_body)
+			src.soul.setStatus(cursetype, src.duration, src.original_body)
 
 		onUpdate()
 			..()
 			if (QDELETED(src.original_body) || isdead(src.original_body))
-				src.remove_self()
+				if(!gene)
+					src.remove_self()
+				else
+					owner.delStatus(src.id)
 
 		onRemove()
-			src.soul.delStatus("art_curser_displaced_soul")
+			src.soul.delStatus(cursetype)
 			if (QDELETED(src.original_body) || isdead(src.original_body))
 				boutput(src.soul, SPAN_ALERT("<b>Your body has died!</b>"))
 			if (!QDELETED(src.original_body))
@@ -3358,6 +3376,14 @@
 			QDEL_NULL(src.soul)
 			src.original_body = null
 			..()
+
+		gene
+			id = "ghost_walk_effect"
+			duration = 30
+			cursetype = "ghost_walk_soul"
+			desc = "Your body is vacant with the soul wandering." // Shouldn't be seen by the user, but ghosts could I guess.
+			soul = /mob/living/intangible/art_curser_displaced_soul/gene
+			gene = TRUE
 
 	displaced_soul
 		id = "art_curser_displaced_soul"
@@ -3380,6 +3406,14 @@
 				src.outputs_removal_msg = FALSE
 			src.original_body = null
 			..()
+
+		gene
+			id = "ghost_walk_soul"
+			name = "Spectral Walker"
+			desc = "You've ascended to the spectral plane for a short duration. Use the ability to return early."
+			extra_desc = null
+			removal_msg = "You reanchor your soul."
+
 
 	light
 		id = "art_light_curse"
@@ -3508,12 +3542,17 @@
 		if (ismob(owner) && !QDELETED(owner))
 			var/mob/mob_owner = owner
 			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+			APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+			var/image/stasis_image = owner.SafeGetOverlayImage("stasis_field", 'icons/obj/ship.dmi', "tractor", FLOAT_LAYER)
+			owner.AddOverlays(stasis_image, "stasis_field")
 		..()
 
 	onRemove()
 		if (ismob(owner) && !QDELETED(owner))
 			var/mob/mob_owner = owner
 			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+			REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+			owner.ClearSpecificOverlays("stasis_field")
 		..()
 
 /datum/statusEffect/silicon_radiation
@@ -3908,6 +3947,48 @@
 		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/implants_disabled
+	id = "implants_disabled"
+	name = "Implants overloaded"
+	desc = "Your implants are painfully overloaded!"
+	maxDuration = 60 SECONDS
+	icon_state = "implants_disabled"
+	unique = TRUE
+
+	var/list/disabled_implants = list()
+
+	preCheck(mob/living/M)
+		return ..() && istype(M) && length(M.implant)
+
+	onAdd()
+		..()
+		src.owner.UpdateParticles(new /particles/rack_spark, src.id)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				implant.deactivate()
+				src.disabled_implants |= implant
+		if (ishuman(src.owner))
+			var/image/glow = image('icons/mob/human.dmi', "implants_disabled")
+			glow.plane = PLANE_SELFILLUM
+			src.owner.UpdateOverlays(glow, "implants_disabled")
+
+	onChange(optional)
+		if (isliving(src.owner))
+			var/mob/living/living_owner = src.owner
+			for (var/obj/item/implant/implant as anything in living_owner.implant)
+				if (implant.online)
+					implant.deactivate()
+					src.disabled_implants |= implant
+
+	onRemove()
+		..()
+		src.owner.UpdateParticles(null, src.id)
+		for (var/obj/item/implant/implant as anything in src.disabled_implants)
+			if (!QDELETED(implant))
+				implant.activate()
+		src.owner.UpdateOverlays(null, "implants_disabled")
 
 /datum/statusEffect/therapy_zone
 	id = "therapy_zone"

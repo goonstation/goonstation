@@ -219,7 +219,7 @@
 /turf/variableTurf/clear,
 /area/space)
 "jd" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},
@@ -349,9 +349,8 @@
 /area/listeningpost/general)
 "pt" = (
 /obj/table/wood/auto,
-/obj/item/cigpacket{
-	pixel_x = 6;
-	pixel_y = 7
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
 	},
 /turf/simulated/floor/grey/corner{
 	dir = 8
@@ -650,14 +649,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Di" = (
-/obj/storage/crate,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/item/fuel_pellet/erebite,
-/obj/machinery/light_switch/west,
+/obj/machinery/gravity_tether/multi_area/listening_post,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/power)
 "DB" = (
@@ -679,6 +671,13 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/storage/crate,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
+/obj/item/fuel_pellet/erebite,
 /turf/simulated/floor/plating/jen,
 /area/listeningpost/power)
 "Fq" = (
@@ -913,6 +912,10 @@
 /obj/item/device/radio/intercom/brig{
 	pixel_x = 1
 	},
+/obj/item/cigpacket{
+	pixel_x = 6;
+	pixel_y = 7
+	},
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
@@ -947,6 +950,7 @@
 /obj/cable/black{
 	icon_state = "2-4"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/caution/north,
 /area/listeningpost/power)
 "Sw" = (

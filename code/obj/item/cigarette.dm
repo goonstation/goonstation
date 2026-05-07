@@ -355,7 +355,8 @@
 		if (ismob(src.loc))
 			logTheThing(LOG_BOMBING, null, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
 		else
-			logTheThing(LOG_BOMBING, src.fingerprintslast, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			var/last_ckey = src.get_last_ckey()
+			logTheThing(LOG_BOMBING, last_ckey, "A trick cigarette explodes at [log_loc(src)]. Last touched by [replace_if_false(last_ckey, "None")].")
 
 		if (istype(src.loc,/obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = src.loc
@@ -553,6 +554,9 @@
 			new src.cigtype(src)
 
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (!can_act(usr) || !in_interact_range(usr, src) || !in_interact_range(usr, over_location) || !in_interact_range(over_location, src) || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
+			return ..()
+
 		if ((istype(over_object, /obj/table) || \
 					(isturf(over_object) && total_density(over_location) < 1)) && \
 					in_interact_range(over_object,src) && \
@@ -563,7 +567,8 @@
 			src.UpdateIcon()
 			if (!islist(params)) params = params2list(params)
 			if (params) params["dumped"] = 1
-		else ..()
+		else
+			return ..()
 
 	should_place_on(obj/target, params)
 		if (istype(target, /obj/table) && params && params["dumped"])

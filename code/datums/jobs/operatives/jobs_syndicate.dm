@@ -10,6 +10,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 	add_to_manifest = FALSE
 	//Always a generic antagonist, don't allow normal antag roles.
 	can_roll_antag = FALSE
+	var/antag_role = ROLE_SYNDICATE_AGENT
 
 	slot_back = list(/obj/item/storage/backpack/syndie)
 	slot_jump = list(/obj/item/clothing/under/misc/syndicate)
@@ -29,9 +30,10 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 			var/obj/item/card/id/ID = M.get_id()
 			if(istype(ID))
 				ID.icon_state = "id_syndie" //Syndie ID normally starts with basic sprite
+				ID.keep_icon = TRUE
 		SPAWN(2) //Ghost respawn panel has a SPAWN(1) that clears all antag roles. Apply specialist role if no other role was picked
 			if(!M.mind?.is_antagonist())
-				M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, src.name, source = ANTAGONIST_SOURCE_ADMIN)
+				M.mind?.add_generic_antagonist(src.antag_role, src.name, source = ANTAGONIST_SOURCE_ADMIN)
 
 /datum/job/special/syndicate/weak
 	name = "Junior Syndicate Operative"
@@ -56,6 +58,18 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_back = list(/obj/item/storage/backpack/syndie/tactical)
 	slot_lhan = list(/obj/item/remote/syndicate_teleporter) //To get off the cairngorm with
 	slot_rhan = list(/obj/item/tank/jetpack/syndicate) //To get off the listening post with
+
+/datum/job/special/syndicate/specialist/commander
+	name = "Syndicate Commander"
+	antag_role = ROLE_SYNDICATE_COMMANDER
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat)
+	slot_poc1 = list(/obj/item/pinpointer/disk)
+	slot_ears = list(/obj/item/device/radio/headset/syndicate/leader)
+	slot_belt = list(/obj/item/swords_sheaths/nukeop)
+	slot_card = /obj/item/card/id/syndicate/commander
+	items_in_backpack = list(/obj/item/storage/box/capella,
+							/obj/item/dagger/syndicate)
 
 /datum/job/special/syndicate/specialist/demo
 	name = "Syndicate Grenadier"
@@ -90,18 +104,21 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist)
 	slot_poc1 = list(/obj/item/storage/pouch/tranq_pistol_dart)
-	slot_lhan = list(/obj/item/storage/backpack/chameleon)
-	items_in_backpack = list(/obj/item/gun/kinetic/tranq_pistol,
+	slot_back = list(/obj/item/storage/backpack/chameleon/no_belt)
+	slot_belt = list(/obj/item/storage/belt/chameleon/tactical)
+	items_in_belt = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/device/chameleon,
-		/obj/item/remote/syndicate_teleporter) //Because their hands are filled with their chameleon gear
+		/obj/item/device/chameleon)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		var/obj/item/remote/chameleon/remote = locate(/obj/item/remote/chameleon) in M
 		M.stow_in_available(remote)
+		var/obj/item/storage/belt/chameleon/chambelt = M.belt
+		if(istype(chambelt))
+			remote.connected_belt = chambelt
 
 /datum/job/special/syndicate/specialist/scout
 	name = "Syndicate Scout"

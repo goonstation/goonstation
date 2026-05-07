@@ -11,7 +11,7 @@
 
 			var/mult = get_multiplier()
 
-			if (!isrestrictedz(T.z) && H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
+			if (!isrestrictedz(T.z) && H.loc == T && T.temp_flags & HAS_KUDZU && H.decomp_stage < DECOMP_STAGE_SKELETONIZED) //only infect if on the floor
 				H.infect_kudzu()
 
 			if (!H.mutantrace.decomposes)
@@ -63,7 +63,7 @@
 			// Devera-class interdictor: prohibit miasma formation
 			var/miasma_blocked = FALSE
 			for_by_tcl(IX, /obj/machinery/interdictor)
-				if (IX.expend_interdict(15,src,TRUE,ITDR_DEVERA))
+				if (IX.expend_interdict(15,src,TRUE,ITDR_DEVERA,TRUE))
 					miasma_blocked = TRUE
 					break
 

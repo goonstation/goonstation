@@ -319,6 +319,12 @@ client/proc/toggle_ghost_respawns()
 
 		boutput(usr, SPAN_NOTICE("Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]"))
 
+	if(isdead(usr))
+		if (isadminghost(usr))
+			get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
+		else
+			get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
+
 	logTheThing(LOG_ADMIN, usr, "has set player mode to [(player_mode ? "On" : "Off")]")
 	logTheThing(LOG_DIARY, usr, "has set player mode to [(player_mode ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has set player mode to [(player_mode ? "On" : "Off")]")

@@ -520,6 +520,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 	icon_state = "atmos"
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/transception_control
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -689,8 +690,8 @@ TYPEINFO(/obj/machinery/transception_pad)
 					if("send")
 						src.attempt_transceive()
 					if("receive")
-						var/sigindex = signal.data["data"]
-						if(isnum_safe(sigindex))
+						var/sigindex = text2num_safe(signal.data["data"])
+						if (isnum_safe(sigindex))
 							src.attempt_transceive(sigindex)
 
 

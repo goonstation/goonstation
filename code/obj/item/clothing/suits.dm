@@ -132,10 +132,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 /obj/item/clothing/suit/hoodie/random
 	New()
-		if (prob(50))
-			hcolor = null
-		else
-			hcolor = "blue"
+		src.hcolor = pick(null, "blue", "darkblue", "white", "pink", "blank", "grey", "dullgrey", "magenta", "green", "yellow", "red")
 		..()
 
 /obj/item/clothing/suit/hoodie/large
@@ -184,6 +181,40 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 		item_state = "hoodieL-purple"
 		hcolor = "purple"
 
+/* ======== Raincoats ======== */
+/obj/item/clothing/suit/raincoat
+	name = "raincoat"
+	desc = "Perfect for frolicking in the rain. Wait, does space even have rain?"
+	icon = 'icons/obj/clothing/overcoats/hoods/raincoats.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_raincoats.dmi'
+	icon_state = "raincoat-yellow"
+	item_state = "raincoat-yellow"
+	body_parts_covered = TORSO|ARMS
+	var/rcolor = "yellow"
+	New()
+		..()
+		setProperty("chemprot", 10)
+		src.AddComponent(/datum/component/toggle_hood, hood_style="raincoat[src.rcolor ? "-[rcolor]" : null]")
+		src.icon_state = "raincoat[src.rcolor ? "-[rcolor]" : null]"
+		src.item_state = "raincoat[src.rcolor ? "-[rcolor]" : null]"
+
+	green
+		name = "green raincoat"
+		icon_state = "raincoat-green"
+		icon_state = "raincoat-green"
+		rcolor = "green"
+
+	blue
+		name = "blue raincoat"
+		icon_state = "raincoat-blue"
+		icon_state = "raincoat-blue"
+		rcolor = "blue"
+
+	purple
+		name = "purple raincoat"
+		icon_state = "raincoat-purple"
+		icon_state = "raincoat-purple"
+		rcolor = "purple"
 /* ======== Jackets ======== */
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)
@@ -348,9 +379,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 
 		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		src.armor()
-		if(!src.fingerprints)
-			src.fingerprints = list()
-		src.fingerprints |= W.fingerprints
+		W.forensic_holder.copy_to(src.forensic_holder)
 		qdel(W)
 
 		if (ismob(src.loc))
@@ -728,6 +757,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 		else
 			. = "A bunch of purple glitter and cheap plastic glued together in a sad attempt to make a stylish lab coat."
 
+/obj/item/clothing/suit/labcoat/pharmacist
+	name = "pharmacist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pharmacist."
+	icon_state = "PHlabcoat"
+	item_state = "PHlabcoat"
+	coat_style = "PHlabcoat"
+
+	april_fools
+		icon_state = "PHlabcoat-alt"
+		item_state = "PHlabcoat-alt"
+		coat_style = "PHlabcoat-alt"
+
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
@@ -900,6 +941,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			src.item_state = src.icon_state
 			see_face = FALSE
 			src.c_flags = initial(src.c_flags)
+			if (src.eyeholes)
+				src.c_flags &= ~COVERSEYES
 			wear_layer = MOB_OVER_TOP_LAYER
 
 	proc/cut_eyeholes()
@@ -1822,6 +1865,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A traditional blue wizard's robe. It lacks all the stars and moons and stuff on it though."
 	icon_state = "wizard"
 	item_state = "wizard"
+	c_flags = SPACEWEAR
 	magical = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
@@ -1914,6 +1958,12 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "wintercoat-genetics"
 	item_state = "wintercoat-genetics"
 	coat_style = "wintercoat-genetics"
+
+/obj/item/clothing/suit/wintercoat/pharmacist
+	name = "pharmacist winter coat"
+	icon_state = "wintercoat-pharma"
+	item_state = "wintercoat-pharma"
+	coat_style = "wintercoat-pharma"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"

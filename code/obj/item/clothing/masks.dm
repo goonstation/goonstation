@@ -27,6 +27,19 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 2)
 
+	equipped(mob/user, slot)
+		. = ..()
+		if ((slot != SLOT_WEAR_MASK) || !src.vchange)
+			return
+		for(var/modifier in src.vchange.speech_modifiers)
+			user.ensure_speech_tree().AddSpeechModifier(modifier)
+
+	unequipped(mob/user)
+		if ((src.equipped_in_slot == SLOT_WEAR_MASK) && src.vchange)
+			for(var/modifier in src.vchange.speech_modifiers)
+				user.ensure_speech_tree().RemoveSpeechModifier(modifier)
+		. = ..()
+
 /obj/item/clothing/mask/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/voice_changer))
 		if (src.see_face)
@@ -44,6 +57,9 @@
 			src.vchange = W
 			W.set_loc(src)
 			user.u_equip(W)
+			if(user.get_slot_from_item(src) == SLOT_WEAR_MASK)
+				for(var/modifier in src.vchange.speech_modifiers)
+					user.ensure_speech_tree().AddSpeechModifier(modifier)
 			return
 	else if (issnippingtool(W))
 		if (src.vchange)
@@ -56,6 +72,9 @@
 				return
 			user.show_text("You remove [src.vchange] from [src].", "green")
 			user.put_in_hand_or_drop(src.vchange)
+			if(user.get_slot_from_item(src) == SLOT_WEAR_MASK)
+				for(var/modifier in src.vchange.speech_modifiers)
+					user.ensure_speech_tree().RemoveSpeechModifier(modifier)
 			src.vchange = null
 			return
 		else
@@ -277,6 +296,7 @@ TYPEINFO(/obj/item/voice_changer)
 	icon_state = "voicechanger"
 	is_syndicate = 1
 	var/permanent = FALSE
+	var/speech_modifiers = list(SPEECH_MODIFIER_VOICE_CHANGER)
 	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
 
 /obj/item/voice_changer/permanent
@@ -438,7 +458,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		. = ..()
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_WEAR_MASK)
-			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
+			if ( user.mind && user.traitHolder?.hasTrait("training_clown") && istraitor(user) )
 				src.cant_other_remove = 1
 				src.cant_self_remove = 0
 			else
@@ -478,7 +498,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				src.victim.emote("laugh")
 
 	afterattack(atom/target, mob/user, reach, params)
-		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
+		if ( reach <= 1 && user.traitHolder?.hasTrait("training_clown") && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
@@ -545,6 +565,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
+	default_material = "plastic"
 	var/bee = FALSE
 	var/randcol
 
@@ -607,10 +628,10 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		else if (istype(W,/obj/item/cable_coil/))
 			boutput(user, SPAN_NOTICE("You attach the cable to the mask. Looks like you can wear it now."))
 			var/obj/item/cable_coil/C = W
-			C.use(1)
+			if(!C.use(1))
+				return
 			var/obj/item/clothing/mask/paper/M = new /obj/item/clothing/mask/paper(src.loc)
 			user.put_in_hand_or_drop(M)
-			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
 			if (src.color)
 				M.color = src.color
 			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, M, user)
@@ -887,3 +908,26 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	icon_state = "burnedcultmask"
 	wear_layer = MOB_OVER_TOP_LAYER
 	see_face = FALSE
+
+// Clown nose!!
+
+/obj/item/clothing/mask/clown_nose
+	name = "clown nose"
+	desc = "A classic red clown nose. It even honks!"
+	icon_state = "clown_nose"
+	item_state = "clown_nose"
+	see_face = TRUE
+	c_flags = null
+
+	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
+	var/volume = 50
+	var/randomized_pitch = 1
+
+	proc/honk_nose(mob/user as mob)
+		if (ON_COOLDOWN(src, "clown_nose", 10 SECONDS))
+			return 1
+		src.add_fingerprint(user)
+		user?.visible_message("<B>[user]</B> honks the [src.name]!")
+		playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+		return 0
+

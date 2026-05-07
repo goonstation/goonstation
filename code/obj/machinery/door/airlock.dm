@@ -87,6 +87,9 @@ var/global/list/cycling_airlocks = list()
 		if (!isnull(A))
 			src.name = A.name
 	src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle bolts", PROC_REF(mech_toggle_lock))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"bolt", PROC_REF(mech_lock))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"unbolt", PROC_REF(mech_unlock))
 	START_TRACKING
 
 
@@ -103,6 +106,43 @@ var/global/list/cycling_airlocks = list()
 	if (src.no_access) //nope :)
 		return 0
 	.= ..()
+
+/obj/machinery/door/airlock/try_mech_signal(var/datum/mechanicsMessage/input)
+	if (!src.arePowerSystemsOn() || (src.status & NOPOWER))
+		. = DOOR_MECHCOMP_FAILED
+	else
+		. = ..()
+	if (. != DOOR_MECHCOMP_DENIED)
+		return
+	if (!src.requiresID())
+		return DOOR_MECHCOMP_SUCCESS
+	var/access_code = text2num(input.signal)
+	if (src.net_access_code == access_code)
+		return DOOR_MECHCOMP_SUCCESS
+	else
+		if(!ON_COOLDOWN(src, "mechcomp_play_deny", 50)) // 5 second cooldown seems reasonable
+			src.play_deny()
+			// solely to make it not-trivial to make a machine that spams the loud-as-fuck deny sound
+		else if (src.density) //only play if it's closed
+			play_animation("deny")
+
+
+/obj/machinery/door/airlock/proc/mech_lock(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(!src.locked)
+			src.set_locked()
+
+/obj/machinery/door/airlock/proc/mech_unlock(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(src.locked)
+			src.set_unlocked()
+
+/obj/machinery/door/airlock/proc/mech_toggle_lock(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(src.locked)
+			src.set_unlocked()
+		else
+			src.set_locked()
 
 // ================= airlock wire panel procs ==================
 
@@ -774,13 +814,15 @@ var/global/list/cycling_airlocks = list()
 	return
 
 /obj/machinery/door/airlock/proc/interact_panel(mob/user)
-	if (!src.panel_open)
+	src.panel_open = !src.panel_open
+	if (src.panel_open)
 		user.visible_message(SPAN_ALERT("[user] opens the maintenance panel on \the [src.name]."))
 		logTheThing(LOG_STATION, user, "opens the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
+		ui_interact(user)
+		interact_particle(user,src)
 	else
 		user.visible_message(SPAN_ALERT("[user] closes the maintenance panel on \the [src.name]."))
 		logTheThing(LOG_STATION, user, "closes the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
-	src.panel_open = !(src.panel_open)
 	tgui_process.update_uis(src)
 	src.UpdateIcon()
 	playsound(src.loc, 'sound/items/screwdriver2.ogg', 25, TRUE)
@@ -884,7 +926,7 @@ var/global/list/cycling_airlocks = list()
 	return 0
 
 /obj/machinery/door/airlock/autoclose()
-	if (src.aiControlDisabled != 1)
+	if (!src.isWireCut(AIRLOCK_WIRE_AI_CONTROL))
 		if(!src.welded)
 			close(0, 1)
 		else

@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/obj/space_phoenix_ice_wall)
 	layer = TURF_LAYER
 	default_material = "ice"
 	mat_changename = FALSE
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	var/hits_left = 3
 
 	New()

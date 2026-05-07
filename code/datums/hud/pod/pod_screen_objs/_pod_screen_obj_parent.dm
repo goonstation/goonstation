@@ -26,6 +26,10 @@
 		boutput(user, SPAN_ALERT("Not when you are incapacitated or restrained."))
 		return
 
+	if (isghostcritter(user))
+		boutput(user, SPAN_ALERT("You cannot operate such a complicated machine!"))
+		return
+
 	src.on_click(user)
 	src.pod_hud.update_states()
 

@@ -334,6 +334,8 @@
 		if (src.is_sealed)
 			is_sealed = 0
 			src.set_open_container(TRUE)
+			src.desc += " Its seal has been opened."
+			tooltip_rebuild = TRUE
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE
@@ -343,7 +345,7 @@
 				src.reagents.reaction(user)
 				src.reagents.clear_reagents()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
+				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediately sprayed with its contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
 			else
 				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return
@@ -539,7 +541,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 	babel_blast
 		name = "Grones Soda Mountain Grones Babel Blast flavor" //by warcrimes
 		label = "babel"
-		initial_reagents = (list("cola"=20, "suomium"=5, "quebon"=5, "swedium"=5, "caledonium"=5, "worcestershire_sauce"=5))
+		initial_reagents = (list("cola"=20, "suomium"=5, "quebon"=5, "swedium"=5, "caledonium"=5, "yorkshire_sauce"=5))
 
 	jungle_juice
 		name = "Grones Soda Jammin' Jambalaya Jungle Juice flavor" //by Camryn Buttes
@@ -547,7 +549,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 		initial_reagents = (list("cola"=20, "strawberry_milk"=1, "ricewine"=1, "boorbon"=1, "diesel"=1, "irishcoffee"=1,
 		"vanilla"=1, "harlow"=1, "espressomartini"=1, "ectocooler"=1, "bread"=1, "sarsaparilla"=1, "eggnog"=1,
 		"chocolate"=1, "guacamole"=1, "salt"=1, "gravy"=1, "mashedpotatoes"=1, "msg"=1, "mugwort"=1, "juice_cran"=1,
-		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "worcestershire_sauce"=1, "fakecheese"=1,
+		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "yorkshire_sauce"=1, "fakecheese"=1,
 		"capsaicin"=1, "paper"=1, "chalk"=1)) //pain; a little of everything
 
 /obj/item/reagent_containers/food/drinks/ddpumpkinspicelatte
@@ -604,7 +606,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 				src.initial_reagents["suomium"] = 2
 				src.initial_reagents["swedium"] = 2
 				src.initial_reagents["innitium"] = 2
-				src.initial_reagents["worcestershire_sauce"] = 2
+				src.initial_reagents["yorkshire_sauce"] = 2
 			if (6)
 				src.name += "- SUPER SPICED Pumpkin Latte"
 				src.desc = {"\"Discount Dan's is not responsible for any ignition, incineration,

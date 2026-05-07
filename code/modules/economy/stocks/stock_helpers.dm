@@ -1,16 +1,3 @@
-
-/// Uppercases first letter
-/proc/ucfirst(str)
-	return "[uppertext(copytext(str, 1))][copytext(str, 2)]"
-
-/// Uppercases first letter of every word
-/proc/ucfirsts(str)
-	var/list/split = splittext(str, " ")
-	. = list()
-	for (var/P in split)
-		. += ucfirst(P)
-	. = jointext(., " ")
-
 var/global/list/FrozenAccounts = list()
 
 /proc/list_frozen()

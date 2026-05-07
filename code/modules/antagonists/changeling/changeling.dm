@@ -39,6 +39,7 @@
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/buttcrab)
 		src.ability_holder.addAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.addAbility(/datum/targetable/changeling/give_control)
+		src.ability_holder.addAbility(/datum/targetable/changeling/prepare_headspider)
 
 		if(istype(src.owner.current, /mob/living))
 			var/mob/living/L = src.owner.current
@@ -67,6 +68,7 @@
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/buttcrab)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/give_control)
+		src.ability_holder.removeAbility(/datum/targetable/changeling/prepare_headspider)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/changeling)
 
 		if(istype(src.owner.current, /mob/living))

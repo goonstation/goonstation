@@ -310,11 +310,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/listeningpost/vestibule)
 "uX" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
-	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
-	id = "Sleeper_Access";
-	name = "Weather Satellite"
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle/red,
 /area/listeningpost/syndicate_teleporter)
 "wD" = (
@@ -517,6 +513,15 @@
 /obj/machinery/power/apc/autoname_north/hardened,
 /turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/listeningpost/barracks)
+"LH" = (
+/obj/table/syndicate/auto,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost/general)
 "LU" = (
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
@@ -590,7 +595,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Rk" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	tag = "icon-sink (NORTH)"
 	},
@@ -1255,7 +1260,7 @@ XJ
 yA
 yA
 yA
-yA
+LH
 VN
 ow
 ow

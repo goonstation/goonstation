@@ -83,6 +83,11 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeY = 9
 	prefabPath = "assets/maps/allocated/phoenix_nest.dmm"
 
+/datum/mapPrefab/allocated/salvager_local
+	prefabSizeX = 31
+	prefabSizeY = 33
+	prefabPath = "assets/maps/allocated/salvager_local.dmm"
+
 /datum/mapPrefab/allocated/syndicate_hideout
 	prefabSizeX = 13
 	prefabSizeY = 12

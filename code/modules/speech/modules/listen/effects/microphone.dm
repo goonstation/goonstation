@@ -6,6 +6,10 @@
 	if (!istype(microphone) || !microphone.on || !CAN_RELAY_MESSAGE(message, SAY_RELAY_MICROPHONE))
 		return
 
+	// If held, the microphone must be in the speaker's active hand to receive the message.
+	if (ismob(microphone.loc) && (astype(message.original_speaker, /mob)?.equipped() != microphone))
+		return
+
 	var/feedback = FALSE
 	var/cause_fault = FALSE
 	var/list/obj/machinery/loudspeaker/loudspeakers = list()

@@ -51,7 +51,6 @@
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
@@ -516,6 +515,7 @@
 	icon_state = "hardhat0"
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
+	c_flags = null
 	var/on = 0
 	var/datum/component/loctargeting/simple_light/light_dir
 
@@ -658,6 +658,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
 	item_state = "camhat"
+	c_flags = null
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = CAMERA_NETWORK_PUBLIC
@@ -833,6 +834,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	icon_state = "siren0"
 	item_state = "siren"
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
+	c_flags = null
 	var/weeoo_in_progress = 0
 	var/datum/light/light
 
@@ -1173,7 +1175,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 
 /obj/item/clothing/head/helmet/captain
 	name = "captain's helmet"
-	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriguing shade of green befitting of a captain"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in an intriguing shade of green befitting of a captain"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"

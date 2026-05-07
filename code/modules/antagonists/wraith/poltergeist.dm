@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/mob/intangible/poltergeist
 	id = ROLE_POLTERGEIST
 	display_name = "poltergeist"
+	antagonist_icon = "wraithsummon"
 	mob_path = /mob/living/intangible/wraith/poltergeist
 	remove_on_death = TRUE
 	has_info_popup = FALSE

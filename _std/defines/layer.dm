@@ -15,15 +15,17 @@
 #define FLOOR_EQUIP_LAYER1 	(TURF_LAYER+0.3)
 #define FLOOR_EQUIP_LAYER2 	(TURF_LAYER+0.31)
 #define AI_RAIL_LAYER 		(TURF_LAYER+0.4)
+#define UNDERFLOOR_MACHINE	(TURF_LAYER+0.5)
 #define TURF_EFFECTS_LAYER 	(TURF_LAYER+0.8)
 #define GRILLE_LAYER 		(TURF_LAYER+0.9)
 #define COG2_WINDOW_LAYER 	(TURF_LAYER+0.95)
 
 // More specific obj layers
 // OBJ_LAYER - 3
-#define SUB_TAG_LAYER		(OBJ_LAYER - 0.03) //! Graffiti that's been sprayed over sits here
-#define TAG_LAYER			(OBJ_LAYER - 0.02) //! Graffiti layer for gangs, this is the topmost (ie. most recent) tag on a turf
-#define STORAGE_LAYER		(OBJ_LAYER - 0.01) // Keep lockers etc below items
+#define SUB_TAG_LAYER		(OBJ_LAYER - 0.04) //! Graffiti that's been sprayed over sits here
+#define TAG_LAYER			(OBJ_LAYER - 0.03) //! Graffiti layer for gangs, this is the topmost (ie. most recent) tag on a turf
+#define DOOR_LAYER			(OBJ_LAYER - 0.02) // Keep doors below storage objects
+#define STORAGE_LAYER		(OBJ_LAYER - 0.01) // Keep storage objects below items
 #define ABOVE_OBJ_LAYER 	(OBJ_LAYER + 0.01) // For objects that should generally layer above other objects
 
 // Mob clothing and effect layers

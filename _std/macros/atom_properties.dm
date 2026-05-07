@@ -330,6 +330,10 @@ To remove:
 ///for tracking if a borg/cyborg frame was a roundstart one, for stats purposes
 #define PROP_ATOM_ROUNDSTART_BORG(x) x("rounstart_borg", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_ART_FISSURE_CORROSION_COUNT(x) x("art_fissure_corrosion_count", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+/// Is the atom immune to gravity
+#define PROP_ATOM_GRAVITY_IMMUNE(x) x("gravity_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+/// Does this atom make things inside it immune to gravity per-tick effects?
+#define PROP_ATOM_GRAVITY_IMMUNE_INSIDE(x) x("gravity_immune_inside", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 #define PROP_ATOM_LUCK(x) x("luck", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
