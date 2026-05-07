@@ -718,9 +718,9 @@
 /area/listeningpost/general)
 "MN" = (
 /obj/table/auto,
-/obj/item/device/t_scanner,
-/obj/item/wrench,
-/obj/item/mining_tools/pick,
+/obj/random_item_spawner/spacesuit,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
@@ -887,9 +887,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "VQ" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
+/obj/item/tank/jetpack,
 /obj/machinery/light/small,
 /obj/cable/black{
 	icon_state = "1-4"

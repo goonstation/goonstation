@@ -427,9 +427,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
+/obj/rack,
+/obj/item/tank/jetpack,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -490,8 +489,10 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/item/mining_tool/powered/pickaxe,
-/obj/table/auto,
+/obj/random_item_spawner/spacesuit,
+/obj/item/clothing/mask/breath,
+/obj/rack,
+/obj/item/tank/air,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -593,6 +594,12 @@
 	dir = 10
 	},
 /area/listeningpost/general)
+"BB" = (
+/obj/machinery/computer/announcement/syndicate{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/break_room)
 "BH" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -704,6 +711,12 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost/power)
+"Ht" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/break_room)
 "HH" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/security{
@@ -985,6 +998,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/plating/jen,
 /area/listeningpost/power)
 "TI" = (
@@ -1656,7 +1670,7 @@ Sw
 GA
 qR
 qR
-ig
+Ht
 cC
 kw
 fW
@@ -1690,7 +1704,7 @@ Sw
 GA
 GA
 qR
-ig
+BB
 cC
 as
 fW

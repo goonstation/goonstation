@@ -126,12 +126,7 @@
 /obj/item/clothing/mask/breath{
 	pixel_x = -4
 	},
-/obj/item/clothing/head/helmet/space/syndicate{
-	pixel_x = 4
-	},
-/obj/item/clothing/head/helmet/space/syndicate{
-	pixel_x = -4
-	},
+/obj/random_item_spawner/spacesuit,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
 "fx" = (

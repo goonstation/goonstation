@@ -478,6 +478,8 @@
 /area/space)
 "xE" = (
 /obj/machinery/light/incandescent/warm,
+/obj/item/tank/jetpack,
+/obj/rack,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
 "yf" = (
@@ -1045,6 +1047,10 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/rack,
+/obj/random_item_spawner/spacesuit,
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
 "Ww" = (

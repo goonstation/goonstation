@@ -16,8 +16,10 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost/barracks)
 "aQ" = (
-/obj/storage/closet/emergency,
+/obj/storage/closet/syndicate,
 /obj/item/tank/oxygen,
+/obj/random_item_spawner/spacesuit,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -488,6 +490,12 @@
 /area/listeningpost/syndicate_teleporter)
 "tK" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/item/tank/jetpack,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
