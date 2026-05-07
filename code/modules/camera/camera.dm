@@ -122,7 +122,7 @@
 
 /// Update the visuals for this camera being actively viewed through, note that this is not the same as just being on
 /obj/machinery/camera/proc/set_viewed(viewed)
-	if (src.has_light)
+	if (src.has_light && src.light)
 		if (viewed)
 			src.light.set_color(0, 150/255, 1)
 		else
