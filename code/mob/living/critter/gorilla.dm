@@ -59,9 +59,6 @@ TYPEINFO(/mob/living/critter/gorilla)
 		return ..() // in the infinite expanse of space, gorillas live in harmony
 
 	critter_basic_attack(mob/target)
-		if (issilicon(target))
-			fuck_up_silicons(target)
-			return TRUE
 		if(!ON_COOLDOWN(src, "gorilla_ook", 5 SECONDS))
 			src.visible_message(SPAN_ALERT("<b>[src] screeches!</b>"))
 			playsound(src.loc, 'sound/voice/screams/monkey_scream.ogg', 90, 1, pitch=0.3)
@@ -147,21 +144,6 @@ TYPEINFO(/mob/living/critter/gorilla)
 			src.visible_message(SPAN_ALERT("<B>[src]</B> roars!"))
 
 
-	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // taken from brullbar
-		if (isrobot(silicon) && !ON_COOLDOWN(src, "gorilla_messup_cyborg", 30 SECONDS))
-			var/mob/living/silicon/robot/cyborg = silicon
-			if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
-				src.visible_message(SPAN_ALERT("<B>[src] grabs [cyborg.name]'s head and wrenches it right off!</B>"))
-				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-				cyborg.compborg_lose_limb(cyborg.part_head)
-			else
-				src.visible_message(SPAN_ALERT("<B>[src] pounds on [cyborg.name]'s head furiously!</B>"))
-				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
-				cyborg.part_head.ropart_take_damage(rand(20,40),0)
-		else
-			src.visible_message(SPAN_ALERT("<B>[src] smashes [silicon] furiously!</B>"))
-			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
-			random_brute_damage(silicon, 15, 0)
 
 // perma switches the gorilla to a state of rage
 	proc/gorilla_rage()
