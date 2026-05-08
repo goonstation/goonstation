@@ -12072,7 +12072,7 @@
 "cTJ" = (
 /obj/decal/poster/wallsign/stencil/left/zero,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/obj/decal/poster/wallsign/stencil/right/four,
+/obj/decal/poster/wallsign/stencil/right/five,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "cTK" = (
@@ -91642,10 +91642,7 @@
 "vwe" = (
 /obj/decal/stage_edge/alt,
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell{
-	pixel_x = 1;
-	pixel_y = 1
-	},
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
