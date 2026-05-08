@@ -51,14 +51,27 @@
 #define _NS_PATH_CONCAT_9(X, a, b, c, d, e, f, g, h, i) X(a##__##b##__##c##__##d##__##e##__##f##__##g##__##h##__##i)
 
 
+/// A list of all global namespaces.
+var/list/datum/namespace/global_namespaces = null
+
 /// Initialise all global namespaces by looping through global variables, determining which are namespaces, then instantiating them.
 /proc/initialise_namespaces()
+	global.global_namespaces = list()
+
 	for (var/variable_name as anything in global.vars)
 		var/namespace_path = global.vars[variable_name]
 		if (!ispath(namespace_path, /datum/namespace))
 			continue
 
-		global.vars[variable_name] = new namespace_path(variable_name)
+		var/datum/namespace/global_namespace = new namespace_path(variable_name)
+		global.vars[variable_name] = global_namespace
+		global.global_namespaces += global_namespace
+
+	global.sortList(global.global_namespaces, GLOBAL_PROC_REF(cmp_namespaces))
+
+/// Compare the names of two namespaces.
+/proc/cmp_namespaces(datum/namespace/a, datum/namespace/b)
+	return sorttext(b._namespace_name, a._namespace_name)
 
 
 /datum/namespace
@@ -66,9 +79,12 @@
 	var/_namespace_name = null
 	/// An associative list of proc references to procs defined on this namespace and its nested namespaces, indexed by proc name.
 	var/list/_namespace_procs = null
+	/// A list of this namespace's nested namespaces.
+	var/list/datum/namespace/_nested_namespaces = null
 
 /datum/namespace/New(_namespace_name)
 	src._namespace_name = _namespace_name
+	src._nested_namespaces = list()
 
 	// Initialise any nested namespaces.
 	for (var/variable_name as anything in src.vars)
@@ -79,27 +95,31 @@
 		if (!ispath(namespace_path, /datum/namespace))
 			continue
 
-		src.vars[variable_name] = new namespace_path(variable_name)
+		var/datum/namespace/nested_namespace = new namespace_path(variable_name)
+		src.vars[variable_name] = nested_namespace
+		src._nested_namespaces += nested_namespace
+
+	global.sortList(src._nested_namespaces, GLOBAL_PROC_REF(cmp_namespaces))
 
 	. = ..()
 
 /// Returns an associative list of proc references to procs defined on this namespace and its nested namespaces, indexed by proc name.
-/datum/namespace/proc/_get_namespace_procs()
+/datum/namespace/proc/_get_namespace_procs(prefix_name = FALSE)
 	RETURN_TYPE(/list)
 
-	if (length(src._namespace_procs))
-		return src._namespace_procs
+	if (!length(src._namespace_procs))
+		src._namespace_procs = global.get_singleton(/datum/proc_ownership_cache).procs_by_type[src.type] || list()
+		src._namespace_procs -= list("(init)", "New", "_get_namespace_procs")
+		global.sortList(src._namespace_procs, GLOBAL_PROC_REF(cmp_text_asc))
 
-	src._namespace_procs = global.get_singleton(/datum/proc_ownership_cache).procs_by_type[src.type] || list()
-	src._namespace_procs -= list("(init)", "New", "_get_namespace_procs")
+		for (var/datum/namespace/nested_namespace as anything in src._nested_namespaces)
+			src._namespace_procs += nested_namespace._get_namespace_procs(TRUE)
 
-	for (var/variable_name as anything in src.vars)
-		var/datum/namespace/nested_namespace = src.vars[variable_name]
-		if (!istype(nested_namespace))
-			continue
+	if (prefix_name)
+		var/list/procs = list()
+		for (var/proc_name as anything in src._namespace_procs)
+			procs["[src._namespace_name].[proc_name]"] = src._namespace_procs[proc_name]
 
-		var/list/nested_namespace_procs = nested_namespace._get_namespace_procs()
-		for (var/proc_name as anything in nested_namespace_procs)
-			src._namespace_procs["[nested_namespace._namespace_name]: [proc_name]"] = nested_namespace_procs[proc_name]
+		return procs
 
 	return src._namespace_procs
