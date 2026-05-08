@@ -12172,9 +12172,7 @@
 /area/station/engine/engineering)
 "bxb" = (
 /obj/item/device/radio/beacon,
-/obj/submachine/cargopad/mechanics{
-	name = "Engineering Pad"
-	},
+/obj/submachine/cargopad/engineering,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bxc" = (
@@ -20269,9 +20267,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "fES" = (
-/obj/submachine/cargopad{
-	name = "Security Pad"
-	},
+/obj/submachine/cargopad/security,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},

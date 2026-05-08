@@ -20018,9 +20018,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/submachine/cargopad{
-	name = "Security Pad"
-	},
+/obj/submachine/cargopad/security,
 /obj/machinery/camera/directional/west,
 /obj/storage/cart/forensic/security,
 /turf/simulated/floor/redblack{

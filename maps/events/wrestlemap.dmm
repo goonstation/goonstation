@@ -34885,9 +34885,7 @@
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/storage)
 "pGW" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /obj/machinery/light/small/harsh{
 	dir = 4
 	},

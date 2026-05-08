@@ -25296,9 +25296,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/ce)
 "rMi" = (
-/obj/submachine/cargopad{
-	name = "Security Pod Bay Pad"
-	},
+/obj/submachine/cargopad/security,
 /obj/machinery/disposal/small/north{
 	pixel_y = 32
 	},
@@ -25898,9 +25896,7 @@
 /area/station/science/lab)
 "shh" = (
 /obj/landmark/gps_waypoint,
-/obj/submachine/cargopad{
-	name = "Mining Cargo Pad"
-	},
+/obj/submachine/cargopad/miningstaff,
 /obj/machinery/navbeacon/mule/mining_north/west,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)

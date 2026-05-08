@@ -16917,9 +16917,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/mining/staff_room)
 "bDg" = (
-/obj/submachine/cargopad/magnet{
-	name = "Mining Staff Room"
-	},
+/obj/submachine/cargopad/miningstaff,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bDh" = (
@@ -27373,9 +27371,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/submachine/cargopad{
-	name = "Catering Hanger Pad"
-	},
+/obj/submachine/cargopad/catering,
 /obj/item/cargotele{
 	pixel_x = 5;
 	pixel_y = 8
@@ -45920,9 +45916,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "uTy" = (
-/obj/submachine/cargopad{
-	name = "Security Pod Bay Pad"
-	},
+/obj/submachine/cargopad/security,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "uUN" = (
