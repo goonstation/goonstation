@@ -6,6 +6,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 	desc= "Holy shit"
 	hand_count = 2
 	icon_state = "gorilla"
+	icon_state_dead = "gorilla_dead"
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
