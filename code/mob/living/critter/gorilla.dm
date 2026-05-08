@@ -56,7 +56,7 @@
 		if (issilicon(target))
 			fuck_up_silicons(target)
 			return TRUE
-		if(!ON_COOLDOWN(src, "gorilla_ook", 3 SECONDS))
+		if(!ON_COOLDOWN(src, "gorilla_ook", 5 SECONDS))
 			src.visible_message(SPAN_ALERT("<b>[src] screeches!</b>"))
 			playsound(src.loc, 'sound/voice/screams/monkey_scream.ogg', 90, 1, pitch=0.3)
 		else

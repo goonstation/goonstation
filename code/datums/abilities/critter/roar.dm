@@ -2,7 +2,6 @@
 /datum/targetable/critter/roar
 	name = "roar"
 	desc = "Terrify your target and send all nearby monkeys to attack them"
-	icon = "null"
 	icon_state = "roar"
 	target_anything = TRUE
 	targeted = TRUE
