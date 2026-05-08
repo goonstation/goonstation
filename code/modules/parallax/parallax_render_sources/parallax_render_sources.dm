@@ -451,3 +451,41 @@
 	parallax_icon_state = "void_clouds_2"
 	parallax_value = 0.7
 	blend_mode = BLEND_ADD
+
+// Decarabia Layers
+/atom/movable/screen/parallax_render_source/decarabia
+	parallax_icon_state = "void_clouds_2"
+	parallax_value = 0.7
+	color = list(
+		0, 0, 0, 0.4,
+		0, 1, 0, 0.4,
+		0, 0, 1, 0.4,
+		0, 0, 0, 1,
+		0, 0, 0, 0)
+	scroll_speed = 5
+	scroll_angle = 200
+
+/atom/movable/screen/parallax_render_source/decarabia/clouds
+	parallax_icon_state = "snow_dense"
+	color = list(
+		1, 0, 0, 0.4,
+		0, 1, 0, 0.4,
+		0, 0, 1, 0.4,
+		0, 0, 0, 1,
+		0, 0, 0, -1)
+	static_colour = TRUE
+	parallax_value = 0.8
+	scroll_speed = 10
+	scroll_angle = 150
+
+/atom/movable/screen/parallax_render_source/foreground/decarabia
+	parallax_icon_state = "snow_dense"
+	color = list(
+		0.9, 0, 0, 0.4,
+		0, 1, 0, 0.4,
+		0, 0, 1, 0.4,
+		0, 0, 0, 1,
+		0, 0, 0, -1)
+	parallax_value = 0.9
+	scroll_speed = 25
+	scroll_angle = 175

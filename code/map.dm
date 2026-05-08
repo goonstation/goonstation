@@ -462,9 +462,9 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/walp
 
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
-		/atom/movable/screen/parallax_render_source/space_1,
-		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
+		/atom/movable/screen/parallax_render_source/decarabia,
+		/atom/movable/screen/parallax_render_source/decarabia/clouds,
+		/atom/movable/screen/parallax_render_source/foreground/decarabia,
 		)
 
 	escape_dir = WEST
