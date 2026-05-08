@@ -1,6 +1,6 @@
 // ability for gorillas that disorients non simians nearby and intimidates every nearby monkey into attacking the target
 /datum/targetable/critter/roar
-	name = "roar"
+	name = "Roar"
 	desc = "Terrify your target and send all nearby monkeys to attack them"
 	icon_state = "roar"
 	target_anything = TRUE
@@ -27,7 +27,7 @@
 		else
 
 			var/obj/itemspecialeffect/screech/E = new /obj/itemspecialeffect/screech
-			E.color = "#FFFFFF"
+			E.color = "#ce0c0c"
 			E.setup(holder.owner.loc)
 			playsound(holder.owner.loc, 'sound/voice/maneatersnarl.ogg', 70, TRUE)
 			boutput(GT, SPAN_ALERT("You are overcome with fear!"))

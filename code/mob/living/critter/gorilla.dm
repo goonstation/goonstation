@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/critter/gorilla)
+	start_listen_languages = list(LANGUAGE_MONKEY, LANGUAGE_ENGLISH)
+
 /mob/living/critter/gorilla
 	name= "gorilla"
 	desc= "Holy shit"
