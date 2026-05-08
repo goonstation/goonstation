@@ -889,6 +889,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	item_state = "flask"
 	initial_volume = 500
 	w_class = W_CLASS_BULKY
+	default_material = "plastic"
 	incompatible_with_chem_dispensers = 1
 	can_chug = 0
 

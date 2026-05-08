@@ -15,6 +15,7 @@
 /area/prefab/helianthus)
 "e" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor,
 /area/prefab/helianthus)
 "f" = (

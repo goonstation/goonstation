@@ -137,8 +137,18 @@
 			actions.start(action_bar, user)
 			return
 
+		if (istype(W, /obj/item/device/key))
+			user.visible_message(SPAN_ALERT("<B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B>"), null,SPAN_ALERT("You hear a metallic scraping sound!"))
+			if(!keyed) src.name = "scratched-up [src.name]"
+			src.keyed++
+			src.add_fingerprint(user)
+			return
+
 		if (istype(W, /obj/item/ammo/bullets))
 			if (W.disposed)
+				return
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
 				return
 			var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
 			if(!main_weapon)
@@ -171,20 +181,19 @@
 				qdel(ammo)
 				return
 
-		if (istype(W, /obj/item/device/key))
-			user.visible_message(SPAN_ALERT("<B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B>"), null,SPAN_ALERT("You hear a metallic scraping sound!"))
-			if(!keyed) src.name = "scratched-up [src.name]"
-			src.keyed++
-			src.add_fingerprint(user)
-			return
-
 		if (istype(W, /obj/item/sheet))
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+				return
 			var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
 			if (istype(main_weapon,/obj/item/shipcomponent/mainweapon/constructor))
 				main_weapon.Attackby(W,user)
 				return
 
 		if (istype(W, /obj/item/tank/plasma))
+			if (src.locked)
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+				return
 			if(src.fueltank || !src.atmostank)
 				src.open_parts_panel(user)
 			else

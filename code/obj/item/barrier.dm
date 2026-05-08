@@ -135,7 +135,7 @@ TYPEINFO(/obj/item/barrier)
 
 /obj/item/barrier/void
 	name = "Scale Shield"
-	desc = "A crude and unwieldy shield made from a eldritch scale. It appears to be able to both reflect and amplify projectiles."
+	desc = "A crude and unwieldy shield made from an eldritch scale. It appears to be able to both reflect and amplify projectiles."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "void_barrier"
 	item_state = "void_barrier"

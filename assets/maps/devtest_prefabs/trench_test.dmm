@@ -1,14 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/auto/dirt,
-/area/space)
+/area/station/devzone)
 "H" = (
 /turf/simulated/floor/auto/trench,
-/area/space)
+/area/station/devzone)
 "I" = (
 /obj/item/shovel,
 /turf/simulated/floor/auto/dirt,
-/area/space)
+/area/station/devzone)
 
 (1,1,1) = {"
 a

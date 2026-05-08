@@ -830,7 +830,7 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	can_hold = list(/obj/item/deconstructor)
+	can_hold = list(/obj/item/deconstructor, /obj/item/tool/omnitool/dualconstruction_device)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 /obj/item/storage/belt/utility/nt_engineer
@@ -840,6 +840,7 @@
 		/obj/item/rcd,
 		/obj/item/rcd_ammo,
 		/obj/item/deconstructor,
+		/obj/item/tool/omnitool/dualconstruction_device,
 		/obj/item/sheet,
 		/obj/item/tile
 	)
@@ -857,8 +858,9 @@
 	item_state = "cebelt"
 	rarity = 4
 	can_hold = list(/obj/item/rcd,
-	/obj/item/rcd_ammo,
-	/obj/item/deconstructor)
+		/obj/item/rcd_ammo,
+		/obj/item/deconstructor,
+		/obj/item/tool/omnitool/dualconstruction_device)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	inventory_counter_enabled = 1
 

@@ -94,17 +94,18 @@
 		if (istype(src, /obj/machinery/disposal/mail)) FLICK("[src.icon_state]-flush", src)
 		else FLICK("disposal-flush", src)
 
-		ZERO_GASES(air_contents)
-
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
-
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
 		H.mail_tag = src.destination_tag
+		H.vent_on_exit = FALSE
+
+		ZERO_GASES(air_contents)
+
+		sleep(1 SECOND)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 		H.start(src) // start the holder processing movement
 		flushing = FALSE
@@ -147,7 +148,12 @@
 /obj/machinery/disposal/mail/autoname
 	autoname = TRUE
 
-	// Please keep the destinations identical to /obj/machinery/disposal/mail/small/autoname.
+	// Mailtag types
+	// All subtypes should exist across:
+	// - /obj/mapping_helper/mailtag
+	// - /obj/machinery/disposal/mail/autoname (here)
+	// - /obj/machinery/disposal/mail/small/autoname
+
 	janitor
 		name = "Janitor"
 		mail_tag = "janitor"
@@ -336,14 +342,13 @@
 
 /obj/machinery/disposal/mail/small/autoname
 	autoname = TRUE
-/*
-	New() // Would be more elegant, but I want them to be aligned properly in the map editor.
-		..()
-		if (src.dir == NORTH)
-			src.pixel_y = 32
-		return
-*/
-	// Please keep the destinations identical to /obj/machinery/disposal/mail/autoname.
+
+	// Mailtag types
+	// All subtypes should exist across:
+	// - /obj/mapping_helper/mailtag
+	// - /obj/machinery/disposal/mail/autoname
+	// - /obj/machinery/disposal/mail/small/autoname (here)
+
 	janitor
 		name = "Janitor"
 		mail_tag = "janitor"

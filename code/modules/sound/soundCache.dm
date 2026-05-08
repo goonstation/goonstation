@@ -790,6 +790,7 @@ var/global/list/soundCache = list(
  	"sound/machines/shieldgen_startup.ogg" = 'sound/machines/shieldgen_startup.ogg',\
  	"sound/machines/shieldoverload.ogg" = 'sound/machines/shieldoverload.ogg',\
  	"sound/machines/shieldup.ogg" = 'sound/machines/shieldup.ogg',\
+ 	"sound/machines/shredder.ogg" = 'sound/machines/shredder.ogg',\
  	"sound/machines/signal.ogg" = 'sound/machines/signal.ogg',\
  	"sound/machines/singulo_start.ogg" = 'sound/machines/singulo_start.ogg',\
  	"sound/machines/siphon_activate.ogg" = 'sound/machines/siphon_activate.ogg',\

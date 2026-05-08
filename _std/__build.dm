@@ -54,6 +54,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_WANNA_DO_CRIME ROLE_TRAITOR // Spawn as the matching antagonist role as defined in _std\defines\roles.dm
 //#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 //#define NO_PREGAME_HTML // Don't spawn the HTML pregame browser lobby screen
+//#define I_HATE_WAITING_FOR_GENES // Marks nearly all genes as researched, gives chromosomes/materials/autodecryptors, increases gene storage cap, and removes time/cost limitations on the gene console
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -110,6 +111,9 @@ o+`        `-` ``..-:yooos-..----------..`
 
 // Enable local authentication using a dummy version of the goonhub authentication process
 //#define TEST_AUTH
+
+//Don't automatically grant admin to all localhost connections
+//#define DONT_ADMIN_MEE
 
 // Makes the code crash / log when an abstract type is instantiated.
 // see _stadlib/_types.dm for details

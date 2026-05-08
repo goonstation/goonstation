@@ -357,7 +357,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "se_breach";
 	name = "South East Breach Hull"
 	},
@@ -874,7 +874,7 @@
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactormain";
 	enter_id = "outer";
 	name = "Reactor Main"
@@ -1041,7 +1041,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro1";
 	enter_id = "inner";
 	name = "Security Interrogation 1"
@@ -1406,6 +1406,7 @@
 /area/station/hallway/primary/northwest)
 "aEs" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/south,
 /area/station/medical/head)
 "aEI" = (
@@ -1813,6 +1814,7 @@
 /area/pasiphae/bridge)
 "aRh" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/east,
 /area/station/medical/medbay/pharmacy)
 "aRr" = (
@@ -2872,6 +2874,14 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/item/paper/manufacturer_blueprint/resonator_type_fq{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/obj/item/paper/resonator_type_fq{
+	pixel_y = 3;
+	pixel_x = -3
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
@@ -3936,6 +3946,7 @@
 	})
 "bJE" = (
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/north,
 /area/station/science/chemistry)
 "bJF" = (
@@ -6223,6 +6234,7 @@
 	desc = "What? Security has moments of weakness too!";
 	name = "emergency alcohol dispenser"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/south,
 /area/station/ai_monitored/armory)
 "cQf" = (
@@ -6362,7 +6374,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aicore";
 	enter_id = "inner";
 	name = "AI Core"
@@ -6731,6 +6743,7 @@
 "cZS" = (
 /obj/machinery/light_switch/west,
 /obj/fitness/speedbag/captain,
+/obj/item/reagent_containers/applicator/glue,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
@@ -6802,7 +6815,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "brig";
 	name = "Security"
@@ -8236,12 +8249,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Rods decay at a diminishing rate;<br>corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
-	name = "printed card";
-	pixel_y = 6
-	},
+/obj/item/paper/catalytic_guide,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -8540,7 +8548,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactorside";
 	enter_id = "outer";
 	name = "Reactor Side"
@@ -9389,9 +9397,7 @@
 /area/station/engine/engineering/ce)
 "eop" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/alarm{
-	pixel_y = 22
-	},
+/obj/machinery/alarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "eoI" = (
@@ -10074,7 +10080,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sw_breach";
 	name = "South West Breach Hull"
 	},
@@ -10293,8 +10299,7 @@
 /obj/machinery/computer3/generic/personal{
 	desc = "This workstation appears to be outfitted with non-standard equipment.";
 	name = "modified computer";
-	setup_starting_peripheral2 = /datum/computer/file/terminal_program/communications;
-	setup_starting_program = null
+	setup_starting_program = /datum/computer/file/terminal_program/communications;
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -13107,7 +13112,7 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactormain";
 	enter_id = "inner2";
 	name = "Reactor Main"
@@ -15092,7 +15097,7 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "disposals";
 	enter_id = "outer";
 	name = "Disposals"
@@ -17718,7 +17723,7 @@
 /area/station/storage/tools)
 "hLe" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "escape";
 	enter_id = "inner";
 	name = "Escape"
@@ -19808,7 +19813,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro2";
 	enter_id = "inner";
 	name = "Security Interrogation 2"
@@ -20041,7 +20046,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "ne_breach";
 	name = "North East Breach Hull"
 	},
@@ -20219,10 +20224,7 @@
 /area/station/crew_quarters/courtroom)
 "iNR" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
+/obj/machinery/alarm/directional/west,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
 "iNU" = (
@@ -21222,7 +21224,7 @@
 "jky" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "escape";
 	enter_id = "outer";
 	name = "Escape"
@@ -21923,6 +21925,7 @@
 	name = "Chemistry Lab Shutters";
 	pixel_y = 26
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -22178,7 +22181,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "escape";
 	enter_id = "inner";
 	name = "Escape"
@@ -22287,6 +22290,7 @@
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -23727,7 +23731,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sw_breach";
 	name = "South West Breach Hull"
 	},
@@ -24537,12 +24541,12 @@
 /area/station/chapel/sanctuary)
 "kEo" = (
 /obj/table/reinforced/auto,
-/obj/item/device/radio/intercom{
-	pixel_x = 1
-	},
 /obj/item/toy/judge_gavel{
 	pixel_x = -18;
 	pixel_y = 3
+	},
+/obj/machinery/shredder{
+	pixel_y = 12
 	},
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -25862,7 +25866,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/ai_upload,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aiupload";
 	enter_id = "inner";
 	name = "AI Upload"
@@ -26029,12 +26033,8 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>Maximum 3 intensity";
-	name = "printed card";
-	pixel_x = -4;
-	pixel_y = 13
+/obj/item/paper/resonator_type_sm{
+	pixel_y = 12
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -26292,7 +26292,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sw_breach2";
 	name = "South West Breach Hull"
 	},
@@ -27325,7 +27325,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactormain";
 	enter_id = "centrifuge";
 	name = "Reactor Main"
@@ -27394,7 +27394,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "inner";
 	name = "Security"
@@ -29105,7 +29105,7 @@
 "mzV" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/firealarm/directional/west,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/west,
 /area/station/crew_quarters/baroffice)
 "mAa" = (
@@ -29125,7 +29125,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aicore";
 	enter_id = "outer";
 	name = "AI Core"
@@ -29721,10 +29721,7 @@
 	},
 /area/station/quartermaster/cargooffice)
 "mOL" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
@@ -30141,10 +30138,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -31056,7 +31050,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "nw_breach";
 	name = "North West Breach Hull"
 	},
@@ -31384,6 +31378,9 @@
 /obj/noticeboard/persistent/customs/directional/north,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
+	},
+/obj/item/device/radio/intercom{
+	dir = 4
 	},
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/courtroom)
@@ -32806,7 +32803,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactorside";
 	enter_id = "inner";
 	name = "Reactor Side"
@@ -34848,7 +34845,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "se_breach";
 	name = "South East Breach Hull"
 	},
@@ -34992,7 +34989,7 @@
 	},
 /obj/mapping_helper/access/ai_upload,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "aiupload";
 	enter_id = "outer";
 	name = "AI Upload"
@@ -35086,7 +35083,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "reactormain";
 	enter_id = "inner1";
 	name = "Reactor Main"
@@ -36930,7 +36927,7 @@
 /area/station/communications/centre)
 "qcm" = (
 /obj/table/auto,
-/obj/item/disk/data/fixed_disk{
+/obj/item/disk/data/fixed_disk/hd64{
 	pixel_y = 9
 	},
 /obj/item/disk/data/floppy/read_only/security_progs{
@@ -37363,7 +37360,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "disposals";
 	enter_id = "inner";
 	name = "Disposals"
@@ -37770,7 +37767,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro2";
 	enter_id = "outer";
 	name = "Security Interrogation 2"
@@ -39384,10 +39381,10 @@
 "ror" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -44925,7 +44922,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "ne_breach";
 	name = "North East Breach Hull"
 	},
@@ -46265,10 +46262,7 @@
 /area/station/science/teleporter)
 "uvL" = (
 /obj/machinery/centrifuge_nuclear,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -46756,12 +46750,7 @@
 "uJG" = (
 /obj/machinery/light/incandescent/cool,
 /obj/table/reinforced/auto,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Rods decay at a diminishing rate;<br>corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
-	name = "printed card";
-	pixel_y = 6
-	},
+/obj/item/paper/catalytic_guide,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -47649,6 +47638,14 @@
 	dir = 8
 	},
 /area/station/security/main)
+"vfb" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/grey,
+/area/pasiphae/bridge)
 "vfE" = (
 /obj/stool/chair{
 	dir = 4
@@ -47706,7 +47703,6 @@
 	pixel_y = 5
 	},
 /obj/noticeboard/persistent/bar/directional/north,
-/obj/item/reagent_containers/food/drinks/espressocup,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -47718,6 +47714,7 @@
 	dir = 4;
 	pixel_y = 4
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "viB" = (
@@ -47841,6 +47838,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "vlO" = (
@@ -48054,12 +48052,8 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
-	name = "printed card";
-	pixel_x = 4;
-	pixel_y = 13
+/obj/item/paper/resonator_type_ax{
+	pixel_y = 12
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -48168,6 +48162,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
+	},
+/obj/item/paper/manufacturer_blueprint/resonator_type_fq{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/paper/resonator_type_fq{
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
@@ -50206,7 +50208,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "nw_breach";
 	name = "North West Breach Hull"
 	},
@@ -50343,7 +50345,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "secinterro1";
 	enter_id = "outer";
 	name = "Security Interrogation 1"
@@ -50839,7 +50841,7 @@
 /area/station/science/hall)
 "wDb" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sw_breach2";
 	name = "South West Breach Hull"
 	},
@@ -51216,8 +51218,7 @@
 /obj/machinery/computer3/generic/personal{
 	desc = "This workstation appears to be outfitted with non-standard equipment.";
 	name = "modified computer";
-	setup_starting_peripheral2 = /datum/computer/file/terminal_program/communications;
-	setup_starting_program = null
+	setup_starting_program = /datum/computer/file/terminal_program/communications;
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -54069,7 +54070,7 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "sec";
 	enter_id = "outer";
 	name = "Security"
@@ -122645,7 +122646,7 @@ bzS
 gtT
 rcO
 nVY
-vZZ
+vfb
 vSG
 vZZ
 rHX

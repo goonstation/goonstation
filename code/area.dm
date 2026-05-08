@@ -2833,8 +2833,6 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Quarters"
 	icon_state = "yellow"
 
-/area/station/engine/core/nuclear
-	name = "Nuclear Reactor Core"
 
 /area/station/engine/storage
 	name = "Engineering Storage"
@@ -2889,6 +2887,15 @@ TYPEINFO(/area/station/engine/singcore)
 	name = "Thermo-Electric Generator"
 	icon_state = "teg" // sometimes you just gotta make an icon the way it is because that's what your heart tells you to do, even if it looks like something a cartoon for toddlers would reject for looking too stupid
 	sound_environment = 10
+
+/area/station/engine/core/nuclear
+	name = "Nuclear Reactor Engine Room"
+
+/area/station/engine/core/singularity
+	name = "Singularity Engine Room"
+
+/area/station/engine/core/thermoelectric
+	name = "Thermo-Electric Engine Room"
 
 /area/station/engine/hotloop
 	name = "Hot Loop"
@@ -3949,6 +3956,12 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
 				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
+				if(!src.armory_auth && (IS_IT_SATURDAY))
+					var/ircmsg[] = new()
+					ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+					ircmsg["msg"] = "entered the armory while it's unauthorized."
+					ircbot.export_async("admin", ircmsg)
 // // // // // //
 
 /// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.
@@ -4352,6 +4365,15 @@ ABSTRACT_TYPE(/area/mining)
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"
+
+	unpowered
+		requires_power = TRUE
+
+	no_default_light
+		ambient_light = null
+
+		unpowered
+			requires_power = TRUE
 
 	gravity_traction_partial
 		gforce_minimum = GFORCE_TRACTION_PARTIAL

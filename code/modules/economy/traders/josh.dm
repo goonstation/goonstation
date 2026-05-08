@@ -35,6 +35,7 @@
 			/datum/commodity/trader/josh/hoodie,
 			/datum/commodity/trader/josh/flyswatter,
 			/datum/commodity/trader/josh/robustris,
+			/datum/commodity/trader/josh/gluestick,
 		),
 		TRADER_RARITY_UNCOMMON = list(
 			/datum/commodity/trader/josh/foamgun,
@@ -218,3 +219,11 @@
 	possible_names = list("These are technically legal, trust me bro!",
 		"REAL firecrackers, chuck them and run!",
 		"My cousin got such a sick burn off of one of these once.")
+
+/datum/commodity/trader/josh/gluestick
+	comname = "Glue Stick"
+	comtype = /obj/item/reagent_containers/applicator/glue
+	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	amount = 50
+	possible_names = list("You should be allowed to glue your poster!",
+	"Stickin' it to the man, yeah!")

@@ -566,7 +566,13 @@
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
-#define BLACKLIST_TURFS list(/turf/simulated/floor/auto/elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
+#define BLACKLIST_TURFS list(\
+	/turf/simulated/floor/auto/elevator_shaft, \
+	/turf/simulated/shuttle, \
+	/turf/simulated/floor/shuttle, \
+	/turf/simulated/wall/auto/shuttle, \
+	/turf/simulated/wall/auto/martian, \
+)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0

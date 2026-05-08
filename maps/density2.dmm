@@ -705,10 +705,10 @@
 /area/station/turret_protected/ai_upload)
 "et" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "eD" = (
@@ -2634,9 +2634,7 @@
 /area/station/quartermaster/office)
 "qR" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	req_access = null;
-	req_access_txt = "0"
+	dir = 4
 	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
@@ -3182,6 +3180,7 @@
 "uJ" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/decal/cleanable/dirt,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/bridge)
 "uK" = (
@@ -3234,7 +3233,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1";
@@ -3749,6 +3747,7 @@
 "yP" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/carpet/red/standard/edge/se,
 /area/station/bridge)
 "yV" = (
@@ -3891,10 +3890,9 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen/fancy,
+/obj/machinery/shredder{
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/nw_triple,
 /area/station/bridge)
 "Ak" = (
@@ -5700,10 +5698,12 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Nt" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Nu" = (
@@ -5773,7 +5773,7 @@
 /area/station/crew_quarters/cafeteria)
 "NO" = (
 /obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "NS" = (
@@ -6934,8 +6934,7 @@
 "WX" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	opacity = 0;
-	req_access_txt = ""
+	opacity = 0
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -7216,8 +7215,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	name = "Cockpit";
-	opacity = 0;
-	req_access_txt = ""
+	opacity = 0
 	},
 /turf/unsimulated/floor{
 	desc = "";

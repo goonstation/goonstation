@@ -722,7 +722,7 @@
 /datum/manufacture/glass
 	name = "Glass Panel"
 	item_requirements = list("crystal" = 1)
-	item_outputs = list(/obj/item/sheet)
+	item_outputs = list(/obj/item/sheet/glass)
 	create = 1
 	time = 2 SECONDS
 	category = "Resource"
@@ -760,7 +760,7 @@
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
-	item_requirements = list("metal_dense" = 1)
+	item_requirements = list("metal_or_wood_dense" = 1)
 	item_outputs = list(/obj/item/rods)
 	time = 3 SECONDS
 	category = "Resource"
@@ -1595,6 +1595,15 @@
 	create = 1
 	time = 3 SECONDS
 	category = "Tool"
+
+/datum/manufacture/gene_booth_frame
+	name = "Genetics Booth Deployer"
+	item_outputs = list(/obj/item/electronics/frame/flatpack/genetics_booth)
+	item_requirements = list(
+		"metal" = 15,
+		"crystal" = 5,
+		"energy" = 10,
+	)
 
 #ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/
@@ -3820,6 +3829,17 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 							 "crystal" = 10,
 							 "insulated" = 10)
 	item_outputs = list(/obj/machinery/siphon/resonator/stabilizer)
+	create = 1
+	time = 30 SECONDS
+	category = "Machinery"
+
+/datum/manufacture/resonator_type_fq
+	name = "Type-FQ Resonator"
+	item_requirements = list("metal_dense" = 15,
+							 "conductive_high" = 20,
+							 "koshmarite" = 10,
+							 "electrum" = 5)
+	item_outputs = list(/obj/machinery/siphon/resonator/field_dilation)
 	create = 1
 	time = 30 SECONDS
 	category = "Machinery"

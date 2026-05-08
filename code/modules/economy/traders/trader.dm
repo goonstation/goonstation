@@ -208,7 +208,7 @@
 
 		invoice.info += "<br>Final Cost of Goods: [total_price] credits."
 
-		wagesystem.shipping_budget -= total_price
+		wagesystem.budgets[BUDGET_CAT_SHIPPING] -= total_price
 
 		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
 		src.currently_selling = 0 //At this point the shopping cart has been processed

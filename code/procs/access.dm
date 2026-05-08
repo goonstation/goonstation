@@ -68,14 +68,16 @@
 	. = 0
 	if(M?.client?.holder?.ghost_interaction)
 		return 2
+	// check for admin access override
+	if (src.admin_access_override)
+		if (M?.client?.holder?.level >= LEVEL_SA)
+			return 2
+		else if(src.admin_access_override == ADMIN_ACCESS_OVERRIDE_ONLY)
+			return 0
 	// easy out for if no access is required
 	if (!src.has_access_requirements())
 		return 1
 	if (M && ismob(M))
-		// check for admin access override
-		if (src.admin_access_override)
-			if (M.client?.holder?.level >= LEVEL_SA)
-				return 2
 		// check in-hand first
 		if (src.check_access(M.equipped()))
 			return 2
@@ -172,14 +174,14 @@
 			return get_all_accesses() + list(access_syndicate_shuttle)
 		// --------------------------- Heads of staff
 		if("Captain")
-			return get_all_accesses()
+			return get_all_accesses() + list(access_maxsec)
 		if("Head of Personnel")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
 						access_fine_small, access_fine_large, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers, access_pharmacy,
 						access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_supply_console,
-						access_research, access_hydro, access_ranch, access_ai_upload, access_pathology, access_researchfoyer,
+						access_research, access_hydro, access_ranch, access_ai_upload, access_researchfoyer,
 						access_telesci, access_teleporter, access_money)
 		if("Head of Security")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
@@ -189,7 +191,7 @@
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_ai_upload,
 						access_tech_storage, access_maint_tunnels, access_bar, access_janitor, access_fine_small, access_fine_large,
 						access_engineering, access_teleporter, access_engineering_engine, access_engineering_control,
-						access_mining, access_pathology, access_researchfoyer, access_chapel_office, access_telesci,
+						access_mining, access_researchfoyer, access_chapel_office, access_telesci,
 						access_engineering_storage, access_engineering_mechanic)
 		if("Research Director")
 			return list(access_research, access_research_director, access_dwaine_superuser,
@@ -218,7 +220,7 @@
 		if("Security Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig,  access_ticket,
 			access_maint_tunnels, access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
-			access_fine_small, access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer, access_mining
+			access_fine_small, access_chemistry, access_bar, access_kitchen, access_hydro, access_researchfoyer, access_mining
 			)
 		if("Vice Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_ticket, access_maint_tunnels,
@@ -236,8 +238,6 @@
 			return list(access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Geneticist")
 			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
-		if("Pathologist")
-			return list(access_medical, access_medical_lockers, access_morgue, access_pathology, access_maint_tunnels)
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Pharmacist")
@@ -308,7 +308,7 @@
 		if("Inspector", "Communications Officer")
 			return list(access_security, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch, access_pathology,
+						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch,
 						access_researchfoyer, access_artlab, access_telesci, access_robotdepot, access_fine_small)
 		if("Hall Monitor")
 			return list(access_ticket)
@@ -328,7 +328,7 @@
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 				access_change_ids, access_ai_upload,
 				access_teleporter, access_eva, access_heads, access_captain, access_head_of_personnel,
-				access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
+				access_chapel_office, access_kitchen, access_medical_lockers,
 				access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch,
 				access_engineering, access_maint_tunnels,
 				access_tech_storage, access_engineering_storage,
@@ -381,8 +381,6 @@ var/list/access_all_actually = null
 			return "Medical Equipment"
 		if(access_medlab)
 			return "Genetics"
-		if(access_pathology)
-			return "Pathology"
 		if(access_morgue)
 			return "Morgue"
 		if(access_tox)

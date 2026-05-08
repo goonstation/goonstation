@@ -62,10 +62,11 @@
 	proc/spray()
 		src.last_spray = world.time
 		if (src?.default_reagent)
-			src.reagents.add_reagent(default_reagent,240)
+			var/fill_percent = max(0, (320 - src.reagents.total_volume)/320)
+			src.reagents.add_reagent(default_reagent, fill_percent*240)
 			//also add some water for ~wet floor~ immersion
 			if (src.add_water)
-				src.reagents.add_reagent("water",80)
+				src.reagents.add_reagent("water",fill_percent*80)
 
 		if (src?.reagents.total_volume)
 			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread

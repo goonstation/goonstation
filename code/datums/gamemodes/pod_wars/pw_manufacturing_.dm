@@ -537,7 +537,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "filgrastim", "atropine",\
 	"salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
 	"oculine", "mannitol", "penteticacid", "saline",\
-	"salicylic_acid", "blood", \
+	"salicylic_acid","acetylsalicylic_acid", "blood", \
 	"menthol", "antihistamine", "smelling_salt", "oculine")
 
 /obj/machinery/manufacturer/general/pod_wars
