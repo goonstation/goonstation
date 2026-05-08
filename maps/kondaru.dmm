@@ -34431,9 +34431,7 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/news_office)
 "hrS" = (
-/obj/submachine/cargopad{
-	name = "Security Pad"
-	},
+/obj/submachine/cargopad/security,
 /turf/simulated/floor/red,
 /area/station/security/evidence)
 "hsi" = (

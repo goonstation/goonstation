@@ -2110,7 +2110,6 @@ or don't if it uses a custom topopen overlay
 	if (!src.deployed_to_eyecam)
 		src.eye_view()
 	src.eyecam.set_loc(get_turf(C))
-	src.eyecam.update_statics()
 	//src:current = C
 	//src.set_eye(C)
 	return 1

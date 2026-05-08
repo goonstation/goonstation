@@ -33,7 +33,7 @@
 	/// Robust light
 	var/datum/light/point/light
 
-	/// The viewers of the camera, for quickly disconnecting them when needed
+	/// Mobs that are directly viewing through this one camera, for quickly disconnecting them when needed
 	var/list/mob/viewers
 
 	HELP_MESSAGE_OVERRIDE("You can use a pair of <b>wire cutters</b> to disable the camera, or a <b>cable coil</b> to fix it if it's broken.")
@@ -91,6 +91,9 @@
 
 		src.name = name_build_string
 
+	RegisterSignal(src, COMSIG_CAMERA_ACTIVE, PROC_REF(set_viewed_on))
+	RegisterSignal(src, COMSIG_CAMERA_DEACTIVE, PROC_REF(set_viewed_off))
+
 	SPAWN(1 SECOND)
 		addToNetwork()
 
@@ -109,6 +112,50 @@
 	if (global.camnets && global.camnets[network])
 		global.camnets[network].Remove(src)
 	..()
+
+//signal boilerplate
+/obj/machinery/camera/proc/set_viewed_on()
+	src.set_viewed(TRUE)
+
+/obj/machinery/camera/proc/set_viewed_off()
+	src.set_viewed(FALSE)
+
+/// Update the visuals for this camera being actively viewed through, note that this is not the same as just being on
+/obj/machinery/camera/proc/set_viewed(viewed)
+	if (src.has_light && src.light)
+		if (viewed)
+			src.light.set_color(0, 150/255, 1)
+		else
+			src.light.set_color(209/255, 27/255, 6/255)
+
+	var/image/on_light = image(src.icon, "camera-light")
+	if (viewed) //only colour matrix the actual light if active, otherwise use base colour
+		on_light.color = list(
+			0, 130/255, 1.5, 0,
+			0, 1, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1,
+			0, 0, 0, 0,
+		)
+	src.UpdateOverlays(on_light, "on_light")
+	if (viewed)
+		on_light.color = list(
+			0, 130/255, 1.5, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 1,
+			1, 1, 1, 0,
+		)
+	else
+		on_light.color = list(
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 1,
+			1, 1, 1, 0,
+		)
+	on_light.plane = PLANE_LIGHTING
+	src.UpdateOverlays(on_light, "on_light_lighting")
 
 /obj/machinery/camera/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
@@ -195,18 +242,8 @@
 
 	if (src.camera_status)
 		src.icon_state = "camera"
-		var/image/on_light = image(src.icon, "camera-light")
-		src.UpdateOverlays(on_light, "on_light")
-
-		on_light.color = list(
-			0, 0, 0, 0,
-			0, 0, 0, 0,
-			0, 0, 0, 0,
-			0, 0, 0, 1,
-			1, 1, 1, 0,
-		)
-		on_light.plane = PLANE_LIGHTING
-		src.UpdateOverlays(on_light, "on_light_lighting")
+		//we just turned on, we're not being viewed through
+		src.set_viewed(FALSE)
 
 	else
 		src.icon_state = "camera-off"
@@ -240,6 +277,8 @@
 		return FALSE
 	if (src.camera_status)
 		LAZYLISTADD(src.viewers, viewer)
+		var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
+		emitter.register_user(viewer)
 		viewer.set_eye(src)
 		return TRUE
 
@@ -247,6 +286,8 @@
 /obj/machinery/camera/proc/disconnect_viewer(var/mob/viewer)
 	if (istype(viewer))
 		LAZYLISTREMOVE(src.viewers, viewer)
+		var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
+		emitter?.unregister_user(viewer)
 	if (!QDELETED(viewer))
 		viewer.set_eye(null)
 

@@ -1806,3 +1806,17 @@ TYPEINFO(/mob/living)
 			return TRUE
 
 	return FALSE
+
+/mob/living/proc/handle_perma_cryo()
+	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+		antagonist.handle_perma_cryo()
+
+/mob/living/proc/handle_cryo()
+	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+		antagonist.handle_cryo()
+	for_by_tcl(disky, /obj/item/disk/data/floppy/read_only/authentication)
+		if (get_turf(disky) == get_turf(src))
+			disky.safe_delete()
+			var/obj/storage/crate/crate = new
+			new /obj/item/disk/data/floppy/read_only/authentication(crate)
+			shippingmarket.receive_crate(crate)

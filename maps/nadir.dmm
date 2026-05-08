@@ -34657,9 +34657,7 @@
 	},
 /area/station/hydroponics/bay)
 "oZQ" = (
-/obj/submachine/cargopad{
-	name = "Security Pod Bay Pad"
-	},
+/obj/submachine/cargopad/security,
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
 "oZS" = (
@@ -45215,9 +45213,7 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "tYz" = (
-/obj/submachine/cargopad/magnet{
-	name = "Mining Staff Room"
-	},
+/obj/submachine/cargopad/miningstaff,
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "tYE" = (

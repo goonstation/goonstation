@@ -4006,6 +4006,8 @@ datum
 					return
 				if (M.bioHolder && M.bioHolder.HasEffect("toxic_farts"))
 					return
+				if (istype(M, /mob/living/critter/changeling))
+					return
 
 				if (M?.reagents)
 					if (prob(25))

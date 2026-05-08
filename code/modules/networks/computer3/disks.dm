@@ -348,6 +348,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 
 	New()
 		. = ..()
+		START_TRACKING
 		SPAWN(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
@@ -358,6 +359,10 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 			src.read_only = 1
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))

@@ -486,6 +486,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		RegisterSignal(src, COMSIG_ATOM_ANALYZE, PROC_REF(noreward))
 		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
@@ -541,6 +542,9 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. 'HOS' is engraved in the side."
 		icon_state = "energy-hos"
 
+		New()
+			. = ..()
+			src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)
 	mats = null

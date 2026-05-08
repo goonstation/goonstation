@@ -1661,7 +1661,7 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[src.mob]</B> screams!"
-					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 			if ("fart")
 				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
 					if (!src.mob.emote_check(voluntary, 1 SECOND))
@@ -1702,7 +1702,7 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 							if(25) . = "<B>[src.mob]</B> makes a big goofy grin and farts loudly."
 							if(26) . = "<B>[src.mob]</B> hovers off the ground for a moment using a powerful fart."
 							if(27) . = "<B>[src.mob]</B> plays drums on its ass while farting."
-					playsound(src.mob.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 
 					src.mob.remove_stamina(STAMINA_DEFAULT_FART_COST)
 					src.mob.stamina_stun()
@@ -2027,7 +2027,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			if("burp","fart","gasp")
 				if (src.mob.emote_check(voluntary, 1 SECOND))
 					message = "<B>[src.mob]</B> croaks."
-					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_FARTS)
 					return message
 
 			if ("clothes")

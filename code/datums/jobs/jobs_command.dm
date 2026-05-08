@@ -43,6 +43,11 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
 	rounds_needed_to_play = ROUNDS_MIN_CAPTAIN
 
+	special_setup(var/mob/living/carbon/human/M)
+		//already a disk? No disk for u
+		if (length(by_type[/obj/item/disk/data/floppy/read_only/authentication]) > 1)
+			M.l_store.safe_delete()
+
 	derelict
 		//name = "NT-SO Commander"
 		name = null

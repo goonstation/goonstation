@@ -14768,9 +14768,7 @@
 	c_tag = "Robotics East";
 	pixel_y = 10
 	},
-/obj/submachine/cargopad{
-	name = "Research Sector Pad"
-	},
+/obj/submachine/cargopad/researchoutpost,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/recharger/wall{
 	dir = 4;
