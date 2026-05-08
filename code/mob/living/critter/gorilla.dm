@@ -12,7 +12,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 	health_brute = 100
 	health_brute_vuln = 0.6
 	health_burn = 100
-	health_burn_vuln = 1.2
+	health_burn_vuln = 1.4
 	speech_verb_say = "chimpers"
 	speech_verb_exclaim = "roars"
 	speech_verb_ask = "ooks"
@@ -86,6 +86,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 			if (!istype(G)) //if it hasn't grabbed something, try to
 				if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
 					src.drop_item()
+					src.hand_attack(target, params)
 				src.hand_attack(target, params)
 			else
 				if (G.affecting == null || G.assailant == null || G.disposed || isdead(G.affecting))
@@ -111,6 +112,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 // special retaliate that sends all nearby gorillas to destroy the enemy
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null) // special retaliate that sends all nearby gorillas into
 		for (var/mob/living/critter/gorilla/G in view(7, src))
+			if (G == src) continue
 			if (G.ai)
 				G._ai_patience_count--
 				G.ai.was_harmed(weapon,M)
@@ -121,7 +123,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 						G.wake_from_hibernation()
 				if(!G.enraged)
 					G.enraged = TRUE
-					gorilla_rage(G)
+					G.gorilla_rage()
 
 				// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
 				if (G.ai_retaliates && G.ai.enabled && length(G.ai.priority_tasks) <= 0 && M != G && G.is_npc)
@@ -130,6 +132,11 @@ TYPEINFO(/mob/living/critter/gorilla)
 					task_instance.start_time = TIME
 					G.ai.priority_tasks += task_instance
 					G.ai.interrupt()
+
+		if(!src.enraged)
+			src.enraged = TRUE
+			src.gorilla_rage()
+
 		..()
 
 	seek_target(var/range = 9)
