@@ -390,7 +390,7 @@ var/global/game_force_started = FALSE
 				continue
 #endif
 
-			if (player.ready_play)
+			if (player.ready_play || (player.ckey in job_controls.forced_assignments))
 				var/datum/player/P
 				if (player.mind)
 					P = player.mind.get_player()
