@@ -131,7 +131,7 @@
 	var/image/on_light = image(src.icon, "camera-light")
 	if (viewed) //only colour matrix the actual light if active, otherwise use base colour
 		on_light.color = list(
-			0, 150/255, 1, 0,
+			0, 130/255, 1.5, 0,
 			0, 1, 0, 0,
 			0, 0, 1, 0,
 			0, 0, 0, 1,
@@ -140,7 +140,7 @@
 	src.UpdateOverlays(on_light, "on_light")
 	if (viewed)
 		on_light.color = list(
-			0, 0.8, 1, 0,
+			0, 130/255, 1.5, 0,
 			0, 0, 0, 0,
 			0, 0, 0, 0,
 			0, 0, 0, 1,
