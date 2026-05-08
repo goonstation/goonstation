@@ -21,7 +21,6 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	var/atom/icon_from_thing
 	var/turf/target_loc
 	var/audio
-	var/audio_choice = "Once"
 	var/plane_choice = FALSE
 	var/dir_input = "Random"
 	var/end_effect = "Leave zlevel"
@@ -51,11 +50,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			src.plane_choice = tgui_input_list(usr, "Layer above blackness?", "Blackness layer", list(TRUE, FALSE))
 
 		if (ctrl)
-			src.audio_choice = tgui_input_list(usr, "Loop sound globally or play once on arrival?", "Choose", list("Global loop", "Once", "Clear"))
-			if (src.audio_choice == "Clear")
-				src.audio = null
-			else
-				src.audio = input(usr, "Upload a file:", "File Uploader - Long files WILL lag people out, sounds will loop.", null) as null|sound
+			src.audio = input(usr, "Upload a file:", "Uploader - Long files WILL lag people out, sound will play once at destination", null) as null|sound
 			if (src.audio)
 				logTheThing(LOG_ADMIN, usr, "uploaded a sound [src.audio] to use with Fly Object Overhead buildmode")
 
@@ -122,9 +117,6 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		pilot.set_loc(startloc)
 		animate(pilot, transform = matrix(), alpha = src.alphainput, time = 0.8 SECONDS)
 
-		if (src.audio_choice == "Global loop" && src.audio)
-			pilot.loopsound = TRUE
-
 		if (src.plane_choice)
 			pilot.plane = PLANE_ABOVE_BLACKNESS
 		else
@@ -145,7 +137,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 
 		// everything below is after the pilot reaches its destination
 
-		if (!pilot.loopsound && pilot.attached_sound)
+		if (pilot.attached_sound)
 			playsound(target_locinput, pilot.attached_sound, 30)
 
 		if (pathinput) // spawn your optional mobs and objects if chosen
@@ -176,11 +168,8 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 				robogibs(T)
 				playsound(T, pick(big_explosions), 80, 1)
 				animate(pilot, transform = matrix(), alpha = 0, time = 0.5 SECONDS)
-				if (pilot.loopsound)
+				SPAWN(15 SECONDS) // Wait some time to let most uploaded sounds play out first. Couldn't get rustg sound len to work instead
 					qdel(pilot)
-				else
-					SPAWN(15 SECONDS) // Wait some time to let most uploaded sounds play out first. Couldn't get rustg sound len to work instead
-						qdel(pilot)
 			if (FADE)
 				animate(pilot, transform = matrix(), alpha = 0, time = 0.5 SECONDS)
 				for (var/i=0,i<=3,i++)
@@ -215,34 +204,14 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	var/icon/image_overlay
 	var/sound/attached_sound
 	var/loopsound = FALSE
+	var/parent_admin
 
 	New()
 		..()
-		START_TRACKING
 		SPAWN(0)
 			var/image/ship
 			ship = image(icon=src.image_overlay, loc=src, layer = EFFECTS_LAYER_4)
 			AddOverlays(ship, "ship")
-			if (src.loopsound && src.check_for_pilots())
-				play()
-
-	disposing()
-		if (src.check_for_pilots())
-			var/sound/stopsound = sound(null, wait = TRUE)
-			world << stopsound
-		STOP_TRACKING
-		..()
-
-	proc/play()
-		if (src.loc && !QDELETED(src))
-			src.attached_sound = sound(src.attached_sound, TRUE, TRUE, volume=10)
-			world << src.attached_sound
-
-	proc/check_for_pilots() // check if there's only one pilot, used for starting and stopping looping audio
-		if (length(by_type[/obj/image_pilot]) == 1)
-			return TRUE
-		else
-			return FALSE
 
 #undef LEAVE
 #undef RUN
