@@ -108,7 +108,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 		return null
 
 // special retaliate that sends all nearby gorillas to destroy the enemy
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null) // special retaliate that sends all nearby gorillas into
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		for (var/mob/living/critter/gorilla/G in view(7, src))
 			if (G == src) continue
 			if (G.ai)
