@@ -10,6 +10,9 @@
 	health_brute_vuln = 0.6
 	health_burn = 100
 	health_burn_vuln = 1.2
+	speech_verb_say = "chimpers"
+	speech_verb_exclaim = "roars"
+	speech_verb_ask = "ooks"
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
@@ -163,4 +166,11 @@
 	desc = "HOLY SHIT"
 	enraged = TRUE
 
+/mob/living/critter/gorilla/carl
+	desc = "Now with more molecules!"
+	faction = list(FACTION_BOTANY)
 
+	New()
+		..()
+		src.name = "Carl Jr."
+		src.real_name = src.name
