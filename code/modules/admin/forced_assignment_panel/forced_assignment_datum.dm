@@ -39,6 +39,7 @@
 		var/datum/job/forced_job = forced_assignment.forced_job
 		if (istype(forced_job, /datum/job))
 			candidate.mind.assigned_role = forced_job.name
+			forced_job.assigned++
 			message_admins("[key_name(forced_assignment.ckey)] assigned to job [forced_job].")
 			logTheThing(LOG_DEBUG, candidate, "Assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].")
 			logTheThing(LOG_DIARY, candidate, "Assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].", "admin")
