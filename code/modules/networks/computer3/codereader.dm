@@ -104,8 +104,20 @@ TYPEINFO(/obj/machinery/codereader)
 /obj/machinery/codereader/syndicate/process_disk(mob/user)
 	if(istype(src.inserted_disk, /obj/item/disk/data/floppy/read_only/authentication) && !src.authdisk_uploaded_by)
 		src.authdisk_uploaded_by = (user?.real_name || "Unknown")
+		var/list/antag_roles = list()
+		var/list/bought_items = list()
+		for (var/datum/antagonist/antag_role in user.mind.antagonists)
+			antag_role += antag_role.display_name
+			if (istype(antag_role, /datum/antagonist/traitor))
+				var/datum/antagonist/traitor/traitor = antag_role
+				for (var/datum/syndicate_buylist/bought in traitor.purchased_items)
+					bought_items += bought.name
+			if (istype(antag_role, /datum/antagonist/spy_thief))
+				var/datum/antagonist/spy_thief/spief = antag_role
+				for (var/datum/syndicate_buylist/redeemed in spief.redeemed_items)
+					bought_items += redeemed.name
 		logTheThing(LOG_STATION, user, "unlocks the listening post barracks by inserting an auth disk into [src]")
-		ircbot.export_async("admin_debug", list("msg"="<@844525423412379668>: [user] ([user.ckey]) unlocked the listening post barracks with [src.inserted_disk] at [ticker.round_elapsed_ticks/(1 MINUTE)] minutes shift time"))
+		ircbot.export_async("admin_debug", list("msg"="<@844525423412379668>: [user] ([user.ckey]), job: [user.job], antag role: [english_list(antag_roles)], bought items: [english_list(bought_items)] unlocked the listening post barracks with [src.inserted_disk] at [ticker.round_elapsed_ticks/(1 MINUTE)] minutes shift time"))
 		SPAWN(3 SECONDS)
 			for (var/obj/machinery/door/airlock/airlock in by_type[/obj/machinery/door])
 				if (airlock.id == src.id)
