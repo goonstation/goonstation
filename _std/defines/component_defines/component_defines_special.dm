@@ -139,7 +139,7 @@
 		#define COMSIG_DOCK_JOHN_OUTPOST "john_outpost"
 		#define COMSIG_DOCK_JOHN_GRILLNASIUM "john_grillnasium"
 
-	// ---- Research Shuttle docks (donut2/cogmap2) ----
+	// ---- Research Shuttle docks (donut2/cogmap2/decarabia) ----
 		#define COMSIG_DOCK_RESEARCH_STATION "research_station"
 		#define COMSIG_DOCK_RESEARCH_OUTPOST "research_outpost"
 

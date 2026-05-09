@@ -468,7 +468,7 @@
 /atom/movable/screen/parallax_render_source/decarabia/clouds
 	parallax_icon_state = "snow_dense"
 	color = list(
-		1, 0, 0, 0.4,
+		0.5, 0, 0, 0.4,
 		0, 1, 0, 0.4,
 		0, 0, 1, 0.4,
 		0, 0, 0, 1,
@@ -478,7 +478,7 @@
 	scroll_speed = 10
 	scroll_angle = 150
 
-/atom/movable/screen/parallax_render_source/foreground/decarabia
+/atom/movable/screen/parallax_render_source/decarabia/clouds2
 	parallax_icon_state = "snow_dense"
 	color = list(
 		0.9, 0, 0, 0.4,

@@ -750,6 +750,12 @@ ABSTRACT_TYPE(/area/shuttle)
 	occlude_foreground_parallax_layers = FALSE
 	#ifdef UNDERWATER_MAP
 	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
+	occlude_foreground_parallax_layers = FALSE
+	#elif defined(MAP_OVERRIDE_DONUT3) || defined(MAP_OVERRIDE_DECARABIA)
+	ambient_light_source = AMBIENT_LIGHT_SRC_INVLD
+	occlude_foreground_parallax_layers = TRUE
+	#else
+	occlude_foreground_parallax_layers = FALSE
 	#endif
 
 /area/shuttle/escape/centcom
@@ -908,12 +914,20 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
 	icon_state = "shuttle2"
+	#ifdef MAP_OVERRIDE_DECARABIA
+	loc_string = "north-west"
+	#else
 	loc_string = "left"
+	#endif
 
 /area/shuttle/merchant_shuttle/right_station
 	name = "Station Merchant Shuttle Dock Beta"
 	icon_state = "shuttle2"
+	#ifdef MAP_OVERRIDE_DECARABIA
+	loc_string = "south"
+	#else
 	loc_string = "right"
+	#endif
 
 /area/shuttle/spacebus
 	name = "Space Bus"
