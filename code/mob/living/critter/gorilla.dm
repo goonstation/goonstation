@@ -109,27 +109,27 @@ TYPEINFO(/mob/living/critter/gorilla)
 
 // special retaliate that sends all nearby gorillas to destroy the enemy
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
-		for (var/mob/living/critter/gorilla/G in view(7, src))
-			if (G == src) continue
-			if (G.ai)
-				G._ai_patience_count--
-				G.ai.was_harmed(weapon,M)
-				if(G.is_hibernating)
-					if (G.registered_area)
-						G.registered_area.wake_critters(M)
+		for (var/mob/living/critter/gorilla/ally in view(7, src))
+			if (ally == src) continue
+			if (ally.ai)
+				ally._ai_patience_count--
+				ally.ai.was_harmed(weapon,M)
+				if(ally.is_hibernating)
+					if (ally.registered_area)
+						ally.registered_area.wake_critters(M)
 					else
-						G.wake_from_hibernation()
-				if(!G.enraged)
-					G.enraged = TRUE
-					G.gorilla_rage()
+						ally.wake_from_hibernation()
+				if(!ally.enraged)
+					ally.enraged = TRUE
+					ally.gorilla_rage()
 
 				// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
-				if (G.ai_retaliates && G.ai.enabled && length(G.ai.priority_tasks) <= 0 && M != G && G.is_npc)
-					var/datum/aiTask/sequence/goalbased/retaliate/task_instance = G.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(G.ai, G.ai.default_task))
+				if (ally.ai_retaliates && ally.ai.enabled && length(ally.ai.priority_tasks) <= 0 && M != ally && ally.is_npc)
+					var/datum/aiTask/sequence/goalbased/retaliate/task_instance = ally.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(ally.ai, ally.ai.default_task))
 					task_instance.targetted_mob = M
 					task_instance.start_time = TIME
-					G.ai.priority_tasks += task_instance
-					G.ai.interrupt()
+					ally.ai.priority_tasks += task_instance
+					ally.ai.interrupt()
 
 		if(!src.enraged)
 			src.enraged = TRUE

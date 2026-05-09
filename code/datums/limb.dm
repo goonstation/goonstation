@@ -2024,9 +2024,7 @@
 			if (issilicon(target))
 				special_attack_silicon(target, user)
 				return
-			else
-				..()
-				return
+
 
 		. = ..()
 
