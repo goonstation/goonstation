@@ -1371,6 +1371,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
+/obj/decal/poster/wallsign/stencil/right/one,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "asn" = (
@@ -2237,12 +2238,14 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/checkpoint/arrivals)
 "aEb" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/research_horizontal{
+	id = "hangar_research2"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -3636,6 +3639,16 @@
 	name = "reinforced plating"
 	},
 /area/station/engine/core/nuclear)
+"aWR" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 2
+	},
+/obj/machinery/r_door_control/podbay/research/new_walls/north{
+	id = "hangar_research2"
+	},
+/turf/space,
+/area/space)
 "aWV" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -4939,6 +4952,14 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "bmZ" = (
@@ -8053,7 +8074,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/jazz)
 "bXG" = (
-/obj/rack,
 /obj/decal/tile_edge/line/black{
 	dir = 9;
 	icon_state = "line2"
@@ -8063,15 +8083,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/stripe_caution,
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 2;
-	pixel_y = -1
-	},
+/obj/shrub/random,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -9109,6 +9121,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor/horprivate)
 "clO" = (
@@ -13108,6 +13123,9 @@
 "del" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/power/pt_laser,
+/obj/cable/blue{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -13689,9 +13707,6 @@
 /area/station/crewquarters/escapelounge)
 "dkq" = (
 /obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable,
@@ -13703,6 +13718,12 @@
 	level = -1
 	},
 /obj/mapping_helper/access/security,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/minitiles/black,
 /area/station/security/main)
 "dky" = (
@@ -20738,9 +20759,6 @@
 	},
 /obj/table/round/auto,
 /obj/item/clothing/glasses/sunglasses,
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
 /obj/machinery/firealarm/directional/north,
 /obj/item/clothing/head/basecap/green{
 	pixel_y = 12;
@@ -21616,6 +21634,9 @@
 /turf/simulated/floor/twotone/purple,
 /area/station/science/teleporter)
 "eYY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/security/quarters)
 "eYZ" = (
@@ -21964,7 +21985,9 @@
 /turf/simulated/floor/twotone,
 /area/station/storage/tools)
 "fdb" = (
-/obj/machinery/light/incandescent,
+/obj/machinery/r_door_control/podbay/research/new_walls/south{
+	id = "hangar_research2"
+	},
 /turf/simulated/floor/twotone,
 /area/research_outpost/hangar)
 "fdj" = (
@@ -26281,11 +26304,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/obj/storage/secure/closet/animal,
 /obj/machinery/camera/directional/south{
 	network = "Armory Perimeter";
 	pixel_x = 10
 	},
+/obj/storage/secure/closet/animal/research,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -26864,15 +26887,7 @@
 	name = "Mounted Igniter";
 	pixel_x = 24
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4;
-	external_pressure_bound = 0;
-	icon_state = "in";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	pressure_checks = 2;
-	pump_direction = 0
-	},
+/obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "gjQ" = (
@@ -30178,6 +30193,7 @@
 "gWG" = (
 /obj/storage/closet/welding_supply,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "gWI" = (
@@ -30901,10 +30917,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/comdish)
 "hfo" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "hfq" = (
@@ -35352,6 +35365,9 @@
 /obj/cable/blue{
 	icon_state = "1-8"
 	},
+/obj/cable/blue{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/ptl)
 "ihE" = (
@@ -37662,8 +37678,10 @@
 	},
 /area/station/quartermaster/cargobay)
 "iKk" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/research_horizontal{
+	id = "hangar_research2"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -42833,11 +42851,13 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
 "jXr" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/research_horizontal{
+	id = "hangar_research2"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -43638,6 +43658,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"khd" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/quarters)
 "khn" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -45135,6 +45167,7 @@
 	},
 /obj/mapping_helper/access/hydro,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/plating/random,
 /area/station/storage/hydroponics)
 "kyS" = (
@@ -45863,6 +45896,18 @@
 	dir = 4
 	},
 /area/station/crew_quarters/mime)
+"kIG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/cable/blue{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/engine/ptl)
 "kII" = (
 /obj/decal/tile_edge/line/white{
 	dir = 10;
@@ -46520,6 +46565,15 @@
 	enter_id = "inner";
 	name = "Bridge"
 	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "kRH" = (
@@ -46838,6 +46892,14 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/black/grime,
 /area/station/security/equipment)
+"kWy" = (
+/obj/cable/blue{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/engine/ptl)
 "kWC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49654,9 +49716,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor/horprivate)
 "lyT" = (
@@ -52632,7 +52691,6 @@
 	layer = 8;
 	name = "Exhaust Vent"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/research_outpost/toxins)
 "mjj" = (
@@ -53081,6 +53139,14 @@
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/longtile/black,
 /area/station/bridge)
 "mon" = (
@@ -53554,6 +53620,14 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/arrival/corner,
 /area/station/hangar/arrivals)
+"mtw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
+/obj/decal/poster/wallsign/stencil/left/two,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/toxins)
 "mtD" = (
 /obj/item/paper/book/from_file/nuclear_engineering,
 /obj/table/reinforced/industrial/auto,
@@ -55723,6 +55797,12 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/medical/morgue)
 "mVC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/security/quarters)
 "mVH" = (
@@ -57755,21 +57835,13 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "nwe" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
-	external_pressure_bound = 0;
-	icon_state = "in";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	pressure_checks = 2;
-	pump_direction = 0
-	},
 /obj/machinery/sparker{
 	id = "tox_ignition2";
 	layer = 7;
 	name = "Mounted Igniter";
 	pixel_x = 24
 	},
+/obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "nwi" = (
@@ -59804,6 +59876,9 @@
 	},
 /obj/cable/blue{
 	icon_state = "1-2"
+	},
+/obj/cable/blue{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/ptl)
@@ -61920,15 +61995,16 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "ovn" = (
@@ -62763,6 +62839,15 @@
 	icon_state = "wooden"
 	},
 /area/station/hydroponics/bay)
+"oGB" = (
+/obj/machinery/door_control/podbay/medsci/new_walls/east{
+	id = "hangar_research2";
+	pixel_x = -1;
+	pixel_y = 25;
+	dir = 2
+	},
+/turf/simulated/floor/twotone,
+/area/research_outpost/hangar)
 "oGH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -63461,6 +63546,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
 "oON" = (
@@ -70798,7 +70886,9 @@
 	pixel_y = 2;
 	name = "Red Alert Button"
 	},
-/obj/decal/poster/wallsign/iso/safe/shipboard_general_alarm,
+/obj/decal/poster/wallsign/iso/safe/shipboard_general_alarm{
+	pixel_y = 27
+	},
 /turf/simulated/floor/longtile/black,
 /area/station/bridge)
 "qEv" = (
@@ -72364,6 +72454,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/hydro,
 /turf/simulated/floor/black/grime,
 /area/station/storage/hydroponics)
 "qZb" = (
@@ -75032,9 +75123,6 @@
 /area/space)
 "rCB" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -75752,6 +75840,9 @@
 "rIQ" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/quarters)
@@ -76908,6 +76999,15 @@
 	name = "Bridge"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
 "rXi" = (
@@ -84526,7 +84626,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
+/turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
 "tJn" = (
 /obj/decal/tile_edge/line/grey{
@@ -84849,6 +84949,7 @@
 "tNm" = (
 /obj/reagent_dispensers/foamtank,
 /obj/decal/stripe_caution,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/neutral,
 /area/research_outpost/hangar)
 "tNr" = (
@@ -85169,6 +85270,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/cable/blue{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -85457,6 +85561,9 @@
 	pixel_y = 9
 	},
 /obj/table/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/quarters)
 "tVk" = (
@@ -90752,6 +90859,14 @@
 /obj/disposalpipe/segment,
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
 /turf/simulated/floor/longtile/black,
 /area/station/bridge)
 "vgI" = (
@@ -92135,6 +92250,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
+/obj/cable/blue{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -93018,7 +93136,8 @@
 	id = "mimelair";
 	name = "Privacy Shutters";
 	pixel_x = 24;
-	pixel_y = 5
+	pixel_y = 5;
+	dir = 4
 	},
 /turf/simulated/floor/blackwhite/corner{
 	dir = 4
@@ -95010,11 +95129,11 @@
 	},
 /area/station/medical/medbay/lobby)
 "wjf" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/black,
@@ -97570,11 +97689,11 @@
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
-/obj/cable/blue{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/terminal{
 	dir = 4
+	},
+/obj/cable/blue{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -110206,7 +110325,7 @@ ofe
 ffF
 vvb
 wzn
-ask
+mtw
 dxo
 wJy
 wjf
@@ -113849,7 +113968,7 @@ lqG
 fJa
 rdW
 ptO
-lgB
+oGB
 lmk
 esh
 fnw
@@ -115364,9 +115483,9 @@ oeu
 jyZ
 lgB
 jyZ
-fdb
+lgB
 sWx
-pWs
+aWR
 pWs
 pWs
 jAy
@@ -153504,7 +153623,7 @@ ifR
 oVf
 ugc
 aME
-fuu
+ugc
 rUf
 dqx
 tcH
@@ -167494,8 +167613,8 @@ iGD
 aNw
 qyM
 oFw
-wlP
-lJM
+kIG
+kWy
 del
 lNx
 loj
@@ -175285,7 +175404,7 @@ uBM
 ays
 rIQ
 mVC
-pye
+khd
 xEo
 xEo
 xEo

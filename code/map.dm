@@ -456,7 +456,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/decarabia
 	name = "DECARABIA"
-	goonhub_map = "https://goonhub.com/maps/decarabia"
+	goonhub_map = "/maps/decarabia"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/walp
 	rwalls = /turf/simulated/wall/auto/reinforced/walp

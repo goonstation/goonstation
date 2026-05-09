@@ -1000,6 +1000,14 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/tech_room)
+"AG" = (
+/obj/table/syndicate/auto,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_y = 8
+	},
+/obj/machinery/codereader/syndicate,
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room)
 "AH" = (
 /turf/variableTurf/clear,
 /area/space)
@@ -1789,13 +1797,6 @@
 /obj/item/bat,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
-"Zu" = (
-/obj/table/syndicate/auto,
-/obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_y = 8
-	},
-/turf/simulated/floor/minitiles/black,
-/area/listeningpost/tech_room)
 "ZD" = (
 /obj/cable/black{
 	icon_state = "4-8"
@@ -2340,7 +2341,7 @@ oD
 Cw
 AP
 nX
-AK
+AG
 zt
 Dq
 ZK
@@ -2374,7 +2375,7 @@ vJ
 cU
 fa
 kP
-Zu
+AK
 Ro
 sx
 xS
