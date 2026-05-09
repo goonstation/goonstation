@@ -169,7 +169,6 @@
 #include "code\datums\abilities\critter\envelope.dm"
 #include "code\datums\abilities\critter\firepoof.dm"
 #include "code\datums\abilities\critter\flamethrower.dm"
-#include "code\datums\abilities\critter\fling.dm"
 #include "code\datums\abilities\critter\frenzy.dm"
 #include "code\datums\abilities\critter\gibstare.dm"
 #include "code\datums\abilities\critter\grow.dm"

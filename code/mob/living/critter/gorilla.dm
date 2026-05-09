@@ -23,7 +23,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 	ai_type = /datum/aiHolder/gorilla
 	is_npc = TRUE
 	no_stamina_stuns = TRUE
-	add_abilities = list(/datum/targetable/critter/roar, /datum/targetable/critter/fling)
+	add_abilities = list(/datum/targetable/critter/roar, /datum/targetable/wrestler/throw/gorilla_fling)
 	var/enraged = FALSE // gorillas that are not already enraged and witness an ally being harmed will switch to aggressive AI
 
 	New()
@@ -71,8 +71,8 @@ TYPEINFO(/mob/living/critter/gorilla)
 		if (!roar.disabled && roar.cooldowncheck())
 			roar.handleCast(target)
 			return TRUE
-		var/datum/targetable/critter/fling = src.abilityHolder.getAbility(/datum/targetable/critter/fling)
-		if (!fling.disabled && fling.cooldowncheck() && is_incapacitated(target))
+		var/datum/targetable/wrestler/throw/gorilla_fling = src.abilityHolder.getAbility(/datum/targetable/wrestler/throw/gorilla_fling)
+		if (!gorilla_fling.disabled && gorilla_fling.cooldowncheck() && is_incapacitated(target))
 			//from pikaia behavior so gorillas can grab their target to use fling
 			src.set_a_intent(INTENT_GRAB)
 			src.set_dir(get_dir(src, target))
@@ -94,7 +94,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 				if (G.state <= GRAB_PASSIVE)
 					G.AttackSelf(src)
 				else
-					fling.handleCast(target)
+					gorilla_fling.handleCast(target)
 					src.set_a_intent(INTENT_HARM)
 					return TRUE
 

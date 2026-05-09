@@ -1,4 +1,4 @@
-/datum/aiHolder/gorilla
+/datum/aiHolder/gorilla // made this a distinct AI so it can be expanded on later. Maybe some more interesting behaviour for passive gorillas?
 	New()
 		..()
 		default_task = get_instance(/datum/aiTask/prioritizer/critter/gorilla, list(src))
