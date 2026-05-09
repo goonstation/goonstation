@@ -6,9 +6,10 @@
  */
 
 import { Box, Button, Divider, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { ForcedAssignmentPanelData, ForcedAssignment } from './types';
+import { ForcedAssignment, ForcedAssignmentPanelData } from './types';
 
 const ForcedAssignmentItem = (props: ForcedAssignment) => {
   const { act } = useBackend<ForcedAssignmentPanelData>();
