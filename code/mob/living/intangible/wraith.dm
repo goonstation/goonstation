@@ -42,6 +42,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 	/// flag set if we were manifested involuntarily, e.g. salt. Blocks wraith powers is true
 	var/forced_manifest = FALSE
 
+	var/whisper_toggled = TRUE // verb turning on-click whispers on and off
 	var/last_life_update = 0
 	var/const/life_tick_spacing = LIFE_PROCESS_TICK_SPACING
 	/// standard duration of an involuntary haunt action
@@ -449,7 +450,6 @@ TYPEINFO(/mob/living/intangible/wraith)
 		src.addAbility(/datum/targetable/wraithAbility/command)
 		src.addAbility(/datum/targetable/wraithAbility/animateObject)
 		src.addAbility(/datum/targetable/wraithAbility/spook)
-		src.addAbility(/datum/targetable/wraithAbility/whisper)
 		src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
 		src.addAbility(/datum/targetable/wraithAbility/blood_writing)
 		src.addAbility(/datum/targetable/wraithAbility/haunt)
@@ -508,6 +508,12 @@ TYPEINFO(/mob/living/intangible/wraith)
 
 	proc/whisper(var/mob/target)
 		var/mob/living/carbon/human/H = target
+
+		if (!src.whisper_toggled)
+			return
+		if (src.hasStatus("corporeal"))
+			boutput(usr, SPAN_ALERT("You have no tongue to speak with when corporeal!"))
+			return
 		if (isdead(H))
 			boutput(usr, SPAN_ALERT("They can hear you just fine without the use of your abilities."))
 			return
@@ -617,6 +623,14 @@ TYPEINFO(/mob/living/intangible/wraith)
 //////////////
 // Related procs and verbs
 //////////////
+
+/mob/living/intangible/wraith/verb/toggle_click_to_whisper()
+	if (src.whisper_toggled)
+		src.whisper_toggled = FALSE
+		boutput(src, SPAN_ALERT("Clicking on humans will no longer whisper to them."))
+	else
+		src.whisper_toggled = TRUE
+		boutput(src, SPAN_ALERT("Clicking on humans will now whisper to them."))
 
 /proc/visibleBodies(var/mob/M)
 	var/list/ret = new
