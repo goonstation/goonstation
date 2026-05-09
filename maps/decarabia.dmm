@@ -1762,11 +1762,10 @@
 	pixel_y = 31
 	},
 /obj/railing/orange/reinforced{
-	dir = 8
-	},
-/obj/railing/orange/reinforced,
-/obj/railing/orange/reinforced{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
@@ -5153,9 +5152,6 @@
 	dir = 4
 	},
 /area/station/crewquarters/reccenter)
-"bpe" = (
-/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
-/area/station/mining/magnet)
 "bpj" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -66758,11 +66754,6 @@
 /turf/simulated/floor/plating/airless/shuttlebay,
 /area/station/mining/magnet)
 "pDQ" = (
-/obj/machinery/door_control{
-	id = "gene_door";
-	name = "Genetics Door Control";
-	pixel_x = 25
-	},
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
@@ -142153,7 +142144,7 @@ kax
 xJC
 xJC
 htL
-dRt
+oMc
 mIC
 maf
 lmK
@@ -155533,8 +155524,8 @@ tNJ
 tNJ
 hnN
 keD
-bpe
-bpe
+gCt
+gCt
 cbe
 xJC
 xJC
