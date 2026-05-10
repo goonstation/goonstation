@@ -1233,6 +1233,22 @@
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/roller_bed
+	name = "Roller Bed"
+	item_requirements = list("metal" = 4)
+	item_outputs = list(/obj/stool/bed/moveable)
+	create = 1
+	time = 19 SECONDS
+	category = "Resource"
+
+/datum/manufacture/iv_stand
+	name = "IV Stand"
+	item_requirements = list("metal" = 3)
+	item_outputs = list(/obj/iv_stand)
+	create = 1
+	time = 12 SECONDS
+	category = "Resource"
+
 /datum/manufacture/hypospray
 	name = "Hypospray"
 	item_requirements = list("metal" = 2,

@@ -262,7 +262,8 @@
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-		/datum/manufacture/glass
+		/datum/manufacture/glass,
+		/datum/manufacture/roller_bed,
 	)
 
 	hidden = list()
