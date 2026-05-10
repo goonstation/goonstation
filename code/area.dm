@@ -69,7 +69,7 @@ TYPEINFO(/area)
 	mat_changename = 0
 	mat_changedesc = 0
 	text = ""
-	var/lightswitch = 1
+	var/lightswitch = TRUE //! If TRUE, lights in the area will start on.
 
 	/// If the area is on a restricted z leve, this controls if people can eat within it. (The reason for this might shock you!)
 	var/may_eat_here_in_restricted_z = FALSE
@@ -2415,6 +2415,9 @@ ABSTRACT_TYPE(/area/station/mining)
 	name = "Mining Magnet Control Room"
 	icon_state = "miningp"
 
+/area/station/mining/magnet_platform
+	name = "Mining Magnet Platform"
+
 /area/station/mining/cargo_staff_room
 	name = "Cargo Staff Room"
 
@@ -3397,17 +3400,25 @@ TYPEINFO(/area/station/solar/small_backup3)
 	name = "Research Outpost Solar Array"
 	icon_state = "yellow"
 
+/area/station/solar/zeta/east
+	name = "Research Outpost Solar Array East"
+	icon_state = "yellow"
+
+/area/station/solar/zeta/west
+	name = "Research Outpost Solar Array West"
+	icon_state = "yellow"
+
 ABSTRACT_TYPE(/area/station/quartermaster)
 /area/station/quartermaster
 	name = "Quartermaster's"
 	icon_state = "quart"
 	workplace = 1
 	station_map_colour = MAPC_QUARTERMASTER
+	sound_environment = 10
 
 /area/station/quartermaster/office
 	name = "Quartermaster's Office"
 	icon_state = "quartoffice"
-	sound_environment = 10
 
 /area/station/quartermaster/storage
 	name = "Quartermaster's Storage"
@@ -3417,22 +3428,22 @@ ABSTRACT_TYPE(/area/station/quartermaster)
 /area/station/quartermaster/magnet
 	name = "Magnet Control Room"
 	icon_state = "green"
-	sound_environment = 10
 
 /area/station/quartermaster/refinery
 	name = "Refinery"
 	icon_state = "green"
-	sound_environment = 10
 
 /area/station/quartermaster/cargobay
 	name = "Cargo Bay"
 	icon_state = "quartstorage"
-	sound_environment = 10
 
 /area/station/quartermaster/cargooffice
 	name = "Cargo Bay Office"
 	icon_state = "quartoffice"
-	sound_environment = 10
+
+/area/station/quartermaster/private
+	name = "Quartermaster's Quarters"
+	icon_state = "quartoffice"
 
 ABSTRACT_TYPE(/area/station/janitor)
 /area/station/janitor
@@ -3809,29 +3820,34 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	minimaps_to_render_on = null
 
 /area/research_outpost/hangar
-		name = "Research Outpost Hangar"
-		icon_state = "hangar"
+	name = "Research Outpost Hangar"
+	icon_state = "hangar"
 
 /area/research_outpost/lobby
-		name = "Research Outpost Lobby"
-		icon_state = "blue"
+	name = "Research Outpost Lobby"
+	icon_state = "blue"
 
 /area/research_outpost/chamber
-		name = "Research Outpost Test Chamber"
-		icon_state = "yellow"
+	name = "Research Outpost Test Chamber"
+	icon_state = "yellow"
 
 /area/research_outpost/maint
-		name = "Research Outpost Maintenance"
-		icon_state = "purple"
-		do_not_irradiate = TRUE
+	name = "Research Outpost Maintenance"
+	icon_state = "purple"
+	do_not_irradiate = TRUE
 
 /area/research_outpost/toxins
-		name = "Research Outpost Toxins"
-		icon_state = "green"
+	name = "Research Outpost Toxins"
+	icon_state = "green"
 
 /area/research_outpost/pathology
-		name = "Research Outpost Pathology"
-		icon_state = "pink"
+	name = "Research Outpost Pathology"
+	icon_state = "pink"
+
+/area/research_outpost/bomb_test
+	name = "Research Outpost Bomb Testing Chamber"
+	minimaps_to_render_on = null
+	icon_state = "red"
 
 // end station areas //
 

@@ -2,6 +2,7 @@
 - Solar tracker
 - Solar panel
 - Solar control computer
+- Solar configuration subtypes
 */
 
 /////////////////////////////////// Solar tracker //////////////////////////////////////////////////////
@@ -24,32 +25,6 @@ TYPEINFO(/obj/machinery/power/tracker)
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/computer/solar_control/control
 
-	north
-		id = "north"
-	south
-		id = "south"
-	alt
-		id = "alt"
-	east
-		id = "east"
-	west
-		id = "west"
-	small_backup1
-		id = "small_backup1"
-	small_backup2
-		id = "small_backup2"
-	small_backup3
-		id = "small_backup3"
-	small_backup4
-		id = "small_backup4"
-	diner
-		id = "diner"
-	silverglass
-		id = "silverglass"
-	zeta
-		id = "zeta"
-	aisat
-		id = "aisat"
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -110,35 +85,6 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/ndir = SOUTH
 	var/turn_angle = 0
 	var/obj/machinery/computer/solar_control/control
-
-
-	north
-		id = "north"
-	south
-		id = "south"
-	alt
-		id = "alt"
-	east
-		id = "east"
-	west
-		id = "west"
-	small_backup1
-		id = "small_backup1"
-	small_backup2
-		id = "small_backup2"
-	small_backup3
-		id = "small_backup3"
-	small_backup4
-		id = "small_backup4"
-	diner
-		id = "diner"
-	silverglass
-		id = "silverglass"
-	zeta
-		id = "zeta"
-	aisat
-		id = "aisat"
-
 
 /obj/machinery/power/solar/New()
 	..()
@@ -266,33 +212,6 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/lastgen = 0
 	var/active = TRUE
 	var/obj/machinery/power/tracker/tracker
-
-	north
-		solar_id = "north"
-	south
-		solar_id = "south"
-	alt
-		solar_id = "alt"
-	east
-		solar_id = "east"
-	west
-		solar_id = "west"
-	small_backup1
-		solar_id = "small_backup1"
-	small_backup2
-		solar_id = "small_backup2"
-	small_backup3
-		solar_id = "small_backup3"
-	small_backup4
-		solar_id = "small_backup4"
-	diner
-		solar_id = "diner"
-	silverglass
-		solar_id = "silverglass"
-	zeta
-		solar_id = "zeta"
-	aisat
-		solar_id = "aisat"
 
 /obj/machinery/computer/solar_control/New()
 	..()
@@ -456,3 +375,28 @@ TYPEINFO(/obj/machinery/power/solar/owl_cheat)
 				UpdateIcon()
 
 			update_solar_exposure()
+
+/////////////////////////////////////////////////// Solar Subtypes /////////////////////////////////////////
+
+#define DEFINE_SOLARS(_PATH, _ID) \
+	/obj/machinery/power/tracker/_PATH{id=_ID};\
+	/obj/machinery/power/solar/_PATH{id=_ID};\
+	/obj/machinery/computer/solar_control/_PATH{id=_ID};
+
+DEFINE_SOLARS(north, "north")
+DEFINE_SOLARS(south, "south")
+DEFINE_SOLARS(alt, "alt")
+DEFINE_SOLARS(east, "east")
+DEFINE_SOLARS(west, "west")
+DEFINE_SOLARS(small_backup1, "small_backup1")
+DEFINE_SOLARS(small_backup2, "small_backup2")
+DEFINE_SOLARS(small_backup3, "small_backup3")
+DEFINE_SOLARS(small_backup4, "small_backup4")
+DEFINE_SOLARS(diner, "diner")
+DEFINE_SOLARS(silverglass, "silverglass")
+DEFINE_SOLARS(zeta, "zeta")
+DEFINE_SOLARS(zeta_east, "zeta_east")
+DEFINE_SOLARS(zeta_west, "zeta_west")
+DEFINE_SOLARS(aisat, "aisat")
+
+#undef DEFINE_SOLARS
