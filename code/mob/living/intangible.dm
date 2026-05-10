@@ -81,6 +81,9 @@ TYPEINFO(/mob/living/intangible)
 
 		return ..()
 
+	click(atom/target, params, location, control)
+		. = ..()
+
 /mob/living/intangible/change_eye_blurry(var/amount, var/cap = 0)
 	if (amount < 0)
 		return ..()
