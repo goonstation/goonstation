@@ -14,6 +14,7 @@
 	var/lasers = 0
 	var/health = 100
 	var/obj/machinery/turretcover/cover = null
+	var/obj/machinery/turretbase/base = null
 	var/popping = 0
 	var/wasvalid = 0
 	var/lastfired = 0
@@ -27,11 +28,20 @@
 	var/image/turret_smoke_overlay = null
 
 /obj/machinery/turretcover
-	name = "pop-up turret cover"
+	name = "TurretCover"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "TurretCover"
 	anchored = ANCHORED
-	layer = OBJ_LAYER+0.5
+	layer = ABOVE_OBJ_LAYER
+	density = 0
+
+/obj/machinery/turretbase
+	name = "TurretBase"
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "TurretBase"
+	anchored = ANCHORED
+	layer = OBJ_LAYER - 0.01
+	plane = PLANE_WALL
 	density = 0
 
 /obj/machinery/turret/New()
@@ -58,7 +68,7 @@
 /obj/machinery/turret/power_change()
 	if(status & BROKEN)
 		icon_state = "Turret_off"
-		var/image/turret_overlay = ClearAllOverlays()
+		var/image/turret_overlay = ClearSpecificOverlays()
 		turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
 		turret_overlay.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(turret_overlay, "off_overlay")
@@ -67,13 +77,13 @@
 			if (src.enabled)
 				if (src.lasers)
 					icon_state = "Turret_lethal"
-					turret_overlay = ClearAllOverlays()
+					turret_overlay = ClearSpecificOverlays()
 					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
 					turret_overlay.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(turret_overlay, "lethal_overlay")
 				else
 					icon_state = "Turret_stun"
-					turret_overlay = ClearAllOverlays()
+					turret_overlay = ClearSpecificOverlays()
 					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
 					turret_overlay.plane = PLANE_SELFILLUM
 					turret_overlay.alpha = 128
@@ -81,7 +91,7 @@
 
 			else
 				icon_state = "Turret_off"
-				turret_overlay = ClearAllOverlays()
+				turret_overlay = ClearSpecificOverlays()
 				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
 				turret_overlay.plane = PLANE_SELFILLUM
 				src.UpdateOverlays(turret_overlay, "off_overlay")
@@ -89,7 +99,7 @@
 		else
 			SPAWN(rand(0, 15))
 				src.icon_state = "Turret_nopower"
-				turret_overlay = ClearAllOverlays()
+				turret_overlay = ClearSpecificOverlays()
 				src.UpdateOverlays(turret_overlay)
 				status |= NOPOWER
 
@@ -111,6 +121,8 @@
 
 	if (src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
+	if (src.base==null)
+		src.base = new /obj/machinery/turretbase(src.loc)
 	var/area/area = get_area(loc)
 	if (istype(area))
 		if(!target_list)
@@ -193,7 +205,7 @@
 		if (src.cover!=null)
 			FLICK("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
-			turret_overlay = ClearAllOverlays()
+			turret_overlay = ClearSpecificOverlays()
 			SPAWN(1.4 SECONDS)
 				if(status & BROKEN)
 					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
@@ -299,7 +311,7 @@
 	src.health = 0
 	src.set_density(0)
 	src.status |= BROKEN
-	turret_overlay = ClearAllOverlays()
+	turret_overlay = ClearSpecificOverlays()
 	turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "explosion_overlay")
 	turret_overlay.plane = PLANE_SELFILLUM
 	src.UpdateOverlays(turret_overlay, "explosion_overlay")
@@ -308,16 +320,18 @@
 		turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay_1")
 		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay_1")
 	SPAWN(1.1 SECONDS)
-		turret_overlay = ClearAllOverlays()
-		turret_smoke_overlay = ClearAllOverlays()
+		turret_overlay = ClearSpecificOverlays()
+		turret_smoke_overlay = ClearSpecificOverlays()
 		turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay_2")
 		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay_2")
 		src.icon_state = "Turret_destroyed" //same deal here
 		SPAWN(0.6 SECONDS)
-			turret_overlay = ClearAllOverlays()
-			turret_smoke_overlay = ClearAllOverlays()
+			turret_overlay = ClearSpecificOverlays()
+			turret_smoke_overlay = ClearSpecificOverlays()
 			if (cover!=null)
 				qdel(cover)
+			if(base!=null)
+				qdel(base)
 			qdel(src)
 
 /*
