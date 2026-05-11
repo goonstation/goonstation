@@ -13,14 +13,11 @@ export interface ForcedAssignmentPanelData {
 export interface ForcedAssignment {
   ckey: string;
   playerName: string;
-  forcedJobInput: string;
   forcedJob: string;
-  forcedAntagInput: Array<string>;
   forcedAntags: Record<string, ForcedAntagonist>;
 }
 
 export interface ForcedAntagonist {
-  antagonistPath: string;
   displayName: string;
   doEquipment: string;
   doObjectives: string;

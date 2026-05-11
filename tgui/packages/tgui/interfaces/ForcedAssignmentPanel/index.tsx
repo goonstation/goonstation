@@ -19,20 +19,15 @@ import {
 
 const ForcedAssignmentItem = (props: ForcedAssignment) => {
   const { act } = useBackend<ForcedAssignmentPanelData>();
-  const {
-    ckey,
-    playerName,
-    forcedJobInput,
-    forcedJob,
-    forcedAntagInput,
-    forcedAntags,
-  } = props;
+  const { ckey, playerName, forcedJob, forcedAntags } = props;
   return (
     <Table.Row className="candystripe">
-      <Table.Cell textAlign="center">{ckey}</Table.Cell>
-      <Table.Cell textAlign="center">
+      <Table.Cell textAlign="center" verticalAlign="middle">
+        {ckey}
+      </Table.Cell>
+      <Table.Cell textAlign="center" verticalAlign="middle">
         {playerName ? (
-          <Stack>
+          <Stack justify="center">
             <Stack.Item>
               <Button
                 onClick={() =>
@@ -59,51 +54,48 @@ const ForcedAssignmentItem = (props: ForcedAssignment) => {
             </Stack.Item>
           </Stack>
         ) : (
-          'N/A'
+          'OFFLINE'
         )}
       </Table.Cell>
-      <Table.Cell textAlign="center">
+      <Table.Cell textAlign="center" verticalAlign="middle">
         {forcedJob ? (
           <Button
             onClick={() => act('edit_job', { ckey: ckey })}
-            tooltip="Edit Job"
+            tooltip="Edit job"
           >
             {forcedJob}
           </Button>
-        ) : forcedJobInput ? (
-          <Stack fill vertical>
-            <Stack.Item>
-              <NoticeBox danger>Invalid Job!</NoticeBox>
-            </Stack.Item>
-            <Stack.Item>{forcedJobInput}</Stack.Item>
-          </Stack>
         ) : (
-          'N/A'
+          <Button
+            icon="plus"
+            onClick={() => act('edit_job', { ckey: ckey })}
+            tooltip="Add job"
+          />
         )}
       </Table.Cell>
-      <Table.Cell textAlign="center">
+      <Table.Cell textAlign="center" verticalAlign="middle">
         <Stack fill vertical>
-          {forcedAntags ? (
+          {!!forcedAntags &&
             Object.values(forcedAntags).map((forcedAntag) => (
               <ForcedAntagonistItem
                 key={forcedAntag.displayName}
                 ckey={ckey}
                 {...forcedAntag}
               />
-            ))
-          ) : forcedAntagInput.length ? (
-            <Stack.Item>
-              <NoticeBox danger>Invalid Antagonists!</NoticeBox>
-            </Stack.Item>
-          ) : (
-            'N/A'
-          )}
+            ))}
+          <Stack.Item>
+            <Button
+              icon="plus"
+              onClick={() => act('add_antagonist_role', { ckey: ckey })}
+              tooltip="Add antagonist role"
+            />
+          </Stack.Item>
         </Stack>
       </Table.Cell>
-      <Table.Cell textAlign="center">
+      <Table.Cell textAlign="center" verticalAlign="middle">
         <Button
           onClick={() => act('remove_forced_assignment', { ckey: ckey })}
-          color="red"
+          color="bad"
           icon="x"
           tooltip={'Remove ' + ckey}
         />
@@ -118,14 +110,8 @@ interface ForcedAntagonistProps extends ForcedAntagonist {
 
 const ForcedAntagonistItem = (props: ForcedAntagonistProps) => {
   const { act } = useBackend<ForcedAssignmentPanelData>();
-  const {
-    antagonistPath,
-    ckey,
-    displayName,
-    doEquipment,
-    doObjectives,
-    customObjective,
-  } = props;
+  const { ckey, displayName, doEquipment, doObjectives, customObjective } =
+    props;
   return (
     <Stack.Item>
       <Button
@@ -136,7 +122,7 @@ const ForcedAntagonistItem = (props: ForcedAntagonistProps) => {
           })
         }
         tooltip={
-          <Stack fill vertical textAlign="center">
+          <Stack fill vertical>
             <Stack.Item>Give Equipment: {doEquipment}</Stack.Item>
             <Stack.Item>Do Objectives: {doObjectives}</Stack.Item>
             {!!customObjective && (
@@ -199,17 +185,25 @@ export const ForcedAssignmentPanel = () => {
                 </Stack>
               }
             >
-              <Table>
+              <Table textAlign="center">
                 <Table.Row header>
-                  <Table.Cell collapsing textAlign="center">
+                  <Table.Cell textAlign="center" verticalAlign="middle">
                     CKey
                   </Table.Cell>
-                  <Table.Cell collapsing textAlign="center">
+                  <Table.Cell textAlign="center" verticalAlign="middle">
                     Player Name
                   </Table.Cell>
-                  <Table.Cell textAlign="center">Job</Table.Cell>
-                  <Table.Cell textAlign="center">Antagonist Roles</Table.Cell>
-                  <Table.Cell collapsing textAlign="center">
+                  <Table.Cell textAlign="center" verticalAlign="middle">
+                    Job
+                  </Table.Cell>
+                  <Table.Cell textAlign="center" verticalAlign="middle">
+                    Antagonist Roles
+                  </Table.Cell>
+                  <Table.Cell
+                    collapsing
+                    textAlign="center"
+                    verticalAlign="middle"
+                  >
                     Actions
                   </Table.Cell>
                 </Table.Row>
