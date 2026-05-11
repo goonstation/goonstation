@@ -57,7 +57,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 
 	valid_target(mob/living/C)
 		if (istype(C, /mob/living/critter/gorilla)) return FALSE
-		return ..() // in the infinite expanse of space, gorillas live in harmony
+		. = ..()// in the infinite expanse of space, gorillas live in harmony
 
 	critter_basic_attack(mob/target)
 		if(!ON_COOLDOWN(src, "gorilla_ook", 5 SECONDS))
@@ -150,12 +150,12 @@ TYPEINFO(/mob/living/critter/gorilla)
 	proc/gorilla_rage()
 		qdel(src.ai)
 		src.ai = null
-		src.ai_type = /datum/aiHolder/gorilla/aggressive
+		src.ai_type = /datum/aiHolder/gorilla_aggressive
 		src.ai = new src.ai_type(src)
 
 
 /mob/living/critter/gorilla/aggressive // gorrillas that start enraged for admemes
-	ai_type = /datum/aiHolder/gorilla/aggressive
+	ai_type = /datum/aiHolder/gorilla_aggressive
 	desc = "HOLY SHIT"
 	enraged = TRUE
 

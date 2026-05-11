@@ -8,12 +8,12 @@
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/floor_only, list(holder, src))
 
 
-/datum/aiHolder/gorilla/aggressive
+/datum/aiHolder/gorilla_aggressive
 	New()
 		..()
-		default_task = get_instance(/datum/aiTask/prioritizer/critter/gorilla/aggressive, list(src))
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/gorilla_aggressive, list(src))
 
-/datum/aiTask/prioritizer/critter/gorilla/aggressive/New()
+/datum/aiTask/prioritizer/critter/gorilla_aggressive/New()
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive/melee, list(src.holder, src))
