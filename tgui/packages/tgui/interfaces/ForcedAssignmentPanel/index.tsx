@@ -23,7 +23,12 @@ const ForcedAssignmentItem = (props: ForcedAssignment) => {
   return (
     <Table.Row className="candystripe">
       <Table.Cell textAlign="center" verticalAlign="middle">
-        {ckey}
+        <Button
+          onClick={() => act('edit_ckey', { ckey: ckey })}
+          tooltip="Change CKey"
+        >
+          {ckey}
+        </Button>
       </Table.Cell>
       <Table.Cell textAlign="center" verticalAlign="middle">
         {playerName ? (
@@ -86,7 +91,7 @@ const ForcedAssignmentItem = (props: ForcedAssignment) => {
           <Stack.Item>
             <Button
               icon="plus"
-              onClick={() => act('add_antagonist_role', { ckey: ckey })}
+              onClick={() => act('add_antagonist_roles', { ckey: ckey })}
               tooltip="Add antagonist role"
             />
           </Stack.Item>
@@ -104,37 +109,55 @@ const ForcedAssignmentItem = (props: ForcedAssignment) => {
   );
 };
 
-interface ForcedAntagonistProps extends ForcedAntagonist {
+interface ForcedAntagonistItemProps extends ForcedAntagonist {
   ckey: string;
 }
 
-const ForcedAntagonistItem = (props: ForcedAntagonistProps) => {
+const ForcedAntagonistItem = (props: ForcedAntagonistItemProps) => {
   const { act } = useBackend<ForcedAssignmentPanelData>();
   const { ckey, displayName, doEquipment, doObjectives, customObjective } =
     props;
   return (
     <Stack.Item>
-      <Button
-        onClick={() =>
-          act('edit_antagonist_role', {
-            ckey: ckey,
-            forcedAntagonist: displayName,
-          })
-        }
-        tooltip={
-          <Stack fill vertical>
-            <Stack.Item>Give Equipment: {doEquipment}</Stack.Item>
-            <Stack.Item>Do Objectives: {doObjectives}</Stack.Item>
-            {!!customObjective && (
-              <Stack.Item>Custom Objective: {customObjective}</Stack.Item>
-            )}
-          </Stack>
-        }
-      >
-        <Stack fill vertical>
-          <Stack.Item>{capitalize(displayName)}</Stack.Item>
-        </Stack>
-      </Button>
+      <Stack fill justify="center">
+        <Stack.Item>
+          {' '}
+          <Button
+            onClick={() =>
+              act('edit_antagonist_role', {
+                ckey: ckey,
+                displayName: displayName,
+              })
+            }
+            tooltip={
+              <Stack fill vertical>
+                <Stack.Item>Give Equipment: {doEquipment}</Stack.Item>
+                <Stack.Item>Do Objectives: {doObjectives}</Stack.Item>
+                {!!customObjective && (
+                  <Stack.Item>Custom Objective: {customObjective}</Stack.Item>
+                )}
+              </Stack>
+            }
+          >
+            <Stack fill vertical>
+              <Stack.Item>{capitalize(displayName)}</Stack.Item>
+            </Stack>
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            icon="x"
+            color="bad"
+            onClick={() =>
+              act('remove_antagonist', {
+                ckey: ckey,
+                displayName: displayName,
+              })
+            }
+            tooltip={'Remove ' + displayName}
+          />
+        </Stack.Item>
+      </Stack>
     </Stack.Item>
   );
 };
@@ -163,24 +186,34 @@ export const ForcedAssignmentPanel = () => {
               buttons={
                 <Stack>
                   <Stack.Item>
-                    <Button onClick={() => act('add_forced_assignment')}>
-                      Add Forced Assignment
-                    </Button>
+                    <Button
+                      onClick={() => act('add_forced_assignment')}
+                      color="good"
+                      icon="plus"
+                      tooltip="Add Forced Assignment"
+                    />
                   </Stack.Item>
                   <Stack.Item>
-                    <Button onClick={() => act('clear_forced_assignments')}>
-                      Clear All
-                    </Button>
+                    <Button
+                      onClick={() => act('clear_forced_assignments')}
+                      color="bad"
+                      icon="trash"
+                      tooltip="Clear All"
+                    />
                   </Stack.Item>
                   <Stack.Item>
-                    <Button onClick={() => act('import_forced_assignments')}>
-                      Import
-                    </Button>
+                    <Button
+                      onClick={() => act('import_forced_assignments')}
+                      icon="file-import"
+                      tooltip="Import"
+                    />
                   </Stack.Item>
                   <Stack.Item>
-                    <Button onClick={() => act('export_forced_assignments')}>
-                      Export
-                    </Button>
+                    <Button
+                      onClick={() => act('export_forced_assignments')}
+                      icon="file-export"
+                      tooltip="Export"
+                    />
                   </Stack.Item>
                 </Stack>
               }

@@ -1,3 +1,7 @@
+// todo
+// allow re-assigning names of forced assignments
+// remove the indexing by ckey and antag display name stuff it's really annoying for list operations
+
 /client/proc/cmd_forced_assignment_panel()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Forced Assignment Panel"
@@ -44,32 +48,31 @@
 			if (global.job_controls.forced_assignments[ckey])
 				boutput(user, SPAN_ALERT("Requested ckey [ckey] already has a forced assignment!"))
 				return
-			var/new_assignment = src.input_job(user)
+			var/datum/job/new_job = src.input_job(user)
 			var/list/datum/forced_antagonist/new_antagonists = src.input_antagonist_roles(user)
-			if (tgui_alert(user, "Create forced assignment with parameters (ckey: [ckey], job: [new_assignment ? new_assignment : "n/a"]\
+			if (tgui_alert(user, "Create forced assignment with parameters (ckey: [ckey], job: [new_job ? new_job.name : "n/a"]\
 				[length(new_antagonists) ? ", [length(new_antagonists)] antag role[(length(new_antagonists) == 0 || length(new_antagonists) > 1) \
 				? "s" : ""]" : ""])?", "Confirmation", list("Create", "Cancel")) != "Create")
 				return
-			var/datum/forced_assignment/forced_assignment = new(ckey, new_assignment, new_antagonists)
+			var/datum/forced_assignment/forced_assignment = new(ckey, new_job, new_antagonists)
 			global.job_controls.forced_assignments[ckey] = forced_assignment
-			message_admins("Admin [key_name(ui.user)] forced ckey [find_player(ckey) ? key_name(ckey) : \
-				ckey] to roll [!!new_assignment && " [new_assignment]"] on round start!")
-			logTheThing(LOG_ADMIN, ui.user, "added forced assignment [!!new_assignment && " [new_assignment]"] to ckey [ckey]")
-			logTheThing(LOG_DIARY, ui.user, "added forced assignment [!!new_assignment && " [new_assignment]"] to ckey [ckey]", "admin")
+			message_admins("Admin [key_name(ui.user)] added a forced assignment to ckey [find_player(ckey) ? key_name(ckey) : ckey] ([new_job \
+				? new_job : ""][length(new_antagonists) ? ", [length(new_antagonists)] antag roles" : ""]) on round start!")
+			logTheThing(LOG_ADMIN, ui.user, "added forced assignment to ckey [find_player(ckey) ? key_name(ckey) : ckey] \
+				([new_job ? new_job : ""][length(new_antagonists) ? ", [length(new_antagonists)] antag roles" : ""]) on round start")
+			logTheThing(LOG_DIARY, ui.user, "added forced assignment to ckey [find_player(ckey) ? key_name(ckey) : ckey] \
+				([new_job ? new_job : ""][length(new_antagonists) ? ", [length(new_antagonists)] antag roles" : ""]) on round start", "admin")
 			. = TRUE
 
 		if ("remove_forced_assignment")
 			var/ckey = ckey(params["ckey"])
-			if (!(ckey in global.job_controls.forced_assignments))
-				boutput(user, SPAN_ALERT("Unable to find forced assignment attached to ckey [ckey]!"))
-				return
-			var/datum/forced_assignment/forced_assignment = global.job_controls.forced_assignments[ckey]
+			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, ckey)
 			if (!istype(forced_assignment, /datum/forced_assignment))
 				return
 			message_admins("Admin [key_name(ui.user)] removed ckey [find_player(ckey) ? key_name(ckey) : \
 				ckey] from forced assignments on round start!")
-			logTheThing(LOG_ADMIN, ui.user, "removed forced assignments from ckey [ckey]")
-			logTheThing(LOG_DIARY, ui.user, "removed forced assignments from ckey [ckey]", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "removed forced assignment from ckey [ckey]")
+			logTheThing(LOG_DIARY, ui.user, "removed forced assignment from ckey [ckey]", "admin")
 			qdel(forced_assignment)
 			global.job_controls.forced_assignments -= ckey
 			. = TRUE
@@ -110,7 +113,10 @@
 				return
 			var/forced_assignment_export = json_encode(src.serialise_forced_assignments(), JSON_PRETTY_PRINT)
 			// todo file save instead
-			user.Browse("<title>Forced Assignment Export</title><pre>[forced_assignment_export]</pre>", "window=forced_assignment_export;size=500x700")
+			// user.Browse("<title>Forced Assignment Export</title><pre>[forced_assignment_export]</pre>", "window=forced_assignment_export;size=500x700")
+			var/filename = "ForcedAssignments_[limit_chars(capitalize_each_word((config.server_name)), include_nums = TRUE, include_letters = TRUE)]_\
+				[time2text(world.realtime,"YYYY-MM-DD")].txt"
+			user.client << ftp(forced_assignment_export, filename)
 
 		if ("open_player_options")
 			if (!user.client) return
@@ -128,28 +134,84 @@
 				do_admin_pm(M.ckey, user)
 				break
 
+		if ("edit_ckey")
+			var/old_ckey = ckey(params["ckey"])
+			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, old_ckey)
+			if (!istype(forced_assignment, /datum/forced_assignment))
+				return
+			var/new_ckey = ckey(tgui_input_text(user, "Designate ckey to assign forced assignment.", "Designate ckey"))
+			if (!new_ckey)
+				return
+			if (global.job_controls.forced_assignments[new_ckey])
+				boutput(user, SPAN_ALERT("Requested ckey [new_ckey] already has a forced assignment!"))
+				return
+			if (tgui_alert(user, "Confirm replacement from ckey [old_ckey] to [new_ckey].", "Confirmation", list("Confirm", "Cancel")) != "Confirm")
+				return
+			forced_assignment.ckey = new_ckey
+			global.job_controls.forced_assignments -= forced_assignment
+			global.job_controls.forced_assignments[new_ckey] = forced_assignment
+			message_admins("Admin [key_name(ui.user)] re-designated a forced assignment from ckey [find_player(old_ckey) ? key_name(old_ckey) : \
+				old_ckey] to [find_player(new_ckey) ? key_name(new_ckey) : new_ckey]!")
+			logTheThing(LOG_ADMIN, ui.user, "re-designated a forced assignment from ckey [old_ckey] to [new_ckey]")
+			logTheThing(LOG_DIARY, ui.user, "re-designated a forced assignment from ckey [old_ckey] to [new_ckey]", "admin")
+			. = TRUE
+
 		if ("edit_job")
 			var/target_ckey = params["ckey"]
 			if (!length(target_ckey))
 				return
-			if (!(target_ckey in global.job_controls.forced_assignments))
+			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, target_ckey)
+			if (!istype(forced_assignment, /datum/forced_assignment))
 				return
-			var/datum/forced_assignment/forced_assignment = global.job_controls.forced_assignments[target_ckey]
-			var/datum/job/old_assignment = forced_assignment.forced_job
-			var/new_assignment = src.input_job(user)
-			if (!new_assignment)
+			var/datum/job/old_job = forced_assignment.forced_job
+			var/datum/job/new_job = src.input_job(user)
+			if (!new_job)
 				return
-			if (tgui_alert(user, "Confirm re-assignment for ckey [target_ckey] from [old_assignment.name] to [new_assignment].", \
+			if (tgui_alert(user, "Confirm re-assignment for ckey [target_ckey] from [old_job.name] to [new_job].", \
 				"Confirmation", list("Confirm", "Cancel")) != "Confirm")
 				return
-			forced_assignment.change_job(new_assignment)
+			forced_assignment.change_job(new_job)
 			message_admins("Admin [key_name(ui.user)] forced ckey [find_player(target_ckey) ? key_name(target_ckey) : \
-				target_ckey] to roll [new_assignment] on round start!")
-			logTheThing(LOG_ADMIN, ui.user, "added forced assignment [new_assignment] to ckey [target_ckey]")
-			logTheThing(LOG_DIARY, ui.user, "added forced assignment [new_assignment] to ckey [target_ckey]", "admin")
+				target_ckey] to roll [new_job] on round start!")
+			logTheThing(LOG_ADMIN, ui.user, "added forced assignment [new_job] to ckey [target_ckey]")
+			logTheThing(LOG_DIARY, ui.user, "added forced assignment [new_job] to ckey [target_ckey]", "admin")
+			. = TRUE
+
+		if ("add_antagonist_roles")
+			var/target_ckey = params["ckey"]
+			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, target_ckey)
+			if (!istype(forced_assignment, /datum/forced_assignment))
+				return
+			var/list/datum/forced_antagonist/new_antagonists = src.input_antagonist_roles(user, forced_assignment)
+			if (!length(new_antagonists))
+				return
+			if (tgui_alert(user, "Confirm addition of [length(new_antagonists)] antag roles to [target_ckey]'s forced assignment.", "Confirmation", \
+				list("Confirm", "Cancel")) != "Confirm")
+				return
+			forced_assignment.forced_antags += new_antagonists
+			message_admins("Admin [key_name(ui.user)] added [length(new_antagonists)] more antag roles to [find_player(target_ckey) \
+				? key_name(target_ckey) : target_ckey]'s forced assignment!")
+			logTheThing(LOG_ADMIN, ui.user, "added [length(new_antagonists)] more antag roles to ckey [target_ckey]'s forced assignment")
+			logTheThing(LOG_DIARY, ui.user, "added [length(new_antagonists)] more antag roles to ckey [target_ckey]'s forced assignment", "admin")
 			. = TRUE
 
 		if ("edit_antagonist_role")
+			var/target_ckey = params["ckey"]
+			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, target_ckey)
+			if (!istype(forced_assignment, /datum/forced_assignment))
+				return
+			var/datum/forced_antagonist/forced_antagonist = forced_assignment.forced_antags[params["displayName"]]
+			if (!istype(forced_antagonist, /datum/forced_antagonist))
+				return
+			var/list/antagonist_params = src.adjust_antagonist_params(user)
+			if (!length(antagonist_params))
+				return
+			if (tgui_alert(usr, "Confirm selected antagonist [forced_antagonist.display_name]. Equipment and abilities will[antagonist_params[1] == "Yes" \
+				? "" : " NOT"] be added.[antagonist_params[3]].", "Designate antag roles", list("Confirm", "Cancel")) != "Confirm")
+				return
+			forced_antagonist.do_equipment = antagonist_params[1]
+			forced_antagonist.do_objectives = antagonist_params[2]
+			forced_antagonist.custom_objective = antagonist_params[4]
 			. = TRUE
 
 /datum/forced_assignment_panel/proc/input_job(mob/caller)
@@ -157,8 +219,10 @@
 		(global.job_controls.staple_jobs|global.job_controls.special_jobs|global.job_controls.hidden_jobs))
 
 /// For continuous input of multiple antagonist roles to a single ckey. Why would you need more than the one?
-/datum/forced_assignment_panel/proc/input_antagonist_roles(mob/caller)
+/datum/forced_assignment_panel/proc/input_antagonist_roles(mob/caller, datum/forced_assignment/forced_assignment)
 	. = list()
+	if (istype(forced_assignment, /datum/forced_assignment))
+		. = forced_assignment.forced_antags
 	while (TRUE)
 		var/datum/forced_antagonist/new_forced_antagonist = src.input_antagonist(caller, continuous = TRUE, current_list = .)
 		if (istype(new_forced_antagonist, /datum/forced_antagonist))
@@ -191,6 +255,18 @@
 		if (tgui_alert(caller, "Current list has an antagonist role ([initial(antagonist_to_check.display_name)]) that will not naturally occur with \
 			others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
 			return
+	var/list/antagonist_params = src.adjust_antagonist_params(caller)
+	if (!length(antagonist_params))
+		return
+	if (tgui_alert(usr, "Confirm selected antagonist [selected_antagonist]. Equipment and abilities will[antagonist_params[1] == "Yes" \
+		? "" : " NOT"] be added.[antagonist_params[3]].", "Designate antag roles", list("Confirm", "Cancel")) != "Confirm")
+		return
+	var/datum/forced_antagonist/new_forced_antagonist = new(eligible_antagonists[selected_antagonist], antagonist_params[1], antagonist_params[2], \
+		antagonist_params[4])
+	. = new_forced_antagonist
+
+/datum/forced_assignment_panel/proc/adjust_antagonist_params(mob/caller)
+	. = list()
 	var/do_equipment = tgui_alert(caller, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", \
 		"Designate antag roles", list("Yes", "No", "Cancel"))
 	if (do_equipment == "Cancel")
@@ -207,18 +283,22 @@
 			do_objectives_text = " Objectives will be generated automatically"
 		if ("Custom")
 			do_objectives_text = " A custom objective will be added"
-	if (tgui_alert(usr, "Confirm selected antagonist [selected_antagonist]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be \
-		added.[do_objectives_text].", "Designate antag roles", list("Confirm", "Cancel")) != "Confirm")
-		return
-	var/datum/forced_antagonist/new_forced_antagonist = new(eligible_antagonists[selected_antagonist], do_equipment, do_objectives,\
-		custom_objective)
-	. = new_forced_antagonist
+	. = list(do_equipment, do_objectives, do_objectives_text, custom_objective)
 
 /datum/forced_assignment_panel/proc/clear_forced_assignments()
 	for (var/forced_assignment_index in global.job_controls.forced_assignments)
 		var/datum/forced_assignment/forced_assignment = global.job_controls.forced_assignments[forced_assignment_index]
 		qdel(forced_assignment)
 	global.job_controls.forced_assignments = list()
+
+/datum/forced_assignment_panel/proc/get_assignment_by_ckey(mob/caller, ckey)
+	if (!(ckey in global.job_controls.forced_assignments))
+		boutput(caller, SPAN_ALERT("Unable to find forced assignment attached to ckey [ckey]!"))
+		return
+	var/datum/forced_assignment/forced_assignment = global.job_controls.forced_assignments[ckey]
+	if (!istype(forced_assignment, /datum/forced_assignment))
+		return
+	. = forced_assignment
 
 /datum/forced_assignment_panel/proc/serialise_forced_assignments()
 	. = list()
@@ -229,9 +309,7 @@
 		serialised_forced_assignment = list(
 			"ckey" = forced_assignment.ckey,
 			"playerName" = ckey_player?.client?.mob?.name || null,
-			"forcedJobInput" = forced_assignment.forced_job || null,
 			"forcedJob" = forced_assignment.forced_job?.name || null,
-			"forcedAntagInput" = forced_assignment.forced_antags_input || null,
 		)
 		if (length(forced_assignment.forced_antags))
 			var/list/serialised_forced_antags = list()
@@ -239,7 +317,6 @@
 				var/list/serialised_forced_antag = list()
 				var/datum/forced_antagonist/forced_antagonist = forced_assignment.forced_antags[forced_antagonist_index]
 				serialised_forced_antag = list(
-					"antagonistPath" = forced_antagonist.antagonist_path,
 					"displayName" = forced_antagonist.display_name,
 					"doEquipment" = forced_antagonist?.do_equipment || null,
 					"doObjectives" = forced_antagonist?.do_objectives || null,
