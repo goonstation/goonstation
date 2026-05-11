@@ -307,6 +307,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	slice_amount = 10
 	default_material = "glass"
 
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "clear blue"
+
 // Ocean saltwater fish
 
 /obj/item/reagent_containers/food/fish/herring
