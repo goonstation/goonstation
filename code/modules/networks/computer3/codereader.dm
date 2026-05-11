@@ -107,7 +107,7 @@ TYPEINFO(/obj/machinery/codereader)
 		var/list/antag_roles = list()
 		var/list/bought_items = list()
 		for (var/datum/antagonist/antag_role in user.mind.antagonists)
-			antag_role += antag_role.display_name
+			antag_roles += antag_role.display_name
 			if (istype(antag_role, /datum/antagonist/traitor))
 				var/datum/antagonist/traitor/traitor = antag_role
 				for (var/datum/syndicate_buylist/bought in traitor.purchased_items)
