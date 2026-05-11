@@ -816,6 +816,7 @@
 #include "code\modules\admin\buildmodes\adventure\elements\trap\foam.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\trap\lightning.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\trap\projectile.dm"
+#include "code\modules\admin\forced_assignment_panel\forced_antagonist_datum.dm"
 #include "code\modules\admin\forced_assignment_panel\forced_assignment_datum.dm"
 #include "code\modules\admin\forced_assignment_panel\forced_assignment_panel.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\trap\smoke.dm"

@@ -1,22 +1,44 @@
+// todo
+// actually make it apply antag roles
+
 /**
- * For forcing the job controller to assign specific ckeys to specific jobs.
+ * For forcing the job controller to assign specific ckeys to specific jobs and antagonist roles.
 */
 /datum/forced_assignment
 	var/ckey = null
 	var/forced_job_input = null
 	var/datum/job/forced_job = null
+	var/list/forced_antags_input = list()
+	var/list/datum/forced_antagonist/forced_antags = list()
 
-/datum/forced_assignment/New(new_ckey = null, new_forced_job = null, list/new_forced_antag_roles = list())
+/datum/forced_assignment/New(new_ckey = null, new_forced_job = null, list/new_forced_antags = list())
 	. = ..()
-	src.ckey = new_ckey
+	src.ckey = ckey(new_ckey)
 	if (new_forced_job)
-		src.forced_job = find_job_in_controller_by_string(new_forced_job)
-	if (src.ckey)
+		src.forced_job_input = new_forced_job
+	if (istype(src.forced_job_input, /datum/job))
+		src.forced_job = src.forced_job_input
+	else
+		src.forced_job = find_job_in_controller_by_string(src.forced_job_input)
+	if (new_forced_antags)
+		src.forced_antags_input = new_forced_antags
+	var/antags_input_valid = TRUE
+	for (var/forced_antags_input_index in src.forced_antags_input)
+		if (istype(src.forced_antags_input[forced_antags_input_index], /datum/forced_antagonist))
+			continue
+		antags_input_valid = FALSE
+	if (antags_input_valid)
+		src.forced_antags = src.forced_antags_input
+
+/datum/forced_assignment/proc/change_job(new_job_input)
+	var/datum/job/new_job
+	if (istype(new_job_input, /datum/job))
+		new_job = new_job_input
+	else
+		new_job = find_job_in_controller_by_string(new_job_input)
+	if (!istype(new_job, /datum/job))
 		return
-	if (src in job_controls.forced_assignments)
-		logTheThing(LOG_DEBUG, src, "Forced assignment generated without ckey! Removing from forced assignments list!")
-		job_controls.forced_assignments -= src
-		qdel(src)
+	src.forced_job = new_job
 
 /// Assigns forced jobs at roundstart based off of existing `/datum/forced_assignment`s in `job_controls`.
 /proc/handle_forced_job_assignments(list/unassigned_personnel)
@@ -43,7 +65,3 @@
 			message_admins("[key_name(forced_assignment.ckey)] assigned to job [forced_job].")
 			logTheThing(LOG_DEBUG, candidate, "Assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].")
 			logTheThing(LOG_DIARY, candidate, "Assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].", "admin")
-		else
-			message_admins("[key_name(forced_assignment.ckey)] assigned to no job at all.")
-			logTheThing(LOG_DEBUG, candidate, "Assigned [candidate] (ckey: [forced_assignment.ckey]) to no job at all.")
-			logTheThing(LOG_DIARY, candidate, "Assigned [candidate] (ckey: [forced_assignment.ckey]) to no job at all.", "admin")
