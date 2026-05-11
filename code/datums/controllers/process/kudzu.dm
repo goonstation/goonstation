@@ -44,7 +44,10 @@
 			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			H.set_body_icon_dirty()
 			return
-		src.conversion_progress += rand(CONVERT_PER_CORPSE_MINIMUM, CONVERT_PER_CORPSE_MAXIMUM)
+		if(H.hasStatus("kudzuwalk") && !iskudzuman(H))
+			src.grant_conversion()
+		else
+			src.conversion_progress += rand(CONVERT_PER_CORPSE_MINIMUM, CONVERT_PER_CORPSE_MAXIMUM)
 		if(src.conversion_progress < CONVERT_REQUIRED)
 			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			H.set_body_icon_dirty()
@@ -62,6 +65,9 @@
 			H.abilityHolder.dispose()
 			H.abilityHolder = null
 		H.mind?.add_antagonist(ROLE_KUDZUPERSON, source = ANTAGONIST_SOURCE_CONVERTED, respect_mutual_exclusives = FALSE)
+
+	proc/grant_conversion()
+		src.conversion_progress += CONVERT_REQUIRED
 
 /mob/living/carbon/human/proc/infect_kudzu()
 	var/obj/icecube/kudzu/cube = new /obj/icecube/kudzu(get_turf(src), src)

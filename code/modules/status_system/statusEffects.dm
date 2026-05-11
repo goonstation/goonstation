@@ -2878,9 +2878,10 @@
 
 	onRemove()
 		..()
-		if (src.added_accent)
-			var/mob/living/M = src.owner
-			M.bioHolder.RemoveEffectInstance(src.added_accent)
+		SPAWN(0)
+			if (src.added_accent)
+				var/mob/living/M = src.owner
+				M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_ATOM_SAY)
 
 /datum/statusEffect/graffiti
@@ -3995,3 +3996,37 @@
 	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
 	icon_state = "therapy_zone"
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/camera_awareness
+	id = "camera_awareness"
+	visible = FALSE
+	/// Camera coverage emitters we are currently using to see
+	var/list/current_emitters = list()
+
+	onUpdate(timePassed)
+		//First, find all the emitters we're using
+		var/list/new_emitters
+		if (isAIeye(src.owner))
+			var/mob/living/intangible/aieye/eye = src.owner
+			if (!eye.mainframe) //???
+				return
+			new_emitters = eye.mainframe.currently_using_cameras()
+		else
+			var/mob/mob_owner = src.owner
+			if (!mob_owner.client)
+				return
+			for (var/turf/T in view(mob_owner.client.view, get_turf(src.owner)))
+				for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
+					new_emitters |= emitter
+
+		//register and deregister the ones that have changed
+		for (var/datum/component/camera_coverage_emitter/emitter as anything in src.current_emitters)
+			//not in the new batch, we're not using this camera anymore
+			if (!(emitter in new_emitters))
+				emitter.unregister_user(src.owner)
+				src.current_emitters -= emitter
+		for (var/datum/component/camera_coverage_emitter/emitter as anything in new_emitters)
+			//new one!
+			if (!(emitter in src.current_emitters))
+				emitter.register_user(src.owner)
+				src.current_emitters += emitter

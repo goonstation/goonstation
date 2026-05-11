@@ -15,28 +15,29 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { pluralize } from 'tgui-core/string';
+import { capitalizeAll, pluralize } from 'tgui-core/string';
 
 import { useBackend, useSharedState } from '../../backend';
-import type { EnvironmentProps, SpellData, WizardSpellbookData } from './type';
+import type { EnvironmentProps, ItemData, UplinkData } from './type';
 
 const THUMBNAIL_SIZE = '32px';
 
 const buildPurchaseText = (
   purchased: boolean,
   cost: number,
-  spellSlots: number,
+  currency_amount: number,
+  currency_name: string,
 ) => {
   if (purchased) {
-    return 'Spell purchased';
-  } else if (cost > spellSlots) {
-    return 'Not enough spell slots';
+    return 'Purchased';
+  } else if (cost > currency_amount) {
+    return `Not enough ${currency_name}s`;
   }
-  return `Purchase for ${cost} ${pluralize('spell slot', cost)}`;
+  return `Purchase for ${cost} ${pluralize(capitalizeAll(currency_name), cost)}`;
 };
 
-interface SpellItemProps extends EnvironmentProps {
-  spell: SpellData;
+interface ItemProps extends EnvironmentProps {
+  item: ItemData;
 }
 
 // needed to standardize a button within the `title` prop of a `Section` component
@@ -44,20 +45,20 @@ const titleButtonResetProps = {
   style: { fontWeight: 'normal' },
 };
 
-export const SpellItem = (props: SpellItemProps) => {
-  const { act } = useBackend<WizardSpellbookData>();
-  const { spell, isVr, spellSlots } = props;
-  const { name, desc, cooldown, cost, spell_img, vr_allowed } = spell;
+export const ItemEntry = (props: ItemProps) => {
+  const { act } = useBackend<UplinkData>();
+  const { item, isVr, currency_amount, currency_name } = props;
+  const { name, desc, cooldown, cost, icon, vr_allowed } = item;
   const [purchased, setPurchased] = useSharedState(name + '-purchased', false);
 
   const title = (
     <Stack align="center">
-      {!!spell_img && (
+      {!!icon && (
         <Stack.Item height={THUMBNAIL_SIZE}>
           <Image
             height={THUMBNAIL_SIZE}
             width={THUMBNAIL_SIZE}
-            src={`data:image/png;base64,${spell_img}`}
+            src={`data:image/png;base64,${icon}`}
           />
         </Stack.Item>
       )}
@@ -66,13 +67,13 @@ export const SpellItem = (props: SpellItemProps) => {
         <Button
           {...titleButtonResetProps}
           color="good"
-          disabled={spellSlots < cost || purchased}
+          disabled={currency_amount < cost || purchased}
           onClick={() => {
             setPurchased(true);
-            act('buyspell', { spell: name });
+            act('purchase', { item: name });
           }}
         >
-          {buildPurchaseText(purchased, cost, spellSlots)}
+          {buildPurchaseText(purchased, cost, currency_amount, currency_name)}
         </Button>
       </Stack.Item>
     </Stack>
@@ -82,7 +83,7 @@ export const SpellItem = (props: SpellItemProps) => {
       {isVr && !vr_allowed && (
         <Dimmer>
           <Box fontSize={1.5} backgroundColor="#384e68">
-            Spell unavailable in VR
+            Unavailable in VR
           </Box>
         </Dimmer>
       )}

@@ -752,10 +752,10 @@
 		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
 		color = "yellow"
 
-	ketamine
+	thio
 		name = "sleep blowdarts"
-		desc = "These darts are loaded with a heavy dose of horse-tranquilizer."
-		ammo_type = new/datum/projectile/bullet/blow_dart/ketamine
+		desc = "These darts are loaded with a heavy dose of fast-acting tranquilizer."
+		ammo_type = new/datum/projectile/bullet/blow_dart/thio
 		color = "#00c5e7"
 
 		single //I hate this

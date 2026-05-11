@@ -181,6 +181,40 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 		item_state = "hoodieL-purple"
 		hcolor = "purple"
 
+/* ======== Raincoats ======== */
+/obj/item/clothing/suit/raincoat
+	name = "raincoat"
+	desc = "Perfect for frolicking in the rain. Wait, does space even have rain?"
+	icon = 'icons/obj/clothing/overcoats/hoods/raincoats.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_raincoats.dmi'
+	icon_state = "raincoat-yellow"
+	item_state = "raincoat-yellow"
+	body_parts_covered = TORSO|ARMS
+	var/rcolor = "yellow"
+	New()
+		..()
+		setProperty("chemprot", 10)
+		src.AddComponent(/datum/component/toggle_hood, hood_style="raincoat[src.rcolor ? "-[rcolor]" : null]")
+		src.icon_state = "raincoat[src.rcolor ? "-[rcolor]" : null]"
+		src.item_state = "raincoat[src.rcolor ? "-[rcolor]" : null]"
+
+	green
+		name = "green raincoat"
+		icon_state = "raincoat-green"
+		icon_state = "raincoat-green"
+		rcolor = "green"
+
+	blue
+		name = "blue raincoat"
+		icon_state = "raincoat-blue"
+		icon_state = "raincoat-blue"
+		rcolor = "blue"
+
+	purple
+		name = "purple raincoat"
+		icon_state = "raincoat-purple"
+		icon_state = "raincoat-purple"
+		rcolor = "purple"
 /* ======== Jackets ======== */
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)

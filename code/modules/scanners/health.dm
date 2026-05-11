@@ -93,7 +93,7 @@
 					bp_col = "#CC7A1D"
 				if (666 to INFINITY) // very high (160/100)
 					bp_col = "red"
-			if (isdead(L))
+			if (isdead(L) || L.find_ailment_by_type(/datum/ailment/malady/flatline) || ("heart" in L.organHolder?.get_missing_organs()))
 				blood_data = "Blood Pressure: [SPAN_ALERT("NO PULSE")]"
 			else
 				blood_data = "Blood Pressure: <span style='color:[bp_col]'>[L.blood_pressure["rendered"]] ([L.blood_pressure["status"]])</span>"

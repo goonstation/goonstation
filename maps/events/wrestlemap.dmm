@@ -3934,11 +3934,11 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = -4
 	},
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 7
 	},
 /turf/simulated/floor/white/checker2,
@@ -4432,7 +4432,7 @@
 "bVK" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/auto,
-/obj/item/reagent_containers/applicator/glue,
+/obj/item/reagent_containers/applicator/stick/glue,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "bVS" = (
@@ -10260,8 +10260,8 @@
 "exR" = (
 /obj/table/wood/auto,
 /obj/item/plate,
-/obj/item/shaker/salt,
-/obj/item/shaker/pepper,
+/obj/item/reagent_containers/applicator/condiment/shaker/salt,
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge/luxury_seating)
@@ -15999,17 +15999,17 @@
 /area/mining/magnet)
 "hjh" = (
 /obj/table/auto,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = -8;
 	pixel_y = 3
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 3
 	},
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 6
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -6
 	},
 /obj/item/pen/crayon/random,
@@ -21857,8 +21857,8 @@
 /area/station/janitor/office)
 "jLB" = (
 /obj/table/wood/auto,
-/obj/item/shaker/ketchup,
-/obj/item/shaker/mustard,
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup,
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard,
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/red/fancy,
@@ -34885,9 +34885,7 @@
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/storage)
 "pGW" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /obj/machinery/light/small/harsh{
 	dir = 4
 	},

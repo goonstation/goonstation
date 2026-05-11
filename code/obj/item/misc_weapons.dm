@@ -1414,6 +1414,16 @@ TYPEINFO(/obj/item/swords/katana)
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
+/obj/item/swords/katana/thundering
+	name = "thundering katana"
+	icon_state = "katana_thundering"
+	rarity = ITEM_RARITY_LEGENDARY
+	hit_type = DAMAGE_BURN
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/katana_dash/thundering)
+
 TYPEINFO(/obj/item/swords/captain)
 	mats = list("metal_dense" = 15)
 /obj/item/swords/captain

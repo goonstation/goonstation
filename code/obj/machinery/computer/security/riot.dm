@@ -134,6 +134,12 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		if(src.authed)
 			return
 
+		var/ircmsg[] = new()
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		ircmsg["msg"] = "authorized the armory."
+		ircbot.export_async("admin", ircmsg)
+
 		logTheThing(LOG_STATION, usr, "authorized armory access")
 		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
 		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>", "Security Level Increased", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_STATION)
@@ -163,6 +169,12 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 	proc/unauthorize()
 		if(!src.authed)
 			return
+
+		var/ircmsg[] = new()
+		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		ircmsg["msg"] = "(UN)authorized the armory."
+		ircbot.export_async("admin", ircmsg)
 
 		logTheThing(LOG_STATION, usr, "unauthorized armory access")
 		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg", alert_origin=ALERT_STATION)

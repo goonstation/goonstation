@@ -27629,7 +27629,7 @@
 /area/meat_derelict/entry)
 "cfx" = (
 /obj/table/auto,
-/obj/item/shaker/salt,
+/obj/item/reagent_containers/applicator/condiment/shaker/salt,
 /obj/item/kitchen/utensil/knife,
 /turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
@@ -36196,7 +36196,7 @@
 /area/owlery/gangzone)
 "cHy" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/item/shaker/mustard,
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cHB" = (
@@ -64565,20 +64565,20 @@
 /area/titlescreen)
 "lFb" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	name = "moostard bottle";
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 6;
 	pixel_y = 2
 	},

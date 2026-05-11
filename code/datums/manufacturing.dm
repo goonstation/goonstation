@@ -760,7 +760,7 @@
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
-	item_requirements = list("metal_dense" = 1)
+	item_requirements = list("metal_or_wood_dense" = 1)
 	item_outputs = list(/obj/item/rods)
 	time = 3 SECONDS
 	category = "Resource"

@@ -75,11 +75,6 @@
 	req_access = list(access_robotics)
 	color = MEDICAL
 
-/obj/mapping_helper/access/pathology
-	name = "pathology access spawn"
-	req_access = list(access_medical)
-	color = MEDICAL
-
 /obj/mapping_helper/access/pharmacy
 	name = "pharmacy access spawn"
 	req_access = list(access_pharmacy)

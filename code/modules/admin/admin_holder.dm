@@ -219,6 +219,10 @@
 			"Say",\
 			)
 
+	disposing()
+		src.admin_speech_tree?.update_target_speech_tree()
+		src.admin_listen_tree?.update_target_listen_tree()
+		. = ..()
 
 
 	proc/show_pref_window(mob/user)
