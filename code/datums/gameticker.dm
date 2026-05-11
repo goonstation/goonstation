@@ -423,7 +423,8 @@ var/global/game_force_started = FALSE
 						antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
 
 				else if (player.mind)
-					if (player.client.using_antag_token && ticker.mode.antag_token_support)
+					if (player.client.using_antag_token && ticker.mode.antag_token_support || \
+						(length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments)))
 						player.client.use_antag_token()	//Removes a token from the player
 					player.create_character()
 					qdel(player)
