@@ -100,6 +100,13 @@ export const Changelog = () => {
                 like AGPLv3. This also applies in the opposite direction for
                 features ported from other codebases.
               </div>
+              <br />
+              <div>
+                <b>Official GitHub:</b>{' '}
+                <a href={'https://github.com/goonstation/goonstation'}>
+                  https://github.com/goonstation/goonstation
+                </a>
+              </div>
             </Section>
             <Section title={'Official Development Team'}>
               <Stack vertical>
