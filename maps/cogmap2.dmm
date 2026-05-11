@@ -64839,9 +64839,6 @@
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
 /obj/storage/closet/biohazard,
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "pbs" = (

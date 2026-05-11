@@ -29,6 +29,9 @@ This ID is then placed on buttons in your active tile, and doors one tile away i
 					O:id = pair_id
 				else
 					O:id = src.id
+			if(istype(O,/obj/machinery/r_door_control)) //refresh identifier
+				O:id_setup()
+
 		if(do_pair)
 			var/turf/looking_at = get_step(our_spot,src.dir)
 			for(var/obj/O in looking_at)
