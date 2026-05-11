@@ -34,6 +34,7 @@ Ocean saltwater fish:
 		Sardine
 		Barracuda
 		Sailfish
+		Glassfish
 	Unimplemented:
 		Blue Marlin
 		Red Snapper
@@ -67,8 +68,11 @@ Alien/mutant/other fish:
 		Golden fish
 		Ling fish
 		Tree fish
+		Origami fish
+		Cardboard fish
 	Unimplemented:
 		Blood fish
+		Starstonefish
 */
 
 // These catagories aren't used currently.
@@ -291,6 +295,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#2e1306"
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_UNCOMMON
+
+/obj/item/reagent_containers/food/fish/glassfish
+	name = "glassfish"
+	desc = "A family of freshwater fish noted for having transparent bodies. They're not actually made of glass, right?"
+	icon_state = "glassfish"
+	inhand_color = "#e3fffd"
+	category = FISH_CATEGORY_FRESHWATER
+	rarity = ITEM_RARITY_UNCOMMON
+	slice_product = /obj/item/sheet/glass
+	slice_amount = 10
+	default_material = "glass"
 
 // Ocean saltwater fish
 
@@ -763,6 +778,52 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 
 	get_scent_color()
 		return "forest green"
+
+/obj/item/reagent_containers/food/fish/origamifish
+	name = "origami fish"
+	desc = "Printing paper folded into the shape of a fish by a skilled and bored office worker."
+	icon_state = "origamifish"
+	inhand_color = "#d9e8eb"
+	rarity = ITEM_RARITY_UNCOMMON
+	slice_product = /obj/item/paper
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "pastel pink"
+
+/obj/item/reagent_containers/food/fish/cardboardfish
+	name = "cardboard fish"
+	desc = "This is just a cardboard cutout of a fish with a face drawn on it."
+	icon_state = "cardboardfish"
+	inhand_color = "#8f7f6a"
+	rarity = ITEM_RARITY_UNCOMMON
+	slice_product = /obj/item/sheet/cardboard
+	slice_amount = 10
+	default_material = "cardboard"
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "dusty grey"
+
+/obj/item/reagent_containers/food/fish/starstonefish // Unused for now. Feel free to take.
+	name = "starstonefish"
+	desc = "A light blue starfish suspected to have been hunted to extinction by rock worms. This might be the only one left."
+	icon_state = "starstonefish"
+	inhand_color = "#94e1ec"
+	rarity = ITEM_RARITY_MYTHIC
+	slice_product = /obj/item/raw_material/starstone
+	slice_amount = 1
+	default_material = "starstone"
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "clear blue"
 
 /obj/item/reagent_containers/food/fish/random // used by the Wholetuna Cordata plant
 	New()

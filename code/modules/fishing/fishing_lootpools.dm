@@ -89,7 +89,9 @@
 	/mob/living/critter/small_animal/cockroach = 1, \
 	/obj/item/currency/buttcoin = 10, \
 	/obj/item/currency/spacecash/really_small = 20, \
-	/obj/item/cigbutt = 5)
+	/obj/item/cigbutt = 5,\
+	/obj/item/reagent_containers/food/fish/cardboardfish = 10,\
+	/obj/item/reagent_containers/food/fish/origamifish = 10)
 
 ///charred items you potentionally can find in lava or the oven in the kitchen
 /datum/fishing_lootpool/charred_remains
