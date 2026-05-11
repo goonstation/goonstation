@@ -493,7 +493,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/light/bulb/yellow/broken = 20,\
 	/obj/item/reagent_containers/food/fish/cardboardfish = 20,\
-	/obj/item/reagent_containers/food/fish/origamifish = 15)
+	/obj/item/reagent_containers/food/fish/origamifish = 15,\
+	/obj/item/reagent_containers/food/fish/glassfish = 5)
 
 /datum/fishing_spot/disposal_chute/New()
 	..()
@@ -796,7 +797,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/coin = 25,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/currency/spacecash/really_small = 20,\
-	/obj/item/reagent_containers/food/fish/origamifish = 10)
+	/obj/item/reagent_containers/food/fish/origamifish = 10,\
+	/obj/item/reagent_containers/food/fish/glassfish = 5)
 
 /datum/fishing_spot/vending/New()
 	..()
