@@ -194,3 +194,10 @@
 // ---- Gravity Events ----
 /// When gravity events occur (source, type) (see _std/defines/gravity.dm )
 #define COMSIG_GRAVITY_EVENT "gravity_event"
+
+// ---- Camera coverage signals
+
+///When a camera coverage emitter starts being viewed (subsequent viewers will not trigger a re-signal)
+#define COMSIG_CAMERA_ACTIVE "camera_active"
+///When a camera coverage emitter stops being viewed at all (no more viewers registered)
+#define COMSIG_CAMERA_DEACTIVE "camera_deactive"

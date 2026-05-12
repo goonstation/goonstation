@@ -637,8 +637,8 @@ toxic - poisons
 	ls_bee
 		reagent_payload = "lsd_bee"
 
-	ketamine
-		reagent_payload = "ketamine"
+	thio
+		reagent_payload = "sodium_thiopental"
 
 //0.41
 /datum/projectile/bullet/derringer

@@ -14103,6 +14103,10 @@
 	icon_state = "1-4"
 	},
 /obj/landmark/gps_waypoint,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 6;
+	pixel_y = -11
+	},
 /turf/simulated/floor/carpet/purple,
 /area/station/science/research_director)
 "jJn" = (

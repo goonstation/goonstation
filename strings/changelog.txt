@@ -1,4 +1,19 @@
-
+(t)mon may 11 26
+(u)LeahTheTech
+(+)If there is no captain in the round, Jones will now guard the auth disk.
+(t)sat may 09 26
+(u)LeahTheTech
+(*)Blowgun knockout darts now contain the faster acting sodium thiopental rather than ketamine.
+(t)fri may 08 26
+(u)nova2053
+(p)26526
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Medical scanners now indicate sugar overdose at 80 units rather than 200 units, better indicating at which point sugar overdose becomes dangerous.
+(+)Sugar will now cause hyperglycemic shock at 160 units instead of 200 units.
+(u)LeahTheTech
+(p)26530
+(e)🆕🎨⚖🧛⏰🤖💡|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Status-Effects, A-Silicons, A-Station-Systems
+(*)Security cameras now light up blue when someone is watching you through them, including AI eyes.
 (t)wed may 06 26
 (u)DisturbHerb
 (p)26522
@@ -20,6 +35,7 @@
 (p)26444
 (e)🆕💡|C-Feature, A-Station-Systems
 (+)Washing machines now take mechcomp inputs.
+(u)LeahTheTech
 (+)The auth disk will now spawn in place of the captain if there isn't one at roundstart.
 (+)The auth disk will now be shipped to cargo if anyone cryos with it.
 (u)glowbold

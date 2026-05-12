@@ -135,6 +135,7 @@ ABSTRACT_TYPE(/datum/job)
 
 	proc/special_setup(var/mob/M, no_special_spawn)
 		SHOULD_NOT_SLEEP(TRUE)
+		SHOULD_CALL_PARENT(TRUE)
 		if (!M)
 			return
 		if (src.receives_miranda)

@@ -1705,7 +1705,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	click_sound = null
 
 	tranq
-		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
+		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/thio/single
 
 	New()
 		ammo = new default_magazine
