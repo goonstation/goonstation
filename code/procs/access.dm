@@ -177,7 +177,7 @@
 			return get_all_accesses() + list(access_maxsec)
 		if("Head of Personnel")
 			return get_all_accesses() - list(access_captain, access_engineering_chief, access_medical_director, access_research_director,
-											access_securitylockers, access_brig, access_forensics_lockers)
+											access_securitylockers, access_brig, access_forensics_lockers, access_medical_lockers, access_engineering_power)
 		if("Head of Security")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
 						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
