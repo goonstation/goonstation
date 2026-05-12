@@ -488,7 +488,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc1 = list(/obj/item/paper/packets)
 	slot_poc2 = list(/obj/item/device/pda2/computeroperator)
 	items_in_backpack = list(/obj/item/luggable_computer/techpersonal,
-							/obj/item/storage/box/diskbox/programs)
+							/obj/item/storage/box/diskbox/programs,
+							/obj/item/cable_coil)
 	alt_names = list("Cybersecurity Expert", \
 					"IT Specialist", \
 					"Network Technician")
