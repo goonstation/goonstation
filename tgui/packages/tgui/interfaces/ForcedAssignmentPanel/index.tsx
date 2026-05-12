@@ -64,12 +64,28 @@ const ForcedAssignmentItem = (props: ForcedAssignment) => {
       </Table.Cell>
       <Table.Cell textAlign="center" verticalAlign="middle">
         {forcedJob ? (
-          <Button
-            onClick={() => act('edit_job', { ckey: ckey })}
-            tooltip="Edit job"
-          >
-            {forcedJob}
-          </Button>
+          <Stack fill justify="center">
+            <Stack.Item>
+              <Button
+                onClick={() => act('edit_job', { ckey: ckey })}
+                tooltip="Edit job"
+              >
+                {forcedJob}
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="x"
+                color="bad"
+                onClick={() =>
+                  act('remove_job', {
+                    ckey: ckey,
+                  })
+                }
+                tooltip="Remove Job"
+              />
+            </Stack.Item>
+          </Stack>
         ) : (
           <Button
             icon="plus"
@@ -124,7 +140,7 @@ const ForcedAntagonistItem = (props: ForcedAntagonistItemProps) => {
           {' '}
           <Button
             onClick={() =>
-              act('edit_antagonist_role', {
+              act('edit_antagonist', {
                 ckey: ckey,
                 displayName: displayName,
               })

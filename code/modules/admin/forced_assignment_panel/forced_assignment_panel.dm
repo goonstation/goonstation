@@ -109,10 +109,12 @@
 				return
 			var/forced_assignment_export = json_encode(src.serialise_forced_assignments(), JSON_PRETTY_PRINT)
 			// todo file save instead
-			// user.Browse("<title>Forced Assignment Export</title><pre>[forced_assignment_export]</pre>", "window=forced_assignment_export;size=500x700")
+			user.Browse("<title>Forced Assignment Export</title><pre>[forced_assignment_export]</pre>", "window=forced_assignment_export;size=500x700")
+/*
 			var/filename = "ForcedAssignments_[limit_chars(capitalize_each_word((config.server_name)), include_nums = TRUE, include_letters = TRUE)]_\
 				[time2text(world.realtime,"YYYY-MM-DD")].txt"
 			user.client << ftp(forced_assignment_export, filename)
+*/
 
 		if ("open_player_options")
 			if (!user.client) return
@@ -152,6 +154,24 @@
 			logTheThing(LOG_DIARY, ui.user, "re-designated a forced assignment from ckey [old_ckey] to [new_ckey]", "admin")
 			. = TRUE
 
+		if ("add_antagonist_roles")
+			var/target_ckey = params["ckey"]
+			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, target_ckey)
+			if (!istype(forced_assignment, /datum/forced_assignment))
+				return
+			var/list/datum/forced_antagonist/new_antagonists = src.input_antagonist_roles(user, forced_assignment)
+			if (!length(new_antagonists))
+				return
+			if (tgui_alert(user, "Confirm addition of [length(new_antagonists)] antag roles to [target_ckey]'s forced assignment.", "Confirmation", \
+				list("Confirm", "Cancel")) != "Confirm")
+				return
+			forced_assignment.forced_antags += new_antagonists
+			message_admins("Admin [key_name(ui.user)] added [length(new_antagonists)] more antag roles to [find_player(target_ckey) \
+				? key_name(target_ckey) : target_ckey]'s forced assignment!")
+			logTheThing(LOG_ADMIN, ui.user, "added [length(new_antagonists)] more antag roles to ckey [target_ckey]'s forced assignment")
+			logTheThing(LOG_DIARY, ui.user, "added [length(new_antagonists)] more antag roles to ckey [target_ckey]'s forced assignment", "admin")
+			. = TRUE
+
 		if ("edit_job")
 			var/target_ckey = params["ckey"]
 			if (!length(target_ckey))
@@ -173,25 +193,7 @@
 			logTheThing(LOG_DIARY, ui.user, "added forced assignment [new_job] to ckey [target_ckey]", "admin")
 			. = TRUE
 
-		if ("add_antagonist_roles")
-			var/target_ckey = params["ckey"]
-			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, target_ckey)
-			if (!istype(forced_assignment, /datum/forced_assignment))
-				return
-			var/list/datum/forced_antagonist/new_antagonists = src.input_antagonist_roles(user, forced_assignment)
-			if (!length(new_antagonists))
-				return
-			if (tgui_alert(user, "Confirm addition of [length(new_antagonists)] antag roles to [target_ckey]'s forced assignment.", "Confirmation", \
-				list("Confirm", "Cancel")) != "Confirm")
-				return
-			forced_assignment.forced_antags += new_antagonists
-			message_admins("Admin [key_name(ui.user)] added [length(new_antagonists)] more antag roles to [find_player(target_ckey) \
-				? key_name(target_ckey) : target_ckey]'s forced assignment!")
-			logTheThing(LOG_ADMIN, ui.user, "added [length(new_antagonists)] more antag roles to ckey [target_ckey]'s forced assignment")
-			logTheThing(LOG_DIARY, ui.user, "added [length(new_antagonists)] more antag roles to ckey [target_ckey]'s forced assignment", "admin")
-			. = TRUE
-
-		if ("edit_antagonist_role")
+		if ("edit_antagonist")
 			var/target_ckey = params["ckey"]
 			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, target_ckey)
 			if (!istype(forced_assignment, /datum/forced_assignment))
@@ -208,6 +210,26 @@
 			forced_antagonist.do_equipment = antagonist_params[1]
 			forced_antagonist.do_objectives = antagonist_params[2]
 			forced_antagonist.custom_objective = antagonist_params[4]
+			. = TRUE
+
+		if ("remove_job")
+			var/target_ckey = params["ckey"]
+			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, target_ckey)
+			if (!istype(forced_assignment, /datum/forced_assignment))
+				return
+			forced_assignment.forced_job = null
+			. = TRUE
+
+		if ("remove_antagonist")
+			var/target_ckey = params["ckey"]
+			var/datum/forced_assignment/forced_assignment = src.get_assignment_by_ckey(user, target_ckey)
+			if (!istype(forced_assignment, /datum/forced_assignment))
+				return
+			var/datum/forced_antagonist/forced_antagonist = forced_assignment.forced_antags[params["displayName"]]
+			if (!istype(forced_antagonist, /datum/forced_antagonist))
+				return
+			forced_assignment.forced_antags -= params["displayName"]
+			qdel(forced_antagonist)
 			. = TRUE
 
 /datum/forced_assignment_panel/proc/input_job(mob/caller)
