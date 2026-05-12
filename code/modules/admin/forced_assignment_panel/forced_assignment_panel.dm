@@ -216,40 +216,40 @@
 
 /// For continuous input of multiple antagonist roles to a single ckey. Why would you need more than the one?
 /datum/forced_assignment_panel/proc/input_antagonist_roles(mob/caller, datum/forced_assignment/forced_assignment)
-	. = list()
-	if (istype(forced_assignment, /datum/forced_assignment))
-		. = forced_assignment.forced_antags
+	var/list/output_buffer = list()
 	while (TRUE)
-		var/datum/forced_antagonist/new_forced_antagonist = src.input_antagonist(caller, continuous = TRUE, current_list = .)
+		var/datum/forced_antagonist/new_forced_antagonist = src.input_antagonist(caller, TRUE, output_buffer, forced_assignment?.forced_antags)
 		if (istype(new_forced_antagonist, /datum/forced_antagonist))
-			.[new_forced_antagonist.display_name] = new_forced_antagonist
+			output_buffer[new_forced_antagonist.display_name] = new_forced_antagonist
 			continue
 		break
+	. = output_buffer
 
 /// Cargo cult from `code\modules\admin\admin.dm`.
-/datum/forced_assignment_panel/proc/input_antagonist(mob/caller, continuous = FALSE, list/datum/forced_antagonist/current_list)
+/datum/forced_assignment_panel/proc/input_antagonist(mob/caller, continuous = FALSE, list/datum/forced_antagonist/output_buffer, list/datum/forced_antagonist/existing_list)
+	var/list/datum/forced_antagonist/combined_lists = output_buffer + (existing_list || list())
 	var/list/eligible_antagonists = list()
 	var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate) \
 		+ concrete_typesof(/datum/antagonist/generic))
 	for (var/antag_path in eligible_antagonist_types)
 		var/datum/antagonist/antag_role = antag_path
 		eligible_antagonists[initial(antag_role.display_name)] = antag_path
-	for (var/existing_antag in current_list)
+	for (var/existing_antag in combined_lists)
 		eligible_antagonists -= existing_antag
 	if (!length(eligible_antagonists))
 		boutput(caller, SPAN_ALERT("Unable to input antagonist role as no valid antagonist roles exist!"))
 		return
 	var/selected_antagonist = tgui_input_list(caller, "Designate forced antagonist role.[!!continuous && " Cancel to complete addition. \
-		[length(current_list)] selected so far."]", "Designate antag roles", eligible_antagonists)
+		[length(output_buffer)] selected so far."]", "Designate antag roles", eligible_antagonists)
 	if (!selected_antagonist)
 		return
-	for (var/forced_antagonist_index in current_list)
-		var/datum/forced_antagonist/forced_antagonist_to_check = current_list[forced_antagonist_index]
+	for (var/forced_antagonist_index in combined_lists)
+		var/datum/forced_antagonist/forced_antagonist_to_check = combined_lists[forced_antagonist_index]
 		var/datum/antagonist/antagonist_to_check = forced_antagonist_to_check.antagonist_path
 		if (!initial(antagonist_to_check.mutually_exclusive))
 			continue
-		if (tgui_alert(caller, "Current list has an antagonist role ([initial(antagonist_to_check.display_name)]) that will not naturally occur with \
-			others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
+		if (tgui_alert(caller, "Current list has an antagonist role ([capitalize(initial(antagonist_to_check.display_name))]) that will not \
+			naturally occur with others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
 			return
 	var/list/antagonist_params = src.adjust_antagonist_params(caller)
 	if (!length(antagonist_params))
