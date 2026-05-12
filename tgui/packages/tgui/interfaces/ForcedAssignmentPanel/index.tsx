@@ -147,8 +147,12 @@ const ForcedAntagonistItem = (props: ForcedAntagonistItemProps) => {
             }
             tooltip={
               <Stack fill vertical>
-                <Stack.Item>Give Equipment: {doEquipment}</Stack.Item>
-                <Stack.Item>Do Objectives: {doObjectives}</Stack.Item>
+                <Stack.Item>
+                  Give Equipment: {doEquipment ? 'Yes' : 'No'}
+                </Stack.Item>
+                <Stack.Item>
+                  Random Objectives: {doObjectives ? 'Yes' : 'No'}
+                </Stack.Item>
                 {!!customObjective && (
                   <Stack.Item>Custom Objective: {customObjective}</Stack.Item>
                 )}

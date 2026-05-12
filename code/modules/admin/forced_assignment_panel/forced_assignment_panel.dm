@@ -291,8 +291,8 @@
 	if (tgui_alert(usr, "Confirm selected antagonist [selected_antagonist]. Equipment and abilities will[antagonist_params[1] == "Yes" \
 		? "" : " NOT"] be added.[antagonist_params[3]].", "Designate antag roles", list("Confirm", "Cancel")) != "Confirm")
 		return
-	var/datum/forced_antagonist/new_forced_antagonist = new(eligible_antagonists[selected_antagonist], antagonist_params[1], antagonist_params[2], \
-		antagonist_params[4])
+	var/datum/forced_antagonist/new_forced_antagonist = new(eligible_antagonists[selected_antagonist], antagonist_params[1] == "Yes" ? TRUE : FALSE, \
+		antagonist_params[2] == "Yes" ? TRUE : FALSE, antagonist_params[4])
 	. = new_forced_antagonist
 
 /datum/forced_assignment_panel/proc/adjust_antagonist_params(mob/caller)
@@ -347,10 +347,11 @@
 				var/list/serialised_forced_antag = list()
 				var/datum/forced_antagonist/forced_antagonist = forced_assignment.forced_antags[forced_antagonist_index]
 				serialised_forced_antag = list(
+					"antagPath" = forced_antagonist.antagonist_path,
 					"displayName" = forced_antagonist.display_name,
-					"doEquipment" = forced_antagonist?.do_equipment || null,
-					"doObjectives" = forced_antagonist?.do_objectives || null,
-					"customObjective" = forced_antagonist?.custom_objective || null,
+					"doEquipment" = forced_antagonist.do_equipment || null,
+					"doObjectives" = forced_antagonist.do_objectives || null,
+					"customObjective" = forced_antagonist.custom_objective || null,
 				)
 				serialised_forced_antags[forced_antagonist_index] = serialised_forced_antag
 			serialised_forced_assignment["forcedAntags"] = serialised_forced_antags
@@ -360,13 +361,31 @@
 	var/list/datum/forced_assignment/forced_assignment_buffer = list()
 	for (var/forced_assignment_item_index in decode_list)
 		var/forced_assignment_item = decode_list[forced_assignment_item_index]
-		var/ckey = null
-		var/job_name = null
+		var/ckey = ""
 		if (length(forced_assignment_item["ckey"]))
 			ckey = forced_assignment_item["ckey"]
+		var/job_name = ""
 		if (length(forced_assignment_item["forcedJob"]))
 			job_name = forced_assignment_item["forcedJob"]
-		var/datum/forced_assignment/forced_assignment = new(ckey, job_name)
+		var/datum/job/new_job = null
+		if (length(job_name))
+			new_job = find_job_in_controller_by_string(job_name)
+		var/list/datum/forced_antagonist/forced_antagonist_buffer = list()
+		var/list/forced_antags_list = forced_assignment_item["forcedAntags"]
+		if (length(forced_antags_list))
+			for (var/forced_antagonist_item_index in forced_antags_list)
+				var/forced_antagonist_item = forced_antags_list[forced_antagonist_item_index]
+				var/antagonist_path = ""
+				if (length(forced_antagonist_item["antagPath"]))
+					antagonist_path = forced_antagonist_item["antagPath"]
+				var/do_equipment = forced_antagonist_item["doEquipment"] ? TRUE : FALSE
+				var/do_objectives = forced_antagonist_item["doObjectives"] ? TRUE : FALSE
+				var/custom_objective = ""
+				if (length(forced_antagonist_item["customObjective"]))
+					custom_objective = forced_antagonist_item["customObjective"]
+				var/datum/forced_antagonist/forced_antagonist = new(antagonist_path, do_equipment, do_objectives, custom_objective)
+				forced_antagonist_buffer[forced_antagonist.display_name] = forced_antagonist
+		var/datum/forced_assignment/forced_assignment = new(ckey, new_job, forced_antagonist_buffer)
 		forced_assignment_buffer[forced_assignment.ckey] = forced_assignment
 	if (!length(forced_assignment_buffer))
 		return FALSE
