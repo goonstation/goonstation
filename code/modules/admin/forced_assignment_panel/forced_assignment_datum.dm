@@ -1,6 +1,3 @@
-// todo
-// actually make it apply antag roles
-
 /**
  * For forcing the job controller to assign specific ckeys to specific jobs and antagonist roles.
 */
@@ -38,10 +35,10 @@
 		var/datum/forced_assignment/forced_assignment = job_controls.forced_assignments[forced_assignment_ckey]
 		if (!istype(forced_assignment, /datum/forced_assignment))
 			continue
-		var/client/C = find_client(forced_assignment.ckey)
-		if (!isclient(C))
+		var/client/candidate_client = find_client(forced_assignment.ckey)
+		if (!isclient(candidate_client))
 			continue
-		var/mob/new_player/candidate = C.mob
+		var/mob/new_player/candidate = candidate_client.mob
 		if (!istype(candidate, /mob/new_player))
 			continue
 		var/datum/job/forced_job = forced_assignment.forced_job
@@ -50,8 +47,50 @@
 			forced_job.assigned++
 			candidate.mind.assigned_role = forced_job.name
 			message_admins("[key_name(forced_assignment.ckey)] assigned to job [forced_job].")
-			logTheThing(LOG_DEBUG, candidate, "Assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].")
-			logTheThing(LOG_DIARY, candidate, "Assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].", "admin")
+			logTheThing(LOG_DEBUG, candidate, "assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].")
+			logTheThing(LOG_DIARY, candidate, "assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].", "admin")
 
+/**
+ * Assigns forced antagonist roles at roundstart based off of existing `/datum/forced_assignment`s in `job_controls`. Cargo cult from
+ * `code\modules\admin\admin.dm`.
+ */
 /proc/handle_forced_antag_assignments()
-	return
+	if (!length(job_controls.forced_assignments))
+		return
+
+	for (var/forced_assignment_ckey in job_controls.forced_assignments)
+		var/datum/forced_assignment/forced_assignment = job_controls.forced_assignments[forced_assignment_ckey]
+		if (!istype(forced_assignment, /datum/forced_assignment))
+			continue
+		if (!length(forced_assignment.forced_antags))
+			continue
+		var/client/candidate_client = find_client(forced_assignment.ckey)
+		if (!isclient(candidate_client))
+			continue
+		var/mob/candidate = candidate_client.mob
+		if (!ismob(candidate))
+			continue
+		var/antagonist_roles_added = list()
+		for (var/forced_antagonist_index in forced_assignment.forced_antags)
+			var/datum/forced_antagonist/forced_antagonist = forced_assignment.forced_antags[forced_antagonist_index]
+			if (!istype(forced_antagonist, /datum/forced_antagonist))
+				continue
+			candidate.onProcCalled("add_antagonist", list(forced_antagonist.id, forced_antagonist.do_equipment, forced_antagonist.do_objectives, \
+				source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE))
+			var/success = candidate.mind.add_antagonist(forced_antagonist.id, forced_antagonist.do_equipment, forced_antagonist.do_objectives, \
+				source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
+			if (!success)
+				message_admins("Could not assign forced antagonist [forced_antagonist.display_name] to [key_name(candidate.ckey)]!")
+				logTheThing(LOG_DEBUG, candidate, "could not assign forced antagonist [forced_antagonist.display_name] to [key_name(candidate.ckey)].")
+				logTheThing(LOG_DIARY, candidate, "could not assign forced antagonist [forced_antagonist.display_name] to [key_name(candidate.ckey)].", "admin")
+				continue
+			if (length(forced_antagonist.custom_objective))
+				new /datum/objective/regular(forced_antagonist.custom_objective, candidate.mind, candidate.mind.get_antagonist(forced_antagonist.id))
+				tgui_alert(candidate, "Your objective is: [forced_antagonist.custom_objective]", "Objective")
+			antagonist_roles_added += forced_antagonist.display_name
+		if (!length(antagonist_roles_added))
+			continue
+		message_admins("[key_name(forced_assignment.ckey)] assigned antagonist role(s) [english_list(antagonist_roles_added)].")
+		logTheThing(LOG_DEBUG, candidate, "assigned [candidate] (ckey: [forced_assignment.ckey]) to antagonist role(s) [english_list(antagonist_roles_added)].")
+		logTheThing(LOG_DIARY, candidate, "assigned [candidate] (ckey: [forced_assignment.ckey]) to antagonist role(s) [english_list(antagonist_roles_added)].", \
+			"admin")
