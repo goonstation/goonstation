@@ -930,13 +930,13 @@
 /obj/item/storage/belt/utility/it
 	name = "IT utility belt"
 	desc = "Tools for fixing computers and other electronics."
-	spawn_contents = list(/obj/item/crowbar/vr,
-	/obj/item/weldingtool,
+	spawn_contents = list(/obj/item/weldingtool,
 	/obj/item/wirecutters,
 	/obj/item/screwdriver,
 	/obj/item/wrench,
 	/obj/item/crowbar,
-	/obj/item/device/multitool)
+	/obj/item/device/multitool,
+	/obj/item/electronics/soldering)
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
