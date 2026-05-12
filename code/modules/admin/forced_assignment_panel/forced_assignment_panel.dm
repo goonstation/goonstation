@@ -1,7 +1,3 @@
-// todo
-// allow re-assigning names of forced assignments
-// remove the indexing by ckey and antag display name stuff it's really annoying for list operations
-
 /client/proc/cmd_forced_assignment_panel()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Forced Assignment Panel"
@@ -148,7 +144,7 @@
 			if (tgui_alert(user, "Confirm replacement from ckey [old_ckey] to [new_ckey].", "Confirmation", list("Confirm", "Cancel")) != "Confirm")
 				return
 			forced_assignment.ckey = new_ckey
-			global.job_controls.forced_assignments -= forced_assignment
+			global.job_controls.forced_assignments -= old_ckey
 			global.job_controls.forced_assignments[new_ckey] = forced_assignment
 			message_admins("Admin [key_name(ui.user)] re-designated a forced assignment from ckey [find_player(old_ckey) ? key_name(old_ckey) : \
 				old_ckey] to [find_player(new_ckey) ? key_name(new_ckey) : new_ckey]!")
