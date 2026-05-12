@@ -52,9 +52,9 @@
 			if (!istype(forced_antagonist, /datum/forced_antagonist))
 				continue
 			candidate.onProcCalled("add_antagonist", list(forced_antagonist.id, forced_antagonist.do_equipment, forced_antagonist.do_objectives, \
-				silent = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE))
+				source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE))
 			var/success = candidate.mind.add_antagonist(forced_antagonist.id, forced_antagonist.do_equipment, forced_antagonist.do_objectives, \
-				silent = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
+				source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (!success)
 				message_admins("Could not assign forced antagonist [forced_antagonist.display_name] to [key_name(candidate.ckey)]!")
 				logTheThing(LOG_DEBUG, candidate, "could not assign forced antagonist [forced_antagonist.display_name] to [key_name(candidate.ckey)].")
