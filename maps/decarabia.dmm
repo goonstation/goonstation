@@ -860,7 +860,7 @@
 /area/station/maintenance/outer/ne)
 "alf" = (
 /obj/machinery/mass_driver{
-	drive_range = 40;
+	drive_range = 33;
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -12237,7 +12237,7 @@
 /area/station/medical/medbay/lobby)
 "cTd" = (
 /obj/machinery/mass_driver{
-	drive_range = 40;
+	drive_range = 32;
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -49579,7 +49579,7 @@
 /obj/machinery/mass_driver{
 	dir = 4;
 	id = "drone_launcher";
-	drive_range = 47
+	drive_range = 34
 	},
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -88307,7 +88307,7 @@
 "uss" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	drive_range = 48;
+	drive_range = 35;
 	id = "drone_launcher"
 	},
 /turf/simulated/floor/plating,
@@ -97838,6 +97838,9 @@
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -12
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = 10
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/reception)
