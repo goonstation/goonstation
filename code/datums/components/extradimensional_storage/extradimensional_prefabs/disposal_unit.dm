@@ -104,12 +104,12 @@
 	name = "disposals hijacker"
 	desc = "A highly experimental piece of syndicate tech capable of manifesting an entire pocket dimension inside of a disposals unit."
 	icon_state = "disposals_hijacker"
-	var/obj/machinery/disposal/extradimensional/host/dimension_host
+	var/datum/weakref/dimension_host //The "/obj/machinery/disposal/extradimensional/host" this hijacker made
 
 	pickup(mob/user)
 		. = ..()
-		if (src.dimension_host)
-			user.AddComponent(/datum/component/tracker_hud, src.dimension_host, "#b22c20")
+		if (src.dimension_host?.deref())
+			user.AddComponent(/datum/component/tracker_hud, src.dimension_host.deref(), "#b22c20")
 
 	dropped(mob/user)
 		. = ..()
@@ -119,7 +119,7 @@
 	afterattack(atom/target, mob/user)
 		if(!istype(target, /obj/machinery/disposal))
 			return ..()
-		if(src.dimension_host)
+		if(src.dimension_host?.deref())
 			boutput(user, SPAN_ALERT("[src] can only maintain one pocket dimension at a time!"))
 			return
 		var/obj/machinery/disposal/target_chute = target
@@ -130,15 +130,18 @@
 		actions.start(new/datum/action/bar/icon/disposals_hijack(src,target_chute), user)
 
 	proc/replace_chute(var/obj/machinery/disposal/target_chute, var/mob/user)
-		src.dimension_host = new(target_chute.loc)
-		user.AddComponent(/datum/component/tracker_hud, src.dimension_host, "#b22c20")
+		var/obj/machinery/disposal/extradimensional/host/new_chute = new(src)
+		new_chute.appearance = target_chute.appearance
+		new_chute.dir = target_chute.dir
+		new_chute.icon_style = target_chute.icon_style
+		new_chute.light_style = target_chute.light_style
+		new_chute.density = target_chute.density
+		src.dimension_host = get_weakref(new_chute)
+		new_chute.set_loc(target_chute.loc)
 		for(var/atom/movable/AM in target_chute)
-			AM.set_loc(src.dimension_host)
-		src.dimension_host.appearance = target_chute.appearance
-		src.dimension_host.dir = target_chute.dir
-		src.dimension_host.icon_style = target_chute.icon_style
-		src.dimension_host.light_style = target_chute.light_style
+			AM.set_loc(new_chute)
 		qdel(target_chute)
+		user.AddComponent(/datum/component/tracker_hud, new_chute, "#b22c20")
 
 /datum/action/bar/icon/disposals_hijack
 	duration = 4 SECONDS
