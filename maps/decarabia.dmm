@@ -19009,7 +19009,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/hydro,
-/obj/mapping_helper/access/rancher,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -45513,7 +45512,6 @@
 	},
 /obj/mapping_helper/access/hydro,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/plating/random,
 /area/station/storage/hydroponics)
 "kyS" = (
@@ -55186,7 +55184,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/hydro,
-/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/plating/random,
 /area/station/hydroponics/bay)
 "mIK" = (
@@ -62327,7 +62324,6 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/hydro,
-/obj/mapping_helper/access/rancher,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -72959,7 +72955,6 @@
 "qYY" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/rancher,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -75884,7 +75879,6 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/hydro,
-/obj/mapping_helper/access/rancher,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
