@@ -210,6 +210,10 @@
 			forced_antagonist.do_equipment = antagonist_params[1]
 			forced_antagonist.do_objectives = antagonist_params[2]
 			forced_antagonist.custom_objective = antagonist_params[4]
+			message_admins("Admin [key_name(ui.user)] edited ckey [find_player(target_ckey) ? key_name(target_ckey) : \
+				target_ckey]'s designated forced antagonist role!")
+			logTheThing(LOG_ADMIN, ui.user, "edited ckey [new_job]'s designated forced antagonist role")
+			logTheThing(LOG_DIARY, ui.user, "edited ckey [new_job]'s designated forced antagonist role", "admin")
 			. = TRUE
 
 		if ("remove_job")
@@ -218,6 +222,10 @@
 			if (!istype(forced_assignment, /datum/forced_assignment))
 				return
 			forced_assignment.forced_job = null
+			message_admins("Admin [key_name(ui.user)] removed ckey [find_player(target_ckey) ? key_name(target_ckey) : \
+				target_ckey]'s designated forced job role!")
+			logTheThing(LOG_ADMIN, ui.user, "removed ckey [new_job]'s designated forced job role")
+			logTheThing(LOG_DIARY, ui.user, "removed ckey [new_job]'s designated forced job role", "admin")
 			. = TRUE
 
 		if ("remove_antagonist")
@@ -230,6 +238,10 @@
 				return
 			forced_assignment.forced_antags -= params["displayName"]
 			qdel(forced_antagonist)
+			message_admins("Admin [key_name(ui.user)] removed ckey [find_player(target_ckey) ? key_name(target_ckey) : \
+				target_ckey]'s designated forced antagonist role!")
+			logTheThing(LOG_ADMIN, ui.user, "removed ckey [new_job]'s designated forced antagonist role")
+			logTheThing(LOG_DIARY, ui.user, "removed ckey [new_job]'s designated forced antagonist role", "admin")
 			. = TRUE
 
 /datum/forced_assignment_panel/proc/input_job(mob/caller)
