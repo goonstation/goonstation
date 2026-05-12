@@ -1573,7 +1573,7 @@ TYPEINFO(/mob)
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
 	if (!src.mind) return
-	src.set_eye(null)
+	SEND_SIGNAL(src, COMSIG_MOB_CANCEL_CAMERA)
 	src.remove_dialogs()
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS

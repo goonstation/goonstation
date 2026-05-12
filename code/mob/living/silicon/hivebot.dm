@@ -1021,9 +1021,6 @@ Frequency:
 		available_ai_shells -= src
 		..()
 
-	on_close_viewport(datum/viewport/vp)
-		src.mainframe?.on_close_viewport(vp)
-
 /mob/living/silicon/hivebot/proc/admin_add_tool()
 	set name = "Add Module Tool"
 	if(!src.module)
