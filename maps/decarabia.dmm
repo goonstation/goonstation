@@ -64005,6 +64005,7 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/mining,
+/obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/industrial,
 /area/station/hangar/qm)
