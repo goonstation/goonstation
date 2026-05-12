@@ -23035,6 +23035,13 @@
 /area/station/hangar/arrivals)
 "hlO" = (
 /obj/disposalpipe/segment/horizontal,
+/obj/stool/chair/purple{
+	dir = 1
+	},
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 6;
+	pixel_y = -11
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/hor)
 "hmm" = (
@@ -36109,9 +36116,6 @@
 "owC" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/stool/chair{
-	dir = 4
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4

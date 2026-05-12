@@ -124,7 +124,6 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						return
 					brain.icon = "icons/obj/items/organs/brain.dmi"
 					brain.icon_state = "smooth_brain"
-					brain.item_state = "smooth_brain"
 					// getting rid of all of those UNSIGHTLY wrinkles heals your brain!
 					brain.heal_damage(brain.brute_dam, brain.burn_dam, brain.tox_dam)
 					brain.changeStatus("freshly_laundered", INFINITE_STATUS)

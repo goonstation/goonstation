@@ -209,7 +209,6 @@
 			owner.eyecam.observeMob(tracking)
 
 		owner.hud.update_tracking()
-		owner.eyecam.update_statics()
 
 		last_track = world.timeofday
 

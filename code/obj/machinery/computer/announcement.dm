@@ -22,7 +22,7 @@
 	var/area_name = null
 	/// Determines colors for alert text
 	var/alert_origin = ALERT_COMMAND
-	/// Does the annuoncement computer remove the header ID Name/Job addendum
+	/// Does the announcement computer remove the header ID Name/Job addendum
 	var/anonymous = FALSE
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -30,6 +30,10 @@
 	light_r =0.6
 	light_g = 1
 	light_b = 0.1
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "<br/>Insert an <b>ID Card</b> and click with an <b>open hand</b> to send an announcement to all players."
 
 	New()
 		. = ..()
