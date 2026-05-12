@@ -163,7 +163,7 @@
 			var/datum/job/new_job = src.input_job(user)
 			if (!new_job)
 				return
-			if (tgui_alert(user, "Confirm re-assignment for ckey [target_ckey] from [old_job.name] to [new_job].", \
+			if (tgui_alert(user, "Confirm re-assignment for ckey [target_ckey][old_job ? " from [old_job.name]" : ""] to [new_job].", \
 				"Confirmation", list("Confirm", "Cancel")) != "Confirm")
 				return
 			forced_assignment.change_job(new_job)
