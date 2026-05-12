@@ -212,8 +212,8 @@
 			forced_antagonist.custom_objective = antagonist_params[4]
 			message_admins("Admin [key_name(ui.user)] edited ckey [find_player(target_ckey) ? key_name(target_ckey) : \
 				target_ckey]'s designated forced antagonist role!")
-			logTheThing(LOG_ADMIN, ui.user, "edited ckey [new_job]'s designated forced antagonist role")
-			logTheThing(LOG_DIARY, ui.user, "edited ckey [new_job]'s designated forced antagonist role", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "edited ckey [target_ckey]'s designated forced antagonist role")
+			logTheThing(LOG_DIARY, ui.user, "edited ckey [target_ckey]'s designated forced antagonist role", "admin")
 			. = TRUE
 
 		if ("remove_job")
@@ -224,8 +224,8 @@
 			forced_assignment.forced_job = null
 			message_admins("Admin [key_name(ui.user)] removed ckey [find_player(target_ckey) ? key_name(target_ckey) : \
 				target_ckey]'s designated forced job role!")
-			logTheThing(LOG_ADMIN, ui.user, "removed ckey [new_job]'s designated forced job role")
-			logTheThing(LOG_DIARY, ui.user, "removed ckey [new_job]'s designated forced job role", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "removed ckey [target_ckey]'s designated forced job role")
+			logTheThing(LOG_DIARY, ui.user, "removed ckey [target_ckey]'s designated forced job role", "admin")
 			. = TRUE
 
 		if ("remove_antagonist")
@@ -240,8 +240,8 @@
 			qdel(forced_antagonist)
 			message_admins("Admin [key_name(ui.user)] removed ckey [find_player(target_ckey) ? key_name(target_ckey) : \
 				target_ckey]'s designated forced antagonist role!")
-			logTheThing(LOG_ADMIN, ui.user, "removed ckey [new_job]'s designated forced antagonist role")
-			logTheThing(LOG_DIARY, ui.user, "removed ckey [new_job]'s designated forced antagonist role", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "removed ckey [target_ckey]'s designated forced antagonist role")
+			logTheThing(LOG_DIARY, ui.user, "removed ckey [target_ckey]'s designated forced antagonist role", "admin")
 			. = TRUE
 
 /datum/forced_assignment_panel/proc/input_job(mob/caller)
