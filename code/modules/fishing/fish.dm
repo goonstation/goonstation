@@ -785,25 +785,11 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	get_scent_color()
 		return "forest green"
 
-/obj/item/reagent_containers/food/fish/origamifish
-	name = "origami fish"
-	desc = "Printing paper folded into the shape of a fish by a skilled and bored office worker."
-	icon_state = "origamifish"
-	inhand_color = "#d9e8eb"
-	rarity = ITEM_RARITY_UNCOMMON
-	slice_product = /obj/item/paper
-
-	slapsound()
-		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 50, 1, -1)
-
-	get_scent_color()
-		return "pastel pink"
-
 /obj/item/reagent_containers/food/fish/cardboardfish
 	name = "cardboard fish"
 	desc = "This is just a cardboard cutout of a fish with a face drawn on it."
 	icon_state = "cardboardfish"
-	inhand_color = "#8f7f6a"
+	inhand_color = "#ac8f69"
 	rarity = ITEM_RARITY_UNCOMMON
 	slice_product = /obj/item/sheet/cardboard
 	slice_amount = 10
@@ -830,6 +816,50 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 
 	get_scent_color()
 		return "clear blue"
+
+/obj/item/reagent_containers/food/fish/origami
+	name = "origami fish"
+	icon_state = "origamifish"
+	inhand_color = "#d9e8eb"
+	slice_product = /obj/item/paper
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "pastel pink"
+
+/obj/item/reagent_containers/food/fish/origami/sunfish
+	name = "origami sunfish"
+	desc = "The remains of tree, pressed together and folded to look like a sunfish. Probably just the circle of life."
+	icon_state = "origami_sunfish"
+	inhand_color = "#e9a744"
+	rarity = ITEM_RARITY_UNCOMMON
+
+	get_scent_color()
+		return "sunshine yellow"
+
+/obj/item/reagent_containers/food/fish/origami/angelfish
+	name = "origami angelfish"
+	desc = "Paper folded into an angelfish by a skilled and bored office worker."
+	icon_state = "origami_angelfish"
+	inhand_color = "#798bdf"
+	rarity = ITEM_RARITY_UNCOMMON
+
+/obj/item/reagent_containers/food/fish/origami/squid
+	name = "origami squid"
+	desc = "A paper squid that probably ejects printer ink when threatened."
+	icon_state = "origami_squid"
+	inhand_color = "#f4a6e1"
+	rarity = ITEM_RARITY_RARE
+	slice_product = /obj/item/pen
+
+/obj/item/reagent_containers/food/fish/origami/stingray
+	name = "origami stingray"
+	desc = "Paper folded into the shape of a stingray. Safe to hold unless you get a papercut."
+	icon_state = "origami_stingray"
+	inhand_color = "#337624"
+	rarity = ITEM_RARITY_RARE
 
 /obj/item/reagent_containers/food/fish/random // used by the Wholetuna Cordata plant
 	New()

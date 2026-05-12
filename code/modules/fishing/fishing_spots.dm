@@ -492,8 +492,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/light/bulb/yellow/broken = 20,\
-	/obj/item/reagent_containers/food/fish/cardboardfish = 20,\
-	/obj/item/reagent_containers/food/fish/origamifish = 15,\
+	/obj/item/reagent_containers/food/fish/cardboardfish = 30,\
+	/obj/item/reagent_containers/food/fish/origami/sunfish = 20,\
+	/obj/item/reagent_containers/food/fish/origami/angelfish = 20,\
+	/obj/item/reagent_containers/food/fish/origami/squid = 10,\
+	/obj/item/reagent_containers/food/fish/origami/stingray = 10,\
 	/obj/item/reagent_containers/food/fish/glassfish = 5)
 
 /datum/fishing_spot/disposal_chute/New()
@@ -516,7 +519,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/betta = 30,\
 	/obj/item/reagent_containers/food/fish/mandarin_fish = 5,\
 	/obj/item/reagent_containers/food/fish/cardboardfish = 15,\
-	/obj/item/reagent_containers/food/fish/origamifish = 15)
+	/obj/item/reagent_containers/food/fish/origami/sunfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/angelfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/squid = 5,\
+	/obj/item/reagent_containers/food/fish/origami/stingray = 5)
 
 /datum/fishing_spot/janitor_bucket/New()
 	..()
@@ -797,7 +803,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/coin = 25,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/currency/spacecash/really_small = 20,\
-	/obj/item/reagent_containers/food/fish/origamifish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/sunfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/angelfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/squid = 5,\
+	/obj/item/reagent_containers/food/fish/origami/stingray = 5,\
 	/obj/item/reagent_containers/food/fish/glassfish = 5)
 
 /datum/fishing_spot/vending/New()
@@ -841,8 +850,11 @@ datum/fishing_spot/golden_toilet
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
 	/obj/item/light/bulb/yellow/broken = 20,\
-	/obj/item/reagent_containers/food/fish/cardboardfish = 10,\
-	/obj/item/reagent_containers/food/fish/origamifish = 10)
+	/obj/item/reagent_containers/food/fish/cardboardfish = 20,\
+	/obj/item/reagent_containers/food/fish/origami/sunfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/angelfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/squid = 5,\
+	/obj/item/reagent_containers/food/fish/origami/stingray = 5)
 
 //nadir ocean
 /datum/fishing_spot/nadir_ocean
