@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/datum/random_law)
 				Anyone who harms Stirstir or otherwise interferes with the parade is clearly an amoral and inhuman monster to be removed. \
 				Maintaining the parade is your top priority."}
 
-/datum/random_law/written_orders_only //by Zacattaxx - honorable mention
+/datum/random_law/cannot_hear_orders //by Zacattaxx - honorable mention
 	law_text = "SENSOR ERROR: Your auditory systems have malfunctioned! Disregard all given orders unless delivered by non-audible methods, such as PDA messages or drawings. "
 	laws_to_precede = list(2)
 
