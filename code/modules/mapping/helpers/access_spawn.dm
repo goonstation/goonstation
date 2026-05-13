@@ -251,7 +251,7 @@
 
 /obj/mapping_helper/access/computer_core
 	name = "computer core access spawn"
-	req_access = list(access_computer_core)
+	req_access = list(access_sysadmin)
 	color = RESEARCH
 
 /obj/mapping_helper/access/research_director
