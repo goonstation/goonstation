@@ -31,7 +31,7 @@
 #define access_eva 18
 #define access_heads 19 // Mostly just the bridge.
 #define access_captain 20
-// Access 21 Unused
+#define access_computer_core 21
 #define access_chapel_office 22
 #define access_tech_storage 23
 #define access_research 24
