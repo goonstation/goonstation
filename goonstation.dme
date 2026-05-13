@@ -1305,6 +1305,7 @@
 #include "code\modules\events\sleeperagent.dm"
 #include "code\modules\events\solar_flare.dm"
 #include "code\modules\events\spatial_tear.dm"
+#include "code\modules\events\sudden_simean_sapience.dm"
 #include "code\modules\events\supply_drop.dm"
 #include "code\modules\events\syndicate_retribution.dm"
 #include "code\modules\events\vamp_teg.dm"
