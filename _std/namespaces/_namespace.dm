@@ -1,3 +1,26 @@
+//------------ How To Use Namespaces ------------//
+/*
+
+CREATE_NAMESPACE(TEST)
+
+// Non-constant variable example.
+ADD_TO_NAMESPACE(TEST)(var/example_var = new /atom/movable)
+// Constant variable example. Can be statically accessed with `::`. See `test_var` below for a usecase.
+ADD_TO_NAMESPACE(TEST)(var/const/example_constant = (1 << 3))
+// Proc example.
+ADD_TO_NAMESPACE(TEST)(proc/example_proc())
+	return "example value"
+
+/datum/test_datum
+	var/test_var = TEST::example_constant
+
+/datum/test_datum/proc/test_proc()
+	message_admins(TEST.example_var)
+	message_admins(TEST.example_proc())
+
+*/
+
+
 /**
  *	Declare a new namespace. If one argument is passed, a global namespace is created. If more than one argument is passed, a nested namespace is created. \
  *	E.g.
