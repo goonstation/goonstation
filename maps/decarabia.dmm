@@ -860,7 +860,7 @@
 /area/station/maintenance/outer/ne)
 "alf" = (
 /obj/machinery/mass_driver{
-	drive_range = 51;
+	drive_range = 33;
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -1301,13 +1301,6 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/north)
-"aqW" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4
-	},
-/obj/machinery/firealarm/directional/north,
-/turf/simulated/floor/black/grime,
-/area/station/engine/inner)
 "arc" = (
 /obj/stool/chair/black{
 	dir = 4
@@ -2978,7 +2971,7 @@
 	pixel_x = 7
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "aNA" = (
 /obj/machinery/manufacturer/science,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -5660,7 +5653,7 @@
 /obj/machinery/shieldgenerator/energy_shield,
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "btd" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -7650,7 +7643,13 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
-/turf/simulated/floor/black/grime,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge2"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/engine/inner)
 "bQJ" = (
 /turf/simulated/wall/auto/asteroid/lighted,
@@ -8976,7 +8975,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "ciD" = (
 /obj/shrub{
 	dir = 6
@@ -12240,7 +12239,7 @@
 /area/station/medical/medbay/lobby)
 "cTd" = (
 /obj/machinery/mass_driver{
-	drive_range = 52;
+	drive_range = 32;
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -16065,7 +16064,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "dKp" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -17087,7 +17086,7 @@
 /area/station/ranch)
 "dVU" = (
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "dVY" = (
 /obj/decal/tile_edge/line/white{
 	dir = 10;
@@ -17961,7 +17960,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "efy" = (
 /obj/machinery/turret,
 /obj/lattice{
@@ -20100,7 +20099,7 @@
 /obj/machinery/manufacturer/general,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "eEb" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
@@ -22148,7 +22147,7 @@
 /obj/mapping_helper/access/engineering_storage,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "fcP" = (
 /obj/railing/red{
 	dir = 1
@@ -30585,6 +30584,10 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/north)
+"gYN" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/black/grime,
+/area/station/engine/inner)
 "gYP" = (
 /turf/simulated/wall/auto/reinforced/walp/yellow,
 /area/station/mining/staff_room)
@@ -32349,6 +32352,7 @@
 	id = "chapelgun";
 	name = "Chapel Mass Driver"
 	},
+/obj/machinery/launcher_loader/east,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "htp" = (
@@ -32559,7 +32563,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "hvA" = (
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
@@ -37716,7 +37720,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "iGG" = (
 /obj/cable{
 	icon_state = "4-10"
@@ -40515,7 +40519,7 @@
 	pixel_y = 29
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "jnv" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -41380,6 +41384,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/walp,
 /turf/simulated/floor/plating,
 /area/station/conveniencestore)
+"jxZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/engine/gravity)
 "jyb" = (
 /obj/decal/tile_edge/line/white{
 	dir = 4;
@@ -43525,7 +43538,7 @@
 "kbw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "kbB" = (
 /turf/space/asteroid,
 /area/space)
@@ -43679,7 +43692,7 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "kdn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49334,7 +49347,7 @@
 /obj/machinery/firealarm/directional/north,
 /obj/item/rods/steel/fullstack,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "lrp" = (
 /obj/storage/crate{
 	name = "Flatpacked Podiums"
@@ -55660,7 +55673,7 @@
 "mOZ" = (
 /obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "mPq" = (
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent,
@@ -61169,7 +61182,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "oga" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/cable{
@@ -61349,7 +61362,7 @@
 /obj/machinery/power/lgenerator,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "ohG" = (
 /obj/shrub{
 	dir = 8;
@@ -70985,7 +70998,7 @@
 /area/station/maintenance/inner/se)
 "qyM" = (
 /turf/simulated/wall/auto/walp/yellow,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "qyT" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -78045,7 +78058,8 @@
 	id = "trashoutbelt";
 	name = "Disposals Outer Belt Control";
 	pixel_x = 24;
-	pixel_y = 6
+	pixel_y = 6;
+	dir = 4
 	},
 /obj/machinery/conveyor/SN{
 	id = "trashoutbelt";
@@ -84898,7 +84912,7 @@
 	pixel_x = -2
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "tDV" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -85062,7 +85076,7 @@
 	pixel_x = -9
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "tGi" = (
 /obj/item/space_thing,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -89229,7 +89243,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "uDR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -89432,7 +89446,7 @@
 /obj/machinery/portable_reclaimer,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "uGp" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/terrazzo/black,
@@ -89812,7 +89826,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "uMS" = (
 /obj/rack,
 /obj/machinery/camera/directional/south{
@@ -91587,19 +91601,6 @@
 	icon_state = "wooden"
 	},
 /area/station/medical/head/private)
-"vht" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/engine/gravity)
 "vhv" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -92225,7 +92226,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "vpy" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -93708,7 +93709,7 @@
 /area/station/hallway/primary/south)
 "vKn" = (
 /turf/simulated/wall/auto/reinforced/walp/yellow,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "vKs" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -93797,7 +93798,7 @@
 /obj/storage/cart/mechcart/breach,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "vLE" = (
 /obj/machinery/sink/slim{
 	dir = 1;
@@ -98629,7 +98630,7 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "wNF" = (
 /obj/decal/poster/wallsign/iso/warning/generic,
 /obj/decal/tile_edge/line/purple{
@@ -99242,7 +99243,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "wVx" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white/checker,
@@ -100030,7 +100031,7 @@
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black/grime,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "xeg" = (
 /obj/stove{
 	pixel_y = 2
@@ -164379,8 +164380,8 @@ djL
 vbs
 vbs
 vbs
-wDd
-aqW
+xXk
+gOA
 gOA
 ibp
 jsY
@@ -164679,9 +164680,9 @@ wHU
 bWR
 hgZ
 vBs
-vBs
 iax
 vbs
+gYN
 pGl
 gOA
 tku
@@ -164981,9 +164982,9 @@ mxg
 rgc
 gvn
 lvv
-lvv
-vht
+jxZ
 wDd
+qbE
 pIc
 nyk
 faP
@@ -165284,8 +165285,8 @@ lNu
 lNu
 lNu
 lNu
-lNu
 vbs
+xJC
 tjp
 eYS
 mxa
@@ -165585,9 +165586,9 @@ mxg
 ltz
 lNu
 ugv
-lNu
 jgZ
 vbs
+xJC
 mxa
 vmU
 rwi
@@ -165889,7 +165890,7 @@ vbs
 vbs
 vbs
 wDd
-wDd
+xJC
 xJC
 xJC
 xJC
