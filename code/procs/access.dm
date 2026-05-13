@@ -125,6 +125,8 @@
 			return get_all_accesses() + list(access_centcom)
 		if("Syndicate Operative")
 			return get_all_accesses() + list(access_syndicate_shuttle)
+		if("Syndicate Commander")
+			return get_access("Syndicate Operative") + list(access_syndicate_commander)
 		// --------------------------- Heads of staff
 		if("Captain")
 			return get_all_accesses() + list(access_maxsec)

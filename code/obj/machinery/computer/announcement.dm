@@ -107,7 +107,7 @@
 				src.set_arrival_alert(usr, params["value"])
 				. = TRUE
 			if ("log")
-				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
+				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[sanitize(adminscrub(params["value"]))]\" from \"[sanitize(adminscrub(params["old"]))]\".")
 
 	proc/update_status()
 		if(!src.ID)
@@ -122,6 +122,8 @@
 			return
 
 		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.content
+		message = STRIP_MUTABLE_CONTENT_TAGS(message)
+		message = sanitize(adminscrub(message))
 		if (!message)
 			return
 
