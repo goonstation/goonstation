@@ -12269,7 +12269,7 @@
 "cTJ" = (
 /obj/decal/poster/wallsign/stencil/left/zero,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/obj/decal/poster/wallsign/stencil/right/five,
+/obj/decal/poster/wallsign/stencil/right/six,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "cTK" = (
