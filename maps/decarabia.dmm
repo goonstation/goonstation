@@ -860,7 +860,7 @@
 /area/station/maintenance/outer/ne)
 "alf" = (
 /obj/machinery/mass_driver{
-	drive_range = 33;
+	drive_range = 51;
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -1387,8 +1387,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /obj/decal/poster/wallsign/stencil/right/one,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "asn" = (
@@ -4438,7 +4438,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/obj/machinery/atmospherics/binary/valve/purge,
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -7646,6 +7646,9 @@
 "bQG" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/inner)
@@ -12237,7 +12240,7 @@
 /area/station/medical/medbay/lobby)
 "cTd" = (
 /obj/machinery/mass_driver{
-	drive_range = 32;
+	drive_range = 52;
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -14333,7 +14336,9 @@
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold gas supply 2"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -15947,8 +15952,8 @@
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw)
 "dJj" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 8
 	},
 /turf/simulated/floor/black/grime,
 /area/research_outpost/toxins)
@@ -22508,7 +22513,9 @@
 	},
 /area/station/solar/zeta/east)
 "fhb" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold gas supply 1"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -23947,7 +23954,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/binary/valve/purge,
+/obj/machinery/atmospherics/binary/valve/purge{
+	name = "hot gas supply 1"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -24679,6 +24688,15 @@
 	dir = 6
 	},
 /area/station/crewquarters/reccenter)
+"fFm" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 0;
+	frequency = 1229;
+	id = "Chamber Two Outlet";
+	target_pressure = 250
+	},
+/turf/simulated/wall/auto/reinforced/walp/purple,
+/area/research_outpost/toxins)
 "fFr" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -25396,7 +25414,7 @@
 /turf/simulated/wall/auto/walp,
 /area/station/hallway/primary/south)
 "fPh" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor{
+/obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
 /turf/simulated/floor/black/grime,
@@ -32485,11 +32503,11 @@
 	},
 /area/station/engine/core/nuclear)
 "huW" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 9
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/inner)
@@ -33923,6 +33941,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/walp,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/north)
+"hLy" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 1;
+	frequency = 1229;
+	id = "Chamber Two Inlet";
+	target_pressure = 500
+	},
+/turf/simulated/wall/auto/reinforced/walp/purple,
+/area/research_outpost/toxins)
 "hLB" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -44317,7 +44344,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "kly" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor,
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/wall/auto/reinforced/walp/purple,
 /area/research_outpost/toxins)
 "klB" = (
@@ -49273,8 +49300,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "lrl" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 1;
+	frequency = 1229;
+	id = "Chamber One Inlet";
+	target_pressure = 500
 	},
 /turf/simulated/wall/auto/reinforced/walp/purple,
 /area/research_outpost/toxins)
@@ -52805,11 +52835,8 @@
 	pixel_x = 10;
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 1;
-	frequency = 1229;
-	id = "Chamber Two Inlet";
-	target_pressure = 500
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
 	},
 /turf/simulated/floor/blue,
 /area/research_outpost/toxins)
@@ -57339,7 +57366,8 @@
 /area/station/security/hos)
 "nko" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4
+	dir = 4;
+	name = "external cold loop"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/inner)
@@ -64272,8 +64300,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/binary/valve{
-	name = "freezer interface valve";
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
@@ -66939,7 +66967,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/overfloor,
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/black/grime,
 /area/research_outpost/toxins)
 "pzH" = (
@@ -68635,11 +68663,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 0;
-	frequency = 1229;
-	id = "Chamber Two Outlet";
-	target_pressure = 250
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
 	},
 /turf/simulated/floor/red,
 /area/research_outpost/toxins)
@@ -75133,8 +75158,11 @@
 	},
 /area/station/medical/head)
 "rwD" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 0;
+	frequency = 1229;
+	id = "Chamber One Outlet";
+	target_pressure = 250
 	},
 /turf/simulated/wall/auto/reinforced/walp/purple,
 /area/research_outpost/toxins)
@@ -80369,10 +80397,6 @@
 	},
 /turf/simulated/floor/twotone/blue,
 /area/station/medical/medbay)
-"sGW" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor,
-/turf/simulated/floor/black/grime,
-/area/station/engine/inner)
 "sHh" = (
 /obj/rack,
 /obj/item/tank/air,
@@ -80862,6 +80886,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/se)
+"sMI" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "emergency cooler valve"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/engine/core/nuclear)
 "sMT" = (
 /obj/decal/tile_edge/line/green{
 	dir = 9;
@@ -84906,10 +84942,10 @@
 	},
 /area/station/science/teleporter)
 "tEg" = (
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -87017,7 +87053,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/overfloor,
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/purpleblack{
 	dir = 5
 	},
@@ -92467,11 +92503,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 1;
-	frequency = 1229;
-	id = "Chamber One Inlet";
-	target_pressure = 500
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
 	},
 /turf/simulated/floor/blue,
 /area/research_outpost/toxins)
@@ -93094,10 +93127,10 @@
 	},
 /area/station/chapel/office)
 "vBr" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/binary/valve/purge,
 /turf/simulated/floor/black/grime,
 /area/station/engine/core/nuclear)
 "vBs" = (
@@ -95742,10 +95775,10 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
 	},
+/obj/machinery/meter,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/research_outpost/toxins)
 "wjn" = (
@@ -95828,6 +95861,13 @@
 	dir = 1
 	},
 /area/research_outpost/lobby)
+"wkl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/black/grime,
+/area/station/engine/core/nuclear)
 "wkA" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4;
@@ -99664,7 +99704,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/bolter,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "xai" = (
 /obj/decal/tile_edge/line/black{
@@ -100015,13 +100055,7 @@
 /area/station/crew_quarters/kitchen)
 "xen" = (
 /obj/machinery/light/incandescent,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/obj/machinery/atmospherics/unary/portables_connector,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/black/grime,
 /area/station/engine/inner)
 "xeu" = (
 /obj/decal/tile_edge/line/white{
@@ -102140,11 +102174,8 @@
 	pixel_x = -10;
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 0;
-	frequency = 1229;
-	id = "Chamber One Outlet";
-	target_pressure = 250
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
 	},
 /turf/simulated/floor/red,
 /area/research_outpost/toxins)
@@ -110674,7 +110705,7 @@ ofe
 kbk
 pLE
 hfo
-lrl
+hLy
 mfy
 xWJ
 dJj
@@ -111278,7 +111309,7 @@ ofe
 aeK
 aeK
 nwe
-rwD
+fFm
 pVv
 mxB
 dJj
@@ -162830,7 +162861,7 @@ fQE
 tYo
 cjH
 aTT
-vBr
+wkl
 fwX
 iHt
 wHU
@@ -163425,7 +163456,7 @@ xiD
 csc
 ckm
 lxH
-oXz
+sMI
 fOC
 aly
 hxJ
@@ -163740,8 +163771,8 @@ qDg
 pJa
 wHU
 xen
-sGW
-xRa
+xXk
+xXk
 huW
 xXk
 xXk
