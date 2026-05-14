@@ -509,6 +509,7 @@
 /obj/item/clothing/mask/cigarette/syndicate
 	//desc = "It looks a little funny." //fucka you
 	exploding = 1
+	SYNDICATE_STEALTH_DESCRIPTION("It smells faintly of gunpowder.", null)
 
 // this was in the middle of plants_food_etc.dm
 // WHY
@@ -629,6 +630,7 @@
 /obj/item/cigpacket/syndicate // cogwerks: made them more sneaky, removed the glaringly obvious name
 // haine: these can just inherit the parent name and description vOv
 	cigtype = /obj/item/clothing/mask/cigarette/syndicate
+	SYNDICATE_STEALTH_DESCRIPTION("The ingredients list notably includes gunpowder.", null)
 
 /obj/item/cigpacket/update_icon()
 	src.overlays = null

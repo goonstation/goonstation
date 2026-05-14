@@ -2367,6 +2367,7 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "cargotelegreen"
 
 /obj/item/cargotele/traitor
+	SYNDICATE_STEALTH_DESCRIPTION("The targeting system is fluctuating rapidly.", null)
 	cost = 15
 	///The account to credit for sales
 	var/datum/db_record/account = null

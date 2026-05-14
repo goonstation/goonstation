@@ -9,6 +9,7 @@
 	name = "glassware box"
 	icon_state = "glassware"
 	desc = "A box with glass cups for drinking liquids from."
+	SYNDICATE_STEALTH_DESCRIPTION("The label mentions something about \"nearly bottomless mimosas\".", null)
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie = 7)
 
 /obj/item/storage/box/cutlery

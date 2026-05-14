@@ -152,6 +152,7 @@
 
 /obj/storage/cart/trash/syndicate
 	crunches_contents = 1
+	SYNDICATE_STEALTH_DESCRIPTION("There appears to be a crushing mechanism installed inside.", null)
 
 /obj/storage/cart/hotdog
 	name = "hotdog stand"
@@ -164,3 +165,4 @@
 /obj/storage/cart/hotdog/syndicate
 	crunches_contents = 1
 	crunches_deliciously = 1
+	SYNDICATE_STEALTH_DESCRIPTION("There appears to be a crushing mechanism installed inside.", null)

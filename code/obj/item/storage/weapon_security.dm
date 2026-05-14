@@ -222,6 +222,7 @@
 	name = "cleaner grenade box"
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/fcleaner = 5)
+	SYNDICATE_STEALTH_DESCRIPTION("You struggle to keep a good grip on it.", null)
 
 /obj/item/storage/box/grenade_starter_kit
 	name = "grenade starter kit"
