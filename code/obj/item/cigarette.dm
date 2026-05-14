@@ -510,7 +510,7 @@
 	//desc = "It looks a little funny." //fucka you
 	exploding = 1
 	SYNDICATE_STEALTH_DESCRIPTION("It smells faintly of gunpowder.", null)
-	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
+	tooltip_flags = REBUILD_USER
 
 // this was in the middle of plants_food_etc.dm
 // WHY
@@ -632,7 +632,7 @@
 // haine: these can just inherit the parent name and description vOv
 	cigtype = /obj/item/clothing/mask/cigarette/syndicate
 	SYNDICATE_STEALTH_DESCRIPTION("The ingredients list notably includes gunpowder.", null)
-	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
+	tooltip_flags = REBUILD_USER
 
 /obj/item/cigpacket/update_icon()
 	src.overlays = null
