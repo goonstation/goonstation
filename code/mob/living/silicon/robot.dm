@@ -665,7 +665,7 @@ TYPEINFO(/mob/living/silicon/robot)
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_FARTS)
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
@@ -2656,7 +2656,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = list(MGD_MEDRESEACH, MGO_SILICON, MGA_DEATH)
+			newsignal.data["group"] = list(MGT_ROBOTICS, MGD_SILICON, MGA_DEATH)
 			newsignal.data["sender"] = net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)

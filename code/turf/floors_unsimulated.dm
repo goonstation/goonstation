@@ -154,6 +154,9 @@
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/random
+#ifdef IN_MAP_EDITOR
+	icon_state = "plating_random"
+#endif
 	New()
 		..()
 		if (prob(20))

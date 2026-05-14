@@ -84,6 +84,9 @@
 			)
 		)
 
+// Stub
+/obj/salvager_cryotron
+
 /datum/job/special/salvager
 	name = "Salvager"
 	wages = 0

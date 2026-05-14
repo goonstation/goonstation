@@ -63,7 +63,7 @@
 			// Devera-class interdictor: prohibit miasma formation
 			var/miasma_blocked = FALSE
 			for_by_tcl(IX, /obj/machinery/interdictor)
-				if (IX.expend_interdict(15,src,TRUE,ITDR_DEVERA))
+				if (IX.expend_interdict(15,src,TRUE,ITDR_DEVERA,TRUE))
 					miasma_blocked = TRUE
 					break
 

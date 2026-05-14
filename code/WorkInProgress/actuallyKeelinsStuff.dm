@@ -2831,6 +2831,8 @@ Returns:
 
 	New()
 		..()
+		RegisterSignal(src, COMSIG_LASER_CONNECTED, PROC_REF(on_laser_incident))
+		RegisterSignal(src, COMSIG_LASER_DISCONNECTED, PROC_REF(on_laser_exident))
 		light = new /datum/light/point
 		light.set_color(0.3, 0.6, 0.8)
 		light.set_brightness(1)
@@ -2840,19 +2842,15 @@ Returns:
 			if (target_tag)
 				target = locate(target_tag)
 
-	incident(obj/linked_laser/laser)
-		if (src.in_laser) //no infinite loops allowed
-			return FALSE
-		src.in_laser = laser
+	proc/on_laser_incident(datum/source, obj/linked_laser/laser)
 		src.out_laser = laser.copy_laser(get_turf(target), laser.dir)
+		src.out_laser.previous = laser
 		laser.next = src.out_laser
 		src.out_laser.try_propagate()
-		return TRUE
 
-	exident(obj/linked_laser/laser)
+	proc/on_laser_exident(datum/source, obj/linked_laser/laser)
 		qdel(src.out_laser)
 		src.out_laser = null
-		..()
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))

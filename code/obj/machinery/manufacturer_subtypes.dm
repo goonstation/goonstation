@@ -225,6 +225,14 @@
 		/datum/manufacture/mender,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
+		/datum/manufacture/empty_autoinjector/orange,
+		/datum/manufacture/empty_autoinjector/red,
+		/datum/manufacture/empty_autoinjector/blue,
+		/datum/manufacture/empty_autoinjector/green,
+		/datum/manufacture/empty_autoinjector/yellow,
+		/datum/manufacture/empty_autoinjector/purple,
+		/datum/manufacture/empty_autoinjector/black,
+		/datum/manufacture/empty_autoinjector/white,
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,
@@ -533,7 +541,7 @@
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "personnel manufacturer"
-	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
+	supplemental_desc = "This one is a multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resources = list(/obj/item/material_piece/steel = 5,

@@ -507,6 +507,7 @@ TYPEINFO(/mob/living)
 					storage.close(user = src)
 				else
 					storage.open(user = src)
+				storage.add_fingerprint(src)
 		else
 			src.swap_hand()
 		return
@@ -1798,3 +1799,24 @@ TYPEINFO(/mob/living)
 
 /mob/living/HealBleeding(amt)
 	src.bleeding = max(src.bleeding - amt, 0)
+
+/mob/living/proc/muffled_by_grab()
+	for (var/obj/item/grab/G as anything in src.grabbed_by)
+		if ((G.state >= GRAB_CHOKE) && G.muffle_affecting)
+			return TRUE
+
+	return FALSE
+
+/mob/living/proc/handle_perma_cryo()
+	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+		antagonist.handle_perma_cryo()
+
+/mob/living/proc/handle_cryo()
+	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+		antagonist.handle_cryo()
+	for_by_tcl(disky, /obj/item/disk/data/floppy/read_only/authentication)
+		if (get_turf(disky) == get_turf(src))
+			disky.safe_delete()
+			var/obj/storage/crate/crate = new
+			new /obj/item/disk/data/floppy/read_only/authentication(crate)
+			shippingmarket.receive_crate(crate)

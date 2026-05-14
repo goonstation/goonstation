@@ -227,7 +227,7 @@
 	flags = FLUID_SUBMERGE
 	text = "<font color=#5c5>s"
 	var/health = 50
-	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track a objective.
+	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track an objective.
 	var/max_uses = 0 // The maximum amount of time one can try to shake this shrub for something.
 	var/spawn_chance = 0 // How likely is this shrub to spawn something?
 	var/last_use = 0 // To prevent spam.
@@ -795,6 +795,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "blind1"
 	anchored = ANCHORED
 	density = 0
+	var/working = TRUE
 	var/on = 0
 	var/id = null
 
@@ -830,7 +831,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		src.UpdateIcon()
 
 	proc/toggle_group()
-		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
+		if (src.working)
+			switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
 		. = ..()

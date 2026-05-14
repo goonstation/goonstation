@@ -166,3 +166,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	items = list(/obj/item/basketball/lethal)
 	cost = 3
 	desc = "An even more illegal basketball capable of dangerous levels of balling."
+
+/datum/syndicate_buylist/surplus/batong
+	name = "Wind-up stun baton"
+	items = list(/obj/item/baton/windup)
+	cost = 3
+	desc = "An experimental but powerful stun baton. Requires a brief charge-up window to activate."
+
+/datum/syndicate_buylist/surplus/lasershotgun
+	name = "Laser shotgun"
+	cost = 5 //it does a lot of damage but overheats very fast and has limited charge
+	items = list(/obj/item/gun/energy/lasershotgun)
+	desc = "A very large laser shotgun with bouncing projectiles and a tendency to overheat."

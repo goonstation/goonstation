@@ -623,6 +623,23 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
+/datum/supply_packs/forensics
+	name = "Crime-Scene Investigation Resupply (Cardlocked \[Forensics])"
+	desc = "2x Fingerprint Dusters, 1x Luminol Spray Bottle, 1x Forensic Scanner, 2x Security Tape Roll, 3x Body Bags, 5x Evidence Boxes."
+	category = "Security Department"
+	contains = list(
+		/obj/item/reagent_containers/applicator/brush/silver_nitrate = 2,
+		/obj/item/spraybottle/detective = 1,
+		/obj/item/device/detective_scanner = 1,
+		/obj/item/sec_tape/vended = 2,
+		/obj/item/body_bag = 3,
+		/obj/item/storage/box/evidence = 5,
+	)
+	cost = PAY_IMPORTANT
+	access = access_forensics_lockers
+	containertype = /obj/storage/secure/crate/gear/transfer
+	containername = "CSI Supply Crate (Cardlocked \[Forensics])"
+
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
 	desc = "x4 Floor Bots, x4 Oxygen Tanks, x4 Gas Mask, x4 Emergency Space Suit Sets."
@@ -662,7 +679,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/storage/box/cocktail_umbrellas = 2,
 					/obj/item/storage/box/cocktail_doodads = 2,
 					/obj/item/storage/box/fruit_wedges = 1,
-					/obj/item/shaker/salt = 1)
+					/obj/item/reagent_containers/applicator/condiment/shaker/salt = 1)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate
 	containername = "Cocktail Party Supplies"
@@ -927,8 +944,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Prosthetic Augmentation Kit"
 
 /datum/supply_packs/restricted_medicine
-	name = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
-	desc = "x1 Omnizine bottle, x1 Perfluorodecalin bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle."
+	name = "Restricted Medicine Shipment (Cardlocked \[Pharmacy])"
+	desc = "x1 Omnizine bottle, x2 Perfluorodecalin bottles, x1 Pentetic Acid bottle, x1 Haloperidol bottle, x1 Diethyl Ether bottle."
 	category = "Medical Department"
 	contains = list(/obj/item/reagent_containers/glass/bottle/omnizine,
 					/obj/item/reagent_containers/glass/bottle/pfd = 2,
@@ -937,7 +954,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/glass/bottle/ether)
 	cost = PAY_DOCTORATE*5
 	containertype = /obj/storage/secure/crate
-	containername = "Restricted Medicine Shipment (Cardlocked \[Medical Director])"
+	containername = "Restricted Medicine Shipment (Cardlocked \[Pharmacy])"
 	access = access_pharmacy
 
 /datum/supply_packs/cyborg
@@ -1278,7 +1295,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/head/headband/nyan/leopard = 1,
 					/obj/item/clothing/head/headband/nyan/snowleopard = 1,
 					/obj/item/clothing/head/headband/bee = 2,
-					/obj/item/clothing/head/headband/nyan/random = 1)
+					/obj/item/clothing/head/headband/nyan/random = 1,
+					/obj/item/clothing/head/headband/woof/random = 1)
 	containertype = /obj/storage/crate/packing
 	containername = "Bows and Bands Box"
 

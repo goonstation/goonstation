@@ -164,6 +164,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		for(var/obj/item/item as anything in items) // augh body bags
 			if(istype(item, /obj/item/body_bag) && item.w_class >= W_CLASS_BULKY)
 				items -= item
+			if(istype(item, /obj/item/gang_loot))
+				items -= item
 
 		if (linked_power.power > 1)
 			items += get_filtered_atoms_in_touch_range(src.owner, /obj/the_server_ingame_whoa)
@@ -435,6 +437,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Trichochromatic Shift"
 	desc = "Enables the subject to shift their hair color to a different region."
 	id = "colorshift"
+	icon_state = "tri_shift"
 	msgGain = "Your hair itches."
 	msgLose = "You feel more confident in your hair color."
 	cooldown = 600
@@ -447,7 +450,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 /datum/targetable/geneticsAbility/colorshift
 	name = "Trichochromatic Shift"
 	desc = "Swap the colors of your hair around."
-	icon_state = "polymorphism"
+	icon_state = "tri_shift"
 	needs_hands = FALSE
 	targeted = FALSE
 
@@ -1648,6 +1651,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Telekinetic Pull"
 	desc = "Allows the subject to influence physical objects through utilizing latent powers in their mind."
 	id = "telekinesis_drag"
+	icon_state = "tkp"
 	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
@@ -1684,6 +1688,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Telekinesis"
 	desc = "Allows the subject to influence physical objects through utilizing latent powers in their mind."
 	id = "telekinesis_command"
+	icon_state  = "tk"
 	effectType = EFFECT_TYPE_POWER
 	probability = 8
 	blockCount = 5
@@ -1937,6 +1942,15 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	ability_path = /datum/targetable/geneticsAbility/bigpuke
 	var/range = 3
 
+	onPowerChange(oldval, newval)
+		. = ..()
+		var/datum/targetable/geneticsAbility/bigpuke/our_gene = src.ability
+		if(ismob(owner))
+			if(oldval > 1)
+				our_gene.puke_reagents = list("vomit" = 20)
+			if(newval > 1)
+				our_gene.puke_reagents = list("vomit" = 40)
+
 /datum/targetable/geneticsAbility/bigpuke
 	name = "Mass Emesis"
 	desc = "BLAAAAAAAARFGHHHHHGHH"
@@ -2072,8 +2086,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	OnLife(var/mult)
 		..()
 		if(src.safety && src.stability_loss)
-			src.owner.bioHolder.genetic_stability += src.stability_loss
 			src.stability_loss = 0
+			src.holder.calculateStability()
 
 		if (count < ticks_to_explode)
 			count += mult
@@ -2170,7 +2184,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "Spectral Ascent"
 	desc = "Allows the subject to become a ghost for a short duration, leaving their body to return."
 	id = "ghost_walk"
-	icon = "ghost_ascend"
+	icon_state = "ghost_ascend"
 	occur_in_genepools = 0 // Only from the genes of a boss mob.
 	probability = 0
 	msgGain = "You feel like your soul is more flexible."
@@ -2243,6 +2257,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 	name = "Ophidentis Vipernox"
 	desc = "Generates an enhanced structure of your fangs allowing for venom."
 	id = "snake_bite"
+	icon_state = "viper"
 	msgGain = "You become oddly aware of your canines and they feel different."
 	msgLose = "You feel less aware of your teeth."
 	cooldown = 20 SECONDS
@@ -2263,6 +2278,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 	name = "Scorpiocauda Vipernox"
 	desc = "Generates a hardened chitin tail like stucture."
 	id = "scorpion_sting"
+	icon_state = "scorpio"
 	msgGain = "You feel aware of something strange around your tail bone."
 	msgLose = "You feel a bit more normal."
 	cooldown = 20 SECONDS
@@ -2277,41 +2293,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 	has_misfire = FALSE
 	needs_hands = FALSE
 	override_params = list("amt1"=2,"amt2"=5)
-
-/datum/targetable/geneticsAbility/ink
-	name = "Ink Glands"
-	desc = "Spray colorful ink onto an object."
-	icon_state = "ink"
-	targeted = FALSE
-	has_misfire = FALSE
-	needs_hands = FALSE
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/obj/the_object = target
-		var/base_path = /obj
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if(!the_object)
-			if (!items.len)
-				boutput(usr, "/red You can't find anything nearby to spray ink on.")
-				return 1
-
-			the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
-			if (!the_object)
-				last_cast = 0
-				return 1
-		if (!(the_object in items))
-			return 1
-
-		var/datum/bioEffect/power/ink/I = linked_power
-		if (!linked_power)
-			owner.visible_message("[owner] spits on [the_object]. Gross.")
-		else
-			owner.visible_message(SPAN_ALERT("[owner] sprays ink onto [the_object]!"))
-			the_object.color = I.color
-		return 0
 
 ////////////////
 // Admin Only //

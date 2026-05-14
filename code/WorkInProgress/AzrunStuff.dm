@@ -149,8 +149,8 @@
 	attacked_proc = 1
 	harvestable = 0
 	starthealth = 40
-	growtime = 80
-	harvtime = 120
+	growtime = 5
+	harvtime = 10
 	cropsize = 1
 	harvests = 0
 	endurance = 5
@@ -183,7 +183,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 5))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA)))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
@@ -192,9 +192,9 @@
 				var/mob/living/target = pick(stuffnearby)
 				var/datum/callback/C = new(src, PROC_REF(alter_projectile), DNA)
 				if(prob(10))
-					shoot_projectile_ST_pixel_spread(POT, projectile, get_step(target, pick(ordinal)), alter_proj=C)
+					shoot_projectile_ST_pixel_spread(get_turf(POT), projectile, get_step(target, pick(ordinal)), alter_proj=C)
 				else
-					shoot_projectile_ST_pixel_spread(POT, projectile, target, alter_proj=C)
+					shoot_projectile_ST_pixel_spread(get_turf(POT), projectile, target, alter_proj=C)
 				POT.growth -= rand(1,5)
 			return
 
@@ -208,6 +208,7 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seedproj"
 	implanted = /obj/item/implant/projectile/body_visible/seed/spitter_pod
+	damage = 15
 
 /obj/item/implant/projectile/body_visible/seed/spitter_pod
 	name = "strange seed pod"
@@ -215,42 +216,10 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	desc = "A small hollow pod."
 	icon_state = "seedproj"
-	var/dig_ticker = 25
 
 	New()
 		..()
 		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
-
-	do_process()
-		src.dig_ticker = max(src.dig_ticker-1, 0)
-		if(!src.dig_ticker)
-			online = FALSE
-			if(prob(80))
-				var/mob/living/carbon/human/H = src.owner
-				var/obj/item/implant/projectile/spitter_pod/implant = new
-				implant.implanted(H)
-				boutput(src.owner,SPAN_ALERT("You feel something work its way into your body from \the [src]."))
-
-	on_death()
-		. = ..()
-		if(!online)
-			return
-		if(prob(80))
-			var/mob/living/carbon/human/H = src.owner
-			var/obj/item/implant/projectile/spitter_pod/implant = new
-			implant.implanted(H)
-			SPAWN(rand(5 SECONDS, 30 SECONDS))
-				if(!QDELETED(H) && !QDELETED(implant))
-					implant.on_death()
-
-/obj/item/implant/projectile/spitter_pod
-	name = "strange seed pod"
-	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	desc = "A small hollow pod."
-	icon_state = "seedproj"
-
-	var/heart_ticker = 35
-	online = TRUE
 
 	implanted(mob/M, mob/Implanter)
 		..()
@@ -274,31 +243,6 @@
 				P.pixel_x = 15 * -P.rest_mult
 				P.transform = P.transform.Turn(P.rest_mult * -90)
 				animate(P, alpha=255, time=2 SECONDS)
-
-	do_process()
-		heart_ticker = max(heart_ticker-1, 0)
-		if(!isalive(src.owner))
-			online = FALSE
-			return
-		if(heart_ticker & prob(60) && !ON_COOLDOWN(src,"[src] spam", 5 SECONDS) )
-			if(prob(30))
-				boutput(src.owner,SPAN_ALERT("You feel as though something moving towards your heart... That can't be good."))
-			else
-				boutput(src.owner,SPAN_ALERT("You feel as though something is working its way through your chest."))
-		else if(!heart_ticker)
-			if(!ON_COOLDOWN(src,"[src] spam", 8 SECONDS))
-				var/mob/living/carbon/human/H = src.owner
-				if(istype(H))
-					H.organHolder.damage_organs(rand(1,5)/2, 0, 1, list("heart"))
-				else
-					src.owner.TakeDamage("All", 1, 0)
-
-				if(prob(5))
-					boutput(src.owner,SPAN_ALERT("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
-					src.owner.emote("scream")
-					src.owner.changeStatus("stunned", rand(1 SECOND, 2 SECONDS))
-				else if(prob(40))
-					boutput(src.owner,SPAN_ALERT("You feel a sharp pain in your chest."))
 
 /datum/gimmick_event
 	var/interaction = 0

@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/request_limit = 0 //!Maximum total `limit` via RoleControl request function
 	var/request_cost = null //!Cost to open an additional slot using RoleControl
 	var/player_requested = FALSE //! Flag if currently requested via RoleControl
-
+	var/email_group = null //! Which email workgroup does this role belong to
 
 
 	New()
@@ -135,6 +135,7 @@ ABSTRACT_TYPE(/datum/job)
 
 	proc/special_setup(var/mob/M, no_special_spawn)
 		SHOULD_NOT_SLEEP(TRUE)
+		SHOULD_CALL_PARENT(TRUE)
 		if (!M)
 			return
 		if (src.receives_miranda)

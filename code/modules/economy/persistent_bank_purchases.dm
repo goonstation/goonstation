@@ -380,7 +380,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	altclown
 		name = "Alternate Clown Outfit"
 		cost = 200
-		icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
+		icon = 'icons/obj/clothing/jumpsuits/item_js_clown.dmi'
 		icon_state = "pinkclown"
 
 		Create(var/mob/living/M)
@@ -388,8 +388,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				var/mob/living/carbon/human/H = M
 				if (H.mind && H.mind.assigned_role == "Clown")
 					var/type = pick("purple","pink","yellow")
-					H.w_uniform.icon = 'icons/obj/clothing/jumpsuits/item_js_gimmick.dmi'
-					H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+					H.w_uniform.icon = 'icons/obj/clothing/jumpsuits/item_js_clown.dmi'
+					H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_clown.dmi'
 					H.w_uniform.icon_state = "[type]clown"
 					H.w_uniform.item_state = "[type]clown"
 					H.w_uniform.name = "[type] clown suit"
@@ -469,10 +469,16 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			var/mob/living/critter/small_animal/frog/froggo = new(M.loc)
 			SPAWN(1 SECOND)
-				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
+				var/new_name = tgui_input_text(M,"What name should your frog have?", "Name Your Frog!", default=pick("Frog", "Frogge", "Froggy"), max_length=32)
+				if (new_name == "hunter2")
+					new_name = tgui_input_text(M,"What name should your frog have?", "Name Your Frog!", default=pick("Frog", "Frogge", "Froggy"), max_length=256)
+				if (isnull(new_name))
+					new_name = pick("Frog", "Frogge", "Froggy")
+				froggo.real_name = new_name
 				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
 				logTheThing(LOG_STATION, M, "named their adopted frog [froggo.real_name]")
 				froggo.name = froggo.real_name
+				froggo.update_name_tag()
 			return 1
 
 	missile_arrival

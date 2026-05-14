@@ -5,7 +5,7 @@
 #define ALL_DOCTORS "Medical Director", "Medical Doctor", "Medical Trainee", "Pharmacist"
 #define ALL_ENGINEERS "Chief Engineer", "Engineer", "Technical Trainee"
 #define ALL_CHEFS "Chef", "Sous-Chef"
-#define ALL_CLOWNS "Clown", "Blue Clown"
+#define ALL_CLOWNS "Clown", "Blue Clown", "Purple Clown", "Yellow Clown", "Pink Clown", "Green Clown?"
 
 //////////////////////////////////////////////// Job-specific items  ////////////////////////////////////////////////////
 
@@ -242,12 +242,19 @@
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/stimulants
-	name = "Stimulants"
+	name = "Stimulant 3-Pack"
 	items = list(/obj/item/storage/box/stimulants)
 	cost = 6
 	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This 3-pack of all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Users are recommended to take only a single dose at a time, and let withdrawal symptoms play out naturally.</font>"
-	job = list(ALL_DOCTORS, ALL_RESEARCH, "Geneticist", "Pathologist")
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+	job = list(ALL_DOCTORS, ALL_RESEARCH, "Geneticist", "Pathologist", "Pharmacist")
+	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/stimulants_one_pack
+	name = "Stimulant Syringe"
+	items = list(/obj/item/stimpack)
+	cost = 4 // not directly purchasable but changes spief item tier
+	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This single dose of all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Users are recommended to take only a single dose at a time, and let withdrawal symptoms play out naturally.</font>"
+	can_buy = UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/syringegun
 	name = "Syringe Gun"
@@ -325,7 +332,7 @@
 	name = "Safari Kit"
 	items = list(/obj/item/storage/box/costume/safari)
 	cost = 7
-	desc = "Almost everything you need to hunt the most dangerous game. Tranquilizer rifle not included."
+	desc = "4 clips of banned tranquilizer darts, a dashing safari outfit, and a boomarang to match. Tranquilizer rifle not included."
 	br_allowed = TRUE
 	job = list("Medical Director")
 	can_buy = UPLINK_TRAITOR

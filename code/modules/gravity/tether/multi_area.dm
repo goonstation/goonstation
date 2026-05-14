@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 
 // donut2 research station
 /obj/machinery/gravity_tether/multi_area/research_station
-	name = "Reearch Station gravity tether"
+	name = "Research Station gravity tether"
 	req_access = list(access_research_director)
 	base_area_typepath = /area/station/science
 	base_area_exceptions = list(/area/station/science/testchamber/bombchamber)

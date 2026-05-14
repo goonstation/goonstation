@@ -5,7 +5,7 @@ var/parallax_enabled = TRUE
 var/list/z_level_parallax_render_source_groups = list()
 /// An associative list of parallax render source group types and the corresponding instance of that type.
 var/list/area_parallax_render_source_groups = list()
-/// An list of parallax render source group instances that are used within procedurally generated planets.
+/// A list of parallax render source group instances that are used within procedurally generated planets.
 var/list/planet_parallax_render_source_groups = list()
 
 /// Initialises `z_level_parallax_render_source_groups` by populating it with z-level parallax render source groups.

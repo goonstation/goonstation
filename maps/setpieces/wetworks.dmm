@@ -871,6 +871,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},

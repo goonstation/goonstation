@@ -7,7 +7,7 @@ TYPEINFO(/datum/component/assembly)
 		ARG_INFO("ignore_given_proc", DATA_INPUT_BOOL, "Set this to TRUE if you want the component to ignore that proc_to_call isn't given and instead call src.override_combination. This is only usefull for children of this component.", FALSE),
 	)
 
-///This component calls a procref with a assembly_information string on the atom it was added to when it gets attacked with an object specified in the to_combine_item
+///This component calls a procref with an assembly_information string on the atom it was added to when it gets attacked with an object specified in the to_combine_item
 ///This component can be used to get the convulent if-then-else trees of assemblies under control
 ///Make the proc you call on sucessfull assembly return TRUE. Else the attack will go through!
 
@@ -106,7 +106,7 @@ TYPEINFO(/datum/component/assembly)
 
 /datum/component/assembly/trigger_applier_assembly/attackby(var/atom/affected_parent, var/atom/to_combine_atom, var/mob/user, var/params, var/is_special)
 	if((length(to_combine_atom.GetComponents(/datum/component/assembly/trigger_applier_assembly)) > 0) && isassemblyapplier(src.parent))
-		//If the item used to attack you can also be trigger and a applier for an assembly, we don't continue here.
+		//If the item used to attack you can also be trigger and an applier for an assembly, we don't continue here.
 		//At this point, the component of to_combine_atom should already turned this item into an assembly
 		//this guarantees that the item you use in your hand for an assembly will always turn out to be the trigger
 		return FALSE

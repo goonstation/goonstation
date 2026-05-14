@@ -16,7 +16,9 @@ TYPEINFO(/obj/item/device/flash)
 	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
-	item_state = "electronic"
+	//no inhands, flash is a little sneaky
+	inhand_image_icon = null
+	item_state = null
 
 	var/status = 1 // Bulb still functional?
 	var/use = 0 // Times the flash has been used.
@@ -355,7 +357,7 @@ TYPEINFO(/obj/item/device/flash)
 			var/obj/item/assembly/checked_assembly = src.master
 			if(checked_assembly.trigger == src) //in case a flash is used for something else than a trigger
 				checked_assembly.trigger_icon_prefix = "flash3"
-			if(checked_assembly.applier == src) //in case a flash is used for something else than a applier
+			if(checked_assembly.applier == src) //in case a flash is used for something else than an applier
 				checked_assembly.applier_icon_prefix = "flash3"
 			checked_assembly.UpdateIcon()
 			checked_assembly.UpdateName()

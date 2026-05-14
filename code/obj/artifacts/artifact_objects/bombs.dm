@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	post_setup()
 		. = ..()
-		payload_type = rand(0,3)
+		payload_type = rand(1,3)// replace the 1 with 0 to enable foam bombs
 		var/payload_type_name = "unknown"
 		switch (payload_type)
 			if (CHEMBOMB_FOAMY)
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","styptic_powder","salbutamol","anti_rad","silver_sulfadiazine","synaptizine",
-				"omnizine","synthflesh","saline","salicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine","solipsizine",
+				"omnizine","synthflesh","saline","salicylic_acid","acetylsalicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine","solipsizine",
 				"perfluorodecalin","ipecac","mutadone","insulin","epinephrine","cyanide","ketamine","toxin","neurotoxin","neurodepressant","mutagen",
 				"fake_initropidril","toxic_slurry","space_fungus","blood","vomit","gvomit","meat_slurry","grease","butter","spaceglue", "ants")
 			if ("eldritch")

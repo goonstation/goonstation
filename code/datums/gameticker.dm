@@ -250,6 +250,22 @@ var/global/game_force_started = FALSE
 
 	//Equip characters
 	equip_characters()
+	//no captain? spawn disk in their office at least
+	if (!length(by_type[/obj/item/disk/data/floppy/read_only/authentication]))
+		var/turf/T = get_turf(locate(/mob/living/critter/small_animal/cat/jones))
+		if (!T)
+			T = pick(job_start_locations["Captain"])
+		new /obj/item/disk/data/floppy/read_only/authentication(T)
+
+#ifdef I_WANNA_DO_CRIME
+	SPAWN(1 SECOND) //Avoids runtiming on certain special job setups changing equipment through SPAWN()s of their own
+		for (var/datum/mind/mind in src.minds)
+			if(!mind.current.client)
+				continue
+			mind.add_antagonist(I_WANNA_DO_CRIME)
+			if(isnull(mind.current.loc))
+				mind.current.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+#endif
 
 #ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 	Z_LOG_DEBUG("Game Start", "Animating client colors to normal")

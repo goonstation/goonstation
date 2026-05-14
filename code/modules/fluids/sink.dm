@@ -92,8 +92,11 @@ TYPEINFO(/obj/machinery/sink)
 		if (W.reagents && W.is_open_container())
 			src.drain_fluid(W.reagents, W.reagents.total_volume)
 
-/obj/machinery/sink/MouseDrop_T(obj/item/reagent_containers/W as obj, mob/user as mob)
+/obj/machinery/sink/MouseDrop_T(obj/item/reagent_containers/W, mob/user)
 	if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
+		if (issilicon(user) && !W.reagents.total_volume) //they probably wanna transfer TO it
+			src.Attackby(W, user)
+			return
 		if(W.current_lid)
 			boutput(user, SPAN_ALERT("You cannot transfer liquids from the [W] while it has a lid on it!"))
 			return
@@ -331,7 +334,7 @@ TYPEINFO(/obj/machinery/sink/piped)
 	return src.reagents.total_volume
 
 /obj/machinery/sink/piped/drain_fluid(datum/reagents/fluid, amount)
-	return fluid.trans_to_direct(src.drainage, amount)
+	return fluid.trans_to_direct(src.drainage, min(amount, src.drainage.maximum_volume - src.drainage.total_volume))
 
 /obj/machinery/sink/piped/New()
 	..()

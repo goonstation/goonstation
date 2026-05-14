@@ -1916,6 +1916,7 @@
 /area/mining/miningoutpost)
 "uc" = (
 /obj/rack,
+/obj/item/device/camera_viewer/outpost/mining,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/grime,
 /area/mining/comms)
@@ -3111,6 +3112,7 @@
 	icon_state = "1-2"
 	},
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/item/rods/steel,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "Ci" = (
@@ -3282,6 +3284,7 @@
 /area/evilreaver/security)
 "DT" = (
 /obj/machinery/light/incandescent,
+/obj/item/rods/steel,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "DW" = (
@@ -4444,9 +4447,6 @@
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "Lw" = (
-/obj/item/rods/steel,
-/obj/item/rods/steel,
-/obj/item/rods/steel,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "Lx" = (
@@ -4609,11 +4609,11 @@
 /area/noGenerate)
 "Mo" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/regular,
 /obj/decal/cleanable/cobweb,
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/item/storage/firstaid/regular,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "Mq" = (

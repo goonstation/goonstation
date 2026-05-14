@@ -3185,3 +3185,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	initial_reagents = list("sugar" = 10, "vanilla" = 10)
 	food_effects = list("food_energized")
 	meal_time_flags = MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/proc/random_pigblanket_name()
+	.= pick(list("pigs in a blanket", "pig in a blanket", "little pigs in blanket", "pork sausage links in a blanket", "kolache", "avisance", "fransk hot dog", "sausage horns", "saucijzenbroodje", "sausage roll"))
+
+/obj/item/reagent_containers/food/snacks/pigblanket
+	name = "pig in a blanket"
+	desc = "A small hotdog wrapped in a pastry."
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
+	icon_state = "pigblanket"
+	bites_left = 2
+	heal_amt = 1
+	food_effects = list("food_sweaty")
+	meal_time_flags = MEAL_TIME_SNACK
+
+	New()
+		..()
+		name = "[random_pigblanket_name()]"
+
+/obj/item/reagent_containers/food/snacks/fruit_salad
+	name = "fruit salad"
+	desc = "Yummy, yummy fruit salad."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "fruit_salad"
+	bites_left = 3
+	food_effects = list("food_energized", "food_refreshed")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER

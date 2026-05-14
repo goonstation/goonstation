@@ -153,7 +153,7 @@
 /obj/decal/tile_edge/carpet/fancy
 	icon_state = "frugfull"
 
-/obj/decal/tile_edge/flowers // not really a edge thing but uh I want it to merge with the turf, so. ye. we doin this.
+/obj/decal/tile_edge/flowers // not really an edge thing but uh I want it to merge with the turf, so. ye. we doin this.
 	name = "flowers"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "flowers1"

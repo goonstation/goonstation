@@ -375,8 +375,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
 	items = list(/obj/item/lightbreaker)
-	cost = 4
-	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
+	cost = 3
+	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all other nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
 
@@ -416,10 +416,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 		crate.spawn_items(owner, uplink)
 
 /datum/syndicate_buylist/traitor/fingerprinter
-	name = "Fingerprinter"
-	items = list(/obj/item/device/fingerprinter)
-	desc = "A tool which allows you to scan and plant fingerprints."
-	cost = 1
+ 	name = "Fingerprinter"
+ 	items = list(/obj/item/device/fingerprinter)
+ 	desc = "A tool which allows you to scan and plant fingerprints."
+ 	cost = 1
 
 /datum/syndicate_buylist/traitor/blowgun
 	name = "Blowgun"
@@ -431,7 +431,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/wiretap
 	name = "Wiretap Radio Upgrade"
-	items = list(/obj/item/device/radio_upgrade)
+	items = list(/obj/item/device/radio_upgrade/wiretap)
 	cost = 3
 	desc = "A small device that may be installed in a headset to grant access to all station channels, along with one reserved for Syndicate operatives."
 	vr_allowed = FALSE

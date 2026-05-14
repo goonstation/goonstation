@@ -332,7 +332,7 @@ THROWING DARTS
 	impcolor = "b"
 	scan_category = IMPLANT_SCAN_CATEGORY_HEALTH
 	uses_radio = 1
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+	mailgroups = list(MGD_MEDICAL, MGT_SPIRITUALAFFAIRS)
 
 	var/healthstring = ""
 	var/affected = "CREW"
@@ -672,7 +672,7 @@ THROWING DARTS
 		. = ..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
-			H.reagents.add_reagent("formaldehyde", 5)
+			H.reagents.add_reagent("formaldehyde", 30)
 
 
 /* Deprecated old turds shit */

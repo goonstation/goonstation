@@ -4,7 +4,7 @@
 
 TYPEINFO(/mob/dead/observer)
 	start_listen_modifiers = list(LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS)
-	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_RADIO_GLOBAL_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST,LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST,LISTEN_INPUT_RADIO_GLOBAL_GHOST,LISTEN_INPUT_BLOBCHAT,LISTEN_INPUT_FLOCK_GLOBAL,LISTEN_INPUT_WRAITHCHAT)
 	start_listen_languages = list(LANGUAGE_ALL)
 
 /mob/dead/observer
@@ -307,8 +307,7 @@ TYPEINFO(/mob/dead/observer)
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, DNR status will be set, and you will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
-				for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
-					antagonist.handle_perma_cryo()
+				src.handle_perma_cryo()
 				src.mind?.get_player()?.dnr = TRUE
 				src.ghostize()
 				qdel(src)

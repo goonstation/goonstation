@@ -22,12 +22,18 @@
 	var/area_name = null
 	/// Determines colors for alert text
 	var/alert_origin = ALERT_COMMAND
+	/// Does the announcement computer remove the header ID Name/Job addendum
+	var/anonymous = FALSE
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	light_r =0.6
 	light_g = 1
 	light_b = 0.1
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "<br/>Insert an <b>ID Card</b> and click with an <b>open hand</b> to send an announcement to all players."
 
 	New()
 		. = ..()
@@ -101,7 +107,7 @@
 				src.set_arrival_alert(usr, params["value"])
 				. = TRUE
 			if ("log")
-				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
+				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[sanitize(adminscrub(params["value"]))]\" from \"[sanitize(adminscrub(params["old"]))]\".")
 
 	proc/update_status()
 		if(!src.ID)
@@ -116,6 +122,8 @@
 			return
 
 		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.content
+		message = STRIP_MUTABLE_CONTENT_TAGS(message)
+		message = sanitize(adminscrub(message))
 		if (!message)
 			return
 
@@ -129,7 +137,10 @@
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 		var/area/A = get_area(src)
-		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
+		var/header = "[src.area_name || A.name] Announcement"
+		if (!src.anonymous)
+			header += " by [ID.registered] ([ID.assignment])"
+
 		command_announcement(message, header, msg_sound, volume = src.sound_volume, alert_origin = src.alert_origin)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
@@ -284,10 +295,12 @@
 	req_access = list(access_syndicate_shuttle)
 	circuit_type = /obj/item/circuitboard/announcement/syndicate
 	alert_origin = ALERT_SYNDICATE
+	anonymous = TRUE
 
 	commander
 		area_name = null
 		req_access = list(access_syndicate_commander)
+		anonymous = FALSE
 
 	console
 		icon_state = "syndiepc14"
@@ -363,6 +376,7 @@
 	circuit_type = null //Prevents deconstructing via screwdriver
 	explodes = FALSE
 	density = 0
+	glow_in_dark_screen = FALSE
 
 	New()
 		..()

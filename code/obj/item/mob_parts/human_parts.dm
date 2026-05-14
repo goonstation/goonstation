@@ -1469,7 +1469,7 @@
 ////// ACTUAL AMPHIBIAN LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/amphibian/left
 	name = "left amphibian arm"
-	desc = "A amphibian's left arm. Croak."
+	desc = "An amphibian's left arm. Croak."
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
@@ -1477,7 +1477,7 @@
 
 /obj/item/parts/human_parts/arm/mutant/amphibian/right
 	name = "right amphibian arm"
-	desc = "A amphibian's right arm. Froak."
+	desc = "An amphibian's right arm. Froak."
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
@@ -1485,7 +1485,7 @@
 
 /obj/item/parts/human_parts/leg/mutant/amphibian/left
 	name = "left amphibian leg"
-	desc = "A amphibian's left leg. Croak."
+	desc = "An amphibian's left leg. Croak."
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
@@ -1494,7 +1494,7 @@
 
 /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	name = "right amphibian leg"
-	desc = "A amphibian's right leg. Froak"
+	desc = "An amphibian's right leg. Froak"
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"

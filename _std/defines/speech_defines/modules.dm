@@ -150,6 +150,7 @@
 #define SPEECH_MODIFIER_TEST_DUMMY "test_dummy"
 #define SPEECH_MODIFIER_TRANSLATOR "translator"
 #define SPEECH_MODIFIER_VENDING_MACHINE "vending_machine"
+#define SPEECH_MODIFIER_VOICE_CHANGER "voice_changer"
 
 
 //------------ Speech Prefixes ------------//
@@ -222,6 +223,7 @@
 #define LISTEN_MODIFIER_BRAIN_DAMAGE "brain_damage_hearing"
 #define LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS "chat_context_flags"
 #define LISTEN_MODIFIER_CLOWN_DISBELIEF "clown_disbelief"
+#define LISTEN_MODIFIER_COMIC_SANS "comic_sans"
 #define LISTEN_MODIFIER_MOB_MODIFIERS "mob_modifiers"
 #define LISTEN_MODIFIER_PHONE "phone_formatting"
 #define LISTEN_MODIFIER_RADIO "radio_formatting"

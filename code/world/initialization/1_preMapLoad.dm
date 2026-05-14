@@ -55,6 +55,9 @@
 	world.log << ""
 #endif
 	enable_auxtools_debugger()
+
+	global.initialise_namespaces()
+
 	Z_LOG_DEBUG("Preload", "  radio")
 	radio_controller = new /datum/controller/radio()
 
@@ -95,6 +98,9 @@
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 		Z_LOG_DEBUG("Preload", "Loading local browserassets...")
 		loadAllLocalResources("browserassets/src/")
+		#ifdef SECRETS_ENABLED
+		loadAllLocalResources("+secret/browserassets/src/")
+		#endif
 
 	Z_LOG_DEBUG("Preload", "Z-level datums...")
 	init_zlevel_datums()
