@@ -19,6 +19,7 @@
 	syndicate
 		is_syndicate = TRUE
 		SYNDICATE_STEALTH_DESCRIPTION("The internal circuitry has been jailbroken.", null)
+		tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
 
 	New()
 		. = ..()

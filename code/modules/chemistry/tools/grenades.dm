@@ -449,6 +449,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	name = "cleaner grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	SYNDICATE_STEALTH_DESCRIPTION("You struggle to keep a good grip on it.", null)
+	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
