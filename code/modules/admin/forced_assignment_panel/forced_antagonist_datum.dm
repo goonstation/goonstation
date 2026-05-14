@@ -1,6 +1,4 @@
 /datum/forced_antagonist
-	/// Selected antagonist as type path.
-	var/antagonist_path = null
 	/// Selected antagonist display name.
 	var/display_name = ""
 	/// Selected antagonist id.
@@ -8,17 +6,17 @@
 	var/do_equipment = FALSE
 	var/do_objectives = FALSE
 	/// Text for custom antag objective.
-	var/custom_objective = "Fuck shit up."
+	var/custom_objective = ""
 
-/datum/forced_antagonist/New(antagonist_path_input, do_equipment_input, do_objectives_input, custom_objective_input)
+/datum/forced_antagonist/New(antagonist_id_input, do_equipment_input, do_objectives_input, custom_objective_input)
 	. = ..()
-	if (istext(antagonist_path_input))
-		antagonist_path_input = text2path(antagonist_path_input)
-	if (!ispath(antagonist_path_input, /datum/antagonist))
+	if (!istext(antagonist_id_input))
 		qdel(src)
 		return
-	src.antagonist_path = antagonist_path_input
-	var/datum/antagonist/antagonist_instance = src.antagonist_path
+	var/datum/antagonist/antagonist_instance = get_antagonist_datum_type(antagonist_id_input)
+	if (!ispath(antagonist_instance, /datum/antagonist))
+		qdel(src)
+		return
 	src.display_name = initial(antagonist_instance.display_name)
 	src.id = initial(antagonist_instance.id)
 	src.do_equipment = do_equipment_input ? TRUE : FALSE
@@ -61,8 +59,9 @@
 				logTheThing(LOG_DIARY, candidate, "could not assign forced antagonist [forced_antagonist.display_name] to [key_name(candidate.ckey)].", "admin")
 				continue
 			if (length(forced_antagonist.custom_objective))
-				new /datum/objective/regular(forced_antagonist.custom_objective, candidate.mind, candidate.mind.get_antagonist(forced_antagonist.id))
-				tgui_alert(candidate, "Your objective is: [forced_antagonist.custom_objective]", "Objective")
+				SPAWN(0)
+					new /datum/objective/regular(forced_antagonist.custom_objective, candidate.mind, candidate.mind.get_antagonist(forced_antagonist.id))
+					tgui_alert(candidate, "Your objective is: [forced_antagonist.custom_objective]", "Objective")
 			antagonist_roles_added += forced_antagonist.display_name
 		if (!length(antagonist_roles_added))
 			continue

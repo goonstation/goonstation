@@ -273,13 +273,13 @@
 	if (!length(eligible_antagonists))
 		boutput(caller, SPAN_ALERT("Unable to input antagonist role as no valid antagonist roles exist!"))
 		return
-	var/selected_antagonist = tgui_input_list(caller, "Designate forced antagonist role.[!!continuous && " Cancel to complete addition. \
+	var/selected_antagonist_name = tgui_input_list(caller, "Designate forced antagonist role.[!!continuous && " Cancel to complete addition. \
 		[length(output_buffer)] selected so far."]", "Designate antag roles", eligible_antagonists)
-	if (!selected_antagonist)
+	if (!selected_antagonist_name)
 		return
 	for (var/forced_antagonist_index in combined_lists)
 		var/datum/forced_antagonist/forced_antagonist_to_check = combined_lists[forced_antagonist_index]
-		var/datum/antagonist/antagonist_to_check = forced_antagonist_to_check.antagonist_path
+		var/datum/antagonist/antagonist_to_check = get_antagonist_datum_type(forced_antagonist_to_check.id)
 		if (!initial(antagonist_to_check.mutually_exclusive))
 			continue
 		if (tgui_alert(caller, "Current list has an antagonist role ([capitalize(initial(antagonist_to_check.display_name))]) that will not \
@@ -288,10 +288,11 @@
 	var/list/antagonist_params = src.adjust_antagonist_params(caller)
 	if (!length(antagonist_params))
 		return
-	if (tgui_alert(usr, "Confirm selected antagonist [selected_antagonist]. Equipment and abilities will[antagonist_params[1] == "Yes" \
+	if (tgui_alert(usr, "Confirm selected antagonist [selected_antagonist_name]. Equipment and abilities will[antagonist_params[1] == "Yes" \
 		? "" : " NOT"] be added.[antagonist_params[3]].", "Designate antag roles", list("Confirm", "Cancel")) != "Confirm")
 		return
-	var/datum/forced_antagonist/new_forced_antagonist = new(eligible_antagonists[selected_antagonist], antagonist_params[1] == "Yes" ? TRUE : FALSE, \
+	var/datum/antagonist/selected_antagonist = eligible_antagonists[selected_antagonist_name]
+	var/datum/forced_antagonist/new_forced_antagonist = new(initial(selected_antagonist.id), antagonist_params[1] == "Yes" ? TRUE : FALSE, \
 		antagonist_params[2] == "Yes" ? TRUE : FALSE, antagonist_params[4])
 	. = new_forced_antagonist
 
@@ -347,7 +348,7 @@
 				var/list/serialised_forced_antag = list()
 				var/datum/forced_antagonist/forced_antagonist = forced_assignment.forced_antags[forced_antagonist_index]
 				serialised_forced_antag = list(
-					"antagPath" = forced_antagonist.antagonist_path,
+					"antagID" = forced_antagonist.id,
 					"displayName" = forced_antagonist.display_name,
 					"doEquipment" = forced_antagonist.do_equipment || null,
 					"doObjectives" = forced_antagonist.do_objectives || null,
@@ -375,15 +376,15 @@
 		if (length(forced_antags_list))
 			for (var/forced_antagonist_item_index in forced_antags_list)
 				var/forced_antagonist_item = forced_antags_list[forced_antagonist_item_index]
-				var/antagonist_path = ""
-				if (length(forced_antagonist_item["antagPath"]))
-					antagonist_path = forced_antagonist_item["antagPath"]
+				var/antagonist_id = ""
+				if (length(forced_antagonist_item["antagID"]))
+					antagonist_id = forced_antagonist_item["antagID"]
 				var/do_equipment = forced_antagonist_item["doEquipment"] ? TRUE : FALSE
 				var/do_objectives = forced_antagonist_item["doObjectives"] ? TRUE : FALSE
 				var/custom_objective = ""
 				if (length(forced_antagonist_item["customObjective"]))
 					custom_objective = forced_antagonist_item["customObjective"]
-				var/datum/forced_antagonist/forced_antagonist = new(antagonist_path, do_equipment, do_objectives, custom_objective)
+				var/datum/forced_antagonist/forced_antagonist = new(antagonist_id, do_equipment, do_objectives, custom_objective)
 				forced_antagonist_buffer[forced_antagonist.display_name] = forced_antagonist
 		var/datum/forced_assignment/forced_assignment = new(ckey, new_job, forced_antagonist_buffer)
 		forced_assignment_buffer[forced_assignment.ckey] = forced_assignment
