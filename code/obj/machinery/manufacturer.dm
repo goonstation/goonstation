@@ -835,11 +835,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 					account["current_money"] -= total
 					storage.eject_ores(ore_name, get_output_location(), quantity, transmit=1, user=usr)
 
-						// This next bit is stolen from PTL Code
+					// This next bit is stolen from PTL Code
 					var/list/accounts = \
 						data_core.general.find_records("rank", "Chief Engineer") + \
 						data_core.general.find_records("rank", "Miner")
-
 
 					var/datum/signal/minerSignal = get_free_signal()
 					minerSignal.source = src
@@ -850,9 +849,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 						var/divisible_amount = subtotal - leftovers
 						if(divisible_amount)
 							var/amount_per_account = divisible_amount/length(accounts)
-							for(var/datum/db_record/t as anything in accounts)
-								t["current_money"] += amount_per_account
-							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
+							for(var/datum/db_record/gen_rec as anything in accounts)
+								var/datum/db_record/bank_rec = global.data_core.bank.find_record("id", gen_rec["id"])
+								if (istype(bank_rec))
+									bank_rec["current_money"] += amount_per_account
+									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
 						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")

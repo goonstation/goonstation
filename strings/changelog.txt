@@ -1,13 +1,182 @@
 
+(t)thu may 14 26
+(u)iDESTROYkibble
+(p)26589
+(e)|
+(+)You can now print roller beds and IV stands with the medical fabricator.
+(u)JORJ949
+(p)26476
+(e)⚖🧑‍✈️|C-Balance, A-Command
+(*)The HoP now has all access minus command offices, the brig, security equipment, forensics, medical equipment and APCs.
+(u)JORJ949
+(p)26508
+(e)⚖📨|C-Balance, A-Logistics
+(*)The listening post trader now sells voice anonymizers (makes you appear as "Unknown") instead of voice changers.
+(u)CalliopeSoups
+(p)26573
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Wraith's Whisper and Mass Whisper now both have no cooldown.
+(u)glowbold
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Observers can toggle examine-on-click with a new button in the top-right HUD.
+(t)wed may 13 26
+(u)LeahTheTech
+(*)Two new items have been added to the syndicate surplus pool: a unique stun baton with a windup and instant 5 second stun, and a big laser shotgun with very bouncy projectiles (overheating guaranteed). These will also show up in spy-thief bounties.
+(u)EmeraldCrow
+(p)26232
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds Ricochet stun bullets to hacked SecTechs and normal ammotech. bank shot that clown today!
+(+)New sprites for lethal ricochet bullets, to match the stun ricochet bullets.
+(u)bamlord, sprites by swinglow20
+(p)26535
+(e)🗺🎨📡🐁|A-Mapping, C-Sprites, A-AI, A-Critters
+(*)Added Gorillas, extremely robust and rare critters.
+(t)tue may 12 26
+(u)Bonnedav
+(p)26583
+(e)|
+(+)Computer Operators now spawn a box of useful floppy disks, an IT toolbelt, a cable coil, and the frequency reference sheet.
+(u)glowbold
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)Portable machinery like the Port-A-Medbay only show "Off-Station Location" when the location or home is not on station.
+(u)LeahTheTech
+(*)Lightbreaker changes: TC cost 4 -> 3, rewind time 30 -> 20 seconds, rewind action is now quieter and keeps its progress when interrupted, 1 second cooldown added to activation to prevent all charges being used at once in a panic.
+(u)LorrMaster
+(p)26576
+(e)🎨🧱🌱|C-Sprites, A-Materials, A-Hydroponics
+(*)New wood log sprites for various stack sizes. Wood planks color adjusted.
+(t)mon may 11 26
+(u)LeahTheTech
+(+)If there is no captain in the round, Jones will now guard the auth disk.
+(t)sat may 09 26
+(u)LeahTheTech
+(*)Blowgun knockout darts now contain the faster acting sodium thiopental rather than ketamine.
+(t)fri may 08 26
+(u)nova2053
+(p)26526
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Medical scanners now indicate sugar overdose at 80 units rather than 200 units, better indicating at which point sugar overdose becomes dangerous.
+(+)Sugar will now cause hyperglycemic shock at 160 units instead of 200 units.
+(u)LeahTheTech
+(p)26530
+(e)🆕🎨⚖🧛⏰🤖💡|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Status-Effects, A-Silicons, A-Station-Systems
+(*)Security cameras now light up blue when someone is watching you through them, including AI eyes.
+(t)wed may 06 26
+(u)DisturbHerb
+(p)26522
+(e)🆕💅🔊📄👽🤖|C-Feature, C-QoL, C-Sound, A-UI, A-Mutantraces, A-Silicons
+(+)Fart volume may now be adjusted in your audio settings.
+(u)Pirate-Rob
+(p)26427
+(e)🔎💅💡|C-Code-Quality, C-QoL, A-Station-Systems
+(+)You can now place items directly into peripherals that are not currently in a computer.
+(u)Nexusuxen
+(p)26437
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can now use a wrench to (un)anchor pipe dispensers and drag them around.
+(u)Soulware
+(p)26385
+(e)🎨|C-Sprites
+(+)You can smooth out a brain using a washing machine now. (sprite by skeletonman0)
+(u)JORJ949
+(p)26444
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Washing machines now take mechcomp inputs.
+(u)LeahTheTech
+(+)The auth disk will now spawn in place of the captain if there isn't one at roundstart.
+(+)The auth disk will now be shipped to cargo if anyone cryos with it.
+(u)glowbold
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)The Syndicate Announcement computer no longer forces you to share your ID name/job in announcements.
+(t)tue may 05 26
+(u)grasswitch
+(p)26343
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Removed foam-based chemical artifact bombs.
+(t)mon may 03 26
+(u)glowbold
+(e)💅👮|C-QoL, A-Security
+(*)The DetGadget hat can now store a fingerprint duster from the Detective's forensics cart.
+(t)fri may 01 26
+(u)Tela
+(p)26350
+(e)🎨🐣|C-Sprites, A-Respawning
+(+)Adds 4 New Hairstyles! Side Pigtails, Long Top Bun, Curtained Ponytail, Low Bun, Along with Hairparts for Side Pigtails and Scorpion Braid.
+(u)Urist McCoder
+(p)26406
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)drinks that contain coffee as an ingredient now contain caffeine, with alcoholic drinks having an amount equal to espresso
+(+)pineapple matcha is now considered matcha tea
+(+)lattes and coconut milk espresso have the same caffeine amount as espresso
+(u)bork
+(p)26475
+(e)🎨🍝|C-Sprites, A-Catering
+(+)repsrites rice and beans, risotto and fried rice
+(t)thu apr 30 26
+(u)JORJ949
+(p)26484
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)AI turrets (and Computer Core/Armory(If not using a NARCS)) on the stun setting can no longer be heard through walls
+(u)glowbold
+(e)💅👮|C-QoL, A-Security
+(*)Detectives now get two fingerprint dusters in their forensics cart (sprite by TemThrush). Cargo can order more in a Forensic-locked crate.
+(u)glowbold
+(p)26395
+(e)⚖💊|C-Balance, A-Medical
+(+)A stopped or missing heart stops bleeding, and causes your organs to slowly die.
+(t)wed apr 29 26
+(u)TheGeneralJay
+(p)26279
+(e)🔄🗺|C-Rework, A-Mapping
+(*)Crew of the NSS Clarion can now utilize the fancy new southern hall.
+(u)bamlord
+(p)26458
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Basketball hoops now send an mechcomp output and are thus even more illegal.
+(t)sat apr 25 26
+(u)Lorrmaster
+(p)26361
+(e)💅👮|C-QoL, A-Security
+(+)Latex gloves now block fingerprints in the same way all other gloves do.
+(u)LorrMaster
+(p)26310
+(e)🪲🎨🧛👮|C-Bug, C-Sprites, A-Gamemodes, A-Security
+(*)Fingerprinter has been fixed and can now scan and search similar to the forensics scanner.
+(u)Nexusuxen
+(p)26379
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)New options for MechComp door control. Also, sending an airlock its access code via MechComp signal will allow it to work on doors that require access.
+(u)NibChocolateeny
+(p)26130
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Adds a new plant gene, "Gene Inhibitor," which prevents your plants from getting genes. Funny, that.
+(+)Adds "Gene Inhibitor" as a possible gene in Pear plants.
+(u)LorrMaster
+(p)26314
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Cardboard material now considered to be wooden. Wood can now be turned into rods.
+(*)New cardboard sprites.
+(u)LeahTheTech
+(e)🪲🧱|C-Bug, A-Materials
+(+)Bohrum now looks like bohrum again.
+(u)Lord_Earthfire
+(p)26195
+(e)🆕📡🐁|C-Feature, A-AI, A-Critters
+(+)Man-Eating plants now are able to walk and pathfind through kudzu.
+(u)Lord_Earthfire
+(p)26380
+(e)🪲⚖⚗|C-Bug, C-Balance, A-Chemistry
+(+)Flamethrowers apply chemicals onto people at the temperature the flamethrower is actually set at.
+(+)Flamethrowers and the W4V3 don't inject chemicals into tiles anymore.
 (t)thu apr 23 26
 (u)Nexusuxen
 (p)26447
-(e)💡|A-Station-Systems
+(e)💅💡|C-QoL, A-Station-Systems
 (+)You can now replace missing APC power terminals with just some cabling, a soldering iron, and a sheet of metal.
 (t)wed apr 22 26
 (u)Kubius
 (p)26424
-(e)🗺|A-Mapping
+(e)🔄🗺|C-Rework, A-Mapping
 (+)Retooled Neon's medbay, introducing a psychiatrist's office and rearranging several workspaces.
 (t)tue apr 21 26
 (u)RubberRats
@@ -20,6 +189,7 @@
 (+)Mushroom can now have a Nuclear engine instead of its usual singularity
 (t)mon apr 20 26
 (u)Sord
+(e)🆕💊|C-Feature, A-Medical
 (+)Added acetylsalicylic acid to the pharmacist's auto injector filler whitelist (not hypospray)
 (u)Kubius
 (p)26423

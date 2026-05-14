@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 		if (.)
 			//we remove this commut and add splice disabler
 			HYPremoveCommut(gene_pool, /datum/plant_gene_strain/temporary_splice_stabilizer)
-			HYPaddCommut(gene_pool, /datum/plant_gene_strain/splicing/disabled)
+			HYPaddCommut(gene_pool, /datum/plant_gene_strain/splicing/disabled, TRUE) // Important to make this unaffected by commutblocker.
 
 /datum/plant_gene_strain/overpowering_genome
 	name = "Overpowering Genome"
@@ -319,7 +319,11 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 
 /datum/plant_gene_strain/stabilizer
 	name = "Stabilizer"
-	desc = "A strengthened genetic structure prevents mutations from occurring."
+	desc = "A strengthened genetic structure prevents any mutations from occurring."
+
+/datum/plant_gene_strain/commutblocker
+	name = "Gene Inhibitor"
+	desc = "A modified DNA repair response will prevent this plant from gaining unusual genetic traits. Other mutations can still occur."
 
 /datum/plant_gene_strain/accelerator
 	name = "Accelerator"

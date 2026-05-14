@@ -310,6 +310,16 @@ datum
 				if(gen_record && text2num(gen_record["age"]) < 21)
 					H.apply_automated_arrest("Underage drinking.")
 
+		fooddrink/alcoholic/hardcoffee
+			name = "alcoholic caffeinated reagent parent"
+			description = "You shouldn't be seeing this ingame. If you do, report it to a coder."
+
+			var/caffeine_content = 0.6 //same caffeine content as espresso
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				M.reagents.add_reagent("caffeine", caffeine_content * src.calculate_depletion_rate(M, mult))
+
+
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
 			id = "hard_punch"
@@ -1130,7 +1140,7 @@ datum
 			description = "Nice drink, Dude."
 			reagent_state = LIQUID
 
-		fooddrink/alcoholic/b_russian
+		fooddrink/alcoholic/hardcoffee/b_russian
 			name = "Black Russian"
 			id = "b_russian"
 			fluid_r = 99
@@ -1140,7 +1150,7 @@ datum
 			description = "A vodka-infused coffee cocktail. Supposedly created in honor of a US Ambassador that no one remembers."
 			reagent_state = LIQUID
 
-		fooddrink/alcoholic/irishcoffee
+		fooddrink/alcoholic/hardcoffee/irishcoffee
 			name = "Irish Coffee"
 			id = "irishcoffee"
 			fluid_r = 54
@@ -1255,7 +1265,7 @@ datum
 			reagent_state = LIQUID
 			taste = "medicinal"
 
-		fooddrink/alcoholic/eraser
+		fooddrink/alcoholic/hardcoffee/eraser
 			name = "Mind Eraser"
 			id = "eraser"
 			fluid_r = 90
@@ -1512,7 +1522,7 @@ datum
 				..()
 				return
 
-		fooddrink/alcoholic/bull
+		fooddrink/alcoholic/hardcoffee/bull
 			name = "Brave Bull"
 			id = "bull"
 			fluid_r = 60
@@ -2011,7 +2021,10 @@ datum
 			description = "¡Una cerveza preparada de perfecta para los sedientos habitantes de la estación espacial que quieren algo con un bocado!"
 			reagent_state = LIQUID
 
-		fooddrink/alcoholic/espressomartini
+
+
+
+		fooddrink/alcoholic/hardcoffee/espressomartini
 			name = "Espresso Martini"
 			id = "espressomartini"
 			fluid_r = 93
@@ -4119,7 +4132,7 @@ datum
 			viscosity = 0.1
 			taste = "refreshing"
 
-		fooddrink/laurapalmer
+		fooddrink/caffeinated/laurapalmer
 			name = "laura palmer"
 			id = "laurapalmer"
 			fluid_r = 132
@@ -4201,7 +4214,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/cafe_gele
+		fooddrink/caffeinated/cafe_gele
 			name = "cafe gele"
 			id = "cafe_gele"
 			fluid_r = 140
@@ -4707,7 +4720,7 @@ datum
 			reagent_state = LIQUID
 			taste = list("sweet", "sour")
 
-		fooddrink/alcoholic/duckfart
+		fooddrink/alcoholic/hardcoffee/duckfart
 			name = "Duck Fart"
 			id = "duckfart"
 			fluid_r = 253
@@ -4840,7 +4853,7 @@ datum
 				flush(holder, 3 * mult, flushed_reagents)
 				..()
 
-		fooddrink/coconutmilkespresso
+		fooddrink/caffeinated/espresso/coconutmilkespresso
 			name = "iced coconut milk espresso"
 			id = "icedcoconutmilkespresso"
 			fluid_r = 177
@@ -4852,7 +4865,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/pineapplematcha
+		fooddrink/caffeinated/matchatea/pineapplematcha
 			name = "iced pineapple matcha"
 			id = "icedpineapplematcha"
 			fluid_r = 152
@@ -4862,9 +4875,8 @@ datum
 			taste = list("earthy")
 			description = "Tangy, yet refreshingly earthy."
 			reagent_state = LIQUID
-			thirst_value = 0.8
 
-		fooddrink/thaicoffee
+		fooddrink/caffeinated/thaicoffee
 			name = "Thai iced coffee"
 			id = "thaiicedcoffee"
 			fluid_r = 218
@@ -4900,7 +4912,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.75
 
-		fooddrink/pumpkinspicelatte
+		fooddrink/caffeinated/pumpkinspicelatte
 			name = "pumpkin spice latte"
 			id = "pumpkinspicelatte"
 			fluid_r = 231
@@ -4910,6 +4922,7 @@ datum
 			reagent_state = LIQUID
 			taste = list("earthy", "sweet")
 			thirst_value = 1
+			caffeine_content = 0.6
 
 		fooddrink/lavender_essence
 			name = "lavender essence"
@@ -4954,7 +4967,7 @@ datum
 					src.holder.remove_reagent("miasma", (src.holder.get_reagent_amount("lavender_essence")) * 2)
 					src.holder.remove_reagent("lavender_essence", miasma_amount/2)
 
-		fooddrink/lavenderlatte
+		fooddrink/caffeinated/lavenderlatte
 			name = "lavender latte"
 			id = "lavender_latte"
 			fluid_r = 157
@@ -4964,3 +4977,4 @@ datum
 			reagent_state = LIQUID
 			taste = "like living in a cottage in the countryside"
 			thirst_value = 1
+			caffeine_content = 0.6

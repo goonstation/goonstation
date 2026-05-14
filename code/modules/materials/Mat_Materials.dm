@@ -716,9 +716,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "bohrum"
 	desc = "Bohrum is a heavy and highly durable metal."
 	icon_file = 'icons/obj/items/materials/bohrum.dmi'
-	color = list(0.50, 0.00, 0.00, 0.00,\
-				0.25, 0.75, 0.25, 0.00,\
-				0.00, 0.00, 0.50, 0.00,\
+	color = list(0.20, 0.00, 0.00, 0.00,\
+				0.25, 0.55, 0.25, 0.00,\
+				0.00, 0.00, 0.20, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
 	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
@@ -1670,6 +1670,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 2)
 		setProperty("hard", 1)
 		setProperty("flammable", 4)

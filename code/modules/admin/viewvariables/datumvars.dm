@@ -423,7 +423,7 @@
 
 			html += "<table><thead><tr><th>Idx</th><th>Value</th></tr></thead><tbody>"
 			var/assoc = 0
-			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs")
+			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs" && name != "filters")
 				try
 					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch
@@ -459,6 +459,8 @@
 	return html
 
 /client/Topic(href, href_list, hsrc)
+	if (!usr || isnull(usr.client) || usr.client != src)
+		return
 	if (href_list["Pause"])
 		USR_ADMIN_ONLY
 		src.refresh_varedit_onchange = !src.refresh_varedit_onchange

@@ -137,8 +137,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_back = list(/obj/item/storage/backpack/satchel/randoseru)
-	slot_poc1 = list(/obj/item/shaker/ketchup)
-	slot_poc2 = list(/obj/item/shaker/mustard)
+	slot_poc1 = list(/obj/item/reagent_containers/applicator/condiment/bottle/ketchup)
+	slot_poc2 = list(/obj/item/reagent_containers/applicator/condiment/bottle/mustard)
 
 /datum/job/special/halloween/godzilla
 	name = "Discount Godzilla"
@@ -208,7 +208,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/magnifying_glass)
-	slot_poc2 = list(/obj/item/shaker/salt)
+	slot_poc2 = list(/obj/item/reagent_containers/applicator/condiment/shaker/salt)
 	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/gun/energy/ghost)
 	alt_names = list("Paranormal Activities Investigator", "Spooks Specialist")
 	change_name_on_spawn = TRUE

@@ -33,9 +33,9 @@ ABSTRACT_TYPE(/datum/job/special/clown)
 	limit = 0
 #endif
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/blue)
-	slot_ears = list(/obj/item/device/radio/headset/clown/blue)
 	slot_jump = list(/obj/item/clothing/under/misc/clown/blue)
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/blue)
+	slot_ears = list(/obj/item/device/radio/headset/clown/blue)
 	slot_belt = list(/obj/item/storage/fanny/funny/blue)
 	slot_poc1 = list(/obj/item/device/pda2/clown/blue)
 	slot_lhan = list(/obj/item/instrument/bikehorn/blue)
@@ -50,6 +50,9 @@ ABSTRACT_TYPE(/datum/job/special/clown)
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/purple)
 	slot_jump = list(/obj/item/clothing/under/misc/clown/purple)
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/purple)
+	slot_ears = list(/obj/item/device/radio/headset/clown/purple)
+	slot_belt = list(/obj/item/storage/fanny/funny/purple)
+	slot_poc1 = list(/obj/item/device/pda2/clown/purple)
 
 /datum/job/special/clown/yellow
 	name = "Yellow Clown"
@@ -57,6 +60,8 @@ ABSTRACT_TYPE(/datum/job/special/clown)
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/yellow)
 	slot_jump = list(/obj/item/clothing/under/misc/clown/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/yellow)
+	slot_ears = list(/obj/item/device/radio/headset/clown/yellow)
+	slot_belt = list(/obj/item/storage/fanny/funny/yellow)
 	slot_glov = list(/obj/item/clothing/gloves/yellow/unsulated)
 
 /datum/job/special/clown/pink
@@ -64,6 +69,9 @@ ABSTRACT_TYPE(/datum/job/special/clown)
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/pink)
 	slot_jump = list(/obj/item/clothing/under/misc/clown/pink)
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/pink)
+	slot_ears = list(/obj/item/device/radio/headset/clown/pink)
+	slot_belt = list(/obj/item/storage/fanny/funny/pink)
+	slot_poc1 = list(/obj/item/device/pda2/clown/pink)
 
 /datum/job/special/clown/green
 	name = "Green Clown?"
@@ -71,4 +79,7 @@ ABSTRACT_TYPE(/datum/job/special/clown)
 	slot_mask = list(/obj/item/clothing/mask/cursedclown_hat)
 	slot_jump = list(/obj/item/clothing/under/gimmick/cursedclown)
 	slot_foot = list(/obj/item/clothing/shoes/cursedclown_shoes)
+	slot_ears = list(/obj/item/device/radio/headset/clown/green)
+	slot_belt = list(/obj/item/storage/fanny/funny/green)
+	slot_poc1 = list(/obj/item/device/pda2/clown/green)
 	slot_glov = list(/obj/item/clothing/gloves/cursedclown_gloves)

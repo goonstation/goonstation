@@ -672,7 +672,7 @@ THROWING DARTS
 		. = ..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
-			H.reagents.add_reagent("formaldehyde", 5)
+			H.reagents.add_reagent("formaldehyde", 30)
 
 
 /* Deprecated old turds shit */

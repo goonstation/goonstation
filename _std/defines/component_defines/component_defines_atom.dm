@@ -304,6 +304,8 @@
 	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
 	/// Sent when a mob changes its lying state (lying)
 	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
+	/// Sent to cancel a mob viewing a camera
+	#define COMSIG_MOB_CANCEL_CAMERA "mob_cancel_camera"
 
 	// ---- cloaking device signal ----
 

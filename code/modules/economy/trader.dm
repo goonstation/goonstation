@@ -928,7 +928,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		if (carlsell <= 6)
 			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 		if (carlsell >= 4)
-			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+			src.goods_illegal += new /datum/commodity/contraband/voiceanonymizer(src)
 
 		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 		src.goods_sell += new /datum/commodity/contraband/flare(src)

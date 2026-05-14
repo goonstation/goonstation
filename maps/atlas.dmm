@@ -8821,7 +8821,7 @@
 /obj/decal/cleanable/dirt{
 	dir = 8
 	},
-/obj/item/reagent_containers/applicator/glue,
+/obj/item/reagent_containers/applicator/stick/glue,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "cxJ" = (
