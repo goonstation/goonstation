@@ -134,7 +134,7 @@
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
 						access_fine_small, access_fine_large, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers, access_pharmacy,
-						access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
+						access_tech_storage, access_sysadmin, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_supply_console,
 						access_research, access_hydro, access_ranch, access_ai_upload, access_researchfoyer,
 						access_telesci, access_teleporter, access_money)
@@ -156,7 +156,7 @@
 						)
 		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
-						access_maint_tunnels, access_tech_storage, access_medical_lockers, access_pharmacy,
+						access_maint_tunnels, access_tech_storage, access_sysadmin, access_medical_lockers, access_pharmacy,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload, access_teleporter
 						)
 		if("Chief Engineer")
