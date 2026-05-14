@@ -1457,7 +1457,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "You feel like something's different today, but you can't quite put your finger/tail/hoof/antennae on it."
 	id = "random_species"
 	points = -1
-	category = list("species", "infrared", "cloner_stuff", "nohair", "hemophilia")
+	category = list("species", "infrared", "cloner_stuff", "hemophilia")
 
 	onAdd(mob/owner)
 		if (ishuman(owner))
