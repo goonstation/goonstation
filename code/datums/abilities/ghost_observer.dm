@@ -152,6 +152,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.addAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_ghosts)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_health)
+		src.addAbility(/datum/targetable/ghost_observer/toggle_examine)
 		src.addAbility(/datum/targetable/ghost_observer/view_minimap)
 		if (istype(ticker?.mode, /datum/game_mode/gang))
 			src.addAbility(/datum/targetable/ghost_observer/toggle_gang_overlay)
@@ -304,6 +305,19 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (holder && istype(holder.owner, /mob/dead/observer))
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.show_health()
+
+/datum/targetable/ghost_observer/toggle_examine
+	name = "Toggle Examine"
+	desc = "Toggle examining on left-click."
+	icon_state = "toggle-examine"
+	targeted = 0
+	cooldown = 0
+
+	cast(atom/target, params)
+		. = ..()
+		if (holder && istype(holder.owner, /mob/dead/observer))
+			var/mob/dead/observer/ghost = holder.owner
+			ghost.click_to_examine = !ghost.click_to_examine
 
 /datum/targetable/ghost_observer/toggle_HUD
 	name = "Hide HUD"

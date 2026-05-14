@@ -2507,17 +2507,13 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		src.rack(user)
 
 	proc/rack(var/mob/user)
-		if (src.overheated)
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, amount) & CELL_INSUFFICIENT_CHARGE)
-				boutput(user, "<span class ='notice'>You are out of energy!</span>")
-			else
-				boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
-				playsound(src, 'sound/effects/steamrelease.ogg', 70, 1)
-				ON_COOLDOWN(src, "rack delay", 1 SECONDS)
-				SPAWN(1 SECOND)
-					src.overheated = FALSE
-					src.shotcount = 0
-					src.UpdateParticles(null, "overheat_steam")
+		if (src.shotcount > 0 && !ON_COOLDOWN(src, "rack delay", 1 SECONDS))
+			boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
+			playsound(src, 'sound/effects/steamrelease.ogg', 70, 1)
+			SPAWN(1 SECOND)
+				src.overheated = FALSE
+				src.shotcount = 0
+				src.UpdateParticles(null, "overheat_steam")
 
 /obj/item/gun/energy/resonator
 	name = "Resonator"
