@@ -2220,6 +2220,87 @@
 
 		return
 
+//Interface program for APCs
+/datum/computer/file/mainframe_program/apc_interface
+	name = "pwrman"
+	size = 4
+
+	initialize(var/initparams)
+		if (..())
+			mainframe_prog_exit
+			return
+
+		. = read_user_field("group")
+		if ((. > src.metadata["group"]) && (. != 0)) //User isn't sysop.
+			message_user("Error: Access denied. System Operator status required.")
+			mainframe_prog_exit
+			return
+
+		var/list/initlist = splittext(initparams, " ")
+		if (!initparams || !length(initlist))
+			message_user("Invalid commmand argument.|nValid Arguments:|n \"list\" to list connected APCs.|n \"stat (APC Net ID)\" to view APC status. |n \"set (APC Net ID) (mode) (setting)\" to set APC mode.","multiline")
+			mainframe_prog_exit
+			return
+
+		var/list/driverlist = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pwr_cntrl"))
+		if (!istype(driverlist) || !length(driverlist))
+			message_user("Error: Could not detect APC driver(s).")
+			mainframe_prog_exit
+			return
+
+		var/command = lowertext(initlist[1])
+		switch(command)
+			if ("list")
+				var/listText = ""
+				for (var/x in driverlist)
+					if (isnull(driverlist[x]))
+						continue
+					listText += "[x] - [driverlist[x]]|n"
+				if (!listText)
+					listText = "NONE"
+				message_user("Connected APCs:|n[listText]", "multiline")
+
+			if ("stat")
+				if (length(initlist) < 2 || !(lowertext(initlist[2]) in driverlist))
+					message_user("Error: Disconnected or invalid APC Net ID")
+					mainframe_prog_exit
+					return
+
+				else
+					message_user(driverlist[initlist[2]])
+
+			if ("set")
+				if (length(initlist) < 2 || !(lowertext(initlist[2]) in driverlist))
+					message_user("Error: Disconnected or invalid APC Net ID")
+					mainframe_prog_exit
+					return
+				if (length(initlist) < 4)
+					message_user("Error: Insufficient arguments for set command.|nUsage: set (APC Net ID) (mode) (setting)|nValid modes: equip, light, environ, cover","multiline")
+					mainframe_prog_exit
+					return
+
+				var/mode = lowertext(initlist[3])
+				var/setting = lowertext(initlist[4])
+				switch (mode)
+					if ("equip")
+						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=initlist[2],"dcommand"="setmode","equip"=setting))
+					if ("light")
+						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=initlist[2],"dcommand"="setmode","light"=setting))
+					if ("environ")
+						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=initlist[2],"dcommand"="setmode","environ"=setting))
+					if ("cover")
+						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=initlist[2],"dcommand"="setmode","cover"=setting))
+					else
+						message_user("Valid mode arguments: equip, light, environ, cover.")
+						mainframe_prog_exit
+						return
+				message_user("Changing [mode] to [setting]...")
+
+			else
+				message_user("Unknown command argument.")
+
+		mainframe_prog_exit
+		return
 
 //HEPT emitter
 /datum/computer/file/mainframe_program/driver/hept_emitter

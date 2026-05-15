@@ -159,6 +159,7 @@
 		//Nuke interface, because sometimes the nuke is alround.
 		src.root.add_file( new /datum/computer/file/mainframe_program/nuke_interface(src) )
 		//src.root.add_file( new /datum/computer/file/mainframe_program/srv/telecontrol(src) )
+		src.root.add_file( new /datum/computer/file/mainframe_program/apc_interface(src) )
 
 		for (var/datum/computer/file/F in src.root.contents)
 			F.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
@@ -191,7 +192,8 @@
 		src.root.add_file( new /datum/computer/file/mainframe_program/driver/mountable/user_terminal(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/driver/telepad(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/driver/mountable/comm_dish(src) )
-		//src.root.add_file( new /datum/computer/file/mainframe_program/driver/mountable/logreader(src) )
+		//src.root.add_file( new /datum/computer/file/mainframe_program/driver/mountable/logreader(src)
+		src.root.add_file( new /datum/computer/file/mainframe_program/driver/apc(src) )
 
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/cd(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/utility/ls(src) )
@@ -228,6 +230,7 @@
 		src.root.add_file( new /datum/computer/file/record/c3help(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/nuke_interface(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/test_interface(src) )
+		src.root.add_file( new /datum/computer/file/mainframe_program/apc_interface(src) )
 
 /obj/item/disk/data/tape/guardbot_tools
 	name = "ThinkTape-'PR-6S Config'"
