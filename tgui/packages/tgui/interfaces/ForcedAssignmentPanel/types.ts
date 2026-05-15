@@ -5,6 +5,8 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
+
 export interface ForcedAssignmentPanelData {
   currentState: number;
   forcedAssignments: Record<string, ForcedAssignment>;
@@ -19,8 +21,8 @@ export interface ForcedAssignment {
 
 export interface ForcedAntagonist {
   displayName: string;
-  doEquipment: string;
-  doObjectives: string;
+  doEquipment: BooleanLike;
+  doObjectives: BooleanLike;
   customObjective: string;
 }
 

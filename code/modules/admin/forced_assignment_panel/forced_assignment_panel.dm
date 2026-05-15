@@ -1,3 +1,6 @@
+/// Increment when changes to data serialisation are made, please!
+#define FORCED_ASSIGNMENT_DATA_VER 1
+
 /client/proc/cmd_forced_assignment_panel()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Forced Assignment Panel"
@@ -86,35 +89,11 @@
 			. = TRUE
 
 		if ("import_forced_assignments")
-			var/forced_assignment_import = input("Input forced assignment JSON.", "Import Forced Assignments") as message
-			if (!length(forced_assignment_import))
-				return
-			if (tgui_alert(user, "Confirm forced assignment import. This may override any existing assignments!", "Confirmation", \
-				list("Import", "Cancel")) != "Import")
-				return
-			var/list/forced_assignment_import_list = json_decode(forced_assignment_import)
-			var/list/datum/forced_assignment/decoded_forced_assignments = src.decode_forced_assignments(forced_assignment_import_list)
-			if (!length(decoded_forced_assignments))
-				boutput(user, SPAN_ALERT("Forced assignment JSON decoder returned an empty list!"))
-				return
-			src.clear_forced_assignments()
-			global.job_controls.forced_assignments = decoded_forced_assignments
-			message_admins("Admin [key_name(ui.user)] imported new forced assignments!")
-			logTheThing(LOG_ADMIN, ui.user, "imported new forced assignments")
-			logTheThing(LOG_DIARY, ui.user, "imported new forced assignments", "admin")
-			. = TRUE
+			if (src.import_forced_assignments(user))
+				. = TRUE
 
 		if ("export_forced_assignments")
-			if (!length(global.job_controls.forced_assignments))
-				return
-			var/forced_assignment_export = json_encode(src.serialise_forced_assignments(), JSON_PRETTY_PRINT)
-			// todo file save instead
-			user.Browse("<title>Forced Assignment Export</title><pre>[forced_assignment_export]</pre>", "window=forced_assignment_export;size=500x700")
-/*
-			var/filename = "ForcedAssignments_[limit_chars(capitalize_each_word((config.server_name)), include_nums = TRUE, include_letters = TRUE)]_\
-				[time2text(world.realtime,"YYYY-MM-DD")].txt"
-			user.client << ftp(forced_assignment_export, filename)
-*/
+			src.export_forced_assignments(user)
 
 		if ("open_player_options")
 			if (!user.client) return
@@ -207,8 +186,8 @@
 			if (tgui_alert(usr, "Confirm selected antagonist [forced_antagonist.display_name]. Equipment and abilities will[antagonist_params[1] == "Yes" \
 				? "" : " NOT"] be added.[antagonist_params[3]].", "Designate antag roles", list("Confirm", "Cancel")) != "Confirm")
 				return
-			forced_antagonist.do_equipment = antagonist_params[1]
-			forced_antagonist.do_objectives = antagonist_params[2]
+			forced_antagonist.do_equipment = antagonist_params[1] == "Yes" ? TRUE : FALSE
+			forced_antagonist.do_objectives = antagonist_params[2] == "Yes" ? TRUE : FALSE
 			forced_antagonist.custom_objective = antagonist_params[4]
 			message_admins("Admin [key_name(ui.user)] edited ckey [find_player(target_ckey) ? key_name(target_ckey) : \
 				target_ckey]'s designated forced antagonist role!")
@@ -358,13 +337,16 @@
 			serialised_forced_assignment["forcedAntags"] = serialised_forced_antags
 		.[forced_assignment.ckey] = serialised_forced_assignment
 
-/datum/forced_assignment_panel/proc/decode_forced_assignments(list/decode_list)
+/datum/forced_assignment_panel/proc/decode_forced_assignments(list/decode_list, mob/caller)
 	var/list/datum/forced_assignment/forced_assignment_buffer = list()
 	for (var/forced_assignment_item_index in decode_list)
 		var/forced_assignment_item = decode_list[forced_assignment_item_index]
 		var/ckey = ""
 		if (length(forced_assignment_item["ckey"]))
 			ckey = forced_assignment_item["ckey"]
+		if (ckey in global.job_controls.forced_assignments)
+			boutput(caller, SPAN_ALERT("CKey [ckey] already has an entry in the forced assignments list! Skipping!"))
+			continue
 		var/job_name = ""
 		if (length(forced_assignment_item["forcedJob"]))
 			job_name = forced_assignment_item["forcedJob"]
@@ -391,3 +373,43 @@
 	if (!length(forced_assignment_buffer))
 		return FALSE
 	return forced_assignment_buffer
+
+/datum/forced_assignment_panel/proc/export_forced_assignments(mob/caller)
+	if (!length(global.job_controls.forced_assignments))
+		return
+	var/savefile/export = new()
+	var/filename = "ForcedAssignmentsV[FORCED_ASSIGNMENT_DATA_VER]_[time2text(world.realtime,"YYYY-MM-DD")].sav"
+	export["version"] << FORCED_ASSIGNMENT_DATA_VER
+	export["body"] << src.serialise_forced_assignments()
+	if (fexists(filename))
+		fdel(filename)
+	var/export_file = file(filename)
+	export.ExportText("/", export_file)
+	caller.client << ftp(export_file, filename)
+	SPAWN(15 SECONDS)
+		var/tries = 0
+		while ((fdel(filename) == 0) && tries++ < 10)
+			sleep(30 SECONDS)
+
+/datum/forced_assignment_panel/proc/import_forced_assignments(mob/caller)
+	var/file = input(caller) as file|null
+	if (!file)
+		return
+	var/savefile/import = new()
+	import.ImportText("/", file2text(file))
+	var/file_version = null
+	import["version"] >> file_version
+	if (file_version != FORCED_ASSIGNMENT_DATA_VER)
+		boutput(caller, SPAN_ALERT("The forced assignment file you are attempting to import is incompatible with the current version of the system!"))
+		return
+	var/list/forced_assignment_import_list = list()
+	import["body"] >> forced_assignment_import_list
+	var/list/datum/forced_assignment/decoded_forced_assignments = src.decode_forced_assignments(forced_assignment_import_list)
+	if (!length(decoded_forced_assignments))
+		boutput(caller, SPAN_ALERT("Forced assignment decoder returned an empty list!"))
+		return
+	global.job_controls.forced_assignments += decoded_forced_assignments
+	message_admins("Admin [key_name(caller)] imported new forced assignments!")
+	logTheThing(LOG_ADMIN, caller, "imported new forced assignments")
+	logTheThing(LOG_DIARY, caller, "imported new forced assignments", "admin")
+	. = TRUE

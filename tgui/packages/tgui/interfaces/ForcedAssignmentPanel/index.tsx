@@ -17,7 +17,109 @@ import {
   GameStates,
 } from './types';
 
-const ForcedAssignmentItem = (props: ForcedAssignment) => {
+export const ForcedAssignmentPanel = () => {
+  const { act, data } = useBackend<ForcedAssignmentPanelData>();
+  const { currentState } = data;
+
+  return (
+    <Window width={640} height={480} title="Forced Assignment Panel">
+      <Window.Content>
+        <Stack fill vertical>
+          {!!(currentState >= GameStates.GameStateSettingUp) && (
+            <Stack.Item>
+              <Section>
+                <NoticeBox>
+                  Changes to forced assignments will not take effect in an
+                  active round!
+                </NoticeBox>
+              </Section>
+            </Stack.Item>
+          )}
+          <Stack.Item grow>
+            <Section fill>
+              <ForcedAssignmentTable />
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              <Stack justify="center">
+                <Stack.Item>
+                  <Button
+                    onClick={() => act('add_forced_assignment')}
+                    color="good"
+                    icon="plus"
+                  >
+                    Add Forced Assignment
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    onClick={() => act('clear_forced_assignments')}
+                    color="bad"
+                    icon="trash"
+                  >
+                    Clear All
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    onClick={() => act('import_forced_assignments')}
+                    icon="file-import"
+                  >
+                    Import
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    onClick={() => act('export_forced_assignments')}
+                    icon="file-export"
+                  >
+                    Export
+                  </Button>
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
+
+const ForcedAssignmentTable = () => {
+  const { data } = useBackend<ForcedAssignmentPanelData>();
+  const { forcedAssignments } = data;
+
+  return (
+    <Table textAlign="center">
+      <Table.Row header>
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          CKey
+        </Table.Cell>
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          Player Name
+        </Table.Cell>
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          Job
+        </Table.Cell>
+        <Table.Cell textAlign="center" verticalAlign="middle">
+          Antagonist Roles
+        </Table.Cell>
+        <Table.Cell collapsing textAlign="center" verticalAlign="middle">
+          Actions
+        </Table.Cell>
+      </Table.Row>
+      {Object.values(forcedAssignments).map((forcedAssignment) => (
+        <ForcedAssignmentRow
+          key={forcedAssignment.ckey}
+          {...forcedAssignment}
+        />
+      ))}
+    </Table>
+  );
+};
+
+const ForcedAssignmentRow = (props: ForcedAssignment) => {
   const { act } = useBackend<ForcedAssignmentPanelData>();
   const { ckey, playerName, forcedJob, forcedAntags } = props;
   return (
@@ -31,61 +133,11 @@ const ForcedAssignmentItem = (props: ForcedAssignment) => {
         </Button>
       </Table.Cell>
       <Table.Cell textAlign="center" verticalAlign="middle">
-        {playerName ? (
-          <Stack justify="center">
-            <Stack.Item>
-              <Button
-                onClick={() =>
-                  act('open_player_options', {
-                    ckey: ckey,
-                  })
-                }
-                tooltip={'View player options for ' + ckey}
-              >
-                {ckey}
-              </Button>
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                icon="envelope"
-                color="bad"
-                onClick={() =>
-                  act('private_message_player', {
-                    ckey: ckey,
-                  })
-                }
-                tooltip={'Private message ' + ckey}
-              />
-            </Stack.Item>
-          </Stack>
-        ) : (
-          'OFFLINE'
-        )}
+        {playerName ? <PlayerItem ckey={ckey} /> : 'OFFLINE'}
       </Table.Cell>
       <Table.Cell textAlign="center" verticalAlign="middle">
         {forcedJob ? (
-          <Stack fill justify="center">
-            <Stack.Item>
-              <Button
-                onClick={() => act('edit_job', { ckey: ckey })}
-                tooltip="Edit job"
-              >
-                {forcedJob}
-              </Button>
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                icon="x"
-                color="bad"
-                onClick={() =>
-                  act('remove_job', {
-                    ckey: ckey,
-                  })
-                }
-                tooltip="Remove Job"
-              />
-            </Stack.Item>
-          </Stack>
+          <JobItem ckey={ckey} forcedJob={forcedJob} />
         ) : (
           <Button
             icon="plus"
@@ -122,6 +174,79 @@ const ForcedAssignmentItem = (props: ForcedAssignment) => {
         />
       </Table.Cell>
     </Table.Row>
+  );
+};
+
+interface PlayerItemProps {
+  ckey: string;
+}
+
+const PlayerItem = (props: PlayerItemProps) => {
+  const { act } = useBackend<ForcedAssignmentPanelData>();
+  const { ckey } = props;
+
+  return (
+    <Stack justify="center">
+      <Stack.Item>
+        <Button
+          onClick={() =>
+            act('open_player_options', {
+              ckey: ckey,
+            })
+          }
+          tooltip={'View player options for ' + ckey}
+        >
+          {ckey}
+        </Button>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="envelope"
+          color="bad"
+          onClick={() =>
+            act('private_message_player', {
+              ckey: ckey,
+            })
+          }
+          tooltip={'Private message ' + ckey}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+interface JobItemProps {
+  ckey: string;
+  forcedJob: string;
+}
+
+const JobItem = (props: JobItemProps) => {
+  const { act } = useBackend<ForcedAssignmentPanelData>();
+  const { ckey, forcedJob } = props;
+
+  return (
+    <Stack fill justify="center">
+      <Stack.Item>
+        <Button
+          onClick={() => act('edit_job', { ckey: ckey })}
+          tooltip="Edit job"
+        >
+          {forcedJob}
+        </Button>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="x"
+          color="bad"
+          onClick={() =>
+            act('remove_job', {
+              ckey: ckey,
+            })
+          }
+          tooltip="Remove Job"
+        />
+      </Stack.Item>
+    </Stack>
   );
 };
 
@@ -179,98 +304,5 @@ const ForcedAntagonistItem = (props: ForcedAntagonistItemProps) => {
         </Stack.Item>
       </Stack>
     </Stack.Item>
-  );
-};
-
-export const ForcedAssignmentPanel = () => {
-  const { act, data } = useBackend<ForcedAssignmentPanelData>();
-  const { currentState, forcedAssignments } = data;
-
-  return (
-    <Window width={640} height={480} title="Forced Assignment Panel">
-      <Window.Content>
-        <Stack fill vertical>
-          {!!(currentState >= GameStates.GameStateSettingUp) && (
-            <Stack.Item>
-              <NoticeBox>
-                Changes to forced assignments will not take effect in an active
-                round!
-              </NoticeBox>
-            </Stack.Item>
-          )}
-
-          <Stack.Item grow>
-            <Section
-              title="Forced Assignment Controls"
-              fill
-              buttons={
-                <Stack>
-                  <Stack.Item>
-                    <Button
-                      onClick={() => act('add_forced_assignment')}
-                      color="good"
-                      icon="plus"
-                      tooltip="Add Forced Assignment"
-                    />
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      onClick={() => act('clear_forced_assignments')}
-                      color="bad"
-                      icon="trash"
-                      tooltip="Clear All"
-                    />
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      onClick={() => act('import_forced_assignments')}
-                      icon="file-import"
-                      tooltip="Import"
-                    />
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      onClick={() => act('export_forced_assignments')}
-                      icon="file-export"
-                      tooltip="Export"
-                    />
-                  </Stack.Item>
-                </Stack>
-              }
-            >
-              <Table textAlign="center">
-                <Table.Row header>
-                  <Table.Cell textAlign="center" verticalAlign="middle">
-                    CKey
-                  </Table.Cell>
-                  <Table.Cell textAlign="center" verticalAlign="middle">
-                    Player Name
-                  </Table.Cell>
-                  <Table.Cell textAlign="center" verticalAlign="middle">
-                    Job
-                  </Table.Cell>
-                  <Table.Cell textAlign="center" verticalAlign="middle">
-                    Antagonist Roles
-                  </Table.Cell>
-                  <Table.Cell
-                    collapsing
-                    textAlign="center"
-                    verticalAlign="middle"
-                  >
-                    Actions
-                  </Table.Cell>
-                </Table.Row>
-                {Object.values(forcedAssignments).map((forcedAssignment) => (
-                  <ForcedAssignmentItem
-                    key={forcedAssignment.ckey}
-                    {...forcedAssignment}
-                  />
-                ))}
-              </Table>
-            </Section>
-          </Stack.Item>
-        </Stack>
-      </Window.Content>
-    </Window>
   );
 };

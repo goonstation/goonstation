@@ -19,8 +19,8 @@
 		return
 	src.display_name = initial(antagonist_instance.display_name)
 	src.id = initial(antagonist_instance.id)
-	src.do_equipment = do_equipment_input ? TRUE : FALSE
-	src.do_objectives = do_objectives_input ? TRUE : FALSE
+	src.do_equipment = do_equipment_input
+	src.do_objectives = do_objectives_input
 	if (istext(custom_objective_input))
 		src.custom_objective = custom_objective_input
 
