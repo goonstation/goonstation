@@ -22,62 +22,61 @@ export const ForcedAssignmentPanel = () => {
   const { currentState } = data;
 
   return (
-    <Window width={640} height={480} title="Forced Assignment Panel">
+    <Window width={800} height={450} title="Forced Assignment Panel">
       <Window.Content>
         <Stack fill vertical>
           {!!(currentState >= GameStates.GameStateSettingUp) && (
             <Stack.Item>
-              <Section>
-                <NoticeBox>
-                  Changes to forced assignments will not take effect in an
-                  active round!
-                </NoticeBox>
-              </Section>
+              <NoticeBox>
+                Changes to forced assignments will not take effect in an active
+                round!
+              </NoticeBox>
             </Stack.Item>
           )}
           <Stack.Item grow>
-            <Section fill>
+            <Section
+              fill
+              title="Forced Assignments"
+              buttons={
+                <Stack justify="center">
+                  <Stack.Item>
+                    <Button
+                      onClick={() => act('add_forced_assignment')}
+                      color="good"
+                      icon="plus"
+                    >
+                      Add Forced Assignment
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      onClick={() => act('clear_forced_assignments')}
+                      color="bad"
+                      icon="trash"
+                    >
+                      Clear All
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      onClick={() => act('import_forced_assignments')}
+                      icon="file-import"
+                    >
+                      Import
+                    </Button>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      onClick={() => act('export_forced_assignments')}
+                      icon="file-export"
+                    >
+                      Export
+                    </Button>
+                  </Stack.Item>
+                </Stack>
+              }
+            >
               <ForcedAssignmentTable />
-            </Section>
-          </Stack.Item>
-          <Stack.Item>
-            <Section>
-              <Stack justify="center">
-                <Stack.Item>
-                  <Button
-                    onClick={() => act('add_forced_assignment')}
-                    color="good"
-                    icon="plus"
-                  >
-                    Add Forced Assignment
-                  </Button>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    onClick={() => act('clear_forced_assignments')}
-                    color="bad"
-                    icon="trash"
-                  >
-                    Clear All
-                  </Button>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    onClick={() => act('import_forced_assignments')}
-                    icon="file-import"
-                  >
-                    Import
-                  </Button>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    onClick={() => act('export_forced_assignments')}
-                    icon="file-export"
-                  >
-                    Export
-                  </Button>
-                </Stack.Item>
-              </Stack>
             </Section>
           </Stack.Item>
         </Stack>
