@@ -39475,7 +39475,7 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Hangar Access"
 	},
 /obj/mapping_helper/firedoor_spawn,
