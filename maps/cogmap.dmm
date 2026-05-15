@@ -47368,7 +47368,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "lUF" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Core Access"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -54759,7 +54759,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "qWU" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Core Access"
 	},
 /obj/mapping_helper/firedoor_spawn,
