@@ -2223,7 +2223,7 @@
 /area/station/medical/robotics)
 "aDD" = (
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/pool/white,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aDI" = (
 /obj/shrub{
@@ -9558,11 +9558,6 @@
 	},
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/station/crew_quarters/catering)
-"cpk" = (
-/turf/simulated/floor/pool/lightbluewhite{
-	dir = 4
-	},
-/area/station/crew_quarters/pool)
 "cpm" = (
 /obj/decal/poster/wallsign/stencil/left/b{
 	pixel_x = 4
@@ -10213,9 +10208,6 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
-"cwE" = (
-/turf/simulated/floor/pool/lightbluewhite,
-/area/station/crew_quarters/pool)
 "cwF" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -10349,9 +10341,6 @@
 /obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/twotone/red,
 /area/station/security/evidence)
-"cxK" = (
-/turf/simulated/floor/pool/lightbluewhitecorner,
-/area/station/crew_quarters/pool)
 "cxO" = (
 /obj/machinery/light/small,
 /obj/cable{
@@ -12268,7 +12257,7 @@
 "cTJ" = (
 /obj/decal/poster/wallsign/stencil/left/zero,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/obj/decal/poster/wallsign/stencil/right/six,
+/obj/decal/poster/wallsign/stencil/right/seven,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "cTK" = (
@@ -17522,9 +17511,7 @@
 /area/station/hallway/primary/northwest)
 "dZz" = (
 /obj/item/inner_tube/flamingo,
-/turf/simulated/floor/pool/lightbluewhite{
-	dir = 1
-	},
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "dZA" = (
 /obj/cable{
@@ -24212,7 +24199,8 @@
 /area/station/maintenance/inner/ne)
 "fAd" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/walp/purple,
 /area/research_outpost/toxins)
@@ -25194,7 +25182,7 @@
 /obj/fluid_spawner{
 	amount = 3750
 	},
-/turf/simulated/floor/pool/white,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "fNf" = (
 /obj/lattice{
@@ -27125,12 +27113,6 @@
 	},
 /area/station/quartermaster/private)
 "gjI" = (
-/obj/machinery/sparker{
-	id = "tox_ignition1";
-	layer = 7;
-	name = "Mounted Igniter";
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
@@ -31210,6 +31192,12 @@
 /area/station/com_dish/comdish)
 "hfo" = (
 /obj/machinery/atmospherics/unary/outlet_injector/overfloor/active,
+/obj/machinery/sparker{
+	id = "tox_ignition1";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = -18
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/toxins)
 "hfq" = (
@@ -44357,7 +44345,9 @@
 	},
 /area/station/crew_quarters/jazz)
 "kly" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /turf/simulated/wall/auto/reinforced/walp/purple,
 /area/research_outpost/toxins)
 "klB" = (
@@ -56123,11 +56113,6 @@
 	dir = 4
 	},
 /area/station/medical/robotics)
-"mUx" = (
-/turf/simulated/floor/pool/lightbluewhitecorner{
-	dir = 9
-	},
-/area/station/crew_quarters/pool)
 "mUz" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -57219,15 +57204,16 @@
 /obj/item/device/camera_viewer/telesci{
 	pixel_y = 13
 	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = 6
-	},
 /obj/table/reinforced/chemistry/auto,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/item/clothing/head/helmet/camera/telesci{
+	pixel_x = -5
+	},
+/obj/item/clothing/head/helmet/camera/telesci{
+	pixel_x = 5;
+	pixel_y = -3
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
@@ -58266,16 +58252,6 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
-"nwe" = (
-/obj/machinery/sparker{
-	id = "tox_ignition2";
-	layer = 7;
-	name = "Mounted Igniter";
-	pixel_x = 24
-	},
-/obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning,
-/turf/simulated/floor/engine/vacuum,
-/area/research_outpost/toxins)
 "nwi" = (
 /obj/submachine/cargopad/robotics,
 /obj/machinery/ai_status_display{
@@ -58783,9 +58759,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "nDD" = (
-/turf/simulated/floor/pool/lightbluewhitecorner{
-	dir = 5
-	},
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "nDN" = (
 /obj/table/wood/auto/desk,
@@ -69110,11 +69084,6 @@
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/twotone/yellow,
 /area/station/engine/elect)
-"pZm" = (
-/turf/simulated/floor/pool/lightbluewhite{
-	dir = 1
-	},
-/area/station/crew_quarters/pool)
 "pZD" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -78402,6 +78371,16 @@
 	dir = 1
 	},
 /area/station/hangar/arrivals)
+"sgz" = (
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active,
+/obj/machinery/sparker{
+	id = "tox_ignition2";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = -18
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/toxins)
 "sgK" = (
 /obj/window_blinds/cog2/left,
 /obj/cable{
@@ -83981,9 +83960,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
-"ttr" = (
-/turf/simulated/floor/pool/white,
-/area/station/crew_quarters/pool)
 "ttU" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -89979,11 +89955,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
 /area/station/engine/core/nuclear)
-"uOS" = (
-/turf/simulated/floor/pool/lightbluewhite{
-	dir = 8
-	},
-/area/station/crew_quarters/pool)
 "uPi" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/industrial,
@@ -90405,10 +90376,6 @@
 	},
 /turf/simulated/floor/airbridge,
 /area/station/hangar/arrivals)
-"uUf" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/pool/lightbluewhite,
-/area/station/crew_quarters/pool)
 "uUh" = (
 /obj/fireworksbox,
 /obj/cable{
@@ -110705,7 +110672,7 @@ eQR
 ofe
 kbk
 pLE
-hfo
+sgz
 hLy
 mfy
 xWJ
@@ -111309,7 +111276,7 @@ eQR
 ofe
 aeK
 aeK
-nwe
+gjI
 fFm
 pVv
 mxB
@@ -146208,11 +146175,11 @@ fpp
 shA
 lsr
 oZy
-cxK
-cpk
-cpk
-cpk
-cpk
+nDD
+nDD
+nDD
+nDD
+nDD
 nDD
 jlh
 oNx
@@ -146510,12 +146477,12 @@ fpp
 nYq
 lsr
 oZy
-uUf
-ttr
 aDD
-ttr
+nDD
 aDD
-pZm
+nDD
+aDD
+nDD
 jlh
 pDy
 erR
@@ -146812,12 +146779,12 @@ fpp
 qGd
 lsr
 keM
-cwE
-ttr
-ttr
-ttr
-ttr
-pZm
+nDD
+nDD
+nDD
+nDD
+nDD
+nDD
 jlh
 pDy
 ilP
@@ -147114,12 +147081,12 @@ fpp
 qUt
 lsr
 oZy
-cwE
-ttr
+nDD
+nDD
 fNd
-ttr
-ttr
-pZm
+nDD
+nDD
+nDD
 jlh
 pDy
 tVp
@@ -147416,10 +147383,10 @@ fpp
 xLM
 lsr
 oZy
-uUf
-ttr
 aDD
-ttr
+nDD
+aDD
+nDD
 aDD
 dZz
 jlh
@@ -147718,12 +147685,12 @@ fpp
 pZE
 lsr
 oZy
-cxK
-uOS
-uOS
-uOS
-uOS
-mUx
+nDD
+nDD
+nDD
+nDD
+nDD
+nDD
 jlh
 pDy
 isO
