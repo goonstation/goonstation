@@ -306,7 +306,6 @@
 
 	commander
 		area_name = null
-		anonymous = FALSE //we want you to know we're coming
 		req_access = list(access_syndicate_commander)
 
 	console
