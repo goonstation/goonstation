@@ -439,7 +439,7 @@
 	/obj/item/storage/pouch/poison_dart = 2)
 
 /obj/item/storage/briefcase/instruments/blowgun/tranq
-	spawn_contents = list(/obj/item/gun/kinetic/blowgun/tranq, /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine = 2)
+	spawn_contents = list(/obj/item/gun/kinetic/blowgun/tranq, /obj/item/ammo/bullets/tranq_darts/blow_darts/thio = 2)
 
 /obj/item/storage/box/chameleonbomb
 	name = "chameleon bomb case"

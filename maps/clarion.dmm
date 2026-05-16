@@ -33277,6 +33277,10 @@
 /obj/item/pen/fancy,
 /obj/item/stamp/rd,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 6;
+	pixel_y = -11
+	},
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne,
 /area/station/science/research_director)
 "sqa" = (

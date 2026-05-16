@@ -34,6 +34,11 @@ TYPEINFO(/obj/submachine/laundry_machine)
 /obj/submachine/laundry_machine/New()
 	..()
 	src.UpdateIcon()
+	AddComponent(/datum/component/mechanics_holder)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Door", PROC_REF(toggle_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Open Door", PROC_REF(open_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Close Door", PROC_REF(close_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start Cycle", PROC_REF(start_cycle))
 
 /obj/submachine/laundry_machine/disposing()
 	src.unload()
@@ -112,6 +117,20 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					var/mob/living/carbon/human/criminal = src.activator
 					if(criminal)
 						criminal.apply_automated_arrest("Money laundering.")
+				else if (istype(item, /obj/item/organ/brain))
+					var/obj/item/organ/brain = item
+					// prevents re-washing
+					if (brain.icon_state != "brain2")
+						return
+					brain.icon = "icons/obj/items/organs/brain.dmi"
+					brain.icon_state = "smooth_brain"
+					// getting rid of all of those UNSIGHTLY wrinkles heals your brain!
+					brain.heal_damage(brain.brute_dam, brain.burn_dam, brain.tox_dam)
+					brain.changeStatus("freshly_laundered", INFINITE_STATUS)
+					// even if it's completely fucked up?
+					if (brain.broken)
+						brain.unbreakme()
+					brain.UpdateIcon()
 			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0
@@ -224,7 +243,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	return 1
 
 /obj/submachine/laundry_machine/attackby(obj/item/W, mob/user)
-	if (istype(W))
+	if (istype(W) && !ispulsingtool(W))
 		if (!src.open)
 			src.visible_message("[user] tries to put [W] into [src], but [src]'s door is closed, so [he_or_she(user)] just smooshes [W] against the door.[prob(40) ? " What a doofus!" : null]")
 			return
@@ -238,7 +257,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/brick))
+			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/brick) || istype(W, /obj/item/organ/brain))
 				user.u_equip(W)
 				W.set_loc(src)
 				src.visible_message("[user] puts [W] into [src].")
@@ -350,28 +369,48 @@ TYPEINFO(/obj/submachine/laundry_machine)
 		return
 	switch(action)
 		if("door")
-			if (src.on)
+			if(src.on)
 				src.visible_message("[usr] tries to open [src]'s door, but [src] is running and the door is locked!")
 				return
-			else
-				src.open = !src.open
-				. = TRUE
-				src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
-				if (src.open)
-					src.unload()
-					src.cycle = PRE
+			src.toggle_door(ui.user)
+			src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
 		if("cycle")
-			if (src.occupant)
-				src.cycle_max = CYCLE_TIME_MOB_INSIDE
-			src.on = !src.on
-			. = TRUE
+			src.start_cycle(ui.user)
 			src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
-			src.activator = usr
-			if (src.on)
-				src.cycle = PRE
-				src.open = 0
-				if (!(src in processing_items))
-					processing_items.Add(src)
+
+/obj/submachine/laundry_machine/proc/toggle_door()
+	if (src.on)
+		return
+	if(src.open)
+		src.close_door()
+	else
+		src.open_door()
+
+/obj/submachine/laundry_machine/proc/open_door()
+	if(src.open || src.on)
+		return
+	src.open = TRUE
+	src.unload()
+	src.cycle = PRE
+	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/proc/close_door()
+	if(!src.open)
+		return
+	src.open = FALSE
+	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/proc/start_cycle(var/activator)
+	if(src in processing_items)
+		return
+	if(ismob(activator)) //Could also be a mechanics input
+		src.activator = activator
+	src.close_door()
+	src.cycle = PRE
+	src.on = TRUE
+	if (src.occupant)
+		src.cycle_max = CYCLE_TIME_MOB_INSIDE
+	processing_items.Add(src)
 	src.UpdateIcon()
 
 /obj/submachine/laundry_machine/Click(location, control, params)

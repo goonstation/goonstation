@@ -541,6 +541,7 @@ MATERIAL
 			default_reinforcement = "steel"
 
 /obj/item/sheet/wood
+	name = "plank"
 	item_state = "sheet-metal"
 	icon_state = "sheet-m_5$$wood"
 	default_material = "wood"
@@ -554,6 +555,38 @@ MATERIAL
 		if (locate(src.wall_type) in T.contents)
 			return ..()
 		actions.start(new /datum/action/bar/icon/build(wall_type, target.loc, 1, 3 SECONDS, src, 5, null, null, src.material, 'icons/ui/actions.dmi', "working"), user)
+
+	_update_stack_appearance()
+		switch(amount)
+			if(1)
+				icon_state = "[icon_state_base]_1"
+			if(2)
+				icon_state = "[icon_state_base]_2"
+			if(3 to 5)
+				icon_state = "[icon_state_base]_3"
+			if(6 to 7)
+				icon_state = "[icon_state_base]_4"
+			if(8 to 9)
+				icon_state = "[icon_state_base]_5"
+			if(10 to 14)
+				icon_state = "[icon_state_base]_6"
+			if(15 to 19)
+				icon_state = "[icon_state_base]_7"
+			if(20 to 24)
+				icon_state = "[icon_state_base]_8"
+			if(25 to 29)
+				icon_state = "[icon_state_base]_9"
+			if(30 to 34)
+				icon_state = "[icon_state_base]_10"
+			if(35 to 39)
+				icon_state = "[icon_state_base]_11"
+			if(40 to 44)
+				icon_state = "[icon_state_base]_12"
+			if(45 to 49)
+				icon_state = "[icon_state_base]_13"
+			else
+				icon_state = "[icon_state_base]_14"
+
 /obj/item/sheet/wood/zwood
 	amount = 5
 	wall_type = /obj/structure/woodwall/anti_zombie
