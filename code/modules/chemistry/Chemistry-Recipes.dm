@@ -118,7 +118,7 @@
 		name = "Lumen"
 		id = "lumen"
 		required_reagents = list("radium" = 1, "omega_mutagen" = 1, "hydrogen" = 1, "helium" = 1, "luminol" = 1)
-		mix_phrase = "The chemicals coalesce and begin to grow rather brightly!"
+		mix_phrase = "The chemicals coalesce and begin to glow rather brightly!"
 		mix_sound = 'sound/voice/heavenly.ogg'
 		result_amount = 3
 		result = "lumen"

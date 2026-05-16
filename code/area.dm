@@ -1347,6 +1347,7 @@ ABSTRACT_TYPE(/area/adventure)
 /area/spacehabitat
 	name = "Habitat Dome"
 	icon_state = "green"
+	requires_power = FALSE
 
 /area/spacehabitat/beach
 	name = "Habitat Dome Beach"
@@ -1356,13 +1357,11 @@ ABSTRACT_TYPE(/area/adventure)
 /area/spacehabitat/pool
 	name = "Pool Room"
 	icon_state = "yellow"
-	requires_power = FALSE
 
 /area/spacehabitat/owlery
 	name = "Owlery"
 	icon_state = "yellow"
 	sound_environment = 15
-	requires_power = FALSE
 
 /area/salyut
 	name = "Soviet derelict"

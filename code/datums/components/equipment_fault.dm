@@ -413,8 +413,22 @@ TYPEINFO(/datum/component/equipment_fault)
 			elecflash(M.loc, power=5, exclude_center=FALSE)
 			return
 
-		var/target = pick(targets)
-		arcFlash(M, target, 200000) // TODO: maybe some sort of PNET check?
+		var/wattage = 0
+		if (istype(src.parent, /obj/machinery/power/smes))
+			var/obj/machinery/power/smes/smes = src.parent
+			wattage = smes.charge / 10
+			smes.charge -= wattage
+		else if (istype(src.parent, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = src.parent
+			var/raw_wattage = apc.cell.amount / 10
+			wattage = raw_wattage / CELLRATE
+			apc.use_power(raw_wattage)
+		else
+			wattage = rand(10000,50000)
+
+		if (wattage > 0)
+			var/target = pick(targets)
+			arcFlash(M, target, wattage)
 
 
 /datum/component/equipment_fault/faulty_wiring

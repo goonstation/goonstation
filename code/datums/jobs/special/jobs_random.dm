@@ -482,10 +482,14 @@ ABSTRACT_TYPE(/datum/job/special/random)
 					/obj/item/clothing/under/misc/casualjeansblue = 1, \
 					/obj/item/clothing/under/misc/casualjeanskhaki = 1)
 	slot_suit = list(/obj/item/clothing/suit/hoodie/random)
-	slot_belt = list(/obj/item/device/pda2/computeroperator)
+	slot_belt = list(/obj/item/storage/belt/utility/it)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_eyes = list(/obj/item/clothing/glasses/packetvision)
-	items_in_backpack = list(/obj/item/luggable_computer/techpersonal)
+	slot_poc1 = list(/obj/item/paper/packets)
+	slot_poc2 = list(/obj/item/device/pda2/computeroperator)
+	items_in_backpack = list(/obj/item/luggable_computer/techpersonal,
+							/obj/item/storage/box/diskbox/programs,
+							/obj/item/cable_coil)
 	alt_names = list("Cybersecurity Expert", \
 					"IT Specialist", \
 					"Network Technician")

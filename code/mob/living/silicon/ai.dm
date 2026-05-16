@@ -2588,6 +2588,23 @@ proc/get_mobs_trackable_by_AI()
 	src.name = "AI"
 	src.UpdateName()
 
+///Returns a list of all camera coverage emitters currently in use by this AI (eye + viewports)
+/mob/living/silicon/ai/proc/currently_using_cameras()
+	var/list/emitters = list()
+	//if we're logged in *somewhere* then viewports count
+	if (src.client || src.eyecam.client || src.deployed_shell?.client)
+		for (var/turf/T as anything in src.eyecam.get_viewport_turfs())
+			for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
+				emitters |= emitter
+	if (src.eyecam.client)
+		for (var/turf/T in view(src.eyecam.client.view, get_turf(src.eyecam)))
+			for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
+				emitters |= emitter
+	return emitters
+
+/mob/living/silicon/ai/on_close_viewport(datum/viewport/vp)
+	src.eyecam?.on_close_viewport(vp)
+
 /*-----Core-Creation---------------------------------------*/
 
 /obj/ai_core_frame

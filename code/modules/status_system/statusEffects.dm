@@ -4004,24 +4004,21 @@
 	var/list/current_emitters = list()
 
 	onUpdate(timePassed)
-		var/mob/mob_owner = src.owner
-		//no client, no looking
-		if (!mob_owner.client)
-			for (var/datum/component/camera_coverage_emitter/emitter as anything in src.current_emitters)
-				emitter.unregister_user(src.owner)
-			src.current_emitters = list()
-			return
-
-		//find all the emitters we're using
-		var/list/new_emitters = list()
-		if (isAIeye(mob_owner))
-			var/mob/living/intangible/aieye/eye = mob_owner
-			for (var/turf/T as anything in eye.get_viewport_turfs())
+		//First, find all the emitters we're using
+		var/list/new_emitters
+		if (isAIeye(src.owner))
+			var/mob/living/intangible/aieye/eye = src.owner
+			if (!eye.mainframe) //???
+				return
+			new_emitters = eye.mainframe.currently_using_cameras()
+		else
+			var/mob/mob_owner = src.owner
+			if (!mob_owner.client)
+				return
+			for (var/turf/T in view(mob_owner.client.view, get_turf(src.owner)))
 				for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
 					new_emitters |= emitter
-		for (var/turf/T in view(mob_owner.client.view, get_turf(src.owner)))
-			for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
-				new_emitters |= emitter
+
 		//register and deregister the ones that have changed
 		for (var/datum/component/camera_coverage_emitter/emitter as anything in src.current_emitters)
 			//not in the new batch, we're not using this camera anymore
