@@ -4213,6 +4213,18 @@ datum
 			taste = list("fizzy", "rich", "vinegary")
 			reagent_state = LIQUID
 			thirst_value = 0.8
+			target_organs = list("intestines", "stomach", "liver")
+
+			reaction_mob(var/mob/M, var/method=INGEST, var/volume)
+				. = ..()
+				if(method == INGEST)
+					if (M.get_toxin_damage())
+						M.take_toxin_damage(-clamp(2 * volume, 0, 10))
+					if(!M) M = holder.my_atom
+				if (prob(50) && ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.organHolder)
+						H.organHolder.heal_organs(clamp(2 * volume, 0, 10), clamp(2 * volume, 0, 10), clamp(2 * volume, 0, 10), target_organs)
 
 		fooddrink/caffeinated/cafe_gele
 			name = "cafe gele"
