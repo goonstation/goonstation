@@ -110,6 +110,7 @@ var/list/datum/chem_request/chem_requests = list()
 				//byond jank, lists are only associative if they aren't int indexed
 				chem_requests["[src.request.id]"] = src.request
 				logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] placed a chemical request for [src.request.volume] units of [src.request.reagent_id] using [src.request.requester_name]'s ID at [log_loc(src)], notes: \"[src.request.note]\"")
+				boutput(ui.user, SPAN_NOTICE("Request for [src.request.volume] units of [src.request.reagent_id] sent to all Chemical Request Displays. Research will process your order as soon as possible."))
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_RESEARCH), "sender"="00000000", "message"="Notification: new chemical request received. [src.request.volume]u of [src.request.reagent_name] requested by [src.request.requester_name].")
 				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)

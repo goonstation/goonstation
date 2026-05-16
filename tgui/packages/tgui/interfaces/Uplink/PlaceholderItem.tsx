@@ -17,7 +17,9 @@ export const PlaceholderItem = (props: PlaceholderItemProps) => {
     <Stack.Item>
       <Section textAlign="center">
         <Stack vertical>
-          <Stack.Item>Your spell research has come up blank!</Stack.Item>
+          <Stack.Item>
+            Could not find anything matching those filters!
+          </Stack.Item>
           <Stack.Item>
             <Button onClick={onClearClick}>Clear Filters</Button>
           </Stack.Item>

@@ -173,7 +173,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	..()
 	UnsubscribeProcess()
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleinput))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle open/close", PROC_REF(mech_toggle))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"open", PROC_REF(mech_open))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"close", PROC_REF(mech_close))
 	AddComponent(/datum/component/bullet_holes, 15, src.hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
 	src.update_nearby_tiles(need_rebuild=1)
 	START_TRACKING
@@ -197,16 +199,35 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if(src.dir != NORTH)
 		garland.dir = src.dir
 
-/obj/machinery/door/proc/toggleinput()
-	if(src.cant_emag || (src.req_access && !(src.operating == -1)))
+/// Checks if we should listen to a mechcomp signal, and handles signal failure
+/// Returns -1 if door broke/inherently ignores mechcomp, 0 if access denied, 1 if successful
+/obj/machinery/door/proc/try_mech_signal(var/datum/mechanicsMessage/input)
+	. = DOOR_MECHCOMP_DENIED
+	if(src.cant_emag)
 		if (src.density) //only play if it's closed
 			play_animation("deny")
-		return
-	if(density)
-		open()
-	else
-		close()
-	return
+		return DOOR_MECHCOMP_FAILED
+	if(src.operating == -1)
+		return DOOR_MECHCOMP_FAILED
+	if(!src.req_access)
+		return DOOR_MECHCOMP_SUCCESS
+
+/obj/machinery/door/proc/mech_toggle(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(src.density)
+			open()
+		else
+			close()
+
+/obj/machinery/door/proc/mech_open(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(src.density)
+			open()
+
+/obj/machinery/door/proc/mech_close(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(!src.density)
+			close()
 
 /obj/machinery/door/meteorhit(obj/M as obj)
 	if (isrestrictedz(src.z))

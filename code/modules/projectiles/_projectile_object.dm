@@ -247,7 +247,8 @@
 				die()
 		else if (ismob(A))
 			if (proj_data?.hit_mob_sound)
-				playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
+				var/flags = proj_data.sound_los ? SOUND_DO_LOS : 0
+				playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5, flags = flags)
 			SEND_SIGNAL(A, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			SEND_SIGNAL(A, COMSIG_MOB_DISGUISER_DEACTIVATE)
 			if (ishuman(A))
@@ -274,7 +275,8 @@
 			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (!goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (iscritter(A))
 					if (proj_data?.hit_mob_sound)
-						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
+						var/flags = proj_data.sound_los ? SOUND_DO_LOS : 0
+						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5, flags = flags)
 				else
 					if (proj_data?.hit_object_sound)
 						playsound(A.loc, proj_data.hit_object_sound, 60, 0.5)

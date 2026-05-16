@@ -22,3 +22,10 @@
 #define AIRLOCK_WIRE_AI_CONTROL 8
 #define AIRLOCK_WIRE_ELECTRIFY 9
 #define AIRLOCK_WIRE_SAFETY 10
+
+/// If mechcomp signals are wholly rejected, regardless of access
+#define DOOR_MECHCOMP_FAILED 1
+/// If a mechcomp signal was denied due to access issues
+#define DOOR_MECHCOMP_DENIED 2
+/// If a mechcomp signal is allowed to act on the door
+#define DOOR_MECHCOMP_SUCCESS 3

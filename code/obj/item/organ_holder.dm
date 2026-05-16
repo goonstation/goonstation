@@ -441,6 +441,12 @@
 					return
 				if (donor.mob_flags & SHOULD_HAVE_A_TAIL) // Only become clumsy if you should have a tail and are not a shapeshifting alien
 					donor.bioHolder?.AddEffect("clumsy", 0, 0, 0, 1)
+			if ("heart")
+				if (!isvampire(src.donor))
+					src.donor.bleeding = 0
+					src.donor.bleeding_internal = 0
+					if (prob(50))
+						src.donor.organHolder?.damage_organs(tox=1 * mult, organs=src.donor.organHolder?.organ_list)
 			//Missing lungs is handled in it's own proc right now. I'll probably move it here eventually, but that's how I did it originally before I thought of a thing for handling missing organs in the organholder and I'm not rewriting such a tedious thing now.
 
 

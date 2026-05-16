@@ -433,6 +433,31 @@ TYPEINFO(/obj/item/device/radio/headset/clown)
 	icon_override = "clown_blue"
 	icon_tooltip = "Blue Clown"
 
+/obj/item/device/radio/headset/clown/purple
+	name = "purple clown's headset"
+	icon_state = "purple clown headset"
+	icon_override = "clown_purple"
+	icon_tooltip = "Purple Clown"
+
+/obj/item/device/radio/headset/clown/yellow
+	name = "yellow clown's headset"
+	icon_state = "yellow clown headset"
+	icon_override = "clown_yellow"
+	icon_tooltip = "Blue Clown"
+
+/obj/item/device/radio/headset/clown/pink
+	name = "pink clown's headset"
+	icon_state = "pink clown headset"
+	wear_state = "clown headset"
+	icon_override = "clown_pink"
+	icon_tooltip = "Pink Clown"
+
+/obj/item/device/radio/headset/clown/green
+	name = "green clown's headset"
+	icon_state = "green clown headset"
+	icon_override = "clown_green"
+	icon_tooltip = "Green Clown"
+
 /obj/item/device/radio/headset/ghost_buster
 	name = "\improper Ghost Buster's headset"
 	desc = "So you can hear those who are calling you when there's something strange in their department."

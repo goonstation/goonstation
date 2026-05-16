@@ -628,7 +628,6 @@
 /area/station/engine/inner)
 "aht" = (
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/access/maint,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -3316,7 +3315,7 @@
 /area/station/medical/morgue)
 "aWf" = (
 /obj/table/round/auto,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 7;
 	pixel_y = 15
 	},
@@ -6703,7 +6702,7 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "bZT" = (
@@ -12232,7 +12231,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "dKg" = (
-/obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "1-2"
@@ -14001,11 +13999,11 @@
 /obj/table/wood/round/auto,
 /obj/item/plate,
 /obj/random_item_spawner/snacks/one_or_zero,
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -12;
 	pixel_y = 9
 	},
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 12;
 	pixel_y = 9
 	},
@@ -14794,7 +14792,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/breakroom)
 "eAw" = (
-/obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "4-8"
@@ -15716,7 +15713,7 @@
 "eSa" = (
 /obj/item/pen/crayon/rainbow,
 /obj/storage/crate/clown,
-/obj/item/reagent_containers/applicator/glue,
+/obj/item/reagent_containers/applicator/stick/glue,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "eSb" = (
@@ -18194,15 +18191,15 @@
 	})
 "fFe" = (
 /obj/table/wood/round/auto,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 5;
 	pixel_y = 1
 	},
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = -7;
 	pixel_y = 2
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -1;
 	pixel_y = 2
 	},
@@ -23689,7 +23686,7 @@
 	pixel_y = 3
 	},
 /obj/random_item_spawner/tableware/few,
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 7;
 	pixel_y = 12
 	},
@@ -35740,7 +35737,7 @@
 	pixel_y = 3
 	},
 /obj/random_item_spawner/tableware/few,
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 8;
 	pixel_y = 15
 	},
@@ -35959,7 +35956,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "lkj" = (
-/obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "4-8"
@@ -41003,7 +40999,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
-/obj/mapping_helper/access/maint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -46626,7 +46621,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "ozp" = (
@@ -54858,7 +54853,6 @@
 /area/station/maintenance/outer/north)
 "raL" = (
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/access/maint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -56785,7 +56779,7 @@
 /area/station/security/hos)
 "rGV" = (
 /obj/table/round/auto,
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 7;
 	pixel_y = -6
 	},
@@ -66222,11 +66216,11 @@
 "uCf" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/tableware/four,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 4;
 	pixel_y = 1
 	},
@@ -66417,7 +66411,7 @@
 	pixel_y = 3
 	},
 /obj/random_item_spawner/tableware/few,
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -8;
 	pixel_y = 15
 	},
@@ -68821,7 +68815,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "vol" = (
-/obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null;
@@ -73089,7 +73082,6 @@
 	},
 /area/station/crew_quarters/courtroom)
 "wAy" = (
-/obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "4-8"
@@ -74049,7 +74041,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "wOm" = (
@@ -76854,7 +76846,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/saltpile,
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -10;
 	pixel_y = -8
 	},
@@ -77399,7 +77391,7 @@
 	pixel_y = 3
 	},
 /obj/random_item_spawner/tableware/few,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = -7;
 	pixel_y = 12
 	},

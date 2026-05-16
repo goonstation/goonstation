@@ -8,17 +8,18 @@
 
 import { useState } from 'react';
 import { Box, Flex, Input, Section, Stack, Tabs } from 'tgui-core/components';
+import { capitalizeAll, pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { ItemEntry } from './ItemEntry';
 import { PlaceholderItem } from './PlaceholderItem';
-import { SpellItem } from './SpellItem';
-import type { WizardSpellbookData } from './type';
+import type { UplinkData } from './type';
 
 const SIDEBAR_WIDTH = '160px';
 
-export const WizardSpellbook = () => {
-  const { data } = useBackend<WizardSpellbookData>();
+export const Uplink = () => {
+  const { data } = useBackend<UplinkData>();
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilters, setCategoryFilters] = useState<
     Record<string, boolean>
@@ -31,35 +32,34 @@ export const WizardSpellbook = () => {
     Object.values(categoryFilters).length === 0 ||
     Object.values(categoryFilters).every((filter) => !filter);
 
-  const { spellbook_contents, spell_slots, owner_name, vr } = data;
+  const { item_entries, currency_amount, currency_name, vr } = data;
   const isVr = !!vr;
   const lowerSearchQuery = searchQuery.toLocaleLowerCase();
 
-  const spellCategories = Object.keys(spellbook_contents);
-  const filteredSpells = Object.entries(spellbook_contents)
+  const itemCategories = Object.keys(item_entries);
+  const filteredItems = Object.entries(item_entries)
     .filter(([category]) => allFiltersApplied || categoryFilters[category])
-    .flatMap(([_category, spells]) => spells)
-    .filter((spell) =>
-      spell.name.toLocaleLowerCase().includes(lowerSearchQuery),
-    )
+    .flatMap(([_category, items]) => items)
+    .filter((item) => item.name.toLocaleLowerCase().includes(lowerSearchQuery))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <Window
-      theme="wizard"
-      title={`${owner_name || 'Wizard'}'s Spellbook`}
-      height={600}
-      width={720}
-    >
+    <Window theme={data.theme} title={data.title} height={600} width={720}>
       <Flex>
         <Flex.Item style={{ width: SIDEBAR_WIDTH }}>
           <Stack vertical ml={1} mt={1}>
             <Stack.Item>
               <Section textAlign="center">
-                <Box fontSize={2} color={spell_slots === 0 ? 'bad' : undefined}>
-                  {spell_slots}
+                <Box
+                  fontSize={2}
+                  color={currency_amount === 0 ? 'bad' : undefined}
+                >
+                  {currency_amount}
                 </Box>
-                <Box>Spell slots remaining</Box>
+                <Box>
+                  {pluralize(capitalizeAll(currency_name), currency_amount)}{' '}
+                  remaining
+                </Box>
               </Section>
             </Stack.Item>
             <Stack.Item>
@@ -83,16 +83,16 @@ export const WizardSpellbook = () => {
                   >
                     All
                   </Tabs.Tab>
-                  {spellCategories.map((spellCategory) => (
+                  {itemCategories.map((itemCategory) => (
                     <Tabs.Tab
-                      key={spellCategory}
+                      key={itemCategory}
                       align="right"
-                      selected={!!categoryFilters[spellCategory]}
+                      selected={!!categoryFilters[itemCategory]}
                       onClick={() =>
-                        setCategoryFilters({ [spellCategory]: true })
+                        setCategoryFilters({ [itemCategory]: true })
                       }
                     >
-                      {spellCategory}
+                      {itemCategory}
                     </Tabs.Tab>
                   ))}
                 </Tabs>
@@ -103,15 +103,16 @@ export const WizardSpellbook = () => {
         <Flex.Item>
           <Window.Content scrollable ml={SIDEBAR_WIDTH}>
             <Stack vertical>
-              {filteredSpells.length === 0 ? (
+              {filteredItems.length === 0 ? (
                 <PlaceholderItem onClearClick={clearFilters} />
               ) : (
-                filteredSpells.map((spell) => (
-                  <SpellItem
-                    key={spell.name}
-                    spell={spell}
+                filteredItems.map((item) => (
+                  <ItemEntry
+                    key={item.name}
+                    item={item}
                     isVr={isVr}
-                    spellSlots={spell_slots}
+                    currency_amount={currency_amount}
+                    currency_name={currency_name}
                   />
                 ))
               )}

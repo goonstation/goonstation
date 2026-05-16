@@ -118,7 +118,7 @@
 		name = "Lumen"
 		id = "lumen"
 		required_reagents = list("radium" = 1, "omega_mutagen" = 1, "hydrogen" = 1, "helium" = 1, "luminol" = 1)
-		mix_phrase = "The chemicals coalesce and begin to grow rather brightly!"
+		mix_phrase = "The chemicals coalesce and begin to glow rather brightly!"
 		mix_sound = 'sound/voice/heavenly.ogg'
 		result_amount = 3
 		result = "lumen"
@@ -4134,7 +4134,6 @@
 		min_temperature = T0C + 100
 		result_amount = 1
 		mix_phrase = "The mixture bubbles and white crystals form."
-		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chem_reaction_priority = 2)
 			holder.add_reagent("water", created_volume, , holder.total_temperature, chem_reaction_priority = 3)
