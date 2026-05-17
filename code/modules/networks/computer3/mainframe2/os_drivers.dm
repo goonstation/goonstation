@@ -2139,7 +2139,7 @@
 /datum/computer/file/mainframe_program/driver/apc
 	name = "pwr_cntrl"
 	setup_processes = 1
-	status = "0;0;0;0"
+	status = "none;0;0;0;0"
 	var/tmp/apcID = null
 
 	var/tmp/apcEquip = 0
@@ -2196,11 +2196,16 @@
 
 				return
 
+			if ("ack")
+				message_device("command=status")
+				return
+
 			if ("status")
 				var/newEquip = text2num_safe(datalist["equip"])
 				var/newLight = text2num_safe(datalist["light"])
 				var/newEnviron = text2num_safe(datalist["environ"])
 				var/newCover = text2num_safe(datalist["cover"])
+				apcID = ckey(datalist["area"])
 
 				if (!isnull(newEquip))
 					apcEquip = round(clamp(newEquip, 0, 3))
@@ -2216,13 +2221,13 @@
 				else
 					apcCover = 0
 
-				status = "[apcEquip];[apcLight];[apcEnviron];[apcCover]"
+				status = "[apcID];[apcEquip];[apcLight];[apcEnviron];[apcCover]"
 
 		return
 
 //Interface program for APCs
 /datum/computer/file/mainframe_program/apc_interface
-	name = "pwrman"
+	name = "apcman"
 	size = 4
 
 	initialize(var/initparams)
@@ -2238,7 +2243,7 @@
 
 		var/list/initlist = splittext(initparams, " ")
 		if (!initparams || !length(initlist))
-			message_user("Invalid commmand argument.|nValid Arguments:|n \"list\" to list connected APCs.|n \"stat (APC Net ID)\" to view APC status. |n \"set (APC Net ID) (mode) (setting)\" to set APC mode.","multiline")
+			message_user("Error: Invalid commmand argument.|nValid Arguments:|n \"list\" to list connected APCs.|n \"stat (APC Net ID)\" to view APC status. |n \"set (APC Net ID) (mode) (setting)\" to set APC mode.","multiline")
 			mainframe_prog_exit
 			return
 
@@ -2251,14 +2256,14 @@
 		var/command = lowertext(initlist[1])
 		switch(command)
 			if ("list")
-				var/listText = ""
+				message_user("Connected APCs:")
+				if (length(driverlist) == 0)
+					message_user("NONE")
 				for (var/x in driverlist)
 					if (isnull(driverlist[x]))
 						continue
-					listText += "[x] - [driverlist[x]]|n"
-				if (!listText)
-					listText = "NONE"
-				message_user("Connected APCs:|n[listText]", "multiline")
+					var/status = splittext(driverlist[x], ";")
+					message_user("[x] - [status[1]]")
 
 			if ("stat")
 				if (length(initlist) < 2 || !(lowertext(initlist[2]) in driverlist))
@@ -2267,7 +2272,8 @@
 					return
 
 				else
-					message_user(driverlist[initlist[2]])
+					var/status = splittext(driverlist[initlist[2]], ";")
+					message_user("Area: [status[1]]|nEquip: [status[2]]|nLight: [status[3]]|nEnviron: [status[4]]|nCover: [status[5]]", "multiline")
 
 			if ("set")
 				if (length(initlist) < 2 || !(lowertext(initlist[2]) in driverlist))
@@ -2280,24 +2286,32 @@
 					return
 
 				var/mode = lowertext(initlist[3])
-				var/setting = lowertext(initlist[4])
+				var/setting = text2num_safe(initlist[4])
+				if (isnull(setting))
+					message_user("Error: Invalid setting argument. Setting must be a number.")
+					mainframe_prog_exit
+					return
+
+				var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=initlist[2]))
+				driver_id &= ~ESIG_DATABIT
+
 				switch (mode)
 					if ("equip")
-						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=initlist[2],"dcommand"="setmode","equip"=setting))
+						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="setmode","equip"=setting))
 					if ("light")
-						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=initlist[2],"dcommand"="setmode","light"=setting))
+						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="setmode","light"=setting))
 					if ("environ")
-						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=initlist[2],"dcommand"="setmode","environ"=setting))
+						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="setmode","environ"=setting))
 					if ("cover")
-						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=initlist[2],"dcommand"="setmode","cover"=setting))
+						signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="setmode","cover"=setting))
 					else
-						message_user("Valid mode arguments: equip, light, environ, cover.")
+						message_user("Error: Invalid setting argument.|nValid mode arguments: equip, light, environ, cover.", "multiline")
 						mainframe_prog_exit
 						return
 				message_user("Changing [mode] to [setting]...")
 
 			else
-				message_user("Unknown command argument.")
+				message_user("Error: Invalid commmand argument.|nValid Arguments:|n \"list\" to list connected APCs.|n \"stat (APC Net ID)\" to view APC status. |n \"set (APC Net ID) (mode) (setting)\" to set APC mode.","multiline")
 
 		mainframe_prog_exit
 		return
