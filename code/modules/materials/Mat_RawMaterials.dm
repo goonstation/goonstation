@@ -310,8 +310,10 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
-	icon_state = "log"
+	icon = 'icons/obj/items/materials/wood.dmi'
+	icon_state = "log1"
 	default_material = "wood"
+	max_stack = 10
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
@@ -325,6 +327,39 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 				qdel (src)
 		else
 			..()
+
+	_update_stack_appearance()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "log1"
+			if(2 to 4)
+				src.icon_state = "log2"
+			if(5 to 7)
+				src.icon_state = "log3"
+			if(8 to 9)
+				src.icon_state = "log4"
+			else
+				src.icon_state = "log5"
+
+/obj/item/material_piece/organic/wood/thin
+	icon_state = "log_thin1"
+
+	_update_stack_appearance()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "log_thin1"
+			if(2)
+				src.icon_state = "log_thin2"
+			if(3 to 4)
+				src.icon_state = "log_thin3"
+			if(5 to 6)
+				src.icon_state = "log_thin4"
+			if(7 to 8)
+				src.icon_state = "log_thin5"
+			if(9)
+				src.icon_state = "log_thin6"
+			else
+				src.icon_state = "log_thin7"
 
 /obj/item/material_piece/organic/bamboo
 	name = "stalk"

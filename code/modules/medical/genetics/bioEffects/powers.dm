@@ -164,6 +164,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		for(var/obj/item/item as anything in items) // augh body bags
 			if(istype(item, /obj/item/body_bag) && item.w_class >= W_CLASS_BULKY)
 				items -= item
+			if(istype(item, /obj/item/gang_loot))
+				items -= item
 
 		if (linked_power.power > 1)
 			items += get_filtered_atoms_in_touch_range(src.owner, /obj/the_server_ingame_whoa)
