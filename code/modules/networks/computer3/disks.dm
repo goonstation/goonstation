@@ -356,7 +356,8 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
 								"SEC"="[netpass_security]",
-								"MED"="[netpass_medical]")
+								"MED"="[netpass_medical]",
+								"LOGIN"="[netpass_login]")
 
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
