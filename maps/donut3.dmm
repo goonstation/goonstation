@@ -43689,7 +43689,7 @@
 	},
 /obj/mapping_helper/access/computer_core,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "nCa" = (
 /obj/machinery/light/small/sticky{
