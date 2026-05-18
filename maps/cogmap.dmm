@@ -36629,7 +36629,6 @@
 	dir = 4;
 	name = "AI and Computer Core"
 	},
-/obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -36642,6 +36641,8 @@
 	enter_id = "outer";
 	name = "AI Airbridge"
 	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "eli" = (
@@ -37985,7 +37986,6 @@
 	dir = 4;
 	name = "Electrical Substation"
 	},
-/obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -37995,6 +37995,8 @@
 	enter_id = "inner";
 	name = "AI Power"
 	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
 "ffm" = (
@@ -53642,7 +53644,6 @@
 	dir = 4;
 	name = "AI and Computer Core"
 	},
-/obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -53655,6 +53656,8 @@
 	enter_id = "inner";
 	name = "AI Airbridge"
 	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "qoP" = (
@@ -56022,8 +56025,9 @@
 	name = "Computer Core Access"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "rYg" = (

@@ -9075,7 +9075,8 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "eew" = (
@@ -27579,7 +27580,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "lSq" = (
@@ -30104,8 +30105,9 @@
 	},
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "mYj" = (

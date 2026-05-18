@@ -17546,7 +17546,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "man" = (
@@ -22584,7 +22584,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/robotdepot,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "pMP" = (
@@ -32273,7 +32273,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/robotdepot,
-/obj/mapping_helper/access/heads,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "wyP" = (

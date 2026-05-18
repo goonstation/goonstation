@@ -33379,7 +33379,8 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "gRQ" = (

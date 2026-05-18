@@ -27036,7 +27036,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "jzx" = (
@@ -49497,7 +49497,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "wiL" = (
