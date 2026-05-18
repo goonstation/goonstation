@@ -141,15 +141,15 @@
 
 
 						if (iscluwne(src))
-							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_FARTS)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
-							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_FARTS)
 						else if (src.getStatusDuration("food_deep_fart"))
-							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_FARTS)
 						else
-							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
@@ -181,7 +181,7 @@
 									var/mob/M = V.cursed_dude
 									if (!M || !M.lying)
 										continue
-									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 									switch(rand(1, 7))
 										if (1) M.visible_message(SPAN_EMOTE("<b>[M]</b> suddenly radiates an unwelcoming odor."))
 										if (2) M.visible_message(SPAN_EMOTE("<b>[M]</b> is visited by ethereal incontinence."))

@@ -3,6 +3,10 @@
 #define APC_WIRE_MAIN_POWER2 3
 #define APC_WIRE_AI_CONTROL 4
 
+#define TERMINAL_REPAIR_STEP_WIRING 1 // nothing has been done yet, waiting for wiring
+#define TERMINAL_REPAIR_STEP_SOLDERING 2 // wiring has been installed into open frame, waiting for solder
+#define TERMINAL_REPAIR_STEP_METAL 3 // wiring has been soldered, waiting for metal
+// metal sheet to conclude repairs
 
 var/zapLimiter = 0
 #define APC_ZAP_LIMIT_PER_5 2
@@ -74,6 +78,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/wiresexposed = 0
 	var/apcwires = 15
 	var/repair_status = 0 //0: Screwdriver - Disconnect Control Unit ->  1: 4 units of cable - repair autotransformer -> 2: Wrench - Tune autotransformer -> 3: Multitool - Reset control circuitry -> 4: Screwdriver - Reconnect circuitry.
+	var/terminal_repair_status = 0 // 0 = nothing yet, the rest are defined above handle_terminal_repair
 	var/setup_networkapc = 1 //0: Local interface only, 1: Local interface and network interface, 2: network interface only.
 	var/net_id = null
 	var/host_id = null
@@ -217,15 +222,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	src.UpdateIcon()
 
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	if (setup_networkapc)
-		terminal = new /obj/machinery/power/terminal/netlink(src.loc)
-		src.net_id = generate_net_id(src)
-	else
-		terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.set_dir(tdir)
-	terminal.master = src
+	src.build_terminal()
 
 	SPAWN(0.5 SECONDS)
 		src.update()
@@ -438,13 +435,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 							src.terminal = newTerm
 							newTerm.master = src
 							newTerm.set_dir(initial(src.dir)) //Can't use CURRENT dir because it is set to south on spawn.
-						else
-							if (src.setup_networkapc)
-								src.terminal = new /obj/machinery/power/terminal/netlink(src.loc)
-							else
-								src.terminal = new /obj/machinery/power/terminal(src.loc)
-							src.terminal.master = src
-							src.terminal.set_dir(initial(src.dir))
 
 					status &= ~BROKEN //Clear broken flag
 					icon_state = initial(src.icon_state)
@@ -502,6 +492,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			return
 
 		return
+
+	if(!terminal && opened) // terminal repair
+		if(!terminal_repair_status) // failsafe check, just in case something weird happens
+			terminal_repair_status = TERMINAL_REPAIR_STEP_WIRING
+		if(istype(W, /obj/item/cable_coil) || issolderingtool(W) || istype(W, /obj/item/sheet))
+			handle_terminal_repair(W, user)
+			return
+
 	if (ispryingtool(W))	// crowbar means open or close the cover
 		if(opened)
 			opened = 0
@@ -568,6 +566,75 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	boutput(user, "You tune the autotransformer.")
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	src.repair_status = 3
+
+// We assume that another proc has verified that the terminal is actually missing, and that the cover is open
+/obj/machinery/power/apc/proc/handle_terminal_repair(obj/item/W, mob/user)
+	if(istype(W, /obj/item/cable_coil))
+		if(terminal_repair_status != TERMINAL_REPAIR_STEP_WIRING)
+			boutput(user, SPAN_ALERT("You don't need any more cables to repair the terminal."))
+			return
+		var/obj/item/cable_coil/theCoil = W
+		if (theCoil.amount >= 6)
+			boutput(user, "You unravel some cable..<br>Now replacing the power feed cables.  This could take some time.")
+		else
+			boutput(user, SPAN_ALERT("Not enough cable! <I>(Requires six pieces)</I>"))
+			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/power/apc/proc/terminal_step_wiring,\
+		list(theCoil, user), W.icon, W.icon_state, null, null)
+		return
+
+	else if(issolderingtool(W))
+		if(terminal_repair_status == TERMINAL_REPAIR_STEP_WIRING)
+			boutput(user, SPAN_ALERT("You can't solder the cabling when you haven't even installed it yet!"))
+			return
+		else if(terminal_repair_status == TERMINAL_REPAIR_STEP_METAL)
+			boutput(user, SPAN_ALERT("The power cables are already secured!"))
+			return
+		playsound(src, 'sound/machines/click.ogg', 15, TRUE, pitch = 1.25)
+		boutput(user, "You start to solder the cables to the autotransformer and power board. This could take some time.")
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/power/apc/proc/terminal_step_soldering,\
+		list(user), W.icon, W.icon_state, null, null)
+		return
+
+	else if(istype(W, /obj/item/sheet))
+		if(terminal_repair_status == TERMINAL_REPAIR_STEP_WIRING)
+			boutput(user, SPAN_ALERT("You haven't even installed the wires yet, the terminal cover can wait!"))
+			return
+		if(terminal_repair_status == TERMINAL_REPAIR_STEP_SOLDERING)
+			boutput(user, SPAN_ALERT("The cabling hasn't been soldered, it's not time to install the terminal cover yet!"))
+			return
+		var/obj/item/sheet/sheet = W
+		if (sheet.material?.getMaterialFlags() & MATERIAL_METAL)
+			sheet.change_stack_amount(-1)
+			src.visible_message("[user] finishes installing a new power terminal for [src].")
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+			src.terminal_repair_status = null // we're done!
+			src.build_terminal()
+		else
+			boutput(user, SPAN_ALERT("You need a sheet of metal to finish the terminal cover!"))
+			return
+
+/obj/machinery/power/apc/proc/terminal_step_wiring(var/obj/item/cable_coil/theCoil, mob/user)
+	if(theCoil?.use(6))
+		boutput(user, "You feed the new cabling into the conduits.")
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		src.terminal_repair_status = TERMINAL_REPAIR_STEP_SOLDERING
+
+/obj/machinery/power/apc/proc/terminal_step_soldering(mob/user)
+	boutput(user, "You finish securing the power supply cables.")
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	src.terminal_repair_status = TERMINAL_REPAIR_STEP_METAL
+
+/// create a terminal object at the same position as original turf loc
+/// wires will attach to this
+/obj/machinery/power/apc/proc/build_terminal()
+	if (src.setup_networkapc)
+		src.terminal = new /obj/machinery/power/terminal/netlink(src.loc)
+		src.net_id = generate_net_id(src)
+	else
+		src.terminal = new/obj/machinery/power/terminal(src.loc)
+	src.terminal.set_dir(tdir)
+	src.terminal.master = src
 
 /obj/machinery/power/apc/attack_ai(mob/user)
 	if (src.aidisabled && !src.wiresexposed)
@@ -1662,16 +1729,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		src.cell = null
 
 /obj/machinery/power/apc/get_help_message(dist, mob/user)
-	if (!(src.status & BROKEN))
+	if (!(src.status & BROKEN) && !terminal_repair_status)
 		return null
-	switch(repair_status)
-		if(0)
-			. += "It's completely busted! It seems you need to use a <b>screwdriver</b> and disconnect the control board first, to begin the repair process."
-		if(1)
-			. += "The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it."
-		if(2)
-			. += "The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a <b>wrench</b> now."
-		if(3)
-			. += "The autotransformer seems to be working fine now. The next step is resetting the control board with a <b>multitool</b>."
-		if(4)
-			. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a <b>screwdriver</b>, to finish the repair process.</br>"
+	if(src.status & BROKEN)
+		switch(repair_status)
+			if(0)
+				. += "It's completely busted! It seems you need to use a <b>screwdriver</b> and disconnect the control board first, to begin the repair process."
+			if(1)
+				. += "The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it."
+			if(2)
+				. += "The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a <b>wrench</b> now."
+			if(3)
+				. += "The autotransformer seems to be working fine now. The next step is resetting the control board with a <b>multitool</b>."
+			if(4)
+				. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a <b>screwdriver</b>, to finish the repair process.</br>"
+	else
+		switch(terminal_repair_status)
+			if(TERMINAL_REPAIR_STEP_WIRING)
+				. += "The power terminal is missing! To begin replacing it, you'll need to <b>open the cover</b> and <b>insert new cabling</b>."
+			if(TERMINAL_REPAIR_STEP_SOLDERING)
+				. += "New cables have been inserted, but you need to finish installing them with a <b>soldering iron</b>."
+			if(TERMINAL_REPAIR_STEP_METAL)
+				. += "The new power cables are fully installed, and just need a housing. Any <b>sheet of metal</b> should do the trick."

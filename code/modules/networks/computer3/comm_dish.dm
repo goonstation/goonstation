@@ -7,6 +7,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 	icon_state = "def_radar"
 	anchored = ANCHORED
 	density = 1
+	provides_grip = TRUE
 	var/list/messagetitle = list()
 	var/list/messagetext = list()
 	var/list/terminals = list() //list of netIDs of connected terminals.

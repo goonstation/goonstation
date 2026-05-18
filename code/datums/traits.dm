@@ -803,7 +803,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/job/scientist
 	name = "Scientist Training."
-	desc = "Subject is a experienced researcher."
+	desc = "Subject is an experienced researcher."
 	id = "training_scientist"
 
 /datum/trait/job/headsurgeon
@@ -1508,7 +1508,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
 	points = -1
-	category = list("species", "cloner_stuff", "nohair")
+	category = list("species", "cloner_stuff")
 	mutantRace = /datum/mutantrace/skeleton
 
 /datum/trait/roach
@@ -1535,7 +1535,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "You feel like something's different today, but you can't quite put your finger/tail/hoof/antennae on it."
 	id = "random_species"
 	points = -1
-	category = list("species", "infrared", "cloner_stuff", "nohair", "hemophilia")
+	category = list("species", "infrared", "cloner_stuff", "hemophilia")
 
 	onAdd(mob/owner)
 		if (ishuman(owner))

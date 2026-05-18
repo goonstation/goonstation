@@ -37,10 +37,16 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 					return
 				if(M.client.holder)
 					return
+				var/area/centcom/offices/office = src
+				if(istype(office))
+					var/client/owner = find_client(office.ckey)
+					if(owner && isadmin(owner) && !owner.player_mode && !ON_COOLDOWN(src, "trespass_alert", 1 MINUTE))
+						boutput(owner, SPAN_ALERT(SPAN_BOLD("[key_name(M)] is trespassing in your office!")))
 				if(M.client.ckey in entered_ckeys)
 					return
 				entered_ckeys += M.client.ckey
 				logTheThing(LOG_DEBUG, M, "entered Centcom before round end [log_loc(M)].")
+				message_admins("[key_name(M)] entered Centcom before round end [log_loc(M)].")
 
 /area/centcom/outside
 	name = "Earth"

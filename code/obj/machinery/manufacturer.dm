@@ -36,6 +36,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// req_access is used to lock out specific features and not limit deconstruction therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
+	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 	layer = STORAGE_LAYER
@@ -73,7 +74,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/original_duration = 0 //! Original duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
 	var/time_left = 0 //! Time left until the current blueprint is complete. Updated on pausing and on starting a new blueprint.
 	var/time_started = 0 //! Time the blueprint was queued, or if paused/resumed, the time we resumed the blueprint.
-	var/speed = DEFAULT_SPEED //! Controls how fast blueprints are produced. Higher speed settings have a exponential effect on power use.
+	var/speed = DEFAULT_SPEED //! Controls how fast blueprints are produced. Higher speed settings have an exponential effect on power use.
 	var/repeat = FALSE //! Controls whether or not to repeat the first item in the queue while working.
 	var/output_cap = MAX_OUTPUT //! The maximum amount of produce this can dispense on outputting a blueprint's chosen outputs.
 	var/list/datum/manufacture/queue = list() //! A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
@@ -834,11 +835,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 					account["current_money"] -= total
 					storage.eject_ores(ore_name, get_output_location(), quantity, transmit=1, user=usr)
 
-						// This next bit is stolen from PTL Code
+					// This next bit is stolen from PTL Code
 					var/list/accounts = \
 						data_core.general.find_records("rank", "Chief Engineer") + \
 						data_core.general.find_records("rank", "Miner")
-
 
 					var/datum/signal/minerSignal = get_free_signal()
 					minerSignal.source = src
@@ -849,9 +849,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 						var/divisible_amount = subtotal - leftovers
 						if(divisible_amount)
 							var/amount_per_account = divisible_amount/length(accounts)
-							for(var/datum/db_record/t as anything in accounts)
-								t["current_money"] += amount_per_account
-							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
+							for(var/datum/db_record/gen_rec as anything in accounts)
+								var/datum/db_record/bank_rec = global.data_core.bank.find_record("id", gen_rec["id"])
+								if (istype(bank_rec))
+									bank_rec["current_money"] += amount_per_account
+									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
 						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")

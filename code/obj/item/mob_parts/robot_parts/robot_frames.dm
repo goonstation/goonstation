@@ -302,7 +302,7 @@
 				boutput(AI, SPAN_SUCCESS("[src] has been connected to you as a controllable shell."))
 			borg.shell = 1
 		else if (istype(borg.part_head.brain, /obj/item/organ/brain/latejoin))
-			boutput(usr, SPAN_NOTICE("You activate the frame and a audible beep emanates from the head."))
+			boutput(usr, SPAN_NOTICE("You activate the frame and an audible beep emanates from the head."))
 			playsound(src, 'sound/weapons/radxbow.ogg', 40, TRUE)
 		else
 			stack_trace("We finished cyborg [identify_object(borg)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")

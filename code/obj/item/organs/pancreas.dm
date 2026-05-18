@@ -12,20 +12,26 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if(!emagged) //emagged pancreas doesn't regulate sugar for you anymore.
-			if (donor.reagents && donor.reagents.get_reagent_amount("sugar") > 80)
-				if (prob(50))
-					donor.reagents.add_reagent("insulin", 1 * mult)
-					if(!robotic) //don't kill a cyberpancreas
-						src.take_damage(0, 0, 10)
-				else if (prob(50))
-					if (donor.reagents.get_reagent_amount("sugar") > 200)
-						donor.reagents.add_reagent("insulin", 2 * mult)
-						if(!robotic)
-							src.take_damage(0, 0, 40)
+		if (donor.reagents)
+			var/sugar_dose = donor.reagents.get_reagent_amount("sugar") //variable to check for whether and how much the donor is overdosing on sugar, with respect for chemical weakness defect and chemical resistant trait.
+			if(donor.traitHolder.hasTrait("chemresist"))
+				sugar_dose *= 0.65
+			if(HAS_ATOM_PROPERTY(donor, PROP_MOB_OVERDOSE_WEAKNESS))
+				sugar_dose *= 2
+			if(!emagged) //emagged pancreas doesn't regulate sugar for you anymore.
+				if (sugar_dose > 80)
+					if (prob(50))
+						donor.reagents.add_reagent("insulin", 1 * mult)
+						if(!robotic) //don't kill a cyberpancreas
+							src.take_damage(0, 0, 10)
+					else if (prob(50))
+						if (sugar_dose > 160)
+							donor.reagents.add_reagent("insulin", 2 * mult)
+							if(!robotic)
+								src.take_damage(0, 0, 40)
 
-			if (src.get_damage() >= 65 && prob(src.get_damage() * 0.2))
-				donor.contract_disease(failure_disease,null,null,1)
+		if (src.get_damage() >= 65 && prob(src.get_damage() * 0.2))
+			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
 	disposing()

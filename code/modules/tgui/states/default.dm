@@ -17,7 +17,7 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 		. = min(., loc.contents_ui_distance(src_object, src)) // Check the distance...
 	if(. == UI_INTERACTIVE) // Non-human living mobs can only look, not touch.
 		// Permit ghost drone access to ghost critter permitted UIs
-		if (!(isghostdrone(src) && !HAS_FLAG(src_object.object_flags, NO_GHOSTCRITTER)))
+		if (!(isghostdrone(src) && (!HAS_FLAG(src_object.object_flags, NO_GHOSTCRITTER) || HAS_FLAG(src_object.object_flags, GHOSTDRONE_ALLOWED))))
 			return UI_UPDATE
 
 /mob/living/carbon/human/default_can_use_topic(src_object)

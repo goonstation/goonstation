@@ -220,6 +220,8 @@
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
 		/datum/manufacture/wheelchair,
+		/datum/manufacture/roller_bed,
+		/datum/manufacture/iv_stand,
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
@@ -262,7 +264,7 @@
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-		/datum/manufacture/glass
+		/datum/manufacture/glass,
 	)
 
 	hidden = list()
@@ -541,7 +543,7 @@
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "personnel manufacturer"
-	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
+	supplemental_desc = "This one is a multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resources = list(/obj/item/material_piece/steel = 5,

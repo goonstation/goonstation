@@ -17,7 +17,7 @@
 			return ..()
 		if (src.working || src.is_disabled())
 			return
-		if (!I.material || !((I.material.getMaterialFlags() & MATERIAL_METAL) || I.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+		if (!I.material || !HAS_ANY_FLAGS(I.material.getMaterialFlags(), MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_WOOD))
 			boutput(user, SPAN_ALERT("[I] doesn't go in there!"))
 			return
 		var/obj/item/material_piece/taken_piece = null

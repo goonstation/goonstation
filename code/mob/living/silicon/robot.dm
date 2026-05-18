@@ -665,7 +665,7 @@ TYPEINFO(/mob/living/silicon/robot)
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_FARTS)
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif

@@ -113,6 +113,18 @@ TYPEINFO(/obj/item/peripheral)
 
 		return 0
 
+/obj/item/peripheral/attackby(obj/item/P, mob/user)
+	var result = src.itemInteract(P, user)
+	if(result)
+		if(istext(result))
+			boutput(user, SPAN_ALERT(result))
+		else ..()
+
+/obj/item/peripheral/proc/itemInteract(obj/item/P, mob/user)
+	//Returns falsey if success
+	//Returns 1 if silent failure because this periph would never interact with the item
+	//Returns string if there's a failure reason but this periph would normally accept the item
+	return 1
 
 /obj/item/peripheral/network
 	var/code = null //Signal encryption code
@@ -1001,6 +1013,18 @@ TYPEINFO(/obj/item/peripheral)
 
 		return
 
+	itemInteract(obj/item/P, mob/user)
+		if(istype(P, /obj/item/card/id))
+			if(!src.authid)
+				user.drop_item()
+				P.loc = src
+				src.authid = P
+				boutput(user, "You insert [P] into the card scanner.")
+				return 0
+			else
+				return "There's already a card in the scanner."
+		return 1
+
 	receive_command(obj/source,command, datum/signal/signal)
 		if(..())
 			return 1
@@ -1192,7 +1216,7 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 	icon_state = "card_mod"
 	func_tag = "SHU_FLOPPY"
 	var/obj/item/disk/data/disk = null
-	var/setup_disk_type = /obj/item/disk/data/floppy //Inserted disks need to be a child type of this.
+	var/setup_disk_type = /obj/item/disk/data/floppy //Inserted disks need to be a child type of this. Make certain it's of type /disk/data or things may break!
 
 	disposing()
 		disk = null
@@ -1210,7 +1234,7 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 
 	return_badge()
 		// label text, icon, contents
-		. = list("label" = "Disk","icon" = "rom","contents" = src.disk)
+		. = list("label" = "Disk","icon" = "save","contents" = src.disk)
 
 	uninstalled()
 		src.disk?.set_loc(src)
@@ -1281,6 +1305,18 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 
 		return
 
+	itemInteract(obj/item/P, mob/user)
+		if(istype(P, setup_disk_type))
+			if(!src.disk)
+				user.drop_item()
+				P.loc = src
+				src.disk = P
+				boutput(user, "You insert [P] into the drive.")
+				return 0
+			else
+				return "There's already a diskette in the drive."
+		return 1
+
 /obj/item/peripheral/drive/cart_reader
 	name = "ROM cart reader module"
 	desc = "A peripheral board for reading ROM carts."
@@ -1304,6 +1340,18 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 
 		return
 
+	itemInteract(obj/item/P, mob/user)
+		if(istype(P, setup_disk_type))
+			if(!src.disk)
+				user.drop_item()
+				P.loc = src
+				src.disk = P
+				boutput(user, "You insert [P] into the reader.")
+				return 0
+			else
+				return "There's already a cart in the reader."
+		return 1
+
 /obj/item/peripheral/drive/tape_reader
 	name = "Tape drive module"
 	desc = "A peripheral board designed for reading magnetic data tape."
@@ -1326,6 +1374,18 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 			src.eject_disk()
 
 		return
+
+	itemInteract(obj/item/P, mob/user)
+		if(istype(P, setup_disk_type))
+			if(!src.disk)
+				user.drop_item()
+				P.loc = src
+				src.disk = P
+				boutput(user, "You insert [P] into the reader.")
+				return 0
+			else
+				return "There's already a reel in the reader."
+		return 1
 
 /obj/item/peripheral/cell_monitor
 	name = "cell monitor module"

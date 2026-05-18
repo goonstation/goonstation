@@ -42,7 +42,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "sigil_pt2"
 	w_class = W_CLASS_SMALL
-	desc = "A green wax mold, it appears to already have a indent inside it."
+	desc = "A green wax mold, it appears to already have an indent inside it."
 	var/pt1 = FALSE
 
 	complete // Nothingburger used for the dialogue box
@@ -111,7 +111,7 @@
 // 	icon = 'icons/obj/decoration.dmi'
 // 	icon_state = "sigil_pt2"
 // 	w_class = W_CLASS_SMALL
-// 	desc = "A green wax mold, it appears to already have a indent inside it."
+// 	desc = "A green wax mold, it appears to already have an indent inside it."
 // 	var/pt1 = FALSE
 // 	var/pt3 = FALSE
 
@@ -146,7 +146,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "sigil_pt3"
 	w_class = W_CLASS_SMALL
-	desc = "A purple crystal, it appears to gaze at you like a eye."
+	desc = "A purple crystal, it appears to gaze at you like an eye."
 
 	attackby(obj/item/W, mob/user, params)
 		. = ..()
@@ -183,7 +183,7 @@
 	name = "overqualified backscratcher"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "backscratcher"
-	desc = "A something... It could sure scratch a itch on someone's back though."
+	desc = "A something... It could sure scratch an itch on someone's back though."
 	force = 10
 
 	attackby(obj/item/W, mob/user, params)
@@ -407,7 +407,7 @@
 
 	controlpc_lv
 		linkText = "(Move the lever down to lower the voltage.)"
-		nodeText = {"The creature, while not even directly visible clearly loosens its composure. A echo... a sound which could be graditude or unleashed wrath. Its simply too alien to determine. <br>
+		nodeText = {"The creature, while not even directly visible clearly loosens its composure. An echo... a sound which could be graditude or unleashed wrath. Its simply too alien to determine. <br>
 		A bead of some kind is knocked off it during its departure."}
 		links = list()
 

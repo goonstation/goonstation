@@ -920,13 +920,13 @@ datum/fishing_spot/golden_toilet
 		return result
 
 /datum/fishing_spot/ketchup
-	fishing_atom_type = /obj/item/shaker/ketchup
+	fishing_atom_type = /obj/item/reagent_containers/applicator/condiment/bottle/ketchup
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/snacks/condiment/ketchup = 50,\
 	/obj/item/reagent_containers/food/snacks/yuck = 20)
 
 /datum/fishing_spot/mustard
-	fishing_atom_type = /obj/item/shaker/mustard
+	fishing_atom_type = /obj/item/reagent_containers/applicator/condiment/bottle/mustard
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/snacks/condiment/mustard = 50,\
 	/obj/item/reagent_containers/food/snacks/yuck = 20)

@@ -2367,6 +2367,8 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "cargotelegreen"
 
 /obj/item/cargotele/traitor
+	SYNDICATE_STEALTH_DESCRIPTION("The targeting system is fluctuating rapidly.", null)
+	tooltip_flags = REBUILD_USER
 	cost = 15
 	///The account to credit for sales
 	var/datum/db_record/account = null
@@ -2746,6 +2748,9 @@ TYPEINFO(/obj/submachine/cargopad)
 	artlab
 		mailgroup = MGD_RESEARCH
 		name = "Artifact Lab Pad"
+	catering
+		mailgroup = MGT_CATERING
+		name = "Catering Hangar Pad"
 	engineering
 		mailgroup = MGD_ENGINEER
 		name = "Engineering Pad"
@@ -2758,17 +2763,23 @@ TYPEINFO(/obj/submachine/cargopad)
 	miningoutpost
 		mailgroup = MGT_MINING
 		name = "Mining Outpost Pad"
+	miningstaff
+		mailgroup = MGT_MINING
+		name = "Mining Staff Room Pad"
 	qm
 		mailgroup = MGT_CARGO
-		name = "QM Pad"
+		name = "Cargo Office Pad"
 	qm2
 		mailgroup = MGT_CARGO
-		name = "QM Pad 2"
+		name = "Export Pad"
 	researchoutpost
 		mailgroup = MGD_RESEARCH
 		name = "Research Outpost Pad"
 	radio
 		name = "Radio Station Pad"
+	security
+		mailgroup = MGD_SECURITY
+		name = "Security Pad"
 
 	New()
 		..()
