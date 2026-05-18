@@ -4,8 +4,7 @@
 	name = "mysterious barrel"
 	desc = "Some curious looking barrel..?"
 	SYNDICATE_STEALTH_DESCRIPTION("More fun than a ValuChimp! Looks like there's a tray to put clothes inside.", null)
-	HELP_MESSAGE_OVERRIDE("Right click to access the holographic clothing menu, letting you set the clothes of the monkeys.")
-	tooltip_flags = REBUILD_USER
+	help_message = "Right click to access the holographic clothing menu, letting you set the clothes of the monkeys."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "barrel"
 	throwforce = 50
