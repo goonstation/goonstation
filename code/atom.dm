@@ -478,14 +478,18 @@ TYPEINFO(/atom/movable)
 	/// A key-value list of match property or material IDs and an amount required to construct the item
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
-	var/analyser_flags = ANALYSER_ALLOWED | ANALYSER_FAILFEEDBACK /// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
-	var/manufactured_type = null /// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
-	//IF YOU OVERRIDE MANUFACTURED TYPE, THE SYSTEM USES THE ANALYSER FLAGS FROM THE OVERRIDE, NOT THE ORIGINAL
+	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/analyser_flags = ANALYSER_ALLOWED | ANALYSER_FAILFEEDBACK
+
+	/// If defined, you will override device analyzer scans to yield this typepath (instead of the default, which is just the object's type itself)
+	/// WARNING: If you override, the system uses analyser_flags from the override, not the original
+	var/manufactured_type = null
 
 	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
 	/// if an object type can be built somewhere, before instantiating the object itself.
 	proc/can_build(turf/T, direction)
 		return TRUE
+
 
 
 //Wow why are these TYPEINFOs here? Because parent_type:: depends on file load order :))))
