@@ -445,6 +445,7 @@
 	reinforced = TRUE
 	bolted = TRUE
 	spawn_contents = list(/obj/item/item_box/contraband)
+	radiation_protection = 20
 
 // Old Mushroom-era feature I fixed up (Convair880).
 /obj/storage/secure/closet/brig_automatic
@@ -953,6 +954,7 @@
 	open_sound = 'sound/misc/fridge_open.ogg'
 	close_sound = 'sound/misc/fridge_close.ogg'
 	volume = 80
+	radiation_protection = 20
 
 /obj/storage/secure/closet/fridge/opened
 	New()

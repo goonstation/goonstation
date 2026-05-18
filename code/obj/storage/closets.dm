@@ -594,6 +594,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 					/obj/item/storage/pill_bottle/antirad = 1,
 					/obj/item/clothing/glasses/toggleable/meson = 1,
 					/obj/item/reagent_containers/emergency_injector/anti_rad = 1)
+	radiation_protection = 20
 
 /obj/storage/closet/medicalclothes
 	name = "medical clothing locker"

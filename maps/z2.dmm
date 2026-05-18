@@ -74157,6 +74157,15 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"sUy" = (
+/obj/spacevine{
+	icon_state = "vine-light2"
+	},
+/mob/living/critter/gorilla/carl,
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/crater/biodome/north)
 "sVQ" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -117182,7 +117191,7 @@ wTN
 aMc
 aMJ
 aML
-aOc
+sUy
 aOY
 nyQ
 aQx

@@ -1,3 +1,74 @@
+
+(t)mon may 18 26
+(u)FlameArrow57 & Mr. Moriarty
+(p)26581
+(e)💅📄🚨|C-QoL, A-UI, A-Admin
+(*)The changelog has been converted to TGUI.
+(u)LorrMaster
+(p)26347
+(e)🎨🧛🧱⏰📨|C-Sprites, A-Gamemodes, A-Materials, A-Status-Effects, A-Logistics
+(*)Added batiline, a new ore with anti-radioactive properties.
+(*)Custom spacesuits and large containers may now provide some protection from radiation based on materials.
+(t)sun may 17 26
+(u)Cheekybrdy
+(p)26615
+(e)🆕🐁|C-Feature, A-Critters
+(+)Gorillas now have some genes if put in a scanner
+(u)JORJ949
+(*)The "Fun Times" medal reward for a participation ribbon now puts one in your hand (or the floor under you) instead of spawning you as a possessed one.
+(t)sat may 16 26
+(u)glowbold
+(*) Announcements from the Syndicate Announcement computer have an option for toggling anonymous
+(t)thu may 14 26
+(u)bork
+(p)26600
+(e)|
+(+)water bottles hold 75u instead of 25u now.
+(u)iDESTROYkibble
+(p)26589
+(e)|
+(+)You can now print roller beds and IV stands with the medical fabricator.
+(u)JORJ949
+(p)26476
+(e)⚖🧑‍✈️|C-Balance, A-Command
+(*)The HoP now has all access minus command offices, the brig, security equipment, forensics, medical equipment and APCs.
+(u)JORJ949
+(p)26508
+(e)⚖📨|C-Balance, A-Logistics
+(*)The listening post trader now sells voice anonymizers (makes you appear as "Unknown") instead of voice changers.
+(u)CalliopeSoups
+(p)26573
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Wraith's Whisper and Mass Whisper now both have no cooldown.
+(u)glowbold
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Observers can toggle examine-on-click with a new button in the top-right HUD.
+(t)wed may 13 26
+(u)LeahTheTech
+(*)Two new items have been added to the syndicate surplus pool: a unique stun baton with a windup and instant 5 second stun, and a big laser shotgun with very bouncy projectiles (overheating guaranteed). These will also show up in spy-thief bounties.
+(u)EmeraldCrow
+(p)26232
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds Ricochet stun bullets to hacked SecTechs and normal ammotech. bank shot that clown today!
+(+)New sprites for lethal ricochet bullets, to match the stun ricochet bullets.
+(u)bamlord, sprites by swinglow20
+(p)26535
+(e)🗺🎨📡🐁|A-Mapping, C-Sprites, A-AI, A-Critters
+(*)Added Gorillas, extremely robust and rare critters.
+(t)tue may 12 26
+(u)Bonnedav
+(p)26583
+(e)|
+(+)Computer Operators now spawn a box of useful floppy disks, an IT toolbelt, a cable coil, and the frequency reference sheet.
+(u)glowbold
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)Portable machinery like the Port-A-Medbay only show "Off-Station Location" when the location or home is not on station.
+(u)LeahTheTech
+(*)Lightbreaker changes: TC cost 4 -> 3, rewind time 30 -> 20 seconds, rewind action is now quieter and keeps its progress when interrupted, 1 second cooldown added to activation to prevent all charges being used at once in a panic.
+(u)LorrMaster
+(p)26576
+(e)🎨🧱🌱|C-Sprites, A-Materials, A-Hydroponics
+(*)New wood log sprites for various stack sizes. Wood planks color adjusted.
 (t)mon may 11 26
 (u)LeahTheTech
 (+)If there is no captain in the round, Jones will now guard the auth disk.
@@ -944,7 +1015,7 @@
 (e)🆕💅📨|C-Feature, C-QoL, A-Logistics
 (*)Orders made using a crew members's personal account will now add their name to the shipped crate.
 (u)glowbold
-(e)⚖🧛🤖C-Balance, A-Gamemodes, A-Silicons
+(e)⚖🧛🤖|C-Balance, A-Gamemodes, A-Silicons
 (*)Changelings and other anchored mobs can't fit in disposals. You cannot slip out of a changeling's grip into disposals.
 (*)The atmospherics transporter tool for silicons has been removed.
 (+)Wanted posters can be used to roll illegal cigarettes.
@@ -3775,6 +3846,3 @@
 (t)thu jan 02 25
 (u)LeahTheTech
 (+)Turbine stator load is now measured in kJ rather than Joules (number is 1000 times smaller).
-(t)wed jan 01 25
-(u)Goonstation Contributors
-(*)<a target="_blank" href="https://wiki.ss13.co/Changelog">Older changelog entries are available on the wiki</a>
