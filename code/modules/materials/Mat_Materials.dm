@@ -1877,7 +1877,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 					0.00, 0.00, 1.50, 0.00,\
 					0.00, 0.00, 0.00, 1.00,\
 					0.08, 0.20, -0.30, 0.00)
-	texture = list("mycelium_a", "mycelium_b")
+	texture = list("mycelium_a", "mycelium_b", "mycelium_c")
 	texture_blend = BLEND_DEFAULT
 	edible_exact = 1
 	edible = 1
