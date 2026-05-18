@@ -21,8 +21,8 @@
 
 	if (user_data.fields["code"] != netpass_login)
 		return ESIG_GENERIC
-
-	if ("[access_dwaine_superuser]" in splittext(user_data.fields["access"], ";"))
+    
+	if ("[access_sysadmin]" in splittext(user_data.fields["access"], ";"))
 		if (src.signal_program(1, list("command" = DWAINE_COMMAND_UGROUP, "group" = 0)) == ESIG_SUCCESS)
 			src.message_user("You are now authorized.")
 			usr.unlock_medal("I'm in", TRUE)

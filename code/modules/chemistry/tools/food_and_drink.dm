@@ -1635,6 +1635,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	wedge_y_offset = -2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
+	SYNDICATE_STEALTH_DESCRIPTION("The label mentions something about \"nearly bottomless mimosas\".", null)
+	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50

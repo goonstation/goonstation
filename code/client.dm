@@ -9,7 +9,7 @@
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
 	var/deadchat = 0
-	var/changes = 0
+	var/changes = FALSE
 	var/area = null
 	var/stealth = 0
 	var/stealth_hide_fakekey = 0
@@ -345,10 +345,11 @@
 
 			#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
-				changes()
-
-			if (isadmin(src) && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
-				admin_changes()
+				if (global.tgui_process)
+					src.changes()
+				else
+					SPAWN(3 SECONDS)
+						src.changes()
 			#endif
 		else
 			if (noir)

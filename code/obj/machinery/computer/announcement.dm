@@ -22,8 +22,10 @@
 	var/area_name = null
 	/// Determines colors for alert text
 	var/alert_origin = ALERT_COMMAND
+	/// You can toggle is_anonymous through the TGUI interface
+	var/can_change_anonymous = FALSE
 	/// Does the announcement computer remove the header ID Name/Job addendum
-	var/anonymous = FALSE
+	var/is_anonymous = FALSE
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -69,7 +71,9 @@
 			"time" = get_time(user) SECONDS,
 			"announces_arrivals" = 	src.announces_arrivals,
 			"arrivalalert" = src.arrivalalert,
-			"max_length" = src.max_length
+			"max_length" = src.max_length,
+			"can_change_anonymous" = src.can_change_anonymous,
+			"is_anonymous" = src.is_anonymous
 		)
 
 	ui_act(action, params, datum/tgui/ui)
@@ -108,6 +112,9 @@
 				. = TRUE
 			if ("log")
 				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[sanitize(adminscrub(params["value"]))]\" from \"[sanitize(adminscrub(params["old"]))]\".")
+			if("toggleAnonymous")
+				if (src.can_change_anonymous)
+					src.is_anonymous = !src.is_anonymous
 
 	proc/update_status()
 		if(!src.ID)
@@ -138,7 +145,7 @@
 
 		var/area/A = get_area(src)
 		var/header = "[src.area_name || A.name] Announcement"
-		if (!src.anonymous)
+		if (!src.is_anonymous)
 			header += " by [ID.registered] ([ID.assignment])"
 
 		command_announcement(message, header, msg_sound, volume = src.sound_volume, alert_origin = src.alert_origin)
@@ -295,12 +302,11 @@
 	req_access = list(access_syndicate_shuttle)
 	circuit_type = /obj/item/circuitboard/announcement/syndicate
 	alert_origin = ALERT_SYNDICATE
-	anonymous = TRUE
+	can_change_anonymous = TRUE
 
 	commander
 		area_name = null
 		req_access = list(access_syndicate_commander)
-		anonymous = FALSE
 
 	console
 		icon_state = "syndiepc14"

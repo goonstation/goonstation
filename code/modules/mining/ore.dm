@@ -81,6 +81,17 @@
 	hardness_mod = 2
 	mining_health = 200
 
+/datum/ore/batiline
+	name = "batiline"
+	output = /obj/item/raw_material/batiline
+	events = list(/datum/ore/event/gem = 100)
+	gems = list(/obj/item/raw_material/uqill)
+	tiles_per_rock_min = 4
+	tiles_per_rock_max = 16
+	hardness_mod = 1
+	rarity_tier = 2
+	mining_health = 200
+
 /datum/ore/bohrum
 	name = "bohrum"
 	output = /obj/item/raw_material/bohrum
