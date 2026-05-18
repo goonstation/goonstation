@@ -542,7 +542,7 @@
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
 	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red,
-	/obj/item/reagent_containers/applicator/glue)
+	/obj/item/reagent_containers/applicator/stick/glue)
 
 	one
 		amt2spawn = 1

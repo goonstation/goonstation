@@ -3221,7 +3221,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			name = "purge"
 			task_id = "PURGE"
 			no_patrol = 0
-			var/accepted_access = access_dwaine_superuser
+			var/accepted_access = access_sysadmin
 
 			assess_perp(mob/living/carbon/human/perp as mob)
 				var/obj/item/card/id/the_id = perp.get_id()

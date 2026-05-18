@@ -984,7 +984,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/reagent_containers/applicator/glue,
+/obj/item/reagent_containers/applicator/stick/glue,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
@@ -6164,10 +6164,10 @@
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/storage/cart/hotdog,
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 6
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -6
 	},
 /turf/simulated/floor/black,
@@ -7278,14 +7278,14 @@
 /area/station/crew_quarters/catering)
 "axR" = (
 /obj/table/auto,
-/obj/item/shaker/salt,
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt,
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -6
 	},
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 3
 	},
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 6
 	},
 /obj/item_dispenser/icedispenser{
@@ -12445,10 +12445,10 @@
 /area/station/crew_quarters/cafeteria)
 "aNp" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 6
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -6
 	},
 /obj/machinery/light,
@@ -12458,10 +12458,10 @@
 /area/station/crew_quarters/cafeteria)
 "aNq" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 3
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -3
 	},
 /turf/simulated/floor/carpet{
@@ -12488,10 +12488,10 @@
 /area/station/crew_quarters/cafeteria)
 "aNv" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 3
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -3
 	},
 /turf/simulated/floor/carpet{
@@ -43874,7 +43874,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
 "cLg" = (
@@ -44965,6 +44965,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cPk" = (
@@ -45287,6 +45288,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cQH" = (
@@ -48036,7 +48038,7 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_doctor,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/medical/medbay)
 "daQ" = (
@@ -48069,8 +48071,8 @@
 /obj/stool/chair/office{
 	dir = 8
 	},
-/obj/landmark/start/job/medical_doctor,
 /obj/disposalpipe/segment/vertical,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/medical/medbay)
 "daT" = (
@@ -48682,6 +48684,7 @@
 /obj/stool/chair/couch/blue{
 	dir = 8
 	},
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/medical/medbay/psychiatrist)
 "ddL" = (
@@ -52514,7 +52517,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "eEu" = (
@@ -52697,7 +52699,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/storage/auxillary)
@@ -59603,7 +59604,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
@@ -60772,7 +60772,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "lxh" = (
@@ -62402,7 +62401,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
@@ -64476,6 +64474,12 @@
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
+"oLd" = (
+/obj/landmark/start/job/medical_trainee,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "oLw" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
@@ -64835,9 +64839,6 @@
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
 /obj/storage/closet/biohazard,
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "pbs" = (
@@ -71059,6 +71060,7 @@
 	dir = 1
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
 "uxI" = (
@@ -72209,7 +72211,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "vCI" = (
@@ -114620,7 +114621,7 @@ cWy
 dgy
 uKJ
 ddd
-ddd
+oLd
 ddd
 dgi
 ddg

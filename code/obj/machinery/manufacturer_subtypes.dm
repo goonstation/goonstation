@@ -221,6 +221,8 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
 		/datum/manufacture/wheelchair,
+		/datum/manufacture/roller_bed,
+		/datum/manufacture/iv_stand,
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
@@ -263,7 +265,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-		/datum/manufacture/glass
+		/datum/manufacture/glass,
 	)
 
 	hidden = list()

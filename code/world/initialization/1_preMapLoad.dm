@@ -55,6 +55,9 @@
 	world.log << ""
 #endif
 	enable_auxtools_debugger()
+
+	global.initialise_namespaces()
+
 	Z_LOG_DEBUG("Preload", "  radio")
 	radio_controller = new /datum/controller/radio()
 

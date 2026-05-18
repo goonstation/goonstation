@@ -332,7 +332,7 @@
 	name = "Safari Kit"
 	items = list(/obj/item/storage/box/costume/safari)
 	cost = 7
-	desc = "Almost everything you need to hunt the most dangerous game. Tranquilizer rifle not included."
+	desc = "4 clips of banned tranquilizer darts, a dashing safari outfit, and a boomarang to match. Tranquilizer rifle not included."
 	br_allowed = TRUE
 	job = list("Medical Director")
 	can_buy = UPLINK_TRAITOR

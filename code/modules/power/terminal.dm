@@ -26,6 +26,7 @@
 		if (istype(src.master,/obj/machinery/power/apc))
 			var/obj/machinery/power/apc/APC = src.master
 			if (APC.terminal == src)
+				APC.terminal_repair_status = TERMINAL_REPAIR_STEP_WIRING
 				APC.terminal = null
 		if (istype(src.master, /obj/machinery/power/smes))
 			var/obj/machinery/power/smes/SMES = src.master

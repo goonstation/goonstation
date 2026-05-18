@@ -1,0 +1,4 @@
+/obj/item/shaker/mustard : /obj/item/reagent_containers/applicator/condiment/bottle/mustard{@OLD}
+/obj/item/shaker/ketchup : /obj/item/reagent_containers/applicator/condiment/bottle/ketchup{@OLD}
+/obj/item/shaker/salt : /obj/item/reagent_containers/applicator/condiment/shaker/salt{@OLD}
+/obj/item/shaker/pepper : /obj/item/reagent_containers/applicator/condiment/shaker/pepper{@OLD}

@@ -487,6 +487,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		RegisterSignal(src, COMSIG_ATOM_ANALYZE, PROC_REF(noreward))
 		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
@@ -542,6 +543,9 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. 'HOS' is engraved in the side."
 		icon_state = "energy-hos"
 
+		New()
+			. = ..()
+			src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)
 	analyser_flags = ANALYSER_BLACKLIST
@@ -2506,17 +2510,13 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		src.rack(user)
 
 	proc/rack(var/mob/user)
-		if (src.overheated)
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, amount) & CELL_INSUFFICIENT_CHARGE)
-				boutput(user, "<span class ='notice'>You are out of energy!</span>")
-			else
-				boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
-				playsound(src, 'sound/effects/steamrelease.ogg', 70, 1)
-				ON_COOLDOWN(src, "rack delay", 1 SECONDS)
-				SPAWN(1 SECOND)
-					src.overheated = FALSE
-					src.shotcount = 0
-					src.UpdateParticles(null, "overheat_steam")
+		if (src.shotcount > 0 && !ON_COOLDOWN(src, "rack delay", 1 SECONDS))
+			boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
+			playsound(src, 'sound/effects/steamrelease.ogg', 70, 1)
+			SPAWN(1 SECOND)
+				src.overheated = FALSE
+				src.shotcount = 0
+				src.UpdateParticles(null, "overheat_steam")
 
 /obj/item/gun/energy/resonator
 	name = "Resonator"

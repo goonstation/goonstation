@@ -997,7 +997,7 @@
 	status = 2
 	},
 /obj/item/paper/book/from_file/the_trial,
-/obj/item/reagent_containers/applicator/glue,
+/obj/item/reagent_containers/applicator/stick/glue,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
 "aeG" = (
@@ -36030,7 +36030,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/east)
 "dPW" = (
@@ -37363,7 +37362,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "eGU" = (
@@ -39541,7 +39539,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction2)
 "gfr" = (
@@ -41565,7 +41562,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
 "hCK" = (
@@ -44836,11 +44832,11 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/random_item_spawner/tableware/few,
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -12;
 	pixel_y = 9
 	},
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = -7;
 	pixel_y = 12
 	},
@@ -46885,7 +46881,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "lBV" = (
@@ -50857,8 +50852,6 @@
 /area/station/routing/sortingRoom)
 "onU" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/bar,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ook" = (
@@ -53883,11 +53876,11 @@
 	pixel_x = 19;
 	pixel_y = 8
 	},
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = -9;
 	pixel_y = 10
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -57004,7 +56997,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "sFY" = (
@@ -57222,7 +57214,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "sMR" = (
@@ -63302,11 +63293,11 @@
 "xcr" = (
 /obj/table/wood/auto,
 /obj/item/plate,
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = 3;
 	pixel_y = 8
 	},
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -64086,7 +64077,6 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "xLf" = (

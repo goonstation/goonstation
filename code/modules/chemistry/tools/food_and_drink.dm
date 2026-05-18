@@ -1349,16 +1349,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.UpdateIcon()
 			return
 
-		else if (istype(W, /obj/item/shaker/salt))
-			var/obj/item/shaker/salt/S = W
-			if (S.shakes >= 15)
+		// applicators are not open containers, special handling here
+		else if (istype(W, /obj/item/reagent_containers/applicator/condiment/shaker/salt))
+			var/obj/item/reagent_containers/applicator/condiment/shaker/salt/S = W
+			if (S.reagents.total_volume < 2)
 				boutput(user, SPAN_ALERT("There isn't enough salt in here to salt the rim!"))
 				return
 			else
 				boutput(user, SPAN_NOTICE("You salt the rim of [src]."))
 				src.salted = 1
+				S.reagents.remove_any(2)
 				src.UpdateIcon()
-				S.shakes ++
 				return
 
 		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents.has_reagent("salt"))

@@ -22,6 +22,7 @@
 /obj/item/reagent_containers/glass/bottle/plastic
 	name = "plastic bottle"
 	desc = "A small 3D-printed bottle."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()

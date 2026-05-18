@@ -66,6 +66,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	var/made_stuff
 
 	var/grab_stuff_on_spawn = TRUE
+	var/radiation_protection = 0 // Amount of rad protection while inside in Ohms. Materials can add additional shielding.
 
 	///Controls items that are 'inside' the crate, even when it's open. These will be dragged around with the crate until removed.
 	var/datum/vis_storage_controller/vis_controller
@@ -166,10 +167,22 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		else
 			. = list(start,stop)
 
-	Entered(atom/movable/Obj, OldLoc)
+	Entered(atom/movable/AM, OldLoc)
 		. = ..()
 		if(src.open || length(contents) > src.max_capacity)
-			Obj.set_loc(get_turf(src))
+			AM.set_loc(get_turf(src))
+		if(src.radiation_protection)
+			// I'm ignoring artifacts for now. Not sure if there is a generalized way to handle protecting objs.
+			if(ismob(AM))
+				var/mob/M = AM
+				M.setStatus("radiation_protection", INFINITE_STATUS, src)
+
+	Exited(atom/movable/AM, OldLoc)
+		. = ..()
+		if(src.radiation_protection)
+			if(ismob(AM))
+				var/mob/M = AM
+				M.delStatus("radiation_protection")
 
 	update_icon()
 
@@ -403,9 +416,25 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	onMaterialChanged()
 		. = ..()
 		if(isnull(src.material))
+			src.set_radiation_protection(initial(src.radiation_protection))
 			return
 		if(contains_negative_matter(src))
 			src.AddComponent(/datum/component/extradimensional_storage/storage)
+		if(!src.material.hasProperty("radiation") && !src.material.hasProperty("n_radiation"))
+			var/mat_rad_prot = src.material.calc_radiation_prot() * src.material_amount_total()
+			mat_rad_prot = round(mat_rad_prot, 5)
+			src.set_radiation_protection(initial(src.radiation_protection) + mat_rad_prot)
+		else
+			src.set_radiation_protection(0)
+
+	proc/set_radiation_protection(var/new_amount)
+		src.radiation_protection = new_amount
+		if(src.radiation_protection)
+			for(var/mob/M in src.contents)
+				M.setStatus("radiation_protection", INFINITE_STATUS, src)
+		else
+			for(var/mob/M in src.contents)
+				M.delStatus("radiation_protection")
 
 	proc/pry_open(var/mob/user)
 		playsound(src, 'sound/items/Crowbar.ogg', 60, 1)

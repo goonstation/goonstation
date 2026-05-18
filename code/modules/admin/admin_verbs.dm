@@ -11,7 +11,6 @@ var/list/admin_verbs = list(
 
 	list(
 		// LEVEL_MOD, moderator
-		/client/proc/admin_changes,
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
 		/client/proc/admin_invisible,
@@ -364,6 +363,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as,
 		/client/proc/whitelist_add_temp,
 		/client/proc/whitelist_toggle,
+		/client/proc/mentor_whitelist_toggle,
 		/client/proc/list_adminteract_buttons,
 
 		/client/proc/general_report,
@@ -633,8 +633,7 @@ var/list/special_pa_observing_verbs = list(
 			src.holder.level = LEVEL_BABBY
 
 		if ("Inactive")
-			src.holder.dispose()
-			src.holder = null
+			src.clear_admin()
 			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the Goonstation Discord if you would like to become active again!</b></span>")
 			return
 
@@ -1529,40 +1528,6 @@ var/list/fun_images = list()
 	logTheThing(LOG_DIARY, src, "spawned a custom grenade at [usr.loc]", "admin")
 	message_admins("[key_name(src)] spawned a custom grenade at [usr.loc].")
 
-/client/proc/admin_changes()
-	set category = "Commands"
-	set name = "Admin Changelog"
-	set desc = "Show or hide the admin changelog"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
-		src.Browse(null, "window=adminchanges")
-	else
-		var/changelogHtml
-		var/data
-		if (src.byond_version >= 516)
-			changelogHtml = grabResource("html/changelog.html")
-			data = admin_changelog.html
-		else
-			changelogHtml = grabResource("html/legacy_changelog.html")
-			data = legacy_admin_changelog.html
-		var/fontcssdata = {"
-				<style type="text/css">
-				@font-face {
-					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
-					text-rendering: optimizeLegibility;
-				}
-				</style>
-		"}
-		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
-		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516 && global.tgui_process)
-			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
-		else
-			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
-
 /client/proc/removeSelf()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Remove Self"
@@ -2415,6 +2380,22 @@ proc/alert_all_ghosts(atom/target, message)
 		world.save_intra_round_value("whitelist_disabled", 0)
 
 	set_station_name(src.mob, manual=FALSE, name=station_name)
+
+/client/proc/mentor_whitelist_toggle()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle whitelisted mentors"
+	set desc = "Toggle if Mentors bypass the whitelist"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	DENY_TEMPMIN
+
+	var/current_status = config.mentors_bypass_whitelist ? "enabled" : "disabled"
+
+	if(tgui_alert(src, "Mentors bypassing the whitelist is currently [current_status]. Toggle for this round?", "Toggle whitelisted mentors?", list("Yes", "No")) != "Yes")
+		return
+	config.mentors_bypass_whitelist = !config.mentors_bypass_whitelist
+	message_admins("[src] has [config.mentors_bypass_whitelist ? "enabled" : "disabled"] mentors bypassing the whitelist for this round.")
+	logTheThing(LOG_ADMIN, src, "[config.mentors_bypass_whitelist ? "Enabled" : "Disabled"] mentors bypassing the whitelist for this round.")
 
 /client/proc/set_conspiracy_objective()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)

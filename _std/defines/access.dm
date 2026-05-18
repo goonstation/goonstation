@@ -44,7 +44,7 @@
 #define access_cargo 31 // QM.
 #define access_pharmacy 32
 #define access_chemistry 33
-#define access_dwaine_superuser 34 // So it's not the same as the RD's office and locker.
+#define access_sysadmin 34 // Access to computer core and superuser access.
 #define access_hydro 35
 // Access 36 Unused
 #define access_maxsec 37 // The HoS' office
@@ -115,8 +115,7 @@
 //rancher job
 #define access_ranch 83
 
-//pathologist job
-#define access_pathology 84
+// Access 84 Unused
 
 //extra research access
 #define access_researchfoyer 85

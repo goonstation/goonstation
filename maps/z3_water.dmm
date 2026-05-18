@@ -2422,7 +2422,7 @@
 /obj/item/reagent_containers/syringe{
 	pixel_y = -3
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 8;
 	pixel_y = 5
 	},

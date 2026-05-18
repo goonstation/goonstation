@@ -38,6 +38,7 @@
 	if(istype(TP))
 		TP.turret_list += src
 	START_TRACKING
+	src.stun.sound_los = TRUE
 
 	#ifdef LOW_SECURITY
 	START_TRACKING_CAT(TR_CAT_DELETE_ME)
@@ -130,7 +131,7 @@
 			continue
 		if (!(get_area(C) == A))
 			continue
-		if ((src.req_access || src.req_access_txt) && src.allowed(C))
+		if (src.req_access && src.allowed(C))
 			continue //optional access whitelist
 		. += C
 
@@ -383,7 +384,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 /obj/machinery/turretid/computer_core
 	name = "Computer Core Turret Control"
 	turretArea = /area/station/turret_protected/Zeta
-	req_access = list(access_heads)
+	req_access = list(access_sysadmin, access_ai_upload)
 
 /obj/machinery/turretid/armory
 	name = "Armory Turret Control"
