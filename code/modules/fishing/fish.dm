@@ -801,6 +801,10 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	get_scent_color()
 		return "dusty grey"
 
+	make_reagents()
+		src.reagents.add_reagent("ash", 20)
+		return
+
 /obj/item/reagent_containers/food/fish/starstonefish // Unused for now. Feel free to take.
 	name = "starstonefish"
 	desc = "A light blue starfish suspected to have been hunted to extinction by rock worms. This might be the only one left."
