@@ -35,7 +35,7 @@ TYPEINFO(/datum/component/analyzable)
 	// attempting to scan a syndicate item and this is a normal scanner
 	var/typeinfo/obj/typeinfo = get_type_typeinfo(result_type)
 
-	if (isnull(typeinfo.mats) || typeinfo.mats == 0) //If no mats are defined it's sort of hard to manufacture lol
+	if (isnull(typeinfo.mats) || typeinfo.mats == 0)
 		scan_result = MECHANICS_ANALYSIS_IMPOSSIBLE
 	else if(!(typeinfo.analyser_flags & ANALYSER_ALLOWED)) //Item isn't allowed? ban he
 		scan_result = MECHANICS_ANALYSIS_IMPOSSIBLE
