@@ -1030,11 +1030,11 @@ TYPEINFO(/obj/machinery/networked/storage)
 ADMIN_INTERACT_PROCS(/obj/machinery/networked/nuclear_charge, proc/activate, proc/deactivate, proc/detonate)
 
 TYPEINFO(/obj/machinery/networked/nuclear_charge)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //^ Agreed
 	mats = list("energy_extreme" = 27,
 				"metal_superdense" = 25,
 				"conductive_high" = 13,
 				"crystal_dense" = 15) //haha this is a bad idea
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //^ Agreed
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = ANCHORED_ALWAYS
