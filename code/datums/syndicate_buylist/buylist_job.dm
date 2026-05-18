@@ -479,7 +479,7 @@
 	items = list(/obj/monkey_barrel)
 	cost = 6
 	vr_allowed = FALSE
-	desc = "A barrel of bloodthirsty apes. Careful!"
+	desc = "A barrel of bloodthirsty apes. Careful! The ad mentions a holographic clothing feature..."
 	job = list("Staff Assistant","Test Subject","Geneticist","Pathologist")
 
 /datum/syndicate_buylist/traitor/mindhack_module
