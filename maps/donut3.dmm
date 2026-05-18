@@ -41973,6 +41973,13 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce)
+"mZu" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 8
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor,
+/area/station/turret_protected/Zeta)
 "mZA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -118187,7 +118194,7 @@ mpb
 xVi
 eVo
 xlH
-pBo
+mZu
 kvS
 pBo
 xlH

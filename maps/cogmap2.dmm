@@ -6018,6 +6018,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aug" = (
@@ -51826,6 +51829,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"dVE" = (
+/obj/machinery/light_switch/south,
+/turf/simulated/floor,
+/area/station/turret_protected/Zeta)
 "dVF" = (
 /obj/table/auto,
 /obj/item/sheet/steel{
@@ -128377,7 +128384,7 @@ rnj
 igt
 pkg
 lPo
-lPo
+dVE
 uXV
 aam
 cha
