@@ -15,7 +15,7 @@ TYPEINFO(/datum/component/analyzable)
 /datum/component/analyzable/Initialize(type_override)
 	. = ..()
 	if (ismovable(parent))
-		var/typeinfo/obj/typeinfo = parent.get_typeinfo()
+		var/typeinfo/atom/movable/typeinfo = parent.get_typeinfo()
 		if(!(typeinfo.analyser_flags & ANALYSER_ALLOWED))
 			return COMPONENT_INCOMPATIBLE
 	else
