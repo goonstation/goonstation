@@ -829,6 +829,10 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	get_scent_color()
 		return "pastel pink"
 
+	make_reagents()
+		src.reagents.add_reagent("paper", 20)
+		return
+
 /obj/item/reagent_containers/food/fish/origami/sunfish
 	name = "origami sunfish"
 	desc = "The remains of tree, pressed together and folded to look like a sunfish. Probably just the circle of life."
@@ -853,6 +857,11 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	inhand_color = "#f4a6e1"
 	rarity = ITEM_RARITY_RARE
 	slice_product = /obj/item/pen
+
+	make_reagents()
+		src.reagents.add_reagent("paper", 10)
+		src.reagents.add_reagent("oil", 10)
+		return
 
 /obj/item/reagent_containers/food/fish/origami/stingray
 	name = "origami stingray"
