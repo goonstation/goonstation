@@ -48,4 +48,4 @@
 			candidate.mind.assigned_role = forced_job.name
 			message_admins("[key_name(forced_assignment.ckey)] assigned to job [forced_job].")
 			logTheThing(LOG_DEBUG, candidate, "assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].")
-			logTheThing(LOG_DIARY, candidate, "assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].", "admin")
+			logTheThing(LOG_DIARY, candidate, "forcefully assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].", "admin")
