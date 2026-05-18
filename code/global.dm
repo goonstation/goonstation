@@ -366,6 +366,7 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 	datum/player_panel/player_panel = new()
+	datum/forced_assignment_panel/forced_assignment_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
 	bioele_accidents = 0

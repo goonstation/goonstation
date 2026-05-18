@@ -49,8 +49,6 @@
 			var/datum/forced_antagonist/forced_antagonist = forced_assignment.forced_antags[forced_antagonist_index]
 			if (!istype(forced_antagonist, /datum/forced_antagonist))
 				continue
-			candidate.onProcCalled("add_antagonist", list(forced_antagonist.id, forced_antagonist.do_equipment, forced_antagonist.do_objectives, \
-				source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE))
 			var/success = candidate.mind.add_antagonist(forced_antagonist.id, forced_antagonist.do_equipment, forced_antagonist.do_objectives, \
 				source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (!success)

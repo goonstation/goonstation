@@ -8,10 +8,8 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	if (isnull(src.holder.forced_assignment_panel))
-		src.holder.forced_assignment_panel = new
-
-	src.holder.forced_assignment_panel.ui_interact(src.mob)
+	if (src.holder.level >= LEVEL_MOD)
+		global.forced_assignment_panel.ui_interact(src.mob)
 
 /datum/forced_assignment_panel
 
@@ -242,8 +240,7 @@
 /datum/forced_assignment_panel/proc/input_antagonist(mob/caller, continuous = FALSE, list/datum/forced_antagonist/output_buffer, list/datum/forced_antagonist/existing_list)
 	var/list/datum/forced_antagonist/combined_lists = output_buffer + (existing_list || list())
 	var/list/eligible_antagonists = list()
-	var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate) \
-		+ concrete_typesof(/datum/antagonist/generic))
+	var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate))
 	for (var/antag_path in eligible_antagonist_types)
 		var/datum/antagonist/antag_role = antag_path
 		eligible_antagonists[initial(antag_role.display_name)] = antag_path

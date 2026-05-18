@@ -25,17 +25,30 @@ export const ForcedAssignmentPanel = () => {
     <Window width={800} height={450} title="Forced Assignment Panel">
       <Window.Content>
         <Stack fill vertical>
-          {!!(currentState >= GameStates.GameStateSettingUp) && (
-            <Stack.Item>
-              <NoticeBox>
-                Changes to forced assignments will not take effect in an active
-                round!
-              </NoticeBox>
-            </Stack.Item>
-          )}
+          <Stack.Item>
+            <Section>
+              <Stack fill vertical>
+                {!!(currentState >= GameStates.GameStateSettingUp) && (
+                  <Stack.Item>
+                    <NoticeBox>
+                      Changes to forced assignments will not take effect in an
+                      active round!
+                    </NoticeBox>
+                  </Stack.Item>
+                )}
+                <Stack.Item>
+                  <NoticeBox danger>
+                    Forced Assignments do not currently respect gamemode antag
+                    selection or limits!
+                  </NoticeBox>
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
           <Stack.Item grow>
             <Section
               fill
+              scrollable
               title="Forced Assignments"
               buttons={
                 <Stack justify="center">
@@ -92,19 +105,19 @@ const ForcedAssignmentTable = () => {
   return (
     <Table textAlign="center">
       <Table.Row header>
-        <Table.Cell textAlign="center" verticalAlign="middle">
+        <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
           CKey
         </Table.Cell>
-        <Table.Cell textAlign="center" verticalAlign="middle">
+        <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
           Player Name
         </Table.Cell>
-        <Table.Cell textAlign="center" verticalAlign="middle">
+        <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
           Job
         </Table.Cell>
-        <Table.Cell textAlign="center" verticalAlign="middle">
+        <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
           Antagonist Roles
         </Table.Cell>
-        <Table.Cell collapsing textAlign="center" verticalAlign="middle">
+        <Table.Cell collapsing textAlign="center" verticalAlign="middle" py={1}>
           Actions
         </Table.Cell>
       </Table.Row>
@@ -123,7 +136,7 @@ const ForcedAssignmentRow = (props: ForcedAssignment) => {
   const { ckey, playerName, forcedJob, forcedAntags } = props;
   return (
     <Table.Row className="candystripe">
-      <Table.Cell textAlign="center" verticalAlign="middle">
+      <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
         <Button
           onClick={() => act('edit_ckey', { ckey: ckey })}
           tooltip="Change CKey"
@@ -131,10 +144,10 @@ const ForcedAssignmentRow = (props: ForcedAssignment) => {
           {ckey}
         </Button>
       </Table.Cell>
-      <Table.Cell textAlign="center" verticalAlign="middle">
+      <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
         {playerName ? <PlayerItem ckey={ckey} /> : 'OFFLINE'}
       </Table.Cell>
-      <Table.Cell textAlign="center" verticalAlign="middle">
+      <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
         {forcedJob ? (
           <JobItem ckey={ckey} forcedJob={forcedJob} />
         ) : (
@@ -145,7 +158,7 @@ const ForcedAssignmentRow = (props: ForcedAssignment) => {
           />
         )}
       </Table.Cell>
-      <Table.Cell textAlign="center" verticalAlign="middle">
+      <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
         <Stack fill vertical>
           {!!forcedAntags &&
             Object.values(forcedAntags).map((forcedAntag) => (
@@ -164,7 +177,7 @@ const ForcedAssignmentRow = (props: ForcedAssignment) => {
           </Stack.Item>
         </Stack>
       </Table.Cell>
-      <Table.Cell textAlign="center" verticalAlign="middle">
+      <Table.Cell textAlign="center" verticalAlign="middle" py={1}>
         <Button
           onClick={() => act('remove_forced_assignment', { ckey: ckey })}
           color="bad"
