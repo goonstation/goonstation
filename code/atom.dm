@@ -539,14 +539,9 @@ TYPEINFO(/obj/item/disk)
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
 	var/override_type = src.type
-	var/__while_safety = 0;
 	while(!isnull(typeinfo.manufactured_type) && override_type != typeinfo.manufactured_type) //Recursively go up the list of manufacture overrides.
 		override_type = typeinfo.manufactured_type
 		typeinfo = get_type_typeinfo(override_type)
-		__while_safety++
-		if(__while_safety > 10) //This should never be needed but just in case someone messes up and can't figure out what the problem is
-			message_coders("Infinite loop because of a bad typeinfo.manufactured_type, please check it.")
-			break
 
 	if (typeinfo.analyser_flags & (ANALYSER_ALLOWED | ANALYSER_SKIP_IF_FAIL | ANALYSER_FAILFEEDBACK)) // typeinfo.mats &&
 		src.AddComponent(/datum/component/analyzable, override_type)
