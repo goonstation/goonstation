@@ -30485,7 +30485,6 @@
 	pixel_x = -1;
 	pixel_y = 9
 	},
-/obj/item/clothing/glasses/healthgoggles,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
@@ -37313,10 +37312,6 @@
 /obj/item/clipboard{
 	pixel_x = -7
 	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 7;
-	pixel_y = 7
-	},
 /obj/item/kitchen/food_box/lollipop{
 	pixel_x = 15;
 	pixel_y = -2
@@ -42076,10 +42071,6 @@
 	},
 /obj/item/clipboard{
 	pixel_x = -7
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 7;
-	pixel_y = 7
 	},
 /obj/item/kitchen/food_box/lollipop{
 	pixel_x = 15;

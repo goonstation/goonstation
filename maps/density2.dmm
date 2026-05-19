@@ -5788,8 +5788,6 @@
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
 /obj/item/reagent_containers/hypospray,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "NY" = (

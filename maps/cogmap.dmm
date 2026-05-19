@@ -9047,10 +9047,6 @@
 	pixel_x = -8;
 	pixel_y = 1
 	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -3;
-	pixel_y = -5
-	},
 /obj/machinery/door/window/westright{
 	dir = 1;
 	name = "Medical Booth"
@@ -10971,10 +10967,6 @@
 /obj/item/reagent_containers/hypospray{
 	pixel_x = -7;
 	pixel_y = 6
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 5;
-	pixel_y = -1
 	},
 /obj/machinery/light/emergency,
 /turf/simulated/floor/bluewhite,
@@ -32839,14 +32831,6 @@
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -8;
-	pixel_y = 10
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -7;
-	pixel_y = 7
-	},
 /obj/item/device/analyzer/healthanalyzer{
 	pixel_x = 12;
 	pixel_y = 11
@@ -39049,10 +39033,6 @@
 	pixel_x = -1;
 	pixel_y = 12
 	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -2;
-	pixel_y = -4
-	},
 /obj/item/storage/firstaid/oxygen{
 	pixel_x = -11;
 	pixel_y = -1
@@ -41950,10 +41930,6 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -9;
 	pixel_y = 1
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 7;
-	pixel_y = 7
 	},
 /obj/machinery/recharger/defibrillator{
 	pixel_y = 3
@@ -54535,7 +54511,6 @@
 /obj/item/robodefibrillator,
 /obj/item/remote/porter/port_a_nanomed,
 /obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/machinery/power/apc/autoname_north,
 /obj/item/item_box/postit,
 /obj/item/reagent_containers/hypospray,

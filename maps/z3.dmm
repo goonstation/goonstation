@@ -6338,7 +6338,6 @@
 	},
 /obj/table/auto,
 /obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/dropper,
 /turf/simulated/floor/airless/damaged2,

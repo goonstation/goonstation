@@ -20153,9 +20153,6 @@
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
 /obj/item/reagent_containers/hypospray,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/table/auto,
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
 	},

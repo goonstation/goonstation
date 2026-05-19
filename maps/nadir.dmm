@@ -14147,10 +14147,6 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -8;
-	pixel_y = -3
-	},
 /obj/item/device/radio/headset/deaf{
 	pixel_x = 9;
 	pixel_y = 3
@@ -15608,10 +15604,6 @@
 /obj/item/paper/book/from_file/medical_surgery_guide{
 	pixel_x = -4;
 	pixel_y = 7
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -2;
-	pixel_y = 8
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
@@ -41165,9 +41157,6 @@
 /area/shuttle/arrival/station)
 "sin" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 16
-	},
 /obj/item/clothing/mask/surgical{
 	pixel_x = -1;
 	pixel_y = 9

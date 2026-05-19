@@ -2447,10 +2447,10 @@ TYPEINFO(/mob/living/silicon/robot)
 					src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
 			if("Medical")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Medical module. It comes with a free ProDoc Healthgoggles Upgrade."))
+				boutput(src, SPAN_NOTICE("You chose the Medical module. It comes with a free Repair Pack Upgrade."))
 				src.set_module(new /obj/item/robot_module/medical(src))
 				if(length(src.upgrades) < src.max_upgrades)
-					src.upgrades += new /obj/item/roboupgrade/healthgoggles(src)
+					src.upgrades += new /obj/item/roboupgrade/repairpack(src)
 			if("Mining")
 				src.freemodule = 0
 				src.set_module(new /obj/item/robot_module/mining(src))

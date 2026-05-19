@@ -643,8 +643,7 @@
 	/obj/item/clothing/suit/wintercoat/medical,
 	/obj/item/storage/belt/medical,
 	/obj/item/storage/box/stma_kit,
-	/obj/item/storage/box/lglo_kit/random,
-	/obj/item/clothing/glasses/healthgoggles)
+	/obj/item/storage/box/lglo_kit/random)
 
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"

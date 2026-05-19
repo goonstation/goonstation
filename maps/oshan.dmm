@@ -27449,8 +27449,6 @@
 /obj/item/storage/belt/medical,
 /obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/redwhite{
 	dir = 4
@@ -29807,7 +29805,6 @@
 	print_id = "MD"
 	},
 /obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
 /obj/table/wood/round/auto,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/power/data_terminal,
@@ -34877,7 +34874,6 @@
 "lps" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/medicine,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/item/robodefibrillator,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/power/apc/autoname_north,
@@ -35654,8 +35650,6 @@
 /obj/item/storage/belt/medical,
 /obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/redwhite{
 	dir = 4
@@ -38450,7 +38444,6 @@
 /obj/table/reinforced/auto,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,

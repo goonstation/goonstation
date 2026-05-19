@@ -640,7 +640,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	network = LANDMARK_VR_BOMBTEST
 
 TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
-	mats = 8
+	mats = 0
 
 /obj/item/clothing/glasses/healthgoggles
 	name = "\improper ProDoc Healthgoggles"

@@ -19409,15 +19409,6 @@
 /obj/item/storage/firstaid/oxygen{
 	pixel_x = 6
 	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 9
-	},
 /obj/table/auto,
 /obj/cable{
 	icon_state = "4-8"
@@ -37680,10 +37671,6 @@
 	},
 /obj/item/reagent_containers/hypospray{
 	pixel_x = -8
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 7;
-	pixel_x = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/md)

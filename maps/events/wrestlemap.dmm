@@ -14662,7 +14662,6 @@
 /obj/item/storage/belt/medical,
 /obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/box/stma_kit,
-/obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "gCQ" = (
@@ -20961,7 +20960,6 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
-/obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "jpp" = (

@@ -393,7 +393,6 @@
 	station_bounties[/obj/item/clothing/glasses/sunglasses/sechud] = 2
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
-	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
 	station_bounties[/obj/item/clothing/glasses/packetvision] = 2
 
 	#ifdef UNDERWATER_MAP

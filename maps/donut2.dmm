@@ -32434,7 +32434,6 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail{

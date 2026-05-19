@@ -808,9 +808,6 @@
 /area/station/devzone/no_default_light)
 "AW" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 16
-	},
 /obj/item/clothing/mask/surgical{
 	pixel_x = -1;
 	pixel_y = 9
@@ -1370,7 +1367,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
 /obj/cable{
 	icon_state = "0-8"
 	},

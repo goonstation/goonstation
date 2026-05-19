@@ -9375,7 +9375,6 @@
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/color/lime,
 /obj/item/clothing/head/green,
-/obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/quarters_south)
 "aPf" = (
@@ -40424,7 +40423,6 @@
 /obj/item/robodefibrillator,
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/visor,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/item/remote/porter/port_a_nanomed,
 /obj/item/reagent_containers/hypospray,
 /obj/machinery/door_control/bolter/new_walls/north{
@@ -41418,7 +41416,6 @@
 /obj/item/reagent_containers/glass/beaker/large/burn,
 /obj/item/reagent_containers/glass/beaker/large/brute,
 /obj/item/reagent_containers/glass/beaker/large/antitox,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/item/reagent_containers/hypospray,
 /obj/item/scalpel,
 /obj/item/circular_saw{

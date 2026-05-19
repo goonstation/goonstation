@@ -15577,7 +15577,6 @@
 /area/station/hallway/primary/south)
 "kGZ" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
 /obj/random_item_spawner/med_kit,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
@@ -19812,14 +19811,6 @@
 	},
 /obj/item/storage/box/patchbox{
 	pixel_x = 5
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 7;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -5;
-	pixel_y = 3
 	},
 /obj/item/robodefibrillator,
 /obj/machinery/recharger/defibrillator{

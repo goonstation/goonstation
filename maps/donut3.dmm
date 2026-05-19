@@ -12936,11 +12936,6 @@
 	autoclose = 0;
 	dir = 4
 	},
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -2;
-	pixel_y = 7
-	},
 /obj/mapping_helper/access/medical,
 /obj/window_blinds/cog2/middle{
 	dir = 4
@@ -35272,14 +35267,6 @@
 /obj/item/storage/box/syringes{
 	pixel_x = 7;
 	pixel_y = 13
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -2;
-	pixel_y = 1
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -2;
-	pixel_y = -2
 	},
 /obj/item/reagent_containers/dropper/mechanical{
 	pixel_x = -9;

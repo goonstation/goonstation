@@ -12919,7 +12919,6 @@
 /obj/item/reagent_containers/glass/beaker/large/burn,
 /obj/item/reagent_containers/glass/beaker/large/brute,
 /obj/item/reagent_containers/glass/beaker/large/antitox,
-/obj/item/clothing/glasses/healthgoggles,
 /obj/item/reagent_containers/hypospray,
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -39407,9 +39406,6 @@
 /area/station/medical/robotics)
 "cwo" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 16
-	},
 /obj/item/clothing/mask/surgical{
 	pixel_x = -1;
 	pixel_y = 9
@@ -54368,7 +54364,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
 /obj/cable{
 	icon_state = "0-8"
 	},
