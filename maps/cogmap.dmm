@@ -6513,9 +6513,7 @@
 	name = "Gas Mixer Control (Combustion Chamber)"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
+/obj/noticeboard/persistent/engineering/directional/north,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -44495,7 +44493,6 @@
 	name = "Catering Hangar"
 	})
 "jKQ" = (
-/obj/machinery/firealarm/directional/south,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -49985,13 +49982,9 @@
 /turf/simulated/floor,
 /area/station/engine/monitoring)
 "nJe" = (
-/obj/noticeboard/persistent/engineering/directional/north,
 /obj/decal/stripe_delivery,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/engine/monitoring)
@@ -50660,6 +50653,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
 "ogM" = (
@@ -51855,6 +51849,9 @@
 	},
 /obj/machinery/light{
 	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
 /turf/simulated/floor/yellow/side{
@@ -56477,6 +56474,19 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
+"shT" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "siu" = (
 /obj/landmark/start/job/miner,
 /turf/simulated/floor,
@@ -63338,6 +63348,12 @@
 "xbK" = (
 /obj/cable/orange{
 	icon_state = "1-2"
+	},
+/obj/machinery/door_control{
+	id = "engi";
+	name = "Engine Room Shield Control";
+	pixel_x = 24;
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
@@ -112824,7 +112840,7 @@ adC
 adC
 adC
 jKQ
-bsN
+shT
 nJe
 lWj
 oOe
