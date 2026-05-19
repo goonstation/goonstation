@@ -1951,10 +1951,12 @@ TYPEINFO(/datum/mutantrace/cat/bingus)
 	icon = 'icons/mob/amphibian/frog.dmi'
 /obj/effect/rt/frog_distorts/uniform
 	icon_state = "suit_distort"
-/obj/effect/rt/frog_distorts/shoes
-	icon_state = "shoes_distort"
+/obj/effect/rt/frog_distorts/headset
+	icon_state = "headset_distort"
 /obj/effect/rt/frog_distorts/backpack
 	icon_state = "backpack_distort"
+/obj/effect/rt/frog_distorts/shoes
+	icon_state = "shoes_distort"
 
 TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across amphibians, abzunians, and shelterfrogs
 	icon = 'icons/mob/abzunian.dmi'
@@ -2173,6 +2175,8 @@ TYPEINFO(/datum/mutantrace/frog/amphibian)
 	icon = 'icons/mob/amphibian/frog.dmi'
 	special_styles = list("standard" = 'icons/mob/amphibian/frog.dmi',
 	"golden" = 'icons/mob/amphibian/golden.dmi',
+	"lichen" = 'icons/mob/amphibian/lichen.dmi',
+	"russet" = 'icons/mob/amphibian/russet.dmi',
 	"gills" = 'icons/mob/amphibian/gills.dmi')
 /datum/mutantrace/frog/amphibian
 	name = "Amphibian"
@@ -2206,8 +2210,9 @@ TYPEINFO(/datum/mutantrace/frog/amphibian)
 
 	var/clothes_filters_active = TRUE
 	var/obj/effect/rt/frog_distorts/uniform/distort_uniform = new
-	var/obj/effect/rt/frog_distorts/shoes/distort_shoes = new
+	var/obj/effect/rt/frog_distorts/headset/distort_headset = new
 	var/obj/effect/rt/frog_distorts/backpack/distort_backpack = new
+	var/obj/effect/rt/frog_distorts/shoes/distort_shoes = new
 
 	say_verb()
 		return "croaks"
@@ -2216,12 +2221,12 @@ TYPEINFO(/datum/mutantrace/frog/amphibian)
 		..()
 		if(ishuman(src.mob))
 			M.bioHolder.AddEffect("accent_frog", do_stability = FALSE, scannable = FALSE, innate = TRUE)
-			src.mob.vis_contents += list(src.distort_uniform,src.distort_shoes,src.distort_backpack)
+			src.mob.vis_contents += list(src.distort_uniform,src.distort_headset,src.distort_backpack,src.distort_shoes)
 
 	disposing()
 		if(ishuman(src.mob))
 			src.mob.bioHolder.RemoveEffect("accent_frog")
-			src.mob.vis_contents -= list(src.distort_uniform,src.distort_shoes,src.distort_backpack)
+			src.mob.vis_contents -= list(src.distort_uniform,src.distort_headset,src.distort_backpack,src.distort_shoes)
 		..()
 
 	apply_clothing_filters(var/obj/item/worn)
@@ -2233,10 +2238,12 @@ TYPEINFO(/datum/mutantrace/frog/amphibian)
 			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
 		else if (istype(worn, /obj/item/clothing/under))
 			output += filter(type="displace", render_source = src.distort_uniform.render_target, size = 127)
-		else if (istype(worn, /obj/item/clothing/shoes))
-			output += filter(type="displace", render_source = src.distort_shoes.render_target, size = 127)
+		else if (istype(worn, /obj/item/device/radio/headset))
+			output += filter(type="displace", render_source = src.distort_headset.render_target, size = 127)
 		else if (istype(worn, /obj/item/storage/backpack))
 			output += filter(type="displace", render_source = src.distort_backpack.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/shoes))
+			output += filter(type="displace", render_source = src.distort_shoes.render_target, size = 127)
 		return output
 
 TYPEINFO(/datum/mutantrace/kudzu)
