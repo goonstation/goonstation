@@ -1276,7 +1276,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
 "Ve" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange,
 /area/prefab/discount_dans_asteroid)
 "Wo" = (
 /obj/decal/cleanable/blood/gibs/body,

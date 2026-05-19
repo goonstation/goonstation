@@ -5,7 +5,7 @@
 #define ALL_DOCTORS "Medical Director", "Medical Doctor", "Medical Trainee", "Pharmacist"
 #define ALL_ENGINEERS "Chief Engineer", "Engineer", "Technical Trainee"
 #define ALL_CHEFS "Chef", "Sous-Chef"
-#define ALL_CLOWNS "Clown", "Blue Clown"
+#define ALL_CLOWNS "Clown", "Blue Clown", "Purple Clown", "Yellow Clown", "Pink Clown", "Green Clown?"
 
 //////////////////////////////////////////////// Job-specific items  ////////////////////////////////////////////////////
 

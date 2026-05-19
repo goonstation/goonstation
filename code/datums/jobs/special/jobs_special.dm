@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_poc1 = list(/obj/item/device/detective_scanner)
-	items_in_backpack = list(/obj/item/tank/pocket/oxygen, /obj/item/reagent_containers/glass/vial/silver_nitrate)
+	items_in_backpack = list(/obj/item/tank/pocket/oxygen, /obj/item/reagent_containers/applicator/brush/silver_nitrate)
 	email_group = MGD_SECURITY
 
 /datum/job/special/toxins_researcher
@@ -775,7 +775,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	name = "Pathologist"
 	limit = 0
 	wages = PAY_DOCTORATE
-	access_string = "Pathologist"
+	access_string = "Medical Doctor"
 	slot_belt = list(/obj/item/device/pda2/genetics)
 	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
 	slot_foot = list(/obj/item/clothing/shoes/white)

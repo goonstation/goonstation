@@ -185,7 +185,7 @@
 "aJ" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breakfast,
-/obj/item/shaker/salt,
+/obj/item/reagent_containers/applicator/condiment/shaker/salt,
 /turf/simulated/floor/specialroom/medbay,
 /area/mining/miningoutpost)
 "aK" = (
@@ -230,7 +230,7 @@
 "aQ" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breakfast,
-/obj/item/shaker/pepper,
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper,
 /turf/simulated/floor/specialroom/medbay,
 /area/mining/miningoutpost)
 "aR" = (

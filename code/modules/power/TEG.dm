@@ -303,7 +303,7 @@
 		if( src.reagents.has_reagent("love") && src.generator.grump > 20 && prob(5)  )
 			src.reagents.remove_reagent("love", 1)
 			src.generator.grump -= 100
-			src.audible_message(SPAN_ALERT("A oddly distinctive sound of contentment can be heard from [src]. How wonderful!"))
+			src.audible_message(SPAN_ALERT("An oddly distinctive sound of contentment can be heard from [src]. How wonderful!"))
 
 		if( src.reagents.has_reagent("spaceglue"))
 			src.reagents.remove_reagent("spaceglue", 1)

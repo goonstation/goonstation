@@ -93,7 +93,7 @@
 					bp_col = "#CC7A1D"
 				if (666 to INFINITY) // very high (160/100)
 					bp_col = "red"
-			if (isdead(L))
+			if (isdead(L) || L.find_ailment_by_type(/datum/ailment/malady/flatline) || ("heart" in L.organHolder?.get_missing_organs()))
 				blood_data = "Blood Pressure: [SPAN_ALERT("NO PULSE")]"
 			else
 				blood_data = "Blood Pressure: <span style='color:[bp_col]'>[L.blood_pressure["rendered"]] ([L.blood_pressure["status"]])</span>"
@@ -354,7 +354,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 /// ----------- Assembly-Related Procs -----------
 
 	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
-		return " You can add this to a armor vest in order to craft a suicide bomb vest."
+		return " You can add this to an armor vest in order to craft a suicide bomb vest."
 
 	proc/assembly_on_wearer_death(var/affected_analyser, var/mob/dying_mob)
 		if (src.master && istype(src.master, /obj/item/assembly))

@@ -109,6 +109,7 @@
 	var/datum/antagonist_panel/antagonist_panel = null
 	var/datum/job_manager/job_manager = null
 	var/datum/region_allocator_panel/region_allocator_panel = null
+	var/datum/command_report_panel/command_report_panel = null
 
 	var/list/hidden_categories = null
 
@@ -218,6 +219,10 @@
 			"Say",\
 			)
 
+	disposing()
+		src.admin_speech_tree?.update_target_speech_tree()
+		src.admin_listen_tree?.update_target_listen_tree()
+		. = ..()
 
 
 	proc/show_pref_window(mob/user)

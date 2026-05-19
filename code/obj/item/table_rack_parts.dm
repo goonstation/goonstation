@@ -498,7 +498,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 	industrial
 		name = "industrial chair parts"
-		desc = "An collection of rods and scaffolding that can be used to make an industrial chair."
+		desc = "A collection of rods and scaffolding that can be used to make an industrial chair."
 		icon_state = "ichair_parts"
 		furniture_type = /obj/stool/chair/dining/industrial
 		furniture_name = "industrial chair"

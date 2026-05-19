@@ -911,7 +911,7 @@ datum
 		/*foaming_agent
 			name = "foaming agent"
 			id = "foaming_agent"
-			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+			description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
 			reagent_state = SOLID
 			fluid_r = 100
 			fluid_g = 90
@@ -4005,6 +4005,8 @@ datum
 				if(!volume_passed)
 					return
 				if (M.bioHolder && M.bioHolder.HasEffect("toxic_farts"))
+					return
+				if (istype(M, /mob/living/critter/changeling))
 					return
 
 				if (M?.reagents)

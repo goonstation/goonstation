@@ -6,56 +6,9 @@
  */
 /obj/var/list/req_access = null
 /*
- * Text version of req_access, converted on instantiation (useful for applying vars to specific instances in a map)
- * Syntax is "x|y;z", where "|" delimit access groups, and ";" delimit access within each group.
- * To set to no access requirements, set this to an empty string.
- * To not affect requirements, this should be null.
- */
-/obj/var/req_access_txt = null
-/*
  * Override all access requirements if user is an administrator
  */
 /obj/var/admin_access_override = FALSE
-
-/*
- * Overrides the object's req_access var based on what's in req_access_txt (if set).
- */
-/obj/proc/update_access_from_txt()
-	// null req_access_txt means no change
-	if (!isnull(src.req_access_txt))
-		// empty string (or "0") req_access_txt means set to no access required
-		if (src.req_access_txt && src.req_access_txt != "0")
-			// reset src.req_access to build it up
-			src.req_access = list()
-			var/list/access_group_txts = splittext(src.req_access_txt, "|")
-			// loop through the access groups, adding them to src.req_access as they are resolved
-			for (var/access_group_txt in access_group_txts)
-				// sanity check for an empty access group (e.g. src.req_access_txt is "1|"), giving an empty string as the last access group
-				if (access_group_txt)
-					var/list/access_group = list()
-					var/list/access_group_strings = splittext(access_group_txt, ";")
-					// loop through the access group, adding them to the list for this group
-					for (var/access_string in access_group_strings)
-						// sanity check for an empty access string (e.g. src.req_access_txt is "1;", giving an empty string as the last access string
-						if (access_string)
-							// parse the access string
-							var/access_code = text2num(access_string)
-							if (!isnull(access_code))
-								// numerical code
-								access_group += access_code
-							// else
-								// string code
-								// TODO: some sensible lookup, possibly using access_name_lookup (but they're VERY wordy)
-					// add to the src.req_access list (assuming non-empty)
-					if (length(access_group) > 1)
-						// add the whole access group
-						// odd syntax is because += with a list on the right appends the items of the list, not the list itself, so we wrap in a list so it only unpacks once
-						src.req_access += list(access_group)
-					else if (length(access_group) == 1)
-						// add the single element
-						src.req_access += access_group[1]
-		else
-			src.req_access = null
 
 /**
  * Determines if a mob is allowed to use an object (or pass through
@@ -68,14 +21,16 @@
 	. = 0
 	if(M?.client?.holder?.ghost_interaction)
 		return 2
+	// check for admin access override
+	if (src.admin_access_override)
+		if (M?.client?.holder?.level >= LEVEL_SA)
+			return 2
+		else if(src.admin_access_override == ADMIN_ACCESS_OVERRIDE_ONLY)
+			return 0
 	// easy out for if no access is required
 	if (!src.has_access_requirements())
 		return 1
 	if (M && ismob(M))
-		// check for admin access override
-		if (src.admin_access_override)
-			if (M.client?.holder?.level >= LEVEL_SA)
-				return 2
 		// check in-hand first
 		if (src.check_access(M.equipped()))
 			return 2
@@ -172,14 +127,14 @@
 			return get_all_accesses() + list(access_syndicate_shuttle)
 		// --------------------------- Heads of staff
 		if("Captain")
-			return get_all_accesses()
+			return get_all_accesses() + list(access_maxsec)
 		if("Head of Personnel")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
 						access_fine_small, access_fine_large, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers, access_pharmacy,
 						access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_supply_console,
-						access_research, access_hydro, access_ranch, access_ai_upload, access_pathology, access_researchfoyer,
+						access_research, access_hydro, access_ranch, access_ai_upload, access_researchfoyer,
 						access_telesci, access_teleporter, access_money)
 		if("Head of Security")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers,
@@ -189,7 +144,7 @@
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_ai_upload,
 						access_tech_storage, access_maint_tunnels, access_bar, access_janitor, access_fine_small, access_fine_large,
 						access_engineering, access_teleporter, access_engineering_engine, access_engineering_control,
-						access_mining, access_pathology, access_researchfoyer, access_chapel_office, access_telesci,
+						access_mining, access_researchfoyer, access_chapel_office, access_telesci,
 						access_engineering_storage, access_engineering_mechanic)
 		if("Research Director")
 			return list(access_research, access_research_director, access_dwaine_superuser,
@@ -218,7 +173,7 @@
 		if("Security Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig,  access_ticket,
 			access_maint_tunnels, access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
-			access_fine_small, access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer, access_mining
+			access_fine_small, access_chemistry, access_bar, access_kitchen, access_hydro, access_researchfoyer, access_mining
 			)
 		if("Vice Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_ticket, access_maint_tunnels,
@@ -236,8 +191,6 @@
 			return list(access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Geneticist")
 			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
-		if("Pathologist")
-			return list(access_medical, access_medical_lockers, access_morgue, access_pathology, access_maint_tunnels)
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Pharmacist")
@@ -308,7 +261,7 @@
 		if("Inspector", "Communications Officer")
 			return list(access_security, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch, access_pathology,
+						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch,
 						access_researchfoyer, access_artlab, access_telesci, access_robotdepot, access_fine_small)
 		if("Hall Monitor")
 			return list(access_ticket)
@@ -328,7 +281,7 @@
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 				access_change_ids, access_ai_upload,
 				access_teleporter, access_eva, access_heads, access_captain, access_head_of_personnel,
-				access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
+				access_chapel_office, access_kitchen, access_medical_lockers,
 				access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch,
 				access_engineering, access_maint_tunnels,
 				access_tech_storage, access_engineering_storage,
@@ -381,8 +334,6 @@ var/list/access_all_actually = null
 			return "Medical Equipment"
 		if(access_medlab)
 			return "Genetics"
-		if(access_pathology)
-			return "Pathology"
 		if(access_morgue)
 			return "Morgue"
 		if(access_tox)
@@ -665,7 +616,6 @@ proc/fetchAirlock(access,variant)
 
 /obj/proc/set_access_list(var/list/L)
 	src.req_access = L.Copy()
-	src.req_access_txt = null
 
 
 

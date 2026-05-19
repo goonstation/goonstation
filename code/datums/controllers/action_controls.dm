@@ -462,7 +462,7 @@ var/datum/action_controller/actions
 			src.end_message = end_message
 		if (interrupt_flags != null)
 			src.interrupt_flags = interrupt_flags
-		//generate a id
+		//generate an id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 
@@ -555,7 +555,7 @@ var/datum/action_controller/actions
 			src.end_message = end_message
 		if (interrupt_flags != null)
 			src.interrupt_flags = interrupt_flags
-		//generate a id
+		//generate an id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 

@@ -590,7 +590,6 @@ TYPEINFO(/obj/machinery/door_control)
 		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				M.req_access = null
-				M.req_access_txt = null
 
 	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)

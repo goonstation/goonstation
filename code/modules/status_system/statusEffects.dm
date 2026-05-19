@@ -2211,7 +2211,7 @@
 		if(!ishuman(A))
 			. = FALSE
 		// I'd LIKE to put this check here, but proc/find_ailment_by_type and is a bit too inefficient for my comfort
-		// and this will be applied on combat hit. The ailments should use a assoc list for Constant lookup time or something...
+		// and this will be applied on combat hit. The ailments should use an assoc list for Constant lookup time or something...
 		// if (isliving(A))
 		// 	var/mob/living/L = A
 		// 	if (L.find_ailment_by_type(/datum/ailment/disease/necrotic_degeneration/can_infect_more))
@@ -2878,9 +2878,10 @@
 
 	onRemove()
 		..()
-		if (src.added_accent)
-			var/mob/living/M = src.owner
-			M.bioHolder.RemoveEffectInstance(src.added_accent)
+		SPAWN(0)
+			if (src.added_accent)
+				var/mob/living/M = src.owner
+				M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_ATOM_SAY)
 
 /datum/statusEffect/graffiti

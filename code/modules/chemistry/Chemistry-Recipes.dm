@@ -4134,7 +4134,6 @@
 		min_temperature = T0C + 100
 		result_amount = 1
 		mix_phrase = "The mixture bubbles and white crystals form."
-		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chem_reaction_priority = 2)
 			holder.add_reagent("water", created_volume, , holder.total_temperature, chem_reaction_priority = 3)
