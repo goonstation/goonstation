@@ -22444,6 +22444,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -50654,6 +50657,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
 "ogM" = (
@@ -54437,6 +54441,19 @@
 	dir = 4
 	},
 /area/station/crew_quarters/bar)
+"qKD" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "qKH" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -56474,19 +56491,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
-"shT" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 2;
-	icon_state = "pdoor0";
-	id = "engi";
-	layer = 4;
-	name = "Engine Room Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
 "siu" = (
 /obj/landmark/start/job/miner,
 /turf/simulated/floor,
@@ -112840,7 +112844,7 @@ adC
 adC
 adC
 jKQ
-shT
+qKD
 nJe
 lWj
 oOe
