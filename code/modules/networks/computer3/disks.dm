@@ -330,7 +330,9 @@
 #endif
 
 TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
-	mats = 15
+	mats = list("metal_superdense" = 5,
+				"conductive_high" = 15,
+				"crystal_dense" = 10)
 
 /obj/item/disk/data/floppy/read_only/authentication
 	name = "Authentication Disk"
@@ -342,6 +344,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	w_class = W_CLASS_TINY
 	random_color = 0
 	file_amount = 32
+	is_syndicate = 1
 	HELP_MESSAGE_OVERRIDE({"Use on an armed nuclear bomb to alter the time remaining until detonation.
 	Use on an armory authorization computer to issue an emergency authorization or unauthorization.
 	Use on an escape shuttle launch computer to alter the time until departure."})
