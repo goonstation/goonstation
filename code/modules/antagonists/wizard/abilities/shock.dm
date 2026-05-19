@@ -52,12 +52,6 @@
 		M = Source
 		..()
 
-	New(Source, Target, Spell)
-		target = Target
-		spell = Spell
-		A = spell.holder
-		M = Source
-		..()
 
 	onStart()
 		..()
