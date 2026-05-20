@@ -261,6 +261,15 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
 
+/datum/siphon_mineral/batiline
+	name = "Batiline"
+	tick_req = 16
+	shear = 18
+	x_torque = 12
+	y_torque = 5
+	sens_window = 4
+	product = /obj/item/raw_material/batiline
+
 //variable materials
 
 /datum/siphon_mineral/telecrystal
