@@ -263,7 +263,7 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 
 /datum/siphon_mineral/batiline
 	name = "Batiline"
-	tick_req = 16
+	tick_req = 35
 	shear = 18
 	x_torque = 12
 	y_torque = 5
