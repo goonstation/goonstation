@@ -1832,6 +1832,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"ayY" = (
+/turf/simulated/floor/green/corner{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "azp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3281,6 +3286,11 @@
 	dir = 6
 	},
 /area/station/hallway/primary/south)
+"aVG" = (
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/turret_protected/Zeta)
 "aVI" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/maintenance/outer/west)
@@ -4210,6 +4220,9 @@
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hallway/primary/south)
+"bkJ" = (
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/station/turret_protected/Zeta)
 "bkQ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -4523,6 +4536,16 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"brh" = (
+/obj/machinery/light/incandescent/greenish,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/vending/computer3,
+/turf/simulated/floor/green/side{
+	dir = 6
+	},
+/area/station/turret_protected/Zeta)
 "brj" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/two,
@@ -6280,6 +6303,18 @@
 	},
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/north)
+"bRr" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "bRs" = (
 /obj/machinery/vending/floppy,
 /obj/machinery/light/incandescent,
@@ -11041,6 +11076,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/crew_quarters/clown)
+"dof" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "dol" = (
 /obj/stool/chair/office{
 	dir = 1
@@ -11793,6 +11834,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
+"dDo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "dDv" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -13323,6 +13370,23 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"eaO" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = 7
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = -7
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = -7
+	},
+/obj/item/circuitboard/robotics,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/turret_protected/Zeta)
 "eaQ" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -14919,6 +14983,16 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
+"eCA" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/turret_protected/Zeta)
 "eCB" = (
 /turf/simulated/floor/black,
 /area/station/bridge/reception)
@@ -15560,6 +15634,14 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
+"eOZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "ePf" = (
 /obj/railing/orange{
 	dir = 1
@@ -17662,6 +17744,14 @@
 /obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
+"fwx" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "fwI" = (
 /obj/machinery/networked/test_apparatus/pitching_machine{
 	dir = 4
@@ -19587,6 +19677,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"gbY" = (
+/turf/simulated/floor,
+/area/station/turret_protected/Zeta)
 "gca" = (
 /obj/machinery/conveyor_switch{
 	id = "toxins_plasma";
@@ -21063,6 +21156,14 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/wall/auto/jen/red,
 /area/station/hallway/primary/west)
+"gAa" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/peripherals/some,
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
 "gAo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22452,6 +22553,17 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
+"gWH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/turretid/computer_core{
+	pixel_x = 24
+	},
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "gWM" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff/one_or_zero,
@@ -25680,6 +25792,10 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
+"hZK" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/grey,
+/area/station/turret_protected/Zeta)
 "hZS" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -26209,6 +26325,15 @@
 	},
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
+"ihc" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/incandescent/greenish,
+/obj/item/disk/data/tape/boot2,
+/obj/item/disk/data/tape/master,
+/obj/item/disk/data/tape/guardbot_tools,
+/obj/item/disk/data/tape/artifact_research,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "ihr" = (
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -26844,6 +26969,17 @@
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"itT" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "itU" = (
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
@@ -27203,6 +27339,9 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"izn" = (
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "izp" = (
 /obj/disposalpipe/segment/food{
 	icon_state = "pipe-c"
@@ -30215,6 +30354,12 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
+"juO" = (
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/green/side{
+	dir = 10
+	},
+/area/station/turret_protected/Zeta)
 "jvb" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hangar/science)
@@ -33630,6 +33775,18 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
+"kvU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/stool/chair/office/green{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/turret_protected/Zeta)
 "kwl" = (
 /obj/machinery/power/solar,
 /turf/simulated/floor/airless/solar,
@@ -34583,6 +34740,9 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grey,
 /area/station/science/lab)
 "kMo" = (
@@ -34749,6 +34909,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"kPc" = (
+/obj/machinery/turret,
+/obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "kPe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35094,6 +35259,9 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
 /area/station/science/lab)
@@ -37124,6 +37292,15 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
+"lCq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "lCu" = (
 /obj/machinery/chem_master{
 	dir = 1
@@ -41789,6 +41966,14 @@
 "mYB" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/mining/staff_room)
+"mYR" = (
+/obj/machinery/light/incandescent/greenish{
+	dir = 1
+	},
+/turf/simulated/floor/green/side{
+	dir = 5
+	},
+/area/station/turret_protected/Zeta)
 "mYY" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/decal/stripe_delivery,
@@ -41983,7 +42168,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/science/artifact)
+/area/station/turret_protected/Zeta)
 "ncZ" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor,
@@ -42052,6 +42237,9 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/harsh,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/grey,
 /area/station/science/lab)
 "ndN" = (
@@ -45666,6 +45854,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
+"oky" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/tapebox,
+/obj/item/storage/box/tapebox,
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "okB" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass,
@@ -46215,6 +46410,19 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
+"osu" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Control";
+	locked = 0;
+	name = "Databank - Control";
+	setup_drive_type = /obj/item/disk/data/tape/master
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "osx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -47298,6 +47506,13 @@
 /area/station/wreckage{
 	name = "Restricted Area"
 	})
+"oJy" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/diskbox,
+/obj/item/storage/box/diskbox,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "oJI" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger{
@@ -49371,6 +49586,15 @@
 	dir = 6
 	},
 /area/station/hydroponics/bay)
+"prH" = (
+/obj/machinery/light/incandescent/greenish{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/green/side{
+	dir = 9
+	},
+/area/station/turret_protected/Zeta)
 "prO" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -50962,6 +51186,18 @@
 	},
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/kitchen/freezer)
+"pPu" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "Computer Core"
+	},
+/obj/mapping_helper/access/computer_core,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/grey,
+/area/station/turret_protected/Zeta)
 "pPz" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
@@ -52167,6 +52403,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"qkH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/turret_protected/Zeta)
 "qkJ" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -52914,6 +53156,13 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
+"qvP" = (
+/obj/machinery/turret,
+/obj/machinery/light/incandescent/greenish{
+	dir = 1
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "qwb" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
@@ -56080,6 +56329,14 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/lobby)
+"rvQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/turret_protected/Zeta)
 "rvX" = (
 /obj/disposalpipe/segment/food{
 	dir = 8;
@@ -56930,6 +57187,17 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
+"rIH" = (
+/obj/machinery/light/incandescent/greenish,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/device/net_sniffer,
+/turf/simulated/floor/green/side{
+	dir = 10
+	},
+/area/station/turret_protected/Zeta)
 "rII" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -61960,6 +62228,15 @@
 	dir = 8
 	},
 /area/station/security/quarters)
+"tkw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/printer,
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
 "tky" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -65282,6 +65559,14 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
+"unB" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/mainframe/zeta,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "unD" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -65389,6 +65674,21 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
+"upK" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/incandescent/greenish{
+	dir = 1
+	},
+/obj/item/disk/data/floppy/computer3boot,
+/obj/item/disk/data/floppy/read_only/terminal_os,
+/obj/item/disk/data/floppy/read_only/network_progs,
+/obj/item/disk/data/floppy/read_only/medical_progs,
+/obj/item/disk/data/floppy/read_only/engine_prog,
+/obj/item/disk/data/floppy/read_only/security_progs,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/item/disk/data/floppy/read_only/bank_progs,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "upS" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -65449,6 +65749,14 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/breakroom)
+"uqG" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/radio,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "uqL" = (
 /obj/machinery/light/incandescent/cool,
 /obj/cable{
@@ -66405,6 +66713,18 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"uEh" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = Backup;
+	locked = 0;
+	name = "Databank - Backup"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "uEm" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -68279,6 +68599,11 @@
 	dir = 10
 	},
 /area/station/hangar/main)
+"vfL" = (
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/station/turret_protected/Zeta)
 "vfO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -69515,6 +69840,14 @@
 /obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"vyF" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 8
+	},
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/grey,
+/area/station/turret_protected/Zeta)
 "vyH" = (
 /obj/disposalpipe/junction{
 	name = "factory pipe"
@@ -70030,6 +70363,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"vHg" = (
+/obj/machinery/computer3/generic/radio,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/turret_protected/Zeta)
 "vHi" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -70125,6 +70468,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"vIl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/item/device/multitool,
+/obj/item/screwdriver,
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
 "vIm" = (
 /turf/simulated/floor/arrival/corner{
 	dir = 8
@@ -71391,6 +71747,19 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
+"wbK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/scanner,
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/green/side,
+/area/station/turret_protected/Zeta)
 "wbM" = (
 /obj/table/auto,
 /obj/item/storage/box/trash_bags{
@@ -73081,6 +73450,12 @@
 	icon_state = "nt_logo"
 	},
 /area/station/crew_quarters/courtroom)
+"wAu" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "wAy" = (
 /obj/decal/stripe_delivery,
 /obj/cable{
@@ -117618,9 +117993,9 @@ hyr
 hyr
 hyr
 hyr
-hyr
-hyr
-hyr
+bkJ
+pPu
+bkJ
 hyr
 jrN
 otz
@@ -117919,15 +118294,15 @@ aAz
 mpb
 xVi
 eVo
-hyr
-rdj
-rdj
-rdj
-hyr
-hyr
-hyr
-hyr
-rdj
+bkJ
+prH
+eOZ
+juO
+bkJ
+bkJ
+bkJ
+bkJ
+bkJ
 rdj
 rdj
 rdj
@@ -118221,15 +118596,15 @@ dkB
 dkB
 dkB
 dkB
-rOT
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+bkJ
+aVG
+qkH
+ayY
+vfL
+vfL
+vfL
+rIH
+bkJ
 rdj
 rdj
 rdj
@@ -118523,15 +118898,15 @@ xJu
 tbu
 nDE
 hKs
-rOT
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+bkJ
+eCA
+kvU
+gbY
+gbY
+gbY
+gbY
+tkw
+bkJ
 rdj
 rdj
 rdj
@@ -118825,15 +119200,15 @@ bQT
 vcE
 ceb
 srn
-rOT
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+bkJ
+eaO
+qkH
+gbY
+gbY
+gbY
+gbY
+wbK
+bkJ
 rdj
 rdj
 rdj
@@ -119127,15 +119502,15 @@ gIT
 mnb
 wkm
 kDs
-rOT
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+bkJ
+vHg
+kvU
+gbY
+gbY
+gbY
+gbY
+vIl
+bkJ
 rdj
 rdj
 rdj
@@ -119429,15 +119804,15 @@ bQT
 vcE
 pBX
 iJq
-rOT
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+bkJ
+aVG
+qkH
+gbY
+gbY
+gbY
+gbY
+gAa
+bkJ
 rdj
 rdj
 rdj
@@ -119731,15 +120106,15 @@ thx
 mlS
 pay
 lml
-rOT
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+bkJ
+mYR
+fwx
+rvQ
+gWH
+itT
+rvQ
+brh
+bkJ
 rdj
 rdj
 rdj
@@ -120034,14 +120409,14 @@ uBi
 uBi
 rOT
 rOT
-rOT
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-tXv
+bkJ
+hZK
+hZK
+hZK
+vyF
+hZK
+hZK
+bkJ
 rdj
 rdj
 rdj
@@ -120337,13 +120712,13 @@ pTE
 adf
 vhl
 ncS
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+qvP
+izn
+izn
+dDo
+izn
+kPc
+bkJ
 rdj
 rdj
 rdj
@@ -120639,13 +121014,13 @@ dxm
 lGE
 nyK
 ncS
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+oJy
+dof
+lCq
+bRr
+wAu
+oky
+bkJ
 rdj
 rdj
 rdj
@@ -120941,13 +121316,13 @@ bCY
 gnK
 bHn
 ncS
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+upK
+uqG
+unB
+osu
+uEh
+ihc
+bkJ
 rdj
 rdj
 rdj
@@ -121242,14 +121617,14 @@ rOT
 rOT
 rOT
 rOT
-rOT
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
-rdj
+bkJ
+bkJ
+bkJ
+bkJ
+bkJ
+bkJ
+bkJ
+bkJ
 rdj
 rdj
 rdj
