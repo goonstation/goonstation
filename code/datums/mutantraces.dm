@@ -1974,6 +1974,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
 	movement_modifier = /datum/movement_modifier/amphibian
 	var/original_blood_color = null
+	var/datum/fluid_group/last_fluid_group = null // why the fuck did i put this here anyhow
 	mutant_folder = 'icons/mob/abzunian.dmi'
 	special_head = HEAD_FROG
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/right
@@ -2028,6 +2029,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 				..()
 
 	onLife(var/mult = 1)
+		src.dermal_absorbtion(5)
 		if(src.mob.sims.getValue("Thirst") < 25.0) // dehydration effect
 			if (prob(10))
 				src.mob.visible_message(SPAN_EMOTE(pick("[mob] wrinkles up conspicuously.", "[mob] quietly wheezes.", "[mob]'s third eyelids stick to [his_or_her(src.mob)] eyes for a moment.")))
@@ -2036,6 +2038,44 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 				src.mob.take_oxygen_deprivation(15)
 			if (prob(10))
 				src.mob.visible_message(SPAN_ALERT(pick("[mob] struggles to breathe!", "[mob] gasps for air!")))
+
+	proc/dermal_absorbtion(var/absorbtion_rate) // it's actually spelled "absorption" but every other absorption proc is misspelled too
+		if(!src.mob)
+			return
+		var/turf/T = get_turf(src.mob)
+		if(!T.active_liquid?.group?.reagents)
+			src.last_fluid_group = null
+			return
+		if(!ishuman(src.mob))
+			return
+
+				// Less likely to absorb based on chem protection
+		var/chem_prot = clamp(GET_ATOM_PROPERTY(src.mob, PROP_MOB_CHEMPROT), 0, 40)
+		if(chem_prot >= 55)
+			return
+		var/absorb_prob = (30 - (chem_prot / 2))
+		if(!prob(absorb_prob))
+			return
+		absorb_reagents(T.active_liquid.group, absorbtion_rate)
+
+		if(chem_prot >= 55)
+			if(prob(30))
+				absorb_reagents(T.active_liquid.group, absorbtion_rate)
+			return
+		if(T.active_liquid.my_depth_level < 2)
+			return // Fluid not deep enough to absorb through shoes/suit
+
+	proc/absorb_reagents(var/datum/fluid_group/fluids, var/absorbtion_rate)
+		var/datum/reagents/R = fluids.reagents
+		if(!R.total_volume)
+			return
+		R.reaction(src.mob, TOUCH, clamp(R.total_volume, CHEM_EPSILON, min(absorbtion_rate, (src.mob.reagents?.maximum_volume - src.mob.reagents?.total_volume))))
+		R.trans_to(src.mob, min(R.total_volume, absorbtion_rate))
+		playsound(src.mob.loc,'sound/items/drink.ogg', rand(10,20), 1)
+		eat_twitch(src.mob)
+		if(fluids != src.last_fluid_group)
+			src.mob.visible_message(SPAN_NOTICE("[src.mob]'s skin begins to absorb the surrounding fluid."),"[SPAN_NOTICE("Your skin begins to absorb the surrounding fluid.")]", group = "[src.mob]_drink_messages")
+			src.last_fluid_group = fluids
 
 TYPEINFO(/datum/mutantrace/frog/abzunian)
 	icon = 'icons/mob/abzunian.dmi'
