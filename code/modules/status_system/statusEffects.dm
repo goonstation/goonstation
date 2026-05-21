@@ -3997,6 +3997,37 @@
 	icon_state = "therapy_zone"
 	effect_quality = STATUS_QUALITY_POSITIVE
 
+/datum/statusEffect/radiation_protection
+	id = "radiation_protection"
+	name = "Radiation Protection"
+	desc = "You have some insulation from the outside world."
+	icon_state = "rad_resist"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/obj/storage/prot_source = null
+	var/protection_amount = 0
+
+	getTooltip()
+		. = "[src.prot_source] is providing [src.protection_amount] Ohms of protection."
+
+	onAdd(var/obj/storage/source)
+		. = ..()
+		src.prot_source = source
+		src.protection_amount = src.prot_source.radiation_protection
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_EXT, src, src.protection_amount)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_EXT, src)
+
+	onChange(var/obj/storage/source)
+		. = ..()
+		if(!source.radiation_protection)
+			src.remove_self()
+		src.prot_source = source
+		src.protection_amount = src.prot_source.radiation_protection
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_EXT, src, src.protection_amount)
+
+
 /datum/statusEffect/camera_awareness
 	id = "camera_awareness"
 	visible = FALSE

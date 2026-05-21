@@ -451,3 +451,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/handcuffs/tape_roll)
 	cost = 1
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
+
+/datum/syndicate_buylist/traitor/deployable_hideout
+	name = "Deployable Hideout"
+	desc = "A disposals hijacking device capable of installing a pocket dimension containing a hideout inside of any disposal or mail chute."
+	items = list(/obj/item/device/disposals_hijacker)
+	cost = 4
+	vr_allowed = FALSE

@@ -97,6 +97,12 @@ task-test-ci() {
   yarn run tgui:test-ci
 }
 
+## Normalizes SVG line endings to LF
+task-normalize-svgs() {
+  cd "${base_dir}"
+  yarn run tgui:normalize-svgs
+}
+
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
@@ -285,6 +291,12 @@ if [[ ${1} == '--test-ci' ]]; then
   shift 1
   task-install
   task-test-ci "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--normalize-svgs' ]]; then
+  task-install
+  task-normalize-svgs
   exit 0
 fi
 

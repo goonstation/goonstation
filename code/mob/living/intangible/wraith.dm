@@ -392,12 +392,6 @@ TYPEINFO(/mob/living/intangible/wraith)
 	equipped()
 		return 0
 
-	click(atom/target)
-		if (src.targeting_ability)
-			return ..()
-		if (!density)
-			src.examine_verb(target)
-
 	examine_verb(atom/A as mob|obj|turf in view())
 		..()
 

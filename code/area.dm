@@ -3851,6 +3851,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "medical bay"
 	icon_state = "purple"
 
+/area/syndicate_station/hideout
+	name = "Syndicate Hideout"
+	icon_state = "red"
+
 // end syndie //
 
 /// Wizard den area for the wizard shuttle spawn

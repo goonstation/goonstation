@@ -7398,7 +7398,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
-	icon = 'icons/obj/large_storage.dmi';
+	icon = 'icons/obj/storage/large_storage.dmi';
 	icon_state = "filecabinet";
 	name = "Planetary Survey Hardcopies";
 	pixel_x = -8
@@ -7407,7 +7407,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
-	icon = 'icons/obj/large_storage.dmi';
+	icon = 'icons/obj/storage/large_storage.dmi';
 	icon_state = "filecabinet";
 	name = "Planetary Survey Hardcopies";
 	pixel_x = 3

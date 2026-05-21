@@ -1,4 +1,4 @@
-(t)mon apr 20 67
+(t)thu may 21 26
 (u)DisturbHerb
 (*)Added the "Forced Assignments Panel" verb, found in the Players tab, which can be used to force certain ckeys to spawn at roundstart with a given job, antagonist roles, or even lack thereof. Supports exporting and importing save files to allow for the preparation of assignments in advance of an admin-facilitated event.
 (t)thu apr 16 26

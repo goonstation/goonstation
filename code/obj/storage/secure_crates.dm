@@ -1,6 +1,7 @@
 /obj/storage/secure/crate
 	desc = "A secure crate."
 	name = "Secure crate"
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
