@@ -170,6 +170,15 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 		"Type-AX Resonator, Position H7, 1 Intensity<br>"
 	)
 
+/datum/siphon_mineral/batiline
+	name = "Batiline"
+	tick_req = 35
+	shear = 18
+	x_torque = 12
+	y_torque = 5
+	sens_window = 4
+	product = /obj/item/raw_material/batiline
+
 /datum/siphon_mineral/fibrilith
 	name = "Fibrilith"
 	x_torque = 0
@@ -260,15 +269,6 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	shear = 54
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
-
-/datum/siphon_mineral/batiline
-	name = "Batiline"
-	tick_req = 35
-	shear = 18
-	x_torque = 12
-	y_torque = 5
-	sens_window = 4
-	product = /obj/item/raw_material/batiline
 
 //variable materials
 
