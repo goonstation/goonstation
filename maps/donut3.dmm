@@ -59838,9 +59838,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/robotics{
-	dir = 4
-	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
