@@ -62,8 +62,13 @@
 
 /obj/item/reagent_containers/applicator/stick/glue
 	name = "glue stick"
-	desc = "It's a stick. Of glue. Glue stick."
+	desc = "It's a stick. Of glue. A glue stick."
 	initial_reagents = list("spaceglue" = 30)
+
+/obj/item/reagent_containers/applicator/stick/glue/craft
+	name = "craft glue stick"
+	desc = "You vaguely remember this tasting good from elementary school."
+	initial_reagents = list("craftglue" = 30)
 
 /obj/item/reagent_containers/applicator/stick/glue/infinite
 	name = "really big glue stick"
@@ -221,3 +226,10 @@
 		New(loc, new_initial_reagents)
 			. = ..()
 			src.name = "\improper [pick("Tabasco", "Sriracha", "Cholula", "Tapatío")] sauce bottle"
+
+	superglue
+		name = "superglue bottle"
+		desc = "For when you want to permenantly we(l)d two things together"
+		icon = 'icons/obj/items/items.dmi'
+		icon_state = "ointment"
+		initial_reagents = list("superglue" = 30)

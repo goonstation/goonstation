@@ -2,6 +2,7 @@
 	name = "supply cart"
 	desc = "A big rolling supply cart."
 	is_short = 1
+	icon = 'icons/obj/storage/cart.dmi'
 	icon_state = "cart"
 	icon_closed = "cart"
 	icon_opened = "cartopen"
@@ -152,6 +153,7 @@
 
 /obj/storage/cart/trash/syndicate
 	crunches_contents = 1
+	SYNDICATE_STEALTH_DESCRIPTION("There appears to be a crushing mechanism installed inside.", null)
 
 /obj/storage/cart/hotdog
 	name = "hotdog stand"
@@ -164,3 +166,4 @@
 /obj/storage/cart/hotdog/syndicate
 	crunches_contents = 1
 	crunches_deliciously = 1
+	SYNDICATE_STEALTH_DESCRIPTION("There appears to be a crushing mechanism installed inside.", null)

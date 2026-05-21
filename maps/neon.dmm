@@ -12291,7 +12291,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ixb" = (
-/obj/disposalpipe/segment/vertical,
+/obj/disposalpipe/segment/bent/west,
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -23355,6 +23355,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"qmY" = (
+/obj/random_item_spawner/gross_with_junk/one_or_zero,
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "qnh" = (
 /obj/overlay{
 	density = 1;
@@ -25008,7 +25013,6 @@
 	dir = 4
 	},
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
-/obj/disposalpipe/segment/bent/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29450,10 +29454,10 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/disposalpipe/segment/bent/east,
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "uEI" = (
@@ -74690,7 +74694,7 @@ aru
 mxD
 wYC
 wYC
-wYC
+qmY
 uEg
 qKd
 gQE

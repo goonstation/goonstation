@@ -384,7 +384,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 /obj/machinery/turretid/computer_core
 	name = "Computer Core Turret Control"
 	turretArea = /area/station/turret_protected/Zeta
-	req_access = list(access_heads)
+	req_access = list(access_sysadmin, access_ai_upload)
 
 /obj/machinery/turretid/armory
 	name = "Armory Turret Control"

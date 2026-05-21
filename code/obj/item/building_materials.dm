@@ -1319,7 +1319,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			craftedType = /obj/storage/closet
 			name = "Closet"
 			sheet_cost = 2
-			icon = 'icons/obj/large_storage.dmi'
+			icon = 'icons/obj/storage/locker.dmi'
 			icon_state = "closed"
 		construct
 			recipe_id = "construct"
@@ -1460,14 +1460,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			craftedType = /obj/storage/closet/dresser
 			name = "dresser"
 			sheet_cost = 2
-			icon = 'icons/obj/large_storage.dmi'
+			icon = 'icons/obj/storage/closet.dmi'
 			icon_state = "dresser"
 		coffin
 			recipe_id = "coffin"
 			craftedType = /obj/storage/closet/coffin
 			name = "coffin"
 			sheet_cost = 2
-			icon = 'icons/obj/large_storage.dmi'
+			icon = 'icons/obj/storage/coffin.dmi'
 			icon_state = "coffin"
 		construct
 			recipe_id = "wood_construct"

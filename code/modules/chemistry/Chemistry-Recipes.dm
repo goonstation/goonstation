@@ -2833,6 +2833,16 @@
 		result_amount = 3
 		mix_phrase = "The substance turns a striking cyan and becomes oily."
 
+	craftglue
+
+		name = "Craft Glue"
+		id = "craftglue"
+		result = "craftglue"
+		inhibitors = list("formaldehyde")
+		required_reagents = list("plasma" = 1, "phenol" = 0.25, "oxygen" = 1, "hydrogen" = 1)
+		result_amount = 3
+		mix_phrase = "The substance turns a bright purple and becomes midly tacky."
+
 	glue
 		name = "Space Glue"
 		id = "spaceglue"

@@ -89,6 +89,11 @@ function task-test-ci {
   yarn run tgui:test-ci
 }
 
+## Normalizes SVG line endings to LF
+function task-normalize-svgs {
+  yarn run tgui:normalize-svgs
+}
+
 ## Mr. Proper
 function task-clean {
   Remove-Quiet -Recurse -Force ../browserassets/src/tgui/.tmp
@@ -255,6 +260,12 @@ if ($Args.Length -gt 0) {
     $Rest = $Args | Select-Object -Skip 1
     task-install
     task-test-ci @Rest
+    exit 0
+  }
+
+  if ($Args[0] -eq "--normalize-svgs") {
+    task-install
+    task-normalize-svgs
     exit 0
   }
 

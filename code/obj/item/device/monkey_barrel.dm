@@ -2,7 +2,8 @@
 
 /obj/monkey_barrel
 	name = "mysterious barrel"
-	desc = "More fun than a ValuChimp!"
+	desc = "More fun than a ValuChimp! Looks like there's a tray to put clothes inside."
+	HELP_MESSAGE_OVERRIDE("Right click to access the holographic clothing menu, letting you set the clothes of the monkeys.")
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "barrel"
 	throwforce = 50

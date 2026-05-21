@@ -24,6 +24,7 @@ TYPEINFO(/mob/living/critter/gorilla)
 	is_npc = TRUE
 	no_stamina_stuns = TRUE
 	add_abilities = list(/datum/targetable/critter/roar, /datum/targetable/wrestler/throw/gorilla_fling)
+	has_genes = TRUE
 	var/enraged = FALSE // gorillas that are not already enraged and witness an ally being harmed will switch to aggressive AI
 
 	New()
@@ -31,6 +32,11 @@ TYPEINFO(/mob/living/critter/gorilla)
 		src.name = pick_string_autokey("names/monkey.txt")
 		src.real_name = src.name
 		src.add_stam_mod_max("gorilla", 50) //gorillas don't give a shit about your stun meta
+		src.bioHolder.AddNewPoolEffect("fitness_buff", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("strong", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("hulk", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("monkey", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("seamonkey-loot", scramble=TRUE)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "gorilla", 25)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "gorilla", 25)
 

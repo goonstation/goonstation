@@ -1,5 +1,39 @@
 
+(t)wed may 20 26
+(u)LorrMaster
+(p)26644
+(e)🆕🔬|C-Feature, A-Science
+(*)Eldritch and Wizard artifacts no longer work inside the chapel.
+(u)glowbold
+(p)26641
+(e)⚖⚗|C-Balance, A-Chemistry
+(*)Craft Glue is a weaker version of Space Glue that is always temporary.
+(*)Space Glue and Craft Glue only apply to un-anchored items.
+(*)Super Glue is a stronger version of space glue that applies to everything. It has a secret recipe.
+(+)Josh has a chance to sell you Craft Glue instead of Super Glue.
+(t)mon may 18 26
+(u)Bonnedav
+(p)26596
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)All heads now receive System Administrator access (renamed from DWAINE superuser).
+(u)JORJ949
+(p)26605
+(e)🆕💅📦🍝|C-Feature, C-QoL, A-Game-Objects, A-Catering
+(*)Many stealthy syndicate items now have special syndicate-only (indicated by being bold and red) descriptive pieces to tell syndies that the item is in fact the sneaky crime version. See the PR for the full list of items.
+(u)FlameArrow57 & Mr. Moriarty
+(p)26581
+(e)💅📄🚨|C-QoL, A-UI, A-Admin
+(*)The changelog has been converted to TGUI.
+(u)LorrMaster
+(p)26347
+(e)🎨🧛🧱⏰📨|C-Sprites, A-Gamemodes, A-Materials, A-Status-Effects, A-Logistics
+(*)Added batiline, a new ore with anti-radioactive properties.
+(*)Custom spacesuits and large containers may now provide some protection from radiation based on materials.
 (t)sun may 17 26
+(u)Cheekybrdy
+(p)26615
+(e)🆕🐁|C-Feature, A-Critters
+(+)Gorillas now have some genes if put in a scanner
 (u)JORJ949
 (*)The "Fun Times" medal reward for a participation ribbon now puts one in your hand (or the floor under you) instead of spawning you as a possessed one.
 (t)sat may 16 26
@@ -1001,7 +1035,7 @@
 (e)🆕💅📨|C-Feature, C-QoL, A-Logistics
 (*)Orders made using a crew members's personal account will now add their name to the shipped crate.
 (u)glowbold
-(e)⚖🧛🤖C-Balance, A-Gamemodes, A-Silicons
+(e)⚖🧛🤖|C-Balance, A-Gamemodes, A-Silicons
 (*)Changelings and other anchored mobs can't fit in disposals. You cannot slip out of a changeling's grip into disposals.
 (*)The atmospherics transporter tool for silicons has been removed.
 (+)Wanted posters can be used to roll illegal cigarettes.
@@ -3832,6 +3866,3 @@
 (t)thu jan 02 25
 (u)LeahTheTech
 (+)Turbine stator load is now measured in kJ rather than Joules (number is 1000 times smaller).
-(t)wed jan 01 25
-(u)Goonstation Contributors
-(*)<a target="_blank" href="https://wiki.ss13.co/Changelog">Older changelog entries are available on the wiki</a>

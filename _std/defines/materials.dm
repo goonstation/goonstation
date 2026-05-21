@@ -37,6 +37,7 @@ var/global/static/list/RARITY_COLOR = list("#9d9d9d", "#ffffff", "#1eff00", "#00
 #define TRIGGERS_ON_REMOVE "triggersOnRemove"
 #define TRIGGERS_ON_HIT "triggersOnHit"
 #define TRIGGERS_ON_BLOBHIT "triggersOnBlobHit"
+#define TRIGGERS_ON_MIX "triggersOnMix"
 
 
 /// This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
@@ -56,4 +57,5 @@ var/global/list/triggerVars = list(
 	TRIGGERS_ON_REMOVE,
 	TRIGGERS_ON_HIT,
 	TRIGGERS_ON_BLOBHIT,
+	TRIGGERS_ON_MIX,
 )

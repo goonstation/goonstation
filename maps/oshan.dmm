@@ -7817,6 +7817,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light_switch/auto,
+/obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKr" = (
@@ -44757,7 +44758,6 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "tPC" = (
-/obj/machinery/light/incandescent/greenish,
 /obj/cable{
 	icon_state = "2-4"
 	},
