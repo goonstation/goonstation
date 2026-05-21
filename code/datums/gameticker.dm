@@ -81,8 +81,12 @@ var/global/game_force_started = FALSE
 
 			if (pregame_timeleft <= 30 && !did_reminder)
 				// hey boo the rounds starting and you didnt ready up
+				// also notify anyone with a forced assignment
 				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
+					if (length(job_controls.forced_assignments) && (P.ckey in job_controls.forced_assignments))
+						notify_forced_assignment_holder(P)
+						continue
 					if (!P.ready_play && !P.ready_tutorial)
 						targets += P
 				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
