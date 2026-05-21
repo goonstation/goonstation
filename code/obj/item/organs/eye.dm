@@ -56,6 +56,8 @@
 				src.iris_color = AH.customizations["hair_top"].color
 			else
 				src.iris_color = AH.e_color
+			if (AH.mutant_race.mutant_appearance_flags & LIGHT_EYES)
+				src.iris_color = light_colors(src.iris_color)
 			var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
 			iris_image.color = iris_color
 			src.UpdateOverlays(iris_image, "iris")

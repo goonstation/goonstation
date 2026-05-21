@@ -2211,7 +2211,7 @@ TYPEINFO(/datum/mutantrace/frog/shelter)
 			output += filter(type="displace", render_source = src.distort_shoes.render_target, size = 127)
 		return output
 
-TYPEINFO(/datum/mutantrace/frog/amphibian)
+TYPEINFO(/datum/mutantrace/frog/amphibian) // trait mutantrace
 	icon = 'icons/mob/amphibian/frog.dmi'
 	special_styles = list("standard" = 'icons/mob/amphibian/frog.dmi',
 	"golden" = 'icons/mob/amphibian/golden.dmi',
@@ -2243,7 +2243,7 @@ TYPEINFO(/datum/mutantrace/frog/amphibian)
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | HAS_NO_SKINTONE | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | HAS_NO_SKINTONE | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS | LIGHT_EYES)
 	blood_color = "#22EE99"
 
 	ghost_icon_state = "ghost-amphibian"
