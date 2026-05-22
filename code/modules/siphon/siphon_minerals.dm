@@ -178,6 +178,12 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	y_torque = 5
 	sens_window = 4
 	product = /obj/item/raw_material/batiline
+	setup_guide = list(
+		"Type-AX Resonator, Position C6, 1 Intensity<br>",
+		"Type-AX Resonator, Position G6, 2 Intensity<br>",
+		"Type-AX Resonator, Position G4, 2 Intensity<br>",
+		"Type-AX Resonator, Position G2, 1 Intensity<br>"
+	)
 
 /datum/siphon_mineral/fibrilith
 	name = "Fibrilith"
