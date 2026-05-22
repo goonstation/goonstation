@@ -464,7 +464,7 @@ type BackendState<TData> = {
       name: string;
       observer: number;
     };
-    cdn: string;
+    cdn: string; // |GOONSTATION-ADD|
   };
   data: TData;
   shared: Record<string, any>;
