@@ -464,6 +464,7 @@ type BackendState<TData> = {
       name: string;
       observer: number;
     };
+    cdn: string;
   };
   data: TData;
   shared: Record<string, any>;

@@ -283,6 +283,7 @@
 			"name" = "[user]",
 			"observer" = isobserver(user),
 		),
+		"cdn" = global.cdn,
 	)
 	var/data = custom_data || with_data && src_object.ui_data(user)
 	if(data)
