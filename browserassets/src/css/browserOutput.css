@@ -856,6 +856,9 @@ h2.asyn {
 .rsupply {
   color: #806335;
 }
+.rsupply {
+  color: #806335;
+}
 .rmedical {
   color: #153e7e;
 }
@@ -1415,6 +1418,9 @@ html.theme-dark .rdetective {
 }
 html.theme-dark .rengineering {
   color: #e9a840;
+}
+html.theme-dark .rsupply {
+  color: #b48c4b;
 }
 html.theme-dark .rsupply {
   color: #b48c4b;
