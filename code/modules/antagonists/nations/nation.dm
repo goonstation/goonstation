@@ -133,7 +133,8 @@ ABSTRACT_TYPE(/datum/nation)
 	citizen_job_categories = list(JOB_CLOWN)
 
 /datum/nation/engineering
-	name = "Engistan"
+	name = "The Great Technocracy (Actually a dictatorship) of the Engiland Empire"
+	short_name = "Engiland"
 	passport_type = /obj/item/passport/engineering
 	nation_color = "#d37610"
 	control_point_marker = "point_eng"
@@ -143,7 +144,8 @@ ABSTRACT_TYPE(/datum/nation)
 	citizen_job_categories = list(JOB_ENGINEERING)
 
 /datum/nation/medical
-	name = "Asclepius"
+	name = "The Sovereign State of Medica"
+	short_name = "Medica"
 	passport_type = /obj/item/passport/medical
 	nation_color = "#c9294e"
 	control_point_marker = "point_med"
@@ -153,7 +155,8 @@ ABSTRACT_TYPE(/datum/nation)
 	citizen_job_categories = list(JOB_MEDICAL)
 
 /datum/nation/research
-	name = "Erudite"
+	name = "The Science team!"
+	short_name = "Team Science!"
 	passport_type = /obj/item/passport/research
 	nation_color = "#5a1d8a"
 	control_point_marker = "point_sci"
@@ -163,7 +166,8 @@ ABSTRACT_TYPE(/datum/nation)
 	citizen_job_categories = list(JOB_RESEARCH)
 
 /datum/nation/service
-	name = "\the Grey Horde"
+	name = "The Kingdom of Servicia"
+	short_name = "Servicia"
 	passport_type = /obj/item/passport/service
 	nation_color = "#167935"
 	control_point_marker = "point_ser"
@@ -173,8 +177,8 @@ ABSTRACT_TYPE(/datum/nation)
 	citizen_job_categories = list(JOB_CIVILIAN)
 
 /datum/nation/supply
-	name = "\the Independent Station-state of Cargonia"
-	short_name = "Cargonia"
+	name = "Greater Home Depot"
+	short_name = "Greater Home Depot"
 	passport_type = /obj/item/passport/supply
 	nation_color = "#4a301b"
 	control_point_marker = "point_sup"
