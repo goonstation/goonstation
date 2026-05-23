@@ -263,7 +263,7 @@
 		if("Hall Monitor")
 			return list(access_ticket)
 		if("Computer Operator")
-			return list(access_maint_tunnels, access_tech_storage, access_sysadmin, access_research, access_researchfoyer, access_robotdepot)
+			return list(access_maint_tunnels, access_tech_storage, access_sysadmin, access_research, access_researchfoyer, access_robotdepot, access_engineering_mechanic)
 		if("Admin")
 			return access_all_actually
 		else
