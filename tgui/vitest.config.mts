@@ -7,7 +7,16 @@ export default defineConfig({
       'packages/**/*.{spec,test}.{ts,tsx}',
     ],
     exclude: ['packages/tgui-bench/**/*'],
-    environment: 'jsdom',
+    environment: 'happy-dom',
+    environmentOptions: {
+      happyDOM: {
+        settings: {
+          navigation: {
+            disableChildFrameNavigation: true,
+          },
+        },
+      },
+    },
     restoreMocks: true,
   },
 });
