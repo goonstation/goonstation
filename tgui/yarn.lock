@@ -6277,20 +6277,20 @@ __metadata:
     react: "npm:^19.2.6"
     react-dom: "npm:^19.2.6"
     tgui: "workspace:*"
-    tgui-core: "npm:~5.4.2"
+    tgui-core: "npm:~5.10.0"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:~5.4.2":
-  version: 5.4.2
-  resolution: "tgui-core@npm:5.4.2"
+"tgui-core@npm:~5.10.0":
+  version: 5.10.0
+  resolution: "tgui-core@npm:5.10.0"
   dependencies:
     "@floating-ui/react": "npm:^0.27.16"
     "@nozbe/microfuzz": "npm:^1.0.0"
   peerDependencies:
     react: ^19.1.0
     react-dom: ^19.1.0
-  checksum: 10c0/e24514be0f8757b0a722d202620d7a1b12052cb20b749c7f64a9d016dfb51b4474c04b3b10babcfc76d062cdd780c8d397ea40634db296a5151f4325b1f598a3
+  checksum: 10c0/e9c22966b714670918dce700f08dc7951d1f00d835b46862538239649d884be5112a574f53e445c4f9c10f5c504935b9ac740b1744464c1c1079c663942cbe83
   languageName: node
   linkType: hard
 
@@ -6318,7 +6318,7 @@ __metadata:
     react: "npm:^19.2.6"
     react-dom: "npm:^19.2.6"
     tgui: "workspace:*"
-    tgui-core: "npm:~5.4.2"
+    tgui-core: "npm:~5.10.0"
     tgui-dev-server: "workspace:*"
   languageName: unknown
   linkType: soft
@@ -6385,7 +6385,7 @@ __metadata:
     react: "npm:^19.2.6"
     react-dom: "npm:^19.2.6"
     remarkable: "npm:^2.0.1"
-    tgui-core: "npm:~5.4.2"
+    tgui-core: "npm:~5.10.0"
     tgui-dev-server: "workspace:*"
     vitest: "npm:^4.1.7"
   languageName: unknown

@@ -11,7 +11,7 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "tgui": "workspace:*",
-    "tgui-core": "~5.4.2"
+    "tgui-core": "~5.10.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.15",
