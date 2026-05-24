@@ -221,15 +221,15 @@
 			logTheThing(LOG_DIARY, ui.user, "removed ckey [target_ckey]'s designated forced antagonist role", "admin")
 			. = TRUE
 
-/datum/forced_assignment_panel/proc/input_job(mob/caller)
-	. = tgui_input_list(caller, "Designate forced job to assign.", "Designate job", \
+/datum/forced_assignment_panel/proc/input_job(mob/user)
+	. = tgui_input_list(user, "Designate forced job to assign.", "Designate job", \
 		(global.job_controls.staple_jobs|global.job_controls.special_jobs|global.job_controls.hidden_jobs))
 
 /// For continuous input of multiple antagonist roles to a single ckey. Why would you need more than the one?
-/datum/forced_assignment_panel/proc/input_antagonist_roles(mob/caller, datum/forced_assignment/forced_assignment)
+/datum/forced_assignment_panel/proc/input_antagonist_roles(mob/user, datum/forced_assignment/forced_assignment)
 	var/list/output_buffer = list()
 	while (TRUE)
-		var/datum/forced_antagonist/new_forced_antagonist = src.input_antagonist(caller, TRUE, output_buffer, forced_assignment?.forced_antags)
+		var/datum/forced_antagonist/new_forced_antagonist = src.input_antagonist(user, TRUE, output_buffer, forced_assignment?.forced_antags)
 		if (istype(new_forced_antagonist, /datum/forced_antagonist))
 			output_buffer[new_forced_antagonist.display_name] = new_forced_antagonist
 			continue
@@ -237,7 +237,7 @@
 	. = output_buffer
 
 /// Cargo cult from `code\modules\admin\admin.dm`.
-/datum/forced_assignment_panel/proc/input_antagonist(mob/caller, continuous = FALSE, list/datum/forced_antagonist/output_buffer, list/datum/forced_antagonist/existing_list)
+/datum/forced_assignment_panel/proc/input_antagonist(mob/user, continuous = FALSE, list/datum/forced_antagonist/output_buffer, list/datum/forced_antagonist/existing_list)
 	var/list/datum/forced_antagonist/combined_lists = output_buffer + (existing_list || list())
 	var/list/eligible_antagonists = list()
 	var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate))
@@ -247,9 +247,9 @@
 	for (var/existing_antag in combined_lists)
 		eligible_antagonists -= existing_antag
 	if (!length(eligible_antagonists))
-		boutput(caller, SPAN_ALERT("Unable to input antagonist role as no valid antagonist roles exist!"))
+		boutput(user, SPAN_ALERT("Unable to input antagonist role as no valid antagonist roles exist!"))
 		return
-	var/selected_antagonist_name = tgui_input_list(caller, "Designate forced antagonist role.[!!continuous && " Cancel to complete addition. \
+	var/selected_antagonist_name = tgui_input_list(user, "Designate forced antagonist role.[!!continuous && " Cancel to complete addition. \
 		[length(output_buffer)] selected so far."]", "Designate antag roles", eligible_antagonists)
 	if (!selected_antagonist_name)
 		return
@@ -258,10 +258,10 @@
 		var/datum/antagonist/antagonist_to_check = get_antagonist_datum_type(forced_antagonist_to_check.id)
 		if (!initial(antagonist_to_check.mutually_exclusive))
 			continue
-		if (tgui_alert(caller, "Current list has an antagonist role ([capitalize(initial(antagonist_to_check.display_name))]) that will not \
+		if (tgui_alert(user, "Current list has an antagonist role ([capitalize(initial(antagonist_to_check.display_name))]) that will not \
 			naturally occur with others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
 			return
-	var/list/antagonist_params = src.adjust_antagonist_params(caller)
+	var/list/antagonist_params = src.adjust_antagonist_params(user)
 	if (!length(antagonist_params))
 		return
 	if (tgui_alert(usr, "Confirm selected antagonist [selected_antagonist_name]. Equipment and abilities will[antagonist_params[1] == "Yes" \
@@ -272,16 +272,16 @@
 		antagonist_params[2] == "Yes" ? TRUE : FALSE, antagonist_params[4])
 	. = new_forced_antagonist
 
-/datum/forced_assignment_panel/proc/adjust_antagonist_params(mob/caller)
+/datum/forced_assignment_panel/proc/adjust_antagonist_params(mob/user)
 	. = list()
-	var/do_equipment = tgui_alert(caller, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", \
+	var/do_equipment = tgui_alert(user, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", \
 		"Designate antag roles", list("Yes", "No", "Cancel"))
 	if (do_equipment == "Cancel")
 		return
-	var/do_objectives = tgui_alert(caller, "Assign randomly-generated objectives?", "Designate antag roles", list("Yes", "No", "Custom"))
+	var/do_objectives = tgui_alert(user, "Assign randomly-generated objectives?", "Designate antag roles", list("Yes", "No", "Custom"))
 	var/custom_objective = ""
 	if (do_objectives == "Custom")
-		custom_objective = tgui_input_text(caller, "Input custom objective text", "Designate antag roles")
+		custom_objective = tgui_input_text(user, "Input custom objective text", "Designate antag roles")
 	var/do_objectives_text = ""
 	switch (do_objectives)
 		if ("No")
@@ -298,9 +298,9 @@
 		qdel(forced_assignment)
 	global.job_controls.forced_assignments = list()
 
-/datum/forced_assignment_panel/proc/get_assignment_by_ckey(mob/caller, ckey)
+/datum/forced_assignment_panel/proc/get_assignment_by_ckey(mob/user, ckey)
 	if (!(ckey in global.job_controls.forced_assignments))
-		boutput(caller, SPAN_ALERT("Unable to find forced assignment attached to ckey [ckey]!"))
+		boutput(user, SPAN_ALERT("Unable to find forced assignment attached to ckey [ckey]!"))
 		return
 	var/datum/forced_assignment/forced_assignment = global.job_controls.forced_assignments[ckey]
 	if (!istype(forced_assignment, /datum/forced_assignment))
@@ -334,7 +334,7 @@
 			serialised_forced_assignment["forcedAntags"] = serialised_forced_antags
 		.[forced_assignment.ckey] = serialised_forced_assignment
 
-/datum/forced_assignment_panel/proc/decode_forced_assignments(list/decode_list, mob/caller)
+/datum/forced_assignment_panel/proc/decode_forced_assignments(list/decode_list, mob/user)
 	var/list/datum/forced_assignment/forced_assignment_buffer = list()
 	for (var/forced_assignment_item_index in decode_list)
 		var/forced_assignment_item = decode_list[forced_assignment_item_index]
@@ -342,7 +342,7 @@
 		if (length(forced_assignment_item["ckey"]))
 			ckey = forced_assignment_item["ckey"]
 		if (ckey in global.job_controls.forced_assignments)
-			boutput(caller, SPAN_ALERT("CKey [ckey] already has an entry in the forced assignments list! Skipping!"))
+			boutput(user, SPAN_ALERT("CKey [ckey] already has an entry in the forced assignments list! Skipping!"))
 			continue
 		var/job_name = ""
 		if (length(forced_assignment_item["forcedJob"]))
@@ -371,7 +371,7 @@
 		return FALSE
 	return forced_assignment_buffer
 
-/datum/forced_assignment_panel/proc/export_forced_assignments(mob/caller)
+/datum/forced_assignment_panel/proc/export_forced_assignments(mob/user)
 	if (!length(global.job_controls.forced_assignments))
 		return
 	var/savefile/export = new()
@@ -382,14 +382,14 @@
 		fdel(filename)
 	var/export_file = file(filename)
 	export.ExportText("/", export_file)
-	caller.client << ftp(export_file, filename)
+	user.client << ftp(export_file, filename)
 	SPAWN(15 SECONDS)
 		var/tries = 0
 		while ((fdel(filename) == 0) && tries++ < 10)
 			sleep(30 SECONDS)
 
-/datum/forced_assignment_panel/proc/import_forced_assignments(mob/caller)
-	var/file = input(caller) as file|null
+/datum/forced_assignment_panel/proc/import_forced_assignments(mob/user)
+	var/file = input(user) as file|null
 	if (!file)
 		return
 	var/savefile/import = new()
@@ -397,16 +397,16 @@
 	var/file_version = null
 	import["version"] >> file_version
 	if (file_version != FORCED_ASSIGNMENT_DATA_VER)
-		boutput(caller, SPAN_ALERT("The forced assignment file you are attempting to import is incompatible with the current version of the system!"))
+		boutput(user, SPAN_ALERT("The forced assignment file you are attempting to import is incompatible with the current version of the system!"))
 		return
 	var/list/forced_assignment_import_list = list()
 	import["body"] >> forced_assignment_import_list
 	var/list/datum/forced_assignment/decoded_forced_assignments = src.decode_forced_assignments(forced_assignment_import_list)
 	if (!length(decoded_forced_assignments))
-		boutput(caller, SPAN_ALERT("Forced assignment decoder returned an empty list!"))
+		boutput(user, SPAN_ALERT("Forced assignment decoder returned an empty list!"))
 		return
 	global.job_controls.forced_assignments += decoded_forced_assignments
-	message_admins("Admin [key_name(caller)] imported new forced assignments!")
-	logTheThing(LOG_ADMIN, caller, "imported new forced assignments")
-	logTheThing(LOG_DIARY, caller, "imported new forced assignments", "admin")
+	message_admins("Admin [key_name(user)] imported new forced assignments!")
+	logTheThing(LOG_ADMIN, user, "imported new forced assignments")
+	logTheThing(LOG_DIARY, user, "imported new forced assignments", "admin")
 	. = TRUE
