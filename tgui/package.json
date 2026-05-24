@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "tgui:analyze": "rspack --analyze",
+    "tgui:analyze": "rspack build --env RSDOCTOR=1",
     "tgui:bench": "rspack --env TGUI_BENCH=1 && node packages/tgui-bench/index.js",
     "tgui:build": "rspack build",
     "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
@@ -22,8 +22,9 @@
     "tgui:normalize-svgs": "node normalize-svgs.mjs"
   },
   "dependencies": {
-    "@rspack/cli": "^1.7.11",
-    "@rspack/core": "^1.7.11",
+    "@rspack/cli": "^2.0.4",
+    "@rspack/core": "^2.0.4",
+    "@rspack/dev-server": "^2.0.1",
     "@typescript-eslint/parser": "^8.59.4",
     "@typescript-eslint/utils": "^8.59.4",
     "css-loader": "^7.1.4",
@@ -37,12 +38,13 @@
     "sass": "^1.100.0",
     "sass-embedded": "^1.100.0",
     "sass-loader": "^17.0.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
+    "@rsdoctor/rspack-plugin": "^1.5.11",
     "@types/node": "^25.9.1",
     "@types/webpack-env": "^1.18.8",
     "@types/wicg-file-system-access": "^2023.10.7",

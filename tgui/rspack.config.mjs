@@ -31,6 +31,7 @@ const createStats = (verbose) => ({
   colors: true,
   entrypoints: false, // |GOONSTATION-CHANGE| secret interfaces
   hash: false,
+  logging: 'warn',
   modules: false,
   performance: false,
   timings: verbose,
@@ -40,19 +41,19 @@ const createStats = (verbose) => ({
 export default (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
+  const rsdoctor = env.RSDOCTOR || process.env.RSDOCTOR;
 
   /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
-    cache: true,
-    experiments: {
+    cache: {
+      type: 'persistent',
       cache: {
         type: 'persistent',
-        storage: {
-          type: 'filesystem',
-          directory: path.resolve(__dirname, '.yarn/rspack'),
-        },
       },
-      css: true,
+      storage: {
+        type: 'filesystem',
+        directory: path.resolve(__dirname, '.yarn/rspack'),
+      },
     },
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
@@ -184,6 +185,12 @@ export default (env = {}, argv) => {
 
   addSecretInterfaceEntries(config); // |GOONSTATION-ADD| secret interface entrypoints
 
+  if (rsdoctor) {
+    const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin');
+
+    config.plugins.push(new RsdoctorRspackPlugin());
+  }
+
   if (bench) {
     config.entry = {
       'tgui-bench': ['./packages/tgui-bench/entrypoint'],
@@ -208,12 +215,12 @@ export default (env = {}, argv) => {
 
   // Development server specific options
   if (argv.devServer) {
+    config.stats = createStats(false);
     config.devServer = {
-      progress: false,
-      quiet: false,
-      noInfo: false,
-      clientLogLevel: 'silent',
-      stats: createStats(false),
+      client: {
+        logging: 'none',
+        progress: false,
+      },
     };
   }
 

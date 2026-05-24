@@ -4,7 +4,7 @@
   "version": "6.0.0",
   "type": "module",
   "dependencies": {
-    "@rspack/core": "^1.7.11",
+    "@rspack/core": "^2.0.4",
     "axios": "^1.16.1",
     "source-map": "^0.7.6",
     "stacktrace-parser": "^0.1.11",
