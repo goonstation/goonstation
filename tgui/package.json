@@ -32,7 +32,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-simple-import-sort": "^13.0.0",
-    "eslint-plugin-sonarjs": "^3.0.7",
+    "eslint-plugin-sonarjs": "^4.0.3",
     "eslint-plugin-unused-imports": "^4.4.1",
     "prettier": "^3.8.3",
     "sass": "^1.100.0",

@@ -69,17 +69,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint-community/regexpp@npm:4.12.2":
-  version: 4.12.2
-  resolution: "@eslint-community/regexpp@npm:4.12.2"
-  checksum: 10c0/fddcbc66851b308478d04e302a4d771d6917a0b3740dc351513c0da9ca2eab8a1adf99f5e0aa7ab8b13fa0df005c81adeee7e63a92f3effd7d367a163b721c2d
-  languageName: node
-  linkType: hard
-
 "@eslint-community/regexpp@npm:^4.12.1, @eslint-community/regexpp@npm:^4.8.0":
   version: 4.12.1
   resolution: "@eslint-community/regexpp@npm:4.12.1"
   checksum: 10c0/a03d98c246bcb9109aec2c08e4d10c8d010256538dcb3f56610191607214523d4fb1b00aa81df830b6dffb74c5fa0be03642513a289c567949d3e550ca11cdf6
+  languageName: node
+  linkType: hard
+
+"@eslint-community/regexpp@npm:^4.12.2":
+  version: 4.12.2
+  resolution: "@eslint-community/regexpp@npm:4.12.2"
+  checksum: 10c0/fddcbc66851b308478d04e302a4d771d6917a0b3740dc351513c0da9ca2eab8a1adf99f5e0aa7ab8b13fa0df005c81adeee7e63a92f3effd7d367a163b721c2d
   languageName: node
   linkType: hard
 
@@ -343,15 +343,6 @@ __metadata:
   dependencies:
     "@isaacs/balanced-match": "npm:^4.0.1"
   checksum: 10c0/b4d4812f4be53afc2c5b6c545001ff7a4659af68d4484804e9d514e183d20269bb81def8682c01a22b17c4d6aed14292c8494f7d2ac664e547101c1a905aa977
-  languageName: node
-  linkType: hard
-
-"@isaacs/brace-expansion@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "@isaacs/brace-expansion@npm:5.0.1"
-  dependencies:
-    "@isaacs/balanced-match": "npm:^4.0.1"
-  checksum: 10c0/e5d67c7bbf1f17b88132a35bc638af306d48acbb72810d48fa6e6edd8ab375854773108e8bf70f021f7ef6a8273455a6d1f0c3b5aa2aff06ce7894049ab77fb8
   languageName: node
   linkType: hard
 
@@ -1991,14 +1982,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"builtin-modules@npm:3.3.0":
+"builtin-modules@npm:^3.3.0":
   version: 3.3.0
   resolution: "builtin-modules@npm:3.3.0"
   checksum: 10c0/2cb3448b4f7306dc853632a4fcddc95e8d4e4b9868c139400027b71938fc6806d4ff44007deffb362ac85724bd40c2c6452fb6a0aa4531650eeddb98d8e5ee8a
   languageName: node
   linkType: hard
 
-"bytes@npm:3.1.2":
+"bytes@npm:^3.1.2":
   version: 3.1.2
   resolution: "bytes@npm:3.1.2"
   checksum: 10c0/76d1c43cbd602794ad8ad2ae94095cddeb1de78c5dddaa7005c51af10b0176c69971a6d88e805a90c2b6550d76636e43c40d8427a808b8645ede885de4a0358e
@@ -2875,23 +2866,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-sonarjs@npm:^3.0.7":
-  version: 3.0.7
-  resolution: "eslint-plugin-sonarjs@npm:3.0.7"
+"eslint-plugin-sonarjs@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "eslint-plugin-sonarjs@npm:4.0.3"
   dependencies:
-    "@eslint-community/regexpp": "npm:4.12.2"
-    builtin-modules: "npm:3.3.0"
-    bytes: "npm:3.1.2"
-    functional-red-black-tree: "npm:1.0.1"
-    jsx-ast-utils-x: "npm:0.1.0"
-    lodash.merge: "npm:4.6.2"
-    minimatch: "npm:10.1.2"
-    scslre: "npm:0.3.0"
-    semver: "npm:7.7.4"
+    "@eslint-community/regexpp": "npm:^4.12.2"
+    builtin-modules: "npm:^3.3.0"
+    bytes: "npm:^3.1.2"
+    functional-red-black-tree: "npm:^1.0.1"
+    globals: "npm:^17.4.0"
+    jsx-ast-utils-x: "npm:^0.1.0"
+    lodash.merge: "npm:^4.6.2"
+    minimatch: "npm:^10.2.5"
+    scslre: "npm:^0.3.0"
+    semver: "npm:^7.7.4"
+    ts-api-utils: "npm:^2.5.0"
     typescript: "npm:>=5"
   peerDependencies:
-    eslint: ^8.0.0 || ^9.0.0
-  checksum: 10c0/bb6997f5388d7adaf7507ab2a77951c2d9107f6a5df77cd6758aae3e870209925137668a497d6e6f69ee649db4cdfd6901de477045ab894abedc1598d4911483
+    eslint: ^8.0.0 || ^9.0.0 || ^10.0.0
+  checksum: 10c0/9cd451d07e0d898cd99b3666c9d6083347a031db4c01f4c5528cf629ea56b0e484b43db8624e11853b825fab06454e0cf5f452c829763de3334a01fc9b716c2b
   languageName: node
   linkType: hard
 
@@ -3335,7 +3328,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"functional-red-black-tree@npm:1.0.1":
+"functional-red-black-tree@npm:^1.0.1":
   version: 1.0.1
   resolution: "functional-red-black-tree@npm:1.0.1"
   checksum: 10c0/5959eed0375803d9924f47688479bb017e0c6816a0e5ac151e22ba6bfe1d12c41de2f339188885e0aa8eeea2072dad509d8e4448467e816bde0a2ca86a0670d3
@@ -3466,7 +3459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^17.6.0":
+"globals@npm:^17.4.0, globals@npm:^17.6.0":
   version: 17.6.0
   resolution: "globals@npm:17.6.0"
   checksum: 10c0/cf94fb4329cc5c68cf81018fd68324f413181ee169f0235b0b33b82bc93fe7825a21beea951f83a80e8e4bbdad9c0c80515a145b5fd4b5cb52f2a80db899a93f
@@ -4117,7 +4110,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsx-ast-utils-x@npm:0.1.0":
+"jsx-ast-utils-x@npm:^0.1.0":
   version: 0.1.0
   resolution: "jsx-ast-utils-x@npm:0.1.0"
   checksum: 10c0/bd147ff19bace8309e48110ec5c7a0c9f750148bcab699b5ba5d44dfac6cea8f358127f3da35ebe073f81cfe46494ce1e9647dd45681bb6c84d83c315904b72b
@@ -4323,7 +4316,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.merge@npm:4.6.2, lodash.merge@npm:^4.6.2":
+"lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: 10c0/402fa16a1edd7538de5b5903a90228aa48eb5533986ba7fa26606a49db2572bf414ff73a2c9f5d5fd36b31c46a5d5c7e1527749c07cbcf965ccff5fbdf32c506
@@ -4461,15 +4454,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:10.1.2":
-  version: 10.1.2
-  resolution: "minimatch@npm:10.1.2"
-  dependencies:
-    "@isaacs/brace-expansion": "npm:^5.0.1"
-  checksum: 10c0/0cccef3622201703de6ecf9d772c0be1d5513dcc038ed9feb866c20cf798243e678ac35605dac3f1a054650c28037486713fe9e9a34b184b9097959114daf086
-  languageName: node
-  linkType: hard
-
 "minimatch@npm:^10.0.3":
   version: 10.0.3
   resolution: "minimatch@npm:10.0.3"
@@ -4479,7 +4463,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^10.2.2":
+"minimatch@npm:^10.2.2, minimatch@npm:^10.2.5":
   version: 10.2.5
   resolution: "minimatch@npm:10.2.5"
   dependencies:
@@ -5723,7 +5707,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scslre@npm:0.3.0":
+"scslre@npm:^0.3.0":
   version: 0.3.0
   resolution: "scslre@npm:0.3.0"
   dependencies:
@@ -5738,15 +5722,6 @@ __metadata:
   version: 4.0.0
   resolution: "secure-json-parse@npm:4.0.0"
   checksum: 10c0/1a298cf00e1de91e833cee5eb406d6e77fb2f7eca9bef3902047d49e7f5d3e6c21b5de61ff73466c831e716430bfe87d732a6e645a7dabb5f1e8a8e4d3e15eb4
-  languageName: node
-  linkType: hard
-
-"semver@npm:7.7.4":
-  version: 7.7.4
-  resolution: "semver@npm:7.7.4"
-  bin:
-    semver: bin/semver.js
-  checksum: 10c0/5215ad0234e2845d4ea5bb9d836d42b03499546ddafb12075566899fc617f68794bb6f146076b6881d755de17d6c6cc73372555879ec7dce2c2feee947866ad2
   languageName: node
   linkType: hard
 
@@ -6377,7 +6352,7 @@ __metadata:
     eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-simple-import-sort: "npm:^13.0.0"
-    eslint-plugin-sonarjs: "npm:^3.0.7"
+    eslint-plugin-sonarjs: "npm:^4.0.3"
     eslint-plugin-unused-imports: "npm:^4.4.1"
     globals: "npm:^17.6.0"
     happy-dom: "npm:^20.9.0"
