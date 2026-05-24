@@ -22,7 +22,8 @@
     "strictBindCallApply": true, // |GOONSTATION-ADD|
     "strictNullChecks": true,
     "strictPropertyInitialization": true, // |GOONSTATION-ADD|
-    "target": "ESNext"
+    "target": "ESNext",
+    "types": ["webpack-env"]
   },
   "include": ["./*.d.ts", "./packages"]
 }
