@@ -81,7 +81,11 @@ function ComponentsPage() {
     <Section fill>
       <NoticeBox info>All component stories have been moved.</NoticeBox>
       View them here{' '}
-      <a href="https://tgstation.github.io/tgui-core" target="_blank">
+      <a
+        href="https://tgstation.github.io/tgui-core"
+        target="_blank"
+        rel="noreferrer"
+      >
         https://tgstation.github.io/tgui-core
       </a>
     </Section>

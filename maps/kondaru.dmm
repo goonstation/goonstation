@@ -7556,15 +7556,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
-"aFJ" = (
-/obj/machinery/door/airlock/pyro,
-/obj/machinery/door/airlock/pyro{
-	dir = 4
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/radio/bathroom{
-	name = "News Office Bathroom"
-	})
 "aFK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -98620,7 +98611,7 @@ pmt
 paL
 iBm
 aqA
-aFJ
+apv
 aqA
 apv
 aqA

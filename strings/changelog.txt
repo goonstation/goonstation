@@ -1,5 +1,9 @@
 
 (t)mon may 25 26
+(u)JORJ949
+(p)26656
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)The Authentication Disk can now only be scanned by syndicate device analyzers.
 (u)ANNmagedon
 (p)26618
 (e)🗺💅🛠️|A-Mapping, C-QoL, A-Engineering
