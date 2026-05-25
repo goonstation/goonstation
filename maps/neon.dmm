@@ -38,9 +38,7 @@
 /obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer/disk,
 /obj/item/hand_tele,
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "abY" = (
@@ -11087,6 +11085,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/noticeboard/persistent/detectives_office/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "hJG" = (
@@ -11896,7 +11895,6 @@
 /area/research_outpost)
 "ijm" = (
 /obj/mopbucket,
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "ijy" = (
@@ -14556,6 +14554,7 @@
 /obj/vehicle/floorbuffer{
 	dir = 8
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "jUK" = (
@@ -15654,6 +15653,7 @@
 "kJM" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/disposal/botany,
+/obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -17205,9 +17205,7 @@
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/suit/space/diving/command,
 /obj/item/clothing/head/helmet/space/engineer/diving/command,
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "lNs" = (
@@ -20398,10 +20396,10 @@
 /area/station/crew_quarters/lounge)
 "ofl" = (
 /obj/disposalpipe/segment/vertical,
-/obj/table/wood/auto,
-/obj/item/device/camera_viewer,
-/obj/item/camera,
 /obj/item/device/radio/intercom/security{
+	dir = 4
+	},
+/obj/machinery/vending/security{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
@@ -27451,7 +27449,9 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "tlt" = (
-/obj/machinery/vending/security,
+/obj/table/wood/auto,
+/obj/item/camera,
+/obj/item/device/camera_viewer,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tmm" = (
