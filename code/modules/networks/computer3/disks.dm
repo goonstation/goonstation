@@ -330,9 +330,7 @@
 #endif
 
 TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
-	mats = list("metal_superdense" = 5,
-				"conductive_high" = 15,
-				"crystal_dense" = 10)
+	mats = 15
 
 /obj/item/disk/data/floppy/read_only/authentication
 	name = "Authentication Disk"
