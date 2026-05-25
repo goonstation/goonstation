@@ -1,4 +1,25 @@
 
+(t)mon may 25 26
+(u)ANNmagedon
+(p)26618
+(e)🗺💅🛠️|A-Mapping, C-QoL, A-Engineering
+(+)Cogmap 1's engine room has received more line of sight blockers to help with getting around a singularity.
+(t)sun may 24 26
+(u)JORJ949
+(p)26461
+(e)🎨⚖🧛📦📨|C-Sprites, C-Balance, A-Gamemodes, A-Game-Objects, A-Logistics
+(*)Signal jammers have received a rebalance, see minor changelog for details.
+(+)Signal jammer uplink cost reduced from 3 > 2 TC
+(+)Signal jammers sold at the Listening Post now require charge of roughly 10u/3s and come with a default cell of 100pu or 30s usetime.
+(+)Charged signal jammers are always sold at the listening post, instead of only sometimes.
+(u)LorrMaster
+(p)26643
+(e)🆕🔬|C-Feature, A-Science
+(*)Language artifacts can be triggered by matching plural words and words within sentences.
+(u)Ikea
+(p)26652
+(e)🔄🔨|C-Rework, A-Player-Actions
+(+)The character setup max age is now 100
 (t)sat may 23 26
 (u)LeahTheTech
 (p)26689

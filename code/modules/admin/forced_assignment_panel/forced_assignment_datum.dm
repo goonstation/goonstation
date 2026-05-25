@@ -54,3 +54,49 @@
 			message_admins("[key_name(forced_assignment.ckey)] assigned to job [forced_job].")
 			logTheThing(LOG_DEBUG, candidate, "assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].")
 			logTheThing(LOG_DIARY, candidate, "forcefully assigned [candidate] (ckey: [forced_assignment.ckey]) to job [forced_job].", "admin")
+
+/datum/forced_assignment/proc/notify_forced_assignment_holder()
+	var/client/holder_client = find_client(src.ckey)
+
+	if (!isclient(holder_client))
+		return
+
+	var/forced_job_text = src.forced_job ? "Your assigned job is [src.forced_job.name]! " : ""
+
+	var/list/forced_antag_display_names = list()
+	for (var/forced_antag_id in src.forced_antags)
+		var/datum/forced_antagonist/forced_antag = src.forced_antags[forced_antag_id]
+		if (!istype(forced_antag, /datum/forced_antagonist))
+			continue
+		forced_antag_display_names += forced_antag.display_name
+
+	var/forced_antag_text = length(forced_antag_display_names) ? "Your antagonist role is: [english_list(forced_antag_display_names)]! " : ""
+
+	var/output = "You are set to be forced-spawned! [forced_job_text][forced_antag_text]Please AHelp if this is unexpected!"
+
+	holder_client.mob?.playsound_local_not_inworld('sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF)
+	boutput(holder_client.mob, SPAN_BLOBALERT(output))
+
+
+/client/proc/cmd_notify_forced_assignment_holders()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Notify Forced Assignment Holders"
+	set desc = "Subtly message everyone who holds a forced assignment."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (src.holder.level < LEVEL_MOD)
+		return
+	if (global.current_state >= GAME_STATE_SETTING_UP)
+		boutput(src, SPAN_ALERT("The round is already in progress!"))
+		return
+	if (!length(job_controls.forced_assignments))
+		return
+
+	for (var/forced_assignment_key in job_controls.forced_assignments)
+		var/datum/forced_assignment/forced_assignment = job_controls.forced_assignments[forced_assignment_key]
+		if (!istype(forced_assignment, /datum/forced_assignment))
+			continue
+		forced_assignment.notify_forced_assignment_holder()
+
+	message_admins("Admin [key_name(src)] sent out notifications to all forced assignment holders!")

@@ -85,7 +85,7 @@ class RspackCompiler {
         return;
       }
       stats
-        ?.toString(this.config.devServer.stats)
+        ?.toString(this.config.stats)
         .split('\n')
         .forEach((line) => logger.log(line));
     });

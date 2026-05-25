@@ -792,6 +792,15 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/engine)
 "adJ" = (
@@ -6504,9 +6513,7 @@
 	name = "Gas Mixer Control (Combustion Chamber)"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
+/obj/noticeboard/persistent/engineering/directional/north,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -21564,6 +21571,12 @@
 	},
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
+/obj/machinery/door_control{
+	id = "engi";
+	name = "Engine Room Shield Control";
+	pixel_x = 5;
+	pixel_y = 27
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -22430,6 +22443,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
@@ -37518,6 +37534,15 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
 "eML" = (
@@ -38433,6 +38458,15 @@
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
 "fre" = (
@@ -39477,7 +39511,7 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Hangar Access"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -43039,6 +43073,15 @@
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "iEM" = (
@@ -43128,6 +43171,15 @@
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "iJw" = (
@@ -44446,7 +44498,6 @@
 	name = "Catering Hangar"
 	})
 "jKQ" = (
-/obj/machinery/firealarm/directional/south,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -47370,7 +47421,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "lUF" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Core Access"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -49936,13 +49987,9 @@
 /turf/simulated/floor,
 /area/station/engine/monitoring)
 "nJe" = (
-/obj/noticeboard/persistent/engineering/directional/north,
 /obj/decal/stripe_delivery,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/station/engine/monitoring)
@@ -50550,6 +50597,15 @@
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/engine)
 "ofw" = (
@@ -50602,6 +50658,8 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
 "ogM" = (
@@ -51797,6 +51855,9 @@
 	},
 /obj/machinery/light{
 	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
 /turf/simulated/floor/yellow/side{
@@ -54383,6 +54444,19 @@
 	dir = 4
 	},
 /area/station/crew_quarters/bar)
+"qKD" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "qKH" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -54762,7 +54836,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "qWU" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
+/obj/machinery/door/airlock/pyro/engineering{
 	name = "Core Access"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -59306,6 +59380,15 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "umE" = (
@@ -60916,6 +60999,15 @@
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
 "vtV" = (
@@ -63264,6 +63356,12 @@
 "xbK" = (
 /obj/cable/orange{
 	icon_state = "1-2"
+	},
+/obj/machinery/door_control{
+	id = "engi";
+	name = "Engine Room Shield Control";
+	pixel_x = 24;
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
@@ -112750,7 +112848,7 @@ adC
 adC
 adC
 jKQ
-bsN
+qKD
 nJe
 lWj
 oOe

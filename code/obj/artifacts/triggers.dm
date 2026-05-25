@@ -1,5 +1,8 @@
 // TRIGGERS
 
+// Maximum number of 5-letter words language artifacts will check in a sentence. Here to prevent abuse.
+#define ARTIFACT_LANGUAGE_SENTENCE_CHECK 3
+
 ABSTRACT_TYPE(/datum/artifact_trigger/)
 /datum/artifact_trigger
 	var/type_name = "bad artifact code"
@@ -132,9 +135,16 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	proc/speech_act(text)
 		if (!text)
 			return
-		text = ckey(text)
-		if (length(text) != 5)
-			return "hint"
+		var/text_cleaned = ckey(text)
+		if (length(text_cleaned) == 5)
+			return speech_act_word(text_cleaned)
+
+		var/list/ignore_characters = list(".",",","!","?","(",")","*","%","$","#","/",";",":","\"","'","_","+","=","&")
+		for(var/char in ignore_characters)
+			text = replacetext(text, char, " ")
+		return speech_act_sentence(text)
+
+	proc/speech_act_word(var/text)
 		if (!(text in src.word_dict))
 			return "error"
 		var/input_vowels = 0
@@ -160,3 +170,25 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 		if (correct_vowels > 0)
 			return " emits [correct_vowel_msg]."
 		return " emits [misplaced_vowel_msg]."
+
+	proc/speech_act_sentence(var/text)
+		if (!text)
+			return
+		var/list/words = splittext(text, " ")
+
+		var/check_count = 0
+		for(var/word in words)
+			word = ckey(word)
+			if((length(word) == 6 && copytext(word, 6, 7) == "s") || (length(word) == 7 && copytext(word, 6, 8) == "es"))
+				word = copytext(word, 1, 6) // Assume that the word is plural
+			else if(length(word) != 5)
+				continue
+			check_count++;
+			var/result_word = speech_act_word(word)
+			if(result_word == "correct")
+				return "correct"
+			if(check_count == ARTIFACT_LANGUAGE_SENTENCE_CHECK)
+				return "hint"
+		return "hint"
+
+#undef ARTIFACT_LANGUAGE_SENTENCE_CHECK
