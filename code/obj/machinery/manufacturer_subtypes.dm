@@ -656,6 +656,7 @@
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
+		/datum/manufacture/eyes_meson,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/pod/weapon/efif1,
