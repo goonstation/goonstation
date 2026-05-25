@@ -249,44 +249,66 @@
 /obj/item/reagent_containers/food/drinks/fruitmilk
 	name = "Creaca's Fruit Milk "
 	desc = "Milk and 'fruit' of undetermined origin; finally, together at last."
-	icon_state = "fruitmilk"
+	icon_state = "fruitmilk-pineapple"
+	item_state = "fruitmilk"
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("milk"=20)
+	New()
+		. = ..()
+
+			src.AddComponent( \
+				/datum/component/reagent_overlay, \
+				reagent_overlay_icon = 'icons/obj/foodNdrink/drinks.dmi', \
+				reagent_overlay_icon_state = "fruitmilk", \
+				reagent_overlay_states = 5, \
+				reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+			)
 
 	New()
 		switch(rand(1,10))
 			if (1)
 				src.name += "Synthetic Tropical Dawn flavor"
+				icon_state = "fruitmilk-pineapple"
 				src.initial_reagents["juice_pineapple"] = 30
 			if (2)
 				src.name += "Changing Cherry Red flavor"
+				icon_state = "fruitmilk-cherry"
 				src.initial_reagents["juice_cherry"] = 30
 			if (3)
 				src.name += "Curdled Lemon Twist flavor"
+				icon_state = "fruitmilk-lemon"
 				src.initial_reagents["juice_lemon"] = 30
 			if (4)
 				src.name += "Earth Dreamer Lime flavor"
+				icon_state = "fruitmilk-lime"
 				src.initial_reagents["juice_lime"] = 30
 			if (5)
 				src.name += "Odyssey Orange flavor"
+				icon_state = "fruitmilk-orange"
 				src.initial_reagents["juice_orange"] = 30
 			if (6)
 				src.name += "Strawberry and Cream flavor"
+				icon_state = "fruitmilk-strawberry"
 				src.initial_reagents["juice_strawberry"] = 30
 			if (7)
 				src.name += "Seasonal Peach Blossom flavor"
+				icon_state = "fruitmilk-peach"
 				src.initial_reagents["juice_peach"] = 30
 			if (8)
 				src.name += "Surprise Mystery flavor"
+				icon_state = "fruitmilk-mystery"
 				src.initial_reagents["juice_pickle"] = 20
 				src.initial_reagents["neurodepressant"] = 5
 				src.initial_reagents["msg"] = 5
 			if (9)
 				src.name += "Little Soups flavor"
+				icon_state = "fruitmilk-tomato"
 				src.initial_reagents["juice_tomato"] = 30
 			if (10)
 				src.name += "Artificial Autumn flavor"
+				icon_state = "fruitmilk-autumn"
 				src.initial_reagents["juice_pumpkin"] = 30
 
 		..()
