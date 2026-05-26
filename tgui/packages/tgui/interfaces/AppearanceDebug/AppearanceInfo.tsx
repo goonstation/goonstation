@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ByondUi,
+  ColorBox,
   LabeledList,
   Section,
   Tooltip,
@@ -62,19 +63,6 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
             params={{
               id: mapRefSelected,
               type: 'map',
-              view: '1',
-            }}
-          />
-          <Box
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '32px',
-              height: '32px',
-              border: '1px dashed #4488ff',
-              pointerEvents: 'none',
             }}
           />
         </Box>
@@ -119,9 +107,17 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
           </LabeledList.Item>
           {!!appearance.data.color && (
             <LabeledList.Item label="color">
-              {typeof appearance.data.color === 'string'
-                ? appearance.data.color
-                : `[${appearance.data.color.join(', ')}]`}
+              {typeof appearance.data.color === 'string' ? (
+                <>
+                  {appearance.data.color}
+                  <ColorBox
+                    color={appearance.data.color}
+                    style={{ marginLeft: '4px' }}
+                  />
+                </>
+              ) : (
+                `[${appearance.data.color.join(', ')}]`
+              )}
             </LabeledList.Item>
           )}
           <LabeledList.Item label="dir">

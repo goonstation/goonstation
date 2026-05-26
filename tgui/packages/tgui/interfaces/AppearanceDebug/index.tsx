@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useBackend } from '../../backend';
 import {
   Box,
@@ -43,7 +43,7 @@ function mapAppearance(
   depth: number = 0,
   appearances: AppearanceMap = {},
   planeFilter: number | null,
-  hideEmissives: boolean,
+  // hideEmissives: boolean,
   keepTogether: boolean,
 ): Appearance {
   if (appearance_data.flags & APPEARANCE_FLAGS.KEEP_APART) keepTogether = false;
@@ -89,12 +89,12 @@ function mapAppearance(
   }
 
   // Filter emissives
-  if (
-    hideEmissives &&
-    (isEmissive(appearance) || isEmissiveBlocker(appearance))
-  ) {
-    appearance.hidden = HiddenState.Hidden;
-  }
+  // if (
+  //   hideEmissives &&
+  //   (isEmissive(appearance) || isEmissiveBlocker(appearance))
+  // ) {
+  //   appearance.hidden = HiddenState.Hidden;
+  // }
 
   appearances[appearance_data.id] = appearance;
 
@@ -119,7 +119,7 @@ function mapAppearance(
           depth + 1,
           appearances,
           planeFilter,
-          hideEmissives,
+          // hideEmissives,
           keepTogether ||
             !!(appearance.data.flags & APPEARANCE_FLAGS.KEEP_TOGETHER),
         ),
@@ -156,7 +156,7 @@ function mapAppearance(
           depth + 1,
           appearances,
           planeFilter,
-          hideEmissives,
+          // hideEmissives,
           keepTogether ||
             !!(appearance.data.flags & APPEARANCE_FLAGS.KEEP_TOGETHER),
         ),
@@ -197,9 +197,8 @@ function getAppearanceHeight(appearance: Appearance) {
 }
 
 export function isEmissive(appearance: Appearance) {
-  // Emissive appearances typically have a specific plane
-  // For goonstation, we'll use PLANE_SELFILLUM (-80) as the emissive equivalent
-  const EMISSIVE_PLANE = -80;
+  // Emissive appearances on goonstation use PLANE_LIGHTING (-90)
+  const EMISSIVE_PLANE = -90;
   if (appearance.data.plane_true !== EMISSIVE_PLANE) return false;
   if (!appearance.data.color) return false;
   if (
@@ -216,7 +215,7 @@ export function isEmissive(appearance: Appearance) {
 }
 
 export function isEmissiveBlocker(appearance: Appearance) {
-  const EMISSIVE_PLANE = -80;
+  const EMISSIVE_PLANE = -90;
   if (appearance.data.plane_true !== EMISSIVE_PLANE || !appearance.data.color)
     return false;
   if (appearance.data.color === '#000000') return true;
@@ -298,7 +297,7 @@ function parseAppearanceData(
   layerToText: Record<string, number>,
   planeToText: Record<string, number>,
   planeFilter: number | null,
-  hideEmissives: boolean,
+  // hideEmissives: boolean,
 ): AppearanceMap {
   const appearances: AppearanceMap = {};
   const primary: Appearance = mapAppearance(
@@ -308,7 +307,7 @@ function parseAppearanceData(
     0,
     appearances,
     planeFilter,
-    hideEmissives,
+    // hideEmissives,
     !!(mainAppearance.flags & APPEARANCE_FLAGS.KEEP_TOGETHER),
   );
 
@@ -465,18 +464,32 @@ export function AppearanceDebug() {
     updateWarning,
   } = data;
   const [planeFilter, setPlaneFilter] = useState<string | null>(null);
-  const [hideEmissives, setHideEmissives] = useState(false);
+  // const [hideEmissives, setHideEmissives] = useState(false);
 
   const appsProcessed = parseAppearanceData(
     mainAppearance,
     layerToText,
     planeToText,
     planeFilter ? planeToText[planeFilter] : null,
-    hideEmissives,
+    // hideEmissives,
   );
   const [zoomToX, setZoomToX] = useState<number>();
   const [zoomToY, setZoomToY] = useState<number>();
   const [selection, setSelection] = useState<number | null>(null);
+
+  const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastHoverId = useRef<number | null>(null);
+  const debouncedHover = useCallback(
+    (id: number) => {
+      if (lastHoverId.current === id) return;
+      if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+      hoverTimeout.current = setTimeout(() => {
+        lastHoverId.current = id;
+        act('swapMapViewHover', { id });
+      }, 90); // 90ms
+    },
+    [act],
+  );
 
   function mapPosition(
     appearance: Appearance,
@@ -578,7 +591,7 @@ export function AppearanceDebug() {
                 }}
               />
             </Stack.Item>
-            <Stack.Item>
+            {/* <Stack.Item>
               <Button
                 color={hideEmissives ? 'green' : 'transparent'}
                 tooltip="Hide Emissives"
@@ -589,7 +602,7 @@ export function AppearanceDebug() {
                   setHideEmissives(!hideEmissives);
                 }}
               />
-            </Stack.Item>
+            </Stack.Item> */}
             <Stack.Item>
               <Button
                 color="transparent"
@@ -622,35 +635,14 @@ export function AppearanceDebug() {
                 backgroundColor: '#1a1a1a',
               }}
             >
-              <Box
-                style={{
-                  position: 'relative',
-                  width: '128px',
-                  height: '128px',
+              <ByondUi
+                width="128px"
+                height="128px"
+                params={{
+                  id: mapRefHover,
+                  type: 'map',
                 }}
-              >
-                <ByondUi
-                  width="128px"
-                  height="128px"
-                  params={{
-                    id: mapRefHover,
-                    type: 'map',
-                    view: '1',
-                  }}
-                />
-                <Box
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '32px',
-                    height: '32px',
-                    border: '1px dashed #4488ff',
-                    pointerEvents: 'none',
-                  }}
-                />
-              </Box>
+              />
             </Box>
           )}
           <InfinitePlane
@@ -671,14 +663,12 @@ export function AppearanceDebug() {
                   key={keyValue[0]}
                   appearance={keyValue[1]}
                   position={mapPosition(keyValue[1], appearancePositions)}
+                  onMouseOver={() => debouncedHover(keyValue[1].data.id)}
                   onClick={() => {
                     setSelection(keyValue[1].data.id);
                     setZoomToX(mapPosition(keyValue[1], appearancePositions).x);
                     setZoomToY(mapPosition(keyValue[1], appearancePositions).y);
                     act('swapMapViewSelected', {
-                      id: keyValue[1].data.id,
-                    });
-                    act('swapMapViewHover', {
                       id: keyValue[1].data.id,
                     });
                   }}

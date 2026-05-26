@@ -127,6 +127,14 @@
 				var/icon/used_icon = icon(target.icon, target_state, use_dir, frame = 1)
 				if (istext(target.color))
 					used_icon.Blend(target.color, ICON_MULTIPLY)
+				else if (islist(target.color))
+					var/list/cm = target.color
+					if (length(cm) >= 12)
+						var/r = cm[1]
+						var/g = cm[6]
+						var/b = cm[11]
+						if (r != 1 || g != 1 || b != 1)
+							used_icon.Blend(rgb(round(r * 255), round(g * 255), round(b * 255)), ICON_MULTIPLY)
 				data["embed_icon"] = icon2base64(used_icon)
 			else if (length(target_state))
 				data["embed_icon_error"] = "'[target_state]' not found in [target.icon]"
