@@ -708,7 +708,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-/datum/bioEffect/xray // made unobtainable due to being too strong but a lot of things depend on it.
+/datum/bioEffect/xray
 	name = "X-Ray Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
 	id = "xray"
@@ -727,7 +727,7 @@
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 	effect_group = "vision"
-	occur_in_genepools = 0
+	occur_in_genepools = 0 // Made unobtainable via genetics to give more room for stealthy antagonists
 	probability = 0
 	scanner_visibility = 0
 	can_research = 0
