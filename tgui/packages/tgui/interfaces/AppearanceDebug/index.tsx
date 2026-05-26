@@ -227,38 +227,41 @@ function getAppearanceWidth(
   layerToText: Record<string, number>,
   planeToText: Record<string, number>,
 ) {
-  return Math.max(
-    textWidth(
-      (appearance.data.name || appearance.data.icon_state) +
-        (isEmissive(appearance)
-          ? ' (Emissive)'
-          : isEmissiveBlocker(appearance)
-            ? ' (Emissive Blocker)'
-            : ''),
-      'Verdana, Geneva',
-      12,
-    ) + 18,
-    textWidth(`icon: ${appearance.data.icon}`, 'Verdana, Geneva', 12) + 12,
-    textWidth(
-      `icon_state: ${appearance.data.icon_state}`,
-      'Verdana, Geneva',
-      12,
-    ) + 12,
-    layerToText
-      ? textWidth(
-          `layer: ${getReadableLayer(appearance, layerToText)}`,
-          'Verdana, Geneva',
-          12,
-        ) + 12
-      : 0,
-    planeToText
-      ? textWidth(
-          `plane: ${getReadablePlane(appearance, planeToText)}`,
-          'Verdana, Geneva',
-          12,
-        ) + 12
-      : 0,
-    150,
+  return Math.min(
+    220,
+    Math.max(
+      textWidth(
+        (appearance.data.name || appearance.data.icon_state) +
+          (isEmissive(appearance)
+            ? ' (Emissive)'
+            : isEmissiveBlocker(appearance)
+              ? ' (Emissive Blocker)'
+              : ''),
+        'Verdana, Geneva',
+        12,
+      ) + 42,
+      textWidth(`icon: ${appearance.data.icon}`, 'Verdana, Geneva', 12) + 12,
+      textWidth(
+        `icon_state: ${appearance.data.icon_state}`,
+        'Verdana, Geneva',
+        12,
+      ) + 12,
+      layerToText
+        ? textWidth(
+            `layer: ${getReadableLayer(appearance, layerToText)}`,
+            'Verdana, Geneva',
+            12,
+          ) + 12
+        : 0,
+      planeToText
+        ? textWidth(
+            `plane: ${getReadablePlane(appearance, planeToText)}`,
+            'Verdana, Geneva',
+            12,
+          ) + 12
+        : 0,
+      150,
+    ),
   );
 }
 
@@ -344,7 +347,7 @@ function parseAppearanceData(
         overlay.relativePosition.x =
           -STACK_COLUMN_GAP -
           getAppearanceWidth(overlay, layerToText, planeToText);
-        overlay.relativePosition.y = -minHeight - overlayBounds[1].y;
+        overlay.relativePosition.y = minHeight - overlayBounds[0].y;
         const totalHeight =
           overlayBounds[1].y - overlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
         minHeight += totalHeight;
@@ -376,7 +379,7 @@ function parseAppearanceData(
         underlay.relativePosition.x =
           -STACK_COLUMN_GAP -
           getAppearanceWidth(underlay, layerToText, planeToText);
-        underlay.relativePosition.y = minHeight + getAppearanceHeight(underlay);
+        underlay.relativePosition.y = minHeight - underlayBounds[0].y;
         const totalHeight =
           underlayBounds[1].y - underlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
         minHeight += totalHeight;
@@ -538,6 +541,8 @@ export function AppearanceDebug() {
   }
 
   const NODE_PADDING = 20;
+  const OVERLAY_NODE_INPUT_PADDING = 60;
+  const UNDERLAY_NODE_INPUT_PADDING = 40;
 
   const appearancePositions: Record<number, Coordinates> = {};
   const connections: Connection[] = [];
@@ -553,7 +558,6 @@ export function AppearanceDebug() {
     const childHeight = getAppearanceHeight(appearance);
     const parentHeight = getAppearanceHeight(appearance.parent);
 
-    // All children are to the LEFT of parent
     connections.push({
       from: {
         x: position.x + childWidth - NODE_PADDING,
@@ -561,7 +565,10 @@ export function AppearanceDebug() {
       },
       to: {
         x: parentPosition.x + NODE_PADDING,
-        y: parentPosition.y + parentHeight / 2,
+        y:
+          appearance.parentType === AppearanceParentType.Overlay
+            ? parentPosition.y + OVERLAY_NODE_INPUT_PADDING
+            : parentPosition.y + parentHeight - UNDERLAY_NODE_INPUT_PADDING,
       },
       index: connectionIndex,
       color: `hsl(${60 + 5 * (connectionIndex % 30)}, 50%, ${50 + (connectionIndex % 30)}%)`,

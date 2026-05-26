@@ -25,6 +25,11 @@ export type AppearanceProps = {
 export function AppearanceBox(props: AppearanceProps) {
   const { appearance, position, onClick, onMouseEnter } = props;
   const { planeToText, layerToText, act } = useAppearanceDebugContext();
+  const singleLineStyle = {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  } as const;
 
   return (
     <>
@@ -88,7 +93,7 @@ export function AppearanceBox(props: AppearanceProps) {
           }}
         >
           <Stack>
-            <Stack.Item grow>
+            <Stack.Item grow style={singleLineStyle}>
               {appearance.data.name || appearance.data.icon_state}
               {isEmissive(appearance)
                 ? ' (Emissive)'
@@ -97,16 +102,16 @@ export function AppearanceBox(props: AppearanceProps) {
                   : ''}
             </Stack.Item>
             <Stack.Item>
-              {appearance.data.type === AppearanceType.Atom && (
-                <Button
-                  icon="pager"
-                  compact
-                  tooltip="View Variables"
-                  onClick={() =>
-                    act('vvAppearance', { id: appearance.data.id })
-                  }
-                />
-              )}
+              <Button
+                icon="pager"
+                compact
+                tooltip={
+                  appearance.data.type === AppearanceType.Atom
+                    ? 'View Variables (Atom)'
+                    : 'View Variables (Appearance Copy)'
+                }
+                onClick={() => act('vvAppearance', { id: appearance.data.id })}
+              />
             </Stack.Item>
           </Stack>
         </Box>
@@ -122,30 +127,29 @@ export function AppearanceBox(props: AppearanceProps) {
         >
           <Stack vertical>
             {appearance.data.icon && (
-              <Stack.Item
-                style={{
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                }}
-              >
+              <Stack.Item style={singleLineStyle}>
                 icon: {appearance.data.icon}
               </Stack.Item>
             )}
             {appearance.data.icon_state && (
-              <Stack.Item>icon_state: {appearance.data.icon_state}</Stack.Item>
+              <Stack.Item style={singleLineStyle}>
+                icon_state: {appearance.data.icon_state}
+              </Stack.Item>
             )}
-            <Stack.Item>
+            <Stack.Item style={singleLineStyle}>
               layer: {getReadableLayer(appearance, layerToText)}
             </Stack.Item>
             <Stack.Item
               style={{
                 borderBottom: '1px dashed hsl(0, 0%, 60%)',
                 paddingBottom: '0.5rem',
+                overflow: 'hidden',
               }}
             >
               <Tooltip content={`True plane: ${appearance.data.plane_true}`}>
-                plane: {getReadablePlane(appearance, planeToText)}
+                <Box style={singleLineStyle}>
+                  plane: {getReadablePlane(appearance, planeToText)}
+                </Box>
               </Tooltip>
             </Stack.Item>
             {!!appearance.data.embed_icon && (

@@ -128,7 +128,7 @@
 			var/target_state = target.icon_state || ""
 			if (target_state in states)
 				var/use_dir = target.dir ? target.dir : SOUTH
-				var/icon/used_icon = icon(target.icon, target_state, use_dir, frame = 1)
+				var/icon/used_icon = icon(target.icon, target_state, use_dir, 1)
 				if (istext(target.color))
 					used_icon.Blend(target.color, ICON_MULTIPLY)
 				else if (islist(target.color))
@@ -301,8 +301,16 @@
 
 		if("vvAppearance")
 			var/appearance_id = text2num(params["id"])
-			if (appearance_id && atom_refs["[appearance_id]"])
+			if (!appearance_id || appearance_id > length(appearance_copies))
+				return
+			// For atoms, VV the real atom so the user sees live variables
+			// For everything else (mutable_appearance, image), generate a VV-style
+			// display since debug_variables() only accepts /datum subtypes
+			if (atom_refs["[appearance_id]"])
 				owner.debug_variables(atom_refs["[appearance_id]"])
+			else
+				var/mutable_appearance/app = appearance_copies[appearance_id]
+				owner.debug_appearance_copy(app)
 
 /datum/appearance_debugger/ui_close(mob/user)
 	qdel(src)
@@ -443,3 +451,68 @@
 		"MOB_TAIL_LAYER2" = MOB_TAIL_LAYER2,
 		"MOB_TAIL_LAYER1" = MOB_TAIL_LAYER1,
 	)
+
+/// Display a VV-style window for a mutable_appearance copy.
+/// debug_variables() only accepts /datum subtypes; mutable_appearance is a BYOND built-in, not a datum.
+/client/proc/debug_appearance_copy(mutable_appearance/app)
+	if (!app || !src.holder || src.holder.level < LEVEL_PA)
+		return
+
+	var/title = "Mutable Appearance ([app.type])"
+
+	// mutable_appearance is a BYOND built-in and does not expose .vars
+	// Enumerate appearance properties explicitly
+	var/list/props = list(
+		"alpha" = app.alpha,
+		"appearance_flags" = app.appearance_flags,
+		"blend_mode" = app.blend_mode,
+		"color" = app.color,
+		"dir" = app.dir,
+		"icon" = "[app.icon]",
+		"icon_state" = app.icon_state,
+		"invisibility" = app.invisibility,
+		"layer" = app.layer,
+		"maptext" = app.maptext,
+		"maptext_height" = app.maptext_height,
+		"maptext_width" = app.maptext_width,
+		"maptext_x" = app.maptext_x,
+		"maptext_y" = app.maptext_y,
+		"mouse_opacity" = app.mouse_opacity,
+		"name" = app.name,
+		"pixel_w" = app.pixel_w,
+		"pixel_x" = app.pixel_x,
+		"pixel_y" = app.pixel_y,
+		"pixel_z" = app.pixel_z,
+		"plane" = app.plane,
+		"render_source" = app.render_source,
+		"render_target" = app.render_target,
+		"screen_loc" = app.screen_loc,
+		"suffix" = app.suffix,
+		"text" = app.text,
+		"transform" = app.transform,
+	)
+
+	var/list/rows = list()
+	for (var/V in props)
+		var/val = props[V]
+		var/display = isnull(val) ? "<em>null</em>" : html_encode("[val]")
+		rows += "<tr><td style='min-width:150px'><strong>[html_encode(V)]</strong></td><td><code>[display]</code></td></tr>"
+
+	var/html = {"
+<html>
+<head>
+	<title>[title]</title>
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	[Make_view_variabls_style()]
+</head>
+<body>
+	<strong>[title]</strong>
+	<hr>
+	<table>
+		<thead><tr><th>Var</th><th>Value</th></tr></thead>
+		<tbody>[rows.Join()]</tbody>
+	</table>
+</body>
+</html>
+"}
+	Browse(html, "window=appearance_copy_vv_\ref[app];size=500x400")
