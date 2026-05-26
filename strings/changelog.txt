@@ -1,5 +1,9 @@
 
 (t)mon may 25 26
+(u)ANNmagedon
+(p)26708
+(e)💅🛠️|C-QoL, A-Engineering
+(+)Added meson goggles to the Engineering Specialist Manufacturer, for compliance with Space OSHA 1910.133 Section (a)(1)
 (u)JORJ949
 (p)26656
 (e)⚖📦|C-Balance, A-Game-Objects

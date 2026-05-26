@@ -84,7 +84,7 @@ function ComponentsPage() {
       <a
         href="https://tgstation.github.io/tgui-core"
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noreferrer"
       >
         https://tgstation.github.io/tgui-core
       </a>
