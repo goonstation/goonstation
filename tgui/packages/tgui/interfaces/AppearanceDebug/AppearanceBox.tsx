@@ -18,11 +18,11 @@ export type AppearanceProps = {
   appearance: Appearance;
   position: Coordinates;
   onClick: React.MouseEventHandler<HTMLDivElement>;
-  onMouseOver?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
 };
 
 export function AppearanceBox(props: AppearanceProps) {
-  const { appearance, position, onClick, onMouseOver } = props;
+  const { appearance, position, onClick, onMouseEnter } = props;
   const { planeToText, layerToText, act } = useAppearanceDebugContext();
 
   return (
@@ -62,7 +62,7 @@ export function AppearanceBox(props: AppearanceProps) {
         minWidth="150px"
         maxWidth="220px"
         onClick={onClick}
-        onMouseOver={onMouseOver}
+        onMouseEnter={onMouseEnter}
         style={{
           zIndex: 1,
           borderRadius: '6px',
