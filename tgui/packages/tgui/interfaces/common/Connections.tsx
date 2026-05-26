@@ -1,7 +1,7 @@
 import { classes } from 'tgui-core/react';
 
 import { CSS_COLORS } from '../../constants';
-import { Coordinates } from './types';
+import { Coordinates } from '../AppearanceDebug/types';
 
 const SVG_CURVE_INTENSITY = 64;
 

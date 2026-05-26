@@ -95,6 +95,7 @@ export type AppearanceData = {
   screen_loc: string | null;
   transform: number[];
   embed_icon: string | null;
+  embed_icon_error: string | null;
   vis_flags: number | null;
 };
 

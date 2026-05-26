@@ -13,6 +13,8 @@ type AppearanceDebugContextType = {
   flagsToText: Record<string, number>;
   visToText: Record<string, number>;
   blendToText: Record<string, string>;
+  mapRefHover: string;
+  mapRefSelected: string;
   appsProcessed: AppearanceMap;
   zoomToX: number | undefined;
   setZoomToX: Dispatch<SetStateAction<number | undefined>>;

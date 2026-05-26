@@ -1,5 +1,4 @@
 import { Box, Button, Image, Stack, Tooltip } from 'tgui-core/components';
-import { classes } from 'tgui-core/react';
 import {
   getReadableLayer,
   getReadablePlane,
@@ -60,8 +59,14 @@ export function AppearanceBox(props: AppearanceProps) {
         left={`${position.x}px`}
         top={`${position.y}px`}
         minWidth="150px"
+        maxWidth="220px"
         onClick={onClick}
-        style={{ zIndex: 1 }}
+        style={{
+          zIndex: 1,
+          borderRadius: '6px',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          overflow: 'hidden',
+        }}
         opacity={appearance.hidden === HiddenState.VisibleChild ? 0.7 : 1}
       >
         <Box
@@ -74,7 +79,10 @@ export function AppearanceBox(props: AppearanceProps) {
           }
           py={1}
           px={1}
-          className="ObjectComponent__Titlebar"
+          style={{
+            borderRadius: '6px 6px 0 0',
+            fontWeight: 'bold',
+          }}
         >
           <Stack>
             <Stack.Item grow>
@@ -86,40 +94,85 @@ export function AppearanceBox(props: AppearanceProps) {
                   : ''}
             </Stack.Item>
             <Stack.Item>
-              <Button
-                icon="pager"
-                compact
-                tooltip="View Variables (Mirror)"
-                onClick={() => act('vvAppearance', { id: appearance.data.id })}
-              />
+              {appearance.data.type === AppearanceType.Atom && (
+                <Button
+                  icon="pager"
+                  compact
+                  tooltip="View Variables"
+                  onClick={() =>
+                    act('vvAppearance', { id: appearance.data.id })
+                  }
+                />
+              )}
             </Stack.Item>
           </Stack>
         </Box>
 
-        <Box className={classes(['ObjectComponent__Content'])} py={1} px={1}>
+        <Box
+          py={1}
+          px={1}
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            borderRadius: '0 0 6px 6px',
+            borderTop: 'none',
+          }}
+        >
           <Stack vertical>
             {appearance.data.icon && (
-              <Stack.Item>icon: {appearance.data.icon}</Stack.Item>
+              <Stack.Item
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                icon: {appearance.data.icon}
+              </Stack.Item>
             )}
             {appearance.data.icon_state && (
               <Stack.Item>icon_state: {appearance.data.icon_state}</Stack.Item>
             )}
             <Stack.Item>
-              layer:{` ${getReadableLayer(appearance, layerToText)}`}
+              layer: {getReadableLayer(appearance, layerToText)}
             </Stack.Item>
-            <Stack.Item style={{ borderBottom: '1px dashed hsl(0, 0%, 60%)' }}>
+            <Stack.Item
+              style={{
+                borderBottom: '1px dashed hsl(0, 0%, 60%)',
+                paddingBottom: '0.5rem',
+              }}
+            >
               <Tooltip content={`True plane: ${appearance.data.plane_true}`}>
-                plane:{` ${getReadablePlane(appearance, planeToText)}`}
+                plane: {getReadablePlane(appearance, planeToText)}
               </Tooltip>
             </Stack.Item>
             {!!appearance.data.embed_icon && (
-              <Stack.Item height="64px" width="64px">
+              <Stack.Item>
                 <Image
                   src={`data:image/png;base64,${appearance.data.embed_icon}`}
                   height="64px"
                   width="64px"
-                  m="2px"
+                  objectFit="contain"
                 />
+              </Stack.Item>
+            )}
+            {!!appearance.data.embed_icon_error && (
+              <Stack.Item>
+                <Box
+                  px={1}
+                  py={0.5}
+                  style={{
+                    backgroundColor: '#800080aa',
+                    color: '#fff',
+                    fontWeight: '600',
+                    fontSize: '10px',
+                    border: '2px solid #000',
+                    backgroundImage:
+                      'repeating-linear-gradient(45deg, #000 0px, #000 4px, #800080aa 4px, #800080aa 8px)',
+                    wordBreak: 'break-word',
+                  }}
+                >
+                  {appearance.data.embed_icon_error}
+                </Box>
               </Stack.Item>
             )}
           </Stack>

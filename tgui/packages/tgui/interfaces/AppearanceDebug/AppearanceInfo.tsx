@@ -1,4 +1,11 @@
-import { Button, LabeledList, Section, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  ByondUi,
+  LabeledList,
+  Section,
+  Tooltip,
+} from 'tgui-core/components';
 import { getReadableLayer, getReadablePlane } from '.';
 import { type Appearance, AppearanceType, DIR, MOUSE_OPACITY } from './types';
 import { useAppearanceDebugContext } from './useAppearanceDebug';
@@ -10,8 +17,15 @@ export type AppearanceInfoProps = {
 
 export function AppearanceInfo(props: AppearanceInfoProps) {
   const { appearance, onClose } = props;
-  const { planeToText, layerToText, flagsToText, visToText, blendToText } =
-    useAppearanceDebugContext();
+  const {
+    planeToText,
+    layerToText,
+    flagsToText,
+    visToText,
+    blendToText,
+    mapRefSelected,
+    act,
+  } = useAppearanceDebugContext();
   return (
     <Section
       fill
@@ -22,8 +36,49 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
       right="0px"
       backgroundColor="#121212DA"
       title={`Appearance Debug: ${appearance.data.name || appearance.data.icon_state}`}
-      buttons={<Button icon="times" tooltip="Close" onClick={onClose} />}
+      buttons={
+        <>
+          {appearance.data.type === AppearanceType.Atom && (
+            <Button
+              icon="pager"
+              tooltip="View Variables"
+              onClick={() => act('vvAppearance', { id: appearance.data.id })}
+            />
+          )}
+          <Button icon="times" tooltip="Close" onClick={onClose} />
+        </>
+      }
     >
+      {!!mapRefSelected && (
+        <Box
+          style={{
+            position: 'relative',
+            backgroundColor: '#1a1a1a',
+          }}
+        >
+          <ByondUi
+            width="384px"
+            height="160px"
+            params={{
+              id: mapRefSelected,
+              type: 'map',
+              view: '1',
+            }}
+          />
+          <Box
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '32px',
+              height: '32px',
+              border: '1px dashed #4488ff',
+              pointerEvents: 'none',
+            }}
+          />
+        </Box>
+      )}
       <Section title="Information">
         <LabeledList>
           <LabeledList.Item label="Type">
@@ -136,7 +191,14 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
             </LabeledList.Item>
           )}
           <LabeledList.Item label="transform">
-            {`[${appearance.data.transform.join(', ')}]`}
+            {appearance.data.transform[0] === 1 &&
+            appearance.data.transform[1] === 0 &&
+            appearance.data.transform[2] === 0 &&
+            appearance.data.transform[3] === 0 &&
+            appearance.data.transform[4] === 1 &&
+            appearance.data.transform[5] === 0
+              ? 'NONE'
+              : `[${appearance.data.transform.join(', ')}]`}
           </LabeledList.Item>
           {appearance.data.vis_flags !== null && (
             <LabeledList.Item label="vis_flags">

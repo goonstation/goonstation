@@ -3,6 +3,7 @@ import { useBackend } from '../../backend';
 import {
   Box,
   Button,
+  ByondUi,
   Dropdown,
   InfinitePlane,
   Stack,
@@ -10,7 +11,7 @@ import {
 import { Window } from '../../layouts';
 import { AppearanceBox } from './AppearanceBox';
 import { AppearanceInfo } from './AppearanceInfo';
-import { type Connection, Connections } from './Connections';
+import { type Connection, Connections } from '../common/Connections';
 import type {
   Appearance,
   AppearanceData,
@@ -191,6 +192,7 @@ function getAppearanceHeight(appearance: Appearance) {
   if (appearance.data.plane) rows++;
   let height = COLUMN_BREAK + TITLEBAR + rows * 15 + (rows - 1) * 6 - 8;
   if (appearance.data.embed_icon) height += 64 + 6;
+  if (appearance.data.embed_icon_error) height += 70;
   return height;
 }
 
@@ -325,37 +327,76 @@ function parseAppearanceData(
   });
 
   // Position children relative to parent
-  function positionChildren(appearance: Appearance) {
-    const width = getAppearanceWidth(appearance, layerToText, planeToText);
-    const height = getAppearanceHeight(appearance);
-    const NODE_PADDING = 20;
+  const STACK_COLUMN_GAP = 60;
+  const VERTICAL_APPEARANCE_GAP = 15;
+  const CENTRAL_APPEARANCE_GAP = 30;
+  const KEEP_APART_TOGETHER_GAP = 18;
+  const KEEP_APART_TOGETHER_GAP_TOP = 30;
 
-    let underlayY = height - 40;
-    if (appearance.underlays) {
-      for (const underlay of appearance.underlays) {
-        if (underlay.hidden === HiddenState.Hidden) continue;
-        underlay.relativePosition = {
-          x: -(
-            getAppearanceWidth(underlay, layerToText, planeToText) +
-            NODE_PADDING
-          ),
-          y: underlayY,
-        };
-        underlayY += getAppearanceHeight(underlay) + NODE_PADDING;
-        positionChildren(underlay);
+  function positionChildren(appearance: Appearance) {
+    const height = getAppearanceHeight(appearance);
+
+    if (appearance.overlays) {
+      let minHeight = -height / 2 + CENTRAL_APPEARANCE_GAP / 2;
+      let totalOverlayHeight = 0;
+      for (let i = 0; i < appearance.overlays.length; i++) {
+        const overlay = appearance.overlays[i];
+        if (overlay.hidden === HiddenState.Hidden) continue;
+        positionChildren(overlay);
+        const overlayBounds = getBoundingBox(overlay);
+        overlay.boundingBox = overlayBounds;
+        overlay.relativePosition.x =
+          -STACK_COLUMN_GAP -
+          getAppearanceWidth(overlay, layerToText, planeToText);
+        overlay.relativePosition.y = -minHeight - overlayBounds[1].y;
+        const totalHeight =
+          overlayBounds[1].y - overlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
+        minHeight += totalHeight;
+        totalOverlayHeight += totalHeight;
+      }
+      // If we don't have any underlays, shift all overlays down
+      if (
+        !appearance.underlays?.filter((x) => x.hidden !== HiddenState.Hidden)
+          .length
+      ) {
+        const staticShift =
+          CENTRAL_APPEARANCE_GAP / 2 +
+          (totalOverlayHeight - VERTICAL_APPEARANCE_GAP) / 2;
+        for (let i = 0; i < appearance.overlays.length; i++) {
+          appearance.overlays[i].relativePosition.y += staticShift;
+        }
       }
     }
 
-    let overlayY = 40;
-    if (appearance.overlays) {
-      for (const overlay of appearance.overlays) {
-        if (overlay.hidden === HiddenState.Hidden) continue;
-        overlay.relativePosition = {
-          x: width + NODE_PADDING,
-          y: overlayY,
-        };
-        overlayY += getAppearanceHeight(overlay) + NODE_PADDING;
-        positionChildren(overlay);
+    if (appearance.underlays) {
+      let minHeight = height / 2 - CENTRAL_APPEARANCE_GAP / 2;
+      let totalUnderlayHeight = 0;
+      for (let i = 0; i < appearance.underlays.length; i++) {
+        const underlay = appearance.underlays[i];
+        if (underlay.hidden === HiddenState.Hidden) continue;
+        positionChildren(underlay);
+        const underlayBounds = getBoundingBox(underlay);
+        underlay.boundingBox = underlayBounds;
+        underlay.relativePosition.x =
+          -STACK_COLUMN_GAP -
+          getAppearanceWidth(underlay, layerToText, planeToText);
+        underlay.relativePosition.y = minHeight + getAppearanceHeight(underlay);
+        const totalHeight =
+          underlayBounds[1].y - underlayBounds[0].y + VERTICAL_APPEARANCE_GAP;
+        minHeight += totalHeight;
+        totalUnderlayHeight += totalHeight;
+      }
+      // If we don't have any overlays, shift all underlays up
+      if (
+        !appearance.overlays?.filter((x) => x.hidden !== HiddenState.Hidden)
+          .length
+      ) {
+        const staticShift =
+          CENTRAL_APPEARANCE_GAP / 2 +
+          (totalUnderlayHeight - VERTICAL_APPEARANCE_GAP) / 2;
+        for (let i = 0; i < appearance.underlays.length; i++) {
+          appearance.underlays[i].relativePosition.y -= staticShift;
+        }
       }
     }
   }
@@ -389,6 +430,16 @@ function parseAppearanceData(
       }
     }
 
+    if (
+      appearance.data.flags &
+      (APPEARANCE_FLAGS.KEEP_TOGETHER | APPEARANCE_FLAGS.KEEP_APART)
+    ) {
+      minX -= KEEP_APART_TOGETHER_GAP;
+      minY -= KEEP_APART_TOGETHER_GAP_TOP;
+      maxX += KEEP_APART_TOGETHER_GAP;
+      maxY += KEEP_APART_TOGETHER_GAP;
+    }
+
     return [
       { x: minX, y: minY },
       { x: maxX, y: maxY },
@@ -409,6 +460,8 @@ export function AppearanceDebug() {
     flagsToText,
     visToText,
     blendToText,
+    mapRefHover,
+    mapRefSelected,
     updateWarning,
   } = data;
   const [planeFilter, setPlaneFilter] = useState<string | null>(null);
@@ -445,8 +498,6 @@ export function AppearanceDebug() {
   }
 
   const NODE_PADDING = 20;
-  const OVERLAY_NODE_INPUT_PADDING = 60;
-  const UNDERLAY_NODE_INPUT_PADDING = 40;
 
   const appearancePositions: Record<number, Coordinates> = {};
   const connections: Connection[] = [];
@@ -457,46 +508,23 @@ export function AppearanceDebug() {
       continue;
     const position = mapPosition(appearance, appearancePositions);
     const parentPosition = mapPosition(appearance.parent, appearancePositions);
-    const parentWidth = getAppearanceWidth(
-      appearance.parent,
-      layerToText,
-      planeToText,
-    );
     const childWidth = getAppearanceWidth(appearance, layerToText, planeToText);
     const childHeight = getAppearanceHeight(appearance);
+    const parentHeight = getAppearanceHeight(appearance.parent);
 
-    if (appearance.parentType === AppearanceParentType.Overlay) {
-      // Overlay is to the RIGHT of parent: line from parent right → child left
-      connections.push({
-        from: {
-          x: parentPosition.x + parentWidth - NODE_PADDING,
-          y: parentPosition.y + OVERLAY_NODE_INPUT_PADDING,
-        },
-        to: {
-          x: position.x + NODE_PADDING,
-          y: position.y + childHeight / 2,
-        },
-        index: connectionIndex,
-        color: `hsl(${60 + 5 * (connectionIndex % 30)}, 50%, ${50 + (connectionIndex % 30)}%)`,
-      });
-    } else {
-      // Underlay is to the LEFT of parent: line from child right → parent left
-      connections.push({
-        from: {
-          x: position.x + childWidth - NODE_PADDING,
-          y: position.y + childHeight / 2,
-        },
-        to: {
-          x: parentPosition.x + NODE_PADDING,
-          y:
-            parentPosition.y +
-            getAppearanceHeight(appearance.parent) -
-            UNDERLAY_NODE_INPUT_PADDING,
-        },
-        index: connectionIndex,
-        color: `hsl(${60 + 5 * (connectionIndex % 30)}, 50%, ${50 + (connectionIndex % 30)}%)`,
-      });
-    }
+    // All children are to the LEFT of parent
+    connections.push({
+      from: {
+        x: position.x + childWidth - NODE_PADDING,
+        y: position.y + childHeight / 2,
+      },
+      to: {
+        x: parentPosition.x + NODE_PADDING,
+        y: parentPosition.y + parentHeight / 2,
+      },
+      index: connectionIndex,
+      color: `hsl(${60 + 5 * (connectionIndex % 30)}, 50%, ${50 + (connectionIndex % 30)}%)`,
+    });
     connectionIndex++;
   }
 
@@ -509,6 +537,8 @@ export function AppearanceDebug() {
         flagsToText,
         visToText,
         blendToText,
+        mapRefHover,
+        mapRefSelected,
         appsProcessed,
         zoomToX,
         setZoomToX,
@@ -537,12 +567,13 @@ export function AppearanceDebug() {
               }px`}
             >
               <Dropdown
-                options={Object.keys(planeToText).sort()}
+                options={['(All Planes)', ...Object.keys(planeToText).sort()]}
                 placeholder="Filter by Plane"
-                selected={planeFilter || ''}
+                selected={planeFilter || '(All Planes)'}
                 onSelected={(value) => {
                   setSelection(null);
-                  if (!(value in planeToText)) setPlaneFilter(null);
+                  if (value === '(All Planes)' || !(value in planeToText))
+                    setPlaneFilter(null);
                   else setPlaneFilter(value);
                 }}
               />
@@ -575,10 +606,57 @@ export function AppearanceDebug() {
             backgroundImage: 'none',
           }}
         >
+          {!!mapRefHover && (
+            <Box
+              position="absolute"
+              left="12px"
+              top="42px"
+              width="140px"
+              height="140px"
+              style={{
+                zIndex: 3,
+                pointerEvents: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#1a1a1a',
+              }}
+            >
+              <Box
+                style={{
+                  position: 'relative',
+                  width: '128px',
+                  height: '128px',
+                }}
+              >
+                <ByondUi
+                  width="128px"
+                  height="128px"
+                  params={{
+                    id: mapRefHover,
+                    type: 'map',
+                    view: '1',
+                  }}
+                />
+                <Box
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '32px',
+                    height: '32px',
+                    border: '1px dashed #4488ff',
+                    pointerEvents: 'none',
+                  }}
+                />
+              </Box>
+            </Box>
+          )}
           <InfinitePlane
             width="100%"
             height="100%"
-            backgroundImage="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23282828'/%3E%3Cpath d='M100 0L0 0 0 100' fill='none' stroke='%23333' stroke-width='1'/%3E%3C/svg%3E"
+            backgroundImage="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23282828'/%3E%3Cpath d='M100 0L0 0 0 100' fill='none' stroke='%23666' stroke-width='2'/%3E%3C/svg%3E"
             imageWidth={100}
             initialLeft={500}
             initialTop={-1350}
@@ -597,6 +675,12 @@ export function AppearanceDebug() {
                     setSelection(keyValue[1].data.id);
                     setZoomToX(mapPosition(keyValue[1], appearancePositions).x);
                     setZoomToY(mapPosition(keyValue[1], appearancePositions).y);
+                    act('swapMapViewSelected', {
+                      id: keyValue[1].data.id,
+                    });
+                    act('swapMapViewHover', {
+                      id: keyValue[1].data.id,
+                    });
                   }}
                 />
               ))}
