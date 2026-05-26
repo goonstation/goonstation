@@ -13,10 +13,6 @@ ABSTRACT_TYPE(/datum/geneticsrecipe)
 	required_effects = list("strong","radioactive")
 	result = /datum/bioEffect/hulk
 
-/datum/geneticsrecipe/xray // Discovered
-	required_effects = list("eyebeams","blind")
-	result = /datum/bioEffect/xray
-
 /datum/geneticsrecipe/regenerator // Discovered
 	required_effects = list("adrenaline","healing_touch")
 	result = /datum/bioEffect/regenerator
@@ -336,7 +332,7 @@ ABSTRACT_TYPE(/datum/geneticsrecipe)
 	result = /datum/bioEffect/mutantrace/skeleton
 
 /datum/geneticsrecipe/skeleton_three
-	required_effects = list("xray","dead_scan")
+	required_effects = list("anemia","dead_scan")
 	result = /datum/bioEffect/mutantrace/skeleton
 
 /datum/geneticsrecipe/reversed_sounds
