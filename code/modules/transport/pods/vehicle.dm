@@ -289,6 +289,8 @@
 		if(user) //This mean it's going on during the game!
 			user.drop_item(part)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
+			if (slot == POD_PART_MAIN_WEAPON)
+				logTheThing(LOG_VEHICLE, user, "Installed weapon [part] into pod [src].")
 		part.set_loc(src)
 		src.installed_parts[slot] = part
 		part.ship = src
