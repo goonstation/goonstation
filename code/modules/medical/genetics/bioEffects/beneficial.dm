@@ -708,7 +708,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-/datum/bioEffect/xray
+/datum/bioEffect/xray // made unobtainable due to being too strong but a lot of things depend on it.
 	name = "X-Ray Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
 	id = "xray"
@@ -727,6 +727,14 @@
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 	effect_group = "vision"
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
 
 	OnAdd()
 		. = ..()
@@ -762,7 +770,7 @@
 	desc = "Enhances the subject's optic nerves, allowing them to see in the dark."
 	id = "nightvision"
 	effectType = EFFECT_TYPE_POWER
-	probability = 0
+	probability = 33
 	blockCount = 3
 	blockGaps = 3
 	reclaim_mats = 30
