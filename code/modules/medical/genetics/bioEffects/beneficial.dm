@@ -713,7 +713,6 @@
 	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
 	id = "xray"
 	effectType = EFFECT_TYPE_POWER
-	probability = 33
 	blockCount = 3
 	blockGaps = 5
 	reclaim_mats = 40
@@ -763,7 +762,7 @@
 	desc = "Enhances the subject's optic nerves, allowing them to see in the dark."
 	id = "nightvision"
 	effectType = EFFECT_TYPE_POWER
-	probability = 33
+	probability = 0
 	blockCount = 3
 	blockGaps = 3
 	reclaim_mats = 30
