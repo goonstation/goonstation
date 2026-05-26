@@ -1,4 +1,5 @@
 import { Box, Button, Image, Stack, Tooltip } from 'tgui-core/components';
+
 import {
   getReadableLayer,
   getReadablePlane,
@@ -6,8 +7,8 @@ import {
   isEmissiveBlocker,
 } from '.';
 import {
-  APPEARANCE_FLAGS,
   type Appearance,
+  APPEARANCE_FLAGS,
   AppearanceType,
   type Coordinates,
   HiddenState,

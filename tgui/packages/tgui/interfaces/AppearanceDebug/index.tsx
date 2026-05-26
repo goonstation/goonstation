@@ -1,5 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
-import { useBackend } from '../../backend';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Box,
   Button,
@@ -8,10 +7,12 @@ import {
   InfinitePlane,
   Stack,
 } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { type Connection, Connections } from '../common/Connections';
 import { AppearanceBox } from './AppearanceBox';
 import { AppearanceInfo } from './AppearanceInfo';
-import { type Connection, Connections } from '../common/Connections';
 import type {
   Appearance,
   AppearanceData,
@@ -23,6 +24,7 @@ import {
   APPEARANCE_FLAGS,
   AppearanceParentType,
   AppearanceType,
+  GRID_BACKGROUND_IMAGE,
   HiddenState,
   VIS_FLAGS,
 } from './types';
@@ -46,6 +48,7 @@ function mapAppearance(
   hideEmissives: boolean,
   keepTogether: boolean,
 ): Appearance {
+  if (!appearance_data) return null as unknown as Appearance;
   if (appearance_data.flags & APPEARANCE_FLAGS.KEEP_APART) keepTogether = false;
 
   const appearance: Appearance = {
@@ -111,6 +114,7 @@ function mapAppearance(
   }
   if (underlays.length > 0) {
     appearance.underlays = underlays
+      .filter(Boolean)
       .map((data) =>
         mapAppearance(
           data,
@@ -133,8 +137,9 @@ function mapAppearance(
       appearance.hidden === HiddenState.Hidden &&
       appearance.underlays.filter((x) => x.hidden !== HiddenState.Hidden)
         .length > 0
-    )
+    ) {
       appearance.hidden = HiddenState.VisibleChild;
+    }
   }
 
   // Process overlays
@@ -148,6 +153,7 @@ function mapAppearance(
   }
   if (overlays.length > 0) {
     appearance.overlays = overlays
+      .filter(Boolean)
       .map((data) =>
         mapAppearance(
           data,
@@ -176,8 +182,9 @@ function mapAppearance(
       appearance.hidden === HiddenState.Hidden &&
       appearance.overlays.filter((x) => x.hidden !== HiddenState.Hidden)
         .length > 0
-    )
+    ) {
       appearance.hidden = HiddenState.VisibleChild;
+    }
   }
   return appearance;
 }
@@ -203,8 +210,9 @@ export function isEmissive(appearance: Appearance) {
 
 export function isEmissiveBlocker(appearance: Appearance) {
   // Emissive blockers are black overlays on PLANE_LIGHTING that mask out emission
-  if (appearance.data.plane_true !== -90 || !appearance.data.color)
+  if (appearance.data.plane_true !== -90 || !appearance.data.color) {
     return false;
+  }
   if (appearance.data.color === '#000000') return true;
   if (!Array.isArray(appearance.data.color)) return false;
   const colorMatrix = appearance.data.color as number[];
@@ -300,14 +308,16 @@ function parseAppearanceData(
 
   const sourceMap: Record<string, Appearance> = {};
   Object.values(appearances).forEach((element) => {
-    if (element.data.render_target)
+    if (element.data.render_target) {
       sourceMap[element.data.render_target] = element;
+    }
   });
 
   Object.values(appearances).forEach((element) => {
     if (element.data.render_source && element.data.render_source in sourceMap) {
-      if (sourceMap[element.data.render_source].renderTargetTo === null)
+      if (sourceMap[element.data.render_source].renderTargetTo === null) {
         sourceMap[element.data.render_source].renderTargetTo = [];
+      }
       sourceMap[element.data.render_source].renderTargetTo!.push(element);
     }
   });
@@ -478,6 +488,35 @@ export function AppearanceDebug() {
     [act],
   );
 
+  const infinitePlaneWrapperRef = useRef<HTMLDivElement>(null);
+
+  // InfinitePlane's onWheel only lives on its background div. Cards are in a sibling
+  // content div, so wheel events from cards never reach it. Forward them.
+  useEffect(() => {
+    const outerDiv = infinitePlaneWrapperRef.current
+      ?.firstElementChild as HTMLElement | null;
+    const backgroundDiv = outerDiv?.firstElementChild as HTMLElement | null;
+    if (!outerDiv || !backgroundDiv) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY === 0 || backgroundDiv.contains(e.target as Node)) return;
+      e.preventDefault();
+      backgroundDiv.dispatchEvent(
+        new WheelEvent('wheel', {
+          deltaY: e.deltaY,
+          deltaMode: e.deltaMode,
+          clientX: e.clientX,
+          clientY: e.clientY,
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+    };
+
+    outerDiv.addEventListener('wheel', handleWheel, { passive: false });
+    return () => outerDiv.removeEventListener('wheel', handleWheel);
+  }, []);
+
   function mapPosition(
     appearance: Appearance,
     positions: Record<number, Coordinates>,
@@ -488,8 +527,9 @@ export function AppearanceDebug() {
       y: appearance.relativePosition.y,
     };
     if (appearance.parent) {
-      if (!(appearance.parent.data.id in positions))
+      if (!(appearance.parent.data.id in positions)) {
         mapPosition(appearance.parent, positions);
+      }
       position.x += positions[appearance.parent.data.id].x;
       position.y += positions[appearance.parent.data.id].y;
     }
@@ -504,8 +544,9 @@ export function AppearanceDebug() {
   let connectionIndex = 0;
   for (const key of Object.keys(appsProcessed)) {
     const appearance = appsProcessed[key as unknown as number];
-    if (!appearance.parent || appearance.hidden === HiddenState.Hidden)
+    if (!appearance.parent || appearance.hidden === HiddenState.Hidden) {
       continue;
+    }
     const position = mapPosition(appearance, appearancePositions);
     const parentPosition = mapPosition(appearance.parent, appearancePositions);
     const childWidth = getAppearanceWidth(appearance, layerToText, planeToText);
@@ -572,9 +613,9 @@ export function AppearanceDebug() {
                 selected={planeFilter || '(All Planes)'}
                 onSelected={(value) => {
                   setSelection(null);
-                  if (value === '(All Planes)' || !(value in planeToText))
+                  if (value === '(All Planes)' || !(value in planeToText)) {
                     setPlaneFilter(null);
-                  else setPlaneFilter(value);
+                  } else setPlaneFilter(value);
                 }}
               />
             </Stack.Item>
@@ -632,37 +673,46 @@ export function AppearanceDebug() {
               />
             </Box>
           )}
-          <InfinitePlane
-            width="100%"
-            height="100%"
-            backgroundImage="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23282828'/%3E%3Cpath d='M100 0L0 0 0 100' fill='none' stroke='%23666' stroke-width='2'/%3E%3C/svg%3E"
-            imageWidth={100}
-            initialLeft={500}
-            initialTop={-1350}
-            zoomPadding={selection !== null ? 400 : 0}
-            zoomToX={-(zoomToX || 0) + 525}
-            zoomToY={-(zoomToY || 0) + 300}
+          <div
+            ref={infinitePlaneWrapperRef}
+            style={{ width: '100%', height: '100%' }}
           >
-            {Object.entries(appsProcessed)
-              .filter((keyValue) => keyValue[1].hidden !== HiddenState.Hidden)
-              .map((keyValue) => (
-                <AppearanceBox
-                  key={keyValue[0]}
-                  appearance={keyValue[1]}
-                  position={mapPosition(keyValue[1], appearancePositions)}
-                  onMouseEnter={() => debouncedHover(keyValue[1].data.id)}
-                  onClick={() => {
-                    setSelection(keyValue[1].data.id);
-                    setZoomToX(mapPosition(keyValue[1], appearancePositions).x);
-                    setZoomToY(mapPosition(keyValue[1], appearancePositions).y);
-                    act('swapMapViewSelected', {
-                      id: keyValue[1].data.id,
-                    });
-                  }}
-                />
-              ))}
-            <Connections connections={connections} />
-          </InfinitePlane>
+            <InfinitePlane
+              width="100%"
+              height="100%"
+              backgroundImage={GRID_BACKGROUND_IMAGE}
+              imageWidth={100}
+              initialLeft={500}
+              initialTop={-1350}
+              zoomPadding={selection !== null ? 400 : 0}
+              zoomToX={-(zoomToX || 0) + 525}
+              zoomToY={-(zoomToY || 0) + 300}
+            >
+              {Object.entries(appsProcessed)
+                .filter((keyValue) => keyValue[1].hidden !== HiddenState.Hidden)
+                .map((keyValue) => (
+                  <AppearanceBox
+                    key={keyValue[0]}
+                    appearance={keyValue[1]}
+                    position={mapPosition(keyValue[1], appearancePositions)}
+                    onMouseEnter={() => debouncedHover(keyValue[1].data.id)}
+                    onClick={() => {
+                      setSelection(keyValue[1].data.id);
+                      setZoomToX(
+                        mapPosition(keyValue[1], appearancePositions).x,
+                      );
+                      setZoomToY(
+                        mapPosition(keyValue[1], appearancePositions).y,
+                      );
+                      act('swapMapViewSelected', {
+                        id: keyValue[1].data.id,
+                      });
+                    }}
+                  />
+                ))}
+              <Connections connections={connections} />
+            </InfinitePlane>
+          </div>
           {selection !== null && (
             <AppearanceInfo
               appearance={

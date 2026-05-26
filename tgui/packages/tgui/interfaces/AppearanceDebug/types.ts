@@ -1,3 +1,6 @@
+export const GRID_BACKGROUND_IMAGE =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23282828'/%3E%3Cpath d='M100 0L0 0 0 100' fill='none' stroke='%23666' stroke-width='2'/%3E%3C%2Fsvg%3E";
+
 export type AppearanceDebugData = {
   mainAppearance: AppearanceData;
   planeToText: Record<string, number>;

@@ -7,6 +7,7 @@ import {
   Section,
   Tooltip,
 } from 'tgui-core/components';
+
 import { getReadableLayer, getReadablePlane } from '.';
 import { type Appearance, AppearanceType, DIR, MOUSE_OPACITY } from './types';
 import { useAppearanceDebugContext } from './useAppearanceDebug';
@@ -36,7 +37,7 @@ export function AppearanceInfo(props: AppearanceInfoProps) {
       top="0px"
       right="0px"
       backgroundColor="#121212DA"
-      title={`Appearance Debug: ${appearance.data.name || appearance.data.icon_state}`}
+      title={`${appearance.data.name || appearance.data.icon_state}`}
       buttons={
         <>
           {appearance.data.type === AppearanceType.Atom && (

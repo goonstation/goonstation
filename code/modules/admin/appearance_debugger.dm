@@ -108,11 +108,15 @@
 
 	var/list/underlay_data = list()
 	for (var/mutable_appearance/underlay as anything in target.underlays)
+		if (!underlay)
+			continue
 		underlay_data += list(get_appearance_data(underlay))
 	data["underlays"] = underlay_data
 
 	var/list/overlay_data = list()
 	for (var/mutable_appearance/overlay as anything in target.overlays)
+		if (!overlay)
+			continue
 		overlay_data += list(get_appearance_data(overlay))
 	data["overlays"] = overlay_data
 

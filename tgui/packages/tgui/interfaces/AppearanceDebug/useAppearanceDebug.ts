@@ -4,6 +4,7 @@ import {
   type SetStateAction,
   useContext,
 } from 'react';
+
 import type { AppearanceMap } from './types';
 
 type AppearanceDebugContextType = {
