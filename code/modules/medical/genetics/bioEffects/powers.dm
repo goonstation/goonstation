@@ -397,7 +397,9 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (!src.holder.owner.client || length(src.images))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
-		src.owner.AddOverlays(image('icons/effects/genetics.dmi', "xray"), "xray_eyes")
+		var/image/eye_overlay = image('icons/effects/genetics.dmi', "xray")
+		eye_overlay.plane = PLANE_SELFILLUM
+		src.owner.AddOverlays(eye_overlay, "xray_eyes")
 
 		var/datum/bioEffect/power/xray/parent_bioeffect = src.linked_power
 
@@ -407,6 +409,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/max_angle = center_angle + parent_bioeffect.arc_width / 2
 
 		src.owner.set_dir(get_dir_accurate(src.owner, target))
+		src.owner.visible_message(SPAN_ALERT("[src.owner]'s eyes emit a weak blue glow."))
 
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, parent_bioeffect)
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, parent_bioeffect)
