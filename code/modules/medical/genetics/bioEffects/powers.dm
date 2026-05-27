@@ -412,14 +412,14 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 		ma.name = " "
 		var/turf/owner_turf = get_turf(src.holder.owner)
-		//oouuughHHH
+		//oouuughHHH, see AI static code
 		var/v_width = 12
 		var/v_height = 9
 		var/list/turf/turfs_to_block = block(owner_turf.x - v_width, owner_turf.y - v_height, owner_turf.z, owner_turf.x + v_width, owner_turf.y + v_height, owner_turf.z)
 		for (var/turf/T in turfs_to_block)
 			//in our vision cone?
 			if (angle_inbetween(arctan(T.x - src.holder.owner.x, T.y - src.holder.owner.y), min_angle, max_angle))
-				if (prob(10))
+				if (prob(5))
 					T.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 				continue
 			var/image/blackout = new //https://www.youtube.com/watch?v=jAClFRUer38
