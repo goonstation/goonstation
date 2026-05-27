@@ -686,16 +686,17 @@ Equip items from body traits.
 		else // Picky eater trait holders get a custom lunchbox with 3 of their favourite foods
 			var/lunchbox = new /obj/item/storage/lunchbox(src)
 			trinket = lunchbox
-			var/list/fav_foods = src.traitHolder.getTrait("picky_eater").fav_foods
+			var/datum/trait/picky_eater/picky_trait = src.traitHolder.getTrait("picky_eater")
+			var/list/fav_foods = picky_trait.fav_foods
 			for (var/i in 1 to 3)
 				var/obj/item/food = fav_foods[i]
 				trinket.storage.add_contents(new food(src))
-			var/list = list(/obj/item/reagent_containers/food/drinks/water,\
+			var/list/lunch_list = list(/obj/item/reagent_containers/food/drinks/water,\
 			/obj/item/kitchen/utensil/fork,\
 			/obj/item/kitchen/utensil/spoon,\
 			/obj/item/paper/lunchbox_note)
-			for (var/i in list)
-				trinket.storage.add_contents(new i(src))
+			for (var/lunch_item_type in lunch_list)
+				trinket.storage.add_contents(new lunch_item_type(src))
 	else if (src.traitHolder && src.traitHolder.hasTrait("wheelchair"))
 		SPAWN(0) // Ensures wheelchair spawns with you even if you aren't latejoining at arrivals.
 			var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
