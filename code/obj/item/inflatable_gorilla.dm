@@ -36,6 +36,7 @@
 		qdel(src)
 
 /obj/item/inflatable_mob/gorilla
+	desc = "A slab of thick, heavy duty rubber with a little orange connector port on the side."
 	mob_type = /mob/living/critter/gorilla
 	mob_name = "gorilla"
 	icon = 'icons/obj/items/items.dmi'
