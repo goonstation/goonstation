@@ -429,8 +429,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			images += blackout
 			src.holder.owner.client.images += blackout
 
-
+		//in case of forced movements, teleports, random gibbings etc.
+		RegisterSignal(src.holder.owner, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_effects))
 		SPAWN(3 SECONDS)
+			//effects have already been removed
+			if (!length(src.images))
+				return
 			//safety in case they disconnected in those three seconds
 			if (!src.holder.owner.client && !src.holder.owner.last_client)
 				RegisterSignal(src.holder.owner, COMSIG_MOB_LOGIN, PROC_REF(remove_effects))
@@ -438,6 +442,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			src.remove_effects()
 
 	proc/remove_effects()
+		UnregisterSignal(src.holder.owner, COMSIG_MOVABLE_SET_LOC)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src.linked_power)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, src.linked_power)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION_WEAK, src.linked_power)
