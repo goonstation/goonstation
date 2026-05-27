@@ -2603,6 +2603,7 @@
 #include "code\obj\item\handcuffs.dm"
 #include "code\obj\item\hydroponics.dm"
 #include "code\obj\item\implant.dm"
+#include "code\obj\item\inflatable_gorilla.dm"
 #include "code\obj\item\kendo.dm"
 #include "code\obj\item\keys.dm"
 #include "code\obj\item\magtractor.dm"
