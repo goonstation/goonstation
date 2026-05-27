@@ -378,6 +378,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	/// How wide is the arc swept by the vision cone (degrees)
 	var/arc_width = 30
 
+	onPowerChange(oldval, newval)
+		if (newval)
+			src.arc_width = 60
+		else
+			src.arc_width = 30
+
 /datum/targetable/geneticsAbility/xray
 	name = "X-Ray Vision"
 	desc = "See through walls!"
@@ -398,10 +404,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/min_angle = center_angle - parent_bioeffect.arc_width / 2
 		var/max_angle = center_angle + parent_bioeffect.arc_width / 2
 
-		if(parent_bioeffect.power)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION_WEAK, parent_bioeffect)
-		else
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, parent_bioeffect)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, parent_bioeffect)
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, parent_bioeffect)
 
 		//tech 100% stolen from AI static code
@@ -445,7 +448,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		UnregisterSignal(src.holder.owner, COMSIG_MOVABLE_SET_LOC)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src.linked_power)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, src.linked_power)
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION_WEAK, src.linked_power)
 		var/client/client = src.holder.owner.client || src.holder.owner.last_client
 		for (var/image/blackout in images)
 			client.images -= blackout
