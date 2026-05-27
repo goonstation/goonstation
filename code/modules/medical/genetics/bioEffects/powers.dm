@@ -354,6 +354,103 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/bioEffect/power/xray
+	name = "X-Ray Vision"
+	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
+	id = "xray"
+	effectType = EFFECT_TYPE_POWER
+	probability = 33
+	blockCount = 3
+	blockGaps = 5
+	reclaim_mats = 40
+	msgGain = "You suddenly seem to be able to see through everything."
+	msgLose = "Your vision fades back to normal."
+	lockProb = 40
+	lockedGaps = 1
+	lockedDiff = 3
+	lockedChars = list("G","C","A","T")
+	lockedTries = 8
+	stability_loss = 20
+	degrade_to = "bad_eyesight"
+	icon_state  = "eye"
+	effect_group = "vision"
+	ability_path = /datum/targetable/geneticsAbility/xray
+	/// How wide is the arc swept by the vision cone (degrees)
+	var/arc_width = 30
+
+/datum/targetable/geneticsAbility/xray
+	name = "X-Ray Vision"
+	desc = "See through walls!"
+	icon_state = "eye"
+	cooldown = 30 SECONDS
+	var/list/image/images = list()
+
+	cast_genetics(atom/target, misfire)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!src.holder.owner.client || length(src.images))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+		var/datum/bioEffect/power/xray/parent_bioeffect = src.linked_power
+
+		//tech mildly stolen from robustlight code
+		var/center_angle = arctan(target.x - src.holder.owner.x, target.y - src.holder.owner.y)
+		var/min_angle = center_angle - parent_bioeffect.arc_width / 2
+		var/max_angle = center_angle + parent_bioeffect.arc_width / 2
+
+		if(parent_bioeffect.power)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION_WEAK, parent_bioeffect)
+		else
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, parent_bioeffect)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, parent_bioeffect)
+
+		//tech 100% stolen from AI static code
+		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
+		ma.plane = PLANE_HUD
+		ma.layer = 102 // fucking action bars are 101 guh????????
+		ma.color = "#000000"
+		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
+		ma.name = " "
+		var/turf/owner_turf = get_turf(src.holder.owner)
+		//oouuughHHH
+		var/v_width = 12
+		var/v_height = 9
+		var/list/turf/turfs_to_block = block(owner_turf.x - v_width, owner_turf.y - v_height, owner_turf.z, owner_turf.x + v_width, owner_turf.y + v_height, owner_turf.z)
+		for (var/turf/T in turfs_to_block)
+			//in our vision cone?
+			if (angle_inbetween(arctan(T.x - src.holder.owner.x, T.y - src.holder.owner.y), min_angle, max_angle))
+				if (prob(10))
+					T.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+				continue
+			var/image/blackout = new //https://www.youtube.com/watch?v=jAClFRUer38
+			blackout.appearance = ma
+			blackout.loc = T
+			blackout.override = TRUE
+			images += blackout
+			src.holder.owner.client.images += blackout
+
+
+		SPAWN(3 SECONDS)
+			//safety in case they disconnected in those three seconds
+			if (!src.holder.owner.client && !src.holder.owner.last_client)
+				RegisterSignal(src.holder.owner, COMSIG_MOB_LOGIN, PROC_REF(remove_effects))
+				return
+			src.remove_effects()
+
+	proc/remove_effects()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src.linked_power)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, src.linked_power)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION_WEAK, src.linked_power)
+		var/client/client = src.holder.owner.client || src.holder.owner.last_client
+		for (var/image/blackout in images)
+			client.images -= blackout
+			src.images -= blackout
+		UnregisterSignal(src.holder.owner, COMSIG_MOB_LOGIN)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/bioEffect/power/polymorphism
 	name = "Polymorphism"
 	desc = "Enables the subject to reconfigure their appearance to mimic that of others."
