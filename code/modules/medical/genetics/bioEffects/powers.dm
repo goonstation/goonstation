@@ -404,8 +404,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/min_angle = center_angle - parent_bioeffect.arc_width / 2
 		var/max_angle = center_angle + parent_bioeffect.arc_width / 2
 
+		src.owner.set_dir(get_dir_accurate(src.owner, target))
+
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, parent_bioeffect)
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, parent_bioeffect)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, parent_bioeffect)
 
 		//tech 100% stolen from AI static code
 		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
@@ -448,6 +451,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		UnregisterSignal(src.holder.owner, COMSIG_MOVABLE_SET_LOC)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src.linked_power)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, src.linked_power)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, src.linked_power)
 		var/client/client = src.holder.owner.client || src.holder.owner.last_client
 		for (var/image/blackout in images)
 			client.images -= blackout
