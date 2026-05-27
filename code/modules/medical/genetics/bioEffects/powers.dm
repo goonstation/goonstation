@@ -397,6 +397,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (!src.holder.owner.client || length(src.images))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
+		src.owner.AddOverlays(image('icons/effects/genetics.dmi', "xray"), "xray_eyes")
+
 		var/datum/bioEffect/power/xray/parent_bioeffect = src.linked_power
 
 		//tech mildly stolen from robustlight code
@@ -452,6 +454,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src.linked_power)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, src.linked_power)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, src.linked_power)
+		src.owner.ClearSpecificOverlays("xray_eyes")
 		var/client/client = src.holder.owner.client || src.holder.owner.last_client
 		for (var/image/blackout in images)
 			client.images -= blackout
