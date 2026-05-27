@@ -2351,5 +2351,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 
 /datum/materialProc/mycelium_mix
 	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
-		new_mat.overwriteTrigger(TRIGGERS_ON_EAT, list())
+		if(old_matA.getEdible() && old_matB.getEdible())
+			new_mat.overwriteTrigger(TRIGGERS_ON_EAT, list())
 		return
