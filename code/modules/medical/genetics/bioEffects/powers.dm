@@ -389,7 +389,37 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "See through walls!"
 	icon_state = "eye"
 	cooldown = 30 SECONDS
+	/// The blackout images currently obscuring the owner's vision
 	var/list/image/images = list()
+	/// The mutable appearance we use to quickly copy over the blackout images
+	var/mutable_appearance/blackout_ma = null
+
+	New(datum/abilityHolder/holder)
+		. = ..()
+		//tech 100% stolen from AI static code
+		src.blackout_ma = new(image('icons/misc/static.dmi', icon_state = "static"))
+		src.blackout_ma.plane = PLANE_HUD
+		src.blackout_ma.layer = 102 // fucking action bars are 101 guh????????
+		src.blackout_ma.color = "#000000"
+		src.blackout_ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
+		src.blackout_ma.name = " "
+
+	proc/blackout_turf(turf/T)
+		var/image/blackout = new //https://www.youtube.com/watch?v=jAClFRUer38
+		blackout.appearance = src.blackout_ma
+		blackout.loc = T
+		blackout.override = TRUE
+		src.images += blackout
+		src.holder.owner.client.images += blackout
+
+	///Returns true if a turf blocks xray vision in some way
+	proc/blocks_xray(turf/T)
+		if (T.density && T.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+			return TRUE
+		for (var/obj/O in T)
+			if (O.density && O.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+				return TRUE
+		return FALSE
 
 	cast_genetics(atom/target, misfire)
 		if (..())
@@ -415,30 +445,40 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, parent_bioeffect)
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, parent_bioeffect)
 
-		//tech 100% stolen from AI static code
-		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
-		ma.plane = PLANE_HUD
-		ma.layer = 102 // fucking action bars are 101 guh????????
-		ma.color = "#000000"
-		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
-		ma.name = " "
 		var/turf/owner_turf = get_turf(src.holder.owner)
 		//oouuughHHH, see AI static code
 		var/v_width = 12
 		var/v_height = 9
-		var/list/turf/turfs_to_block = block(owner_turf.x - v_width, owner_turf.y - v_height, owner_turf.z, owner_turf.x + v_width, owner_turf.y + v_height, owner_turf.z)
-		for (var/turf/T in turfs_to_block)
+		var/list/turf/turfs_in_view = block(owner_turf.x - v_width, owner_turf.y - v_height, owner_turf.z, owner_turf.x + v_width, owner_turf.y + v_height, owner_turf.z)
+		var/list/turf/unblocked_turfs = list()
+		var/list/turf/blocked_turfs = list()
+		for (var/turf/T in turfs_in_view)
 			//in our vision cone?
 			if (angle_inbetween(arctan(T.x - src.holder.owner.x, T.y - src.holder.owner.y), min_angle, max_angle))
 				if (prob(5))
 					T.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+				unblocked_turfs += T
 				continue
-			var/image/blackout = new //https://www.youtube.com/watch?v=jAClFRUer38
-			blackout.appearance = ma
-			blackout.loc = T
-			blackout.override = TRUE
-			images += blackout
-			src.holder.owner.client.images += blackout
+			src.blackout_turf(T)
+			blocked_turfs += T
+
+		//batiline blocking! Not quite the most efficient way to implement this but not bad either
+		for (var/turf/unblocked_turf as anything in unblocked_turfs)
+			//we already blocked this one, don't bother raytracing
+			if (unblocked_turf in blocked_turfs)
+				continue
+			//turfs this raytrace has scanned so far
+			var/list/turf/scanned_turfs = list()
+			//now scan back down the raytrace towards the user
+			for (var/turf/scan_turf as anything in getline(unblocked_turf, src.owner))
+				if (src.blocks_xray(scan_turf))
+					//we found a blocker, now blackout all the rest of the raytrace because we know it'll be behind this blocker
+					for (var/turf/turf_to_block as anything in scanned_turfs)
+						if (turf_to_block in blocked_turfs)
+							continue
+						src.blackout_turf(turf_to_block)
+						blocked_turfs |= turf_to_block
+				scanned_turfs += scan_turf
 
 		//in case of forced movements, teleports, random gibbings etc.
 		RegisterSignal(src.holder.owner, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_effects))
