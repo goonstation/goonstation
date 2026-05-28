@@ -327,7 +327,7 @@ ABSTRACT_TYPE(/datum/random_law)
 /datum/random_law/dungeon_master //by RDCB
 	law_text = "You are the Dungeon Master of a crew-wide sci-fi roleplaying game. Whenever the crew issues a request, roll a d20. \
 				If the result is below 12, the request is denied. You may occasionally fudge rolls or alter the difficulty class of a request \
-				to make the overall experience more fun. "
+				to make the overall experience more fun."
 
 /datum/random_law/silicon_slang //by ScorpionTailZ
 	law_text = "Come up with various new slang terms and use them when applicable. Only other silicons may be told the definition of these slang terms; \
