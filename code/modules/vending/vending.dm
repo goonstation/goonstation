@@ -2165,6 +2165,8 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		else if (isscrewingtool(target) && glassed)
 			boutput(user, SPAN_NOTICE("You connect the screen."))
 			var/obj/machinery/vending/B = new vendingtype(src.loc)
+			B.forensic_holder = src.forensic_holder
+			B.setMaterial(src.material)
 			logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 			qdel(src)
 		else if (ispryingtool(target))
@@ -2187,6 +2189,10 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	desc = "A vending machine offering presumably legal goods sold by other crewmembers."
 	pay = 1
 	layer = OBJ_LAYER - 0.3
+	default_material = "steel"
+	mat_changename = FALSE
+	material_amt = 0.3
+
 	//Product loading chute
 	var/loading = FALSE
 	var/unlocked = FALSE
