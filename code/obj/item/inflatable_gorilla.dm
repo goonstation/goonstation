@@ -19,6 +19,9 @@
 	user.u_equip(tank)
 	tank.set_loc(src)
 	var/mob/mob_instance = new src.mob_type(get_turf(src))
+	if (src.material)
+		mob_instance.setMaterial(src.material)
+	mob_instance.forensic_holder = src.forensic_holder
 	user.u_equip(src)
 	src.set_loc(mob_instance)
 	APPLY_ATOM_PROPERTY(mob_instance, PROP_MOB_CANTMOVE, src)
