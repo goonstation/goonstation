@@ -644,6 +644,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					for (var/datum/data/vending_product/player_product/R in player_list)
 						if(ref(R) == params["target"])
 							P.promoimage = R.icon
+							P.promoimage.appearance_flags = KEEP_APART | RESET_COLOR // Promo image should keep original coloring
 							P.updateAppearance()
 		// return cash
 		if("returncash")
@@ -2167,6 +2168,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			var/obj/machinery/vending/B = new vendingtype(src.loc)
 			B.forensic_holder = src.forensic_holder
 			B.setMaterial(src.material)
+			B.material_amt = src.material_amt
 			logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 			qdel(src)
 		else if (ispryingtool(target))
@@ -2191,7 +2193,6 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	layer = OBJ_LAYER - 0.3
 	default_material = "steel"
 	mat_changename = FALSE
-	material_amt = 0.3
 
 	//Product loading chute
 	var/loading = FALSE
