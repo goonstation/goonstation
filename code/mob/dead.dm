@@ -11,6 +11,7 @@ TYPEINFO(/mob/dead)
 	pass_unstable = FALSE
 	use_speech_bubble = TRUE
 	default_speech_output_channel = SAY_CHANNEL_DEAD
+	var/click_to_examine = TRUE
 
 	///Our corpse, if one exists
 	var/mob/living/corpse
@@ -61,7 +62,8 @@ TYPEINFO(/mob/dead)
 	else
 		if (GET_DIST(src, target) > 0)
 			src.set_dir(get_dir_accurate(src, target))
-		src.examine_verb(target)
+		if (src.click_to_examine)
+			src.examine_verb(target)
 
 /mob/dead/process_move(keys)
 	if(keys && src.move_dir && !src.get_active_movement_controller() && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!

@@ -550,6 +550,7 @@ TYPEINFO(/obj/item/mechanics)
 				logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 				level = UNDERFLOOR
 				anchored = ANCHORED
+				src.unglue_attached_to()
 				set_owner(user)
 				secure()
 		var/turf/T = src.loc

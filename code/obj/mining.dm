@@ -2766,7 +2766,7 @@ TYPEINFO(/obj/submachine/cargopad)
 		name = "Mining Staff Room Pad"
 	qm
 		mailgroup = MGT_CARGO
-		name = "Cargo Pad"
+		name = "Cargo Office Pad"
 	qm2
 		mailgroup = MGT_CARGO
 		name = "Export Pad"

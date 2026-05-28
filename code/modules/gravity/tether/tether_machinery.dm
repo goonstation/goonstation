@@ -42,7 +42,7 @@
 
 	src.handle_power_cycle()
 
-	if (!src.powered())
+	if (src.has_no_power())
 		if (src.processing_state == TETHER_PROCESSING_PENDING)
 			src.finish_gravity_change()
 		if (src.gforce_intensity > GFORCE_GRAVITY_MINIMUM)
@@ -82,7 +82,7 @@
 		playsound(src.loc, pick(global.ambience_gravity), 50, 1, pitch=(0.5 + (src.gforce_intensity/200)))
 
 /// The gravity tether prioritizes its own internal capacitor
-/obj/machinery/gravity_tether/use_power(amount, chan)
+/obj/machinery/gravity_tether/use_power(amount, chan = src.power_channel)
 	// convert powernet wattage to cell usage
 	var/battery_usage = CELLRATE * amount
 
@@ -91,14 +91,14 @@
 		src.use_cell_wrapper(src.cell.charge)
 		amount -= src.cell.charge / CELLRATE
 		var/area/A = get_area(src)
-		if (A.powered(EQUIP))
+		if (A.powered(src.power_channel))
 			..(amount)
 		else
 			src.power_change()
 	else
 		src.use_cell_wrapper(battery_usage)
 
-/obj/machinery/gravity_tether/powered(chan)
+/obj/machinery/gravity_tether/powered(chan = src.power_channel)
 	. = FALSE
 	if (istype(src.loc, /obj/item/electronics/frame))
 		return FALSE
@@ -135,17 +135,17 @@
 					passive_wattage_needed = 0
 
 	if (src.uses_area_power && (passive_wattage_needed || recharge_wattage_needed))
-		if (A.powered(EQUIP))
+		if (A.powered(src.power_channel))
 			var/obj/machinery/power/apc/area_apc = A?.area_apc
 			if (istype(area_apc) && area_apc.cell?.charge)
 				var/available_area_watts = area_apc.cell?.charge / CELLRATE
 				if (passive_wattage_needed && available_area_watts > passive_wattage_needed)
-					area_apc.use_power(passive_wattage_needed, EQUIP)
+					area_apc.use_power(passive_wattage_needed, src.power_channel)
 					available_area_watts -= passive_wattage_needed
 					passive_wattage_needed = 0
 				if (!passive_wattage_needed && recharge_wattage_needed && available_area_watts > recharge_wattage_needed && area_apc.cell?.percent() > 40 )
 					if(src.give_cell_wrapper(recharge_wattage_needed * CELLRATE))
-						area_apc.use_power(recharge_wattage_needed, EQUIP)
+						area_apc.use_power(recharge_wattage_needed, src.power_channel)
 						recharge_wattage_needed = 0
 
 	if (passive_wattage_needed) // no power, keel over
