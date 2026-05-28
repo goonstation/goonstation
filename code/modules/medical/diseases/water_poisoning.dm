@@ -45,7 +45,7 @@
 		if(4)
 			if(probmult(3))
 				affected_mob.vomit()
-				boutput(affected_mob, SPAN_ALERT("<font_color='FF0000'> You vomit an EXTREME amount of water!"))
+				boutput(affected_mob, SPAN_ALERT("You vomit an EXTREME amount of water!"))
 				var/turf/T = get_turf(affected_mob)
 				T.fluid_react_single("water",100)
 				affected_mob.take_toxin_damage(15)
