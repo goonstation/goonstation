@@ -73,6 +73,7 @@
 		else if ((src.customizable_settings_available && src.transfer_mode == TO_TARGET) || (!src.customizable_settings_available && src.reagents.total_volume))
 			if (src.reagents.total_volume)
 				var/t = min(src.transfer_amount, src.reagents.total_volume) // Can't drop more than you have.
+				if (t <= 0) return
 
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
 					boutput(user, SPAN_ALERT("[target] is full."))

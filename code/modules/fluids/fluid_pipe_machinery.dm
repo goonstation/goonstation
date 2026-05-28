@@ -58,6 +58,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 				src.network = target.network
 				src.network.machines += src
 			break
+	SEND_SIGNAL(src, COMSIG_FLUID_PIPE_ON_INIT)
 
 /obj/machinery/fluid_machinery/unary/refresh_network(datum/flow_network/network)
 	src.network?.machines -= src
@@ -84,10 +85,36 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 	flags = NOSPLASH | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	HELP_MESSAGE_OVERRIDE("You can connect glass plumbing to this machine. Can pull 100 units from a screwed barrel per cycle.")
 	var/obj/reagent_dispensers/chemicalbarrel/connectedcontainer = null
+	var/turf/scanned_turf = null //! this stores the turf this machine scans for COMSIG_TURF_FLUID_PORT_PING
+
+/obj/machinery/fluid_machinery/unary/input/New()
+	. = ..()
+	SPAWN(0)
+		src.scanned_turf = get_turf(src)
+		RegisterSignal(src.scanned_turf, COMSIG_TURF_FLUID_PORT_PING, PROC_REF(on_turf_ping))
+		SEND_SIGNAL(src.scanned_turf, COMSIG_TURF_FLUID_PORT_CREATED, src)
 
 /obj/machinery/fluid_machinery/unary/input/initialize()
 	..()
 	src.reagents = src.network?.reagents || new(0)
+
+
+/obj/machinery/fluid_machinery/unary/input/disposing()
+	if(src.scanned_turf)
+		UnregisterSignal(src.scanned_turf, COMSIG_TURF_FLUID_PORT_PING)
+		src.scanned_turf = null
+	if(istype(src.reagents, /datum/reagents/flow_network))
+		// we need to specifically check for the flow network subtype here, because we ports and these nodes share the same datum
+		// if we don't drop the reference, we delete the whole fluid networks reagent datum
+		src.reagents = null
+	..()
+
+/obj/machinery/fluid_machinery/unary/input/proc/on_turf_ping(var/turf/pinged_turf, var/list/return_list)
+	if(!src.qdeled && !src.disposed && return_list)
+		//we put ourself in the list to return and return TRUE
+		//we have to do it this way because returning anything else than Booleans with signals doesn't work well
+		return_list += src
+		return TRUE
 
 /obj/machinery/fluid_machinery/unary/input/process()
 	src.connectedcontainer?.reagents.trans_to(src, 100)
@@ -563,6 +590,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 				src.network2 = target.network
 				src.network2.machines += src
 			break
+	SEND_SIGNAL(src, COMSIG_FLUID_PIPE_ON_INIT)
 
 /obj/machinery/fluid_machinery/binary/refresh_network(datum/flow_network/network)
 	src.network1?.machines -= src
@@ -722,6 +750,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 				src.network3 = target.network
 				src.network3.machines += src
 			break
+	SEND_SIGNAL(src, COMSIG_FLUID_PIPE_ON_INIT)
 
 /obj/machinery/fluid_machinery/trinary/refresh_network(datum/flow_network/network)
 	src.network1?.machines -= src

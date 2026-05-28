@@ -1175,7 +1175,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 
 /obj/item/clothing/head/helmet/captain
 	name = "captain's helmet"
-	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriguing shade of green befitting of a captain"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in an intriguing shade of green befitting of a captain"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"

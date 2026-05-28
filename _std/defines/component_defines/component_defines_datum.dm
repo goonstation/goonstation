@@ -42,3 +42,5 @@
 // ---- reagents signals ----
 	/// When reagent scanned
 	#define COMSIG_REAGENTS_ANALYZED "reagents_analyzed"
+	/// When this reagent changes stops/starts processing reactions (reagents)
+	#define COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE "reagents_processing_reactions_change"

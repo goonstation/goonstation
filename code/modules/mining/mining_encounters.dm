@@ -521,6 +521,19 @@ ABSTRACT_TYPE(/datum/mining_encounter/oneshot)
 		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"starstone",rand(1,2))
+
+/datum/mining_encounter/tel_batiline
+	name = "Batiline asteroid"
+	rarity_tier = 1
+	no_pick = 1
+
+	generate(var/obj/magnet_target_marker/target)
+		if (..())
+			return
+		var/list/generated_turfs = src.create_round_asteroid(target)
+
+		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"batiline",rand(2,5))
+		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
 // Terrain Gen Procs
 
 /// ASTEROIDS ///

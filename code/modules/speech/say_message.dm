@@ -377,13 +377,6 @@
 
 	var/mob/M = src.speaker
 
-	// The speaker is using a voice changer.
-	if (M.wear_mask?.vchange)
-		if (!isnull(src.card_ident))
-			return src.card_ident
-
-		return "Unknown"
-
 	// The speaker is vocally disfigured.
 	if (M.vdisfigured)
 		return "Unknown"

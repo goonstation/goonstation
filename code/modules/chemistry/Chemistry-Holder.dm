@@ -554,9 +554,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			if (processing_reactions)
 				processing_reactions = 0
 				active_reagent_holders -= src
+				SEND_SIGNAL(src, COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE)
 		else if (!processing_reactions)
 			processing_reactions = 1
 			active_reagent_holders += src
+			SEND_SIGNAL(src, COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE)
 		return 1
 
 	proc/process_reactions()
@@ -611,6 +613,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		else if (!active_reactions.len && processing_reactions)
 			processing_reactions = 0
 			active_reagent_holders -= src
+			SEND_SIGNAL(src, COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE)
 
 	proc/isolate_reagent(var/reagent)
 		for(var/current_id in reagent_list)

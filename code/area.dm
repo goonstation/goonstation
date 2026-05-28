@@ -1347,6 +1347,7 @@ ABSTRACT_TYPE(/area/adventure)
 /area/spacehabitat
 	name = "Habitat Dome"
 	icon_state = "green"
+	requires_power = FALSE
 
 /area/spacehabitat/beach
 	name = "Habitat Dome Beach"
@@ -1356,13 +1357,11 @@ ABSTRACT_TYPE(/area/adventure)
 /area/spacehabitat/pool
 	name = "Pool Room"
 	icon_state = "yellow"
-	requires_power = FALSE
 
 /area/spacehabitat/owlery
 	name = "Owlery"
 	icon_state = "yellow"
 	sound_environment = 15
-	requires_power = FALSE
 
 /area/salyut
 	name = "Soviet derelict"
@@ -3852,6 +3851,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "medical bay"
 	icon_state = "purple"
 
+/area/syndicate_station/hideout
+	name = "Syndicate Hideout"
+	icon_state = "red"
+
 // end syndie //
 
 /// Wizard den area for the wizard shuttle spawn
@@ -3956,6 +3959,12 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey
 				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
+				if(!src.armory_auth && (IS_IT_SATURDAY))
+					var/ircmsg[] = new()
+					ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+					ircmsg["msg"] = "entered the armory while it's unauthorized."
+					ircbot.export_async("admin", ircmsg)
 // // // // // //
 
 /// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.

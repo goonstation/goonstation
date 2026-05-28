@@ -24,6 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
 	provides_grip = TRUE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSAL_CHUTE_CHARGING	// item mode 0=off 1=charging 2=charged
@@ -189,7 +190,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			src.bash(I, user)
 			update()
 			return
-		if (istype(I, /obj/item/handheld_vacuum))
+		if (istype(I, /obj/item/handheld_vacuum) || istype(I, /obj/item/device/disposals_hijacker))
 			return
 		// Mousedropping storage items will dump the contents during MouseDrop_T instead
 		if (istype(I, /obj/item/storage/mechanics) || (islist(params) && params["dragged"]))

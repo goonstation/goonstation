@@ -7,6 +7,7 @@
 	pass_unstable = TRUE
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = TABLEPASS | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	default_material = "plastic"
 	HELP_MESSAGE_OVERRIDE("You can drag and drop yourself to move onto the bucket.<br>The bucket has 7 storage slots inside of it.<br>To pour reagents into the bucket from a <b>cup</b> or similar, drag and drop the cup to the bucket.")
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image

@@ -142,7 +142,6 @@
 		// |GOONSTATION-ADD| all below
 		"content_window" = content_window,
 		"theme" = theme,
-		"cdn" = cdn,
 		"cant_interact" = cant_interact
 	)
 

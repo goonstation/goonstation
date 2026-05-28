@@ -52,6 +52,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	for (var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player) || !player.mind) continue
+		if (length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments))
+			unassigned += player
+			continue
 		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND))
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
 		if (player.ready_play && !player.mind.assigned_role)
@@ -62,12 +65,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (!length(unassigned))
 		return 0
-
-	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
-	if (master_mode == "construction")
-		for (var/mob/new_player/player in unassigned)
-			player.mind.assigned_role = "Construction Worker"
-		return
 
 	#ifdef I_WANNA_BE_THE_JOB
 	for (var/mob/new_player/player in unassigned)
@@ -94,6 +91,16 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		// If it's hi-pri, add it to that list. Simple enough
 		if (JOB.high_priority_job)
 			high_priority_jobs.Add(JOB)
+
+	// Handle forced assignment first, even if someone set the mode to construction for some reason.
+	if (length(job_controls.forced_assignments))
+		unassigned = global.handle_forced_job_assignments(unassigned)
+
+	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
+	if (master_mode == "construction")
+		for (var/mob/new_player/player in unassigned)
+			player.mind.assigned_role = "Construction Worker"
+		return
 
 	// Wiggle the players too so that priority isn't determined by key alphabetization
 	shuffle_list(unassigned)

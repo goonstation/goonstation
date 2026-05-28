@@ -33,6 +33,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 			ST.name = "Storage Tank [count]"
 			count++
 		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
+		AddComponent(/datum/component/fluid_pipe_interface, null, null, PROC_REF(chempipe_interface_on_process_tick), TRUE)
 		AddComponent(/datum/component/transfer_output)
 		src.parent_item = parent_item
 
@@ -169,6 +170,13 @@ TYPEINFO(/obj/submachine/chem_extractor)
 			tryInsert(W, user)
 
 		..()
+
+	proc/chempipe_interface_on_process_tick(var/affected_reagent_extractor, var/obj/machinery/fluid_machinery/unary/node/internal_chemnode, var/mult)
+		// a chem extractor connected to the grid does try to pump 20u of each of its internal tanks into the chem network
+		var/drain_per_process = 20 * mult
+		for(var/obj/item/reagent_containers/glass/internal_container in list(src.storage_tank_1, src.storage_tank_2))
+			if(internal_container)
+				internal_container.reagents.trans_to(internal_chemnode, drain_per_process)
 
 	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself

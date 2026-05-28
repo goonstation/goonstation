@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_head = list(/obj/item/clothing/head/basecap/red)
 	slot_poc1 = list(/obj/item/pen/pencil)
 	slot_poc2 = list(/obj/item/device/radio/hall_monitor)
-	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust,/obj/item/reagent_containers/applicator/glue)
+	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust,/obj/item/reagent_containers/applicator/stick/glue)
 
 /datum/job/special/random/hollywood
 	name = "Hollywood Actor"
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc1 = list(/obj/item/currency/spacecash/twenty)
 	slot_poc2 = list(/obj/item/pen/pencil)
 	slot_lhan = list(/obj/item/storage/toolbox/artistic)
-	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random,/obj/item/reagent_containers/applicator/glue)
+	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random,/obj/item/reagent_containers/applicator/stick/glue)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/foodcritic
@@ -482,10 +482,14 @@ ABSTRACT_TYPE(/datum/job/special/random)
 					/obj/item/clothing/under/misc/casualjeansblue = 1, \
 					/obj/item/clothing/under/misc/casualjeanskhaki = 1)
 	slot_suit = list(/obj/item/clothing/suit/hoodie/random)
-	slot_belt = list(/obj/item/device/pda2/computeroperator)
+	slot_belt = list(/obj/item/storage/belt/utility/it)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_eyes = list(/obj/item/clothing/glasses/packetvision)
-	items_in_backpack = list(/obj/item/luggable_computer/techpersonal)
+	slot_poc1 = list(/obj/item/paper/packets)
+	slot_poc2 = list(/obj/item/device/pda2/computeroperator)
+	items_in_backpack = list(/obj/item/luggable_computer/techpersonal,
+							/obj/item/storage/box/diskbox/programs,
+							/obj/item/cable_coil)
 	alt_names = list("Cybersecurity Expert", \
 					"IT Specialist", \
 					"Network Technician")

@@ -42,7 +42,7 @@ MATERIAL
 /obj/item/sheet
 	name = "sheet"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon = 'icons/obj/metal.dmi'
+	icon = 'icons/obj/items/materials/sheets.dmi'
 	icon_state = "sheet-m_5"
 	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
 	var/icon_state_base = "sheet"
@@ -209,7 +209,7 @@ MATERIAL
 				boutput(user, SPAN_ALERT("These rods won't work for reinforcing."))
 				return
 
-			if (src.material && (src.material.getMaterialFlags() & MATERIAL_METAL || src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+			if (src.material && (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL)))
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [min(min(R.amount,src.amount),50)]",1) as num
 				var/makesheets = min(min(R.amount,src.amount),50) //recalculate AFTER the popup to avoid interface stacking exploits
 				sheetsinput = min(sheetsinput,makesheets)
@@ -541,6 +541,7 @@ MATERIAL
 			default_reinforcement = "steel"
 
 /obj/item/sheet/wood
+	name = "plank"
 	item_state = "sheet-metal"
 	icon_state = "sheet-m_5$$wood"
 	default_material = "wood"
@@ -554,6 +555,38 @@ MATERIAL
 		if (locate(src.wall_type) in T.contents)
 			return ..()
 		actions.start(new /datum/action/bar/icon/build(wall_type, target.loc, 1, 3 SECONDS, src, 5, null, null, src.material, 'icons/ui/actions.dmi', "working"), user)
+
+	_update_stack_appearance()
+		switch(amount)
+			if(1)
+				icon_state = "[icon_state_base]_1"
+			if(2)
+				icon_state = "[icon_state_base]_2"
+			if(3 to 5)
+				icon_state = "[icon_state_base]_3"
+			if(6 to 7)
+				icon_state = "[icon_state_base]_4"
+			if(8 to 9)
+				icon_state = "[icon_state_base]_5"
+			if(10 to 14)
+				icon_state = "[icon_state_base]_6"
+			if(15 to 19)
+				icon_state = "[icon_state_base]_7"
+			if(20 to 24)
+				icon_state = "[icon_state_base]_8"
+			if(25 to 29)
+				icon_state = "[icon_state_base]_9"
+			if(30 to 34)
+				icon_state = "[icon_state_base]_10"
+			if(35 to 39)
+				icon_state = "[icon_state_base]_11"
+			if(40 to 44)
+				icon_state = "[icon_state_base]_12"
+			if(45 to 49)
+				icon_state = "[icon_state_base]_13"
+			else
+				icon_state = "[icon_state_base]_14"
+
 /obj/item/sheet/wood/zwood
 	amount = 5
 	wall_type = /obj/structure/woodwall/anti_zombie
@@ -586,11 +619,16 @@ MATERIAL
 	default_material = "plastic"
 	color = "#baccd3"
 
+/obj/item/sheet/cardboard
+	item_state = "sheet-metal"
+	icon_state = "sheet-m_5$$cardboard"
+	default_material = "cardboard"
+
 // RODS
 /obj/item/rods
 	name = "rods"
-	desc = "A set of metal rods, useful for constructing grilles and other objects, and decent for hitting people."
-	icon = 'icons/obj/metal.dmi'
+	desc = "A set of sturdy rods, useful for constructing grilles and other objects. Also decent for hitting people."
+	icon = 'icons/obj/items/materials/rods.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods_5"
 	item_state = "rods"
@@ -616,6 +654,16 @@ MATERIAL
 		SPAWN(0)
 			UpdateStackAppearance()
 		BLOCK_SETUP(BLOCK_ROD)
+
+	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+		. = ..()
+		var/material_flags = src.material?.getMaterialFlags()
+		if(HAS_FLAG(material_flags, MATERIAL_WOOD) && !HAS_FLAG(material_flags, MATERIAL_METAL))
+			if(src.material.getID() == "cardboard")
+				src.real_name = "tubes"
+			else
+				src.real_name = "poles"
+		UpdateName()
 
 	check_valid_stack(atom/movable/O as obj)
 		if (!istype(O,/obj/item/rods/))
@@ -775,6 +823,11 @@ MATERIAL
 			src.change_stack_amount(-2)
 			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.getID() || "*UNKNOWN*"]) at [log_loc(user)].")
 			A.add_fingerprint(user)
+
+/obj/item/rods/bamboo
+	icon_state = "rods_5$$bamboo"
+	default_material = "bamboo"
+	amount = 20
 
 /obj/head_on_spike
 	name = "head on a spike"
@@ -1197,7 +1250,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			name = "Rods"
 			yield = 2
 			can_craft_multiples = TRUE
-			icon = 'icons/obj/metal.dmi'
+			icon = 'icons/obj/items/materials/rods.dmi'
 			icon_state = "rods_5"
 
 		rack
@@ -1271,7 +1324,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			craftedType = /obj/storage/closet
 			name = "Closet"
 			sheet_cost = 2
-			icon = 'icons/obj/large_storage.dmi'
+			icon = 'icons/obj/storage/locker.dmi'
 			icon_state = "closed"
 		construct
 			recipe_id = "construct"
@@ -1364,7 +1417,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 	remetal
 		recipe_id = "remetal"
 		name = "Remove Reinforcement"
-		icon = 'icons/obj/metal.dmi'
+		icon = 'icons/obj/items/materials/sheets.dmi'
 		icon_state = "sheet-m_5"
 		can_craft_multiples = TRUE
 
@@ -1380,6 +1433,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			can_craft_multiples = TRUE
 			icon = 'icons/obj/metal.dmi'
 			icon_state = "tile_5"
+		rods
+			recipe_id = "rods"
+			craftedType =  /obj/item/rods
+			name = "Rods"
+			yield = 2
+			can_craft_multiples = TRUE
+			icon = 'icons/obj/items/materials/rods.dmi'
+			icon_state = "rods_5$$wood"
 		stool
 			recipe_id = "wood_stool"
 			craftedType = /obj/stool/wooden/constructed
@@ -1404,14 +1465,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			craftedType = /obj/storage/closet/dresser
 			name = "dresser"
 			sheet_cost = 2
-			icon = 'icons/obj/large_storage.dmi'
+			icon = 'icons/obj/storage/closet.dmi'
 			icon_state = "dresser"
 		coffin
 			recipe_id = "coffin"
 			craftedType = /obj/storage/closet/coffin
 			name = "coffin"
 			sheet_cost = 2
-			icon = 'icons/obj/large_storage.dmi'
+			icon = 'icons/obj/storage/coffin.dmi'
 			icon_state = "coffin"
 		construct
 			recipe_id = "wood_construct"
