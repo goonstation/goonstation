@@ -411,7 +411,7 @@ TYPEINFO(/mob/living/critter/changeling)
 					C.organHolder.receive_organ(E, "right_eye", 2)
 					C.update_body()
 			else
-				dna_gain = 2 // bad_ideas.txt
+				dna_gain = CHANGELING_EYESPIDER_COST // bad_ideas.txt
 
 		boutput(hivemind_owner.owner, SPAN_NOTICE("An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]"))
 		hivemind_owner.points += dna_gain

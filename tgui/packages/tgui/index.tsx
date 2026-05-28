@@ -16,6 +16,7 @@ import { setupHotKeys } from './hotkeys';
 import { loadIconRefMap } from './icons';
 import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
+import { getRoutedComponent } from './routes';
 import { configureStore } from './store';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
@@ -27,8 +28,7 @@ const renderApp = createRenderer(() => {
   setGlobalStore(store);
   loadIconRefMap();
 
-  const { getRoutedComponent } = require('./routes');
-  const Component = getRoutedComponent(store);
+  const Component = getRoutedComponent();
   return <Component />;
 });
 

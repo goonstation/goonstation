@@ -423,7 +423,7 @@
 	var/armor_mod = 0
 	//var/z_name = zone
 	var/a_zone = zone
-	if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
+	if (a_zone in list("l_arm", "r_arm", "l_leg", "r_leg"))
 		a_zone = "chest"
 
 	armor_mod = get_melee_protection(zone, damage_type)

@@ -342,22 +342,31 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	w_class = W_CLASS_TINY
 	random_color = 0
 	file_amount = 32
+	is_syndicate = 1
 	HELP_MESSAGE_OVERRIDE({"Use on an armed nuclear bomb to alter the time remaining until detonation.
 	Use on an armory authorization computer to issue an emergency authorization or unauthorization.
 	Use on an escape shuttle launch computer to alter the time until departure."})
 
 	New()
 		. = ..()
+		START_TRACKING
+		// I'm not including the captain here so you can see when they recollect it.
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, message_admins_too=FALSE)
 		SPAWN(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
 								"SEC"="[netpass_security]",
-								"MED"="[netpass_medical]")
+								"MED"="[netpass_medical]",
+								"LOGIN"="[netpass_login]")
 
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 			src.read_only = 1
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))

@@ -93,7 +93,6 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/item_box/postit,
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
-	/obj/item/reagent_containers/applicator/glue,
 	/obj/item/scissors,
 	/obj/item/stamp,
 	/obj/item/canvas)
@@ -210,7 +209,7 @@ TYPEINFO(/obj/item/storage/wall)
 
 /obj/item/storage/wall/clothingrack
 	name = "clothing rack"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/rack.dmi'
 	icon_state = "clothingrack_01"
 	var/base_icon_state = "01"
 	density = 1
@@ -297,7 +296,7 @@ TYPEINFO(/obj/item/storage/wall)
 obj/item/storage/wall/clothingrack/hatrack
 	name = "hat shelf"
 	desc = "It's a shelf designed for many hats."
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/rack.dmi'
 	icon_state = "hatrack"
 	density = 0
 	can_hold = list(/obj/item/clothing/head)

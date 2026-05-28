@@ -721,15 +721,20 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			var/area/AR = get_area(M)
 			if (AR?.sanctuary || M.nodamage || (src.rod in M.equipped_list(check_for_magtractor = 0)))
 				return TRUE
+			var/fisherman_text
+			if(isliving(src.rod?.loc))
+				fisherman_text = " (rod held by [key_name(src.rod.loc.name)])"
 			if (do_weaken)
 				M.changeStatus("knockdown", 5 SECONDS)
 				M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)
+				logTheThing(LOG_COMBAT, M, "falls for and is caught by a barbed fishing lure[fisherman_text] at [log_loc(src)]")
+			else
+				logTheThing(LOG_COMBAT, M, "is caught by a barbed fishing lure[fisherman_text] at [log_loc(src)]")
 			M.force_laydown_standup()
 
 			src.owner = M
 			src.set_loc(M)
 			M.visible_message(SPAN_ALERT("<b>[M] gets snagged by a fishing lure!</b>"))
-			logTheThing(LOG_COMBAT, M, "is caught by a barbed fishing lure at [log_loc(src)]")
 			M.emote("scream")
 			take_bleeding_damage(M, null, 10, DAMAGE_STAB)
 			M.UpdateDamageIcon()

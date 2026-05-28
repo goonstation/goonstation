@@ -19,24 +19,26 @@ TYPEINFO(/obj/item/lightbreaker)
 	stamina_crit_chance = 15
 	var/ammo = 4
 	var/ammo_max = 4
-	HELP_MESSAGE_OVERRIDE({"Use the lightbreaker in hand to shatter most windows and lights around you, and deafen/stagger people around you without ear protection. To recharge the lightbreaker, hit it with a <b>screwdriver</b>."})
+	var/rewind_time = 20 SECONDS
+	HELP_MESSAGE_OVERRIDE({"Use the lightbreaker in hand to shatter all lights around you and deafen/stagger other people without ear protection. Can be rewound with a <b>screwdriver</b>."})
 
 	examine()
 		. = ..()
-		if(src.ammo > 0)
-			. += "It has [src.ammo] uses left out of [src.ammo_max]."
+		if(src.ammo >= 1)
+			. += "It has [round(src.ammo)] uses left out of [src.ammo_max]."
 		else
 			. += "The tape has worn out!"
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		if(ammo > 0)
+		if(ammo >= 1)
+			if (ON_COOLDOWN(src, "spam_protection", 1 SECOND))
+				return
 			src.activate(user)
 			ammo--
 		else
-			playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			boutput(user, SPAN_ALERT("The tape is worn out!"))
-		return
 
 	proc/activate(mob/user as mob)
 		playsound(src.loc, 'sound/effects/light_breaker.ogg', 75, 1, 5)
@@ -58,7 +60,7 @@ TYPEINFO(/obj/item/lightbreaker)
 	attackby(obj/item/W, mob/user, params)
 		if(isscrewingtool(W))
 			if(ammo < ammo_max)
-				actions.start(new /datum/action/bar/icon/rewind_tape(src, W, "rewind",round(300*(1-ammo/ammo_max))), user)
+				actions.start(new /datum/action/bar/icon/rewind_tape(src, W, "rewind",round(src.rewind_time*(1-ammo/ammo_max))), user)
 			else
 				boutput(user, SPAN_ALERT("It's already fully rewound!"))
 			return
@@ -66,7 +68,7 @@ TYPEINFO(/obj/item/lightbreaker)
 
 	proc/rewind()
 		ammo = ammo_max
-		playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
+
 
 /datum/action/bar/icon/rewind_tape
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -77,6 +79,8 @@ TYPEINFO(/obj/item/lightbreaker)
 	var/obj/item/lightbreaker/the_breaker
 	var/obj/item/the_tool
 	var/interaction = "rewind"
+	/// Rough delta-t system so we can gradually increase the tape's "ammo"
+	var/last_update = 0
 
 	New(var/obj/item/lightbreaker/brkr, var/obj/item/tool, var/interact, var/duration_i)
 		..()
@@ -100,7 +104,18 @@ TYPEINFO(/obj/item/lightbreaker)
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(the_breaker, 'sound/misc/winding.ogg', 50, TRUE,3)
+		var/old_ammo = the_breaker.ammo
+		//ammo per second * delta time
+		the_breaker.ammo += (the_breaker.ammo_max / the_breaker.rewind_time) * (TIME - src.last_update)
+		the_breaker.ammo = min(the_breaker.ammo, the_breaker.ammo_max)
+
+		if (round(old_ammo) != round(the_breaker.ammo))
+			playsound(get_turf(the_breaker), 'sound/machines/click.ogg', 50, 1, -3)
+			boutput(source, SPAN_NOTICE("You rewind one full track."))
+
+		if (the_breaker.ammo == the_breaker.ammo_max)
+			src.state = ACTIONSTATE_FINISH
+		src.last_update = TIME
 
 	onStart()
 		..()
@@ -109,6 +124,7 @@ TYPEINFO(/obj/item/lightbreaker)
 			if ("rewind")
 				verbing = "rewinding"
 		owner.visible_message(SPAN_NOTICE("[owner] begins [verbing] [the_breaker]."))
+		src.last_update = TIME
 
 	onEnd()
 		..()
@@ -117,6 +133,7 @@ TYPEINFO(/obj/item/lightbreaker)
 			if ("rewind")
 				verbens = "rewinds"
 				the_breaker.rewind()
+		playsound(get_turf(the_breaker), 'sound/machines/click.ogg', 50, 1, -3)
 		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [the_breaker]."))
 
 

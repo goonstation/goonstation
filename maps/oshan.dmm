@@ -4114,6 +4114,10 @@
 	pixel_x = 8
 	},
 /obj/blind_switch/area/east,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 6;
+	pixel_y = -11
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -4318,7 +4322,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "atU" = (
@@ -7814,6 +7817,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light_switch/auto,
+/obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKr" = (
@@ -12751,10 +12755,10 @@
 /area/station/crew_quarters/bar)
 "bkV" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 3
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -3
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
@@ -13037,10 +13041,10 @@
 /area/station/crew_quarters/kitchen)
 "blR" = (
 /obj/table/auto,
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -7
 	},
-/obj/item/shaker/pepper,
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "blU" = (
@@ -13207,10 +13211,10 @@
 /area/station/crew_quarters/bar)
 "bmy" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 3
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -2
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_south,
@@ -13582,10 +13586,10 @@
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 6
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -6
 	},
 /turf/simulated/floor/white,
@@ -16918,9 +16922,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/mining/staff_room)
 "bDg" = (
-/obj/submachine/cargopad/magnet{
-	name = "Mining Staff Room"
-	},
+/obj/submachine/cargopad/miningstaff,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bDh" = (
@@ -21778,10 +21780,10 @@
 /area/diner/kitchen)
 "cbE" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 1
 	},
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = -8;
 	pixel_y = 3
 	},
@@ -21789,11 +21791,11 @@
 /area/diner/kitchen)
 "cbF" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = 3
 	},
 /turf/simulated/floor/grime,
@@ -24567,14 +24569,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
-"cKd" = (
-/obj/mapping_helper/access/maint,
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "cKm" = (
 /obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/engine,
@@ -27076,12 +27070,6 @@
 /obj/item/casing,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"eND" = (
-/obj/mapping_helper/access/maint,
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "eNM" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler/manual{
@@ -27388,9 +27376,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/submachine/cargopad{
-	name = "Catering Hanger Pad"
-	},
+/obj/submachine/cargopad/catering,
 /obj/item/cargotele{
 	pixel_x = 5;
 	pixel_y = 8
@@ -27540,7 +27526,6 @@
 /area/station/hydroponics/bay)
 "ffg" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
@@ -28114,7 +28099,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "fFn" = (
@@ -29536,14 +29520,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"gKt" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "gKC" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -31099,7 +31075,6 @@
 /area/station/crew_quarters/hop)
 "ifp" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -31282,7 +31257,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "ioK" = (
@@ -32548,12 +32522,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
-"jvS" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "jvU" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/lattice,
@@ -32615,7 +32583,6 @@
 "jzv" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "jzB" = (
@@ -33164,11 +33131,12 @@
 /area/station/maintenance/northwest)
 "jXL" = (
 /obj/machinery/door/airlock/pyro/command/alt,
-/obj/mapping_helper/access/heads,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "jXW" = (
@@ -35501,7 +35469,6 @@
 /area/station/medical/medbay/lobby)
 "lPL" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/central)
@@ -35793,7 +35760,6 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -36342,7 +36308,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "mBS" = (
@@ -37918,7 +37883,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "nTW" = (
@@ -38156,7 +38120,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "ofL" = (
-/obj/item/shaker/ketchup,
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup,
 /obj/decal/cleanable/ketchup,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -38459,12 +38423,6 @@
 /obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/blue/corner,
 /area/station/medical/medbay/surgery/storage)
-"osF" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "osH" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -38479,7 +38437,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "ovi" = (
@@ -39478,7 +39435,7 @@
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/auto,
 /obj/item/card_group/plain,
-/obj/item/reagent_containers/applicator/glue,
+/obj/item/reagent_containers/applicator/stick/glue,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "pqA" = (
@@ -39561,7 +39518,6 @@
 /area/space)
 "puD" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -40440,7 +40396,6 @@
 /area/station/engine/elect)
 "qkP" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -41216,14 +41171,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/stairs,
 /area/station/chapel/office)
-"qVd" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/mapping_helper/access/maint,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "qVJ" = (
 /obj/machinery/light/incandescent/cool,
 /obj/cable{
@@ -42377,14 +42324,6 @@
 "rPU" = (
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
-"rPW" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "rQE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43465,7 +43404,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "sHE" = (
@@ -43643,7 +43581,6 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
@@ -44268,11 +44205,12 @@
 	dir = 4;
 	name = "Computer Core"
 	},
-/obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "tsu" = (
@@ -44426,7 +44364,6 @@
 "txA" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "tzo" = (
@@ -44823,7 +44760,6 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "tPC" = (
-/obj/machinery/light/incandescent/greenish,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -45345,12 +45281,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
-"ukq" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "ulg" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -45992,9 +45922,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "uTy" = (
-/obj/submachine/cargopad{
-	name = "Security Pod Bay Pad"
-	},
+/obj/submachine/cargopad/security,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "uUN" = (
@@ -46494,7 +46422,6 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/central)
@@ -46560,7 +46487,6 @@
 "vAP" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/structure/woodwall,
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -47404,7 +47330,6 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
@@ -48214,7 +48139,6 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "wUd" = (
@@ -49334,7 +49258,6 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -49837,7 +49760,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
 "yjD" = (
@@ -78410,7 +78332,7 @@ qpm
 ioU
 qpm
 qpm
-eND
+ifp
 qpm
 qpm
 qpm
@@ -78707,7 +78629,7 @@ aia
 qpm
 qpm
 qpm
-eND
+ifp
 qpm
 qpm
 aia
@@ -79304,8 +79226,8 @@ ahb
 ahb
 ahb
 ahb
-cKd
-cKd
+mds
+mds
 aia
 aia
 aia
@@ -80876,7 +80798,7 @@ bsS
 bot
 buc
 btX
-jvS
+jTG
 btZ
 bJw
 cDL
@@ -100157,7 +100079,7 @@ azt
 ayd
 aBn
 aBn
-gKt
+xPw
 chd
 aig
 ckO
@@ -102857,7 +102779,7 @@ mPe
 mPe
 aOO
 aOO
-rPW
+rCV
 aOO
 amf
 apw
@@ -103764,10 +103686,10 @@ mPe
 aOO
 aoj
 aoj
-osF
+kCm
 aoj
 aoj
-osF
+kCm
 aoj
 aoj
 aoj
@@ -113456,7 +113378,7 @@ lfd
 aOO
 aOO
 aOO
-qVd
+nTU
 aOO
 aOO
 aOO
@@ -114351,7 +114273,7 @@ kTn
 aoj
 aoj
 rWW
-woL
+jzv
 xac
 mIg
 lol
@@ -114367,7 +114289,7 @@ ofx
 skl
 aOO
 aOO
-qVd
+nTU
 aOO
 aOO
 aqn
@@ -114375,7 +114297,7 @@ aqn
 aqn
 aOO
 aOO
-qVd
+nTU
 aOO
 anx
 aqn
@@ -115257,7 +115179,7 @@ anx
 mPe
 mPe
 mPe
-woL
+jzv
 rWW
 aoj
 rWW
@@ -115265,7 +115187,7 @@ pnn
 aoj
 cfa
 aoj
-woL
+jzv
 exz
 aoj
 aoj
@@ -115301,7 +115223,7 @@ aqn
 anx
 aoj
 mPe
-ukq
+kCm
 mPe
 ijk
 qzO
@@ -116211,7 +116133,7 @@ nAA
 aOO
 jUm
 jUm
-qVd
+nTU
 aOO
 byi
 bzf

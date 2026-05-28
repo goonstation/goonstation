@@ -55,7 +55,7 @@ TYPEINFO(/obj/machinery/codereader)
 	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 	src.UpdateIcon()
 
-#define IS_REAL_READABLE_NETPASS(x) (x in list(netpass_heads, netpass_security, netpass_medical))
+#define IS_REAL_READABLE_NETPASS(x) (x in list(netpass_heads, netpass_security, netpass_medical, netpass_login))
 /obj/machinery/codereader/proc/process_disk(mob/user)
 	if(!src.inserted_disk || !istype(src.inserted_disk))
 		return FALSE

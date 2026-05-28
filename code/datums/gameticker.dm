@@ -83,9 +83,22 @@ var/global/game_force_started = FALSE
 				// hey boo the rounds starting and you didnt ready up
 				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
+					// Don't give them a reminder if they havea forced assignment.
+					if (P.ckey in job_controls.forced_assignments)
+						continue
 					if (!P.ready_play && !P.ready_tutorial)
 						targets += P
 				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
+
+				// also notify anyone with a forced assignment
+				if (length(job_controls.forced_assignments))
+					for (var/forced_assignment_key in job_controls.forced_assignments)
+						var/datum/forced_assignment/forced_assignment = job_controls.forced_assignments[forced_assignment_key]
+						if (!istype(forced_assignment, /datum/forced_assignment))
+							continue
+						forced_assignment.notify_forced_assignment_holder()
+					message_admins("Gameticker automatically sent out notifications to all forced assignment holders!")
+
 				did_reminder = TRUE
 
 			if (title_countdown)
@@ -233,6 +246,9 @@ var/global/game_force_started = FALSE
 
 	add_minds()
 
+	if (length(global.job_controls.forced_assignments))
+		handle_forced_antag_assignments()
+
 	// rip collar key, nerds murdered people for you as non-antags and it was annoying
 	//implant_skull_key() //Solarium
 
@@ -250,6 +266,12 @@ var/global/game_force_started = FALSE
 
 	//Equip characters
 	equip_characters()
+	//no captain? spawn disk in their office at least
+	if (!length(by_type[/obj/item/disk/data/floppy/read_only/authentication]))
+		var/turf/T = get_turf(locate(/mob/living/critter/small_animal/cat/jones))
+		if (!T)
+			T = pick(job_start_locations["Captain"])
+		new /obj/item/disk/data/floppy/read_only/authentication(T)
 
 #ifdef I_WANNA_DO_CRIME
 	SPAWN(1 SECOND) //Avoids runtiming on certain special job setups changing equipment through SPAWN()s of their own
@@ -386,7 +408,7 @@ var/global/game_force_started = FALSE
 				continue
 #endif
 
-			if (player.ready_play)
+			if (player.ready_play || (player.ckey in job_controls.forced_assignments))
 				var/datum/player/P
 				if (player.mind)
 					P = player.mind.get_player()
@@ -419,7 +441,8 @@ var/global/game_force_started = FALSE
 						antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
 
 				else if (player.mind)
-					if (player.client.using_antag_token && ticker.mode.antag_token_support)
+					if (player.client.using_antag_token && ticker.mode.antag_token_support && \
+						!(length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments)))
 						player.client.use_antag_token()	//Removes a token from the player
 					player.create_character()
 					qdel(player)

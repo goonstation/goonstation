@@ -90,6 +90,7 @@
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 		if (src.icon_state == "fig-floorpills")
+			AddComponent(/datum/component/radioactive, 5, TRUE, FALSE, 0)
 			src.create_reagents(30)
 
 			var/primaries = rand(1,3)

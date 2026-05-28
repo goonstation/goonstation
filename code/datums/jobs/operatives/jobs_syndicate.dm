@@ -61,6 +61,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 
 /datum/job/special/syndicate/specialist/commander
 	name = "Syndicate Commander"
+	access_string = "Syndicate Commander"
 	antag_role = ROLE_SYNDICATE_COMMANDER
 	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat)
