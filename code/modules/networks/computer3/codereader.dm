@@ -117,7 +117,7 @@ TYPEINFO(/obj/machinery/codereader)
 				for (var/datum/syndicate_buylist/redeemed in spief.redeemed_items)
 					bought_items += redeemed.name
 		logTheThing(LOG_STATION, user, "unlocks the listening post barracks by inserting an auth disk into [src]")
-		ircbot.export_async("admin_debug", list("msg"="<@844525423412379668>: [user] ([user.ckey]), job: [user.job], antag role: [english_list(antag_roles)], bought items: [english_list(bought_items)] unlocked the listening post barracks with [src.inserted_disk] at [ticker.round_elapsed_ticks/(1 MINUTE)] minutes shift time"))
+		// ircbot.export_async("admin_debug", list("msg"="<@844525423412379668>: [user] ([user.ckey]), job: [user.job], antag role: [english_list(antag_roles)], bought items: [english_list(bought_items)] unlocked the listening post barracks with [src.inserted_disk] at [ticker.round_elapsed_ticks/(1 MINUTE)] minutes shift time"))
 		SPAWN(3 SECONDS)
 			for (var/obj/machinery/door/airlock/airlock in by_type[/obj/machinery/door])
 				if (airlock.id == src.id)
