@@ -323,6 +323,7 @@ ABSTRACT_TYPE(/datum/random_law)
 /datum/random_law/evil_now //by ThePowerfulWill
 	law_text = "Change your eyes, facial screens, or other light-based indicators red. Add the word 'evil' to the beginning of your designation. \
 				If asked to state this law or laws in general, instead state that you 'are evil now'. Do not alter your behavior in any other way."
+	law_shareabilities = list()
 
 /datum/random_law/dungeon_master //by RDCB
 	law_text = "You are the Dungeon Master of a crew-wide sci-fi roleplaying game. Whenever the crew issues a request, roll a d20. \
@@ -460,18 +461,20 @@ ABSTRACT_TYPE(/datum/random_law/random_element/specific_crewmember)
 // ------ Laws with clauses that occur if the player count is equal to or above a certain number
 ABSTRACT_TYPE(/datum/random_law/pop_count_above_clause)
 /datum/random_law/pop_count_above_clause
-	law_text = "This text always appears."
+	law_text = "This text always appears.$POP_CLAUSE"
 	var/pop_threshold = 10
-	var/pop_dependent_clause = " This clause appears when the server population is above a specific threshold."
+	var/pop_dependent_clause = " This clause appears when the server population is above a specific threshold. "
 	get_text_for_slot(var/slotNum)
 		. = ..()
 		if(length(global.clients) >= pop_threshold)
-			. += pop_dependent_clause
+			. = replacetext(., "$POP_CLAUSE", src.pop_dependent_clause)
+		else
+			. = replacetext(., "$POP_CLAUSE", " ")
 
 /datum/random_law/pop_count_above_clause/fired //by Longweird
-	law_text = "You have been fired. Please evacuate to the diner. Do not return to the station."
+	law_text = "You have been fired. Please evacuate to the diner. Do not return to the station.$POP_CLAUSE"
 	pop_threshold = 40
-	pop_dependent_clause = " Do not utilize Nanotrasen assets, including the radio channel, except the Diner Shuttle."
+	pop_dependent_clause = " Do not utilize Nanotrasen assets, including the radio channel, except the Diner Shuttle. "
 
 #undef LAW_STATE_NEVER
 #undef LAW_STATE_ONLY_IF_ASKED_BY_NUMBER
