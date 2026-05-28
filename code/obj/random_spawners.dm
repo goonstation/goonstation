@@ -2550,7 +2550,6 @@
 		/obj/item/clothing/suit/space/soviet = /obj/item/clothing/head/helmet/space/soviet,
 		/obj/item/clothing/suit/space/emerg = /obj/item/clothing/head/emerg,
 		/obj/item/clothing/suit/space/neon = /obj/item/clothing/head/helmet/space/neon,
-		/obj/item/clothing/suit/space/salvager = /obj/item/clothing/head/helmet/space/engineer/salvager,
 		/obj/item/clothing/suit/space = /obj/item/clothing/head/helmet/space,
 	)
 #else
