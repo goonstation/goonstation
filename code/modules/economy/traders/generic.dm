@@ -101,6 +101,8 @@
 	comname = "Monkeys"
 	comtype = /mob/living/carbon/human/npc/monkey
 	amount = 4
+	possible_alt_types = list(/mob/living/critter/gorilla)
+	alt_type_chance = 5
 	price_boundary = list(PAY_UNTRAINED, PAY_DOCTORATE)
 	possible_names = list("We found a few stowaway monkeys on our ship. Feel free to take them off our hands.",
 	"We seem to have a simian situation, and are selling them for a cheap price.")

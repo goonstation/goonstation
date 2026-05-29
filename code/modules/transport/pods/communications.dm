@@ -72,7 +72,7 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 
 	wizard
 		name = "MagicaTech Communication Array"
-		desc = "A expensive magical-looking shipboard communicator. Often used by those who shoot fireballs!"
+		desc = "An expensive magical-looking shipboard communicator. Often used by those who shoot fireballs!"
 		color = "#E62DE6"
 		access_type = list(POD_ACCESS_WIZARDS)
 

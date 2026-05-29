@@ -29,13 +29,13 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 			if("choice", "choicedevtest")
 				comp1type = /obj/machinery/engine_selector //type select computer
 				comp2type = /obj/landmark/engine_computer/two
-			if("nuclear", "nucleardevtest")
+			if("nuclear", "nucleardevtest", "nuclearmushroom")
 				comp1type = /obj/machinery/power/nuclear/reactor_control
 				comp2type = /obj/machinery/power/nuclear/turbine_control
 			if("TEG", "TEGdevtest")
 				comp1type = /obj/machinery/computer/power_monitor/smes
 				comp2type = /obj/machinery/power/reactor_stats
-			if("singularity", "singularitydevtest")
+			if("singularity", "singularitydevtest", "singularitymushroom")
 				comp1type = /obj/machinery/computer3/generic/engine
 				comp2type = /obj/machinery/computer/power_monitor/smes
 			else
@@ -104,6 +104,15 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 	#ifdef IN_MAP_EDITOR
 	icon = 'icons/effects/mapeditor/engine_room_devtest.dmi'
 	icon_state = "19x19engine_room"
+#else
+	icon = null
+	icon_state = null
+#endif
+
+/obj/landmark/engine_room/mushroom
+	#ifdef IN_MAP_EDITOR
+	icon = 'icons/effects/mapeditor/engine_room_mushroom.dmi'
+	icon_state = "13x13engine_room"
 #else
 	icon = null
 	icon_state = null

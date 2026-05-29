@@ -101,7 +101,7 @@
 		<h3>Salicylic Acid</h3>
 		<div class="salicylic acid">
 		<ul>
-			<li>This is a is a standard salicylate pain reliever and fever reducer. It will help relieve slowed movement from injuries.
+			<li>This is a standard salicylate pain reliever and fever reducer. It will help relieve slowed movement from injuries.
 			<li>Synthesis: treat sodium and phenol with carbon and oxygen, then acidify with sulfuric acid.
 		<br>
 		<h4><i>Advanced:</i></h4>

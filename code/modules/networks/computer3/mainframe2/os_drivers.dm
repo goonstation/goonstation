@@ -1025,7 +1025,7 @@
 	var/tmp/list/auths = list()
 
 	var/setup_sync_time = 20
-	var/setup_auth_access = access_dwaine_superuser
+	var/setup_auth_access = access_sysadmin
 	var/setup_auths_needed = 3
 
 	var/const/SESSION_TIMER = 1
