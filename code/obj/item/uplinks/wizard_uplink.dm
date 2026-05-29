@@ -59,12 +59,14 @@
 			else if (spell.icon && spell.icon_state)
 				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
 			spellbook_contents[spell.eqtype] += list(list(
-				cooldown = cooldown_contents,
-				cost = spell.cost,
-				desc = spell.desc,
-				name = spell.name,
-				icon = spell_icon,
-				vr_allowed = spell.vr_allowed,
+				"cooldown" = cooldown_contents,
+				"cost" = spell.cost,
+				"desc" = spell.desc,
+				"name" = spell.name,
+				"icon" = spell_icon,
+				"vr_allowed" = spell.vr_allowed,
+				"ref" = ref(spell),
+				"purchase_limit" = 1,
 			))
 		. = list(
 			"title" = "[src.wizard_name]'s Spellbook",
@@ -88,11 +90,10 @@
 			return
 		switch (action)
 			if ("purchase")
-				var/datum/SWFuplinkspell/chosen_spell = params["item"]
-				for (var/datum/SWFuplinkspell/spell in src.spells)
-					if (spell.name == chosen_spell)
-						chosen_spell = spell
-						break
+				var/datum/SWFuplinkspell/chosen_spell = locate(params["item_ref"]) in src.spells
+				if(!chosen_spell || !istype(chosen_spell))
+					boutput(usr, SPAN_ALERT("Oops, couldn't find that spell, call an Archmage Coder!"))
+					return
 				if (chosen_spell.SWFspell_CheckRequirements(usr,src))
 					chosen_spell.SWFspell_Purchased(usr,src)
 

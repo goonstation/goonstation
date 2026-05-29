@@ -23,6 +23,8 @@ export interface ItemData {
   cooldown: number | null;
   vr_allowed: BooleanLike;
   icon: string | null;
+  ref: string;
+  purchase_limit: number;
 }
 
 export interface EnvironmentProps {
