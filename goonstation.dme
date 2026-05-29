@@ -2227,6 +2227,7 @@
 #include "code\modules\speech\modules\speech\prefixes\thrallchat.dm"
 #include "code\modules\speech\modules\speech\prefixes\wraithchat.dm"
 #include "code\modules\speech\phrase_log\phrase_log.dm"
+#include "code\modules\speech\phrase_log\phrase_log_cleaner.dm"
 #include "code\modules\speech\say_channels\_say_channel_parent.dm"
 #include "code\modules\speech\say_channels\blobchat.dm"
 #include "code\modules\speech\say_channels\deadchat.dm"
