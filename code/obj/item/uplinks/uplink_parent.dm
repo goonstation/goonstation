@@ -378,6 +378,53 @@
 
 		return 0
 
+	proc/try_buy(var/datum/syndicate_buylist/I)
+		if (!I || !istype(I))
+			//usr.show_text("Something went wrong (invalid syndicate_buylist reference). Please try again and contact a coder if the problem persists.", "red")
+			return
+
+		// Trying to spawn things you shouldn't, eh?
+		if(!validate_spawn(I))
+			trigger_anti_cheat(usr, "tried to href exploit the syndicate buylist")
+			return
+
+		if (src.is_VR_uplink == 0)
+			if (src.uses < I.cost)
+				boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
+				return
+			if (src.purchase_log[I.type] >= I.max_buy)
+				boutput(usr, SPAN_ALERT("You have already bought as many of those as you can!"))
+				return
+			src.uses = max(0, src.uses - I.cost)
+
+			if (src.purchase_flags & UPLINK_TRAITOR)
+				var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
+				if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+					antagonist_role.purchased_items.Add(I)
+
+			if (src.purchase_flags & UPLINK_HEAD_REV)
+				var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
+				if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+					antagonist_role.purchased_items.Add(I)
+
+			if (src.purchase_flags & UPLINK_NUKE_OP)
+				var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+				if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+					antagonist_role.uplink_items.Add(I)
+
+			logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
+
+		if (length(I.items) > 0)
+			for (var/uplink_item in I.items)
+				var/obj/item = new uplink_item(get_turf(src))
+				I.run_on_spawn(item, usr, FALSE, src)
+			if (src.is_VR_uplink == 0)
+				var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
+				antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
+				if (!src.purchase_log[I.type])
+					src.purchase_log[I.type] = 0
+				src.purchase_log[I.type]++
+
 #define CHECK1 (BOUNDS_DIST(src, usr) > 0 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 #define CHECK2 (is_incapacitated(usr) || usr.restrained())
 	Topic(href, href_list)
@@ -428,52 +475,7 @@
 				usr.show_text("The uplink is now locked.", "blue")
 
 		else if (href_list["spawn"])
-			var/datum/syndicate_buylist/I = locate(href_list["spawn"])
-			if (!I || !istype(I))
-				//usr.show_text("Something went wrong (invalid syndicate_buylist reference). Please try again and contact a coder if the problem persists.", "red")
-				return
-
-			// Trying to spawn things you shouldn't, eh?
-			if(!validate_spawn(I))
-				trigger_anti_cheat(usr, "tried to href exploit the syndicate buylist")
-				return
-
-			if (src.is_VR_uplink == 0)
-				if (src.uses < I.cost)
-					boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
-					return
-				if (src.purchase_log[I.type] >= I.max_buy)
-					boutput(usr, SPAN_ALERT("You have already bought as many of those as you can!"))
-					return
-				src.uses = max(0, src.uses - I.cost)
-
-				if (src.purchase_flags & UPLINK_TRAITOR)
-					var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
-					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role.purchased_items.Add(I)
-
-				if (src.purchase_flags & UPLINK_HEAD_REV)
-					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
-					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role.purchased_items.Add(I)
-
-				if (src.purchase_flags & UPLINK_NUKE_OP)
-					var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
-					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role.uplink_items.Add(I)
-
-				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
-
-			if (length(I.items) > 0)
-				for (var/uplink_item in I.items)
-					var/obj/item = new uplink_item(get_turf(src))
-					I.run_on_spawn(item, usr, FALSE, src)
-				if (src.is_VR_uplink == 0)
-					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
-					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
-					if (!src.purchase_log[I.type])
-						src.purchase_log[I.type] = 0
-					src.purchase_log[I.type]++
+			src.try_buy(locate(href_list["spawn"]))
 
 		else if (href_list["about"])
 			reading_about = locate(href_list["about"])
