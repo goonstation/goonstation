@@ -152,11 +152,19 @@ datum
 			id = "banana peel"
 			description = "Banana peel crushed up to a liquid."
 			reagent_state = LIQUID
+			minimum_to_infect = 2.5
 			fluid_r = 255
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 150
 			disease = /datum/ailment/disease/monkey_madness
+
+			infectious
+				name = "concentrated banana peel"
+				id = "infectious banana peel"
+				minimum_to_infect = 0
+				random_chem_blacklisted = 1 // do not make this shit obtainable
+				disease = /datum/ailment/disease/monkey_madness/infectious
 
 		disease/liquid_plasma // Plasmatoid
 			name = "activated plasma"
