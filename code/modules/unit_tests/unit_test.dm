@@ -150,6 +150,8 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	allocated += instance
 	return instance
 
+/datum/unit_test/regression
+
 /area/testroom
 /obj/landmark/unit_test_top_right
 	name = LANDMARK_TOP_RIGHT
