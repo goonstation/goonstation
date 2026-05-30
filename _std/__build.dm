@@ -165,7 +165,8 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
-//#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions // Only run tests of these types - comma separated list of types
+//#define UNIT_TESTS_REGRESSION_ONLY // Only run /datum/unit_test/regression subtypes
+//#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/regression/deletion_regressions // Only run tests of these types - comma separated list of types
 
 #ifdef CI_RUNTIME_CHECKING
 #define CHECK_MORE_RUNTIMES 1
