@@ -68,7 +68,6 @@ describe('sanitizeText', () => {
       expect(result).toBe('<b>hi</b>');
     });
 
-    /* eslint-disable sonarjs/code-eval */
     it('strips javascript: hrefs', ({ expect }) => {
       const input = '<a href="javascript:alert(1)">click</a>';
       const result = sanitizeText(
@@ -80,7 +79,6 @@ describe('sanitizeText', () => {
       // <a> is not in PAPER_ALLOWED_TAGS so the tag itself is stripped too
       expect(result).not.toContain('javascript:');
     });
-    /* eslint-enable sonarjs/code-eval */
 
     it('preserves input tags with style, id, type, size, maxlength, disabled', ({
       expect,

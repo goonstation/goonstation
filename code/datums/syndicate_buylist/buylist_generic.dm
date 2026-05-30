@@ -155,8 +155,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 /datum/syndicate_buylist/generic/jammer
 	name = "Signal Jammer"
 	items = list(/obj/item/radiojammer)
-	cost = 3
-	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream."
+	cost = 2
+	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream. Infinite charge, no batteries needed!"
 
 /datum/syndicate_buylist/generic/psink
 	name = "Power Sink"
@@ -458,3 +458,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/device/disposals_hijacker)
 	cost = 4
 	vr_allowed = FALSE
+
+/datum/syndicate_buylist/traitor/gorilla
+	name = "Gorilla"
+	desc = "A highly realistic inflatable gorilla. So realistic in fact that it can still beat the shit out of you. Requires a gas tank to inflate."
+	cost = 3
+	vr_allowed = FALSE
+	items = list(/obj/item/inflatable_mob/gorilla)

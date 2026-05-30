@@ -308,7 +308,7 @@
 						return
 
 					if (FIELDNUM_AGE)
-						var/newAge = round( min( text2num_safe(command), 99) )
+						var/newAge = round( min( text2num_safe(command), 100) )
 						if (newAge < 1)
 							src.print_text("Invalid age value. Please re-enter.")
 							return

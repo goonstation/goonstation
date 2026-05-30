@@ -363,7 +363,7 @@
 					return
 
 				if(FIELDNUM_AGE)
-					var/newAge = round( min( text2num_safe(command), 99) )
+					var/newAge = round( min( text2num_safe(command), 100) )
 					if (newAge < 1)
 						src.print_text("Invalid age value. Please re-enter.")
 						return
@@ -646,7 +646,7 @@
 
 		if(MENU_STAFF_BONUS_TEAM)
 			if(!(world.time >= global.wagesystem.last_issued_bonus_time))
-				src.print_text("Nanotrasen Regulations forbid issuing multiple staff incentives within five minutes.")
+				src.print_text("Nanotrasen regulations forbid issuing multiple staff incentives within five minutes.")
 				src.menu = MENU_STATION_BUDGET
 				src.print_budget()
 				return
@@ -665,7 +665,8 @@
 				for(var/job_datum in src.team_to_job_datum[src.teams[choice]])
 					for(var/datum/job/job_type as anything in concrete_typesof(job_datum))
 						if (record["rank"] == job_type::name)
-							src.bonus_crew += record
+							var/datum/db_record/bank_rec = global.data_core.bank.find_record("id", record["id"])
+							src.bonus_crew += bank_rec
 							goto next_record // pop out of both for loops
 				next_record:
 
@@ -682,7 +683,7 @@
 
 		if(MENU_STAFF_BONUS_AMOUNT)
 			if(!(world.time >= global.wagesystem.last_issued_bonus_time))
-				src.print_text("Nanotrasen Regulations forbid issuing multiple staff incentives within five minutes.")
+				src.print_text("Nanotrasen regulations forbid issuing multiple staff incentives within five minutes.")
 				src.menu = MENU_STATION_BUDGET
 				src.print_budget()
 				return
@@ -713,7 +714,7 @@
 
 		if(MENU_STAFF_BONUS_REASON)
 			if(!(world.time >= global.wagesystem.last_issued_bonus_time))
-				src.print_text("Nanotrasen Regulations forbid issuing multiple staff incentives within five minutes.")
+				src.print_text("Nanotrasen regulations forbid issuing multiple staff incentives within five minutes.")
 				src.menu = MENU_STATION_BUDGET
 				src.print_budget()
 				return

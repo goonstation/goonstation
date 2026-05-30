@@ -605,9 +605,9 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-age")
-				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-100", "Character Generation", src.age, 100, 20)
 				if (new_age)
-					src.age = clamp(round(text2num(new_age)), 20, 80)
+					src.age = clamp(round(text2num(new_age)), 20, 100)
 					src.profile_modified = TRUE
 					return TRUE
 

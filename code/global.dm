@@ -329,6 +329,7 @@ var/global
 	netpass_medical = null
 	netpass_banking = null
 	netpass_cargo = null
+	netpass_login = null
 	netpass_syndicate = null //Detomatix
 
 	//

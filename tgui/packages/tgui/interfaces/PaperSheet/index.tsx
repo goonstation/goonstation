@@ -9,7 +9,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Remarkable } from 'remarkable';
+import { Remarkable } from 'remarkable/dist/esm/index.js';
 import { Box, Flex, Tabs, TextArea } from 'tgui-core/components';
 import { KEY } from 'tgui-core/keys';
 

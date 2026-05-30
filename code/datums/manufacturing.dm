@@ -2198,6 +2198,16 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 90 SECONDS
 	category = "Component"
+
+/datum/manufacture/robup_pressure
+	name = "Pressure Visualizer Upgrade"
+	item_requirements = list("crystal" = 2,
+							 "conductive" = 4)
+	item_outputs = list(/obj/item/roboupgrade/pressure_visualizer)
+	create = 1
+	time = 90 SECONDS
+	category = "Component"
+
 /* shit done be broked
 /datum/manufacture/robup_thermal
 	name = "Optical Thermal Upgrade"

@@ -207,7 +207,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/shockingtouch
 	name = "Shocking Touch"
 	eqtype = "Offensive"
-	desc = "This spell cannot be used on a moving target due to the need for a very short charging sequence, but will instantly put them in critical condition, and shock and stun anyone close to them."
+	desc = "This spell cannot be used on a moving target due to the need for a very short charging sequence, but will instantly burn your victim into critical condition."
 	assoc_spell = /datum/targetable/spell/shock
 
 /datum/SWFuplinkspell/iceburst

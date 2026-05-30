@@ -80,5 +80,6 @@ export const sanitizeText = (
   return DOMPurify.sanitize(input, {
     ALLOWED_TAGS: tags,
     FORBID_ATTR: forbidAttr,
+    FORCE_BODY: true,
   });
 };

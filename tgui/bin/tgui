@@ -302,8 +302,9 @@ fi
 
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
+  shift 1
   task-install
-  task-rspack --mode=production --analyze
+  task-rspack --mode=production --env RSDOCTOR=1 "${@}"
   exit 0
 fi
 

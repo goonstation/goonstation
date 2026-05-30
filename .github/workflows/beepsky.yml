@@ -90,23 +90,22 @@ jobs:
         run: |
           ~/SpacemanDMM/dreamchecker
 
-  # disabled while alist for loop is broken
-  # odlint:
-  #   name: Lint with OpenDream
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Setup .NET SDK
-  #       uses: actions/setup-dotnet@v4.2.0
-  #       with:
-  #         dotnet-version: 9.0.100
-  #     - uses: actions/checkout@v6
-  #     - uses: robinraju/release-downloader@v1.11
-  #       with:
-  #         repository: "OpenDreamProject/OpenDream"
-  #         tag: "latest"
-  #         fileName: "DMCompiler_linux-x64.tar.gz"
-  #         extract: true
-  #     - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=516.1666
+  odlint:
+    name: Lint with OpenDream
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5.2.0
+        with:
+          dotnet-version: 10
+      - uses: actions/checkout@v6
+      - uses: robinraju/release-downloader@v1.13
+        with:
+          repository: "OpenDreamProject/OpenDream"
+          tag: "latest"
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=516.1666
 
   compile:
     name: Compile
