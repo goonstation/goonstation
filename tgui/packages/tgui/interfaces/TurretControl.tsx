@@ -5,9 +5,17 @@
  * @license MIT
  */
 
-import { Box, Button, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Modal,
+  Section,
+  Stack,
+  TimeDisplay,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
+import { formatTime } from '../format';
 import { Window } from '../layouts';
 import { randInt } from './common/mathUtils';
 import { glitch } from './common/stringUtils';
@@ -37,13 +45,14 @@ interface TurretControlData {
   enabled;
   lethal;
   emagged;
+  emp_timer;
   area;
   locked;
 }
 
 export const TurretControl = () => {
   const { act, data } = useBackend<TurretControlData>();
-  const { enabled, lethal, emagged, area, locked } = data;
+  const { enabled, lethal, emagged, emp_timer, area, locked } = data;
 
   const set_lethal = (value) => {
     act('setLethal', { lethal: value });
@@ -59,6 +68,12 @@ export const TurretControl = () => {
       height={150}
     >
       <Window.Content align="center">
+        {emp_timer > 0 && (
+          <Modal textAlign="center" fontSize={2} p="10px">
+            System Rebooting: <br />
+            <TimeDisplay value={emp_timer} format={formatTime} />
+          </Modal>
+        )}
         {!emagged && !locked && (
           <Box fontSize="16px">
             <Section>

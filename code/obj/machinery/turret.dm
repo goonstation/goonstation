@@ -427,7 +427,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	. = list(
 		"enabled" = src.enabled,
 		"lethal" = src.lethal,
-		"emagged" = src.emagged
+		"emagged" = src.emagged,
+		"emp_timer" = GET_COOLDOWN(src, "emp_timer")
 	)
 	if (issilicon(user) || isAI(user))
 		.["locked"] = FALSE
@@ -451,6 +452,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 		if (!issilicon(usr) && !isAI(usr))
 			boutput(usr, "Control panel is locked!")
 			return
+
+	if(GET_COOLDOWN(src, "emp_timer"))
+		return
 
 	switch (action)
 		if ("setEnabled")
@@ -476,7 +480,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 /obj/machinery/turretid/receive_silicon_hotkey(var/mob/user)
 	if(..())
 		return
-	if(src.emagged)
+	if(src.emagged || GET_COOLDOWN(src, "emp_timer"))
 		return
 
 	if(user.client.check_key(KEY_OPEN))
@@ -554,3 +558,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 
 		sleep(rand(1, 10) * 10)
 	while(emagged)
+
+/obj/machinery/turretid/emp_act()
+	logTheThing(LOG_COMBAT,, "turret control in [loc.name] \[[log_loc(src)]] is disabled by an EMP")
+	EXTEND_COOLDOWN(src, "emp_timer", rand(30, 60) SECONDS)
+	src.enabled = 0
+	src.updateTurrets()
