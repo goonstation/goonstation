@@ -101,7 +101,7 @@ export const CyborgStatuses = (props: SiliconStatusesProps) => {
                       act('stop_silicon_lock', { mob_ref: item.mob_ref })
                     }
                   >
-                    Cancel - {item.lock_time}s{' '}
+                    Cancel - {item.lock_time}s
                   </Button>
                 </NoticeBox>
               )}

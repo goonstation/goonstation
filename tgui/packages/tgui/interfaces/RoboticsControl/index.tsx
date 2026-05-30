@@ -69,7 +69,10 @@ export const RoboticsControl = () => {
           </Section>
           <Section title="Ghostdrones">
             {ghostdrones?.length ? (
-              <GhostdroneStatuses ghostdrones={ghostdrones} user_is_cyborg />
+              <GhostdroneStatuses
+                ghostdrones={ghostdrones}
+                user_is_cyborg={!!user_is_cyborg}
+              />
             ) : (
               'No ghostdrones located'
             )}
