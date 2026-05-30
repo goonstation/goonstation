@@ -40,7 +40,7 @@
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 		/obj/item/sponge, // To clean up drawings
 		/obj/item/pen/omni, // Fancy
-		/obj/item/pen/crayon/random/robot,
+		/obj/item/pen/crayon/robot,
 		/obj/item/pen/crayon/rainbow,
 		/obj/item/hand_labeler,
 		/obj/item/coin_bot,
