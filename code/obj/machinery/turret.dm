@@ -15,6 +15,7 @@
 	var/health = 100
 	var/obj/machinery/turretcover/cover = null
 	var/obj/machinery/turretbase/base = null
+	var/obj/decal/turretvoid/void = null
 	var/popping = 0
 	var/wasvalid = 0
 	var/lastfired = 0
@@ -28,7 +29,7 @@
 	var/image/turret_smoke_overlay = null
 
 /obj/machinery/turretcover
-	name = "TurretCover"
+	name = "Turret Cover"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "TurretCover"
 	anchored = ANCHORED
@@ -36,12 +37,21 @@
 	density = 0
 
 /obj/machinery/turretbase
-	name = "TurretBase"
+	name = "turret tase"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "TurretBase"
 	anchored = ANCHORED
 	layer = OBJ_LAYER - 0.01
 	plane = PLANE_WALL
+	density = 0
+
+/obj/decal/turretvoid
+	name = ""
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "TurretVoid"
+	anchored = ANCHORED
+	layer = TURF_LAYER
+	plane = PLANE_FLOOR
 	density = 0
 
 /obj/machinery/turret/New()
@@ -124,14 +134,17 @@
 		src.cover = new /obj/machinery/turretcover(src.loc)
 	if (src.base==null)
 		src.base = new /obj/machinery/turretbase(src.loc)
+	var/turf/T = get_turf(src)
+	if (isfloor(T))
+		src.void = new /obj/decal/turretvoid(src.loc)
 	var/area/area = get_area(loc)
 	if (istype(area))
 		if(!target_list)
 			target_list = get_target_list()	//Calculate a new batch of targets
 			if(istype(area, /area/station/turret_protected)) //It'd be faster to just throw our turret buds our target list.
 				var/area/station/turret_protected/TP = area
-				for(var/obj/machinery/turret/T in TP.turret_list) //Sharing is caring - give it to our turret friends so they don't have to work out a target list
-					T.target_list = src.target_list
+				for(var/obj/machinery/turret/turrets in TP.turret_list) //Sharing is caring - give it to our turret friends so they don't have to work out a target list
+					turrets.target_list = src.target_list
 
 
 		if (length(target_list))
