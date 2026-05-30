@@ -552,9 +552,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 
 /obj/machinery/turretid/proc/process_emag()
 	do
-		src.enabled = prob(90)
-		src.lethal = prob(60)
-		updateTurrets()
+		if(!GET_COOLDOWN(src, "emp_timer"))
+			src.enabled = prob(90)
+			src.lethal = prob(60)
+			updateTurrets()
 
 		sleep(rand(1, 10) * 10)
 	while(emagged)
