@@ -1965,6 +1965,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 	icon_state = "body_m"
 	firevuln = 1.3
 	brutevuln = 0.7
+	toxvuln = 2
 	human_compatible = 0
 	uses_human_clothes = 1
 	aquatic = 1
