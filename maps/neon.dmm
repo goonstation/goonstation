@@ -571,27 +571,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "atx" = (
-/obj/table/auto,
-/obj/item/robot_module{
-	pixel_x = 12;
-	pixel_y = 6
-	},
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
 	},
-/obj/item/robot_module{
-	pixel_x = -2;
-	pixel_y = -8
-	},
-/obj/item/robot_module{
-	pixel_y = 6;
-	pixel_x = -2
-	},
-/obj/item/robot_module{
-	pixel_x = 12;
-	pixel_y = -8
-	},
 /obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/obj/machinery/computer/robotics/lab{
 	dir = 4
 	},
 /turf/simulated/floor/blueblack,
@@ -822,18 +808,24 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aAS" = (
-/obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/crowbar,
-/obj/item/cell/supercell/charged,
-/obj/item/device/prox_sensor,
-/obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/obj/item/storage/belt/utility,
-/obj/item/staple_gun,
 /obj/machinery/firealarm/directional/south,
+/obj/item/robot_module{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/obj/item/robot_module{
+	pixel_x = 12;
+	pixel_y = -8
+	},
+/obj/item/robot_module{
+	pixel_y = 6;
+	pixel_x = -2
+	},
+/obj/item/robot_module{
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/obj/table/auto,
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
 "aAZ" = (
@@ -7402,6 +7394,7 @@
 	dir = 4;
 	pixel_x = -8
 	},
+/obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/sanitary,
 /area/station/medical/robotics)
 "feP" = (
@@ -11155,11 +11148,23 @@
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
 "hLM" = (
-/obj/storage/secure/closet/medical/anesthetic,
 /obj/disposalpipe/trunk/north,
 /obj/machinery/disposal/small/west{
 	pixel_x = 8
 	},
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/staple_gun,
+/obj/item/storage/belt/utility,
+/obj/item/device/multitool{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/item/device/prox_sensor,
+/obj/item/crowbar,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
 "hLU" = (

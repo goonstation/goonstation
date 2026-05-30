@@ -11406,6 +11406,7 @@
 /area/station/garden/aviary)
 "dwi" = (
 /obj/landmark/gps_waypoint,
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "dwl" = (
@@ -16047,7 +16048,23 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start/job/cyborg,
+/obj/table/auto,
+/obj/item/weldingtool{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 2;
+	pixel_y = 11
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "gzl" = (
@@ -19689,29 +19706,13 @@
 	},
 /area/station/engine/substation/east)
 "iWX" = (
-/obj/table/auto,
-/obj/item/robot_module{
-	pixel_x = -6;
-	pixel_y = -3
-	},
-/obj/item/robot_module{
-	pixel_x = -6;
-	pixel_y = 9
-	},
-/obj/item/robot_module{
-	pixel_x = 8;
-	pixel_y = -3
-	},
-/obj/item/robot_module{
-	pixel_x = 8;
-	pixel_y = 9
-	},
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
+/obj/machinery/computer/robotics/lab,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "iXr" = (
@@ -28083,7 +28084,6 @@
 /turf/space,
 /area/space)
 "oOZ" = (
-/obj/table/auto,
 /obj/machinery/cell_charger{
 	pixel_x = -1;
 	pixel_y = -3
@@ -28110,6 +28110,7 @@
 	pixel_x = -2;
 	pixel_y = 5
 	},
+/obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "oPb" = (
@@ -35009,6 +35010,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "txI" = (
@@ -40708,10 +40710,10 @@
 /obj/machinery/disposal/mail/small/autoname/medbay/robotics/east{
 	dir = 2
 	},
-/obj/landmark/start/job/cyborg,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "xlC" = (
@@ -41875,25 +41877,25 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "ydu" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = 2;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/glass/oilcan{
-	pixel_x = -6;
-	pixel_y = -1
-	},
-/obj/item/weldingtool{
-	pixel_x = 9;
-	pixel_y = -1
-	},
-/obj/item/clothing/head/helmet/welding{
-	pixel_x = -7;
-	pixel_y = 15
-	},
 /obj/machinery/ai_status_display{
 	pixel_y = 28
+	},
+/obj/table/auto,
+/obj/item/robot_module{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/robot_module{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/robot_module{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/robot_module{
+	pixel_x = -6;
+	pixel_y = -3
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)

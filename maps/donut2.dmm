@@ -9862,14 +9862,11 @@
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
 "bhc" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 8
-	},
 /obj/machinery/light/incandescent,
 /obj/decal/poster/wallsign/poster_borg{
 	pixel_y = 32
 	},
+/obj/machinery/computer/robotics/lab,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -31839,12 +31836,13 @@
 /turf/simulated/floor,
 /area/station/engine/substation/west)
 "miW" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/simulated/floor/black/side{
 	dir = 1

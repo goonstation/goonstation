@@ -1220,9 +1220,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -7549,11 +7546,13 @@
 /turf/simulated/floor/carpet/green/fancy/junction/sw_e,
 /area/station/crew_quarters/jazz)
 "drM" = (
-/obj/landmark/start/job/roboticist,
 /obj/machinery/firealarm/directional/west,
-/obj/cable{
-	icon_state = "1-4"
-	},
+/obj/table/reinforced,
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -8050,9 +8049,6 @@
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -12263,8 +12259,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/optable,
-/obj/machinery/drainage,
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "fzm" = (
@@ -24427,11 +24422,11 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/operating,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "kUy" = (
@@ -26754,6 +26749,15 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
+"lXG" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/landmark/start/job/roboticist,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/robotics)
 "lXL" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
@@ -34917,17 +34921,14 @@
 /turf/simulated/floor/carpet/purple/standard/narrow/north,
 /area/station/teleporter)
 "pIb" = (
-/obj/table/reinforced,
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell,
-/obj/item/cell/supercell,
-/obj/item/cell/supercell,
+/obj/machinery/computer/robotics/lab{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "pIu" = (
@@ -41011,9 +41012,6 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -44493,12 +44491,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"ulX" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/robotics)
 "ulY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -80815,7 +80807,7 @@ peV
 kGZ
 cLs
 kUm
-ulX
+kkg
 drM
 hTF
 pIb
@@ -81722,7 +81714,7 @@ kGZ
 cLs
 mKX
 kkg
-sIP
+lXG
 cmN
 oXN
 rxz

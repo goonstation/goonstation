@@ -8104,6 +8104,10 @@
 	pixel_y = 5;
 	print_id = "Robotics"
 	},
+/obj/item/sheet/steel/fullstack{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "dFE" = (
@@ -22167,9 +22171,21 @@
 /area/station/crew_quarters/pool)
 "jFU" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/steel/fullstack{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -24455,27 +24471,12 @@
 	},
 /area/station/hallway/secondary/exit)
 "kDv" = (
-/obj/table/reinforced/auto,
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/item/robot_module{
-	pixel_x = -10;
-	pixel_y = -5
-	},
-/obj/item/robot_module{
-	pixel_x = 5;
-	pixel_y = -5
-	},
-/obj/item/robot_module{
-	pixel_x = -10;
-	pixel_y = 10
-	},
-/obj/item/robot_module{
-	pixel_x = 5;
-	pixel_y = 10
-	},
+/obj/machinery/recharge_station,
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "kDD" = (
@@ -40713,28 +40714,26 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "rVx" = (
-/obj/item/suture{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/staple_gun{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/suture{
-	pixel_x = 2;
-	pixel_y = 7
-	},
 /obj/table/reinforced/auto,
-/obj/item/hemostat{
-	pixel_y = 6
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_y = 16
 	},
-/obj/item/scissors/surgical_scissors,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = -12
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/item/scalpel,
+/obj/item/clothing/mask/surgical_shield{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = -4;
+	pixel_y = -7
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "rVE" = (
@@ -41164,29 +41163,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
-"sin" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 16
-	},
-/obj/item/clothing/mask/surgical{
-	pixel_x = -1;
-	pixel_y = 9
-	},
-/obj/item/clothing/gloves/latex{
-	pixel_x = -4;
-	pixel_y = -7
-	},
-/obj/item/clothing/mask/surgical_shield{
-	pixel_x = -9;
-	pixel_y = 7
-	},
-/obj/item/device/analyzer/healthanalyzer{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "siL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
@@ -42046,8 +42022,9 @@
 	},
 /area/station/quartermaster/refinery)
 "sEk" = (
-/obj/machinery/recharge_station,
-/obj/landmark/start/job/cyborg,
+/obj/machinery/computer/robotics/lab{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "sEm" = (
@@ -96528,7 +96505,7 @@ oYC
 rJL
 hxL
 rVx
-sin
+rKH
 hXh
 ecd
 ecd

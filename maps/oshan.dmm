@@ -1520,7 +1520,7 @@
 /obj/machinery/computer/robot_module_rewriter{
 	dir = 8
 	},
-/turf/simulated/floor/caution/corner/sw,
+/turf/simulated/floor/caution/west,
 /area/station/medical/robotics)
 "agY" = (
 /turf/simulated/floor/plating/random,
@@ -1684,12 +1684,16 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "ahN" = (
-/obj/submachine/cargopad/robotics,
-/turf/simulated/floor/black,
+/obj/machinery/computer/robotics/lab{
+	dir = 8
+	},
+/turf/simulated/floor/caution/west,
 /area/station/medical/robotics)
 "ahQ" = (
 /obj/machinery/manufacturer/robotics,
-/turf/simulated/floor/caution/corner/ne,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 9
+	},
 /area/station/medical/robotics)
 "ahS" = (
 /obj/storage/secure/closet/medical/medicine,
@@ -45814,6 +45818,7 @@
 /obj/blind_switch/area/west{
 	pixel_y = 4
 	},
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "uNu" = (
