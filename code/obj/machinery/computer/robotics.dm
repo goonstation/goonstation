@@ -8,7 +8,7 @@
 	icon_state = "robotics"
 	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
+	desc = "A computer that allows an authorized user to have an overview and control of the cyborgs on the station."
 	power_usage = 500
 	circuit_type = /obj/item/circuitboard/robotics
 	var/perma = 0
@@ -254,6 +254,9 @@
 	return ghostdrones
 
 /obj/machinery/computer/robotics/lab
+	name = "robotics monitoring"
+	desc = "A computer that allows users to have an overview of the cyborgs on the station."
+	circuit_type = /obj/item/circuitboard/robotics_lab
 	can_killswitch = FALSE
 	can_lockdown = FALSE
 

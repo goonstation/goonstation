@@ -28,7 +28,11 @@ export const RoboticsControl = () => {
   } = data;
 
   return (
-    <Window title="Robotics Control" width={870} height={590}>
+    <Window
+      title={can_killswitch ? 'Robotics Control' : 'Robotics Monitoring'}
+      width={870}
+      height={590}
+    >
       <Window.Content>
         {(!!can_lockdown || !!can_killswitch) &&
           !(user_is_ai || user_is_cyborg) && (

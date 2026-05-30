@@ -250,6 +250,7 @@
 		/obj/item/circuitboard/cloning,
 		/obj/item/circuitboard/genetics,
 		/obj/item/circuitboard/robot_module_rewriter,
+		/obj/item/circuitboard/robotics_lab,
 		/obj/item/circuitboard/chem_request,
 		/obj/item/circuitboard/chem_request_receiver,
 	)
