@@ -9,6 +9,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 export interface UplinkData {
   item_entries: Record<string, ItemData[]>;
+  purchased_items: Record<string, number>;
   currency_amount: number;
   currency_name: string;
   title: string;

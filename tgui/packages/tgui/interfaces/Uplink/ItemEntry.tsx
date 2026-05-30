@@ -17,7 +17,7 @@ import {
 } from 'tgui-core/components';
 import { capitalizeAll, pluralize } from 'tgui-core/string';
 
-import { useBackend, useSharedState } from '../../backend';
+import { useBackend } from '../../backend';
 import type { EnvironmentProps, ItemData, UplinkData } from './type';
 
 const THUMBNAIL_SIZE = '32px';
@@ -31,8 +31,7 @@ const buildPurchaseText = (
 ) => {
   if (purchased > 0 && purchase_limit === 1) {
     return 'Purchased';
-  } else if (purchase_limit < 100 && purchased >= purchase_limit) {
-    // 100 isn't the limit its actually infinity but i need a number to cutoff at
+  } else if (purchase_limit < Infinity && purchased >= purchase_limit) {
     return `Purchase limit reached`;
   } else if (cost > currency_amount) {
     return `Not enough ${currency_name}s`;
@@ -42,6 +41,7 @@ const buildPurchaseText = (
 
 interface ItemProps extends EnvironmentProps {
   item: ItemData;
+  purchased: number;
 }
 
 // needed to standardize a button within the `title` prop of a `Section` component
@@ -51,10 +51,9 @@ const titleButtonResetProps = {
 
 export const ItemEntry = (props: ItemProps) => {
   const { act } = useBackend<UplinkData>();
-  const { item, isVr, currency_amount, currency_name } = props;
+  const { item, isVr, currency_amount, currency_name, purchased } = props;
   const { name, desc, cooldown, cost, icon, vr_allowed, ref, purchase_limit } =
     item;
-  const [purchased, setPurchased] = useSharedState(name + '-purchased', 0);
 
   const title = (
     <Stack align="center">
@@ -74,10 +73,9 @@ export const ItemEntry = (props: ItemProps) => {
           color="good"
           disabled={
             currency_amount < cost ||
-            (purchase_limit < 100 && purchased >= purchase_limit)
-          } // 100 isn't the limit its actually infinity but i need a number to cutoff at
+            (purchase_limit < Infinity && purchased >= purchase_limit)
+          }
           onClick={() => {
-            setPurchased(purchased + 1);
             act('purchase', { item_ref: ref });
           }}
         >
