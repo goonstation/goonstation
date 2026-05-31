@@ -1,4 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ax" = (
+/obj/table/wood/auto{
+	dir = 5
+	},
+/obj/item/reagent_containers/food/snacks/taco/complete,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
 "dk" = (
 /obj/table/wood/auto{
 	dir = 5
@@ -54,6 +61,13 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
+"lg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/computer/announcement/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
 "lv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -61,6 +75,17 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
+"mP" = (
+/obj/table/wood/auto{
+	dir = 5
+	},
+/obj/item/uplink_telecrystal,
+/obj/item/uplink_telecrystal{
+	pixel_y = -1;
+	pixel_x = -6
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
 "mR" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
@@ -79,7 +104,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/general)
 "rt" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
 "rL" = (
@@ -125,12 +150,8 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/listeningpost/tech_room)
-"sX" = (
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/black,
-/area/listeningpost/barracks)
 "tr" = (
-/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /turf/simulated/floor/plating,
 /area/listeningpost/barracks)
 "tC" = (
@@ -159,6 +180,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
+"wA" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
 "xb" = (
 /obj/machinery/vending/computer3{
 	profit = 0
@@ -195,14 +220,21 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
+"AO" = (
+/obj/item/turret_deployer/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
 "Bf" = (
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "Bk" = (
-/obj/storage/closet/syndicate/personal,
 /obj/item/device/radio/intercom/brig{
 	dir = 8
 	},
+/obj/table/wood/auto{
+	dir = 5
+	},
+/obj/item/tank/jetpack,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "DF" = (
@@ -255,13 +287,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Hg" = (
-/obj/table/wood/auto{
-	dir = 5
-	},
 /obj/machinery/light_switch/north,
-/obj/machinery/codereader/syndicate{
-	pixel_y = 5
-	},
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "HA" = (
@@ -282,8 +309,17 @@
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "JZ" = (
-/obj/machinery/computer/television,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
+/obj/table/wood/auto{
+	dir = 5
+	},
 /turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"Kb" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/turf/simulated/floor/plating,
 /area/listeningpost/tech_room)
 "Ki" = (
 /obj/submachine/syndicate_teleporter,
@@ -331,6 +367,10 @@
 	name = "Dubious Hand Scanner";
 	pixel_x = 32
 	},
+/obj/storage/closet/syndicate,
+/obj/random_item_spawner/spacesuit,
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Qd" = (
@@ -342,16 +382,9 @@
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
-"Qu" = (
-/obj/storage/crate,
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/shipcomponent/secondary_system/crash,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/black,
-/area/listeningpost/barracks)
 "Rt" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/shuttle{
@@ -406,6 +439,10 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
+"Wp" = (
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks)
 "Yc" = (
 /obj/machinery/communications_dish{
 	name = "Communications dish"
@@ -884,7 +921,7 @@ Bf
 rL
 rL
 rL
-Fz
+lg
 VF
 OK
 IP
@@ -991,11 +1028,11 @@ xU
 sR
 kg
 sR
-sR
+Kb
 rL
 rL
 rL
-eH
+rL
 eH
 eH
 Bf
@@ -1026,10 +1063,10 @@ Hg
 si
 JZ
 tr
+ax
+IG
+ub
 Sn
-Sn
-Sn
-eH
 eH
 eH
 eH
@@ -1061,9 +1098,9 @@ kC
 zq
 rt
 IG
-Qu
+IG
+wA
 Sn
-eH
 eH
 eH
 Zx
@@ -1094,10 +1131,10 @@ Bk
 Ln
 GK
 tr
-sX
-ub
+AO
+Wp
+mP
 Sn
-Bf
 Bf
 Bf
 Zx
@@ -1131,7 +1168,7 @@ Sn
 Sn
 Sn
 Sn
-Bf
+Sn
 Bf
 Bf
 Bf

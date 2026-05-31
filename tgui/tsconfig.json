@@ -11,6 +11,16 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
+    "paths": {
+      "tgui": ["./packages/tgui"],
+      "tgui/*": ["./packages/tgui/*"],
+      // "tgui-panel": ["./packages/tgui-panel"], // |GOONSTATION-CHANGE|
+      // "tgui-panel/*": ["./packages/tgui-panel/*"], // |GOONSTATION-CHANGE|
+      // "tgui-say": ["./packages/tgui-say"], // |GOONSTATION-CHANGE|
+      // "tgui-say/*": ["./packages/tgui-say/*"], // |GOONSTATION-CHANGE|
+      "tgui-dev-server": ["./packages/tgui-dev-server"],
+      "tgui-dev-server/*": ["./packages/tgui-dev-server/*"]
+    },
     "noFallthroughCasesInSwitch": true, // |GOONSTATION-ADD|
     "noImplicitThis": true, // |GOONSTATION-ADD|
     // "noUncheckedIndexedAccess": true, // |GOONSTATION-ADD| TODO: enable

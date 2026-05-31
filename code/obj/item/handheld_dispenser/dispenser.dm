@@ -112,13 +112,21 @@ TYPEINFO(/obj/item/places_pipes)
 		if(istype(target, /obj/machinery/atmospherics) || istype(target, /obj/fluid_pipe) || istype(target, /obj/machinery/fluid_machinery))
 			SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(destroy_item), list(user, target),\
 			 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
+		else
+			if (SEND_SIGNAL(target, COMSIG_MACHINERY_HAS_REMOVEABLE_FLUID_NODE, src))
+				SETUP_GENERIC_ACTIONBAR(target, src, src.dispenser_delay, PROC_REF(remove_internal_fluid_node), list(user, target),\
+				 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
 	else
-		if(!issimulatedturf(target) && !istype(target, /turf/space))
+		if(!isturf(target) && (!istype(src.selection, /datum/pipe_recipe/fluid/machine/unary/port) || !SEND_SIGNAL(target, COMSIG_MACHINERY_CAN_RECEIVE_FLUID_NODE, src)))
+			//we are not targeting a turf and the machine we are targeting can either not receive a fluid node, or we don't have the fluid input selected, so we return here.
+			return
+		var/turf/target_turf = get_turf(target)
+		if(!issimulatedturf(target_turf) && !istype(target_turf, /turf/space))
 			return
 		var/directs = selection.get_directions(direction)
 		if(istype(src.selection, /datum/pipe_recipe/atmos))
-			for(var/obj/machinery/atmospherics/device in target)
+			for(var/obj/machinery/atmospherics/device in target_turf)
 				if((device.initialize_directions & directs))
 					boutput(user, SPAN_ALERT("Something is occupying that direction!"))
 					return
@@ -127,7 +135,7 @@ TYPEINFO(/obj/item/places_pipes)
 					return
 		else
 			var/obj/fluid_pipe/fluidthingy
-			for(var/obj/device in target)
+			for(var/obj/device in target_turf)
 				if(!istype(device, /obj/fluid_pipe) && !istype(device, /obj/machinery/fluid_machinery))
 					continue
 				fluidthingy = device
@@ -147,7 +155,7 @@ TYPEINFO(/obj/item/places_pipes)
 			return
 		var/icon/rotated_icon = icon(selection.icon, selection.icon_state, src.direction)
 		var/datum/action/bar/icon/callback/actionbar = new (\
-			target, src, src.dispenser_delay, PROC_REF(create_item), list(target, user, selection, direction),\
+			target_turf, src, src.dispenser_delay, PROC_REF(create_item), list(target_turf, user, selection, direction),\
 			rotated_icon, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 		)
 		actions.start(actionbar, user)
@@ -201,27 +209,44 @@ TYPEINFO(/obj/item/places_pipes)
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
+/obj/item/places_pipes/proc/remove_internal_fluid_node(var/mob/user, var/obj/machinery/target)
+	if(SEND_SIGNAL(target, COMSIG_MACHINERY_REMOVE_FLUID_NODE, src))
+		src.change_recource_amount(user, 1)
+		user.visible_message(SPAN_NOTICE("[user] destroys the fluid input on [target]."))
+		logTheThing(LOG_STATION, user, "destroys a fluid node on [target] at [log_loc(target)] with dir: [target.dir] with an HPD")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	else
+		boutput(user, SPAN_ALERT("The [src] can't access the fluid input of [target]."))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+
 /obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
-	var/mob/living/silicon/S
 	user.visible_message(SPAN_NOTICE("[user] destroys [target]."))
 	logTheThing(LOG_STATION, user, "destroys a [target] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	if(istype(target, /obj/machinery/atmospherics/binary/valve))
 		var/obj/machinery/atmospherics/binary/valve/O = target
 		if(O.high_risk)
 			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
-	if (S?.cell)
-		S.cell.give(src.silicon_cost_multiplier)
-	else
-		resources += (src.resources + 1 <= src.max_resources) ? 1 : 0
-	if (!issilicon(user))
-		src.inventory_counter.update_number(src.resources)
-	src.tooltip_rebuild = TRUE
+	src.change_recource_amount(user, 1)
 	if (istype(target, /obj/machinery/atmospherics))
 		qdel(target)
 	else
 		target.onDestroy()
-	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+
+/obj/item/places_pipes/proc/change_recource_amount(mob/user, var/change)
+	if(issilicon(user))
+		//silicons pay/gain from their cell
+		var/mob/living/silicon/affected_silicon = user
+		if(affected_silicon.cell)
+			if(change > 0)
+				affected_silicon.cell.give(src.silicon_cost_multiplier * change)
+			else
+				affected_silicon.cell.use(src.silicon_cost_multiplier * change)
+	else
+		src.resources = clamp(src.resources + change, 0, src.max_resources)
+		src.inventory_counter.update_number(src.resources)
+	src.tooltip_rebuild = TRUE
+	src.UpdateIcon()
 
 /obj/item/places_pipes/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

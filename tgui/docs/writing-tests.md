@@ -16,4 +16,6 @@ There is an example test in `packages/common/react.spec.ts`.
 
 You can read more about Vitest here: https://vitest.dev/
 
-Note, that there is still no real solution to test UIs for now, even though a lot of the support is hereThat will come later.
+### Interfaces
+
+You can also test ingame interfaces. See `tgui\packages\tgui\interfaces\Radio\Radio.test.tsx` for an example.
