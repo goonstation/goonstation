@@ -11897,7 +11897,6 @@
 /area/research_outpost)
 "ijm" = (
 /obj/mopbucket,
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "ijy" = (
@@ -14557,6 +14556,7 @@
 /obj/vehicle/floorbuffer{
 	dir = 8
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "jUK" = (
