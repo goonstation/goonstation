@@ -3176,14 +3176,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 	proc/insert_tank(obj/item/tank/tank, mob/user)
 		if (!src.holding)
-			boutput(user, "You insert the [tank] into the the [src].</span>")
+			boutput(user, "You insert the [tank] into the [src].</span>")
 			UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
 			user.drop_item()
 			tank.set_loc(src)
 			src.holding = tank
 			tgui_process.update_uis(src)
 		else
-			boutput(user, "You try to insert the [tank] into the the [src], but there's already a tank there!</span>")
+			boutput(user, "You try to insert the [tank] into [src], but there's already a tank there!</span>")
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
