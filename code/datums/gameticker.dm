@@ -1074,7 +1074,7 @@ var/global/game_force_started = FALSE
 		var/time_ratio = player.current_playtime / ticker.round_elapsed_ticks
 		var/player_unique_chance = actual_token_chance * time_ratio
 		if (player.get_antag_tokens() >= 1)
-			boutput(M, SPAN_BOLD("You would have been eligable for an antag token drop this round, but you already have one!"))
+			boutput(M, SPAN_BOLD("You would have been eligible for an antag token drop this round, but you already have one!"))
 			continue
 		if (!prob(player_unique_chance))
 			continue //unlucky
