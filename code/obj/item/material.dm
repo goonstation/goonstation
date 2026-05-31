@@ -693,6 +693,7 @@
 	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = FALSE
 	mat_changename = TRUE
+	material_amt = 0.1
 	material_name = "Steel"
 	default_material = "steel"
 	var/icon_type = "A"
