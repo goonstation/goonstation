@@ -15655,6 +15655,7 @@
 "kJM" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/disposal/botany,
+/obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
