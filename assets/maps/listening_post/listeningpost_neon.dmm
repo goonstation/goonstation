@@ -46,13 +46,13 @@
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "cH" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/obj/window/cubicle{
-	dir = 1
+/obj/table/glass/reinforced/auto,
+/obj/item/uplink_telecrystal{
+	pixel_y = 5;
+	pixel_x = 7
 	},
-/obj/window/cubicle{
-	dir = 4
+/obj/item/uplink_telecrystal{
+	pixel_y = -1
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
@@ -71,7 +71,7 @@
 /area/listeningpost/tech_room)
 "cV" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/device/radio,
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "dq" = (
@@ -93,10 +93,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "dx" = (
-/obj/machinery/door/airlock/pyro/alt,
-/obj/cable/black{
-	icon_state = "1-2"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner,
 /turf/simulated/floor/red,
 /area/listeningpost/barracks)
 "dH" = (
@@ -129,12 +126,7 @@
 /obj/item/clothing/mask/breath{
 	pixel_x = -4
 	},
-/obj/item/clothing/head/helmet/space/syndicate{
-	pixel_x = 4
-	},
-/obj/item/clothing/head/helmet/space/syndicate{
-	pixel_x = -4
-	},
+/obj/random_item_spawner/spacesuit,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
 "fx" = (
@@ -252,9 +244,6 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/stool/chair{
-	dir = 4
-	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "iZ" = (
@@ -346,15 +335,13 @@
 "mn" = (
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
-"mq" = (
-/obj/cable/black{
-	icon_state = "1-8"
+"mB" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper/pipebombs{
+	pixel_y = 4
 	},
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost/general)
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
 "nh" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/pinpointer/disk,
@@ -368,13 +355,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/listeningpost/tech_room)
-"of" = (
-/obj/cable/black{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west/hardened,
-/turf/simulated/floor,
-/area/listeningpost/barracks)
 "ol" = (
 /turf/simulated/floor,
 /area/listeningpost/barracks)
@@ -477,9 +457,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
+/obj/stool/chair,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "re" = (
@@ -518,11 +496,6 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/turf/simulated/floor/black,
-/area/listeningpost/break_room)
-"sY" = (
-/obj/table/glass/reinforced/auto,
-/obj/item/device/pda2,
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "tu" = (
@@ -611,8 +584,9 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/stool/chair{
-	dir = 8
+/obj/table/reinforced/auto,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
@@ -762,11 +736,13 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "Dz" = (
-/obj/window/cubicle{
-	dir = 4
-	},
+/obj/table/glass/reinforced/auto,
+/obj/item/turret_deployer/syndicate,
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
 /area/listeningpost/barracks)
+"DT" = (
+/turf/simulated/floor/red,
+/area/listeningpost/general)
 "Eb" = (
 /obj/rack,
 /obj/item/tank/oxygen{
@@ -903,8 +879,7 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
-/obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cereal_box/syndie,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "ML" = (
@@ -998,14 +973,12 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/table/reinforced/auto,
 /obj/cable/black{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west/hardened,
-/obj/machinery/codereader/syndicate{
-	pixel_y = 5
-	},
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/cereal_box/syndie,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "PM" = (
@@ -1243,12 +1216,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/listeningpost/barracks)
-"XH" = (
-/obj/cable/black{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor,
-/area/listeningpost/barracks)
 "XJ" = (
 /turf/simulated/floor/black,
 /area/listeningpost/general)
@@ -1330,9 +1297,6 @@
 "Zw" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
-	},
-/obj/cable/black{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/listeningpost/barracks)
@@ -2030,7 +1994,7 @@ Wk
 hx
 ap
 nh
-jt
+mB
 sL
 ry
 UO
@@ -2060,11 +2024,11 @@ vk
 eg
 kS
 kn
-mq
+YM
 hx
 ap
 cV
-sY
+jt
 sL
 ry
 UO
@@ -2094,7 +2058,7 @@ gw
 ND
 QW
 iT
-Wk
+DT
 hx
 Yp
 zc
@@ -2128,7 +2092,7 @@ QW
 QW
 QW
 Mx
-Wk
+DT
 Sv
 iZ
 Yw
@@ -2158,11 +2122,11 @@ Aq
 dH
 cH
 Dz
-of
+ol
 Vh
 MX
 xD
-Wk
+DT
 hx
 Jf
 UO
@@ -2192,11 +2156,11 @@ Qj
 YT
 YT
 Ul
-XH
+ol
 Zw
 dx
-kn
-YM
+DT
+DT
 hx
 Jf
 UO

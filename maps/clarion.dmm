@@ -23629,10 +23629,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"lMh" = (
-/obj/floorpillstatue,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "lNk" = (
 /obj/stool/chair{
 	dir = 1
@@ -70716,7 +70712,7 @@ vAA
 nsx
 aAV
 axS
-lMh
+aGS
 vhJ
 bkJ
 xHS

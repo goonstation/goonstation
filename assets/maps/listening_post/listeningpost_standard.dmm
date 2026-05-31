@@ -19,6 +19,9 @@
 	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
+"cv" = (
+/turf/simulated/floor/red,
+/area/listeningpost/general)
 "cD" = (
 /obj/mesh/catwalk{
 	dir = 5
@@ -38,6 +41,16 @@
 	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
+"dp" = (
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/computer/announcement/syndicate{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
 "ej" = (
 /obj/cable/black{
 	icon_state = "1-2"
@@ -77,8 +90,14 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "eT" = (
-/obj/machinery/computer/announcement/syndicate,
 /obj/item/device/radio/intercom/security,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/obj/cable/black{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -92,9 +111,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east/hardened,
-/obj/cable/black{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -199,13 +215,16 @@
 "kk" = (
 /obj/table/auto,
 /obj/decal/cleanable/cobweb,
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "km" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
+/obj/table/glass/reinforced/auto,
+/obj/item/uplink_telecrystal{
+	pixel_y = 5
+	},
+/obj/item/uplink_telecrystal{
+	pixel_y = -1
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
 /area/listeningpost/barracks)
@@ -316,13 +335,6 @@
 	},
 /area/listeningpost/tech_room)
 "qh" = (
-/obj/machinery/bot/guardbot/bad{
-	on = 0
-	},
-/obj/cable/black{
-	icon_state = "0-2"
-	},
-/obj/machinery/guardbot_dock,
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -364,15 +376,6 @@
 	dir = 8
 	},
 /area/listeningpost/vestibule)
-"sW" = (
-/obj/cable/black{
-	icon_state = "1-8"
-	},
-/obj/cable/black{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost/general)
 "tm" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -385,8 +388,6 @@
 /area/listeningpost/tech_room)
 "ts" = (
 /obj/machinery/light/incandescent/warm,
-/obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_north,
 /area/listeningpost/barracks)
 "tv" = (
@@ -477,6 +478,8 @@
 /area/space)
 "xE" = (
 /obj/machinery/light/incandescent/warm,
+/obj/item/tank/jetpack,
+/obj/rack,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
 "yf" = (
@@ -495,6 +498,12 @@
 /obj/item/tank/pocket/extended/oxygen,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
+"yp" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
 "yw" = (
 /obj/cable/black{
 	icon_state = "1-2"
@@ -520,6 +529,15 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
+"zB" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
 "zP" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/listeningpost/tech_room)
@@ -545,10 +563,7 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost/vestibule)
 "Bv" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/alt{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -703,10 +718,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "FQ" = (
-/obj/machinery/power/apc/autoname_west/hardened,
-/obj/cable/black{
-	icon_state = "0-4"
-	},
+/obj/item/turret_deployer/syndicate,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
 "Gi" = (
@@ -865,12 +877,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/listeningpost/solars)
-"On" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/red/fancy/innercorner/omni,
-/area/listeningpost/barracks)
 "Ot" = (
 /obj/decal/tile_edge/line/red{
 	dir = 10;
@@ -930,9 +936,6 @@
 /turf/variableTurf/clear,
 /area/space)
 "QU" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
 /obj/decal/tile_edge/line/red{
 	dir = 4;
 	icon_state = "line1"
@@ -1044,6 +1047,10 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/rack,
+/obj/random_item_spawner/spacesuit,
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
 "Ww" = (
@@ -1102,7 +1109,13 @@
 	icon_state = "line1"
 	},
 /obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cereal_box/syndie,
+/obj/item/reagent_containers/food/snacks/cereal_box/syndie{
+	pixel_x = 8
+	},
+/obj/item/paper/pipebombs{
+	pixel_y = 5;
+	pixel_x = -6
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Yy" = (
@@ -1458,7 +1471,7 @@ UE
 mZ
 ts
 Eb
-On
+Eb
 jQ
 mZ
 wR
@@ -1560,7 +1573,7 @@ UL
 Cf
 RG
 Nj
-RH
+cv
 zV
 zo
 BK
@@ -1594,7 +1607,7 @@ jd
 ru
 ru
 rY
-RH
+cv
 kw
 vt
 Mw
@@ -1628,7 +1641,7 @@ ZW
 ZW
 Mu
 ZW
-sW
+ZW
 ZW
 Rn
 zV
@@ -1665,7 +1678,7 @@ QZ
 nj
 lN
 RH
-zV
+dp
 Cf
 wR
 wR
@@ -1795,8 +1808,8 @@ IJ
 eq
 zP
 eT
-rC
-MG
+yp
+zB
 yf
 zP
 ex

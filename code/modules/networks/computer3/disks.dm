@@ -342,6 +342,7 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	w_class = W_CLASS_TINY
 	random_color = 0
 	file_amount = 32
+	is_syndicate = 1
 	HELP_MESSAGE_OVERRIDE({"Use on an armed nuclear bomb to alter the time remaining until detonation.
 	Use on an armory authorization computer to issue an emergency authorization or unauthorization.
 	Use on an escape shuttle launch computer to alter the time until departure."})
@@ -356,7 +357,8 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
 								"SEC"="[netpass_security]",
-								"MED"="[netpass_medical]")
+								"MED"="[netpass_medical]",
+								"LOGIN"="[netpass_login]")
 
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))

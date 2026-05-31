@@ -35317,12 +35317,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/refinery)
-"cjZ" = (
-/obj/floorpillstatue,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/quartermaster/refinery)
 "cka" = (
 /obj/item/device/radio/intercom/cargo,
 /obj/machinery/light{
@@ -54277,6 +54271,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)
 "gpc" = (
@@ -54659,6 +54654,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "gEa" = (
@@ -67919,6 +67915,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor,
 /area/station/chapel/sanctuary)
 "rAg" = (
@@ -73486,6 +73483,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor,
 /area/station/chapel/sanctuary)
 "wRX" = (
@@ -121536,7 +121534,7 @@ cgl
 cgH
 chE
 chH
-cjZ
+ciK
 clI
 cnq
 oVJ

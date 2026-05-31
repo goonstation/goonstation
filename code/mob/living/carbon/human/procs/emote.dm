@@ -2394,11 +2394,14 @@
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART | PIXEL_SCALE
+	var/image/blank = image(null, src)
+	blank.render_source = src.render_target
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
 	src.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
+	world << blank
 	world << torso
 	world << right_arm
 	world << left_arm
@@ -2414,6 +2417,7 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
+		qdel(blank)
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)

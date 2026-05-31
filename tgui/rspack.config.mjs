@@ -178,6 +178,10 @@ export default (env = {}, argv) => {
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
+      new rspack.IgnorePlugin({
+        resourceRegExp: /\.test\.tsx?$/,
+        contextRegExp: /__mocks__/,
+      }),
       new SecretInterfaceSyncPlugin(), // |GOONSTATION-ADD| secret interfaces
       new SecretBundleStoragePlugin(), // |GOONSTATION-ADD| secret interfaces
     ],

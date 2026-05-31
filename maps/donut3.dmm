@@ -14221,12 +14221,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"epL" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/floorpillstatue,
-/obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
 "epN" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/chapel{
@@ -125025,7 +125019,7 @@ rdj
 aUm
 aNo
 dwQ
-epL
+bzZ
 kkV
 eMk
 nFq

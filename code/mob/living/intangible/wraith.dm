@@ -392,6 +392,15 @@ TYPEINFO(/mob/living/intangible/wraith)
 	equipped()
 		return 0
 
+	click(atom/target, params, lcoation, control)
+		var/used_ability = src.targeting_ability
+		if (!used_ability) used_ability = get_ability_hotkey(src, params)
+		if (istype(used_ability, /datum/targetable))
+			return ..()
+
+		if (!density)
+			src.examine_verb(target)
+
 	examine_verb(atom/A as mob|obj|turf in view())
 		..()
 

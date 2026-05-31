@@ -24204,7 +24204,6 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "kPe" = (
-/obj/floorpillstatue,
 /obj/machinery/light/incandescent/cool/very,
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera/directional/east{
