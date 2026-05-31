@@ -1253,6 +1253,13 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			icon = 'icons/obj/items/materials/rods.dmi'
 			icon_state = "rods_5"
 
+		scrap
+			recipe_id = "metal_scrap"
+			craftedType = /obj/item/raw_material/scrap_metal
+			name = "metal_scrap"
+			can_craft_multiples = TRUE
+			icon = 'icons/obj/items/materials/scrap.dmi'
+			icon_state = "scrapA_1"
 		rack
 			recipe_id = "rack"
 			craftedType = /obj/item/furniture_parts/rack
@@ -1385,6 +1392,12 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			icon_state = "shaft"
 
 	glass
+		shard
+			recipe_id = "glass_shard"
+			craftedType = /obj/item/raw_material/shard
+			name = "Glass Shard"
+			icon = 'icons/obj/items/materials/materials.dmi'
+			icon_state = "shard"
 		smallwindow
 			recipe_id = "smallwindow"
 			name = "Thin Window"
