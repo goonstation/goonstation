@@ -3183,7 +3183,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 			src.holding = tank
 			tgui_process.update_uis(src)
 		else
-			boutput(user, "You try to insert the [tank] into [src], but there's already a tank there!</span>")
+			boutput(user, "You try to insert the [tank] into the [src], but there's already a tank there!</span>")
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
