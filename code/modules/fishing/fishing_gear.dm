@@ -353,10 +353,10 @@ TYPEINFO(/obj/item/fish_portal)
 
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
-			boutput(user, SPAN_ALERT("There is nothing in the upload terminal!"))
+			get_singleton(/datum/fish_collection).ui_interact(user)
 			return
 		if (src.working)
-			boutput(user, SPAN_ALERT("The terminal is busy!"))
+			get_singleton(/datum/fish_collection).ui_interact(user)
 			return
 		src.icon_state = "uploadterminal_working"
 		src.working = TRUE

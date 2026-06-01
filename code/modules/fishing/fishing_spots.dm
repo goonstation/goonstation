@@ -88,6 +88,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 		var/atom/movable/fish = src.generate_fish(user, fishing_rod, target)
 		if (!fish)
 			return 0
+
+		user.add_to_fish_collection(fish)
+
 		// ever put this much effort into the dumbest thing ever haha
 		user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 		[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
