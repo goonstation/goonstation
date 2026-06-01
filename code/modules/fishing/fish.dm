@@ -75,6 +75,11 @@ Alien/mutant/other fish:
 		Starstonefish
 */
 
+// These catagories aren't used currently.
+#define FISH_CATEGORY_FRESHWATER "freshwater"
+#define FISH_CATEGORY_OCEAN "ocean"
+#define FISH_CATEGORY_AQUARIUM "aquarium"
+
 TYPEINFO(/obj/item/reagent_containers/food/fish)
 	var/appears_in_fish_collection = FALSE
 
@@ -169,7 +174,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 
 // Freshwater fish
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/bass)
+TYPEINFO(/obj/item/reagent_containers/food/fish/bass)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/bass
 	name = "largemouth bass"
 	desc = "A fighty freshwater fish, a good catch for a beginner angler."
@@ -180,7 +186,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/bass)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/salmon)
+TYPEINFO(/obj/item/reagent_containers/food/fish/salmon)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/salmon
 	name = "salmon"
 	desc = "A commercial saltwater fish prized for its flavor for over five thousand years."
@@ -191,7 +198,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/salmon)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/carp)
+TYPEINFO(/obj/item/reagent_containers/food/fish/carp)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/carp
 	name = "carp"
 	desc = "The queen of rivers. A very popular game fish, though not as revered in the USA."
@@ -200,7 +208,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/carp)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/rainbow_trout)
+TYPEINFO(/obj/item/reagent_containers/food/fish/rainbow_trout)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/rainbow_trout
 	name = "rainbow trout"
 	desc = "A highly-regarded game fish with a vivid red stripe along it."
@@ -209,7 +218,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/rainbow_trout)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/goldfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/goldfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/goldfish
 	name = "goldfish"
 	desc = "A commonly kept indoor aquarium fish. More clever than you might expect."
@@ -221,7 +231,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/goldfish)
 	get_scent_color()
 		return "golden yellow"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/chub)
+TYPEINFO(/obj/item/reagent_containers/food/fish/chub)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/chub
 	name = "chub"
 	desc = "The sea chub, also known as the rudderfish or the pilot fish. Wait which one is this?"
@@ -230,7 +241,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/chub)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/eel)
+TYPEINFO(/obj/item/reagent_containers/food/fish/eel)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/eel
 	name = "eel"
 	desc = "When the jaws open wide and there's more jaws inside, that's a Moray!"
@@ -242,7 +254,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/eel)
 	get_scent_color()
 		return "midnight blue"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/dace)
+TYPEINFO(/obj/item/reagent_containers/food/fish/dace)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/dace
 	name = "dace"
 	desc = "A surface-dwelling fish related to the carp. Became established after escaping from being used as a bait fish."
@@ -251,7 +264,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/dace)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/minnow)
+TYPEINFO(/obj/item/reagent_containers/food/fish/minnow)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/minnow
 	name = "minnow"
 	desc = "One of the most common bait fish, looks like this one got away! Until you caught it."
@@ -260,7 +274,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/minnow)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/pike)
+TYPEINFO(/obj/item/reagent_containers/food/fish/pike)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/pike
 	name = "pike"
 	desc = "Named after the long and pointy weapon of war, the pike features in the Finnish Kalevala, where it's jawbone is turned in to a magical kantele."
@@ -270,7 +285,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/pike)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_RARE
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/arapaima)
+TYPEINFO(/obj/item/reagent_containers/food/fish/arapaima)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/arapaima
 	name = "arapaima"
 	desc = "One of the largest freshwater fish as well as one of the oldest, with fossils for this species dating back 23 million years."
@@ -280,7 +296,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/arapaima)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_RARE
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/rosefin_shiner)
+TYPEINFO(/obj/item/reagent_containers/food/fish/rosefin_shiner)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/rosefin_shiner
 	name = "rosefin shiner"
 	desc = "A native to Virginia and Carolina, this fish likes clear freshwater pools and creeks. Take me home, rosefin shiner!"
@@ -289,7 +306,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/rosefin_shiner)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/catfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/catfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/catfish
 	name = "catfish"
 	desc = "Found the whole world over, the humble catfish typically presents with their trademark whiskers, called barbels."
@@ -298,7 +316,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/catfish)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/tiger_oscar)
+TYPEINFO(/obj/item/reagent_containers/food/fish/tiger_oscar)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/tiger_oscar
 	name = "tiger oscar"
 	desc = "Popular in both aquariums and kitchens, this fish was accidentally misclassified in 1831. Don't make that mistake again!"
@@ -307,7 +326,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/tiger_oscar)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/glassfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/glassfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/glassfish
 	name = "glassfish"
 	desc = "A family of freshwater fish noted for having transparent bodies. They're not actually made of glass, right?"
@@ -327,7 +347,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/glassfish)
 
 // Ocean saltwater fish
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/herring)
+TYPEINFO(/obj/item/reagent_containers/food/fish/herring)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/herring
 	name = "herring"
 	desc = "The silver darling. A small ocean fish that swims in schools."
@@ -337,7 +358,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/herring)
 	rarity = ITEM_RARITY_COMMON
 
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/red_herring)
+TYPEINFO(/obj/item/reagent_containers/food/fish/red_herring)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/red_herring
 	name = "peculiarly coloured clupea pallasi"
 	desc = "What is this? Why is this here? WHAT IS THE PURPOSE OF THIS?"
@@ -352,7 +374,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/red_herring)
 		var/color_desc = pick("deadly","ghastly","siren","fishy","feline","cunning","mysterious","alluring","troubling","jewel")
 		return "[color_desc] [color_base]"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/tuna)
+TYPEINFO(/obj/item/reagent_containers/food/fish/tuna)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/tuna
 	name = "bluefin tuna"
 	desc = "Formerly known as the tunny. Delicious but sadly overfished."
@@ -361,7 +384,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/tuna)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/cod)
+TYPEINFO(/obj/item/reagent_containers/food/fish/cod)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/cod
 	name = "atlantic cod"
 	desc = "The keystone of fish & chips. Enjoyed since 800 AD."
@@ -373,7 +397,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/cod)
 	get_scent_color()
 		return "seafoam green"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/pufferfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/pufferfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/pufferfish
 	name = "pufferfish"
 	desc = "Adorable. Quite poisonous."
@@ -437,7 +462,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/pufferfish)
 			return TRUE //no pokey if not holdy :salute:
 
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/flounder)
+TYPEINFO(/obj/item/reagent_containers/food/fish/flounder)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/flounder
 	name = "flounder"
 	desc = "A flatfish found at the bottom of oceans around the world. It's got it's eyes on you!"
@@ -449,7 +475,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/flounder)
 	get_scent_color()
 		return "seafoam green"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/coelacanth)
+TYPEINFO(/obj/item/reagent_containers/food/fish/coelacanth)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/coelacanth
 	name = "coelacanth"
 	desc = "Lazarus had nothing on you. We thought you went to the celestial zoo. The lungfish calls you brother and I guess that we should too."
@@ -458,7 +485,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/coelacanth)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_RARE
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/mahimahi)
+TYPEINFO(/obj/item/reagent_containers/food/fish/mahimahi)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/mahimahi
 	name = "Mahi-mahi"
 	desc = "Also known as a dolphinfish, this tropical fish is prized for its quality and size. When first taken out of the water, they change colors."
@@ -472,7 +500,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/mahimahi)
 	get_scent_color()
 		return "seafoam green"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/shrimp)
+TYPEINFO(/obj/item/reagent_containers/food/fish/shrimp)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/shrimp
 	name = "shrimp"
 	desc = "Shrimple as that."
@@ -485,7 +514,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/shrimp)
 	get_scent_color()
 		return "shell pink"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/sardine)
+TYPEINFO(/obj/item/reagent_containers/food/fish/sardine)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/sardine
 	name = "sardine"
 	desc = "At home in a can. Good grilled, pickled or smoked. The sardine isn't a fan of this however."
@@ -494,7 +524,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/sardine)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/anchovy)
+TYPEINFO(/obj/item/reagent_containers/food/fish/anchovy)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/anchovy
 	name = "anchovy"
 	desc = "Great on pizza."
@@ -503,7 +534,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/anchovy)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/barracuda)
+TYPEINFO(/obj/item/reagent_containers/food/fish/barracuda)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/barracuda
 	name = "barracuda"
 	desc = "You gonna burn, burn, burn, burn, burn to the wick. Ooh, barracuda, oh, yeah."
@@ -513,7 +545,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/barracuda)
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_RARE
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/sailfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/sailfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/sailfish
 	name = "sailfish"
 	desc = "A fearsome looking predator with a ferocious temper. Looks like you were up for the challenge!"
@@ -525,7 +558,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/sailfish)
 
 // Aquarium fish
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/clownfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/clownfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/clownfish
 	name = "clownfish"
 	desc = "A pop-culturally significant orange fish that lives in a symbiotic relationship with an anemone."
@@ -537,7 +571,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/clownfish)
 	get_scent_color()
 		return "warm orange"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/damselfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/damselfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/damselfish
 	name = "damselfish"
 	desc = "A small pretty fish native to tropical coral reefs and your local aquarium."
@@ -546,7 +581,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/damselfish)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/green_chromis)
+TYPEINFO(/obj/item/reagent_containers/food/fish/green_chromis)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/green_chromis
 	name = "green chromis"
 	desc = "Beautiful iridescent apple-green. Wait a second, isn't this a damselfish?"
@@ -555,7 +591,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/green_chromis)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/cardinalfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/cardinalfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/cardinalfish
 	name = "cardinalfish"
 	desc = "A nocturnal ray-finned fish enjoyed for being small, peaceful and colourful."
@@ -564,7 +601,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/cardinalfish)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/royal_gramma)
+TYPEINFO(/obj/item/reagent_containers/food/fish/royal_gramma)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/royal_gramma
 	name = "royal gramma"
 	desc = "A pretty pink and yellow common to aquariums. Peaceful and friendly."
@@ -573,7 +611,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/royal_gramma)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/bc_angelfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/bc_angelfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/bc_angelfish
 	name = "bicolor angelfish"
 	desc = "It's like two fish in one! Apparently they don't get along with other fish though, at least they have each other."
@@ -582,7 +621,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/bc_angelfish)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/blue_tang)
+TYPEINFO(/obj/item/reagent_containers/food/fish/blue_tang)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/blue_tang
 	name = "blue tang"
 	desc = "One of the most common and popular marine aquarium fish in the world, for reasons now lost to time."
@@ -591,7 +631,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/blue_tang)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_COMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/firefish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/firefish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/firefish
 	name = "firefish"
 	desc = "Someone set this one on fire! Just kidding, we have fun here."
@@ -600,7 +641,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/firefish)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/yellow_tang)
+TYPEINFO(/obj/item/reagent_containers/food/fish/yellow_tang)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/yellow_tang
 	name = "yellow tang"
 	desc = "Born around the full moon, but bright as the sun. A popular, pretty aquarium fish."
@@ -612,7 +654,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/yellow_tang)
 	get_scent_color()
 		return "sunshine yellow"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/mandarin_fish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/mandarin_fish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/mandarin_fish
 	name = "mandarin fish"
 	desc = "Slow moving reef-dwellers, these extremely colorful fish find it hard to adapt to aquarium life."
@@ -621,7 +664,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/mandarin_fish)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_RARE
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/lionfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/lionfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/lionfish
 	name = "lionfish"
 	desc = "With strong red and white stripes and armed with a full complement of venomous spines, you better be careful handling this one."
@@ -630,7 +674,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/lionfish)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_RARE
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/betta)
+TYPEINFO(/obj/item/reagent_containers/food/fish/betta)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/betta
 	name = "betta"
 	desc = "This could be one of 73 species domesticated over 1000 years ago. Sadly used in fish-fights by less savory sorts."
@@ -642,7 +687,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/betta)
 // adventure zone special fish
 
 //meatzone
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/meat_mutant)
+TYPEINFO(/obj/item/reagent_containers/food/fish/meat_mutant)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/meat_mutant
 	name = "meat mutant"
 	desc = "A fish? Whatver it is, it's grown accustomed to swimming in a pool of digestive acids."
@@ -661,7 +707,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/meat_mutant)
 	inhand_color = "#af2323"
 	rarity = ITEM_RARITY_RARE
 */
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/eye_mutant)
+TYPEINFO(/obj/item/reagent_containers/food/fish/eye_mutant)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/eye_mutant
 	name = "eye mutant"
 	desc = "Was this a fish once? It's got too many eyes on you."
@@ -670,7 +717,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/eye_mutant)
 	rarity = ITEM_RARITY_RARE
 	slice_product = /obj/item/item_box/googly_eyes
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/lingfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/lingfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/lingfish
 	name = "splashing horror"
 	desc = "A writhing, flailing mass of tissue pantomiming a sick caricature of a fish. You should probably just put this one back."
@@ -684,7 +732,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/lingfish)
 		return "blood red"
 
 //void
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/void_fish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/void_fish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/void_fish
 	name = "void fish"
 	desc = "This fish has swum through the timestream to witness the death of the universe. Probably doesn't fry too well."
@@ -696,7 +745,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/void_fish)
 		return "deep purple"
 
 //code
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/code_worm)
+TYPEINFO(/obj/item/reagent_containers/food/fish/code_worm)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/code_worm
 	name = "code worm"
 	desc = "This unstable creature has been swimming around in this code for a long time, giving developers and its victims a massive headache."
@@ -729,7 +779,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/code_worm)
 		return null
 
 //solarium
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/sun_fish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/sun_fish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/sun_fish
 	name = "literal sun fish"
 	desc = "Nobody will ever believe you."
@@ -744,7 +795,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/sun_fish)
 		return "sunshine yellow"
 
 //lava moon
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/lava_fish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/lava_fish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/lava_fish
 	name = "lava fish"
 	desc = "A blazing hot catch straight from the planet's core!"
@@ -774,7 +826,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/lava_fish)
 	get_scent_color()
 		return "ruby red"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/igneous_fish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/igneous_fish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/igneous_fish
 	name = "igneous fish"
 	desc = "A fish formed of cooled volcanic magma, neat! Still hot to handle though!"
@@ -786,7 +839,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/igneous_fish)
 		return "ruby red"
 
 //blob
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/blobfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/blobfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/blobfish
 	name = "blobfish"
 	desc = "Looking good, blobfish."
@@ -833,7 +887,8 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	get_scent_color()
 		return "forest green"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/cardboardfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/cardboardfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/cardboardfish
 	name = "cardboard fish"
 	desc = "This is just a cardboard cutout of a fish with a face drawn on it."
@@ -887,7 +942,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish/origami)
 		src.reagents.add_reagent("paper", 20)
 		return
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/origami/sunfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/origami/sunfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/origami/sunfish
 	name = "origami sunfish"
 	desc = "The remains of tree, pressed together and folded to look like a sunfish. Probably just the circle of life."
@@ -898,7 +954,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/origami/sunfish)
 	get_scent_color()
 		return "sunshine yellow"
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/origami/angelfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/origami/angelfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/origami/angelfish
 	name = "origami angelfish"
 	desc = "Paper folded into an angelfish by a skilled and bored office worker."
@@ -906,7 +963,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/origami/angelfish)
 	inhand_color = "#798bdf"
 	rarity = ITEM_RARITY_UNCOMMON
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/origami/squid)
+TYPEINFO(/obj/item/reagent_containers/food/fish/origami/squid)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/origami/squid
 	name = "origami squid"
 	desc = "A paper squid that probably ejects printer ink when threatened."
@@ -920,7 +978,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/origami/squid)
 		src.reagents.add_reagent("oil", 10)
 		return
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/origami/stingray)
+TYPEINFO(/obj/item/reagent_containers/food/fish/origami/stingray)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/origami/stingray
 	name = "origami stingray"
 	desc = "Paper folded into the shape of a stingray. Safe to hold unless you get a papercut."
@@ -936,7 +995,8 @@ FISH_COLLECTION(/obj/item/reagent_containers/food/fish/origami/stingray)
 			new fish(get_turf(src))
 			qdel(src)
 
-FISH_COLLECTION(/obj/item/reagent_containers/food/fish/borgfish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/borgfish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/borgfish
 	name = "cyborg fish"
 	desc = "This must be an experiment from a bored roboticist."
