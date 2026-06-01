@@ -28007,13 +28007,6 @@
 	name = "organic floor"
 	},
 /area/evilreaver/bridge)
-"tGA" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/window_blinds/cog2/left{
-	dir = 8
-	},
-/turf/space/fluid,
-/area/station/security/detectives_office)
 "tGY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -92842,7 +92835,7 @@ imr
 imr
 imr
 imr
-tGA
+imr
 cnu
 qpn
 qpn
