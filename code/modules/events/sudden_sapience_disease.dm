@@ -21,6 +21,8 @@
 			if (isalive(bigbill))
 				found_npcs += bigbill // hehe
 
+		if (found_npcs.len <= 0)
+			return
 		return pick(found_npcs)
 
 	event_effect(var/source)
@@ -45,5 +47,4 @@
 				M.transfer_to(picked_npc)
 				message_ghosts("<b>[picked_npc.real_name] has become sapient.</b>")
 		else
-			message_ghosts("No NPCs became sapient.")
 			return
