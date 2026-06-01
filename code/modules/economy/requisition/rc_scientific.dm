@@ -9,8 +9,9 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 /datum/req_contract/scientific/internalaffairs //get it?
 	//name = "Don't Ask Too Many Questions"
-	payout = PAY_DOCTORATE*10*2
+	payout = PAY_DOCTORATE*7*2
 	weight = 80
+	item_rewarders = list(/datum/rc_itemreward/prodoc_glasses, /datum/rc_itemreward/prodoc_silicon)
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","CANNOT VERIFY ORIGIN","Organ Study")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
 	var/list/desc_whatstudy = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
@@ -51,8 +52,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 
 /datum/req_contract/scientific/clonejuice
-	payout = PAY_DOCTORATE*5
+	payout = PAY_DOCTORATE*7*1.5
 	weight = 80
+	item_rewarders = list(/datum/rc_itemreward/prodoc_glasses, /datum/rc_itemreward/prodoc_silicon)
 	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
 	var/list/desc_wherestudy = list(
 		"(REDACTED)",
@@ -1084,4 +1086,17 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "mobile recharging bay"
 	build_reward()
 		var/theitem = new /obj/item/storage/backpack/recharge_bay
+		return theitem
+
+// misc rewards
+/datum/rc_itemreward/prodoc_glasses
+	name = "prodoc glasses"
+	build_reward()
+		var/theitem = new /obj/item/clothing/glasses/healthgoggles/upgraded
+		return theitem
+
+/datum/rc_itemreward/prodoc_silicon
+	name = "cyborg prodoc upgrade"
+	build_reward()
+		var/theitem = new /obj/item/roboupgrade/healthgoggles
 		return theitem

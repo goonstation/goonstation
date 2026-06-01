@@ -34,8 +34,9 @@
 		/obj/item/roboupgrade/physshield = 10,\
 		/obj/item/roboupgrade/teleport = 10,\
 		/obj/item/roboupgrade/healthgoggles = 10,\
-		/obj/item/cloner_upgrade = 10,\
-		/obj/item/grinder_upgrade = 20,\
+		/obj/item/clothing/glasses/healthgoggles = 10,\
+		/obj/item/cloner_upgrade = 5,\
+		/obj/item/grinder_upgrade = 5,\
 		/obj/item/reagent_containers/mender/both = 10,\
 		/obj/item/plant/herb/cannabis/white/spawnable = 20,\
 		list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster) = 10,

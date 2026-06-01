@@ -295,6 +295,7 @@
 	/obj/item/device/pda2/medical_director,
 	/obj/item/circuitboard/card/medical,
 	/obj/item/circuitboard/announcement/medical,
+	/obj/item/clothing/glasses/healthgoggles,
 	/obj/item/reagent_containers/injector_filler)
 
 	make_my_stuff()

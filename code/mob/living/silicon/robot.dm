@@ -2423,53 +2423,51 @@ TYPEINFO(/mob/living/silicon/robot)
 		switch(mod)
 			if("Brobocop")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Brobocop module. It comes with a free Security HUD Upgrade."))
 				src.set_module(new /obj/item/robot_module/brobocop(src))
 				if(length(src.upgrades) < src.max_upgrades)
+					boutput(src, SPAN_NOTICE("You chose the Brobocop module. It comes with a free Security HUD Upgrade."))
 					src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
 			if("Science")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Science module. It comes with a free Spectroscopic Scanner Upgrade."))
 				src.set_module(new /obj/item/robot_module/science(src))
 				if(length(src.upgrades) < src.max_upgrades)
+					boutput(src, SPAN_NOTICE("You chose the Science module. It comes with a free Spectroscopic Scanner Upgrade."))
 					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Civilian module. It comes with a free recharge pack."))
 				src.set_module(new /obj/item/robot_module/civilian(src))
 				if(length(src.upgrades) < src.max_upgrades)
+					boutput(src, SPAN_NOTICE("You chose the Civilian module. It comes with a free recharge pack."))
 					src.upgrades += new /obj/item/roboupgrade/rechargepack(src)
 			if("Engineering")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Engineering module. It comes with a free Meson Vision Upgrade."))
 				src.set_module(new /obj/item/robot_module/engineering(src))
 				if(length(src.upgrades) < src.max_upgrades)
+					boutput(src, SPAN_NOTICE("You chose the Engineering module. It comes with a free Meson Vision Upgrade."))
 					src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
 			if("Medical")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Medical module. It comes with a free Repair Pack Upgrade."))
 				src.set_module(new /obj/item/robot_module/medical(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/repairpack(src)
+					boutput(src, SPAN_NOTICE("You chose the Medical module. It comes with a free Repair Pack Upgrade."))
 			if("Mining")
 				src.freemodule = 0
 				src.set_module(new /obj/item/robot_module/mining(src))
-			#ifdef UNDERWATER_MAP
-				boutput(src, SPAN_NOTICE("You chose the Mining module. It comes with a free Meson Vision Upgrade."))
 				if(length(src.upgrades) < src.max_upgrades)
+				#ifdef UNDERWATER_MAP
+					boutput(src, SPAN_NOTICE("You chose the Mining module. It comes with a free Meson Vision Upgrade."))
 					src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
-			#else
-				boutput(src, SPAN_NOTICE("You chose the Mining module. It comes with a free Propulsion Upgrade."))
-				if(length(src.upgrades) < src.max_upgrades)
+				#else
+					boutput(src, SPAN_NOTICE("You chose the Mining module. It comes with a free Propulsion Upgrade."))
 					src.upgrades += new /obj/item/roboupgrade/jetpack(src)
-			#endif
+				#endif
 			if ("Construction Worker")
 				src.freemodule = 0
-				boutput(src, SPAN_NOTICE("You chose the Construction Worker module. It comes with a free Construction Visualizer Upgrade."))
 				src.set_module(new /obj/item/robot_module/construction_worker(src))
 				if(length(src.upgrades) < src.max_upgrades)
+					boutput(src, SPAN_NOTICE("You chose the Construction Worker module. It comes with a free Construction Visualizer Upgrade."))
 					src.upgrades += new /obj/item/roboupgrade/visualizer(src)
-
 
 		var/datum/eventRecord/CyborgModuleSelection/cyborgModuleSelectionEvent = new()
 		cyborgModuleSelectionEvent.buildAndSend(src, mod)

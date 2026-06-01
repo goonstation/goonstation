@@ -109,6 +109,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 		"Further wounded may be arriving soon.",
 		"Several individuals are yet unaccounted for, and may require care."
 	)
+	item_rewarders = list(/datum/rc_itemreward/prodoc_glasses, /datum/rc_itemreward/prodoc_silicon)
 
 	New()
 		src.name = pick(namevary)
