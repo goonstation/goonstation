@@ -2,7 +2,10 @@
 	name = "Monkey Madness"
 	max_stages = 5
 	scantype = "Simian Flu"
-	cure_flags = CURE_ANTIBIOTICS
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Potassium"
+	reagentcure = list("potassium")
+	recureprob = 4 //easy to get chem
 	associated_reagent = "banana peel"
 	affected_species = list("Human")
 	spread = "Non-Contagious"
@@ -59,13 +62,13 @@
 
 				if(prob(20)) // rare chance to gib into gorilla
 					new /mob/living/critter/gorilla/aggressive (T)
-					affected_mob.gib()
+					affected_mob.implode()
 					qdel(affected_mob)
 					logTheThing(LOG_COMBAT, affected_mob, "was gibbed into a gorilla by the disease [name] at [log_loc(affected_mob)].")
 
 				else // else just an angry monkie
 					new /mob/living/carbon/human/npc/monkey/angry (T)
-					affected_mob.gib()
+					affected_mob.implode()
 					qdel(affected_mob)
 					logTheThing(LOG_COMBAT, affected_mob, "was gibbed into a monkey by the disease [name] at [log_loc(affected_mob)].")
 
