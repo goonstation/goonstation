@@ -11,7 +11,6 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 	//name = "Don't Ask Too Many Questions"
 	payout = PAY_DOCTORATE*7*2
 	weight = 80
-	item_rewarders = list(/datum/rc_itemreward/prodoc_glasses, /datum/rc_itemreward/prodoc_silicon)
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","CANNOT VERIFY ORIGIN","Organ Study")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
 	var/list/desc_whatstudy = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
@@ -27,6 +26,8 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 		src.flavor_desc = "An affiliated research group is [pick(desc_begins)] a [pick(desc_whatstudy)] of [organic.name] [pick(desc_whystudy)]"
 		src.flavor_desc += " and requires genetically-human specimens in adequate condition."
 		src.payout += rand(0,40) * 20
+		src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+		src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
 		..()
 
 ABSTRACT_TYPE(/datum/rc_entry/item/organ)
@@ -54,7 +55,6 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/req_contract/scientific/clonejuice
 	payout = PAY_DOCTORATE*7*1.5
 	weight = 80
-	item_rewarders = list(/datum/rc_itemreward/prodoc_glasses, /datum/rc_itemreward/prodoc_silicon)
 	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
 	var/list/desc_wherestudy = list(
 		"(REDACTED)",
@@ -91,6 +91,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		src.flavor_desc = "[pick(desc_wherestudy)] seeking [pick(desc_whatstudy)] for [pick(desc_whystudy)].[pick(desc_bonusflavor)]"
 		src.flavor_desc += "<br><br><i>REQHUB ADVISORY: Parameters from contract issuer indicate the following NT-recognized reagents to be compositionally adequate</i>"
 		src.flavor_desc += "<br>SYNTHFLESH | BEFF | PEPPERONI | MEAT SLURRY"
+		src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+		src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
 
 		src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/clonejuice,rand(8,15)*20)
 		..()
@@ -1088,13 +1090,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 // misc rewards
 /datum/rc_itemreward/prodoc_glasses
-	name = "prodoc glasses"
+	name = "ProDoc Healthgoggles"
 	build_reward()
 		var/theitem = new /obj/item/clothing/glasses/healthgoggles/upgraded
 		return theitem
 
 /datum/rc_itemreward/prodoc_silicon
-	name = "cyborg prodoc upgrade"
+	name = "ProDoc scanner upgrade"
 	build_reward()
 		var/theitem = new /obj/item/roboupgrade/healthgoggles
 		return theitem

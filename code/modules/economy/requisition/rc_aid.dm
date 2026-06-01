@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/req_contract/aid/wrecked
 	//name = "Breach Recovery"
-	payout = PAY_TRADESMAN*10*2
+	payout = PAY_TRADESMAN*10
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
 	var/list/desc_placejob = list("research","mining","security","cargo transfer")
 	var/list/desc_placetype = list("vessel","ship","station","outpost")
@@ -89,7 +89,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 /datum/req_contract/aid/triage
 	//name = "Medical Aid"
-	payout = PAY_DOCTORATE*10*2
+	payout = PAY_DOCTORATE*10
 	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition","Vital Support")
 	var/list/desc_helpsite = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
 	var/list/desc_tense = list("to assist with","after heavy load due to","to restock after")
@@ -109,12 +109,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 		"Further wounded may be arriving soon.",
 		"Several individuals are yet unaccounted for, and may require care."
 	)
-	item_rewarders = list(/datum/rc_itemreward/prodoc_glasses, /datum/rc_itemreward/prodoc_silicon)
 
 	New()
 		src.name = pick(namevary)
 		src.cycles_remaining = rand(1,3)
 		src.flavor_desc = "[pick(desc_helpsite)] requires additional supplies [pick(desc_tense)] [pick(desc_crisis)]. [pick(desc_emphasis)]"
+		src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+		src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
 		src.payout += rand(0,60) * 10
 
 		if(prob(60))
@@ -208,7 +209,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 /datum/req_contract/aid/geeksquad
 	//name = "Computer Failure"
-	payout = PAY_DOCTORATE*10*2
+	payout = PAY_DOCTORATE*10
 	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown","Crucial Repair")
 	var/list/desc_wherebork = list("research","mining","security","cargo transfer","communications","deep-space survey")
 	var/list/desc_whobork = list("vessel","ship","station","outpost")
@@ -298,7 +299,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 /datum/req_contract/aid/supplyshort
 	//name = "Supply Chain Failure"
-	payout = PAY_TRADESMAN*10*2
+	payout = PAY_TRADESMAN*10
 	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
 	var/list/desc_placejob = list("research","mining","hydroponics","civilian","Nanotrasen")
 	var/list/desc_place = list("vessel","station","outpost","colony")
