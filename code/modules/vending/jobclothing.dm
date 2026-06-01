@@ -427,6 +427,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
 
+TYPEINFO(/obj/machinery/vending/jobclothing/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //So engineer traitors dont scan it with their PDA
 /obj/machinery/vending/jobclothing/syndicate
 	name = "Syndicate Apparel"
 	desc = "A vending machine that vends Syndicate clothing."
@@ -434,7 +436,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_panel = "snack-panel"
 	pay = 1
 	acceptcard = 1
-	is_syndicate = 1 //So engineer traitors dont scan it with their PDA
 	req_access = list()
 
 	create_products(restocked)

@@ -1,4 +1,32 @@
 
+(t)sun may 31 26
+(u)Pirate-Rob
+(p)26087
+(e)🔎🧛💊🍝🔬💡🌱🚗🐁🛠️|C-Code-Quality, A-Gamemodes, A-Medical, A-Catering, A-Science, A-Station-Systems, A-Hydroponics, A-Vehicles, A-Critters, A-Engineering
+(+)Device Analyzer now has fancy new error messages for when something is wrong.
+(u)grasswitch
+(p)26717
+(e)🆕🔬|C-Feature, A-Science
+(+)Artifacts sometimes hint at newly developed faults. Agitator artifacts always cause hints to be displayed.
+(u)LorrMaster
+(p)26720
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Added mycelium, a new material that can be obtained from harvested mushrooms.
+(+)Combining mycelium with another edible material will remove any "on eat" effects from the resulting material.
+(u)glowbold
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)Using MechComp to vend items from vending machines requires adequate payment from cash or a linked card.
+(*)Market traders have a small chance of restocking goods on market refresh.
+(*)Payout exponent bonuses for requisitions and delivered mail have been reduced.
+(t)sat may 30 26
+(u)Studenterhue (and JORJ949)
+(p)26595
+(e)🆕🎉🤖🌠|C-Feature, E-Contest, A-Silicons, A-Events
+(*)Added 13 new laws to the pool of potential laws for the law corruption event, from the 13 winners of the Goonstation Winter Contest. Congratulations to Grasswitch, Longweird, FireKestrel, ThePowerfulWill, Spyritdragon, RDCB,ScorpionTailZ, Aft2001, Emikamiyuki, Asterion0, not suzpicious, and Vandry!
+(*)kibanderjack, Zelda4040404, and Zacattaxx did not win, but their entries were so good they got included into the pool anyway.
+(t)fri may 29 26
+(u)NoHelp
+(+)Skeletons can now have the hairy trait.
 (t)thu may 28 26
 (u)bamlord
 (p)26497

@@ -1,4 +1,5 @@
 TYPEINFO(/mob/living/critter/robotic/gunbot)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6)
@@ -26,7 +27,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	speech_verb_stammer = "states"
 	speech_verb_exclaim = "declares"
 	speech_verb_ask = "queries"
-	is_syndicate = TRUE
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged
@@ -287,6 +287,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 16,
 				"conductive_high" = 12,
 				"dense_super" = 6,
@@ -305,6 +306,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
 		src.UpdateOverlays(image(src.icon,"gunbot-mrls"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6,
@@ -323,6 +325,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
 		src.UpdateOverlays(image(src.icon, "gunbot-flamethrower"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6,
@@ -354,6 +357,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
 		src.UpdateOverlays(image(src.icon, "gunbot-striker"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 18,
 				"conductive_high" = 12,
 				"dense" = 6,
@@ -373,6 +377,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
 		src.UpdateOverlays(image(src.icon, "gunbot-heavy"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6,

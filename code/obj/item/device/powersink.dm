@@ -4,6 +4,7 @@
 #define POWERSINK_OPERATING 2
 
 TYPEINFO(/obj/item/device/powersink)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 20,
 				"conductive_high" = 20,
 				"crystal" = 10)
@@ -24,7 +25,6 @@ TYPEINFO(/obj/item/device/powersink)
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 2e8		// maximum power that can be drained before exploding
 	var/mode = POWERSINK_OFF		// 0 = off, 1=clamped (off), 2=operating
-	is_syndicate = 1
 	rand_pos = 0
 	HELP_MESSAGE_OVERRIDE({"To anchor the powersink, use a <b>screwdriver</b> on it while it is on exposed wiring. To turn the powersink on/off click it with an empty hand."})
 
