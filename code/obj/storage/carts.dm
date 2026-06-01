@@ -2,6 +2,7 @@
 	name = "supply cart"
 	desc = "A big rolling supply cart."
 	is_short = 1
+	icon = 'icons/obj/storage/cart.dmi'
 	icon_state = "cart"
 	icon_closed = "cart"
 	icon_opened = "cartopen"

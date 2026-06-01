@@ -541,62 +541,29 @@
 
 /obj/machinery/computer3/attackby(obj/item/W, mob/user)
 
-	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
-		var/drive_count = 0
-		var/obj/item/peripheral/drive/drive = null
-		for(var/obj/item/peripheral/P in src.peripherals)
-			var/obj/item/peripheral/drive/PD = P
-			if(istype(PD, /obj/item/peripheral/drive))
-				drive_count++
-				if(!PD.disk)
-					drive = PD
-					break
-		if (drive)
-			user.drop_item()
-			W.set_loc(src)
-			drive.disk = W
-			boutput(user, "You insert [W].")
-			update_static_data(usr)
-			return
-		else if(drive_count <= 0)
-			boutput(user, SPAN_ALERT("There's no drive to insert the disk into!"))
-		else if(drive_count <= 1)
-			boutput(user, SPAN_ALERT("There's already a disk inside!"))
-		else if(drive_count > 1)
-			boutput(user, SPAN_ALERT("There are no empty drives!"))
-
 	if (isscrewingtool(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
-
-	else if(istype(W, /obj/item/card/id))
-		var/obj/item/peripheral/card_scanner/dv = get_card_scanner()
-		if (!dv)
-			src.Attackhand(user)
-			return
-
-		if (dv.authid)
-			boutput(user, SPAN_ALERT("There is already a card inserted!"))
-		else
-			usr.drop_item()
-			W.loc = src
-			dv.authid = W
-			update_static_data(usr)
 		return
 
-	else
-		src.Attackhand(user)
-	return
+	var/string_failreason = ""
+	for(var/obj/item/peripheral/P in src.peripherals)
+		var/interactResult = P.itemInteract(W, user)
+		if(!interactResult)//If false then interaction was valid and we can leave
+			src.Attackhand(user)
+			src.updateUsrDialog()
+			return
+		else //Interaction is truthy, so either we have a reason for failure or no reason. Either way we skip.
+			if(istext(interactResult))
+				string_failreason = interactResult;
 
-/obj/machinery/computer3/proc/get_card_scanner()
-	. = locate(/obj/item/peripheral/card_scanner) in src.peripherals
-	if (!.)
-		. = locate(/obj/item/peripheral/card_scanner/editor) in src.peripherals
-	if (!.)
-		. = locate(/obj/item/peripheral/card_scanner/register) in src.peripherals
-	if (!.)
-		. = locate(/obj/item/peripheral/card_scanner/clownifier) in src.peripherals
+	if(string_failreason != "")
+		boutput(user, SPAN_ALERT(string_failreason))
+		return
+
+	src.Attackhand(user)
+	return
 
 /obj/machinery/computer3/proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 	if(!ispath(setup_frame_type, /obj/computer3frame))
@@ -972,31 +939,7 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/disk/data/floppy)) //I think this function calls it's parent already, is this even needed?
-			var/drive_count = 0
-			var/obj/item/peripheral/drive/drive = null
-			for(var/obj/item/peripheral/P in src.peripherals)
-				var/obj/item/peripheral/drive/PD = P
-				if(istype(PD, /obj/item/peripheral/drive))
-					drive_count++
-					if(!PD.disk)
-						drive = PD
-						break
-			if (drive)
-				user.drop_item()
-				W.set_loc(src)
-				drive.disk = W
-				boutput(user, "You insert [W].")
-				update_static_data(usr)
-				return
-			else if(drive_count <= 0)
-				boutput(user, SPAN_ALERT("There's no drive to insert the disk into!"))
-			else if(drive_count <= 1)
-				boutput(user, SPAN_ALERT("There's already a disk inside!"))
-			else if(drive_count > 1)
-				boutput(user, SPAN_ALERT("There are no empty drives!"))
-
-		if (ispryingtool(W))
+		if (ispryingtool(W) || isscrewingtool(W))
 			if(!src.cell)
 				boutput(user, SPAN_ALERT("There is no energy cell inserted!"))
 				return
@@ -1009,7 +952,7 @@
 			update_static_data(usr)
 			return
 
-		else if (istype(W, /obj/item/cell))
+		if (istype(W, /obj/item/cell))
 			if(src.cell)
 				boutput(user, SPAN_ALERT("There is already an energy cell inserted!"))
 
@@ -1022,20 +965,6 @@
 				update_static_data(usr)
 			return
 
-		else if(istype(W, /obj/item/card/id))
-			var/obj/item/peripheral/card_scanner/dv = get_card_scanner()
-			if (!dv)
-				src.Attackhand(user)
-				return
-
-			if (dv.authid)
-				boutput(user, SPAN_ALERT("There is already a card inserted!"))
-			else
-				usr.drop_item()
-				W.loc = src
-				dv.authid = W
-				update_static_data(usr)
-			return
 		..()
 
 	grab_smash(obj/item/grab/G, mob/user)

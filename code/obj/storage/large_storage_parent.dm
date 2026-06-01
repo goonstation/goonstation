@@ -16,7 +16,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	desc = "this is a parent item you shouldn't see!!"
 	flags = NOSPLASH | FLUID_SUBMERGE
 	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/large_storage.dmi'
 	icon_state = "closed"
 	density = 1
 	throwforce = 10

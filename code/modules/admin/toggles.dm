@@ -601,10 +601,14 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Player Cap"
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
-	player_capa = !( player_capa )
-	if (player_capa)
+	if (!player_capa)
+		var/picked_cap = tgui_input_number(usr, "How many players (admins not included) should be allowed in?", "Select Player Cap", global.player_cap, 200, 0)
+		if(!isnull(picked_cap))
+			global.player_cap = picked_cap
+		player_capa = TRUE
 		boutput(world, "<B>The global player cap has been enabled at [player_cap] players.</B>")
 	else
+		player_capa = FALSE
 		boutput(world, "<B>The global player cap has been disabled.</B>")
 	logTheThing(LOG_ADMIN, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].")
 	logTheThing(LOG_DIARY, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].", "admin")

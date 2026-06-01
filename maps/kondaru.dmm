@@ -1017,7 +1017,6 @@
 /area/station/storage/northeast)
 "aeq" = (
 /obj/decal/cleanable/dirt,
-/obj/floorpillstatue,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
 "aer" = (
@@ -7556,15 +7555,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
-"aFJ" = (
-/obj/machinery/door/airlock/pyro,
-/obj/machinery/door/airlock/pyro{
-	dir = 4
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/radio/bathroom{
-	name = "News Office Bathroom"
-	})
 "aFK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33379,7 +33369,8 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "gRQ" = (
@@ -47849,6 +47840,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/grime,
 /area/station/chapel/sanctuary)
 "reX" = (
@@ -55033,6 +55025,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/grime,
 /area/station/chapel/sanctuary)
 "wiB" = (
@@ -55355,6 +55348,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "wrs" = (
@@ -98619,7 +98613,7 @@ pmt
 paL
 iBm
 aqA
-aFJ
+apv
 aqA
 apv
 aqA

@@ -1545,6 +1545,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		switch(wireIndex)
 			if(WIRE_EXTEND)
 				src.hacked = FALSE
+				src.UpdateOverlays(null, "indicator-hacked")
 			if(WIRE_SHOCK)
 				src.time_left_electrified = 0
 			if(WIRE_MALF)
@@ -1577,6 +1578,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.hacked = !src.hacked
 				if(src.hacked)
 					src.AddOverlays(image(src.icon, null, "indicator-hacked", layer = src.layer + 0.0001), "indicator-hacked")
+				else
+					src.UpdateOverlays(null, "indicator-hacked")
 			if (WIRE_SHOCK)
 				src.time_left_electrified = 30
 			if (WIRE_MALF)

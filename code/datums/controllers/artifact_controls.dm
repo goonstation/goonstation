@@ -222,6 +222,7 @@ var/datum/artifact_controller/artifact_controls
 	var/fx_alpha_max = 255
 	var/nofx = 0 // If set to 1, does not apply an overlay but a flat icon_state change.
 	var/scramblechance = 10 //probability to have "fake" artifact with altered appearance
+	var/chapel_block = FALSE // Artifact does not work inside chapels
 	var/list/activation_sounds = list()
 	var/list/instrument_sounds = list()
 	var/list/lightswitch_sounds = list('sound/misc/lightswitch.ogg')
@@ -399,6 +400,7 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/messager/what_dead_people_said = 5,
 		/datum/artifact_fault/messager/what_people_said = 5,
 		/datum/artifact_fault/messager/emoji = 5)
+	chapel_block = TRUE
 	activation_sounds = list('sound/machines/ArtifactWiz1.ogg')
 	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Wizard_1.ogg',
 		'sound/musical_instruments/artifact/Artifact_Wizard_2.ogg',
@@ -473,6 +475,7 @@ var/datum/artifact_controller/artifact_controls
 /datum/artifact_origin/eldritch
 	type_name = "Eldritch"
 	name = "eldritch"
+	chapel_block = TRUE
 	activation_sounds = list('sound/machines/ArtifactEld1.ogg','sound/machines/ArtifactEld2.ogg')
 	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Eldritch_1.ogg',
 		'sound/musical_instruments/artifact/Artifact_Eldritch_2.ogg',

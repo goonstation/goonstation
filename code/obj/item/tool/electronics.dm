@@ -132,6 +132,7 @@ TYPEINFO(/obj/item/electronics/frame)
 
 	flatpack
 		icon_state = "dbox_alt"
+		desc = "Hand-held machinery deployer with a big button on the back."
 		HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
 		attack_self(mob/user)
@@ -330,6 +331,7 @@ TYPEINFO(/obj/item/electronics/frame)
 		AM.set_loc(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 0)
+		SEND_SIGNAL(AM, COMSIG_BUILD_FROM_FRAME, user, FALSE)
 		AM.forensic_holder = src.forensic_holder
 
 		// if we have a material, give it to the object if the object doesn't have one
@@ -339,6 +341,7 @@ TYPEINFO(/obj/item/electronics/frame)
 		AM = new store_type(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 1)
+		SEND_SIGNAL(AM, COMSIG_BUILD_FROM_FRAME, user, TRUE)
 		AM.forensic_holder = src.forensic_holder
 
 		if (src.material && !AM.material)

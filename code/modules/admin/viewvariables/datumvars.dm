@@ -782,7 +782,7 @@
 	//Let's prevent people from promoting themselves, yes?
 	#ifndef I_AM_HACKERMAN
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
-	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
+	if(D != "GLOB" && istype(D, /datum) && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
 		boutput(usr, SPAN_ALERT("You're not allowed to edit [D.type] for security reasons!"))
 		logTheThing(LOG_ADMIN, usr, "tried to varedit [D.type] but was denied!")
 		logTheThing(LOG_DIARY, usr, "tried to varedit [D.type] but was denied!", "admin")

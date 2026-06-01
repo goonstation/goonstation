@@ -170,6 +170,21 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 		"Type-AX Resonator, Position H7, 1 Intensity<br>"
 	)
 
+/datum/siphon_mineral/batiline
+	name = "Batiline"
+	tick_req = 35
+	shear = 18
+	x_torque = 12
+	y_torque = 5
+	sens_window = 4
+	product = /obj/item/raw_material/batiline
+	setup_guide = list(
+		"Type-AX Resonator, Position C6, 1 Intensity<br>",
+		"Type-AX Resonator, Position G6, 2 Intensity<br>",
+		"Type-AX Resonator, Position G4, 2 Intensity<br>",
+		"Type-AX Resonator, Position G2, 1 Intensity<br>"
+	)
+
 /datum/siphon_mineral/fibrilith
 	name = "Fibrilith"
 	x_torque = 0

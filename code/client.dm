@@ -1022,7 +1022,7 @@ var/global/curr_day = null
 	if (!forced_desussification)
 		return
 
-	if (!phrase_log.is_sussy(message.original_content))
+	if (!phrase_log.is_sussy(message.get_original_content_parsable()))
 		return
 
 	arcFlash(message.speaker, message.speaker, forced_desussification)

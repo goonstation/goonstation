@@ -179,6 +179,7 @@ proc/load_listening_post()
 /area/listeningpost/barracks
 	name = "Listening Post Barracks"
 	icon_state = "pink"
+	requires_power = FALSE
 
 /area/listeningpost/break_room
 	name = "Listening Post Break Room"

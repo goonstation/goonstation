@@ -914,7 +914,7 @@ TYPEINFO(/obj/item/plate/pizza_box)
 /obj/item/plate/pizza_box
 	name = "pizza box"
 	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "pizzabox"
 	pickup_sfx = 0 // to avoid using plate SFX
 	w_class = W_CLASS_BULKY

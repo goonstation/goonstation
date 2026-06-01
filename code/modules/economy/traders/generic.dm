@@ -4,6 +4,7 @@
 	base_patience = list(4,20)
 	chance_leave = 45
 	chance_arrive = 66
+	chance_restock = 20
 
 	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(

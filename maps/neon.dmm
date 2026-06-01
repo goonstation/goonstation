@@ -9294,6 +9294,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "gsd" = (
@@ -17546,7 +17547,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "man" = (
@@ -22584,7 +22585,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/robotdepot,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "pMP" = (
@@ -32273,7 +32274,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/robotdepot,
-/obj/mapping_helper/access/heads,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "wyP" = (

@@ -5,6 +5,7 @@ TYPEINFO(/obj/storage/closet)
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
+	icon = 'icons/obj/storage/locker.dmi'
 	object_flags = NO_GHOSTCRITTER
 	soundproofing = SOUNDPROOFING_STORAGE
 	can_flip_bust = 1
@@ -154,6 +155,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 /obj/storage/closet/coffin
 	name = "coffin"
 	desc = "A burial receptacle for the dearly departed."
+	icon = 'icons/obj/storage/coffin.dmi'
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
@@ -584,7 +586,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 
 /obj/storage/closet/radiation
 	name = "radiation supplies closet"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_closed = "radiation"
 	icon_state = "radiation"
 	icon_opened = "radiation-open"
@@ -598,7 +600,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 
 /obj/storage/closet/medicalclothes
 	name = "medical clothing locker"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_closed = "red-medical"
 	icon_state = "red-medical"
 	icon_opened = "open-white"
@@ -613,7 +615,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"
 	desc = "This thing looks ransacked."
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_state = "dented_c"
 	icon_closed = "dented_c"
 	icon_opened = "dented_c-open"
@@ -627,7 +629,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 
 /obj/storage/closet/mauxite
 	desc = "This thing looks pretty robust!"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_state = "closed$$mauxite"
 	default_material = "mauxite"
 	uses_default_material_appearance = TRUE

@@ -8,6 +8,7 @@
 	base_patience = list(12,20)
 	chance_leave = 25
 	chance_arrive = 25
+	chance_restock = 15
 	asshole = 1
 
 	base_goods_buy = alist(

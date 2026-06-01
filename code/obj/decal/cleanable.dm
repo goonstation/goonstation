@@ -1080,6 +1080,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "A fungal growth. Looks pretty nasty."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "fungus1"
+	default_material = "mycelium"
 	var/amount = 1
 	can_sample = 1
 	sample_reagent = "space_fungus"

@@ -7817,6 +7817,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light_switch/auto,
+/obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKr" = (
@@ -33130,11 +33131,12 @@
 /area/station/maintenance/northwest)
 "jXL" = (
 /obj/machinery/door/airlock/pyro/command/alt,
-/obj/mapping_helper/access/heads,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "jXW" = (
@@ -44203,11 +44205,12 @@
 	dir = 4;
 	name = "Computer Core"
 	},
-/obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "tsu" = (
@@ -44757,7 +44760,6 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "tPC" = (
-/obj/machinery/light/incandescent/greenish,
 /obj/cable{
 	icon_state = "2-4"
 	},

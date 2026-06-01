@@ -1,6 +1,7 @@
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
+	icon = 'icons/obj/storage/locker.dmi'
 	object_flags = NO_GHOSTCRITTER
 	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
