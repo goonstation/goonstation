@@ -13,15 +13,15 @@
 			var/turf/monkearea = get_turf(monke)
 			if (istype(monkearea.loc, /area/station/medical/dome)) // remove monkey pen apes so you don't get one of those 95% of the time
 				continue
-			found_npcs += monke
+			if (isalive(monke))
+				found_npcs += monke
 
 		if (prob(5))
-			found_npcs += locate(/mob/living/carbon/human/biker) // hehe
+			var/mob/bigbill = locate(/mob/living/carbon/human/biker)
+			if (isalive(bigbill))
+				found_npcs += bigbill // hehe
 
-		var/mob/proposed_npc = pick(found_npcs)
-
-		if (isalive(proposed_npc))
-			return proposed_npc
+		return pick(found_npcs)
 
 	event_effect(var/source)
 		..()
