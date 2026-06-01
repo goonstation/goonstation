@@ -333,8 +333,10 @@ const TextSetter = ({
  * SOFTWARE.
  */
 
-interface HexColorInputProps
-  extends Omit<ColorInputBaseProps, 'escape' | 'validate'> {
+interface HexColorInputProps extends Omit<
+  ColorInputBaseProps,
+  'escape' | 'validate'
+> {
   /** Enables `#` prefix displaying */
   prefixed?: boolean;
   /** Allows `#rgba` and `#rrggbbaa` color formats */

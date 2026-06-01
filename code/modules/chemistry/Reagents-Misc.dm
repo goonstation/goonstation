@@ -2,6 +2,7 @@
 
 ABSTRACT_TYPE(/datum/reagent/cement)
 ABSTRACT_TYPE(/datum/reagent/concrete)
+ABSTRACT_TYPE(/datum/reagent/glue)
 
 datum
 	reagent
@@ -847,9 +848,9 @@ datum
 					simulated_target.wetify(-1, 60 SECONDS, rgb(164,188,98))
 
 		glue
-			name = "space glue"
-			id = "spaceglue"
-			description = "Industrial superglue that is sure to stick to everything."
+			name = "abstract glue parent"
+			id = "glue_parent"
+			description = "God's Lavish Unholy Excrement"
 			reagent_state = LIQUID
 			depletion_rate = 0.6
 			fluid_r = 230
@@ -859,24 +860,17 @@ datum
 			viscosity = 0.8
 			block_slippy = 1
 			var/counter
+			var/max_duration = null
+
+			proc/check_valid_obj(obj/O, volume)
+				if (O.anchored)
+					return FALSE
+				return TRUE
 
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
 					simulated_target.wetify(-2, 60 SECONDS)
-
-			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
-				if (!M) M = holder.my_atom
-				if (!counter) counter = 1
-				switch(counter += (1 * mult))
-					if(20 to INFINITY)
-						M.druggy = max(M.druggy, 15)
-						if (M.canmove && prob(20))
-							M.change_misstep_chance(5 * mult)
-						if(probmult(5)) M.emote(pick("twitch","drool","moan"))
-
-				..()
-				return
 
 			reaction_obj(obj/O, volume)
 				if(volume < 5)
@@ -887,6 +881,8 @@ datum
 					return
 				if(O.invisibility >= INVIS_ALWAYS_ISH)
 					return
+				if (!src.check_valid_obj(O, volume))
+					return
 				var/silent = FALSE
 				var/list/covered = holder.covered_turf()
 				if (length(covered) > 5)
@@ -896,12 +892,67 @@ datum
 					volume = min(volume, src.volume / (2 + 3 / length(covered)))
 				if(volume < 5)
 					return
-				O.AddComponent(/datum/component/glue_ready, null, clamp(volume/4, 3, 15) SECONDS)
+				O.AddComponent(/datum/component/glue_ready, max_duration, clamp(volume/4, 3, 15) SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
 					T.visible_message(SPAN_NOTICE("\The [O] is coated in a layer of glue!"))
 				if(istype(holder, /datum/reagents/fluid_group))
 					holder.remove_reagent(src.id, min(volume, src.volume - 4))
+
+			spaceglue
+				name = "space glue"
+				id = "spaceglue"
+				description = "Strong glue that is sure to stick to most things."
+
+				check_valid_obj(obj/O, volume)
+					if (!isitem(O))
+						return FALSE
+					. = ..()
+
+				on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+					if (!M) M = holder.my_atom
+					if (!counter) counter = 1
+					switch(counter += (1 * mult))
+						if(20 to INFINITY)
+							M.druggy = max(M.druggy, 15)
+							if (M.canmove && prob(20))
+								M.change_misstep_chance(5 * mult)
+							if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+					. = ..()
+
+			superglue
+				name = "super glue"
+				id = "superglue"
+				description = "Industrial superglue that is sure to stick to everything."
+
+				check_valid_obj(obj/O, volume)
+					return TRUE
+
+				on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+					if (!M) M = holder.my_atom
+					if (!counter) counter = 1
+					switch(counter += (1 * mult))
+						if(20 to INFINITY)
+							M.druggy = max(M.druggy, 15)
+							if (M.canmove && prob(20))
+								M.change_misstep_chance(5 * mult)
+							if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+					. = ..()
+
+			craftglue
+				name = "craft glue"
+				id = "craftglue"
+				fluid_r = 230
+				fluid_b = 230
+				fluid_g = 60
+				description = "Non-toxic craft glue suitable for consumption by children and adults alike."
+				max_duration = 10 MINUTES
+
+				check_valid_obj(obj/O, volume)
+					if (!isitem(O))
+						return FALSE
+					. = ..()
+
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually

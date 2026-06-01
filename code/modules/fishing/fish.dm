@@ -34,6 +34,7 @@ Ocean saltwater fish:
 		Sardine
 		Barracuda
 		Sailfish
+		Glassfish
 	Unimplemented:
 		Blue Marlin
 		Red Snapper
@@ -67,8 +68,11 @@ Alien/mutant/other fish:
 		Golden fish
 		Ling fish
 		Tree fish
+		Origami fish
+		Cardboard fish
 	Unimplemented:
 		Blood fish
+		Starstonefish
 */
 
 // These catagories aren't used currently.
@@ -291,6 +295,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#2e1306"
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_UNCOMMON
+
+/obj/item/reagent_containers/food/fish/glassfish
+	name = "glassfish"
+	desc = "A family of freshwater fish noted for having transparent bodies. They're not actually made of glass, right?"
+	icon_state = "glassfish"
+	inhand_color = "#e3fffd"
+	category = FISH_CATEGORY_FRESHWATER
+	rarity = ITEM_RARITY_UNCOMMON
+	slice_product = /obj/item/sheet/glass
+	slice_amount = 10
+	default_material = "glass"
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "clear blue"
 
 // Ocean saltwater fish
 
@@ -763,6 +784,95 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 
 	get_scent_color()
 		return "forest green"
+
+/obj/item/reagent_containers/food/fish/cardboardfish
+	name = "cardboard fish"
+	desc = "This is just a cardboard cutout of a fish with a face drawn on it."
+	icon_state = "cardboardfish"
+	inhand_color = "#ac8f69"
+	rarity = ITEM_RARITY_UNCOMMON
+	slice_product = /obj/item/sheet/cardboard
+	slice_amount = 10
+	default_material = "cardboard"
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "dusty grey"
+
+	make_reagents()
+		src.reagents.add_reagent("ash", 20)
+		return
+
+/obj/item/reagent_containers/food/fish/starstonefish // Unused for now. Feel free to take.
+	name = "starstonefish"
+	desc = "A light blue starfish suspected to have been hunted to extinction by rock worms. This might be the only one left."
+	icon_state = "starstonefish"
+	inhand_color = "#94e1ec"
+	rarity = ITEM_RARITY_MYTHIC
+	slice_product = /obj/item/raw_material/starstone
+	slice_amount = 1
+	default_material = "starstone"
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "clear blue"
+
+/obj/item/reagent_containers/food/fish/origami
+	name = "origami fish"
+	icon_state = "origamifish"
+	inhand_color = "#d9e8eb"
+	slice_product = /obj/item/paper
+
+	slapsound()
+		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 50, 1, -1)
+
+	get_scent_color()
+		return "pastel pink"
+
+	make_reagents()
+		src.reagents.add_reagent("paper", 20)
+		return
+
+/obj/item/reagent_containers/food/fish/origami/sunfish
+	name = "origami sunfish"
+	desc = "The remains of tree, pressed together and folded to look like a sunfish. Probably just the circle of life."
+	icon_state = "origami_sunfish"
+	inhand_color = "#e9a744"
+	rarity = ITEM_RARITY_UNCOMMON
+
+	get_scent_color()
+		return "sunshine yellow"
+
+/obj/item/reagent_containers/food/fish/origami/angelfish
+	name = "origami angelfish"
+	desc = "Paper folded into an angelfish by a skilled and bored office worker."
+	icon_state = "origami_angelfish"
+	inhand_color = "#798bdf"
+	rarity = ITEM_RARITY_UNCOMMON
+
+/obj/item/reagent_containers/food/fish/origami/squid
+	name = "origami squid"
+	desc = "A paper squid that probably ejects printer ink when threatened."
+	icon_state = "origami_squid"
+	inhand_color = "#f4a6e1"
+	rarity = ITEM_RARITY_RARE
+	slice_product = /obj/item/pen
+
+	make_reagents()
+		src.reagents.add_reagent("paper", 10)
+		src.reagents.add_reagent("oil", 10)
+		return
+
+/obj/item/reagent_containers/food/fish/origami/stingray
+	name = "origami stingray"
+	desc = "Paper folded into the shape of a stingray. Safe to hold unless you get a papercut."
+	icon_state = "origami_stingray"
+	inhand_color = "#337624"
+	rarity = ITEM_RARITY_RARE
 
 /obj/item/reagent_containers/food/fish/random // used by the Wholetuna Cordata plant
 	New()

@@ -13085,11 +13085,6 @@
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
-"bDc" = (
-/obj/machinery/light/small/sticky,
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/grime,
-/area/station/atmos/highcap_storage)
 "bDf" = (
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
@@ -15141,6 +15136,19 @@
 	},
 /turf/space,
 /area/space)
+"cyh" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "cyq" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -24370,6 +24378,17 @@
 /obj/machinery/vending/jobclothing/research,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
+"hZQ" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/computer_core,
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "hZY" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -24675,6 +24694,16 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"ihg" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/grime,
+/area/station/atmos/highcap_storage)
 "ihq" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -25567,15 +25596,6 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge)
-"iGw" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/device/radio/intercom/engineering{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
-/area/station/atmos/highcap_storage)
 "iGA" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
@@ -27028,17 +27048,6 @@
 /obj/item/bat,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"jzf" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "jzx" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/disposalpipe/segment,
@@ -27690,6 +27699,14 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
+"jVe" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/mapping_helper/access/computer_core,
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "jVm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32428,19 +32445,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"mAo" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/table/reinforced/auto,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/mapping_helper/access/medical,
-/obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/medbay)
 "mAE" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "West Maintenance External Access";
@@ -39018,6 +39022,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"qbm" = (
+/obj/machinery/light/small/sticky,
+/obj/machinery/dispenser{
+	pltanks = 0
+	},
+/turf/simulated/floor/grime,
+/area/station/atmos/highcap_storage)
 "qbr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42313,6 +42324,16 @@
 "rZc" = (
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
+"rZM" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "rZP" = (
 /obj/lattice,
 /obj/warp_beacon{
@@ -43901,18 +43922,6 @@
 	dir = 1
 	},
 /area/abandonedship)
-"sUb" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "sUu" = (
 /mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/carpet/grime,
@@ -45347,6 +45356,19 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
+"tMn" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/table/reinforced/auto,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/medbay)
 "tMo" = (
 /obj/table/auto,
 /obj/item/extinguisher,
@@ -45569,15 +45591,6 @@
 /obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
-"tUA" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "tUE" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular{
@@ -49491,14 +49504,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/science/hall)
-"wiC" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/glass/command,
-/obj/mapping_helper/access/heads,
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "wiL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -69872,7 +69877,7 @@ aUH
 aUH
 olY
 shd
-mAo
+tMn
 bae
 aWZ
 aVh
@@ -80787,7 +80792,7 @@ bAR
 tVj
 bCr
 bDb
-iGw
+ihg
 bEq
 cci
 bFo
@@ -81088,7 +81093,7 @@ bhm
 bhm
 nwC
 bCr
-bDc
+qbm
 bDJ
 ndv
 bEQ
@@ -93099,8 +93104,8 @@ aDA
 aDA
 hQK
 avj
-tUA
-sUb
+rZM
+cyh
 aGO
 ngz
 avU
@@ -125070,7 +125075,7 @@ ajg
 ajg
 ajg
 alE
-jzf
+hZQ
 alE
 alE
 alE
@@ -126280,7 +126285,7 @@ mGo
 alE
 hWo
 bKK
-wiC
+jVe
 amw
 amG
 amT

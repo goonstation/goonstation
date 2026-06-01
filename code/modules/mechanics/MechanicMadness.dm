@@ -17,10 +17,12 @@
 //
 
 TYPEINFO(/obj/item/storage/mechanics/housing_large)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("bohrum" = 100,
 				"conductive" = 50)
 
 TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("bohrum" = 80,
 				"conductive_high" = 40)
 
@@ -3127,7 +3129,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 			return
 
 		LIGHT_UP_HOUSING
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.content]")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.get_content_parsable()]")
 		animate_flash_color_fill(src, "#00FF00", 2, 2)
 
 	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)

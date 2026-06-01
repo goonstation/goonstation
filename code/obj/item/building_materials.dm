@@ -619,6 +619,11 @@ MATERIAL
 	default_material = "plastic"
 	color = "#baccd3"
 
+/obj/item/sheet/cardboard
+	item_state = "sheet-metal"
+	icon_state = "sheet-m_5$$cardboard"
+	default_material = "cardboard"
+
 // RODS
 /obj/item/rods
 	name = "rods"

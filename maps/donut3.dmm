@@ -12930,18 +12930,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"dUK" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 4
-	},
-/obj/mapping_helper/access/medical,
-/obj/window_blinds/cog2/middle{
-	dir = 4
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbooth)
 "dUT" = (
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
@@ -14216,12 +14204,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"epL" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/floorpillstatue,
-/obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/ne)
 "epN" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/chapel{
@@ -14286,6 +14268,29 @@
 	},
 /turf/space,
 /area/space)
+"erC" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -5;
+	pixel_y = -13
+	},
+/obj/item/storage/box/syringes{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/dropper/mechanical{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
 "erR" = (
 /obj/lattice/auto/turf_attaching,
 /obj/machinery/light/runway_light/delay4,
@@ -19640,6 +19645,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
+"gcF" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/mapping_helper/access/medical,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbooth)
 "gcR" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -35258,29 +35275,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
-"kXT" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -5;
-	pixel_y = -13
-	},
-/obj/item/storage/box/syringes{
-	pixel_x = 7;
-	pixel_y = 13
-	},
-/obj/item/reagent_containers/dropper/mechanical{
-	pixel_x = -9;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/dropper/mechanical{
-	pixel_x = -3;
-	pixel_y = 9
-	},
-/obj/item/device/radio/intercom/medical{
-	dir = 4
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/treatment)
 "kXZ" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -118476,7 +118470,7 @@ xLh
 qLV
 daZ
 jXn
-kXT
+erC
 vNY
 fPh
 oUK
@@ -125012,7 +125006,7 @@ rdj
 aUm
 aNo
 dwQ
-epL
+bzZ
 kkV
 eMk
 nFq
@@ -133809,7 +133803,7 @@ wst
 kFy
 oRw
 blL
-dUK
+gcF
 wst
 wst
 eZY

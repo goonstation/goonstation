@@ -2394,6 +2394,30 @@
 /area/station/chapel/office{
 	name = "Chaplain's Office"
 	})
+"avP" = (
+/obj/surgery_tray,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/gloves/latex{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/item/clothing/mask/surgical_shield{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "avR" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/emergency{
@@ -10568,6 +10592,31 @@
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/teleporter)
+"cOX" = (
+/obj/machinery/door/airlock/pyro/command,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/heads,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "lockdown";
+	layer = 4;
+	name = "Bridge Lockdown Door";
+	opacity = 0
+	},
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "aicore";
+	enter_id = "outer";
+	name = "AI Core"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/access/computer_core,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "cPa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10819,6 +10868,23 @@
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
+"cXx" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
+/obj/item/clipboard{
+	pixel_x = -7
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 15;
+	pixel_y = -2
+	},
+/obj/mapping_helper/access/pharmacy,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "cXQ" = (
 /obj/machinery/disposal/small/north{
 	pixel_y = 28
@@ -23629,10 +23695,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"lMh" = (
-/obj/floorpillstatue,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "lNk" = (
 /obj/stool/chair{
 	dir = 1
@@ -26515,6 +26577,23 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"nLb" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
+/obj/item/clipboard{
+	pixel_x = -7
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 15;
+	pixel_y = -2
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/reception)
 "nLf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30466,30 +30545,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"que" = (
-/obj/surgery_tray,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/gloves/latex{
-	pixel_x = -4;
-	pixel_y = -7
-	},
-/obj/item/clothing/mask/surgical_shield{
-	pixel_x = -9;
-	pixel_y = 7
-	},
-/obj/item/clothing/mask/surgical{
-	pixel_x = -1;
-	pixel_y = 9
-	},
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "qum" = (
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/east)
@@ -33420,29 +33475,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"suV" = (
-/obj/machinery/door/airlock/pyro/command,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	icon_state = "bdoormid0";
-	id = "lockdown";
-	layer = 4;
-	name = "Bridge Lockdown Door";
-	opacity = 0
-	},
-/obj/mapping_helper/airlock/cycler/manual{
-	cycle_id = "aicore";
-	enter_id = "outer";
-	name = "AI Core"
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "svK" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -35075,6 +35107,17 @@
 /obj/storage/secure/closet/civilian/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"tyS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/computer_core,
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "tzj" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -35415,17 +35458,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
-"tIn" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
-	},
-/obj/mapping_helper/access/heads,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "tID" = (
 /obj/table/auto,
 /obj/item/decoration/flower_vase,
@@ -37303,23 +37335,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"uRi" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 1
-	},
-/obj/item/clipboard{
-	pixel_x = -7
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 15;
-	pixel_y = -2
-	},
-/obj/mapping_helper/access/medical,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/reception)
 "uRw" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/left_station/destiny)
@@ -42063,23 +42078,6 @@
 "yie" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/janitor/supply)
-"yis" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 1
-	},
-/obj/item/clipboard{
-	pixel_x = -7
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 15;
-	pixel_y = -2
-	},
-/obj/mapping_helper/access/pharmacy,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/pharmacy)
 "yjk" = (
 /obj/machinery/manufacturer/robotics,
 /obj/machinery/camera/directional/west{
@@ -70705,12 +70703,12 @@ vAA
 nsx
 aAV
 axS
-lMh
+aGS
 vhJ
 bkJ
 xHS
 wOt
-que
+avP
 kSj
 qcL
 kea
@@ -71929,7 +71927,7 @@ oEQ
 cdV
 nyD
 wKe
-uRi
+nLb
 sXK
 vkf
 fCk
@@ -72236,7 +72234,7 @@ oDC
 pfp
 pSM
 pLQ
-yis
+cXx
 aHd
 aHd
 jXh
@@ -79790,7 +79788,7 @@ bnG
 bkl
 cte
 cte
-tIn
+tyS
 cte
 cte
 bkl
@@ -80398,7 +80396,7 @@ wGP
 gUu
 gUu
 gQp
-suV
+cOX
 ray
 nPF
 oZw

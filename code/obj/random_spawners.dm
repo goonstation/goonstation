@@ -11,6 +11,7 @@
 	var/min_amt2spawn = 0
 	var/max_amt2spawn = 0
 	var/rare_chance = 0 // chance (out of 100) that the rare item list will be spawned instead of the common one
+	//the two main spawn lists can be associative to spawn pairs of linked items
 	var/list/items2spawn = list()
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
@@ -67,6 +68,9 @@
 				continue
 
 			closet_check_spawn(new_item)
+			//for associative lists, spawn the associated item!
+			if (ispath(items2spawn[new_item]))
+				closet_check_spawn(items2spawn[new_item])
 
 	proc/closet_check_spawn(var/obj/item/new_item)
 		var/obj/storage/S = locate(/obj/storage) in src.loc
@@ -2535,3 +2539,25 @@
 	one
 		min_amt2spawn = 1
 		max_amt2spawn = 1
+
+/obj/random_item_spawner/spacesuit
+	min_amt2spawn = 2
+	max_amt2spawn = 2
+
+#ifndef UNDERWATER_MAP
+	items2spawn = list(
+		/obj/item/clothing/suit/space/engineer = /obj/item/clothing/head/helmet/space/engineer,
+		/obj/item/clothing/suit/space/soviet = /obj/item/clothing/head/helmet/space/soviet,
+		/obj/item/clothing/suit/space/emerg = /obj/item/clothing/head/emerg,
+		/obj/item/clothing/suit/space/neon = /obj/item/clothing/head/helmet/space/neon,
+		/obj/item/clothing/suit/space = /obj/item/clothing/head/helmet/space,
+	)
+#else
+	items2spawn = list(
+		/obj/item/clothing/suit/space/diving/civilian = /obj/item/clothing/head/helmet/space/engineer/diving/civilian,
+		/obj/item/clothing/suit/space/diving/engineering = /obj/item/clothing/head/helmet/space/engineer/diving/engineering,
+		/obj/item/clothing/suit/space/diving/command = /obj/item/clothing/head/helmet/space/engineer/diving/command,
+		/obj/item/clothing/suit/space/diving/security = /obj/item/clothing/head/helmet/space/engineer/diving/security,
+		/obj/item/clothing/suit/space/emerg = /obj/item/clothing/head/emerg,
+	)
+#endif

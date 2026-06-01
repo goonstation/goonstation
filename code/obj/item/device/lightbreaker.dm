@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/lightbreaker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
 
 /obj/item/lightbreaker
@@ -14,7 +15,6 @@ TYPEINFO(/obj/item/lightbreaker)
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 10
-	is_syndicate = 1
 	stamina_cost = 10
 	stamina_crit_chance = 15
 	var/ammo = 4

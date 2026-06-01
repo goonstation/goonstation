@@ -271,8 +271,15 @@ if ($Args.Length -gt 0) {
 
   ## Analyze the bundle
   if ($Args[0] -eq "--analyze") {
+    if ($Args.Length -gt 1) {
+      $Args = $Args[1..($Args.Length - 1)]
+    }
+    else {
+      $Args = @()
+    }
+
     task-install
-    task-rspack --mode=production --analyze
+    task-rspack --mode=production --env RSDOCTOR=1 @Args
     exit 0
   }
 

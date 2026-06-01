@@ -57,7 +57,7 @@
 			..(user)
 
 	attackby(obj/item/W, mob/user)
-		if(W.type == src.type)
+		if(W.stack_type == src.stack_type)
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
@@ -249,6 +249,7 @@
 	default_material = "iridiumalloy"
 	uses_default_material_appearance = TRUE
 	amount = 5
+	stack_type = /obj/item/material_piece/iridiumalloy
 
 	New()
 		..()

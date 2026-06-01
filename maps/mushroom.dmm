@@ -14628,6 +14628,21 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"hou" = (
+/obj/machinery/light/incandescent,
+/obj/random_item_spawner/med_kit{
+	pixel_x = -5
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = 6
+	},
+/obj/table/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/medical,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "hov" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19401,21 +19416,6 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/station/storage/primary)
-"kNz" = (
-/obj/machinery/light/incandescent,
-/obj/random_item_spawner/med_kit{
-	pixel_x = -5
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_x = 6
-	},
-/obj/table/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/vending/medical,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "kOV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21727,6 +21727,21 @@
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
+"mGA" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/table/wood/auto,
+/obj/item/robodefibrillator,
+/obj/item/device/analyzer/healthanalyzer/upgraded{
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = -8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/station/crew_quarters/md)
 "mGT" = (
 /obj/stool/bed,
 /obj/machinery/firealarm/directional/south,
@@ -29335,16 +29350,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
-"rxh" = (
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/maint,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "rxO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32007,6 +32012,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
+"tcj" = (
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/mapping_helper/access/maint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "tcm" = (
 /obj/machinery/optable,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -37659,21 +37675,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/central)
-"wWy" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/table/wood/auto,
-/obj/item/robodefibrillator,
-/obj/item/device/analyzer/healthanalyzer/upgraded{
-	pixel_y = -5
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = -8
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/md)
 "wWU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -85482,7 +85483,7 @@ afC
 afC
 yhp
 aDX
-rxh
+tcj
 rXT
 oEa
 kuG
@@ -90357,7 +90358,7 @@ oXa
 jMf
 fkd
 xkP
-wWy
+mGA
 kUy
 hQH
 jrg
@@ -95190,7 +95191,7 @@ jlz
 dRA
 cxV
 xKP
-kNz
+hou
 kvV
 npb
 oNy

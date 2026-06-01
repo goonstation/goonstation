@@ -13682,6 +13682,13 @@
 "gcp" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"gcA" = (
+/obj/rack,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/storage/box/stma_kit,
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "gcE" = (
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
@@ -14657,13 +14664,6 @@
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
-"gCH" = (
-/obj/rack,
-/obj/item/storage/belt/medical,
-/obj/item/clothing/suit/hazard/paramedic,
-/obj/item/storage/box/stma_kit,
-/turf/simulated/floor/wood/two,
-/area/station/medical/staff)
 "gCQ" = (
 /obj/machinery/door_control{
 	id = "market";
@@ -20952,16 +20952,6 @@
 /area/station/crew_quarters/market{
 	name = "Seating Area"
 	})
-"jpd" = (
-/obj/rack,
-/obj/item/storage/belt/medical,
-/obj/item/clothing/suit/hazard/paramedic,
-/obj/item/storage/box/stma_kit,
-/obj/decal/tile_edge/stripe{
-	dir = 1
-	},
-/turf/simulated/floor/wood/two,
-/area/station/medical/staff)
 "jpp" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -24201,17 +24191,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"kPe" = (
-/obj/floorpillstatue,
-/obj/machinery/light/incandescent/cool/very,
-/obj/decal/cleanable/dirt,
-/obj/machinery/camera/directional/east{
-	pixel_y = -10
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/crew_quarters/toilets{
-	name = "Engineering Toilets"
-	})
 "kPp" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -27227,6 +27206,16 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"mjD" = (
+/obj/machinery/light/incandescent/cool/very,
+/obj/decal/cleanable/dirt,
+/obj/machinery/camera/directional/east{
+	pixel_y = -10
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/crew_quarters/toilets{
+	name = "Engineering Toilets"
+	})
 "mjS" = (
 /turf/simulated/floor/greenwhite,
 /area/station/medical/medbay/treatment1)
@@ -44400,6 +44389,16 @@
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
 	})
+"ujr" = (
+/obj/rack,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/storage/box/stma_kit,
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "ujL" = (
 /obj/machinery/manufacturer/gas,
 /obj/machinery/power/apc/autoname_east,
@@ -79613,9 +79612,9 @@ fhg
 myH
 aHb
 ufh
-jpd
-gCH
-gCH
+ujr
+gcA
+gcA
 eKF
 feo
 kmh
@@ -95999,7 +95998,7 @@ sqG
 bqy
 cBY
 nIQ
-kPe
+mjD
 cBY
 uJW
 oNe
