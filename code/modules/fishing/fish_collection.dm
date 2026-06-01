@@ -4,7 +4,8 @@
 	if (!istype(fish, /obj/item/reagent_containers/food/fish))
 		return
 
-	var/list/collection = src.client.player?.cloudSaves.getData("fish_collection").Copy()
+	var/list/collection = src.client.player?.cloudSaves.getData("fish_collection")
+	collection = collection.Copy() // otherwise this will point to the list in the chache, which will stop it from saving
 	if (collection == null)
 		collection = list()
 	else if (collection.Find(initial(fish.name)))
