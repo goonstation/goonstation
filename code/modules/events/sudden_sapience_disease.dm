@@ -45,6 +45,11 @@
 					M.current.ghostize()
 				log_respawn_event(M, "random station monkey", source)
 				M.transfer_to(picked_npc)
+				SPAWN(0)
+					if (istype(picked_npc, /mob/living/carbon/human/biker))
+						tgui_alert(picked_npc, "You are not an antagonist! While you are not employed by NanoTrasen, you should still act like a sane person that wants to remain on the station.", "You are not an antagonist!")
+					else
+						tgui_alert(picked_npc, "You are not an antagonist! Humans can't understand you, but a vocal translator can change that.", "You are not an antagonist!")
 				message_ghosts("<b>[picked_npc.real_name] has become sapient.</b>")
 		else
 			return
