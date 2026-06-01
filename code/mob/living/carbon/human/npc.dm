@@ -23,6 +23,7 @@
 	ai_attacknpc = 0
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0)
 			src.mind = new(src)
 			if (src.name == "human")
@@ -33,6 +34,11 @@
 		SPAWN(2 SECONDS)
 			if (src.is_npc)
 				ai_init()
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
 
 /mob/living/carbon/human/npc/mutantrace
 	var/spawn_mutantrace

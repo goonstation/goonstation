@@ -7,7 +7,7 @@
 
 	proc/pick_npc()
 		var/list/mob/found_npcs = list()
-		for (var/mob/living/carbon/human/npc/monkey/monke in world)
+		for_by_tcl(monke, /mob/living/carbon/human/npc)
 			if (istypes(monke, src.npc_blacklist))
 				continue
 			var/turf/monkearea = get_turf(monke)
