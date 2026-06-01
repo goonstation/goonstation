@@ -196,6 +196,8 @@
 		return
 	if (!( istype(T, /turf) ))
 		return
+	if(GET_COOLDOWN(src, "emp_timer"))
+		return
 
 	if(shot_type == 1)
 		return
@@ -245,9 +247,11 @@
 
 /obj/machinery/turret/emp_act()
 	..()
-	src.enabled = 0
-	src.lasers = 0
-	src.power_change()
+	var/length = rand(30, 60) SECONDS
+	EXTEND_COOLDOWN(src, "emp_timer", length)
+	src.add_filter("emp_outline", 1, outline_filter(1, "#00FFFF", OUTLINE_SHARP))
+	SPAWN(length)
+		src.remove_filter("emp_outline")
 	return
 
 /obj/machinery/turret/proc/die()
