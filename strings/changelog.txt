@@ -1,4 +1,19 @@
 
+(t)sun may 31 26
+(u)grasswitch
+(p)26717
+(e)🆕🔬|C-Feature, A-Science
+(+)Artifacts sometimes hint at newly developed faults. Agitator artifacts always cause hints to be displayed.
+(u)LorrMaster
+(p)26720
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Added mycelium, a new material that can be obtained from harvested mushrooms.
+(+)Combining mycelium with another edible material will remove any "on eat" effects from the resulting material.
+(u)glowbold
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)Using MechComp to vend items from vending machines requires adequate payment from cash or a linked card.
+(*)Market traders have a small chance of restocking goods on market refresh.
+(*)Payout exponent bonuses for requisitions and delivered mail have been reduced.
 (t)sat may 30 26
 (u)Studenterhue (and JORJ949)
 (p)26595

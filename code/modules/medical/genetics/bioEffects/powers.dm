@@ -374,6 +374,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 	effect_group = "vision"
+	cooldown = 30 SECONDS
 	ability_path = /datum/targetable/geneticsAbility/xray
 	/// How wide is the arc swept by the vision cone (degrees)
 	var/arc_width = 30
@@ -388,7 +389,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "X-Ray Vision"
 	desc = "See through walls!"
 	icon_state = "eye"
-	cooldown = 30 SECONDS
 	/// The blackout images currently obscuring the owner's vision
 	var/list/image/images = list()
 	/// The mutable appearance we use to quickly copy over the blackout images
