@@ -12,7 +12,6 @@
 				continue
 			var/turf/monkearea = get_turf(monke)
 			if (istype(monkearea.loc, /area/station/medical/dome)) // remove monkey pen apes so you don't get one of those 95% of the time
-				found_npcs -= monke // maybe game-able? dunno why someone would
 				continue
 			found_npcs += monke
 
