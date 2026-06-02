@@ -712,6 +712,8 @@ TYPEINFO(/mob/living/carbon/human/npc/monkey)
 
 			if (templateclothes)
 				holoclothes = src.get_slot(slot)
+				if (slot == "gloves")
+					holoclothes.item_state = templateclothes.item_state
 				holoclothes.icon = templateclothes.icon
 				holoclothes.wear_image_icon = templateclothes.wear_image_icon
 				holoclothes.icon_state = templateclothes.icon_state
