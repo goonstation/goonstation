@@ -13,23 +13,20 @@
 	collection.Add(initial(fish.name))
 	src.client.player?.cloudSaves.putData("fish_collection", collection)
 
-	if (length(collection) >= length(get_singleton(/datum/fish_collection).names))
+	if (length(collection) >= length(get_singleton(/datum/fish_collection).fish_data))
 		src.unlock_medal("So Long, and Thanks for All the Fish", 1)
 
 /datum/fish_collection
-	var/list/names = list()
-	var/list/images = list()
-	var/list/silhouettes = list()
+	// elements in the form of list("name" = name, "image" = image, "silhouette" = silhouette)
+	var/list/fish_data = list()
 
 	proc/getBase64Imgs(path)
-		// modified code from vending machine
-		var/atom/dummy_atom = new path
-		sleep(0) // give it a chance to do icon changes
-		var/dummy_icon = icon2base64(getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE))
-		dummy_atom.color = "#000000"
-		var/dummy_icon_silhouette = icon2base64(getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE))
-		qdel(dummy_atom) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
-		return list(dummy_icon, dummy_icon_silhouette)
+
+		var/obj/fish = path
+		var/icon/icon = icon(initial(fish.icon), initial(fish.icon_state))
+		var/fish_icon = icon2base64(icon)
+		var/fish_silhouette = icon2base64(icon * "#000000")
+		return list(fish_icon, fish_silhouette)
 
 	proc/is_fish_in_collection(path)
 		var/typeinfo/obj/item/reagent_containers/food/fish/info = get_type_typeinfo(path)
@@ -39,10 +36,8 @@
 		..()
 		for (var/path in filtered_concrete_typesof(/obj/item/reagent_containers/food/fish, .proc/is_fish_in_collection))
 			var/obj/fish = path
-			src.names.Add(initial(fish.name))
 			var/result = src.getBase64Imgs(fish)
-			src.images.Add(result[1])
-			src.silhouettes.Add(result[2])
+			src.fish_data.Add(list(list("name" = initial(fish.name), "image" = result[1], "silhouette" = result[2])))
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -51,18 +46,14 @@
 			ui.open()
 
 	ui_data(mob/user)
-		var/list/collected = user?.client.player?.cloudSaves.getData("fish_collection")
-		if (isnull(collected))
-			collected = list()
+		var/list/collected = user.client?.player.cloudSaves.getData("fish_collection")
 		. = list(
 			"collected" = collected
 		)
 
 	ui_static_data(mob/user)
 		. = list(
-			"names" = src.names,
-			"images" = src.images,
-			"silhouettes" = src.silhouettes
+			"fish_data" = src.fish_data
 		)
 
 	ui_status(mob/user, datum/ui_state/state)
