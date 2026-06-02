@@ -22,7 +22,7 @@
 			if (isalive(bigbill))
 				found_npcs += bigbill // hehe
 
-		if (found_npcs.len <= 0)
+		if (length(found_npcs) <= 0)
 			return
 		return pick(found_npcs)
 
