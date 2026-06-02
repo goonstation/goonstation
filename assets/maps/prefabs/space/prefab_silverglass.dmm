@@ -578,7 +578,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/silverglass)
 "su" = (
 /obj/cable,
@@ -1086,7 +1086,7 @@
 /area/prefab/silverglass)
 "NE" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/silverglass)
 "NI" = (
 /obj/cable{
