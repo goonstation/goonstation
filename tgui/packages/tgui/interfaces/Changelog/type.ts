@@ -38,6 +38,7 @@ export interface DateEntryData {
 export interface ChangeEntryData {
   author: string;
   pr_num: string | null;
+  feedback: string | null;
   emojis: string | null;
   emoji_tooltips: string | null;
   changes: string[];

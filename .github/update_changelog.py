@@ -76,6 +76,12 @@ def parse_pr_changelog(pr):
 	changelog_match = re.search(r"```changelog(.*)```", pr.body, re.S | re.M)
 	if changelog_match is None:
 		return
+	feedback = None
+	feedback_match = re.search(r"\(f\)\s*(.*?)$", changelog_match.group(1), re.M)
+	if feedback_match is not None:
+		link = feedback_match.group(1)
+		if link.find("https://forum.ss13.co/") == 0:
+			feedback = link
 	lines = changelog_match.group(1).split('\n')
 	emoji = ''.join(labels_to_emoji.get(label.name.lower(), '') for label in pr.labels)
 	emoji += "|" + ', '.join(label.name for label in pr.labels if label.name.lower() in labels_to_emoji)
@@ -104,6 +110,8 @@ def parse_pr_changelog(pr):
 				print("Author not set, substituting", author)
 			entries.append(f"(u){author}")
 			entries.append(f"(p){pr.number}")
+			if feedback:
+				entries.append(f"(f){feedback}")
 			if emoji:
 				entries.append(f"(e){emoji}")
 		if not content:
