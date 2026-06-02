@@ -1932,6 +1932,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 /obj/item/clothing/head/hairbow
 	name = "hairbow"
 	desc = "A huge bow that goes on your head."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/bows.dmi'
 	icon_state = "hbow-magenta"
 	item_state = "hbow-magenta"
 	w_class = W_CLASS_TINY
@@ -1944,7 +1946,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		item_state = "hbow_[bowcolour]"
 
 	proc/bow_tying(var/mob/user as mob)
-		var/tiebow = tgui_input_list(user, "How would you like to tie the [src]?", "Bow tying", list("High", "Low", "Middle", "Left", "Right"))
+		var/tiebow = tgui_input_list(user, "How would you like to tie [src]?", "Bow tying", list("High", "Low", "Middle", "Left", "Right"))
 		//High Boow
 		if(tiebow == "High")
 			if(src.bowsmall)
@@ -1966,43 +1968,43 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 				src.item_state = "hbow-low-[bowcolour]"
 				boutput(user, SPAN_NOTICE("big bow go"))
 		//Mid Bow
-			if(tiebow == "Middle")
-				if(src.bowsmall)
-					src.icon_state = "hbow-Smid-[bowcolour]"
-					src.item_state = "hbow-Smid-[bowcolour]"
-					boutput(user, SPAN_NOTICE("tiny bow go"))
-				else
-					src.icon_state = "hbow-mid-[bowcolour]"
-					src.item_state = "hbow-mid-[bowcolour]"
-					boutput(user, SPAN_NOTICE("big bow go"))
-			//Left Bow
-			if(tiebow == "Left")
-				if(src.bowsmall)
-					src.icon_state = "hbow-Sleft-[bowcolour]"
-					src.item_state = "hbow-Sleft-[bowcolour]"
-					boutput(user, SPAN_NOTICE("tiny bow go"))
-				else
-					src.icon_state = "hbow-left-[bowcolour]"
-					src.item_state = "hbow-left-[bowcolour]"
-					boutput(user, SPAN_NOTICE("big bow go"))
-			//Right Bow
-			if(tiebow == "Right")
-				if(src.bowsmall)
-					src.icon_state = "hbow-Sright-[bowcolour]"
-					src.item_state = "hbow-Sright-[bowcolour]"
-					boutput(user, SPAN_NOTICE("tiny bow go"))
-				else
-					src.icon_state = "hbow-right-[bowcolour]"
-					src.item_state = "hbow-right-[bowcolour]"
-					boutput(user, SPAN_NOTICE("big bow go"))
+		if(tiebow == "Middle")
+			if(src.bowsmall)
+				src.icon_state = "hbow-Smid-[bowcolour]"
+				src.item_state = "hbow-Smid-[bowcolour]"
+				boutput(user, SPAN_NOTICE("tiny bow go"))
 			else
-				return
+				src.icon_state = "hbow-mid-[bowcolour]"
+				src.item_state = "hbow-mid-[bowcolour]"
+				boutput(user, SPAN_NOTICE("big bow go"))
+		//Left Bow
+		if(tiebow == "Left")
+			if(src.bowsmall)
+				src.icon_state = "hbow-Sleft-[bowcolour]"
+				src.item_state = "hbow-Sleft-[bowcolour]"
+				boutput(user, SPAN_NOTICE("tiny bow go"))
+			else
+				src.icon_state = "hbow-left-[bowcolour]"
+				src.item_state = "hbow-left-[bowcolour]"
+				boutput(user, SPAN_NOTICE("big bow go"))
+		//Right Bow
+		if(tiebow == "Right")
+			if(src.bowsmall)
+				src.icon_state = "hbow-Sright-[bowcolour]"
+				src.item_state = "hbow-Sright-[bowcolour]"
+				boutput(user, SPAN_NOTICE("tiny bow go"))
+			else
+				src.icon_state = "hbow-right-[bowcolour]"
+				src.item_state = "hbow-right-[bowcolour]"
+				boutput(user, SPAN_NOTICE("big bow go"))
+		else
+			return
 
 
 	attack_self(var/mob/user as mob)
 		src.icon_state = "hbow-[bowcolour]"
 		src.item_state = "hbow-[bowcolour]"
-		var/menuchoice = tgui_alert(user, "What size [src] are you tying?","Bow size", list("Big", "Small", "Cancel"))
+		var/menuchoice = tgui_alert(user, "What size bow are you tying?","Bow size", list("Big", "Small", "Cancel"))
 		switch(menuchoice)
 			if("Big")
 				src.bowsmall = FALSE
