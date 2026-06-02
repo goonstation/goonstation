@@ -1510,6 +1510,45 @@
 			if(istype(O))
 				O.unbreakme()
 
+	/// Get TGUI ui_data for all organs
+	proc/get_tgui_organ_data()
+		var/list/organ_data = list()
+		if (isvampire(src.donor))
+			return organ_data
+
+		var/list/organs_to_check = list("heart", "left_eye", "right_eye", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+		if(src.tail || src.donor.mob_flags & SHOULD_HAVE_A_TAIL)
+			organs_to_check += "tail"
+
+		for (var/organ_name in organs_to_check)
+			var/obj/item/organ/O = src.get_organ(organ_name)
+			var/damage = ""
+			var/color = "grey"
+			var/special = ""
+			if (O == 0 || !O)
+				damage = "Missing"
+				color = "Red"
+			else
+				if (O.robotic)
+					special = "Cybernetic"
+				if (O.synthetic)
+					special = "Synthetic"
+				if (O.unusual)
+					special = "Unusual"
+				var/list/organ_calc = O.get_tgui_damage_severity()
+				damage = organ_calc[1]
+				color = organ_calc[2]
+
+			organ_data += list(list(
+				"organ" = organ_name,
+				"state" = damage,
+				"color" = color,
+				"special" = special,
+			))
+
+		return organ_data
+
+
 /*=================================*/
 /*---------- Human Procs ----------*/
 /*=================================*/

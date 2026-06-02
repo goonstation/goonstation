@@ -39,7 +39,7 @@ export const HealthAnalyzer = () => {
   if (organ_scan) height += 200;
   if (reagent_scan) height += 90;
   return (
-    <Window title="Health Analyzer" width={660} height={height}>
+    <Window title="Health Analyzer" width={460} height={height}>
       <Window.Content scrollable>
         <PatientOverview />
       </Window.Content>
@@ -318,10 +318,8 @@ const DisplayTitle = (props: OperatingComputerDisplayTitleProps) => {
   return (
     <Stack>
       <Stack.Item width={60}>
-        <Box fontSize={1}>Patient Name</Box>
-        <Box fontSize={1.5} color={patient_name_color}>
-          {!!patient_name && patient_name}
-          {!patient_name && 'No Patient Detected'}
+        <Box fontSize={1} color={patient_name_color}>
+          {patient_name ? patient_name : 'No Patient Detected'}
         </Box>
       </Stack.Item>
       <HealthSummary

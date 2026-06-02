@@ -20,7 +20,6 @@
 	// or any combination of the above!
 	var/recureprob = 8					// ...and how likely % they are per tick to do so (unless a number or list is associated with the reagent as above)
 	var/temperature_cure = 406			// bodytemperature >= this will purge the infection
-	var/detectability = 0				// detectors must >= this to pick up the disease
 	var/resistance_prob = 0				// how likely this disease is to grant immunity once cured
 	var/max_stacks = 1					// how many times at once you can have this ailment
 	var/can_be_asymptomatic = TRUE
@@ -60,7 +59,6 @@
 		strain.stage_prob = src.stage_prob
 		strain.reagentcure = src.reagentcure
 		strain.recureprob = src.recureprob
-		strain.detectability = src.detectability
 		strain.cure_flags = src.cure_flags
 		strain.cure_desc = src.cure_desc
 		strain.spread = src.spread
@@ -108,7 +106,6 @@
 	var/tmp/mob/living/affected_mob = null	// the poor sod suffering from the disease
 	var/name = null							// an override - uses the base disease name if null - if not, it uses this
 	var/scantype = null						// same as above but for scantype
-	var/detectability = 0					// scans must >= this to detect the disease
 	/// flags for determining how this ailment is cured
 	var/cure_flags = CURE_UNKNOWN
 	/// description for the cure that appears in medical scanners, etc. if null, presets based on the cure flags
@@ -128,7 +125,6 @@
 		src.master = other.master
 		src.name = other.name
 		src.scantype = other.scantype
-		src.detectability = other.detectability
 		src.cure_flags = other.cure_flags
 		src.cure_desc = other.cure_desc
 		src.spread = other.spread

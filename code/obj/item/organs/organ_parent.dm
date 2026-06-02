@@ -491,3 +491,17 @@
 
 			.+= length(surgery_contexts)
 
+	/// Get TGUI ui_data list for this organ's health
+	proc/get_tgui_damage_severity()
+		var/damage = src.get_damage()
+		if (damage >= src.max_damage)
+			return list("Dead", "red")
+		if (damage >= src.max_damage*0.9)
+			return list("Critical", "orange")
+		if (damage >= src.max_damage*0.65)
+			return list("Significant", "orange")
+		if (damage >= src.max_damage*0.3)
+			return list("Moderate", "yellow")
+		if (damage > 0)
+			return list("Minor", "green")
+		return list("Okay", "green")
