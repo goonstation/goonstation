@@ -8,6 +8,7 @@
 	var/hidden = 0              // Makes the trader not show up on the QM console
 	var/chance_leave = 35       // Chance for a trader to go hidden during a market shift
 	var/chance_arrive = 45      // Chance for a trader to stop hiding during a market shift
+	var/chance_restock = 35		// Chance for a trader to restock goods (per good) during a market shift
 	var/asshole = 0 // will accept wrong-direction haggles
 
 	///A business card or other item type to occasionally include with orders

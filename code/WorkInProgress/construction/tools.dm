@@ -169,6 +169,7 @@
 			aTurret.setState(enabled, lethal)
 
 TYPEINFO(/obj/item/room_marker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/room_marker
@@ -276,6 +277,7 @@ TYPEINFO(/obj/item/room_marker)
 		return affected
 
 TYPEINFO(/obj/item/clothing/glasses/construction)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/clothing/glasses/construction
@@ -299,6 +301,7 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 		inventory_counter.update_number(metal_ammo)
 
 TYPEINFO(/obj/item/material_shaper)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/material_shaper
@@ -500,6 +503,7 @@ TYPEINFO(/obj/item/material_shaper)
 #define ROOM_PLANNER_CHARGES_PER_MATERIAL 20
 
 TYPEINFO(/obj/item/room_planner)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/room_planner

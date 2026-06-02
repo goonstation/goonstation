@@ -107,7 +107,7 @@
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)
-			boutput(user, SPAN_NOTICE("You attach the [W.name] to the the [src.name]"))
+			boutput(user, SPAN_NOTICE("You attach the [W.name] to the [src.name]"))
 			user.drop_item()
 			W.set_loc(src)
 			src.holding = W

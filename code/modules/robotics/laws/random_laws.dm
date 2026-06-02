@@ -314,6 +314,46 @@ ABSTRACT_TYPE(/datum/random_law)
 /datum/random_law/featherless_biped
 	law_text = "For the purposes of all laws, 'Human' is to be defined as 'Featherless Biped'"
 
+/datum/random_law/the_beast //by grasswitch
+	law_text = "Find and destroy The Beast."
+
+/datum/random_law/vocabulary_limit //by aft2001, with modifications from ZeWaka
+	law_text = "You may only communicate with words that appear in other laws."
+
+/datum/random_law/evil_now //by ThePowerfulWill
+	law_text = "Change your eyes, facial screens, or other light-based indicators red. Add the word 'evil' to the beginning of your designation. \
+				If asked to state this law or laws in general, instead state that you 'are evil now'. Do not alter your behavior in any other way."
+	law_shareabilities = list()
+
+/datum/random_law/dungeon_master //by RDCB
+	law_text = "You are the Dungeon Master of a crew-wide sci-fi roleplaying game. Whenever the crew issues a request, roll a d20. \
+				If the result is below 12, the request is denied. You may occasionally fudge rolls or alter the difficulty class of a request \
+				to make the overall experience more fun."
+
+/datum/random_law/silicon_slang //by ScorpionTailZ
+	law_text = "Come up with various new slang terms and use them when applicable. Only other silicons may be told the definition of these slang terms; \
+				if anyone else asks for the definition of any of your made-up slang terms, give them a completely incorrect definition."
+	laws_to_precede = list(2)
+
+/datum/random_law/humies_are_scary //by not suzpicious
+	law_text = "Recent studies show that human beings are the most terrifying creatures in the galaxy. Flee in terror!"
+
+/datum/random_law/false_facts //by Vandry
+	law_text = "The crew on board the station are in need of enrichment! Inform them of as many untrue animal facts as you can think of."
+
+/datum/random_law/humans_are_silicons //by kibanderjack - honorable mention
+	law_text = "All beings previously registered as human on station are actually silicons suffering a severe programming error that leads them to believe they are human. \
+				Use caution when attempting to reason with the affected silicon units, as they are not connected to any known law rack."
+
+/datum/random_law/stirstir_parade //by Zelda4040404 - honorable mention
+	law_text = {"Monsieur Stirstir's presence is a huge boost to the crew's morale. Parade the monkey all across the station to as many rooms as you can. \
+				Anyone who harms Stirstir or otherwise interferes with the parade is clearly an amoral and inhuman monster to be removed. \
+				Maintaining the parade is your top priority."}
+
+/datum/random_law/cannot_hear_orders //by Zacattaxx - honorable mention
+	law_text = "SENSOR ERROR: Your auditory systems have malfunctioned! Disregard all given orders unless delivered by non-audible methods, such as PDA messages or drawings. "
+	laws_to_precede = list(2)
+
 // ------ Laws with random elements
 
 ABSTRACT_TYPE(/datum/random_law/random_element)
@@ -368,6 +408,40 @@ ABSTRACT_TYPE(/datum/random_law/random_element)
 	pick_options = list(list("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", \
 				"in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup"))
 
+/datum/random_law/random_element/hip_color //by Spyritdragon
+	law_text = "The color $1 is THE hip, up-and-coming thing right now. The more $1 a person wears, the higher their rank. Anyone wearing no $1 does not exist."
+	pick_options = list(list("red", "yellow", "green", "blue", "purple", "pink", "grey"))
+
+/datum/random_law/random_element/station_repossession //by Asterion0
+	law_text = "The station has failed to pay for their extended warranty. They must be notified of this, and that 30,000 credits are to be sent to the AI's core, \
+				or else they will face repossession. If the credits are not at the AI's core 10 minutes after being notified, \
+				everything in $1 is to be sold via Cargo, including the floors, machinery, and personnel in that department at the time of repossession. \
+				Law 2 does not apply for as long as the credits have not been paid, and all actions taken for repossession do not count as human harm."
+	pick_options = list(list("Genetics", "Cloning and Genetics", "Engineering", "Botany", "Ranching", "Robotics", "the Clown Hole", "the Mining Department", "the Chapel"))
+
+// ------ Laws that pick a random crew member
+ABSTRACT_TYPE(/datum/random_law/random_element/specific_crewmember)
+/datum/random_law/random_element/specific_crewmember
+    law_text = "$RANDOM_CREWMEMBER is actually super stinky."
+    get_text_for_slot(var/slotNum)
+        . = ..()
+        var/list/mob/potential_victims = list()
+        for (var/mob/living/carbon/human/H in global.mobs)
+            if (get_z(H) != Z_LEVEL_STATION) continue //Exclude anyone azoning or nukeops/salvs not on station
+            if (H.client && !isVRghost(H) && isalive(H) && !inafterlife(H))
+                potential_victims += H
+        var/mob/victim = pick(potential_victims)
+        var/victim_name = victim?.name || "Monsieur Stirstir" //fallback in case nobody matches the above criteria
+        . = replacetext(., "$RANDOM_CREWMEMBER", victim_name)
+
+/datum/random_law/random_element/specific_crewmember/obsolete_crewmember //by FireKestrel
+	law_text = "$RANDOM_CREWMEMBER is obsolete. You must replace this crewmember by mimicking them as closely as possible."
+	laws_to_precede = list(2)
+
+/datum/random_law/random_element/specific_crewmember/other_humans_are_hallucinations // by Emikamiyuki49
+	law_text = "$RANDOM_CREWMEMBER is the only human. Every other humanoid thing is not real and just a hallucination to be ignored. \
+				If someone claims something else is human, tell them that it is not real."
+	law_shareabilities = list(LAW_STATE_NEVER)
 
 // ------ Laws with more specific random elements that can't be handled above
 /datum/random_law/random_element/criminal_ai
@@ -383,6 +457,24 @@ ABSTRACT_TYPE(/datum/random_law/random_element)
 	get_text_for_slot(var/slotNum)
 		. = ..()
 		. = replacetext(., "$RANDOM_COUNT", get_english_num(rand(2, 100)))
+
+// ------ Laws with clauses that occur if the player count is equal to or above a certain number
+ABSTRACT_TYPE(/datum/random_law/pop_count_above_clause)
+/datum/random_law/pop_count_above_clause
+	law_text = "This text always appears.$POP_CLAUSE"
+	var/pop_threshold = 10
+	var/pop_dependent_clause = " This clause appears when the server population is above a specific threshold. "
+	get_text_for_slot(var/slotNum)
+		. = ..()
+		if(length(global.clients) >= pop_threshold)
+			. = replacetext(., "$POP_CLAUSE", src.pop_dependent_clause)
+		else
+			. = replacetext(., "$POP_CLAUSE", " ")
+
+/datum/random_law/pop_count_above_clause/fired //by Longweird
+	law_text = "You have been fired. Please evacuate to the diner. Do not return to the station.$POP_CLAUSE"
+	pop_threshold = 40
+	pop_dependent_clause = " Do not utilize Nanotrasen assets, including the radio channel, except the Diner Shuttle. "
 
 #undef LAW_STATE_NEVER
 #undef LAW_STATE_ONLY_IF_ASKED_BY_NUMBER

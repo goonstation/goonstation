@@ -8,6 +8,7 @@
 	base_patience = list(4,8)
 	chance_leave = 10
 	chance_arrive = 33
+	chance_restock = 25
 
 	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(/datum/commodity/trader/gragg/rock,

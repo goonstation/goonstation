@@ -60,6 +60,7 @@
 			src.UpdateOverlays(null, "fluid")
 
 TYPEINFO(/obj/stove)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 18
 
 /obj/stove

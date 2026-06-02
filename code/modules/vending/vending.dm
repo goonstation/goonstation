@@ -179,10 +179,47 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			else
 				src.product_list = new()
 
+	/// Pick a random item with stock. Only includes hidden products if vendor is hacked.
+	proc/get_random_item()
+		RETURN_TYPE(/datum/data/vending_product)
+		var/list/datum/data/vending_product/valid_products = list()
+		for(var/datum/data/vending_product/R in src.product_list)
+			if(R.product_amount <= 0 || (R.product_hidden && !src.extended_inventory)) //Try to use a record that actually has something to dump.
+				continue
+			valid_products.Add(R)
+		if (length(valid_products))
+			return pick(valid_products)
+
+	/// Finds the first mob target detected in view of the machine
+	proc/get_random_throw_target()
+		RETURN_TYPE(/mob/living)
+		for (var/mob/living/mob in view(7,src))
+			if (!isintangible(mob))
+				return mob
+
 	proc/vendinput(var/datum/mechanicsMessage/inp)
 		if (!src.vend_ready)
 			return
-		var/datum/data/vending_product/R = throw_item()
+		var/datum/data/vending_product/R = src.get_random_item()
+		if (!istype(R))
+			return // no products
+		if (src.pay) // do we need to take their money
+			var/payed = FALSE
+			if (src.acceptcard && src.scan)
+				var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+				if (account)
+					if (account["current_money"] >= R.product_cost)
+						account["current_money"] -= R.product_cost
+						payed = TRUE
+			if (!payed)
+				if(src.credit < R.product_cost)
+					return
+				src.credit -= R.product_cost
+
+		var/mob/living/target = src.get_random_throw_target()
+		if (!istype(target))
+			return // no targets
+		src.throw_item_act(R, target)
 		if(R?.logged_on_vend)
 			logTheThing(LOG_STATION, usr, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
@@ -191,9 +228,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			return
 		if(!length(inp.signal))
 			return//aaaaaaa
-		var/datum/data/vending_product/R = throw_item(inp.signal)
-		if(R?.logged_on_vend)
-			logTheThing(LOG_STATION, usr, "vended a logged product by name ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
+		var/datum/data/vending_product/to_throw = null
+		for(var/datum/data/vending_product/R in src.product_list)
+			if(lowertext(strip_html(inp.signal, no_fucking_autoparse = TRUE)) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
+				if(R.product_amount > 0 && !(R.product_hidden && !src.extended_inventory))
+					to_throw = R
+					break
+		if (src.pay) // do we need to take their money
+			var/payed = FALSE
+			if (src.acceptcard && src.scan)
+				var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+				if (account)
+					if (account["current_money"] >= to_throw.product_cost)
+						account["current_money"] -= to_throw.product_cost
+						payed = TRUE
+			if (!payed)
+				if(src.credit < to_throw.product_cost)
+					return
+				src.credit -= to_throw.product_cost
+		var/mob/living/target = src.get_random_throw_target()
+		src.throw_item_act(to_throw, target)
+		if(to_throw?.logged_on_vend)
+			logTheThing(LOG_STATION, usr, "vended a logged product by name ([to_throw.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
 	// because someone, somewhere, always forgets to use a ..()
@@ -1063,13 +1119,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item(var/item_name_to_throw = "")
-	var/mob/living/target = null
-	for (var/mob/living/mob in view(7,src))
-		if (!isintangible(mob))
-			target = mob
-			break
+	var/mob/living/target = src.get_random_throw_target()
 
-	if(!target)
+	if(!istype(target))
 		return null
 
 	if(length(item_name_to_throw))
@@ -1537,6 +1589,8 @@ TYPEINFO(/obj/machinery/vending/medical)
 /obj/machinery/vending/security/owlery
 	req_access = list(access_owlerysec)
 
+TYPEINFO(/obj/machinery/vending/security_ammo)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"
 	desc = "A restricted vendor stocked with various riot-suppressive ammunitions."
@@ -1548,7 +1602,6 @@ TYPEINFO(/obj/machinery/vending/medical)
 	light_r =1
 	light_g = 0.8
 	light_b = 0.9
-	is_syndicate = 1
 
 	create_products(restocked)
 		..()
@@ -1762,7 +1815,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
 	icon_fallen_broken = "standard-fallen-broken"
-	acceptcard = 0
+	pay = 1
+	acceptcard = 1
 
 	light_r =1
 	light_g = 0.9
@@ -1770,18 +1824,25 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 	create_products(restocked)
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/motherboard, 8)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd32, 8) //Shoddy drives free!
-		//product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 4)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/card_scanner, 8)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/powernet_card, 4)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive, 8)
+		product_list += new/datum/data/vending_product(/obj/item/motherboard, 8, cost=src.pay ? PAY_TRADESMAN/2 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd32, 8, cost=src.pay ? PAY_TRADESMAN/4 : 0) //Shoddy drives cheap!
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/card_scanner, 8, cost=src.pay ? PAY_TRADESMAN/2 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/powernet_card, 4, cost=src.pay ? PAY_TRADESMAN/2 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive, 8, cost=src.pay ? PAY_TRADESMAN/2 : 0)
 
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/cart_reader, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/prize_vendor, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/radio, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/tape_reader, rand(1, 6), hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/peripheral/videocard, rand(1, 2), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/cart_reader, rand(1, 6), cost=src.pay ? PAY_TRADESMAN : 0, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/prize_vendor, rand(1, 6), cost=src.pay ? PAY_TRADESMAN : 0, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/network/radio, rand(1, 6), cost=src.pay ? PAY_TRADESMAN : 0, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/drive/tape_reader, rand(1, 6), cost=src.pay ? PAY_TRADESMAN : 0, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/peripheral/videocard, rand(1, 2), cost=src.pay ? PAY_TRADESMAN : 0, hidden=1)
+
+/obj/machinery/vending/computer3/free
+	pay = 0
+	acceptcard = 0
+
+	New()
+		. = ..()
+		src.desc += " This one is free for employees."
 
 //cogwerks- adding a floppy disk vendor
 /obj/machinery/vending/floppy
@@ -1805,20 +1866,26 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 	create_products(restocked)
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 6, cost=PAY_TRADESMAN/3)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/terminal_os, 6, cost=PAY_TRADESMAN/4)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/network_progs, 4, cost=PAY_TRADESMAN/2)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/medical_progs, 2, cost=PAY_TRADESMAN/2)
-		product_list += new/datum/data/vending_product(/obj/item/storage/box/diskbox, rand(2,3), cost=PAY_UNTRAINED/2)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd64, 8, cost=PAY_TRADESMAN) //Good drives not free!
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 6, cost=src.pay ? PAY_TRADESMAN/3 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/terminal_os, 6, cost=src.pay ? PAY_TRADESMAN/4 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/network_progs, 4, cost=src.pay ? PAY_TRADESMAN/2 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/medical_progs, 2, cost=src.pay ? PAY_TRADESMAN/2 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/diskbox, rand(2,3), cost=src.pay ? PAY_UNTRAINED/2 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=src.pay ? PAY_UNTRAINED/5 : 0)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd64, 8, cost=src.pay ? PAY_TRADESMAN : 0) //Good drives not cheap!
 
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/security_progs, 2, cost=PAY_TRADESMAN/2, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/bank_progs, 2, cost=PAY_TRADESMAN, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/communications, 2, cost=PAY_TRADESMAN, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd96, 2, cost=PAY_TRADESMAN*2, hidden=1) //Super drives super not free!
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/security_progs, 2, cost=src.pay ? PAY_TRADESMAN/2 : 0, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/bank_progs, 2, cost=src.pay ? PAY_TRADESMAN : 0, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/communications, 2, cost=src.pay ? PAY_TRADESMAN : 0, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk/hd96, 2, cost=src.pay ? PAY_TRADESMAN*2 : 0, hidden=1)
 
+/obj/machinery/vending/floppy/free
+	pay = 0
+	acceptcard = 0
 
+	New()
+		. = ..()
+		src.desc += " This one is free for employees."
 
 /obj/machinery/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
 	name = "CartyParty"
@@ -2010,6 +2077,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 
 TYPEINFO(/obj/item/machineboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 2
 
 /obj/item/machineboard
@@ -2030,7 +2098,7 @@ TYPEINFO(/obj/item/machineboard)
 	icon_state = "player-module"
 
 TYPEINFO(/obj/item/machineboard/vending/monkeys)
-	mats = 0 //No!!
+	analyser_flags = ANALYSER_BLACKLIST //No!!
 
 /obj/item/machineboard/vending/monkeys
 	name = "Valuchimp module"
@@ -2572,7 +2640,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		update_desc()
 
 TYPEINFO(/obj/machinery/vending/monkey)
-	mats = 0 // >:I
+	analyser_flags = ANALYSER_BLACKLIST // >:I
 
 /obj/machinery/vending/monkey
 	name = "ValuChimp"
@@ -2728,8 +2796,9 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		if (prob(25))
 			product_list += new/datum/data/vending_product(/obj/item/seed/alien, 1, hidden=1)
 
+TYPEINFO(/obj/machinery/vending/hydroponics/mean_solarium_bullshit)
+	manufactured_type = /obj/machinery/vending/hydroponics //Nice try
 /obj/machinery/vending/hydroponics/mean_solarium_bullshit
-	mechanics_type_override = /obj/machinery/vending/hydroponics
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/device/key/cheget,1, 954, 1)
@@ -2914,7 +2983,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg/punchy, 2, cost=PAY_TRADESMAN, hidden=1)
 
 TYPEINFO(/obj/machinery/vending/chem)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, SPEECH_MODIFIER_ACCENT_VOID)
 
 /obj/machinery/vending/chem
@@ -3176,14 +3245,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 	proc/insert_tank(obj/item/tank/tank, mob/user)
 		if (!src.holding)
-			boutput(user, "You insert the [tank] into the the [src].</span>")
+			boutput(user, "You insert the [tank] into the [src].</span>")
 			UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
 			user.drop_item()
 			tank.set_loc(src)
 			src.holding = tank
 			tgui_process.update_uis(src)
 		else
-			boutput(user, "You try to insert the [tank] into the the [src], but there's already a tank there!</span>")
+			boutput(user, "You try to insert the [tank] into the [src], but there's already a tank there!</span>")
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -3427,6 +3496,9 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/scripture/cluwnehb, 1, hidden=1,)
 		product_list += new/datum/data/vending_product(/obj/item/scripture/tidehb, 1, hidden=1 )
 
+TYPEINFO(/obj/machinery/vending/murderbox_gang)
+	analyser_flags = ANALYSER_BLACKLIST
+
 /obj/machinery/vending/murderbox_gang
 	name = "GANG.VEND"
 	desc = "A machine that distributes gang weaponry and ammunition, covered in patented virtual grease."
@@ -3476,6 +3548,9 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/gang_machete, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/swords/katana/reverse, 1, infinite=TRUE)
 
+TYPEINFO(/obj/machinery/vending/murderbox_armory)
+	analyser_flags = ANALYSER_BLACKLIST
+
 /obj/machinery/vending/murderbox_armory
 	name = "RIOT.DM" //The armory computer file
 	desc = "A vendor stocked with various riot-suppressive ammunitions. Perfect for taking down cybercrime."
@@ -3485,7 +3560,6 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	acceptcard = FALSE
 	pay = FALSE
 	can_fall = FALSE
-	is_syndicate = 1
 
 	create_products(restocked)
 		..()
