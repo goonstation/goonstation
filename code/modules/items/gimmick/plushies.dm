@@ -321,7 +321,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		src.squeak()
 		src.add_fingerprint(user)
 		animate_door_squeeze(src)
-		user.visible_message(SPAN_EMOTE("[user] squeezes [src], and it squeaks. Wow!"))
+		user.visible_message(SPAN_EMOTE("[user] squeezes [src], and she squeaks. Wow!"))
 	return
 
 /obj/item/toy/plush/small/tuba/proc/squeak()
