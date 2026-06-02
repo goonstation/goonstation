@@ -7,13 +7,14 @@
 
 	proc/pick_npc()
 		var/list/mob/found_npcs = list()
-		for_by_tcl(monke, /mob/living/carbon/human/npc)
+		for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
 			if (istypes(monke, src.npc_blacklist))
 				continue
 			var/turf/monkearea = get_turf(monke)
 			if (istype(monkearea.loc, /area/station/medical/dome)) // remove monkey pen apes so you don't get one of those 95% of the time
 				continue
-			if (isalive(monke))
+
+			if (isalive(monke) && get_z(monke) == Z_LEVEL_STATION)
 				found_npcs += monke
 
 		if (prob(5))
@@ -47,7 +48,7 @@
 				M.transfer_to(picked_npc)
 				SPAWN(0)
 					if (istype(picked_npc, /mob/living/carbon/human/biker))
-						tgui_alert(picked_npc, "You are not an antagonist! While you are not employed by NanoTrasen, you should still act like a sane person that wants to remain on the station.", "You are not an antagonist!")
+						tgui_alert(picked_npc, "You are not an antagonist! While you are not employed by NanoTrasen, you should still act like a somewhat sane person that doesn't want to die or hurt people.", "You are not an antagonist!")
 					else
 						tgui_alert(picked_npc, "You are not an antagonist! Humans can't understand you, but a vocal translator can change that.", "You are not an antagonist!")
 				message_ghosts("<b>[picked_npc.real_name] has become sapient.</b>")
