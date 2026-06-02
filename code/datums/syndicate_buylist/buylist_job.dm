@@ -165,7 +165,7 @@
 
 	run_on_spawn(obj/item/our_item, mob/living/owner, in_surplus_crate)
 		if(in_surplus_crate)
-			new /obj/item/implanter/wasp(our_item.loc)
+			new /obj/item/implanter/sneaky/wasp(our_item.loc)
 			return
 		..()
 
@@ -180,7 +180,7 @@
 
 	run_on_spawn(obj/item/our_item, mob/living/owner, in_surplus_crate)
 		if(in_surplus_crate)
-			new /obj/item/implanter/wasp(our_item.loc)
+			new /obj/item/implanter/sneaky/wasp(our_item.loc)
 			return
 		..()
 
@@ -275,7 +275,7 @@
 
 /datum/syndicate_buylist/traitor/zappy_implant
 	name = "Flyzapper Implant"
-	items = list(/obj/item/implanter/zappy)
+	items = list(/obj/item/implanter/sneaky/zappy)
 	cost = 1
 	desc = "This implant turns you into a living (or dying) generator, zapping those around you with a volume of electricity that scales with the number of implants upon your demise."
 	job = list(ALL_ENGINEERS)

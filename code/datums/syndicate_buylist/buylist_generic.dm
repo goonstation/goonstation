@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/marionette_implant
 	name = "Marionette Implant"
-	items = list(/obj/item/implanter/marionette)
+	items = list(/obj/item/implanter/sneaky/marionette)
 	cost = 1
 	desc = "Receives data signals and converts them into synaptic impulses, for remote-control puppeting! Packet compatible.<br><br>\
 		The first purchase of this item will be contained in a box that also includes instructions and a remote. Subsequent purchases will only \
@@ -367,7 +367,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/microbomb
 	name = "Microbomb Implant"
-	items = list(/obj/item/implanter/uplink_microbomb)
+	items = list(/obj/item/implanter/sneaky/uplink_microbomb)
 	cost = 1
 	vr_allowed = FALSE
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."

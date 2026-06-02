@@ -320,7 +320,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 /datum/dead_drop/destruction
 	items_max = 4
 	items = list(/obj/item/card/id/syndicate=100,
-				/obj/item/implanter/uplink_microbomb=25,
+				/obj/item/implanter/sneaky/uplink_microbomb=25,
 				/obj/item/breaching_charge/thermite=50,
 				/obj/item/breaching_charge=50,
 				/obj/item/gun/kinetic/pistol=10,

@@ -359,7 +359,7 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/storage/box/spy_sticker_kit,
 	/obj/item/reagent_containers/food/snacks/pizza/xmas,
 #ifndef RP_MODE
-	/obj/item/implanter/microbomb,
+	/obj/item/implanter/sneaky/microbomb,
 	/obj/item/old_grenade/light_gimmick,
 	/obj/item/gun/energy/bfg,
 	/obj/item/engibox/station_locked,

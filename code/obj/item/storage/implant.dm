@@ -38,4 +38,4 @@
 	New(loc, flag_that_prevents_the_box_from_having_its_free_implanter)
 		..()
 		if (!flag_that_prevents_the_box_from_having_its_free_implanter)
-			src.storage.add_contents(new /obj/item/implanter/marionette)
+			src.storage.add_contents(new /obj/item/implanter/sneaky/marionette)

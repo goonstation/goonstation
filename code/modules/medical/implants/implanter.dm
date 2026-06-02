@@ -176,19 +176,20 @@
 		src.imp = new /obj/item/implant/mindhack/super( src )
 		..()
 
-/obj/item/implanter/microbomb
-	name = "microbomb implanter"
-	icon_state = "implanter1-g"
+/obj/item/implanter/sneaky
 	sneaky = TRUE
+	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
+	SYNDICATE_STEALTH_DESCRIPTION("It has stealth injection systems installed, making it harder for victims to notice being implanted.", null)
+
+/obj/item/implanter/sneaky/microbomb
+	icon_state = "implanter1-g"
 
 	New()
 		src.imp = new /obj/item/implant/revenge/microbomb( src )
 		..()
 
-/obj/item/implanter/uplink_microbomb
-	name = "microbomb implanter"
+/obj/item/implanter/sneaky/uplink_microbomb
 	icon_state = "implanter1-g"
-	sneaky = TRUE
 	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, an explosion relative to the amount of microbombs in them will occur. Suiciding will likely cause no explosion, but succumbing while in crit will."})
 
 	New()
@@ -197,29 +198,25 @@
 		src.imp = newbomb
 		..()
 
-/obj/item/implanter/zappy
-	name = "flyzapper implanter"
+/obj/item/implanter/sneaky/zappy
 	icon_state = "implanter1-g"
-	sneaky = TRUE
 	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, a ball of lightning relative to the amount of flyzapper implants in them will occur. Suiciding will cause no lightning."})
 
 	New()
 		src.imp = new /obj/item/implant/revenge/zappy(src)
 		..()
 
-/obj/item/implanter/wasp
+/obj/item/implanter/sneaky/wasp
 	name = "wasp implanter"
 	icon_state = "implanter1-g"
-	sneaky = TRUE
 	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, they will explode into a cloud of angry wasps. Suiciding will cause no cloud of wasps to appear. This implant will also make wasps friendly to the user."})
 
 	New()
 		src.imp = new /obj/item/implant/revenge/wasp(src)
 		..()
 
-/obj/item/implanter/marionette
+/obj/item/implanter/sneaky/marionette
 	icon_state = "implanter1-g"
-	sneaky = TRUE
 	HELP_MESSAGE_OVERRIDE({"Allows remote signals to exert limited control over the implanted target. Compatible with packets. \
 	You can hit this implanter with a marionette implant remote to scan it, causing the contained implant to send status updates to it."})
 
