@@ -185,10 +185,8 @@ so you'll want your single-digit days to have 0s in front
 
 			if ("(f)")
 				var/link = trimtext(copytext(line, 4, 0))
-				if (copytext(link, 1, 23) != "https://forum.ss13.co/")
-					continue
-
-				feedback = copytext(line, 4, 0)
+				if (copytext(link, 1, 23) == "https://forum.ss13.co/")
+					feedback = link
 
 			if ("(e)")
 				var/emoji_line = copytext(line, 4, 0)
