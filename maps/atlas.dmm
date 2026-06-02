@@ -8726,7 +8726,7 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "cmS" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -9261,7 +9261,7 @@
 "dcX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/manufacturer/gas,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "ddp" = (
 /obj/machinery/power/terminal{
@@ -9534,7 +9534,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "dxF" = (
 /obj/cable{
@@ -9653,7 +9653,7 @@
 /obj/cable/blue{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "dEY" = (
 /obj/machinery/vending/capsule,
@@ -10713,7 +10713,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "fug" = (
 /obj/cable/orange{
@@ -10722,7 +10722,7 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "fvt" = (
 /obj/mesh/catwalk{
@@ -11201,7 +11201,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "fZL" = (
 /obj/stool/bed,
@@ -12325,7 +12325,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
 "ibC" = (
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "icc" = (
 /obj/lattice{
@@ -12500,7 +12500,7 @@
 /obj/cable/blue{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "inR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -13327,7 +13327,7 @@
 /obj/cable/blue{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "jmR" = (
 /obj/mesh/catwalk{
@@ -16070,7 +16070,7 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "mYJ" = (
 /obj/cable{
@@ -16620,7 +16620,7 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "nPD" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon2,
@@ -16722,7 +16722,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "nVa" = (
 /obj/machinery/power/smes{
@@ -16938,7 +16938,7 @@
 	id = "Cold Loop Gas Supply 2";
 	target_pressure = 1000
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "olj" = (
 /obj/machinery/power/apc/autoname_east,
@@ -17883,7 +17883,7 @@
 /obj/machinery/power/reactor_stats,
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/engine/core)
 "pTy" = (
 /obj/machinery/vending/air_vendor/plasma,

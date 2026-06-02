@@ -2889,7 +2889,7 @@
 /obj/machinery/turretid/ai_chamber{
 	pixel_x = 24
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/turret_protected/ai)
 "bpo" = (
 /obj/machinery/disposal,
@@ -3128,7 +3128,7 @@
 	pixel_w = -1
 	},
 /obj/submachine/record_player,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bsN" = (
 /obj/machinery/light{
@@ -8306,7 +8306,7 @@
 /obj/item/device/radio/intercom/AI{
 	dir = 8
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/turret_protected/ai)
 "dLf" = (
 /obj/machinery/light/emergency,
@@ -10516,7 +10516,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "eNL" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -15716,7 +15716,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "gVT" = (
 /obj/table/reinforced/auto,
@@ -16482,7 +16482,7 @@
 /turf/space/fluid/acid/clear,
 /area/space)
 "hkq" = (
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/turret_protected/ai)
 "hkx" = (
 /obj/table/reinforced/auto,
@@ -17013,7 +17013,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "hvz" = (
 /obj/machinery/light/small/floor/cool,
@@ -17459,7 +17459,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "hEL" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -18594,7 +18594,7 @@
 	pixel_x = -2;
 	pixel_y = 15
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "icI" = (
 /obj/cable{
@@ -18839,7 +18839,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "ihJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -20743,7 +20743,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "jaN" = (
 /obj/stool/chair{
@@ -22365,7 +22365,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "jMV" = (
 /obj/storage/cart/mechcart,
@@ -23590,7 +23590,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "knj" = (
 /obj/mesh/catwalk,
@@ -24016,7 +24016,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "kta" = (
 /obj/machinery/power/apc/autoname_north,
@@ -25002,7 +25002,7 @@
 	name = "Robust Donuts";
 	pixel_y = 4
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "kPn" = (
 /obj/disposalpipe/segment/transport{
@@ -25195,7 +25195,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "kTD" = (
 /obj/fakeobject/flock/antenna{
@@ -28503,7 +28503,7 @@
 /area/station/security/secwing)
 "mma" = (
 /obj/submachine/tape_deck,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "mmf" = (
 /obj/disposalpipe/segment/horizontal,
@@ -28588,7 +28588,7 @@
 	id = "nadiradio";
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "mob" = (
 /obj/cable{
@@ -32167,7 +32167,7 @@
 /obj/machinery/door/unpowered/wood/pyro,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "nRJ" = (
 /obj/cable{
@@ -32305,7 +32305,7 @@
 	pixel_y = 2
 	},
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "nUr" = (
 /obj/decal/tile_edge/line/black{
@@ -33801,7 +33801,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "oHc" = (
 /obj/decal/tile_edge/line/grey{
@@ -34939,7 +34939,7 @@
 	pixel_w = -1
 	},
 /obj/submachine/mixing_desk,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "pho" = (
 /obj/disposalpipe/segment/brig{
@@ -35273,7 +35273,7 @@
 	name = "Northeast Breach Hull"
 	})
 "pnt" = (
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "pnu" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -35611,7 +35611,7 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "pvU" = (
 /obj/machinery/traymachine/morgue,
@@ -37417,7 +37417,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "qqC" = (
 /obj/lattice{
@@ -38135,7 +38135,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/west,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "qGw" = (
 /obj/cable{
@@ -38268,7 +38268,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "qKz" = (
 /obj/machinery/light_switch/north{
@@ -39803,7 +39803,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "rBp" = (
 /obj/machinery/vending/pda,
@@ -41329,7 +41329,7 @@
 	pixel_w = -1
 	},
 /obj/item/device/radio/intercom/radiostation,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "snl" = (
 /obj/machinery/camera/directional/south{
@@ -43040,7 +43040,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "sZM" = (
 /obj/stool/chair/yellow{
@@ -43098,7 +43098,7 @@
 /obj/machinery/photocopier{
 	pixel_x = 0
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "tba" = (
 /obj/machinery/light/small{
@@ -43156,7 +43156,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "tbZ" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -43458,7 +43458,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "tiB" = (
 /obj/machinery/door/poddoor/pyro{
@@ -46469,7 +46469,7 @@
 /obj/machinery/computer3/terminal/zeta,
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "uBF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -46602,7 +46602,7 @@
 	pixel_x = 8;
 	pixel_y = -2
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "uFj" = (
 /obj/decal/tile_edge/line/red{
@@ -47078,7 +47078,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "uRy" = (
 /obj/stool/chair/office/blue{
@@ -47977,7 +47977,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "vrx" = (
 /obj/decal/boxingrope{
@@ -49042,7 +49042,7 @@
 /obj/stool/chair/office/blue{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "vNj" = (
 /obj/disposalpipe/segment/vertical,
@@ -51293,7 +51293,7 @@
 /area/station/security/hos)
 "wPf" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "wPg" = (
 /obj/machinery/disposal/brig,
@@ -51723,7 +51723,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/turret_protected/ai)
 "wYn" = (
 /obj/machinery/clothingbooth,
@@ -53099,7 +53099,7 @@
 /obj/stool/chair/office/blue{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "xFk" = (
 /obj/table/auto,
