@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { Divider, Image, Stack } from 'tgui-core/components';
+import { Divider, Image, Stack, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -34,9 +34,17 @@ export const FishCollection = (props, context) => {
         <Stack wrap="wrap" justify="space-around">
           {fish_data.map((fish) => (
             <Stack.Item key={fish.name}>
-              <Image
-                src={`data:image/png;base64,${(collected ? collected.includes(fish.name) : false) ? fish.image : fish.silhouette}`}
-              />
+              <Tooltip
+                content={
+                  (collected ? collected.includes(fish.name) : false)
+                    ? fish.name
+                    : '???'
+                }
+              >
+                <Image
+                  src={`data:image/png;base64,${(collected ? collected.includes(fish.name) : false) ? fish.image : fish.silhouette}`}
+                />
+              </Tooltip>
             </Stack.Item>
           ))}
         </Stack>
