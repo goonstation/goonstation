@@ -333,6 +333,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	var/image/scanner_status
 	var/last_scan_data = null
 	var/last_scan_timestamp = null
+	var/mob/living/carbon/human/victim = null
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
@@ -407,7 +408,10 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		src.last_scan_data = scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1)
 		src.last_scan_timestamp = time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")
-		boutput(user, src.last_scan_data)
+		if (istype(target, /mob/living))
+			src.victim = target
+			global.processing_items |= src
+			src.ui_interact(user)
 
 		DISPLAY_MAPTEXT(target, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, target)
 		update_medical_record(target)
@@ -427,6 +431,86 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 				return
 		..()
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "HealthAnalyzer")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		.["occupied"] = istype(src.victim)
+		.["organ_scan"] = src.organ_scan
+		.["reagent_scan"] = src.reagent_scan
+		if(!src.victim)
+			return
+		var/datum/color/blood_color_value = new()
+		blood_color_value.from_hex(src.victim.blood_color)
+
+		// hack for hemoglyph b/c we don't tint blood color properly
+		if(src.victim.bioHolder.GetEffect("roach"))
+			blood_color_value.from_hex("#009E81") // commented out blood color in `mutantraces.dm`. yep.
+
+		var/datum/statusEffect/simpledot/radiation/R = src.victim.hasStatus("radiation")
+		if (R?.stage)
+			.["rad_stage"] = R.stage
+			.["rad_dose"] = src.victim.radiation_dose
+		else
+			.["rad_stage"] = 0
+			.["rad_dose"] = 0
+
+		.["patient_name"] = src.victim.real_name
+
+		var/death_state = src.victim.stat
+		if (src.victim.bioHolder && src.victim.bioHolder.HasEffect("dead_scan"))
+			death_state = 2
+		.["patient_status"] = death_state
+
+		.["body_temp"] = src.victim.bodytemperature
+		.["optimal_temp"] = src.victim.base_body_temp
+
+		.["max_health"] = round(src.victim.max_health)
+		.["current_health"] = round(src.victim.health)
+		.["brute"] = round(src.victim.get_brute_damage())
+		.["burn"] = round(src.victim.get_burn_damage())
+		.["toxin"] = round(src.victim.get_toxin_damage())
+		.["oxygen"] = round(src.victim.get_oxygen_deprivation())
+
+		.["blood_volume"] = src.victim.blood_pressure["total"]
+		.["blood_pressure_status"] = src.victim.blood_pressure["status"]
+		.["blood_pressure_rendered"] = src.victim.blood_pressure["rendered"]
+
+		var/list/brain_damage = calc_brain_damage_severity(src.victim)
+		.["brain_damage"] = list (
+			"value" = src.victim.get_brain_damage(),
+			"desc" = brain_damage[1],
+			"color" = brain_damage[2],
+		)
+
+		.["embedded_objects"] = check_embedded_objects(src.victim)
+
+		if (src.organ_scan)
+			.["organ_status"] = generate_organ_data(src.victim)
+		.["limb_status"] = generate_limb_data(src.victim)
+
+		if (src.reagent_scan)
+			.["reagent_container"] = ui_describe_reagents(src.victim)
+
+	process()
+		if (!src.victim || QDELETED(src.victim))
+			src.victim = null
+			global.processing_items -= src
+			return
+		var/mob/M = src.loc
+		if (!istype(src.loc, /mob/living))
+			src.victim = null
+			global.processing_items -= src
+			return
+		if(!BOUNDS_DIST(M, src.victim) == 0)
+			src.victim = null
+			global.processing_items -= src
+			return
+
 	proc/print_report(mob/user)
 		if (!src.last_scan_data)
 			boutput(user, SPAN_ALERT("\The [src] has nothing to print — scan something first!"))
@@ -438,6 +522,183 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 			user.put_in_hand_or_eject(P)
 			playsound(src, 'sound/machines/printer_thermal.ogg', 25, TRUE)
 
+/obj/item/device/analyzer/healthanalyzer/proc/calc_brain_damage_severity(var/mob/living/carbon/human/H)
+	var/brain = H.get_organ("brain")
+	if (!brain)
+		return list("Missing", "red")
+	var/brain_damage = H.get_brain_damage()
+	if(brain_damage >= BRAIN_DAMAGE_LETHAL)
+		return list("Braindead", "red")
+	if(brain_damage >= BRAIN_DAMAGE_SEVERE)
+		return list("Severe", "red")
+	if(brain_damage >= BRAIN_DAMAGE_MAJOR)
+		return list("Major", "red")
+	if(brain_damage >= BRAIN_DAMAGE_MODERATE)
+		return list("Moderate", "orange")
+	if(brain_damage >= BRAIN_DAMAGE_MINOR)
+		return list("Minor", "yellow")
+	return list("Okay", "green")
+
+/obj/item/device/analyzer/healthanalyzer/proc/calc_organ_damage_severity(var/obj/item/organ/O)
+	var/damage = O.get_damage()
+	if (damage >= O.max_damage)
+		return list("Dead", "red")
+	if (damage >= O.max_damage*0.9)
+		return list("Critical", "orange")
+	if (damage >= O.max_damage*0.65)
+		return list("Significant", "orange")
+	if (damage >= O.max_damage*0.3)
+		return list("Moderate", "yellow")
+	if (damage > 0)
+		return list("Minor", "green")
+	return list("Okay", "green")
+
+/obj/item/device/analyzer/healthanalyzer/proc/generate_limb_data(var/mob/living/carbon/human/H)
+	var/list/limb_data = list()
+	var/current_status = ""
+	var/current_limb = ""
+	if (H.limbs)
+		current_limb = "Left Arm"
+		current_status = "Okay"
+		if (!H.limbs.l_arm)
+			current_status = "Missing"
+		else
+			if (istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+				var/obj/item/parts/human_parts/arm/left/item/I = H.limbs.l_arm
+				current_status = I.remove_object
+			else if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/))
+				current_status = "Cybernetic"
+			else if (istype(H.limbs.l_arm, /obj/item/parts/artifact_parts/arm/))
+				current_status = "UNKNOWN"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
+		current_limb = "Right Arm"
+		current_status = "Okay"
+		if (!H.limbs.r_arm)
+			current_status = "Missing"
+		else
+			if (istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+				var/obj/item/parts/human_parts/arm/right/item/I = H.limbs.r_arm
+				current_status = I.remove_object
+			else if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts/arm/right))
+				current_status = "Cybernetic"
+			else if (istype(H.limbs.r_arm, /obj/item/parts/artifact_parts/arm/))
+				current_status = "UNKNOWN"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
+		current_limb = "Left Leg"
+		current_status = "Okay"
+		if (!H.limbs.l_leg)
+			current_status = "Missing"
+		else
+			if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts/leg/left))
+				current_status = "Cybernetic"
+			else if (istype(H.limbs.l_leg, /obj/item/parts/artifact_parts/leg/))
+				current_status = "UNKNOWN"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
+		current_limb = "Right Leg"
+		current_status = "Okay"
+		if (!H.limbs.r_leg)
+			current_status = "Missing"
+		else
+			if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts/leg/right))
+				current_status = "Cybernetic"
+			else if (istype(H.limbs.r_leg, /obj/item/parts/artifact_parts/leg/))
+				current_status = "UNKNOWN"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
+		current_limb = "Butt" // look. okay. where else do i put it?
+		current_status = "Okay"
+		if(!H.organHolder?.butt)
+			current_status = "Missing"
+		else
+			if (istype(H.organHolder.butt, /obj/item/clothing/head/butt/cyberbutt))
+				current_status = "Cybernetic"
+		limb_data += list(list(
+			"limb" = current_limb,
+			"status" = current_status,
+		))
+
+	return limb_data
+
+/obj/item/device/analyzer/healthanalyzer/proc/check_embedded_objects(var/mob/living/L)
+	var/foreign_object_count = 0
+	var/implant_count = 0
+	var/has_chest_object = FALSE
+	if (length(L.implant))
+		for (var/obj/item/implant/I in L.implant)
+			if (istype(I, /obj/item/implant/projectile))
+				foreign_object_count++
+				continue
+			if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
+				continue
+			if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
+				implant_count++
+
+	if (ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.chest_item != null)
+			foreign_object_count++
+			has_chest_object = TRUE
+
+	return list(
+		"foreign_object_count" = foreign_object_count,
+		"implant_count" = implant_count,
+		"has_chest_object" = has_chest_object,
+	)
+
+/obj/item/device/analyzer/healthanalyzer/proc/generate_organ_data(var/mob/living/carbon/human/H)
+	var/list/organ_data = list()
+
+	if (isvampire(H))
+		return organ_data
+	if (!H.organHolder)
+		return organ_data
+
+	var/list/organs_to_check = list("heart", "left_eye", "right_eye", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+	if(H.organHolder.tail || H.mob_flags & SHOULD_HAVE_A_TAIL)
+		organs_to_check += "tail"
+
+	for (var/organ_name in organs_to_check)
+		var/obj/item/organ/O = H.get_organ(organ_name)
+		var/damage = ""
+		var/color = "grey"
+		var/special = ""
+		if (O == 0 || !O)
+			damage = "Missing"
+			color = "Red"
+		else
+			if (O.robotic)
+				special = "Cybernetic"
+			if (O.synthetic)
+				special = "Synthetic"
+			if (O.unusual)
+				special = "Unusual"
+			var/list/organ_calc = calc_organ_damage_severity(O)
+			damage = organ_calc[1]
+			color = organ_calc[2]
+
+		organ_data += list(list(
+			"organ" = organ_name,
+			"state" = damage,
+			"color" = color,
+			"special" = special,
+		))
+
+	return organ_data
 
 /obj/item/device/analyzer/healthanalyzer/upgraded
 	icon_state = "health"

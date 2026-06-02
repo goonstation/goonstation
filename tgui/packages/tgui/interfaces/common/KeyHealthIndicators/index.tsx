@@ -223,7 +223,7 @@ interface DisplayBrainProps extends DisplayOccupiedProps {
 
 const DisplayBrain = (props: DisplayBrainProps) => {
   const { occupied, status } = props;
-  if (!occupied || !['Okay', 'Missing'].includes(status.desc)) {
+  if (!occupied) {
     return null;
   }
   return (
@@ -238,7 +238,9 @@ const DisplayBrain = (props: DisplayBrainProps) => {
         Neuron Cohesion:
       </Table.Cell>
       <Table.Cell>
-        {(((120 - status.value) / 120) * 100).toFixed(2)}%
+        {status.desc !== 'Missing' &&
+          (((120 - status.value) / 120) * 100).toFixed(2) + '%'}
+        {status.desc === 'Missing' && 'N/A'}
       </Table.Cell>
     </Table.Row>
   );
