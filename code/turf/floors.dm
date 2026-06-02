@@ -512,7 +512,7 @@
 /turf/simulated/floor/darkblue/corner
 	icon_state = "dbluecorner"
 
-/turf/simulated/floor/darkblue/checker/white
+/turf/simulated/floor/darkblue/checker
 	icon_state = "dbluechecker"
 
 /turf/simulated/floor/darkblueblack
