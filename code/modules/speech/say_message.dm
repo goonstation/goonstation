@@ -8,7 +8,7 @@
 	var/speaker_to_display = null
 	/// The text indicating where this message was spoken from, if it was spoken from inside of an object.
 	var/speaker_location_text = null
-	/// The sanitised and processed content of this message.
+	/// The processed content of this message. Do not read from this directly, lest you permit HTML injection.
 	var/content = ""
 	/// The verb to display when this message is received, i.e: "Jeff [say_verb], [message]"
 	var/say_verb = null
@@ -48,7 +48,7 @@
 	var/id = ""
 	/// The datum that should act as a signal recipient for every copy of this message.
 	var/datum/signal_recipient = null
-	/// The original contents of this message, uneditied, unsanitised.
+	/// The original contents of this message, uneditied, unsanitised. Do not read from this directly, lest you permit HTML injection.
 	var/original_content = ""
 	/// Message flags. See `_std/defines/speech_defines/sayflags.dm`.
 	var/flags = SAYFLAG_HAS_QUOTATION_MARKS
@@ -316,8 +316,8 @@
 	// Apply any message modifier flags to the message.
 	global.SpeechManager.ApplyMessageModifierPostprocessing(src)
 
-	// Apply HTML escaping to mutable characters.
-	APPLY_CALLBACK_TO_MESSAGE_CONTENT(src, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(strip_html)))
+	// Apply HTML escaping to mutable content and strip mutable tags.
+	src.content = src.get_content()
 
 	// Apply loudness effects.
 	if (!isnull(src.message_size_override))
@@ -369,6 +369,30 @@
 		[src.format_content_style_suffix]\
 		[src.format_content_suffix]\
 	"}
+
+/// Returns the message content with HTML escaping applied to the mutable content and the mutable tags removed.
+/// Use this if you want to output the message content *directly* to the browser.
+/datum/say_message/proc/get_content()
+	var/content = src.content
+	content = APPLY_CALLBACK_TO_CONTENT(content, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(strip_html)))
+	content = STRIP_MUTABLE_CONTENT_TAGS(content)
+
+	return content
+
+/// Returns the message content with all mutable tags and immutable content stripped.
+/// Use this if you want to search the message content or retransmit it through `say()`.
+/datum/say_message/proc/get_content_parsable()
+	return STRIP_IMMUTABLE_CONTENT(src.content)
+
+/// Returns the original message content with HTML escaping applied.
+/// Use this if you want to output the original message content *directly* to the browser.
+/datum/say_message/proc/get_original_content()
+	return strip_html(src.original_content)
+
+/// Returns the original message content in parsable format.
+/// Use this if you want to search the original message content or retransmit it through `say()`.
+/datum/say_message/proc/get_original_content_parsable()
+	return src.original_content
 
 /// Returns the heard name of the speaker, taking into account masks, voice changers, and IDs.
 /datum/say_message/proc/get_speaker_name(heard_name_only = FALSE)

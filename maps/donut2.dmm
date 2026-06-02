@@ -13087,7 +13087,9 @@
 /area/station/atmos/highcap_storage)
 "bDc" = (
 /obj/machinery/light/small/sticky,
-/obj/item/device/radio/beacon,
+/obj/machinery/dispenser{
+	pltanks = 0
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bDf" = (
@@ -25574,6 +25576,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "iGA" = (

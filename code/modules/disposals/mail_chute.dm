@@ -6,6 +6,7 @@
 	desc = "A pneumatic mail-delivery chute."
 	icon_style = "mail"
 	light_style = "mailchute"
+	repressure_speed = 0.2
 	var/mail_tag = null
 	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
 	var/list/destinations = list()

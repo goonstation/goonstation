@@ -66,6 +66,7 @@
 		return
 
 TYPEINFO(/obj/item/device/chameleon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 14
 
 /obj/item/device/chameleon
@@ -85,8 +86,6 @@ TYPEINFO(/obj/item/device/chameleon)
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
 	HELP_MESSAGE_OVERRIDE({"Use the chameleon projector on any object to copy it's appearance. Use it in hand to appear as that object indefinitely. The disguise will be removed if you interact with anything else or are hit."})
-
-	is_syndicate = 1
 
 	New()
 		..()

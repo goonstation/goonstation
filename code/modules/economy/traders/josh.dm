@@ -8,6 +8,7 @@
 	base_patience = list(8,18)
 	chance_leave = 8
 	chance_arrive = 35
+	chance_restock = 30
 
 	business_card = /obj/item/paper/businesscard/josh
 

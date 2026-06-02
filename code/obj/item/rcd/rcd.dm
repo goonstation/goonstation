@@ -1,5 +1,6 @@
 
 TYPEINFO(/obj/item/rcd)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 20,
 				"crystal_dense" = 10,
 				"conductive_high" = 10,

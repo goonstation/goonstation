@@ -253,6 +253,14 @@
 			else
 				if (prob(T.chance_leave))
 					T.hidden = 1
+				else
+					for (var/datum/commodity/com in T.goods_sell)
+						if (com.amount == -1)
+							continue // infinite
+						if (com.amount >= initial(com.amount))
+							continue // overstock
+						if (prob(T.chance_restock))
+							com.amount = clamp(com.amount + (initial(com.amount) * 0.25), 1,  initial(com.amount))
 
 		// Remove / time out contracts by variant...
 		for(var/datum/req_contract/RC in src.req_contracts)
