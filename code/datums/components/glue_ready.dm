@@ -60,7 +60,14 @@ TYPEINFO(/datum/component/glue_ready)
 		if(user)
 			boutput(user, SPAN_ALERT("You can't glue [thing_glued] to stuff."))
 		return FALSE
-	if(istype(thing_glued, /obj/storage) || isgrab(thing_glued) || isgrab(glued_to) || istype(thing_glued, /obj/item/dummy) | istype(glued_to, /obj/item/dummy))
+	if(istype(thing_glued, /obj/storage)\
+		|| isgrab(thing_glued)\
+		|| isgrab(glued_to)\
+		|| istype(thing_glued, /obj/item/dummy)\
+		|| istype(glued_to, /obj/item/dummy)\
+		|| istype(thing_glued, /obj/tug_cart)\
+		|| istype(thing_glued, /obj/vehicle)\
+	)
 		return FALSE
 	if(isitem(glued_to))
 		var/obj/item/item_glued_to = glued_to

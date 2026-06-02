@@ -605,9 +605,9 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-age")
-				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-100", "Character Generation", src.age, 100, 20)
 				if (new_age)
-					src.age = clamp(round(text2num(new_age)), 20, 80)
+					src.age = clamp(round(text2num(new_age)), 20, 100)
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -1451,8 +1451,10 @@ var/list/removed_jobs = list(
 					reason_tooltip = "You have been banned from playing this job."
 				else if (job_datum.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					reason_tooltip = "This job requires the <i>\"Unlike the director, I went to college\"</i> medal, which you do not possess."
-				else if (job_datum.requires_whitelist && !user.client.can_play_whitelisted_roles())
-					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may also play this job on Fridays."
+				else if (job_datum.requires_whitelist == REQUIRES_WHITELIST_ALWAYS && !user.client.can_play_whitelisted_roles())
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays."
+				else if (job_datum.requires_whitelist == REQUIRES_WHITELIST_USUALLY && !user.client.can_play_whitelisted_roles() && (!IS_IT_SATURDAY))
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays. Anyone may play this job on Saturdays."
 				else if (!job_datum.has_rounds_needed(user.client?.player))
 					var/played_rounds = user.client.player.get_rounds_participated()
 					var/needed_rounds = job_datum.rounds_needed_to_play

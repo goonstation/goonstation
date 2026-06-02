@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/orange, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/yellow, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/orange, 5)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/welding, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/firefighter, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/goggles/yellow, 1)
@@ -427,6 +427,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
 
+TYPEINFO(/obj/machinery/vending/jobclothing/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //So engineer traitors dont scan it with their PDA
 /obj/machinery/vending/jobclothing/syndicate
 	name = "Syndicate Apparel"
 	desc = "A vending machine that vends Syndicate clothing."

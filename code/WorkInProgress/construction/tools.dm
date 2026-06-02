@@ -169,6 +169,7 @@
 			aTurret.setState(enabled, lethal)
 
 TYPEINFO(/obj/item/room_marker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/room_marker
@@ -276,6 +277,7 @@ TYPEINFO(/obj/item/room_marker)
 		return affected
 
 TYPEINFO(/obj/item/clothing/glasses/construction)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/clothing/glasses/construction
@@ -299,6 +301,7 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 		inventory_counter.update_number(metal_ammo)
 
 TYPEINFO(/obj/item/material_shaper)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/material_shaper
@@ -500,6 +503,7 @@ TYPEINFO(/obj/item/material_shaper)
 #define ROOM_PLANNER_CHARGES_PER_MATERIAL 20
 
 TYPEINFO(/obj/item/room_planner)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/room_planner
@@ -545,9 +549,9 @@ TYPEINFO(/obj/item/room_planner)
 		"ancient smooth" = 'icons/turf/walls/ancient_smooth.dmi',
 		"tempus green" = 'icons/turf/walls/unused/walls_tempus-green.dmi',
 		"tempus white" = 'icons/turf/walls/unused/walls_tempus-white.dmi',
-		"black red" = 'icons/turf/walls/supernorn/blackred.dmi',
-		"orange" = 'icons/turf/walls/supernorn/orange.dmi',
-		"yellow" = 'icons/turf/walls/supernorn/yellow.dmi',
+		"black red" = 'icons/turf/walls/supernorn/reinforced/red.dmi',
+		"orange" = 'icons/turf/walls/supernorn/standard/orange.dmi',
+		"yellow" = 'icons/turf/walls/supernorn/standard/yellow.dmi',
 		"beehive" = 'icons/turf/walls/beehive.dmi',
 		"hedge" = 'icons/turf/walls/hedge.dmi',
 		"ice" = 'icons/turf/walls/ice.dmi',
@@ -573,9 +577,9 @@ TYPEINFO(/obj/item/room_planner)
 		"ancient smooth" = "interior-",
 		"tempus green" = "",
 		"tempus white" = "",
-		"black red" = "norn-BR-",
-		"orange" = "norn-O-",
-		"yellow" = "norn-Y-",
+		"black red" = "norn-",
+		"orange" = "norn-",
+		"yellow" = "norn-",
 		"beehive" = "bee-",
 		"hedge" = "hedge-",
 		"ice" = "ice-",

@@ -4405,14 +4405,14 @@
 /area/station/storage/hydroponics)
 "bWh" = (
 /obj/table/auto,
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -6
 	},
-/obj/item/shaker/salt,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt,
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 3
 	},
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 6
 	},
 /obj/item/paper_bin{
@@ -6743,6 +6743,7 @@
 "cZS" = (
 /obj/machinery/light_switch/west,
 /obj/fitness/speedbag/captain,
+/obj/item/reagent_containers/applicator/stick/glue,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
@@ -7397,7 +7398,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
-	icon = 'icons/obj/large_storage.dmi';
+	icon = 'icons/obj/storage/large_storage.dmi';
 	icon_state = "filecabinet";
 	name = "Planetary Survey Hardcopies";
 	pixel_x = -8
@@ -7406,7 +7407,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Filing cabinets. Upon closer examination, they seem to be unusually reinforced, and disinclined to open.";
-	icon = 'icons/obj/large_storage.dmi';
+	icon = 'icons/obj/storage/large_storage.dmi';
 	icon_state = "filecabinet";
 	name = "Planetary Survey Hardcopies";
 	pixel_x = 3
@@ -9074,7 +9075,8 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "eew" = (
@@ -10298,8 +10300,7 @@
 /obj/machinery/computer3/generic/personal{
 	desc = "This workstation appears to be outfitted with non-standard equipment.";
 	name = "modified computer";
-	setup_starting_peripheral2 = /datum/computer/file/terminal_program/communications;
-	setup_starting_program = null
+	setup_starting_program = /datum/computer/file/terminal_program/communications
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -17562,11 +17563,11 @@
 	pixel_x = 11;
 	pixel_y = 4
 	},
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = 3;
 	pixel_y = -7
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = -2;
 	pixel_y = -7
 	},
@@ -21195,7 +21196,6 @@
 	})
 "jjT" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/cable{
 	icon_state = "1-2"
@@ -21758,7 +21758,6 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/floorpillstatue,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -21880,7 +21879,6 @@
 /area/station/hallway/primary/northeast)
 "jzF" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "jzJ" = (
@@ -21960,7 +21958,6 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "jBb" = (
@@ -26719,7 +26716,6 @@
 	})
 "lCv" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
@@ -27531,7 +27527,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/mapping_helper/access/maint,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
@@ -27584,7 +27579,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "lSq" = (
@@ -29204,7 +29199,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "mCj" = (
@@ -30110,8 +30104,9 @@
 	},
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "mYj" = (
@@ -34272,16 +34267,6 @@
 /obj/machinery/ghostdrone_factory/part3,
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
-"oSp" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/mapping_helper/access/maint,
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "oSr" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/industrial,
@@ -34673,9 +34658,7 @@
 	},
 /area/station/hydroponics/bay)
 "oZQ" = (
-/obj/submachine/cargopad{
-	name = "Security Pod Bay Pad"
-	},
+/obj/submachine/cargopad/security,
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
 "oZS" = (
@@ -36057,7 +36040,6 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "pGy" = (
@@ -37189,7 +37171,6 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "qkW" = (
@@ -39832,7 +39813,6 @@
 /area/station/hallway/primary/southeast)
 "rBG" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "rCd" = (
@@ -43895,16 +43875,6 @@
 "ttd" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"ttn" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/mapping_helper/access/maint,
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "ttr" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -44726,7 +44696,6 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "tKX" = (
@@ -45245,9 +45214,7 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "tYz" = (
-/obj/submachine/cargopad/magnet{
-	name = "Mining Staff Room"
-	},
+/obj/submachine/cargopad/miningstaff,
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "tYE" = (
@@ -46526,7 +46493,6 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "uCR" = (
@@ -49259,11 +49225,11 @@
 	pixel_x = -11;
 	pixel_y = 11
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = -3;
 	pixel_y = -10
 	},
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = 2;
 	pixel_y = -10
 	},
@@ -50459,7 +50425,6 @@
 	})
 "wsf" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "wsz" = (
@@ -51218,8 +51183,7 @@
 /obj/machinery/computer3/generic/personal{
 	desc = "This workstation appears to be outfitted with non-standard equipment.";
 	name = "modified computer";
-	setup_starting_peripheral2 = /datum/computer/file/terminal_program/communications;
-	setup_starting_program = null
+	setup_starting_program = /datum/computer/file/terminal_program/communications
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -53972,7 +53936,6 @@
 /area/station/storage/emergency2)
 "xYe" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/mapping_helper/access/maint,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/cable{
 	icon_state = "1-2"
@@ -95339,7 +95302,7 @@ vTs
 jhj
 pAY
 oil
-ttn
+qkS
 smG
 xtp
 myj
@@ -105003,7 +104966,7 @@ gpm
 lRC
 vYP
 aaC
-oSp
+pGu
 aho
 aho
 xAm

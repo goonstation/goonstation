@@ -8,6 +8,7 @@
 	base_patience = list(8,18)
 	chance_leave = 8
 	chance_arrive = 35
+	chance_restock = 30
 
 	business_card = /obj/item/paper/businesscard/josh
 
@@ -222,8 +223,10 @@
 
 /datum/commodity/trader/josh/gluestick
 	comname = "Glue Stick"
-	comtype = /obj/item/reagent_containers/applicator/glue
+	comtype = /obj/item/reagent_containers/applicator/stick/glue
 	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	possible_alt_types = list(/obj/item/reagent_containers/applicator/stick/glue/craft)
+	alt_type_chance = 60
 	amount = 50
 	possible_names = list("You should be allowed to glue your poster!",
 	"Stickin' it to the man, yeah!")

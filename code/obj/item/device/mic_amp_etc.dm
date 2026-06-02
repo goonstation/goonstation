@@ -38,6 +38,7 @@ TYPEINFO(/obj/item/device/microphone)
 
 
 TYPEINFO(/obj/mic_stand)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/mic_stand

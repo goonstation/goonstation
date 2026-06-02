@@ -850,8 +850,8 @@
 /turf/simulated/floor,
 /area/space)
 "dt" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-3"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-3"
 	},
 /area/space)
 "du" = (
@@ -885,8 +885,8 @@
 /turf/simulated/floor/black,
 /area/space)
 "dB" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-7"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-7"
 	},
 /area/space)
 "dG" = (
@@ -1066,8 +1066,8 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
 /area/space)
 "eu" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-10"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-10"
 	},
 /area/space)
 "ev" = (
@@ -1838,8 +1838,8 @@
 /turf/simulated/floor/carpet/green/standard/narrow/T_north,
 /area/space)
 "hE" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-5"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-5"
 	},
 /area/space)
 "hM" = (
@@ -2175,8 +2175,8 @@
 /turf/simulated/floor/carpet/green/standard/narrow/T_west,
 /area/space)
 "iV" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-12"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-12"
 	},
 /area/space)
 "iW" = (
@@ -2246,8 +2246,8 @@
 	},
 /area/space)
 "jm" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-10"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-10"
 	},
 /area/space)
 "jn" = (
@@ -2693,8 +2693,8 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "kE" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-7"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-7"
 	},
 /area/space)
 "kG" = (
@@ -3108,8 +3108,8 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/eastwest,
 /area/space)
 "mz" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-11"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-11"
 	},
 /area/space)
 "mA" = (
@@ -3119,8 +3119,8 @@
 /turf/simulated/floor,
 /area/space)
 "mC" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-4"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-4"
 	},
 /area/space)
 "mD" = (
@@ -3521,8 +3521,8 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/space)
 "nR" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-3"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-3"
 	},
 /area/space)
 "nT" = (
@@ -3714,8 +3714,8 @@
 /turf/simulated/floor/black,
 /area/space)
 "oy" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-5"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-5"
 	},
 /area/space)
 "oz" = (
@@ -3724,8 +3724,8 @@
 	},
 /area/space)
 "oC" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-3"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-3"
 	},
 /area/space)
 "oD" = (
@@ -3839,8 +3839,8 @@
 	},
 /area/space)
 "pd" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-2"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-2"
 	},
 /area/space)
 "pe" = (
@@ -4793,8 +4793,8 @@
 	},
 /area/space)
 "sN" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-15"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-15"
 	},
 /area/space)
 "sO" = (
@@ -4929,8 +4929,8 @@
 	},
 /area/space)
 "tC" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-11"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-11"
 	},
 /area/space)
 "tE" = (
@@ -5058,8 +5058,8 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "tZ" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-0"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-0"
 	},
 /area/space)
 "ua" = (
@@ -5254,8 +5254,8 @@
 	},
 /area/space)
 "uO" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-0"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-0"
 	},
 /area/space)
 "uQ" = (
@@ -5490,8 +5490,8 @@
 /turf/simulated/floor/carpet/purple/fancy/innercorner/sw,
 /area/space)
 "vT" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-13"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-13"
 	},
 /area/space)
 "vU" = (
@@ -5752,8 +5752,8 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "xk" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-12"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-12"
 	},
 /area/space)
 "xl" = (
@@ -5793,8 +5793,8 @@
 	},
 /area/space)
 "xs" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-2"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-2"
 	},
 /area/space)
 "xt" = (
@@ -6399,8 +6399,8 @@
 /turf/simulated/floor,
 /area/space)
 "zp" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-1"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-1"
 	},
 /area/space)
 "zq" = (
@@ -6896,8 +6896,8 @@
 	},
 /area/space)
 "By" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-2"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-2"
 	},
 /area/space)
 "BA" = (
@@ -6920,8 +6920,8 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "BK" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-1"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-1"
 	},
 /area/space)
 "BL" = (
@@ -7076,8 +7076,8 @@
 /turf/simulated/floor,
 /area/space)
 "Ch" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-6"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-6"
 	},
 /area/space)
 "Cj" = (
@@ -7771,8 +7771,8 @@
 	},
 /area/space)
 "Fr" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-10"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-10"
 	},
 /area/space)
 "Fs" = (
@@ -8002,8 +8002,8 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/T_east,
 /area/space)
 "Gp" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-11"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-11"
 	},
 /area/space)
 "Gq" = (
@@ -8255,8 +8255,8 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "Hs" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-14"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-14"
 	},
 /area/space)
 "Ht" = (
@@ -8271,8 +8271,8 @@
 /turf/simulated/floor/yellow,
 /area/space)
 "Hv" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-4"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-4"
 	},
 /area/space)
 "Hx" = (
@@ -8450,8 +8450,8 @@
 	},
 /area/space)
 "Ii" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-1"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-1"
 	},
 /area/space)
 "Ij" = (
@@ -8575,8 +8575,8 @@
 	},
 /area/space)
 "IK" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-9"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-9"
 	},
 /area/space)
 "IR" = (
@@ -8641,8 +8641,8 @@
 	},
 /area/space)
 "IY" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-9"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-9"
 	},
 /area/space)
 "IZ" = (
@@ -8992,8 +8992,8 @@
 /turf/simulated/floor,
 /area/space)
 "Kv" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-13"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-13"
 	},
 /area/space)
 "Kw" = (
@@ -9213,8 +9213,8 @@
 	},
 /area/space)
 "Lf" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-15"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-15"
 	},
 /area/space)
 "Lg" = (
@@ -9289,8 +9289,8 @@
 /turf/simulated/floor/carpet/red/decal/innercross,
 /area/space)
 "LB" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-13"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-13"
 	},
 /area/space)
 "LD" = (
@@ -9514,8 +9514,8 @@
 /turf/simulated/floor/carpet/purple/fancy/junction/nw_s,
 /area/space)
 "Mr" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-14"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-14"
 	},
 /area/space)
 "Mt" = (
@@ -9572,8 +9572,8 @@
 /turf/simulated/floor/carpet/green/fancy/innercorner/ne_sw,
 /area/space)
 "MH" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-5"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-5"
 	},
 /area/space)
 "MI" = (
@@ -9611,8 +9611,8 @@
 /turf/simulated/floor,
 /area/space)
 "MN" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-15"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-15"
 	},
 /area/space)
 "MO" = (
@@ -9942,8 +9942,8 @@
 /turf/simulated/floor,
 /area/space)
 "Of" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-7"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-7"
 	},
 /area/space)
 "Og" = (
@@ -10035,8 +10035,8 @@
 /turf/simulated/floor/carpet/blue/fancy/narrow/se,
 /area/space)
 "Ou" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-4"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-4"
 	},
 /area/space)
 "Ov" = (
@@ -11541,8 +11541,8 @@
 /turf/simulated/floor,
 /area/space)
 "TY" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-12"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-12"
 	},
 /area/space)
 "TZ" = (
@@ -11591,8 +11591,8 @@
 /turf/simulated/floor/black,
 /area/space)
 "Uh" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-14"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-14"
 	},
 /area/space)
 "Ui" = (
@@ -11606,8 +11606,8 @@
 	},
 /area/space)
 "Uk" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-8"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-8"
 	},
 /area/space)
 "Um" = (
@@ -11786,8 +11786,8 @@
 /turf/simulated/floor,
 /area/space)
 "Vd" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-9"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-9"
 	},
 /area/space)
 "Ve" = (
@@ -12161,8 +12161,8 @@
 /turf/simulated/floor,
 /area/space)
 "Wn" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-6"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-6"
 	},
 /area/space)
 "Wp" = (
@@ -12378,8 +12378,8 @@
 /turf/simulated/floor,
 /area/space)
 "Xe" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-0"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-0"
 	},
 /area/space)
 "Xf" = (
@@ -12477,8 +12477,8 @@
 	},
 /area/space)
 "Xx" = (
-/turf/simulated/wall/auto/reinforced/supernorn/orange{
-	icon_state = "norn-O-8"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange{
+	icon_state = "norn-8"
 	},
 /area/space)
 "Xz" = (
@@ -12602,8 +12602,8 @@
 /turf/simulated/floor,
 /area/space)
 "XZ" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred{
-	icon_state = "norn-BR-8"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red{
+	icon_state = "norn-8"
 	},
 /area/space)
 "Yb" = (
@@ -12777,8 +12777,8 @@
 	},
 /area/space)
 "YT" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	icon_state = "norn-Y-6"
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{
+	icon_state = "norn-6"
 	},
 /area/space)
 "YU" = (

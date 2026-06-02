@@ -579,6 +579,7 @@
 	spawn_contents = list(/obj/item/old_grenade/smoke=3,/obj/item/chem_grenade/flashbang = 2)
 
 TYPEINFO(/obj/item/salvager_hand_tele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("MET-1" = 5, "POW-1"=5, "CON-2" = 5, "telecrystal" = 30)
 
 /obj/item/salvager_hand_tele

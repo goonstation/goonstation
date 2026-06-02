@@ -1,4 +1,5 @@
 TYPEINFO(/obj/submachine/claw_machine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"conductive" = 5,
 				"crystal" = 5,

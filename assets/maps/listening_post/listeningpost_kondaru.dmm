@@ -196,10 +196,6 @@
 /area/listeningpost/break_room)
 "lY" = (
 /obj/machinery/vending/jobclothing/syndicate,
-/obj/cable/black{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west/hardened,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "mh" = (
@@ -263,18 +259,13 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/codereader/syndicate{
-	pixel_y = 5
-	},
+/obj/machinery/recharger,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "oD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
 /obj/machinery/light_switch/west,
-/obj/cable/black{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "oO" = (
@@ -378,14 +369,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "vx" = (
-/obj/cable/black{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -405,9 +391,6 @@
 /obj/cable/black{
 	icon_state = "2-4"
 	},
-/obj/cable/black{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -426,6 +409,7 @@
 /obj/cable/black{
 	icon_state = "0-4"
 	},
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "wk" = (
@@ -450,6 +434,17 @@
 	},
 /turf/variableTurf/clear,
 /area/space)
+"xQ" = (
+/obj/table/wood/auto,
+/obj/item/uplink_telecrystal{
+	pixel_y = -1
+	},
+/obj/item/uplink_telecrystal{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
 "xR" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -512,6 +507,11 @@
 "Dm" = (
 /turf/simulated/floor/airless/engine,
 /area/listeningpost/landing_bay)
+"Dp" = (
+/obj/table/wood/auto,
+/obj/item/turret_deployer/syndicate,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
 "DE" = (
 /obj/marker/supplymarker,
 /obj/decal/poster/wallsign/poster_nt{
@@ -590,11 +590,8 @@
 	},
 /area/listeningpost/general)
 "Gx" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner{
 	dir = 4
-	},
-/obj/cable/black{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
@@ -661,9 +658,6 @@
 	name = "Dubious Hand Scanner";
 	pixel_x = -32
 	},
-/obj/cable/black{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -703,7 +697,9 @@
 /area/listeningpost/barracks)
 "KM" = (
 /obj/table/wood/auto,
-/obj/machinery/recharger,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
 /turf/simulated/floor/orangeblack,
 /area/listeningpost/general)
 "Lf" = (
@@ -722,9 +718,9 @@
 /area/listeningpost/general)
 "MN" = (
 /obj/table/auto,
-/obj/item/device/t_scanner,
-/obj/item/wrench,
-/obj/item/mining_tools/pick,
+/obj/random_item_spawner/spacesuit,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
@@ -736,11 +732,11 @@
 /turf/simulated/floor/airless/plating,
 /area/listeningpost/comm_dish)
 "Nm" = (
-/obj/machinery/computer/announcement/syndicate,
 /obj/cable/black{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north/hardened,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "NF" = (
@@ -891,9 +887,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "VQ" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
+/obj/item/tank/jetpack,
 /obj/machinery/light/small,
 /obj/cable/black{
 	icon_state = "1-4"
@@ -934,9 +928,6 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "XW" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "XY" = (
@@ -1273,8 +1264,8 @@ sT
 sT
 sT
 sT
-sT
-sT
+WC
+WC
 lt
 Dm
 Dm
@@ -1304,8 +1295,8 @@ sT
 sT
 sT
 sT
-sT
-sT
+WC
+WC
 WC
 WC
 WC
@@ -1337,10 +1328,10 @@ sT
 sT
 sT
 sT
-sT
-sT
 WC
 WC
+KJ
+KJ
 KJ
 KJ
 KJ
@@ -1371,11 +1362,11 @@ sT
 sT
 sT
 sT
-sT
-WC
 WC
 WC
 KJ
+xQ
+Dp
 lY
 oD
 KJ
@@ -1407,9 +1398,9 @@ sT
 WC
 WC
 WC
-WC
-WC
 KJ
+XW
+XW
 va
 XW
 KJ

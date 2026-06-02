@@ -55,7 +55,7 @@ TYPEINFO(/obj/machinery/codereader)
 	playsound(src, 'sound/items/floppy_disk.ogg', 30, TRUE)
 	src.UpdateIcon()
 
-#define IS_REAL_READABLE_NETPASS(x) (x in list(netpass_heads, netpass_security, netpass_medical))
+#define IS_REAL_READABLE_NETPASS(x) (x in list(netpass_heads, netpass_security, netpass_medical, netpass_login))
 /obj/machinery/codereader/proc/process_disk(mob/user)
 	if(!src.inserted_disk || !istype(src.inserted_disk))
 		return FALSE
@@ -89,28 +89,38 @@ TYPEINFO(/obj/machinery/codereader)
 		printed_paper.pixel_y = src.pixel_y + 9
 	return TRUE
 
+TYPEINFO(/obj/machinery/codereader/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/machinery/codereader/syndicate
 	name = "syndicate codereader"
 	desc = "A large device for stealing NanoTrasen security codes from floppy disks."
 	icon_state = "codereader_syndicate"
-	is_syndicate = TRUE
+	var/id = "listening_post_inner"
 	var/static/authdisk_uploaded_by = null
-	var/credits_for_authdisk = 2 //Number of credits reading the authdisk is worth
 
 	get_help_message(dist, mob/user)
-		if (!src.authdisk_uploaded_by && src.credits_for_authdisk)
-			. = "You can insert the <b>Authentication Disk</b> to get a reward from the Syndicate."
+		if (!src.authdisk_uploaded_by)
+			. = "You can insert the <b>Authentication Disk</b> to open the listening post barracks."
 
 /obj/machinery/codereader/syndicate/process_disk(mob/user)
-	if(istype(src.inserted_disk, /obj/item/disk/data/floppy/read_only/authentication) && !src.authdisk_uploaded_by && src.credits_for_authdisk)
+	if(istype(src.inserted_disk, /obj/item/disk/data/floppy/read_only/authentication) && !src.authdisk_uploaded_by)
 		src.authdisk_uploaded_by = (user?.real_name || "Unknown")
-		logTheThing(LOG_STATION, user, "receives [src.credits_for_authdisk] traitor credits for inserting the authentication disk into [src]")
-
-		var/obj/item/uplink_telecrystal/tc_stack = new(src)
-		tc_stack.amount = src.credits_for_authdisk
-		tc_stack._update_stack_appearance()
-		playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
-		animate_teleport(tc_stack)
-		SPAWN(0.6 SECONDS)
-			tc_stack.set_loc(src.loc)
+		var/list/antag_roles = list()
+		var/list/bought_items = list()
+		for (var/datum/antagonist/antag_role in user.mind.antagonists)
+			antag_roles += antag_role.display_name
+			if (istype(antag_role, /datum/antagonist/traitor))
+				var/datum/antagonist/traitor/traitor = antag_role
+				for (var/datum/syndicate_buylist/bought in traitor.purchased_items)
+					bought_items += bought.name
+			if (istype(antag_role, /datum/antagonist/spy_thief))
+				var/datum/antagonist/spy_thief/spief = antag_role
+				for (var/datum/syndicate_buylist/redeemed in spief.redeemed_items)
+					bought_items += redeemed.name
+		logTheThing(LOG_STATION, user, "unlocks the listening post barracks by inserting an auth disk into [src]")
+		// ircbot.export_async("admin_debug", list("msg"="<@844525423412379668>: [user] ([user.ckey]), job: [user.job], antag role: [english_list(antag_roles)], bought items: [english_list(bought_items)] unlocked the listening post barracks with [src.inserted_disk] at [ticker.round_elapsed_ticks/(1 MINUTE)] minutes shift time"))
+		SPAWN(3 SECONDS)
+			for (var/obj/machinery/door/airlock/airlock in by_type[/obj/machinery/door])
+				if (airlock.id == src.id)
+					airlock.bolt_open()
 	return ..()

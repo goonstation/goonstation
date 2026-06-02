@@ -188,8 +188,9 @@
 
 	death(var/gibbed)
 		..()
-		drop_stick(1)
-		qdel(src)
+		if(!(src.my_stick == null)) // Regular snakes should remain visible after death
+			drop_stick(1)
+			qdel(src)
 
 	Cross(atom/mover)
 		if (istype(mover, /obj/projectile))

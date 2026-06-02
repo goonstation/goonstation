@@ -5818,11 +5818,11 @@
 /obj/table/clothred{
 	name = "condiment table"
 	},
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = 4;
 	pixel_y = 8
 	},

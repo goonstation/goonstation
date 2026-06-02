@@ -125,6 +125,8 @@
 
 	ArtifactDevelopFault(10)
 
+	if(A.artitype.chapel_block)
+		src.RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(Artifact_chapel_block))
 	if (A.automatic_activation)
 		src.ArtifactActivated()
 
@@ -154,6 +156,13 @@
 		return 1 // can't activate these ones at all by design
 	if (!A.may_activate(src))
 		return 1
+	if(A.artitype.chapel_block)
+		var/is_chapel = istype(get_area(src), /area/station/chapel)
+		if(is_chapel)
+			playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1, pitch = 1.25)
+			var/turf/T = get_turf(src)
+			T.visible_message(SPAN_ALERT("<b>[src] attempts to activate but fails!</b>"))
+			return 1
 	if (A.activ_sound)
 		playsound(src.loc, A.activ_sound, 100, 1)
 	if (A.activ_text)
@@ -381,6 +390,14 @@
 	src.ArtifactHitWith(W, user)
 	return 1
 
+/obj/proc/Artifact_chapel_block(var/thing, var/area/old_area, var/area/new_area)
+	var/is_chapel = istype(new_area, /area/station/chapel)
+	if(is_chapel && src.artifact.activated)
+		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1, pitch = 1.25)
+		src.ArtifactDeactivated()
+	if(!is_chapel && !src.artifact.activated && src.artifact.automatic_activation)
+		src.ArtifactActivated()
+
 #define FAULT_RESULT_INVALID 2 // artifact can't do faults
 #define FAULT_RESULT_STOP	1		 // we gotta stop, artifact was destroyed or deactivated
 #define FAULT_RESULT_SUCCESS 0 // everything's cool!
@@ -565,6 +582,8 @@
 	src.remove_artifact_forms()
 
 	src.ArtifactDeactivated()
+	if(src.artifact.artitype.chapel_block)
+		UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
 
 	ArtifactLogs(usr, null, src, "destroyed", null, 0)
 
@@ -573,7 +592,7 @@
 	qdel(src)
 	return
 
-/obj/proc/ArtifactDevelopFault(var/faultprob)
+/obj/proc/ArtifactDevelopFault(var/faultprob, var/messageprob = 5)
 	// This proc is used for randomly giving an artifact a fault. It's usually used in the New() proc of an artifact so that
 	// newly spawned artifacts have a chance of being faulty by default, though this can also be called whenever an artifact is
 	// damaged or otherwise poorly handled, so you could potentially turn a good artifact into a dangerous piece of shit if you
@@ -594,6 +613,10 @@
 		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)
+			if (A.activated && prob(messageprob))
+				var/turf/T = get_turf(src)
+				if (T)
+					T.visible_message(SPAN_NOTICE("The [src.name] [F.add_message]"))
 			F.holder = A
 			A.faults += F
 

@@ -310,6 +310,15 @@
 		blue
 			icon_state = "pda-clown-blue"
 
+		purple
+			icon_state = "pda-clown-purple"
+
+		pink
+			icon_state = "pda-clown-pink"
+
+		green
+			icon_state = "pda-clown-green"
+
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
 			LAZYLISTREMOVE(M.attached_objs, src)
@@ -541,8 +550,6 @@
 	var/wincheck = winexists(user, "pda2_\ref[src]")
 	//boutput(world, wincheck)
 	if(wincheck != "MAIN")
-		if (src.host_program)
-			src.host_program.get_other_pdas()
 		winclone(user, "pda2", "pda2_\ref[src]")
 	winset(user, "pda2_\ref[src]", "title=\"[src.window_title]\"")
 

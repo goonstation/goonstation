@@ -61,8 +61,10 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock/cycler/auto)
 ///For many cases when you have a simple pair of inner/outer airlocks and nothing else, this will allow setup without any variable editing.
 /obj/mapping_helper/airlock/cycler/auto
 	name = "proximity airlock cycler linkage"
-	///When looking for airlocks at either end, check for them within this radius.
-	var/seek_radius = 0
+	///When looking for airlocks near the helper, do it in this radius.
+	var/radius_around_helper = 0
+	///When looking for airlocks near the "outer" airlock/set, do it in this radius.
+	var/radius_around_pair_turf = 0
 
 	///Proc to locate the turf that is under/near the "outer" airlock set. Should return one turf.
 	proc/seek_pair_turf()
@@ -72,12 +74,12 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock/cycler/auto)
 		if (src.cycle_id)
 			CRASH("[src] has a manually set cycle ID. This should not be done with proximity cycler helpers. Coords: [src.x], [src.y], [src.z]")
 		src.cycle_id = "AUTO_[src.x]_[src.y]"
-		for (var/obj/machinery/door/airlock/D in range(src.seek_radius,src))
+		for (var/obj/machinery/door/airlock/D in range(src.radius_around_helper,src))
 			D.cycle_id = src.cycle_id
 			D.cycle_enter_id = "inner"
 			D.attempt_cycle_link()
 		var/turf/other_turf = src.seek_pair_turf()
-		for (var/obj/machinery/door/airlock/D in range(src.seek_radius,other_turf))
+		for (var/obj/machinery/door/airlock/D in range(src.radius_around_pair_turf,other_turf))
 			D.cycle_id = src.cycle_id
 			D.cycle_enter_id = "outer"
 			D.attempt_cycle_link()
@@ -127,10 +129,20 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock/cycler/auto)
 		var/turf/other_turf = locate(src.x + x_offset, src.y + y_offset, src.z)
 		return other_turf
 
-///Connects airlocks within a 1-tile radius of the helper to those within a 1-tile radius of a spot 2 tiles away (useful for multi-door airlocks)
+///Connects airlocks within a 1-tile radius of the helper to those within a 1-tile radius of a spot 2 tiles away (useful for wide airlocks and some edge cases)
 /obj/mapping_helper/airlock/cycler/auto/rook
 	icon_state = "cycle-auto-rook"
-	seek_radius = 1
+	radius_around_helper = 1
+	radius_around_pair_turf = 1
+
+	seek_pair_turf()
+		var/turf/other_turf = get_steps(src,src.dir,2)
+		return other_turf
+
+///Connects airlocks within a 1-tile radius of the helper to a single outer airlock 2 tiles away (useful for airlocks with multiple interior-facing doors)
+/obj/mapping_helper/airlock/cycler/auto/pawn
+	icon_state = "cycle-auto-pawn"
+	radius_around_helper = 1
 
 	seek_pair_turf()
 		var/turf/other_turf = get_steps(src,src.dir,2)

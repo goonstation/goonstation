@@ -177,7 +177,7 @@
 	switch (grade)
 		if (1)
 			common_ores = list(/datum/ore/pharosium, /datum/ore/molitz, /datum/ore/mauxite)
-			rare_ores = list(/datum/ore/claretine, /datum/ore/bohrum)
+			rare_ores = list(/datum/ore/claretine, /datum/ore/bohrum, /datum/ore/batiline)
 
 		if (2)
 			common_ores = list(/datum/ore/claretine, /datum/ore/bohrum, /datum/ore/viscerite, /datum/ore/koshmarite)

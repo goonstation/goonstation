@@ -75,11 +75,6 @@
 	req_access = list(access_robotics)
 	color = MEDICAL
 
-/obj/mapping_helper/access/pathology
-	name = "pathology access spawn"
-	req_access = list(access_medical)
-	color = MEDICAL
-
 /obj/mapping_helper/access/pharmacy
 	name = "pharmacy access spawn"
 	req_access = list(access_pharmacy)
@@ -253,6 +248,11 @@
 	name = "HOP access spawn"
 	req_access = list(access_head_of_personnel)
 	color = COMMAND
+
+/obj/mapping_helper/access/computer_core
+	name = "computer core access spawn"
+	req_access = list(access_sysadmin)
+	color = RESEARCH
 
 /obj/mapping_helper/access/research_director
 	name = "RD access spawn"

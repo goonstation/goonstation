@@ -164,6 +164,8 @@
 		impact_image_effect(ie_type, hit)
 		return
 
+TYPEINFO(/obj/item/swords/sord)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"
@@ -177,7 +179,6 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	is_syndicate = TRUE
 	contraband = 10 // absolutely illegal
 	w_class = W_CLASS_NORMAL
 	hitsound = 'sound/voice/farts/fart7.ogg'
@@ -671,6 +672,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
 // auto injector refiller, move to different file at some point. or dont, im not your/my own boss
 
 TYPEINFO(/obj/item/reagent_containers/injector_filler)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list(metal = 10,
 				crystal = 10,
 				conductive_high = 10)
@@ -688,7 +690,7 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 	var/image/fluid_image
 	var/list/whitelist = list()
 	var/safe = 1
-	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine")
+	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine", "acetylsalicylic_acid")
 
 
 	New()

@@ -672,7 +672,7 @@ THROWING DARTS
 		. = ..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
-			H.reagents.add_reagent("formaldehyde", 5)
+			H.reagents.add_reagent("formaldehyde", 30)
 
 
 /* Deprecated old turds shit */
@@ -2613,6 +2613,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /* =============================================================== */
 
 TYPEINFO(/obj/item/gun/implanter)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/gun/implanter

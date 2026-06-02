@@ -668,7 +668,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.22
 /obj/item/gun/kinetic/faith
 	name = "Faith"
-	desc = "'Cause ya gotta have Faith. A custom upgrade to the the Auklet .22 pocket pistol from Cormorant Precision Arms."
+	desc = "'Cause ya gotta have Faith. A custom upgrade to the Auklet .22 pocket pistol from Cormorant Precision Arms."
 	icon_state = "faith"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_22)
@@ -1705,7 +1705,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	click_sound = null
 
 	tranq
-		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
+		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/thio/single
 
 	New()
 		ammo = new default_magazine

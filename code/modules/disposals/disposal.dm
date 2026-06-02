@@ -162,10 +162,22 @@
 		damage_pipe(5)
 		slowed++
 
+	assume_air(datum/air_group/giver)
+		src.gas.merge(giver)
+
+	remove_air(amount)
+		return src.gas.remove(amount)
+
+	return_air(direct)
+		if(direct)
+			return src.gas
+		. = ..()
+
 	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		if (src.gas && breath_request > 0)
-			return src.gas
-		..()
+			return src.remove_air(breath_request * mult)
+		else
+			..()
 
 	proc/damage_pipe(var/amount = 3)
 		var/obj/disposalpipe/P = src.loc
@@ -923,6 +935,13 @@
 	var/switch_dir = 0 //Direction of secondary port
 					//Same-tag holders are sent out this one.
 
+	attackby(obj/item/W, mob/user)
+		if(..(W, user)) return
+		if(ispulsingtool(W))
+			boutput(user, SPAN_ALERT("[src]'s mailtags can't be edited while anchored!"))
+			// This is 95% because I don't wanna copy/paste the mailtag-editing code, but also
+			// it makes it *marginally* harder to maliciously mess with mailtags
+
 	left
 		name = "mail junction"
 		icon_state = "pipe-sj1"
@@ -951,23 +970,27 @@
 
 	New()
 		..()
-		if(icon_state == "pipe-sj1")
-			switch_dir = turn(dir, -90)
-			dpdir = dir | switch_dir | turn(dir,180)
-		else if(icon_state == "pipe-sj2")
-			switch_dir = turn(dir, 90)
-			dpdir = dir | turn(dir, 90) | turn(dir,180)
-		else
-			switch_dir = turn(dir, 90)
-			dpdir = dir | turn(dir,90) | turn(dir, -90)
-		update()
-
-		if (src.mail_tag)
-			if (islist(src.mail_tag))
-				src.name = "mail junction (multiple destinations)"
+		// i didnt wanna do this but i dont see a good way to get this to work short of reworking disposal construction
+		SPAWN(0 SECONDS)
+			if (src.mail_tag)
+				if (islist(src.mail_tag))
+					if (src.mail_tag.len > 1)
+						src.name = "mail junction (multiple destinations)"
+					else
+						src.name = "mail junction ([src.mail_tag[1]])"
+				else
+					src.name = "mail junction ([src.mail_tag])"
+					src.mail_tag = params2list(src.mail_tag)
+			if(icon_state == "pipe-sj1")
+				switch_dir = turn(dir, -90)
+				dpdir = dir | switch_dir | turn(dir,180)
+			else if(icon_state == "pipe-sj2")
+				switch_dir = turn(dir, 90)
+				dpdir = dir | turn(dir, 90) | turn(dir,180)
 			else
-				src.name = "mail junction ([src.mail_tag])"
-				src.mail_tag = params2list(src.mail_tag)
+				switch_dir = turn(dir, 90)
+				dpdir = dir | turn(dir,90) | turn(dir, -90)
+			update()
 		return
 
 
@@ -1090,9 +1113,6 @@
 
 		qdel(src)
 
-TYPEINFO(/obj/disposalpipe/loafer)
-	mats = 100
-
 /obj/disposalpipe/chicken_disposal_pipe
 	name = "humane chicken processor"
 	desc = "a pipe segment designed to convert alive chickens into dead chickens"
@@ -1166,11 +1186,13 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 		return P
 
+TYPEINFO(/obj/disposalpipe/loafer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+	mats = 100
 /obj/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	is_syndicate = 1
 	weldable = FALSE
 	var/is_doing_stuff = FALSE
 	HELP_MESSAGE_OVERRIDE("The disciplinary loaf processor cannot be detached by welding.")
@@ -2042,6 +2064,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 // the disposal outlet machine
 
 TYPEINFO(/obj/disposaloutlet)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/disposaloutlet
