@@ -16,10 +16,6 @@
 	if (length(collection) >= length(get_singleton(/datum/fish_collection).names))
 		src.unlock_medal("So Long, and Thanks for All the Fish", 1)
 
-proc/is_fish_in_collection(path)
-	var/typeinfo/obj/item/reagent_containers/food/fish/info = get_type_typeinfo(path)
-	return info.appears_in_fish_collection
-
 /datum/fish_collection
 	var/list/names = list()
 	var/list/images = list()
@@ -35,10 +31,13 @@ proc/is_fish_in_collection(path)
 		qdel(dummy_atom) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
 		return list(dummy_icon, dummy_icon_silhouette)
 
+	proc/is_fish_in_collection(path)
+		var/typeinfo/obj/item/reagent_containers/food/fish/info = get_type_typeinfo(path)
+		return info.appears_in_fish_collection
+
 	New()
-		. = ..()
-		var/list/collection = filtered_concrete_typesof(/obj/item/reagent_containers/food/fish, /proc/is_fish_in_collection)
-		for (var/path in collection)
+		..()
+		for (var/path in filtered_concrete_typesof(/obj/item/reagent_containers/food/fish, .proc/is_fish_in_collection))
 			var/obj/fish = path
 			src.names.Add(initial(fish.name))
 			var/result = src.getBase64Imgs(fish)
