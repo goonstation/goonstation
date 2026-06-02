@@ -39,7 +39,7 @@
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1, for_antag = FALSE)
 
-		if (candidates.len > 0)
+		if (length(candidates) > 0)
 			var/datum/mind/M = pick(candidates)
 			if (M.current)
 				if(!isobserver(M.current))
