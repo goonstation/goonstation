@@ -182,6 +182,7 @@
 	SYNDICATE_STEALTH_DESCRIPTION("It has stealth injection systems installed, making it harder for victims to notice being implanted.", null)
 
 /obj/item/implanter/sneaky/microbomb
+	name = "microbomb implanter"
 	icon_state = "implanter1-g"
 
 	New()
@@ -189,6 +190,7 @@
 		..()
 
 /obj/item/implanter/sneaky/uplink_microbomb
+	name = "microbomb implanter"
 	icon_state = "implanter1-g"
 	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, an explosion relative to the amount of microbombs in them will occur. Suiciding will likely cause no explosion, but succumbing while in crit will."})
 
@@ -199,6 +201,7 @@
 		..()
 
 /obj/item/implanter/sneaky/zappy
+	name = "flyzapper implanter"
 	icon_state = "implanter1-g"
 	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, a ball of lightning relative to the amount of flyzapper implants in them will occur. Suiciding will cause no lightning."})
 
