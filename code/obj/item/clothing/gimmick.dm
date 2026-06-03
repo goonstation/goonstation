@@ -313,6 +313,46 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			return
 		. = ..()
 
+	attack(mob/living/carbon/human/target, mob/user, def_zone, is_special, params)
+		if (def_zone != "head" || !src.blade || !istype(target))
+			return ..()
+		//need to grab them close
+		var/obj/item/grab/grab = user.find_type_in_hand(/obj/item/grab)
+		if (!grab || grab.affecting != target || grab.state < GRAB_AGGRESSIVE)
+			return ..()
+		//anything covering their eyes?
+		if (target.wear_mask?.c_flags & COVERSEYES || target.head?.c_flags & COVERSEYES || target.glasses?.c_flags & COVERSEYES)
+			return ..()
+		//don't let them do this more than once
+		if ((!target.organHolder.left_eye || target.organHolder.left_eye.broken) && (!target.organHolder.right_eye || target.organHolder.right_eye.broken))
+			return ..()
+		src.visible_message(SPAN_BOLD(SPAN_COMBAT("[user] begins to slowly drag their blade across [target]'s eyes!")))
+		victim.emote("scream")
+		var/datum/action/bar/razor_blind/actionbar = new()
+		actionbar.victim = target
+		actions.start(actionbar, user)
+
+//is this too far? maybe?? It's kind of badass though...
+/datum/action/bar/razor_blind
+	duration = 10 SECONDS
+	var/mob/living/carbon/human/victim
+
+	onUpdate()
+		take_bleeding_damage(src.victim, src.owner, 5)
+		if (TIME - src.started >= 5 SECONDS && src.victim.organHolder.left_eye && !src.victim.organHolder.left_eye.broken)
+			src.victim.emote("scream")
+			playsound(get_turf(src.victim), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 1)
+			src.victim.organHolder.left_eye.take_damage(src.victim.organHolder.left_eye.max_damage)
+		..()
+
+	onEnd()
+		if (src.victim.organHolder.right_eye && !src.victim.organHolder.right_eye.broken)
+			src.victim.emote("scream")
+			playsound(get_turf(src.victim), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 1)
+			src.victim.organHolder.right_eye.take_damage(src.victim.organHolder.right_eye.max_damage)
+		..()
+
+
 // Donk clothes
 
 /obj/item/clothing/head/helmet/space/donk
