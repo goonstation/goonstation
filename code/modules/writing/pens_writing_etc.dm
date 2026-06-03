@@ -431,15 +431,12 @@
 		font_color = "#FF00FF"
 
 	random
-		var/picked_color
-
 		New()
 			..()
-			src.picked_color = random_color()
+			src.color = random_color()
 			src.reset_color()
 
 		reset_color()
-			src.color = picked_color
 			src.font_color = src.color
 			src.name = "[hex2color_name(src.color)] marker"
 
@@ -455,7 +452,6 @@
 	custom_suicide = 1
 	var/maptext_crayon = FALSE
 	var/font_size = 32
-	var/picked_color
 
 	white
 		name = "white crayon"
@@ -543,7 +539,7 @@
 
 		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			if (target == user)
-				src.picked_color = input("Pick crayon color:","Crayon color") as null|color
+				src.color = input("Pick crayon color:","Crayon color") as null|color
 				src.reset_color()
 				user.visible_message(SPAN_NOTICE("Your crayon becomes [hex2color_name(src.color)]!"))
 				return
@@ -552,7 +548,7 @@
 	random
 		New()
 			..()
-			src.picked_color = random_color()
+			src.color = random_color()
 			src.reset_color()
 
 		choose
@@ -560,7 +556,7 @@
 
 			on_spin_emote(var/mob/living/carbon/human/user as mob)
 				..()
-				src.picked_color = random_color()
+				src.color = random_color()
 				src.reset_color()
 				user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
 
@@ -613,7 +609,6 @@
 		src.create_inventory_counter()
 
 	reset_color()
-		src.color = src.picked_color
 		src.font_color = src.color
 		src.color_name = hex2color_name(src.color)
 		src.name = "[src.color_name] crayon"
