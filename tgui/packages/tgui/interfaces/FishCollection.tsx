@@ -32,21 +32,20 @@ export const FishCollection = (props) => {
         Collected fish: {collected?.length ?? 0}/{fish_data.length}
         <Divider />
         <Stack wrap="wrap" justify="space-around">
-          {fish_data.map((fish) => (
-            <Stack.Item key={fish.name}>
-              <Tooltip
-                content={
-                  (collected ? collected.includes(fish.name) : false)
-                    ? fish.name
-                    : '???'
-                }
-              >
-                <Image
-                  src={`data:image/png;base64,${(collected ? collected.includes(fish.name) : false) ? fish.image : fish.silhouette}`}
-                />
-              </Tooltip>
-            </Stack.Item>
-          ))}
+          {fish_data.map((fish) => {
+            const isCollected = collected?.includes(fish.name) ?? false;
+            return (
+              <Stack.Item key={fish.name}>
+                <Tooltip
+                  content={isCollected ? fish.name : '???'}
+                >
+                  <Image
+                    src={`data:image/png;base64,${isCollected ? fish.image : fish.silhouette}`}
+                  />
+                </Tooltip>
+              </Stack.Item>
+            );
+          })}
         </Stack>
       </Window.Content>
     </Window>
