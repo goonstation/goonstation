@@ -327,7 +327,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 		if ((!target.organHolder.left_eye || target.organHolder.left_eye.broken) && (!target.organHolder.right_eye || target.organHolder.right_eye.broken))
 			return ..()
 		src.visible_message(SPAN_BOLD(SPAN_COMBAT("[user] begins to slowly drag their blade across [target]'s eyes!")))
-		victim.emote("scream")
+		target.emote("scream")
 		var/datum/action/bar/razor_blind/actionbar = new()
 		actionbar.victim = target
 		actions.start(actionbar, user)
