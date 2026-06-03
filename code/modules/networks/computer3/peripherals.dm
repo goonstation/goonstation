@@ -1310,7 +1310,10 @@ TYPEINFO(/obj/item/peripheral/sound_card)
 		if(istype(P, setup_disk_type))
 			if(!src.disk)
 				user.drop_item()
-				P.loc = src
+				if (src.host)
+					P.set_loc(src.host)
+				else
+					P.set_loc(src)
 				src.disk = P
 				boutput(user, "You insert [P] into the drive.")
 				return 0
