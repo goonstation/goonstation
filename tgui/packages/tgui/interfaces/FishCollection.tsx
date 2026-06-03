@@ -29,7 +29,7 @@ export const FishCollection = (props) => {
   return (
     <Window title="Fish Collection" theme="ntos" width={420} height={320}>
       <Window.Content>
-        Collected fish: {collected ? collected.length : 0}/{fish_data.length}
+        Collected fish: {collected?.length ?? 0}/{fish_data.length}
         <Divider />
         <Stack wrap="wrap" justify="space-around">
           {fish_data.map((fish) => (
