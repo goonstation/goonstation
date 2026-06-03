@@ -21,7 +21,7 @@ interface FishData {
   silhouette: string;
 }
 
-export const FishCollection = (props, context) => {
+export const FishCollection = (props) => {
   const { act, data } = useBackend<FishCollectionData>();
 
   const { fish_data, collected } = data;
