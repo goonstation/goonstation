@@ -313,15 +313,15 @@ TYPEINFO(/obj/submachine/claw_machine)
 	icon_state = "tuba"
 
 /obj/item/toy/plush/small/tuba/attack_self(mob/user as mob)
-	if (!ON_COOLDOWN(src,"squeak",2 SECONDS))
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.sims?.affectMotive("fun", 1)
-		src.squeak()
-		src.add_fingerprint(user)
-		animate_door_squeeze(src)
-		user.visible_message(SPAN_EMOTE("[user] squeezes [src], and she squeaks. Wow!"))
-	return
+	if (ON_COOLDOWN(src,"squeak",2 SECONDS))
+		return
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.sims?.affectMotive("fun", 1)
+	src.squeak()
+	src.add_fingerprint(user)
+	animate_door_squeeze(src)
+	user.visible_message(SPAN_EMOTE("[user] squeezes [src], and she squeaks. Wow!"))
 
 /obj/item/toy/plush/small/tuba/proc/squeak()
 	playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 50, TRUE)
