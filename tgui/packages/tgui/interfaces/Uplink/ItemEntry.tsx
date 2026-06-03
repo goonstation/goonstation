@@ -104,7 +104,7 @@ export const ItemEntry = (props: ItemProps) => {
           {cooldown && (
             <LabeledList.Item label="Cooldown">{`${cooldown} seconds`}</LabeledList.Item>
           )}
-          {purchase_limit < 100 && (
+          {purchase_limit < Infinity && (
             <LabeledList.Item label="Purchase Limit">{`${purchased}/${purchase_limit}`}</LabeledList.Item>
           )}
           <LabeledList.Item label="Description">{desc}</LabeledList.Item>
