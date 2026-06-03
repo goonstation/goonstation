@@ -36,9 +36,7 @@ export const FishCollection = (props) => {
             const isCollected = collected?.includes(fish.name) ?? false;
             return (
               <Stack.Item key={fish.name}>
-                <Tooltip
-                  content={isCollected ? fish.name : '???'}
-                >
+                <Tooltip content={isCollected ? fish.name : '???'}>
                   <Image
                     src={`data:image/png;base64,${isCollected ? fish.image : fish.silhouette}`}
                   />
