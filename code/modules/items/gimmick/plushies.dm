@@ -318,13 +318,10 @@ TYPEINFO(/obj/submachine/claw_machine)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.sims?.affectMotive("fun", 1)
-	src.squeak()
+	playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 50, TRUE)
 	src.add_fingerprint(user)
 	animate_door_squeeze(src)
 	user.visible_message(SPAN_EMOTE("[user] squeezes [src], and she squeaks. Wow!"))
-
-/obj/item/toy/plush/small/tuba/proc/squeak()
-	playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 50, TRUE)
 
 /obj/item/toy/plush/small/chris
 	name = "Chris the goat"
