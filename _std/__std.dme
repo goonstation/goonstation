@@ -23,6 +23,7 @@
 #include "macros\spawn.dm"			// SPAWN
 #include "plane.dm"					// debug icons
 #include "text.dm"					// text macros/helpers
+#include "namespaces\pay.dm"
 #include "defines\abilities.dm"
 #include "defines\access.dm"
 #include "defines\actions.dm"
@@ -152,7 +153,6 @@
 #include "defines\uplink.dm"
 #include "defines\vehicles.dm"
 #include "defines\viewport.dm"
-#include "defines\wages.dm"
 #include "defines\watermap.dm"
 #include "defines\weapons.dm"
 #include "defines\worldgen.dm"
