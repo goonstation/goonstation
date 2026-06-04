@@ -197,7 +197,7 @@ proc/filter_carrier_pets(var/type)
 			src.ClearSpecificOverlays("bowtie")
 
 	proc/bow_icon_state()
-		return "[replacetext(src.bow.icon_state, "hbow", "bowtie")][isdead(src) ? "-dead" : ""]"
+		return "bowtie-[src.bow.bowcolour][isdead(src) ? "-dead" : ""]"
 
 	setup_hands()
 		..()
@@ -3117,7 +3117,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		var/image/bow = image('icons/obj/clothing/item_hats.dmi', "hbow-mint")
+		var/image/bow = image('icons/obj/clothing/item_hats_bows.dmi', "hbow-high-mint")
 		bow.appearance_flags = KEEP_TOGETHER
 		bow.pixel_y = 7
 		bow.pixel_x = 1

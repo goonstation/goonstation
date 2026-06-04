@@ -1934,168 +1934,135 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 	desc = "A huge bow that goes on your head."
 	icon = 'icons/obj/clothing/item_hats_bows.dmi'
 	wear_image_icon = 'icons/mob/clothing/bows.dmi'
-	icon_state = "hbow-magenta"
-	item_state = "hbow-magenta"
+	icon_state = "hbow-high-magenta"
+	item_state = "hbow-high-magenta"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 	var/bowcolour = "magenta"
-	var/bowsmall = FALSE
+
 	New()
-		..()
-		name = "[bowcolour] hairbow"
-		item_state = "hbow_[bowcolour]"
+		. = ..()
+		src.name = "[src.bowcolour] hairbow"
+		src.item_state = "hbow_[src.bowcolour]"
+		src.icon_state = "hbow-high-[src.bowcolour]"
+		src.item_state = "hbow-high-[src.bowcolour]"
 
-	proc/bow_tying(var/mob/user as mob)
-		var/tiebow = tgui_input_list(user, "How would you like to tie [src]?", "Bow tying", list("High", "Low", "Middle", "Left", "Right"))
-		//High Boow
-		if(tiebow == "High")
-			if(src.bowsmall)
-				src.icon_state = "hbow-Shigh-[bowcolour]"
-				src.item_state = "hbow-Shigh-[bowcolour]"
-			else
-				src.icon_state = "hbow-[bowcolour]"
-				src.item_state = "hbow-[bowcolour]"
-		//Low Bow
-		if(tiebow == "Low")
-			if(src.bowsmall)
-				src.icon_state = "hbow-Slow-[bowcolour]"
-				src.item_state = "hbow-Slow-[bowcolour]"
-			else
-				src.icon_state = "hbow-low-[bowcolour]"
-				src.item_state = "hbow-low-[bowcolour]"
-		//Mid Bow
-		if(tiebow == "Middle")
-			if(src.bowsmall)
-				src.icon_state = "hbow-Smid-[bowcolour]"
-				src.item_state = "hbow-Smid-[bowcolour]"
-			else
-				src.icon_state = "hbow-mid-[bowcolour]"
-				src.item_state = "hbow-mid-[bowcolour]"
-		//Left Bow
-		if(tiebow == "Left")
-			if(src.bowsmall)
-				src.icon_state = "hbow-Sleft-[bowcolour]"
-				src.item_state = "hbow-Sleft-[bowcolour]"
-			else
-				src.icon_state = "hbow-left-[bowcolour]"
-				src.item_state = "hbow-left-[bowcolour]"
-		//Right Bow
-		if(tiebow == "Right")
-			if(src.bowsmall)
-				src.icon_state = "hbow-Sright-[bowcolour]"
-				src.item_state = "hbow-Sright-[bowcolour]"
-			else
-				src.icon_state = "hbow-right-[bowcolour]"
-				src.item_state = "hbow-right-[bowcolour]"
-		else
-			return
-
-
-	attack_self(var/mob/user as mob)
-		src.icon_state = "hbow-[bowcolour]"
-		src.item_state = "hbow-[bowcolour]"
-		var/menuchoice = tgui_alert(user, "What size bow are you tying?","Bow size", list("Big", "Small", "Cancel"))
-		switch(menuchoice)
-			if("Big")
-				src.bowsmall = FALSE
-				bow_tying()
-			if("Small")
-				src.bowsmall = TRUE
-				bow_tying()
+	attack_self(mob/user)
+		var/bow_size = null
+		switch (global.tgui_alert(user, "What size of bow are you tying?", "Bow size", list("Big", "Small", "Cancel")))
+			if ("Big")
+				bow_size = ""
+			if ("Small")
+				bow_size = "S"
 			else
 				return
 
+		var/list/style_list = list(
+			"High" = "high",
+			"Low" = "low",
+			"Middle" = "mid",
+			"Left" = "left",
+			"Right" = "right",
+		)
+		var/selected = global.tgui_input_list(user, "How would you like to tie [src]?", "Bow tying", style_list)
+		var/bow_style = style_list[selected]
+		if (!bow_style)
+			return
+
+		var/state = "hbow-[bow_size][bow_style]-[src.bowcolour]"
+		src.icon_state = state
+		src.item_state = state
+
 	magenta
 		name = "magenta hairbow"
-		bowcolour = "magenta"
 		desc = "A huge bow that goes on your head. This one is magenta."
-		icon_state = "hbow-magenta"
-		item_state = "hbow-magenta"
+		bowcolour = "magenta"
+		icon_state = "hbow-high-magenta"
+		item_state = "hbow-high-magenta"
 	pink
 		name = "pink hairbow"
-		bowcolour = "pink"
 		desc = "A huge bow that goes on your head. This one is pink."
-		icon_state = "hbow-pink"
-		item_state = "hbow-pink"
+		bowcolour = "pink"
+		icon_state = "hbow-high-pink"
+		item_state = "hbow-high-pink"
 	red
 		name = "red hairbow"
-		bowcolour = "red"
 		desc = "A huge bow that goes on your head. This one is red."
-		icon_state = "hbow-red"
-		item_state = "hbow-red"
+		bowcolour = "red"
+		icon_state = "hbow-high-red"
+		item_state = "hbow-high-red"
 	gold
 		name = "gold hairbow"
-		bowcolour = "gold"
 		desc = "A huge bow that goes on your head. This one is gold."
-		icon_state = "hbow-gold"
-		item_state = "hbow-gold"
+		bowcolour = "gold"
+		icon_state = "hbow-high-gold"
+		item_state = "hbow-high-gold"
 	green
 		name = "green hairbow"
-		bowcolour = "green"
 		desc = "A huge bow that goes on your head. This one is green."
-		icon_state = "hbow-green"
-		item_state = "hbow-green"
+		bowcolour = "green"
+		icon_state = "hbow-high-green"
+		item_state = "hbow-high-green"
 	mint
 		name = "mint hairbow"
-		bowcolour = "mint"
 		desc = "A huge bow that goes on your head. This one is mint."
-		icon_state = "hbow-mint"
-		item_state = "hbow-mint"
+		bowcolour = "mint"
+		icon_state = "hbow-high-mint"
+		item_state = "hbow-high-mint"
 	blue
 		name = "blue hairbow"
-		bowcolour = "blue"
 		desc = "A huge bow that goes on your head. This one is blue."
-		icon_state = "hbow-blue"
-		item_state = "hbow-blue"
+		bowcolour = "blue"
+		icon_state = "hbow-high-blue"
+		item_state = "hbow-high-blue"
 	navy
 		name = "navy hairbow"
-		bowcolour = "navy"
 		desc = "A huge bow that goes on your head. This one is navy."
-		icon_state = "hbow-navy"
-		item_state = "hbow-navy"
+		bowcolour = "navy"
+		icon_state = "hbow-high-navy"
+		item_state = "hbow-high-navy"
 	purple
 		name = "purple hairbow"
-		bowcolour = "purple"
 		desc = "A huge bow that goes on your head. This one is purple."
-		icon_state = "hbow-purple"
-		item_state = "hbow-purple"
+		bowcolour = "purple"
+		icon_state = "hbow-high-purple"
+		item_state = "hbow-high-purple"
 	shinyblack
 		name = "shiny black hairbow"
-		bowcolour = "shinyblack"
 		desc = "A huge bow that goes on your head. This one is shiny black."
-		icon_state = "hbow-shinyblack"
-		item_state = "hbow-shinyblack"
+		bowcolour = "shinyblack"
+		icon_state = "hbow-high-shinyblack"
+		item_state = "hbow-high-shinyblack"
 	matteblack
 		name = "matte black hairbow"
-		bowcolour = "matteblack"
 		desc = "A huge bow that goes on your head. This one is matte black."
-		icon_state = "hbow-matteblack"
-		item_state = "hbow-matteblack"
+		bowcolour = "matteblack"
+		icon_state = "hbow-high-matteblack"
+		item_state = "hbow-high-matteblack"
 	white
 		name = "white hairbow"
-		bowcolour = "white"
 		desc = "A huge bow that goes on your head. This one is white."
-		icon_state = "hbow-white"
-		item_state = "hbow-white"
+		bowcolour = "white"
+		icon_state = "hbow-high-white"
+		item_state = "hbow-high-white"
 	rainbow
 		name = "rainbow hairbow"
-		bowcolour = "rainbow"
 		desc = "A huge bow that goes on your head. This one has stripes in all the colors of the rainbow."
-		icon_state = "hbow-rainbow"
-		item_state = "hbow-rainbow"
+		bowcolour = "rainbow"
+		icon_state = "hbow-high-rainbow"
+		item_state = "hbow-high-rainbow"
 	flashy
 		name = "flashy hairbow"
-		bowcolour = "flashy"
 		desc = "A huge bow that goes on your head. This one is flashing all kinds of colors! Whoa."
-		icon_state = "hbow-flashy"
-		item_state = "hbow-flashy"
-
+		bowcolour = "flashy"
+		icon_state = "hbow-high-flashy"
+		item_state = "hbow-high-flashy"
 	yellowpolkadot
 		name = "yellow polka-dot hairbow"
-		bowcolour = "yellowpolkadot"
 		desc = "A huge bow that goes on your head. This one is yellow and has polka dots. Not itsy bitsy or teeny weeny."
-		icon_state = "hbow-yellowpolkadot"
-		item_state = "hbow-yellowpolkadot"
+		bowcolour = "yellowpolkadot"
+		icon_state = "hbow-high-yellowpolkadot"
+		item_state = "hbow-high-yellowpolkadot"
 
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"
