@@ -4221,10 +4221,15 @@ datum
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(-clamp(2 * volume, 0, 10))
 					if(!M) M = holder.my_atom
-				if (prob(50) && ishuman(M))
+				..()
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.organHolder)
 						H.organHolder.heal_organs(clamp(2 * volume, 0, 10), clamp(2 * volume, 0, 10), clamp(2 * volume, 0, 10), target_organs)
+				..()
+				return
 
 		fooddrink/caffeinated/cafe_gele
 			name = "cafe gele"
