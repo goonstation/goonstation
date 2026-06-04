@@ -1932,7 +1932,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 /obj/item/clothing/head/hairbow
 	name = "hairbow"
 	desc = "A huge bow that goes on your head."
-	icon = 'icons/obj/clothing/item_hats.dmi'
+	icon = 'icons/obj/clothing/item_hats_bows.dmi'
 	wear_image_icon = 'icons/mob/clothing/bows.dmi'
 	icon_state = "hbow-magenta"
 	item_state = "hbow-magenta"
@@ -1952,51 +1952,41 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 			if(src.bowsmall)
 				src.icon_state = "hbow-Shigh-[bowcolour]"
 				src.item_state = "hbow-Shigh-[bowcolour]"
-				boutput(user, SPAN_NOTICE("tiny bow go"))
 			else
 				src.icon_state = "hbow-[bowcolour]"
 				src.item_state = "hbow-[bowcolour]"
-				boutput(user, SPAN_NOTICE("big bow go"))
 		//Low Bow
 		if(tiebow == "Low")
 			if(src.bowsmall)
 				src.icon_state = "hbow-Slow-[bowcolour]"
 				src.item_state = "hbow-Slow-[bowcolour]"
-				boutput(user, SPAN_NOTICE("tiny bow go"))
 			else
 				src.icon_state = "hbow-low-[bowcolour]"
 				src.item_state = "hbow-low-[bowcolour]"
-				boutput(user, SPAN_NOTICE("big bow go"))
 		//Mid Bow
 		if(tiebow == "Middle")
 			if(src.bowsmall)
 				src.icon_state = "hbow-Smid-[bowcolour]"
 				src.item_state = "hbow-Smid-[bowcolour]"
-				boutput(user, SPAN_NOTICE("tiny bow go"))
 			else
 				src.icon_state = "hbow-mid-[bowcolour]"
 				src.item_state = "hbow-mid-[bowcolour]"
-				boutput(user, SPAN_NOTICE("big bow go"))
 		//Left Bow
 		if(tiebow == "Left")
 			if(src.bowsmall)
 				src.icon_state = "hbow-Sleft-[bowcolour]"
 				src.item_state = "hbow-Sleft-[bowcolour]"
-				boutput(user, SPAN_NOTICE("tiny bow go"))
 			else
 				src.icon_state = "hbow-left-[bowcolour]"
 				src.item_state = "hbow-left-[bowcolour]"
-				boutput(user, SPAN_NOTICE("big bow go"))
 		//Right Bow
 		if(tiebow == "Right")
 			if(src.bowsmall)
 				src.icon_state = "hbow-Sright-[bowcolour]"
 				src.item_state = "hbow-Sright-[bowcolour]"
-				boutput(user, SPAN_NOTICE("tiny bow go"))
 			else
 				src.icon_state = "hbow-right-[bowcolour]"
 				src.item_state = "hbow-right-[bowcolour]"
-				boutput(user, SPAN_NOTICE("big bow go"))
 		else
 			return
 
