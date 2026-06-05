@@ -130,21 +130,22 @@
 	var/image/fabrWornImg = null
 	var/image/visrItemImg = null
 	var/image/visrWornImg = null
+	var/image/renfItemImg = null
+	var/image/renfWornImg = null
 
 	New()
 		..()
 		// Prep the item overlays
 		fabrItemImg = SafeGetOverlayImage("item-helmet", src.icon, "spacemat")
+		renfItemImg = SafeGetOverlayImage("item-helmet-highlight", src.icon, "spacemat-highlight")
 		visrItemImg = SafeGetOverlayImage("item-visor", src.icon, "spacemat-vis")
 		// Prep the worn overlays
 		fabrWornImg = SafeGetOverlayImage("worn-helmet", src.wear_image_icon, "spacemat")
+		renfWornImg = SafeGetOverlayImage("worn-helmet-highlight", src.wear_image_icon, "spacemat-highlight")
 		visrWornImg = SafeGetOverlayImage("worn-visor", src.wear_image_icon, "spacemat-vis")
 
-	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat)
-		src.setMaterial(
-			helmMat,
-			FALSE, // We want to purely rely on the overlay colours
-		)
+	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat, datum/material/renfMat)
+		src.setMaterial(helmMat, FALSE) // We want to purely rely on the overlay colours
 		name = "[visrMat]-visored [helmMat] helmet"
 
 		// Setup the clothing stats based on material properties
@@ -158,19 +159,19 @@
 		prot = max(0, visrMat.getProperty("density") - 3) / 2
 		setProperty("meleeprot_head", 3 + prot)
 
-		// Setup item overlays
-		fabrItemImg.color = helmMat.getColor()
-		visrItemImg.color = visrMat.getColor()
-		UpdateOverlays(visrItemImg, "item-visor")
+		fabrItemImg.apply_material_appearance(helmMat)
+		renfItemImg.apply_material_appearance(renfMat)
+		visrItemImg.apply_material_appearance(visrMat)
 		UpdateOverlays(fabrItemImg, "item-helmet")
-		// Setup worn overlays
-		fabrWornImg.color = helmMat.getColor()
-		visrWornImg.color = visrMat.getColor()
+		UpdateOverlays(renfItemImg, "item-helmet-highlight")
+		UpdateOverlays(visrItemImg, "item-visor")
+
+		fabrWornImg.apply_material_appearance(helmMat)
+		renfWornImg.apply_material_appearance(renfMat)
+		visrWornImg.apply_material_appearance(visrMat)
 		src.wear_image.overlays += fabrWornImg
+		src.wear_image.overlays += renfWornImg
 		src.wear_image.overlays += visrWornImg
-		// Add back the helmet texture since we overide the material apparance
-		if (helmMat.getTexture())
-			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
 
 /obj/item/clothing/head/helmet/space/custom/prototype
 	New()

@@ -1015,6 +1015,10 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
+"aeq" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/storage/northeast)
 "aer" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -9781,19 +9785,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"aRb" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/mapping_helper/access/chapel_office,
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "aRf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -33386,6 +33377,18 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/security/hos)
+"gQV" = (
+/obj/machinery/door/airlock/pyro/command{
+	name = "Computer Core"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/access/computer_core,
+/turf/simulated/floor/black,
+/area/station/turret_protected/Zeta)
 "gRQ" = (
 /obj/lattice{
 	dir = 6;
@@ -34199,6 +34202,10 @@
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"htB" = (
+/obj/machinery/door/airlock/pyro/maintenance,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "htL" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -35323,15 +35330,6 @@
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
-"ipP" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/obj/mapping_helper/access/chapel_office,
-/turf/simulated/floor/grime,
-/area/station/chapel/sanctuary)
 "ipR" = (
 /obj/machinery/light/small/floor,
 /obj/machinery/plantpot{
@@ -35919,10 +35917,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
-"iIV" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/storage/northeast)
 "iJc" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -44638,19 +44632,6 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/station/crew_quarters/quarters_east)
-"oRF" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/obj/mapping_helper/access/chapel_office,
-/turf/simulated/floor/grime,
-/area/station/chapel/sanctuary)
 "oSe" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -46496,11 +46477,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/depot)
-"qjT" = (
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "qkS" = (
 /obj/machinery/chem_master{
 	dir = 8
@@ -47848,6 +47824,15 @@
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
+"reM" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/grime,
+/area/station/chapel/sanctuary)
 "reX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51184,18 +51169,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/ghostdrone_factory)
-"tBJ" = (
-/obj/machinery/door/airlock/pyro/command{
-	name = "Computer Core"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/ai_upload,
-/obj/mapping_helper/access/computer_core,
-/turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
 "tCk" = (
 /obj/machinery/computer3/terminal/network{
 	dir = 4;
@@ -55032,6 +55005,19 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/research)
+"wix" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/grime,
+/area/station/chapel/sanctuary)
 "wiB" = (
 /obj/stool/bar,
 /obj/disposalpipe/segment/bent/west,
@@ -55342,6 +55328,19 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"wrk" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "wrs" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -92291,7 +92290,7 @@ aMt
 avB
 avB
 avB
-qjT
+htB
 aLA
 aLv
 mOM
@@ -112796,7 +112795,7 @@ aay
 aaf
 akV
 akV
-aRb
+wrk
 akV
 akV
 akV
@@ -117324,8 +117323,8 @@ aaa
 aaa
 abW
 akV
-ipP
-oRF
+reM
+wix
 age
 fUz
 jup
@@ -120949,7 +120948,7 @@ aaa
 aaa
 aaa
 aem
-iIV
+aeq
 afR
 ahb
 adv
@@ -122845,9 +122844,9 @@ bHl
 peh
 bpr
 lec
-tBJ
+gQV
 nbc
-tBJ
+gQV
 rTG
 bDX
 bnq

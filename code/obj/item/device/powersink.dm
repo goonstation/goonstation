@@ -43,15 +43,19 @@ TYPEINFO(/obj/item/device/powersink)
 			src.add_fingerprint(user)
 			if(mode == POWERSINK_OFF)
 				var/turf/T = loc
+				for (var/obj/item/device/powersink/sink in T)
+					if (sink.anchored)
+						boutput(user, SPAN_ALERT("There's already a powersink attached here!"))
+						return
 				if(isturf(T) && !T.intact)
 					attached = locate() in T
 					if(!attached)
-						boutput(user, "No exposed cable here to attach to.")
+						boutput(user, SPAN_ALERT("No exposed cable here to attach to!"))
 						return
 					else
 						anchored = ANCHORED
 						mode = POWERSINK_CLAMPED
-						boutput(user, "You attach the device to the cable.")
+						boutput(user, SPAN_NOTICE("You attach the device to the cable."))
 						message_ghosts("<b>[src]</b> has been activated at [log_loc(src, ghostjump=TRUE)].")
 						for(var/mob/M in AIviewers(user))
 							if(M == user) continue

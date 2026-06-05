@@ -162,10 +162,22 @@
 		damage_pipe(5)
 		slowed++
 
+	assume_air(datum/air_group/giver)
+		src.gas.merge(giver)
+
+	remove_air(amount)
+		return src.gas.remove(amount)
+
+	return_air(direct)
+		if(direct)
+			return src.gas
+		. = ..()
+
 	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		if (src.gas && breath_request > 0)
-			return src.gas
-		..()
+			return src.remove_air(breath_request * mult)
+		else
+			..()
 
 	proc/damage_pipe(var/amount = 3)
 		var/obj/disposalpipe/P = src.loc
