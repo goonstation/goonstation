@@ -1,4 +1,4 @@
-/// Standardised quantities of credits.
+/// Standardised quantities of credits
 CREATE_NAMESPACE(PAY)
 
 /// e.g. Clown wage.
