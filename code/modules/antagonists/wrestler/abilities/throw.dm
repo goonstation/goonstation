@@ -118,9 +118,7 @@
 			if (T && isturf(T))
 				if (ishuman(HH) && gorilla_mode == TRUE)
 					var/mob/living/carbon/human/limb_loser = HH
-					if(!limb_loser.limbs)
-						return
-					else
+					if(limb_loser.limbs)
 						limb_loser.sever_limb(pick(list("l_arm", "r_arm", "l_leg", "r_leg")))
 				if (!fake)
 					HH.set_loc(get_turf(M))
