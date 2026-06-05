@@ -202,7 +202,7 @@
 		/obj/item/rcd,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
+		/obj/item/room_planner/cyborg,
 		/obj/item/room_marker,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
@@ -213,7 +213,7 @@
 		/obj/item/weldingtool,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
+		/obj/item/room_planner/cyborg,
 		/obj/item/room_marker,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/rcd,
