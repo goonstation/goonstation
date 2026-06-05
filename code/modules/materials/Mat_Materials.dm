@@ -105,6 +105,8 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/list/triggersOnHit = list()
 	/// Called when the material is interpolated with another.
 	VAR_PROTECTED/list/triggersOnMix = list()
+	/// Called when the material appearance is applied to an image
+	VAR_PROTECTED/list/triggersOnImage = list()
 
 
 	New()
@@ -473,6 +475,11 @@ ABSTRACT_TYPE(/datum/material)
 	proc/triggerOnMix(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		for(var/datum/materialProc/X in triggersOnMix)
 			X.execute(new_mat, old_matA, old_matB, bias)
+		return
+
+	proc/triggerOnImage(var/image/target)
+		for(var/datum/materialProc/X in triggersOnImage)
+			X.execute(target, src) // Need to include the material for the image
 		return
 
 	proc/calc_radiation_prot()
@@ -1785,6 +1792,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		// maybe make it sticky somehow?
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/honey_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/honey_remove())
+		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 
 
 /datum/material/organic/frozenfart
