@@ -25,15 +25,6 @@
 	dir = 4
 	},
 /area/listeningpost/general)
-"cN" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/obj/cable/black{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/carpet/red/standard/edge/east,
-/area/listeningpost/barracks)
 "ef" = (
 /obj/securearea,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -94,6 +85,9 @@
 /obj/item/clothing/shoes/flippers,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
+"gm" = (
+/turf/simulated/floor/carpet/red/standard/edge/east,
+/area/listeningpost/barracks)
 "gQ" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor,
@@ -110,12 +104,6 @@
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/listeningpost/barracks)
-"hw" = (
-/obj/cable/black{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost/general)
 "il" = (
 /obj/cable/black{
 	icon_state = "1-4"
@@ -161,7 +149,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "kJ" = (
-/obj/table/wood/auto,
+/obj/table/syndicate/auto,
 /obj/item/peripheral/network/radio/locked,
 /obj/item/aiModule/hologram_expansion/syndicate{
 	pixel_x = -2;
@@ -206,7 +194,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/oxygen,
 /obj/item/tank/oxygen,
-/obj/item/clothing/head/helmet/space/syndicate,
+/obj/random_item_spawner/spacesuit,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
 "mB" = (
@@ -219,15 +207,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "mZ" = (
-/obj/machinery/bot/guardbot/bad{
-	on = 0
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/guardbot_dock,
-/obj/cable/black{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/carpet/red/standard/edge/sw,
+/obj/item/turret_deployer/syndicate,
+/turf/simulated/floor/carpet/red/standard/edge/west,
 /area/listeningpost/barracks)
 "nt" = (
 /obj/machinery/recharger,
@@ -236,7 +217,12 @@
 /area/listeningpost/tech_room)
 "nv" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/cereal_box/syndie,
+/obj/item/reagent_containers/food/snacks/cereal_box/syndie{
+	pixel_x = -4
+	},
+/obj/item/paper/pipebombs{
+	pixel_x = 7
+	},
 /turf/simulated/floor,
 /area/listeningpost/break_room)
 "nD" = (
@@ -322,17 +308,29 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
+"ya" = (
+/obj/table/syndicate/auto,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost/general)
 "yA" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
 /area/listeningpost/general)
-"zR" = (
-/obj/cable/black{
-	icon_state = "2-4"
+"yI" = (
+/obj/machinery/bot/guardbot/bad{
+	on = 0
 	},
-/turf/simulated/floor/carpet/red/standard,
-/area/listeningpost/barracks)
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/cable/black,
+/turf/simulated/floor,
+/area/listeningpost/break_room)
 "Ac" = (
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/circuit/red,
@@ -444,10 +442,7 @@
 /area/listeningpost/power)
 "HG" = (
 /obj/cable/black{
-	icon_state = "2-4"
-	},
-/obj/cable/black{
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/general)
@@ -481,20 +476,13 @@
 /obj/item/storage/pill_bottle/cyberpunk{
 	pixel_x = -3
 	},
-/obj/item/paper/pipebombs{
-	pixel_x = 7
-	},
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/listeningpost/barracks)
 "KZ" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/listeningpost/break_room)
 "Lk" = (
-/obj/machinery/light/incandescent/greenish,
-/obj/cable/black{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/carpet/red/standard/edge/south,
+/turf/simulated/floor/carpet/red/standard,
 /area/listeningpost/barracks)
 "Lm" = (
 /obj/machinery/power/data_terminal,
@@ -505,19 +493,11 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost/comm_dish)
 "Lz" = (
-/obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/crash,
-/obj/cable/black{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north/hardened,
 /turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/listeningpost/barracks)
 "LH" = (
 /obj/table/syndicate/auto,
-/obj/machinery/codereader/syndicate{
-	pixel_y = 5
-	},
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -536,11 +516,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "ML" = (
-/obj/machinery/door/airlock/pyro{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner{
 	dir = 4
-	},
-/obj/cable/black{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/listeningpost/barracks)
@@ -579,6 +556,18 @@
 /obj/npc/trader/robot/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost/general)
+"Ps" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/uplink_telecrystal{
+	pixel_y = -1;
+	pixel_x = -6
+	},
+/obj/item/uplink_telecrystal{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/turf/simulated/floor/carpet/red/standard/edge/sw,
+/area/listeningpost/barracks)
 "Qg" = (
 /obj/machinery/light/incandescent/greenish{
 	dir = 8
@@ -604,6 +593,9 @@
 "Rs" = (
 /obj/cable/black{
 	icon_state = "1-4"
+	},
+/obj/cable/black{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/listeningpost/break_room)
@@ -666,6 +658,10 @@
 	dir = 4
 	},
 /area/listeningpost/general)
+"TM" = (
+/obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor/carpet/red/standard/edge/south,
+/area/listeningpost/barracks)
 "Uz" = (
 /obj/cable/black{
 	icon_state = "1-2"
@@ -682,9 +678,6 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "VB" = (
-/obj/cable/black{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/red,
 /area/listeningpost/general)
 "VJ" = (
@@ -1024,7 +1017,7 @@ fP
 fP
 fP
 fP
-ow
+fP
 ow
 ow
 ow
@@ -1052,13 +1045,13 @@ KZ
 IU
 MT
 Rs
-Oh
+yI
 KZ
 hr
 JR
 mZ
+Ps
 fP
-ow
 ow
 ow
 ow
@@ -1089,10 +1082,10 @@ fc
 Rk
 KZ
 jW
-zR
 Lk
+Lk
+TM
 fP
-ow
 ow
 ow
 ow
@@ -1123,10 +1116,10 @@ fc
 RP
 KZ
 Lz
-cN
+gm
+gm
 sU
 fP
-ow
 ow
 ow
 ow
@@ -1160,7 +1153,7 @@ fP
 ML
 fP
 fP
-ow
+fP
 ow
 ow
 ow
@@ -1190,8 +1183,8 @@ bY
 jA
 SC
 kJ
+ya
 lD
-jA
 BY
 VN
 ow
@@ -1223,8 +1216,8 @@ uX
 Jh
 fy
 HG
-hw
-hw
+VB
+VB
 VB
 Pr
 VN

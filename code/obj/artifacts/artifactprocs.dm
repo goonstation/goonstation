@@ -592,7 +592,7 @@
 	qdel(src)
 	return
 
-/obj/proc/ArtifactDevelopFault(var/faultprob)
+/obj/proc/ArtifactDevelopFault(var/faultprob, var/messageprob = 5)
 	// This proc is used for randomly giving an artifact a fault. It's usually used in the New() proc of an artifact so that
 	// newly spawned artifacts have a chance of being faulty by default, though this can also be called whenever an artifact is
 	// damaged or otherwise poorly handled, so you could potentially turn a good artifact into a dangerous piece of shit if you
@@ -613,6 +613,10 @@
 		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)
+			if (A.activated && prob(messageprob))
+				var/turf/T = get_turf(src)
+				if (T)
+					T.visible_message(SPAN_NOTICE("The [src.name] [F.add_message]"))
 			F.holder = A
 			A.faults += F
 

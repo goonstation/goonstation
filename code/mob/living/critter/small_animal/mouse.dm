@@ -454,8 +454,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 	New()
 		. = ..()
 		src.fur_color = "#be5a53"
-		// true when making the mob to not make the respawn timer reset...false here to allow for crime
-		ghost_spawned = FALSE
 		new /obj/item/implant/access/infinite/admin_mouse(src)
 		SPAWN(1 SECOND)
 			src.bioHolder?.AddEffect("radio_brain", power = 3, do_stability = FALSE, magical = TRUE)

@@ -1061,7 +1061,7 @@
 /turf/unsimulated/floor/orangeblack,
 /area/station/devzone)
 "sE" = (
-/obj/reagent_dispensers/fueltank,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor,
 /area/station/devzone)
 "sG" = (
@@ -2431,6 +2431,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
+/area/station/devzone)
+"PX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor,
 /area/station/devzone)
 "Ql" = (
 /obj/disposalpipe/switch_junction/right/west{
@@ -3966,7 +3973,7 @@ hL
 hL
 Cn
 Dh
-Cv
+PX
 Xo
 xi
 ng

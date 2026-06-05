@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		src.payout += rand(0,9) * 100
 		src.flavor_desc = "[pick(desc_wherestudy)] seeking [pick(desc_whatstudy)] for [pick(desc_whystudy)].[pick(desc_bonusflavor)]"
 		src.flavor_desc += "<br><br><i>REQHUB ADVISORY: Parameters from contract issuer indicate the following NT-recognized reagents to be compositionally adequate</i>"
-		src.flavor_desc += "<br>BLOOD | SYNTHFLESH | BEFF | PEPPERONI | MEAT SLURRY"
+		src.flavor_desc += "<br>SYNTHFLESH | BEFF | PEPPERONI | MEAT SLURRY"
 
 		src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/clonejuice,rand(8,15)*20)
 		..()
@@ -96,12 +96,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/reagent/clonejuice
 	name = "protein solution"
 	chem_ids = list(
-		"blood",
 		"synthflesh",
 		"beff",
 		"pepperoni",
 		"meat_slurry",
-		"bloodc"
 	)
 	feemod = PAY_DOCTORATE/30
 

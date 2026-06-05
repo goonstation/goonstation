@@ -2,8 +2,8 @@
 // Curse you SpacemanDMM, if you make this type I will laugh at you because it will do nothing, use the /host one.
 /obj/machinery/disposal/extradimensional
 	deconstruct_flags = DECON_NONE
-	_health = 500
-	_max_health = 500
+	_health = 250
+	_max_health = 250
 	SYNDICATE_STEALTH_DESCRIPTION("You can't see the bottom.", null)
 
 /obj/machinery/disposal/extradimensional/flush()
@@ -32,13 +32,6 @@
 
 /obj/machinery/disposal/extradimensional/proc/on_flushed(atom/movable/AM)
 	return
-
-/obj/machinery/disposal/extradimensional/ex_act(severity)
-	if(severity == 1)
-		src.set_broken()
-	else
-		. = ..()
-
 
 // ------------ ENTRANCE ------------ //
 /obj/machinery/disposal/extradimensional/host
@@ -73,6 +66,7 @@
 
 /obj/machinery/disposal/extradimensional/exit/New()
 	. = ..()
+	src.RemoveComponentsOfType(/datum/component/obj_projectile_damage)//No.
 	src.AddComponent(/datum/component/extradimensional_prefab_entrance, CALLBACK(src, PROC_REF(on_prefab_enter)))
 	src.AddComponent(/datum/component/extradimensional_prefab_exit, CALLBACK(src, PROC_REF(on_prefab_exit)))
 
@@ -96,7 +90,11 @@
 		return
 	AM.set_loc(exit)
 
-/obj/machinery/disposal/extradimensional/exit/ex_act(severity)
+/obj/machinery/disposal/extradimensional/exit/ex_act(severity)//No. x2
+	return
+/obj/machinery/disposal/extradimensional/exit/bash()//No. x3
+	return
+/obj/machinery/disposal/extradimensional/exit/set_broken()//No. x4
 	return
 
 // ------------ CONVERTER ------------ //
@@ -121,6 +119,9 @@
 			return ..()
 		if(src.dimension_host?.deref())
 			boutput(user, SPAN_ALERT("[src] can only maintain one pocket dimension at a time!"))
+			return
+		if(isrestrictedz(get_z(target)))
+			boutput(user, SPAN_ALERT("[src] can't be used here!"))
 			return
 		var/obj/machinery/disposal/target_chute = target
 		if(istype(target, /obj/machinery/disposal/extradimensional))

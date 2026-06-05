@@ -83,9 +83,22 @@ var/global/game_force_started = FALSE
 				// hey boo the rounds starting and you didnt ready up
 				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
+					// Don't give them a reminder if they havea forced assignment.
+					if (P.ckey in job_controls.forced_assignments)
+						continue
 					if (!P.ready_play && !P.ready_tutorial)
 						targets += P
 				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
+
+				// also notify anyone with a forced assignment
+				if (length(job_controls.forced_assignments))
+					for (var/forced_assignment_key in job_controls.forced_assignments)
+						var/datum/forced_assignment/forced_assignment = job_controls.forced_assignments[forced_assignment_key]
+						if (!istype(forced_assignment, /datum/forced_assignment))
+							continue
+						forced_assignment.notify_forced_assignment_holder()
+					message_admins("Gameticker automatically sent out notifications to all forced assignment holders!")
+
 				did_reminder = TRUE
 
 			if (title_countdown)
@@ -1061,7 +1074,7 @@ var/global/game_force_started = FALSE
 		var/time_ratio = player.current_playtime / ticker.round_elapsed_ticks
 		var/player_unique_chance = actual_token_chance * time_ratio
 		if (player.get_antag_tokens() >= 1)
-			boutput(M, SPAN_BOLD("You would have been eligable for an antag token drop this round, but you already have one!"))
+			boutput(M, SPAN_BOLD("You would have been eligible for an antag token drop this round, but you already have one!"))
 			continue
 		if (!prob(player_unique_chance))
 			continue //unlucky

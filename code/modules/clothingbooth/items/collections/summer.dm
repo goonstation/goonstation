@@ -5,37 +5,37 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 
 /datum/clothingbooth_item/w_uniform/bikini/white
 	name = "White"
-	item_path = /obj/item/clothing/under/misc/bikini/white
+	item_path = /obj/item/clothing/under/swimsuit/bikini/white
 	swatch_background_color = "#ffffff"
 
 /datum/clothingbooth_item/w_uniform/bikini/red
 	name = "Red"
-	item_path = /obj/item/clothing/under/misc/bikini/red
+	item_path = /obj/item/clothing/under/swimsuit/bikini/red
 	swatch_background_color = "#e21616"
 
 /datum/clothingbooth_item/w_uniform/bikini/yellow
 	name = "Yellow"
-	item_path = /obj/item/clothing/under/misc/bikini/yellow
+	item_path = /obj/item/clothing/under/swimsuit/bikini/yellow
 	swatch_background_color = "#e0e02c"
 
 /datum/clothingbooth_item/w_uniform/bikini/pink
 	name = "Pink"
-	item_path = /obj/item/clothing/under/misc/bikini/pink
+	item_path = /obj/item/clothing/under/swimsuit/bikini/pink
 	swatch_background_color = "#f2a9a9"
 
 /datum/clothingbooth_item/w_uniform/bikini/blue
 	name = "Blue"
-	item_path = /obj/item/clothing/under/misc/bikini/blue
+	item_path =/obj/item/clothing/under/swimsuit/bikini/blue
 	swatch_background_color = "#2323b2"
 
 /datum/clothingbooth_item/w_uniform/bikini/black
 	name = "Black"
-	item_path = /obj/item/clothing/under/misc/bikini/black
+	item_path = /obj/item/clothing/under/swimsuit/bikini/black
 	swatch_background_color = "#2f2851"
 
 /datum/clothingbooth_item/w_uniform/bikini/polkadot
 	name = "Red Polka-Dot"
-	item_path = /obj/item/clothing/under/misc/bikini/pdot_red
+	item_path = /obj/item/clothing/under/swimsuit/bikini/pdot_red
 	cost = PAY_TRADESMAN
 	swatch_background_color = "#e21616"
 	swatch_foreground_color = "#ffffff"
@@ -43,13 +43,13 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 
 /datum/clothingbooth_item/w_uniform/bikini/polkadot/yellow
 	name = "Yellow Polka-Dot"
-	item_path = /obj/item/clothing/under/misc/bikini/pdot_yellow
+	item_path = /obj/item/clothing/under/swimsuit/bikini/pdot_yellow
 	swatch_background_color = "#e0e02c"
 	swatch_foreground_color = "#2f2851"
 
 /datum/clothingbooth_item/w_uniform/bikini/strawberry
 	name = "Strawberry"
-	item_path = /obj/item/clothing/under/misc/bikini/strawberry
+	item_path =/obj/item/clothing/under/swimsuit/bikini/strawberry
 	cost = PAY_IMPORTANT/3
 	swatch_background_color = "#c20038"
 	swatch_foreground_color = "#1fa03b"
@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 
 /datum/clothingbooth_item/w_uniform/bikini/bee
 	name = "Bee"
-	item_path = /obj/item/clothing/under/misc/bikini/bee
+	item_path = /obj/item/clothing/under/swimsuit/bikini/bee
 	cost = PAY_IMPORTANT/3
 	swatch_background_color = "#e0e02c"
 	swatch_foreground_color = "#2f2851"
@@ -70,42 +70,42 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/onepiece)
 
 /datum/clothingbooth_item/w_uniform/onepiece/white
 	name = "White"
-	item_path = /obj/item/clothing/under/misc/onepiece/white
+	item_path = /obj/item/clothing/under/swimsuit/onepiece/white
 	swatch_background_color = "#ffffff"
 
 /datum/clothingbooth_item/w_uniform/onepiece/red
 	name = "Red"
-	item_path = /obj/item/clothing/under/misc/onepiece/red
+	item_path = /obj/item/clothing/under/swimsuit/onepiece/red
 	swatch_background_color = "#e21616"
 
 /datum/clothingbooth_item/w_uniform/onepiece/orange
 	name = "Orange"
-	item_path = /obj/item/clothing/under/misc/onepiece/orange
+	item_path = /obj/item/clothing/under/swimsuit/onepiece/orange
 	swatch_background_color = "#e55b16"
 
 /datum/clothingbooth_item/w_uniform/onepiece/yellow
 	name = "Yellow"
-	item_path = /obj/item/clothing/under/misc/onepiece/yellow
+	item_path = /obj/item/clothing/under/swimsuit/onepiece/yellow
 	swatch_background_color = "#e0e02c"
 
 /datum/clothingbooth_item/w_uniform/onepiece/green
 	name = "Green"
-	item_path = /obj/item/clothing/under/misc/onepiece/green
+	item_path = /obj/item/clothing/under/swimsuit/onepiece/green
 	swatch_background_color = "#0c7f29"
 
 /datum/clothingbooth_item/w_uniform/onepiece/blue
 	name = "Blue"
-	item_path = /obj/item/clothing/under/misc/onepiece/blue
+	item_path = /obj/item/clothing/under/swimsuit/onepiece/blue
 	swatch_background_color = "#2323b2"
 
 /datum/clothingbooth_item/w_uniform/onepiece/purple
 	name = "Purple"
-	item_path = /obj/item/clothing/under/misc/onepiece/purple
+	item_path = /obj/item/clothing/under/swimsuit/onepiece/purple
 	swatch_background_color = "#9425bc"
 
 /datum/clothingbooth_item/w_uniform/onepiece/black
 	name = "Black"
-	item_path = /obj/item/clothing/under/misc/onepiece/black
+	item_path = /obj/item/clothing/under/swimsuit/onepiece/black
 	swatch_background_color = "#2f2851"
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
@@ -196,73 +196,73 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/oldswimsuit)
 
 /datum/clothingbooth_item/w_uniform/oldswimsuit/red
 	name = "Red and White"
-	item_path = /obj/item/clothing/under/misc/oldswimsuit/red
+	item_path = /obj/item/clothing/under/swimsuit/oldswimsuit/red
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#e21616"
 
 /datum/clothingbooth_item/w_uniform/oldswimsuit/blue
 	name = "Blue and White"
-	item_path = /obj/item/clothing/under/misc/oldswimsuit/blue
+	item_path = /obj/item/clothing/under/swimsuit/oldswimsuit/blue
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#7fffff"
 
 /datum/clothingbooth_item/w_uniform/oldswimsuit/black
 	name = "Black and White"
-	item_path = /obj/item/clothing/under/misc/oldswimsuit/black
+	item_path = /obj/item/clothing/under/swimsuit/oldswimsuit/black
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#2f2851"
 
 /datum/clothingbooth_item/w_uniform/oldswimsuit/bee
 	name = "Bee"
-	item_path = /obj/item/clothing/under/misc/oldswimsuit/bee
+	item_path = /obj/item/clothing/under/swimsuit/oldswimsuit/bee
 	swatch_background_color = "#e0e02c"
 	swatch_foreground_color = "#2f2851"
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/wetsuit)
 /datum/clothingbooth_item/w_uniform/wetsuit/black
 	name = "Black"
-	item_path = /obj/item/clothing/under/misc/wetsuit
+	item_path = /obj/item/clothing/under/swimsuit/wetsuit
 	cost = PAY_TRADESMAN/3
 	swatch_background_color = "#2f2851"
 
 /datum/clothingbooth_item/w_uniform/wetsuit/red
 	name = "Black and Red"
-	item_path = /obj/item/clothing/under/misc/wetsuit/red
+	item_path = /obj/item/clothing/under/swimsuit/wetsuit/red
 	swatch_background_color = "#2f2851"
 	swatch_foreground_color = "#e21616"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 /datum/clothingbooth_item/w_uniform/wetsuit/orange
 	name = "Black and Orange"
-	item_path = /obj/item/clothing/under/misc/wetsuit/orange
+	item_path = /obj/item/clothing/under/swimsuit/wetsuit/orange
 	swatch_background_color = "#2f2851"
 	swatch_foreground_color = "#e55b16"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 /datum/clothingbooth_item/w_uniform/wetsuit/yellow
 	name = "Black and Yellow"
-	item_path = /obj/item/clothing/under/misc/wetsuit/yellow
+	item_path = /obj/item/clothing/under/swimsuit/wetsuit/yellow
 	swatch_background_color = "#2f2851"
 	swatch_foreground_color = "#e0e02c"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 /datum/clothingbooth_item/w_uniform/wetsuit/cyan
 	name = "Black and Cyan"
-	item_path = /obj/item/clothing/under/misc/wetsuit/cyan
+	item_path = /obj/item/clothing/under/swimsuit/wetsuit/cyan
 	swatch_background_color = "#2f2851"
 	swatch_foreground_color = "#7fffff"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 /datum/clothingbooth_item/w_uniform/wetsuit/purple
 	name = "Black and Purple"
-	item_path = /obj/item/clothing/under/misc/wetsuit/purple
+	item_path = /obj/item/clothing/under/swimsuit/wetsuit/purple
 	swatch_background_color = "#2f2851"
 	swatch_foreground_color = "#9425bc"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 /datum/clothingbooth_item/w_uniform/wetsuit/pink
 	name = "Black and Pink"
-	item_path = /obj/item/clothing/under/misc/wetsuit/pink
+	item_path = /obj/item/clothing/under/swimsuit/wetsuit/pink
 	swatch_background_color = "#2f2851"
 	swatch_foreground_color = "#f2a9a9"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT

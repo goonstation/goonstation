@@ -2,6 +2,7 @@
 // haine wuz here and tore this file to bits!!!  f u we can have things in their own files and we SHOULD
 // rather than EVERYTHING BEING IN HALLOWEEN.DM AND KEELINSSTUFF.DM OKAY THINGS CAN BE IN OTHER FILES
 
+////TYPEINFO: THIS HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/items/storage.dmi'
@@ -23,7 +24,6 @@
 	move_triggered = 1
 	flags = TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500
