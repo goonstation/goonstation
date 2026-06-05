@@ -3105,7 +3105,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (tray.current)
 					. += O
 
-	proc/edibility_check(_,_, obj/item/item)
+	proc/edibility_check(_,__, obj/item/item)
 		return SLUG_ITEM_EDIBLE(item)
 
 	critter_eat(obj/target)
