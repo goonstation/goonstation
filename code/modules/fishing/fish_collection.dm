@@ -5,15 +5,16 @@
 	if (!istype(fish, /obj/item/reagent_containers/food/fish))
 		return
 
-	var/list/collection = src.client.player?.cloudSaves.getData("fish_collection")
-	if (collection != null)
+	var/collection_data = src.client.player?.cloudSaves.getData("fish_collection")
+	var/list/collection = null
+	if (collection_data != null)
+		collection = json_decode(collection_data)
 		if (collection.Find(initial(fish.name)))
 			return
-		collection = collection.Copy() // otherwise this will point to the list in the chache, which will stop it from saving
 	else
 		collection = list()
 	collection.Add(initial(fish.name))
-	src.client.player?.cloudSaves.putData("fish_collection", collection)
+	src.client.player?.cloudSaves.putData("fish_collection", json_encode(collection))
 
 	if (length(collection) >= length(get_singleton(/datum/fish_collection).fish_data))
 		src.unlock_medal(get_singleton(/datum/fish_collection).medal_name, 1)
@@ -24,7 +25,8 @@
 	var/const/medal_name = "So Long, and Thanks for All the Fish"
 
 	proc/verify_fish_medal(datum/player/player)
-		var/list/user_fish = player.cloudSaves.getData("fish_collection")
+		var/collection_data = player.cloudSaves.getData("fish_collection")
+		var/list/user_fish = isnull(collection_data) ? list() : json_decode(collection_data)
 		if (length(user_fish) < length(src.fish_data))
 			player.clear_medal(src.medal_name)
 		else //fallback in case we... delete fish I guess?
@@ -56,7 +58,8 @@
 			ui.open()
 
 	ui_data(mob/user)
-		var/list/collected = user.client?.player.cloudSaves.getData("fish_collection")
+		var/collection_data = user.client?.player.cloudSaves.getData("fish_collection")
+		var/list/collected = isnull(collection_data) ? list() : json_decode(collection_data)
 		. = list(
 			"collected" = collected
 		)
