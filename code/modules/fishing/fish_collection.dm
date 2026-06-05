@@ -1,3 +1,22 @@
+CREATE_NAMESPACE(FISH)
+ADD_TO_NAMESPACE(FISH)(var/number_of_fish_that_exist = null)
+ADD_TO_NAMESPACE(FISH)(var/const/medal_name = "So Long, and Thanks for All the Fish")
+ADD_TO_NAMESPACE(FISH)(proc/count_all_fish_that_exist())
+	FISH.number_of_fish_that_exist = 0
+	for (var/type in concrete_typesof(/obj/item/reagent_containers/food/fish))
+		var/typeinfo/obj/item/reagent_containers/food/fish/info = get_type_typeinfo(type)
+		if (info.appears_in_fish_collection)
+			FISH.number_of_fish_that_exist++
+
+ADD_TO_NAMESPACE(FISH)(proc/check_fish_medal(datum/player/player))
+	var/list/user_fish = player.cloudSaves.getData("fish_collection")
+	if (isnull(FISH::number_of_fish_that_exist))
+		FISH.count_all_fish_that_exist()
+	if (length(user_fish) < FISH.number_of_fish_that_exist)
+		player.clear_medal(FISH::medal_name)
+	else //fallback in case we... delete fish I guess?
+		player.unlock_medal(FISH::medal_name, 0)
+
 /mob/proc/add_to_fish_collection(atom/movable/fish)
 	if (!src.client)
 		return
@@ -5,16 +24,17 @@
 		return
 
 	var/list/collection = src.client.player?.cloudSaves.getData("fish_collection")
-	collection = collection.Copy() // otherwise this will point to the list in the chache, which will stop it from saving
-	if (collection == null)
+	if (collection != null)
+		if (collection.Find(initial(fish.name)))
+			return
+		collection = collection.Copy() // otherwise this will point to the list in the chache, which will stop it from saving
+	else
 		collection = list()
-	else if (collection.Find(initial(fish.name)))
-		return
 	collection.Add(initial(fish.name))
 	src.client.player?.cloudSaves.putData("fish_collection", collection)
 
 	if (length(collection) >= length(get_singleton(/datum/fish_collection).fish_data))
-		src.unlock_medal("So Long, and Thanks for All the Fish", 1)
+		src.unlock_medal(FISH::medal_name, 1)
 
 /datum/fish_collection
 	// elements in the form of list("name" = name, "image" = image, "silhouette" = silhouette)
