@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 					break
 			return check_result
 /datum/objective/crew/chiefengineer/ptl
-	explanation_text = "Earn at least ten thousand credits via the PTL."
+	explanation_text = "Earn at least one hundred thousand credits via the PTL."
 	medal_name = "1.21 Jiggawatts"
 	var/static/check_result = null
 	check_completion()
