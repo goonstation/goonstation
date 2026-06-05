@@ -23,7 +23,6 @@
 #include "macros\spawn.dm"			// SPAWN
 #include "plane.dm"					// debug icons
 #include "text.dm"					// text macros/helpers
-#include "namespaces\pay.dm"
 #include "defines\abilities.dm"
 #include "defines\access.dm"
 #include "defines\actions.dm"
@@ -200,6 +199,7 @@
 #include "macros\turf.dm"
 #include "macros\twitch_sbill.dm"
 #include "macros\vehicles.dm"
+#include "namespaces\pay.dm"
 #include "color.dm"
 #include "compare.dm"
 #include "copy.dm"
