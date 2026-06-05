@@ -139,10 +139,10 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
-		ircmsg["msg"] = "authorized the armory."
+		ircmsg["msg"] = "authorized the armory. Reason: [src.auth_reason || "None"]"
 		ircbot.export_async("admin", ircmsg)
 
-		logTheThing(LOG_STATION, usr, "authorized armory access")
+		logTheThing(LOG_STATION, usr, "authorized armory access. Reason: [src.auth_reason || "None"]")
 		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
 		var/reason_text = src.auth_reason ? "<br>[SPAN_BOLD("Reason:")] [src.auth_reason]" : null
 		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>[reason_text]", "Security Level Increased", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_STATION)
@@ -177,10 +177,10 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
-		ircmsg["msg"] = "(UN)authorized the armory."
+		ircmsg["msg"] = "(UN)authorized the armory. Reason: [src.auth_reason || "None"]"
 		ircbot.export_async("admin", ircmsg)
 
-		logTheThing(LOG_STATION, usr, "unauthorized armory access")
+		logTheThing(LOG_STATION, usr, "unauthorized armory access. Reason: [src.auth_reason || "None"]")
 		var/reason_text = src.auth_reason ? "<br>[SPAN_BOLD("Reason:")] [src.auth_reason]" : null
 		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>[reason_text]", "Security Level Decreased", "sound/misc/announcement_1.ogg", alert_origin=ALERT_STATION)
 		playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
