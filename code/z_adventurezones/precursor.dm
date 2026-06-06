@@ -957,11 +957,14 @@
 
 /obj/machinery/computer3/generic/icemooon
 	name = "Computer Console"
-	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-	setup_starting_peripheral2 = /obj/item/peripheral/printer
-	setup_drive_type = /obj/item/disk/data/fixed_disk/icemoon_rdrive
+	setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive,
+			/obj/item/peripheral/network/powernet_card,
+			/obj/item/peripheral/printer)
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd32/icemoon_rdrive
 
-/obj/item/disk/data/fixed_disk/icemoon_rdrive
+/obj/item/disk/data/fixed_disk/hd32/icemoon_rdrive
 	title = "VR_HDD"
 
 	New()
@@ -1295,11 +1298,14 @@ var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',
 
 /obj/machinery/computer3/generic/dronelab
 	name = "Design Office Console"
-	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-	setup_starting_peripheral2 = /obj/item/peripheral/printer
-	setup_drive_type = /obj/item/disk/data/fixed_disk/dronelab
+	setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive,
+			/obj/item/peripheral/network/powernet_card,
+			/obj/item/peripheral/printer)
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd32/dronelab
 
-/obj/item/disk/data/fixed_disk/dronelab
+/obj/item/disk/data/fixed_disk/hd32/dronelab
 	title = "DRONE_HDD"
 
 	New()

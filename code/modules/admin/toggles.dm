@@ -319,6 +319,12 @@ client/proc/toggle_ghost_respawns()
 
 		boutput(usr, SPAN_NOTICE("Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]"))
 
+	if(isdead(usr))
+		if (isadminghost(usr))
+			get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
+		else
+			get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
+
 	logTheThing(LOG_ADMIN, usr, "has set player mode to [(player_mode ? "On" : "Off")]")
 	logTheThing(LOG_DIARY, usr, "has set player mode to [(player_mode ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has set player mode to [(player_mode ? "On" : "Off")]")
@@ -595,10 +601,14 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle Player Cap"
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
-	player_capa = !( player_capa )
-	if (player_capa)
+	if (!player_capa)
+		var/picked_cap = tgui_input_number(usr, "How many players (admins not included) should be allowed in?", "Select Player Cap", global.player_cap, 200, 0)
+		if(!isnull(picked_cap))
+			global.player_cap = picked_cap
+		player_capa = TRUE
 		boutput(world, "<B>The global player cap has been enabled at [player_cap] players.</B>")
 	else
+		player_capa = FALSE
 		boutput(world, "<B>The global player cap has been disabled.</B>")
 	logTheThing(LOG_ADMIN, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].")
 	logTheThing(LOG_DIARY, usr, "toggled player cap of [player_cap] [player_capa ? "on" : "off"].", "admin")

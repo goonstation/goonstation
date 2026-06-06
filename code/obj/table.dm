@@ -2,6 +2,7 @@
 #define STATUS_STRONG 2
 
 TYPEINFO(/obj/table)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 	/// Determines what types this table will smooth with
 	var/smooth_list = null
 TYPEINFO_NEW(/obj/table)
@@ -18,9 +19,8 @@ TYPEINFO_NEW(/obj/table)
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	mat_changename = 1
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null
@@ -45,7 +45,8 @@ TYPEINFO_NEW(/obj/table)
 		START_TRACKING
 		if (src.has_drawer)
 			src.create_storage(/datum/storage/unholdable, spawn_contents = src.drawer_contents, slots = 13, max_wclass = W_CLASS_SMALL)
-
+			src.storage.open_sound = 'sound/effects/drawer_open.ogg'
+			src.storage.close_sound = 'sound/effects/drawer_close.ogg'
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
@@ -290,11 +291,10 @@ TYPEINFO_NEW(/obj/table)
 			return ..()
 
 	attack_hand(mob/user)
-		if (user.is_hulk() && !hulk_immune)
+		if ((user.is_hulk() || isabomination(user)) && !src.hulk_immune)
 			user.visible_message(SPAN_ALERT("[user] destroys the table!"))
-			if (prob(40))
-				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-			logTheThing(LOG_COMBAT, user, "uses hulk to smash a table at [log_loc(src)].")
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			logTheThing(LOG_COMBAT, user, "uses [user.is_hulk() ? "hulk" : isabomination(user) ? "changeling abomination form" : "unknown"] to smash a table at [log_loc(src)].")
 			deconstruct()
 			return
 

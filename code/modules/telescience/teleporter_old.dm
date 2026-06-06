@@ -202,9 +202,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 		qdel(M)
 		return 1
 
+	return_if_overlay_or_effect(M)
+
 	var/turf/destturf = get_turf(destination)
 	if (!istype(destturf))
 		return 1
+
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.shoes?.magnetic)
+			return 1
+
+	if (ismob(destination.loc))
+		precision += 3
 
 	var/tx = destturf.x + rand(precision * -1, precision)
 	var/ty = destturf.y + rand(precision * -1, precision)

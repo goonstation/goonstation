@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/chef
 	name = "Chef"
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_chef")
 	access_string = "Chef"
 	slot_belt = list(/obj/item/device/pda2/chef)
@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/chef)
 	slot_head = list(/obj/item/clothing/head/chefhat)
 	slot_suit = list(/obj/item/clothing/suit/chef)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/catering)
 	items_in_backpack = list(/obj/item/kitchen/rollingpin, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/bell/kitchen)
 	wiki_link = "https://wiki.ss13.co/Chef"
 
@@ -25,27 +25,23 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Bartender"
 	alias_names = list("Barman")
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_drinker", "training_bartender")
 	access_string = "Bartender"
 	slot_belt = list(/obj/item/device/pda2/bartender)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/catering)
 	slot_poc1 = list(/obj/item/cloth/towel/bar)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/cocktailshaker)
-	items_in_backpack = list(/obj/item/gun/kinetic/sawnoff, /obj/item/ammo/bullets/abg, /obj/item/paper/book/from_file/pocketguide/bartending)
+	items_in_backpack = list(/obj/item/gun/kinetic/sawnoff, /obj/item/ammo/bullets/abg/punchy, /obj/item/paper/book/from_file/pocketguide/bartending)
 	wiki_link = "https://wiki.ss13.co/Bartender"
 
 /datum/job/civilian/botanist
 	name = "Botanist"
-	#ifdef MAP_OVERRIDE_DONUT3
-	limit = 7
-	#else
 	limit = 5
-	#endif
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Botanist"
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_jump = list(/obj/item/clothing/under/rank/hydroponics)
@@ -53,7 +49,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc1 = list(/obj/item/paper/botany_guide)
 	slot_poc2 = list(/obj/item/plantanalyzer)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	wiki_link = "https://wiki.ss13.co/Botanist"
 
 	faction = list(FACTION_BOTANY)
@@ -61,7 +57,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/rancher
 	name = "Rancher"
 	limit = 1
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Rancher"
 	slot_belt = list(/obj/item/storage/belt/rancher/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/rancher)
@@ -70,21 +66,21 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc1 = list(/obj/item/paper/ranch_guide)
 	slot_poc2 = list(/obj/item/device/pda2/botanist)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
 	wiki_link = "https://wiki.ss13.co/Rancher"
 
 /datum/job/civilian/janitor
 	name = "Janitor"
 	limit = 3
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Janitor"
 	slot_belt = list(/obj/item/storage/fanny/janny)
 	slot_jump = list(/obj/item/clothing/under/rank/janitor)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes)
 	slot_glov = list(/obj/item/clothing/gloves/long)
 	slot_rhan = list(/obj/item/mop)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/janitor)
 	slot_poc1 = list(/obj/item/device/pda2/janitor)
 	items_in_backpack = list(/obj/item/reagent_containers/glass/bucket, /obj/item/lamp_manufacturer/organic)
 	wiki_link = "https://wiki.ss13.co/Janitor"
@@ -92,13 +88,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/chaplain
 	name = "Chaplain"
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_chaplain")
 	access_string = "Chaplain"
 	slot_jump = list(/obj/item/clothing/under/rank/chaplain)
 	slot_belt = list(/obj/item/device/pda2/chaplain)
 	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_ears = list(/obj/item/device/radio/headset/civilian/chaplain)
 	slot_lhan = list(/obj/item/bible/loaded)
 	wiki_link = "https://wiki.ss13.co/Chaplain"
 
@@ -108,7 +104,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/staff_assistant
 	name = "Staff Assistant"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	no_jobban_from_this_job = TRUE
 	low_priority_job = TRUE
@@ -128,7 +124,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/mail_courier
 	name = "Mail Courier"
 	alias_names = "Mailman"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Mail Courier"
 	limit = 1
 	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
@@ -145,9 +141,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/clown
 	name = "Clown"
 	limit = 1
-	wages = PAY_DUMBCLOWN
+	wages = PAY::DUMBCLOWN
 	request_limit = 3 //this is definitely a bad idea
-	request_cost = PAY_TRADESMAN*4
+	request_cost = PAY::TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	ui_colour = TGUI_COLOUR_PINK
@@ -184,6 +180,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	uses_character_profile = FALSE
 	show_in_id_comp = FALSE
 	wiki_link = "https://wiki.ss13.co/Artificial_Intelligence"
+	email_group = MGD_SILICON
+	rounds_needed_to_play = ROUNDS_MIN_SECASS
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -206,6 +204,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	uses_character_profile = FALSE
 	show_in_id_comp = FALSE
 	wiki_link = "https://wiki.ss13.co/Cyborg"
+	email_group = MGD_SILICON
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

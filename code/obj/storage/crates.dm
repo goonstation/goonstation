@@ -2,6 +2,7 @@
 	name = "crate"
 	desc = "A big metal box that you can put things into. Who knows, it might even have things already in it."
 	is_short = 1
+	icon = 'icons/obj/storage/crate.dmi'
 	#ifdef XMAS
 	icon_state = "xmascrate"
 	icon_opened = "xmascrateopen"
@@ -12,12 +13,13 @@
 	icon_opened = "crateopen"
 	#endif
 	icon_welded = "welded-crate"
-	soundproofing = 3
+	soundproofing = SOUNDPROOFING_STORAGE
 	throwforce = 50 //ouch
 	can_flip_bust = 1
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	pass_unstable = TRUE
+	material_amt = 0.1 // Matched to their cost in QM/crate fabricators.
 
 	get_desc()
 		. = ..()
@@ -294,7 +296,7 @@
  */
 
 /obj/storage/crate/haunted
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "bloodycrate"
 	icon_opened = "bloodycrateopen"
 	icon_closed = "bloodycrate"
@@ -418,6 +420,7 @@
 /obj/storage/crate/packing
 	name = "packing crate"
 	desc = "A packing crate."
+	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "packingcrate1"
 
 	New()
@@ -440,6 +443,7 @@
 /obj/storage/crate/wooden
 	name = "wooden crate"
 	desc = "A wooden crate."
+	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "woodencrate1"
 	New()
 		var/n = rand(1,9)
@@ -564,7 +568,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/storage/backpack/chameleon,
+		/obj/item/storage/backpack/chameleon/tactical_belt,
 		/obj/item/device/chameleon,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -806,7 +810,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/chem_grenade/cryo = 4)
 
 	weapons3
-		spawn_contents = list(/obj/item/barrier,
+		spawn_contents = list(/obj/item/barrier/collapsible/security,
 		/obj/item/chem_grenade/shock = 2)
 
 	weapons4

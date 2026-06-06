@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/mechanics/text_to_music)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list(
 		"metal"      = 10,
 		"conductive" = 5,
@@ -10,6 +11,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	desc = "Can play multiple instruments."
 	icon_state = "comp_text_to_music"
 	cabinet_prevent_move = TRUE // no walking music machines
+	mechanically_copyable = FALSE // Maybe someday in the future.
 	var/datum/text_to_music/mech_comp/music_player = null
 
 	New()

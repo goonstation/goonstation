@@ -230,7 +230,7 @@ var/list/globalRituals = list() //Global list of rituals.
 		return
 
 	proc/hear(datum/say_message/message)
-		if(istype(ownerAnchor) && findtext(lowertext(message.content), lowertext(name)) )// && BOUNDS_DIST(owner, M) == 0)
+		if(istype(ownerAnchor) && findtext(lowertext(message.get_content_parsable()), lowertext(name)) )// && BOUNDS_DIST(owner, M) == 0)
 			if(!active)
 				setActive(1)
 				ownerAnchor.tryFire(message.speaker)

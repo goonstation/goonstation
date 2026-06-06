@@ -24,9 +24,9 @@ TYPEINFO(/obj/item/device/accessgun)
 	var/list/engineering_access_list = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
 	var/list/supply_access_list = list(access_cargo, access_supply_console, access_mining, access_mining_outpost)
 	var/list/research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
-	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics, access_pathology)
+	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
-	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser, access_money)
+	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_sysadmin, access_money)
 	var/list/allowed_access_list
 
 	New()
@@ -67,13 +67,13 @@ TYPEINFO(/obj/item/device/accessgun)
 				command_access.Add(access_data(A))
 
 		.["accesses_by_area"] = list(
-			list(name = "Civilian", color = "civilian", accesses = civilian_access),
-			list(name = "Engineering", color = "engineering", accesses = engineering_access),
-			list(name = "Supply", color = "engineering", accesses = supply_access),
-			list(name = "Science", color = "research", accesses = research_access),
-			list(name = "Medical", color = "medical", accesses = medical_access),
-			list(name = "Security", color = "security", accesses = security_access),
-			list(name = "Command", color = "command", accesses = command_access),
+			list(name = "Command", color = /datum/job/command::ui_colour, accesses = command_access),
+			list(name = "Security", color = /datum/job/security::ui_colour, accesses = security_access),
+			list(name = "Science", color = /datum/job/research::ui_colour, accesses = research_access),
+			list(name = "Medical", color = /datum/job/medical::ui_colour, accesses = medical_access),
+			list(name = "Engineering", color = /datum/job/engineering::ui_colour, accesses = engineering_access),
+			list(name = "Supply", color = /datum/job/engineering::ui_colour, accesses = supply_access),
+			list(name = "Civilian", color = /datum/job/civilian::ui_colour, accesses = civilian_access),
 		)
 
 	proc/access_data(var/A)
@@ -211,7 +211,8 @@ TYPEINFO(/obj/item/device/accessgun)
 	afterattack(obj/target, mob/user, reach, params)
 		var/obj/machinery/door/airlock/door_reqs = target
 		if (!istype(door_reqs))
-			. = ..()
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
+			boutput(user, SPAN_NOTICE("[src] can only reprogram or scan airlocks!"))
 			return
 		if(target.deconstruct_flags & DECON_BUILT)
 			if (length(door_reqs.req_access))

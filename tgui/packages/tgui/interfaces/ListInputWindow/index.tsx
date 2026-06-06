@@ -16,6 +16,7 @@ type ListInputData = {
   start_with_search: boolean;
   capitalize: boolean;
   theme: string | null;
+  banned_chars?: string[];
 };
 
 export const ListInputWindow = () => {
@@ -30,6 +31,7 @@ export const ListInputWindow = () => {
     start_with_search,
     capitalize,
     theme,
+    banned_chars,
   } = data;
 
   // Dynamically changes the window height based on the message.
@@ -65,6 +67,7 @@ export const ListInputWindow = () => {
           on_cancel={() => act('cancel')}
           start_with_search={start_with_search}
           capitalize={capitalize}
+          banned_chars={banned_chars}
         />
       </Window.Content>
     </Window>

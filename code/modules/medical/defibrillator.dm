@@ -7,6 +7,7 @@
 // TODO: common abstract parent to split power cell / cell using defibs; requires large code & map repathing
 
 TYPEINFO(/obj/item/robodefibrillator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 10,
 				"conductive" = 15,
 				"crystal" = 5,)
@@ -260,7 +261,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 
 TYPEINFO(/obj/item/robodefibrillator/makeshift)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/robodefibrillator/makeshift
 	name = "shoddy-looking makeshift defibrillator"
 	desc = "It might restart your heart, I guess, or it might barbeque your insides."
@@ -300,7 +301,7 @@ TYPEINFO(/obj/item/robodefibrillator/makeshift)
 		return TRUE
 
 TYPEINFO(/obj/item/robodefibrillator/cyborg)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/robodefibrillator/cyborg
 	cost = DEFIB_CHARGE_LARGE_CELL_COST
 
@@ -318,7 +319,7 @@ TYPEINFO(/obj/item/robodefibrillator/cyborg)
 		return TRUE
 
 TYPEINFO(/obj/item/robodefibrillator/mounted)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/robodefibrillator/mounted
 	icon_state = "defib-mounted-off"
 	icon_base = "defib-mounted"
@@ -345,7 +346,7 @@ TYPEINFO(/obj/item/robodefibrillator/mounted)
 		..()
 
 TYPEINFO(/obj/item/robodefibrillator/recharging)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/robodefibrillator/recharging
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 
@@ -377,6 +378,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (defib)
 			qdel(defib)
 			defib = null
+		UnregisterSignal(src, COMSIG_CORD_RETRACT)
 		..()
 
 	process()
@@ -402,7 +404,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 			return //maybe a bird ate it
 		if(defib.loc != src)
 			return //if someone else has it, don't put it in user's hand
-		src.AddComponent(/datum/component/cord, src.defib, base_offset_x = 0, base_offset_y = -2)
+		src.AddComponent(/datum/component/cord, src.defib, base_offset_x = 0, base_offset_y = -2, range=48)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, 'sound/items/pickup_defib.ogg', 65, vary=0.2)

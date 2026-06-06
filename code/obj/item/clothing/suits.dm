@@ -132,10 +132,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 /obj/item/clothing/suit/hoodie/random
 	New()
-		if (prob(50))
-			hcolor = null
-		else
-			hcolor = "blue"
+		src.hcolor = pick(null, "blue", "darkblue", "white", "pink", "blank", "grey", "dullgrey", "magenta", "green", "yellow", "red")
 		..()
 
 /obj/item/clothing/suit/hoodie/large
@@ -184,6 +181,40 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 		item_state = "hoodieL-purple"
 		hcolor = "purple"
 
+/* ======== Raincoats ======== */
+/obj/item/clothing/suit/raincoat
+	name = "raincoat"
+	desc = "Perfect for frolicking in the rain. Wait, does space even have rain?"
+	icon = 'icons/obj/clothing/overcoats/hoods/raincoats.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_raincoats.dmi'
+	icon_state = "raincoat-yellow"
+	item_state = "raincoat-yellow"
+	body_parts_covered = TORSO|ARMS
+	var/rcolor = "yellow"
+	New()
+		..()
+		setProperty("chemprot", 10)
+		src.AddComponent(/datum/component/toggle_hood, hood_style="raincoat[src.rcolor ? "-[rcolor]" : null]")
+		src.icon_state = "raincoat[src.rcolor ? "-[rcolor]" : null]"
+		src.item_state = "raincoat[src.rcolor ? "-[rcolor]" : null]"
+
+	green
+		name = "green raincoat"
+		icon_state = "raincoat-green"
+		icon_state = "raincoat-green"
+		rcolor = "green"
+
+	blue
+		name = "blue raincoat"
+		icon_state = "raincoat-blue"
+		icon_state = "raincoat-blue"
+		rcolor = "blue"
+
+	purple
+		name = "purple raincoat"
+		icon_state = "raincoat-purple"
+		icon_state = "raincoat-purple"
+		rcolor = "purple"
 /* ======== Jackets ======== */
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)
@@ -348,9 +379,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard)
 
 		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		src.armor()
-		if(!src.fingerprints)
-			src.fingerprints = list()
-		src.fingerprints |= W.fingerprints
+		W.forensic_holder.copy_to(src.forensic_holder)
 		qdel(W)
 
 		if (ismob(src.loc))
@@ -728,6 +757,18 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 		else
 			. = "A bunch of purple glitter and cheap plastic glued together in a sad attempt to make a stylish lab coat."
 
+/obj/item/clothing/suit/labcoat/pharmacist
+	name = "pharmacist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pharmacist."
+	icon_state = "PHlabcoat"
+	item_state = "PHlabcoat"
+	coat_style = "PHlabcoat"
+
+	april_fools
+		icon_state = "PHlabcoat-alt"
+		item_state = "PHlabcoat-alt"
+		coat_style = "PHlabcoat-alt"
+
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
@@ -900,6 +941,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 			src.item_state = src.icon_state
 			see_face = FALSE
 			src.c_flags = initial(src.c_flags)
+			if (src.eyeholes)
+				src.c_flags &= ~COVERSEYES
 			wear_layer = MOB_OVER_TOP_LAYER
 
 	proc/cut_eyeholes()
@@ -1518,10 +1561,23 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 /obj/item/clothing/suit/space/custom // Used for nanofabs
 	icon_state = "spacemat"
-	inhand_image_icon = "s_suit"
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
+
+	var/image/fabrItemImg = null
+	var/image/fabrWornImg = null
+	var/image/renfItemImg = null
+	var/image/renfWornImg = null
+
+	New()
+		..()
+		// Prep the item overlays
+		fabrItemImg = SafeGetOverlayImage("item-suit", src.icon, "spacemat")
+		renfItemImg = SafeGetOverlayImage("item-suit-highlight", src.icon, "spacemat-armor")
+		// Prep the worn overlays
+		fabrWornImg = SafeGetOverlayImage("worn-suit", src.wear_image_icon, "spacemat")
+		renfWornImg = SafeGetOverlayImage("worn-suit-highlight", src.wear_image_icon, "spacemat-armor")
 
 	onMaterialChanged()
 		. = ..()
@@ -1534,14 +1590,25 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			setProperty("chemprot", prot)
 		return
 
-
 	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
-		src.setMaterial(fabrMat)
+		src.setMaterial(fabrMat, FALSE) // We want to purely rely on the overlay colours
 		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
+		var/prot_rad = round(renfMat.calc_radiation_prot() / 2, 5)
+		setProperty("radprot", prot_rad)
 		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
 		setProperty("meleeprot", 3 + prot)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
+
+		fabrItemImg.apply_material_appearance(fabrMat)
+		renfItemImg.apply_material_appearance(renfMat)
+		UpdateOverlays(fabrItemImg, "item-suit")
+		UpdateOverlays(renfItemImg, "item-suit-highlight")
+
+		fabrWornImg.apply_material_appearance(fabrMat)
+		renfWornImg.apply_material_appearance(renfMat)
+		src.wear_image.overlays += fabrWornImg
+		src.wear_image.overlays += renfWornImg
 
 /obj/item/clothing/suit/space/custom/prototype
 	New()
@@ -1684,13 +1751,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 15,
 				"crystal_dense" = 5)
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
-	is_syndicate = TRUE
 	contraband = 3
 	icon_state = "indusred"
 	item_state = "indusred"
@@ -1710,6 +1777,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		..()
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
 				"conductive_high" = 10,
@@ -1822,6 +1890,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A traditional blue wizard's robe. It lacks all the stars and moons and stuff on it though."
 	icon_state = "wizard"
 	item_state = "wizard"
+	c_flags = SPACEWEAR
 	magical = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
@@ -1914,6 +1983,12 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "wintercoat-genetics"
 	item_state = "wintercoat-genetics"
 	coat_style = "wintercoat-genetics"
+
+/obj/item/clothing/suit/wintercoat/pharmacist
+	name = "pharmacist winter coat"
+	icon_state = "wintercoat-pharma"
+	item_state = "wintercoat-pharma"
+	coat_style = "wintercoat-pharma"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"

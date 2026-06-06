@@ -17,14 +17,13 @@
 //Ringtone Carts
 
 TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/disk/data/cartridge
 	name = "\improper PDA cartridge"
 	desc = "A data cartridge for PDAs."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "cart-blank"
-	item_state = "electronic"
 	file_amount = 32
 	title = "ROM Cart"
 

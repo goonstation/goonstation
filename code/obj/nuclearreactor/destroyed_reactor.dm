@@ -27,10 +27,12 @@
 			src.bonus_rads_4_u()
 
 	proc/bonus_rads_4_u()
+		var/turf/current_loc = get_turf(src)
+		if(!current_loc)
+			return
 		var/datum/gas_mixture/current_gas = new/datum/gas_mixture()
 		current_gas.radgas += 50
 		current_gas.temperature = 1000
-		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 		for(var/i = 1 to 5)
 			shoot_projectile_XY(src, new /datum/projectile/neutron(100), rand(-10,10), rand(-10,10))

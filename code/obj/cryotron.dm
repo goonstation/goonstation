@@ -10,6 +10,7 @@
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	event_handler_flags = IMMUNE_SINGULARITY
+	provides_grip = TRUE
 	pass_unstable = FALSE
 	bound_width = 96
 	bound_x = -32
@@ -19,6 +20,7 @@
 #else
 	pixel_x = -32
 #endif
+	open_to_sound = FALSE
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
@@ -156,6 +158,7 @@
 			else
 				L.set_loc(src)
 				L.hibernating = 1
+				L.handle_cryo()
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
@@ -165,8 +168,8 @@
 				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
-		for(var/datum/antagonist/antagonist as anything in L.mind?.antagonists)
-			antagonist.handle_cryo()
+		L.handle_cryo()
+
 		stored_mobs += L
 		stored_mobs_volunteered += L
 		stored_crew_names += L.real_name
@@ -217,8 +220,7 @@
 						if (mob_can_enter_storage(user))
 							add_person_to_storage(user)
 							respawn_controller.subscribeNewRespawnee(user.ckey)
-							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
-								antagonist.handle_perma_cryo()
+							user.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
 							var/mob/dead/observer/ghost = user.ghostize()
 							//hopefully that's all the links?

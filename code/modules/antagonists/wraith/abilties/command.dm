@@ -36,3 +36,9 @@
 				O.throw_at(T, 32, 2)
 
 		return 0
+
+	cultist
+		preferred_holder_type = /datum/abilityHolder/generic
+		pointCost = FALSE
+		cooldown = 35 SECONDS
+		min_req_dist = 5

@@ -68,23 +68,21 @@
 /obj/item/reagent_containers/food/snacks/plant/attackby(obj/item/W, mob/user) //first phase of fruithat construction
 	if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
-		if (src.validforhat == 1) //is it a fruit and not a filthy vegetable?
-			if (C.amount <= 7)
+		if (src.validforhat == TRUE)
+			if (C.amount < 8)
 				boutput(user, "You don't have enough cable to add to \the [src.name]")
-			else
-				boutput(user, SPAN_NOTICE("You begin adding \the [C.name] to \the [src.name]."))
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, SPAN_ALERT("You were interrupted!"))
-					return ..()
-				else
-					C.amount -= 8
-					C.UpdateIcon()
-					user.drop_item()
-					var/obj/item/dynassembly/fruit/A = new /obj/item/dynassembly/fruit(get_turf(src))
-					A.newpart(A,src,1) //returns assembly we created, fruit we made it from, and 1st run
-					var/image/I = new /image('icons/obj/foodNdrink/food_produce.dmi', "hatwires")
-					I.layer += 1
-					A.overlays += I
+				return
+			boutput(user, SPAN_NOTICE("You begin adding \the [C.name] to \the [src.name]."))
+			if (!do_after(user, 3 SECONDS))
+				boutput(user, SPAN_ALERT("You were interrupted!"))
+				return ..()
+			if (C.use(8))
+				var/obj/item/dynassembly/fruit/A = new /obj/item/dynassembly/fruit(get_turf(src))
+				A.newpart(A,src,1) //returns assembly we created, fruit we made it from, and 1st run
+				var/image/I = new /image('icons/obj/foodNdrink/food_produce.dmi', "hatwires")
+				I.layer += 1
+				A.overlays += I
+
 		else
 			boutput(user, "The [src.name] cannot be wired with the [C.name]")
 	return ..()

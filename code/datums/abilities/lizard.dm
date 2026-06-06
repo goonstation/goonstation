@@ -30,7 +30,7 @@
 			T.colorize_tail(liz.bioHolder.mobAppearance)
 		liz?.bioHolder?.mobAppearance.UpdateMob()
 
-/datum/abilityHolder/lizard
+/datum/abilityHolder/mutantrace/lizard
 	topBarRendered = 1
 	points = 0
 	regenRate = 0	// eat some kidneys or something
@@ -42,7 +42,7 @@
 	cooldown = 0
 	last_cast = 0
 	targeted = 0
-	preferred_holder_type = /datum/abilityHolder/lizard
+	preferred_holder_type = /datum/abilityHolder/mutantrace/lizard
 	var/mob/living/carbon/human/L
 
 	onAttach(datum/abilityHolder/H)

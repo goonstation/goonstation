@@ -1,11 +1,11 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 /datum/clothingbooth_item/head
 	slot = SLOT_HEAD
-	cost = PAY_TRADESMAN/2
+	cost = PAY::TRADESMAN/2
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 /datum/clothingbooth_item/head/barrettes
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 
 	black
 		name = "Black"
@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 /datum/clothingbooth_item/head/basecap
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 
 	black
 		name = "Black"
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 /datum/clothingbooth_item/head/beret
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 
 	white
 		name = "White"
@@ -125,20 +125,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 		item_path = /obj/item/clothing/head/frenchberet/blueberry
 
 /datum/clothingbooth_item/head/mime_bowler
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 	item_path = /obj/item/clothing/head/mime_bowler
 
 /datum/clothingbooth_item/head/mime_beret
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 	item_path = /obj/item/clothing/head/mime_beret
 
 /datum/clothingbooth_item/head/sailormoon
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 	item_path = /obj/item/clothing/head/sailormoon
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 /datum/clothingbooth_item/head/butterfly_hairclip
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 
 	blue
 		name = "Blue"
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 /datum/clothingbooth_item/head/cat_ears
-	cost = PAY_TRADESMAN/2
+	cost = PAY::TRADESMAN
 
 	white
 		name = "White"
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 /datum/clothingbooth_item/head/costume_goggles
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 
 	yellow
 		name = "Yellow"
@@ -229,19 +229,19 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 		item_path = /obj/item/clothing/head/goggles/purple
 
 /datum/clothingbooth_item/head/cowboy
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 	item_path = /obj/item/clothing/head/cowboy
 
 /datum/clothingbooth_item/head/cwhat
 	item_path = /obj/item/clothing/head/cwhat
 
 /datum/clothingbooth_item/head/diner_waitress_hat
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 	item_path = /obj/item/clothing/head/waitresshat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 /datum/clothingbooth_item/head/fedora
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 
 	black
 		name = "Black"
@@ -259,20 +259,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 		item_path = /obj/item/clothing/head/mj_hat
 
 /datum/clothingbooth_item/head/frog
-	cost = PAY_TRADESMAN
+	cost = PAY::TRADESMAN
 	item_path = /obj/item/clothing/head/frog_hat
 
 /datum/clothingbooth_item/head/fthat
-	cost = PAY_DOCTORATE/5
+	cost = PAY::DOCTORATE/5
 	item_path = /obj/item/clothing/head/fthat
 
 /datum/clothingbooth_item/head/green_visor
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 	item_path = /obj/item/clothing/head/pokervisor
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 /datum/clothingbooth_item/head/hairbow
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 
 	blue
 		name = "Blue"
@@ -348,7 +348,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 /datum/clothingbooth_item/head/headband/basic
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 
 	blue
 		name = "Blue"
@@ -421,18 +421,18 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/headband/basic)
 		item_path = /obj/item/clothing/head/headband/basic/cream
 
 /datum/clothingbooth_item/head/maid_headwear
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 	item_path = /obj/item/clothing/head/maid
 
 /datum/clothingbooth_item/head/lace_veil
-	cost = PAY_IMPORTANT
+	cost = PAY::IMPORTANT
 	item_path = /obj/item/clothing/head/veil
 
 /datum/clothingbooth_item/head/leaf_hairclip
 	item_path = /obj/item/clothing/head/headsprout
 
 /datum/clothingbooth_item/head/pinwheel
-	cost = PAY_TRADESMAN
+	cost = PAY::TRADESMAN
 	item_path = /obj/item/clothing/head/pinwheel_hat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/pirate)
@@ -463,7 +463,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/pomhat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/sunhat)
 /datum/clothingbooth_item/head/sunhat
-	cost = PAY_TRADESMAN/5
+	cost = PAY::TRADESMAN/5
 
 	red
 		name = "Red"
@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/tophat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 /datum/clothingbooth_item/head/westhat
-	cost = PAY_UNTRAINED/2
+	cost = PAY::UNTRAINED/2
 
 	beige
 		name = "Beige"
@@ -533,5 +533,190 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 		item_path = /obj/item/clothing/head/westhat/red
 
 /datum/clothingbooth_item/head/ushanka
-	cost = PAY_TRADESMAN
+	cost = PAY::TRADESMAN
 	item_path = /obj/item/clothing/head/ushanka
+
+/datum/clothingbooth_item/head/flatcap
+	cost = PAY::UNTRAINED
+	item_path = /obj/item/clothing/head/flatcap
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/hijab)
+/datum/clothingbooth_item/head/hijab
+	cost = PAY::TRADESMAN/5
+
+	black
+		name = "Black"
+		swatch_background_color = "#090a22"
+		item_path = /obj/item/clothing/head/hijab/black
+
+	darkblue
+		name = "Dark Blue"
+		swatch_background_color = "#1a378d"
+		item_path = /obj/item/clothing/head/hijab/darkblue
+
+	lightblue
+		name = "Light Blue"
+		swatch_background_color = "#24bdc6"
+		item_path = /obj/item/clothing/head/hijab/lightblue
+
+	green
+		name = "Green"
+		swatch_background_color = "#3fb54f"
+		item_path = /obj/item/clothing/head/hijab/green
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#d3cb21"
+		item_path = /obj/item/clothing/head/hijab/yellow
+
+	orange
+		name = "Orange"
+		swatch_background_color = "#d37610"
+		item_path = /obj/item/clothing/head/hijab/orange
+
+	brown
+		name = "Brown"
+		swatch_background_color = "#724f29"
+		item_path = /obj/item/clothing/head/hijab/brown
+
+	red
+		name = "Red"
+		swatch_background_color = "#d71d15"
+		item_path = /obj/item/clothing/head/hijab/red
+
+	pink
+		name = "Pink"
+		swatch_background_color = "#f57382"
+		item_path = /obj/item/clothing/head/hijab/pink
+
+	purple
+		name = "Purple"
+		swatch_background_color = "#b320c3"
+		item_path = /obj/item/clothing/head/hijab/purple
+
+	white
+		name = "White"
+		swatch_background_color = "#ebf0f2"
+		item_path = /obj/item/clothing/head/hijab/white
+
+	flower
+		name = "Flower Pattern"
+		swatch_background_color = "#63bfdc"
+		swatch_foreground_color = "#d44e99"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
+		item_path = /obj/item/clothing/head/hijab/flower
+
+	zigzag
+		name = "Zigzag Pattern"
+		swatch_background_color = "#4d091f"
+		swatch_foreground_color = "#e19a38"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
+		item_path = /obj/item/clothing/head/hijab/zigzag
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/headscarf)
+/datum/clothingbooth_item/head/headscarf
+	cost = PAY::TRADESMAN/5
+
+	black
+		name = "Black"
+		swatch_background_color = "#090a22"
+		item_path = /obj/item/clothing/head/headscarf/black
+
+	purple
+		name = "Purple"
+		swatch_background_color = "#b320c3"
+		item_path = /obj/item/clothing/head/headscarf/purple
+
+	darkblue
+		name = "Dark Blue"
+		swatch_background_color = "#1a378d"
+		item_path = /obj/item/clothing/head/headscarf/darkblue
+
+	lightblue
+		name = "Light Blue"
+		swatch_background_color = "#24bdc6"
+		item_path = /obj/item/clothing/head/headscarf/lightblue
+
+	green
+		name = "Green"
+		swatch_background_color = "#167935"
+		item_path = /obj/item/clothing/head/headscarf/green
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#ddb720"
+		item_path = /obj/item/clothing/head/headscarf/yellow
+
+	orange
+		name = "Orange"
+		swatch_background_color = "#d37610"
+		item_path = /obj/item/clothing/head/headscarf/orange
+
+	brown
+		name = "Brown"
+		swatch_background_color = "#4a281b"
+		item_path = /obj/item/clothing/head/headscarf/brown
+
+	pink
+		name = "Pink"
+		swatch_background_color = "#f57382"
+		item_path = /obj/item/clothing/head/headscarf/pink
+
+	red
+		name = "Red"
+		swatch_background_color = "#d73715"
+		item_path = /obj/item/clothing/head/headscarf/red
+
+	white
+		name = "White"
+		swatch_background_color = "#ebf0f2"
+		item_path = /obj/item/clothing/head/headscarf/white
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/dog_ears)
+/datum/clothingbooth_item/head/dog_ears
+	cost = PAY::TRADESMAN
+
+	white
+		name = "White"
+		swatch_background_color = "#e5e5e5"
+		item_path = /obj/item/clothing/head/headband/woof/white
+
+	black
+		name = "Black"
+		swatch_background_color = "#191919"
+		item_path = /obj/item/clothing/head/headband/woof/black
+
+	blue
+		name = "Blue"
+		swatch_background_color = "#007f7f"
+		item_path = /obj/item/clothing/head/headband/woof/blue
+
+	green
+		name = "Green"
+		swatch_background_color = "#007f00"
+		item_path = /obj/item/clothing/head/headband/woof/green
+
+	grey
+		name = "Grey"
+		swatch_background_color = "#4c4c4c"
+		item_path = /obj/item/clothing/head/headband/woof/gray
+
+	orange
+		name = "Orange"
+		swatch_background_color = "#7f3f00"
+		item_path = /obj/item/clothing/head/headband/woof/orange
+
+	purple
+		name = "Purple"
+		swatch_background_color = "#55007f"
+		item_path = /obj/item/clothing/head/headband/woof/purple
+
+	red
+		name = "Red"
+		swatch_background_color = "#7f0000"
+		item_path = /obj/item/clothing/head/headband/woof/red
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#7f6a00"
+		item_path = /obj/item/clothing/head/headband/woof/yellow

@@ -358,6 +358,10 @@
 			"value" = score_tracker.score_stirstir_alive ? "Yes" : "No",
 		),
 		list(
+			"name" = "Authentication Codes",
+			"value" = score_tracker.score_codes_stolen ? "Stolen by [score_tracker.score_codes_stolen]" : "Secure",
+		),
+		list(
 			"name" = "Total Department Score",
 			"type" = "colorPercent",
 			"value" =  round(score_tracker.final_score_sec),

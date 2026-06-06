@@ -1,5 +1,6 @@
 // Cleaned up the ancient code that used to be here (Convair880).
 TYPEINFO(/obj/item/mine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/mine
@@ -10,7 +11,6 @@ TYPEINFO(/obj/item/mine)
 	layer = OBJ_LAYER
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
-	is_syndicate = TRUE
 	event_handler_flags = USE_FLUID_ENTER
 	var/suppress_flavourtext = FALSE
 	var/armed = FALSE
@@ -194,7 +194,7 @@ TYPEINFO(/obj/item/mine)
 		if (!src || !istype(src))
 			return
 		var/logtarget = (T && ismob(T) ? T : null)
-		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 
 /obj/item/mine/radiation
 	name = "radiation land mine"
@@ -280,7 +280,7 @@ TYPEINFO(/obj/item/mine)
 		explosion(src, src.loc, 0, 1, 2, 3)
 
 TYPEINFO(/obj/item/mine/gibs)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/mine/gibs
 	name = "pustule"
@@ -288,7 +288,6 @@ TYPEINFO(/obj/item/mine/gibs)
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "meatmine"
 	suppress_flavourtext = TRUE
-	is_syndicate = FALSE
 
 	armed
 		armed = TRUE

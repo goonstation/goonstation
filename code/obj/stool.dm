@@ -87,7 +87,7 @@
 			return ..()
 
 	proc/can_buckle(var/mob/living/to_buckle, var/mob/user)
-		if (!istype(to_buckle) || isintangible(to_buckle) || isflockmob(to_buckle)) //no buckling AI-eyes
+		if (!istype(to_buckle) || isintangible(to_buckle) || isflockmob(to_buckle) || isabomination(to_buckle)) //no buckling AI-eyes
 			return FALSE
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
@@ -963,6 +963,7 @@ TYPEINFO(/obj/item/chair/folded)
 	material_amt = 0.1
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
+	can_arcplate = FALSE
 
 	New()
 		..()
@@ -1134,6 +1135,7 @@ TYPEINFO(/obj/item/chair/folded)
 /* ===================================================== */
 
 TYPEINFO(/obj/stool/chair/comfy/wheelchair)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 15
 	mat_appearances_to_ignore = list("steel")
 /obj/stool/chair/comfy/wheelchair

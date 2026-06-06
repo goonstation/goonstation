@@ -457,7 +457,7 @@ TYPEINFO(/obj/machinery/bot/guardbot/soviet)
 #endif
 		SPAWN(1 SECOND)
 			if (src.botcard)
-				src.botcard.access += FREQ_AINLEY_BUDDY
+				src.botcard.access += access_ainley_buddy
 
 	turn_on()
 		if(!src.cell || src.cell.charge <= 0)

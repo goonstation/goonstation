@@ -40,7 +40,10 @@
 #define HAS_NBGG					(1 << 7)
 /// if an atom/movable is in the crusher (so conveyors don't push it around)
 #define BEING_CRUSHERED				(1 << 8)
-
+/// if an atom/movable is currently using the drifting animation
+#define DRIFT_ANIMATION				(1 << 9)
+/// In the gravity controller
+#define GRAVITY_SUBSCRIBER			(1 << 10)
 
 // event_handler_flags
 /// Atom implements EnteredFluid() call in some way.

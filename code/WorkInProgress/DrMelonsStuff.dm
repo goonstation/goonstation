@@ -95,6 +95,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
 	flags = OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	anchored = TRUE
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
@@ -113,6 +115,12 @@
 			O.set_loc(get_turf(src))
 		src.occupant = null
 		..()
+
+	was_deconstructed_to_frame(mob/user)
+		src.on = FALSE
+		if (src.reagents.total_volume)
+			src.reagents.trans_to(src.last_turf, src.reagents.total_volume)
+		. = ..()
 
 	mob_flip_inside(var/mob/user)
 		if (src.reagents.total_volume)
@@ -264,6 +272,10 @@
 				src.on_reagent_change()
 				on = TRUE
 
+	proc/actually_drain()
+		src.reagents.clear_reagents()
+		src.on_reagent_change()
+
 	proc/drain_bathtub(mob/user)
 		src.add_fingerprint(user)
 		if (GET_DIST(user, src) <= 1 && !is_incapacitated(user))
@@ -274,8 +286,7 @@
 					if(!H.gloves)
 						reagents.reaction(H, TOUCH, 5)
 				playsound(src.loc, 'sound/misc/drain_glug.ogg', 70, 1)
-				src.reagents.clear_reagents()
-				src.on_reagent_change()
+				src.actually_drain()
 
 				var/count = 0
 				for (var/obj/O in src)
@@ -291,8 +302,9 @@
 
 	process()
 		if (src.on)
-			src.reagents.add_reagent(src.default_reagent, 100)
-			src.on_reagent_change()
+			if (src.default_reagent)
+				src.reagents.add_reagent(src.default_reagent, 100)
+				src.on_reagent_change()
 			if (src.reagents.is_full())
 				src.visible_message(SPAN_NOTICE("As the [src] finishes filling, the tap shuts off automatically."))
 				playsound(src.loc, 'sound/misc/pourdrink2.ogg', 60, 5)
@@ -315,7 +327,12 @@
 					if (!current_reagent)
 						continue
 					src.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
-
+		if (HAS_ATOM_PROPERTY_FROM_SOURCE(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src))
+			if (src.reagents.total_volume < 400)
+				REMOVE_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
+		else
+			if (src.reagents.total_volume >= 400)
+				APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 	Exited(atom/movable/Obj, loc)
 		..()
 		if (Obj == src.occupant)

@@ -67,6 +67,28 @@
 			src.laces = LACES_CUT
 			tooltip_rebuild = TRUE
 
+	proc/magnetic_teleport_check(mob/living/carbon/human/H, turf/start, turf/end)
+		if (!istype(H) || !src.magnetic || !istype(src, /obj/item/clothing/shoes/magnetic))
+			return // only do this crew-available magboots, anatgonist-specific ones shouldn't be affected. this feels silly.
+		var/obj/item/clothing/shoes/magnetic/stay_behind = H.shoes
+		if (!istype(stay_behind))
+			return
+		boutput(H, SPAN_ALERT("<b>The magnetic attractor on [stay_behind] overloads, severing your legs!</b>"))
+		playsound(H, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg'), 30)
+		H.u_equip(stay_behind)
+		stay_behind.set_loc(H.loc)
+		stay_behind.dropped(H)
+		stay_behind.layer = initial(stay_behind.layer)
+		H.sever_limb("l_leg")
+		H.sever_limb("r_leg")
+		random_brute_damage(H, rand(15, 25))
+		take_bleeding_damage(H, null, 10, DAMAGE_CRUSH)
+		logTheThing(LOG_COMBAT, H, "had magboots on when warping, severing their legs, going from [log_loc(start)] to [log_loc(end)].")
+		if (istype(src, /obj/item/clothing/shoes/magnetic))
+			SPAWN(3 SECONDS) // womp womp
+				var/obj/item/clothing/shoes/magnetic/magboot = src
+				magboot.deactivate(H)
+
 /obj/item/clothing/shoes/rocket
 	name = "rocket shoes"
 	desc = "A gas tank taped to some shoes. Brilliant. They also look kind of silly."
@@ -174,8 +196,11 @@
 	icon_state = "pink"
 
 TYPEINFO(/obj/item/clothing/shoes/magnetic)
-	mats = 8
-
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = list("metal" = 4,
+			"conductive" = 8,
+			"fabric" = 3,
+			)
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
@@ -189,6 +214,9 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	abilities = list(/obj/ability_button/magboot_toggle)
 
 	proc/activate(mob/M)
+		if (GET_COOLDOWN(src, "emp_check"))
+			boutput(M, SPAN_ALERT("\The [src] are still kerfuzzled!"))
+			return FALSE
 		if (src.check_move(M, get_turf(M), null, TRUE))
 			boutput(M, SPAN_ALERT("There's nothing to anchor to!"))
 			playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
@@ -211,26 +239,35 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		playsound(M.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		UnregisterSignal(M, COMSIG_MOVABLE_PRE_MOVE)
 
+	emp_act()
+		. = ..()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if (!GET_COOLDOWN(src, "emp_check"))
+				boutput(H, SPAN_ALERT("\The [src] kerfuzzle out!"))
+			if (H.shoes == src && src.magnetic)
+				src.deactivate(H)
+		ON_COOLDOWN(src, "emp_check", 10 SECONDS)
 	unequipped(mob/user)
 		. = ..()
 		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
 		//is the turf we're on solid?
-		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid) || T.throw_unlimited))
+		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid)))
 			return FALSE
-		//this is kind of expensive to put on Move BUT in my defense it will only happen for magboots wearers standing on a space tile
-		//what are the chances they're also next to botany's server lag weed pile at the same time?
-		for (var/atom/A in oview(1,T))
-			if (A.stops_space_move)
-				if (!quiet && iswall(A) && prob(30)) //occasionally play a clonk for the people inside to hear
-					playsound(A, src.step_sound, 50, 1, extrarange = global.footstep_extrarange)
+		for (var/dir in alldirs)
+			var/turf/check = get_step(T, dir)
+			if (check.grip_atom_count > 0)
+				if (!quiet && prob(30)) //occasionally play a clonk for the people inside to hear
+					playsound(T, src.step_sound, 50, 1, extrarange = global.footstep_extrarange)
+					mover.playsound_local(src, src.step_sound, 50, 1)
 				return FALSE
 		//if we've got here then there would be nothing stopping us drifting off, so block the move
 		return TRUE
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
@@ -249,6 +286,7 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 10,
 				"energy_high" = 10)
@@ -289,6 +327,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "galoshes"
 	desc = "Rubber boots that prevent slipping on wet surfaces."
 	icon_state = "galoshes"
+	default_material = "synthrubber_yellow"
 	c_flags = NOSLIP
 	step_sound = "step_rubberboot"
 	step_priority = STEP_PRIORITY_LOW
@@ -319,6 +358,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	step_priority = 999
 	var/list/crayons = list() // stonepillar's crayon project
 	var/max_crayons = 5
+	var/crayonwalk_chance = 10
 
 	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pen/crayon))
@@ -371,6 +411,12 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			return
 		return ..()
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.max_crayons == initial(src.max_crayons))
+			src.max_crayons = INFINITY
+			src.crayonwalk_chance = 50
+			boutput(user, SPAN_NOTICE("Somehow you open up a crayon pocket dimension in [src]"))
+
 	autumn
 		name = "autumn clown shoes"
 		desc = "Wouldn't want to leaf these behind."
@@ -404,6 +450,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "flippers"
 	desc = "A pair of rubber flippers that improves swimming ability when worn."
 	icon_state = "flippers"
+	default_material = "synthrubber_blue"
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -415,6 +462,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
 TYPEINFO(/obj/item/clothing/shoes/moon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 2
 
 /obj/item/clothing/shoes/moon
@@ -438,6 +486,8 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	icon_state = "cowboy"
 	compatible_species = list("human", "cow")
 
+TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
@@ -445,7 +495,6 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
-	is_syndicate = 1
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -577,6 +626,12 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		else
 			. = "Looks like some big shoes to fill!"
 		. = ..()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(src.step_sound != "clownstep")
+			src.step_sound = "clownstep"
+			src.step_priority = /obj/item/clothing/shoes/clown_shoes::step_priority
+			boutput(user, SPAN_NOTICE("You scramble the speakers installed in [src]"))
 
 /obj/item/clothing/shoes/swat/heavy/clown
 	name = "heavy clown boots"

@@ -62,7 +62,7 @@
 					locker.toggle_hide(TRUE)
 
 			if (locker.stored_cash < 1)
-				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
+				locker.default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
 				continue
 
@@ -74,14 +74,14 @@
 			var/amount = round(min(locker.stored_cash, launder_rate))
 			var/points = round(amount/GANG_CASH_DIVISOR) // only launder full points
 			if (points < 1)
-				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
+				locker.default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
 				continue
 
 			if (locker.superlaunder_stacks)
-				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_superlaunder")
+				locker.default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_superlaunder")
 			else
-				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_launder")
+				locker.default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_launder")
 			locker.UpdateIcon()
 			locker.stored_cash -= (points*GANG_CASH_DIVISOR)
 			locker.gang.score_cash += points

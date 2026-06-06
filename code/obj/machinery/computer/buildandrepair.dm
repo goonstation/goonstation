@@ -22,6 +22,7 @@
 
 ABSTRACT_TYPE(/obj/item/circuitboard)
 TYPEINFO(/obj/item/circuitboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/circuitboard
@@ -32,11 +33,13 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
-	item_state = "electronic"
+	item_state = "electronics"
 	var/computertype = null
 	var/powernet = null
 	/// Custom data saved to the on-board memory chip from its computer type
 	var/saved_data = null
+	/// Behaviour to handle the emagging effect on the board and transfer it to the corresponding computer
+	var/emagged = FALSE
 
 	New()
 		. = ..()
@@ -49,6 +52,14 @@ TYPEINFO(/obj/item/circuitboard)
 	get_desc(dist, mob/user)
 		if (!isnull(saved_data))
 			. += "This one has an onboard memory chip."
+
+	emag_act(var/mob/user, var/obj/item/card/emag/used_emag)
+		src.emagged = TRUE
+		return TRUE
+
+	demag(var/mob/user)
+		src.emagged = FALSE
+		return TRUE
 
 /obj/item/circuitboard/security
 	name = "circuit board (security camera viewer)"
@@ -191,6 +202,10 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (transception interlink)"
 	computertype = /obj/machinery/computer/transception
 	icon_state = "circuit_engineering"
+/obj/item/circuitboard/transception_control
+	name = "circuit board (transception control array)"
+	computertype = /obj/machinery/computer/trsc_array
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/mining_magnet
 	name = "circuit board (mining magnet computer)"
 	computertype = /obj/machinery/computer/magnet
@@ -210,7 +225,7 @@ TYPEINFO(/obj/item/circuitboard)
 	computertype = /obj/machinery/computer/announcement/station
 
 TYPEINFO(/obj/item/circuitboard/announcement/bridge)
-	mats = 0 //no spamming arrival messages please
+	analyser_flags = ANALYSER_BLACKLIST //no spamming arrival messages please
 
 /obj/item/circuitboard/announcement/bridge
 	name = "circuit board (bridge/arrival announcement computer)"
@@ -259,14 +274,15 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 	computertype = /obj/machinery/computer/announcement/station/catering
 	icon_state = "circuit_civilian"
 
+TYPEINFO(/obj/item/circuitboard/announcement/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/circuitboard/announcement/syndicate
 	name = "circuit board (syndicate announcement computer)"
 	computertype = /obj/machinery/computer/announcement/syndicate
 	icon_state = "circuit_security"
-	is_syndicate = TRUE
 
 TYPEINFO(/obj/item/circuitboard/announcement/clown)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/circuitboard/announcement/clown
 	name = "circuit board (clown announcement computer)"
 	computertype = /obj/machinery/computer/announcement/clown
@@ -440,10 +456,11 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 				src.state = STATE_UNANCHORED
 		if(STATE_HAS_BOARD)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				boutput(user, SPAN_NOTICE("You add cables to the frame."))
-				P.change_stack_amount(-5)
-				src.state = STATE_HAS_CABLES
-				src.icon_state = "3"
+				var/obj/item/cable_coil/coil = P
+				if (coil?.use(5))
+					boutput(user, SPAN_NOTICE("You add cables to the frame."))
+					src.state = STATE_HAS_CABLES
+					src.icon_state = "3"
 		if(STATE_HAS_CABLES)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
 				boutput(user, SPAN_NOTICE("You put in the glass panel."))

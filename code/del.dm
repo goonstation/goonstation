@@ -51,8 +51,7 @@ proc/qdel(var/datum/D)
 		//	D.qdeltime = world.time
 
 		// delete_queue.enqueue("\ref[O]")
-		var/refD = "\ref[D]"
-		delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += ADDR_TO_NUM(refD)
+		delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += ref(D)
 	else
 		if(islist(D))
 			D:len = 0

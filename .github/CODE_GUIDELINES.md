@@ -560,6 +560,22 @@ for (var/mob/living/jellyfish/jelly in by_type[/mob/living/jellyfish])
         ...
 ```
 
+## Git Hooks
+
+The repository includes several Git hooks to automate common tasks:
+
+### Installation
+Run the installer to set up hooks at `tools/hooks/install`
+
+### Available Hooks
+* **Map merging** - Automatically reduces map file diffs on commit
+* **Icon merging** - Resolves `.dmi` file conflicts during merges
+* **TGUI building** - Automatically rebuilds TGUI bundles after merges/rebases and resolves bundle conflicts
+
+**Note**: TGUI hooks require Node.js. If you don't have it installed or don't work on TGUI, you can safely skip these hooks.
+
+See `tools/hooks/README.md` for more details.
+
 # Unit Test Woes
 
 ## Passability Cache

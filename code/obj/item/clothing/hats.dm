@@ -82,6 +82,8 @@ proc/filter_trait_hats(var/type)
 	item_state = "bgloves"
 
 /obj/item/clothing/head/serpico
+	name = "bucket hat"
+	desc = "Weirdly tall."
 	icon_state = "serpico"
 	item_state = "serpico"
 
@@ -361,7 +363,9 @@ TYPEINFO(/obj/item/clothing/head/det_hat/gadget)
 									"camera" = /obj/item/camera,
 									"audiolog" = /obj/item/device/audio_log ,
 									"flashlight" = /obj/item/device/light/flashlight,
-									"glasses" = /obj/item/clothing/glasses)
+									"glasses" = /obj/item/clothing/glasses,
+									"duster" = /obj/item/reagent_containers/applicator/brush,
+									)
 		cigs = list()
 	examine()
 		. = ..()
@@ -417,11 +421,11 @@ TYPEINFO(/obj/item/clothing/head/det_hat/gadget)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
 		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] DetGadget hat into a spiffy scuttlebot!</b>"))
-		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		user.drop_item()
+		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src), user)
 		if (src.inspector == TRUE)
 			S.make_inspector()
 		S.linked_hat = src
-		user.drop_item()
 		src.set_loc(S)
 		user.update_inhands()
 		return
@@ -549,6 +553,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "plunger"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "plunger"
+	default_material = "synthrubber"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 2)
@@ -1018,6 +1023,8 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	w_class = W_CLASS_BULKY
 	blocked_from_petasusaphilic = TRUE
 
+TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //no easy replication thanks
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
 	desc = "A commitment."
@@ -1026,7 +1033,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	interesting = "It kinda stinks now..."
 	c_flags = SPACEWEAR // can't take it off, so may as well make it spaceworthy
 	contraband = 10 //let's set off some alarms, boys
-	is_syndicate = 1 //no easy replication thanks
 	cant_self_remove = 1
 	item_function_flags = IMMUNE_TO_ACID //shouldn't be able to just melt the Syndicate Hat.
 	var/datum/component/loctargeting/sm_light/light_c
@@ -1355,9 +1361,11 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
+			var/obj/item/cable_coil/coil = W
+			if (!coil.use(1))
+				return
 			boutput(user, SPAN_NOTICE("You attach the wires to the [src.name]."))
 			src.stunready = 1
-			W:amount--
 			return
 
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
@@ -1638,6 +1646,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 				H.name = src.name
 				H.icon_state = src.icon_state
 				H.wear_image_icon = src.wear_image_icon
+				H.wear_state = src.wear_state
 				H.wear_image = src.wear_image
 				H.desc = "Someone has taped a radio headset underneath the headband."
 				qdel(src)
@@ -1647,6 +1656,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 				H.name = src.name
 				H.icon_state = src.icon_state
 				H.wear_image_icon = src.wear_image_icon
+				H.wear_state = src.wear_state
 				H.wear_image = src.wear_image
 				H.wear_layer = MOB_FULL_SUIT_LAYER
 				H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
@@ -1819,6 +1829,57 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
+ABSTRACT_TYPE(/obj/item/clothing/head/headband/woof)
+/obj/item/clothing/head/headband/woof
+	name = "gray dog ears"
+	desc = "Aww, cute and floppy."
+	icon_state = "dog-gray"
+	item_state = "dog-gray"
+	random
+		New()
+			..()
+			var/color = pick("white","gray","black","red","orange","yellow","green","blue","purple")
+			name = "[color] dog ears"
+			item_state = "dog-[color]"
+			icon_state = "dog-[color]"
+
+	white
+		name = "white dog ears"
+		icon_state = "dog-white"
+		item_state = "dog-white"
+	gray
+		name = "gray dog ears"
+		icon_state = "dog-gray"
+		item_state = "dog-gray"
+	black
+		name = "black dog ears"
+		icon_state = "dog-black"
+		item_state = "dog-black"
+	red
+		name = "red dog ears"
+		icon_state = "dog-red"
+		item_state = "dog-red"
+	orange
+		name = "orange dog ears"
+		icon_state = "dog-orange"
+		item_state = "dog-orange"
+	yellow
+		name = "yellow dog ears"
+		icon_state = "dog-yellow"
+		item_state = "dog-yellow"
+	green
+		name = "green dog ears"
+		icon_state = "dog-green"
+		item_state = "dog-green"
+	blue
+		name = "blue dog ears"
+		icon_state = "dog-blue"
+		item_state = "dog-blue"
+	purple
+		name = "purple dog ears"
+		icon_state = "dog-purple"
+		item_state = "dog-purple"
+
 // BARRETTES
 
 ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
@@ -1872,87 +1933,137 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 /obj/item/clothing/head/hairbow
 	name = "hairbow"
 	desc = "A huge bow that goes on your head."
-	icon_state = "hbow-magenta"
-	item_state = "hbow-magenta"
+	icon = 'icons/obj/clothing/item_hats_bows.dmi'
+	wear_image_icon = 'icons/mob/clothing/bows.dmi'
+	icon_state = "hbow-high-magenta"
+	item_state = "hbow-high-magenta"
 	w_class = W_CLASS_TINY
 	throwforce = 0
+	var/bowcolour = "magenta"
+
+	New()
+		. = ..()
+		src.name = "[src.bowcolour] hairbow"
+		src.item_state = "hbow_[src.bowcolour]"
+		src.icon_state = "hbow-high-[src.bowcolour]"
+		src.item_state = "hbow-high-[src.bowcolour]"
+
+	attack_self(mob/user)
+		var/bow_size = null
+		switch (global.tgui_alert(user, "What size of bow are you tying?", "Bow size", list("Big", "Small", "Cancel")))
+			if ("Big")
+				bow_size = ""
+			if ("Small")
+				bow_size = "S"
+			else
+				return
+
+		var/list/style_list = list(
+			"High" = "high",
+			"Low" = "low",
+			"Middle" = "mid",
+			"Left" = "left",
+			"Right" = "right",
+		)
+		var/selected = global.tgui_input_list(user, "How would you like to tie [src]?", "Bow tying", style_list)
+		var/bow_style = style_list[selected]
+		if (!bow_style)
+			return
+
+		var/state = "hbow-[bow_size][bow_style]-[src.bowcolour]"
+		src.icon_state = state
+		src.item_state = state
 
 	magenta
 		name = "magenta hairbow"
 		desc = "A huge bow that goes on your head. This one is magenta."
-		icon_state = "hbow-magenta"
-		item_state = "hbow-magenta"
+		bowcolour = "magenta"
+		icon_state = "hbow-high-magenta"
+		item_state = "hbow-high-magenta"
 	pink
 		name = "pink hairbow"
 		desc = "A huge bow that goes on your head. This one is pink."
-		icon_state = "hbow-pink"
-		item_state = "hbow-pink"
+		bowcolour = "pink"
+		icon_state = "hbow-high-pink"
+		item_state = "hbow-high-pink"
 	red
 		name = "red hairbow"
 		desc = "A huge bow that goes on your head. This one is red."
-		icon_state = "hbow-red"
-		item_state = "hbow-red"
+		bowcolour = "red"
+		icon_state = "hbow-high-red"
+		item_state = "hbow-high-red"
 	gold
 		name = "gold hairbow"
 		desc = "A huge bow that goes on your head. This one is gold."
-		icon_state = "hbow-gold"
-		item_state = "hbow-gold"
+		bowcolour = "gold"
+		icon_state = "hbow-high-gold"
+		item_state = "hbow-high-gold"
 	green
 		name = "green hairbow"
 		desc = "A huge bow that goes on your head. This one is green."
-		icon_state = "hbow-green"
-		item_state = "hbow-green"
+		bowcolour = "green"
+		icon_state = "hbow-high-green"
+		item_state = "hbow-high-green"
 	mint
 		name = "mint hairbow"
 		desc = "A huge bow that goes on your head. This one is mint."
-		icon_state = "hbow-mint"
-		item_state = "hbow-mint"
+		bowcolour = "mint"
+		icon_state = "hbow-high-mint"
+		item_state = "hbow-high-mint"
 	blue
 		name = "blue hairbow"
 		desc = "A huge bow that goes on your head. This one is blue."
-		icon_state = "hbow-blue"
-		item_state = "hbow-blue"
+		bowcolour = "blue"
+		icon_state = "hbow-high-blue"
+		item_state = "hbow-high-blue"
 	navy
 		name = "navy hairbow"
 		desc = "A huge bow that goes on your head. This one is navy."
-		icon_state = "hbow-navy"
-		item_state = "hbow-navy"
+		bowcolour = "navy"
+		icon_state = "hbow-high-navy"
+		item_state = "hbow-high-navy"
 	purple
 		name = "purple hairbow"
 		desc = "A huge bow that goes on your head. This one is purple."
-		icon_state = "hbow-purple"
-		item_state = "hbow-purple"
+		bowcolour = "purple"
+		icon_state = "hbow-high-purple"
+		item_state = "hbow-high-purple"
 	shinyblack
 		name = "shiny black hairbow"
 		desc = "A huge bow that goes on your head. This one is shiny black."
-		icon_state = "hbow-shinyblack"
-		item_state = "hbow-shinyblack"
+		bowcolour = "shinyblack"
+		icon_state = "hbow-high-shinyblack"
+		item_state = "hbow-high-shinyblack"
 	matteblack
 		name = "matte black hairbow"
 		desc = "A huge bow that goes on your head. This one is matte black."
-		icon_state = "hbow-matteblack"
-		item_state = "hbow-matteblack"
+		bowcolour = "matteblack"
+		icon_state = "hbow-high-matteblack"
+		item_state = "hbow-high-matteblack"
 	white
 		name = "white hairbow"
 		desc = "A huge bow that goes on your head. This one is white."
-		icon_state = "hbow-white"
-		item_state = "hbow-white"
+		bowcolour = "white"
+		icon_state = "hbow-high-white"
+		item_state = "hbow-high-white"
 	rainbow
 		name = "rainbow hairbow"
 		desc = "A huge bow that goes on your head. This one has stripes in all the colors of the rainbow."
-		icon_state = "hbow-rainbow"
-		item_state = "hbow-rainbow"
+		bowcolour = "rainbow"
+		icon_state = "hbow-high-rainbow"
+		item_state = "hbow-high-rainbow"
 	flashy
 		name = "flashy hairbow"
 		desc = "A huge bow that goes on your head. This one is flashing all kinds of colors! Whoa."
-		icon_state = "hbow-flashy"
-		item_state = "hbow-flashy"
-
+		bowcolour = "flashy"
+		icon_state = "hbow-high-flashy"
+		item_state = "hbow-high-flashy"
 	yellowpolkadot
 		name = "yellow polka-dot hairbow"
 		desc = "A huge bow that goes on your head. This one is yellow and has polka dots. Not itsy bitsy or teeny weeny."
-		icon_state = "hbow-yellowpolkadot"
-		item_state = "hbow-yellowpolkadot"
+		bowcolour = "yellowpolkadot"
+		icon_state = "hbow-high-yellowpolkadot"
+		item_state = "hbow-high-yellowpolkadot"
 
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"
@@ -2151,6 +2262,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 //Lesbian Hat
 
 TYPEINFO(/obj/item/clothing/head/lesbian_hat)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("fabric" = 5,
 				"honey" = 5)
 /obj/item/clothing/head/lesbian_hat
@@ -2561,3 +2673,142 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 		..()
 		if(ON_COOLDOWN(src, "gnome giggle",15 SECONDS)) return
 		playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 100, 1)
+
+// HIJABS
+ABSTRACT_TYPE(/obj/item/clothing/head/hijab)
+obj/item/clothing/head/hijab
+	name = "hijab"
+	desc = ""
+	icon_state = "hijab-black"
+	item_state = "hijab-black"
+	w_class = W_CLASS_TINY
+	c_flags = COVERSHAIR
+
+	black
+		name = "black hijab"
+		icon_state = "hijab-black"
+		item_state = "hijab-black"
+
+	darkblue
+		name = "dark blue hijab"
+		icon_state = "hijab-dblue"
+		item_state = "hijab-dblue"
+
+	lightblue
+		name = "light blue hijab"
+		icon_state = "hijab-lblue"
+		item_state = "hijab-lblue"
+
+	green
+		name = "green hijab"
+		icon_state = "hijab-green"
+		item_state = "hijab-green"
+
+	yellow
+		name = "yellow hijab"
+		icon_state = "hijab-yellow"
+		item_state = "hijab-yellow"
+
+	orange
+		name = "orange hijab"
+		icon_state = "hijab-orange"
+		item_state = "hijab-orange"
+
+	brown
+		name = "brown hijab"
+		icon_state = "hijab-brown"
+		item_state = "hijab-brown"
+
+	red
+		name = "red hijab"
+		icon_state = "hijab-red"
+		item_state = "hijab-red"
+
+	pink
+		name = "pink hijab"
+		icon_state = "hijab-pink"
+		item_state = "hijab-pink"
+
+	purple
+		name = "purple hijab"
+		icon_state = "hijab-purple"
+		item_state = "hijab-purple"
+
+	white
+		name = "white hijab"
+		icon_state = "hijab-white"
+		item_state = "hijab-white"
+
+	flower
+		name = "flower hijab"
+		icon_state = "hijab-flower"
+		item_state = "hijab-flower"
+
+	zigzag
+		name = "zigzag hijab"
+		icon_state = "hijab-zigzag"
+		item_state = "hijab-zigzag"
+
+//HEADSCARVES
+ABSTRACT_TYPE(/obj/item/clothing/head/headscarf)
+obj/item/clothing/head/headscarf
+	name = "headscarf"
+	desc = ""
+	icon_state = "headscarf-black"
+	item_state = "headscarf-black"
+	w_class = W_CLASS_TINY
+
+	black
+		name = "black headscarf"
+		icon_state = "headscarf-black"
+		item_state = "headscarf-black"
+
+	purple
+		name = "purple headscarf"
+		icon_state = "headscarf-purple"
+		item_state = "headscarf-purple"
+
+	darkblue
+		name = "dark blue headscarf"
+		icon_state = "headscarf-dblue"
+		item_state = "headscarf-dblue"
+
+	lightblue
+		name = "light blue headscarf"
+		icon_state = "headscarf-lblue"
+		item_state = "headscarf-lblue"
+
+	green
+		name = "green headscarf"
+		icon_state = "headscarf-green"
+		item_state = "headscarf-green"
+
+	yellow
+		name = "yellow headscarf"
+		icon_state = "headscarf-yellow"
+		item_state = "headscarf-yellow"
+
+	orange
+		name = "orange headscarf"
+		icon_state = "headscarf-orange"
+		item_state = "headscarf-orange"
+
+	brown
+		name = "brown headscarf"
+		icon_state = "headscarf-brown"
+		item_state = "headscarf-brown"
+
+	pink
+		name = "pink headscarf"
+		icon_state = "headscarf-pink"
+		item_state = "headscarf-pink"
+
+	red
+		name = "red headscarf"
+		icon_state = "headscarf-red"
+		item_state = "headscarf-red"
+
+	white
+		name = "white headscarf"
+		icon_state = "headscarf-white"
+		item_state = "headscarf-white"

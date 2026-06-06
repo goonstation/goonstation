@@ -4,7 +4,7 @@
 	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = ANCHORED
-	soundproofing = -1
+	soundproofing = SOUNDPROOFING_NOT_ON
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
@@ -66,6 +66,7 @@
 		return
 
 TYPEINFO(/obj/item/device/chameleon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 14
 
 /obj/item/device/chameleon
@@ -73,7 +74,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon_state = "shield0"
 	flags = TABLEPASS | CONDUCT | EXTRADELAY | SUPPRESSATTACK
 	c_flags = ONBELT
-	item_state = "electronic"
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
@@ -85,8 +86,6 @@ TYPEINFO(/obj/item/device/chameleon)
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
 	HELP_MESSAGE_OVERRIDE({"Use the chameleon projector on any object to copy it's appearance. Use it in hand to appear as that object indefinitely. The disguise will be removed if you interact with anything else or are hit."})
-
-	is_syndicate = 1
 
 	New()
 		..()

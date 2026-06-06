@@ -9,7 +9,7 @@
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
 	var/deadchat = 0
-	var/changes = 0
+	var/changes = FALSE
 	var/area = null
 	var/stealth = 0
 	var/stealth_hide_fakekey = 0
@@ -47,9 +47,6 @@
 
 	var/tg_controls = 0
 	var/tg_layout = null
-
-	var/use_chui = 1
-	var/use_chui_custom_frames = 1
 
 	var/ignore_sound_flags = 0
 
@@ -348,10 +345,11 @@
 
 			#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
-				changes()
-
-			if (isadmin(src) && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
-				admin_changes()
+				if (global.tgui_process)
+					src.changes()
+				else
+					SPAWN(3 SECONDS)
+						src.changes()
 			#endif
 		else
 			if (noir)
@@ -385,14 +383,13 @@
 
 		#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
 		src.verbs += /client/proc/cmd_rp_rules
-		if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
+		if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs") && global.tgui_process)
 			src.cmd_rp_rules()
 		#endif
 		// End stuff reliant on cloudsaves
 
 	// Put stuff that sleeps here
 	SPAWN(0)
-		if (global.browse_item_initial_done) sendItemIcons(src)
 		ircbot.event("login", src.key)
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 		src.setJoinDate()
@@ -440,15 +437,6 @@
 
 	if(winget(src, "menu.hide_menu", "is-checked") == "true")
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
-
-	if (src.byond_version >= 516)
-		use_chui = FALSE
-		winset(src, "use_chui", "is-checked=false")
-		use_chui_custom_frames = FALSE
-		winset(src, "use_chui_custom_frames", "is-checked=false")
-	else
-		use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
-		use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
 
 	//wow its the future we can choose between 3 fps values omg
 	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
@@ -530,7 +518,10 @@
 
 
 /client/proc/init_admin()
-	if (IsLocalClient(src)) admins[src.ckey] = "Host"
+#ifndef DONT_ADMIN_MEE
+	if (IsLocalClient(src))
+		admins[src.ckey] = "Host"
+#endif
 	if (admins.Find(src.ckey) && !src.holder)
 		src.make_admin()
 		return 1
@@ -830,7 +821,7 @@ var/global/curr_day = null
 		sleep(0.1 SECONDS)
 
 /client/Topic(href, href_list)
-	if (!usr || isnull(usr.client))
+	if (!usr || isnull(usr.client) || usr.client != src)
 		return
 
 	// Tgui Topic middleware
@@ -993,7 +984,7 @@ var/global/curr_day = null
 
 		if("resourcePreloadComplete")
 			boutput(src, SPAN_NOTICE("<b>Preload completed.</b>"))
-			src.Browse(null, "window=resourcePreload")
+			src << browse(null, "window=resourcePreload")
 			return
 
 		if ("loginnotice_ack")
@@ -1031,7 +1022,7 @@ var/global/curr_day = null
 	if (!forced_desussification)
 		return
 
-	if (!phrase_log.is_sussy(message.original_content))
+	if (!phrase_log.is_sussy(message.get_original_content_parsable()))
 		return
 
 	arcFlash(message.speaker, message.speaker, forced_desussification)
@@ -1242,32 +1233,6 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "set-wasd-controls"
 	src.do_action("togglewasd")
-
-
-/client/verb/set_chui()
-	set hidden = 1
-	set name = "set-chui"
-	if (byond_version >= 516)
-		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
-		winset(src, "use_chui", "is-checked=false")
-		return
-	if (src.use_chui)
-		src.use_chui = 0
-	else
-		src.use_chui = 1
-
-/client/verb/set_chui_custom_frames()
-	set hidden = 1
-	set name = "set-chui-custom-frames"
-	if (byond_version >= 516)
-		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
-		winset(src, "use_chui_custom_frames", "is-checked=false")
-		return
-	if (src.use_chui_custom_frames)
-		src.use_chui_custom_frames = 0
-	else
-		src.use_chui_custom_frames = 1
-
 
 /client/verb/set_speech_sounds()
 	set hidden = 1

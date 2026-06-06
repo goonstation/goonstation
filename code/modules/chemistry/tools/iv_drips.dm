@@ -15,6 +15,7 @@
 	w_class = W_CLASS_TINY
 	flags = TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
+	default_material = "plastic"
 	amount_per_transfer_from_this = 5
 	initial_volume = 250//100
 	var/image/fluid_image = null
@@ -126,9 +127,9 @@
 			return
 
 	attackby(obj/A, mob/user)
-		if (iscuttingtool(A) && !(src.slashed))
+		if ((iscuttingtool(A) || issnippingtool(A)) && !(src.slashed))
 			src.slashed = 1
-			src.desc = "[src.desc] It has been sliced open with a scalpel."
+			src.desc = "[src.desc] It has been sliced open."
 			boutput(user, "You carefully slice [src] open.")
 			return
 		else if (iscuttingtool(A) && (src.slashed))
@@ -159,8 +160,7 @@
 				return
 
 			// the part where shit's actually transferred
-			src.reagents.trans_to(src.patient, src.amount_per_transfer_from_this)
-			src.patient.reagents.reaction(src.patient, INGEST, src.amount_per_transfer_from_this)
+			src.reagents.trans_to(src.patient, src.amount_per_transfer_from_this, do_fluid_react=TRUE)
 			return
 
 		else if (src.mode == IV_DRAW)
@@ -227,6 +227,7 @@
 /* ================================================== */
 
 TYPEINFO(/obj/iv_stand)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/iv_stand

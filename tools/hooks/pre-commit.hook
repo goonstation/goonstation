@@ -1,2 +1,22 @@
 #!/bin/sh
-exec tools/bootstrap/python -m mapmerge2.precommit
+status=0
+
+if [ "${TGUI_HOOK:-1}" = "1" ]; then
+	tools/bootstrap/python -m hooks.tgui_hook pre-commit "$@"
+	hook_status=$?
+	if [ $hook_status -ne 0 ]; then
+		echo "tgui hook failed with status $hook_status" >&2
+		status=$hook_status
+	fi
+fi
+
+if [ "${MAPMERGE_HOOK:-1}" = "1" ]; then
+	tools/bootstrap/python -m mapmerge2.pre-commit "$@"
+	hook_status=$?
+	if [ $hook_status -ne 0 ]; then
+		echo "mapmerge hook failed with status $hook_status" >&2
+		status=$hook_status
+	fi
+fi
+
+exit $status

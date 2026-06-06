@@ -9,30 +9,25 @@
 	density = 1
 	anchored = ANCHORED
 	var/base_icon_state = "computer_generic"
-	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
+	var/temp = ""
 	var/temp_add = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
 	var/datum/computer/file/terminal_program/host_program //active is set to this when the normal active quits, if available
 	var/list/processing_programs = list()
-	var/obj/item/disk/data/floppy/diskette = null
 	var/list/peripherals = list()
 	var/restarting = 0 //Are we currently restarting the system?
 	var/datum/light/light
+	var/obj/item/motherboard/mainboard = null
 
 	//Does it spawn with a card scanner? (It should, the main os needs one of these now.)
-	var/setup_idscan_path = null
-	var/setup_has_internal_disk = 0 //Do we use that magic disk drive that has no peripheral attached?
-	var/setup_drive_size = 64
-	var/setup_drive_type = null //Use this path for the hd
+	var/setup_drive_type = /obj/item/disk/data/fixed_disk/hd64 //Use this path for the hd
 	var/setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!
 	var/setup_starting_program = null //This program will start out installed on the drive (can be a path or a list of paths)
 	var/setup_starting_os = null //This program will start out installed AND AS ACTIVE PROGRAM
-	var/setup_starting_peripheral1 = null //Please note that the user cannot install more than 3.
-	var/setup_starting_peripheral2 = null //And the os tends to need that third one for the card reader
+	var/list/setup_starting_peripherals = list(/obj/item/peripheral/card_scanner)
 	var/setup_os_string = null
-	var/setup_font_color = "#19A319"
-	var/setup_bg_color = "#1B1E1B"
+
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
@@ -45,18 +40,22 @@
 	power_usage = 250
 
 	generic //Generic computer, standard os and card scanner
-		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
-		setup_idscan_path = /obj/item/peripheral/card_scanner
-		setup_has_internal_disk = 1
+		setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive)
 
 		personal
 			name = "Personal Computer"
 			icon_state = "old"
 			base_icon_state = "old"
 			setup_frame_type = /obj/computer3frame/desktop
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
-			setup_starting_peripheral2 = /obj/item/peripheral/sound_card
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card/terminal,
+				/obj/item/peripheral/sound_card)
 			setup_starting_program = /datum/computer/file/terminal_program/email
 			object_flags = NO_BLOCK_TABLE
 
@@ -69,8 +68,11 @@
 			name = "Medical computer"
 			icon_state = "datamed"
 			base_icon_state = "datamed"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/printer
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/printer)
 			setup_starting_program = /datum/computer/file/terminal_program/medical_records
 
 
@@ -91,8 +93,11 @@
 			name = "Security computer"
 			icon_state = "datasec"
 			base_icon_state = "datasec"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
 			setup_starting_program = /datum/computer/file/terminal_program/secure_records
 
 			console_upper
@@ -108,8 +113,11 @@
 			name = "Bank computer"
 			icon_state = "databank"
 			base_icon_state = "databank"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/printer
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/printer)
 			setup_starting_program = /datum/computer/file/terminal_program/bank_records
 
 			console_upper
@@ -125,9 +133,12 @@
 			name = "personnel management computer"
 			icon_state = "personnel_management"
 			base_icon_state = "personnel_management"
-			setup_drive_size = 80
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd96
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
 			setup_starting_program = list(
 				/datum/computer/file/terminal_program/bank_records,
 				/datum/computer/file/terminal_program/secure_records,
@@ -138,9 +149,12 @@
 			name = "Communications Console"
 			icon_state = "comm"
 			setup_starting_program = list(/datum/computer/file/terminal_program/communications, /datum/computer/file/terminal_program/job_controls)
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/status
-			setup_drive_size = 80
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/network/radio/locked/status)
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd96
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -155,7 +169,6 @@
 			name = "Artifact Database"
 			icon_state = "resart"
 			setup_starting_program = /datum/computer/file/terminal_program/artifact_research
-			setup_drive_size = 48
 
 		engine
 			name = "Engine Control Console"
@@ -163,9 +176,12 @@
 			base_icon_state = "engine"
 
 			setup_starting_program = /datum/computer/file/terminal_program/engine_control
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
-			setup_drive_size = 48
+			setup_starting_peripherals = list(
+				/obj/item/peripheral/card_scanner,
+				/obj/item/peripheral/drive,
+				/obj/item/peripheral/network/powernet_card,
+				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
+			setup_drive_type = /obj/item/disk/data/fixed_disk/hd32
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -185,13 +201,13 @@
 
 		radio
 			name = "wireless computer"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/radio
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/drive,/obj/item/peripheral/network/radio)
 
 	terminal //Terminal computer, stripped down with less cards.
 		name = "Terminal"
 		icon_state = "dterm"
 		base_icon_state = "dterm"
-		setup_drive_size = 24
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd16
 		setup_frame_type = /obj/computer3frame/terminal
 		setup_starting_os = /datum/computer/file/terminal_program/os/terminal_os
 
@@ -207,7 +223,7 @@
 		network
 			name = "Network Terminal"
 			//Terminal frames can only hold two cards please don't add more here
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/network/powernet_card/terminal)
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -220,8 +236,7 @@
 
 		zeta
 			name = "DWAINE Terminal"
-			setup_idscan_path = /obj/item/peripheral/card_scanner
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/network/powernet_card/terminal)
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -243,13 +258,9 @@
 		icon_state = "bcase"
 		base_icon_state = "bcase"
 
-		setup_drive_type = /obj/item/disk/data/fixed_disk/computer3
+		setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/computer3
 		setup_starting_os = /datum/computer/file/terminal_program/os/main_os
-		setup_idscan_path = /obj/item/peripheral/card_scanner
-		setup_has_internal_disk = 1
-		setup_starting_peripheral1 = /obj/item/peripheral/network/omni
-		setup_starting_peripheral2 = /obj/item/peripheral/cell_monitor
-		setup_drive_size = 32
+		setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/drive,/obj/item/peripheral/network/omni,/obj/item/peripheral/cell_monitor)
 
 		var/obj/item/cell/cell //We have limited power! Immersion!!
 		var/setup_charge_maximum = 15000
@@ -266,8 +277,7 @@
 			desc = "This fine piece of hardware sports an incredible 2 kilobytes of RAM, all for a price slightly higher than the whole economy of greece."
 			icon_state = "oldlap"
 			base_icon_state = "oldlap"
-			setup_starting_peripheral1 = /obj/item/peripheral/network/omni
-			setup_starting_peripheral2 = /obj/item/peripheral/sound_card
+			setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/drive,/obj/item/peripheral/network/omni,/obj/item/peripheral/sound_card)
 
 
 /obj/machinery/computer3/New()
@@ -291,24 +301,20 @@
 		src.AddOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
-		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
-			if(ispath(src.setup_starting_peripheral1))
-				new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
+		if(!src.mainboard) // make sure this is the first time we're initializing this computer
+			mainboard = new /obj/item/motherboard()
+			if(mainboard.created_name)src.name = mainboard.created_name
 
-			if(ispath(src.setup_starting_peripheral2))
-				new src.setup_starting_peripheral2(src)
+			for(var/peripheral in src.setup_starting_peripherals)
+				if(ispath(peripheral))
+					new peripheral(src)//Peripherals add themselves automatically if spawned inside a computer3
 
-
-			if(src.setup_idscan_path)
-				new src.setup_idscan_path(src)
-
-			if(!hd && (setup_drive_size > 0))
+			if(!hd)
 				if(src.setup_drive_type)
 					src.hd = new src.setup_drive_type
 					src.hd.set_loc(src)
 				else
-					src.hd = new /obj/item/disk/data/fixed_disk(src)
-				src.hd.file_amount = src.setup_drive_size
+					src.hd = new /obj/item/disk/data/fixed_disk/hd64(src)
 
 			for (var/program_path in (list() + src.setup_starting_program)) //neat hack to make it work with lists or a single path
 				if(ispath(program_path))
@@ -334,13 +340,7 @@
 
 		src.post_system()
 
-		if (prob(60))
-			switch(rand(1,2))
-				if(1)
-					setup_font_color = "#E79C01"
-				if(2)
-					setup_font_color = "#A5A5FF"
-					setup_bg_color = "#4242E7"
+
 
 	return
 /obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
@@ -352,15 +352,8 @@
 /obj/machinery/computer3/ui_static_data(mob/user)
 	. = list(
 		"ckey" = user.ckey,
+		"peripherals" = list()
 	)
-	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
-		. += list("peripherals" = list(list(
-		"icon" = "save",
-		"card" = "internal",
-		"color" = src.diskette,
-		"contents" = src.diskette,
-		"label" = "Disk",
-		)))
 	for (var/i in 1 to length(src.peripherals)) // originally i had all this stuff in static data, but the buttons didnt update.
 		var/obj/item/peripheral/periph = src.peripherals[i]
 		if(periph.setup_has_badge)
@@ -376,11 +369,10 @@
 	. = list(
 		"displayHTML" = src.temp, // display data
 		"TermActive" = src.active_program, // is the terminal running or restarting
-		"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
 		"windowName" = src.name,
 		"user" = user,
-		"fontColor" = src.setup_font_color, // display monochrome values
-		"bgColor" = src.setup_bg_color,
+		"fontColor" = src.mainboard ? src.mainboard.font_color : "#aaaaaa", //If there's no motherboard, mimic BSOD colours \o/
+		"bgColor" = src.mainboard ? src.mainboard.bg_color : "#0000aa",
 		"inputValue" = src.tgui_last_accessed[user.ckey],
 	)
 
@@ -435,88 +427,75 @@
 				return src.traverse_history(params["ckey"],  1)
 		if("text")
 			if(src.active_program && params["value"]) // haha it fucking works WOOOOOO
-				if(params["value"] == "term_clear")
-					src.temp = "Cleared\n"
-					return
 				src.active_program.input_text(params["value"])
 				src.add_history(params["ckey"], params["value"])
 				playsound(src.loc, "keyboard", 50, 1, -15)
 				src.updateUsrDialog()
 		if("buttonPressed")
 			var/obj/item/I = usr.equipped() // how the old code did it
-			if(params["card"] == "internal") // the hacky magic floppy disk reader
-				if(src.diskette)
-					//Ai/cyborgs cannot press a physical button from a room away.
+			//What type of drive are we?
+			if (findtext(params["card"], "/obj/item/peripheral/card_scanner"))
+				//A card drive!
+				var/obj/item/peripheral/card_scanner/dv = src.peripherals[params["index"]]
+				if(dv.authid)
+					usr.put_in_hand_or_eject(dv.authid)
+					dv.authid = null
+				else if(istype(I, /obj/item/card/id))
+					usr.drop_item()
+					I.loc = src
+					dv.authid = I
+				update_static_data(usr)
+
+			else if (findtext(params["card"], "/obj/item/peripheral/drive"))
+				//A disk drive!
+				var/obj/item/peripheral/drive/dv = src.peripherals[params["index"]]
+				if(dv.disk)
+					//Ai/cyborgs cannot press a physical button from a room away. But imagine they could...
 					if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
 						boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 						return
 					for(var/datum/computer/file/terminal_program/P in src.processing_programs)
-						P.disk_ejected(src.diskette)
-					usr.put_in_hand_or_eject(src.diskette)
-					src.diskette= null
-				else if(istype(I,/obj/item/disk/data/floppy))
+						P.disk_ejected(dv.disk)
+					usr.put_in_hand_or_eject(dv.disk)
+					dv.disk = null
+				else if(istype(I, dv.setup_disk_type))
 					usr.drop_item()
 					I.loc = src
-					src.diskette = I
+					dv.disk = I
 				update_static_data(usr)
-			else
-				//What type of drive are we?
-				if (findtext(params["card"], "/obj/item/peripheral/card_scanner"))
-					//A card drive!
-					var/obj/item/peripheral/card_scanner/dv = src.peripherals[params["index"]]
-					if(dv.authid)
-						usr.put_in_hand_or_eject(dv.authid)
-						dv.authid = null
-					else if(istype(I, /obj/item/card/id))
-						usr.drop_item()
-						I.loc = src
-						dv.authid = I
-					update_static_data(usr)
+			else if (findtext(params["card"], "/obj/item/peripheral/cheget_key"))
+				var/obj/item/peripheral/cheget_key/cheget_key = src.peripherals[params["index"]]
+				if (cheget_key.inserted_key)
+					usr.put_in_hand_or_eject(cheget_key.inserted_key)
+					cheget_key.inserted_key = null
+					boutput(usr, SPAN_NOTICE("You turn the key and pull it out of the lock. The green light turns off."))
+					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
+					SPAWN(1 SECOND)
+						if(!cheget_key.inserted_key)
+							src.visible_message(SPAN_ALERT("[src] emits a dour boop and a small red light flickers on."))
+							playsound(src.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
+							var/datum/signal/deauthSignal = get_free_signal()
+							deauthSignal.data = list("authcode"="\ref[src]")
+							cheget_key.send_command("key_deauth", deauthSignal)
 
-				else if (findtext(params["card"], "/obj/item/peripheral/drive"))
-					//A disk drive!
-					var/obj/item/peripheral/drive/dv = src.peripherals[params["index"]]
-					if(dv.disk)
-						usr.put_in_hand_or_eject(dv.disk)
-						dv.disk = null
-					else if(istype(I, dv.setup_disk_type))
-						usr.drop_item()
-						I.loc = src
-						dv.disk = I
-					update_static_data(usr)
-				else if (findtext(params["card"], "/obj/item/peripheral/cheget_key"))
-					var/obj/item/peripheral/cheget_key/cheget_key = src.peripherals[params["index"]]
-					if (cheget_key.inserted_key)
-						usr.put_in_hand_or_eject(cheget_key.inserted_key)
-						cheget_key.inserted_key = null
-						boutput(usr, SPAN_NOTICE("You turn the key and pull it out of the lock. The green light turns off."))
-						playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
-						SPAWN(1 SECOND)
-							if(!cheget_key.inserted_key)
-								src.visible_message(SPAN_ALERT("[src] emits a dour boop and a small red light flickers on."))
-								playsound(src.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
-								var/datum/signal/deauthSignal = get_free_signal()
-								deauthSignal.data = list("authcode"="\ref[src]")
-								cheget_key.send_command("key_deauth", deauthSignal)
-
-					else if(istype(I, /obj/item/device/key/cheget))
-						usr.drop_item()
-						I.loc = src
-						cheget_key.inserted_key = I
-						boutput(usr, SPAN_NOTICE("You insert the key and turn it."))
-						playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
-						SPAWN(1 SECOND)
-							if(cheget_key.inserted_key)
-								src.visible_message(SPAN_ALERT("[src] emits a satisfied boop and a little green light comes on."))
-								playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
-								var/datum/signal/authSignal = get_free_signal()
-								authSignal.data = list("authcode"="\ref[I]")
-								cheget_key.send_command("key_auth", authSignal)
-					else if(istype(I, /obj/item/device/key))
-						boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
-						src.visible_message(SPAN_ALERT("[src] emits a grumpy boop."))
-						playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
-					update_static_data(usr)
+				else if(istype(I, /obj/item/device/key/cheget))
+					usr.drop_item()
+					I.loc = src
+					cheget_key.inserted_key = I
+					boutput(usr, SPAN_NOTICE("You insert the key and turn it."))
+					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
+					SPAWN(1 SECOND)
+						if(cheget_key.inserted_key)
+							src.visible_message(SPAN_ALERT("[src] emits a satisfied boop and a little green light comes on."))
+							playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
+							var/datum/signal/authSignal = get_free_signal()
+							authSignal.data = list("authcode"="\ref[I]")
+							cheget_key.send_command("key_auth", authSignal)
+				else if(istype(I, /obj/item/device/key))
+					boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
+					src.visible_message(SPAN_ALERT("[src] emits a grumpy boop."))
+					playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
+				update_static_data(usr)
 	. = TRUE
 
 /obj/machinery/computer3/updateUsrDialog()
@@ -561,51 +540,30 @@
 				src.ClearSpecificOverlays("screen_image")
 
 /obj/machinery/computer3/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
-		if ((!src.diskette) && src.setup_has_internal_disk)
-			user.drop_item()
-			W.set_loc(src)
-			src.diskette = W
-			boutput(user, "You insert [W].")
-			update_static_data(usr)
-			return
-		else if(src.diskette)
-			boutput(user, SPAN_ALERT("There's already a disk inside!"))
-		else if(!src.setup_has_internal_disk)
-			boutput(user, SPAN_ALERT("There's no visible peripheral device to insert the disk into!"))
 
-	else if (isscrewingtool(W))
+	if (isscrewingtool(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
-
-	else if(istype(W, /obj/item/card/id))
-		var/obj/item/peripheral/card_scanner/dv = get_card_scanner()
-		if (!dv)
-			src.Attackhand(user)
-			return
-
-		if (dv.authid)
-			boutput(user, SPAN_ALERT("There is already a card inserted!"))
-		else
-			usr.drop_item()
-			W.loc = src
-			dv.authid = W
-			update_static_data(usr)
 		return
 
-	else
-		src.Attackhand(user)
-	return
+	var/string_failreason = ""
+	for(var/obj/item/peripheral/P in src.peripherals)
+		var/interactResult = P.itemInteract(W, user)
+		if(!interactResult)//If false then interaction was valid and we can leave
+			src.Attackhand(user)
+			src.updateUsrDialog()
+			return
+		else //Interaction is truthy, so either we have a reason for failure or no reason. Either way we skip.
+			if(istext(interactResult))
+				string_failreason = interactResult;
 
-/obj/machinery/computer3/proc/get_card_scanner()
-	. = locate(/obj/item/peripheral/card_scanner) in src.peripherals
-	if (!.)
-		. = locate(/obj/item/peripheral/card_scanner/editor) in src.peripherals
-	if (!.)
-		. = locate(/obj/item/peripheral/card_scanner/register) in src.peripherals
-	if (!.)
-		. = locate(/obj/item/peripheral/card_scanner/clownifier) in src.peripherals
+	if(string_failreason != "")
+		boutput(user, SPAN_ALERT(string_failreason))
+		return
+
+	src.Attackhand(user)
+	return
 
 /obj/machinery/computer3/proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 	if(!ispath(setup_frame_type, /obj/computer3frame))
@@ -632,18 +590,12 @@
 		A.peripherals.Add(C)
 		C.uninstalled()
 
-	if(src.diskette)
-		src.diskette.set_loc(src.loc)
-		src.diskette = null
-
 	if(src.hd)
 		src.hd.set_loc(A)
 		A.hd = src.hd
 		src.hd = null
 
-	A.mainboard = new /obj/item/motherboard(A)
-	A.mainboard.created_name = src.name
-	A.mainboard.integrated_floppy = src.setup_has_internal_disk
+	A.mainboard = src.mainboard
 
 
 	A.anchored = ANCHORED
@@ -703,11 +655,6 @@
 		if (hd.loc == src)
 			hd.dispose()
 		hd = null
-
-	if (diskette)
-		if (diskette.loc == src)
-			diskette.dispose()
-		diskette = null
 
 	if (peripherals)
 		for (var/obj/P in peripherals)
@@ -824,6 +771,7 @@
 		return
 
 	post_system()
+		if(src.mainboard)src.temp_add += src.mainboard.bios_version+"<br>"
 		src.temp_add += "Initializing system...<br>"
 
 		if(!src.hd)
@@ -836,14 +784,20 @@
 				src.active_program.initialize()
 
 		else
-			if(src.diskette && src.diskette.root)
-				var/datum/computer/file/terminal_program/os/newos = locate(/datum/computer/file/terminal_program/os) in src.diskette.root.contents
+			if(!src.host_program)
+				for(var/obj/item/disk/data/D in src)
+					if(D == src.hd)
+						continue
 
-				if(newos && istype(newos))
-					src.temp_add += "Booting from diskette...<br>"
-					src.run_program(newos)
-				else
-					src.temp_add += "<font color=red>Non-system disk or disk error.</font><br>"
+					var/datum/computer/file/terminal_program/os/newos = locate() in D.root.contents
+
+					if(newos && istype(newos))
+						if(findtext(lowertext(D.title), "disk"))
+							src.temp_add += "Booting from "+D.title+"...<br>"
+						else
+							src.temp_add += "Booting from "+D.title+" diskette...<br>"
+						src.run_program(newos)
+						break
 
 			if(!src.host_program && src.hd && src.hd.root)
 				var/datum/computer/file/terminal_program/os/newos = locate(/datum/computer/file/terminal_program/os) in src.hd.root.contents
@@ -855,21 +809,7 @@
 					src.temp_add += "<font color=red>Unable to boot from fixed disk.</font><br>"
 
 			if(!src.host_program)
-				var/success = 0
-				for(var/obj/item/disk/data/D in src)
-					if(D == src.hd || D == src.diskette)
-						continue
-
-					var/datum/computer/file/terminal_program/os/newos = locate() in D.root.contents
-
-					if(istype(newos))
-						src.temp_add += "Booting from peripheral disk...<br>"
-						success = 1
-						src.run_program(newos)
-						break
-
-				if(!success)
-					src.temp_add += "<font color=red>ERR - BOOT FAILURE</font><br>"
+				src.temp_add += "<font color=red>ERR - BOOT FAILURE</font><br>"
 
 		src.updateUsrDialog()
 		return
@@ -882,18 +822,12 @@
 	if (src.hd)
 		cloneComp.hd = src.hd.clone()
 
-	if (src.diskette)
-		cloneComp.diskette = src.diskette.clone()
+	if (src.mainboard)
+		cloneComp.mainboard = src.mainboard.clone()
 
-	cloneComp.setup_starting_peripheral1 = src.setup_starting_peripheral1
-	cloneComp.setup_starting_peripheral2 = src.setup_starting_peripheral2
+	cloneComp.setup_starting_peripherals = src.setup_starting_peripherals
 
 	cloneComp.setup_starting_os = null
-	cloneComp.setup_idscan_path = src.setup_idscan_path
-	cloneComp.setup_has_internal_disk = src.setup_has_internal_disk
-
-	cloneComp.setup_font_color = src.setup_font_color
-	cloneComp.setup_bg_color = src.setup_bg_color
 
 	return cloneComp
 
@@ -1000,23 +934,12 @@
 
 		src.case.set_loc(get_turf(src))
 		src.set_loc(src.case)
+		tgui_process.close_uis(src)
 		src.deployed = 0
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
-			if ((!src.diskette) && src.setup_has_internal_disk)
-				user.drop_item()
-				W.set_loc(src)
-				src.diskette = W
-				boutput(user, "You insert [W].")
-				update_static_data(usr)
-			else if(src.diskette)
-				boutput(user, SPAN_ALERT("There's already a disk inside!"))
-			else if(!src.setup_has_internal_disk)
-				boutput(user, SPAN_ALERT("There's no visible peripheral device to insert the disk into!"))
-
-		else if (ispryingtool(W))
+		if (ispryingtool(W) || isscrewingtool(W))
 			if(!src.cell)
 				boutput(user, SPAN_ALERT("There is no energy cell inserted!"))
 				return
@@ -1029,7 +952,7 @@
 			update_static_data(usr)
 			return
 
-		else if (istype(W, /obj/item/cell))
+		if (istype(W, /obj/item/cell))
 			if(src.cell)
 				boutput(user, SPAN_ALERT("There is already an energy cell inserted!"))
 
@@ -1042,20 +965,6 @@
 				update_static_data(usr)
 			return
 
-		else if(istype(W, /obj/item/card/id))
-			var/obj/item/peripheral/card_scanner/dv = get_card_scanner()
-			if (!dv)
-				src.Attackhand(user)
-				return
-
-			if (dv.authid)
-				boutput(user, SPAN_ALERT("There is already a card inserted!"))
-			else
-				usr.drop_item()
-				W.loc = src
-				dv.authid = W
-				update_static_data(usr)
-			return
 		..()
 
 	grab_smash(obj/item/grab/G, mob/user)
@@ -1095,13 +1004,35 @@
 		if(!src.case)
 			src.case = new /obj/item/luggable_computer/personal(src)
 			src.case.luggable = src
+		. = ..()
 
-		for (var/obj/item/peripheral/peripheral in peripherals)
-			peripheral.uninstalled()
+//A personal version, but for an Arch Linux user!
 
-		src.case.set_loc(get_turf(src))
-		src.set_loc(src.case)
-		src.deployed = 0
-		return
+/obj/item/luggable_computer/techpersonal
+	name = "Custom-Built Laptop"
+	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
+	icon_state = "oldlapshut"
+	luggable_type = /obj/machinery/computer3/luggable/techpersonal
+	w_class = W_CLASS_NORMAL
+
+
+/obj/machinery/computer3/luggable/techpersonal
+	name = "Custom-Built Laptop"
+	desc = "A one-of-a-kind machine built with bleeding-edge components, including a mindblowing 4 kilobytes of RAM and a blazingly-fast 16-bit processor."
+	icon_state = "oldlap"
+	base_icon_state = "oldlap"
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd128/techcomputer3
+	setup_starting_peripherals = list(
+		/obj/item/peripheral/card_scanner,
+		/obj/item/peripheral/drive,
+		/obj/item/peripheral/drive,
+		/obj/item/peripheral/network/omni,
+		/obj/item/peripheral/cell_monitor)
+
+	undeploy()
+		if(!src.case)
+			src.case = new /obj/item/luggable_computer/techpersonal(src)
+			src.case.luggable = src
+		. = ..()
 
 #undef MAX_INPUT_HISTORY_LENGTH

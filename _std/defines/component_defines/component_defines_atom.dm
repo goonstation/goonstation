@@ -59,16 +59,42 @@
 	#define COMSIG_CORD_RETRACT "cord_retract"
 	/// sent to the signal jamming thing when it successfully blocks a signal (signal)
 	#define COMSIG_SIGNAL_JAMMED "signal_jammed"
+	/// sent when something was build out of a frame (thing, user, newly_build)
+	#define COMSIG_BUILD_FROM_FRAME "build_from_frame"
 
 // ---- minimap ----
 
 /// When an atom requires to create a single minimap marker for a specific minimap.
 #define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
 
+// ---- laser sink ----
+
+/// Sent to an object when a laser hits it (laser)
+#define COMSIG_LASER_INCIDENT "laser_incident"
+/// Sent to a sink's parent when a laser successfully connects to it (laser) - return COMPONENT_LASER_BLOCKED to reject connection
+#define COMSIG_LASER_CONNECTED "laser_connected"
+/// Sent to an object when a laser stops hitting it (laser)
+#define COMSIG_LASER_EXIDENT "laser_exident"
+/// Sent to a sink's parent when a laser disconnects from it (laser)
+#define COMSIG_LASER_DISCONNECTED "laser_disconnected"
+/// Sent to a parent when laser traversal is requested (proc_to_call)
+#define COMSIG_LASER_TRAVERSE "laser_traverse"
+/// Return flag for COMSIG_LASER_CONNECTED: reject the laser
+#define COMPONENT_LASER_BLOCKED (1<<0)
+
 // ---- machinery ----
 
 /// When this piece of machinery calls its process function
 #define COMSIG_MACHINERY_PROCESS "machinery_process"
+/// When the HPD wants to check if this machine has a node it can remove (thing, used_HPD). returns TRUE is it is the case.
+#define COMSIG_MACHINERY_HAS_REMOVEABLE_FLUID_NODE "machinery_has_removeable_fluid_node"
+/// When the HPD wants to check if this machine could potentionally have a node (thing, used_HPD). returns TRUE is it is the case.
+#define COMSIG_MACHINERY_CAN_RECEIVE_FLUID_NODE "machinery_can_receive_fluid_node"
+/// When the HPD tries to order the object to remove their internal fluid node (thing, used_HPD). returns TRUE if sucessfull.
+#define COMSIG_MACHINERY_REMOVE_FLUID_NODE "machinery_remove_fluid_node"
+/// sent when the fluid pipe gets initialized (thing)
+#define COMSIG_FLUID_PIPE_ON_INIT "fluid_pipe_on_init"
+
 
 // ---- atom/movable signals ----
 
@@ -115,6 +141,10 @@
 	#define COMSIG_TURF_REPLACED "turf_replaced"
 	/// when an atom inside the turfs contents changes density (turf, previous_density, thing)
 	#define COMSIG_TURF_CONTENTS_SET_DENSITY "turf_contents_set_density"
+	/// when a fluid port is created on this turf
+	#define COMSIG_TURF_FLUID_PORT_CREATED "turf_fluid_port_created"
+	/// this is used to receive a list with all fluid ports on a tile (thing, list_for_pipes)
+	#define COMSIG_TURF_FLUID_PORT_PING "turf_fluid_fluid_port_ping"
 
 // ---- obj signals ----
 
@@ -289,6 +319,8 @@
 	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
 	/// Sent when a mob changes its lying state (lying)
 	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
+	/// Sent to cancel a mob viewing a camera
+	#define COMSIG_MOB_CANCEL_CAMERA "mob_cancel_camera"
 
 	// ---- cloaking device signal ----
 

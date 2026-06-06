@@ -588,6 +588,7 @@
 /* -------------------- Dramatic Bike Horn -------------------- */
 
 TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 2
 
 /obj/item/instrument/bikehorn/dramatic
@@ -641,6 +642,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 /obj/item/instrument/bikehorn/blue
 	name = "blue bike horn"
 	icon_state = "bike_horn_blue"
+	item_state = "bike_horn_blue"
 
 /* -------------------- Harmonica -------------------- */
 

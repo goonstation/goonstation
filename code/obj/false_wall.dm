@@ -169,6 +169,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.name = src.material ? "false [src.material.getName()] wall" : "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
 		SPAWN(delay)
+			if (!istype(src, /turf/simulated/wall/false_wall))
+				return // can change type during SPAWN
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			//actually do the opening things
 			src.set_density(0)
@@ -177,7 +179,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			src.pathable = 1
 			src.update_air_properties()
 			src.set_opacity(0)
-			if(!floorintact)
+			if(!src.floorintact)
 				src.setIntact(FALSE)
 				src.levelupdate()
 			update_nearby_tiles()
@@ -221,8 +223,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			var/static/list/s_connects_to = typecacheof(list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-			/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
-			/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
+			/obj/window, /obj/mapping_helper/wingrille_spawn,
 			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
 			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn))
 

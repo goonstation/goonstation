@@ -1,4 +1,5 @@
 TYPEINFO(/obj/submachine/slot_machine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/slot_machine

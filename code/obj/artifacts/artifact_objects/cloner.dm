@@ -56,6 +56,7 @@
 			deep_count--
 			clone = semi_deep_copy(H, O, copy_flags=COPY_SKIP_EXPLOITABLE) // admins made me do it
 			clone.remove_filter("cloner_art_outline")
+			clone.is_npc = TRUE
 		else
 			// a bunch of stolen cloner code
 			clone = new /mob/living/carbon/human/clone(O)
@@ -74,8 +75,8 @@
 
 		if(swapSouls && H.mind)
 			clone.is_npc = FALSE
-			H.is_npc = TRUE
 			H.mind.transfer_to(clone)
+			H.is_npc = TRUE
 		APPLY_ATOM_PROPERTY(clone, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
 		clone.changeStatus("unconscious", imprison_time) // so they don't ruin the surprise
 		O.ArtifactFaultUsed(H)
@@ -103,15 +104,15 @@
 						H.fake_say(phrase_log.random_phrase("say"))
 						sleep(randfloat(1 SECOND, 3 SECONDS))
 						H.fake_say(phrase_log.random_phrase("say"))
-				src.make_evil(H)
+				src.make_evil(H, O)
 		else
-			src.make_evil(clone)
+			src.make_evil(clone, O)
 
 		SPAWN(imprison_time)
 			if (!O.disposed)
 				O.ArtifactDeactivated()
 
-	proc/make_evil(mob/living/carbon/human/clone)
+	proc/make_evil(mob/living/carbon/human/clone, obj/O)
 		set waitfor = FALSE
 		if(clone)
 			sleep(evil_delay)
@@ -119,6 +120,7 @@
 			clone.ai_init()
 			clone.ai_aggressive = 1
 			clone.ai_calm_down = 0
+			clone.ai_origin_object = O
 			sleep(randfloat(3 SECOND, 20 SECONDS))
 			while (!isdead(clone) && isnull(clone.client) && !QDELETED(clone))
 				clone.fake_say(phrase_log.random_phrase("say"))

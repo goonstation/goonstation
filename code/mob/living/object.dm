@@ -130,6 +130,11 @@
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object")
 		..()
 
+	Entered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if (OldLoc?.loc == src) // if you enter the object from inside of it, pop out. for stuff like living closets eating people
+			AM.set_loc(src.loc)
+
 	Exited(var/atom/movable/AM, var/atom/newloc)
 		if (AM == src.possessed_thing && newloc != src)
 			src.death(FALSE) //uh oh
@@ -184,7 +189,7 @@
 			if (D_ENERGY)
 				src.TakeDamage(null, 0, damage)
 
-		if(!P.proj_data.silentshot)
+		if(!P.proj_data.no_hit_message)
 			boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	blob_act(var/power)
@@ -408,7 +413,9 @@
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
 	else
-		if(!ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay))
+		var/obj/item/equipped = holder.owner.equipped()
+		var/delay = max(holder.owner.combat_click_delay, equipped.click_delay)
+		if(!ON_COOLDOWN(holder.owner, "livingobj_click_delay", delay))
 			var/atom/movable/thing_to_attack = holder.target
 			if (isobj(thing_to_attack.loc))
 				thing_to_attack = thing_to_attack.loc

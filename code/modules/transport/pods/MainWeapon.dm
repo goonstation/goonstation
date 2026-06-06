@@ -43,9 +43,7 @@
 		if(src.ship.uses_weapon_overlays && src.appearanceString)
 			var/image/weap_image = image('icons/effects/64x64.dmi', "[src.appearanceString]")
 			weap_image.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
-			weap_image.color = src.color
-			weap_image.alpha = src.alpha
-			weap_image.filters = src.filters.Copy()
+			src.copy_appearance_to_image(weap_image)
 			src.ship.UpdateOverlays(weap_image, "mainweapon")
 
 	ship_uninstall()
@@ -108,7 +106,11 @@
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			return
 		else
-			boutput(user, "[ship.ship_message("[remaining_ammunition] shots remaining.")]")
+			if(remaining_ammunition <= ship.AmmoPerShot())  //Janky because this gets called before ammo is decremented by shooting.
+				boutput(user, "[ship.ship_message("<b>All ammunition expended.</b>")]")
+			else
+				boutput(user, "[ship.ship_message("[remaining_ammunition - ship.AmmoPerShot()] shots remaining.")]")
+
 
 	var/rdir = ship.dir
 	if (shot_dir_override > 1)
@@ -253,6 +255,7 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 8
 
 /obj/item/shipcomponent/mainweapon/gun/pod_wars //normal nukies can have the fun version
 	firerate = 20
@@ -267,6 +270,7 @@
 	current_projectile = new/datum/projectile/bullet/akm/pod
 	icon_state = "minigun"
 	muzzle_flash = "muzzle_flash"
+	contraband = 6
 
 /obj/item/shipcomponent/mainweapon/gun_9mm
 	name = "PEP-9 Ballistic System"
@@ -278,6 +282,7 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 5
 
 /obj/item/shipcomponent/mainweapon/gun_9mm/uses_ammo
 	name = "PEP-9L Ballistic System"
@@ -296,6 +301,7 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 4
 
 /obj/item/shipcomponent/mainweapon/gun_22/uses_ammo
 	name = "PEP-22L Ballistic System"
@@ -316,6 +322,7 @@
 	shots_to_fire = 3
 	spread = 30
 	large_pod_compatible = FALSE
+	contraband = 10
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
@@ -337,6 +344,7 @@
 	appearanceString = "pod_weapon_hammer_railgun"
 	icon_state = "hammer-railgun"
 	muzzle_flash = "muzzle_flash_launch"
+	contraband = 8
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
@@ -371,6 +379,7 @@
 	firerate = 100
 	icon_state = "grenade-launcher"
 	muzzle_flash = "muzzle_flash_launch"
+	contraband = 10
 
 	lower_ammo
 		remaining_ammunition = 6
@@ -537,6 +546,7 @@
 #define LOAD_SUCCESS 2
 
 TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 50, "claretine" = 20, "electrum" = 10)
 
 /obj/item/shipcomponent/mainweapon/constructor
@@ -1131,6 +1141,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	desc = "An unfinished pod weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	firerate = 100
+	contraband = 100
 	var/increment
 	var/pod_is_large = FALSE
 	var/core_inserted = FALSE

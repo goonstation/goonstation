@@ -2,6 +2,7 @@
 // haine wuz here and tore this file to bits!!!  f u we can have things in their own files and we SHOULD
 // rather than EVERYTHING BEING IN HALLOWEEN.DM AND KEELINSSTUFF.DM OKAY THINGS CAN BE IN OTHER FILES
 
+////TYPEINFO: THIS HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/items/storage.dmi'
@@ -12,7 +13,7 @@
 	var/list/can_hold = null
 	var/list/can_hold_exact = null
 	var/list/prevent_holding = null
-	var/check_wclass = 0
+	var/check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
 	var/datum/hud/storage/hud
 	var/sneaky = 0
 	var/stealthy_storage = FALSE
@@ -23,7 +24,6 @@
 	move_triggered = 1
 	flags = TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -61,7 +61,7 @@
 	icon_state = "box"
 	desc = "A box that can hold a number of small items."
 	max_wclass = W_CLASS_SMALL
-	soundproofing = 20
+	soundproofing = SOUNDPROOFING_MUTE
 
 /obj/item/storage/box/starter // the one you get in your backpack
 	name = "emergency box"

@@ -916,7 +916,7 @@
 							A.Attackhand(user, params)
 						attacked += A
 						A.throw_at(get_edge_target_turf(A,direction), 5, 3)
-						if (ishuman(A))
+						if (isnpc(A))
 							var/mob/living/carbon/human/H = A
 							if (isdead(H))
 								H.gib()
@@ -1377,6 +1377,19 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "syndiebarrier"
 
+/datum/item_special/barrier/void
+	image = "voidbarrier"
+	name = "Eldritch Projection"
+	desc = "Deploy a temporary barrier that reflects and amplifies projectiles. The barrier can be easily broken by any attack or a sustained push."
+	barrier_type = /obj/itemspecialeffect/barrier/void
+
+/obj/itemspecialeffect/barrier/void
+	name = "eldritch barrier"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "void-barrier"
+	amplify = 1
+	amplify_amount = 2
+
 /datum/item_special/flame
 	cooldown = 0
 	moveDelay = 5
@@ -1615,7 +1628,9 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
+		dash(target, params, user, reach)
 
+	proc/dash(atom/target, params, mob/user, reach)
 		if(params["left"] && (master && K) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
@@ -1698,7 +1713,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			afterUse(user)
 			//if (!hit)
 			playsound(master, 'sound/effects/sparks6.ogg', 70, FALSE)
-		return
 
 	proc/apply_dash_reagent(mob/user, var/turf/loc)
 		if(K.reagents?.total_volume > 1)
@@ -1723,6 +1737,16 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/mob/living/carbon/human/H = hit
 			H.do_disorient(src.stamina_damage, stunned = 10)
 
+/datum/item_special/katana_dash/thundering
+	staminaCost = 100
+
+	dash(atom/target, params, mob/user, reach)
+		var/turf/T1 = get_turf(user)
+
+		. = ..()
+		var/turf/T2 = get_turf(user)
+		if(BOUNDS_DIST(T1,T2))
+			lightning_bolt(T1, user, 1 SECOND)
 
 /datum/item_special/katana_dash/limb
 	cooldown = 0
@@ -2219,6 +2243,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		//mouse_opacity = 1
 		var/bump_count = 0
 		var/mob/master = 0
+		var/amplify = 0 // Will this effect the original damage/stun/power whatever of a projectile
+		var/amplify_amount = 0 // multiple for the amp/deamplification
 
 		setup(atom/location)
 			src.density = 1
@@ -2256,6 +2282,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				P.die()
 
 				if(Q)
+					if(amplify)
+						Q.power = Q.power * amplify_amount
 					src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 

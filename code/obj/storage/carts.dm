@@ -2,11 +2,12 @@
 	name = "supply cart"
 	desc = "A big rolling supply cart."
 	is_short = 1
+	icon = 'icons/obj/storage/cart.dmi'
 	icon_state = "cart"
 	icon_closed = "cart"
 	icon_opened = "cartopen"
 	icon_welded = "welded-crate"
-	soundproofing = 5
+	soundproofing = SOUNDPROOFING_INSIDE
 	throwforce = 50
 	flip_health = 4
 	can_flip_bust = 1
@@ -111,6 +112,8 @@
 		/obj/item/clothing/mask/surgical{pixel_x=-6; pixel_y=8} = 1,
 		/obj/item/device/detective_scanner{pixel_x=2;pixel_y=4} = 1,
 		/obj/item/spraybottle/detective{pixel_x=2; pixel_y=-4} = 1,
+		/obj/item/reagent_containers/applicator/brush/silver_nitrate{pixel_x=-1;pixel_y=1} = 1,
+		/obj/item/reagent_containers/applicator/brush/silver_nitrate{pixel_x=-3;pixel_y=3} = 1,
 	)
 
 /obj/storage/cart/forensic/security
@@ -150,6 +153,7 @@
 
 /obj/storage/cart/trash/syndicate
 	crunches_contents = 1
+	SYNDICATE_STEALTH_DESCRIPTION("There appears to be a crushing mechanism installed inside.", null)
 
 /obj/storage/cart/hotdog
 	name = "hotdog stand"
@@ -162,3 +166,4 @@
 /obj/storage/cart/hotdog/syndicate
 	crunches_contents = 1
 	crunches_deliciously = 1
+	SYNDICATE_STEALTH_DESCRIPTION("There appears to be a crushing mechanism installed inside.", null)

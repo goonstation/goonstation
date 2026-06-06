@@ -128,18 +128,37 @@
 
 	onLife(var/mult = 1)
 		..()
-		if (!(the_coffin?.disposed) && isturf(owner.loc) && istype(the_coffin,/obj/storage/closet/coffin))
-			owner.set_loc(the_coffin)
+		if (!(src.the_coffin?.disposed) && isturf(src.owner.loc) && istype(src.the_coffin, /obj/storage/closet/coffin))
+			src.owner.set_loc(the_coffin)
 
-		if (istype(owner.loc,/obj/storage/closet/coffin))
+		if (istype(src.owner.loc,/obj/storage/closet/coffin))
 			the_coffin = null
-			if (isdead(owner))
-				owner.full_heal()
-				if (ishuman(owner)) // oof
-					var/mob/living/carbon/human/owner_human = owner
-					owner_human.decomp_stage = DECOMP_STAGE_NO_ROT
-					owner_human.update_face()
-					owner_human.update_body()
+			if (isdead(src.owner))
+				if (ismobcritter(src.owner))
+					src.owner.full_heal()
+				else // bring them to just above crit, not full
+					if (src.owner.ghost?.mind)
+						src.owner.ghost.mind.transfer_to(src.owner)
+						if(isliving(src.owner))
+							var/mob/living/L = src.owner
+							L.is_npc = FALSE
+						if(isobserver(src.owner.ghost))
+							qdel(src.owner.ghost)
+					src.owner.take_oxygen_deprivation(-INFINITY)
+					setalive(src.owner)
+					src.owner.stabilize()
+					src.owner.delStatus("drowsy")
+					src.owner.remove_stuns()
+					src.owner.delStatus("slowed")
+					src.owner.delStatus("nausea")
+					src.owner.delStatus("critical_condition")
+					src.owner.delStatus("recent_trauma")
+					src.owner.delStatus("muted")
+					if (ishuman(src.owner))
+						var/mob/living/carbon/human/owner_human = src.owner
+						owner_human.decomp_stage = DECOMP_STAGE_NO_ROT
+						owner_human.update_face()
+						owner_human.update_body()
 			else
 				if (ishuman(owner))
 					changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)

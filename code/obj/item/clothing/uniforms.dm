@@ -535,6 +535,16 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
 
+/obj/item/clothing/under/rank/pharmacist
+	name = "pharmacist's jumpsuit"
+	desc = "Proves you know how to make chemicals explode and/or heal people."
+	icon_state = "pharmacist"
+	item_state = "pharmacist"
+
+	april_fools
+		icon_state = "pharmacist-alt"
+		item_state = "pharmacist-alt"
+
 /obj/item/clothing/under/rank/pathologist
 	name = "pathologist's jumpsuit"
 	desc = "Scientifically proven to block up to 99% of pathogens."
@@ -542,8 +552,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 	item_state = "pathology"
 
 	april_fools
-		icon_state = "medical-alt"
-		item_state = "medical-alt"
+		icon_state = "pharmacist-alt"
+		item_state = "pharmacist-alt"
 
 // Engineering
 
@@ -684,6 +694,9 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 /obj/item/clothing/under/misc/clown
 	name = "clown suit"
 	desc = "You are likely taking your life into your own hands by wearing this."
+	icon = 'icons/obj/clothing/jumpsuits/item_js_clown.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_clown.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_clown.dmi'
 	icon_state = "clown"
 	item_state = "clown"
 
@@ -1614,10 +1627,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 	item_state = "collar_shirt-white"
 	var/shirt_colour_name = "white"
 
-	New()
-		..()
-		src.name = "[src.shirt_colour_name] collar shirt"
-		src.desc = "A plain [src.shirt_colour_name] collared shirt."
+/obj/item/clothing/under/misc/collar_shirt/New()
+	..()
+	src.name = "[src.shirt_colour_name] collar shirt"
+	src.desc = "A plain [src.shirt_colour_name] collared shirt."
+	src.AddComponent(/datum/component/cycle_tuck, base_name = src.item_state)
 
 /obj/item/clothing/under/misc/collar_shirt/white
 	icon_state = "collar_shirt-white"
@@ -2160,6 +2174,39 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/tea_party_dress)
 	icon_state = "tea_party_dress-yellow"
 	item_state = "tea_party_dress-yellow"
 
+// Hawaiian shirts
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/hawaiian_shirt)
+/obj/item/clothing/under/misc/hawaiian_shirt
+	name = "hawaiian shirt"
+	desc = "You're ready to party! Just kidding, you work here. You don't get invited to parties."
+	icon_state = "floral-red"
+	item_state = "floral-red"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/red
+	name = "red hawaiian shirt"
+	icon_state = "floral-red"
+	item_state = "floral-red"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/yellow
+	name = "yellow hawaiian shirt"
+	icon_state = "floral-yellow"
+	item_state = "floral-yellow"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/black
+	name = "black hawaiian shirt"
+	icon_state = "floral-black"
+	item_state = "floral-black"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/pink
+	name = "pink hawaiian shirt"
+	icon_state = "floral-pink"
+	item_state = "floral-pink"
+
+/obj/item/clothing/under/misc/hawaiian_shirt/sec
+	name = "security hawaiian shirt"
+	icon_state = "floral-sec"
+	item_state = "floral-sec"
+
 // New chaplain stuff
 
 /obj/item/clothing/under/gimmick/weirdo
@@ -2167,3 +2214,53 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/tea_party_dress)
 	desc = "The symbols on this teal jumpsuit are entirely alien to you. It almost speaks to you of an ancient belief lost to time"
 	icon_state = "weirdo"
 	item_state = "weirdo"
+
+
+// Seasonal spring clothing
+
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/sundress)
+/obj/item/clothing/under/misc/sundress
+	name = "sundress"
+	desc = "a lightweight warm-weather dress"
+	icon_state = "sundress-red"
+	item_state = "sundress-red"
+	hide_underwear = TRUE
+
+	red
+		name = "red sundress"
+
+	green
+		name = "green sundress"
+		icon_state = "sundress-green"
+		item_state = "sundress-green"
+	blue
+		name = "blue sundress"
+		icon_state = "sundress-blue"
+		item_state = "sundress-blue"
+	yellow
+		name = "yellow sundress"
+		icon_state = "sundress-yellow"
+		item_state = "sundress-yellow"
+
+/obj/item/clothing/under/misc/poetshirt
+	name = "poet shirt"
+	desc = "a loose-fitting, ruffled shirt"
+	icon_state = "poetshirt-white"
+	item_state = "poetshirt-white"
+
+	yellow
+		name = "yellow poet shirt"
+		icon_state = "poetshirt-yellow"
+		item_state = "poetshirt-yellow"
+	blue
+		name = "blue poet shirt"
+		icon_state = "poetshirt-blue"
+		item_state = "poetshirt-blue"
+	red
+		name = "red poet shirt"
+		icon_state = "poetshirt-red"
+		item_state = "poetshirt-red"
+	black
+		name = "black poet shirt"
+		icon_state = "poetshirt-black"
+		item_state = "poetshirt-black"

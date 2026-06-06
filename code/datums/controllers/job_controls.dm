@@ -4,6 +4,7 @@ var/datum/job_controller/job_controls
 	var/list/staple_jobs = list()
 	var/list/special_jobs = list()
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
+	var/list/datum/forced_assignment/forced_assignments = list()
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
 	var/datum/job/created/job_creator = null
 	var/datum/job/priority_job = null
@@ -109,10 +110,14 @@ var/datum/job_controller/job_controls
 			return
 		if (job.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			return
-		if (job.requires_whitelist && !player.client.can_play_whitelisted_roles())
+		if (job.requires_whitelist == REQUIRES_WHITELIST_ALWAYS && !player.client.can_play_whitelisted_roles())
 			return
-		if (job.requires_supervisor_job && countJob(job.requires_supervisor_job) <= 0)
+		if (job.requires_whitelist == REQUIRES_WHITELIST_USUALLY && !player.client.can_play_whitelisted_roles() && (!IS_IT_SATURDAY))
 			return
+		if (job.requires_supervisor_job)
+			var/datum/job/boss_job = find_job_in_controller_by_string(job.requires_supervisor_job)
+			if (boss_job?.assigned <= 0)
+				return
 		return TRUE
 
 	/// attempts to assign a player to a job from a list of either job datums or job strings

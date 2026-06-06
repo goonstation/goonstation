@@ -698,11 +698,11 @@ CONTAINS:
 
 	proc/cut_open()
 		for (var/obj/O in src)
-			O.set_loc(get_turf(src))
+			O.set_loc(src.loc)
 		for (var/mob/M in src)
 			M.changeStatus("knockdown", 0.5 SECONDS)
-			M.set_loc(get_turf(src))
-		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, get_turf(src))
+			M.set_loc(src.loc)
+		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, src.loc)
 		B.icon_state = "balloon_black_pop"
 		B.name = "body bag"
 		B.desc = "The remains of a body bag"
@@ -711,11 +711,11 @@ CONTAINS:
 	proc/open()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in src)
-			O.set_loc(get_turf(src))
+			O.set_loc(src.loc)
 		for (var/mob/M in src)
 			M.changeStatus("knockdown", 0.5 SECONDS)
 			SPAWN(0.3 SECONDS)
-				M.set_loc(get_turf(src))
+				M.set_loc(src.loc)
 		src.open = 1
 		src.UpdateIcon()
 
@@ -985,13 +985,18 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 
 					var/the_brain = H.get_organ("brain") // don't need to know anything about it other than "is it there?"
 					var/braind = H.get_brain_damage()
+					var/unresponsive = isdead(H) //Tracks being regular dead or braindead - neither should respond to the penlight.
 					if (!the_brain || isnum(braind))
-						if (!the_brain || braind >= BRAIN_DAMAGE_LETHAL) // braindead as heck
-							if (leye) lmove = "[His_Her] left eye doesn't follow the light at all!"
-							if (reye) rmove = "[His_Her] right eye doesn't follow the light at all!"
-							if (!the_brain)
-								if (leye) lpreact = "doesn't react to the light at all!"
-								if (reye) rpreact = "doesn't react to the light at all!"
+						if (!the_brain || braind >= BRAIN_DAMAGE_LETHAL || unresponsive) // braindead as heck
+							unresponsive = TRUE
+							if(!rpstatus) rpstatus = " The pupil " // If you have drugs in your system, keep the description of the pupils.
+							if(!lpstatus) lpstatus = " The pupil "
+							if (leye)
+								lmove = "[His_Her] left eye doesn't follow the light at all!"
+								lpreact = "doesn't react to the light at all!"
+							if (reye)
+								rmove = "[His_Her] right eye doesn't follow the light at all!"
+								rpreact = "doesn't react to the light at all!"
 						else if (braind >= BRAIN_DAMAGE_MAJOR) // when one becomes a gibbering mess
 							if (reye)
 								rmove = "[His_Her] right eye doesn't follow the light at all!"
@@ -1009,7 +1014,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 						lmove = SPAN_ALERT("[He_She] has no left eye!")
 						lpstatus = null
 						lpreact = null
-					else
+					else if(!unresponsive)
 						if (!lmove) lmove = "[His_Her] left eye follows the light easily."
 						if (!lpstatus) lpstatus = " The pupil "
 						if (!lpreact) lpreact = "constricts normally."
@@ -1018,7 +1023,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 						rmove = SPAN_ALERT("[He_She] has no right eye!")
 						rpstatus = null
 						rpreact = null
-					else
+					else if(!unresponsive)
 						if (!rmove) rmove = "[His_Her] right eye follows the light easily."
 						if (!rpstatus) rpstatus = " The pupil "
 						if (!rpreact) rpreact = "constricts normally."

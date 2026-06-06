@@ -21,6 +21,7 @@
 	icon_state = "carrier-full"
 	item_state = "carrier-open"
 	w_class = W_CLASS_BULKY
+	default_material = "plastic"
 
 	/// Please override this in child types to specify what can actually fit in.
 	var/allowed_mob_types = list(/mob/living/critter/small_animal, /mob/living/critter/wraith/plaguerat, /obj/item/rocko)
@@ -226,7 +227,7 @@
 		src.add_mob(thing_to_trap)
 		user.update_inhands()
 
-	/// Called when a given mob/user releases an mob after an actionbar.
+	/// Called when a given mob/user releases a mob after an actionbar.
 	proc/release_mob(atom/movable/thing_to_release, mob/user)
 		if (thing_to_release)
 			src.eject_mob(thing_to_release)

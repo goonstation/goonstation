@@ -74,6 +74,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_OBSERVER, "ai_eye")
+		src.setStatus("camera_awareness", INFINITE_STATUS)
 
 	Login()
 		.=..()
@@ -145,7 +146,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 	proc/add_all_statics()
 #ifndef SKIP_CAMERA_COVERAGE
-		if (!src.loc)
+		if (!src.loc || !src.client)
 			return
 		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
 			src.client.images |= T.aiImage
@@ -191,9 +192,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 				src.client.images |= T.aiImage
 #endif
 
-	proc/update_statics()	//update seperate from move(). Mostly same code.
-		return
-
 	set_loc(atom/newloc)
 		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION) // Sorry!
 			src.return_mainframe()
@@ -231,7 +229,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 				if(in_ai_range)
 					O.receive_silicon_hotkey(src)
 				else
-					src.show_text("Your mainframe was unable relay this command that far away!", "red")
+					src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 				return
 
 		//var/inrange = in_interact_range(target, src)
@@ -378,7 +376,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if(mainframe)
 			last_loc = src.loc
 			mainframe.return_to(src)
-			update_statics()
 		else
 			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return

@@ -23,4 +23,7 @@
 
 		global.oscillate_colors(src, message.maptext_animation_colours)
 
+	for (var/datum/callback/callback as anything in message.maptext_callbacks)
+		callback.Invoke(message, src)
+
 	. = ..()

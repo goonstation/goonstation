@@ -148,7 +148,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "aI" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "utility sink";
@@ -1475,7 +1475,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "gm" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A water-filled unit intended for laundry purposes.";
 	dir = 4;
 	name = "utility sink";
@@ -1965,7 +1965,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ij" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A water-filled unit intended for sanitation purposes.";
 	name = "medical sink";
 	pixel_y = 16
@@ -3159,9 +3159,7 @@
 	})
 "nj" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access_txt = "777"
-	},
+/obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
 	dir = 4;
@@ -4133,8 +4131,7 @@
 "qQ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	name = "Compartment Access";
-	req_access_txt = ""
+	name = "Compartment Access"
 	},
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
@@ -4485,8 +4482,7 @@
 	})
 "sr" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	name = "Compartment Access";
-	req_access_txt = ""
+	name = "Compartment Access"
 	},
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
@@ -4856,7 +4852,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "tI" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A common utility sink.";
 	dir = 8;
 	name = "utility sink";
@@ -7310,7 +7306,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 16
 	},
@@ -7593,8 +7589,7 @@
 "Fg" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	name = "Compartment Access";
-	req_access_txt = ""
+	name = "Compartment Access"
 	},
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
@@ -8438,7 +8433,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "IH" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = 2
@@ -8911,7 +8906,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Lb" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	tag = "icon-sink (NORTH)"
 	},
@@ -9549,7 +9544,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Nn" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 4
 	},
@@ -9828,9 +9823,7 @@
 	})
 "Oe" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access_txt = "777"
-	},
+/obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/door/poddoor/blast{
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
 	dir = 4;
@@ -10567,9 +10560,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "RA" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	req_access_txt = "777"
-	},
+/obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/carpet/grime,
 /area/solarium{
