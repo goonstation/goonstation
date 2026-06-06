@@ -177,20 +177,26 @@ TYPEINFO(/obj/item/saw/syndie)
 		else
 			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, FALSE)
 
+	proc/butcher(mob/user, mob/living/carbon/C)
+		logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
+		take_bleeding_damage(C, user, 50)
+		playsound(C.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+		for (var/i=0, i<3, i++)
+			new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
+		if (C.mind)
+			C.ghostize()
+		qdel(C)
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!active)
 			return ..()
 		if (iscarbon(target))
 			var/mob/living/carbon/C = target
 			if (isdead(C))
-				logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
-				for (var/i=0, i<3, i++)
-					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
-				if (C.mind)
-					C.ghostize()
-					qdel(C)
-				else
-					qdel(C)
+				playsound(src, 'sound/machines/chainsaw_red.ogg', 50, TRUE)
+				actions.start(new /datum/action/bar/private/icon/callback(
+					user, target, 3 SECONDS, PROC_REF(butcher), list(user, target), null, null, SPAN_ALERT("[user] skillfully butchers [C]'s corpse into a pile of meat!"), null, src
+				), user)
 				return
 
 		if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))

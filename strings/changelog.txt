@@ -1,4 +1,38 @@
 
+(t)fri jun 05 26
+(u)Valtsu0
+(p)26769
+(e)🆕📄🌱|C-Feature, A-UI, A-Hydroponics
+(*)A collection of all the types of fish that you have fished across rounds can be found by using the Fish Collection verb
+(u)LeahTheTech
+(+)Finishing the fish collection will reward you with a fancy fishing rod.
+(p)26784
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Razors hidden in flat caps can now be used to blind people. Requires an aggressive grab and head targeting, blocked by anything that covers the eyes.
+(+)Gang crates can now contain flat caps with razors hidden in them.
+(u)TemThrush & Yelloworlemons
+(p)26797
+(e)🎨|C-Sprites
+(+)Interacting with hairbows while holding them will let you re-tie them into new styles.
+(u)bamlord
+(p)26799
+(e)|
+(+)Gorillas have learned how to rip off all your limbs.
+(u)LorrMaster
+(p)26684
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Custom space suit reinforcement material impacts suit appearance.
+(t)thu jun 04 26
+(u)LeahTheTech
+(+)Slugs and snails now eat plants out of hydroponics trays. Grief botany today!
+(t)wed jun 03 26
+(u)Driftered
+(p)26748
+(e)|
+(*)Cyborgs may now choose their crayon color instead of swapping until they get what they want.
+(t)wed jun 3 26
+(u)LeahTheTech
+(+)Syndie chainsaw butchering now has a 3 second action bar to prevent accidental gibbings (whole bodies make better plant food)
 (t)sun may 31 26
 (u)Pirate-Rob
 (p)26087
@@ -43,7 +77,7 @@
 (u)LeahTheTech
 (p)26521
 (e)🗺⚖🧛|A-Mapping, C-Balance, A-Gamemodes
-(*)The listening post barracks are now locked until the syndicate codereader has scanned an authentication disk. The barracks contain the syndicate apparel vendor, 2TC, and a syndicate announcement computer.
+(*)The listening post barracks are now locked until the syndicate codereader has scanned an authentication disk. The barracks contain the syndicate apparel vendor, 2TC, and a deployable turret.
 (u)Lord_Earthfire
 (p)26266
 (e)🆕⚗|C-Feature, A-Chemistry

@@ -2900,7 +2900,11 @@ TYPEINFO(/obj/item/ore_scoop)
 
 	attack_self(var/mob/user as mob)
 		if(issilicon(user))
-			boutput(user, SPAN_ALERT("The satchel is firmly secured to the scoop."))
+			src.collect_junk = !src.collect_junk
+			if (src.collect_junk)
+				boutput(user, SPAN_NOTICE("Now collecting junk."))
+			else
+				boutput(user, SPAN_NOTICE("No longer collecting junk."))
 			return
 		if (!satchel)
 			src.collect_junk = !src.collect_junk
