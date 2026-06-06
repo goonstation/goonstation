@@ -449,6 +449,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/cod = 20,\
 	/obj/item/reagent_containers/food/fish/dace = 15,\
 	/obj/item/reagent_containers/food/fish/minnow = 15,\
+	/obj/item/reagent_containers/food/fish/rosefin_shiner = 15,\
 	/obj/item/reagent_containers/food/fish/flounder = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
