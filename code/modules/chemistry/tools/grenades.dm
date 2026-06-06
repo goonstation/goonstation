@@ -39,6 +39,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	var/maximum_grenade_time = 15 SECONDS
 	/// time intervals you are able to set the grenade to
 	var/interval_grenade_time = 3 SECONDS
+	/// Maximum grenade range, if lower than contained reagent dispersal range, limits to this range.
+	var/dispersal_range_limit
 	HELP_MESSAGE_OVERRIDE("Use in your active hand (by clicking on pressing C) to activate, then throw (hold space and click on a tile).")
 
 /obj/item/chem_grenade/New()
@@ -180,6 +182,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 		steam.attach(src)
 		steam.start()
 		var/min_dispersal = src.reagents.get_dispersal()
+		if(src.dispersal_range_limit && src.dispersal_range_limit < min_dispersal)
+			min_dispersal = src.dispersal_range_limit
 		for (var/atom/A in range(min_dispersal, get_turf(src.loc)))
 			if ( A == src ) continue
 			if (src?.reagents) // Erik: fix for cannot execute null.grenade effects()
@@ -560,11 +564,12 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
+	dispersal_range_limit = 2 //Phlog dust has a dispersal range of 4 (7 tiles across)
 
 /obj/item/chem_grenade/incendiary/New()
 	..()
 	var/obj/item/reagent_containers/glass/B1 = new(src)
-	B1.reagents.add_reagent("infernite", 20)
+	B1.reagents.add_reagent("firedust", 20)
 	src.beakers += B1
 
 /obj/item/chem_grenade/very_incendiary
