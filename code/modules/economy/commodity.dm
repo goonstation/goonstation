@@ -757,11 +757,17 @@ datum/commodity/drugs/sell/poppies
 	desc = "12 gauge ammo marked 12ga AEX Large Wildlife Dispersal Cartridge. Huh."
 	price = PAY::EMBEZZLED
 
+/datum/commodity/contraband/muckshot
+	comname = "12ga Muckshot"
+	comtype = /obj/item/ammo/bullets/a12/weak
+	desc = "Medium-power 12 gauge buckshot. Nominally sold for hunting purposes."
+	price = PAY::EMBEZZLED
+
 /datum/commodity/contraband/flare
 	comname = "12ga Flare Shells"
 	comtype = /obj/item/ammo/bullets/flare
 	desc = "Military-grade 12 gauge flare shells. Guaranteed to brighten your day."
-	price = PAY::EMBEZZLED
+	price = PAY::EMBEZZLED/2
 
 /datum/commodity/contraband/eguncell_highcap
 	comname = "High-Capacity Power Cell"
