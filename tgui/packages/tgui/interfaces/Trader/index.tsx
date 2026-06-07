@@ -188,7 +188,9 @@ const CommodityEntry = (props: CommodityProps) => {
     <Table.Row className="candystripe">
       <Table.Cell py="5px">
         <Box mb="5px">
-          <b>{commodity.name}</b> {commodity.amount_left != -1 && '— ' +commodity.amount_left + ' Left!'}
+          <b>{commodity.name}</b>{' '}
+          {commodity.amount_left !== -1 &&
+            '— ' + commodity.amount_left + ' Left!'}
         </Box>
         <BlockQuote>{commodity.description}</BlockQuote>
       </Table.Cell>
