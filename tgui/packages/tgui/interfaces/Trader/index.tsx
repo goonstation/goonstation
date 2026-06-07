@@ -199,7 +199,7 @@ const CommodityEntry = (props: CommodityProps) => {
           <Stack.Item>
             <Button
               icon={view_type === 'selling' ? 'cart-shopping' : 'coins'}
-              color={commodity.amount_left === 0 && 'gray'}
+              disabled={commodity.amount_left === 0}
               onClick={() =>
                 act(view_type === 'selling' ? 'purchase' : 'sell', {
                   ref: commodity.ref,
