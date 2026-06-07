@@ -38,8 +38,8 @@
 
 */
 //-- Reference -----------------------------------------------------------------
-
-verb/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num)/*
+dmm_suite
+	verb/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num)/*
 	Description:
 		Loads maps from DMM formatted text.
 	Arguments:
@@ -50,7 +50,7 @@ verb/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num)/*
 	Returns: TRUE if successful, FALSE otherwise
 	*/
 
-verb/write_map(turf/corner1, turf/corner2, flags as num)/*
+	verb/write_map(turf/corner1, turf/corner2, flags as num)/*
 	Description:
 		Writes all contents of a region of turfs to a DMM formatted string. The region is
 		defined as all turfs within a rectangular prism where t1 and t2 are opposite corners.
@@ -69,7 +69,7 @@ verb/write_map(turf/corner1, turf/corner2, flags as num)/*
 		location via read_map
 	*/
 
-verb/write_area(area/save_area, flags as num)/*
+	verb/write_area(area/save_area, flags as num)/*
 	Description: Writes all contents of the provided area to a DMM formatted string.
 	Arguments:
 		save_area: An area object to save.
@@ -78,7 +78,7 @@ verb/write_area(area/save_area, flags as num)/*
 		location via read_map
 	*/
 
-verb/write_cube(startX as num, startY as num, startZ as num, width as num, height as num, depth as num, flags as num)/*
+	verb/write_cube(startX as num, startY as num, startZ as num, width as num, height as num, depth as num, flags as num)/*
 	Descriptions:
 		Writes all contents of a region of turfs (defined by the provided arguments) to a
 		DMM formatted string.
@@ -91,7 +91,7 @@ verb/write_cube(startX as num, startY as num, startZ as num, width as num, heigh
 		location via read_map
 	*/
 
-verb/load_map(dmm_file as file, z_offset as num)/*
+	verb/load_map(dmm_file as file, z_offset as num)/*
 	Deprecated: load_map has been deprecated. Use or read_map instead.
 	Arguments:
 		dmm_file: A .dmm file to load (Required).
