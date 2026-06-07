@@ -145,6 +145,7 @@
 			name = commodity.comname,
 			description = (selling ? commodity.desc : commodity.desc_buy), //TODO: Demand buy description
 			price = commodity.price,
+			amount_left = commodity.amount,
 			ref = ref(commodity),
 		))
 
