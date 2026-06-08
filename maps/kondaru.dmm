@@ -46484,7 +46484,6 @@
 /area/station/routing/depot)
 "qjT" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "qkS" = (

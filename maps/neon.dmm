@@ -3876,6 +3876,14 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
+"cRk" = (
+/obj/machinery/light/incandescent/warm,
+/obj/noticeboard/persistent/detectives_office/directional/west,
+/obj/item/device/radio/intercom/detnet/detective{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "cRo" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/storage/tools)
@@ -11029,13 +11037,8 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "hIN" = (
-/obj/storage/cart/forensic,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/spraybottle/detective,
-/obj/machinery/power/apc/autoname_south,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -11897,7 +11900,6 @@
 /area/research_outpost)
 "ijm" = (
 /obj/mopbucket,
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "ijy" = (
@@ -14557,6 +14559,7 @@
 /obj/vehicle/floorbuffer{
 	dir = 8
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "jUK" = (
@@ -15655,6 +15658,7 @@
 "kJM" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/disposal/botany,
+/obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -21067,6 +21071,17 @@
 	dir = 8
 	},
 /area/station/medical/robotics)
+"oHo" = (
+/obj/blind_switch/area/south{
+	pixel_x = 8
+	},
+/obj/machinery/light_switch/south{
+	pixel_x = -8
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "oHw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29409,14 +29424,10 @@
 /turf/simulated/floor/damaged2,
 /area/diner/kitchen)
 "uCR" = (
-/obj/machinery/computer/secure_data/detective_computer,
-/obj/machinery/light/incandescent/warm,
 /obj/item/device/radio/intercom/brig{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/detnet/detective{
-	dir = 1
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "uCX" = (
@@ -30605,14 +30616,6 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "vyg" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/obj/blind_switch/area/south{
-	pixel_x = 8
-	},
-/obj/machinery/light_switch/south{
-	pixel_x = -8
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -33677,6 +33680,15 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge)
+"xxF" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
+/obj/storage/cart/forensic,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/hand_labeler,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "xxQ" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -91917,8 +91929,8 @@ vJG
 ofl
 swQ
 uCR
-dtp
-qpn
+cRk
+cnu
 qpn
 qpn
 qpn
@@ -92219,8 +92231,8 @@ hVV
 fsD
 hVV
 vyg
-dtp
-qpn
+oHo
+cnu
 qpn
 qpn
 qpn
@@ -92521,8 +92533,8 @@ hrg
 kkD
 ntC
 hIN
-dtp
-qpn
+xxF
+cnu
 qpn
 qpn
 qpn
@@ -92823,8 +92835,8 @@ imr
 imr
 imr
 imr
-dtp
-qpn
+imr
+cnu
 qpn
 qpn
 qpn

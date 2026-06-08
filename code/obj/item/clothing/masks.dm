@@ -160,6 +160,7 @@
 	color_b = 0.95
 
 TYPEINFO(/obj/item/clothing/mask/moustache)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 2
 
 /obj/item/clothing/mask/moustache
@@ -170,7 +171,6 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	see_face = FALSE
 	w_class = W_CLASS_TINY
 	c_flags = null
-	is_syndicate = 1
 
 	setupProperties()
 		..()
@@ -273,6 +273,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_b = 1
 
 TYPEINFO(/obj/item/clothing/mask/gas/voice)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/clothing/mask/gas/voice
@@ -281,20 +282,19 @@ TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 	//vchange = 1
-	is_syndicate = 1
 
 	New()
 		..()
 		src.vchange = new(src)
 
 TYPEINFO(/obj/item/voice_changer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/voice_changer
 	name = "voice changer"
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discreetly fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
-	is_syndicate = 1
 	var/permanent = FALSE
 	var/speech_modifiers = list(SPEECH_MODIFIER_VOICE_CHANGER)
 	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
@@ -309,6 +309,7 @@ TYPEINFO(/obj/item/voice_changer)
 	HELP_MESSAGE_OVERRIDE({"Use the voice anonymizer on a face-concealing mask to fit it inside. You will speak as and appear in chat as "unknown". Use wirecutters on the mask to remove the voice changer."})
 
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12	// 2x voice changer cost. It's complicated ok
 
 /obj/item/clothing/mask/monkey_translator

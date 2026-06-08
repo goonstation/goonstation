@@ -104,7 +104,7 @@
 
 		// Inform the player about the uplink and save information regarding it to the owner's memory.
 		if (istype(uplink_source, /obj/item/device/pda2))
-			boutput(H, "The Syndicate have cunningly disguised a head revolutionary uplink as your [uplink_source.name] [loc_string]. Simply enter the the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
+			boutput(H, "The Syndicate have cunningly disguised a head revolutionary uplink as your [uplink_source.name] [loc_string]. Simply enter the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
 			logTheThing(LOG_DEBUG, H, "Head revolutionary PDA uplink created: [uplink_source.name]. Location given: [loc_string]. Code: [uplink.lock_code]")
 			src.owner.store_memory("<b>Uplink password:</b> [uplink.lock_code].")
 		else if (istype(uplink_source, /obj/item/device/radio))

@@ -126,7 +126,7 @@
 		return
 
 	// If the say channel permits, apply the effects of all modifiers, otherwise only those that override say channel preferences.
-	var/was_uncool = global.phrase_log.is_uncool(message.content)
+	var/was_uncool = global.phrase_log.is_uncool(message.get_content_parsable())
 	if (global.SpeechManager.GetSayChannelInstance(message.output_module_channel).affected_by_modifiers)
 		for (var/modifier_id in src.speech_modifiers_by_id)
 			message = src.speech_modifiers_by_id[modifier_id].process(message)
@@ -141,18 +141,18 @@
 				return
 
 	// If a combination of message modifiers caused the message's content to become uncool, log the modifier combination and garble the uncool words.
-	if (!was_uncool && global.phrase_log.is_uncool(message.content))
+	if (!was_uncool && global.phrase_log.is_uncool(message.get_content_parsable()))
 		var/list/modifier_ids
 		if (global.SpeechManager.GetSayChannelInstance(message.output_module_channel).affected_by_modifiers)
 			modifier_ids = src.speech_modifiers_by_id.Copy()
 		else
 			modifier_ids = src.persistent_speech_modifiers_by_id.Copy()
 
-		logTheThing(LOG_ADMIN, message.speaker, "[message.speaker] tried to say \"[message.original_content]\" but it was garbled into \"[message.content]\", which is uncool by the following effects: [jointext(modifier_ids, ", ")]. The uncool words were garbled.")
+		logTheThing(LOG_ADMIN, message.speaker, "[message.speaker] tried to say \"[message.get_original_content()]\" but it was garbled into \"[message.get_content()]\", which is uncool by the following effects: [jointext(modifier_ids, ", ")]. The uncool words were garbled.")
 		message.content = replacetext(message.content, global.phrase_log.uncool_words, pick("urr", "blargh", "der", "hurr", "pllt"))
 
 	// Check for URLs if we're an IC channel, let people paste wiki links at each other in LOOC if they want to.
-	if ((message.flags & SAYFLAG_SPOKEN_BY_PLAYER) && !global.SpeechManager.GetSayChannelInstance(message.output_module_channel).allows_urls && global.url_regex.Find(message.content))
+	if ((message.flags & SAYFLAG_SPOKEN_BY_PLAYER) && !global.SpeechManager.GetSayChannelInstance(message.output_module_channel).allows_urls && global.url_regex.Find(message.get_content_parsable()))
 		if (ismob(message.speaker))
 			boutput(message.speaker, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
 

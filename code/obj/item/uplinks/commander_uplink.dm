@@ -28,7 +28,7 @@
 			if (!istype(client_mob))
 				continue
 			num_players++
-		points = max(2, round(num_players / PLAYERS_PER_UPLINK_POINT))
+		points = max(2, floor(num_players / PLAYERS_PER_UPLINK_POINT))
 #ifdef BONUS_POINTS
 		points = 9999
 #endif

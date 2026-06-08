@@ -2572,6 +2572,7 @@ proc/get_mobs_trackable_by_AI()
 	if (src.mind)
 		src.mind.register_death()
 		src.mind.get_player()?.dnr = TRUE
+	respawn_controller.subscribeNewRespawnee(src.ckey)
 	var/mob/dead/observer/ghost = src.ghostize()
 	ghost.corpse = null //no coming back
 

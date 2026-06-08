@@ -105,6 +105,8 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/list/triggersOnHit = list()
 	/// Called when the material is interpolated with another.
 	VAR_PROTECTED/list/triggersOnMix = list()
+	/// Called when the material appearance is applied to an image
+	VAR_PROTECTED/list/triggersOnImage = list()
 
 
 	New()
@@ -391,6 +393,10 @@ ABSTRACT_TYPE(/datum/material)
 	proc/specialNaming(atom/target)
 		. = target.name
 
+	proc/overwriteTrigger(var/trigger_type, var/list/mat_procs_new)
+		src.vars[trigger_type] = mat_procs_new
+		return
+
 	proc/triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/datum/materialProc/X in triggersOnEntered)
 			X.execute(owner, entering)
@@ -469,6 +475,11 @@ ABSTRACT_TYPE(/datum/material)
 	proc/triggerOnMix(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		for(var/datum/materialProc/X in triggersOnMix)
 			X.execute(new_mat, old_matA, old_matB, bias)
+		return
+
+	proc/triggerOnImage(var/image/target)
+		for(var/datum/materialProc/X in triggersOnImage)
+			X.execute(target, src) // Need to include the material for the image
 		return
 
 	proc/calc_radiation_prot()
@@ -1781,6 +1792,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		// maybe make it sticky somehow?
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/honey_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/honey_remove())
+		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 
 
 /datum/material/organic/frozenfart
@@ -1862,6 +1874,34 @@ ABSTRACT_TYPE(/datum/material/organic)
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
+
+/datum/material/organic/mycelium
+	mat_id = "mycelium"
+	name = "mycelium"
+	desc = "The structure of mushrooms that can be molded into a surprisingly versatile building material."
+	color = list(0.90, 0.10, 0.00, 0.00,\
+				0.10, 0.80, 0.00, 0.00,\
+				0.00, 0.00, 0.80, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.30, 0.00, 0.00,\
+					0.00, 0.00, 1.50, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.08, 0.20, -0.30, 0.00)
+	texture = list("mycelium_a", "mycelium_b", "mycelium_c")
+	texture_blend = BLEND_DEFAULT
+	edible_exact = 1
+	edible = 1
+
+	New()
+		..()
+		setProperty("hard", 3)
+		setProperty("density", 2)
+		setProperty("electrical", 3)
+		setProperty("thermal", 3)
+		setProperty("flammable", 3)
+		addTrigger(TRIGGERS_ON_MIX, new /datum/materialProc/mycelium_mix())
 
 /datum/material/organic/ectoplasm
 	mat_id = "ectoplasm"
@@ -2315,4 +2355,10 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		new_mat.removeProperty("n_radioactive")
 		new_mat.removeTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radioactive_add)
 		new_mat.removeTrigger(TRIGGERS_ON_ADD, /datum/materialProc/n_radioactive_add)
+		return
+
+/datum/materialProc/mycelium_mix
+	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
+		if(old_matA.getEdible() && old_matB.getEdible())
+			new_mat.overwriteTrigger(TRIGGERS_ON_EAT, list())
 		return

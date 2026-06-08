@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/chef
 	name = "Chef"
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_chef")
 	access_string = "Chef"
 	slot_belt = list(/obj/item/device/pda2/chef)
@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Bartender"
 	alias_names = list("Barman")
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_drinker", "training_bartender")
 	access_string = "Bartender"
 	slot_belt = list(/obj/item/device/pda2/bartender)
@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/botanist
 	name = "Botanist"
 	limit = 5
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Botanist"
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_jump = list(/obj/item/clothing/under/rank/hydroponics)
@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/rancher
 	name = "Rancher"
 	limit = 1
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Rancher"
 	slot_belt = list(/obj/item/storage/belt/rancher/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/rancher)
@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/janitor
 	name = "Janitor"
 	limit = 3
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Janitor"
 	slot_belt = list(/obj/item/storage/fanny/janny)
 	slot_jump = list(/obj/item/clothing/under/rank/janitor)
@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/chaplain
 	name = "Chaplain"
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_chaplain")
 	access_string = "Chaplain"
 	slot_jump = list(/obj/item/clothing/under/rank/chaplain)
@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/staff_assistant
 	name = "Staff Assistant"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	no_jobban_from_this_job = TRUE
 	low_priority_job = TRUE
@@ -124,7 +124,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/mail_courier
 	name = "Mail Courier"
 	alias_names = "Mailman"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Mail Courier"
 	limit = 1
 	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
@@ -141,9 +141,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/clown
 	name = "Clown"
 	limit = 1
-	wages = PAY_DUMBCLOWN
+	wages = PAY::DUMBCLOWN
 	request_limit = 3 //this is definitely a bad idea
-	request_cost = PAY_TRADESMAN*4
+	request_cost = PAY::TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	ui_colour = TGUI_COLOUR_PINK

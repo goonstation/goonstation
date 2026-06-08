@@ -128,9 +128,7 @@
 		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0)
 			return
 
-		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.content
-		message = STRIP_MUTABLE_CONTENT_TAGS(message)
-		message = sanitize(adminscrub(message))
+		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.get_content()
 		if (!message)
 			return
 
