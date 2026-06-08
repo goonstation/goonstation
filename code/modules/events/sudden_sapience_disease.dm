@@ -52,5 +52,3 @@
 					else
 						tgui_alert(picked_npc, "You are not an antagonist! Humans can't understand you, but a vocal translator can change that.", "You are not an antagonist!")
 				message_ghosts("<b>[picked_npc.real_name] has become sapient.</b>")
-		else
-			return
