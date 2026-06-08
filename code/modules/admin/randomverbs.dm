@@ -6,27 +6,6 @@
 	else
 		world.Reboot()
 
-/client/proc/rebuild_flow_networks()
-	set name = "Rebuild Flow Networks"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	make_fluid_networks()
-
-/client/proc/print_flow_networks()
-	set name = "Print Flow Networks"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	DEBUG_MESSAGE("Dumping flow network refs")
-	for_by_tcl(network, /datum/flow_network)
-		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
-	for_by_tcl(network, /datum/flow_network)
-		DEBUG_MESSAGE("Printing flow network rooted at [showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)] (\ref[network])")
-		// Clear DFS flags
-		network.clear_DFS_flags()
-		DFS_LOUD(network.nodes[1])
-
 /client/proc/cmd_admin_drop_everything(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
@@ -359,7 +338,9 @@
 			var/path = text2path(split[i])
 			if(ispath(path, /obj/item/aiModule))
 				var/obj/item/aiModule/module = new path(ticker.ai_law_rack_manager.default_ai_rack)
-				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, TRUE, TRUE)
+				if (module.wonky)
+					module.pixel_x = rand(-2, 2)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, module.can_be_secured, module.can_be_secured)
 				if(istype(module,/obj/item/aiModule/hologram_expansion))
 					var/obj/item/aiModule/hologram_expansion/holo = module
 					ticker.ai_law_rack_manager.default_ai_rack.holo_expansions |= holo.expansion
@@ -471,88 +452,6 @@
 	logTheThing(LOG_ADMIN, usr, "stabilized [constructTarget(M,"admin")]")
 	logTheThing(LOG_DIARY, usr, "stabilized [constructTarget(M,"diary")]", "admin")
 	message_admins(SPAN_ALERT("Admin [key_name(usr)] stabilized [key_name(M)]!"))
-
-/client/proc/cmd_admin_create_centcom_report()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Create Command Report"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
-	if(!input)
-		return
-	var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Central Command Update'", "What?", "") as null|text
-	if(!input3)
-		input3 = "Central Command Update"
-
-	if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report(input2, input)
-
-		var/sound_to_play = 'sound/misc/announcement_1.ogg'
-		command_alert(input, input2, sound_to_play, alert_origin = input3);
-
-		logTheThing(LOG_ADMIN, src, "has created a command report: [input]")
-		logTheThing(LOG_DIARY, src, "has created a command report: [input]", "admin")
-		message_admins("[key_name(src)] has created a command report")
-
-/client/proc/cmd_admin_create_advanced_centcom_report()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Adv. Command Report"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
-	if (!input)
-		return
-	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
-	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		var/sound_to_play = 'sound/misc/announcement_1.ogg'
-		advanced_command_alert(input, input2, sound_to_play);
-
-		logTheThing(LOG_ADMIN, src, "has created an advanced command report: [input]")
-		logTheThing(LOG_DIARY, src, "has created an advanced command report: [input]", "admin")
-		message_admins("[key_name(src)] has created an advanced command report")
-
-/client/proc/cmd_admin_advanced_centcom_report_help()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Adv. Command Report - Help"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	var/T = {"<TT><h1>Advanced Command Report</h1><hr>
-	This report works exactly like the normal report, except it sends a tailored message
-	to each mob in the world, replacing some values with values applicable to them.
-	If you're not planning to use this feature, then I recommend the normal command report as it is
-	less demanding on resources.
-	<table border=1>
-		<tr>
-			<td>%name%
-			<td>The name of the mob currently viewing the report
-		<tr>
-			<td>%key%
-			<td>The key of the mob currently viewing the report
-		<tr>
-			<td>%job%
-			<td>The job of the mob currently viewing the report
-		<tr>
-			<td>%area_name%
-			<td>The name of the area where the mob currently viewing the report is.
-		<tr>
-			<td>%srand_name%
-			<td>The name of a random player, this is the same for everyone viewing the report.
-		<tr>
-			<td>%srand_job%
-			<td>The job of a random player, this is the same for everyone viewing the report.
-		<tr>
-			<td>%mrand_name%
-			<td>The name of a random player, this is <B>different</B> for everyone viewing the report.
-		<tr>
-			<td>%mrand_job%
-			<td>The job of a random player, this is <B>different</B> for everyone viewing the report.
-
-		</table>"}
-	usr.Browse(T, "window=adv_com_help;size=700x500")
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -905,7 +804,7 @@
 				if (new_race == "Remove")
 					src.mutantrace = null
 			else
-				boutput(src, "You must be at least a Administrator to polymorph mutantraces.")
+				boutput(src, "You must be at least an Administrator to polymorph mutantraces.")
 
 		else if(href_list["apply"])
 			src.copy_to_target()
@@ -1395,6 +1294,9 @@
 			var/obj/fluid/F = target
 			if (F.group && F.group.reagents)
 				reagents = F.group.reagents
+		if (istype(target, /obj/fluid_pipe))
+			var/obj/fluid_pipe/pipe = target
+			reagents = pipe.network.reagents
 		if (!reagents)
 			boutput(usr, SPAN_NOTICE("<b>[target] contains no reagents.</b>"))
 			return
@@ -1578,6 +1480,9 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/fluid = A
 		reagents = fluid.group?.reagents
+	else if (istype(A, /obj/fluid_pipe))
+		var/obj/fluid_pipe/pipe = A
+		reagents = pipe.network.reagents
 	else if(!A.reagents)
 		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
 		reagents = A.reagents

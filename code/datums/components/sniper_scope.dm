@@ -70,7 +70,7 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 	scoped = !scoped
 
 /datum/component/holdertargeting/sniper_scope/proc/begin_sniping(mob/user)
-	user.override_movement_controller = src.movement_controller
+	user.add_movement_controller(src.movement_controller)
 	src.movement_controller.start()
 	user.keys_changed(0,0xFFFF)
 	SEND_SIGNAL(parent, COMSIG_SCOPE_TOGGLED, TRUE)
@@ -82,7 +82,7 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 		playsound(user, src.scope_sound, 50, TRUE)
 
 /datum/component/holdertargeting/sniper_scope/proc/stop_sniping(mob/user)
-	user.override_movement_controller = null
+	user.remove_movement_controller(src.movement_controller)
 	src.movement_controller.stop()
 	SEND_SIGNAL(parent, COMSIG_SCOPE_TOGGLED, FALSE, user)
 	user.keys_changed(0,0xFFFF)

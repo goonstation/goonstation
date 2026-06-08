@@ -97,6 +97,12 @@ task-test-ci() {
   yarn run tgui:test-ci
 }
 
+## Normalizes SVG line endings to LF
+task-normalize-svgs() {
+  cd "${base_dir}"
+  yarn run tgui:normalize-svgs
+}
+
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
@@ -176,9 +182,27 @@ task-validate-build() {
 ## Installs merge drivers and git hooks
 task-install-git-hooks() {
   cd "${root_dir}"
-  git config --replace-all merge.tgui-merge-bundle.driver \
-    "${root_dir}/tgui/bin/tgui --merge=bundle %P %O %A %B %L"
-  echo "tgui: Merge drivers have been successfully installed!"
+  if git config --get-all merge.tgui-merge-bundle.driver >/dev/null 2>&1; then
+    git config --unset-all merge.tgui-merge-bundle.driver || true
+    echo "tgui: removed legacy merge.tgui-merge-bundle driver"
+  fi
+  local installer="${root_dir}/tools/bootstrap/python"
+  if [ ! -x "${installer}" ]; then
+    echo "tgui: bootstrap Python launcher not found at ${installer}" >&2
+    exit 1
+  fi
+
+  local base_choice
+  local include_base=0
+  printf "Do you want to install map merge and icon merge hooks? (Y/N): "
+  read -r base_choice
+  if [[ ${base_choice} =~ ^[Yy]$ ]]; then
+    include_base=1
+  fi
+
+  HOOKS_INCLUDE_TGUI=1 HOOKS_INCLUDE_BASE=${include_base} "${installer}" -m hooks.install
+
+  echo "tgui: Git hooks have been installed"
   exit 0
 }
 
@@ -270,10 +294,17 @@ if [[ ${1} == '--test-ci' ]]; then
   exit 0
 fi
 
+if [[ ${1} == '--normalize-svgs' ]]; then
+  task-install
+  task-normalize-svgs
+  exit 0
+fi
+
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
+  shift 1
   task-install
-  task-rspack --mode=production --analyze
+  task-rspack --mode=production --env RSDOCTOR=1 "${@}"
   exit 0
 fi
 

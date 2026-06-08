@@ -29,7 +29,6 @@
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
-		src.update_access_from_txt()
 #ifdef CHECK_MORE_RUNTIMES
 		if (src.req_access && !islist(src.req_access))
 			stack_trace("[src] ([src.type]) initialized at \[[src.x], [src.y], [src.z]\] with non-list req_access >:(")
@@ -362,8 +361,7 @@
 			W.set_dir(dirbuffer)
 		W.set_loc(src.loc)
 		if (imprecise) // place item imprecisely by randomising offset
-			W.pixel_x = rand(-10, 10) // offsets avoid the edges just for niceness
-			W.pixel_y = rand(-10, 10)
+			RANDOMIZE_PIXEL_OFFSET(W, 10)
 		else if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16

@@ -1,6 +1,8 @@
 /datum/ore/event
 	var/analysis_string = "Caution! Anomaly detected!"
 	var/excavation_string = null
+	var/mining_alert_string = null // replaces the excavation string for the user if they have mining alerts active
+	var/excavation_alert_sound = null /// only played while mining alerts is active
 	var/distribution_range = 2
 	var/nearby_tile_distribution_min = 0
 	var/nearby_tile_distribution_max = 0
@@ -19,6 +21,8 @@
 /datum/ore/event/gem
 	analysis_string = "Small extraneous mineral deposit detected."
 	excavation_string = "Something shiny tumbles out of the collapsing rock!"
+	mining_alert_string = "Excavated gem-quality crystalline deposit."
+	excavation_alert_sound = 'sound/effects/gem_drop.ogg'
 	scan_decal = "scan-gem"
 	var/gem_type = /obj/item/raw_material/gemstone
 
@@ -86,6 +90,7 @@
 /datum/ore/event/gem/molitz_b
 	analysis_string = "Small unusual crystalline deposit detected."
 	excavation_string = "Something unusual tumbles out of the collapsing rock!"
+	mining_alert_string = "Excavated anomalous, aesthetically favourable silicate."
 
 	set_up(var/datum/ore/parent)
 		if (..())

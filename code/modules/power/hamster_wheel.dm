@@ -15,7 +15,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 	anchored = UNANCHORED
 	density = 1
 	p_class = 3
-	soundproofing = 0
+	soundproofing = SOUNDPROOFING_ON
 	maptext_y = -32
 	deconstruct_flags = DECON_MULTITOOL | DECON_WELDER | DECON_WRENCH | DECON_WIRECUTTERS
 	var/mob_y_offset = 5

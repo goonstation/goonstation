@@ -179,7 +179,7 @@
 	desc = "I wonder if this is still fresh?"
 	icon_state = "water"
 	item_state = "water"
-	initial_volume = 25
+	initial_volume = 75
 	initial_reagents = "water"
 
 /obj/item/reagent_containers/food/drinks/mate
@@ -249,44 +249,66 @@
 /obj/item/reagent_containers/food/drinks/fruitmilk
 	name = "Creaca's Fruit Milk "
 	desc = "Milk and 'fruit' of undetermined origin; finally, together at last."
-	icon_state = "fruitmilk"
+	icon_state = "fruitmilk-pineapple"
+	item_state = "fruitmilk"
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("milk"=20)
+	New()
+		. = ..()
+
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = 'icons/obj/foodNdrink/drinks.dmi', \
+			reagent_overlay_icon_state = "fruitmilk", \
+			reagent_overlay_states = 5, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)
 
 	New()
 		switch(rand(1,10))
 			if (1)
 				src.name += "Synthetic Tropical Dawn flavor"
+				icon_state = "fruitmilk-pineapple"
 				src.initial_reagents["juice_pineapple"] = 30
 			if (2)
 				src.name += "Changing Cherry Red flavor"
+				icon_state = "fruitmilk-cherry"
 				src.initial_reagents["juice_cherry"] = 30
 			if (3)
 				src.name += "Curdled Lemon Twist flavor"
+				icon_state = "fruitmilk-lemon"
 				src.initial_reagents["juice_lemon"] = 30
 			if (4)
 				src.name += "Earth Dreamer Lime flavor"
+				icon_state = "fruitmilk-lime"
 				src.initial_reagents["juice_lime"] = 30
 			if (5)
 				src.name += "Odyssey Orange flavor"
+				icon_state = "fruitmilk-orange"
 				src.initial_reagents["juice_orange"] = 30
 			if (6)
 				src.name += "Strawberry and Cream flavor"
+				icon_state = "fruitmilk-strawberry"
 				src.initial_reagents["juice_strawberry"] = 30
 			if (7)
 				src.name += "Seasonal Peach Blossom flavor"
+				icon_state = "fruitmilk-peach"
 				src.initial_reagents["juice_peach"] = 30
 			if (8)
 				src.name += "Surprise Mystery flavor"
+				icon_state = "fruitmilk-mystery"
 				src.initial_reagents["juice_pickle"] = 20
 				src.initial_reagents["neurodepressant"] = 5
 				src.initial_reagents["msg"] = 5
 			if (9)
 				src.name += "Little Soups flavor"
+				icon_state = "fruitmilk-tomato"
 				src.initial_reagents["juice_tomato"] = 30
 			if (10)
 				src.name += "Artificial Autumn flavor"
+				icon_state = "fruitmilk-autumn"
 				src.initial_reagents["juice_pumpkin"] = 30
 
 		..()
@@ -334,6 +356,8 @@
 		if (src.is_sealed)
 			is_sealed = 0
 			src.set_open_container(TRUE)
+			src.desc += " Its seal has been opened."
+			tooltip_rebuild = TRUE
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE
@@ -343,7 +367,7 @@
 				src.reagents.reaction(user)
 				src.reagents.clear_reagents()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
+				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediately sprayed with its contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
 			else
 				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return
@@ -539,7 +563,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 	babel_blast
 		name = "Grones Soda Mountain Grones Babel Blast flavor" //by warcrimes
 		label = "babel"
-		initial_reagents = (list("cola"=20, "suomium"=5, "quebon"=5, "swedium"=5, "caledonium"=5, "worcestershire_sauce"=5))
+		initial_reagents = (list("cola"=20, "suomium"=5, "quebon"=5, "swedium"=5, "caledonium"=5, "yorkshire_sauce"=5))
 
 	jungle_juice
 		name = "Grones Soda Jammin' Jambalaya Jungle Juice flavor" //by Camryn Buttes
@@ -547,7 +571,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 		initial_reagents = (list("cola"=20, "strawberry_milk"=1, "ricewine"=1, "boorbon"=1, "diesel"=1, "irishcoffee"=1,
 		"vanilla"=1, "harlow"=1, "espressomartini"=1, "ectocooler"=1, "bread"=1, "sarsaparilla"=1, "eggnog"=1,
 		"chocolate"=1, "guacamole"=1, "salt"=1, "gravy"=1, "mashedpotatoes"=1, "msg"=1, "mugwort"=1, "juice_cran"=1,
-		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "worcestershire_sauce"=1, "fakecheese"=1,
+		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "yorkshire_sauce"=1, "fakecheese"=1,
 		"capsaicin"=1, "paper"=1, "chalk"=1)) //pain; a little of everything
 
 /obj/item/reagent_containers/food/drinks/ddpumpkinspicelatte
@@ -604,7 +628,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 				src.initial_reagents["suomium"] = 2
 				src.initial_reagents["swedium"] = 2
 				src.initial_reagents["innitium"] = 2
-				src.initial_reagents["worcestershire_sauce"] = 2
+				src.initial_reagents["yorkshire_sauce"] = 2
 			if (6)
 				src.name += "- SUPER SPICED Pumpkin Latte"
 				src.desc = {"\"Discount Dan's is not responsible for any ignition, incineration,

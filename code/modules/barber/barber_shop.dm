@@ -286,6 +286,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "dye"
 	flags = TABLEPASS
+	default_material = "plastic"
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left
@@ -357,7 +358,6 @@
 	name = "barber pole"
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "pole"
-	density = 1
 	anchored = ANCHORED
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
 

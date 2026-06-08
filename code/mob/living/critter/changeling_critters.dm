@@ -155,6 +155,10 @@ TYPEINFO(/mob/living/critter/changeling)
 			src.icon_prefix = "robo"
 			src.UpdateIcon()
 
+		// Grant crystal snaps if the mob we (presumably) spawn from has "dactyl crystallization".
+		if (hivemind_owner && hivemind_owner.owner.bioHolder.HasEffect("chime_snaps"))
+			src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
+
 		RegisterSignal(src, COMSIG_MOB_PICKUP, PROC_REF(stop_sprint))
 		RegisterSignal(src, COMSIG_MOB_DROPPED, PROC_REF(enable_sprint))
 
@@ -187,6 +191,7 @@ TYPEINFO(/mob/living/critter/changeling)
 			. += 7
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		var/message
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
@@ -195,7 +200,6 @@ TYPEINFO(/mob/living/critter/changeling)
 			if("flip")
 				if(src.emote_check(voluntary, 50))
 					var/list/mob/living/possible_targets = list()
-					var/message
 					//Check if we have any nearby mobs
 					for(var/mob/living/L in oview(1))
 						possible_targets += L
@@ -220,6 +224,11 @@ TYPEINFO(/mob/living/critter/changeling)
 						animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 						message = "<B>[src]</B> does a flip!"
 
+					return message
+			if ("snap","snapfingers","fingersnap","click","clickfingers")
+				if (src.emote_check(voluntary, 3 SECONDS)) // "Dactyl crystallization" is accounted for on `New()`.
+					message = "The <b>[src.name]</b> snaps [his_or_her(src)] fingers."
+					playsound(src.loc, src.sound_fingersnap, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return message
 		return null
 
@@ -402,7 +411,7 @@ TYPEINFO(/mob/living/critter/changeling)
 					C.organHolder.receive_organ(E, "right_eye", 2)
 					C.update_body()
 			else
-				dna_gain = 2 // bad_ideas.txt
+				dna_gain = CHANGELING_EYESPIDER_COST // bad_ideas.txt
 
 		boutput(hivemind_owner.owner, SPAN_NOTICE("An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]"))
 		hivemind_owner.points += dna_gain

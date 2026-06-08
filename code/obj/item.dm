@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/wear_state = null
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
+	var/image/worn_material_texture_image = null
 	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -123,6 +124,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/contraband = 0 // If nonzero, bots consider this a thing people shouldn't be carrying without authorization
 	var/edible = 0 // can you eat the thing?
 	var/eat_sound = 'sound/items/eatfood.ogg'
+	var/can_arcplate = TRUE //! Determines whether this item can be arcplated by default
 
 	/*_____*/
 	/*Other*/
@@ -587,9 +589,9 @@ ABSTRACT_TYPE(/obj/item)
 				ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)
 				var/msg = "([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)]"
 				if (W?.firesource)
-					msg += " by item ([W]). Last touched by: [key_name(W.fingerprintslast)]"
+					msg += " by item ([W]). Last touched by: [key_name(W.get_last_ckey())]"
 				message_admins(msg)
-				logTheThing(LOG_BOMBING, W?.fingerprintslast, msg)
+				logTheThing(LOG_BOMBING, W?.get_last_ckey(), msg)
 
 	var/image/I = image('icons/effects/fire.dmi', null, "item_fire", pixel_y = 5) // pixel shift for centering
 	I.alpha = 180
@@ -768,7 +770,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!src.anchored)
 		click_drag_tk(over_object, src_location, over_location, over_control, params)
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostdrone(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -898,7 +900,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
 	var/atom/was_stored = src.stored?.linked_item
 
-	if(src.equipped_in_slot && src.cant_self_remove)
+	if(src.equipped_in_slot && (src.cant_self_remove || src.cant_drop))
 		return 0
 
 	was_stored?.storage.transfer_stored_item(src, get_turf(src), user = user)
@@ -1873,3 +1875,16 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/should_suppress_attack(var/object, mob/user, params)
 	return flags & SUPPRESSATTACK
 
+/obj/item/proc/getTexturedWornImage(var/texture, var/blendMode = BLEND_MULTIPLY)
+	if (!src.wear_image || !texture)
+		return null
+	var/icon/mask = GetTexturedIcon(icon(src.wear_image.icon, src.wear_image.icon_state), texture)
+	var/image/finished = image(mask,"")
+	finished.blend_mode = blendMode
+	return finished
+
+/obj/item/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
+	..()
+	if(key != "material")
+		return
+	src.worn_material_texture_image = src.getTexturedWornImage(texture, blendMode)

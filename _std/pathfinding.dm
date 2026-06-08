@@ -340,7 +340,7 @@
 		var/list/reached_target_goals = null
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
-				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf, /turf/simulated/wall) && !is_blocked_turf(current_turf))
+				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf, /turf/simulated/wall))
 					LAZYLISTADD(reached_target_goals, ends[T])
 					ends -= T
 		else if(current_turf in ends)
@@ -416,7 +416,7 @@
 		var/list/reached_target_goals = null
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
-				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall) && !is_blocked_turf(current_turf))
+				if(GET_DIST(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall))
 					LAZYLISTADD(reached_target_goals, ends[T])
 					ends -= T
 		else if(current_turf in ends)

@@ -5,11 +5,12 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	ui_colour = TGUI_COLOUR_ORANGE
 	slot_card = /obj/item/card/id/engineering
 	job_category = JOB_ENGINEERING
+	email_group = MGD_ENGINEER
 
 /datum/job/engineering/engineer
 	name = "Engineer"
 	limit = 8
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_engineer")
 	access_string = "Engineer"
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -20,6 +21,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_poc1 = list(/obj/item/device/pda2/engine)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
 #ifdef HOTSPOTS_ENABLED
 	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/clothing/shoes/stomp_boots)
 #else
@@ -46,7 +48,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering/technical_assistant
 	name = "Technical Trainee"
 	limit = 2
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_engineer")
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
@@ -59,6 +61,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
 	slot_poc1 = list(/obj/item/device/pda2/engine)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
 #ifdef HOTSPOTS_ENABLED
 	items_in_backpack = list(/obj/item/clothing/shoes/stomp_boots)
 #endif
@@ -68,7 +71,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering/quartermaster
 	name = "Quartermaster"
 	limit = 3
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_quartermaster")
 	access_string = "Quartermaster"
 	slot_glov = list(/obj/item/clothing/gloves/black)
@@ -79,6 +82,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/quartermaster)
 	slot_poc2 = list(/obj/item/device/appraisal)
 	wiki_link = "https://wiki.ss13.co/Quartermaster"
+	email_group = MGD_SUPPLY
 
 /datum/job/engineering/miner
 	name = "Miner"
@@ -87,7 +91,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	#else
 	limit = 5
 	#endif
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_miner")
 	access_string = "Miner"
 	invalid_antagonist_roles = list(ROLE_VAMPIRE)
@@ -113,3 +117,4 @@ ABSTRACT_TYPE(/datum/job/engineering)
 							/obj/item/paper/book/from_file/pocketguide/mining)
 	#endif
 	wiki_link = "https://wiki.ss13.co/Miner"
+	email_group = MGD_SUPPLY

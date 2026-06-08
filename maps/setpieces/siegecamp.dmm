@@ -541,16 +541,16 @@
 	name = "battlestaff";
 	pixel_x = 4
 	},
-/obj/item/barrier{
+/obj/item/barrier/collapsible/security{
 	pixel_x = -8
 	},
-/obj/item/barrier{
+/obj/item/barrier/collapsible/security{
 	pixel_x = -8
 	},
-/obj/item/barrier{
+/obj/item/barrier/collapsible/security{
 	pixel_x = -8
 	},
-/obj/item/barrier{
+/obj/item/barrier/collapsible/security{
 	pixel_x = -8
 	},
 /turf/unsimulated/floor/engine/glow/blue,
@@ -1138,7 +1138,7 @@
 /turf/unsimulated/floor/engine/glow/blue,
 /area/space)
 "Wg" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},

@@ -2,7 +2,7 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	var/call_reason = tgui_input_text(usr, "Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", allowEmpty = TRUE)
+	var/call_reason = strip_html(tgui_input_text(usr, "Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", allowEmpty = TRUE))
 
 	if (isnull(call_reason)) // Cancel
 		return
@@ -10,7 +10,7 @@
 		boutput(usr, "You can't call the shuttle because you are dead!")
 		return
 	if(get_z(src) != Z_LEVEL_STATION)
-		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
 	if (emergency_shuttle.online)

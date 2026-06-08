@@ -450,6 +450,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 
 
 TYPEINFO(/obj/item/sea_ladder)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 7
 
 /obj/item/sea_ladder
@@ -532,6 +533,7 @@ TYPEINFO(/obj/item/sea_ladder)
 					playsound(get_turf(clown), src.hitsound, 50, 1)
 
 TYPEINFO(/obj/naval_mine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 16
 
 /obj/naval_mine
@@ -564,7 +566,8 @@ TYPEINFO(/obj/naval_mine)
 
 	proc/boom()
 		if (src.active)
-			logTheThing(LOG_BOMBING, src.fingerprintslast, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			var/last_ckey = src.get_last_ckey()
+			logTheThing(LOG_BOMBING, last_ckey, "A naval mine explodes at [log_loc(src)]. Last touched by [replace_if_false(last_ckey, "None")].")
 			src.blowthefuckup(boom_str)
 
 

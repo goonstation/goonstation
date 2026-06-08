@@ -2,6 +2,7 @@
 
 ABSTRACT_TYPE(/datum/reagent/cement)
 ABSTRACT_TYPE(/datum/reagent/concrete)
+ABSTRACT_TYPE(/datum/reagent/glue)
 
 datum
 	reagent
@@ -36,12 +37,7 @@ datum
 			proc/explode(var/list/covered_turf, expl_reason)
 				var/turf/T = pick(covered_turf)
 				message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [log_loc(T)].")
-				var/context = "???"
-				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprints_full
-					var/list/fh = holder.my_atom.fingerprints_full
-
-					if (length(fh)) //Wire: Fix for: bad text or out of bounds
-						context = "Fingerprints: [jointext(fh, "")]"
+				var/context = holder.my_atom.get_adminprints()
 
 				logTheThing(LOG_COMBAT, usr, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [log_loc(T)]. Context: [context].")
 				explosion_new(usr, T, (12.5 * min(volume, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
@@ -111,6 +107,20 @@ datum
 			transparency = 255
 			// silver salts are toxic
 			overdose = 10
+
+			reaction_turf(var/turf/T, var/volume)
+				. = ..()
+				if(volume < 1)
+					return
+				OVERRIDE_COOLDOWN(T, "forensic_silver_nitrate", 30 SECONDS)
+				holder.remove_reagent(src.id, 1)
+
+			reaction_obj(var/obj/O, var/volume)
+				. = ..()
+				if(volume < 1)
+					return
+				OVERRIDE_COOLDOWN(O, "forensic_silver_nitrate", 30 SECONDS)
+				holder.remove_reagent(src.id, 1)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
@@ -835,12 +845,12 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(-1, 60 SECONDS, rgb(116,226,73))
+					simulated_target.wetify(-1, 60 SECONDS, rgb(164,188,98))
 
 		glue
-			name = "space glue"
-			id = "spaceglue"
-			description = "Industrial superglue that is sure to stick to everything."
+			name = "abstract glue parent"
+			id = "glue_parent"
+			description = "God's Lavish Unholy Excrement"
 			reagent_state = LIQUID
 			depletion_rate = 0.6
 			fluid_r = 230
@@ -850,24 +860,17 @@ datum
 			viscosity = 0.8
 			block_slippy = 1
 			var/counter
+			var/max_duration = null
+
+			proc/check_valid_obj(obj/O, volume)
+				if (O.anchored)
+					return FALSE
+				return TRUE
 
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
 					simulated_target.wetify(-2, 60 SECONDS)
-
-			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
-				if (!M) M = holder.my_atom
-				if (!counter) counter = 1
-				switch(counter += (1 * mult))
-					if(20 to INFINITY)
-						M.druggy = max(M.druggy, 15)
-						if (M.canmove && prob(20))
-							M.change_misstep_chance(5 * mult)
-						if(probmult(5)) M.emote(pick("twitch","drool","moan"))
-
-				..()
-				return
 
 			reaction_obj(obj/O, volume)
 				if(volume < 5)
@@ -878,6 +881,8 @@ datum
 					return
 				if(O.invisibility >= INVIS_ALWAYS_ISH)
 					return
+				if (!src.check_valid_obj(O, volume))
+					return
 				var/silent = FALSE
 				var/list/covered = holder.covered_turf()
 				if (length(covered) > 5)
@@ -887,12 +892,67 @@ datum
 					volume = min(volume, src.volume / (2 + 3 / length(covered)))
 				if(volume < 5)
 					return
-				O.AddComponent(/datum/component/glue_ready, null, clamp(volume/4, 3, 15) SECONDS)
+				O.AddComponent(/datum/component/glue_ready, max_duration, clamp(volume/4, 3, 15) SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
 					T.visible_message(SPAN_NOTICE("\The [O] is coated in a layer of glue!"))
 				if(istype(holder, /datum/reagents/fluid_group))
 					holder.remove_reagent(src.id, min(volume, src.volume - 4))
+
+			spaceglue
+				name = "space glue"
+				id = "spaceglue"
+				description = "Strong glue that is sure to stick to most things."
+
+				check_valid_obj(obj/O, volume)
+					if (!isitem(O))
+						return FALSE
+					. = ..()
+
+				on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+					if (!M) M = holder.my_atom
+					if (!counter) counter = 1
+					switch(counter += (1 * mult))
+						if(20 to INFINITY)
+							M.druggy = max(M.druggy, 15)
+							if (M.canmove && prob(20))
+								M.change_misstep_chance(5 * mult)
+							if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+					. = ..()
+
+			superglue
+				name = "super glue"
+				id = "superglue"
+				description = "Industrial superglue that is sure to stick to everything."
+
+				check_valid_obj(obj/O, volume)
+					return TRUE
+
+				on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+					if (!M) M = holder.my_atom
+					if (!counter) counter = 1
+					switch(counter += (1 * mult))
+						if(20 to INFINITY)
+							M.druggy = max(M.druggy, 15)
+							if (M.canmove && prob(20))
+								M.change_misstep_chance(5 * mult)
+							if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+					. = ..()
+
+			craftglue
+				name = "craft glue"
+				id = "craftglue"
+				fluid_r = 230
+				fluid_b = 230
+				fluid_g = 60
+				description = "Non-toxic craft glue suitable for consumption by children and adults alike."
+				max_duration = 10 MINUTES
+
+				check_valid_obj(obj/O, volume)
+					if (!isitem(O))
+						return FALSE
+					. = ..()
+
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
@@ -902,7 +962,7 @@ datum
 		/*foaming_agent
 			name = "foaming agent"
 			id = "foaming_agent"
-			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+			description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
 			reagent_state = SOLID
 			fluid_r = 100
 			fluid_g = 90
@@ -1166,7 +1226,7 @@ datum
 			transparency = 255
 			viscosity = 0.15
 			depletion_rate = 1
-			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
+			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "acetylsalicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
@@ -3443,9 +3503,53 @@ datum
 			hygiene_value = -5
 			viscosity = 0.5
 			fluid_flags = FLUID_STACKING_BANNED
+			taste = "dirty"
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.health_change += 0.66
+			// Compost now actually tastes like shit! Ew!
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (method == INGEST)
+					// People with synth leg can absorb shit with no consequences. Disgusting.
+					var/mob/living/carbon/human/H = M
+					if(istype(H) && (H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+						boutput(M, SPAN_SUCCESS(pick("You feel like life!", "You feel refreshened!","You feel good.")))
+					else
+						// if not synth leg
+						boutput(M, SPAN_ALERT("Ugh! This tastes like shit!"))
+						SPAWN(1 SECOND)
+							if(!isdead(M) && volume >= 1)
+								M.vomit(0, null, SPAN_ALERT("[M] pukes violently!"))
+				else
+					var/mob/living/carbon/human/H = M
+					// nothing bad happens with synthlegs
+					if(!(H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+						var/output_message = "This smells like shit! What the fuck?!"
+						if (prob(50) && !(H.wear_mask?.c_flags & COVERSMOUTH))
+							output_message += " Shit! Some got into your mouth!"
+							var/amt = min(volume/100,1)
+							src.holder.remove_reagent("poo",amt)
+							M.reagents.add_reagent("poo",amt)
+							src.reaction_mob(M,INGEST,amt,null,amt)
+						boutput(M, SPAN_ALERT(output_message))
+				return
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				var/mob/living/carbon/human/H = M
+				if(istype(H) && (H.limbs.r_leg?.kind_of_limb & LIMB_PLANT || H.limbs.l_leg?.kind_of_limb & LIMB_PLANT))
+					H.take_toxin_damage(-0.25 * mult)
+				else
+					if (isliving(M) && probmult(0.75))
+						var/mob/living/L = M
+						L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+					if (probmult(7))
+						M.emote(pick("twitch","drool","moan"))
+						M.take_toxin_damage(1 * mult)
+						M.nauseate(2)
+				..()
+				return
 
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"
@@ -3952,6 +4056,8 @@ datum
 				if(!volume_passed)
 					return
 				if (M.bioHolder && M.bioHolder.HasEffect("toxic_farts"))
+					return
+				if (istype(M, /mob/living/critter/changeling))
 					return
 
 				if (M?.reagents)

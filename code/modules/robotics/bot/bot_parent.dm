@@ -141,7 +141,7 @@ TYPEINFO(/obj/machinery/bot)
 		var/turf/T = get_turf(src)
 		if(isnull(T))
 			return FALSE
-		return length(GET_NEARBY(/datum/spatial_hashmap/clients, T, src.hash_check_range))
+		return length(global.client_hashmap.fast_manhattan(T, src.hash_check_range))
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)

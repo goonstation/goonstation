@@ -43,7 +43,7 @@
 				owner.sight &= ~SEE_BLACKNESS
 				owner.sight &= ~SEE_MOBS
 			else
-				owner.see_invisible = INVIS_CLOAK
+				owner.see_invisible = INVIS_MESON
 		else
 			if (robot_owner)
 				//var/sight_therm = 0 //todo fix this

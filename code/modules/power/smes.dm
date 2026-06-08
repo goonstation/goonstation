@@ -5,7 +5,7 @@
 #define SMESMAXOUTPUT 200000
 
 TYPEINFO(/obj/machinery/power/smes/magical)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power, using magic."
@@ -28,6 +28,7 @@ TYPEINFO(/obj/machinery/power/smes)
 	icon_state = "smes"
 	density = 1
 	anchored = ANCHORED
+	provides_grip = TRUE
 	requires_power = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL | DECON_CROWBAR | DECON_WELDER
 	var/output = 30000

@@ -35,3 +35,8 @@
 	)
 
 #define cangunpoint(x) (istype(x, /obj/item/gun) || istype(x, /obj/item/bang_gun))
+
+/// Randomizes an item's pixel offset within the given range
+#define RANDOMIZE_PIXEL_OFFSET(item, range) \
+    item.pixel_x = rand(-(range), (range)); \
+    item.pixel_y = rand(-(range), (range))

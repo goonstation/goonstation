@@ -141,6 +141,21 @@ export const JobManager = () => {
       color: 'orange',
       jobs: categorisedSpecialJobs.filter((job) => job.type === 'halloween'),
     },
+    {
+      name: 'Clown Jobs',
+      color: 'pink',
+      jobs: categorisedSpecialJobs.filter((job) => job.type === 'clown'),
+    },
+    {
+      name: 'Random Jobs',
+      color: 'teal',
+      jobs: categorisedSpecialJobs.filter((job) => job.type === 'random'),
+    },
+    {
+      name: 'Daily Jobs',
+      color: 'blue',
+      jobs: categorisedSpecialJobs.filter((job) => job.type === 'daily'),
+    },
   ];
 
   if (!stapleJobs.length && !specialJobs.length && !hiddenJobs.length) {

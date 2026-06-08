@@ -15,8 +15,7 @@
 
 		var/found = FALSE
 		for (var/datum/mind/M in ticker.mode?.traitors + ticker.mode?.Agimmicks)
-			var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
-			if(SA && isnull(SA.dead_drop) && !isdead(M.current))
+			if (src.eligible(M))
 				found = TRUE
 				break
 
@@ -24,6 +23,10 @@
 			. = ..()
 		else
 			. = FALSE
+
+	proc/eligible(datum/mind/M)
+		var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
+		return SA && isnull(SA.dead_drop) && !isdead(M.current) && SA.did_equip
 
 	admin_call(var/source)
 		if (..())
@@ -59,8 +62,7 @@
 
 		sleepers = list()
 		for (var/datum/mind/M in ticker.mode.traitors + ticker.mode.Agimmicks)
-			var/datum/antagonist/sleeper_agent/SA = M.get_antagonist(ROLE_SLEEPER_AGENT)
-			if(SA && isnull(SA.dead_drop) && !isdead(M.current))
+			if (src.eligible(M))
 				src.sleepers += M
 
 		SPAWN(0)

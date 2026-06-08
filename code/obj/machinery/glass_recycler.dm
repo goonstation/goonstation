@@ -134,7 +134,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			user.visible_message(SPAN_NOTICE("[user] inserts [W] into [src]."))
 			user.u_equip(W)
 			qdel(W)
-			ui_interact(user)
+			tgui_process.update_uis(src)
 			var/sound = pick('sound/impact_sounds/Glass_Shatter_1.ogg', 'sound/impact_sounds/Glass_Shatter_2.ogg', 'sound/impact_sounds/Glass_Shatter_3.ogg')
 			playsound(src.loc, sound, 40, 0, 0.1)
 			return TRUE

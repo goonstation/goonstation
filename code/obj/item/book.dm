@@ -156,6 +156,12 @@ Custom Books
 	desc = "A book detailing behaviors and operations of Nadir's transception array"
 	file_path = "strings/books/transception_guide.txt"
 
+/obj/item/paper/book/from_file/gravity_tether
+	name = "Gravi-Tonne Tether Manual"
+	icon_state = "tether_book"
+	desc = "An in-depth guide to the monitoring and operation of a Gravity Tether."
+	file_path = "strings/books/tether_manual.txt"
+
 /****Civilian Guides****/
 
 /obj/item/paper/book/from_file/hydroponicsguide
@@ -579,3 +585,10 @@ all for the love of you.</tt>"}
 			I heard something scary, so I leave for a few minutes, leaving my key behind. I come back. AND THEY'RE LOCKED... WITH A NOTE ON THE TABLE
 			SAYING THE KEY'S INSIDE ONE OF THEM. WHY??? I kicked the table, and YES, there is something metal in there. Well... what am I going to do
 			now?"}
+
+/obj/item/paper/book/from_file/horrorcontest
+	name = "Splinters of a Haunted Station"
+	desc = "A book containing a series of short horror stories to tell in the dark."
+	icon_state = "sbook"
+	file_path = "strings/books/three_sentence_horror.txt"
+

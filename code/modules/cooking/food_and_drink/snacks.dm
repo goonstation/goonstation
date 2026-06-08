@@ -1361,6 +1361,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A mushroom cap of Space Fungus. Probably tastes pretty bad."
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "mushroom"
+	default_material = "mycelium"
 	food_color = "#89533C"
 	bites_left = 1
 	heal_amt = 0
@@ -1449,7 +1450,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		desc = "A hotdog inside a fried banana bread shell.  Is that even possible?"
 		icon_state = "corndogb"
 		heal_amt = 20
-		food_effects = list("food_sweaty_big")
 
 	brain
 		name = "brain-corndog"
@@ -1519,7 +1519,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				src.desc = "A hotdog...in a banana bread bun.  What."
 				src.heal_amt += 8
 				src.name = "bananadog"
-				food_effects = list("food_sweaty_big","food_all")
+				food_effects = list("food_sweaty","food_all")
 				if(src.herb)
 					src.name = "herbal " + src.name
 			else if (istype(W, /obj/item/reagent_containers/food/snacks/breadslice/brain))
@@ -2943,6 +2943,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 3
 	food_effects = list("food_refreshed","food_warm")
 
+/obj/item/reagent_containers/food/snacks/maghaz
+	name = "maghaz"
+	desc = "Brain served in gravy. There are some almonds in it, not sure where those came from."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "maghaz"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 3
+	heal_amt = 3
+	bites_left = 3
+	initial_volume = 10
+	initial_reagents = "gravy"
+	food_effects = list("food_explosion_resist", "food_hp_up_big", "brain_food_ithillid")
+	meal_time_flags = MEAL_TIME_DINNER
+
 // Dippable food
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 /obj/item/reagent_containers/food/snacks/dippable
@@ -3172,3 +3186,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	initial_reagents = list("sugar" = 10, "vanilla" = 10)
 	food_effects = list("food_energized")
 	meal_time_flags = MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/proc/random_pigblanket_name()
+	.= pick(list("pigs in a blanket", "pig in a blanket", "little pigs in blanket", "pork sausage links in a blanket", "kolache", "avisance", "fransk hot dog", "sausage horns", "saucijzenbroodje", "sausage roll"))
+
+/obj/item/reagent_containers/food/snacks/pigblanket
+	name = "pig in a blanket"
+	desc = "A small hotdog wrapped in a pastry."
+	icon = 'icons/obj/foodNdrink/food_hotdog.dmi'
+	icon_state = "pigblanket"
+	bites_left = 2
+	heal_amt = 1
+	food_effects = list("food_sweaty")
+	meal_time_flags = MEAL_TIME_SNACK
+
+	New()
+		..()
+		name = "[random_pigblanket_name()]"
+
+/obj/item/reagent_containers/food/snacks/fruit_salad
+	name = "fruit salad"
+	desc = "Yummy, yummy fruit salad."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "fruit_salad"
+	bites_left = 3
+	food_effects = list("food_energized", "food_refreshed")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER

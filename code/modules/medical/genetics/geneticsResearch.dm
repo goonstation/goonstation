@@ -47,7 +47,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 		//THIS FUCKING ABOMINATION stays here as a memory of someone's shame.
 		//researchTreeTiered = bubblesort(researchTreeTiered)
 		sortList(researchTreeTiered, /proc/cmp_text_asc)
-		return
+#ifdef I_HATE_WAITING_FOR_GENES
+		src.debug_SetResearchLevel()
+		src.debug_mode = TRUE
+		src.see_secret = TRUE
+		src.mutations_researched = 100
+		src.max_save_slots = 59
+#endif
 
 	proc/isResearched(var/type)
 		. = FALSE
@@ -148,6 +154,19 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 	proc/checkCooldownBonus()
 		return genResearch.equipment_cooldown_multiplier - (min(genResearch.checkClonepodBonus(), 2) * 0.05)
+
+	/// set all bioEffects to a specific research level,
+	/// * `level`: the bioEfect's `research_level` to change to, default `EFFECT_RESEARCH_ACTIVATED`.
+	/// * `everything`: if `TRUE`, research otherwise unresearchable genes (i.e. wizard/contract genes)
+	proc/debug_SetResearchLevel(level=EFFECT_RESEARCH_ACTIVATED, everything=FALSE)
+		for (var/id as anything in bioEffectList)
+			var/datum/bioEffect/BE = bioEffectList[id]
+			if (BE.can_research || everything)
+				BE.research_level = level
+				if (level >= EFFECT_RESEARCH_DONE)
+					BE.onResearched()
+		for_by_tcl(computer, /obj/machinery/computer/genetics)
+			computer.update_static_data_for_all_viewers()
 
 /datum/geneticsResearchEntry
 	var/name = "HERF" //Name of the research entry

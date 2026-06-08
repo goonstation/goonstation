@@ -9,7 +9,7 @@
 	can_hold = list(/obj/item/storage/pill_bottle)
 	throw_range = 8
 	max_wclass = W_CLASS_TINY
-	check_wclass = TRUE
+	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	var/list/kit_styles = null
 
 	New()
@@ -148,7 +148,7 @@
 	name = "doctor's bag"
 	icon_state = "docbag1"
 	item_state = "docbag1"
-	desc = "A old-fashioned doctor's bag designed to carry medical and surgical supplies."
+	desc = "An old-fashioned doctor's bag designed to carry medical and surgical supplies."
 	kit_styles = list("docbag1", "docbag2", "docbag3")
 	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medicaldiagnosis/stethoscope)
 

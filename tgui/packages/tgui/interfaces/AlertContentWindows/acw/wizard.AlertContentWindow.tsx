@@ -63,5 +63,6 @@ const WizardContentWindow = () => {
 
 export const acw: AlertContentWindow = {
   title: 'Wizarding Facts for beginning magical entities',
+  theme: 'wizard',
   component: WizardContentWindow,
 };

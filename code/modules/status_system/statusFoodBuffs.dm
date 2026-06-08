@@ -433,10 +433,9 @@
 	maxDuration = 600
 	icon_state = "-"
 	unique = 1
-	var/reagent_id = "slime"
 
 	onUpdate(timePassed)
-		dropSweat(src.reagent_id, 5, 5)
+		dropSweat("slime", 5, 5, sweatpools=TRUE)
 
 /datum/statusEffect/sweaty
 	id = "food_sweaty"
@@ -444,7 +443,7 @@
 	desc = "You feel sweaty!"
 	icon_state = "sweaty"
 	exclusiveGroup = "Food"
-	maxDuration = 3000
+	maxDuration = 900
 	unique = 1
 
 	var/sweat_adjective = "" // used for getChefHint()
@@ -460,7 +459,7 @@
 		maxDuration = 600
 
 		onUpdate(timePassed)
-			dropSweat("water", 5, 20)
+			dropSweat("water", 5, 10, sweatpools=TRUE)
 
 	bigger
 		name ="Food (Sweaty++)"
@@ -470,7 +469,7 @@
 		maxDuration = 300
 
 		onUpdate(timePassed)
-			dropSweat("water", 15, 35)
+			dropSweat("water", 15, 35, sweatpools=TRUE)
 
 	getChefHint()
 		. = "Makes the consumer [sweat_adjective]sweaty."

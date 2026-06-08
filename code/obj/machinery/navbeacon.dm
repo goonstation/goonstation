@@ -3,6 +3,7 @@
 
 TYPEINFO(/obj/machinery/navbeacon)
 	mats = 4
+	manufactured_type = /obj/machinery/navbeacon //For subtypes
 
 /obj/machinery/navbeacon
 
@@ -11,7 +12,7 @@ TYPEINFO(/obj/machinery/navbeacon)
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
-	layer = 2.5 // TODO layer whatever
+	layer = UNDERFLOOR_MACHINE
 	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -26,7 +27,6 @@ TYPEINFO(/obj/machinery/navbeacon)
 
 	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
 		START_TRACKING
@@ -348,7 +348,7 @@ TYPEINFO(/obj/machinery/wirenav)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "wirednav"//-f"
 	level = 1		// underfloor
-	layer = OBJ_LAYER
+	layer = UNDERFLOOR_MACHINE
 	anchored = ANCHORED
 	var/nav_tag = null
 	var/net_id = null

@@ -1,6 +1,6 @@
 
 TYPEINFO(/obj/item/magtractor)
-	mats = 12
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/magtractor
 	name = "magtractor"

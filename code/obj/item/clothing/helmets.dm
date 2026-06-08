@@ -51,7 +51,6 @@
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
@@ -65,6 +64,10 @@
 		if(ismob(src.loc))
 			light_dir.light_target = src.loc
 		light_dir.update(0)
+
+	setupProperties()
+		..()
+		setProperty("mining_alerts")
 
 	attack_self(mob/user)
 		src.flashlight_toggle(user, activated_inhand = TRUE)
@@ -127,21 +130,22 @@
 	var/image/fabrWornImg = null
 	var/image/visrItemImg = null
 	var/image/visrWornImg = null
+	var/image/renfItemImg = null
+	var/image/renfWornImg = null
 
 	New()
 		..()
 		// Prep the item overlays
 		fabrItemImg = SafeGetOverlayImage("item-helmet", src.icon, "spacemat")
+		renfItemImg = SafeGetOverlayImage("item-helmet-highlight", src.icon, "spacemat-highlight")
 		visrItemImg = SafeGetOverlayImage("item-visor", src.icon, "spacemat-vis")
 		// Prep the worn overlays
 		fabrWornImg = SafeGetOverlayImage("worn-helmet", src.wear_image_icon, "spacemat")
+		renfWornImg = SafeGetOverlayImage("worn-helmet-highlight", src.wear_image_icon, "spacemat-highlight")
 		visrWornImg = SafeGetOverlayImage("worn-visor", src.wear_image_icon, "spacemat-vis")
 
-	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat)
-		src.setMaterial(
-			helmMat,
-			FALSE, // We want to purely rely on the overlay colours
-		)
+	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat, datum/material/renfMat)
+		src.setMaterial(helmMat, FALSE) // We want to purely rely on the overlay colours
 		name = "[visrMat]-visored [helmMat] helmet"
 
 		// Setup the clothing stats based on material properties
@@ -155,19 +159,19 @@
 		prot = max(0, visrMat.getProperty("density") - 3) / 2
 		setProperty("meleeprot_head", 3 + prot)
 
-		// Setup item overlays
-		fabrItemImg.color = helmMat.getColor()
-		visrItemImg.color = visrMat.getColor()
-		UpdateOverlays(visrItemImg, "item-visor")
+		fabrItemImg.apply_material_appearance(helmMat)
+		renfItemImg.apply_material_appearance(renfMat)
+		visrItemImg.apply_material_appearance(visrMat)
 		UpdateOverlays(fabrItemImg, "item-helmet")
-		// Setup worn overlays
-		fabrWornImg.color = helmMat.getColor()
-		visrWornImg.color = visrMat.getColor()
+		UpdateOverlays(renfItemImg, "item-helmet-highlight")
+		UpdateOverlays(visrItemImg, "item-visor")
+
+		fabrWornImg.apply_material_appearance(helmMat)
+		renfWornImg.apply_material_appearance(renfMat)
+		visrWornImg.apply_material_appearance(visrMat)
 		src.wear_image.overlays += fabrWornImg
+		src.wear_image.overlays += renfWornImg
 		src.wear_image.overlays += visrWornImg
-		// Add back the helmet texture since we overide the material apparance
-		if (helmMat.getTexture())
-			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
 
 /obj/item/clothing/head/helmet/space/custom/prototype
 	New()
@@ -512,6 +516,7 @@
 	icon_state = "hardhat0"
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
+	c_flags = null
 	var/on = 0
 	var/datum/component/loctargeting/simple_light/light_dir
 
@@ -646,6 +651,7 @@ obj/item/clothing/head/helmet/hardhat/security/hos
 /obj/item/clothing/head/helmet/hardhat/abilities = list(/obj/ability_button/flashlight_hardhat)
 
 TYPEINFO(/obj/item/clothing/head/helmet/camera)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 4,
 				"crystal" = 2,
 				"conductive" = 2)
@@ -654,6 +660,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
 	item_state = "camhat"
+	c_flags = null
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = CAMERA_NETWORK_PUBLIC
@@ -821,6 +828,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		setProperty("movespeed", 0.15)
 
 TYPEINFO(/obj/item/clothing/head/helmet/siren)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/clothing/head/helmet/siren
@@ -829,6 +837,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	icon_state = "siren0"
 	item_state = "siren"
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
+	c_flags = null
 	var/weeoo_in_progress = 0
 	var/datum/light/light
 
@@ -912,6 +921,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 		setProperty("disorient_resist_eye", 15)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 7
 
 /obj/item/clothing/head/helmet/space/industrial
@@ -947,6 +957,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
 		setProperty("space_movespeed", 0.2)
+		setProperty("mining_alerts")
 
 	attack_self(var/mob/user)
 		if(src.has_visor)
@@ -1010,6 +1021,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		src.remove_visor(user)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 5,
 				"conductive_high" = 5,
 				"crystal_dense" = 5)
@@ -1018,7 +1030,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
-	is_syndicate = 1
 	blocked_from_petasusaphilic = TRUE
 
 	setupProperties()
@@ -1035,6 +1046,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 		..()
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
 				"conductive_high" = 10,
@@ -1059,6 +1071,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/item/clothing/head/helmet/space/mining_combat
@@ -1168,7 +1181,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 
 /obj/item/clothing/head/helmet/captain
 	name = "captain's helmet"
-	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriguing shade of green befitting of a captain"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in an intriguing shade of green befitting of a captain"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"

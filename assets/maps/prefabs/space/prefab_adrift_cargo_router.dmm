@@ -281,7 +281,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/device/infra_sensor,
 /turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
 "vl" = (

@@ -101,6 +101,7 @@ toxic - poisons
 
 /datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
 	name = "heavy laser"
+	law_rack_safe = TRUE
 
 /datum/projectile/laser/diffuse
 	sname = "diffuse laser"

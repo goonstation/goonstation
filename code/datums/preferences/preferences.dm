@@ -37,6 +37,7 @@ var/list/removed_jobs = list(
 
 	var/be_traitor = FALSE
 	var/be_syndicate = FALSE
+	var/be_sleeper_agent = FALSE
 	var/be_syndicate_commander = FALSE
 	var/be_spy = FALSE
 	var/be_gangleader = FALSE
@@ -75,6 +76,7 @@ var/list/removed_jobs = list(
 	var/PDAcolor = "#6F7961"
 	var/use_satchel //Automatically convert backpack to satchel?
 	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
+	var/id_starts_in_pda = FALSE //Try to automatically equip IDs in PDAs and PDAs in ID slots?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -254,6 +256,7 @@ var/list/removed_jobs = list(
 			"pdaRingtone" = src.pda_ringtone_index,
 			"useSatchel" = src.use_satchel,
 			"preferredUplink" = src.preferred_uplink,
+			"idStartsInPda" = src.id_starts_in_pda,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -274,6 +277,7 @@ var/list/removed_jobs = list(
 
 			"antagonistPreferences" = list(
 				ROLE_TRAITOR = src.be_traitor,
+				ROLE_SLEEPER_AGENT = src.be_sleeper_agent,
 				ROLE_NUKEOP = src.be_syndicate,
 				ROLE_NUKEOP_COMMANDER = src.be_syndicate_commander,
 				ROLE_SPY_THIEF = src.be_spy,
@@ -545,6 +549,11 @@ var/list/removed_jobs = list(
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("toggle-id-in-pda")
+				src.id_starts_in_pda = !src.id_starts_in_pda
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-uplink")
 				if (isnull(src.preferred_uplink) || src.preferred_uplink == PREFERRED_UPLINK_STANDALONE)
 					src.preferred_uplink = PREFERRED_UPLINK_PDA
@@ -596,9 +605,9 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-age")
-				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-100", "Character Generation", src.age, 100, 20)
 				if (new_age)
-					src.age = clamp(round(text2num(new_age)), 20, 80)
+					src.age = clamp(round(text2num(new_age)), 20, 100)
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -1121,6 +1130,7 @@ var/list/removed_jobs = list(
 				src.use_click_buffer = FALSE
 				src.help_text_in_examine = TRUE
 				src.be_traitor = FALSE
+				src.be_sleeper_agent = FALSE
 				src.be_syndicate = FALSE
 				src.be_syndicate_commander = FALSE
 				src.be_spy = FALSE
@@ -1131,10 +1141,12 @@ var/list/removed_jobs = list(
 				src.be_wizard = FALSE
 				src.be_werewolf = FALSE
 				src.be_vampire = FALSE
+				src.be_arcfiend = FALSE
 				src.be_wraith = FALSE
 				src.be_blob = FALSE
 				src.be_conspirator = FALSE
 				src.be_flock = FALSE
+				src.be_salvager = FALSE
 				src.be_misc = FALSE
 				src.tooltip_option = TOOLTIP_ALWAYS
 				src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
@@ -1294,7 +1306,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
+			if (jobban_isbanned(user, J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1309,7 +1321,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))))
+			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1336,7 +1348,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
+			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !user.client.can_play_whitelisted_roles()) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1439,8 +1451,10 @@ var/list/removed_jobs = list(
 					reason_tooltip = "You have been banned from playing this job."
 				else if (job_datum.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					reason_tooltip = "This job requires the <i>\"Unlike the director, I went to college\"</i> medal, which you do not possess."
-				else if (job_datum.requires_whitelist && !global.NT.Find(user.ckey))
-					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may also play this job on Fridays."
+				else if (job_datum.requires_whitelist == REQUIRES_WHITELIST_ALWAYS && !user.client.can_play_whitelisted_roles())
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays."
+				else if (job_datum.requires_whitelist == REQUIRES_WHITELIST_USUALLY && !user.client.can_play_whitelisted_roles() && (!IS_IT_SATURDAY))
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays. Anyone may play this job on Saturdays."
 				else if (!job_datum.has_rounds_needed(user.client?.player))
 					var/played_rounds = user.client.player.get_rounds_participated()
 					var/needed_rounds = job_datum.rounds_needed_to_play

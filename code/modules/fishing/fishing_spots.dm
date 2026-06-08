@@ -88,6 +88,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 		var/atom/movable/fish = src.generate_fish(user, fishing_rod, target)
 		if (!fish)
 			return 0
+
+		user.add_to_fish_collection(fish)
+
 		// ever put this much effort into the dumbest thing ever haha
 		user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 		[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
@@ -115,7 +118,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/carbon/human/npc/monkey/sea = 5,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,
+	/obj/item/reagent_containers/food/fish/anchovy = 10)
 
 /datum/fishing_spot/swamp
 	fishing_atom_type = /turf/unsimulated/floor/auto/swamp
@@ -231,10 +235,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/anchovy = 10)
 
 /datum/fishing_spot/nuclear_reactor
-	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor
+	fishing_atom_type = /obj/machinery/nuclear_reactor
 	rod_tier_required = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
 	/obj/item/reagent_containers/food/fish/bass = 20,\
@@ -339,7 +344,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	src.fishing_lootpools += new /datum/fishing_lootpool/pufferfish(src)
 
 /datum/fishing_spot/kitchen_sink
-	fishing_atom_type = /obj/submachine/chef_sink
+	fishing_atom_type = /obj/machinery/sink
 	rod_tier_required = 1
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
 	/obj/item/reagent_containers/food/fish/salmon = 20,\
@@ -357,7 +362,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/snacks/swedish_fish = 10)
 
 /datum/fishing_spot/bathroom_sink
-	fishing_atom_type = /obj/submachine/chef_sink/chem_sink
+	fishing_atom_type = /obj/machinery/sink/slim
 	rod_tier_required = 1
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
 	/obj/item/reagent_containers/food/fish/bass = 20,\
@@ -374,7 +379,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 /datum/fishing_spot/bathtub
 	fishing_atom_type = /obj/machinery/bathtub
@@ -396,7 +402,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/cod = 15,\
 	/obj/item/reagent_containers/food/fish/flounder = 10,\
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/anchovy = 30)
 
 /datum/fishing_spot/watertank
 	fishing_atom_type = /obj/reagent_dispensers/watertank
@@ -442,6 +449,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/cod = 20,\
 	/obj/item/reagent_containers/food/fish/dace = 15,\
 	/obj/item/reagent_containers/food/fish/minnow = 15,\
+	/obj/item/reagent_containers/food/fish/rosefin_shiner = 15,\
 	/obj/item/reagent_containers/food/fish/flounder = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
@@ -477,7 +485,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/reagent_containers/food/fish/blobfish = 25)
 
 // Trash fishing spots
-/datum/fishing_spot/disposal_chute // doesn't work yet
+/datum/fishing_spot/disposal_chute
 	fishing_atom_type = /obj/machinery/disposal
 	rod_tier_required = 1
 	fish_available = list(/obj/item/trash_bag = 10,\
@@ -487,7 +495,13 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
-	/obj/item/light/bulb/yellow/broken = 20)
+	/obj/item/light/bulb/yellow/broken = 20,\
+	/obj/item/reagent_containers/food/fish/cardboardfish = 30,\
+	/obj/item/reagent_containers/food/fish/origami/sunfish = 20,\
+	/obj/item/reagent_containers/food/fish/origami/angelfish = 20,\
+	/obj/item/reagent_containers/food/fish/origami/squid = 10,\
+	/obj/item/reagent_containers/food/fish/origami/stingray = 10,\
+	/obj/item/reagent_containers/food/fish/glassfish = 5)
 
 /datum/fishing_spot/disposal_chute/New()
 	..()
@@ -507,7 +521,12 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/yellow_tang = 15,\
 	/obj/item/reagent_containers/food/fish/lionfish = 15,\
 	/obj/item/reagent_containers/food/fish/betta = 30,\
-	/obj/item/reagent_containers/food/fish/mandarin_fish = 5)
+	/obj/item/reagent_containers/food/fish/mandarin_fish = 5,\
+	/obj/item/reagent_containers/food/fish/cardboardfish = 15,\
+	/obj/item/reagent_containers/food/fish/origami/sunfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/angelfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/squid = 5,\
+	/obj/item/reagent_containers/food/fish/origami/stingray = 5)
 
 /datum/fishing_spot/janitor_bucket/New()
 	..()
@@ -551,7 +570,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/eel = 15,\
 	/obj/item/reagent_containers/food/fish/bass = 30,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
-	/obj/item/reagent_containers/food/fish/salmon = 20)
+	/obj/item/reagent_containers/food/fish/salmon = 20,\
+	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 /datum/fishing_spot/drain/New()
 	..()
@@ -686,7 +706,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/flounder = 10,\
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 //ainsley
 /datum/fishing_spot/nuclear_core_decal
@@ -713,7 +734,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
-	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,\
+	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
 		var/atom/result = ..()
@@ -784,7 +806,12 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 1
 	fish_available = list(/obj/item/coin = 25,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
-	/obj/item/currency/spacecash/really_small = 20)
+	/obj/item/currency/spacecash/really_small = 20,\
+	/obj/item/reagent_containers/food/fish/origami/sunfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/angelfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/squid = 5,\
+	/obj/item/reagent_containers/food/fish/origami/stingray = 5,\
+	/obj/item/reagent_containers/food/fish/glassfish = 5)
 
 /datum/fishing_spot/vending/New()
 	..()
@@ -826,7 +853,12 @@ datum/fishing_spot/golden_toilet
 	/obj/item/raw_material/shard/glass = 10,\
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
-	/obj/item/light/bulb/yellow/broken = 20)
+	/obj/item/light/bulb/yellow/broken = 20,\
+	/obj/item/reagent_containers/food/fish/cardboardfish = 20,\
+	/obj/item/reagent_containers/food/fish/origami/sunfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/angelfish = 10,\
+	/obj/item/reagent_containers/food/fish/origami/squid = 5,\
+	/obj/item/reagent_containers/food/fish/origami/stingray = 5)
 
 //nadir ocean
 /datum/fishing_spot/nadir_ocean
@@ -856,7 +888,8 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/fish/flounder = 15,\
 	/mob/living/critter/small_animal/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
-	/mob/living/critter/small_animal/frog = 10)
+	/mob/living/critter/small_animal/frog = 10,\
+	/obj/item/reagent_containers/food/fish/cardboardfish = 5)
 
 //chemical barrel
 /datum/fishing_spot/chemical_barrel
@@ -909,7 +942,8 @@ datum/fishing_spot/golden_toilet
 	/obj/item/raw_material/shard/glass = 20,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 10,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 10,\
-	/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail = 10)
+	/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail = 10,\
+	/obj/item/reagent_containers/food/fish/glassfish = 20)
 
 	generate_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
 		var/atom/result = ..()
@@ -917,13 +951,13 @@ datum/fishing_spot/golden_toilet
 		return result
 
 /datum/fishing_spot/ketchup
-	fishing_atom_type = /obj/item/shaker/ketchup
+	fishing_atom_type = /obj/item/reagent_containers/applicator/condiment/bottle/ketchup
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/snacks/condiment/ketchup = 50,\
 	/obj/item/reagent_containers/food/snacks/yuck = 20)
 
 /datum/fishing_spot/mustard
-	fishing_atom_type = /obj/item/shaker/mustard
+	fishing_atom_type = /obj/item/reagent_containers/applicator/condiment/bottle/mustard
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/snacks/condiment/mustard = 50,\
 	/obj/item/reagent_containers/food/snacks/yuck = 20)

@@ -363,7 +363,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 /obj/item/shipcomponent/secondary_system/lock/pw_id
 	name = "\improper ID card hatch locking unit"
-	desc = "A basic hatch locking mechanism with a ID card scanner."
+	desc = "A basic hatch locking mechanism with an ID card scanner."
 	system = "Lock"
 	f_active = 1
 	power_used = 0
@@ -741,7 +741,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	var/icon_damaged = "barricade-damaged"
 
 	var/health = 100

@@ -668,7 +668,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	desc = "A permanent force field that prevents gas and liquids from passing through it."
 	color = "#33FF33"
 	powerlevel = 2
-	layer = 2.5 //sits under doors if we want it to
+	layer = UNDERFLOOR_MACHINE//sits under doors if we want it to
 	flags = FLUID_DENSE | FLUID_DENSE_ALWAYS
 	gas_impermeable = TRUE
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP

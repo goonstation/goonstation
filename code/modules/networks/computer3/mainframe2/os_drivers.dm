@@ -1025,7 +1025,7 @@
 	var/tmp/list/auths = list()
 
 	var/setup_sync_time = 20
-	var/setup_auth_access = access_dwaine_superuser
+	var/setup_auth_access = access_sysadmin
 	var/setup_auths_needed = 3
 
 	var/const/SESSION_TIMER = 1
@@ -1272,6 +1272,23 @@
 				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="disarm"))
 				switch(success)
 					if (ESIG_SUCCESS)
+
+						var/logUser = "unknown user!"
+						var/obj/callobj = null
+						if (istype(src.useracc) && src.useracc.user_id)
+							callobj = locate("\[0x[copytext(src.useracc.user_id,2)]]") in world
+
+						var/obj/machinery/calling_term = null
+						if(istype(callobj.loc, /obj/machinery/computer3))
+							calling_term = callobj.loc
+						if(istype(calling_term))
+							if(usr)
+								logUser = usr
+							else
+								logUser = "Terminal \[[src.useracc.user_id]]"
+
+						message_admins("NUKE: Research Sector nuclear charge deactivated by [key_name(logUser)].")
+						logTheThing(LOG_COMBAT, logUser, "Deactivated the Research Sector nuclear charge.")
 						message_user("Transmitting Deactivation Code...")
 					if (ESIG_USR1)
 						message_user("Error: Insufficient Authorizations.")

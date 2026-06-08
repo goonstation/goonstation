@@ -8,7 +8,7 @@
 	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
-	soundproofing = 20
+	soundproofing = SOUNDPROOFING_MUTE
 	var/maxitems = 50
 	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	var/list/allowed = null
@@ -50,6 +50,7 @@
 				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
 			tooltip_rebuild = TRUE
+			RANDOMIZE_PIXEL_OFFSET(W, 10)
 		else
 			boutput(user, SPAN_ALERT("[src] is full!"))
 
@@ -170,6 +171,7 @@
 				if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					I.set_loc(src)
 					SEND_SIGNAL(I, COMSIG_ITEM_STORED, user)
+					RANDOMIZE_PIXEL_OFFSET(I, 10)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)
@@ -407,6 +409,7 @@
 		maxitems = 30
 		flags = null
 		w_class = W_CLASS_NORMAL
+		default_material = "plastic"
 
 		New()
 			..()

@@ -113,12 +113,14 @@
 	name = "cruiser console"
 	icon_state = "cruiser"
 	base_icon_state = "cruiser"
-	setup_drive_size = 64
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64
 	setup_frame_type = /obj/computer3frame/terminal
 	setup_starting_os = /datum/computer/file/terminal_program/os/main_os/no_login
-	setup_starting_peripheral1 = /obj/item/peripheral/cruiser
+	setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive,
+			/obj/item/peripheral/cruiser)
 	setup_starting_program = /datum/computer/file/terminal_program/cruiser
-	setup_idscan_path = null
 
 	power_change()
 		if(status & BROKEN)

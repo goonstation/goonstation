@@ -590,7 +590,6 @@ TYPEINFO(/obj/machinery/door_control)
 		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				M.req_access = null
-				M.req_access_txt = null
 
 	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
@@ -657,7 +656,7 @@ TYPEINFO(/obj/machinery/door_control)
 	pressed_icon = "antagscanner-u"
 	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
 	requires_power = 0
-	controlmode = CONTROLMODE_OPEN | CONTROLMODE_ACCESS
+	controlmode = CONTROLMODE_OPEN
 
 /obj/machinery/door_control/ex_act(severity)
 	return
@@ -668,17 +667,20 @@ TYPEINFO(/obj/machinery/door_control)
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (istrainedsyndie(user))
 		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
-		if (listening_post.unlocked)
+		var/first_unlock_text
+		if (!listening_post.unlocked)
 			listening_post.first_unlock(user)
+			first_unlock_text = " Facility lockdown lifted."
 		src.toggle(user)
 		if (src.entrance_scanner)
-			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanently unlocked.")
+			src.say("Biometric profile accepted. Welcome, Agent.[first_unlock_text]")
 	else
 		src.say("Invalid biometric profile. Access denied.")
 
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////
 ///////////////////////////////////////////////////////
+ADMIN_INTERACT_PROCS(/obj/machinery/activation_button, proc/activate)
 ABSTRACT_TYPE(/obj/machinery/activation_button)
 /obj/machinery/activation_button
 	name = "Activation Button"
@@ -1181,14 +1183,18 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		if(id)
-			pass = "[id]-[rand(1,50)]"
-			name = "Access Code: [pass]"
+			src.id_setup()
+
 		light = new /datum/light/point //They were kinda dark okay
 		light.attach(src)
 		light.set_brightness(0.6)
 		light.set_height(1.25)
 		light.set_color(0.9, 0.5, 0.5)
 		light.enable()
+
+	proc/id_setup()
+		src.pass = "[src.id]_[rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)]"
+		src.name = "Access Code: [src.pass]"
 
 	Click(var/location,var/control,var/params)
 		if(GET_DIST(usr, src) > 16)

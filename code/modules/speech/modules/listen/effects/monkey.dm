@@ -5,7 +5,8 @@
 	var/mob/living/carbon/human/npc/monkey/monkey = src.parent_tree.listener_parent
 	if (!istype(monkey) || !isalive(monkey) || !ismob(message.speaker) || !(message.flags & (SAYFLAG_LOUD_SINGING | SAYFLAG_BAD_SINGING)))
 		return
-	if (message.speaker == monkey)
+
+	if ((message.speaker == monkey) || !ishuman(message.speaker) || ismonkey(message.speaker) || !prob(50))
 		return
 
 	SPAWN(0.5 SECONDS)

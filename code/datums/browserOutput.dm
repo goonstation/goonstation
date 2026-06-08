@@ -33,7 +33,7 @@ var/global
 	// like "[LEVEL_MOD]" = FOOBAR_SHITFUCK_FUCKFACE
 	// The byond object tree output gets completely fucked in the ass and generates
 	// broken xml
-	list/contextFlags = list(1 = 0,2 = cFlagsMod,3 = cFlagsSa,4 = 0,5 = 0,6 = cFlagsShitguy,7 = 0,8 = 0)
+	list/contextFlags = list(0,cFlagsMod,cFlagsSa,0,0,cFlagsShitguy,0,0)
 
 	/*
 	8 = LEVEL_HOST
@@ -245,7 +245,7 @@ var/global
 
 /// Called by js client on admin command via context menu
 /datum/chatOutput/proc/handleContextMenu(command, target)
-	if (!src.owner.holder && command != "observe" && command != "teleport") return // oopsy i'm so messy heehee
+	if (!src.owner.holder && command != "observe" && command != "ghostjump") return // oopsy i'm so messy heehee
 	var/datum/mind/targetMind = locate(target)
 	var/mob/targetMob
 	if (targetMind)
@@ -287,7 +287,7 @@ var/global
 					obs.set_observe_target(targetMob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob:insert_observer(targetMob)
-		if ("teleport")
+		if ("ghostjump")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
 				var/mob/dead/target_observer/obs = src.owner.mob
 				if (!obs.locked)

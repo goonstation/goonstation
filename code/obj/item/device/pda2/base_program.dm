@@ -58,18 +58,6 @@
 
 			return 0
 
-		build_grid(mob/user as mob, theGrid)
-			if (!istype(src.holder) || !istype(src.master))
-				return 1
-
-			if (!user || !theGrid)
-				return 1
-
-			if (!(holder in src.master.contents))
-				return 1
-
-			return 0
-
 		process()
 			if((!src.holder) || (!src.master))
 				return 1

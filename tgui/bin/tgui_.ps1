@@ -89,6 +89,11 @@ function task-test-ci {
   yarn run tgui:test-ci
 }
 
+## Normalizes SVG line endings to LF
+function task-normalize-svgs {
+  yarn run tgui:normalize-svgs
+}
+
 ## Mr. Proper
 function task-clean {
   Remove-Quiet -Recurse -Force ../browserassets/src/tgui/.tmp
@@ -169,9 +174,42 @@ function task-validate-build {
 
 ## Installs merge drivers and git hooks
 function task-install-git-hooks () {
-    Set-Location $global:basedir
-    git config --replace-all merge.tgui-merge-bundle.driver "tgui/bin/tgui --merge=bundle %P %O %A %B %L"
-    Write-Output "tgui: Merge drivers have been successfully installed!"
+  Set-Location $global:rootdir
+  $bootstrapBase = Join-Path $global:rootdir "tools/bootstrap/python"
+  $bootstrap = $bootstrapBase
+  if ($Env:OS -eq "Windows_NT") {
+    $bootstrapBat = "$bootstrapBase.bat"
+    if (Test-Path $bootstrapBat -PathType Leaf) {
+      $bootstrap = $bootstrapBat
+    }
+  }
+  $legacyDrivers = & git config --get-all merge.tgui-merge-bundle.driver 2>$null
+  if ($LASTEXITCODE -eq 0 -and $legacyDrivers) {
+    & git config --unset-all merge.tgui-merge-bundle.driver | Out-Null
+    Write-Output "tgui: removed legacy merge.tgui-merge-bundle driver"
+  }
+  if (-not (Test-Path $bootstrap -PathType Leaf)) {
+    Write-Error "tgui: bootstrap Python launcher not found at $bootstrap"
+    exit 1
+  }
+  $includeBase = Read-Host "Do you want to install map merge and icon merge hooks? (Y/N)"
+  $env:HOOKS_INCLUDE_TGUI = "1"
+  if ($includeBase -match '^[Yy]$') {
+    $env:HOOKS_INCLUDE_BASE = "1"
+  } else {
+    $env:HOOKS_INCLUDE_BASE = "0"
+  }
+
+  & $bootstrap -m hooks.install
+  $hookResult = $LASTEXITCODE
+
+  Remove-Item Env:HOOKS_INCLUDE_TGUI -ErrorAction SilentlyContinue
+  Remove-Item Env:HOOKS_INCLUDE_BASE -ErrorAction SilentlyContinue
+
+  if ($hookResult -ne 0) {
+    exit $hookResult
+  }
+  Write-Output "tgui: Git hooks have been installed"
 }
 
 ## Main
@@ -225,10 +263,29 @@ if ($Args.Length -gt 0) {
     exit 0
   }
 
+  if ($Args[0] -eq "--normalize-svgs") {
+    task-install
+    task-normalize-svgs
+    exit 0
+  }
+
   ## Analyze the bundle
   if ($Args[0] -eq "--analyze") {
+    if ($Args.Length -gt 1) {
+      $Args = $Args[1..($Args.Length - 1)]
+    }
+    else {
+      $Args = @()
+    }
+
     task-install
-    task-rspack --mode=production --analyze
+    task-rspack --mode=production --env RSDOCTOR=1 @Args
+    exit 0
+  }
+
+  if ($Args[0] -eq "--build") {
+    task-install
+    task-rspack --mode=production
     exit 0
   }
 

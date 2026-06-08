@@ -436,6 +436,10 @@ Obsidian Crown
 					boutput(M, SPAN_NOTICE("You are caught in a magical warp field!"))
 					M.visible_message(SPAN_COMBAT("[M] is warped away!"))
 					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
+					var/turf/destination = pick(randomturfs)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.shoes?.magnetic_teleport_check(H, get_turf(H), destination)
 					M.set_loc(pick(randomturfs))
 					logTheThing(LOG_COMBAT, M, "is warped away by [constructTarget(host,"combat")]'s obsidian crown to [log_loc(M)].")
 

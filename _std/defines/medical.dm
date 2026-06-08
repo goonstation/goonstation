@@ -7,3 +7,10 @@
 
 /// Maximum air temperature before default lungs start taking damage
 #define DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX T0C + 66
+
+#define TRIAGE_REMOVE -1
+#define TRIAGE_MINOR 0
+#define TRIAGE_DELAYED 1
+#define TRIAGE_IMMEDIATE 2
+#define TRIAGE_DECEASED 3
+#define TRIAGE_UNREVIVABLE 4

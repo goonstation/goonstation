@@ -1577,6 +1577,8 @@ proc/formatTimeText(var/timeValue as num)
 /proc/antag_token_list() //List of all players redeeming antagonist tokens
 	var/list/token_list = list()
 	for(var/mob/new_player/player in mobs)
+		if(length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments))
+			continue
 		if((player.client) && (player.ready_play) && ((player.client.using_antag_token)))
 			token_list += player.mind
 	if (!token_list.len)
@@ -2304,6 +2306,12 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 		. += corrupted_bit
 	return jointext(.,"")
 
+/// Replace a value with another if the original is null. Otherwise returns the original.
+proc/replace_if_false(var/original, var/replacement)
+	if(original)
+		return original
+	else
+		return replacement
 
 /// Returns given text replaced entirely by nonsense chars
 proc/illiterateGarbleText(var/message)

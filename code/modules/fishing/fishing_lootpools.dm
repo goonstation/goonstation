@@ -52,7 +52,8 @@
 	/obj/item/reagent_containers/food/fish/bass = 30,\
 	/obj/item/reagent_containers/food/fish/salmon = 20,\
 	/obj/item/reagent_containers/food/fish/herring = 15,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/anchovy = 10)
 
 ///lava fish as T3 fish for fire-sources
 /datum/fishing_lootpool/lava_fish

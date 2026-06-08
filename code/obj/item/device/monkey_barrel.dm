@@ -1,39 +1,67 @@
 //So much fun!
 
-/obj/storage/monkey_barrel
+TYPEINFO(/obj/monkey_barrel)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+/obj/monkey_barrel
 	name = "mysterious barrel"
-	desc = "More fun than a ValuChimp!"
+	desc = "More fun than a ValuChimp! Looks like there's a tray to put clothes inside."
+	HELP_MESSAGE_OVERRIDE("Right click to access the holographic clothing menu, letting you set the clothes of the monkeys.")
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "barrel"
 	throwforce = 50
 	p_class = 3
-	locked = 1
-	is_syndicate = 1
-	spawn_contents = list(/mob/living/carbon/human/npc/monkey/angry = 6)
+	density = 1
+	open_inv_within = TRUE
+	var/mob/living/carbon/human/npc/monkey/angry/template_monkey // spawns first, copies clothing icons to spawned monkeys
+	var/monkeys_to_spawn = 5
 
 	New()
 		..()
 		var/obj/item/barrel_signaller/M = new /obj/item/barrel_signaller(src.loc)
 		new /obj/item/clothing/suit/monkey(src.loc)
-		SPAWN(0)
-			M.my_barrel = src
-
-	is_acceptable_content(atom/A)
-		return istype(A, /mob/living/carbon/human/npc/monkey)
+		src.template_monkey = new/mob/living/carbon/human/npc/monkey/angry(src)
+		src.contents += src.template_monkey
+		src.template_monkey.real_name = "Holo-Clothes Template"
+		M.my_barrel = src
 
 	update_icon()
 
 		return
 
+	verb/Holographic_Clothing()
+		set src in oview(1)
+		set category = "Local"
+		if (ishuman(usr) && src.template_monkey)
+			var/mob/living/carbon/human/user = usr
+			src.template_monkey.show_inv(user)
 
+	proc/monkey_go()
+		var/turf/targetTurf = get_turf(src)
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.setup(targetTurf)
+		for (var/i in 1 to src.monkeys_to_spawn)
+			var/mob/living/carbon/human/npc/monkey/angry/barrel/monke = new (targetTurf)
+			monke.copy_clothes(src.template_monkey)
+
+		for (var/atom/movable/thing in src.contents)// remove anything inside when deleting
+			if (src.template_monkey == thing)
+				var/mob/living/carbon/human/monke = thing
+				monke.unequip_all(FALSE, src.loc) // get your clothes back!
+				qdel(thing)
+				continue
+			src.contents -= thing
+			thing.set_loc(get_turf(src))
+		qdel(src)
+
+TYPEINFO(/obj/item/barrel_signaller)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/barrel_signaller
 	name = "mysterious signaller"
 	desc = "For monkey business only."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "barrel_signaller"
 	w_class = W_CLASS_TINY
-	var/obj/storage/monkey_barrel/my_barrel = null
-	is_syndicate = 1
+	var/obj/monkey_barrel/my_barrel = null
 
 	attack_self()
 		if (isliving(usr))
@@ -44,7 +72,82 @@
 					playsound(my_barrel.loc, 'sound/effects/Explosion1.ogg', 75, 1)
 				logTheThing(LOG_COMBAT, usr, "explodes a barrel of monkeys at [log_loc(src.my_barrel.loc)].")
 				my_barrel.visible_message(SPAN_ALERT("\The [my_barrel] explodes!"))
-				my_barrel.dump_contents()
-				qdel(my_barrel)
+				my_barrel.monkey_go()
 				qdel(src)
 
+/obj/item/clothing/head/holohat // not the best way to do this maybe?
+	name = "Holographic Hat"
+	desc = "At what point is it just cheaper to give them real clothes..?"
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		SPAWN(1 SECONDS)
+			qdel(src)
+
+/obj/item/clothing/under/holojumpsuit
+	name = "Holographic Jumpsuit"
+	desc = "At what point is it just cheaper to give them real clothes..?"
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		SPAWN(1 SECONDS)
+			qdel(src)
+
+/obj/item/clothing/suit/holosuit
+	name = "Holographic Suit"
+	desc = "At what point is it just cheaper to give them real clothes..?"
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		SPAWN(1 SECONDS)
+			qdel(src)
+
+/obj/item/clothing/mask/holomask
+	name = "Holographic Mask"
+	desc = "At what point is it just cheaper to give them real clothes..?"
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		SPAWN(1 SECONDS)
+			qdel(src)
+
+/obj/item/clothing/shoes/holoshoes
+	name = "Holographic Shoes"
+	desc = "At what point is it just cheaper to give them real clothes..?"
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		SPAWN(1 SECONDS)
+			qdel(src)
+
+/obj/item/clothing/ears/holoears
+	name = "Holographic Earpiece"
+	desc = "At what point is it just cheaper to give them real clothes..?"
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		SPAWN(1 SECONDS)
+			qdel(src)
+
+/obj/item/clothing/gloves/hologloves
+	name = "Holographic Gloves"
+	desc = "At what point is it just cheaper to give them real clothes..?"
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "bald"
+
+	unequipped(mob/user)
+		. = ..()
+		SPAWN(1 SECONDS)
+			qdel(src)

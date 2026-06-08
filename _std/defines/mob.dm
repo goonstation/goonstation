@@ -87,3 +87,10 @@
 
 //idk where else to put this
 #define DEFAULT_MIRANDA "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
+
+/// How many tiles away an examine with ProDocs will give a full health scan
+#define MAX_PRODOC_RANGE 3
+/// How many tiles away can you read nametags/IDs/detailed
+#define MAX_NAMETAG_RANGE 5
+/// How many tiles away can you see if anything is equipped
+#define MAX_EXAMINE_RANGE 7

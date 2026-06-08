@@ -81,8 +81,32 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$PythonExe" ]; then
 	fi
 fi
 
+hash_file() {
+	"$PythonExe" $PythonArg - "$1" <<'EOF'
+import hashlib
+import sys
+path = sys.argv[1]
+hasher = hashlib.blake2b()
+with open(path, 'rb') as handle:
+	for chunk in iter(lambda: handle.read(8192), b''):
+		hasher.update(chunk)
+print(hasher.hexdigest())
+EOF
+}
+
 # Use pip to install our requirements
-if [ ! -f "$PythonDir/requirements.txt" ] || [ "$(b2sum < "$Sdk/requirements.txt")" != "$(b2sum < "$PythonDir/requirements.txt")" ]; then
+NeedDeps=0
+if [ ! -f "$PythonDir/requirements.txt" ]; then
+	NeedDeps=1
+else
+	SrcHash=$(hash_file "$Sdk/requirements.txt")
+	InstalledHash=$(hash_file "$PythonDir/requirements.txt") || InstalledHash=""
+	if [ "$SrcHash" != "$InstalledHash" ]; then
+		NeedDeps=1
+	fi
+fi
+
+if [ "$NeedDeps" = "1" ]; then
 	echo "Updating dependencies..."
 	"$PythonExe"  $PythonArg -m ensurepip || echo "ensurepip failed, continuing anyway..."
 	"$PythonExe" $PythonArg -m pip install -U wheel

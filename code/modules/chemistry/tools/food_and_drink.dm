@@ -96,7 +96,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
 					H.sims.affectMotive("Hunger", healing * 6)
-					H.sims.affectMotive("Bladder", -healing * 0.2)
 
 			if (quality >= 5)
 				boutput(M, SPAN_NOTICE("That tasted amazing!"))
@@ -1075,6 +1074,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			src.name = t
 			src.labeled = 1
+		else if (istype(W,/obj/item/tool/omnitool))
+			var/obj/item/tool/omnitool/OT = W
+			if (OT.mode == OMNI_MODE_UNCAPPING)
+				boutput(user, SPAN_ALERT("It's a screw-top bottle."))
+			else
+				..()
 		else
 			..()
 			return
@@ -1228,7 +1233,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				var/x_offset = 0
 				var/y_offset = 0
 
-				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
+				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella) || istype(in_glass, /obj/item/cocktail_stuff/eyestalk))
 					x_offset = src.umbrella_x_offset
 					y_offset = src.umbrella_y_offset
 				else
@@ -1344,16 +1349,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.UpdateIcon()
 			return
 
-		else if (istype(W, /obj/item/shaker/salt))
-			var/obj/item/shaker/salt/S = W
-			if (S.shakes >= 15)
+		// applicators are not open containers, special handling here
+		else if (istype(W, /obj/item/reagent_containers/applicator/condiment/shaker/salt))
+			var/obj/item/reagent_containers/applicator/condiment/shaker/salt/S = W
+			if (S.reagents.total_volume < 2)
 				boutput(user, SPAN_ALERT("There isn't enough salt in here to salt the rim!"))
 				return
 			else
 				boutput(user, SPAN_NOTICE("You salt the rim of [src]."))
 				src.salted = 1
+				S.reagents.remove_any(2)
 				src.UpdateIcon()
-				S.shakes ++
 				return
 
 		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents.has_reagent("salt"))
@@ -1533,6 +1539,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
 			var/max_iterations = 20
+			src.inertia_value = 1
 			for(var/turf/T in path)
 				if(max_iterations-- <= 0)
 					break
@@ -1628,6 +1635,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	wedge_y_offset = -2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
+	SYNDICATE_STEALTH_DESCRIPTION("The label mentions something about \"nearly bottomless mimosas\".", null)
+	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50

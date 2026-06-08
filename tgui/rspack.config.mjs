@@ -10,19 +10,28 @@ import { rspack } from '@rspack/core';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// |GOONSTATION-CHANGE| secret interfaces
+import {
+  addSecretInterfaceEntries,
+  SecretBundleStoragePlugin,
+  SecretInterfaceSyncPlugin,
+} from './rspack.config-secret.mjs';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const require = createRequire(import.meta.url);
 
 const createStats = (verbose) => ({
   assets: verbose,
+  excludeAssets: [/^secret-.*\.bundle\.js$/i], // |GOONSTATION-CHANGE| secret interfaces
   builtAt: verbose,
   cached: false,
   children: false,
   chunks: false,
   colors: true,
-  entrypoints: true,
+  entrypoints: false, // |GOONSTATION-CHANGE| secret interfaces
   hash: false,
+  logging: 'warn',
   modules: false,
   performance: false,
   timings: verbose,
@@ -32,19 +41,19 @@ const createStats = (verbose) => ({
 export default (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
+  const rsdoctor = env.RSDOCTOR || process.env.RSDOCTOR;
 
   /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
-    cache: true,
-    experiments: {
+    cache: {
+      type: 'persistent',
       cache: {
         type: 'persistent',
-        storage: {
-          type: 'filesystem',
-          directory: path.resolve(__dirname, '.yarn/rspack'),
-        },
       },
-      css: true,
+      storage: {
+        type: 'filesystem',
+        directory: path.resolve(__dirname, '.yarn/rspack'),
+      },
     },
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
@@ -138,13 +147,9 @@ export default (env = {}, argv) => {
               issuer: /\.(s)?css$/,
               type: 'asset/inline',
               generator: {
-                encoding: 'base64',
-                transformation: {
-                  transformer: (content) => {
-                    return Buffer.from(
-                      content.toString().replace(/\r\n/g, '\n'),
-                    );
-                  },
+                dataUrl: (content) => {
+                  const normalized = content.toString().replace(/\r\n/g, '\n');
+                  return `data:image/svg+xml;base64,${Buffer.from(normalized).toString('base64')}`;
                 },
               },
             },
@@ -152,13 +157,6 @@ export default (env = {}, argv) => {
               type: 'asset/resource',
               generator: {
                 filename: 'assets/[name][ext]',
-                transformation: {
-                  transformer: (content) => {
-                    return Buffer.from(
-                      content.toString().replace(/\r\n/g, '\n'),
-                    );
-                  },
-                },
               },
             },
           ],
@@ -180,8 +178,22 @@ export default (env = {}, argv) => {
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
+      new rspack.IgnorePlugin({
+        resourceRegExp: /\.test\.tsx?$/,
+        contextRegExp: /__mocks__/,
+      }),
+      new SecretInterfaceSyncPlugin(), // |GOONSTATION-ADD| secret interfaces
+      new SecretBundleStoragePlugin(), // |GOONSTATION-ADD| secret interfaces
     ],
   });
+
+  addSecretInterfaceEntries(config); // |GOONSTATION-ADD| secret interface entrypoints
+
+  if (rsdoctor) {
+    const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin');
+
+    config.plugins.push(new RsdoctorRspackPlugin());
+  }
 
   if (bench) {
     config.entry = {
@@ -207,12 +219,12 @@ export default (env = {}, argv) => {
 
   // Development server specific options
   if (argv.devServer) {
+    config.stats = createStats(false);
     config.devServer = {
-      progress: false,
-      quiet: false,
-      noInfo: false,
-      clientLogLevel: 'silent',
-      stats: createStats(false),
+      client: {
+        logging: 'none',
+        progress: false,
+      },
     };
   }
 

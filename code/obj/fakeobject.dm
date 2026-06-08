@@ -205,7 +205,7 @@
 	name = "broken air monitor"
 	desc = "Something has broken this air monitor."
 	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarmx"
+	icon_state = "alarm_broken"
 	anchored = ANCHORED
 
 /obj/fakeobject/shuttlethruster
@@ -216,6 +216,7 @@
 	anchored = ANCHORED
 	density = 1
 	opacity = 0
+	provides_grip = TRUE
 
 /obj/fakeobject/shuttleweapon
 	name = "weapons unit"
@@ -262,6 +263,7 @@
 	anchored = ANCHORED
 	density = 1
 	opacity = 0
+	provides_grip = TRUE
 
 /obj/fakeobject/falseladder
 	name = "ladder"

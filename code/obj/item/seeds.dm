@@ -38,7 +38,6 @@ ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 			if (charges > 1) name += " packet"
 		if (charges > 1) src.inventory_counter.update_number(src.charges)
 
-
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		// If the crop is just straight up seeds. Don't need reagents, but we do
 		// need to pass genes and whatnot along like we did for fruit.
@@ -114,7 +113,7 @@ ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 			// We call this only if the seed has not a parent. In this case, HYPpassplantgenes adds the commuts in question
 			if (!has_parent && length(src.planttype.innate_commuts) > 0)
 				for (var/commut_to_add in src.planttype.innate_commuts)
-					HYPaddCommut(src.plantgenes, commut_to_add)
+					HYPaddCommut(src.plantgenes, commut_to_add, TRUE)
 		else
 			src.name = "[src.name] seed"
 		if (src.charges > 1) src.name += " packet"

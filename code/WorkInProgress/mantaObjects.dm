@@ -710,6 +710,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS
+	default_material = "plastic"
 	stamina_damage = 15
 	stamina_cost = 8
 	stamina_crit_chance = 10
@@ -1545,7 +1546,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "blackbox"
-	desc = "A flight recorder is an electronic recording device placed in an spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
+	desc = "A flight recorder is an electronic recording device placed in a spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
 	item_state = "electropack"
 	force = 5
 
@@ -1573,6 +1574,14 @@ var/obj/manta_speed_lever/mantaLever = null
 		name = "dank abyss"
 		desc = "The smell rising from it somehow permeates the surrounding water."
 		falltarget = LANDMARK_FALL_MARJ
+
+		pitwall
+			icon_state = "pit_wall"
+
+	cult
+		name = "ominious abyss"
+		desc = "The water below vibrates with a tension, as though it was raging."
+		falltarget = LANDMARK_FALL_CULTIST
 
 		pitwall
 			icon_state = "pit_wall"
