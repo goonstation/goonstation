@@ -117,7 +117,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		..()
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
-	proc/remove_self(take_gear = TRUE, source, silent = FALSE)
+	proc/remove_self(take_gear = TRUE, source)
 		src.removing = TRUE
 		if (take_gear)
 			src.remove_equipment()
@@ -127,7 +127,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (!src.pseudo)
 			src.remove_from_image_groups()
 
-			if (!src.silent && !silent)
+			if (!src.silent)
 				src.announce_removal(source)
 				src.announce_objectives()
 
