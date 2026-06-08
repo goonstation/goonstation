@@ -431,15 +431,12 @@
 		font_color = "#FF00FF"
 
 	random
-		var/picked_color
-
 		New()
 			..()
-			src.picked_color = random_color()
+			src.color = random_color()
 			src.reset_color()
 
 		reset_color()
-			src.color = picked_color
 			src.font_color = src.color
 			src.name = "[hex2color_name(src.color)] marker"
 
@@ -452,6 +449,7 @@
 	color = "#333333"
 	font = "Comic Sans MS"
 	clicknoise = 0
+	custom_suicide = 1
 	var/maptext_crayon = FALSE
 	var/font_size = 32
 
@@ -535,40 +533,32 @@
 		font_color = "#D20040"
 		default_cleanable = /obj/decal/cleanable/writing/infrared
 
-	random
-		var/picked_color
+	robot
+		desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
+		HELP_MESSAGE_OVERRIDE("Use on your character's sprite to choose a new color for your crayon.")
 
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+			if (target == user)
+				src.color = input("Pick crayon color:","Crayon color") as null|color
+				src.reset_color()
+				user.visible_message(SPAN_NOTICE("Your crayon becomes [hex2color_name(src.color)]!"))
+				return
+			return ..()
+
+	random
 		New()
 			..()
-			src.picked_color = random_color()
+			src.color = random_color()
 			src.reset_color()
-
-		reset_color()
-			src.color = src.picked_color
-			src.font_color = src.color
-			src.color_name = hex2color_name(src.color)
-			src.name = "[src.color_name] crayon"
 
 		choose
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
 
 			on_spin_emote(var/mob/living/carbon/human/user as mob)
 				..()
-				src.picked_color = random_color()
+				src.color = random_color()
 				src.reset_color()
 				user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
-
-		robot
-			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
-
-			attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-				if (target == user)
-					src.picked_color = random_color()
-					src.reset_color()
-					user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
-					return
-
-				return ..()
 
 		pixel
 			maptext_crayon = TRUE
@@ -577,7 +567,6 @@
 			New()
 				..()
 				src.name = "[src.color_name] pixel crayon"
-
 
 	rainbow
 		name = "strange crayon"
@@ -601,7 +590,6 @@
 			src.color = src.font_color
 			..()
 
-	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
@@ -620,6 +608,10 @@
 		. = ..()
 		src.create_inventory_counter()
 
+	reset_color()
+		src.font_color = src.color
+		src.color_name = hex2color_name(src.color)
+		src.name = "[src.color_name] crayon"
 
 	proc/write_input(mob/user)
 		if(src.in_use)

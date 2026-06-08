@@ -88,6 +88,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 		var/atom/movable/fish = src.generate_fish(user, fishing_rod, target)
 		if (!fish)
 			return 0
+
+		user.add_to_fish_collection(fish)
+
 		// ever put this much effort into the dumbest thing ever haha
 		user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 		[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
@@ -446,6 +449,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/cod = 20,\
 	/obj/item/reagent_containers/food/fish/dace = 15,\
 	/obj/item/reagent_containers/food/fish/minnow = 15,\
+	/obj/item/reagent_containers/food/fish/rosefin_shiner = 15,\
 	/obj/item/reagent_containers/food/fish/flounder = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\

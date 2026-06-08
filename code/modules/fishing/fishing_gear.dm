@@ -18,8 +18,10 @@
 	var/last_fished = 0
 	/// true if the rod is currently "fishing", false if it isnt
 	var/is_fishing = FALSE
-	/// what tier of rod is this? can be 0, 1 or 2
+	/// what tier of rod is this? can be 1, 2 or 3
 	var/tier = 0
+	/// is this rod SHINY
+	var/gilded = FALSE
 
 	New()
 		..()
@@ -56,15 +58,33 @@
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now
 
+	// we use overlays for the icon state but bake in the gilding for the inhand so this is kind of a mess
 	update_icon()
-		//state for fishing
-		if (src.is_fishing)
-			src.icon_state = "fishing_rod-active"
-			src.item_state = "fishing_rod-active"
-		//state for not fishing
+		var/inhand_state = "fishing_rod"
+		var/icon_state = "fishing_rod"
+
+		if (src.tier > 1)
+			icon_state += "_[src.tier]"
+
+		if (src.gilded)
+			var/gilded_overlay_state = "gilded"
+			//3 has a sliightly different handle so a unique gilded state
+			if (src.tier == 3)
+				gilded_overlay_state += "_3"
+			src.UpdateOverlays(image(src.icon, gilded_overlay_state), "gilded")
+			inhand_state += "-gilded"
 		else
-			src.icon_state = "fishing_rod-inactive"
-			src.item_state = "fishing_rod-inactive"
+			src.UpdateOverlays(null, "gilded")
+
+		if (src.is_fishing)
+			icon_state += "-active"
+			inhand_state += "-active"
+		else
+			icon_state += "-inactive"
+			inhand_state += "-inactive"
+
+		src.icon_state = icon_state
+		src.item_state = inhand_state
 
 /// (invisible) action for timing out fishing. this is also what lets the fishing spot know that we fished
 /datum/action/fishing
@@ -159,41 +179,17 @@
 	item_state = "fishing_rod-inactive"
 	tier = 1
 
-	update_icon()
-		if (src.is_fishing)
-			src.icon_state = "fishing_rod-active"
-			src.item_state = "fishing_rod-active"
-		else
-			src.icon_state = "fishing_rod-inactive"
-			src.item_state = "fishing_rod-inactive"
-
 /obj/item/fishing_rod/upgraded
 	name = "upgraded fishing rod"
 	icon_state = "fishing_rod_2-inactive"
 	item_state = "fishing_rod-inactive"
 	tier = 2
 
-	update_icon()
-		if (src.is_fishing)
-			src.icon_state = "fishing_rod_2-active"
-			src.item_state = "fishing_rod-active"
-		else
-			src.icon_state = "fishing_rod_2-inactive"
-			src.item_state = "fishing_rod-inactive"
-
 /obj/item/fishing_rod/master
 	name = "master fishing rod"
 	icon_state = "fishing_rod_3-inactive"
 	item_state = "fishing_rod-inactive"
 	tier = 3
-
-	update_icon()
-		if (src.is_fishing)
-			src.icon_state = "fishing_rod_3-active"
-			src.item_state = "fishing_rod-active"
-		else
-			src.icon_state = "fishing_rod_3-inactive"
-			src.item_state = "fishing_rod-inactive"
 
 /obj/item/fishing_rod/cybernetic
 	name = "cybernetic fishing rod"
@@ -504,6 +500,8 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	var/line_length = 8
 	/// true if the rod is currently ""fishing"", false if it isnt
 	var/is_fishing = FALSE
+	/// is this rod SHINY
+	var/gilded = FALSE
 	HELP_MESSAGE_OVERRIDE({"The Glaucus starts with 7 damage on a melee reel, but stores up 3 onetime bonus damage on each ranged reel. If this reaches <b>25 damage</b>, or 6 ranged reels before a melee reel, the target will be stunned when damaged."})
 
 	New()
@@ -588,15 +586,24 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			else
 				src.pull_in_lure(user)
 
+	// we use overlays for the icon state but bake in the gilding for the inhand so this is kind of a mess
 	update_icon()
-		//state for fishing
-		if (src.is_fishing)
-			src.icon_state = "syndie_fishing_rod-active"
-			src.item_state = "syndie_fishing_rod-active"
-		//state for not fishing
+		var/inhand_state = "syndie_fishing_rod"
+		var/icon_state = "syndie_fishing_rod"
+		if (src.gilded)
+			var/gilded_overlay_state = "gilded_syndie"
+			src.UpdateOverlays(image(src.icon, gilded_overlay_state), "gilded")
+			inhand_state += "-gilded"
 		else
-			src.icon_state = "syndie_fishing_rod-inactive"
-			src.item_state = "syndie_fishing_rod-inactive"
+			src.UpdateOverlays(null, "gilded")
+		if (src.is_fishing)
+			icon_state += "-active"
+			inhand_state += "-active"
+		else
+			icon_state += "-inactive"
+			inhand_state += "-inactive"
+		src.icon_state = icon_state
+		src.item_state = inhand_state
 
 	disposing()
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)

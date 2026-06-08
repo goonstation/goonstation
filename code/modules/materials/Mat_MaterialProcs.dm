@@ -9,6 +9,8 @@ triggerDrop(var/mob/M, var/obj/item/I)
 triggerTemp(var/owner, var/temp)
 triggerExp(var/owner, var/severity)
 triggerOnEntered(var/atom/owner, var/atom/entering)
+triggerOnMix(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
+triggerOnImage(var/image/target, var/datum/material/source)
 */
 
 // THINGS LIKE GOLD SPARKLES ARE NOT REMOVED WHEN MATERIAL CHANGES!. MOVE THESE TO NEW APPEARANCE SYSTEM.
@@ -695,6 +697,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/honey_remove
 	execute(var/atom/location)
 		location.remove_filter("honey_wave")
+		return
+
+/datum/materialProc/honey_image
+	execute(var/image/target, var/datum/material/source)
+		var/wave_filter = wave_filter(16, 16, 1, rand(), flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		target.filters = wave_filter + target.filters
 		return
 
 /datum/materialProc/temp_miraclium
