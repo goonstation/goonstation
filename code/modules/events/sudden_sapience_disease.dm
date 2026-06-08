@@ -3,7 +3,7 @@
 	required_elapsed_round_time = 10 MINUTES
 	required_npc_type = /mob/living/carbon/human/npc/monkey
 	var/ghost_confirmation_delay = 1 MINUTES
-	var/list/npc_blacklist = list(/mob/living/carbon/human/npc/monkey/stirstir, /mob/living/carbon/human/npc/monkey/oppenheimer, /mob/living/carbon/human/npc/monkey/angry/, /mob/living/carbon/human/npc/diner_bartender/)
+	var/list/npc_blacklist = list(/mob/living/carbon/human/npc/monkey/stirstir, /mob/living/carbon/human/npc/monkey/oppenheimer, /mob/living/carbon/human/npc/monkey/angry/)
 
 	proc/pick_npc()
 		var/list/mob/found_npcs = list()
