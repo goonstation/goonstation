@@ -813,29 +813,29 @@ var/global/game_force_started = FALSE
 
 			var/job_wage_converted = 100
 			switch(job_wage)
-				if(0 to PAY_DUMBCLOWN)
+				if(0 to PAY::DUMBCLOWN)
 					job_wage_converted = 100
-				if(PAY_DUMBCLOWN+1 to PAY_UNTRAINED)
-					job_wage_converted = PAY_UNTRAINED
-				if(PAY_UNTRAINED+1 to PAY_TRADESMAN)
-					job_wage_converted = PAY_TRADESMAN
-				if(PAY_TRADESMAN+1 to PAY_DOCTORATE)
-					job_wage_converted = PAY_DOCTORATE
-				if(PAY_DOCTORATE+1 to PAY_IMPORTANT)
-					job_wage_converted = PAY_IMPORTANT
-				if(PAY_IMPORTANT+1 to INFINITY)
-					job_wage_converted = PAY_EXECUTIVE
+				if(PAY::DUMBCLOWN+1 to PAY::UNTRAINED)
+					job_wage_converted = PAY::UNTRAINED
+				if(PAY::UNTRAINED+1 to PAY::TRADESMAN)
+					job_wage_converted = PAY::TRADESMAN
+				if(PAY::TRADESMAN+1 to PAY::DOCTORATE)
+					job_wage_converted = PAY::DOCTORATE
+				if(PAY::DOCTORATE+1 to PAY::IMPORTANT)
+					job_wage_converted = PAY::IMPORTANT
+				if(PAY::IMPORTANT+1 to INFINITY)
+					job_wage_converted = PAY::EXECUTIVE
 
 			job_wage = job_wage_converted
 
 			if (isrobot(player))
 				var/mob/living/silicon/robot/borg = player
 				if(borg.shell) // is this secretly an AI??
-					job_wage = PAY_IMPORTANT
+					job_wage = PAY::IMPORTANT
 				else
-					job_wage = PAY_DOCTORATE
+					job_wage = PAY::DOCTORATE
 			if (isAI(player) || isshell(player))
-				job_wage = PAY_IMPORTANT
+				job_wage = PAY::IMPORTANT
 
 			//if part-time, reduce wage
 			if (player.mind.join_time > LATEJOIN_FULL_WAGE_GRACE_PERIOD) //grace period of 9 mins after roundstart to be a full-time employee

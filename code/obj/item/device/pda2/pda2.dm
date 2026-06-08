@@ -788,7 +788,12 @@
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		var/datum/bounty_claim/claim = U.bounty_is_claimable(O, user)
-		if (claim)
+		var/confirmed_redeem = TRUE
+		if(O == src) //Warn the user before claiming their own uplink
+			confirmed_redeem = FALSE
+			if(tgui_alert(user, "Are you sure you'd like to claim your own uplink? You won't be able to replace it!", "Redeem Uplink?", list("Ok", "Cancel")) == "Ok")
+				confirmed_redeem = TRUE
+		if (claim && confirmed_redeem)
 			actions.start(new/datum/action/bar/private/spy_steal(claim.delivery, U), user)
 			return
 	..()

@@ -1,3 +1,56 @@
+
+(t)mon jun 08 26
+(u)LeahTheTech
+(p)26814
+(e)⚖⛔🧛|C-Balance, C-Removal, A-Gamemodes
+(+)Salvager pods no longer have a unique tint. Pods built using the manufacturable salvager pod armour retain the tint.
+(u)LeahTheTech
+(p)26830
+(e)🆕📡🍝🐁|C-Feature, A-AI, A-Catering, A-Critters
+(+)Remy will now wander back to the kitchen if he strays too far.
+(u)CalliopeSoups
+(p)26599
+(e)🆕🌠|C-Feature, A-Events
+(+)Sudden Sapience Disease random event that spawns an observer as a random station monkey.
+(u)JORJ949
+(p)26763
+(e)⚖🤖💡|C-Balance, A-Silicons, A-Station-Systems
+(*)EMPing an AI turret will now prevent it from firing for 30-45 seconds, instead of just turning it off.
+(u)RubberRats
+(p)26824
+(e)🪲📄📨|C-Bug, A-UI, A-Logistics
+(+)The martian trader now properly displays trades with limited stock
+(t)fri jun 05 26
+(u)Valtsu0
+(p)26769
+(e)🆕📄🌱|C-Feature, A-UI, A-Hydroponics
+(*)A collection of all the types of fish that you have fished across rounds can be found by using the Fish Collection verb
+(u)LeahTheTech
+(+)Finishing the fish collection will reward you with a fancy fishing rod.
+(p)26784
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Razors hidden in flat caps can now be used to blind people. Requires an aggressive grab and head targeting, blocked by anything that covers the eyes.
+(+)Gang crates can now contain flat caps with razors hidden in them.
+(u)TemThrush & Yelloworlemons
+(p)26797
+(e)🎨|C-Sprites
+(+)Interacting with hairbows while holding them will let you re-tie them into new styles.
+(u)bamlord
+(p)26799
+(e)|
+(+)Gorillas have learned how to rip off all your limbs.
+(u)LorrMaster
+(p)26684
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Custom space suit reinforcement material impacts suit appearance.
+(t)thu jun 04 26
+(u)LeahTheTech
+(+)Slugs and snails now eat plants out of hydroponics trays. Grief botany today!
+(t)wed jun 03 26
+(u)Driftered
+(p)26748
+(e)|
+(*)Cyborgs may now choose their crayon color instead of swapping until they get what they want.
 (t)wed jun 3 26
 (u)LeahTheTech
 (+)Syndie chainsaw butchering now has a 3 second action bar to prevent accidental gibbings (whole bodies make better plant food)
