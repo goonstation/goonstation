@@ -254,6 +254,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 		return ..()
 
+	home_area()
+		return /area/station/crew_quarters/kitchen
+
 /* =============================================== */
 /* ----------- mentor & admin mice --------------- */
 /* =============================================== */
