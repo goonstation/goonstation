@@ -44,8 +44,8 @@
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "cq" = (
-/obj/machinery/shower/puzzle,
 /obj/machinery/drainage,
+/obj/machinery/shower,
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "cN" = (
@@ -60,10 +60,10 @@
 /turf/simulated/floor/sanitary,
 /area/prefab/secbot_academy)
 "cY" = (
-/obj/machinery/shower/puzzle{
+/obj/machinery/drainage,
+/obj/machinery/shower{
 	dir = 1
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "du" = (
@@ -464,6 +464,12 @@
 	spawn_contents = null
 	},
 /turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"uC" = (
+/obj/machinery/shower/puzzle{
+	dir = 1
+	},
+/turf/simulated/wall/auto/supernorn,
 /area/prefab/secbot_academy)
 "uY" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
@@ -2031,7 +2037,7 @@ Wc
 Ek
 aP
 ib
-Ek
+uC
 hG
 Ar
 bU
