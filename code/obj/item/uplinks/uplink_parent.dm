@@ -31,7 +31,7 @@
 	var/purchase_flags
 	var/owner_ckey = null
 
-	/// Associative list, where keys are /datum/syndicate_buylist instances and values are the number of purchases.
+	/// Associative list, where keys are /datum/syndicate_buylist refs and values are the number of purchases.
 	var/list/purchase_log = list()
 
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
@@ -309,27 +309,27 @@
 					dat += "</table><B>Ejectable [syndicate_currency]:</B><BR><table cellspacing=5>"
 					for (var/T in src.items_telecrystal)
 						var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A> [I4.max_buy == INFINITY  ? "" :"([src.purchase_log[I4.type] ? src.purchase_log[I4.type] : 0]/[I4.max_buy])"]</td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A> [I4.max_buy == INFINITY  ? "" :"([src.get_purchase_log(I4)]/[I4.max_buy])"]</td>"
 				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 					dat += "</table><B>Objective Specific:</B><BR><table cellspacing=5>"
 					for (var/O in src.items_objective)
 						var/datum/syndicate_buylist/I3 = src.items_objective[O]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.purchase_log[I3.type] ? src.purchase_log[I3.type] : 0]/[I3.max_buy])"]</td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.get_purchase_log(I3)]/[I3.max_buy])"]</td>"
 				if (src.items_job && islist(src.items_job) && length(src.items_job))
 					dat += "</table><B>Job Specific:</B><BR><table cellspacing=5>"
 					for (var/J in src.items_job)
 						var/datum/syndicate_buylist/I2 = src.items_job[J]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A> [I2.max_buy == INFINITY  ? "" :"([src.purchase_log[I2.type] ? src.purchase_log[I2.type] : 0]/[I2.max_buy])"]</td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A> [I2.max_buy == INFINITY  ? "" :"([src.get_purchase_log(I2)]/[I2.max_buy])"]</td>"
 				if (src.items_general && islist(src.items_general) && length(src.items_general))
 					dat += "</table><B>Standard Equipment:</B><BR><table cellspacing=5>"
 					for (var/G in src.items_general)
 						var/datum/syndicate_buylist/I1 = src.items_general[G]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A> [I1.max_buy == INFINITY  ? "" :"([src.purchase_log[I1.type] ? src.purchase_log[I1.type] : 0]/[I1.max_buy])"]</td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A> [I1.max_buy == INFINITY  ? "" :"([src.get_purchase_log(I1)]/[I1.max_buy])"]</td>"
 				if (src.items_ammo && islist(src.items_ammo) && length(src.items_ammo))
 					dat += "</table><B>Special ammunition:</B><BR><table cellspacing=5>"
 					for (var/A in src.items_ammo)
 						var/datum/syndicate_buylist/I5 = src.items_ammo[A]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_ammo[A]]'>[I5.name]</A> ([I5.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_ammo[A]]'>About</A> [I5.max_buy == INFINITY  ? "" :"([src.purchase_log[I5.type] ? src.purchase_log[I5.type] : 0]/[I5.max_buy])"]</td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_ammo[A]]'>[I5.name]</A> ([I5.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_ammo[A]]'>About</A> [I5.max_buy == INFINITY  ? "" :"([src.get_purchase_log(I5)]/[I5.max_buy])"]</td>"
 				dat += "</table>"
 				var/do_divider = 1
 
@@ -442,7 +442,7 @@
 				if (src.uses < I.cost)
 					boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
 					return
-				if (src.purchase_log[I.type] >= I.max_buy)
+				if (src.get_purchase_log(I) >= I.max_buy)
 					boutput(usr, SPAN_ALERT("You have already bought as many of those as you can!"))
 					return
 				src.uses = max(0, src.uses - I.cost)
@@ -471,9 +471,7 @@
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
-					if (!src.purchase_log[I.type])
-						src.purchase_log[I.type] = 0
-					src.purchase_log[I.type]++
+					src.add_to_purchase_log(I)
 
 		else if (href_list["about"])
 			reading_about = locate(href_list["about"])
@@ -508,3 +506,11 @@
 		return
 #undef CHECK1
 #undef CHECK2
+
+/obj/item/uplink/proc/add_to_purchase_log(var/datum/syndicate_buylist/buylist_entry)
+	if (!src.purchase_log[ref(buylist_entry)])
+		src.purchase_log[ref(buylist_entry)] = 0
+	src.purchase_log[ref(buylist_entry)]++
+
+/obj/item/uplink/proc/get_purchase_log(var/datum/syndicate_buylist/buylist_entry)
+	return src.purchase_log[ref(buylist_entry)] || 0

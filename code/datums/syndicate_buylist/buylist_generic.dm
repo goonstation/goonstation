@@ -134,7 +134,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
-		if (!uplink?.purchase_log[src.type])
+		if (!uplink?.get_purchase_log(src))
 			var/obj/item/storage/box/marionetteimp_kit/MI = new(item.loc, TRUE)
 			// Spief uplinks put the spawned item in the player's hands after this proc,
 			// so we need to account for that and make sure we don't spit the box out onto the ground

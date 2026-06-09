@@ -123,9 +123,7 @@
 				logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
 				user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 				reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
-			if (!hostpda.uplink.purchase_log[reward.type])
-				hostpda.uplink.purchase_log[reward.type] = 0
-			hostpda.uplink.purchase_log[reward.type]++
+			hostpda.uplink.add_to_purchase_log(reward)
 			if (istype(antag_role))
 				antag_role.redeemed_items.Add(reward)
 
