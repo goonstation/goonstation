@@ -2262,11 +2262,13 @@ TYPEINFO(/datum/mutantrace/frog/amphibian) // trait mutantrace
 		..()
 		if(ishuman(src.mob))
 			M.bioHolder.AddEffect("accent_frog", do_stability = FALSE, scannable = FALSE, innate = TRUE)
+			M.bioHolder.AddEffect("stickytongue", do_stability = FALSE, scannable = FALSE, innate = TRUE)
 			src.mob.vis_contents += list(src.distort_uniform,src.distort_headset,src.distort_backpack,src.distort_shoes)
 
 	disposing()
 		if(ishuman(src.mob))
 			src.mob.bioHolder.RemoveEffect("accent_frog")
+			src.mob.bioHolder.RemoveEffect("stickytongue")
 			src.mob.vis_contents -= list(src.distort_uniform,src.distort_headset,src.distort_backpack,src.distort_shoes)
 		..()
 

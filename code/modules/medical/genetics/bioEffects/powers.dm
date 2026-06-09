@@ -352,6 +352,133 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/bioEffect/power/stickytongue
+	name = "Sticky Tongue"
+	desc = "mlem"
+	id = "stickytongue"
+	icon_state = "sticky_tongue"
+	msgGain = "mlem"
+	msgLose = "you tongue fall out"
+	cooldown = 100
+	probability = 66
+	blockCount = 3
+	blockGaps = 2
+	stability_loss = 10
+	ability_path = /datum/targetable/geneticsAbility/stickytongue
+	var/target_path = /obj/item
+
+/datum/projectile/special/tongue // do i really want this here
+	name = "tongue"
+	dissipation_rate = 1
+	dissipation_delay = 7
+	projectile_speed = 72
+	icon_state = ""
+	damage = 0
+	hit_ground_chance = 0
+	shot_sound = 'sound/misc/croak.ogg'
+	var/list/previous_line = list()
+	on_hit(atom/hit, angle, var/obj/projectile/P)
+		if (previous_line != null)	//Lets clean up the line
+			for (var/obj/O in previous_line)
+				qdel(O)
+		if (ismob(hit))	//Drag them to us
+			var/mob/M = hit
+			if(hit == P.special_data["owner"]) return 1
+			var/turf/destination = get_turf(P.special_data["owner"])
+			if (destination)
+
+				M.throw_at(destination, 10, 1)
+
+				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
+				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
+				M.force_laydown_standup()
+				M.changeStatus("unconscious", 5 SECONDS)
+				M.visible_message(SPAN_ALERT("[M] gets grabbed by a tentacle and dragged!"))
+
+		previous_line = drawLineObj(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
+		SPAWN(1 DECI SECOND)	//Make it last a bit for impact
+			for (var/obj/O in previous_line)
+				qdel(O)
+		qdel(P)
+
+
+	on_launch(var/obj/projectile/P)
+		..()
+		if (!("owner" in P.special_data) || !("target" in P.special_data))
+			P.die()
+			return
+
+	on_end(var/obj/projectile/P)	//Clean up behind us
+		SPAWN(1 DECI SECOND)
+			for (var/obj/O in previous_line)
+				qdel(O)
+
+		if (!("owner" in P.special_data) || !("target" in P.special_data)) // somehow the projectile data got removed?
+			return ..()
+
+		var/obj/target_object = P.targets[1]
+		var/mob/tongue_owner = P.special_data["owner"]
+		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner)) // make sure everyone's still here
+			return ..()
+		if (target_object.loc == get_turf(P)) // target's still located on the place the projectile ended, reel it in
+			target_object.visible_message(SPAN_NOTICE("The tongue sticks to [target_object] and reels it back!"))
+			target_object.throw_at(tongue_owner, 10, 1) // Yeet
+    		// TODO: Sound Effect?
+		..()
+
+	tick(var/obj/projectile/P)    //Trail the projectile
+		..()
+		if(get_turf(P) == P.orig_turf)
+			return //don't draw a trail if we haven't moved
+		if (previous_line != null)
+			for (var/obj/O in previous_line)
+				qdel(O)
+		previous_line = drawLineObj(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
+
+
+/datum/targetable/geneticsAbility/stickytongue
+	name = "Sticky Tongue"
+	desc = "mlem"
+	icon_state = "sticky_tongue"
+	cooldown = 10 SECONDS
+	needs_hands = FALSE
+	targeted = 1
+	target_anything = 1
+
+	cast_genetics(atom/target, misfire)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target))
+		while (!proj || proj.disposed)
+			proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target))
+
+		proj.special_data["owner"] = holder.owner
+		proj.targets = list(target)
+
+		proj.launch()
+		holder.owner.setStatus("slowed", 2 SECONDS)
+
+		if (misfire) cast_mis(target)
+		return
+
+	proc/cast_mis(atom/target)
+		if (!src.linked_power.safety)
+			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
+			if(src.owner.getStatusDuration("burning"))
+				src.owner.delStatus("burning")
+			src.owner.bodytemperature = 100
+			new /obj/icecube(get_turf(src.owner), src.owner)
+		else
+			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires!"))
+			if(src.owner.getStatusDuration("burning"))
+				src.owner.delStatus("burning")
+		return CAST_ATTEMPT_SUCCESS
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/bioEffect/power/polymorphism
 	name = "Polymorphism"
 	desc = "Enables the subject to reconfigure their appearance to mimic that of others."
