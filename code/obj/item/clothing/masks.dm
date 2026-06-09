@@ -521,7 +521,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 
 /obj/item/clothing/mask/medical
 	name = "medical mask"
-	desc = "This mask does not work very well in low pressure environments."
+	desc = "This mask can have a mini-tank attached, but does not work very well in low pressure environments."
 	icon_state = "medical"
 	item_state = "medical"
 	c_flags = COVERSMOUTH | MASKINTERNALS
