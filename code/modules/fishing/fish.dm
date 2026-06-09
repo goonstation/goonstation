@@ -72,7 +72,6 @@ Alien/mutant/other fish:
 		Cardboard fish
 	Unimplemented:
 		Blood fish
-		Starstonefish
 */
 
 // These catagories aren't used currently.
