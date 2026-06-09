@@ -211,10 +211,14 @@
 
 	proc/get_breath_from_internal(volume_needed)
 		if (human_owner?.internal)
-			if (!(human_owner.internal in owner.contents))
+			if (!((human_owner.internal in owner.contents) || (human_owner.internal in human_owner.wear_mask)))
 				human_owner?.internal = null
 			if (!human_owner?.wear_mask || !(human_owner?.wear_mask.c_flags & MASKINTERNALS) )
 				human_owner?.internal = null
+			if (istype(human_owner.wear_mask, /obj/item/clothing/mask/medical))
+				var/turf/simulated/T = get_turf(human_owner)
+				if (istype_exact(T, /turf/space) || (istype(T) && T.air && (MIXTURE_PRESSURE(T.air) < ONE_ATMOSPHERE * 0.5)))
+					human_owner.internal = null
 			if (human_owner?.internal)
 				if (human_owner?.internals)
 					human_owner?.internals.icon_state = "internal1"

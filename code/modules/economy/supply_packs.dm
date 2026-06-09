@@ -1974,7 +1974,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/operating_kit
 	name = "Operating Room Reconstruction Kit (Locked \[Medical])"
-	desc = "x1 Staple Gun, x1 Defibrillator, x2 Scalpel, x2 Circular Saw, x1 Hemostat, x2 Suture, x1 Enucleation Spoon, x1 Medical Fabricator Frame, x1 Operating Table Frame."
+	desc = "x1 Staple Gun, x1 Defibrillator, x2 Scalpel, x2 Circular Saw, x1 Hemostat, x2 Suture, x1 Enucleation Spoon, x1 Anesthetic Mask, x1 Medical Fabricator Frame, x1 Operating Table Frame, 1x Nanomed Vendor Frame."
 	category = "Medical"
 	contains = list(/obj/item/staple_gun,
 					/obj/item/robodefibrillator,
@@ -1983,7 +1983,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/item/hemostat,
 					/obj/item/scissors/surgical_scissors,
 					/obj/item/suture,
-					/obj/item/surgical_spoon)
+					/obj/item/surgical_spoon,
+					/obj/item/clothing/mask/medical/anesthetic)
 	frames = list(/obj/machinery/manufacturer/medical,
 					/obj/machinery/optable,
 					/obj/machinery/vending/medical)

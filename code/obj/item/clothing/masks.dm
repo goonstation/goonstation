@@ -528,6 +528,68 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	w_class = W_CLASS_SMALL
 	protective_temperature = 420
 
+/obj/item/clothing/mask/medical/anesthetic
+	name = "anesthetic mask"
+	desc = "For when you want to put patients to sleep wtihout losing patience."
+	duration_put = 7 SECONDS
+	var/obj/item/tank/attached_tank
+
+	HELP_MESSAGE_OVERRIDE("Detatch an attached tank with a <b>wrenching</b> tool.<br>Click with a <b>mini-tank</b> in-hand to attach it.<br><b>Does not work in space!</b>")
+
+	New()
+		. = ..()
+		src.attached_tank = new /obj/item/tank/mini/anesthetic(src)
+		src.UpdateIcon()
+
+	attackby(obj/item/I, mob/user)
+		if (iswrenchingtool(I))
+			if (!src.attached_tank)
+				boutput(user, SPAN_ALERT("There's no tank attached!"))
+				return
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 35, 1)
+			user.put_in_hand_or_drop(src.attached_tank)
+			src.attached_tank = null
+			src.w_class = W_CLASS_SMALL
+			src.UpdateIcon()
+			return
+
+		if (istype(I, /obj/item/tank/mini))
+			if (src.attached_tank)
+				boutput(user, SPAN_ALERT("There's already an attached tank!"))
+				return
+			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 45, 1)
+			I.set_loc(src)
+			user.u_equip(I)
+			src.attached_tank = I
+			src.w_class = W_CLASS_NORMAL
+			src.UpdateIcon()
+			return
+
+		. = ..()
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot != SLOT_WEAR_MASK)
+			return
+		SPAWN(1 DECI SECOND) // force equipping others doesn't set the wear_mask var in time
+			src.attached_tank?.toggle_valve()
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if (src.attached_tank)
+			. += " It has [src.attached_tank] attached."
+
+	update_icon(...)
+		if (src.attached_tank)
+			var/image/mask_tank = src.SafeGetOverlayImage("mask_tank", src.attached_tank.icon, src.attached_tank.icon_state, pixel_x = 6, pixel_y = 2)
+			var/matrix/new_transform = mask_tank.transform
+			new_transform.Scale(-1, 1)
+			new_transform.Turn(180)
+			mask_tank.transform = new_transform
+			src.underlays += mask_tank
+		else
+			src.underlays.len = 0
+
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
 	icon_state = "muzzle"

@@ -624,8 +624,8 @@
 	icon_state = "medical_anesthetic"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/morphine = 2,
 	/obj/item/storage/box/syringes,
-	/obj/item/tank/anesthetic = 5,
-	/obj/item/clothing/mask/medical = 4)
+	/obj/item/tank/mini/anesthetic = 5,
+	/obj/item/clothing/mask/medical/anesthetic = 2)
 
 /obj/storage/secure/closet/medical/uniforms
 	name = "medical uniform locker"
