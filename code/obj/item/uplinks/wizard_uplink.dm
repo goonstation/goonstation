@@ -7,6 +7,8 @@
 	var/wizard_key = ""
 	var/uses = 6
 	var/list/spells = list()
+	/// Associative list, where keys are /datum/SWFuplinkspell types and values are the number of purchases.
+	var/list/purchased_spells = list()
 	flags = TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
@@ -40,7 +42,8 @@
 
 	ui_data(mob/user)
 		. = list(
-			"currency_amount" = src.uses
+			"currency_amount" = src.uses,
+			"purchased_items" = src.purchased_spells,
 		)
 
 	ui_static_data(mob/user)
@@ -59,12 +62,15 @@
 			else if (spell.icon && spell.icon_state)
 				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
 			spellbook_contents[spell.eqtype] += list(list(
-				cooldown = cooldown_contents,
-				cost = spell.cost,
-				desc = spell.desc,
-				name = spell.name,
-				icon = spell_icon,
-				vr_allowed = spell.vr_allowed,
+				"cooldown" = cooldown_contents,
+				"cost" = spell.cost,
+				"desc" = spell.desc,
+				"name" = spell.name,
+				"icon" = spell_icon,
+				"vr_allowed" = spell.vr_allowed,
+				"ref" = ref(spell),
+				"type" = spell.type,
+				"purchase_limit" = 1,
 			))
 		. = list(
 			"title" = "[src.wizard_name]'s Spellbook",
@@ -88,13 +94,15 @@
 			return
 		switch (action)
 			if ("purchase")
-				var/datum/SWFuplinkspell/chosen_spell = params["item"]
-				for (var/datum/SWFuplinkspell/spell in src.spells)
-					if (spell.name == chosen_spell)
-						chosen_spell = spell
-						break
+				var/datum/SWFuplinkspell/chosen_spell = locate(params["item_ref"]) in src.spells
+				if(!chosen_spell || !istype(chosen_spell))
+					boutput(usr, SPAN_ALERT("Oops, couldn't find that spell, call an Archmage Coder!"))
+					return
 				if (chosen_spell.SWFspell_CheckRequirements(usr,src))
+					src.purchased_spells[chosen_spell.type] ||= 0
+					src.purchased_spells[chosen_spell.type] += 1
 					chosen_spell.SWFspell_Purchased(usr,src)
+					tgui_process.update_uis(src) //Force an update to prevent spam purchases
 
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
 ABSTRACT_TYPE(/datum/SWFuplinkspell)
@@ -116,6 +124,8 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 			return FALSE // unknown error
 		if (book.vr && !src.vr_allowed)
 			return FALSE // Unavailable in VR
+		if (src.type in book.purchased_spells)
+			return FALSE // Already purchased
 		if (src.assoc_spell)
 			if (book.antag_datum.ability_holder.getAbility(assoc_spell))
 				return FALSE // Already have this spell
