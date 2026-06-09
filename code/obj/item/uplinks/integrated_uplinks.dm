@@ -230,7 +230,7 @@
 
 /obj/item/uplink/integrated/radio
 	lock_code_autogenerate = 1
-	use_default_GUI = 1
+	uplink_ui_type = UPLINK_UI_TGUI
 	var/obj/item/device/radio/origradio = null
 
 	generate_code()

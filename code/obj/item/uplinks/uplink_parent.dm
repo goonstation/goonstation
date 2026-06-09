@@ -21,7 +21,8 @@
 	uses = 9999
 #endif
 
-	var/use_default_GUI = 0 // Use the parent's HTML interface (less repeated code).
+	/// Which UI type does this uplink use?
+	var/uplink_ui_type = UPLINK_UI_CUSTOM
 	var/temp = null
 	var/selfdestruct = 0
 	var/can_selfdestruct = 0
@@ -235,9 +236,11 @@
 	attack_self(mob/user as mob)
 		if (src.vr_check(user) != 1)
 			user.show_text("This uplink only works in virtual reality.", "red")
-		else if (src.use_default_GUI == 1)
+		else if (src.uplink_ui_type == UPLINK_UI_HTML)
 			src.add_dialog(user)
 			src.generate_menu()
+		else if (src.uplink_ui_type == UPLINK_UI_TGUI)
+			src.ui_interact(user)
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -260,7 +263,7 @@
 	proc/generate_menu()
 		if (src.uses < 0)
 			src.uses = 0
-		if (src.use_default_GUI == 0)
+		if (src.uplink_ui_type != UPLINK_UI_HTML)
 			return
 
 		var/list/dat = list()
@@ -431,7 +434,7 @@
 		..()
 		if (src.uses < 0)
 			src.uses = 0
-		if (src.use_default_GUI == 0)
+		if (src.uplink_ui_type != UPLINK_UI_HTML)
 			return
 		if (CHECK1)
 			return
@@ -510,3 +513,62 @@
 		return
 #undef CHECK1
 #undef CHECK2
+
+// --- TGUI Uplinks
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Uplink")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"currency_amount" = src.uses,
+			"purchased_items" = src.purchase_log,
+		)
+
+	ui_static_data(mob/user)
+		var/list/categorised_items = list()
+		categorised_items["General"] = src.items_general
+		categorised_items["Job-Specific"] = src.items_job
+		categorised_items["Objective"] = src.items_objective
+		categorised_items["Telecrystals"] = src.items_telecrystal
+		categorised_items["Ammunition"] = src.items_ammo
+		var/list/categorised_data = list()
+		for(var/category in categorised_items)
+			categorised_data[category] = src.get_category_data(categorised_items[category])
+		. = list(
+			"title" = "Syndicate Uplink",
+			"theme" = "syndicate",
+			"currency_name" = global.syndicate_currency,
+			"item_entries" = categorised_data,
+			"vr" = src.is_VR_uplink
+		)
+
+	proc/get_category_data(var/buylist_entry_list)
+		var/list/category_data = list()
+		for(var/buylist_name as anything in buylist_entry_list)
+			var/datum/syndicate_buylist/uplink_item = buylist_entry_list[buylist_name]
+			var/atom/main_entry_type = uplink_item.items[1]
+			var/icon/icon = icon2base64(icon(main_entry_type::icon, main_entry_type::icon_state, frame = 1))
+			category_data += list(list(
+				"name" = uplink_item.name,
+				"desc" = uplink_item.desc,
+				"cost" = uplink_item.cost,
+				"icon" = icon,
+				"vr_allowed"= uplink_item.vr_allowed,
+				"ref" = ref(uplink_item),
+				"type" = uplink_item.type,
+				"purchase_limit" = uplink_item.max_buy,
+			))
+		return category_data
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+		switch (action)
+			if ("purchase")
+				var/all_items = src.items_general | src.items_job | src.items_objective | src.items_telecrystal | src.items_ammo
+				var/buylist_entry = all_items[params["item_name"]]
+				src.try_buy(buylist_entry)
