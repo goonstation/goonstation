@@ -81,7 +81,7 @@
 		..()
 		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space, SLOT_WEAR_SUIT)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, SLOT_HEAD)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/fishbowl, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/von_braun
 	name = "Von Braun"
