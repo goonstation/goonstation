@@ -240,6 +240,10 @@
 			src.add_dialog(user)
 			src.generate_menu()
 		else if (src.uplink_ui_type == UPLINK_UI_TGUI)
+			if(src.locked)
+				src.try_unlock(user)
+			if(src.locked)
+				return
 			src.ui_interact(user)
 		return
 
@@ -428,10 +432,35 @@
 					src.purchase_log[I.type] = 0
 				src.purchase_log[I.type]++
 
-#define CHECK1 (BOUNDS_DIST(src, usr) > 0 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-#define CHECK2 (is_incapacitated(usr) || usr.restrained())
+	proc/lock(mob/user)
+		if(src.locked || src.is_VR_uplink)
+			return FALSE
+		switch(src.uplink_ui_type)
+			if(UPLINK_UI_TGUI)
+				tgui_process.close_uis(src)
+			if(UPLINK_UI_HTML)
+				src.remove_dialog(user)
+				user.Browse(null, "window=radio")
+		user.show_text("The uplink is now locked.", "blue")
+		src.locked = 1
+		return TRUE
+
+#define CHECK1 (BOUNDS_DIST(src, user) > 0 || !user.contents.Find(src) || !isliving(user) || iswraith(user) || isintangible(user))
+#define CHECK2 (is_incapacitated(user) || user.restrained())
+	proc/try_unlock(mob/user)
+		var/the_code = adminscrub(tgui_input_text(user, "Please enter the password.", "Unlock Uplink", null))
+		if (!src || !istype(src) || !user || !ismob(user) || CHECK1 || CHECK2)
+			return
+		if (isnull(the_code) || !cmptext(the_code, src.lock_code))
+			user.show_text("Incorrect password.", "red")
+			return
+
+		src.locked = 0
+		user.show_text("The uplink beeps softly and unlocks.", "blue")
+
 	Topic(href, href_list)
 		..()
+		var/mob/user = usr //CHECK1 and CHECK2 use user not usr
 		if (src.uses < 0)
 			src.uses = 0
 		if (src.uplink_ui_type != UPLINK_UI_HTML)
@@ -447,35 +476,10 @@
 		src.add_dialog(usr)
 
 		if (href_list["unlock"] && src.locked && !isnull(src.lock_code))
-			var/the_code = adminscrub(input(usr, "Please enter the password.", "Unlock Uplink", null))
-			if (!src || !istype(src) || !usr || !ismob(usr) || CHECK1 || CHECK2)
-				return
-			if (isnull(the_code) || !cmptext(the_code, src.lock_code))
-				usr.show_text("Incorrect password.", "red")
-				return
-
-			src.locked = 0
-			usr.show_text("The uplink beeps softly and unlocks.", "blue")
+			src.try_unlock(usr)
 
 		else if (href_list["lock"])
-			if (istype(src, /obj/item/uplink/integrated/radio))
-				var/obj/item/uplink/integrated/radio/RU = src
-				if (!isnull(RU.origradio) && istype(RU.origradio, /obj/item/device/radio))
-					src.remove_dialog(usr)
-					usr.Browse(null, "window=radio")
-					var/obj/item/device/radio/T = RU.origradio
-					RU.set_loc(T)
-					T.set_loc(usr)
-					usr.u_equip(RU)
-					usr.put_in_hand_or_drop(T)
-					RU.set_loc(T)
-					T.set_frequency(initial(T.frequency))
-					T.AttackSelf(usr)
-					return
-
-			else if (src.locked == 0 && src.is_VR_uplink == 0)
-				src.locked = 1
-				usr.show_text("The uplink is now locked.", "blue")
+			src.lock(usr)
 
 		else if (href_list["spawn"])
 			src.try_buy(locate(href_list["spawn"]))
@@ -542,7 +546,8 @@
 			"theme" = "syndicate",
 			"currency_name" = global.syndicate_currency,
 			"item_entries" = categorised_data,
-			"vr" = src.is_VR_uplink
+			"vr" = src.is_VR_uplink,
+			"can_lock" = !isnull(src.lock_code) || istype(src, /obj/item/uplink/integrated/radio), //radio uplink codes are on their associated radio
 		)
 
 	proc/get_category_data(var/buylist_entry_list)
@@ -572,3 +577,5 @@
 				var/all_items = src.items_general | src.items_job | src.items_objective | src.items_telecrystal | src.items_ammo
 				var/buylist_entry = all_items[params["item_name"]]
 				src.try_buy(buylist_entry)
+			if ("lock")
+				src.lock(usr)

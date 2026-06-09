@@ -263,6 +263,19 @@
 				src.origradio = R
 		return
 
+	lock(mob/user)
+		. = ..()
+		if(!.) return //Failed to lock, don't continue.
+		if (!isnull(src.origradio) && istype(src.origradio, /obj/item/device/radio))
+			var/obj/item/device/radio/T = src.origradio
+			src.set_loc(T)
+			T.set_loc(user)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(T)
+			src.set_loc(T)
+			T.set_frequency(initial(T.frequency))
+			T.AttackSelf(user)
+
 	traitor
 		purchase_flags = UPLINK_TRAITOR
 

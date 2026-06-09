@@ -15,6 +15,7 @@ export interface UplinkData {
   title: string;
   theme: string;
   vr: BooleanLike;
+  can_lock: BooleanLike;
 }
 
 export interface ItemData {

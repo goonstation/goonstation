@@ -7,7 +7,15 @@
  */
 
 import { useState } from 'react';
-import { Box, Flex, Input, Section, Stack, Tabs } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
 import { capitalizeAll, pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
@@ -19,7 +27,7 @@ import type { UplinkData } from './type';
 const SIDEBAR_WIDTH = '160px';
 
 export const Uplink = () => {
-  const { data } = useBackend<UplinkData>();
+  const { data, act } = useBackend<UplinkData>();
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilters, setCategoryFilters] = useState<
     Record<string, boolean>
@@ -62,6 +70,22 @@ export const Uplink = () => {
                 </Box>
               </Section>
             </Stack.Item>
+            {!!data.can_lock && (
+              <Stack.Item>
+                <Section>
+                  <Button
+                    color="good"
+                    textAlign="center"
+                    fluid
+                    onClick={() => {
+                      act('lock');
+                    }}
+                  >
+                    Lock Uplink
+                  </Button>
+                </Section>
+              </Stack.Item>
+            )}
             <Stack.Item>
               <Section>
                 <Input
