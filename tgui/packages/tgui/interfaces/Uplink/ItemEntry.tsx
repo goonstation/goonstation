@@ -76,7 +76,7 @@ export const ItemEntry = (props: ItemProps) => {
             (purchase_limit < Infinity && purchased >= purchase_limit)
           }
           onClick={() => {
-            act('purchase', { item_ref: ref });
+            act('purchase', { item_ref: ref, item_name: name });
           }}
         >
           {buildPurchaseText(

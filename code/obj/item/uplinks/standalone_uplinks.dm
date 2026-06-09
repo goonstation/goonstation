@@ -34,7 +34,8 @@
 
 	ui_data(mob/user)
 		. = list(
-			"currency_amount" = src.uses
+			"currency_amount" = src.uses,
+			"purchased_items" = src.purchase_log,
 		)
 
 	ui_static_data(mob/user)
@@ -62,11 +63,14 @@
 			var/atom/main_entry_type = uplink_item.items[1]
 			var/icon/icon = icon2base64(icon(main_entry_type::icon, main_entry_type::icon_state, frame = 1))
 			category_data += list(list(
-				name = uplink_item.name,
-				desc = uplink_item.desc,
-				cost = uplink_item.cost,
-				icon = icon,
-				vr_allowed = uplink_item.vr_allowed,
+				"name" = uplink_item.name,
+				"desc" = uplink_item.desc,
+				"cost" = uplink_item.cost,
+				"icon" = icon,
+				"vr_allowed"= uplink_item.vr_allowed,
+				"ref" = ref(uplink_item),
+				"type" = uplink_item.type,
+				"purchase_limit" = uplink_item.max_buy,
 			))
 		return category_data
 
@@ -76,7 +80,9 @@
 			return
 		switch (action)
 			if ("purchase")
-				src.try_buy(params["item"])
+				var/all_items = src.items_general | src.items_job | src.items_objective | src.items_telecrystal | src.items_ammo
+				var/buylist_entry = all_items[params["item_name"]]
+				src.try_buy(buylist_entry)
 
 	alternate // a version that isn't hidden as a radio. So nukeops can better understand where to click to get guns.
 		name = "syndicate equipment uplink"
