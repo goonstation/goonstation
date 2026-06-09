@@ -3,19 +3,19 @@
 	required_elapsed_round_time = 10 MINUTES
 	required_npc_type = /mob/living/carbon/human/npc/monkey
 	var/ghost_confirmation_delay = 1 MINUTES
-	var/list/npc_blacklist = list(/mob/living/carbon/human/npc/monkey/stirstir, /mob/living/carbon/human/npc/monkey/oppenheimer, /mob/living/carbon/human/npc/monkey/angry/)
+	var/list/antag_npcs = list(/mob/living/carbon/human/npc/monkey/stirstir, /mob/living/carbon/human/npc/monkey/oppenheimer, /mob/living/carbon/human/npc/monkey/angry/)
 
 	proc/pick_npc()
 		var/list/mob/found_npcs = list()
 		for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
-			if (istypes(monke, src.npc_blacklist))
-				continue
 			var/turf/monkearea = get_turf(monke)
 			if (istype(monkearea.loc, /area/station/medical/dome)) // remove monkey pen apes so you don't get one of those 95% of the time
 				continue
 
 			if (isalive(monke) && get_z(monke) == Z_LEVEL_STATION)
 				found_npcs += monke
+			else if (istype(monke, /mob/living/carbon/human/npc/monkey/oppenheimer) && istype(ticker.mode, /datum/game_mode/nuclear))
+				found_npcs += monke // oppenheimer should be available if it's nukies regardless if he's on station or not
 
 		if (prob(5))
 			var/mob/bigbill = locate(/mob/living/carbon/human/biker)
@@ -49,6 +49,10 @@
 				SPAWN(0)
 					if (istype(picked_npc, /mob/living/carbon/human/biker))
 						tgui_alert(picked_npc, "You are not an antagonist! While you are not employed by NanoTrasen, you should still act like a somewhat sane person that doesn't want to die or hurt people.", "You are not an antagonist!")
+					else if (istypes(picked_npc, src.antag_npcs))
+						M.add_antagonist(ROLE_SYNDICATE_AGENT, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						message_admins("[key_name(M)] awakened as a syndicate agent monkey. Source: [source ? "[source]" : "random event"]")
+						logTheThing(LOG_ADMIN, M, "awakened as a syndicate agent monkey. Source: [source ? "[source]" : "random event"]")
 					else
 						tgui_alert(picked_npc, "You are not an antagonist! Humans can't understand you, but a vocal translator can change that.", "You are not an antagonist!")
 				message_ghosts("<b>[picked_npc.real_name] has become sapient.</b>")
