@@ -41,7 +41,10 @@
 		if (!current_ident.do_not_store && !face.do_not_store)
 			current_ident.set_up_from(C)
 			H.absorbed_dna[src.holder.owner.real_name] = current_ident
-		current_ident.remove_from(C)
 		face.apply_to(C)
+		if (istype(face, /datum/absorbedIdentity/monkey) || face.bioHolder.HasEffect("monkey"))
+			if (C.hasStatus("handcuffed"))
+				C.handcuffs.drop_handcuffs(C)
+			C.delStatus("pinned") // slip out of the grab
 		H.current_ident = face
 		return 0

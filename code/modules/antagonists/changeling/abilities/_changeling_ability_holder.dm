@@ -273,11 +273,7 @@
 		return
 
 	apply_to(mob/living/carbon/human/human)
-		if (human.hasStatus("handcuffed"))
-			human.handcuffs.drop_handcuffs(human)
-		human.delStatus("pinned") // slip out of the grab
 		human.monkeyize()
-		human.abilityHolder.updateButtons()
 		logTheThing(LOG_COMBAT, human, "enters lesser form as a changeling, [log_loc(human)].")
 
 // ----------------------------------------
