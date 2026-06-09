@@ -234,7 +234,7 @@
 		return
 
 	attack_self(mob/user as mob)
-		if (src.vr_check(user) != 1)
+		if (!src.vr_check(user))
 			user.show_text("This uplink only works in virtual reality.", "red")
 		else if (src.uplink_ui_type == UPLINK_UI_HTML)
 			src.add_dialog(user)
@@ -391,7 +391,7 @@
 			trigger_anti_cheat(usr, "tried to href exploit the syndicate buylist")
 			return
 
-		if (src.is_VR_uplink == 0)
+		if (!src.is_VR_uplink)
 			if (src.uses < I.cost)
 				boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
 				return
@@ -440,7 +440,7 @@
 			return
 		if (CHECK2)
 			return
-		if (src.vr_check(usr) != 1)
+		if (!src.vr_check(usr))
 			usr.show_text("This uplink only works in virtual reality.", "red")
 			return
 

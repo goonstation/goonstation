@@ -69,7 +69,7 @@
 	generate_menu()
 		if (src.uses < 0)
 			src.uses = 0
-		if (src.vr_check(usr) != 1)
+		if (!src.vr_check(usr))
 			src.menu_message = "This uplink only works in virtual reality."
 			return
 
@@ -134,7 +134,7 @@
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
-		if (src.vr_check(usr) != 1)
+		if (!src.vr_check(usr))
 			usr.show_text("This uplink only works in virtual reality.", "red")
 			return
 
