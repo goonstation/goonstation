@@ -49,18 +49,6 @@
 	desc = "You're about 90% sure this isn't just a regular fishbowl."
 	item_state = "s_helmet"
 
-	setupProperties()
-		..()
-		setProperty("coldprot", 20)
-		setProperty("heatprot", 5)
-		setProperty("viralprot", 50)
-		setProperty("chemprot", 20)
-		setProperty("disorient_resist_eye", 8)
-		setProperty("disorient_resist_ear", 8)
-		setProperty("space_movespeed", 0.2)
-		setProperty("radprot", 5)
-
-
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
