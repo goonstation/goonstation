@@ -945,7 +945,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
 		src.goods_sell += new /datum/commodity/clothing_restock(src)
 #ifdef UNDERWATER_MAP
-		src.goods_sell += new /datum/commodity/HEtorpedo(src)
+		src.goods_sell += new /datum/commodity/HEtorpedo(src, 5)
 #endif
 
 		src.goods_buy += new /datum/commodity/contraband/egun(src)
