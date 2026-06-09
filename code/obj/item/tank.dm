@@ -143,8 +143,6 @@ ABSTRACT_TYPE(/obj/item/tank)
 				playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
 				return FALSE
 
-
-
 	proc/remove_air_volume(volume_to_return)
 		if(!air_contents)
 			return null

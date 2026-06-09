@@ -526,20 +526,12 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "medical"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
+	duration_put = 7 SECONDS
 	protective_temperature = 420
 
-/obj/item/clothing/mask/medical/anesthetic
-	name = "anesthetic mask"
-	desc = "For when you want to put patients to sleep wtihout losing patience."
-	duration_put = 7 SECONDS
 	var/obj/item/tank/attached_tank
 
 	HELP_MESSAGE_OVERRIDE("Detatch an attached tank with a <b>wrenching</b> tool.<br>Click with a <b>mini-tank</b> in-hand to attach it.<br><b>Does not work in space!</b>")
-
-	New()
-		. = ..()
-		src.attached_tank = new /obj/item/tank/mini/anesthetic(src)
-		src.UpdateIcon()
 
 	attackby(obj/item/I, mob/user)
 		if (iswrenchingtool(I))
@@ -589,6 +581,15 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.underlays += mask_tank
 		else
 			src.underlays.len = 0
+
+/obj/item/clothing/mask/medical/anesthetic
+	name = "anesthetic mask"
+	desc = "For when you want to put patients to sleep wtihout losing patience."
+
+	New()
+		. = ..()
+		src.attached_tank = new /obj/item/tank/mini/anesthetic(src)
+		src.UpdateIcon()
 
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
