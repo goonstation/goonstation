@@ -6,12 +6,13 @@
 	if (!istype(hat) || !ismob(message.speaker))
 		return
 
-	var/phrase_location = findtext(message.content, hat.phrase)
+	var/searchable_content = message.get_content_parsable()
+	var/phrase_location = findtext(searchable_content, hat.phrase)
 	if (!phrase_location)
 		return
 
 	var/mob/M = message.speaker
-	var/gadget = copytext(message.content, phrase_location + length(hat.phrase))
+	var/gadget = copytext(searchable_content, phrase_location + length(hat.phrase))
 	gadget = replacetext(gadget, " ", "")
 
 	for (var/name in hat.items)

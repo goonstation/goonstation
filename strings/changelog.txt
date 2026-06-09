@@ -1,4 +1,92 @@
 
+(t)tue jun 09 26
+(u)Gomp
+(p)26809
+(e)🎨|C-Sprites
+(+)Some clown cars have been found missing, with only insane laughter heard in the distance.
+(t)mon jun 08 26
+(u)LeahTheTech
+(p)26814
+(e)⚖⛔🧛|C-Balance, C-Removal, A-Gamemodes
+(+)Salvager pods no longer have a unique tint. Pods built using the manufacturable salvager pod armour retain the tint.
+(u)LeahTheTech
+(p)26830
+(e)🆕📡🍝🐁|C-Feature, A-AI, A-Catering, A-Critters
+(+)Remy will now wander back to the kitchen if he strays too far.
+(u)CalliopeSoups
+(p)26599
+(e)🆕🌠|C-Feature, A-Events
+(+)Sudden Sapience Disease random event that spawns an observer as a random station monkey.
+(u)JORJ949
+(p)26763
+(e)⚖🤖💡|C-Balance, A-Silicons, A-Station-Systems
+(*)EMPing an AI turret will now prevent it from firing for 30-45 seconds, instead of just turning it off.
+(u)RubberRats
+(p)26824
+(e)🪲📄📨|C-Bug, A-UI, A-Logistics
+(+)The martian trader now properly displays trades with limited stock
+(t)fri jun 05 26
+(u)Valtsu0
+(p)26769
+(e)🆕📄🌱|C-Feature, A-UI, A-Hydroponics
+(*)A collection of all the types of fish that you have fished across rounds can be found by using the Fish Collection verb
+(u)LeahTheTech
+(+)Finishing the fish collection will reward you with a fancy fishing rod.
+(p)26784
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Razors hidden in flat caps can now be used to blind people. Requires an aggressive grab and head targeting, blocked by anything that covers the eyes.
+(+)Gang crates can now contain flat caps with razors hidden in them.
+(u)TemThrush & Yelloworlemons
+(p)26797
+(e)🎨|C-Sprites
+(+)Interacting with hairbows while holding them will let you re-tie them into new styles.
+(u)bamlord
+(p)26799
+(e)|
+(+)Gorillas have learned how to rip off all your limbs.
+(u)LorrMaster
+(p)26684
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Custom space suit reinforcement material impacts suit appearance.
+(t)thu jun 04 26
+(u)LeahTheTech
+(+)Slugs and snails now eat plants out of hydroponics trays. Grief botany today!
+(t)wed jun 03 26
+(u)Driftered
+(p)26748
+(e)|
+(*)Cyborgs may now choose their crayon color instead of swapping until they get what they want.
+(t)wed jun 3 26
+(u)LeahTheTech
+(+)Syndie chainsaw butchering now has a 3 second action bar to prevent accidental gibbings (whole bodies make better plant food)
+(t)sun may 31 26
+(u)Pirate-Rob
+(p)26087
+(e)🔎🧛💊🍝🔬💡🌱🚗🐁🛠️|C-Code-Quality, A-Gamemodes, A-Medical, A-Catering, A-Science, A-Station-Systems, A-Hydroponics, A-Vehicles, A-Critters, A-Engineering
+(+)Device Analyzer now has fancy new error messages for when something is wrong.
+(u)grasswitch
+(p)26717
+(e)🆕🔬|C-Feature, A-Science
+(+)Artifacts sometimes hint at newly developed faults. Agitator artifacts always cause hints to be displayed.
+(u)LorrMaster
+(p)26720
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Added mycelium, a new material that can be obtained from harvested mushrooms.
+(+)Combining mycelium with another edible material will remove any "on eat" effects from the resulting material.
+(u)glowbold
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)Using MechComp to vend items from vending machines requires adequate payment from cash or a linked card.
+(*)Market traders have a small chance of restocking goods on market refresh.
+(*)Payout exponent bonuses for requisitions and delivered mail have been reduced.
+(t)sat may 30 26
+(u)Studenterhue (and JORJ949)
+(p)26595
+(e)🆕🎉🤖🌠|C-Feature, E-Contest, A-Silicons, A-Events
+(*)Added 13 new laws to the pool of potential laws for the law corruption event, from the 13 winners of the Goonstation Winter Contest. Congratulations to Grasswitch, Longweird, FireKestrel, ThePowerfulWill, Spyritdragon, RDCB,ScorpionTailZ, Aft2001, Emikamiyuki, Asterion0, not suzpicious, and Vandry!
+(*)kibanderjack, Zelda4040404, and Zacattaxx did not win, but their entries were so good they got included into the pool anyway.
+(t)fri may 29 26
+(u)NoHelp
+(+)Skeletons can now have the hairy trait.
 (t)thu may 28 26
 (u)bamlord
 (p)26497
@@ -15,7 +103,7 @@
 (u)LeahTheTech
 (p)26521
 (e)🗺⚖🧛|A-Mapping, C-Balance, A-Gamemodes
-(*)The listening post barracks are now locked until the syndicate codereader has scanned an authentication disk. The barracks contain the syndicate apparel vendor, 2TC, and a syndicate announcement computer.
+(*)The listening post barracks are now locked until the syndicate codereader has scanned an authentication disk. The barracks contain the syndicate apparel vendor, 2TC, and a deployable turret.
 (u)Lord_Earthfire
 (p)26266
 (e)🆕⚗|C-Feature, A-Chemistry

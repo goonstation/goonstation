@@ -1561,10 +1561,23 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 /obj/item/clothing/suit/space/custom // Used for nanofabs
 	icon_state = "spacemat"
-	inhand_image_icon = "s_suit"
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
+
+	var/image/fabrItemImg = null
+	var/image/fabrWornImg = null
+	var/image/renfItemImg = null
+	var/image/renfWornImg = null
+
+	New()
+		..()
+		// Prep the item overlays
+		fabrItemImg = SafeGetOverlayImage("item-suit", src.icon, "spacemat")
+		renfItemImg = SafeGetOverlayImage("item-suit-highlight", src.icon, "spacemat-armor")
+		// Prep the worn overlays
+		fabrWornImg = SafeGetOverlayImage("worn-suit", src.wear_image_icon, "spacemat")
+		renfWornImg = SafeGetOverlayImage("worn-suit-highlight", src.wear_image_icon, "spacemat-armor")
 
 	onMaterialChanged()
 		. = ..()
@@ -1577,9 +1590,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			setProperty("chemprot", prot)
 		return
 
-
 	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
-		src.setMaterial(fabrMat)
+		src.setMaterial(fabrMat, FALSE) // We want to purely rely on the overlay colours
 		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
 		var/prot_rad = round(renfMat.calc_radiation_prot() / 2, 5)
 		setProperty("radprot", prot_rad)
@@ -1587,6 +1599,16 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		setProperty("meleeprot", 3 + prot)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
+
+		fabrItemImg.apply_material_appearance(fabrMat)
+		renfItemImg.apply_material_appearance(renfMat)
+		UpdateOverlays(fabrItemImg, "item-suit")
+		UpdateOverlays(renfItemImg, "item-suit-highlight")
+
+		fabrWornImg.apply_material_appearance(fabrMat)
+		renfWornImg.apply_material_appearance(renfMat)
+		src.wear_image.overlays += fabrWornImg
+		src.wear_image.overlays += renfWornImg
 
 /obj/item/clothing/suit/space/custom/prototype
 	New()
@@ -1729,13 +1751,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 15,
 				"crystal_dense" = 5)
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
-	is_syndicate = TRUE
 	contraband = 3
 	icon_state = "indusred"
 	item_state = "indusred"
@@ -1755,6 +1777,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		..()
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
 				"conductive_high" = 10,

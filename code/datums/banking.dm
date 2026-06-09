@@ -51,10 +51,10 @@
 		time_between_paydays = 5 MINUTES
 		time_between_lotto = 8 MINUTES
 
-		src.budgets[BUDGET_CAT_STATION] = PAY_IMPORTANT
-		src.budgets[BUDGET_CAT_SHIPPING] = PAY_EXECUTIVE*5
+		src.budgets[BUDGET_CAT_STATION] = PAY::IMPORTANT
+		src.budgets[BUDGET_CAT_SHIPPING] = PAY::EXECUTIVE*5
 		src.budgets[BUDGET_CAT_UNION] = 0
-		src.budgets[BUDGET_CAT_DEPT_MEDICAL] = PAY_EXECUTIVE*10
+		src.budgets[BUDGET_CAT_DEPT_MEDICAL] = PAY::EXECUTIVE*10
 
 		for (var/budget in src.budgets)
 			total_stipend += src.budgets[budget]

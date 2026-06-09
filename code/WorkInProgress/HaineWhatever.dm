@@ -818,6 +818,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/list/nums_snake = list("1","5","9","12","14","16","19","23","27","30","32","34")
 /*
 TYPEINFO(/obj/submachine/blackjack)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 9
 
 /obj/submachine/blackjack
@@ -1709,6 +1710,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			return ..()
 
 TYPEINFO(/obj/item/space_thing)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER //??? I have no idea
 	mats = 50
 
 /obj/item/space_thing

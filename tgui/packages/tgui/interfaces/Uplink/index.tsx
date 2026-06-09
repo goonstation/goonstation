@@ -113,6 +113,7 @@ export const Uplink = () => {
                     isVr={isVr}
                     currency_amount={currency_amount}
                     currency_name={currency_name}
+                    purchased={data.purchased_items[item.ref] ?? 0}
                   />
                 ))
               )}

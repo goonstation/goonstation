@@ -549,6 +549,7 @@
 		return
 
 TYPEINFO(/obj/supply_pad/incoming)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/supply_pad/incoming
@@ -556,6 +557,7 @@ TYPEINFO(/obj/supply_pad/incoming)
 	direction = 0
 
 TYPEINFO(/obj/supply_pad/outgoing)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/supply_pad/outgoing

@@ -6,4 +6,4 @@
 	if (!istype(bot) || !bot.on || !ismob(message.speaker))
 		return
 
-	bot.butt_memory |= message.content
+	bot.butt_memory |= message.get_content_parsable()

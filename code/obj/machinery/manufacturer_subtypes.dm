@@ -84,6 +84,8 @@
 		/datum/manufacture/fiddle,
 		/datum/manufacture/whistle)
 
+TYPEINFO(/obj/machinery/manufacturer/general/grody)
+	manufactured_type = /obj/machinery/manufacturer/general
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
@@ -91,7 +93,6 @@
 	free_resources = list()
 	malfunction = TRUE
 	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
-	mechanics_type_override = /obj/machinery/manufacturer/general
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
