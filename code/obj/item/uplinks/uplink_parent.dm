@@ -445,6 +445,15 @@
 		src.locked = 1
 		return TRUE
 
+	proc/self_destruct()
+		if(!src.can_selfdestruct)
+			return
+		src.selfdestruct = 1
+		logTheThing(LOG_COMBAT, usr, "activates the self destruct on [owner_ckey || "unknown"]'s uplink")
+		SPAWN(10 SECONDS)
+			if (src)
+				src.explode()
+
 #define CHECK1 (BOUNDS_DIST(src, user) > 0 || !user.contents.Find(src) || !isliving(user) || iswraith(user) || isintangible(user))
 #define CHECK2 (is_incapacitated(user) || user.restrained())
 	proc/try_unlock(mob/user)
@@ -497,10 +506,7 @@
 				reading_synd_int = TRUE
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
-			src.selfdestruct = 1
-			SPAWN(10 SECONDS)
-				if (src)
-					src.explode()
+			src.self_destruct()
 
 		else if (href_list["synd_int"] && !src.is_VR_uplink)
 			reading_synd_int = TRUE
@@ -529,6 +535,7 @@
 		. = list(
 			"currency_amount" = src.uses,
 			"purchased_items" = src.purchase_log,
+			"self_destructing" = src.selfdestruct,
 		)
 
 	ui_static_data(mob/user)
@@ -548,6 +555,7 @@
 			"item_entries" = categorised_data,
 			"vr" = src.is_VR_uplink,
 			"can_lock" = !isnull(src.lock_code) || istype(src, /obj/item/uplink/integrated/radio), //radio uplink codes are on their associated radio
+			"can_self_destruct" = src.can_selfdestruct,
 		)
 
 	proc/get_category_data(var/buylist_entry_list)
@@ -579,3 +587,7 @@
 				src.try_buy(buylist_entry)
 			if ("lock")
 				src.lock(usr)
+			if("self_destruct")
+				if(tgui_alert(usr, "Detonate this uplink?", "Self Destruct Confirmation", list("Confirm", "Cancel")) != "Confirm")
+					return
+				src.self_destruct()

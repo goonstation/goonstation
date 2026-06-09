@@ -11,7 +11,9 @@ import {
   Box,
   Button,
   Flex,
+  Icon,
   Input,
+  Modal,
   Section,
   Stack,
   Tabs,
@@ -53,6 +55,14 @@ export const Uplink = () => {
 
   return (
     <Window theme={data.theme} title={data.title} height={600} width={720}>
+      {!!data.self_destructing && (
+        <Modal textAlign="center" fontSize={3}>
+          SELF DESTRUCT<br></br>
+          <Icon name="exclamation-triangle" pr={1.5} />
+          ACTIVATED
+          <Icon name="exclamation-triangle" pl={1.5} />
+        </Modal>
+      )}
       <Flex>
         <Flex.Item style={{ width: SIDEBAR_WIDTH }}>
           <Stack vertical ml={1} mt={1}>
@@ -70,19 +80,35 @@ export const Uplink = () => {
                 </Box>
               </Section>
             </Stack.Item>
-            {!!data.can_lock && (
+            {(!!data.can_lock || !!data.can_self_destruct) && (
               <Stack.Item>
                 <Section>
-                  <Button
-                    color="good"
-                    textAlign="center"
-                    fluid
-                    onClick={() => {
-                      act('lock');
-                    }}
-                  >
-                    Lock Uplink
-                  </Button>
+                  {!!data.can_lock && (
+                    <Button
+                      color="good"
+                      textAlign="center"
+                      icon="lock"
+                      fluid
+                      onClick={() => {
+                        act('lock');
+                      }}
+                    >
+                      Lock Uplink
+                    </Button>
+                  )}
+                  {!!data.can_self_destruct && (
+                    <Button
+                      color="bad"
+                      textAlign="center"
+                      icon="bomb"
+                      fluid
+                      onClick={() => {
+                        act('self_destruct');
+                      }}
+                    >
+                      Self Destruct
+                    </Button>
+                  )}
                 </Section>
               </Stack.Item>
             )}
