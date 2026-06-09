@@ -216,8 +216,9 @@
 			if (!human_owner?.wear_mask || !(human_owner?.wear_mask.c_flags & MASKINTERNALS) )
 				human_owner?.internal = null
 			if (istype(human_owner.wear_mask, /obj/item/clothing/mask/medical))
-				var/turf/simulated/T = get_turf(human_owner)
-				if (istype_exact(T, /turf/space) || (istype(T) && T.air && (MIXTURE_PRESSURE(T.air) < ONE_ATMOSPHERE * 0.5)))
+				var/atom/A = human_owner.loc
+				var/datum/gas_mixture/atmosphere = A.return_air()
+				if (MIXTURE_PRESSURE(atmosphere) < ONE_ATMOSPHERE * 0.5)
 					human_owner.internal = null
 			if (human_owner?.internal)
 				if (human_owner?.internals)
