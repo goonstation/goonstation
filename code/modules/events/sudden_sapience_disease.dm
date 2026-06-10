@@ -3,19 +3,18 @@
 	required_elapsed_round_time = 10 MINUTES
 	required_npc_type = /mob/living/carbon/human/npc/monkey
 	var/ghost_confirmation_delay = 1 MINUTES
-	var/list/antag_npcs = list(/mob/living/carbon/human/npc/monkey/stirstir, /mob/living/carbon/human/npc/monkey/oppenheimer)
+	var/list/antag_npcs = list(/mob/living/carbon/human/npc/monkey/stirstir)
+	var/list/blacklisted_npcs = list(/mob/living/carbon/human/npc/monkey/oppenheimer, /mob/living/carbon/human/npc/monkey/angry)
 
 	proc/pick_npc()
 		var/list/mob/found_npcs = list()
 		for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
 			var/turf/monkearea = get_turf(monke)
-			if (istype(monkearea.loc, /area/station/medical/dome) || istype(monke, /mob/living/carbon/human/npc/monkey/angry/))
+			if (istype(monkearea.loc, /area/station/medical/dome) || istypes(monke, src.blacklisted_npcs))
 				continue // remove monkey pen apes so you don't get one of those 95% of the time
 
 			if (isalive(monke) && get_z(monke) == Z_LEVEL_STATION)
 				found_npcs += monke
-			else if (istype(monke, /mob/living/carbon/human/npc/monkey/oppenheimer) && istype(ticker.mode, /datum/game_mode/nuclear))
-				found_npcs += monke // oppenheimer should be available if it's nukies regardless if he's on station or not
 
 		if (prob(5))
 			var/mob/bigbill = locate(/mob/living/carbon/human/biker)
