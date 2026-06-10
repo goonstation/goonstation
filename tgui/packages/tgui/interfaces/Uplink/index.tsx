@@ -57,7 +57,8 @@ export const Uplink = () => {
     <Window theme={data.theme} title={data.title} height={600} width={720}>
       {!!data.self_destructing && (
         <Modal textAlign="center" fontSize={3}>
-          SELF DESTRUCT<br></br>
+          SELF DESTRUCT
+          <br />
           <Icon name="exclamation-triangle" pr={1.5} />
           ACTIVATED
           <Icon name="exclamation-triangle" pl={1.5} />
