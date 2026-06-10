@@ -58,8 +58,13 @@
 
 		. = ..()
 
-
 /datum/antagonist/generic/syndicate_agent/commander
 	id = ROLE_SYNDICATE_COMMANDER
 	antagonist_icon = "syndcomm"
 	display_name = "syndicate commander"
+
+/datum/antagonist/generic/syndicate_agent/monkey
+	id = ROLE_SYNDICATE_MONKEY
+	antagonist_icon = "syndicate"
+	display_name = "syndicate monkey agent"
+	popup_name_override = "traitormonkey"

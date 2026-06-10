@@ -50,7 +50,7 @@
 					if (istype(picked_npc, /mob/living/carbon/human/biker))
 						tgui_alert(picked_npc, "You are not an antagonist! While you are not employed by NanoTrasen, you should still act like a somewhat sane person that doesn't want to die or hurt people.", "You are not an antagonist!")
 					else if (istypes(picked_npc, src.antag_npcs))
-						M.add_antagonist(ROLE_SYNDICATE_AGENT, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						M.add_antagonist(ROLE_SYNDICATE_MONKEY, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						message_admins("[key_name(M)] awakened as a syndicate agent monkey. Source: [source ? "[source]" : "random event"]")
 						logTheThing(LOG_ADMIN, M, "awakened as a syndicate agent monkey. Source: [source ? "[source]" : "random event"]")
 					else
