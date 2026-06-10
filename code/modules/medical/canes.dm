@@ -6,35 +6,40 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_canes.dmi'
 
 /obj/item/cane/wooden
-	icon_state = wooden
+	icon_state = "wooden"
 
 /obj/item/cane/wooden2
-	icon_state = wooden2
+	icon_state = "wooden2"
+
+/obj/item/cane/wooden3
+	icon_state = "wooden3"
 
 /obj/item/cane/black
-	icon_state = black
+	icon_state = "black"
 
 /obj/item/cane/fourlegged
-	icon_state = fourlegged
+	icon_state = "fourlegged"
 
 /obj/item/cane/tennisball
-	icon_state = tennisball
+	icon_state = "tennisball"
 	desc = "Perfect when you need a million balloons!"
 
 // Cargo exclusive below!
 
 /obj/item/cane/clown
-	icon_state = clown
+	icon_state = "clown"
 	desc = "My back feels funny."
 
 /obj/item/cane/mime
-	icon_state = mime
+	icon_state = "mime"
 	desc = "Suffering in silence."
 
 /obj/item/cane/gold
-	icon_state = gold
+	icon_state = "gold"
+	mat_changename = 0
+	default_material = "gold"
 	desc = "Now your grandkids won't call you for sure."
 
 /obj/item/cane/princess
-	icon_state = princess
+	icon_state = "princess"
 	desc = "Sparkle! Glimmer! Back pain! Sparkle!"
