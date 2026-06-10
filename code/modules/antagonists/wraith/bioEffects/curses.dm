@@ -1,7 +1,12 @@
 ////////////////////
 //Wraith curses
 ////////////////////
-/datum/bioEffect/blood_curse
+/datum/bioEffect/curse
+	OnAdd()
+		. = ..()
+		src.holder.cursed = TRUE
+
+/datum/bioEffect/curse/blood
 	name = "Blood curse"
 	desc = "Curse of blood."
 	id = "blood_curse"
@@ -45,7 +50,7 @@
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 		. = ..()
 
-/datum/bioEffect/blindness_curse
+/datum/bioEffect/curse/blindness
 	name = "Blind curse"
 	desc = "Curse of blindness."
 	id = "blind_curse"
@@ -87,7 +92,7 @@
 		. = ..()
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 
-/datum/bioEffect/weak_curse
+/datum/bioEffect/curse/weakness
 	name = "Weakness curse"
 	desc = "Curse of enfeeblement."
 	id = "weak_curse"
@@ -131,7 +136,7 @@
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 		. = ..()
 
-/datum/bioEffect/rot_curse	//Also prevents eating entirely.
+/datum/bioEffect/curse/rot	//Also prevents eating entirely.
 	name = "Rot curse"
 	desc = "Curse of rot."
 	id = "rot_curse"
@@ -172,7 +177,7 @@
 		. = ..()
 
 //Used mostly to track if someone got rid of this curse in the meantime
-/datum/bioEffect/death_curse
+/datum/bioEffect/curse/death
 	name = "Curse of death"
 	desc = "Curse of death."
 	id = "death_curse"

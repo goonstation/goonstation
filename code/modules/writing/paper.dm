@@ -93,44 +93,60 @@
 	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Fold", "Read", "Nothing"))
 	if (!menuchoice || menuchoice == "Nothing")
 		return
-	else if (menuchoice == "Read")
+	if (menuchoice == "Read")
 		src.examine(user)
+		return
+
+	var/list/options = list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet")
+	if (user.traitHolder.hasTrait("training_chaplain"))
+		options += "Charm"
+	var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", options)
+	if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
+		return
+
+	if (fold == "Paper hat")
+		user.show_text("You fold the paper into a hat! Neat.", "blue")
+		var/obj/item/clothing/head/paper_hat/H = new()
+		H.setMaterial(src.material)
+		user.put_in_hand_or_drop(H)
+	else if (fold == "Cigarette packet")
+		user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
+		var/obj/item/cigpacket/paperpack/H = new()
+		H.setMaterial(src.material)
+		user.put_in_hand_or_drop(H)
 	else
-		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet"))
-		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
-			return
+		var/obj/item/paper/folded/F = null
+		if (fold == "Paper plane")
+			user.show_text("You fold the paper into a plane! Neat.", "blue")
+			F = new /obj/item/paper/folded/plane(user)
+
+		else if (fold == "Paper crane")
+			user.show_text("You fold the paper into a crane! Neat.", "blue")
+			F = new /obj/item/paper/folded/crane(user)
+		else if (fold == "Paper ball")
+			user.show_text("You crumple the paper into a ball! Neat.", "blue")
+			F = new /obj/item/paper/folded/ball(user)
+		else if (fold == "Charm")
+			if (!length(src.info))
+				user.show_text("You must inscribe this paper with words of faith and protection first!", "red")
+				return
+			if (get_chaplain_faith(user) < FAITH_CHARM_CREATION)
+				user.show_text("You are not strong enough in your faith to form this devotion.", "red")
+				return
+			modify_chaplain_faith(user, -FAITH_CHARM_CREATION)
+			user.show_text("You carefully fold the paper into a charm. By your faith it has power.", "blue")
+			F = new /obj/item/paper/folded/charm(user)
+		F.info = src.info
+		F.old_desc = src.desc
+		F.icon_old = src.icon
+		F.old_icon_state = src.icon_state
+		F.stamps = src.stamps
+		F.setMaterial(src.material)
 		user.u_equip(src)
-		if (fold == "Paper hat")
-			user.show_text("You fold the paper into a hat! Neat.", "blue")
-			var/obj/item/clothing/head/paper_hat/H = new()
-			H.setMaterial(src.material)
-			user.put_in_hand_or_drop(H)
-		else if (fold == "Cigarette packet")
-			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
-			var/obj/item/cigpacket/paperpack/H = new()
-			H.setMaterial(src.material)
-			user.put_in_hand_or_drop(H)
-		else
-			var/obj/item/paper/folded/F = null
-			if (fold == "Paper plane")
-				user.show_text("You fold the paper into a plane! Neat.", "blue")
-				F = new /obj/item/paper/folded/plane(user)
+		user.put_in_hand_or_drop(F)
 
-			else if (fold == "Paper crane")
-				user.show_text("You fold the paper into a crane! Neat.", "blue")
-				F = new /obj/item/paper/folded/crane(user)
-			else
-				user.show_text("You crumple the paper into a ball! Neat.", "blue")
-				F = new /obj/item/paper/folded/ball(user)
-			F.info = src.info
-			F.old_desc = src.desc
-			F.icon_old = src.icon
-			F.old_icon_state = src.icon_state
-			F.stamps = src.stamps
-			F.setMaterial(src.material)
-			user.put_in_hand_or_drop(F)
-
-		qdel(src)
+	user.u_equip(src)
+	qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	//Papers can be alt+click inspected from anywhere, let's give attack_ai the same freedom
@@ -947,6 +963,65 @@
 		qdel(P)
 	else
 		..()
+
+/obj/item/paper/folded/charm
+	name = "paper charm"
+	desc = "A little folded paper charm with something written on the inside."
+	icon = 'icons/obj/charms.dmi'
+	icon_state = "paper_charm"
+	var/bloodied = FALSE
+	var/curse_protect = FALSE
+
+	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
+		if (bloodied || !(reagent_id in list("blood", "bloodc", "hemolymph")))
+			..()
+			return FALSE
+		src.bloodied = TRUE
+		var/image/overlay = image(src.icon, "bloodied")
+		var/datum/reagent/reagent = overlay.color = holder_reagents.get_reagent(reagent_id)
+		overlay.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+		src.UpdateOverlays(overlay, "bloodied")
+		var/datum/bioHolder/bioholder = reagent.data
+		if (istype(bioholder) && bioholder.cursed)
+			src.curse_protect = TRUE
+		return TRUE
+
+	attackby(obj/item/cable_coil/cable, mob/living/user, params)
+		if (!istype(cable))
+			return ..()
+		if (!cable.use(2))
+			boutput(user, SPAN_ALERT("You need at least 2 lengths of cable to make that!"))
+			return
+		var/obj/item/clothing/suit/charm/strung_charm = new
+		strung_charm.set_up(src, cable.insulator.getColor())
+		user.drop_item(src)
+		src.set_loc(strung_charm)
+		user.put_in_hand(strung_charm)
+
+/obj/item/clothing/suit/charm
+	name = "strung charm"
+
+	var/obj/item/paper/folded/charm/charm
+
+	proc/set_up(obj/item/paper/folded/charm/charm, cable_color)
+		src.charm = charm
+		src.icon = charm.icon
+		src.icon_state = charm.icon_state
+		copy_overlays(charm, src)
+		var/image/cable_overlay = image(charm.icon, "cord")
+		cable_overlay.color = cable_color
+		src.UpdateOverlays(cable_overlay, "cord")
+
+	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
+		if (src.charm.reagent_act(reagent_id, volume, holder_reagents))
+			copy_overlays(src.charm, src)
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 0)
+		setProperty("heatprot", 0)
+		setProperty("coldprot", 0)
+
 
 /obj/item/paper/nukeop_uplink_purchases
 	name = "Shipping Manifest"

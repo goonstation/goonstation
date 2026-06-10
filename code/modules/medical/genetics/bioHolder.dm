@@ -33,6 +33,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/datum/forensic_id/default_fingerprints = null
 
+	/// Has the owner of this bioholder been a victim of a curse?
+	var/cursed = FALSE
+
 	///If true, bioeffects won't actually be applied to the owner (used for when we want to store a separate bioholder, ie changelings)
 	var/inactive = FALSE
 
