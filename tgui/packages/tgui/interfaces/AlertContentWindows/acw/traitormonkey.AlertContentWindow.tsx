@@ -18,10 +18,14 @@ const GenericAntagContentWindow = () => {
 
       <p>
         1. The rules on griefing and murdering no longer apply to you. Use your
-        abilities as you see fit. 2. Any escalation rules still apply. 3. You
-        start without a translator, find other ways to communicate or get a
-        translator from medbay.
+        abilities as you see fit.
       </p>
+      <p>2. 2. Any escalation rules still apply.</p>
+      <p>
+        3. You start without a translator, find other ways to communicate or get
+        a translator from medbay.
+      </p>
+
       <p>
         For more information, consult{' '}
         <a href="https://wiki.ss13.co/index.php?search=Antagonist">the wiki</a>
