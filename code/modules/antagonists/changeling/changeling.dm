@@ -22,6 +22,7 @@
 
 		src.ability_holder.addAbility(/datum/targetable/changeling/abomination)
 		src.ability_holder.addAbility(/datum/targetable/changeling/absorb)
+		src.ability_holder.addAbility(/datum/targetable/changeling/absorb/transfer)
 		src.ability_holder.addAbility(/datum/targetable/changeling/devour)
 		src.ability_holder.addAbility(/datum/targetable/changeling/mimic_voice)
 		src.ability_holder.addAbility(/datum/targetable/changeling/monkey)
@@ -50,6 +51,7 @@
 	remove_equipment()
 		src.ability_holder.removeAbility(/datum/targetable/changeling/abomination)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/absorb)
+		src.ability_holder.removeAbility(/datum/targetable/changeling/absorb/transfer)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/devour)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/mimic_voice)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/monkey)
