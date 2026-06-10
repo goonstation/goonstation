@@ -562,8 +562,7 @@
 		var/list/category_data = list()
 		for(var/buylist_name as anything in buylist_entry_list)
 			var/datum/syndicate_buylist/uplink_item = buylist_entry_list[buylist_name]
-			var/atom/main_entry_type = uplink_item.items[1]
-			var/icon/icon = icon2base64(icon(main_entry_type::icon, main_entry_type::icon_state, frame = 1))
+			var/icon = getItemIcon(uplink_item.items[1])
 			category_data += list(list(
 				"name" = uplink_item.name,
 				"desc" = uplink_item.desc,
@@ -582,9 +581,7 @@
 			return
 		switch (action)
 			if ("purchase")
-				var/all_items = src.items_general | src.items_job | src.items_objective | src.items_telecrystal | src.items_ammo
-				var/buylist_entry = all_items[params["item_name"]]
-				src.try_buy(buylist_entry)
+				src.try_buy(locate(params["item_ref"]))
 			if ("lock")
 				src.lock(usr)
 			if("self_destruct")

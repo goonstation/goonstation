@@ -59,11 +59,7 @@ export const ItemEntry = (props: ItemProps) => {
     <Stack align="center">
       {!!icon && (
         <Stack.Item height={THUMBNAIL_SIZE}>
-          <Image
-            height={THUMBNAIL_SIZE}
-            width={THUMBNAIL_SIZE}
-            src={`data:image/png;base64,${icon}`}
-          />
+          <Image height={THUMBNAIL_SIZE} width={THUMBNAIL_SIZE} src={icon} />
         </Stack.Item>
       )}
       <Stack.Item grow>{name}</Stack.Item>
@@ -76,7 +72,7 @@ export const ItemEntry = (props: ItemProps) => {
             (purchase_limit < Infinity && purchased >= purchase_limit)
           }
           onClick={() => {
-            act('purchase', { item_ref: ref, item_name: name });
+            act('purchase', { item_ref: ref });
           }}
         >
           {buildPurchaseText(

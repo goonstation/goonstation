@@ -58,9 +58,9 @@
 				var/datum/targetable/spell/spell_ability_datum = spell.assoc_spell
 				// convert deciseconds to seconds
 				cooldown_contents = initial(spell_ability_datum.cooldown) / 10
-				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
+				spell_icon = "\ref[spell_ability_datum.icon]?state=[spell_ability_datum.icon_state]&frame=6"
 			else if (spell.icon && spell.icon_state)
-				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
+				spell_icon = "\ref[spell.icon]?state=[spell.icon_state]"
 			spellbook_contents[spell.eqtype] += list(list(
 				"cooldown" = cooldown_contents,
 				"cost" = spell.cost,
