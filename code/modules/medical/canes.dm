@@ -1,4 +1,6 @@
 /obj/item/cane
 	name = "cane"
-	desc = "Used by old people and people pretending to be old."
-	icon = ""
+	desc = "It's always lupus."
+	icon = 'icons/obj/canes.dmi'
+	icon_state = "wooden"
+	inhand_image_icon = 'icons/mob/inhand/hand_canes.dmi'
