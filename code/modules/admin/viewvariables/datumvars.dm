@@ -181,7 +181,7 @@
 			try
 				body += debug_variable(V, D.vars[V], D, 0)
 			catch(var/exception/e)
-				body += debug_variable_read_error(V, D, e)
+				body += debug_variable_read_error(V, e)
 		//body += debug_variable_link(V, D, (istype(D.vars[V], /datum) && src.holder.level >= LEVEL_CODER) ? 1 : 0)
 
 	body += "</tbody></table>"
@@ -293,7 +293,7 @@
 		</div>
 		"}
 
-/client/proc/debug_variable_read_error(name, var/fullvar, var/exception/e)
+/client/proc/debug_variable_read_error(name, var/exception/e)
 	return {"
 	<tr>
 		<td></td>
