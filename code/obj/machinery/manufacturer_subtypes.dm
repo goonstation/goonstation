@@ -267,6 +267,9 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass,
+		/datum/manufacture/cane/metal,
+		/datum/manufacture/cane/metal/fourlegged,
+		/datum/manufacture/cane/metal/tennisball,
 	)
 
 	hidden = list()
