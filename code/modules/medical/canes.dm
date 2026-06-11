@@ -1,5 +1,5 @@
 //abstracts
-
+ABSTRACT_TYPE(/obj/item/cane)
 /obj/item/cane
 	name = "cane"
 	desc = "A handy walking stick for people who can't walk very well anymore, or just like to beat people with sticks."
@@ -37,7 +37,8 @@
 	icon_state = "tennisball"
 	desc = "Perfect when you need a million balloons!"
 
-// Cargo exclusive below!
+// Geoff's funny canes below!
+ABSTRACT_TYPE(/obj/item/cane/silly)
 
 /obj/item/cane/silly/clown
 	icon_state = "clown"
@@ -50,6 +51,8 @@
 /obj/item/cane/silly/princess
 	icon_state = "princess"
 	desc = "Sparkle! Glimmer! Back pain! Sparkle!"
+
+// Cargo exclusive below!
 
 /obj/item/cane/golden
 	icon_state = "golden"
