@@ -1204,7 +1204,6 @@
 	create = 1
 	time = 3 SECONDS
 	category = "Tool"
-	apply_material = TRUE
 
 /datum/manufacture/cane/metal/fourlegged
 	item_outputs = list(/obj/item/cane/metal/fourlegged)

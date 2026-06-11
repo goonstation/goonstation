@@ -29,9 +29,6 @@
 
 /obj/item/cane/metal
 	icon_state = "metal"
-	mat_changename = 0
-	mat_changeappearance = 0
-	default_material = "steel"
 
 /obj/item/cane/metal/fourlegged
 	icon_state = "fourlegged"
