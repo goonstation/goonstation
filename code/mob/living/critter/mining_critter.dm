@@ -166,6 +166,8 @@
 ///////////////////////////////////////////////
 // FERMID WORKER
 ///////////////////////////////////////////////
+/datum/movement_modifier/small_fermid
+	multiplicative_slowdown = 0.6
 /mob/living/critter/fermid/worker
 	desc = "Extremely hostile asteroid-dwelling bugs. Small, numble, and a whole lot of mandible."
 	icon_state = "fermid-s"
@@ -174,7 +176,9 @@
 	health_burn = 20
 	flags = TABLEPASS
 	fits_under_table = 1
-
+	New()
+		..()
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/small_fermid, src)
 	green
 		recolor = "#05da17"
 
