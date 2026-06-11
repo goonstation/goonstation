@@ -298,7 +298,7 @@
 	<tr>
 		<td></td>
 		<th>\[[name]\]</th>
-		<td><em class='value'>Unable to read var: [html_encode(e?.name || "unknown error")]</em></td>
+		<td><em class='value'>Error: [html_encode(e?.name || "unknown error")]</em></td>
 	</tr>
 	"}
 	//Really, move this out to a .css file or something, too lazy and don't know how offhand
