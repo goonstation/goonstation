@@ -229,6 +229,7 @@
 		canShow(var/client/C)
 			if(istype(C.mob.equipped(), /obj/item/factionrep/ntboard)) return 1
 			if(istype(C.mob.equipped(), /obj/item/blackbox)) return 1
+			if(istype(C.mob.equipped(), /obj/item/card/id/syndicate)) return 1
 			else return 0
 
 		getNodeText(var/client/C)
