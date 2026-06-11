@@ -3044,6 +3044,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	if (missing_legs == 2 && !(locate(/datum/movement_modifier/slither) in src.movement_modifiers))
 		. += 14 - ((2-missing_arms) * 2) // each missing leg adds 7 of movement delay. Each functional arm reduces this by 2.
+	else if ((src.find_type_in_hand(/obj/item/cane)) && missing_legs == 1) // 1 leg because you can't just become a stick man and run around!!
+		. += 0 // Easily changeable slowdown in case canes won't be as fast as 2 legs!
 	else
 		. += 7*missing_legs
 
