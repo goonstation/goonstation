@@ -945,6 +945,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Comedy Equipment"
 
 
+/datum/supply_packs/cane_gaudy
+	name = "Gaudy walking cane"
+	desc = "x1 Walking cane made of pure gold. Put the \"old\" in old money."
+	category = "Medical"
+	contains = list(/obj/item/cane/golden)
+	cost = PAY::EXECUTIVE
+	containertype = /obj/storage/crate
+	containername = "Gaudy walking cane"
+
 /datum/supply_packs/canes
 	name = "Walking canes Kit"
 	desc = "x4 Walking canes. To aid your aging and or maimed crew."
