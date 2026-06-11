@@ -1088,7 +1088,6 @@
 	/obj/item/cane/silly/mime,
 	/obj/item/cane/silly/princess) // Golden intentionally missing
 
-
 /obj/random_item_spawner/critter
 	name = "random critter spawner"
 	icon_state = "rand_critter"
