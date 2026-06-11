@@ -176,6 +176,13 @@
 	health_burn = 20
 	flags = TABLEPASS
 	fits_under_table = 1
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/frenzy/fermid)
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/frenzy/fermid/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy/fermid)
+		if(!frenzy.disabled && frenzy.cooldowncheck())
+			frenzy.handleCast(target)
+			return TRUE
+		. = ..()
 	New()
 		..()
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/small_fermid, src)
