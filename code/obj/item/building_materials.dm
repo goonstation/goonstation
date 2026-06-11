@@ -1516,6 +1516,25 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			sheet_cost = 2
 			icon = 'icons/obj/furniture/swingsign.dmi'
 			icon_state = "written"
+		walking_cane
+			recipe_id = "wood_cane"
+			craftedType = /obj/item/cane/wooden
+			name = "Walking cane"
+			sheet_cost = 1
+			icon = 'icons/obj/canes.dmi'
+			icon_state = "wooden"
+			walking_cane_2
+				recipe_id = "wood_cane_2"
+				craftedType = /obj/item/cane/wooden/wooden2
+				icon_state = "wooden2"
+			walking_cane_3
+				recipe_id = "wood_cane_3"
+				craftedType = /obj/item/cane/wooden/wooden3
+				icon_state = "wooden3"
+			walking_cane_black
+				recipe_id = "wood_cane_black"
+				craftedType = /obj/item/cane/wooden/black
+				icon_state = "black"
 
 	zwood
 		zbarricade
