@@ -1,5 +1,5 @@
 //abstracts
-
+ABSTRACT_TYPE(/obj/item/cane)
 /obj/item/cane
 	name = "cane"
 	desc = "A handy walking stick for people who can't walk very well anymore, or just like to beat people with sticks."
@@ -38,6 +38,7 @@
 	desc = "Perfect when you need a million balloons!"
 
 // Geoff's funny canes below!
+ABSTRACT_TYPE(/obj/item/cane/silly)
 
 /obj/item/cane/silly/clown
 	icon_state = "clown"
