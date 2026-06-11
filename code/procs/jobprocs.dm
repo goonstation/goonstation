@@ -688,7 +688,7 @@ Equip items from body traits.
 			trinket = the_chair
 			the_chair.buckle_in(src, src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("cane"))
-		var/picked = pick(childrentypesof(/obj/item/cane/wooden))
+		var/picked = pick(typesof(/obj/item/cane/wooden))
 		trinket = new picked(src)
 	else
 		trinket = new T(src)
