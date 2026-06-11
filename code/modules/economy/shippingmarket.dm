@@ -387,7 +387,7 @@
 			var/datum/commodity/C1 = src.commodities[ctype]
 			for(var/datum/trader/T in src.active_traders)
 				for(var/datum/commodity/C2 in T.goods_sell)
-					if(C1.comtype == C2.comtype)
+					if(ispath(C2.comtype, C1.comtype))
 						if(C1.indemand)
 							C2.amount = 0
 
