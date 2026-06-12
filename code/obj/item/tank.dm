@@ -456,12 +456,12 @@ ABSTRACT_TYPE(/obj/item/tank)
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"
 	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
-	distribute_pressure = 81
+	distribute_pressure = 34
 
 	New()
 		..()
-		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
 
 // ==== JETPACKS ====
 
@@ -757,12 +757,12 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 	icon_state = "mini_anesthetic"
 	item_state = "mini_anesthetic"
 	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
-	distribute_pressure = 81
+	distribute_pressure = 34
 
 	New()
 		..()
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrous_oxide = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.oxygen = (ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
+		src.air_contents.nitrous_oxide = (ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
 
 /obj/item/tank/mini/empty
 	icon_state = "mini_empty"

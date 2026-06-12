@@ -531,7 +531,18 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 
 	var/obj/item/tank/attached_tank
 
-	HELP_MESSAGE_OVERRIDE("Detatch an attached tank with a <b>wrenching</b> tool.<br>Click with a <b>mini-tank</b> in-hand to attach it.<br><b>Does not work in space!</b>")
+	get_help_message(dist, mob/user)
+		. = "Detatch an attached tank with a <b>wrenching</b> tool.<br>Click with a <b>mini-tank</b> in-hand to attach it.<br>Can equip this item on someone else by targeting the <b>head</b> and <b>clicking</b> on [TEXT_INTENT_HELP] intent.<br><b>Does not work in space!</b>"
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user.zone_sel.selecting == "head" && ishuman(target) && user.a_intent == INTENT_HELP)
+			var/mob/living/carbon/human/Htarget = target
+			if(Htarget.wear_mask)
+				boutput(user, SPAN_ALERT("[Htarget] is already wearing something on [his_or_her(Htarget)] face!"))
+				return
+			actions.start(new/datum/action/bar/icon/otherItem(user, Htarget, user.equipped(), SLOT_WEAR_MASK, 10 SECONDS), user) // longer actionbar than regular
+			return
+		..()
 
 	attackby(obj/item/I, mob/user)
 		if (iswrenchingtool(I))
@@ -570,6 +581,8 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		. = ..()
 		if (src.attached_tank)
 			. += " It has [src.attached_tank] attached."
+		else
+			. += " It has no tank attached."
 
 	update_icon(...)
 		if (src.attached_tank)
@@ -584,7 +597,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 
 /obj/item/clothing/mask/medical/anesthetic
 	name = "anesthetic mask"
-	desc = "For when you want to put patients to sleep wtihout losing patience."
+	desc = "For when you want to put patients to sleep wtihout losing patience. Does not work in low-pressure enviornments."
 
 	New()
 		. = ..()
