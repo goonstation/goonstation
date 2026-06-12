@@ -70,6 +70,7 @@ Alien/mutant/other fish:
 		Tree fish
 		Origami fish
 		Cardboard fish
+		Starstonefish
 	Unimplemented:
 		Blood fish
 */
