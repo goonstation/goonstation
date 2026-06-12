@@ -20,7 +20,7 @@ const GenericAntagContentWindow = () => {
         1. The rules on griefing and murdering no longer apply to you. Use your
         abilities as you see fit.
       </p>
-      <p>2. 2. Any escalation rules still apply.</p>
+      <p> 2. Any escalation rules still apply.</p>
       <p>
         3. You do not speak human, find other ways to communicate or get
         a translator from medbay.
