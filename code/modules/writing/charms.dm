@@ -3,8 +3,12 @@
 	desc = "A little folded paper charm with something written on the inside."
 	icon = 'icons/obj/charms.dmi'
 	icon_state = "paper_charm"
+	/// Sealed with blood?
 	var/bloodied = FALSE
+	/// Was the blood from a curse victim?
 	var/curse_protect = FALSE
+	/// How many curses will this block?
+	var/charges = 3
 
 	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
 		if (bloodied || !(reagent_id in list("blood", "bloodc", "hemolymph")))
@@ -17,6 +21,9 @@
 		src.UpdateOverlays(overlay, "bloodied")
 		var/datum/bioHolder/bioholder = reagent.data
 		if (istype(bioholder) && bioholder.cursed)
+			var/datum/effects/system/bad_smoke_spread/smoke = new(get_turf(src))
+			smoke.set_up(2, 0, get_turf(src), null, "#b1b1b1")
+			smoke.start()
 			src.curse_protect = TRUE
 		return TRUE
 
@@ -32,6 +39,39 @@
 		src.set_loc(strung_charm)
 		user.put_in_hand(strung_charm)
 
+	set_loc(newloc, storage_check)
+		src.on_set_loc(newloc)
+		. = ..()
+
+	proc/on_set_loc(newloc)
+		if (src.loc == newloc)
+			return
+		if (ismob(newloc))
+			src.RegisterSignal(newloc, COMSIG_TRY_CURSE, PROC_REF(on_try_curse))
+		else if (ismob(src.loc))
+			src.UnregisterSignal(src.loc, COMSIG_TRY_CURSE)
+
+	proc/on_try_curse(mob/living/victim, mob/living/intangible/wraith/wraith)
+		if (!src.curse_protect || src.charges <= 0)
+			return FALSE
+		var/obj/effects/harmless_smoke/smoke = new(get_turf(src))
+		SPAWN(1 SECOND)
+			qdel(smoke)
+		boutput(victim, SPAN_ALERT("Your [src] singes as it protects you from a foul curse!"))
+		victim.TakeDamage("chest", burn = 5) //ow!
+		playsound(get_turf(victim), 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+		src.charges--
+		if (src.charges <= 0)
+			if (istype(src.loc, /obj/item/clothing))
+				victim.u_equip(src.loc)
+				qdel(src.loc)
+			else
+				victim.drop_item(src)
+				qdel(src)
+			new /obj/decal/cleanable/ash(victim.loc)
+
+		return TRUE
+
 /obj/item/clothing/suit/charm
 	name = "strung charm"
 
@@ -45,6 +85,10 @@
 		var/image/cable_overlay = image(charm.icon, "cord")
 		cable_overlay.color = cable_color
 		src.UpdateOverlays(cable_overlay, "cord")
+
+	set_loc(newloc, storage_check)
+		src.charm.on_set_loc(newloc)
+		. = ..()
 
 	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
 		if (src.charm.reagent_act(reagent_id, volume, holder_reagents))
