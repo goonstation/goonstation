@@ -3,14 +3,13 @@
 	required_elapsed_round_time = 10 MINUTES
 	required_npc_type = /mob/living/carbon/human/npc/monkey
 	var/ghost_confirmation_delay = 1 MINUTES
-	var/list/antag_npcs = list(/mob/living/carbon/human/npc/monkey/stirstir)
-	var/list/blacklisted_npcs = list(/mob/living/carbon/human/npc/monkey/oppenheimer, /mob/living/carbon/human/npc/monkey/angry)
+	var/list/antag_npcs = list(/mob/living/carbon/human/npc/monkey/stirstir, /mob/living/carbon/human/npc/monkey/oppenheimer)
 
 	proc/pick_npc()
 		var/list/mob/found_npcs = list()
 		for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
 			var/turf/monkearea = get_turf(monke)
-			if (istype(monkearea.loc, /area/station/medical/dome) || istypes(monke, src.blacklisted_npcs))
+			if (istype(monkearea.loc, /area/station/medical/dome) || istype(monke, /mob/living/carbon/human/npc/monkey/angry) || monke.mind?.current.client)
 				continue // remove monkey pen apes so you don't get one of those 95% of the time
 
 			if (isalive(monke) && get_z(monke) == Z_LEVEL_STATION)
@@ -37,6 +36,9 @@
 
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1, for_antag = FALSE)
+
+		if (!picked_npc || picked_npc.mind?.current.client || !isalive(picked_npc))
+			picked_npc = src.pick_npc() // last second check, reroll monkey if the one you picked somehow gained a mind between the vote and the spawn, or died
 
 		if (length(candidates) > 0)
 			var/datum/mind/M = pick(candidates)

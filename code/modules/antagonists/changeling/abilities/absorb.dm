@@ -101,7 +101,7 @@
 		if (!istype(T))
 			boutput(C, SPAN_ALERT("This creature is not compatible with our biology."))
 			return 1
-		if (isnpcmonkey(T))
+		if (isnpcmonkey(T) && !T.last_ckey)
 			boutput(C, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
 			return 1
 		if (T.bioHolder.HasEffect("husk"))
