@@ -193,8 +193,8 @@
 	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid whatever is in that enlarged gaster."
 	icon_state = "fermid-r"
 	icon_state_dead = "fermid-r-dead"
-	health_brute = 30
-	health_burn = 30
+	health_brute = 35
+	health_burn = 35
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/spit)
 
 	critter_ability_attack(var/mob/target)
