@@ -70,6 +70,7 @@
 /obj/item/paper/pipebombs{
 	pixel_x = -5
 	},
+/obj/item/stamp/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost/general)
 "bn" = (
@@ -549,6 +550,7 @@
 /obj/item/uplink_telecrystal{
 	pixel_y = 5
 	},
+/obj/item/stamp/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "zs" = (
