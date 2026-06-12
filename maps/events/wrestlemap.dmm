@@ -4433,6 +4433,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/auto,
 /obj/item/reagent_containers/applicator/stick/glue,
+/obj/item/stamp/clown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "bVS" = (

@@ -36415,6 +36415,7 @@
 /obj/item/peripheral/videocard,
 /obj/item/storage/goodybag,
 /obj/item/aiModule/hologram_expansion/clown,
+/obj/item/stamp/clown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "vVm" = (
