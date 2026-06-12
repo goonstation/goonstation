@@ -465,12 +465,6 @@
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/prefab/secbot_academy)
-"uC" = (
-/obj/machinery/shower/puzzle{
-	dir = 1
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/prefab/secbot_academy)
 "uY" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/prefab/secbot_academy)
@@ -2037,7 +2031,7 @@ Wc
 Ek
 aP
 ib
-uC
+Ek
 hG
 Ar
 bU
