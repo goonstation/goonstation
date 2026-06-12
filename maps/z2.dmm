@@ -22238,6 +22238,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen/sleepypen,
+/obj/item/stamp/syndicate,
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
 /area/syndicate_station/battlecruiser)
 "bLd" = (
