@@ -140,7 +140,7 @@
 	name = "Swarm"
 	desc = "Crawl all over your target and bite them bite them bite them!"
 	cooldown = 45 SECONDS
-
+	icon_state = "frenzy_fermid"
 	frenzy_low = 2
 	frenzy_high = 4
 	frenzy_damage = 3
