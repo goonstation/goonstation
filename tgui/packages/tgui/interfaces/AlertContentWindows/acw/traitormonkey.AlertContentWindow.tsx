@@ -22,8 +22,8 @@ const GenericAntagContentWindow = () => {
       </p>
       <p> 2. Any escalation rules still apply.</p>
       <p>
-        3. You do not speak human, find other ways to communicate or get a
-        translator from medbay.
+        3. You do not speak human, find other ways to communicate or get
+        a translator from medbay.
       </p>
 
       <p>
