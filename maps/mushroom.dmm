@@ -28662,6 +28662,7 @@
 /area/station/turret_protected/ai_upload)
 "rbd" = (
 /obj/table/wood/auto,
+/obj/item/stamp/chap,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -37941,6 +37942,10 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
+/obj/table/auto,
+/obj/item/clipboard/with_pen,
+/obj/item/stamp/qm,
+/obj/random_item_spawner/desk_stuff/one,
 /turf/simulated/floor/caution/side{
 	dir = 8
 	},

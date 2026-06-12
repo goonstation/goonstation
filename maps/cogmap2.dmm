@@ -3820,6 +3820,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/paper_bin,
+/obj/item/stamp/chap,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "anc" = (
@@ -46234,12 +46235,12 @@
 "cUv" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
-/obj/item/stamp,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/item/stamp/qm,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -47533,6 +47534,7 @@
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/stamp/qm,
 /turf/simulated/floor/caution,
 /area/station/quartermaster/office)
 "cZm" = (

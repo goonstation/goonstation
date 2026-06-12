@@ -2225,6 +2225,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
+/obj/item/stamp/chap,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -15947,6 +15948,7 @@
 	},
 /obj/item/cargotele,
 /obj/item/cargotele,
+/obj/item/stamp/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "gwr" = (

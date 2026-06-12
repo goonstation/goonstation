@@ -14805,6 +14805,7 @@
 	pixel_y = 4
 	},
 /obj/mapping_helper/access/cargo,
+/obj/item/stamp/qm,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "lxx" = (
