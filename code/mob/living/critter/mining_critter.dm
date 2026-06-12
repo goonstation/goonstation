@@ -47,9 +47,9 @@
 	pull_w_class = W_CLASS_NORMAL
 	hand_count = 3
 	reagent_capacity = 100
-	health_brute = 25
+	health_brute = 30
 	health_brute_vuln = 1
-	health_burn = 25
+	health_burn = 30
 	health_burn_vuln = 0.3
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/aggressive
