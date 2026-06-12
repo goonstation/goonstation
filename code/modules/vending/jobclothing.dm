@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/security, 2, cost=PAY::TRADESMAN/1.5)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2, cost=PAY::TRADESMAN/1.5)
 		product_list += new/datum/data/vending_product(/obj/item/cloth/towel/security, 4, cost=PAY::TRADESMAN/2)
-		product_list += new/datum/data/vending_product(/obj/item/stamp/law, 4, cost=PAY::TRADESMAN/2)
+		// product_list += new/datum/data/vending_product(/obj/item/stamp/law, 4, cost=PAY::TRADESMAN/2) // uncomment when the actual in-paper stamp's sprite gets replaced
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/security, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/security, 1)
 
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/bobby, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/siren, 2)
 		product_list += new/datum/data/vending_product(/obj/item/cloth/towel/security, 4)
-		product_list += new/datum/data/vending_product(/obj/item/stamp/law, 4)
+		// product_list += new/datum/data/vending_product(/obj/item/stamp/law, 4)  // uncomment when the actual in-paper stamp's sprite gets replaced
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/security, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/security, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security/april_fools, 1)
