@@ -10,6 +10,8 @@
 	/// How many curses will this block?
 	var/charges = 3
 
+	//ideas for other charm effects: lavender gives disease resist + slightly higher chance for asymptomaticness
+
 	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
 		if (bloodied || !(reagent_id in list("blood", "bloodc", "hemolymph")))
 			..()
@@ -74,6 +76,8 @@
 
 /obj/item/clothing/suit/charm
 	name = "strung charm"
+	wear_image_icon = 'icons/obj/charms.dmi'
+	wear_state = "worn_charm"
 
 	var/obj/item/paper/folded/charm/charm
 
