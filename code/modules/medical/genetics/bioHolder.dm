@@ -346,6 +346,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return newUid
 
 	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1)
+		src.cursed = toCopy.cursed
 		//Copies the settings of another given holder. Used for syringes, the dna spread virus and such things.
 		if(copyAppearance)
 			mobAppearance.CopyOther(toCopy.mobAppearance)

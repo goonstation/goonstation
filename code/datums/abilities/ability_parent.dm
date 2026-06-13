@@ -315,6 +315,16 @@
 				return A
 		return null
 
+	proc/getAbilitiesOfType(abilityType)
+		RETURN_TYPE(/list)
+		if (!ispath(abilityType))
+			return null
+		. = list()
+		for (var/datum/targetable/A in src.abilities)
+			if (istype(A, abilityType))
+				. += A
+		return .
+
 	proc/on_clone()
 		if (src.remove_on_clone)
 			if (src.composite_owner)

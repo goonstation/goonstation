@@ -50,6 +50,12 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(H, SPAN_ALERT("<b>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel or the purification of holy water.</b>"))
 				H.playsound_local(H.loc, "sound/voice/wraith/wraithraise1.ogg", 80)
 
+	afterCast()
+		. = ..()
+		for (var/datum/targetable/ability in src.holder.getAbilitiesOfType(/datum/targetable/wraithAbility/curse))
+			if (ability != src)
+				ability.doCooldown()
+
 /datum/targetable/wraithAbility/curse/blood
 	name = "Curse of blood"
 	icon_state = "bloodcurse"
@@ -71,14 +77,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("blood_curse")
 			boutput(holder.owner, SPAN_NOTICE("We curse this being with a blood dripping curse."))
-			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
-			ability.doCooldown()
 			return 0
 		else
 			return 1
@@ -104,14 +102,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("blind_curse")
 			boutput(holder.owner, SPAN_NOTICE("We curse this being with a blinding curse."))
-			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
-			ability.doCooldown()
 			return 0
 		else
 			return 1
@@ -137,14 +127,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("weak_curse")
 			boutput(holder.owner, SPAN_NOTICE("We curse this being with an enfeebling curse."))
-			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
-			ability.doCooldown()
 			return 0
 		else
 			return 1
@@ -170,14 +152,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("rot_curse")
 			boutput(holder.owner, SPAN_NOTICE("We curse this being with a decaying curse."))
-			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-			ability.doCooldown()
-			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
-			ability.doCooldown()
 			return 0
 		else
 			return 1
