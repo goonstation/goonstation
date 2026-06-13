@@ -59,7 +59,7 @@
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
 	no_stamina_stuns = TRUE
 	var/recolor = null
-
+	var/speed = /datum/movement_modifier/fermid
 	New()
 		..()
 		LAZYLISTADDUNIQUE(src.faction, FACTION_FERMID)
@@ -67,7 +67,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		if(recolor)
 			color = color_mapping_matrix(inp=list("#cc0303", "#9d9696", "#444142"), out=list(recolor, "#9d9696", "#444142"))
-
+		APPLY_MOVEMENT_MODIFIER(src, speed, src)
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_BUGS)
 		..()
@@ -168,6 +168,11 @@
 ///////////////////////////////////////////////
 /datum/movement_modifier/small_fermid
 	multiplicative_slowdown = 0.6
+
+/datum/movement_modifier/fermid
+	multiplicative_slowdown = 1
+
+
 /mob/living/critter/fermid/worker
 	desc = "Extremely hostile asteroid-dwelling bugs. Small, numble, and a whole lot of mandible."
 	icon_state = "fermid-s"
@@ -176,6 +181,7 @@
 	health_burn = 20
 	flags = TABLEPASS
 	fits_under_table = 1
+	speed = /datum/movement_modifier/small_fermid
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/frenzy/fermid)
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/frenzy/fermid/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy/fermid)
@@ -185,7 +191,7 @@
 		. = ..()
 	New()
 		..()
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/small_fermid, src)
+		//APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/small_fermid, src)
 	green
 		recolor = "#05da17"
 
@@ -233,6 +239,9 @@
 /datum/movement_modifier/big_fermid
 	additive_slowdown = 2
 
+/datum/movement_modifier/big_fermid_fast
+	multiplicative_slowdown = 0.8
+
 /mob/living/critter/fermid/queen
 	name = "fermid queen"
 	desc = "Extremely hostile asteroid-dwelling mother of bugs. A risk to life as we know it if left unchecked."
@@ -244,10 +253,10 @@
 	health_burn = 25
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
-
+	speed = /datum/movement_modifier/big_fermid
 	New()
 		..()
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
+
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -261,6 +270,7 @@
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/slam/fermid)
+	speed = /datum/movement_modifier/big_fermid
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/slam/fermid/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam/fermid)
 		if (!slam.disabled && slam.cooldowncheck())
@@ -269,12 +279,11 @@
 		. = ..()
 	New()
 		..()
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/fermid/fermid_hulk
 	purple
 		recolor = "#b90fab"
-
+		speed = /datum/movement_modifier/big_fermid_fast
 	radioactive
 		New()
 			..()
@@ -300,10 +309,9 @@
 	health_burn = 15
 	health_burn_vuln = 0.5
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite)
-
+	speed = /datum/movement_modifier/grub_fermid
 	New()
 		..()
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/grub_fermid, src)
 
 ///////////////////////////////////////////////
 // FERMID EGG
