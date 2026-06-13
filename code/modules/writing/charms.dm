@@ -40,16 +40,16 @@
 		user.put_in_hand(strung_charm)
 
 	set_loc(newloc, storage_check)
-		src.on_set_loc(newloc)
+		src.on_set_loc(newloc, src.loc)
 		. = ..()
 
-	proc/on_set_loc(newloc)
-		if (src.loc == newloc)
+	proc/on_set_loc(newloc, currentloc)
+		if (currentloc == newloc)
 			return
 		if (ismob(newloc))
 			src.RegisterSignal(newloc, COMSIG_TRY_CURSE, PROC_REF(on_try_curse))
-		else if (ismob(src.loc))
-			src.UnregisterSignal(src.loc, COMSIG_TRY_CURSE)
+		else if (ismob(currentloc))
+			src.UnregisterSignal(currentloc, COMSIG_TRY_CURSE)
 
 	proc/on_try_curse(mob/living/victim, mob/living/intangible/wraith/wraith)
 		if (!src.curse_protect || src.charges <= 0)
@@ -87,7 +87,7 @@
 		src.UpdateOverlays(cable_overlay, "cord")
 
 	set_loc(newloc, storage_check)
-		src.charm.on_set_loc(newloc)
+		src.charm.on_set_loc(newloc, src.loc)
 		. = ..()
 
 	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
