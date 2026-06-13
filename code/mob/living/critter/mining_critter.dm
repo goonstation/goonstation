@@ -260,7 +260,13 @@
 	health_burn = 25
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
-
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/slam/fermid)
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/slam/fermid/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam/fermid)
+		if (!slam.disabled && slam.cooldowncheck())
+			slam.handleCast(target)
+			return TRUE
+		. = ..()
 	New()
 		..()
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
