@@ -1,14 +1,19 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/item/casing/small,
 /obj/item/casing/small,
 /obj/decal/cleanable/blood{
-	can_track = 0
+	can_track = 0;
+	dry = 1
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "floor6";
 	pixel_y = 30;
-	can_track = 0
+	can_track = 0;
+	dry = 1
 	},
 /obj/dialogueobj/syndiecorpse7,
 /obj/item/gun/kinetic/pistol/empty,
@@ -24,28 +29,25 @@
 /obj/item/casing/shotgun/orange,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
-"Z" = (
-/turf/simulated/floor/plating,
-/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 L
-Z
-Z
-Z
-Z
+a
+a
+a
+a
 "}
 (2,1,1) = {"
-Z
-Z
+a
+a
 V
-Z
-Z
+a
+a
 "}
 (3,1,1) = {"
 M
-Z
-Z
-Z
-Z
+a
+a
+a
+a
 "}
