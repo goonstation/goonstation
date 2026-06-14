@@ -174,7 +174,7 @@
 
 
 /mob/living/critter/fermid/worker
-	desc = "Extremely hostile asteroid-dwelling bugs. Small, numble, and a whole lot of mandible."
+	desc = "Extremely hostile asteroid-dwelling bugs. Small, nimble, and a whole lot of mandible."
 	icon_state = "fermid-s"
 	icon_state_dead = "fermid-s-dead"
 	health_brute = 20
