@@ -2,6 +2,11 @@
 "a" = (
 /turf/simulated/floor/plating,
 /area/space)
+"e" = (
+/obj/table/syndicate/auto,
+/obj/item/device/audio_log/infiltrator_log,
+/turf/simulated/floor/plating,
+/area/space)
 "L" = (
 /obj/item/casing/small,
 /obj/item/casing/small,
@@ -25,6 +30,7 @@
 /area/space)
 "Z" = (
 /obj/table/syndicate/auto,
+/obj/item/device/radio,
 /turf/simulated/floor/plating,
 /area/space)
 
@@ -36,7 +42,7 @@ a
 a
 "}
 (2,1,1) = {"
-Z
+e
 a
 V
 a
