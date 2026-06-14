@@ -133,7 +133,7 @@
 /datum/targetable/critter/slam/fermid
 	name = "Slam"
 	desc = "Throw yourself at your target to knock them back."
-	icon_state = "slam"
+	icon_state = "slam_fermid"
 	cooldown = 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
