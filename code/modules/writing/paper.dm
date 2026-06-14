@@ -869,12 +869,15 @@
 		is_reassignable = 0
 		assignment = "stamp-law"
 	flock
-		name = "\improper temp flock"
-		desc = "caw."
+		name = "\improper Inky Antenna"
+		desc = "It looks kinda like a National Notary stamp of an unfamilar model. Theres small rods sticking out of it though. You doubt you can use it for whatever important documents you've gotten your hands on"
 		icon_state = "stamp-flock"
 		special_mode = "Flock"
 		is_reassignable = 0
 		assignment = "stamp-flock"
+		mat_changename = FALSE
+		mat_changedesc = FALSE
+		default_material = "gnesis"
 
 /obj/item/paper/folded
 	name = "folded paper"
