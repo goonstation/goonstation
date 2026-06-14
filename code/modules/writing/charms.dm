@@ -3,8 +3,8 @@
 	desc = "A little folded paper charm with something written on the inside."
 	icon = 'icons/obj/charms.dmi'
 	icon_state = "paper_charm"
-	/// Sealed with blood?
-	var/bloodied = FALSE
+	/// ID of the reagent staining this charm
+	var/stain_reagent = null
 	/// Was the blood from a curse victim?
 	var/curse_protect = FALSE
 	/// How many curses will this block?
