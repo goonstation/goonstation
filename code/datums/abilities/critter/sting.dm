@@ -7,6 +7,7 @@
 	var/stealthy = 0
 	var/list/venom_ids = list("toxin")
 	var/inject_amount = 25
+	var/downed = TRUE
 	icon_state = "fermid_sting"
 	cooldown = 60 SECONDS
 	targeted = 1
@@ -30,6 +31,9 @@
 		var/mob/MT = target
 		if (!MT.reagents)
 			boutput(holder.owner, SPAN_ALERT("That does not hold reagents, apparently."))
+			return 1
+		if (!downed && !is_incapacitated(MT))
+			boutput(holder.owner, SPAN_ALERT("That is too nimble. Try knocking it down."))
 			return 1
 		if (!stealthy)
 			holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] stings [target]!</b>"))
@@ -60,6 +64,7 @@
 		icon_state = "fermid_sting"
 		venom_ids = list("haloperidol", "atropine")
 		inject_amount = 10
+		downed = FALSE
 
 		polymorph
 			venom_ids = list("ants", "histamine")
