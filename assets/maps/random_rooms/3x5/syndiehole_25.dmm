@@ -1,38 +1,29 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/plating,
-/area/space)
-"e" = (
-/obj/table/syndicate/auto,
-/obj/item/device/audio_log/infiltrator_log,
-/turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/item/casing/small,
 /obj/item/casing/small,
+/obj/decal/cleanable/blood,
 /obj/decal/cleanable/blood{
 	icon_state = "floor6";
 	pixel_y = 30
 	},
-/obj/decal/cleanable/blood,
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate,
+/obj/dialogueobj/syndiecorpse7,
 /obj/item/gun/kinetic/pistol/empty,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/table/syndicate/auto,
-/obj/machinery/computer3/luggable,
+/obj/item/device/radio,
+/obj/item/device/audio_log/infiltrator_log,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "V" = (
 /obj/item/casing/shotgun/orange,
 /turf/simulated/floor/plating,
-/area/space)
-"Z" = (
-/obj/table/syndicate/auto,
-/obj/item/device/radio,
-/turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 L
@@ -42,7 +33,7 @@ a
 a
 "}
 (2,1,1) = {"
-e
+a
 a
 V
 a
@@ -50,7 +41,7 @@ a
 "}
 (3,1,1) = {"
 M
-Z
+a
 a
 a
 a
