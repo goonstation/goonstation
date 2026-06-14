@@ -261,7 +261,7 @@
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
-	desc = "Extremely hostile asteroid-dwelling mother of bugs. A huge guardian of some riches."
+	desc = "Extremely hostile asteroid-dwelling adult bug. A huge guardian of some riches."
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-hulk"
 	icon_state_dead = "fermid-hulk-dead"
