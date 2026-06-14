@@ -21907,6 +21907,7 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/item/paper_bin,
+/obj/item/stamp/law,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "wdb" = (

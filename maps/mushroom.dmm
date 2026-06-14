@@ -25850,6 +25850,10 @@
 	pixel_y = -24
 	},
 /obj/cable,
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/processing)
 "por" = (
@@ -35925,6 +35929,10 @@
 /obj/mapping_helper/access/security,
 /obj/machinery/cashreg{
 	name = "bail payment device"
+	},
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)

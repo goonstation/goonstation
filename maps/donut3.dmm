@@ -16900,6 +16900,10 @@
 /obj/item/clothing/gloves/latex{
 	pixel_y = -3
 	},
+/obj/item/stamp/law{
+	pixel_x = -6;
+	pixel_y = 7
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -55443,6 +55447,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
+/obj/item/stamp/law,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},

@@ -2040,6 +2040,10 @@
 	name = "furious scribbles";
 	pixel_x = 4
 	},
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/security/evidence)
 "bCe" = (
@@ -9054,6 +9058,7 @@
 	opacity = 0
 	},
 /obj/item/paper_bin,
+/obj/item/stamp/law,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "giw" = (

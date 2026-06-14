@@ -48812,6 +48812,10 @@
 /obj/table/auto,
 /obj/item/paper_bin,
 /obj/item/pen/pencil,
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -55090,6 +55094,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1
 	},
+/obj/item/stamp/law,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "wle" = (

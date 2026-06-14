@@ -7020,6 +7020,10 @@
 	pixel_y = -1;
 	pixel_x = -8
 	},
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/evidence)
 "dhu" = (
@@ -36898,6 +36902,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},

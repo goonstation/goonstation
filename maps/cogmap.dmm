@@ -39738,9 +39738,9 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/stamp{
-	pixel_x = -11;
-	pixel_y = 5
+/obj/item/stamp/law{
+	pixel_x = -10;
+	pixel_y = 6
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -44604,9 +44604,9 @@
 	pixel_y = 5;
 	pixel_x = 6
 	},
-/obj/item/stamp{
-	pixel_x = 7;
-	pixel_y = 11
+/obj/item/stamp/law{
+	pixel_x = -11;
+	pixel_y = 12
 	},
 /obj/item/pen{
 	pixel_y = 5;

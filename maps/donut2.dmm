@@ -19103,6 +19103,7 @@
 /obj/item/folder{
 	pixel_x = 6
 	},
+/obj/item/stamp/law,
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "eQM" = (
@@ -31049,6 +31050,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/item/stamp/law,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lNA" = (
