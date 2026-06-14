@@ -885,7 +885,7 @@
 	icon_state = "secure_green"
 	icon_closed = "secure_green"
 	icon_opened = "secure_green-open"
-	spawn_contents = list(/obj/item/paper/ranch_guide,\
+	spawn_contents = list(/obj/item/paper/image/ranch_guide,\
 	/obj/item/fishing_rod/basic,\
 	/obj/item/storage/box/clothing/rancher,\
 	/obj/item/device/camera_viewer/ranch,\

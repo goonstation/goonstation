@@ -10469,11 +10469,11 @@
 /area/station/hallway/primary/southwest)
 "eNe" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/siphon_guide{
+/obj/item/paper/image/siphon_guide{
 	pixel_x = 5;
 	pixel_y = -3
 	},
-/obj/item/paper/siphon_guide{
+/obj/item/paper/image/siphon_guide{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -13170,7 +13170,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/item/paper/siphon_guide{
+/obj/item/paper/image/siphon_guide{
 	pixel_x = 7;
 	pixel_y = -11
 	},
@@ -23518,7 +23518,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/paper/blueprint/chart/system,
-/obj/item/paper/siphon_guide{
+/obj/item/paper/image/siphon_guide{
 	pixel_y = 14
 	},
 /turf/simulated/floor/purpleblack{
@@ -41949,7 +41949,7 @@
 /area/station/bridge/reception)
 "sCH" = (
 /obj/machinery/siphon_lever,
-/obj/item/paper/siphon_guide{
+/obj/item/paper/image/siphon_guide{
 	pixel_y = -10
 	},
 /turf/simulated/floor/engine,

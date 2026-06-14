@@ -127,7 +127,7 @@
 	make_my_stuff()
 		. = ..()
 		if (prob(30))
-			new /obj/item/paper/businesscard/hemera_rcd(src)
+			new /obj/item/paper/image/businesscard/hemera_rcd(src)
 
 /obj/storage/crate/rcd/CE
 	name = "\improper RCD crate"

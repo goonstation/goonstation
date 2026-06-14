@@ -370,32 +370,30 @@
 		if (!src.decomp_stage)
 			. += "<br>[SPAN_ALERT("[Noun] is limp and unresponsive, a dull lifeless look in [t_his] eyes.")]"
 	else
+		var/med_training = usr.traitHolder?.hasTrait("training_medical") || istype(usr, /mob/dead/observer)
 		var/brute = src.get_brute_damage()
 		if (brute >= 5)
-			if (brute < 30)
-				. += "<br>[SPAN_REGULAR("[Noun] looks a little injured.")]"
-			else if (brute < 60)
-				. += "<br>[SPAN_NOTICE("[Noun] looks quite injured.")]"
+			if (med_training)
+				if (brute < 30)
+					. += "<br>[SPAN_REGULAR("[Noun] looks a little injured.")]"
+				else if (brute < 60)
+					. += "<br>[SPAN_NOTICE("[Noun] looks quite injured.")]"
+				else
+					. += "<br>[SPAN_ALERT("<B>[Noun] looks severely injured!</B>")]"
 			else
-				. += "<br>[SPAN_ALERT("<B>[Noun] looks severely injured!</B>")]"
+				. += "<br>[SPAN_NOTICE("[Noun] looks injured.")]"
 
 		var/burn = src.get_burn_damage()
 		if (burn >= 5)
-			if (burn < 30)
-				. += "<br>[SPAN_REGULAR("[Noun] looks a little burnt.")]"
-			else if (burn < 60)
-				. += "<br>[SPAN_NOTICE("[Noun] looks quite burned.")]"
+			if (med_training)
+				if (burn < 30)
+					. += "<br>[SPAN_REGULAR("[Noun] looks a little burnt.")]"
+				else if (burn < 60)
+					. += "<br>[SPAN_NOTICE("[Noun] looks quite burned.")]"
+				else
+					. += "<br>[SPAN_ALERT("<B>[Noun] looks severely burned!</B>")]"
 			else
-				. += "<br>[SPAN_ALERT("<B>[Noun] looks severely burned!</B>")]"
-
-		var/tox = src.get_toxin_damage()
-		if (tox >= 5)
-			if (tox < 30)
-				. += "<br>[SPAN_REGULAR("[Noun] looks a little sickly.")]"
-			else if (tox < 60)
-				. += "<br>[SPAN_NOTICE("[Noun] looks quite sickly.")]"
-			else
-				. += "<br>[SPAN_ALERT("<B>[Noun] looks incredibly sickly!</B>")]"
+				. += "<br>[SPAN_NOTICE("[Noun] looks burned.")]"
 
 		if (src.stat || src.hasStatus("paralysis"))
 			. += "<br>[SPAN_ALERT("[he_or_she_dont_or_doesnt(src)] seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"

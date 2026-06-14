@@ -27113,7 +27113,7 @@
 /obj/storage/closet{
 	name = "rancher supply closet"
 	},
-/obj/item/paper/ranch_guide,
+/obj/item/paper/image/ranch_guide,
 /obj/item/storage/box/clothing/rancher,
 /obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
