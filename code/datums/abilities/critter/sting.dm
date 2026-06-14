@@ -67,6 +67,7 @@
 		downed = FALSE
 
 		polymorph
+			downed = TRUE
 			venom_ids = list("ants", "histamine")
 			inject_amount = 8
 
