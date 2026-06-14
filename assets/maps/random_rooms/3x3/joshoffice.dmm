@@ -1,57 +1,57 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/item/bluntwrap,
-/obj/item/plant/herb/cannabis,
+/obj/item/paper/businesscard/josh,
 /turf/simulated/floor/plating,
-/area/space)
-"m" = (
+/area/dmm_suite/clear_area)
+"e" = (
 /obj/item/cigbutt,
+/obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating,
-/area/space)
-"y" = (
+/area/dmm_suite/clear_area)
+"l" = (
 /obj/machinery/computer/supplycomp,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/space)
-"F" = (
-/obj/item/paper/businesscard/josh,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/item/bluntwrap,
+/obj/item/plant/herb/cannabis,
 /turf/simulated/floor/plating,
-/area/space)
-"G" = (
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/item/cigbutt,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/vehicle/skateboard,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"S" = (
 /obj/table,
 /obj/item/plant/herb/cannabis,
 /obj/item/paper{
 	info = "Hey man, sorry I missed you! -Josh"
 	},
 /turf/simulated/floor/plating,
-/area/space)
-"H" = (
-/obj/item/cigbutt,
-/obj/machinery/light/small/sticky,
+/area/dmm_suite/clear_area)
+"X" = (
 /turf/simulated/floor/plating,
-/area/space)
-"L" = (
-/obj/vehicle/skateboard,
-/turf/simulated/floor/plating,
-/area/space)
-"N" = (
-/turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
-y
-m
-a
+l
+A
+r
 "}
 (2,1,1) = {"
-F
-L
-N
+a
+P
+X
 "}
 (3,1,1) = {"
-G
-N
-H
+S
+X
+e
 "}
