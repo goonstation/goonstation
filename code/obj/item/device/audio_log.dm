@@ -348,6 +348,32 @@ TYPEINFO(/obj/item/device/audio_log)
 			src.audiolog_speakers.len = length(src.audiolog_messages)
 			return
 
+	infiltrator_log
+		name = "Bloodied log"
+		desc = "There's a bloody handprint on it."
+		continuous = 0
+
+		New(newloc)
+			..()
+			audiolog_speakers += "Male #1"
+			src.audiolog_messages += "Aqua Command, Aqua Command, this is Operative Aquilla."
+			audiolog_speakers += "Male #1"
+			src.audiolog_messages += "NT has found my den. They are hot on my tail."
+			audiolog_speakers += "Male #1"
+			src.audiolog_messages += "I only have a few bullets left."
+			audiolog_speakers += "Scientist #1"
+			src.audiolog_messages += "Shit, they're here already. There's something that needs to be known before they get me."
+			audiolog_speakers += "Male #1"
+			src.audiolog_messages += "The fermids at X|G, it wasn't an accident. The eggs were planted by--"
+			audiolog_speakers += "Male #2"
+			src.audiolog_messages += "Nanotrasen Security! Hands where we can see them!"
+			audiolog_speakers += "*Gunfire*"
+			src.audiolog_messages += "BANG BANG BOOM"
+			audiolog_speakers += "Male #2"
+			src.audiolog_messages += "Another Syndicate infiltrator down. Good job, team."
+			src.audiolog_speakers.len = length(src.audiolog_messages)
+			return
+
 	wjam_office_log
 		continuous = 0
 		audiolog_messages = list("Must I remind you, Dr. Garriott, that you are under contract?",
