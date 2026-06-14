@@ -58,7 +58,7 @@
 		name = "Fermid Sting"
 		desc = "Sting a dude with some nasty toxins."
 		icon_state = "fermid_sting"
-		venom_ids = list("tene")
+		venom_ids = list("haloperidol", "atropine")
 		inject_amount = 10
 
 		polymorph
