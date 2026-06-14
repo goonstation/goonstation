@@ -1,5 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
+/obj/sec_tape{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/decal/cleanable/sec_tape,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/decal/cleanable/generic,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "L" = (
@@ -17,37 +28,42 @@
 	},
 /obj/dialogueobj/syndiecorpse7,
 /obj/item/gun/kinetic/pistol/empty,
+/obj/decoration/bullethole,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "M" = (
 /obj/table/syndicate/auto,
 /obj/item/device/radio,
 /obj/item/device/audio_log/infiltrator_log,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "V" = (
 /obj/item/casing/shotgun/orange,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
+"Z" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 L
 a
-a
-a
-a
+Z
+I
+Z
 "}
 (2,1,1) = {"
-a
-a
+D
+D
 V
-a
-a
+Z
+Z
 "}
 (3,1,1) = {"
 M
-a
-a
-a
-a
+Z
+Z
+Z
+Z
 "}
