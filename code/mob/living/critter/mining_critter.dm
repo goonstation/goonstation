@@ -201,7 +201,7 @@
 	icon_state_dead = "fermid-r-dead"
 	health_brute = 35
 	health_burn = 35
-	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/spit)
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/spit)
 
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/spit/spit = src.abilityHolder.getAbility(/datum/targetable/critter/spit)
@@ -212,7 +212,7 @@
 
 	orange
 		recolor = "#ca710a"
-		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/flamethrower)
+		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/flamethrower)
 
 		critter_ability_attack(var/mob/target)
 			var/datum/targetable/critter/fire = src.abilityHolder.getAbility(/datum/targetable/critter/flamethrower)
@@ -223,7 +223,7 @@
 
 	blue
 		recolor = "#1156d8"
-		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/arcflash)
+		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/arcflash)
 
 		critter_ability_attack(var/mob/target)
 			var/datum/targetable/critter/arc = src.abilityHolder.getAbility(/datum/targetable/critter/arcflash)
@@ -254,6 +254,7 @@
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
 	speed = /datum/movement_modifier/big_fermid
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite)
 	New()
 		..()
 
@@ -269,7 +270,7 @@
 	health_burn = 25
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
-	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/slam/fermid)
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/slam/fermid)
 	speed = /datum/movement_modifier/big_fermid
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/slam/fermid/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam/fermid)
