@@ -167,6 +167,9 @@
 			for (var/mob/living/L in T)
 				if(ismobcritter(L) && L.is_npc)
 					qdel(L)
+			for (var/mob/living/critter/flock/drone/L in T)
+				if(L.dormant == 1)
+					qdel(L)
 			if(istype(T,/turf/unsimulated) && ( T.can_build || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
 			else
