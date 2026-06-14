@@ -469,7 +469,7 @@ TYPEINFO(/obj/stool/wooden)
 			newsheet.bed = src
 			user.u_equip(newsheet)
 			newsheet.set_loc(src.loc)
-			LAZYLISTADDUNIQUE(src.attached_objs, newsheet)
+			mutual_attach(src, newsheet)
 
 			var/mob/somebody
 			if (src.buckled_guy)

@@ -13,7 +13,7 @@ TYPEINFO(/obj/item/cloak_gen)
 	desc = "It's humming softly."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "cloakgen_off"
-	var/range = 3
+	var/range = 5
 	var/maxrange = 5
 	var/active = FALSE
 	var/image/noise_image
