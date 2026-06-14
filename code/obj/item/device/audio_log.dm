@@ -367,8 +367,8 @@ TYPEINFO(/obj/item/device/audio_log)
 			src.audiolog_messages += "The fermids at X|G, it wasn't an accident. The eggs were planted by--"
 			audiolog_speakers += "Male #2"
 			src.audiolog_messages += "Nanotrasen Security! Hands where we can see them!"
-			audiolog_speakers += "*Gunfire*"
-			src.audiolog_messages += "*BANG* *BANG* *BOOM*"
+			audiolog_speakers += "Gunfire"
+			src.audiolog_messages += "BANG BANG BOOM"
 			audiolog_speakers += "Male #2"
 			src.audiolog_messages += "Another Syndicate infiltrator down. Good job, team."
 			src.audiolog_speakers.len = length(src.audiolog_messages)
