@@ -133,7 +133,8 @@ var/global/list/mapNames = list(
 	var/ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	var/airlock_style = "pyro"
 
-	/// The Syndicate Listening Post prefab datum, used to dynamically insert the listening post at runtime
+	/// The Syndicate Listening Post prefab datum, used to dynamically insert the listening post at runtime.
+	/// May be a list of listening post prefabs to randomly select from
 	var/listening_post_prefab = /datum/mapPrefab/listening_post/standard
 
 	var/escape_centcom = /area/shuttle/escape/centcom
