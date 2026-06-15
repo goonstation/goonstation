@@ -41043,6 +41043,9 @@
 	icon_state = "line1"
 	},
 /obj/machinery/recharge_station,
+/mob/living/silicon/hivebot/eyebot{
+	dir = 8
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "mMR" = (
@@ -43527,12 +43530,10 @@
 	},
 /area/station/ranch)
 "nBz" = (
-/mob/living/silicon/hivebot/eyebot{
+/obj/machinery/computer/robotics/lab{
 	dir = 8
 	},
-/obj/machinery/door/window/westleft,
-/obj/mapping_helper/access/robotics,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "nCa" = (
 /obj/machinery/light/small/sticky{
@@ -68028,8 +68029,6 @@
 /mob/living/silicon/hivebot/eyebot{
 	dir = 8
 	},
-/obj/machinery/door/window/westright,
-/obj/mapping_helper/access/robotics,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 4
 	},

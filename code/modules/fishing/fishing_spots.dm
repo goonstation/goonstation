@@ -1016,4 +1016,44 @@ datum/fishing_spot/golden_toilet
 	/obj/item/clothing/shoes/flippers = 5, //like fishing up a boot (cartoonstyle)
 	/mob/living/critter/small_animal/pikaia = 5,
 	/mob/living/critter/small_animal/trilobite = 5,
-	/mob/living/critter/small_animal/hallucigenia = 5)
+	/mob/living/critter/small_animal/hallucigenia = 5,
+	/obj/item/reagent_containers/food/fish/blobfish = 1)
+
+//deeper trench hole (cultist base/polaris)
+/datum/fishing_spot/deeperhole
+	fishing_atom_type = /turf/unsimulated/floor/polarispit
+	rod_tier_required = 3
+	fish_available = list(/obj/item/raw_material/rock = 20,
+	/obj/item/seashell = 20,
+	/obj/item/clothing/shoes/flippers = 10,
+	/mob/living/critter/small_animal/pikaia = 10,
+	/mob/living/critter/small_animal/trilobite = 10,
+	/mob/living/critter/small_animal/hallucigenia = 10,
+	/obj/item/reagent_containers/food/fish/blobfish = 5)
+
+//rockworm
+/datum/fishing_spot/rockworm
+	fishing_atom_type = /mob/living/critter/rockworm
+	rod_tier_required = 3
+	fish_available = list(/obj/item/raw_material/rock = 50,
+	/obj/item/raw_material/mauxite = 10,
+	/obj/item/raw_material/pharosium = 10,
+	/obj/item/raw_material/molitz = 10,
+	/obj/item/raw_material/char = 10,
+	/obj/item/raw_material/cobryl = 5,
+	/obj/item/raw_material/syreline = 5,
+	/obj/item/raw_material/batiline = 5,
+	/obj/item/raw_material/bohrum = 5,
+	/obj/item/raw_material/claretine = 5,
+	/obj/item/raw_material/gold = 5,
+	/obj/item/raw_material/uqill = 2,
+	/obj/item/raw_material/gemstone = 2,
+	/obj/item/raw_material/starstone = 1, //wrong one, bucko
+	/obj/item/reagent_containers/food/fish/starstonefish = 1) //YOU SAVED IT!
+
+//starstone geode
+/datum/fishing_spot/stargeode
+	fishing_atom_type = /obj/geode/crystal/starstone
+	rod_tier_required = 3
+	fish_available = list(/obj/item/raw_material/rock = 30,
+	/obj/item/reagent_containers/food/fish/starstonefish = 5)
