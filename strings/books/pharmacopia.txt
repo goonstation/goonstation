@@ -52,7 +52,7 @@
 		<div class = "calomel">
 		<ul>
 			<li>Calomel, or Mercurous Chloride, is a rapid purgative that will remove other reagents from the body. It is quite toxic.
-			<li>It should be used only when the the poisons in your patient are worse than Calomel itself.
+			<li>It should be used only when the poisons in your patient are worse than Calomel itself.
 			<li>Preparation: heat mercury and chlorine together to 374 K.
 		<br>
 		<h4><i>Advanced:</i></h4>

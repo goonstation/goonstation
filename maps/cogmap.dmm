@@ -16527,10 +16527,6 @@
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"bip" = (
-/obj/floorpillstatue,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "biq" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -121575,7 +121571,7 @@ bdI
 qgb
 bgB
 bhl
-bip
+biq
 bju
 bfs
 iEe

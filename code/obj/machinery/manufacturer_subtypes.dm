@@ -84,6 +84,8 @@
 		/datum/manufacture/fiddle,
 		/datum/manufacture/whistle)
 
+TYPEINFO(/obj/machinery/manufacturer/general/grody)
+	manufactured_type = /obj/machinery/manufacturer/general
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
@@ -91,7 +93,6 @@
 	free_resources = list()
 	malfunction = TRUE
 	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
-	mechanics_type_override = /obj/machinery/manufacturer/general
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -162,6 +163,7 @@
 		/datum/manufacture/robup_speed,
 		/datum/manufacture/robup_mag,
 		/datum/manufacture/robup_meson,
+		/datum/manufacture/robup_pressure,
 		/datum/manufacture/robup_aware,
 		/datum/manufacture/robup_physshield,
 		/datum/manufacture/robup_fireshield,
@@ -656,6 +658,7 @@
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
+		/datum/manufacture/eyes_meson,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/pod/weapon/efif1,

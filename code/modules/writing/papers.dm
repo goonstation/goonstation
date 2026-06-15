@@ -1,9 +1,5 @@
 // This file is for premade paper/pamphlet things
 
-//the size of the paper includes the 32px wide bar at the top, so we need to account for that here if we want the image to fit exactly
-#define IMAGE_OFFSET_X 0 //x one kept just in case and because I like symmetry :)
-#define IMAGE_OFFSET_Y 32
-
 /obj/item/paper/alchemy
 	name = "'Chemistry Information'"
 
@@ -695,20 +691,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	exposed to overconfident outbursts on the part of individuals unqualifed to embody the law; in event of such explosion, run.
 	"}
 
-/obj/item/paper/postcard/mushroom
-	name = "Mushroom Station postcard"
-	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
-	icon_state = "postcard-mushroom"
-	sizex = 174 + IMAGE_OFFSET_X
-	sizey = 247 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
-
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		info = PAPER_IMAGE_RENDER("images/arts/mushroom_station.png")
-
 /obj/item/paper/postcard/beach
 	name = "tropical postcard"
 	desc = {"A postcard depicting a picturesque beach scene. The back side has a groan-worthy pun."}
@@ -870,47 +852,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	info = {"<font face='Arial'>Greetings from New Memphis, home of the BonkTek Pyramid!
 	<br><br><br><br><br><hr>
 	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
-
-/obj/item/paper/botany_guide
-	name = "Botany Field Guide"
-	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
-	icon_state = "botany_guide"
-	sizex = 965 + IMAGE_OFFSET_X
-	sizey = 682 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
-
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		info = PAPER_IMAGE_RENDER("images/pocket_guides/botanyguide.png")
-
-/obj/item/paper/ranch_guide
-	name = "Ranch Field Guide"
-	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
-	icon_state = "ranch_guide"
-	sizex = 1100
-	sizey = 800
-	scrollbar = FALSE
-
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		//ranch guide actually needs to be scaled down, so we just let it do its own styling here
-		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
-
-/obj/item/paper/siphon_guide
-	name = "Harmonic Siphon Brief"
-	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
-	icon_state = "postcard-owlery"
-	sizex = 1192 + IMAGE_OFFSET_X
-	sizey = 600 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/pocket_guides/siphonguide.png")
 
 /obj/item/paper/resonator_type_ax
 	name = "printed card"
@@ -1121,187 +1062,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Ovidius Gotdam<br>
 	NT Marching Band Director
 	"}
-
-
-/obj/item/paper/businesscard
-	name = "business card"
-	icon_state = "businesscard"
-	desc = "A generic looking business card, offering printing services for more business cards."
-
-	sizex = 600 + IMAGE_OFFSET_X
-	sizey = 346 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
-
-
-	New()
-		..()
-		//note that the margin styling here does not work, I'm just leaving it here to indicate that there is indeed a problem with the margins that someone smarter than me should fix
-		info = PAPER_IMAGE_RENDER("images/arts/business_blank.png")
-
-
-/obj/item/paper/businesscard/banjo
-	name = "business card - Tum Tum Phillips"
-	icon_state = "businesscard"
-	desc = "A business card for the famous Tum Tum Phillips, Frontier banjoist."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_banjo.png")
-
-
-/obj/item/paper/businesscard/biteylou
-	name = "business card - Bitey Lou's Bodyshop"
-	icon_state = "businesscard"
-	desc = "A business card for some sorta mechanic's shop."
-	color = "gray"
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_biteylou.png")
-
-
-/obj/item/paper/businesscard/bonktek
-	name = "business card - Bonktek Shopping Pyramid"
-	icon_state = "businesscard"
-	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_bonktek.png")
-
-/obj/item/paper/businesscard/clowntown
-	name = "business card - Clown Town"
-	icon_state = "businesscard-clowntown"
-	desc = "A business card for the Clown Town Autonomous Collective."
-	sizey = 341 + IMAGE_OFFSET_Y
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_clowntown.png")
-
-/obj/item/paper/businesscard/cosmicacres
-	name = "business card - Cosmic Acres"
-	icon_state = "businesscard-alt"
-	desc = "A business card for a retirement community on Earth's moon."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_cosmicacres.png")
-
-/obj/item/paper/businesscard/ezekian
-	name = "business card - Ezekian Veterinary Clinic"
-	icon_state = "businesscard"
-	desc = "A business card for a Frontier veterinarian's office."
-	color = "gray"
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_ezekian.png")
-
-/obj/item/paper/businesscard/gragg1
-	name = "business card - Amantes Mini Golf"
-	icon_state = "businesscard-alt"
-	desc = "A business card for a mini golf course."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_gragg1.png")
-
-/obj/item/paper/businesscard/gragg2
-	name = "business card - Amantes Rock Shop"
-	icon_state = "businesscard-alt"
-	desc = "A business card for a rock collector's shop."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_gragg2.png")
-
-/obj/item/paper/businesscard/josh
-	name = "business card - Josh"
-	icon_state = "businesscard-josh"
-	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_josh.png")
-
-/obj/item/paper/businesscard/lawyers
-	name = "business card - Hogge & Wylde"
-	icon_state = "businesscard-alt"
-	desc = "A business card for a personal injury law firm. You've heard their ads way, way too many times."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_law.png")
-
-/obj/item/paper/businesscard/hemera_rcd
-	name = "info card - Rapid Construction Device"
-	icon_state = "businesscard-hemera"
-	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_RCD.png")
-
-
-/obj/item/paper/businesscard/skulls
-	name = "business card - Skulls for Cash"
-	icon_state = "businesscard"
-	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_skulls.png")
-
-/obj/item/paper/businesscard/taxi
-	name = "business card - Old Fortuna Taxi Company"
-	icon_state = "businesscard"
-	desc = "A business card for a Frontier space-taxi and shuttle company."
-	color = "yellow"
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_taxi.png")
-
-/obj/item/paper/businesscard/vurdulak
-	name = "business card - Emporium Vurdulak"
-	icon_state = "businesscard-vurdulak"
-	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_vurdulak.png")
-
-/obj/item/paper/businesscard/seneca
-	name = "business card - Seneca Falls"
-	desc = "A dog-eared blue and gold business card from a staff recruitment agency."
-	icon_state = "businesscard-seneca"
-	//slightly smaller because a staffie left it in their pocket and it shrunk in the wash and also cog can't get the original resolution right now
-	sizex = 408 + IMAGE_OFFSET_X
-	sizey = 233 + IMAGE_OFFSET_Y
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_seneca.png")
-
-/obj/item/paper/businesscard/cans
-	name = "business card - Dented Cans"
-	desc = "A dodgy looking flyer for what you hope is a scrap metal business."
-	sizey = 345 + IMAGE_OFFSET_Y
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
-
-/obj/item/paper/businesscard/mabinogi
-	name = "business card - Mabinogi"
-	desc = "A sleek red and black business card for the Mabinogi Firearms Company."
-	icon_state = "businesscard-mabinogi"
-	sizey = 343 + IMAGE_OFFSET_Y
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_mabinogi.png")
 
 
 /obj/item/paper/donut2smesinstructions
@@ -1604,21 +1364,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
 			qdel(src)
 
-/obj/item/paper/xg_tapes
-	name = "XIANG|GIESEL Onboarding Course"
-	desc = "A cover sheet meant to accompany a set of corporate training materials."
-	icon_state = "paper_burned"
-	sizex = 718 + IMAGE_OFFSET_X
-	sizey = 1023 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
-
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		info = PAPER_IMAGE_RENDER("images/arts/xg_tapes.png")
-
-
 /obj/item/paper/wanderpoem
 	name = "A freshly written poem"
 	icon = 'icons/misc/wander_stuff.dmi'
@@ -1798,20 +1543,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	info = {"so um. i spent all of our money that we were told not to spend, only after reading our leadership's note. we are so fucked. anyways, i
 	went out for a short bit and will be back in a day's time.<br><br>no, you are the one who is fucked. i'm out of here."}
 
-/obj/item/paper/hair_fall
-	name = "hairstyle flyer"
-	icon_state = "hair_fall"
-	desc = "The latest frontier hairstyle fashion for fall 2053."
-
-	sizex = 1213 + IMAGE_OFFSET_X
-	sizey = 762 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
-
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/hairstyles_fall.png")
-
 /obj/item/paper/motel_noise_complaint
 	name = "customer complaint"
 	desc = "This looks written hastily."
@@ -1819,6 +1550,3 @@ Only trained personnel should operate station systems. Follow all procedures car
 	info = {"
 	I couldn't sleep! Shut the ice maker off at <u>NIGHT</u> when people <u>SLEEP</u>. Management refused to move me out of room 1 - 0/10 would not return!
 	"}
-
-#undef IMAGE_OFFSET_X
-#undef IMAGE_OFFSET_Y

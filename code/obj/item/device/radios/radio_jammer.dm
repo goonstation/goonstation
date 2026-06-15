@@ -1,14 +1,12 @@
-
 TYPEINFO(/obj/item/radiojammer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 10
-
 /obj/item/radiojammer
 	name = "signal jammer"
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission. This one is equipped with a miniaturised singularity for infinite charge."
 	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "syndieshieldoff"
 	w_class = W_CLASS_TINY
-	is_syndicate = TRUE
 	var/active = FALSE
 	var/range = DEFAULT_RADIO_JAMMER_RANGE
 	var/base_icon = "syndieshield"

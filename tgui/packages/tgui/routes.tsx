@@ -12,7 +12,11 @@ import {
   persistSecretID,
 } from './secret-interfaces';
 
-const requireInterface = require.context('./interfaces');
+const requireInterface = require.context(
+  './interfaces',
+  true,
+  /^(?!.*\.test\.(tsx?|jsx?)).*\.(tsx?|jsx?)$/,
+);
 
 const routingError =
   (type: 'notFound' | 'missingExport', name: string) => () => {

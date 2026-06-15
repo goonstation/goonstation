@@ -708,56 +708,6 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-/datum/bioEffect/xray
-	name = "X-Ray Vision"
-	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
-	id = "xray"
-	effectType = EFFECT_TYPE_POWER
-	probability = 33
-	blockCount = 3
-	blockGaps = 5
-	reclaim_mats = 40
-	msgGain = "You suddenly seem to be able to see through everything."
-	msgLose = "Your vision fades back to normal."
-	lockProb = 40
-	lockedGaps = 1
-	lockedDiff = 3
-	lockedChars = list("G","C","A","T")
-	lockedTries = 8
-	stability_loss = 20
-	degrade_to = "bad_eyesight"
-	icon_state  = "eye"
-	effect_group = "vision"
-
-	OnAdd()
-		. = ..()
-		if(ismob(owner))
-			if(power == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-	onPowerChange(oldval, newval)
-		. = ..()
-		if(ismob(owner))
-			if(oldval == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-			if(newval == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-	OnRemove()
-		. = ..()
-		if(ismob(owner))
-			if(power == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
 /datum/bioEffect/nightvision
 	name = "Night Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see in the dark."

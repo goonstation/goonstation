@@ -19,6 +19,9 @@
 	if (!user_data.fields["registered"] || !user_data.fields["assignment"])
 		return ESIG_GENERIC
 
+	if (user_data.fields["code"] != netpass_login)
+		return ESIG_GENERIC
+    
 	if ("[access_sysadmin]" in splittext(user_data.fields["access"], ";"))
 		if (src.signal_program(1, list("command" = DWAINE_COMMAND_UGROUP, "group" = 0)) == ESIG_SUCCESS)
 			src.message_user("You are now authorized.")
