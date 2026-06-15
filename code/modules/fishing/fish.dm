@@ -70,9 +70,9 @@ Alien/mutant/other fish:
 		Tree fish
 		Origami fish
 		Cardboard fish
+		Starstonefish
 	Unimplemented:
 		Blood fish
-		Starstonefish
 */
 
 // These catagories aren't used currently.
@@ -909,7 +909,10 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/cardboardfish)
 		src.reagents.add_reagent("ash", 20)
 		return
 
-/obj/item/reagent_containers/food/fish/starstonefish // Unused for now. Feel free to take.
+TYPEINFO(/obj/item/reagent_containers/food/fish/starstonefish)
+	appears_in_fish_collection = TRUE
+
+/obj/item/reagent_containers/food/fish/starstonefish
 	name = "starstonefish"
 	desc = "A light blue starfish suspected to have been hunted to extinction by rock worms. This might be the only one left."
 	icon_state = "starstonefish"

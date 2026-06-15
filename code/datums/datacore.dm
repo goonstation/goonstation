@@ -385,24 +385,24 @@
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
-		wagesystem.budgets[BUDGET_CAT_STATION] += amount
+		wagesystem.budgets[BUDGET_CAT_PAYROLL] += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_PAYROLL] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
-		wagesystem.budgets[BUDGET_CAT_STATION] += (amount-paid_amount)
+		wagesystem.budgets[BUDGET_CAT_PAYROLL] += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_PAYROLL] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 

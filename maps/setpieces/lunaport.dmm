@@ -1181,7 +1181,7 @@
 /obj/decal/cleanable/dirt/dirt2{
 	dir = 8
 	},
-/obj/item/paper/businesscard/seneca{
+/obj/item/paper/image/businesscard/seneca{
 	pixel_y = 29;
 	pixel_x = -3
 	},
@@ -1841,10 +1841,10 @@
 	name = "table";
 	pixel_x = 4
 	},
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/moon/underground/hemera{
 	icon_state = "purple";
@@ -7090,10 +7090,10 @@
 	})
 "azh" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/paper/businesscard/hemera_rcd,
-/obj/item/paper/businesscard/hemera_rcd,
-/obj/item/paper/businesscard/hemera_rcd,
-/obj/item/paper/businesscard/hemera_rcd,
+/obj/item/paper/image/businesscard/hemera_rcd,
+/obj/item/paper/image/businesscard/hemera_rcd,
+/obj/item/paper/image/businesscard/hemera_rcd,
+/obj/item/paper/image/businesscard/hemera_rcd,
 /turf/unsimulated/floor/carpet/purple/fancy,
 /area/moon/underground/hemera{
 	name = "Concourse D"
@@ -8619,10 +8619,10 @@
 	ambient_light = "#555533"
 	})
 "aEc" = (
-/obj/item/paper/businesscard,
-/obj/item/paper/businesscard,
-/obj/item/paper/businesscard,
-/obj/item/paper/businesscard,
+/obj/item/paper/image/businesscard,
+/obj/item/paper/image/businesscard,
+/obj/item/paper/image/businesscard,
+/obj/item/paper/image/businesscard,
 /obj/table/glass/reinforced/auto,
 /turf/unsimulated/floor/carpet/purple/fancy,
 /area/moon/underground/hemera{
@@ -11839,10 +11839,10 @@
 	})
 "aNS" = (
 /obj/table/wood/round,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
 /obj/decoration/clock{
 	pixel_y = 32
 	},
@@ -14430,10 +14430,10 @@
 	name = "table";
 	pixel_x = 4
 	},
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/moon/underground/hemera{
 	icon_state = "purple";
@@ -14806,7 +14806,7 @@
 	icon_state = "aisleshelfend";
 	pixel_x = 7
 	},
-/obj/item/paper/postcard/mushroom{
+/obj/item/paper/image/postcard/mushroom{
 	pixel_y = -2;
 	pixel_x = 4
 	},
@@ -16928,7 +16928,7 @@
 /obj/rack/lunar{
 	pixel_x = -7
 	},
-/obj/item/paper/businesscard/cosmicacres{
+/obj/item/paper/image/businesscard/cosmicacres{
 	pixel_x = -9
 	},
 /turf/unsimulated/floor/longtile/black,
@@ -17055,7 +17055,7 @@
 	icon_state = "aisleshelfend";
 	pixel_x = -7
 	},
-/obj/item/paper/businesscard/cosmicacres{
+/obj/item/paper/image/businesscard/cosmicacres{
 	pixel_x = -7;
 	pixel_y = 9
 	},
@@ -18871,9 +18871,9 @@
 	pixel_y = -1
 	},
 /obj/table/wood/round,
-/obj/item/paper/businesscard/banjo,
-/obj/item/paper/businesscard/banjo,
-/obj/item/paper/businesscard/banjo,
+/obj/item/paper/image/businesscard/banjo,
+/obj/item/paper/image/businesscard/banjo,
+/obj/item/paper/image/businesscard/banjo,
 /turf/unsimulated/floor/terrazzo/black,
 /area/moon/underground{
 	ambient_light = "#441111"
@@ -19137,7 +19137,7 @@
 	icon_state = "aisleshelfend";
 	pixel_x = -7
 	},
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_x = -5;
 	pixel_y = -10
 	},
