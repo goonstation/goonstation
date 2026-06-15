@@ -565,6 +565,7 @@
 // blacklist overrules whitelist
 #define BLACKLIST_OBJECTS list( \
 	/obj/disposalpipe/loafer, \
+	/obj/machinery/disposal/extradimensional, \
 	/obj/submachine/slot_machine/item, \
 	/obj/machinery/portable_atmospherics/canister, \
 	/obj/window/crystal, \
@@ -576,6 +577,7 @@
 	/turf/simulated/floor/auto/elevator_shaft, \
 	/turf/simulated/shuttle, \
 	/turf/simulated/floor/shuttle, \
+	/turf/simulated/floor/arctic_elevator_shaft, \
 	/turf/simulated/wall/auto/shuttle, \
 	/turf/simulated/wall/void, \
 	/turf/simulated/wall/auto/feather/strong, \

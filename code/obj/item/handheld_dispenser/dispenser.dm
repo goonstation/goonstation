@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/places_pipes)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 12,
 				"crystal" = 15,
 				"conductive_high" = 10,

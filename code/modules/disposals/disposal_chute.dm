@@ -544,7 +544,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 
 		// if full enough, switch to ready mode
-		if(MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)
+		if(MIXTURE_PRESSURE(air_contents) >= 2.5*ONE_ATMOSPHERE)
 			mode = DISPOSAL_CHUTE_CHARGED
 			power_usage = 100
 			update()

@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 /datum/req_contract/scientific/internalaffairs //get it?
 	//name = "Don't Ask Too Many Questions"
-	payout = PAY_DOCTORATE*10*2
+	payout = PAY::DOCTORATE*10*2
 	weight = 80
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","CANNOT VERIFY ORIGIN","Organ Study")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/organ
-	feemod = PAY_IMPORTANT*2
+	feemod = PAY::IMPORTANT*2
 	exactpath = TRUE
 
 /datum/rc_entry/item/organ/appendix
@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 
 /datum/req_contract/scientific/clonejuice
-	payout = PAY_DOCTORATE*5
+	payout = PAY::DOCTORATE*5
 	weight = 80
 	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
 	var/list/desc_wherestudy = list(
@@ -101,11 +101,11 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		"pepperoni",
 		"meat_slurry",
 	)
-	feemod = PAY_DOCTORATE/30
+	feemod = PAY::DOCTORATE/30
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
-	payout = PAY_DOCTORATE*10*2
+	payout = PAY::DOCTORATE*10*2
 	var/list/namevary = list("Beamline Calibration","Spectral Analysis","Chromatic Analysis","Refraction Survey","Component Restock","Photonics Project")
 	var/list/desc_wherestudy = list(
 		"Optics calibration laboratory",
@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/lens
 	name = "nano-fabricated lens"
 	typepath = /obj/item/lens
-	feemod = PAY_IMPORTANT
+	feemod = PAY::IMPORTANT
 
 /datum/rc_entry/item/lens/free
 	feemod = 0
@@ -152,13 +152,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "non-anomalous gemstone"
 	commodity = /datum/commodity/ore/gemstone
 	typepath = /obj/item/raw_material/gemstone
-	feemod = PAY_IMPORTANT
+	feemod = PAY::IMPORTANT
 
 /datum/rc_entry/stack/telec
 	name = "telecrystal"
 	commodity = /datum/commodity/ore/telecrystal
 	typepath_alt = /obj/item/material_piece/telecrystal
-	feemod = PAY_IMPORTANT //augmented by commodity price
+	feemod = PAY::IMPORTANT //augmented by commodity price
 
 /datum/rc_entry/stack/telec/minprice
 	feemod = 0
@@ -166,13 +166,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/reagent/cryost
 	name = "cryostylane coolant"
 	chem_ids = "cryostylane"
-	feemod = PAY_DOCTORATE/5
+	feemod = PAY::DOCTORATE/5
 
 /datum/rc_entry/item/lambdarod
 	name = "Lambda phase-control rod"
 	typepath = /obj/item/interdictor_rod
 	exactpath = TRUE
-	feemod = PAY_IMPORTANT*10
+	feemod = PAY::IMPORTANT*10
 
 #define NUM_CHEMLABS 3
 #define CHEMLAB_COMBUSTIBLES 1
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #define CHEMLAB_CULINARY 3
 
 /datum/req_contract/scientific/chemlab
-	payout = PAY_DOCTORATE*10
+	payout = PAY::DOCTORATE*10
 	var/list/desc_friendliness = list(
 		"Associated",
 		"Nanotrasen",
@@ -241,51 +241,51 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/reagent/phlog_bottle
 	name = "phlogiston"
 	chem_ids = "phlogiston"
-	feemod = PAY_DOCTORATE/3
+	feemod = PAY::DOCTORATE/3
 	single_container = TRUE
 
 /datum/rc_entry/reagent/sorium_bottle
 	name = "sorium"
 	chem_ids = "sorium"
-	feemod = PAY_DOCTORATE/5
+	feemod = PAY::DOCTORATE/5
 	single_container = TRUE
 
 /datum/rc_entry/reagent/pyrosium_bottle
 	name = "pyrosium"
 	chem_ids = "pyrosium"
-	feemod = PAY_DOCTORATE/6
+	feemod = PAY::DOCTORATE/6
 	single_container = TRUE
 
 //solvents
 /datum/rc_entry/reagent/fluoro_bottle
 	name = "fluorosulfuric acid"
 	chem_ids = "pacid"
-	feemod = PAY_DOCTORATE/3
+	feemod = PAY::DOCTORATE/3
 	single_container = TRUE
 
 /datum/rc_entry/reagent/acetic_bottle
 	name = "acetic acid"
 	chem_ids = "acetic_acid"
-	feemod = PAY_DOCTORATE/5
+	feemod = PAY::DOCTORATE/5
 	single_container = TRUE
 
 /datum/rc_entry/reagent/tene_bottle
 	name = "aqua tenebrae"
 	chem_ids = "tene"
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY::DOCTORATE/10
 	single_container = TRUE
 
 /datum/rc_entry/reagent/nitric_bottle
 	name = "nitric acid"
 	chem_ids = "nitric_acid"
-	feemod = PAY_DOCTORATE/6
+	feemod = PAY::DOCTORATE/6
 	single_container = TRUE
 
 //culinary
 /datum/rc_entry/reagent/matcha_bottle
 	name = "matcha powder"
 	chem_ids = "matcha"
-	feemod = PAY_DOCTORATE/3
+	feemod = PAY::DOCTORATE/3
 	single_container = TRUE
 
 /datum/rc_entry/reagent/citrus_bottle
@@ -297,37 +297,37 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		"juice_grapefruit",
 		"cocktail_citrus"
 	)
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY::DOCTORATE/10
 	single_container = TRUE
 
 /datum/rc_entry/reagent/mint_bottle
 	name = "mint extract"
 	chem_ids = "mint"
-	feemod = PAY_DOCTORATE/5
+	feemod = PAY::DOCTORATE/5
 	single_container = TRUE
 
 /datum/rc_entry/reagent/capsaicin_bottle
 	name = "capsaicin"
 	chem_ids = "capsaicin"
-	feemod = PAY_DOCTORATE/3
+	feemod = PAY::DOCTORATE/3
 	single_container = TRUE
 
 /datum/rc_entry/reagent/chocolate_bottle
 	name = "chocolate"
 	chem_ids = "chocolate"
-	feemod = PAY_TRADESMAN/10
+	feemod = PAY::TRADESMAN/10
 	single_container = TRUE
 
 /datum/rc_entry/reagent/cinnamon_bottle
 	name = "cinnamon"
 	chem_ids = "cinnamon"
-	feemod = PAY_DOCTORATE/3
+	feemod = PAY::DOCTORATE/3
 	single_container = TRUE
 
 /datum/rc_entry/reagent/cornsyrup_bottle
 	name = "corn syrup"
 	chem_ids = "cornsyrup"
-	feemod = PAY_DOCTORATE/3
+	feemod = PAY::DOCTORATE/3
 	single_container = TRUE
 
 
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #undef CHEMLAB_CULINARY
 
 /datum/req_contract/scientific/botanical_mutates
-	payout = PAY_TRADESMAN*10*2
+	payout = PAY::TRADESMAN*10*2
 	var/list/namevary = list("Plant Mutation Research","Bio-Mutate Engineering","Agricultural Variation Study","Crop Innovation",
 							"Botanical Advancement", "Agronomic Specimen Testing", "Cultivar Innovation Study","Eco-Evolution Research",
 							 "Plant-Deviate Experimentation")
@@ -473,7 +473,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 // old seed requisition
 /* /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
-	payout = PAY_TRADESMAN*10*2
+	payout = PAY::TRADESMAN*10*2
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study","Botanical Advancement")
 	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",
@@ -572,7 +572,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 //Prototypist contract; raw payout relative to effort is lower than usual, but you'll get a special item reward as partial barter
 /datum/req_contract/scientific/prototypist
-	payout = PAY_DOCTORATE * 6
+	payout = PAY::DOCTORATE * 6
 	weight = 180
 
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
@@ -769,12 +769,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/radsuit
 	name = "radiation suit"
 	typepath = /obj/item/clothing/suit/hazard/rad
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/radhelm
 	name = "radiation helmet"
 	typepath = /obj/item/clothing/head/rad_hood
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/geiger
 	name = "Geiger counter"
@@ -854,7 +854,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "claretine"
 	commodity = /datum/commodity/ore/claretine
 	typepath_alt = /obj/item/material_piece/claretine
-	feemod = PAY_DOCTORATE
+	feemod = PAY::DOCTORATE
 
 /datum/rc_entry/stack/claretine/minprice
 	feemod = 0
@@ -863,13 +863,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "bohrum"
 	commodity = /datum/commodity/ore/bohrum
 	typepath_alt = /obj/item/material_piece/bohrum
-	feemod = PAY_DOCTORATE
+	feemod = PAY::DOCTORATE
 
 /datum/rc_entry/stack/electrum
 	name = "electrum"
 	typepath = /obj/item/material_piece
 	mat_id = "electrum"
-	feemod = PAY_IMPORTANT
+	feemod = PAY::IMPORTANT
 
 /datum/rc_entry/item/graviton
 	name = "graviton accelerator"
@@ -886,7 +886,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/tracking_beacon
 	name = "teleport-grade tracking beacon"
 	typepath = /obj/item/device/radio/beacon
-	feemod = PAY_DOCTORATE * 5
+	feemod = PAY::DOCTORATE * 5
 
 /datum/rc_entry/item/magnet_link
 	name = "NT vehicle-grade magnet link array"

@@ -2363,13 +2363,16 @@ TYPEINFO(/datum/mutantrace/cow)
 					. = "<B>[src.mob]</B> moos!"
 					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
-				if (src.mob.emote_check(voluntary))
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					.= release_milk()
 			if ("udder")
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
 				src.mob.update_clothing()
 				. = "<B>[src.mob]</B> adjusts [his_or_her(src.mob)] clothing."
+			if ("rage","fury","angry")
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
+					. = "<b>[src.mob]</b> becomes udderly furious!"
 			else
 				.= ..()
 

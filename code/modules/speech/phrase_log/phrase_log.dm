@@ -139,6 +139,19 @@ var/global/datum/phrase_log/phrase_log = new
 			ircbot.export("admin", list("msg" = "<@480972525703266314> Holy fuck phrase_log is panicing come fix it"))
 			src.phrases = list()
 
+		var/list/cleaners = list()
+		for (var/type in concrete_typesof(/datum/phrase_log_cleaner))
+			cleaners += new type
+
+		for (var/category in src.phrases)
+			for (var/phrase in src.phrases[category])
+				for (var/datum/phrase_log_cleaner/cleaner in cleaners)
+					src.phrases[category] -= phrase
+					var/result = cleaner.clean(phrase)
+					//only add it back if the result wasn't null
+					if (!isnull(result) && length(result))
+						src.phrases[category] += result
+
 		src.original_lengths = list()
 		for(var/category in src.phrases)
 			src.original_lengths[category] = length(src.phrases[category])

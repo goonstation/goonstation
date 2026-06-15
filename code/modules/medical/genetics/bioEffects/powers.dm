@@ -374,6 +374,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 	effect_group = "vision"
+	cooldown = 30 SECONDS
 	ability_path = /datum/targetable/geneticsAbility/xray
 	/// How wide is the arc swept by the vision cone (degrees)
 	var/arc_width = 30
@@ -388,7 +389,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "X-Ray Vision"
 	desc = "See through walls!"
 	icon_state = "eye"
-	cooldown = 30 SECONDS
 	/// The blackout images currently obscuring the owner's vision
 	var/list/image/images = list()
 	/// The mutable appearance we use to quickly copy over the blackout images
@@ -441,9 +441,9 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		src.owner.set_dir(get_dir_accurate(src.owner, target))
 		src.owner.visible_message(SPAN_ALERT("[src.owner]'s eyes emit a weak blue glow."))
 
-		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, parent_bioeffect)
-		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, parent_bioeffect)
-		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, parent_bioeffect)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, "xray_gene")
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, "xray_gene")
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, "xray_gene")
 
 		var/turf/owner_turf = get_turf(src.holder.owner)
 		//oouuughHHH, see AI static code
@@ -482,27 +482,29 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		//in case of forced movements, teleports, random gibbings etc.
 		RegisterSignal(src.holder.owner, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_effects))
+		//can't rely on still being attached to the holder
+		var/mob/user = src.holder.owner
 		SPAWN(3 SECONDS)
 			//effects have already been removed
 			if (!length(src.images))
 				return
 			//safety in case they disconnected in those three seconds
-			if (!src.holder.owner.client && !src.holder.owner.last_client)
-				RegisterSignal(src.holder.owner, COMSIG_MOB_LOGIN, PROC_REF(remove_effects))
+			if (!user.client && !user.last_client)
+				RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(remove_effects))
 				return
-			src.remove_effects()
+			src.remove_effects(user)
 
-	proc/remove_effects()
-		UnregisterSignal(src.holder.owner, COMSIG_MOVABLE_SET_LOC)
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, src.linked_power)
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, src.linked_power)
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, src.linked_power)
-		src.owner.ClearSpecificOverlays("xray_eyes")
-		var/client/client = src.holder.owner.client || src.holder.owner.last_client
+	proc/remove_effects(mob/user)
+		UnregisterSignal(user, COMSIG_MOVABLE_SET_LOC)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "xray_gene")
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_XRAYVISION, "xray_gene")
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTTURN, "xray_gene")
+		user.ClearSpecificOverlays("xray_eyes")
+		var/client/client = user.client || user.last_client
 		for (var/image/blackout in images)
 			client.images -= blackout
 			src.images -= blackout
-		UnregisterSignal(src.holder.owner, COMSIG_MOB_LOGIN)
+		UnregisterSignal(user, COMSIG_MOB_LOGIN)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
