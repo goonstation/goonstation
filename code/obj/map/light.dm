@@ -19,7 +19,6 @@
 			light.attach(src)
 			light.set_color(src.color_r, src.color_g, src.color_b)
 			light.set_brightness(src.brightness / 5)
-			light.enable()
 			SPAWN(1 DECI SECOND)
 				light.enable()
 	disposing()
