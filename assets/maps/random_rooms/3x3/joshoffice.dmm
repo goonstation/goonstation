@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/item/paper/businesscard/josh,
+/obj/item/paper/image/businesscard/josh,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "e" = (
