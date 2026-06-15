@@ -160,8 +160,7 @@
 				return
 
 			// the part where shit's actually transferred
-			src.reagents.trans_to(src.patient, src.amount_per_transfer_from_this)
-			src.patient.reagents.reaction(src.patient, INGEST, src.amount_per_transfer_from_this)
+			src.reagents.trans_to(src.patient, src.amount_per_transfer_from_this, do_fluid_react=TRUE)
 			return
 
 		else if (src.mode == IV_DRAW)
@@ -228,6 +227,7 @@
 /* ================================================== */
 
 TYPEINFO(/obj/iv_stand)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/iv_stand

@@ -4114,6 +4114,10 @@
 	pixel_x = 8
 	},
 /obj/blind_switch/area/east,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 6;
+	pixel_y = -11
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -7813,6 +7817,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light_switch/auto,
+/obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKr" = (
@@ -16917,9 +16922,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/mining/staff_room)
 "bDg" = (
-/obj/submachine/cargopad/magnet{
-	name = "Mining Staff Room"
-	},
+/obj/submachine/cargopad/miningstaff,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bDh" = (
@@ -27373,9 +27376,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/submachine/cargopad{
-	name = "Catering Hanger Pad"
-	},
+/obj/submachine/cargopad/catering,
 /obj/item/cargotele{
 	pixel_x = 5;
 	pixel_y = 8
@@ -33130,11 +33131,12 @@
 /area/station/maintenance/northwest)
 "jXL" = (
 /obj/machinery/door/airlock/pyro/command/alt,
-/obj/mapping_helper/access/heads,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "jXW" = (
@@ -41586,7 +41588,7 @@
 "rmg" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_y = 27
 	},
 /turf/simulated/floor/red/side{
@@ -44203,11 +44205,12 @@
 	dir = 4;
 	name = "Computer Core"
 	},
-/obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "tsu" = (
@@ -44757,7 +44760,6 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "tPC" = (
-/obj/machinery/light/incandescent/greenish,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -45920,9 +45922,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "uTy" = (
-/obj/submachine/cargopad{
-	name = "Security Pod Bay Pad"
-	},
+/obj/submachine/cargopad/security,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "uUN" = (

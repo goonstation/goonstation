@@ -1661,7 +1661,7 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[src.mob]</B> screams!"
-					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 			if ("fart")
 				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
 					if (!src.mob.emote_check(voluntary, 1 SECOND))
@@ -1702,7 +1702,7 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 							if(25) . = "<B>[src.mob]</B> makes a big goofy grin and farts loudly."
 							if(26) . = "<B>[src.mob]</B> hovers off the ground for a moment using a powerful fart."
 							if(27) . = "<B>[src.mob]</B> plays drums on its ass while farting."
-					playsound(src.mob.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 
 					src.mob.remove_stamina(STAMINA_DEFAULT_FART_COST)
 					src.mob.stamina_stun()
@@ -2027,7 +2027,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			if("burp","fart","gasp")
 				if (src.mob.emote_check(voluntary, 1 SECOND))
 					message = "<B>[src.mob]</B> croaks."
-					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_FARTS)
 					return message
 
 			if ("clothes")
@@ -2158,7 +2158,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
-				H.bioHolder.AddEffect("xray", power = 2, do_stability = FALSE, scannable = FALSE, innate = TRUE)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_XRAYVISION, "kudzu")
 				H.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
 				H.ensure_listen_tree().AddListenInput(LISTEN_INPUT_KUDZUCHAT)
 
@@ -2172,6 +2172,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_XRAYVISION, "kudzu")
 
 			H.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
 			H.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_KUDZUCHAT)
@@ -2362,13 +2363,16 @@ TYPEINFO(/datum/mutantrace/cow)
 					. = "<B>[src.mob]</B> moos!"
 					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
-				if (src.mob.emote_check(voluntary))
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					.= release_milk()
 			if ("udder")
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
 				src.mob.update_clothing()
 				. = "<B>[src.mob]</B> adjusts [his_or_her(src.mob)] clothing."
+			if ("rage","fury","angry")
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
+					. = "<b>[src.mob]</b> becomes udderly furious!"
 			else
 				.= ..()
 

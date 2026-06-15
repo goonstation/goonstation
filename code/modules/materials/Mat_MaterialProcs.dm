@@ -3,12 +3,14 @@ triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/at
 triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 triggerOnLife(var/mob/M, var/obj/item/I)
 triggerOnAdd(var/owner)
-triggerChem(var/location, var/chem, var/amount)
+triggerChem(var/location, var/datum/reagent/chem, var/amount)
 triggerPickup(var/mob/M, var/obj/item/I)
 triggerDrop(var/mob/M, var/obj/item/I)
 triggerTemp(var/owner, var/temp)
 triggerExp(var/owner, var/severity)
 triggerOnEntered(var/atom/owner, var/atom/entering)
+triggerOnMix(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
+triggerOnImage(var/image/target, var/datum/material/source)
 */
 
 // THINGS LIKE GOLD SPARKLES ARE NOT REMOVED WHEN MATERIAL CHANGES!. MOVE THESE TO NEW APPEARANCE SYSTEM.
@@ -297,6 +299,26 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/location)
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
 			particleMaster.RemoveSystem(/datum/particleSystem/sparkles, location)
+		return
+
+/datum/materialProc/radiation_immune_add
+	// Radiation component will check for this matProc to prevent radiation effects from being added later
+	execute(var/atom/location)
+		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
+		rad_comp?.RemoveComponent()
+		if(ismob(location))
+			// Have mobs made out of batiline be immune to radiation
+			var/mob/M = location
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+		return
+
+/datum/materialProc/radiation_immune_remove
+	execute(var/atom/location)
+		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
+		rad_comp?.RemoveComponent() // Can still get a radiation component after the material is added
+		if(ismob(location))
+			var/mob/M = location
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src)
 		return
 
 /datum/materialProc/telecrystal_entered
@@ -677,6 +699,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		location.remove_filter("honey_wave")
 		return
 
+/datum/materialProc/honey_image
+	execute(var/image/target, var/datum/material/source)
+		var/wave_filter = wave_filter(16, 16, 1, rand(), flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		target.filters = wave_filter + target.filters
+		return
+
 /datum/materialProc/temp_miraclium
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 100)
@@ -685,7 +713,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		SPAWN(1 SECOND)
 			if(location?.material?.getID() == "miracle")
 				location.visible_message(SPAN_NOTICE("[location] bends and twists, changing colors rapidly."))
-				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "negativematter",prob(6); "ectoplasm")
+				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "batiline",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "negativematter",prob(6); "ectoplasm")
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)
 		return
 

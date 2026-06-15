@@ -1443,6 +1443,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/proc/should_critter_retaliate(var/mob/attcker, var/obj/attcked_with)
 	return src.ai_retaliates && (src._ai_patience_count <= 0)
 
+/// Used for the go_home AI task. Returns the type.
+/mob/living/critter/proc/home_area()
+	return null
 
 /mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A

@@ -1196,6 +1196,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			boutput(user, SPAN_ALERT("You hit the [src.name] with [W], but nothing happens!"))
 		return
 
+	ReplaceWithFloor()
+		src.destroy_asteroid()
+
 	proc/change_health(var/amount=0)
 		if(amount != 0)
 			if(amount < 0)
@@ -1618,6 +1621,12 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	proc/weaken_asteroid()
 		return
 
+	ReplaceWithFloor()
+		src.ReplaceWithSpace()
+
+	break_tile_to_plating()
+		src.ReplaceWithSpace()
+
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tile/))
 			var/obj/item/tile/tile = W
@@ -1989,6 +1998,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 15,
 				"conductive" = 8,
 				"claretine" = 10,
@@ -2202,6 +2212,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 #define SILICON_POWER_COST_MOD 10
 
 TYPEINFO(/obj/item/cargotele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/cargotele
@@ -2367,6 +2378,8 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "cargotelegreen"
 
 /obj/item/cargotele/traitor
+	SYNDICATE_STEALTH_DESCRIPTION("The targeting system is fluctuating rapidly.", null)
+	tooltip_flags = REBUILD_USER
 	cost = 15
 	///The account to credit for sales
 	var/datum/db_record/account = null
@@ -2720,6 +2733,7 @@ TYPEINFO(/obj/item/cargotele)
 var/global/datum/cargo_pad_manager/cargo_pad_manager
 
 TYPEINFO(/obj/submachine/cargopad)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
 
 /obj/submachine/cargopad
@@ -2746,6 +2760,9 @@ TYPEINFO(/obj/submachine/cargopad)
 	artlab
 		mailgroup = MGD_RESEARCH
 		name = "Artifact Lab Pad"
+	catering
+		mailgroup = MGT_CATERING
+		name = "Catering Hangar Pad"
 	engineering
 		mailgroup = MGD_ENGINEER
 		name = "Engineering Pad"
@@ -2758,17 +2775,23 @@ TYPEINFO(/obj/submachine/cargopad)
 	miningoutpost
 		mailgroup = MGT_MINING
 		name = "Mining Outpost Pad"
+	miningstaff
+		mailgroup = MGT_MINING
+		name = "Mining Staff Room Pad"
 	qm
 		mailgroup = MGT_CARGO
-		name = "QM Pad"
+		name = "Cargo Office Pad"
 	qm2
 		mailgroup = MGT_CARGO
-		name = "QM Pad 2"
+		name = "Export Pad"
 	researchoutpost
 		mailgroup = MGD_RESEARCH
 		name = "Research Outpost Pad"
 	radio
 		name = "Radio Station Pad"
+	security
+		mailgroup = MGD_SECURITY
+		name = "Security Pad"
 
 	New()
 		..()
@@ -2836,6 +2859,7 @@ TYPEINFO(/obj/submachine/cargopad)
 // satchels -> obj/item/satchel.dm
 
 TYPEINFO(/obj/item/ore_scoop)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/ore_scoop
@@ -2885,7 +2909,11 @@ TYPEINFO(/obj/item/ore_scoop)
 
 	attack_self(var/mob/user as mob)
 		if(issilicon(user))
-			boutput(user, SPAN_ALERT("The satchel is firmly secured to the scoop."))
+			src.collect_junk = !src.collect_junk
+			if (src.collect_junk)
+				boutput(user, SPAN_NOTICE("Now collecting junk."))
+			else
+				boutput(user, SPAN_NOTICE("No longer collecting junk."))
 			return
 		if (!satchel)
 			src.collect_junk = !src.collect_junk

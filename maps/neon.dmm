@@ -3876,6 +3876,14 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
+"cRk" = (
+/obj/machinery/light/incandescent/warm,
+/obj/noticeboard/persistent/detectives_office/directional/west,
+/obj/item/device/radio/intercom/detnet/detective{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "cRo" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/storage/tools)
@@ -9294,6 +9302,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "gsd" = (
@@ -11028,13 +11037,8 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "hIN" = (
-/obj/storage/cart/forensic,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/spraybottle/detective,
-/obj/machinery/power/apc/autoname_south,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -11896,7 +11900,6 @@
 /area/research_outpost)
 "ijm" = (
 /obj/mopbucket,
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "ijy" = (
@@ -12291,7 +12294,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ixb" = (
-/obj/disposalpipe/segment/vertical,
+/obj/disposalpipe/segment/bent/west,
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -14103,6 +14106,10 @@
 	icon_state = "1-4"
 	},
 /obj/landmark/gps_waypoint,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 6;
+	pixel_y = -11
+	},
 /turf/simulated/floor/carpet/purple,
 /area/station/science/research_director)
 "jJn" = (
@@ -14552,6 +14559,7 @@
 /obj/vehicle/floorbuffer{
 	dir = 8
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "jUK" = (
@@ -15650,6 +15658,7 @@
 "kJM" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/disposal/botany,
+/obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -17542,7 +17551,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "man" = (
@@ -21062,6 +21071,17 @@
 	dir = 8
 	},
 /area/station/medical/robotics)
+"oHo" = (
+/obj/blind_switch/area/south{
+	pixel_x = 8
+	},
+/obj/machinery/light_switch/south{
+	pixel_x = -8
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "oHw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22580,7 +22600,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/robotdepot,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "pMP" = (
@@ -23351,6 +23371,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"qmY" = (
+/obj/random_item_spawner/gross_with_junk/one_or_zero,
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "qnh" = (
 /obj/overlay{
 	density = 1;
@@ -25004,7 +25029,6 @@
 	dir = 4
 	},
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
-/obj/disposalpipe/segment/bent/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -25296,9 +25320,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/ce)
 "rMi" = (
-/obj/submachine/cargopad{
-	name = "Security Pod Bay Pad"
-	},
+/obj/submachine/cargopad/security,
 /obj/machinery/disposal/small/north{
 	pixel_y = 32
 	},
@@ -25898,9 +25920,7 @@
 /area/station/science/lab)
 "shh" = (
 /obj/landmark/gps_waypoint,
-/obj/submachine/cargopad{
-	name = "Mining Cargo Pad"
-	},
+/obj/submachine/cargopad/miningstaff,
 /obj/machinery/navbeacon/mule/mining_north/west,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
@@ -27552,7 +27572,7 @@
 "toF" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_y = 27
 	},
 /turf/simulated/floor/red/side{
@@ -29404,14 +29424,10 @@
 /turf/simulated/floor/damaged2,
 /area/diner/kitchen)
 "uCR" = (
-/obj/machinery/computer/secure_data/detective_computer,
-/obj/machinery/light/incandescent/warm,
 /obj/item/device/radio/intercom/brig{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/detnet/detective{
-	dir = 1
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "uCX" = (
@@ -29450,10 +29466,10 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/disposalpipe/segment/bent/east,
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "uEI" = (
@@ -30600,14 +30616,6 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "vyg" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/obj/blind_switch/area/south{
-	pixel_x = 8
-	},
-/obj/machinery/light_switch/south{
-	pixel_x = -8
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -32269,7 +32277,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/robotdepot,
-/obj/mapping_helper/access/heads,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "wyP" = (
@@ -33673,6 +33680,15 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge)
+"xxF" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
+/obj/storage/cart/forensic,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/hand_labeler,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "xxQ" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -74690,7 +74706,7 @@ aru
 mxD
 wYC
 wYC
-wYC
+qmY
 uEg
 qKd
 gQE
@@ -91913,8 +91929,8 @@ vJG
 ofl
 swQ
 uCR
-dtp
-qpn
+cRk
+cnu
 qpn
 qpn
 qpn
@@ -92215,8 +92231,8 @@ hVV
 fsD
 hVV
 vyg
-dtp
-qpn
+oHo
+cnu
 qpn
 qpn
 qpn
@@ -92517,8 +92533,8 @@ hrg
 kkD
 ntC
 hIN
-dtp
-qpn
+xxF
+cnu
 qpn
 qpn
 qpn
@@ -92819,8 +92835,8 @@ imr
 imr
 imr
 imr
-dtp
-qpn
+imr
+cnu
 qpn
 qpn
 qpn

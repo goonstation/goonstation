@@ -26,7 +26,7 @@ TYPEINFO(/obj/item/device/accessgun)
 	var/list/research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
-	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser, access_money)
+	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_sysadmin, access_money)
 	var/list/allowed_access_list
 
 	New()

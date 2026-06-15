@@ -329,6 +329,7 @@ var/global
 	netpass_medical = null
 	netpass_banking = null
 	netpass_cargo = null
+	netpass_login = null
 	netpass_syndicate = null //Detomatix
 
 	//
@@ -366,6 +367,7 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 	datum/player_panel/player_panel = new()
+	datum/forced_assignment_panel/forced_assignment_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
 	bioele_accidents = 0
@@ -379,10 +381,7 @@ var/global
 	datum/configuration/config = null
 	datum/sun/sun = null
 
-	datum/changelog/legacy_changelog = null
 	datum/changelog/changelog = null
-	datum/admin_changelog/legacy_admin_changelog = null
-	datum/admin_changelog/admin_changelog = null
 
 	list/datum/powernet/powernets = null
 

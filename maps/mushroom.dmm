@@ -14768,9 +14768,7 @@
 	c_tag = "Robotics East";
 	pixel_y = 10
 	},
-/obj/submachine/cargopad{
-	name = "Research Sector Pad"
-	},
+/obj/submachine/cargopad/researchoutpost,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/recharger/wall{
 	dir = 4;
@@ -29354,6 +29352,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "rxO" = (

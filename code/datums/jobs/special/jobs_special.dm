@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/datum/job/special)
 /datum/job/special
 	name = "Special Job"
 	limit = 0
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	wiki_link = "https://wiki.ss13.co/Jobs#Gimmick_Jobs" // fallback for those without their own page
 
 #ifdef I_WANNA_BE_THE_JOB
@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	name = "Station Builder"
 	can_roll_antag = FALSE
 	limit = 0
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_engineer")
 	access_string = "Construction Worker"
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
@@ -59,8 +59,8 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 1
 	request_limit = 2
 	ui_colour = TGUI_COLOUR_GREY
-	wages = PAY_DUMBCLOWN*2 // lol okay whatever
-	request_cost = PAY_DOCTORATE * 4
+	wages = PAY::DUMBCLOWN*2 // lol okay whatever
+	request_cost = PAY::DOCTORATE * 4
 	trait_list = list("training_mime")
 	access_string = "Mime"
 	slot_belt = list(/obj/item/device/pda2)
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	name = "Vice Officer"
 	ui_colour = /datum/job/security::ui_colour
 	limit = 0
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Vice Officer"
 	can_roll_antag = FALSE
 	badge = /obj/item/clothing/suit/security_badge
@@ -101,7 +101,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	name = "Forensic Technician"
 	ui_colour = /datum/job/security::ui_colour
 	limit = 0
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_forensic")
 	access_string = "Forensic Technician"
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	name = "Toxins Researcher"
 	ui_colour = /datum/job/research::ui_colour
 	limit = 0
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	trait_list = list("training_scientist")
 	access_string = "Toxins Researcher"
 	slot_belt = list(/obj/item/device/pda2/toxins)
@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	name = "Chemist"
 	ui_colour = /datum/job/research::ui_colour
 	limit = 0
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	trait_list = "training_scientist"
 	access_string = "Chemist"
 	slot_belt = list(/obj/item/device/pda2/toxins)
@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	name = "Atmospherish Technician"
 	ui_colour = /datum/job/engineering::ui_colour
 	limit = 0
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Atmospheric Technician"
 	slot_belt = list(/obj/item/device/pda2/atmos)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos)
@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/job/special)
 /datum/job/special/comm_officer
 	name = "Communications Officer"
 	limit = 0
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	access_string = "Communications Officer"
 	world_announce_priority = ANNOUNCE_ORDER_LAST
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
@@ -364,7 +364,7 @@ ABSTRACT_TYPE(/datum/job/special)
 /datum/job/special/headminer
 	name = "Head of Mining"
 	limit = 0
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_miner")
 	access_string = "Head of Mining"
 	ui_colour = /datum/job/command::ui_colour
@@ -434,13 +434,13 @@ ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
 	job_category = JOB_DAILY
 	request_limit = 2
-	request_cost = PAY_DOCTORATE*4
+	request_cost = PAY::DOCTORATE*4
 	email_group = MGD_CIVILIAN
 	var/day = ""
 /datum/job/daily/boxer
 	day = "Sunday"
 	name = "Boxer"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Boxer"
 	limit = 4
 	slot_jump = list(/obj/item/clothing/under/shorts)
@@ -453,7 +453,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	day = "Monday"
 	name = "Dungeoneer"
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Dungeoneer"
 	slot_belt = list(/obj/item/device/pda2)
 	slot_mask = list(/obj/item/clothing/mask/skull)
@@ -470,7 +470,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily/barber
 	day = "Tuesday"
 	name = "Barber"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Barber"
 	limit = 1
 	slot_jump = list(/obj/item/clothing/under/misc/barber)
@@ -485,7 +485,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily/waiter
 	day = "Wednesday"
 	name = "Waiter"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Waiter"
 	slot_belt = list(/obj/item/device/pda2/chef)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
@@ -502,7 +502,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	day = "Thursday"
 	name = "Lawyer"
 	ui_colour = /datum/job/security::ui_colour
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	access_string = "Lawyer"
 	limit = 4
 	badge = /obj/item/clothing/suit/security_badge/attorney
@@ -589,7 +589,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	day = "Saturday"
 	name = "Musician"
 	limit = 3
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
 	slot_head = list(/obj/item/clothing/head/flatcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -627,7 +627,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	wages = 0 //Who needs cash when theres a battle to win
 #else
 	limit = 0
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 #endif
 	can_roll_antag = FALSE
 	var/team = 0 //1 = NT, 2 = SY
@@ -774,7 +774,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/pathologist
 	name = "Pathologist"
 	limit = 0
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	access_string = "Medical Doctor"
 	slot_belt = list(/obj/item/device/pda2/genetics)
 	slot_jump = list(/obj/item/clothing/under/rank/pathologist)

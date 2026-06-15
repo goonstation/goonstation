@@ -11,13 +11,14 @@ var/list/admin_verbs = list(
 
 	list(
 		// LEVEL_MOD, moderator
-		/client/proc/admin_changes,
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
 		/client/proc/admin_invisible,
 		/client/proc/game_panel,
 		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
+		/client/proc/cmd_forced_assignment_panel,
+		/client/proc/cmd_notify_forced_assignment_holders,
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/cmd_whois,
 		/client/proc/cmd_whodead,
@@ -1528,40 +1529,6 @@ var/list/fun_images = list()
 	logTheThing(LOG_ADMIN, src, "spawned a custom grenade at [usr.loc]")
 	logTheThing(LOG_DIARY, src, "spawned a custom grenade at [usr.loc]", "admin")
 	message_admins("[key_name(src)] spawned a custom grenade at [usr.loc].")
-
-/client/proc/admin_changes()
-	set category = "Commands"
-	set name = "Admin Changelog"
-	set desc = "Show or hide the admin changelog"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
-		src.Browse(null, "window=adminchanges")
-	else
-		var/changelogHtml
-		var/data
-		if (src.byond_version >= 516)
-			changelogHtml = grabResource("html/changelog.html")
-			data = admin_changelog.html
-		else
-			changelogHtml = grabResource("html/legacy_changelog.html")
-			data = legacy_admin_changelog.html
-		var/fontcssdata = {"
-				<style type="text/css">
-				@font-face {
-					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
-					text-rendering: optimizeLegibility;
-				}
-				</style>
-		"}
-		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
-		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516 && global.tgui_process)
-			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
-		else
-			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
 
 /client/proc/removeSelf()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)

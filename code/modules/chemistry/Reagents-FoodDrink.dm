@@ -4,6 +4,7 @@ ABSTRACT_TYPE(/datum/reagent/fooddrink)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/alcoholic)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/temp_bioeffect)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/caffeinated)
+ABSTRACT_TYPE(/datum/reagent/fooddrink/alcoholic/hardcoffee)
 
 datum
 	reagent

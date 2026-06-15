@@ -103,6 +103,9 @@ TYPEINFO(/mob/living/silicon)
 /mob/living/silicon/proc/show_laws()
 	return
 
+/mob/living/silicon/on_close_viewport(datum/viewport/vp)
+	src.mainframe?.on_close_viewport(vp)
+
 /mob/living/silicon/proc/return_mainframe()
 	if (mainframe)
 		mainframe.return_to(src)

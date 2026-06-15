@@ -118,7 +118,7 @@
 		name = "Lumen"
 		id = "lumen"
 		required_reagents = list("radium" = 1, "omega_mutagen" = 1, "hydrogen" = 1, "helium" = 1, "luminol" = 1)
-		mix_phrase = "The chemicals coalesce and begin to grow rather brightly!"
+		mix_phrase = "The chemicals coalesce and begin to glow rather brightly!"
 		mix_sound = 'sound/voice/heavenly.ogg'
 		result_amount = 3
 		result = "lumen"
@@ -2832,6 +2832,16 @@
 		required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 		result_amount = 3
 		mix_phrase = "The substance turns a striking cyan and becomes oily."
+
+	craftglue
+
+		name = "Craft Glue"
+		id = "craftglue"
+		result = "craftglue"
+		inhibitors = list("formaldehyde")
+		required_reagents = list("plasma" = 1, "phenol" = 0.25, "oxygen" = 1, "hydrogen" = 1)
+		result_amount = 3
+		mix_phrase = "The substance turns a bright purple and becomes midly tacky."
 
 	glue
 		name = "Space Glue"

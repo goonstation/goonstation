@@ -74,6 +74,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_OBSERVER, "ai_eye")
+		src.setStatus("camera_awareness", INFINITE_STATUS)
 
 	Login()
 		.=..()
@@ -190,9 +191,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 			for (var/turf/T as anything in (add_block - remove_block))
 				src.client.images |= T.aiImage
 #endif
-
-	proc/update_statics()	//update seperate from move(). Mostly same code.
-		return
 
 	set_loc(atom/newloc)
 		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION) // Sorry!
@@ -378,7 +376,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if(mainframe)
 			last_loc = src.loc
 			mainframe.return_to(src)
-			update_statics()
 		else
 			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return

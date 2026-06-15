@@ -12172,9 +12172,7 @@
 /area/station/engine/engineering)
 "bxb" = (
 /obj/item/device/radio/beacon,
-/obj/submachine/cargopad/mechanics{
-	name = "Engineering Pad"
-	},
+/obj/submachine/cargopad/engineering,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bxc" = (
@@ -13089,7 +13087,9 @@
 /area/station/atmos/highcap_storage)
 "bDc" = (
 /obj/machinery/light/small/sticky,
-/obj/item/device/radio/beacon,
+/obj/machinery/dispenser{
+	pltanks = 0
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bDf" = (
@@ -20269,9 +20269,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "fES" = (
-/obj/submachine/cargopad{
-	name = "Security Pad"
-	},
+/obj/submachine/cargopad/security,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -23039,6 +23037,13 @@
 /area/station/hangar/arrivals)
 "hlO" = (
 /obj/disposalpipe/segment/horizontal,
+/obj/stool/chair/purple{
+	dir = 1
+	},
+/obj/item/storage/briefcase/toxins{
+	pixel_x = 6;
+	pixel_y = -11
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/hor)
 "hmm" = (
@@ -25571,6 +25576,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "iGA" = (
@@ -27033,7 +27039,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "jzx" = (
@@ -27107,7 +27113,7 @@
 /obj/storage/closet{
 	name = "rancher supply closet"
 	},
-/obj/item/paper/ranch_guide,
+/obj/item/paper/image/ranch_guide,
 /obj/item/storage/box/clothing/rancher,
 /obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
@@ -36114,9 +36120,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -43912,6 +43915,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "sUu" = (
@@ -45577,6 +45581,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "tUE" = (
@@ -49497,7 +49502,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "wiL" = (
