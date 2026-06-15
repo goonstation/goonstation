@@ -27572,7 +27572,7 @@
 "toF" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_y = 27
 	},
 /turf/simulated/floor/red/side{

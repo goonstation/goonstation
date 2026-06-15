@@ -25,6 +25,7 @@ export interface ItemData {
   vr_allowed: BooleanLike;
   icon: string | null;
   ref: string;
+  type: string;
   purchase_limit: number;
 }
 

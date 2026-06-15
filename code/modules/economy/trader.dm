@@ -1144,7 +1144,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 	name = "Geoff Honkington"
 	angrynope = "HO--nngh. Leave me alone."
 	whotext = "Just an honest trader tryin' to make a living. Mind the banana peel, ya hear?"
-	business_card = /obj/item/paper/businesscard/clowntown
+	business_card = /obj/item/paper/image/businesscard/clowntown
 	var/honk = 0
 
 	New()

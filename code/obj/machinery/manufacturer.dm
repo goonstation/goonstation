@@ -842,7 +842,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 					var/datum/signal/minerSignal = get_free_signal()
 					minerSignal.source = src
-					//any non-divisible amounts go to the shipping budget
+					//any non-divisible amounts go to the supply budget
 					var/leftovers = 0
 					if(length(accounts))
 						leftovers = subtotal % length(accounts)
@@ -856,8 +856,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
-						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")
-					wagesystem.budgets[BUDGET_CAT_SHIPPING] += (leftovers + sum_taxes)
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the supply budget.")
+					wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 					src.should_update_static = TRUE
 				else
