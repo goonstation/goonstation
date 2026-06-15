@@ -1724,7 +1724,7 @@
 "afY" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/black/bright,
-/obj/item/paper/businesscard/cosmicacres{
+/obj/item/paper/image/businesscard/cosmicacres{
 	pixel_y = -4
 	},
 /turf/simulated/floor/carpet/grime,
@@ -2139,7 +2139,7 @@
 	},
 /obj/storage/secure/closet/personal,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/paper/businesscard/clowntown,
+/obj/item/paper/image/businesscard/clowntown,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "ajQ" = (
@@ -3104,11 +3104,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/josh{
+/obj/item/paper/image/businesscard/josh{
 	pixel_x = 8;
 	pixel_y = 21
 	},
-/obj/item/paper/businesscard{
+/obj/item/paper/image/businesscard{
 	pixel_y = 32
 	},
 /turf/simulated/floor/grime,
@@ -15396,11 +15396,11 @@
 /area/bee_trader)
 "bLQ" = (
 /obj/machinery/computer/arcade,
-/obj/item/paper/businesscard/bonktek{
+/obj/item/paper/image/businesscard/bonktek{
 	pixel_x = 10;
 	pixel_y = 30
 	},
-/obj/item/paper/businesscard{
+/obj/item/paper/image/businesscard{
 	pixel_x = -1;
 	pixel_y = 25
 	},
@@ -16635,7 +16635,7 @@
 /turf/simulated/floor/airless/black,
 /area/space)
 "eYy" = (
-/obj/item/paper/businesscard/bonktek{
+/obj/item/paper/image/businesscard/bonktek{
 	pixel_x = 5;
 	pixel_y = 25
 	},
@@ -16715,15 +16715,15 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_x = 6;
 	pixel_y = 24
 	},
-/obj/item/paper/businesscard/skulls{
+/obj/item/paper/image/businesscard/skulls{
 	pixel_x = -11;
 	pixel_y = 27
 	},
-/obj/item/paper/businesscard/biteylou{
+/obj/item/paper/image/businesscard/biteylou{
 	pixel_y = 30
 	},
 /turf/simulated/floor/stairs/wide/other{
@@ -16739,10 +16739,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_y = 24
 	},
-/obj/item/paper/businesscard/biteylou{
+/obj/item/paper/image/businesscard/biteylou{
 	pixel_x = 15;
 	pixel_y = 29
 	},
@@ -16957,7 +16957,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_x = -8;
 	pixel_y = 30
 	},
@@ -17458,7 +17458,7 @@
 /area/diner/hangar)
 "gVs" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/item/paper/businesscard/biteylou{
+/obj/item/paper/image/businesscard/biteylou{
 	pixel_y = 24
 	},
 /turf/simulated/floor/grime,
@@ -17796,8 +17796,8 @@
 /area/radiostation/bedroom)
 "hKm" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/businesscard/gragg2,
-/obj/item/paper/businesscard/gragg1,
+/obj/item/paper/image/businesscard/gragg2,
+/obj/item/paper/image/businesscard/gragg1,
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "hLK" = (
@@ -18005,9 +18005,9 @@
 /area/timewarp/ship)
 "ilB" = (
 /obj/table/wood/auto,
-/obj/item/paper/businesscard/cosmicacres,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/vurdulak,
+/obj/item/paper/image/businesscard/cosmicacres,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/vurdulak,
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
 "ilN" = (
@@ -18390,7 +18390,7 @@
 /obj/item/plate,
 /obj/decal/cleanable/dirt,
 /obj/item/kitchen/utensil/fork,
-/obj/item/paper/businesscard/gragg2{
+/obj/item/paper/image/businesscard/gragg2{
 	pixel_y = 24
 	},
 /turf/simulated/floor/carpet{
@@ -18988,7 +18988,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/obj/item/paper/businesscard/clowntown{
+/obj/item/paper/image/businesscard/clowntown{
 	pixel_x = -6;
 	pixel_y = 29
 	},
@@ -19239,7 +19239,7 @@
 /obj/machinery/light/incandescent/warm/very{
 	dir = 1
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_x = 6;
 	pixel_y = 26
 	},
@@ -19281,7 +19281,7 @@
 	},
 /obj/table/auto,
 /obj/item/cable_coil,
-/obj/item/paper/businesscard/hemera_rcd,
+/obj/item/paper/image/businesscard/hemera_rcd,
 /turf/simulated/floor,
 /area/h7/control)
 "lgD" = (
@@ -19371,10 +19371,10 @@
 /area/space)
 "lvW" = (
 /obj/decal/cleanable/dirt,
-/obj/item/paper/businesscard/banjo{
+/obj/item/paper/image/businesscard/banjo{
 	pixel_y = 24
 	},
-/obj/item/paper/businesscard/ezekian{
+/obj/item/paper/image/businesscard/ezekian{
 	pixel_x = -6;
 	pixel_y = 29
 	},
@@ -20899,7 +20899,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_x = 6;
 	pixel_y = 26
 	},
@@ -21040,10 +21040,10 @@
 "piW" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/paper/businesscard/gragg1{
+/obj/item/paper/image/businesscard/gragg1{
 	pixel_y = 24
 	},
-/obj/item/paper/businesscard/cosmicacres{
+/obj/item/paper/image/businesscard/cosmicacres{
 	pixel_x = 16;
 	pixel_y = 32
 	},
@@ -23505,7 +23505,7 @@
 /area/radiostation/hallway)
 "uSs" = (
 /obj/machinery/computer/tetris,
-/obj/item/paper/businesscard/skulls{
+/obj/item/paper/image/businesscard/skulls{
 	pixel_x = -6;
 	pixel_y = 27
 	},
@@ -23921,7 +23921,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "vVN" = (
-/obj/item/paper/businesscard/gragg1{
+/obj/item/paper/image/businesscard/gragg1{
 	pixel_x = 5;
 	pixel_y = 25
 	},
@@ -23953,11 +23953,11 @@
 /area/diner/jucer_trader)
 "vZn" = (
 /obj/map/light/dimred,
-/obj/item/paper/businesscard/josh{
+/obj/item/paper/image/businesscard/josh{
 	pixel_x = 4;
 	pixel_y = 25
 	},
-/obj/item/paper/businesscard/ezekian{
+/obj/item/paper/image/businesscard/ezekian{
 	pixel_x = -4;
 	pixel_y = 29
 	},
@@ -24110,7 +24110,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/item/paper/businesscard/josh{
+/obj/item/paper/image/businesscard/josh{
 	pixel_x = 6;
 	pixel_y = 27
 	},
@@ -24149,7 +24149,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/vurdulak{
+/obj/item/paper/image/businesscard/vurdulak{
 	pixel_y = 26
 	},
 /turf/simulated/floor/scorched2,
@@ -24690,8 +24690,8 @@
 /area/buddyfactory)
 "xYY" = (
 /obj/table/wood/auto,
-/obj/item/paper/businesscard/taxi,
-/obj/item/paper/businesscard,
+/obj/item/paper/image/businesscard/taxi,
+/obj/item/paper/image/businesscard,
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
 "xZo" = (

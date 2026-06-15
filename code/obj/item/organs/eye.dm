@@ -137,6 +137,7 @@
 	iris_color = "#2dca2d"
 
 TYPEINFO(/obj/item/organ/eye/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/eye/cyber

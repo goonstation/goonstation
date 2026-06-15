@@ -1,6 +1,7 @@
 //WIP tugs
 
 TYPEINFO(/obj/tug_cart)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/tug_cart
@@ -161,6 +162,7 @@ TYPEINFO(/obj/tug_cart)
 
 
 TYPEINFO(/obj/vehicle/tug)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/vehicle/tug

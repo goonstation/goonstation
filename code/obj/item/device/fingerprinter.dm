@@ -4,13 +4,14 @@
 #define FINGERPRINT_SCAN 2
 #define FINGERPRINT_SEARCH 3
 
+TYPEINFO(/obj/item/device/fingerprinter)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 // TODO make this cost 2 TC
 /obj/item/device/fingerprinter
 	name = "fingerprinter"
 	desc = "A grey-market tool used for scanning fingerprints on things and putting them onto other things. \
 			Hooks into the station database for information about fingerprint owners." // (this is a lie)
 	icon_state = "reagentscan" // slightly sneaky. slightly.
-	is_syndicate = TRUE
 	w_class = W_CLASS_TINY
 	/// List of prints currently scanned into the device.
 	var/datum/forensic_holder/scanned_evidence = new()

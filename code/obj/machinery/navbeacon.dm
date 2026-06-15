@@ -3,6 +3,7 @@
 
 TYPEINFO(/obj/machinery/navbeacon)
 	mats = 4
+	manufactured_type = /obj/machinery/navbeacon //For subtypes
 
 /obj/machinery/navbeacon
 
@@ -26,7 +27,6 @@ TYPEINFO(/obj/machinery/navbeacon)
 
 	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
 		START_TRACKING

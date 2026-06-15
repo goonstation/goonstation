@@ -36,7 +36,7 @@
 		dat = src.temp
 	else
 
-		dat += {"<B>Shipping Budget:</B> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] Credits<BR>
+		dat += {"<B>Supply Budget:</B> [wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]] Credits<BR>
 		<B>Scanned Card:</B> <A href='byond://?src=\ref[src];card=1'>([src.scan])</A><BR><HR>"}
 		if(src.scan != null)
 			var/datum/db_record/account = null
@@ -45,7 +45,7 @@
 				dat += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		dat += {"<A href='byond://?src=\ref[src];viewrequests=1'>View Requests</A><BR>
 		<A href='byond://?src=\ref[src];order=1'>Request Items</A><BR>
-		<A href='byond://?src=\ref[src];buypoints=1'>Contribute to Shipping Budget</A><BR>
+		<A href='byond://?src=\ref[src];buypoints=1'>Contribute to Supply Budget</A><BR>
 		<A href='byond://?action=mach_close&window=computer'>Close</A>"}
 		//<A href='byond://?src=\ref[src];vieworders=1'>View Approved Orders</A><BR><BR> This right here never worked anyway.
 	user.Browse(dat, "title=Supply Request Console;window=computer_[src];size=575x450")
@@ -94,7 +94,7 @@
 		if(account)
 			src.temp += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		else
-			src.temp += "<B>Shipping Budget:</B> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] Credits<BR><HR>"
+			src.temp += "<B>Supply Budget:</B> [wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]] Credits<BR><HR>"
 		src.temp += "<B>Please select the Supply Package you would like to request:</B><BR><BR>"
 		src.temp += search_snippet()
 		src.temp += "<BR><BR>"
@@ -284,8 +284,8 @@
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
 							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 			else
-				src.temp = {"<B>Contribute to Shipping Budget</B><BR>
-							<B>Shipping Budget:</b> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] Credits<BR>
+				src.temp = {"<B>Contribute to Supply Budget</B><BR>
+							<B>Supply Budget:</b> [wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]] Credits<BR>
 							<B>Credits in Account:</B> [account["current_money"]] Credits<BR><HR>
 							<A href='byond://?src=\ref[src];buy=1'>Make Transaction</A><BR>
 							<A href='byond://?src=\ref[src];mainmenu=1'>Cancel Transfer</A>"}
@@ -303,14 +303,14 @@
 			if (!account)
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
 							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
-			var/transaction = input("How much?", "Shipping Budget", null, null)  as null|num
+			var/transaction = input("How much?", "Supply Budget", null, null)  as null|num
 			if (account["current_money"] >= transaction && (transaction > 0) && isnum_safe(transaction))
 				account["current_money"] -= transaction
-				wagesystem.budgets[BUDGET_CAT_SHIPPING] += transaction
+				wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += transaction
 				src.temp = "Transaction successful. Thank you for your patronage.<BR>"
 				////// PDA NOTIFY/////
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [transaction] credits transferred to shipping budget from [src.scan.registered].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [transaction] credits transferred to supply budget from [src.scan.registered].")
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////
 				src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"

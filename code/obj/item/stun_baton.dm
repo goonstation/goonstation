@@ -5,6 +5,7 @@
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
 TYPEINFO(/obj/item/baton)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 10,
 				"conductive_high" = 10)
 /obj/item/baton
@@ -342,7 +343,7 @@ TYPEINFO(/obj/item/baton)
 	cost_normal = 0
 
 TYPEINFO(/obj/item/baton/beepsky)
-	mats = 0 //no
+	analyser_flags = ANALYSER_BLACKLIST //no
 
 /obj/item/baton/beepsky
 	name = "securitron stun baton"
@@ -371,7 +372,7 @@ TYPEINFO(/obj/item/baton/cane)
 	rechargable = 0
 
 TYPEINFO(/obj/item/baton/classic)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/baton/classic
 	name = "police baton"
@@ -521,7 +522,7 @@ TYPEINFO(/obj/item/baton/ntso)
 
 
 TYPEINFO(/obj/item/baton/windup)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/baton/windup
 	name = "Mod. 41 'Izar' baton"
 	desc = "An experimental but powerful stun baton. Requires a brief charge-up window to activate."

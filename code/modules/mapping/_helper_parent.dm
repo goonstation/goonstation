@@ -1,6 +1,6 @@
 /* Mapping helper parent
  * intended for mapping helpers which do something on an atom on loc and delete themselves such as access spawners
- * if the the orginal location is needed for anything a landmark should be used instead
+ * if the orginal location is needed for anything a landmark should be used instead
 */
 ABSTRACT_TYPE(/obj/mapping_helper)
 /obj/mapping_helper

@@ -1,5 +1,5 @@
 TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 	start_listen_inputs = null
 
 /obj/item/device/radio/intercom/loudspeaker
@@ -43,7 +43,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 
 
 TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 	start_listen_effects = null
 
 /obj/item/device/radio/intercom/loudspeaker/speaker

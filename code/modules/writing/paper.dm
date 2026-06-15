@@ -862,7 +862,7 @@
 	law
 		name = "\improper security's rubber stamp"
 		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the rugged National Notary 'Severn' model with the rock maple handle."
-		icon_state = "stamp-syndicate"
+		icon_state = "stamp-law"
 		special_mode = "Security"
 		is_reassignable = 0
 		assignment = "stamp-law"
