@@ -676,8 +676,6 @@
 	icon = 'icons/obj/items/materials/scrap.dmi'
 	icon_state = "scrapA_1"
 	stack_type = /obj/item/raw_material/scrap_metal
-	amount = 10
-	material_amt = 0.1
 	burn_possible = FALSE
 	mat_changename = TRUE
 	material_name = "Steel"
@@ -935,7 +933,7 @@
 				qdel(M)
 			sleep(smelt_interval)
 
-		output_scrap()
+		output_sheets()
 		if (reject)
 			src.reject = 0
 			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
@@ -984,13 +982,13 @@
 						break
 		playsound(src.loc, sound_process, 40, 1)
 
-	proc/output_scrap()
+	proc/output_sheets()
 		// Dump leftover materials as scrap when finished
 		var/atom/output_location = src.get_output_location()
 		if (istype(output_location, /obj/machinery/manufacturer))
 			output_location = get_turf(src)
 
-		var/obj/item/raw_material/scrap_metal/dummy = new() // Just here to get the material_amt for scrap metal
+		var/obj/item/sheet/dummy = new() // Just here to get the material_amt for scrap metal
 		for(var/leftover_id in leftovers)
 			if(leftovers[leftover_id] < dummy.material_amt)
 				continue
@@ -998,18 +996,18 @@
 			if(!material_reclaim)
 				continue
 			var/material_amount = leftovers[leftover_id]
-			var/num_of_scrap = floor(material_amount * 10)
-			leftovers[leftover_id] = material_amount - (num_of_scrap * 0.1)
+			var/num_of_sheet = floor(material_amount * 10)
+			leftovers[leftover_id] = material_amount - (num_of_sheet * 0.1)
 
-			var/obj/item/raw_material/scrap_metal/scrap = new()
-			scrap.setMaterial(material_reclaim)
-			scrap.set_stack_amount(num_of_scrap)
-			scrap.set_loc(output_location)
-			for (var/obj/item/raw_material/scrap_metal/other_scrap in output_location.contents)
-				if (other_scrap == scrap)
+			var/obj/item/sheet/sheet = new()
+			sheet.setMaterial(material_reclaim)
+			sheet.set_stack_amount(num_of_sheet)
+			sheet.set_loc(output_location)
+			for (var/obj/item/sheet/other_sheet in output_location.contents)
+				if (other_sheet == sheet)
 					continue
-				if (scrap.material.isSameMaterial(other_scrap.material))
-					if (other_scrap.stack_item(scrap))
+				if (sheet.material.isSameMaterial(other_sheet.material))
+					if (other_sheet.stack_item(sheet))
 						break
 			playsound(src.loc, sound_process, 40, 1)
 
