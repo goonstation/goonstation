@@ -215,10 +215,15 @@
 				human_owner?.internal = null
 			if (!human_owner?.wear_mask || !(human_owner?.wear_mask.c_flags & MASKINTERNALS) )
 				human_owner?.internal = null
-			if (istype(human_owner.wear_mask, /obj/item/clothing/mask/medical)) // medical masks don't work in low-atmos enviornments
+			if (istype(human_owner.wear_mask, /obj/item/clothing/mask/medical))
+
 				var/atom/A = human_owner.loc
 				var/datum/gas_mixture/atmosphere = A.return_air()
+				// medical masks don't work in low-atmos enviornments
 				if (MIXTURE_PRESSURE(atmosphere) < ONE_ATMOSPHERE * 0.5)
+					human_owner.internal = null
+				// medical masks automatically shut off if not enough pressure remaining
+				if (MIXTURE_PRESSURE(human_owner.internal.air_contents) < human_owner.internal.distribute_pressure)
 					human_owner.internal = null
 			if (human_owner?.internal)
 				if (human_owner?.internals)
