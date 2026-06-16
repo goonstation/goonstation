@@ -1,9 +1,11 @@
 #define is_blood(x) x in list("blood", "bloodc", "hemolymph", "martian_flesh")
-/obj/item/paper/folded/charm
+/obj/item/clothing/suit/charm
 	name = "paper charm"
 	desc = "A little folded paper charm with something written on the inside."
 	icon = 'icons/obj/charms.dmi'
 	icon_state = "paper_charm"
+	wear_image_icon = 'icons/obj/charms.dmi'
+	wear_state = "worn_charm"
 	/// ID of the reagent staining this charm
 	var/stain_reagent = null
 	var/datum/charm_effect/effect = null
@@ -56,30 +58,6 @@
 			src.effect.on_lose(currentloc)
 		if (ismob(newloc))
 			src.effect.on_gain(newloc)
-
-/obj/item/clothing/suit/charm
-	name = "strung charm"
-	wear_image_icon = 'icons/obj/charms.dmi'
-	wear_state = "worn_charm"
-
-	var/obj/item/paper/folded/charm/charm
-
-	proc/set_up(obj/item/paper/folded/charm/charm, cable_color)
-		src.charm = charm
-		src.icon = charm.icon
-		src.icon_state = charm.icon_state
-		copy_overlays(charm, src)
-		var/image/cable_overlay = image(charm.icon, "cord")
-		cable_overlay.color = cable_color
-		src.UpdateOverlays(cable_overlay, "cord")
-
-	set_loc(newloc, storage_check)
-		src.charm.on_set_loc(newloc, src.loc)
-		. = ..()
-
-	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
-		if (src.charm.reagent_act(reagent_id, volume, holder_reagents))
-			copy_overlays(src.charm, src)
 
 	setupProperties()
 		..()

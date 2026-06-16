@@ -135,7 +135,7 @@
 				return
 			modify_chaplain_faith(user, -FAITH_CHARM_CREATION)
 			user.show_text("You carefully fold the paper into a charm. By your faith it has power.", "blue")
-			F = new /obj/item/paper/folded/charm(user)
+			F = new /obj/item/clothing/suit/charm(user)
 		F.info = src.info
 		F.old_desc = src.desc
 		F.icon_old = src.icon
