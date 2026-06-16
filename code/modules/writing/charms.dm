@@ -13,10 +13,9 @@
 	//ideas for other charm effects: lavender gives disease resist + slightly higher chance for asymptomaticness
 
 	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
-		if (bloodied || !(reagent_id in list("blood", "bloodc", "hemolymph")))
+		if (!(reagent_id in list("blood", "bloodc", "hemolymph")))
 			..()
 			return FALSE
-		src.bloodied = TRUE
 		var/image/overlay = image(src.icon, "bloodied")
 		var/datum/reagent/reagent = overlay.color = holder_reagents.get_reagent(reagent_id)
 		overlay.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
