@@ -19,6 +19,7 @@ ABSTRACT_TYPE(/obj/item/cane)
 	mat_changename = 0
 	mat_changeappearance = 0
 	default_material = "wood"
+	material_amt = 0.1
 
 /obj/item/cane/wooden/wooden2
 	icon_state = "wooden2"
