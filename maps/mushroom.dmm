@@ -16570,13 +16570,6 @@
 	pixel_x = -10;
 	pixel_y = 2
 	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 6
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 10;
-	pixel_y = -2
-	},
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
