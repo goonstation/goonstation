@@ -45,20 +45,24 @@ ABSTRACT_TYPE(/obj/item/cane)
 ABSTRACT_TYPE(/obj/item/cane/silly)
 
 /obj/item/cane/silly/clown
+	name = "clown cane"
 	icon_state = "clown"
 	desc = "My back feels funny."
 
 /obj/item/cane/silly/mime
+	name = "mime cane"
 	icon_state = "mime"
 	desc = "Suffering in silence."
 
 /obj/item/cane/silly/princess
+	name = "pink cane"
 	icon_state = "princess"
 	desc = "Sparkle! Glimmer! Back pain! Sparkle!"
 
 // Cargo exclusive below!
 
 /obj/item/cane/golden
+	name = "golden cane"
 	icon_state = "golden"
 	mat_changename = 0
 	default_material = "gold"
