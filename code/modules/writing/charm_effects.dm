@@ -1,13 +1,13 @@
 //Datumised charm effects!
 ABSTRACT_TYPE(/datum/charm_effect)
-TYPEINFO(/datum/charm_effect)
-	/// Does this effect get added on a particular stain?
-	proc/stain_condition(reagent_id, volume, datum/reagents/holder_reagents)
-		return reagent_id in src.reagents
 /datum/charm_effect
 	/// List of reagent IDs that will cause this effect
 	var/list/reagents = list()
 	var/obj/item/clothing/suit/charm/charm
+
+	/// Does this effect get added on a particular stain?
+	proc/stain_condition(reagent_id, volume, datum/reagents/holder_reagents)
+		return reagent_id in src.reagents
 
 	/// When the charm is first stained with this effect
 	proc/on_stain()

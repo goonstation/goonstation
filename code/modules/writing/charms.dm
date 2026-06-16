@@ -1,4 +1,4 @@
-#define is_blood(x) x in list("blood", "bloodc", "hemolymph", "martian_flesh")
+#define is_blood(x) (x in list("blood", "bloodc", "hemolymph", "martian_flesh"))
 /obj/item/clothing/suit/charm
 	name = "paper charm"
 	desc = "A little folded paper charm with something written on the inside."
@@ -22,9 +22,9 @@
 		overlay.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 		src.UpdateOverlays(overlay, "stain")
 		for (var/type in concrete_typesof(/datum/charm_effect))
-			var/typeinfo/typeinfo = get_type_typeinfo(type)
-			if (typeinfo.stain_condition(reagent_id, volume, datum/reagents/holder_reagents))
-				src.effect = new type()
+			var/datum/charm_effect/effect = get_type_typeinfo(type)
+			if (effect.stain_condition(reagent_id, volume, holder_reagents))
+				src.effect = effect
 				src.effect.charm = src
 				break
 
@@ -35,17 +35,17 @@
 		src.effect = null
 		. = ..()
 
-	attackby(obj/item/cable_coil/cable, mob/living/user, params)
-		if (!istype(cable))
-			return ..()
-		if (!cable.use(2))
-			boutput(user, SPAN_ALERT("You need at least 2 lengths of cable to make that!"))
-			return
-		var/obj/item/clothing/suit/charm/strung_charm = new
-		strung_charm.set_up(src, cable.insulator.getColor())
-		user.drop_item(src)
-		src.set_loc(strung_charm)
-		user.put_in_hand(strung_charm)
+	// attackby(obj/item/cable_coil/cable, mob/living/user, params)
+	// 	if (!istype(cable))
+	// 		return ..()
+	// 	if (!cable.use(2))
+	// 		boutput(user, SPAN_ALERT("You need at least 2 lengths of cable to make that!"))
+	// 		return
+	// 	var/obj/item/clothing/suit/charm/strung_charm = new
+	// 	strung_charm.set_up(src, cable.insulator.getColor())
+	// 	user.drop_item(src)
+	// 	src.set_loc(strung_charm)
+	// 	user.put_in_hand(strung_charm)
 
 	set_loc(newloc, storage_check)
 		src.on_set_loc(newloc, src.loc)
