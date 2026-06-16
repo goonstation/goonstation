@@ -6,11 +6,15 @@ ABSTRACT_TYPE(/obj/item/cane)
 	icon = 'icons/obj/canes.dmi'
 	icon_state = "metal"
 	inhand_image_icon = 'icons/mob/inhand/hand_canes.dmi'
-
 	hitsound = 'sound/impact_sounds/bat_wood.ogg' // Bonk bonk bonk!
 	hit_type = DAMAGE_BLUNT
-	force = 2
 
+	force = 5
+	throwforce = 7
+	throw_speed = 1
+	stamina_damage = 55
+	stamina_cost = 23
+	stamina_crit_chance = 10
 
 // Wood crafted below!
 
