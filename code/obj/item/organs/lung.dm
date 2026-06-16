@@ -18,7 +18,7 @@
 	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_max = 0.4
 	var/n2o_para_min = 1
-	var/n2o_sleep_min = 5
+	var/n2o_sleep_min = 18
 	var/fart_smell_min = 0.69 // don't ask ~warc
 	var/fart_vomit_min = 6.9
 	var/fart_choke_min = 16.9
@@ -112,7 +112,7 @@
 
 		var/N2O_pp = (breath.nitrous_oxide/breath_moles)*breath_pressure
 		if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
-			donor.changeStatus("unconscious", 5 SECONDS/LUNG_COUNT)
+			donor.changeStatus("knockdown", 5 SECONDS/LUNG_COUNT)
 			if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
 				donor.sleeping = max(donor.sleeping, 2)
 		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning

@@ -9,7 +9,7 @@ Contains:
 - Extended Pocket Tanks
 	- Oxygen, Plasma, Air, Empty subtypes
 - Mini Tanks
-	- Oxygen, Plasma, Air, Empty subtypes
+	- Oxygen, Plasma, Air, Empty, Anesthetic subtypes
 */
 
 #define TANK_VOLUME 70 LITERS //! The volume of a normal tank in litres
@@ -94,8 +94,12 @@ ABSTRACT_TYPE(/obj/item/tank)
 		return TRUE
 
 	proc/using_internal()
+		var/mob/living/carbon/location
 		if (iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
+			location = loc
+		else if (istype(src.loc, /obj/item/clothing/mask))
+			location = src.loc.loc
+		if (istype(location))
 			return location.internal == src
 		return FALSE
 
@@ -103,38 +107,41 @@ ABSTRACT_TYPE(/obj/item/tank)
 		distribute_pressure = clamp(pressure, 1, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
+		var/mob/living/carbon/location
 		if (iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
-			if (!location)
-				return
-			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
-			if(location.internal == src)
+			location = loc
+		else if (istype(src.loc, /obj/item/clothing/mask))
+			location = src.loc.loc
+		if (!istype(location))
+			return
+		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
+		if(location.internal == src)
+			for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
+				if(T.the_item == src)
+					T.icon_state = "airoff"
+			location.internal = null
+			if (location.internals)
+				location.internals.icon_state = "internal0"
+			boutput(location, SPAN_NOTICE("You close the tank release valve."))
+			return FALSE
+		else
+			if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
+				if(!isnull(location.internal)) //you're already using a tank and it's not this one
+					location.internal.toggle_valve()
+					boutput(location, SPAN_NOTICE("After closing the valve on your other tank, you switch to this one."))
+				location.internal = src
+
 				for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
 					if(T.the_item == src)
-						T.icon_state = "airoff"
-				location.internal = null
+						T.icon_state = "airon"
 				if (location.internals)
-					location.internals.icon_state = "internal0"
-				boutput(location, SPAN_NOTICE("You close the tank release valve."))
-				return FALSE
+					location.internals.icon_state = "internal1"
+				boutput(location, SPAN_NOTICE("You open the tank release valve."))
+				return TRUE
 			else
-				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
-					if(!isnull(location.internal)) //you're already using a tank and it's not this one
-						location.internal.toggle_valve()
-						boutput(location, SPAN_NOTICE("After closing the valve on your other tank, you switch to this one."))
-					location.internal = src
-
-					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-						if(T.the_item == src)
-							T.icon_state = "airon"
-					if (location.internals)
-						location.internals.icon_state = "internal1"
-					boutput(location, SPAN_NOTICE("You open the tank release valve."))
-					return TRUE
-				else
-					boutput(location, SPAN_ALERT("The valve immediately closes! You need to put on a mask first."))
-					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
-					return FALSE
+				boutput(location, SPAN_ALERT("The valve immediately closes! You need to put on a mask first."))
+				playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
+				return FALSE
 
 	proc/remove_air_volume(volume_to_return)
 		if(!air_contents)
@@ -449,12 +456,12 @@ ABSTRACT_TYPE(/obj/item/tank)
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"
 	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
-	distribute_pressure = 81
+	distribute_pressure = 34
 
 	New()
 		..()
-		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
 
 // ==== JETPACKS ====
 
@@ -745,6 +752,17 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
 		src.air_contents.nitrogen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 
+/obj/item/tank/mini/anesthetic
+	name = "mini tank (anesthetic)"
+	icon_state = "mini_anesthetic"
+	item_state = "mini_anesthetic"
+	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
+	distribute_pressure = 34
+
+	New()
+		..()
+		src.air_contents.oxygen = (ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
+		src.air_contents.nitrous_oxide = (ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
 
 /obj/item/tank/mini/empty
 	icon_state = "mini_empty"
