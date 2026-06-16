@@ -1,4 +1,35 @@
 
+(t)mon jun 15 26
+(u)JORJ949
+(p)26785
+(e)🆕📄👮|C-Feature, A-UI, A-Security
+(*)The armory authorisation computer now has an inputtable reason that will be announced alongside authorisation.
+(u)glowbold
+(p)26747
+(e)🗺🔄🤖|A-Mapping, C-Rework, A-Silicons
+(*)Robotic Control consoles have recieved a major rework, details in minor notes.
+(+)Humans with valid ID can issue a cyborg lockdown at Robotics Control consoles.
+(+)Silicons cannot use screwing tools on robotics consoles. They can still blow them up or otherwise deny access.
+(+)Robotics labs on every map have a Robotics Control console that cannot issue or see lockdowns or killswitches.
+(+)Robotics Control console displays whether a silicon has an active, inactive, or missing brain unit.
+(+)Robotics Control consoles can be emagged to remove access requirements and ensure lockdown/killswitch availability. It still requires sliding an ID card of any access.
+(u)glowbold
+(p)26845
+(e)🆕🎨🔄💊📨|C-Feature, C-Sprites, C-Rework, A-Medical, A-Logistics
+(*)Medical masks can have a mini-tank attached, instantly turn on internals when equipped, do not work in low pressure environments, and automatically turn off when out of gas.
+(*)Anesthetic storage lockers contain 2 medical masks with pre-installed anesthetic mini-tanks, 2 anesthetic tanks, and 5 anesthetic mini-tanks. Morphine contents unchanged.
+(*)N2O knocks you over and prevents movement at lower volumes instead of instantly making you unconscious.
+(+)Cargo can now order a medical-equipment locked Anesthetic Crate to restock medical's anesthetic supplies.
+(t)sun jun 14 26
+(u)TekoTheTeapot
+(p)26831
+(e)|
+(+)Makes Blobfish available in RP and Starstonefish available and present in the Fish Collection.
+(u)Mr. Moriarty
+(p)26778
+(f)https://forum.ss13.co/
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)The changelog may now display PR feedback threads. Click the above "Feedback" link to be redirected to the forums! Going forward, PRs with a feedback thread will be linked here.
 (t)sat jun 13 26
 (u)glowbold
 (e)⚖💊|C-Balance, A-Medical

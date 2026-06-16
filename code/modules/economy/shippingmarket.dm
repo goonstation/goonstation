@@ -442,10 +442,10 @@
 
 		// sell
 		if (scan && account)
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += price / 2
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += price / 2
 			account["current_money"] += price / 2
 		else
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += price
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += price
 		qdel(sell_art)
 
 		// give PDA group messages
@@ -651,12 +651,12 @@
 		if(scan && account)
 			var/share_NT = round(duckets / 2,1) // NT gets half the money, decimals rounded up in case of uneven sale price
 			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += share_NT
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += share_NT
 			account["current_money"] += share_seller
 			logTheThing(LOG_STATION, null, "Cargo sale split [share_seller] credits to [scan.registered], whoever that is.")
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += duckets
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += duckets
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
@@ -763,17 +763,17 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 	var/payroll = 0
-	var/totalfunds = wagesystem.budgets[BUDGET_CAT_STATION] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] + wagesystem.budgets[BUDGET_CAT_SHIPPING]
+	var/totalfunds = wagesystem.budgets[BUDGET_CAT_PAYROLL] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] + wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] + wagesystem.budgets[BUDGET_CAT_UNION]
 	for(var/datum/db_record/R as anything in data_core.bank.records)
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
 	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_STATION],50)][CREDIT_SIGN]
-	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_SHIPPING],50)][CREDIT_SIGN]
-	<BR><b>Current Union Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_UNION],50)][CREDIT_SIGN]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_PAYROLL],50)][CREDIT_SIGN]
+	<BR><b>Current Supply Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY],50)][CREDIT_SIGN]
 	<BR><b>Current Medical Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL],50)][CREDIT_SIGN]
+	<BR><b>Current Union Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_UNION],50)][CREDIT_SIGN]
 	<BR>
 	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
@@ -813,11 +813,11 @@
 
 	switch(trans)
 		if("Payroll")
-			wagesystem.budgets[BUDGET_CAT_STATION] += amount
-			if (wagesystem.budgets[BUDGET_CAT_STATION] < 0) wagesystem.budgets[BUDGET_CAT_STATION] = 0
+			wagesystem.budgets[BUDGET_CAT_PAYROLL] += amount
+			if (wagesystem.budgets[BUDGET_CAT_PAYROLL] < 0) wagesystem.budgets[BUDGET_CAT_PAYROLL] = 0
 		if("Shipping")
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += amount
-			if (wagesystem.budgets[BUDGET_CAT_SHIPPING] < 0) wagesystem.budgets[BUDGET_CAT_SHIPPING] = 0
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += amount
+			if (wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] < 0) wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] = 0
 		if("Union")
 			wagesystem.budgets[BUDGET_CAT_UNION] += amount
 			if (wagesystem.budgets[BUDGET_CAT_UNION] < 0) wagesystem.budgets[BUDGET_CAT_UNION] = 0

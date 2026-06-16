@@ -37536,23 +37536,15 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
-"cqp" = (
-/obj/machinery/sink/slim{
-	pixel_y = 8
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/robotics)
 "cqq" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/medical/robotics)
 "cqr" = (
-/obj/machinery/computer/robot_module_rewriter,
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/machinery/computer/robotics/lab,
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
 "cqs" = (
@@ -38093,6 +38085,10 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
+/obj/machinery/sink/slim{
+	dir = 4;
+	pixel_x = -5
+	},
 /turf/simulated/floor/blueblack{
 	dir = 10
 	},
@@ -54999,6 +54995,10 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
+"gTk" = (
+/obj/machinery/computer/robot_module_rewriter,
+/turf/simulated/floor/caution/south,
+/area/station/medical/robotics)
 "gTO" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light{
@@ -56848,6 +56848,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"ipY" = (
+/obj/machinery/computer/robotics/lab{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/north)
 "iqa" = (
 /obj/machinery/atmospherics/unary/tank/air_repressurization,
 /turf/simulated/floor/plating,
@@ -65256,6 +65262,11 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"pwr" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor/blueblack,
+/area/station/medical/robotics)
 "pwM" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -111572,8 +111583,8 @@ chp
 ciZ
 ckq
 coE
-cqp
-csc
+cqq
+pwr
 daZ
 des
 cwp
@@ -111874,7 +111885,7 @@ chp
 xwP
 ckq
 tLy
-cqq
+gTk
 cAK
 daZ
 xWy
@@ -114536,7 +114547,7 @@ aVg
 aWA
 aYc
 aXY
-bhS
+ipY
 bhS
 aaa
 aaa

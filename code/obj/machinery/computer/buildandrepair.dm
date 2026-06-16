@@ -134,6 +134,10 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/robotics
 	name = "circuit board (robotics control)"
 	computertype = /obj/machinery/computer/robotics
+/obj/item/circuitboard/robotics_lab
+	name = "circuit board (robotics monitoring)"
+	computertype = /obj/machinery/computer/robotics/lab
+	icon_state = "circuit_medical"
 /obj/item/circuitboard/robot_module_rewriter
 	name = "circuit board (cyborg module rewriter)"
 	computertype = /obj/machinery/computer/robot_module_rewriter

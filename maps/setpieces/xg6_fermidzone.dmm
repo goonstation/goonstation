@@ -1208,7 +1208,7 @@
 	})
 "eZ" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
 /turf/unsimulated/floor/redblack,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -1853,14 +1853,14 @@
 	})
 "hI" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/businesscard/biteylou,
+/obj/item/paper/image/businesscard/biteylou,
 /obj/item/paper/tug/invoice{
 	color = "yellow";
 	desc = "Looks like Ms. Kang's private shuttle was dented by NanoTrasen Station 13's cargo launchers. Lousy luck.";
 	info = "<b>Bitey Lou's Body Shop</b><hr><p>Bill for Services Rendered: 55,000 credits</p><br><ul><li>Post-collision Structural Radiography analysis: 20k</li><li>Welding services, vaccuum-rated: 15k</li><li>Replacement of critically damaged outer panels: 10k</li><li>Dent removal: 5k</li><li>Surface repainting: 5k</li></ul><br><hr><p><i>Net 30, 60, and 90 payment terms available depending on creditworthiness.</i></p> ";
 	name = "Bitey Lou's Bill"
 	},
-/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
 /turf/unsimulated/floor/minitiles/black,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -2039,7 +2039,7 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/random_item_spawner/desk_stuff/some,
-/obj/item/paper/businesscard/banjo,
+/obj/item/paper/image/businesscard/banjo,
 /turf/unsimulated/floor/wood/five,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -4734,11 +4734,11 @@
 	})
 "tp" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
 /turf/unsimulated/floor/carpet/office,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -5226,8 +5226,8 @@
 	})
 "vm" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/businesscard/biteylou,
-/obj/item/paper/businesscard/bonktek,
+/obj/item/paper/image/businesscard/biteylou,
+/obj/item/paper/image/businesscard/bonktek,
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
@@ -5651,8 +5651,8 @@
 	pixel_y = 28
 	},
 /obj/map/light/secretwhite,
-/obj/item/paper/businesscard/vurdulak,
-/obj/item/paper/businesscard/josh,
+/obj/item/paper/image/businesscard/vurdulak,
+/obj/item/paper/image/businesscard/josh,
 /obj/item/paper{
 	desc = "Looks like it came from a higher Corporate office.";
 	icon_state = "paper";
@@ -7082,7 +7082,7 @@
 	})
 "CS" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/businesscard/skulls,
+/obj/item/paper/image/businesscard/skulls,
 /turf/simulated/floor/greenblack,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -8633,7 +8633,7 @@
 	})
 "Ka" = (
 /obj/item/cloth/towel/clown,
-/obj/item/paper/businesscard/clowntown,
+/obj/item/paper/image/businesscard/clowntown,
 /obj/storage/crate/chest{
 	desc = "Fancy.";
 	name = "Plucky's storage trunk"
@@ -8919,7 +8919,7 @@
 	})
 "Lc" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/xg_tapes,
+/obj/item/paper/image/xg_tapes,
 /turf/unsimulated/floor/wood/five,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -10155,10 +10155,10 @@
 	})
 "PE" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/businesscard/taxi,
-/obj/item/paper/businesscard/taxi,
-/obj/item/paper/businesscard/taxi,
-/obj/item/paper/businesscard/taxi,
+/obj/item/paper/image/businesscard/taxi,
+/obj/item/paper/image/businesscard/taxi,
+/obj/item/paper/image/businesscard/taxi,
+/obj/item/paper/image/businesscard/taxi,
 /turf/unsimulated/floor/black/side{
 	dir = 1
 	},
@@ -11308,8 +11308,8 @@
 	})
 "UE" = (
 /obj/table/round,
-/obj/item/paper/businesscard/gragg1,
-/obj/item/paper/businesscard/gragg2,
+/obj/item/paper/image/businesscard/gragg1,
+/obj/item/paper/image/businesscard/gragg2,
 /turf/unsimulated/floor/black/side{
 	dir = 4
 	},

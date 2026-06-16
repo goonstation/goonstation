@@ -477,21 +477,31 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/medicalchems
 	name = "Medical Reservoir Crate (Locked \[Medical Equipment])"
-	desc = "x4 Assorted Reservoir Tanks, x2 Sedative Bottles, x2 Hyposprays, x1 Auto-mender, x2 Brute Auto-mender Refill Cartridges, x2 Burn Auto-mender Refill Cartridges, x1 Syringe Kit."
+	desc = "x4 Assorted Reservoir Tanks, x2 Hyposprays, x1 Auto-mender, x2 Brute Auto-mender Refill Cartridges, x2 Burn Auto-mender Refill Cartridges."
 	category = "Medical"
-	contains = list(/obj/item/reagent_containers/glass/beaker/large/antitox,
-					/obj/item/reagent_containers/glass/beaker/large/epinephrine,
-					/obj/item/reagent_containers/food/drinks/reserve/brute,
-					/obj/item/reagent_containers/food/drinks/reserve/burn,
-					/obj/item/reagent_containers/glass/bottle/morphine = 2,
+	contains = list(/obj/item/reagent_containers/glass/beaker/large/antitox = 2,
+					/obj/item/reagent_containers/glass/beaker/large/epinephrine = 2,
 					/obj/item/reagent_containers/mender,
 					/obj/item/reagent_containers/mender_refill_cartridge/brute = 2,
 					/obj/item/reagent_containers/mender_refill_cartridge/burn = 2,
-					/obj/item/reagent_containers/hypospray = 2,
-					/obj/item/storage/box/syringes)
-	cost = PAY::DOCTORATE*5
+					/obj/item/reagent_containers/hypospray = 2)
+	cost = PAY::DOCTORATE*4
 	containertype = /obj/storage/secure/crate/medical
 	containername = "Medical Reservoir Crate"
+	access = access_medical_lockers
+
+/datum/supply_packs/medical_anesthetic
+	name = "Medical Anesthetic Crate (Locked \[Medical Equipment])"
+	desc = "x2 Sedative Bottles, x1 Syringe Kit, 1x Anesthetic Mask, 4x Anesthetic Mini-Tanks, 2x Anesthetic Tanks."
+	category = "Medical"
+	contains = list(/obj/item/reagent_containers/glass/bottle/morphine = 2,
+					/obj/item/storage/box/syringes,
+					/obj/item/clothing/mask/medical/anesthetic,
+					/obj/item/tank/mini/anesthetic = 4,
+					/obj/item/tank/anesthetic = 2)
+	cost = PAY::DOCTORATE*4
+	containertype = /obj/storage/secure/crate/medical
+	containername = "Medical Anesthetic Crate"
 	access = access_medical_lockers
 
 /datum/supply_packs/complex/glass_recycler
@@ -527,7 +537,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 		/obj/item/gun/sprayer,
 		/obj/item/reagent_containers/glass/backtank
 	)
-
 
 /datum/supply_packs/monkey4
 	name = "Lab Monkey Crate - 4 pack"
@@ -1974,7 +1983,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/operating_kit
 	name = "Operating Room Reconstruction Kit (Locked \[Medical])"
-	desc = "x1 Staple Gun, x1 Defibrillator, x2 Scalpel, x2 Circular Saw, x1 Hemostat, x2 Suture, x1 Enucleation Spoon, x1 Medical Fabricator Frame, x1 Operating Table Frame."
+	desc = "x1 Staple Gun, x1 Defibrillator, x2 Scalpel, x2 Circular Saw, x1 Hemostat, x2 Suture, x1 Enucleation Spoon, x1 Medical Fabricator Frame, x1 Operating Table Frame, 1x Nanomed Vendor Frame."
 	category = "Medical"
 	contains = list(/obj/item/staple_gun,
 					/obj/item/robodefibrillator,
