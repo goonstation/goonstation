@@ -7,7 +7,7 @@ TYPEINFO(/datum/charm_effect)
 /datum/charm_effect
 	/// List of reagent IDs that will cause this effect
 	var/list/reagents = list()
-	var/obj/item/paper/folded/charm/charm
+	var/obj/item/clothing/suit/charm/charm
 
 	/// When the charm is first stained with this effect
 	proc/on_stain()
