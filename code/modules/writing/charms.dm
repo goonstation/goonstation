@@ -3,9 +3,9 @@
 	name = "paper charm"
 	desc = "A little folded paper charm with something written on the inside."
 	icon = 'icons/obj/charms.dmi'
-	icon_state = "paper_charm"
-	wear_image_icon = 'icons/obj/charms.dmi'
-	wear_state = "worn_charm"
+	icon_state = "charm"
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_charms.dmi'
+	wear_state = "charm"
 	/// ID of the reagent staining this charm
 	var/stain_reagent = null
 	var/datum/charm_effect/effect = null
@@ -21,8 +21,12 @@
 		var/datum/reagent/reagent = overlay.color = holder_reagents.get_reagent(reagent_id)
 		overlay.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 		src.UpdateOverlays(overlay, "stain")
+
+		if (ishuman(src.loc) && src.equipped_in_slot == SLOT_WEAR_SUIT)
+			src.add_worn_overlays(src.loc)
+
 		for (var/type in concrete_typesof(/datum/charm_effect))
-			var/datum/charm_effect/effect = get_type_typeinfo(type)
+			var/datum/charm_effect/effect = new type()
 			if (effect.stain_condition(reagent_id, volume, holder_reagents))
 				src.effect = effect
 				src.effect.charm = src
@@ -30,22 +34,37 @@
 
 		return TRUE
 
+	equipped(mob/user, slot)
+		src.add_worn_overlays(user)
+		. = ..()
+
+	unequipped(mob/user)
+		user.ClearSpecificOverlays("charm_stain")
+		. = ..()
+
+	proc/add_worn_overlays(mob/living/carbon/human/human)
+		if (!ishuman(human) || !src.stain_reagent)
+			return
+		var/typeinfo/datum/mutantrace/typeinfo = human.mutantrace?.get_typeinfo()
+		var/overlay_icon = typeinfo.clothing_icons["overcoats"] ? typeinfo.clothing_icons["overcoats"] : src.wear_image_icon
+		var/overlay_state = is_blood(src.stain_reagent) ? "charm_stained" : "charm_bloodied"
+		var/image/overlay = image(overlay_icon, overlay_state)
+		var/datum/reagent/reagent = reagents_cache[src.stain_reagent]
+		overlay.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+		human.UpdateOverlays(overlay, "charm_stain")
+
 	disposing()
 		src.effect.charm = null
 		src.effect = null
 		. = ..()
 
-	// attackby(obj/item/cable_coil/cable, mob/living/user, params)
-	// 	if (!istype(cable))
-	// 		return ..()
-	// 	if (!cable.use(2))
-	// 		boutput(user, SPAN_ALERT("You need at least 2 lengths of cable to make that!"))
-	// 		return
-	// 	var/obj/item/clothing/suit/charm/strung_charm = new
-	// 	strung_charm.set_up(src, cable.insulator.getColor())
-	// 	user.drop_item(src)
-	// 	src.set_loc(strung_charm)
-	// 	user.put_in_hand(strung_charm)
+	attackby(obj/item/cable_coil/cable, mob/living/user, params)
+		if (!istype(cable))
+			return ..()
+		if (!cable.use(2))
+			boutput(user, SPAN_ALERT("You need at least 2 lengths of cable to make that!"))
+			return
+		src.icon_state = "charm_strung"
 
 	set_loc(newloc, storage_check)
 		src.on_set_loc(newloc, src.loc)
