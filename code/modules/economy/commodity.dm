@@ -751,7 +751,14 @@ datum/commodity/drugs/sell/poppies
 	desc = "Another one of those experimental Syndicate holographic projects, seems to be an older model."
 	price = PAY::EMBEZZLED
 
-/datum/commodity/contraband/birdbomb
+ABSTRACT_TYPE(/datum/commodity/contraband/specialammo)
+/datum/commodity/contraband/specialammo
+	comname = "Specialty Ammunition"
+	comtype = /obj/item/ammo
+	desc = "Exotic ammunition."
+	var/num_stocked = 4 //Used by CARL
+
+/datum/commodity/contraband/specialammo/birdbomb
 	comname = "12ga AEX ammo"
 	comtype = /obj/item/ammo/bullets/aex
 	desc = "12 gauge ammo marked 12ga AEX Large Wildlife Dispersal Cartridge. Huh."
