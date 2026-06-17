@@ -332,6 +332,7 @@
 #include "code\datums\controllers\daynight_controls.dm"
 #include "code\datums\controllers\disease_controls.dm"
 #include "code\datums\controllers\event_controls.dm"
+#include "code\datums\controllers\infernal_contracts.dm"
 #include "code\datums\controllers\explosion_controls.dm"
 #include "code\datums\controllers\hydro_controls.dm"
 #include "code\datums\controllers\job_controls.dm"

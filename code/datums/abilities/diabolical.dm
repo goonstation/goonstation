@@ -172,10 +172,12 @@
 			return 1
 		. = ..()
 		holder.points -= pointCost
-		souladjust(holder.points, M)
+		contract_controls.souladjust(holder.points, M)
 		boutput(M, SPAN_ALERT("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
-		spawncontract(M, 1, 1) //strong contract + pen
-		soulcheck(M)
+		contract_controls.spawncontract(M, 1, 1) //strong contract + pen
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.soulcheck()
 		return 0
 
 /////////////////////////Random Satan Gimmick Spells/////////////////////////////////////////////
@@ -256,7 +258,7 @@
 		if (!M)
 			return 1
 		. = ..()
-		spawncontract(usr, 0, 1)
+		contract_controls.spawncontract(usr, 0, 1)
 		return 0
 
 ////////////////////////Kill Jesta///////////////////////////////
