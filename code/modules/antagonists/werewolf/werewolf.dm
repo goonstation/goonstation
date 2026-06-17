@@ -34,7 +34,7 @@
 	remove_equipment()
 		var/mob/living/carbon/human/H = src.owner.current
 		if (istype(H.mutantrace, /datum/mutantrace/werewolf))
-			H.werewolf_transform()
+			H.werewolf_transform(TRUE)
 
 		src.ability_holder.removeAbility(/datum/targetable/werewolf/werewolf_feast)
 		src.ability_holder.removeAbility(/datum/targetable/werewolf/werewolf_pounce)
