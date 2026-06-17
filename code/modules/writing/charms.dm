@@ -33,6 +33,7 @@
 			if (effect.stain_condition(reagent_id, volume, holder_reagents))
 				src.effect = effect
 				src.effect.charm = src
+				src.effect.on_stain()
 				if (isliving(src.loc))
 					src.effect.on_gain(src.loc)
 				break
