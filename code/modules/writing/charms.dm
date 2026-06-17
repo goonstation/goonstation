@@ -11,6 +11,7 @@
 	var/datum/charm_effect/effect = null
 	/// Do we have a string, can be equipped?
 	var/strung = FALSE
+	var/obj/item/paper/paper = null
 	//ideas for other charm effects: lavender gives disease resist + slightly higher chance for asymptomaticness
 	//aconite stain prevent ww transforms
 
@@ -32,6 +33,8 @@
 			if (effect.stain_condition(reagent_id, volume, holder_reagents))
 				src.effect = effect
 				src.effect.charm = src
+				if (isliving(src.loc))
+					src.effect.on_gain(src.loc)
 				break
 
 		return TRUE
@@ -46,6 +49,10 @@
 	unequipped(mob/user)
 		user.ClearSpecificOverlays("charm_stain")
 		. = ..()
+
+	attack_self(mob/user)
+		src.paper.ui_interact(user)
+		return
 
 	proc/add_worn_overlays(mob/living/carbon/human/human)
 		if (!ishuman(human) || !src.stain_reagent)

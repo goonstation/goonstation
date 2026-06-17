@@ -42,6 +42,7 @@ ABSTRACT_TYPE(/datum/charm_effect)
 	on_gain(mob/living/user)
 		src.RegisterSignal(user, COMSIG_TRY_CURSE, PROC_REF(on_try_curse))
 
+#define MAX_SERMON_LENGTH 120
 	proc/on_try_curse(mob/living/victim, mob/living/intangible/wraith/wraith)
 		if (src.charges <= 0)
 			return FALSE
@@ -52,9 +53,17 @@ ABSTRACT_TYPE(/datum/charm_effect)
 		victim.TakeDamage("chest", burn = 5) //ow!
 		playsound(get_turf(victim), 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 		src.charges--
+		var/charm_text = strip_html_tags(src.charm.paper.info)
+		//if it won't fit in a message just throw a snippet of it at them instead of always the end
+		if (length(charm_text) > MAX_SERMON_LENGTH)
+			var/start = rand(1, length(charm_text) - MAX_SERMON_LENGTH)
+			charm_text = copytext(charm_text, start, start + MAX_SERMON_LENGTH)
+			charm_text = "...[charm_text]..."
+		DISPLAY_MAPTEXT(victim, list(wraith), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/curse_denied, charm_text, src.charm)
 		if (src.charges <= 0)
 			victim.drop_item(src.charm)
 			qdel(src.charm)
 			new /obj/decal/cleanable/ash(victim.loc)
 
 		return TRUE
+#undef MAX_SERMON_LENGTH
