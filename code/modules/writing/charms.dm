@@ -9,6 +9,8 @@
 	/// ID of the reagent staining this charm
 	var/stain_reagent = null
 	var/datum/charm_effect/effect = null
+	/// Do we have a string, can be equipped?
+	var/strung = FALSE
 	//ideas for other charm effects: lavender gives disease resist + slightly higher chance for asymptomaticness
 	//aconite stain prevent ww transforms
 
@@ -34,6 +36,9 @@
 
 		return TRUE
 
+	can_equip(mob/user, slot)
+		return ..() && src.strung
+
 	equipped(mob/user, slot)
 		src.add_worn_overlays(user)
 		. = ..()
@@ -54,7 +59,7 @@
 		human.UpdateOverlays(overlay, "charm_stain")
 
 	disposing()
-		src.effect.charm = null
+		src.effect?.charm = null
 		src.effect = null
 		. = ..()
 
@@ -65,6 +70,7 @@
 			boutput(user, SPAN_ALERT("You need at least 2 lengths of cable to make that!"))
 			return
 		src.icon_state = "charm_strung"
+		src.strung = TRUE
 
 	set_loc(newloc, storage_check)
 		src.on_set_loc(newloc, src.loc)
