@@ -4,6 +4,7 @@
 	tabName = "Changeling"
 	notEnoughPointsMessage = SPAN_ALERT("We are not strong enough to do this.")
 	var/list/absorbed_dna = list()
+	var/datum/absorbedIdentity/current_ident
 	var/in_fakedeath = 0
 	var/headspider_ready = FALSE /// Have we used the ability to get a headspider ready when we die
 	var/absorbtions = 0
@@ -17,7 +18,11 @@
 	New(var/mob/living/M)
 		..()
 		if (M)
-			absorbed_dna = list("[M.name]" = new /datum/absorbedIdentity(M))
+			src.current_ident = new /datum/absorbedIdentity(M)
+			absorbed_dna = list(
+				"[M.name]" = src.current_ident,
+				"Lesser Form" = new /datum/absorbedIdentity/monkey()
+			)
 
 	onAttach(mob/to_whom)
 		. = ..()
@@ -29,6 +34,7 @@
 		. = ..()
 
 		if (from_who)
+			UnregisterSignal(from_who, COMSIG_MOB_DEATH)
 			from_who.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = ref(src))
 			from_who.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = ref(src))
 
@@ -106,11 +112,19 @@
 			if (istype(antag, /datum/antagonist/subordinate/changeling_critter))
 				mind_to_be_transferred.remove_antagonist(antag)
 
-		// Remove any previous hivemind member roles, and add a new one.
+		// "gracefully" transfer existing hivemind members without messing up lings who are backseating
+		if (istype(M, /mob/dead/target_observer/hivemind_observer))
+			var/mob/dead/target_observer/hivemind_observer/hivemind_observer = M
+			hivemind_observer.hivemind_owner = src
+			hivemind_observer.set_observe_target(src.owner)
+			var/datum/antagonist/subordinate/hivemind_member/antag_role = mind_to_be_transferred.get_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
+			//we skip this bit if they're the ling themselves, you shouldn't subordinate to yourself!
+			if (antag_role && hivemind_observer != src.master)
+				//look for our master's mind, if they've relinquished control it'll be in the stored observer, otherwise it'll just be Here
+				antag_role.master = src.master?.mind || src.owner.mind
+		else
+			mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
 
-		mind_to_be_transferred.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-		mind_to_be_transferred.add_subordinate_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER, master = src.owner.mind)
-		mind_to_be_transferred.current.show_antag_popup(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		return mind_to_be_transferred.current
 
 	proc/return_control_to_master()
@@ -120,6 +134,7 @@
 			//Return the controller to the hivemind, with their original names.
 			boutput(src.owner,"<h2><span class='combat bold'>[master] has retaken control of the flesh!</span></h2>")
 			src.owner.mind.transfer_to(temp_controller)
+			temp_controller.set_observe_target(src.owner)
 			temp_controller = null
 			boutput(master, SPAN_NOTICE("We retake control of our form!"))
 			changeling_master_mind.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
@@ -216,12 +231,18 @@
 		..()
 		for(var/mob/dead/target_observer/hivemind_observer/HO in hivemind)
 			src.insert_into_hivemind(HO)
+		src.owner.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[src]")
+		src.owner.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src]")
 
 ///A stored representation of an absorbed victim, we load their traits as well as their bioholder now
 /datum/absorbedIdentity
 	var/name
 	var/datum/bioHolder/bioHolder
 	var/datum/traitHolder/traitHolder
+	/// Skip checks on real_name being the same when switching away from this ident
+	var/always_switch = FALSE
+	/// Don't attempt to re-store this ident when switching away from it
+	var/do_not_store = FALSE
 
 	New(mob/M)
 		if (M)
@@ -255,6 +276,17 @@
 		human.update_face()
 		human.update_body()
 		human.update_clothing()
+
+/datum/absorbedIdentity/monkey
+	always_switch = TRUE
+	do_not_store = TRUE
+
+	set_up_from(mob/living/carbon/human/victim)
+		return
+
+	apply_to(mob/living/carbon/human/human)
+		human.monkeyize()
+		logTheThing(LOG_COMBAT, human, "enters lesser form as a changeling, [log_loc(human)].")
 
 // ----------------------------------------
 // Generic abilities that critters may have

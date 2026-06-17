@@ -240,13 +240,13 @@ ABSTRACT_TYPE(/datum/objective/crew/securityassistant)
 
 ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 /datum/objective/crew/quartermaster/profit
-	explanation_text = "End the round with a Shipping budget of over 50,000 credits."
+	explanation_text = "End the round with a Supply budget of over 100,000 credits."
 	medal_name = "Tax Haven"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
-			if(wagesystem.budgets[BUDGET_CAT_SHIPPING] > 50000)
+			if(wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] > 100000)
 				check_result = TRUE
 		return check_result
 

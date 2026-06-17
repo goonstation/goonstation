@@ -10,7 +10,7 @@
 	chance_arrive = 10
 	chance_restock = 20
 
-	business_card = /obj/item/paper/businesscard/vurdulak
+	business_card = /obj/item/paper/image/businesscard/vurdulak
 
 	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(
