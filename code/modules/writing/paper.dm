@@ -273,7 +273,7 @@
 		"stamp-sprite-stain-2" = "[resource("images/tgui/stamp_icons/stamp-stain-2.png")]",
 		"stamp-sprite-stain-3" = "[resource("images/tgui/stamp_icons/stamp-stain-3.png")]",
 		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
-		"stamp-sprite-flock" = "[resource("images/tgui/stamp_icons/stamp-flock.png")]",
+		"stamp-sprite-flock" = "[resource("images/tgui/stamp_icons/stamp-flock-encoded.gif")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
