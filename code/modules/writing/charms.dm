@@ -86,6 +86,38 @@
 		src.icon_state = "charm_strung"
 		src.strung = TRUE
 
+	attack(mob/living/target, mob/user, def_zone, is_special, params)
+		if (!istype(target))
+			return ..()
+		if (target.bleeding)
+			var/datum/reagents/holder = new()
+			holder.add_reagent(target.blood_id, 10, target.bioHolder)
+			src.reagent_act(target.blood_id, 10, holder)
+			qdel(holder)
+			attack_particle(user, target)
+			boutput(user, SPAN_NOTICE("You press [src] into [target]'s wounds."))
+			return
+		. = ..()
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/decal/cleanable))
+			var/obj/decal/cleanable/cleanable = target
+			if (length(cleanable.reagents?.reagent_list) || cleanable.sample_reagent)
+				boutput(user, SPAN_NOTICE("You smear [src] in [cleanable]."))
+			if (length(cleanable.reagents?.reagent_list))
+				var/reagent_id = cleanable.reagents.reagent_list[1]
+				src.reagent_act(reagent_id, cleanable.reagents.get_reagent_amount(reagent_id), cleanable.reagents)
+			else if (cleanable.sample_reagent)
+				var/datum/reagents/holder = new()
+				holder.add_reagent(cleanable.sample_reagent, 10)
+				src.reagent_act(cleanable.sample_reagent, 10, holder)
+		else if (isturf(target))
+			var/turf/T = target
+			var/datum/reagents/holder = T.active_liquid?.group?.reagents
+			if (length(holder?.reagent_list))
+				var/reagent_id = holder.reagent_list[1]
+				src.reagent_act(reagent_id, holder.get_reagent_amount(reagent_id), holder)
+
 	set_loc(newloc, storage_check)
 		src.on_set_loc(newloc, src.loc)
 		. = ..()
