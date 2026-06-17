@@ -32,9 +32,12 @@ ABSTRACT_TYPE(/datum/charm_effect)
 		return ..() && istype(bioholder) && bioholder.cursed
 
 	on_stain()
-		var/datum/effects/system/bad_smoke_spread/smoke = new(get_turf(src.charm))
-		smoke.set_up(2, 0, get_turf(charm), null, "#b1b1b1")
-		smoke.start()
+		src.charm.add_filter("cursed_blood", 1, outline_filter(size=0, color="#CC1E27"))
+		animate(src.charm.filters[length(src.charm.filters)], size = 1, time = 1 SECOND)
+		animate(time = 0.5 SECONDS, size = 0)
+		SPAWN(1.5 SECONDS)
+			src.charm.remove_filter("cursed_blood")
+		src.charm.visible_message(SPAN_NOTICE("[src.charm] glows faintly as the cursed blood seeps into it."))
 
 	on_lose(mob/living/user)
 		src.UnregisterSignal(user, COMSIG_TRY_CURSE)
@@ -49,7 +52,7 @@ ABSTRACT_TYPE(/datum/charm_effect)
 		var/obj/effects/harmless_smoke/smoke = new(get_turf(src.charm))
 		SPAWN(1 SECOND)
 			qdel(smoke)
-		boutput(victim, SPAN_ALERT("Your [src.charm] singes as it protects you from a foul curse!"))
+		boutput(victim, SPAN_ALERT("Your [src.charm.name] singes as it protects you from a foul curse!"))
 		victim.TakeDamage("chest", burn = 5) //ow!
 		playsound(get_turf(victim), 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 		src.charges--
