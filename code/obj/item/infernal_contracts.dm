@@ -159,6 +159,8 @@
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
+		if (!contract_controls)
+			contract_controls = new /datum/infernal_contracts_controller()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)

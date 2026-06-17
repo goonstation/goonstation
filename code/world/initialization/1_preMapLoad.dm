@@ -146,8 +146,6 @@
 	shippingmarket = new /datum/shipping_market()
 	Z_LOG_DEBUG("Preload", "  hydro_controls")
 	hydro_controls = new /datum/hydroponics_controller()
-	Z_LOG_DEBUG("Preload", "  infernal_contracts_controls")
-	contract_controls = new /datum/infernal_contracts_controller()
 	Z_LOG_DEBUG("Preload", "  job_controls")
 	job_controls = new /datum/job_controller()
 	Z_LOG_DEBUG("Preload", "  manuf_controls")
