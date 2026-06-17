@@ -159,8 +159,6 @@
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
-		if (!contract_controls)
-			contract_controls = new /datum/infernal_contracts_controller()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
@@ -169,6 +167,8 @@
 	// merchants on contracts need to be set elsewhere when merchant is known
 	make_my_stuff()
 		..()
+		if (!contract_controls)
+			contract_controls = new /datum/infernal_contracts_controller()
 		var/tempcontract = pick(contract_controls.strongcontracts)
 		src.storage.add_contents(new tempcontract(src))
 
