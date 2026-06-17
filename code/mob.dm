@@ -3293,32 +3293,6 @@ TYPEINFO(/mob)
 		else
 			return 0*/
 
-/mob/proc/sell_soul(var/amount, var/reduce_health=1, var/allow_overflow=0)
-	if(!src.mind)
-		return 0
-	if(isnpc(src))
-		return 0
-	if(allow_overflow)
-		amount = clamp(src.mind.soul, 1, amount) // can't sell less than 1
-	if (isdiabolical(src))
-		boutput(src, SPAN_NOTICE("You collect souls, why would you want to sell yours?"))
-		return 0
-	if(istype(src, /mob/living/carbon/human) && src:unkillable) //shield of souls interaction
-		boutput(src,SPAN_ALERT("<b>Your soul is shielded and cannot be sold!</b>"))
-		return 0
-	if(amount > src.mind.soul)
-		boutput(src, SPAN_ALERT("<b>You don't have enough of a soul to sell!</b>"))
-		return 0
-	boutput(src, SPAN_ALERT("<b>You feel a portion of your soul rip away from your body!</b>"))
-	if(reduce_health)
-		var/current_penalty = src.hasStatus("maxhealth-")?:change
-		src.setStatus("maxhealth-", null, current_penalty - amount / 4 * 3)
-	src.mind.soul -= amount
-
-	if(src.mind.soul <= 0)
-		souladjust(1)
-	return 1
-
 /mob/proc/get_id(not_worn = FALSE)
 	RETURN_TYPE(/obj/item/card/id)
 	return get_id_card(src.equipped())

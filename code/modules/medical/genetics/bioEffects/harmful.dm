@@ -658,38 +658,6 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-/datum/bioEffect/emoter/juggler
-	name = "Jugglemancer's Curse"
-	desc = "Places a mystical hex upon the subject that compels the subject to juggle."
-	id = "juggler"
-	msgGain = "You feel the need to juggle"
-	msgLose = "You no longer feel the need to juggle."
-	emote_type = "juggle"
-	emote_prob = 35
-	occur_in_genepools = 0
-	probability = 0
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
-
-	OnAdd()
-		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.can_juggle++
-
-	OnRemove()
-		. = ..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.can_juggle--
-			if (H.can_juggle < 0)
-				H.can_juggle = 0
-
 /datum/bioEffect/buzz
 	name = "Nectar Perspiration"
 	desc = "Causes the subject to perspire nectar that attracts abnormally small bees."

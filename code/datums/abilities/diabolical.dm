@@ -17,41 +17,19 @@
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 /atom/movable/screen/ability/topBar/merchant
-	clicked(params)
-		var/datum/targetable/merchant/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, SPAN_ALERT("You can't use this ability here."))
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 
 /datum/abilityHolder/merchant
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Souls"
 	notEnoughPointsMessage = SPAN_ALERT("You need more souls to use this ability!")
+	var/total_souls = 0
 
 	onAbilityStat() // In the "Souls" tab.
 		..()
 		.= list()
-		.["Souls:"] = total_souls_value
-		.["Total Collected:"] = total_souls_sold
+		.["Souls:"] = points
+		.["Total Collected:"] = total_souls
 		return
 
 /////////////////////////////////////////////// Merchant spell parent ////////////////////////////
@@ -148,9 +126,9 @@
 			boutput(M, SPAN_ALERT("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return 0
 
-		if (!(total_souls_value >= CONTRACT_COST))
+		if (!(holder.points >= CONTRACT_COST))
 			boutput(M, SPAN_ALERT("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, SPAN_ALERT("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
+			boutput(M, SPAN_ALERT("You need [CONTRACT_COST - holder.points] more to afford a contract!"))
 			return 0
 
 		return 1
@@ -184,16 +162,17 @@
 		var/mob/living/M = holder.owner
 		if (!M)
 			return 1
-		if (!(total_souls_value >= CONTRACT_COST))
+		if (!(holder.points >= CONTRACT_COST))
 			boutput(M, SPAN_ALERT("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, SPAN_ALERT("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
+			boutput(M, SPAN_ALERT("You need [CONTRACT_COST - holder.points] more to afford a contract!"))
 			return 1
 		if (!isdiabolical(M))
 			boutput(M, SPAN_ALERT("You aren't evil enough to use this power!"))
 			boutput(M, SPAN_ALERT("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return 1
 		. = ..()
-		souladjust(-CONTRACT_COST)
+		holder.points -= pointCost
+		souladjust(holder.points, M)
 		boutput(M, SPAN_ALERT("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
 		spawncontract(M, 1, 1) //strong contract + pen
 		soulcheck(M)

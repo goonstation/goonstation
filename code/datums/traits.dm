@@ -1653,6 +1653,118 @@ TYPEINFO(/datum/trait/partyanimal)
 			var/mob/living/carbon/human/H = owner
 			randomize_mob_limbs(H)
 
+/datum/trait/devil_narcolepsy
+	name = "Soothing Snooze"
+	desc = "Sold your soul for great naps"
+	id = "devil_narcolepsy"
+	points = 0
+	unselectable = TRUE
+
+	onLife(var/mob/owner, var/mult)
+		if (isliving(owner))
+			var/mob/living/L = owner
+			var/reagent_id = "penteticacid"
+			if (L.reagents && L.reagents.get_reagent_amount(reagent_id) < 12)
+				L.reagents.add_reagent(reagent_id, 4 * mult)
+
+			L.HealDamage("All", 7 * mult, 0.66)
+			if (L.blood_volume < initial(L.blood_volume) && L.blood_volume > 0)
+				L.blood_volume += 1*mult
+
+			if (probmult(1) && ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if (H.limbs)
+					H.limbs.mend(1)
+
+			if (probmult(10))
+				L.sleeping = 1
+
+/datum/trait/devil_chem_production
+	name = "Hazardous Spontaneous Chemical Production"
+	desc = "Sold your soul to have your guts produce... something"
+	id = "devil_chem_production"
+	points = 0
+	unselectable = TRUE
+	var/reagent_to_add = "water"
+
+	onLife(var/mob/owner, var/mult)
+		if (isliving(owner))
+			var/mob/living/L = owner
+			if (L.reagents && L.reagents.get_reagent_amount(reagent_to_add) < 80)
+				L.reagents.add_reagent(reagent_to_add, 5 * mult)
+		if (length(all_functional_reagent_ids) > 1)
+			src.reagent_to_add = pick(all_functional_reagent_ids)
+		else
+			src.reagent_to_add = "water"
+
+/datum/trait/devil_bee_production
+	name = "Auto-BEErewery syndrome"
+	desc = "Sold your soul to have endless bees"
+	id = "devil_bee_production"
+	points = 0
+	unselectable = TRUE
+
+	onLife(var/mob/owner, var/mult)
+		if (isliving(owner))
+			var/mob/living/L = owner
+			if (L.reagents && L.reagents.get_reagent_amount("bee") < 12)
+				L.reagents.add_reagent("bee", 6 * mult)
+
+/datum/trait/juggler
+	name = "Jugglemancer's Curse"
+	desc = "Sold your soul for endless juggling"
+	id = "devil_juggling"
+	points = 0
+	unselectable = TRUE
+
+	onAdd(var/mob/owner)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle++
+
+	onLife(var/mob/owner, var/mult)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (probmult(35))
+				H.emote("juggle")
+
+/datum/trait/devil_genetic_mutations
+	name = "Infernal genetics"
+	desc = "Sold your soul to unlock your true potential"
+	id = "devil_genetic_mutations"
+	points = 0
+	unselectable = TRUE
+	var/mutation_type = "either"
+	var/affect_others = FALSE
+
+	onAdd(var/mob/owner)
+		if (isliving(owner))
+			var/mob/living/L = owner
+			var/datum/bioHolder/B = L.bioHolder
+
+			for(var/ID in B.effectPool)
+				B.ActivatePoolEffect(B.effectPool[ID], 1, 0)
+		if (prob(25))
+			src.mutation_type = "bad"
+			if (prob(5))
+				src.mutation_type = "good"
+
+	onLife(var/mob/owner, var/mult)
+		if (probmult(5))
+			owner.bioHolder.RandomEffect(mutation_type,1)
+			if (affect_others)
+				for(var/mob/living/L in range(2, get_turf(owner)))
+					if (!L.bioHolder)
+						continue
+					L.bioHolder.RandomEffect(mutation_type,1)
+				return
+
+/datum/trait/devil_genetic_mutations/strong
+	name = "Unbound infernal genetics"
+	desc = "Sold your soul to unlock everyone's potential"
+	id = "devil_genetic_mutations_strong"
+	affect_others = TRUE
+
 // organ removal associated traits
 // removal is handled in part customization, tracked here for equipping sensory item
 /datum/trait/missing_left_eye
