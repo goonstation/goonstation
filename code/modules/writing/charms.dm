@@ -19,26 +19,32 @@
 		if (src.stain_reagent)
 			return
 		src.stain_reagent = reagent_id
-		var/stain_type = is_blood(reagent_id) ? "bloodied" : "stained"
+		src.setup_overlay()
+
+		for (var/type in concrete_typesof(/datum/charm_effect))
+			var/datum/charm_effect/effect = new type()
+			if (effect.stain_condition(reagent_id, volume, holder_reagents))
+				src.set_effect(effect)
+				break
+
+		return TRUE
+
+	proc/set_effect(datum/charm_effect/effect)
+		src.effect = effect
+		src.effect.charm = src
+		src.effect.on_stain()
+		if (isliving(src.loc))
+			src.effect.on_gain(src.loc)
+
+	proc/setup_overlay()
+		var/stain_type = is_blood(src.stain_reagent) ? "bloodied" : "stained"
 		var/image/overlay = image(src.icon, stain_type)
-		var/datum/reagent/reagent = overlay.color = holder_reagents.get_reagent(reagent_id)
+		var/datum/reagent/reagent = overlay.color = reagents_cache[src.stain_reagent]
 		overlay.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 		src.UpdateOverlays(overlay, "stain")
 
 		if (ishuman(src.loc) && src.equipped_in_slot == SLOT_WEAR_SUIT)
 			src.add_worn_overlays(src.loc)
-
-		for (var/type in concrete_typesof(/datum/charm_effect))
-			var/datum/charm_effect/effect = new type()
-			if (effect.stain_condition(reagent_id, volume, holder_reagents))
-				src.effect = effect
-				src.effect.charm = src
-				src.effect.on_stain()
-				if (isliving(src.loc))
-					src.effect.on_gain(src.loc)
-				break
-
-		return TRUE
 
 	can_equip(mob/user, slot)
 		return ..() && src.strung
@@ -97,3 +103,11 @@
 		setProperty("meleeprot", 0)
 		setProperty("heatprot", 0)
 		setProperty("coldprot", 0)
+
+/obj/item/clothing/suit/charm/cursed_blood
+	stain_reagent = "blood"
+
+	New()
+		. = ..()
+		src.setup_overlay()
+		src.set_effect(new /datum/charm_effect/cursed_blood)
