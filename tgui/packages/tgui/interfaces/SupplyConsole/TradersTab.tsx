@@ -5,12 +5,183 @@
  * @license MIT
  */
 
-import { Section } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Image,
+  Section,
+  Stack,
+  Table,
+  Tabs,
+} from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
+import { useBackend, useSharedState } from '../../backend';
+import { resource } from '../../goonstation/cdn';
+import { capitalize } from './../common/stringUtils';
 import { SupplyConsoleData } from './type';
+import { CommodityEntry } from '../Trader/index';
 
 export const SupplyConsoleTradersTab = () => {
   const { data } = useBackend<SupplyConsoleData>();
-  return <Section title="Traders"> Todo </Section>;
+  const [viewing_trader, setTrader] = useSharedState('viewtrader', -1);
+  return (
+    <Section
+      fill
+      title="Traders"
+      buttons={
+        viewing_trader >= 0 && (
+          <Button
+            icon="arrow-left"
+            onClick={() => {
+              setTrader(-1);
+            }}
+          >
+            Back
+          </Button>
+        )
+      }
+    >
+      {viewing_trader >= 0 && <TraderView traderIndex={viewing_trader} />}
+      {viewing_trader < 0 && (
+        <Stack scrollable wrap="wrap">
+          {data.trader_data.map((trader, index) => {
+            return (
+              <Stack.Item key={index}>
+                <Button
+                  textAlign="center"
+                  color="grey"
+                  textColor="white"
+                  onClick={() => {
+                    setTrader(index);
+                  }}
+                >
+                  <Image src={resource('images/traders/' + trader.picture)} />
+                  <br />
+                  <b>{trader.name}</b>
+                </Button>
+              </Stack.Item>
+            );
+          })}
+        </Stack>
+      )}
+    </Section>
+  );
+};
+
+// Almost completely copypasted from trader UI
+const TraderView = (props) => {
+  const { data, act } = useBackend<SupplyConsoleData>();
+  const trader = data.trader_data[props.traderIndex];
+  const [traderTab, setTraderTab] = useSharedState('traderTab', 'sell');
+  return (
+    <Stack vertical fill>
+      <Stack.Item>
+        <SupplyTraderInfo trader={trader} />
+      </Stack.Item>
+      <Stack.Item>
+        <Tabs>
+          <Tabs.Tab
+            selected={traderTab === 'sell'}
+            onClick={() => {
+              setTraderTab('sell');
+            }}
+          >
+            Selling Items
+          </Tabs.Tab>
+          <Tabs.Tab
+            selected={traderTab === 'buy'}
+            onClick={() => {
+              setTraderTab('buy');
+            }}
+          >
+            Buying Items
+          </Tabs.Tab>
+          <Tabs.Tab
+            selected={traderTab === 'cart'}
+            onClick={() => {
+              setTraderTab('cart');
+            }}
+          >
+            View Cart
+          </Tabs.Tab>
+        </Tabs>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section fill scrollable noTopPadding>
+          {traderTab === 'sell' && (
+            <Table>
+              {trader.goods_sell.map((commodity) => (
+                <CommodityEntry
+                  key={commodity.ref}
+                  commodity={commodity}
+                  view_type={'selling'}
+                  currency_name={'⪽'}
+                />
+              ))}
+            </Table>
+          )}
+          {traderTab === 'buy' && (
+            <Table>
+              {trader.goods_buy.map((commodity) => (
+                <CommodityEntry
+                  key={commodity.ref}
+                  commodity={commodity}
+                  view_type={'buying'}
+                  currency_name={'⪽'}
+                />
+              ))}
+            </Table>
+          )}
+          {traderTab === 'cart' && (
+            <Table>
+              {trader.cart.map((item, index) => (
+                <Table.Row className="candystripe" key={index}>
+                  <Table.Cell width="32px"></Table.Cell>
+                  <Table.Cell verticalAlign="middle">
+                    <Box>{capitalize(item.name)}</Box>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table>
+          )}
+        </Section>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const SupplyTraderInfo = (props) => {
+  const { act } = useBackend<SupplyConsoleData>();
+  const { trader } = props;
+  return (
+    <Stack fill>
+      <Stack.Item>
+        <Image src={resource('images/traders/' + trader.picture)} />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Stack vertical fill>
+          <Section title={trader.name} fill>
+            <Section>
+              <Stack.Item>
+                <b>Items in cart:</b> {trader.cart.length}
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="cart-shopping"
+                  color="green"
+                  iconColor="white"
+                  textColor="white"
+                  onClick={() => {
+                    act('pickupcart');
+                  }}
+                >
+                  Confirm Cart
+                </Button>
+              </Stack.Item>
+            </Section>
+          </Section>
+        </Stack>
+      </Stack.Item>
+    </Stack>
+  );
 };

@@ -179,11 +179,16 @@ const TraderInfo = () => {
 type CommodityProps = {
   commodity: CommodityData;
   view_type: string;
+  currency_name: string;
 };
 
-const CommodityEntry = (props: CommodityProps) => {
+//Also used by QM console traders
+export const CommodityEntry = (props: CommodityProps) => {
   const { commodity, view_type } = props;
   const { data, act } = useBackend<TraderData>();
+  const currency_name = props.currency_name ?? data.currency_name;
+  const formattedCurrency =
+    currency_name === '⪽' ? currency_name : ' ' + currency_name;
   return (
     <Table.Row className="candystripe">
       <Table.Cell py="5px">
@@ -206,8 +211,8 @@ const CommodityEntry = (props: CommodityProps) => {
                 })
               }
             >
-              {view_type === 'selling' ? 'Buy' : 'Sell'} {commodity.price}{' '}
-              {data.currency_name}
+              {view_type === 'selling' ? 'Buy' : 'Sell'} {commodity.price}
+              {formattedCurrency}
             </Button>
           </Stack.Item>
           <Stack.Item>

@@ -38,11 +38,11 @@ const MarketTable = (props) => {
   return (
     <Table>
       <Table.Row>
-        <Table.Cell textAlign="center">
+        <Table.Cell>
           <b>Item</b>
         </Table.Cell>
         <Table.Cell />
-        <Table.Cell textAlign="center">
+        <Table.Cell textAlign="right">
           <b>Value</b>
         </Table.Cell>
       </Table.Row>
