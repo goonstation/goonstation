@@ -1,4 +1,6 @@
-
+(t)wed jun 17 26
+(u)LeahTheTech
+(+)Welders and igniters now more consistently triggers thermite.
 (t)mon jun 15 26
 (u)JORJ949
 (p)26785
