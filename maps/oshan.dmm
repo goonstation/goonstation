@@ -30634,10 +30634,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"hMy" = (
-/obj/machinery/plantpot,
-/turf/simulated/floor/plating/random,
-/area/station/turret_protected/ai_upload)
 "hNj" = (
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -80139,7 +80135,7 @@ bzx
 bzx
 bzx
 bzx
-hMy
+cfW
 agY
 cfW
 iYq
