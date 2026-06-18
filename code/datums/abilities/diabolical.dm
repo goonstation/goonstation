@@ -23,13 +23,12 @@
 	regenRate = 0
 	tabName = "Souls"
 	notEnoughPointsMessage = SPAN_ALERT("You need more souls to use this ability!")
-	var/total_souls = 0
 
 	onAbilityStat() // In the "Souls" tab.
 		..()
 		.= list()
-		.["Souls:"] = points
-		.["Total Collected:"] = total_souls
+		.["Souls:"] = src.points
+		.["Total Collected:"] = get_singleton(/datum/infernal_contracts_controller).total_souls
 		return
 
 /////////////////////////////////////////////// Merchant spell parent ////////////////////////////
@@ -172,9 +171,10 @@
 			return 1
 		. = ..()
 		holder.points -= pointCost
-		contract_controls.souladjust(holder.points, M)
+		var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
+		inf_controller.souladjust(holder.points, M)
 		boutput(M, SPAN_ALERT("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
-		contract_controls.spawncontract(M, 1, 1) //strong contract + pen
+		inf_controller.spawncontract(M, 1, 1) //strong contract + pen
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.soulcheck()
@@ -258,7 +258,7 @@
 		if (!M)
 			return 1
 		. = ..()
-		contract_controls.spawncontract(usr, 0, 1)
+		get_singleton(/datum/infernal_contracts_controller).spawncontract(usr, 0, 1)
 		return 0
 
 ////////////////////////Kill Jesta///////////////////////////////

@@ -1617,12 +1617,17 @@ TYPEINFO(/datum/trait/partyanimal)
 		owner.bioHolder.RemoveEffect("hair_growth")
 
 //Infernal Contract Traits
-/datum/trait/hair
+ABSTRACT_TYPE(/datum/trait/infernal)
+/datum/trait/infernal
+	name = "Infernal Trait Placeholder"
+	desc = "Placeholder"
+	points = 0
+	unselectable = TRUE
+
+/datum/trait/infernal/hair
 	name = "Wickedly Good Hair"
 	desc = "Sold your soul for the best hair around"
 	id = "contract_hair"
-	points = 0
-	unselectable = TRUE
 
 	onAdd(var/mob/owner)
 		if(ishuman(owner))
@@ -1635,12 +1640,10 @@ TYPEINFO(/datum/trait/partyanimal)
 			var/mob/living/carbon/human/H = owner
 			omega_hairgrownium_grow_hair(H, 1)
 
-/datum/trait/contractlimbs
+/datum/trait/infernal/contractlimbs
 	name = "Wacky Waving Limbs"
 	desc = "Sold your soul for ever shifting limbs"
 	id = "contract_limbs"
-	points = 0
-	unselectable = TRUE
 
 	onAdd(var/mob/owner)
 		if(ishuman(owner))
@@ -1653,12 +1656,10 @@ TYPEINFO(/datum/trait/partyanimal)
 			var/mob/living/carbon/human/H = owner
 			randomize_mob_limbs(H)
 
-/datum/trait/devil_narcolepsy
+/datum/trait/infernal/devil_narcolepsy
 	name = "Soothing Snooze"
 	desc = "Sold your soul for great naps"
 	id = "devil_narcolepsy"
-	points = 0
-	unselectable = TRUE
 
 	onLife(var/mob/owner, var/mult)
 		if (isliving(owner))
@@ -1679,12 +1680,10 @@ TYPEINFO(/datum/trait/partyanimal)
 			if (probmult(10))
 				L.sleeping = 1
 
-/datum/trait/devil_chem_production
+/datum/trait/infernal/devil_chem_production
 	name = "Hazardous Spontaneous Chemical Production"
 	desc = "Sold your soul to have your guts produce... something"
 	id = "devil_chem_production"
-	points = 0
-	unselectable = TRUE
 	var/reagent_to_add = "water"
 
 	onLife(var/mob/owner, var/mult)
@@ -1697,12 +1696,10 @@ TYPEINFO(/datum/trait/partyanimal)
 		else
 			src.reagent_to_add = "water"
 
-/datum/trait/devil_bee_production
+/datum/trait/infernal/devil_bee_production
 	name = "Auto-BEErewery syndrome"
 	desc = "Sold your soul to have endless bees"
 	id = "devil_bee_production"
-	points = 0
-	unselectable = TRUE
 
 	onLife(var/mob/owner, var/mult)
 		if (isliving(owner))
@@ -1710,12 +1707,10 @@ TYPEINFO(/datum/trait/partyanimal)
 			if (L.reagents && L.reagents.get_reagent_amount("bee") < 12)
 				L.reagents.add_reagent("bee", 6 * mult)
 
-/datum/trait/juggler
+/datum/trait/infernal/juggler
 	name = "Jugglemancer's Curse"
 	desc = "Sold your soul for endless juggling"
 	id = "devil_juggling"
-	points = 0
-	unselectable = TRUE
 
 	onAdd(var/mob/owner)
 		if (ishuman(owner))
@@ -1728,12 +1723,10 @@ TYPEINFO(/datum/trait/partyanimal)
 			if (probmult(35))
 				H.emote("juggle")
 
-/datum/trait/devil_genetic_mutations
+/datum/trait/infernal/devil_genetic_mutations
 	name = "Infernal genetics"
 	desc = "Sold your soul to unlock your true potential"
 	id = "devil_genetic_mutations"
-	points = 0
-	unselectable = TRUE
 	var/mutation_type = "either"
 	var/affect_others = FALSE
 
@@ -1759,7 +1752,7 @@ TYPEINFO(/datum/trait/partyanimal)
 					L.bioHolder.RandomEffect(mutation_type,1)
 				return
 
-/datum/trait/devil_genetic_mutations/strong
+/datum/trait/infernal/devil_genetic_mutations/strong
 	name = "Unbound infernal genetics"
 	desc = "Sold your soul to unlock everyone's potential"
 	id = "devil_genetic_mutations_strong"

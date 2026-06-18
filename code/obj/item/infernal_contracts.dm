@@ -167,12 +167,11 @@
 	// merchants on contracts need to be set elsewhere when merchant is known
 	make_my_stuff()
 		..()
-		if (!contract_controls)
-			contract_controls = new /datum/infernal_contracts_controller()
-		var/tempcontract = pick(contract_controls.strongcontracts)
+		var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
+		var/tempcontract = pick(inf_controller.strongcontracts)
 		src.storage.add_contents(new tempcontract(src))
 
-		var/list/tempweakcontracts = contract_controls.weakcontracts
+		var/list/tempweakcontracts = inf_controller.weakcontracts
 		while (!src.storage.is_full() && length(tempweakcontracts))
 			tempcontract = pick(tempweakcontracts)
 			tempweakcontracts.Remove(tempcontract)
@@ -180,11 +179,11 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		..()
-		if (soul_power >= 6)
+		if (src.soul_power >= 6)
 			var/mob/living/L = target
 			if(istype(L))
-				L.update_burning(soul_power) //sets people on fire above 5 souls sold, scales with souls.
-		if (soul_power >= 10)
+				L.update_burning(src.soul_power) //sets people on fire above 5 souls sold, scales with souls.
+		if (src.soul_power >= 10)
 			wrestler_backfist(user, target) //sends people flying above 10 souls sold, does not scale with souls.
 
 	proc/set_merchant(mob/merchant)
@@ -212,8 +211,9 @@
 		return
 	else
 		A.points -= CONTRACT_COST
-		contract_controls.souladjust(A.points, usr)
-		contract_controls.spawncontract(usr, 1, 1)
+		var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
+		inf_controller.souladjust(A.points, usr)
+		inf_controller.spawncontract(usr, 1, 1)
 		boutput(usr, SPAN_NOTICE("You have spent [CONTRACT_COST] souls to summon another contract! Your weapons are weaker as a result."))
 		if (ishuman(usr))
 			var/mob/living/carbon/human/H = usr
@@ -227,13 +227,13 @@
 	if (!A || !istype(A))
 		return
 	if (isdiabolical(src))
-		if (A.total_souls >= 10)
+		if (get_singleton(/datum/infernal_contracts_controller).total_souls >= 10)
 			if (!src.bioHolder.HasEffect("demon_horns"))
 				src.bioHolder.AddEffect("demon_horns", 0, 0, 1)
 			if (!src.bioHolder.HasEffect("hell_fire"))
 				src.bioHolder.AddEffect("hell_fire", 0, 0, 1)
 			return
-		else if (!(A.total_souls >= 10))
+		else if (!get_singleton(/datum/infernal_contracts_controller).total_souls >= 10)
 			if (src.bioHolder.HasEffect("demon_horns"))
 				src.bioHolder.RemoveEffect("demon_horns", 0, 0, 1)
 			if (src.bioHolder.HasEffect("hell_fire"))
@@ -350,10 +350,10 @@ END GUIDE
 			var/datum/abilityHolder/merchant/A = badguy.get_ability_holder(/datum/abilityHolder/merchant)
 			if (A && istype(A))
 				A.points++
-				A.total_souls++
-				contract_controls.souladjust(A.points, badguy)
+			var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
+			inf_controller.total_souls++
+			inf_controller.souladjust(A.points, badguy)
 		logTheThing(LOG_ADMIN, user, "signed a [src.type] contract at [log_loc(user)]!")
-
 
 	proc/updateuses(var/mob/user as mob, var/mob/badguy as mob)
 		if (src.limiteduse == 1)
@@ -367,7 +367,7 @@ END GUIDE
 			boutput(user, SPAN_NOTICE("<b>The depleted contract vanishes in a puff of smoke!</b>"))
 		playsound(src.loc, pick('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg'), 50, 1)
 		if(badguy)
-			contract_controls.spawncontract(badguy, (prob(20) ? 1 : 0), 0) //20 percent chance of rolling a strong contract
+			get_singleton(/datum/infernal_contracts_controller).spawncontract(badguy, (prob(20) ? 1 : 0), 0) //20 percent chance of rolling a strong contract
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 
@@ -411,12 +411,12 @@ END GUIDE
 			else if(!isliving(user) || isghostdrone(user) || issilicon(user))
 				return
 			else if (istype(W, /obj/item/pen/fancy/satan))
-				MagicEffect(user, src.merchant)
-				SPAWN(1 DECI SECOND)
-					if (src.merchant && ishuman(src.merchant))
-						var/mob/living/carbon/human/H = src.merchant
-						H.soulcheck()
-					updateuses(user, src.merchant)
+				if (MagicEffect(user, src.merchant))
+					SPAWN(1 DECI SECOND)
+						if (src.merchant && ishuman(src.merchant))
+							var/mob/living/carbon/human/H = src.merchant
+							H.soulcheck()
+						updateuses(user, src.merchant)
 			else
 				user.visible_message(SPAN_ALERT("<b>[user] looks puzzled as [he_or_she(user)] realizes [his_or_her(user)] pen isn't evil enough to sign [src]!</b>"))
 				return
@@ -477,13 +477,13 @@ END GUIDE
 		. = ..()
 		target.visible_message(SPAN_ALERT("[owner] forces [target] to sign [my_contract]!"))
 		logTheThing(LOG_COMBAT, owner, "forces [target] to sign a [my_contract] at [log_loc(owner)].")
-		my_contract.MagicEffect(target, owner)
-		SPAWN(1 DECI SECOND)
-			my_contract.inuse = 0
-			if (owner && ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.soulcheck()
-			my_contract.updateuses(target, owner)
+		my_contract.inuse = 0
+		if (my_contract.MagicEffect(target, owner))
+			SPAWN(1 DECI SECOND)
+				if (owner && ishuman(owner))
+					var/mob/living/carbon/human/H = owner
+					H.soulcheck()
+				my_contract.updateuses(target, owner)
 
 /obj/item/contract/satan
 	desc = "A contract that promises to bestow upon whomever signs it near immortality, great power, and some other stuff you can't be bothered to read."
@@ -596,7 +596,7 @@ END GUIDE
 		if (A.points >= horse_cost) //horse_cost (currently 15) souls needed to start the end-times. Sufficiently difficult?
 			boutput(user, SPAN_ALERT("<font size=6><B>NEIGH!</b></font>"))
 			A.points -= horse_cost
-			contract_controls.souladjust(A.points, user)
+			get_singleton(/datum/infernal_contracts_controller).souladjust(A.points, user)
 			SPAWN(0)
 				var/turf/spawn_turf = get_turf(src)
 				new /obj/effects/ydrone_summon/horseman(spawn_turf)
