@@ -115,7 +115,8 @@
 			prefab_options += list(prefab.name = prefab)
 			if(prefab == src.prefab_path)
 				current_prefab = prefab.name
-		var/chosen = tgui_input_list(user, "Choose hideout type", "Hideout Customization", prefab_options, current_prefab, theme="syndicate")
+		var/input_desc = "Choose hideout type.[src.dimension_host?.deref() ? " Will not apply to currently placed hideout." : null]"
+		var/chosen = tgui_input_list(user, input_desc, "Hideout Customization", prefab_options, current_prefab, theme="syndicate")
 		if(chosen)
 			src.prefab_path = prefab_options[chosen]
 

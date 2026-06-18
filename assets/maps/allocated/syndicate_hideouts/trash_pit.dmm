@@ -21,14 +21,9 @@
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
 "e" = (
-/obj/table/scrap/auto,
-/obj/item/reagent_containers/food/snacks/yoghurt{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/kitchen/utensil/spoon{
-	pixel_x = -6;
-	pixel_y = 7
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "tile1"
 	},
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
@@ -40,7 +35,10 @@
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
 "h" = (
-/obj/table/scrap/auto,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "tile1"
+	},
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
 "j" = (
@@ -54,21 +52,40 @@
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
 "l" = (
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
-/turf/simulated/floor/plating/random,
-/area/syndicate_station/hideout)
-"m" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
 	icon_state = "tile1"
 	},
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
-"q" = (
+"m" = (
 /obj/table/scrap/auto,
 /obj/item/cloth/towel/yellow{
 	pixel_x = 1;
 	pixel_y = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/syndicate_station/hideout)
+"n" = (
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/simulated/floor/plating/random,
+/area/syndicate_station/hideout)
+"o" = (
+/obj/table/scrap/auto,
+/turf/simulated/floor/plating/random,
+/area/syndicate_station/hideout)
+"r" = (
+/turf/simulated/floor/plating/random,
+/area/syndicate_station/hideout)
+"t" = (
+/obj/table/scrap/auto,
+/obj/item/reagent_containers/food/snacks/yoghurt{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = -6;
+	pixel_y = 7
 	},
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
@@ -79,34 +96,38 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
-"w" = (
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "tile1"
+"y" = (
+/obj/stool/chair/dining/scrap{
+	dir = 1
 	},
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
-"E" = (
+"A" = (
+/obj/table/scrap/auto,
+/obj/item/paper_bin,
+/obj/item/stamp{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/pen/crayon/red{
+	pixel_y = -2;
+	pixel_x = -3
+	},
+/obj/item/pen/pencil,
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
 "G" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "tile1"
+/obj/machinery/disposal/extradimensional/exit{
+	pixel_y = 3
 	},
-/turf/simulated/floor/plating/random,
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/circuit/off,
 /area/syndicate_station/hideout)
 "H" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/syndicate_station/hideout)
 "I" = (
 /obj/item/paper/book/from_file/captaining_101,
-/turf/simulated/floor/plating/random,
-/area/syndicate_station/hideout)
-"P" = (
-/obj/stool/chair/dining/scrap{
-	dir = 1
-	},
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
 "Q" = (
@@ -123,25 +144,8 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
-"U" = (
-/obj/machinery/disposal/extradimensional/exit{
-	pixel_y = 3
-	},
-/obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/circuit/off,
-/area/syndicate_station/hideout)
-"W" = (
-/obj/table/scrap/auto,
-/obj/item/paper_bin,
-/obj/item/stamp{
-	pixel_x = -5;
-	pixel_y = 10
-	},
-/obj/item/pen/crayon/red{
-	pixel_y = -2;
-	pixel_x = -3
-	},
-/obj/item/pen/pencil,
+"S" = (
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/plating/random,
 /area/syndicate_station/hideout)
 
@@ -181,10 +185,10 @@ a
 H
 H
 I
-E
+r
 j
-E
-E
+r
+r
 H
 H
 a
@@ -195,12 +199,12 @@ a
 H
 H
 j
-E
-E
-E
-E
-E
-l
+r
+r
+r
+r
+r
+n
 H
 H
 a
@@ -208,30 +212,30 @@ a
 (5,1,1) = {"
 a
 H
-E
-E
-E
-E
-E
-E
-E
-E
-E
+r
+r
+r
+r
+r
+r
+r
+r
+r
 H
 a
 "}
 (6,1,1) = {"
 a
 H
-E
+r
+o
+r
+l
+e
 h
-E
-m
-G
-w
-E
-E
-E
+r
+r
+r
 H
 a
 "}
@@ -239,13 +243,13 @@ a
 a
 H
 d
-e
-P
+t
+y
 k
-U
+G
 g
-E
-E
+r
+r
 j
 H
 a
@@ -253,30 +257,30 @@ a
 (8,1,1) = {"
 a
 H
-W
-q
-E
+A
+m
+r
 Q
 v
 R
-E
-E
-E
+r
+r
+r
 H
 a
 "}
 (9,1,1) = {"
 a
 H
-E
-E
-E
-E
-E
-E
-E
-E
-E
+r
+r
+r
+r
+r
+r
+r
+r
+r
 H
 a
 "}
@@ -285,11 +289,11 @@ a
 H
 H
 j
-E
-E
-E
-E
-E
+r
+r
+r
+r
+r
 b
 H
 H
@@ -300,11 +304,11 @@ a
 a
 H
 H
-E
-E
+S
+r
 j
-E
-E
+r
+r
 H
 H
 a
