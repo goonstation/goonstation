@@ -66,7 +66,7 @@
 			return
 		var/typeinfo/datum/mutantrace/typeinfo = human.mutantrace?.get_typeinfo()
 		var/overlay_icon = typeinfo.clothing_icons["overcoats"] ? typeinfo.clothing_icons["overcoats"] : src.wear_image_icon
-		var/overlay_state = is_blood(src.stain_reagent) ? "charm_stained" : "charm_bloodied"
+		var/overlay_state = is_blood(src.stain_reagent) ? "charm_bloodied" : "charm_stained"
 		var/image/overlay = image(overlay_icon, overlay_state)
 		var/datum/reagent/reagent = reagents_cache[src.stain_reagent]
 		overlay.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
