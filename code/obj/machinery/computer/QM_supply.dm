@@ -83,6 +83,8 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	. = list()
 	.["supply_categories"] = global.QM_CategoryList
 	.["supply_entries"] = src.fetch_supply_entry_data()
+	.["market_data"] = src.fetch_market_data()
+	.["trader_data"] = src.fetch_trader_data()
 
 /obj/machinery/computer/supplycomp/proc/fetch_supply_entry_data()
 	. = list()
@@ -98,12 +100,43 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		))
 		LAGCHECK(LAG_LOW)
 
+/obj/machinery/computer/supplycomp/proc/fetch_market_data()
+	. = list()
+	for(var/item_type in shippingmarket.commodities)
+		var/datum/commodity/C = shippingmarket.commodities[item_type]
+		var/viewprice = C.price
+		if (C.indemand)
+			viewprice *= shippingmarket.demand_multiplier
+		.+= list(list(
+			"name" = C.comname,
+			"in_demand" = C.indemand,
+			"price" = viewprice,
+		))
+
+/obj/machinery/computer/supplycomp/proc/fetch_trader_data()
+	. = list()
+	for (var/datum/trader/trader in shippingmarket.active_traders)
+		if (trader.hidden)
+			continue
+		.+= list(list(
+			"name" = trader.name,
+			"ref" = ref(trader),
+			"picture" = trader.picture,
+			"goods_sell" = trader.fetch_commodities_data(trader.goods_sell),
+			"goods_buy" = trader.fetch_commodities_data(trader.goods_buy),
+			"cart" = trader.fetch_commodities_data(trader.shopping_cart),
+		))
+
 /obj/machinery/computer/supplycomp/ui_data(mob/user)
 	. = list()
 	.["shipping_budget"] = global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]
 	.["market_reset_timer"] = global.shippingmarket.get_market_timeleft()
 	.["order_history"] = src.fetch_order_history_data()
 	.["requests"] = src.fetch_supply_request_data()
+	.["signal_loss"] = global.signal_loss
+	if(global.shippingmarket.last_market_update != src.last_market_update) //The market has refreshed.
+		src.last_market_update = global.shippingmarket.last_market_update
+		src.update_static_data_for_all_viewers() //Requisitions, market prices, etc.
 
 /obj/machinery/computer/supplycomp/proc/fetch_order_history_data()
 	. = list()

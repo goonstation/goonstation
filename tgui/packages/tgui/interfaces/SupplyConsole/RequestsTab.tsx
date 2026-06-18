@@ -13,7 +13,7 @@ import { SupplyConsoleData } from './type';
 export const SupplyConsoleRequestsTab = () => {
   const { data } = useBackend<SupplyConsoleData>();
   return (
-    <Section title="Cargo Requests">
+    <Section title="Cargo Requests" fill>
       <Table>
         <Table.Cell>
           <b>Requested Items:</b>

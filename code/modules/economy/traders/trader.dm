@@ -227,6 +227,20 @@
 			src.shopping_cart -= COM
 		src.shopping_cart.Cut()
 
+/datum/trader/proc/fetch_commodities_data(var/list/commodities)
+	. = list()
+	for (var/datum/commodity/trader/commodity in commodities)
+		.+= list(src.fetch_commodity_data(commodity))
+
+/datum/trader/proc/fetch_commodity_data(var/datum/commodity/trader/commodity)
+	return list(
+		"name" = commodity.comname,
+		"description" = commodity.listed_name,
+		"price" = commodity.price,
+		"amount_left" = commodity.amount,
+		"ref" = ref(commodity),
+	)
+
 /datum/commodity/trader
 	var/listed_name = "a thing!!!"   // What it shows up as outside the shopping cart
 	var/list/possible_names = list() // List of names the trader will call this commodity

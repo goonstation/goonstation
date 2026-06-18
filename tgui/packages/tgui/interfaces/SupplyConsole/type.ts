@@ -5,13 +5,19 @@
  * @license MIT
  */
 
+import { BooleanLike } from 'common/react';
+import { CommodityData } from '../Trader/type';
+
 export interface SupplyConsoleData {
   shipping_budget: number;
   market_reset_timer: number;
+  signal_loss: number;
   requests: SupplyRequestData[];
   order_history: OrderHistoryData[];
   supply_categories: string[];
   supply_entries: SupplyEntryData[];
+  market_data: MarketEntryData[];
+  trader_data: SupplyTraderData[];
 }
 
 interface SupplyRequestData {
@@ -35,6 +41,22 @@ interface OrderHistoryData {
   orderer: string;
   cost: number;
   comment: string;
+}
+
+interface MarketEntryData {
+  name: string;
+  in_demand: BooleanLike;
+  price: number;
+}
+
+// CommodityData reused from interfaces/Trader/type.ts
+interface SupplyTraderData {
+  name: string;
+  ref: string;
+  picture: string;
+  goods_sell: CommodityData[];
+  goods_buy: CommodityData[];
+  cart: CommodityData[];
 }
 
 export enum SupplyConsoleTabKeys {

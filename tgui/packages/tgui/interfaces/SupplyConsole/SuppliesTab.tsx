@@ -17,18 +17,22 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
+import { formatMoney } from '../../format';
 import { SupplyConsoleData } from './type';
 
 export const SupplyConsoleSuppliesTab = () => {
   const { data } = useBackend<SupplyConsoleData>();
   const [supply_tab, setSupplyTab] = useSharedState('supplytab', 'all');
-  const [searchQuery, setSearchQuery] = useSharedState('searchQuery', '');
+  const [suppliesTabSearchQuery, setSearchQuery] = useSharedState(
+    'suppliesTabSearchQuery',
+    '',
+  );
   const filteredEntries = data.supply_entries
     .filter((entry) => supply_tab === 'all' || entry.category === supply_tab)
     .filter((entry) =>
       (entry.name + entry.desc)
         .toLocaleLowerCase()
-        .includes(searchQuery.toLocaleLowerCase()),
+        .includes(suppliesTabSearchQuery.toLocaleLowerCase()),
     );
   return (
     <Section title="Place Order" fill>
@@ -36,7 +40,7 @@ export const SupplyConsoleSuppliesTab = () => {
         <Stack.Item pb="5px">
           <Input
             fluid
-            value={searchQuery}
+            value={suppliesTabSearchQuery}
             onChange={setSearchQuery}
             placeholder="Filter Packages"
           />
@@ -97,7 +101,7 @@ const SupplyEntry = (props) => {
                 })
               }
             >
-              {'Buy'} {entry.cost}⪽
+              {'Buy'} {formatMoney(entry.cost)}⪽
             </Button>
           </Stack.Item>
         </Stack>

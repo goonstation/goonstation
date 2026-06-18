@@ -26,45 +26,51 @@ export const SupplyConsole = () => {
     SupplyConsoleTabKeys.Requests,
   );
   return (
-    <Window theme={'retro-dark'} width={900} height={600}>
+    <Window theme={'retro-dark'} width={900} height={500}>
       <Window.Content>
         <Stack fill>
           <Stack.Item width={'200px'}>
-            <Section title="Market Information">
-              <MarketInformation />
-            </Section>
-            <Section title="Menu Selection">
-              <Tabs vertical fill>
-                <SupplyConsoleTab
-                  tabID={SupplyConsoleTabKeys.Requests}
-                  tabName={`Requests (${data.requests.length})`}
-                />
-                <SupplyConsoleTab
-                  tabID={SupplyConsoleTabKeys.Supplies}
-                  tabName={'Place Order'}
-                />
-                <SupplyConsoleTab
-                  tabID={SupplyConsoleTabKeys.History}
-                  tabName={'Order History'}
-                />
-                <SupplyConsoleTab
-                  tabID={SupplyConsoleTabKeys.Market}
-                  tabName={'Shipping Market'}
-                />
-                <SupplyConsoleTab
-                  tabID={SupplyConsoleTabKeys.Traders}
-                  tabName={'Traders'}
-                />
-                <SupplyConsoleTab
-                  tabID={SupplyConsoleTabKeys.Requisitions}
-                  tabName={'Requisitions'}
-                />
-                <SupplyConsoleTab
-                  tabID={SupplyConsoleTabKeys.Rockbox}
-                  tabName={'Rockbox Controls'}
-                />
-              </Tabs>
-            </Section>
+            <Stack vertical fill>
+              <Stack.Item>
+                <Section title="Market Information">
+                  <MarketInformation />
+                </Section>
+              </Stack.Item>
+              <Stack.Item grow>
+                <Section title="Menu Selection" fill>
+                  <Tabs vertical fill>
+                    <SupplyConsoleTab
+                      tabID={SupplyConsoleTabKeys.Requests}
+                      tabName={`Requests (${data.requests.length})`}
+                    />
+                    <SupplyConsoleTab
+                      tabID={SupplyConsoleTabKeys.Supplies}
+                      tabName={'Place Order'}
+                    />
+                    <SupplyConsoleTab
+                      tabID={SupplyConsoleTabKeys.History}
+                      tabName={'Order History'}
+                    />
+                    <SupplyConsoleTab
+                      tabID={SupplyConsoleTabKeys.Market}
+                      tabName={'Shipping Market'}
+                    />
+                    <SupplyConsoleTab
+                      tabID={SupplyConsoleTabKeys.Traders}
+                      tabName={'Traders'}
+                    />
+                    <SupplyConsoleTab
+                      tabID={SupplyConsoleTabKeys.Requisitions}
+                      tabName={'Requisitions'}
+                    />
+                    <SupplyConsoleTab
+                      tabID={SupplyConsoleTabKeys.Rockbox}
+                      tabName={'Rockbox Controls'}
+                    />
+                  </Tabs>
+                </Section>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
           <Stack.Item grow>
             {viewing_tab === SupplyConsoleTabKeys.Requests && (
@@ -104,6 +110,9 @@ const MarketInformation = () => {
       </Stack.Item>
       <Stack.Item>
         Market updates in <b>{data.market_reset_timer}</b>
+      </Stack.Item>
+      <Stack.Item>
+        Signal Interference: <b>{data.signal_loss}%</b>
       </Stack.Item>
     </Stack>
   );
