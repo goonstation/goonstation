@@ -29910,6 +29910,7 @@
 	id = "quarters_cap"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/captain,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/captain)
 "hgI" = (
@@ -35582,9 +35583,6 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "lSC" = (
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
 /obj/table/auto,
 /obj/machinery/networked/printer{
 	name = "Printer - NetCafe";
@@ -35595,6 +35593,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/ai_status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -49727,6 +49728,7 @@
 	name = "Captain's Quarters"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/captain,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/captain)
 "xYW" = (
