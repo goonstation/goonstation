@@ -41338,6 +41338,9 @@
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/food/drinks/cola,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "qXU" = (
