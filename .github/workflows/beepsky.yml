@@ -114,32 +114,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Cache BYOND
-        uses: actions/cache@v5
-        with:
-          path: /home/runner/BYOND
-          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
-
-      - name: Setup BYOND
-        run: |
-          tools/ci/install_byond.sh
-          cd $GITHUB_WORKSPACE
-          printenv
-          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
-          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
-          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
-
-      - name: Add Architecture
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
-          sudo apt-get update
-
-      - name: Install Dependencies
-        uses: Eeems-Org/apt-cache-action@v1
-        with:
-          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
+      - uses: ./.github/actions/setup-byond
 
       - name: Compile
         run: |
@@ -168,32 +143,7 @@ jobs:
           submodules: true
           token: "${{ secrets.ROBUDDYBOT_PAT }}"
 
-      - name: Cache BYOND
-        uses: actions/cache@v5
-        with:
-          path: /home/runner/BYOND
-          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
-
-      - name: Setup BYOND
-        run: |
-          tools/ci/install_byond.sh
-          cd $GITHUB_WORKSPACE
-          printenv
-          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
-          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
-          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
-
-      - name: Add Architecture
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
-          sudo apt-get update
-
-      - name: Install Dependencies
-        uses: Eeems-Org/apt-cache-action@v1
-        with:
-          packages: libssl-dev:i386 libgcc-s1:i386 libcurl4:i386
+      - uses: ./.github/actions/setup-byond
 
       - name: Read SpacemanDMM ref from config
         id: smver

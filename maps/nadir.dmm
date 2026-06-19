@@ -6363,6 +6363,19 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
+"cSQ" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/table/reinforced/auto,
+/obj/item/paper/blueprint/chart/system,
+/obj/item/paper/image/siphon_guide{
+	pixel_y = 14
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 6
+	},
+/area/station/science/hall)
 "cSX" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
@@ -8093,19 +8106,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
-"dFw" = (
-/obj/table/reinforced/auto,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/printer{
-	name = "Printer - Robotics";
-	pixel_y = 5;
-	print_id = "Robotics"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "dFE" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -10467,27 +10467,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"eNe" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/image/siphon_guide{
-	pixel_x = 5;
-	pixel_y = -3
-	},
-/obj/item/paper/image/siphon_guide{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/extinguisher{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/turf/simulated/floor/engine,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "eNr" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
@@ -13164,25 +13143,6 @@
 	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
-"fTC" = (
-/obj/table/reinforced/auto,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/item/paper/image/siphon_guide{
-	pixel_x = 7;
-	pixel_y = -11
-	},
-/obj/item/clipboard{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/obj/item/hand_labeler,
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/science/hall)
 "fTH" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -17149,6 +17109,25 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"hye" = (
+/obj/table/reinforced/auto,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/item/paper/image/siphon_guide{
+	pixel_x = 7;
+	pixel_y = -11
+	},
+/obj/item/clipboard{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/hand_labeler,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/science/hall)
 "hyf" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
@@ -18532,6 +18511,26 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"iaT" = (
+/obj/table/reinforced/auto,
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/robot_module{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/robot_module{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "iaW" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -22165,14 +22164,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/pool)
-"jFU" = (
-/obj/table/reinforced/auto,
-/obj/item/sheet/steel/fullstack{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "jGl" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -23512,19 +23503,6 @@
 /area/iss{
 	name = "Drop Capsule"
 	})
-"klu" = (
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
-/obj/table/reinforced/auto,
-/obj/item/paper/blueprint/chart/system,
-/obj/item/paper/image/siphon_guide{
-	pixel_y = 14
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 6
-	},
-/area/station/science/hall)
 "klz" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -24454,30 +24432,6 @@
 	dir = 6
 	},
 /area/station/hallway/secondary/exit)
-"kDv" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/robot_module{
-	pixel_x = -10;
-	pixel_y = -5
-	},
-/obj/item/robot_module{
-	pixel_x = 5;
-	pixel_y = -5
-	},
-/obj/item/robot_module{
-	pixel_x = -10;
-	pixel_y = 10
-	},
-/obj/item/robot_module{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/robotics)
 "kDD" = (
 /obj/machinery/teleport/portal_generator,
 /obj/machinery/firealarm/directional/north,
@@ -30442,6 +30396,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
+"nfQ" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/recharge_station,
+/obj/landmark/start/job/cyborg,
+/turf/simulated/floor/blue,
+/area/station/medical/robotics)
 "ngd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31546,6 +31509,15 @@
 	dir = 4
 	},
 /area/station/security/main)
+"nEH" = (
+/obj/machinery/siphon_lever,
+/obj/item/paper/image/siphon_guide{
+	pixel_y = -10
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "nFf" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -34115,6 +34087,29 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/barber_shop)
+"oPy" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_y = 16
+	},
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/surgical_shield{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
 "oPG" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
@@ -34726,6 +34721,23 @@
 /obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
+"pbC" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/printer{
+	name = "Printer - Robotics";
+	pixel_y = 5;
+	print_id = "Robotics"
+	},
+/obj/item/sheet/steel/fullstack{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "pbM" = (
 /obj/cable/blue{
 	icon_state = "2-5"
@@ -36190,6 +36202,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"pKW" = (
+/obj/machinery/computer/robotics/lab{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "pKY" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency{
@@ -40712,31 +40730,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"rVx" = (
-/obj/item/suture{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/staple_gun{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/suture{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/table/reinforced/auto,
-/obj/item/hemostat{
-	pixel_y = 6
-	},
-/obj/item/scissors/surgical_scissors,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = -12
-	},
-/obj/item/scalpel,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "rVE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41164,29 +41157,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
-"sin" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_y = 16
-	},
-/obj/item/clothing/mask/surgical{
-	pixel_x = -1;
-	pixel_y = 9
-	},
-/obj/item/clothing/gloves/latex{
-	pixel_x = -4;
-	pixel_y = -7
-	},
-/obj/item/clothing/mask/surgical_shield{
-	pixel_x = -9;
-	pixel_y = 7
-	},
-/obj/item/device/analyzer/healthanalyzer{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "siL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
@@ -41947,15 +41917,6 @@
 	dir = 1
 	},
 /area/station/bridge/reception)
-"sCH" = (
-/obj/machinery/siphon_lever,
-/obj/item/paper/image/siphon_guide{
-	pixel_y = -10
-	},
-/turf/simulated/floor/engine,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "sCJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42045,11 +42006,6 @@
 	dir = 8
 	},
 /area/station/quartermaster/refinery)
-"sEk" = (
-/obj/machinery/recharge_station,
-/obj/landmark/start/job/cyborg,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "sEm" = (
 /obj/decal/tile_edge/floorguide/medbay{
 	dir = 8
@@ -53745,6 +53701,27 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
+	})
+"xUH" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/image/siphon_guide{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/obj/item/paper/image/siphon_guide{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/extinguisher{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
 	})
 "xUL" = (
 /obj/storage/secure/closet/immersion{
@@ -96527,8 +96504,8 @@ ohS
 oYC
 rJL
 hxL
-rVx
-sin
+oPy
+rKH
 hXh
 ecd
 ecd
@@ -96830,10 +96807,10 @@ and
 kIi
 kIi
 kIi
-kDv
+nfQ
 qBT
-sEk
-jFU
+pKW
+iaT
 gZh
 ecd
 cCn
@@ -97135,7 +97112,7 @@ kIi
 kIi
 kIi
 kIi
-dFw
+pbC
 oae
 ecd
 bIy
@@ -98371,7 +98348,7 @@ drI
 tht
 jbf
 agE
-fTC
+hye
 fPk
 czo
 mXd
@@ -100177,7 +100154,7 @@ drI
 rdL
 mkG
 iVa
-sCH
+nEH
 xbU
 drI
 lxd
@@ -101988,7 +101965,7 @@ hBK
 hBK
 hBK
 agE
-eNe
+xUH
 pIf
 oQo
 drI
@@ -103206,7 +103183,7 @@ uSG
 erF
 qKT
 qmt
-klu
+cSQ
 iYL
 svE
 kHB

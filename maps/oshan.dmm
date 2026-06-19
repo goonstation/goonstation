@@ -1515,13 +1515,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"agX" = (
-/obj/machinery/light/incandescent/cool/very,
-/obj/machinery/computer/robot_module_rewriter{
-	dir = 8
-	},
-/turf/simulated/floor/caution/corner/sw,
-/area/station/medical/robotics)
 "agY" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
@@ -1682,14 +1675,6 @@
 "ahM" = (
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/black,
-/area/station/medical/robotics)
-"ahN" = (
-/obj/submachine/cargopad/robotics,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
-"ahQ" = (
-/obj/machinery/manufacturer/robotics,
-/turf/simulated/floor/caution/corner/ne,
 /area/station/medical/robotics)
 "ahS" = (
 /obj/storage/secure/closet/medical/medicine,
@@ -32589,6 +32574,13 @@
 /obj/machinery/manufacturer/science,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"jAJ" = (
+/obj/machinery/light/incandescent/cool/very,
+/obj/machinery/computer/robot_module_rewriter{
+	dir = 8
+	},
+/turf/simulated/floor/caution/west,
+/area/station/medical/robotics)
 "jBl" = (
 /obj/machinery/vending/medical,
 /obj/decal/tile_edge/line/red{
@@ -35705,6 +35697,12 @@
 	icon_state = "corner_east"
 	},
 /area/station/crew_quarters/fitness)
+"lZB" = (
+/obj/machinery/computer/robotics/lab{
+	dir = 8
+	},
+/turf/simulated/floor/caution/west,
+/area/station/medical/robotics)
 "lZJ" = (
 /obj/stool/chair/comfy/purple{
 	dir = 8
@@ -38642,6 +38640,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"oGE" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/dirt,
+/obj/item/paper/image/businesscard/lawyers{
+	pixel_y = 27
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/evilreaver/security)
 "oGR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -39897,6 +39905,16 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"pLn" = (
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
+/obj/submachine/cargopad/robotics,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "pMh" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -41585,16 +41603,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"rmg" = (
-/obj/decal/cleanable/oil,
-/obj/decal/cleanable/dirt,
-/obj/item/paper/image/businesscard/lawyers{
-	pixel_y = 27
-	},
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/evilreaver/security)
 "rmS" = (
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 4;
@@ -43511,6 +43519,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/chamber)
+"sNA" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 9
+	},
+/area/station/medical/robotics)
 "sNB" = (
 /obj/mapping_helper/access/cargo,
 /obj/disposalpipe/segment{
@@ -45807,15 +45821,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
-"uMZ" = (
-/obj/machinery/light_switch/west{
-	pixel_y = -4
-	},
-/obj/blind_switch/area/west{
-	pixel_y = 4
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "uNu" = (
 /obj/machinery/door_control/bolter/new_walls/south{
 	id = "quarters_hos"
@@ -97035,7 +97040,7 @@ afx
 dJT
 agj
 ykU
-uMZ
+pLn
 chD
 chD
 chD
@@ -99452,9 +99457,9 @@ awo
 afx
 ais
 afB
-agX
-ahN
-ahQ
+jAJ
+lZB
+sNA
 agA
 ajQ
 oXV
@@ -128977,7 +128982,7 @@ rNv
 aXT
 xhP
 rDE
-rmg
+oGE
 aZV
 baj
 dax

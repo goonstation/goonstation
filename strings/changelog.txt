@@ -1,5 +1,20 @@
-
+(t)wed jun 17 26
+(u)LeahTheTech
+(+)Welders and igniters now more consistently triggers thermite.
 (t)mon jun 15 26
+(u)JORJ949
+(p)26785
+(e)🆕📄👮|C-Feature, A-UI, A-Security
+(*)The armory authorisation computer now has an inputtable reason that will be announced alongside authorisation.
+(u)glowbold
+(p)26747
+(e)🗺🔄🤖|A-Mapping, C-Rework, A-Silicons
+(*)Robotic Control consoles have recieved a major rework, details in minor notes.
+(+)Humans with valid ID can issue a cyborg lockdown at Robotics Control consoles.
+(+)Silicons cannot use screwing tools on robotics consoles. They can still blow them up or otherwise deny access.
+(+)Robotics labs on every map have a Robotics Control console that cannot issue or see lockdowns or killswitches.
+(+)Robotics Control console displays whether a silicon has an active, inactive, or missing brain unit.
+(+)Robotics Control consoles can be emagged to remove access requirements and ensure lockdown/killswitch availability. It still requires sliding an ID card of any access.
 (u)glowbold
 (p)26845
 (e)🆕🎨🔄💊📨|C-Feature, C-Sprites, C-Rework, A-Medical, A-Logistics

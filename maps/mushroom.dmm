@@ -4607,7 +4607,6 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "bgk" = (
@@ -4807,11 +4806,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
-"bhy" = (
-/obj/landmark/start/job/roboticist,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/blueblack/corner,
-/area/station/medical/robotics)
 "bhE" = (
 /obj/machinery/computer/robot_module_rewriter,
 /turf/simulated/floor/blueblack/corner{
@@ -5088,7 +5082,8 @@
 /area/station/medical/robotics)
 "bjw" = (
 /obj/disposalpipe/segment{
-	dir = 4
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
@@ -7880,8 +7875,8 @@
 	c_tag = "Robotics Laboratory";
 	pixel_x = -10
 	},
-/obj/storage/crate/robotics_supplies,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -10026,8 +10021,7 @@
 	},
 /area/station/crew_quarters/supplylobby)
 "dVr" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk,
+/obj/machinery/computer/robotics/lab,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "dVD" = (
@@ -12551,6 +12545,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"fKV" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/blueblack/corner{
+	dir = 1
+	},
+/area/station/medical/robotics)
 "fLo" = (
 /obj/warp_beacon{
 	name = "AI Satellite Beacon"
@@ -18740,10 +18740,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
-"knh" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor/blueblack/corner,
-/area/station/medical/robotics)
 "kny" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -27038,6 +27034,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -32692,13 +32689,6 @@
 "tyw" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/arrivals)
-"tzl" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/blueblack/corner,
-/area/station/medical/robotics)
 "tzn" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -32726,6 +32716,8 @@
 	c_tag = "Robotics East";
 	pixel_y = 10
 	},
+/obj/storage/crate/robotics_supplies,
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -33882,6 +33874,7 @@
 /area/station/maintenance/southwest)
 "unp" = (
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -37261,7 +37254,6 @@
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/storage/belt/utility,
 /obj/table/auto,
 /obj/machinery/phone,
 /turf/simulated/floor/blueblack/corner{
@@ -93376,7 +93368,7 @@ nbl
 llL
 ben
 cvK
-bgh
+fKV
 qbR
 unp
 bjw
@@ -93679,9 +93671,9 @@ upt
 ejt
 dVr
 bgj
-knh
-bhy
-tzl
+ewP
+xgl
+ewP
 hwj
 ben
 eLZ

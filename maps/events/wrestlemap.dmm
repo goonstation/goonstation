@@ -516,6 +516,18 @@
 /area/station/security/secwing{
 	name = "Security Lobby"
 	})
+"aic" = (
+/obj/machinery/firealarm/directional/west,
+/obj/table/reinforced,
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/robotics)
 "aig" = (
 /obj/table/reinforced/auto,
 /obj/item/wrench{
@@ -1215,18 +1227,6 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"ayc" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/robotics)
 "ayf" = (
 /obj/machinery/sheet_extruder,
 /obj/decal/tile_edge/stripe{
@@ -6265,21 +6265,6 @@
 	dir = 1
 	},
 /area/station/security/checkpoint/arrivals)
-"cNT" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/image/ranch_guide,
-/obj/item/fishing_rod/basic,
-/obj/item/chicken_carrier,
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
-/obj/item/device/radio/intercom/catering,
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "cNZ" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -7548,16 +7533,6 @@
 "dry" = (
 /turf/simulated/floor/carpet/green/fancy/junction/sw_e,
 /area/station/crew_quarters/jazz)
-"drM" = (
-/obj/landmark/start/job/roboticist,
-/obj/machinery/firealarm/directional/west,
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/robotics)
 "drO" = (
 /obj/item/clothing/under/gimmick/maid,
 /obj/item/clothing/head/maid{
@@ -8044,20 +8019,6 @@
 "dAX" = (
 /turf/simulated/shuttle/wall/cockpit,
 /area/shuttle/arrival/station)
-"dBi" = (
-/obj/machinery/sink/slim{
-	pixel_y = 8
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/robotics)
 "dBk" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment,
@@ -12257,16 +12218,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"fzl" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/optable,
-/obj/machinery/drainage,
-/turf/simulated/floor/blue,
-/area/station/medical/robotics)
 "fzm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17990,6 +17941,17 @@
 /area/station/maintenance/central{
 	name = "Maintenance Shack"
 	})
+"igv" = (
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/optable,
+/obj/machinery/drainage,
+/turf/simulated/floor/blue,
+/area/station/medical/robotics)
 "igD" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools/some,
@@ -24137,6 +24099,14 @@
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"kMJ" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/robotics)
 "kML" = (
 /obj/machinery/light{
 	dir = 8;
@@ -24423,17 +24393,6 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/checkpoint/sec_foyer)
-"kUm" = (
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/operating,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/robotics)
 "kUy" = (
 /obj/disposalpipe/segment/mail,
 /obj/lattice{
@@ -24954,6 +24913,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"lhO" = (
+/obj/machinery/sink/slim{
+	pixel_y = 8
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/robotics)
 "lhV" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cryo"
@@ -26754,6 +26724,15 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
+"lXG" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/landmark/start/job/roboticist,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/robotics)
 "lXL" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
@@ -28219,6 +28198,15 @@
 "mHE" = (
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/hallway/primary/central)
+"mHX" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/robotics)
 "mIN" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -33479,6 +33467,21 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/medical/breakroom)
+"oYz" = (
+/obj/storage/closet{
+	name = "rancher supply closet"
+	},
+/obj/item/paper/image/ranch_guide,
+/obj/item/fishing_rod/basic,
+/obj/item/chicken_carrier,
+/obj/item/device/camera_viewer/ranch,
+/obj/item/storage/box/syringes,
+/obj/item/satchel/hydro,
+/obj/item/clothing/mask/chicken,
+/obj/item/storage/box/clothing/rancher,
+/obj/item/device/radio/intercom/catering,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "oYJ" = (
 /obj/decal/poster/wallsign/fuck2,
 /obj/disposalpipe/segment/horizontal,
@@ -34916,20 +34919,6 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/north,
 /area/station/teleporter)
-"pIb" = (
-/obj/table/reinforced,
-/obj/machinery/light/incandescent/cool{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell,
-/obj/item/cell/supercell,
-/obj/item/cell/supercell,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "pIu" = (
 /obj/table/auto,
 /obj/item/reagent_containers/hypospray{
@@ -38886,6 +38875,17 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/protest)
+"rDH" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/computer/robotics/lab{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "rDJ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
@@ -41007,17 +41007,6 @@
 	dir = 4
 	},
 /area/station/storage/tools)
-"sIP" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/robotics)
 "sIX" = (
 /obj/stool/bench/red/auto,
 /turf/simulated/floor,
@@ -44493,12 +44482,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"ulX" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/robotics)
 "ulY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49410,6 +49393,15 @@
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
 	})
+"wvf" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/computer/operating/small,
+/turf/simulated/floor/blue,
+/area/station/medical/robotics)
 "wvC" = (
 /obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/wood,
@@ -80814,11 +80806,11 @@ vnX
 peV
 kGZ
 cLs
-kUm
-ulX
-drM
+igv
+kkg
+aic
 hTF
-pIb
+rDH
 dBQ
 kTu
 eKF
@@ -81116,9 +81108,9 @@ vnX
 iAO
 lCr
 cLs
-fzl
+wvf
 kkg
-ayc
+mHX
 vpB
 bSa
 eiK
@@ -81420,7 +81412,7 @@ kGZ
 cLs
 lTY
 kkg
-sIP
+kMJ
 vfG
 oXN
 nwH
@@ -81722,7 +81714,7 @@ kGZ
 cLs
 mKX
 kkg
-sIP
+lXG
 cmN
 oXN
 rxz
@@ -82024,7 +82016,7 @@ nyP
 nyP
 nyP
 nyP
-dBi
+lhO
 xWH
 mfI
 srq
@@ -114366,7 +114358,7 @@ mUN
 vwy
 exA
 tGj
-cNT
+oYz
 qaR
 oKi
 oKi

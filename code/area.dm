@@ -3852,7 +3852,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "purple"
 
 /area/syndicate_station/hideout
-	name = "Syndicate Hideout"
+	name = "Mysterious Hideout"
 	icon_state = "red"
 
 // end syndie //
