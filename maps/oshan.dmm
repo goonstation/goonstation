@@ -17047,7 +17047,6 @@
 /area/station/mining/staff_room)
 "bEx" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/machinery/power/apc/autoname_west,
 /obj/table/auto,
 /obj/cable{
 	icon_state = "0-4"
@@ -42715,6 +42714,7 @@
 	name = "loofah"
 	},
 /obj/item/item_box/medical_patches/mini_styptic,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "rXH" = (
@@ -47149,6 +47149,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "vUK" = (
