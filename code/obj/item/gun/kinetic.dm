@@ -3428,6 +3428,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			else
 				var/datum/projectile/bullet/grenade_shell/custom_shell = src.current_projectile
 				if(src.ammo.amount_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
+					boutput(user, SPAN_ALERT("This is called a : [src]"))
 					boutput(user, SPAN_ALERT("The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!"))
 					return
 				else
