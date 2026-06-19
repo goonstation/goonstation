@@ -280,23 +280,19 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "detective"
 	var/obj/item/razor_blade/blade = null
 
+	razor
+		New()
+			. = ..()
+			var/obj/item/razor_blade/razor = new()
+			src.insert_razor(razor)
+
 	attackby(obj/item/W, mob/user, params) //https://www.youtube.com/watch?v=KGD2N5hJ2e0
 		if (istype(W, /obj/item/razor_blade))
 			boutput(user, SPAN_NOTICE("You sneakily insert [W] into the brim of [src]."))
-			src.desc += " This one has something metal hidden in the brim."
-			src.hit_type = W.hit_type
-			src.tool_flags = W.tool_flags
-			src.force = W.force
-			src.hitsound = W.hitsound
-			src.throwforce = W.throwforce
-			src.throw_speed = W.throw_speed
-			src.throw_range = W.throw_range
-			src.setItemSpecial(W.special.type)
 			user.drop_item(W)
-			W.set_loc(src)
-			src.blade = W
+			src.insert_razor(W)
 			return
-		else if (issnippingtool(W) && src.blade)
+		if (issnippingtool(W) && src.blade)
 			playsound(src, 'sound/items/Scissor.ogg', 40, 1)
 			boutput(user, SPAN_NOTICE("You snip [src.blade] out of the brim of [src]."))
 			src.desc = initial(src.desc)
@@ -312,6 +308,59 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			src.blade = null
 			return
 		. = ..()
+
+	proc/insert_razor(obj/item/razor)
+		src.desc += " This one has something metal hidden in the brim."
+		src.hit_type = razor.hit_type
+		src.tool_flags = razor.tool_flags
+		src.force = razor.force
+		src.hitsound = razor.hitsound
+		src.throwforce = razor.throwforce
+		src.throw_speed = razor.throw_speed
+		src.throw_range = razor.throw_range
+		src.setItemSpecial(razor.special.type)
+		razor.set_loc(src)
+		src.blade = razor
+
+	attack(mob/living/carbon/human/target, mob/user, def_zone, is_special, params)
+		if (def_zone != "head" || !src.blade || !istype(target))
+			return ..()
+		//need to grab them close
+		var/obj/item/grab/grab = user.find_type_in_hand(/obj/item/grab)
+		if (!grab || grab.affecting != target || grab.state < GRAB_AGGRESSIVE)
+			return ..()
+		//anything covering their eyes?
+		if (target.wear_mask?.c_flags & COVERSEYES || target.head?.c_flags & COVERSEYES || target.glasses?.c_flags & COVERSEYES)
+			return ..()
+		//don't let them do this more than once
+		if ((!target.organHolder.left_eye || target.organHolder.left_eye.broken) && (!target.organHolder.right_eye || target.organHolder.right_eye.broken))
+			return ..()
+		src.visible_message(SPAN_BOLD(SPAN_COMBAT("[user] begins to slowly drag their blade across [target]'s eyes!")))
+		target.emote("scream")
+		var/datum/action/bar/razor_blind/actionbar = new()
+		actionbar.victim = target
+		actions.start(actionbar, user)
+
+//is this too far? maybe?? It's kind of badass though...
+/datum/action/bar/razor_blind
+	duration = 10 SECONDS
+	var/mob/living/carbon/human/victim
+
+	onUpdate()
+		take_bleeding_damage(src.victim, src.owner, 5)
+		if (TIME - src.started >= 5 SECONDS && src.victim.organHolder.left_eye && !src.victim.organHolder.left_eye.broken)
+			src.victim.emote("scream")
+			playsound(get_turf(src.victim), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 1)
+			src.victim.organHolder.left_eye.take_damage(src.victim.organHolder.left_eye.max_damage)
+		..()
+
+	onEnd()
+		if (src.victim.organHolder.right_eye && !src.victim.organHolder.right_eye.broken)
+			src.victim.emote("scream")
+			playsound(get_turf(src.victim), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 1)
+			src.victim.organHolder.right_eye.take_damage(src.victim.organHolder.right_eye.max_damage)
+		..()
+
 
 // Donk clothes
 

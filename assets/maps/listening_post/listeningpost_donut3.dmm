@@ -156,9 +156,6 @@
 /turf/simulated/floor/stairs/wide/other,
 /area/listeningpost/break_room)
 "gl" = (
-/obj/cable/black{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/grey/side,
 /area/listeningpost/general)
 "gG" = (
@@ -191,19 +188,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
-"ht" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red";
-	name = "syndicate bedsheet"
-	},
-/obj/machinery/power/apc/autoname_east/hardened,
-/obj/cable/black{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/listeningpost/barracks)
 "hH" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -348,10 +332,7 @@
 	},
 /area/listeningpost/general)
 "pt" = (
-/obj/table/wood/auto,
-/obj/machinery/codereader/syndicate{
-	pixel_y = 5
-	},
+/obj/machinery/vending/snack,
 /turf/simulated/floor/grey/corner{
 	dir = 8
 	},
@@ -425,7 +406,8 @@
 	},
 /area/listeningpost/general)
 "sv" = (
-/obj/machinery/vending/jobclothing/syndicate,
+/obj/table/wood/auto,
+/obj/item/turret_deployer/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "sV" = (
@@ -445,9 +427,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
+/obj/rack,
+/obj/item/tank/jetpack,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -508,8 +489,10 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/item/mining_tool/powered/pickaxe,
-/obj/table/auto,
+/obj/random_item_spawner/spacesuit,
+/obj/item/clothing/mask/breath,
+/obj/rack,
+/obj/item/tank/air,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -557,8 +540,21 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/listeningpost/break_room)
+"yO" = (
+/obj/table/wood/auto,
+/obj/item/uplink_telecrystal{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/uplink_telecrystal{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
 "zs" = (
 /obj/machinery/light_switch/east,
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "zI" = (
@@ -598,6 +594,12 @@
 	dir = 10
 	},
 /area/listeningpost/general)
+"BB" = (
+/obj/machinery/computer/announcement/syndicate{
+	dir = 8
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/break_room)
 "BH" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -612,7 +614,10 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "BV" = (
-/obj/machinery/vending/snack,
+/obj/table/wood/auto,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
 /turf/simulated/floor/grey/side,
 /area/listeningpost/general)
 "BY" = (
@@ -706,6 +711,12 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/listeningpost/power)
+"Ht" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack,
+/area/listeningpost/break_room)
 "HH" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/security{
@@ -789,16 +800,6 @@
 	dir = 4
 	},
 /area/listeningpost/break_room)
-"Kl" = (
-/obj/cable/black{
-	icon_state = "0-8"
-	},
-/obj/cable/black{
-	icon_state = "0-4"
-	},
-/obj/cable/black,
-/turf/simulated/floor/red,
-/area/listeningpost/general)
 "LR" = (
 /obj/table/auto,
 /obj/item/aiModule/hologram_expansion/syndicate{
@@ -884,12 +885,6 @@
 	dir = 8
 	},
 /area/listeningpost/general)
-"Pm" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/listeningpost/barracks)
 "PF" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/external{
@@ -935,12 +930,7 @@
 /area/listeningpost/landing_bay)
 "RN" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post"
-	},
-/obj/cable/black{
-	icon_state = "1-2"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "RO" = (
@@ -1008,6 +998,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/plating/jen,
 /area/listeningpost/power)
 "TI" = (
@@ -1019,12 +1010,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/general)
-"Uz" = (
-/obj/cable/black{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/listeningpost/barracks)
 "UJ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -1137,11 +1122,10 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/comm_dish)
 "ZV" = (
-/obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/crash,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "ZX" = (
@@ -1686,7 +1670,7 @@ Sw
 GA
 qR
 qR
-ig
+Ht
 cC
 kw
 fW
@@ -1720,7 +1704,7 @@ Sw
 GA
 GA
 qR
-ig
+BB
 cC
 as
 fW
@@ -1774,11 +1758,11 @@ RO
 me
 ZV
 kR
-Uz
+kR
 RN
 gl
-Jt
-Kl
+Yg
+CJ
 HH
 PQ
 qR
@@ -1806,9 +1790,9 @@ RO
 RO
 RO
 me
-Er
+yO
 kR
-Pm
+kR
 me
 oY
 bn
@@ -1842,7 +1826,7 @@ RO
 me
 me
 nX
-ht
+Er
 me
 uB
 wv

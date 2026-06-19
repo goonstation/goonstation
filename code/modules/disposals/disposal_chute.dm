@@ -190,7 +190,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			src.bash(I, user)
 			update()
 			return
-		if (istype(I, /obj/item/handheld_vacuum))
+		if (istype(I, /obj/item/handheld_vacuum) || istype(I, /obj/item/device/disposals_hijacker))
 			return
 		// Mousedropping storage items will dump the contents during MouseDrop_T instead
 		if (istype(I, /obj/item/storage/mechanics) || (islist(params) && params["dragged"]))
@@ -544,7 +544,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 
 		// if full enough, switch to ready mode
-		if(MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)
+		if(MIXTURE_PRESSURE(air_contents) >= 2.5*ONE_ATMOSPHERE)
 			mode = DISPOSAL_CHUTE_CHARGED
 			power_usage = 100
 			update()

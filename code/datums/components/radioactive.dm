@@ -30,6 +30,13 @@ TYPEINFO(/datum/component/radioactive)
 		if(!istype(parent,/atom) || parent.type == /turf/space) //exact type check to exclude ocean floors
 			return COMPONENT_INCOMPATIBLE
 		. = ..()
+		var/atom/A = parent
+		if(A.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+			// This material is immune to radiation. Don't register for anything.
+			src.radStrength = 0
+			src.decays = TRUE
+			src.effect_range = 0
+			return
 		src.radStrength = radStrength
 		src.decays = decays
 		src.neutron = neutron
@@ -115,6 +122,9 @@ TYPEINFO(/datum/component/radioactive)
 
 	InheritComponent(datum/component/radioactive/R, i_am_original)
 		if (i_am_original)
+			var/atom/PA = parent
+			if(PA.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+				return
 			if((R.neutron && !src.neutron) || (!R.decays && src.decays)) //neutron overrides non-neutron, permanent overrides temporary
 				src.radStrength = R.radStrength
 				src.neutron = R.neutron

@@ -197,7 +197,7 @@ proc/filter_carrier_pets(var/type)
 			src.ClearSpecificOverlays("bowtie")
 
 	proc/bow_icon_state()
-		return "[replacetext(src.bow.icon_state, "hbow", "bowtie")][isdead(src) ? "-dead" : ""]"
+		return "bowtie-[src.bow.bowcolour][isdead(src) ? "-dead" : ""]"
 
 	setup_hands()
 		..()
@@ -445,6 +445,7 @@ proc/filter_carrier_pets(var/type)
 /* -------------------- Jones -------------------- */
 
 TYPEINFO(/mob/living/critter/small_animal/cat/jones)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("viscerite" = 25)
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
@@ -456,7 +457,6 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_burn = 30
 	is_annoying = TRUE
 	is_pet = 2
-	is_syndicate = 1
 	player_can_spawn_with_pet = FALSE
 	var/swiped = 0
 
@@ -1614,7 +1614,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	faction = list(FACTION_NEUTRAL)
 	fits_under_table = 1
-	ai_type = /datum/aiHolder/roach
+	ai_type = /datum/aiHolder/hungry_critter
 	ai_retaliates = FALSE
 	player_can_spawn_with_pet = TRUE
 
@@ -3066,6 +3066,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/slime_chance = 22
 	butcherable = BUTCHER_ALLOWED
 	name_the_meat = FALSE
+	ai_type = /datum/aiHolder/hungry_critter
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	player_can_spawn_with_pet = TRUE
 
@@ -3073,6 +3074,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		..()
 		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
+		RegisterSignal(src, COMSIG_MOB_ITEM_CONSUMED_PRE, PROC_REF(edibility_check))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_MOB_ITEM_CONSUMED_PRE)
+		. = ..()
 
 	setup_hands()
 		..()
@@ -3083,6 +3089,39 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "mouth thing"			// name for the dummy holder
 		HH.can_hold_items = FALSE
+
+#define SLUG_ITEM_EDIBLE(O) (istype(O, /obj/item/plant)\
+	|| istype(O, /obj/item/reagent_containers/food) && !istype(O, /obj/item/reagent_containers/food/drinks)\
+	|| istype(O, /obj/item/seed))
+
+	seek_food_target(range)
+		. = list()
+		var/eat_plant = !GET_COOLDOWN(src, "ate_plant")
+		for (var/obj/O in view(range, get_turf(src)))
+			if (SLUG_ITEM_EDIBLE(O))
+				. += O
+			else if (istype(O, /obj/machinery/plantpot) && eat_plant)
+				var/obj/machinery/plantpot/tray = O
+				if (tray.current)
+					. += O
+
+	proc/edibility_check(_,__, obj/item/item)
+		return SLUG_ITEM_EDIBLE(item)
+
+	critter_eat(obj/target)
+		if (isitem(target))
+			var/obj/item/item = target
+			item.Eat(src, src, TRUE, TRUE)
+		else if (istype(target, /obj/machinery/plantpot))
+			var/obj/machinery/plantpot/tray = target
+			if (!tray.current)
+				return
+			playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1)
+			eat_twitch(src)
+			tray.HYPdestroyplant()
+			ON_COOLDOWN(src, "ate_plant", 15 SECONDS) //let's not be tooo too mean
+
+#undef SLUG_ITEM_EDIBLE
 
 /* -------------------- Snail -------------------- */
 
@@ -3117,7 +3156,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		var/image/bow = image('icons/obj/clothing/item_hats.dmi', "hbow-mint")
+		var/image/bow = image('icons/obj/clothing/item_hats_bows.dmi', "hbow-high-mint")
 		bow.appearance_flags = KEEP_TOGETHER
 		bow.pixel_y = 7
 		bow.pixel_x = 1

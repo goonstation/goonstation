@@ -119,6 +119,7 @@
 		src.icon_state = pick("plant_heart", "plant_heart_bloom")
 
 TYPEINFO(/obj/item/organ/heart/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/organ/heart/cyber

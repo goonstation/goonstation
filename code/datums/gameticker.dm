@@ -83,9 +83,22 @@ var/global/game_force_started = FALSE
 				// hey boo the rounds starting and you didnt ready up
 				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
+					// Don't give them a reminder if they havea forced assignment.
+					if (P.ckey in job_controls.forced_assignments)
+						continue
 					if (!P.ready_play && !P.ready_tutorial)
 						targets += P
 				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
+
+				// also notify anyone with a forced assignment
+				if (length(job_controls.forced_assignments))
+					for (var/forced_assignment_key in job_controls.forced_assignments)
+						var/datum/forced_assignment/forced_assignment = job_controls.forced_assignments[forced_assignment_key]
+						if (!istype(forced_assignment, /datum/forced_assignment))
+							continue
+						forced_assignment.notify_forced_assignment_holder()
+					message_admins("Gameticker automatically sent out notifications to all forced assignment holders!")
+
 				did_reminder = TRUE
 
 			if (title_countdown)
@@ -233,6 +246,9 @@ var/global/game_force_started = FALSE
 
 	add_minds()
 
+	if (length(global.job_controls.forced_assignments))
+		handle_forced_antag_assignments()
+
 	// rip collar key, nerds murdered people for you as non-antags and it was annoying
 	//implant_skull_key() //Solarium
 
@@ -250,6 +266,12 @@ var/global/game_force_started = FALSE
 
 	//Equip characters
 	equip_characters()
+	//no captain? spawn disk in their office at least
+	if (!length(by_type[/obj/item/disk/data/floppy/read_only/authentication]))
+		var/turf/T = get_turf(locate(/mob/living/critter/small_animal/cat/jones))
+		if (!T)
+			T = pick(job_start_locations["Captain"])
+		new /obj/item/disk/data/floppy/read_only/authentication(T)
 
 #ifdef I_WANNA_DO_CRIME
 	SPAWN(1 SECOND) //Avoids runtiming on certain special job setups changing equipment through SPAWN()s of their own
@@ -386,7 +408,7 @@ var/global/game_force_started = FALSE
 				continue
 #endif
 
-			if (player.ready_play)
+			if (player.ready_play || (player.ckey in job_controls.forced_assignments))
 				var/datum/player/P
 				if (player.mind)
 					P = player.mind.get_player()
@@ -419,7 +441,8 @@ var/global/game_force_started = FALSE
 						antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
 
 				else if (player.mind)
-					if (player.client.using_antag_token && ticker.mode.antag_token_support)
+					if (player.client.using_antag_token && ticker.mode.antag_token_support && \
+						!(length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments)))
 						player.client.use_antag_token()	//Removes a token from the player
 					player.create_character()
 					qdel(player)
@@ -790,29 +813,29 @@ var/global/game_force_started = FALSE
 
 			var/job_wage_converted = 100
 			switch(job_wage)
-				if(0 to PAY_DUMBCLOWN)
+				if(0 to PAY::DUMBCLOWN)
 					job_wage_converted = 100
-				if(PAY_DUMBCLOWN+1 to PAY_UNTRAINED)
-					job_wage_converted = PAY_UNTRAINED
-				if(PAY_UNTRAINED+1 to PAY_TRADESMAN)
-					job_wage_converted = PAY_TRADESMAN
-				if(PAY_TRADESMAN+1 to PAY_DOCTORATE)
-					job_wage_converted = PAY_DOCTORATE
-				if(PAY_DOCTORATE+1 to PAY_IMPORTANT)
-					job_wage_converted = PAY_IMPORTANT
-				if(PAY_IMPORTANT+1 to INFINITY)
-					job_wage_converted = PAY_EXECUTIVE
+				if(PAY::DUMBCLOWN+1 to PAY::UNTRAINED)
+					job_wage_converted = PAY::UNTRAINED
+				if(PAY::UNTRAINED+1 to PAY::TRADESMAN)
+					job_wage_converted = PAY::TRADESMAN
+				if(PAY::TRADESMAN+1 to PAY::DOCTORATE)
+					job_wage_converted = PAY::DOCTORATE
+				if(PAY::DOCTORATE+1 to PAY::IMPORTANT)
+					job_wage_converted = PAY::IMPORTANT
+				if(PAY::IMPORTANT+1 to INFINITY)
+					job_wage_converted = PAY::EXECUTIVE
 
 			job_wage = job_wage_converted
 
 			if (isrobot(player))
 				var/mob/living/silicon/robot/borg = player
 				if(borg.shell) // is this secretly an AI??
-					job_wage = PAY_IMPORTANT
+					job_wage = PAY::IMPORTANT
 				else
-					job_wage = PAY_DOCTORATE
+					job_wage = PAY::DOCTORATE
 			if (isAI(player) || isshell(player))
-				job_wage = PAY_IMPORTANT
+				job_wage = PAY::IMPORTANT
 
 			//if part-time, reduce wage
 			if (player.mind.join_time > LATEJOIN_FULL_WAGE_GRACE_PERIOD) //grace period of 9 mins after roundstart to be a full-time employee
@@ -1051,7 +1074,7 @@ var/global/game_force_started = FALSE
 		var/time_ratio = player.current_playtime / ticker.round_elapsed_ticks
 		var/player_unique_chance = actual_token_chance * time_ratio
 		if (player.get_antag_tokens() >= 1)
-			boutput(M, SPAN_BOLD("You would have been eligable for an antag token drop this round, but you already have one!"))
+			boutput(M, SPAN_BOLD("You would have been eligible for an antag token drop this round, but you already have one!"))
 			continue
 		if (!prob(player_unique_chance))
 			continue //unlucky

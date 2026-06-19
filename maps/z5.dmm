@@ -2361,7 +2361,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent,
-/obj/item/paper/businesscard/gragg2{
+/obj/item/paper/image/businesscard/gragg2{
 	pixel_y = 24
 	},
 /obj/random_item_spawner/junk/one_or_zero,
@@ -2772,7 +2772,7 @@
 /area/mining/refinery)
 "Al" = (
 /obj/machinery/vending/coffee,
-/obj/item/paper/businesscard/josh{
+/obj/item/paper/image/businesscard/josh{
 	pixel_x = 15;
 	pixel_y = 27
 	},
@@ -3263,7 +3263,7 @@
 "Dw" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_y = 27
 	},
 /turf/simulated/floor/red/side{
@@ -4247,11 +4247,11 @@
 /area/mining/mainasteroid)
 "Kb" = (
 /obj/stool/chair/comfy,
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_x = -11;
 	pixel_y = 27
 	},
-/obj/item/paper/businesscard/bonktek{
+/obj/item/paper/image/businesscard/bonktek{
 	pixel_y = 31
 	},
 /turf/simulated/floor/carpet/office,
@@ -5199,7 +5199,7 @@
 "QN" = (
 /obj/table/auto,
 /obj/item/magnet_parts/construction,
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_y = 27
 	},
 /turf/simulated/floor/grime,
@@ -5646,10 +5646,10 @@
 /area/station/solar/small_backup3)
 "TR" = (
 /obj/machinery/vending/snack,
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_y = 32
 	},
-/obj/item/paper/businesscard/ezekian{
+/obj/item/paper/image/businesscard/ezekian{
 	pixel_x = -6;
 	pixel_y = 24
 	},
@@ -5820,10 +5820,10 @@
 	},
 /obj/table/wood/round/champagne,
 /obj/machinery/phone,
-/obj/item/paper/businesscard/banjo{
+/obj/item/paper/image/businesscard/banjo{
 	pixel_y = 28
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_x = -11;
 	pixel_y = 24
 	},

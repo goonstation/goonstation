@@ -272,7 +272,7 @@
 /obj/item/skull/macho // Macho man.
 	name = "golden skull"
 	desc = "Is this thing solid gold, or just gold-plated? Yeesh."
-	icon_state = "skull_macho"
+	icon_state = "skull_machoman"
 	value = 7
 	default_material = "gold"
 

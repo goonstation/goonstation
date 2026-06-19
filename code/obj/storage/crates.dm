@@ -2,6 +2,7 @@
 	name = "crate"
 	desc = "A big metal box that you can put things into. Who knows, it might even have things already in it."
 	is_short = 1
+	icon = 'icons/obj/storage/crate.dmi'
 	#ifdef XMAS
 	icon_state = "xmascrate"
 	icon_opened = "xmascrateopen"
@@ -126,7 +127,7 @@
 	make_my_stuff()
 		. = ..()
 		if (prob(30))
-			new /obj/item/paper/businesscard/hemera_rcd(src)
+			new /obj/item/paper/image/businesscard/hemera_rcd(src)
 
 /obj/storage/crate/rcd/CE
 	name = "\improper RCD crate"
@@ -295,7 +296,7 @@
  */
 
 /obj/storage/crate/haunted
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "bloodycrate"
 	icon_opened = "bloodycrateopen"
 	icon_closed = "bloodycrate"
@@ -419,6 +420,7 @@
 /obj/storage/crate/packing
 	name = "packing crate"
 	desc = "A packing crate."
+	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "packingcrate1"
 
 	New()
@@ -441,6 +443,7 @@
 /obj/storage/crate/wooden
 	name = "wooden crate"
 	desc = "A wooden crate."
+	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "woodencrate1"
 	New()
 		var/n = rand(1,9)

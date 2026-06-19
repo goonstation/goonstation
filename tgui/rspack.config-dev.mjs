@@ -34,8 +34,8 @@ export default (env = {}, argv) => {
   /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
     cache: false,
-    experiments: undefined,
     mode: 'development',
+    stats: createStats(false),
     module: {
       rules: [
         {
@@ -143,13 +143,6 @@ export default (env = {}, argv) => {
     ],
   });
   config.devtool = 'cheap-module-source-map';
-  config.devServer = {
-    progress: false,
-    quiet: false,
-    noInfo: false,
-    clientLogLevel: 'silent',
-    stats: createStats(false),
-  };
 
   return config;
 };

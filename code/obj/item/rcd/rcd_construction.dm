@@ -3,6 +3,7 @@
 */
 
 TYPEINFO(/obj/item/rcd/construction)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 100,
 				"crystal_dense" = 50,
 				"conductive_high" = 50,
@@ -136,10 +137,8 @@ TYPEINFO(/obj/item/rcd/construction)
 	T.name = door_name
 	if (door_access)
 		T.req_access = list(door_access)
-		T.req_access_txt = "[door_access]"
 	else
 		T.req_access = null
-		T.req_access_txt = null
 
 	for (var/obj/window/auto/O in orange(1,T))
 		O.UpdateIcon()

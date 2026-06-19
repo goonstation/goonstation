@@ -74,8 +74,7 @@ export interface LimbData {
   status: string;
 }
 
-export interface OperatingComputerDisplayTitleProps
-  extends DisplayOccupiedProps {
+export interface OperatingComputerDisplayTitleProps extends DisplayOccupiedProps {
   patient_name: string;
   patient_health: number;
   patient_max_health: number;

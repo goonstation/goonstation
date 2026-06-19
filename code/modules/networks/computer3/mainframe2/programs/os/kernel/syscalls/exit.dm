@@ -35,7 +35,7 @@
 		var/user_id = user.user_id
 		src.kernel.logout_user(user, FALSE)
 
-		// As they didn't disconnect the the terminal, we should present a new login screen there.
+		// As they didn't disconnect the terminal, we should present a new login screen there.
 		src.kernel.login_temp_user(user_id)
 
 	else

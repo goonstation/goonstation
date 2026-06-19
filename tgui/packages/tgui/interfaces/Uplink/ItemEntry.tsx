@@ -17,19 +17,22 @@ import {
 } from 'tgui-core/components';
 import { capitalizeAll, pluralize } from 'tgui-core/string';
 
-import { useBackend, useSharedState } from '../../backend';
+import { useBackend } from '../../backend';
 import type { EnvironmentProps, ItemData, UplinkData } from './type';
 
 const THUMBNAIL_SIZE = '32px';
 
 const buildPurchaseText = (
-  purchased: boolean,
+  purchased: number,
+  purchase_limit: number,
   cost: number,
   currency_amount: number,
   currency_name: string,
 ) => {
-  if (purchased) {
+  if (purchased > 0 && purchase_limit === 1) {
     return 'Purchased';
+  } else if (purchase_limit < Infinity && purchased >= purchase_limit) {
+    return `Purchase limit reached`;
   } else if (cost > currency_amount) {
     return `Not enough ${currency_name}s`;
   }
@@ -38,6 +41,7 @@ const buildPurchaseText = (
 
 interface ItemProps extends EnvironmentProps {
   item: ItemData;
+  purchased: number;
 }
 
 // needed to standardize a button within the `title` prop of a `Section` component
@@ -47,9 +51,9 @@ const titleButtonResetProps = {
 
 export const ItemEntry = (props: ItemProps) => {
   const { act } = useBackend<UplinkData>();
-  const { item, isVr, currency_amount, currency_name } = props;
-  const { name, desc, cooldown, cost, icon, vr_allowed } = item;
-  const [purchased, setPurchased] = useSharedState(name + '-purchased', false);
+  const { item, isVr, currency_amount, currency_name, purchased } = props;
+  const { name, desc, cooldown, cost, icon, vr_allowed, ref, purchase_limit } =
+    item;
 
   const title = (
     <Stack align="center">
@@ -67,13 +71,21 @@ export const ItemEntry = (props: ItemProps) => {
         <Button
           {...titleButtonResetProps}
           color="good"
-          disabled={currency_amount < cost || purchased}
+          disabled={
+            currency_amount < cost ||
+            (purchase_limit < Infinity && purchased >= purchase_limit)
+          }
           onClick={() => {
-            setPurchased(true);
-            act('purchase', { item: name });
+            act('purchase', { item_ref: ref });
           }}
         >
-          {buildPurchaseText(purchased, cost, currency_amount, currency_name)}
+          {buildPurchaseText(
+            purchased,
+            purchase_limit,
+            cost,
+            currency_amount,
+            currency_name,
+          )}
         </Button>
       </Stack.Item>
     </Stack>
@@ -91,6 +103,9 @@ export const ItemEntry = (props: ItemProps) => {
         <LabeledList>
           {cooldown && (
             <LabeledList.Item label="Cooldown">{`${cooldown} seconds`}</LabeledList.Item>
+          )}
+          {purchase_limit < Infinity && (
+            <LabeledList.Item label="Purchase Limit">{`${purchased}/${purchase_limit}`}</LabeledList.Item>
           )}
           <LabeledList.Item label="Description">{desc}</LabeledList.Item>
         </LabeledList>

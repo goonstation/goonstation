@@ -1361,6 +1361,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A mushroom cap of Space Fungus. Probably tastes pretty bad."
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "mushroom"
+	default_material = "mycelium"
 	food_color = "#89533C"
 	bites_left = 1
 	heal_amt = 0
