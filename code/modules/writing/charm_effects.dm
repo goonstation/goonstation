@@ -1,4 +1,12 @@
 //Datumised charm effects!
+
+//ideas:
+// something to protect against "gamer" wizard spells like arse nath
+// chance to dodge?
+// Luminol: protects from trickster wraith darkness effect?
+// Maybe stronger against weaker diseases like food poisoning and The Cold, flu?
+// PROTECT FROM METEOR - smear it with char or something?
+
 ABSTRACT_TYPE(/datum/charm_effect)
 /datum/charm_effect
 	/// List of reagent IDs that will cause this effect
@@ -89,3 +97,32 @@ ABSTRACT_TYPE(/datum/charm_effect)
 		if (src.had_disease_resist)
 			return
 		user.resistances -= /datum/ailment/disease/lycanthropy
+
+/datum/charm_effect/lavender
+	reagents = list("lavender_essence")
+	on_stain()
+		src.charm.setProperty("viralprot", 40)
+
+	on_gain(mob/living/user)
+		src.RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+		src.RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, PROC_REF(on_life))
+
+	on_lose(mob/living/user)
+		src.UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		src.UnregisterSignal(user, COMSIG_LIVING_LIFE_TICK)
+
+	proc/on_move(mob/living/user, atom/previous_loc, dir)
+		if (prob(30) && !ON_COOLDOWN(src.charm, "miasma_clear", 1 SECOND))
+			src.try_clear_miasma()
+
+	proc/on_life()
+		if (prob(10))
+			src.try_clear_miasma()
+
+	proc/try_clear_miasma()
+		var/obj/fluid/airborne/cloud = locate() in get_turf(src.charm)
+		if (cloud?.group.reagents.get_reagent_amount("miasma"))
+			cloud.group.update_amt_per_tile()
+			cloud.group.reagents.remove_any(cloud.group.amt_per_tile)
+			cloud.group.reagents.remove_reagent("miasma", 5) //a constant term so we don't end up in epsilon hell
+			qdel(cloud)
