@@ -64,7 +64,7 @@
 		. = ..()
 
 	attack_self(mob/user)
-		src.paper.ui_interact(user)
+		src.paper?.ui_interact(user)
 		return
 
 	proc/add_worn_overlays(mob/living/carbon/human/human)
