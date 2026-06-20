@@ -63,7 +63,7 @@ ABSTRACT_TYPE(/datum/charm_effect)
 		victim.TakeDamage("chest", burn = 5) //ow!
 		playsound(get_turf(victim), 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 		src.charges--
-		if (wraith)
+		if (wraith && src.charm.paper)
 			var/charm_text = strip_html_tags(src.charm.paper.info)
 			//if it won't fit in a message just throw a snippet of it at them instead of always the end
 			if (length(charm_text) > MAX_SERMON_LENGTH)
