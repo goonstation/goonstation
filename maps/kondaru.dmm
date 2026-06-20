@@ -4026,7 +4026,7 @@
 	},
 /obj/machinery/door/window/westright,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/hallway/primary/west)
 "apI" = (
 /obj/disposalpipe/segment/morgue{
@@ -4225,7 +4225,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "aqy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -4248,7 +4248,7 @@
 	dir = 8;
 	name = "camera - news office"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "aqD" = (
 /obj/decal/poster/wallsign/escape_right,
@@ -4411,10 +4411,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "aru" = (
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "arw" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -4430,7 +4430,7 @@
 /area/station/crew_quarters/radio/news_office)
 "arx" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "ary" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -7042,7 +7042,7 @@
 	device_color = "#32BC2D"
 	},
 /obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "aDo" = (
 /obj/cable{
@@ -7159,7 +7159,7 @@
 "aDM" = (
 /obj/submachine/mixing_desk,
 /obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "aDP" = (
 /obj/stool/chair/yellow{
@@ -7876,7 +7876,7 @@
 /area/station/engine/engineering)
 "aHc" = (
 /obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "aHe" = (
 /obj/machinery/door_control{
@@ -8327,7 +8327,7 @@
 "aJg" = (
 /obj/machinery/phone,
 /obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "aJm" = (
 /obj/machinery/atmospherics/binary/pump/active{
@@ -15734,7 +15734,7 @@
 	},
 /obj/machinery/door/window/westright,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/hallway/primary/south)
 "btU" = (
 /obj/storage/crate,
@@ -19000,7 +19000,7 @@
 	icon_state = "0-2"
 	},
 /obj/item/device/radio/intercom/science,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bIQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -19403,7 +19403,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bKn" = (
 /obj/stool/chair/office{
@@ -19419,7 +19419,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bKo" = (
 /obj/cable{
@@ -19428,7 +19428,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bKp" = (
 /obj/cable{
@@ -19753,13 +19753,13 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bLD" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bLE" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -19767,7 +19767,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/bent/east,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bLF" = (
 /obj/cable{
@@ -20043,12 +20043,12 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bME" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bMF" = (
 /turf/simulated/floor/caution/westeast,
@@ -20521,7 +20521,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bOi" = (
 /obj/cable{
@@ -20531,7 +20531,7 @@
 	dir = 9
 	},
 /obj/disposalpipe/segment/bent/west,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bOj" = (
 /obj/machinery/networked/test_apparatus/impact_pad,
@@ -20804,16 +20804,16 @@
 /obj/machinery/networked/test_apparatus/electrobox,
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bPy" = (
 /obj/machinery/networked/test_apparatus/xraymachine,
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bPz" = (
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "bPB" = (
 /obj/cable{
@@ -23683,7 +23683,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/market)
 "cds" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -30306,7 +30306,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "eOX" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -33454,7 +33454,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "gWZ" = (
 /obj/landmark/pest,
@@ -34089,7 +34089,7 @@
 "hrB" = (
 /obj/table/wood/auto,
 /obj/machinery/loudspeaker,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "hrS" = (
 /obj/submachine/cargopad/security,
@@ -36401,7 +36401,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "jbW" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -37904,7 +37904,7 @@
 	},
 /obj/table/wood/auto,
 /obj/machinery/loudspeaker,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "keD" = (
 /obj/cable/orange{
@@ -39319,7 +39319,7 @@
 /area/station/security/secwing)
 "kZl" = (
 /obj/machinery/firealarm/directional/west,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "kZr" = (
 /obj/lattice{
@@ -39778,7 +39778,7 @@
 /area/station/security/secwing)
 "lsn" = (
 /obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "lso" = (
 /obj/table/auto,
@@ -41186,7 +41186,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access/artlab,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/routing/medsci{
 	name = "Research Router"
 	})
@@ -42860,7 +42860,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/firealarm/directional/north,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "nFG" = (
 /turf/simulated/floor/escape,
@@ -44630,7 +44630,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "oTh" = (
 /obj/machinery/nanofab/refining,
@@ -44735,7 +44735,7 @@
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /obj/item/audio_tape,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "oXW" = (
 /obj/table/auto,
@@ -46715,7 +46715,7 @@
 	pixel_y = 16
 	},
 /obj/decal/tile_edge/floorguide/arrow_w,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "qsS" = (
 /obj/decal/poster/wallsign/security{
@@ -46839,7 +46839,7 @@
 /obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "qwl" = (
 /obj/disposalpipe/segment/horizontal,
@@ -49970,7 +49970,7 @@
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "sKA" = (
 /turf/simulated/wall/auto/supernorn,
@@ -51085,10 +51085,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/depot)
-"twk" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
-/area/station/crew_quarters/radio/news_office)
 "twQ" = (
 /obj/decal/poster/wallsign/security_wall,
 /obj/decal/poster/wallsign/stencil/left/v{
@@ -57086,7 +57082,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/science/artifact)
 "xxt" = (
 /obj/machinery/sink/slim{
@@ -57136,7 +57132,7 @@
 "xyz" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/news_office)
 "xzv" = (
 /obj/cable{
@@ -95931,7 +95927,7 @@ akn
 alg
 ame
 anm
-twk
+aHc
 aDM
 aqx
 aru

@@ -59411,7 +59411,7 @@
 /area/station/storage/warehouse)
 "kqn" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/darkblue/checker/white,
+/turf/simulated/floor/darkblue/checker,
 /area/station/maintenance/inner/central)
 "kqp" = (
 /mob/living/carbon/human/npc/monkey,
@@ -68464,7 +68464,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/turf/simulated/floor/darkblue/checker/white,
+/turf/simulated/floor/darkblue/checker,
 /area/station/maintenance/inner/central)
 "sed" = (
 /obj/item/caution{
@@ -68536,7 +68536,7 @@
 	pixel_y = -7;
 	pixel_x = -8
 	},
-/turf/simulated/floor/darkblue/checker/white,
+/turf/simulated/floor/darkblue/checker,
 /area/station/maintenance/inner/central)
 "sgE" = (
 /obj/disposalpipe/segment/morgue,
@@ -73413,7 +73413,7 @@
 	pixel_y = 1;
 	pixel_x = 6
 	},
-/turf/simulated/floor/darkblue/checker/white,
+/turf/simulated/floor/darkblue/checker,
 /area/station/maintenance/inner/central)
 "wNU" = (
 /obj/mesh/grille/steel,

@@ -27,7 +27,7 @@
 		src.ability_holder.addAbility(/datum/targetable/werewolf/werewolf_tainted_saliva)
 		src.ability_holder.addAbility(/datum/targetable/werewolf/werewolf_defense)
 		src.ability_holder.addAbility(/datum/targetable/werewolf/werewolf_transform)
-		src.owner.current.resistances += /datum/ailment/disease/lycanthropy
+		src.owner.current.add_ailment_resistance(/datum/ailment/disease/lycanthropy, src)
 
 		src.owner.current.assign_gimmick_skull()
 
@@ -44,7 +44,7 @@
 		src.ability_holder.removeAbility(/datum/targetable/werewolf/werewolf_defense)
 		src.ability_holder.removeAbility(/datum/targetable/werewolf/werewolf_transform)
 		H.remove_ability_holder(/datum/abilityHolder/werewolf)
-		H.resistances -= /datum/ailment/disease/lycanthropy
+		H.remove_ailment_resistance(/datum/ailment/disease/lycanthropy, src)
 
 		SPAWN(2.5 SECONDS)
 			H.assign_gimmick_skull()

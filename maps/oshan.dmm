@@ -273,7 +273,7 @@
 /obj/decal/poster/wallsign/poster_sol{
 	pixel_x = 32
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "abp" = (
 /obj/machinery/light/incandescent/warm,
@@ -19584,15 +19584,15 @@
 	},
 /area/station/crew_quarters/radio/lab)
 "bRa" = (
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bRb" = (
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bRc" = (
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bRf" = (
 /obj/cable{
@@ -19728,11 +19728,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bSi" = (
 /obj/stool/chair/office/blue,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bSj" = (
 /turf/simulated/floor/darkpurpleblack{
@@ -19896,13 +19896,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bTh" = (
 /obj/stool/chair/office/blue{
 	dir = 4
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bTi" = (
 /obj/disposalpipe/segment,
@@ -20230,11 +20230,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bUu" = (
 /obj/table/wood/auto,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bUv" = (
 /obj/table/wood/auto,
@@ -20252,14 +20252,14 @@
 	pixel_w = -1
 	},
 /obj/item/device/radio/intercom/radiostation,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bUx" = (
 /obj/table/wood/auto{
 	pixel_w = -1
 	},
 /obj/submachine/mixing_desk,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bUz" = (
 /obj/table/auto,
@@ -20403,7 +20403,7 @@
 "bVt" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bVu" = (
 /obj/disposalpipe/segment/mail,
@@ -20414,13 +20414,13 @@
 /area/station/quartermaster/office)
 "bVv" = (
 /obj/submachine/tape_deck,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bVw" = (
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bVy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -20602,7 +20602,7 @@
 	pixel_w = -1
 	},
 /obj/submachine/record_player,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "bWr" = (
 /obj/storage/closet/emergency,
@@ -22843,7 +22843,7 @@
 /obj/machinery/light/incandescent/warm,
 /obj/table/wood/auto/desk,
 /obj/machinery/phone,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "cfw" = (
 /obj/machinery/light/incandescent/warm,
@@ -26145,7 +26145,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "dWC" = (
 /obj/machinery/firealarm/directional/north,
@@ -31206,7 +31206,7 @@
 	pixel_y = 6
 	},
 /obj/item/storage/box/record/radio/host,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "ioh" = (
 /obj/machinery/door/airlock/pyro/glass/security,
@@ -32976,7 +32976,7 @@
 "jQH" = (
 /obj/machinery/firealarm/directional/south,
 /obj/table/wood/auto/desk,
-/turf/simulated/floor/darkblue/checker/other,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "jQT" = (
 /obj/landmark/spawner/artifact,

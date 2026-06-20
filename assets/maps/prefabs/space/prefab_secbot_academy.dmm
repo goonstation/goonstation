@@ -74,7 +74,7 @@
 /area/noGenerate)
 "dv" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "dx" = (
 /turf/simulated/floor/sanitary,
@@ -463,7 +463,7 @@
 	name = "Personal wall locker";
 	spawn_contents = null
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "uY" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
@@ -514,7 +514,7 @@
 /area/noGenerate)
 "wS" = (
 /obj/potted_plant/potted_plant5,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "xl" = (
 /obj/mapping_helper/wingrille_spawn/auto/tuff,
@@ -524,7 +524,7 @@
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_y = 32
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "xx" = (
 /turf/simulated/floor/blueblack{
@@ -650,7 +650,7 @@
 /area/prefab/secbot_academy)
 "FQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "FY" = (
 /obj/cabinet/psychiatry,
@@ -982,11 +982,11 @@
 /turf/simulated/floor/wood,
 /area/prefab/secbot_academy)
 "SF" = (
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "SZ" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "Ti" = (
 /obj/stool/chair/comfy{
@@ -1042,7 +1042,7 @@
 	name = "Personal wall locker";
 	spawn_contents = null
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "Vg" = (
 /obj/health_scanner/floor,

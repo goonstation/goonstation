@@ -164,7 +164,8 @@ TYPEINFO(/mob)
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
 
 //Disease stuff
-	var/list/resistances = null
+	/// Assoc list of ailment type to list of sources of that resistance
+	VAR_PRIVATE/list/resistances = null
 	var/list/ailments = null
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -3596,6 +3597,25 @@ TYPEINFO(/mob)
 		return null
 	return src.movement_controller_list[length(src.movement_controller_list)]
 
+/// type should be a path of /datum/ailment, source should be whatever adds the resistance (think of atom props)
+/mob/proc/add_ailment_resistance(type, source)
+	if (!src.resistances[type])
+		LAZYLISTADD(src.resistances, type)
+	if(islist(src.resistances[type]))
+		src.resistances[type] |= source
+	else
+		src.resistances[type] = list(source)
 
+/// type should be a path of /datum/ailment, source should be whatever adds the resistance (think of atom props)
+/mob/proc/remove_ailment_resistance(type, source)
+	if (!source) //no source = remove ALL sources of this resistance, usually don't do this please
+		src.resistances -= type
+		return
+	if (islist(src.resistances[type]))
+		src.resistances[type] -= source
+	if (!length(src.resistances[type])) //no sources of resistance left
+		src.resistances -= type
 
-
+///"Getter" method so I can private the var
+/mob/proc/has_ailment_resistance(type)
+	return type in src.resistances

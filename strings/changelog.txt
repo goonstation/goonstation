@@ -1,3 +1,9 @@
+
+(t)sat jun 20 26
+(u)ANNmagedon
+(p)26859
+(e)🆕🛠️|C-Feature, A-Engineering
+(+)Added Access Lite to the Engineering Specialist Manufacturer.
 (t)wed jun 17 26
 (u)LeahTheTech
 (+)Welders and igniters now more consistently triggers thermite.

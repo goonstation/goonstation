@@ -350,12 +350,6 @@
 /turf/unsimulated/floor/darkblue
 	icon_state = "fulldblue"
 
-/turf/unsimulated/floor/darkblue/checker
-	icon_state = "blue-dblue"
-
-/turf/unsimulated/floor/darkblue/checker/other
-	icon_state = "blue-dblue2"
-
 /turf/unsimulated/floor/darkblue/side
 	icon_state = "dblue"
 
@@ -496,6 +490,13 @@
 
 /turf/unsimulated/floor/yellowblack/corner
 	icon_state = "yellowblackcorner"
+
+
+/turf/unsimulated/floor/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/unsimulated/floor/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
 
 /////////////////////////////////////////
 

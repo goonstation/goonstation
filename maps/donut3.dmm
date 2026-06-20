@@ -3123,7 +3123,7 @@
 	pixel_y = -4
 	},
 /obj/machinery/firealarm/directional/west,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "aTv" = (
 /obj/cable{
@@ -6931,7 +6931,7 @@
 /obj/blind_switch/area/south{
 	pixel_x = 4
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "ccr" = (
 /obj/machinery/light_switch/north,
@@ -8084,7 +8084,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "csd" = (
 /obj/machinery/computer/genetics{
@@ -14178,7 +14178,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "epf" = (
 /obj/decal/tile_edge/line/white{
@@ -17789,7 +17789,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "fzl" = (
 /obj/decal/stripe_caution,
@@ -20629,7 +20629,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "gtk" = (
 /obj/storage/crate,
@@ -23263,7 +23263,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "hjJ" = (
 /obj/machinery/disposal/small,
@@ -24939,7 +24939,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "hKs" = (
 /obj/machinery/networked/test_apparatus/electrobox,
@@ -27673,7 +27673,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/electrical,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "iGK" = (
 /obj/item/paper/book/from_file/dealing_with_clonelieness{
@@ -29940,7 +29940,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/light/emergency,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "jqN" = (
 /obj/shrub{
@@ -35532,7 +35532,7 @@
 /obj/item/chem_grenade/metalfoam{
 	pixel_x = -5
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "lce" = (
 /obj/machinery/light/emergency{
@@ -40939,7 +40939,7 @@
 /obj/item/tank/jetpack/micro{
 	pixel_x = 4
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "mKe" = (
 /obj/cable{
@@ -43061,7 +43061,7 @@
 "ntB" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/mule/beacon,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "ntV" = (
 /obj/fakeobject/airmonitor_broken{
@@ -52297,7 +52297,7 @@
 	pixel_y = -2
 	},
 /obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "qmW" = (
 /obj/table/reinforced/auto,
@@ -52907,7 +52907,7 @@
 	},
 /obj/reagent_dispensers/fueltank,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "qwb" = (
 /obj/decal/tile_edge/line/yellow{
@@ -56465,7 +56465,7 @@
 /obj/machinery/space_heater,
 /obj/machinery/light/incandescent/cool,
 /obj/decal/mule/beacon,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "rBs" = (
 /obj/disposalpipe/segment,
@@ -57000,7 +57000,7 @@
 /obj/machinery/dispenser{
 	pltanks = 0
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "rKd" = (
 /obj/item/device/radio/intercom{
@@ -66801,7 +66801,7 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "uJe" = (
 /obj/stool/chair/office/red{
@@ -71345,7 +71345,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "wbd" = (
 /turf/simulated/wall/auto/jen,
@@ -78000,7 +78000,7 @@
 	pixel_y = 4
 	},
 /obj/item/tank/mini/oxygen,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "xUa" = (
 /obj/decal/tile_edge/line/red{
@@ -79094,7 +79094,7 @@
 	pixel_x = -3;
 	pixel_y = -1
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "yjl" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -79223,7 +79223,7 @@
 	},
 /area/station/hallway/primary/northwest)
 "yko" = (
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/station/ai_monitored/storage/eva)
 "ykt" = (
 /obj/railing/orange{
