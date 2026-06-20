@@ -120,3 +120,14 @@ ABSTRACT_TYPE(/datum/charm_effect)
 			cloud.group.reagents.remove_any(cloud.group.amt_per_tile)
 			cloud.group.reagents.remove_reagent("miasma", 5) //a constant term so we don't end up in epsilon hell
 			qdel(cloud)
+
+/datum/charm_effect/booze
+	stain_condition(reagent_id, volume, datum/reagents/holder_reagents)
+		var/datum/reagent/fooddrink/alcoholic/reagent = holder_reagents.get_reagent(reagent_id)
+		return istype(reagent)
+
+	on_gain(mob/living/user)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_ALCOHOL_RESIST, src, 40)
+
+	on_lose(mob/living/user)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_ALCOHOL_RESIST, src)

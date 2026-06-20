@@ -1561,5 +1561,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 		<li><b>Blood of a curse victim</b>: protection against further curses.</li>
 		<li><b>Essence of wolfsbane</b>: protection against lycanthropy.</li>
 		<li><b>Dye of the lavender flower</b>: protection from foul miasmas and lesser ills.</li>
+		<li><b>Favoured drink of the faith</b>: to lessen the negative effects of drink upon the person, and to improve their prowess in drunken combat.
 	</ul
 	"}
