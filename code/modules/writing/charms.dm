@@ -13,6 +13,14 @@
 	var/strung = FALSE
 	var/obj/item/paper/paper = null
 
+	get_help_message(dist, mob/user)
+		if (!src.strung)
+			return "Can be strung with a scrap of wire."
+
+	get_desc(dist, mob/user)
+		if (!src.stain_reagent)
+			return "Might look better with a <i>splash</i> of color."
+
 	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
 		if (src.stain_reagent)
 			return

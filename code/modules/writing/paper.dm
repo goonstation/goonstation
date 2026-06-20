@@ -135,6 +135,8 @@
 				return
 			modify_chaplain_faith(user, -FAITH_CHARM_CREATION)
 			user.show_text("You carefully fold the paper into a charm. By your faith it has power.", "blue")
+			SPAWN(1 SECOND)
+				user.show_text("You feel your own connection to the divine weaken.", "red")
 			var/obj/item/clothing/suit/charm/charm = new(user)
 			user.u_equip(src)
 			src.set_loc(charm)
