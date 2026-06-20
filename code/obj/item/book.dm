@@ -603,7 +603,7 @@ all for the love of you.</tt>"}
 	<ul>
 		<li><b>Blood of a curse victim</b>: protection against further curses.</li>
 		<li><b>Essence of wolfsbane</b>: protection against lycanthropy.</li>
-		<li><b>Dye of the lavender flower</b>: protection from foul miasmas and lesser ills.</li>
+		<li><b>Dye of the lavender flower</b>: to dispel the foul miasmas and protect against the lesser ills.</li>
 		<li><b>Favoured drink of the faith</b>: to lessen the negative effects of drink upon the person, and to improve their prowess in drunken combat.
 	</ul
 	"}
