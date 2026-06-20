@@ -1550,3 +1550,16 @@ Only trained personnel should operate station systems. Follow all procedures car
 	info = {"
 	I couldn't sleep! Shut the ice maker off at <u>NIGHT</u> when people <u>SLEEP</u>. Management refused to move me out of room 1 - 0/10 would not return!
 	"}
+
+/obj/item/paper/charms
+	name = "on charms and talismans"
+	info = {"
+	The spiritually minded have been making charms to ward against all the ills of the world for centuries, despite the best efforts of several major churches.<br>
+	The most common form of charm is a simple piece of paper, inscribed with words of power or faith and folded to contain them.<br>
+	These charms are often stained with sanctified drinks, dipped in holy water, or even blood. Please find below a compiled list of some well known charm beliefs.
+	<ul>
+		<li><b>Blood of a curse victim</b>: protection against further curses.</li>
+		<li><b>Essence of wolfsbane</b>: protection against lycanthropy.</li>
+		<li><b>Dye of the lavender flower</b>: protection from foul miasmas and lesser ills.</li>
+	</ul
+	"}
