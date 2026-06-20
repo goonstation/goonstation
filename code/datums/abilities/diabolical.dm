@@ -27,7 +27,7 @@
 	onAbilityStat() // In the "Souls" tab.
 		..()
 		.= list()
-		.["Souls:"] = src.points
+		.["Souls:"] = get_singleton(/datum/infernal_contracts_controller).current_souls
 		.["Total Collected:"] = get_singleton(/datum/infernal_contracts_controller).total_souls
 		return
 
@@ -147,7 +147,6 @@
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 0
-	pointCost = CONTRACT_COST
 	when_stunned = 1
 	not_when_handcuffed = 0
 
@@ -161,18 +160,18 @@
 		var/mob/living/M = holder.owner
 		if (!M)
 			return 1
-		if (!(holder.points >= CONTRACT_COST))
+		var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
+		if (!(inf_controller.current_souls >= CONTRACT_COST))
 			boutput(M, SPAN_ALERT("You don't have enough souls in your satanic bank account to buy another contract!"))
-			boutput(M, SPAN_ALERT("You need [CONTRACT_COST - holder.points] more to afford a contract!"))
+			boutput(M, SPAN_ALERT("You need [CONTRACT_COST - inf_controller.current_souls] more to afford a contract!"))
 			return 1
 		if (!isdiabolical(M))
 			boutput(M, SPAN_ALERT("You aren't evil enough to use this power!"))
 			boutput(M, SPAN_ALERT("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return 1
 		. = ..()
-		holder.points -= pointCost
-		var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
-		inf_controller.souladjust(holder.points, M)
+		inf_controller.current_souls -= CONTRACT_COST
+		inf_controller.souladjust(inf_controller.current_souls, M)
 		boutput(M, SPAN_ALERT("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
 		inf_controller.spawncontract(M, 1, 1) //strong contract + pen
 		if (ishuman(M))

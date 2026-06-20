@@ -17,6 +17,7 @@
 								/obj/item/contract/hair,
 								/obj/item/contract/limbs,
 								/obj/item/contract/greed)
+	var/current_souls = 0
 	var/total_souls = 0
 
 	proc/souladjust(var/current_souls as num, var/mob/badguy as mob)

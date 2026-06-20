@@ -203,16 +203,13 @@
 	if (!(isdiabolical(usr)))
 		boutput(usr, SPAN_NOTICE("You aren't evil enough to buy an infernal contract!"))
 		return
-	var/datum/abilityHolder/merchant/A = usr.get_ability_holder(/datum/abilityHolder/merchant)
-	if (!A || !istype(A))
-		return
-	if (A.points < CONTRACT_COST)
-		boutput(usr, SPAN_NOTICE("You don't have enough souls to summon another contract! You need [CONTRACT_COST - A.points] more to afford it."))
+	var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
+	if (inf_controller.current_souls < CONTRACT_COST)
+		boutput(usr, SPAN_NOTICE("You don't have enough souls to summon another contract! You need [CONTRACT_COST - inf_controller.current_souls] more to afford it."))
 		return
 	else
-		A.points -= CONTRACT_COST
-		var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
-		inf_controller.souladjust(A.points, usr)
+		inf_controller.current_souls -= CONTRACT_COST
+		inf_controller.souladjust(inf_controller.current_souls, usr)
 		inf_controller.spawncontract(usr, 1, 1)
 		boutput(usr, SPAN_NOTICE("You have spent [CONTRACT_COST] souls to summon another contract! Your weapons are weaker as a result."))
 		if (ishuman(usr))
@@ -346,13 +343,10 @@ END GUIDE
 		boutput(user, SPAN_ALERT(SPAN_BOLD("The pen stabs into your hand as you start to sign, your blood trickling down onto the page.")))
 		user.visible_message(SPAN_ALERT("<b>[user] signs [his_or_her(user)] name in [his_or_her(user)] own blood upon [src]!</b>"))
 		take_bleeding_damage(user, user, 4, DAMAGE_STAB, TRUE)
-		if(badguy.get_ability_holder(/datum/abilityHolder/merchant))
-			var/datum/abilityHolder/merchant/A = badguy.get_ability_holder(/datum/abilityHolder/merchant)
-			if (A && istype(A))
-				A.points++
-			var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
-			inf_controller.total_souls++
-			inf_controller.souladjust(A.points, badguy)
+		var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
+		inf_controller.total_souls++
+		inf_controller.current_souls++
+		inf_controller.souladjust(inf_controller.current_souls, badguy)
 		logTheThing(LOG_ADMIN, user, "signed a [src.type] contract at [log_loc(user)]!")
 
 	proc/updateuses(var/mob/user as mob, var/mob/badguy as mob)
@@ -593,10 +587,11 @@ END GUIDE
 		var/datum/abilityHolder/merchant/A = user.get_ability_holder(/datum/abilityHolder/merchant)
 		if (!A || !istype(A))
 			return
-		if (A.points >= horse_cost) //horse_cost (currently 15) souls needed to start the end-times. Sufficiently difficult?
+		var/datum/infernal_contracts_controller/inf_controller = get_singleton(/datum/infernal_contracts_controller)
+		if (inf_controller.current_souls >= horse_cost) //horse_cost (currently 15) souls needed to start the end-times. Sufficiently difficult?
 			boutput(user, SPAN_ALERT("<font size=6><B>NEIGH!</b></font>"))
-			A.points -= horse_cost
-			get_singleton(/datum/infernal_contracts_controller).souladjust(A.points, user)
+			inf_controller.current_souls -= horse_cost
+			inf_controller.souladjust(inf_controller.current_souls, user)
 			SPAWN(0)
 				var/turf/spawn_turf = get_turf(src)
 				new /obj/effects/ydrone_summon/horseman(spawn_turf)
