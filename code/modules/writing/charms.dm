@@ -141,3 +141,5 @@
 		. = ..()
 		src.setup_overlay()
 		src.set_effect(new /datum/charm_effect/cursed_blood)
+
+#undef is_blood
