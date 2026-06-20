@@ -4,7 +4,6 @@
 // something to protect against "gamer" wizard spells like arse nath
 // chance to dodge?
 // Luminol: protects from trickster wraith darkness effect?
-// Maybe stronger against weaker diseases like food poisoning and The Cold, flu?
 // PROTECT FROM METEOR - smear it with char or something?
 
 ABSTRACT_TYPE(/datum/charm_effect)
