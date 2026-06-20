@@ -82,21 +82,16 @@ ABSTRACT_TYPE(/datum/charm_effect)
 
 /datum/charm_effect/wolfsbane
 	reagents = list("wolfsbane")
-	var/had_disease_resist = FALSE
 
 	on_gain(mob/living/user)
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_LYCANTHROPY_RESIST, src)
-		if (/datum/ailment/disease/lycanthropy in user.resistances)
-			src.had_disease_resist = TRUE
-		else
-			src.had_disease_resist = FALSE
-			user.resistances += /datum/ailment/disease/lycanthropy
+		user.add_ailment_resistance(/datum/ailment/disease/lycanthropy, src)
 
 	on_lose(mob/living/user)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_LYCANTHROPY_RESIST, src)
 		if (src.had_disease_resist)
 			return
-		user.resistances -= /datum/ailment/disease/lycanthropy
+		user.remove_ailment_resistance(/datum/ailment/disease/lycanthropy, src)
 
 /datum/charm_effect/lavender
 	reagents = list("lavender_essence")
