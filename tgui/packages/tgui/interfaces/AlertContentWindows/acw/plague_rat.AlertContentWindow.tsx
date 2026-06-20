@@ -35,8 +35,9 @@ const PlagueRatContentWindow = () => {
       </ul>
       <h3>Adult rat</h3>
       <ul>
+        <li>
+          Slam into an unfortunate human and stun you both.
         </li>
-        <li>Slam into an unfortunate human and stun you both.</li>
       </ul>
     </div>
   );
