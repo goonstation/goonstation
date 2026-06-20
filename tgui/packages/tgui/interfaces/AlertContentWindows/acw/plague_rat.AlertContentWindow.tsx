@@ -29,15 +29,11 @@ const PlagueRatContentWindow = () => {
           Make a rat den that will spawn small aggressive mice, and heal you
           when close-by.
         </li>
-        <li>
-          Slip into disposal chutes and sneak around wherever you please.
-        </li>
+        <li>Slip into disposal chutes and sneak around wherever you please.</li>
       </ul>
       <h3>Adult rat</h3>
       <ul>
-        <li>
-          Slam into an unfortunate human and stun you both.
-        </li>
+        <li>Slam into an unfortunate human and stun you both.</li>
       </ul>
     </div>
   );
