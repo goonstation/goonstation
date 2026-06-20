@@ -563,6 +563,11 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 	name = "pug eye"
 	desc = "Poor guy."
 
+/obj/item/organ/eye/amphibian
+	name = "frog eye"
+	desc = "It's eye of newt and toe of frog, not eye of frog!"
+	icon_state = "eye-frog"
+
 /obj/item/organ/eye/shelterfrog
 	name = "shelterfrog eye"
 	desc = "Oh, wow, this thing is huge. Like, larger than its owner's brain huge."

@@ -1978,10 +1978,10 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 	var/datum/fluid_group/last_fluid_group = null // why the fuck did i put this here anyhow
 	mutant_folder = 'icons/mob/abzunian.dmi'
 	special_head = HEAD_FROG
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/abzunian/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/abzunian/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/abzunian/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/abzunian/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#22EE99"
 
@@ -2103,10 +2103,10 @@ TYPEINFO(/datum/mutantrace/frog/abzunian)
 		"spleen"=/obj/item/organ/spleen/amphibian,\
 		"stomach"=/obj/item/organ/stomach/amphibian)
 	special_head = HEAD_FROG
-	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/right
-	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/amphibian/left
-	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
-	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/abzunian/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/abzunian/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/abzunian/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/abzunian/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#22EE99"
 
@@ -2226,7 +2226,8 @@ TYPEINFO(/datum/mutantrace/frog/amphibian) // trait mutantrace
 	eye_state = "eyes_amphibian"
 	mutant_folder = 'icons/mob/amphibian/frog.dmi'
 	mutant_organs = list(\
-		"eye"=/obj/item/organ/eye/shelterfrog,\
+		"left_eye"=/obj/item/organ/eye/amphibian,\
+		"right_eye"=/obj/item/organ/eye/amphibian,\
 		"heart"=/obj/item/organ/heart/amphibian,\
 		"appendix"=/obj/item/organ/appendix/amphibian,\
 		"brain"=/obj/item/organ/brain/amphibian,\
