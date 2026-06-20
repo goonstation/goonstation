@@ -95,16 +95,18 @@ ABSTRACT_TYPE(/datum/charm_effect)
 
 /datum/charm_effect/lavender
 	reagents = list("lavender_essence")
-	on_stain()
-		src.charm.setProperty("viralprot", 40)
 
 	on_gain(mob/living/user)
 		src.RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 		src.RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, PROC_REF(on_life))
+		user.add_ailment_resistance(/datum/ailment/disease/cold, src)
+		user.add_ailment_resistance(/datum/ailment/disease/flu, src)
 
 	on_lose(mob/living/user)
 		src.UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		src.UnregisterSignal(user, COMSIG_LIVING_LIFE_TICK)
+		user.remove_ailment_resistance(/datum/ailment/disease/cold, src)
+		user.remove_ailment_resistance(/datum/ailment/disease/flu, src)
 
 	proc/on_move(mob/living/user, atom/previous_loc, dir)
 		if (prob(30) && !ON_COOLDOWN(src.charm, "miasma_clear", 1 SECOND))
