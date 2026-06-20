@@ -88,8 +88,6 @@ ABSTRACT_TYPE(/datum/charm_effect)
 
 	on_lose(mob/living/user)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_LYCANTHROPY_RESIST, src)
-		if (src.had_disease_resist)
-			return
 		user.remove_ailment_resistance(/datum/ailment/disease/lycanthropy, src)
 
 /datum/charm_effect/lavender
