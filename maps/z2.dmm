@@ -9925,7 +9925,7 @@
 /area/crater/biodome/research)
 "aTg" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/businesscard/bonktek,
+/obj/item/paper/image/businesscard/bonktek,
 /turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTh" = (
@@ -19376,7 +19376,7 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
-/obj/item/paper/businesscard/cosmicacres,
+/obj/item/paper/image/businesscard/cosmicacres,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -24367,8 +24367,8 @@
 /area/crypt/sigma/mainhall)
 "bSl" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/paper/businesscard/bonktek,
-/obj/item/paper/businesscard/banjo,
+/obj/item/paper/image/businesscard/bonktek,
+/obj/item/paper/image/businesscard/banjo,
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -25402,7 +25402,7 @@
 	icon_state = "pictureframe";
 	pixel_y = 8
 	},
-/obj/item/paper/businesscard/vurdulak,
+/obj/item/paper/image/businesscard/vurdulak,
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "bWy" = (
@@ -33640,7 +33640,7 @@
 /obj/table/reinforced/auto,
 /obj/item/pen/fancy,
 /obj/machinery/light_switch/north,
-/obj/item/paper/businesscard,
+/obj/item/paper/image/businesscard,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cAG" = (
@@ -37285,8 +37285,8 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/item/paper/businesscard/vurdulak,
-/obj/item/paper/businesscard/ezekian,
+/obj/item/paper/image/businesscard/vurdulak,
+/obj/item/paper/image/businesscard/ezekian,
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "cLU" = (
@@ -37297,9 +37297,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/paper/businesscard/taxi,
-/obj/item/paper/businesscard/banjo,
-/obj/item/paper/businesscard/clowntown,
+/obj/item/paper/image/businesscard/taxi,
+/obj/item/paper/image/businesscard/banjo,
+/obj/item/paper/image/businesscard/clowntown,
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "cLW" = (
@@ -41459,7 +41459,7 @@
 /obj/machinery/light/lamp/black{
 	pixel_y = 10
 	},
-/obj/item/paper/businesscard,
+/obj/item/paper/image/businesscard,
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
 "cWM" = (
@@ -45603,7 +45603,7 @@
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal{
 	pixel_x = 19
 	},
-/obj/item/paper/businesscard/cosmicacres,
+/obj/item/paper/image/businesscard/cosmicacres,
 /turf/unsimulated/floor/carpet/wizard/standard/edge/south,
 /area/wizard_station)
 "dkD" = (
@@ -55831,7 +55831,7 @@
 /area/iomoon/base)
 "fks" = (
 /obj/table/auto,
-/obj/item/paper/businesscard/mabinogi,
+/obj/item/paper/image/businesscard/mabinogi,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
 "fkC" = (
@@ -67317,7 +67317,7 @@
 /turf/space,
 /area/space)
 "nYx" = (
-/obj/item/paper/xg_tapes{
+/obj/item/paper/image/xg_tapes{
 	pixel_y = 3
 	},
 /turf/unsimulated/floor/carpet/grime,
@@ -68029,7 +68029,7 @@
 /area/watchful_eye_sensor)
 "oEX" = (
 /obj/table/auto,
-/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "oFx" = (
@@ -68563,7 +68563,7 @@
 "oZS" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
-/obj/item/paper/postcard/mushroom,
+/obj/item/paper/image/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
 "pah" = (
@@ -80790,7 +80790,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/item/paper/businesscard/clowntown,
+/obj/item/paper/image/businesscard/clowntown,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "ybt" = (

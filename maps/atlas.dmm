@@ -5126,7 +5126,7 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "aEi" = (
-/obj/storage/crate/robotparts,
+/obj/machinery/computer/robotics/lab,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aEl" = (
@@ -5554,12 +5554,10 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aHa" = (
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
 	},
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "aHb" = (
@@ -16254,6 +16252,7 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/submachine/cargopad/robotics,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "npx" = (

@@ -44,8 +44,8 @@
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "cq" = (
-/obj/machinery/shower/puzzle,
 /obj/machinery/drainage,
+/obj/machinery/shower,
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "cN" = (
@@ -60,10 +60,10 @@
 /turf/simulated/floor/sanitary,
 /area/prefab/secbot_academy)
 "cY" = (
-/obj/machinery/shower/puzzle{
+/obj/machinery/drainage,
+/obj/machinery/shower{
 	dir = 1
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "du" = (

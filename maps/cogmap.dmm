@@ -28075,8 +28075,8 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "ceC" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/computer/robot_module_rewriter{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -28384,14 +28384,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"cfK" = (
-/obj/storage/crate/robotics_supplies,
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "cfO" = (
 /obj/machinery/light/small,
 /obj/reagent_dispensers/fueltank,
@@ -28759,36 +28751,6 @@
 	dir = 4
 	},
 /area/station/solar/south)
-"chd" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "che" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28797,11 +28759,11 @@
 /area/station/medical/robotics)
 "chf" = (
 /obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -29115,10 +29077,6 @@
 /obj/machinery/computer/operating/small{
 	id = "robotics"
 	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
-"cim" = (
-/obj/machinery/computer/robot_module_rewriter,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cip" = (
@@ -38644,6 +38602,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
+/obj/storage/crate/robotics_supplies,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "fxi" = (
@@ -39122,6 +39081,7 @@
 	dir = 4;
 	pixel_x = -5
 	},
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "fQF" = (
@@ -40268,6 +40228,13 @@
 "gGk" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
+"gGy" = (
+/obj/landmark/start/job/roboticist,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "gGL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45869,6 +45836,12 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
+"kHt" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "kIr" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
@@ -47725,6 +47698,12 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/engine/gas)
+"mfE" = (
+/obj/machinery/computer/robotics/lab{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "mfM" = (
 /obj/machinery/vending/security,
 /obj/noticeboard/persistent/security/directional/north,
@@ -50998,6 +50977,12 @@
 	dir = 6
 	},
 /area/station/medical/staff)
+"oru" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "orU" = (
 /obj/machinery/disposal{
 	name = "Crematorium Chute"
@@ -58183,9 +58168,32 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/monitoring)
 "tyy" = (
-/obj/landmark/start/job/cyborg,
 /obj/item/device/radio/intercom/medical{
 	dir = 4
+	},
+/obj/surgery_tray,
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/surgical_spoon,
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -104711,7 +104719,7 @@ caP
 cca
 cdk
 fwY
-cfK
+ckT
 pVO
 tyy
 fQi
@@ -105315,7 +105323,7 @@ caP
 cca
 cwI
 ceB
-ceB
+mfE
 ceB
 cil
 ceB
@@ -105616,10 +105624,10 @@ wqy
 ceA
 ccb
 cdn
+oru
 ceC
-ceC
-chd
-cim
+ceB
+ceB
 ceB
 che
 cmr
@@ -105918,9 +105926,9 @@ fEX
 caR
 ccc
 cdo
-ceB
-dHk
-che
+kHt
+gGy
+oru
 ceB
 ceB
 htO

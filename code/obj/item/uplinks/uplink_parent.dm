@@ -31,7 +31,7 @@
 	var/purchase_flags
 	var/owner_ckey = null
 
-	/// Associative list, where keys are /datum/syndicate_buylist instances and values are the number of purchases.
+	/// Associative list, where keys are /datum/syndicate_buylist types and values are the number of purchases.
 	var/list/purchase_log = list()
 
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.

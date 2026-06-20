@@ -521,12 +521,88 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 
 /obj/item/clothing/mask/medical
 	name = "medical mask"
-	desc = "This mask does not work very well in low pressure environments."
+	desc = "This mask can have a mini-tank attached, but does not work very well in low pressure environments."
 	icon_state = "medical"
 	item_state = "medical"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
+	duration_put = 7 SECONDS
 	protective_temperature = 420
+
+	var/obj/item/tank/attached_tank
+
+	get_help_message(dist, mob/user)
+		. = "Detatch an attached tank with a <b>wrenching</b> tool.<br>Click with a <b>mini-tank</b> in-hand to attach it.<br>Can equip this item on someone else by targeting the <b>head</b> and <b>clicking</b> on [TEXT_INTENT_HELP] intent.<br><b>Does not work in space!</b>"
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user.zone_sel.selecting == "head" && ishuman(target) && user.a_intent == INTENT_HELP)
+			var/mob/living/carbon/human/Htarget = target
+			if(Htarget.wear_mask)
+				boutput(user, SPAN_ALERT("[Htarget] is already wearing something on [his_or_her(Htarget)] face!"))
+				return
+			actions.start(new/datum/action/bar/icon/otherItem(user, Htarget, user.equipped(), SLOT_WEAR_MASK, 10 SECONDS), user) // longer actionbar than regular
+			return
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (iswrenchingtool(I))
+			if (!src.attached_tank)
+				boutput(user, SPAN_ALERT("There's no tank attached!"))
+				return
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 35, 1)
+			user.put_in_hand_or_drop(src.attached_tank)
+			src.attached_tank = null
+			src.w_class = W_CLASS_SMALL
+			src.UpdateIcon()
+			return
+
+		if (istype(I, /obj/item/tank/mini))
+			if (src.attached_tank)
+				boutput(user, SPAN_ALERT("There's already an attached tank!"))
+				return
+			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 45, 1)
+			I.set_loc(src)
+			user.u_equip(I)
+			src.attached_tank = I
+			src.w_class = W_CLASS_NORMAL
+			src.UpdateIcon()
+			return
+
+		. = ..()
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot != SLOT_WEAR_MASK)
+			return
+		SPAWN(1 DECI SECOND) // force equipping others doesn't set the wear_mask var in time
+			src.attached_tank?.toggle_valve()
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if (src.attached_tank)
+			. += " It has [src.attached_tank] attached."
+		else
+			. += " It has no tank attached."
+
+	update_icon(...)
+		if (src.attached_tank)
+			var/image/mask_tank = src.SafeGetOverlayImage("mask_tank", src.attached_tank.icon, src.attached_tank.icon_state, pixel_x = 6, pixel_y = 2)
+			var/matrix/new_transform = mask_tank.transform
+			new_transform.Scale(-1, 1)
+			new_transform.Turn(180)
+			mask_tank.transform = new_transform
+			src.underlays += mask_tank
+		else
+			src.underlays.len = 0
+
+/obj/item/clothing/mask/medical/anesthetic
+	name = "anesthetic mask"
+	desc = "For when you want to put patients to sleep wtihout losing patience. Does not work in low-pressure enviornments."
+
+	New()
+		. = ..()
+		src.attached_tank = new /obj/item/tank/mini/anesthetic(src)
+		src.UpdateIcon()
 
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"

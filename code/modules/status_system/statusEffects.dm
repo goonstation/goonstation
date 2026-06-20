@@ -3147,11 +3147,12 @@
 		if (!ishuman(A))
 			return FALSE
 
-	onAdd(optional)
+	onAdd(datum/artifact/curser/optional)
 		..()
 		if (src.outputs_desc)
 			boutput(src.owner, SPAN_ALERT(src.desc))
-		src.linked_curser = optional
+		if (istype(optional))
+			src.linked_curser = optional
 
 	onRemove()
 		if (QDELETED(src.owner))
@@ -3161,8 +3162,8 @@
 			boutput(L, SPAN_NOTICE(src.removal_msg))
 		if(id != "art_curser_displaced_soul")
 			src.linked_curser.active_cursees -= L
-		if(!length(src.linked_curser.active_cursees))
-			src.linked_curser.curse_cleanup()
+			if(!length(src.linked_curser.active_cursees))
+				src.linked_curser.curse_cleanup()
 		src.linked_curser = null
 		..()
 
@@ -3353,7 +3354,7 @@
 
 		onAdd()
 			..()
-			src.soul = new src.soul(get_turf(src.owner), src.owner)
+			src.soul = new(get_turf(src.owner), src.owner)
 			var/mob/living/carbon/human/H = src.owner
 			H.mind.transfer_to(soul)
 			src.original_body = H
