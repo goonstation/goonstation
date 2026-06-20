@@ -1553,6 +1553,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 /obj/item/paper/charms
 	name = "on charms and talismans"
+	icon_state = "brownbook"
 	info = {"
 	The spiritually minded have been making charms to ward against all the ills of the world for centuries, despite the best efforts of several major churches.<br>
 	The most common form of charm is a simple piece of paper, inscribed with words of power or faith and folded to contain them.<br>
