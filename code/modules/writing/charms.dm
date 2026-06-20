@@ -12,8 +12,6 @@
 	/// Do we have a string, can be equipped?
 	var/strung = FALSE
 	var/obj/item/paper/paper = null
-	//ideas for other charm effects: lavender gives disease resist + slightly higher chance for asymptomaticness
-	//aconite stain prevent ww transforms
 
 	reagent_act(reagent_id, volume, datum/reagents/holder_reagents)
 		if (src.stain_reagent)
