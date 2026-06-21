@@ -20,8 +20,8 @@ ABSTRACT_TYPE(/obj/item/cane)
 
 /obj/item/cane/wooden
 	icon_state = "wooden"
-	mat_changename = 0
-	mat_changeappearance = 0
+	mat_changename = FALSE
+	mat_changeappearance = FALSE
 	default_material = "wood"
 	material_amt = 0.1
 
@@ -69,6 +69,6 @@ ABSTRACT_TYPE(/obj/item/cane/silly)
 /obj/item/cane/golden
 	name = "golden cane"
 	icon_state = "golden"
-	mat_changename = 0
+	mat_changename = FALSE
 	default_material = "gold"
 	desc = "Now your grandkids won't call you for sure."
