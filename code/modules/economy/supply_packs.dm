@@ -950,7 +950,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x1 Walking cane made of pure gold. Put the \"old\" in old money."
 	category = "Medical"
 	contains = list(/obj/item/cane/golden)
-	cost = PAY::EXECUTIVE
+	cost = PAY::DONTBUYIT
 	containertype = /obj/storage/crate
 	containername = "Gaudy walking cane"
 
