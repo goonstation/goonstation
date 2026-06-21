@@ -6743,7 +6743,10 @@
 /area/station/science/chemistry)
 "aFV" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/notHuman,
+/obj/item/aiModule/makeCaptain,
+/obj/item/aiModule/freeform{
+	pixel_y = -16
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "aFW" = (
@@ -25025,14 +25028,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/paper/book/from_file/ai_programming_101{
-	pixel_x = -16
-	},
 /obj/machinery/ai_status_display{
 	pixel_y = 30
-	},
-/obj/item/paper/book/from_file/captaining_101{
-	pixel_x = 15
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -38620,10 +38617,13 @@
 /area/station/hallway/primary/east)
 "owF" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/emergency,
+/obj/item/aiModule/emergency{
+	pixel_y = -16
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/aiModule/notHuman,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "owS" = (
@@ -46853,8 +46853,8 @@
 /area/station/medical/medbay/cloner)
 "vEy" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/freeform,
 /obj/item/device/radio/intercom/AI,
+/obj/item/paper/book/from_file/ai_programming_101,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "vEO" = (
@@ -49575,8 +49575,8 @@
 /area/station/crew_quarters/barber_shop)
 "xNn" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/makeCaptain,
 /obj/item/device/radio/intercom/bridge,
+/obj/item/paper/book/from_file/captaining_101,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "xNv" = (
