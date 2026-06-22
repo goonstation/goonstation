@@ -3738,6 +3738,36 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	name = "Unmarked Syndicate Crate"
 	item_outputs = list(/obj/storage/secure/crate/gear/syndicate)
 
+/******************** Carts *******************/
+
+/datum/manufacture/cart
+	name = "Cart"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/storage/cart)
+	create = 1
+	time = 10 SECONDS
+	category = "Miscellaneous"
+
+/datum/manufacture/cart/forensic
+	name = "Forensics Cart"
+	item_outputs = list(/obj/storage/cart/forensic)
+
+/datum/manufacture/cart/mechanic
+	name = "Mechanics Cart"
+	item_outputs = list(/obj/storage/cart/mechcart)
+
+/datum/manufacture/cart/medical
+	name = "Medical Cart"
+	item_outputs = list(/obj/storage/cart/medcart)
+
+/datum/manufacture/cart/trash
+	name = "Trash Cart"
+	item_outputs = list(/obj/storage/cart/trash)
+
+/datum/manufacture/cart/hotdog
+	name = "Hotdog Cart"
+	item_outputs = list(/obj/storage/cart/hotdog)
+
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor
