@@ -945,7 +945,7 @@ datum/pump_ui/circulator_ui
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/bible)) // god bless this spess
 			if(ON_COOLDOWN(src, "bless_teg", 3 SECONDS)) return
-			else if (!istype(src.active_form, /datum/teg_transformation/vampire) && user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
+			else if (!istype(src.active_form, /datum/teg_transformation/vampire) && user.traitHolder?.hasTrait("training_chaplain"))
 				playsound(src.loc, 'sound/impact_sounds/generic_punch_5.ogg', 50, 1)
 				if(src.grump && prob(80) && get_chaplain_faith(user) > FAITH_TEG_BLESS)
 					playsound(user.loc, 'sound/effects/faithbiblewhack.ogg', 50, 1)
