@@ -101,6 +101,7 @@
 #include "defines\medical.dm"
 #include "defines\message_lengths.dm"
 #include "defines\minimap.dm"
+#include "defines\mining.dm"
 #include "defines\mob.dm"
 #include "defines\movement.dm"
 #include "defines\mutantraces.dm"

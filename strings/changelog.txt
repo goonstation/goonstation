@@ -1,4 +1,9 @@
 
+(t)mon jun 22 26
+(u)LorrMaster
+(p)26821
+(e)🆕🎨🛠️📨|C-Feature, C-Sprites, A-Engineering, A-Logistics
+(*)Fossils now have a chance to be found in "weak rock" anomalies. Mining them requires scanning them directly with the geological scanner and using the required tool.
 (t)sun jun 21 26
 (u)LorrMaster
 (p)26866
