@@ -6,6 +6,7 @@
  */
 
 import { BooleanLike } from 'common/react';
+
 import { CommodityData } from '../Trader/type';
 
 export interface SupplyConsoleData {

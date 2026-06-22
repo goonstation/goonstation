@@ -72,6 +72,7 @@ export const Trader = () => {
                       key={commodity.ref}
                       commodity={commodity}
                       view_type={'selling'}
+                      currency_name={data.currency_name}
                     />
                   ))}
                 </Table>
@@ -83,6 +84,7 @@ export const Trader = () => {
                       key={commodity.ref}
                       commodity={commodity}
                       view_type={'buying'}
+                      currency_name={data.currency_name}
                     />
                   ))}
                 </Table>
@@ -182,11 +184,10 @@ type CommodityProps = {
   currency_name: string;
 };
 
-//Also used by QM console traders
+// Also used by QM console traders
 export const CommodityEntry = (props: CommodityProps) => {
-  const { commodity, view_type } = props;
-  const { data, act } = useBackend<TraderData>();
-  const currency_name = props.currency_name ?? data.currency_name;
+  const { commodity, view_type, currency_name } = props;
+  const { act } = useBackend();
   const formattedCurrency =
     currency_name === '⪽' ? currency_name : ' ' + currency_name;
   return (

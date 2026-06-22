@@ -6,7 +6,6 @@
  */
 
 import {
-  Box,
   Button,
   Image,
   Section,
@@ -17,9 +16,9 @@ import {
 
 import { useBackend, useSharedState } from '../../backend';
 import { resource } from '../../goonstation/cdn';
+import { CommodityEntry } from '../Trader/index';
 import { capitalize } from './../common/stringUtils';
 import { SupplyConsoleData } from './type';
-import { CommodityEntry } from '../Trader/index';
 
 export const SupplyConsoleTradersTab = () => {
   const { data } = useBackend<SupplyConsoleData>();
@@ -136,10 +135,7 @@ const TraderView = (props) => {
             <Table>
               {trader.cart.map((item, index) => (
                 <Table.Row className="candystripe" key={index}>
-                  <Table.Cell width="32px"></Table.Cell>
-                  <Table.Cell verticalAlign="middle">
-                    <Box>{capitalize(item.name)}</Box>
-                  </Table.Cell>
+                  <Table.Cell>{capitalize(item.name)}</Table.Cell>
                 </Table.Row>
               ))}
             </Table>
