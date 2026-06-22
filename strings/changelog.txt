@@ -1,6 +1,14 @@
 
 (t)sun jun 21 26
 (u)LorrMaster
+(p)26866
+(e)🪲🧱|C-Bug, A-Materials
+(+)Radiation and neutron radiation can now both exist on the same object simultaneously.
+(u)SebaceousSasquatch
+(p)26917
+(e)|
+(+)Custom injectors now have the reagent's name specified on them too.
+(u)LorrMaster
 (p)26598
 (e)💅🧱|C-QoL, A-Materials
 (*)Portable reclaimer now outputs leftover material as sheets.
