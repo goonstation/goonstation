@@ -13,17 +13,18 @@ import type { GhostdroneData } from './type';
 
 interface GhostdroneStatusesProps {
   ghostdrones: GhostdroneData[];
+  user_is_cyborg: boolean;
 }
 
 export const GhostdroneStatuses = (props: GhostdroneStatusesProps) => {
   const { act } = useBackend();
-  const { ghostdrones } = props;
+  const { ghostdrones, user_is_cyborg } = props;
 
   return (
     <Table>
       <Table.Row>
         <Table.Cell bold>Name</Table.Cell>
-        <Table.Cell bold>Switch</Table.Cell>
+        <Table.Cell bold>Terminate</Table.Cell>
       </Table.Row>
       {ghostdrones.map((item) => (
         <Table.Row key={item.mob_ref}>
@@ -31,6 +32,7 @@ export const GhostdroneStatuses = (props: GhostdroneStatusesProps) => {
           <Table.Cell collapsing>
             <NoticeBox danger inline>
               <Button
+                disabled={user_is_cyborg}
                 onClick={() =>
                   act('killswitch_ghostdrone', { mob_ref: item.mob_ref })
                 }

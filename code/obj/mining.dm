@@ -1196,6 +1196,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			boutput(user, SPAN_ALERT("You hit the [src.name] with [W], but nothing happens!"))
 		return
 
+	ReplaceWithFloor()
+		src.destroy_asteroid()
+
 	proc/change_health(var/amount=0)
 		if(amount != 0)
 			if(amount < 0)
@@ -1617,6 +1620,12 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	proc/weaken_asteroid()
 		return
+
+	ReplaceWithFloor()
+		src.ReplaceWithSpace()
+
+	break_tile_to_plating()
+		src.ReplaceWithSpace()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tile/))

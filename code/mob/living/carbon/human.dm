@@ -1785,6 +1785,8 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 		hud.add_other_object(src.r_store,hud.layouts[hud.layout_style]["storage2"])
 
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
+	if (!I.can_equip(src, slot))
+		return FALSE
 	switch (slot)
 		if (SLOT_L_STORE, SLOT_R_STORE)
 			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)

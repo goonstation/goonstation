@@ -165,7 +165,7 @@
 	.["name"] = src.name
 
 /obj/machinery/clothingbooth/ui_data(mob/user)
-	if (!src.last_preview_icon || !ON_COOLDOWN(src, "generate_preview_icon", 1 SECOND))
+	if (!src.last_preview_icon && !ON_COOLDOWN(src, "generate_preview_icon", 1 SECOND))
 		src.last_preview_icon = getFlatIcon(src.preview.preview_thing, no_anim = TRUE)
 	. = list(
 		"accountBalance" = src.accessed_record ? src.accessed_record["current_money"] : 0,

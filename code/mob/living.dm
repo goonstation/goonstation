@@ -403,22 +403,6 @@ TYPEINFO(/mob/living)
 		else if (!pixelable && !QDELETED(W))
 			W.AfterAttack(target, src, reach, params)
 
-/mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if (!src.restrained() && !is_incapacitated(src))
-		var/obj/item/W = src.equipped()
-		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
-			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	return
-
-/* nothing currently uses needOnMouseMove, so im commenting this out.
-/mob/living/onMouseMove(object,location,control,params)
-	var/obj/item/W = src.equipped()
-	if(W.needOnMouseMove)
-		if (!src.stat && !src.restrained() && !src.getStatusDuration("knockdown") && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned"))
-			if (W && istype(W))
-				W.onMouseMove(object,location,control,params)
-	return
-*/
 /mob/living/onMouseDown(object,location,control,params)
 	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()

@@ -6077,7 +6077,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 9
 	},
 /area/centcom)
@@ -6155,7 +6155,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 5
 	},
 /area/centcom)
@@ -7256,7 +7256,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aKp" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 4
 	},
 /area/marsoutpost)
@@ -7278,7 +7278,7 @@
 /turf/unsimulated/floor/caution/north,
 /area/marsoutpost)
 "aKt" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/marsoutpost)
@@ -9925,7 +9925,7 @@
 /area/crater/biodome/research)
 "aTg" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/businesscard/bonktek,
+/obj/item/paper/image/businesscard/bonktek,
 /turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTh" = (
@@ -18832,7 +18832,7 @@
 	},
 /area/iomoon/base)
 "bxr" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/centcom)
@@ -19376,7 +19376,7 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
-/obj/item/paper/businesscard/cosmicacres,
+/obj/item/paper/image/businesscard/cosmicacres,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -20458,7 +20458,7 @@
 	},
 /area/iomoon)
 "bET" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 8
 	},
 /area/meat_derelict/entry)
@@ -22507,7 +22507,7 @@
 /turf/unsimulated/floor/grime,
 /area/crunch)
 "bLU" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/crunch)
@@ -22525,7 +22525,7 @@
 	layer = 6;
 	name = "broken door"
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/crunch)
@@ -22639,12 +22639,12 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bMA" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 9
 	},
 /area/crunch)
 "bMB" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/crunch)
@@ -22652,7 +22652,7 @@
 /obj/fakeobject/apc_broken{
 	pixel_y = 24
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/crunch)
@@ -22856,7 +22856,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bNd" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 4
 	},
 /area/crunch)
@@ -22864,12 +22864,12 @@
 /obj/machinery/light/worn{
 	dir = 1
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/crunch)
 "bNf" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/crunch)
@@ -23481,10 +23481,10 @@
 	},
 /area/crunch)
 "bPn" = (
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "bPo" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/crunch)
@@ -23882,7 +23882,7 @@
 /obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/crunch)
@@ -24367,8 +24367,8 @@
 /area/crypt/sigma/mainhall)
 "bSl" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/paper/businesscard/bonktek,
-/obj/item/paper/businesscard/banjo,
+/obj/item/paper/image/businesscard/bonktek,
+/obj/item/paper/image/businesscard/banjo,
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -25402,7 +25402,7 @@
 	icon_state = "pictureframe";
 	pixel_y = 8
 	},
-/obj/item/paper/businesscard/vurdulak,
+/obj/item/paper/image/businesscard/vurdulak,
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "bWy" = (
@@ -26429,7 +26429,7 @@
 /turf/simulated/wall/auto/old,
 /area/crunch)
 "bZY" = (
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "bZZ" = (
 /obj/tombstone{
@@ -26499,13 +26499,13 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "cam" = (
-/turf/unsimulated/floor/orangeblack/corner/white,
+/turf/unsimulated/floor/caution/corner/white,
 /area/crunch)
 "can" = (
-/turf/unsimulated/floor/orangeblack/side/white,
+/turf/unsimulated/floor/caution/white,
 /area/crunch)
 "cao" = (
-/turf/unsimulated/floor/orangeblack/corner/white{
+/turf/unsimulated/floor/caution/corner/white{
 	dir = 8
 	},
 /area/crunch)
@@ -26614,7 +26614,7 @@
 /turf/unsimulated/floor/white,
 /area/crunch)
 "caI" = (
-/turf/unsimulated/floor/orangeblack/side/white{
+/turf/unsimulated/floor/caution/white{
 	dir = 4
 	},
 /area/crunch)
@@ -26623,10 +26623,10 @@
 /obj/item/broken_rcd{
 	desc = "The prototype for a device used to rapidly build walls/floors. A plate on the side is labeled 'ANAXIMANDER II Prototype -- Property of Hemera Astral Research Corporation.'"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "caK" = (
-/turf/unsimulated/floor/orangeblack/side/white{
+/turf/unsimulated/floor/caution/white{
 	dir = 8
 	},
 /area/crunch)
@@ -26639,7 +26639,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "caM" = (
 /obj/fakeobject/lighttube_broken{
@@ -26734,17 +26734,17 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "cbd" = (
-/turf/unsimulated/floor/orangeblack/corner/white{
+/turf/unsimulated/floor/caution/corner/white{
 	dir = 4
 	},
 /area/crunch)
 "cbe" = (
-/turf/unsimulated/floor/orangeblack/side/white{
+/turf/unsimulated/floor/caution/white{
 	dir = 1
 	},
 /area/crunch)
 "cbf" = (
-/turf/unsimulated/floor/orangeblack/corner/white{
+/turf/unsimulated/floor/caution/corner/white{
 	dir = 1
 	},
 /area/crunch)
@@ -27625,7 +27625,7 @@
 /turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cfy" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/meat_derelict/entry)
@@ -27884,7 +27884,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/meat_derelict/entry)
@@ -28373,13 +28373,13 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 9
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cii" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cij" = (
 /obj/machinery/light/emergency{
@@ -29494,13 +29494,13 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "clJ" = (
-/turf/unsimulated/floor/orangeblack/corner,
+/turf/unsimulated/floor/caution/corner,
 /area/crunch)
 "clK" = (
-/turf/unsimulated/floor/orangeblack/side,
+/turf/unsimulated/floor/caution/side,
 /area/crunch)
 "clL" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 8
 	},
 /area/crunch)
@@ -29992,7 +29992,7 @@
 "cnr" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/fakeobject/airlock_broken/sealed/owlery,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cns" = (
 /obj/item/scrap,
@@ -32402,7 +32402,7 @@
 /area/owlery/staffhall)
 "cwR" = (
 /obj/machinery/light/emergency,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cwS" = (
 /obj/lattice{
@@ -32844,7 +32844,7 @@
 	dir = 4
 	},
 /obj/machinery/light/emergency,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cyh" = (
 /obj/machinery/light{
@@ -33640,7 +33640,7 @@
 /obj/table/reinforced/auto,
 /obj/item/pen/fancy,
 /obj/machinery/light_switch/north,
-/obj/item/paper/businesscard,
+/obj/item/paper/image/businesscard,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cAG" = (
@@ -34999,7 +34999,7 @@
 	},
 /area/owlery/gangzone)
 "cEE" = (
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cEF" = (
 /obj/table/reinforced/auto,
@@ -35371,7 +35371,7 @@
 /area/owlery/Owlopen)
 "cFT" = (
 /obj/stool/bench/auto,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cFU" = (
 /turf/unsimulated/floor/redblack/corner{
@@ -37285,8 +37285,8 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/item/paper/businesscard/vurdulak,
-/obj/item/paper/businesscard/ezekian,
+/obj/item/paper/image/businesscard/vurdulak,
+/obj/item/paper/image/businesscard/ezekian,
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "cLU" = (
@@ -37297,9 +37297,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/paper/businesscard/taxi,
-/obj/item/paper/businesscard/banjo,
-/obj/item/paper/businesscard/clowntown,
+/obj/item/paper/image/businesscard/taxi,
+/obj/item/paper/image/businesscard/banjo,
+/obj/item/paper/image/businesscard/clowntown,
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "cLW" = (
@@ -37937,7 +37937,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cNW" = (
 /obj/decal/cleanable/fungus,
@@ -38590,7 +38590,7 @@
 /area/owlery/Owlmait)
 "cPH" = (
 /obj/machinery/light/emergency,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cPI" = (
 /obj/decal/cleanable/blood/gibs{
@@ -38621,7 +38621,7 @@
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cPK" = (
 /obj/item/casing/small,
@@ -41459,7 +41459,7 @@
 /obj/machinery/light/lamp/black{
 	pixel_y = 10
 	},
-/obj/item/paper/businesscard,
+/obj/item/paper/image/businesscard,
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
 "cWM" = (
@@ -45222,7 +45222,7 @@
 /turf/unsimulated/floor/plating,
 /area/syndicate_station/battlecruiser)
 "djf" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 9
 	},
 /area/centcom)
@@ -45603,7 +45603,7 @@
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal{
 	pixel_x = 19
 	},
-/obj/item/paper/businesscard/cosmicacres,
+/obj/item/paper/image/businesscard/cosmicacres,
 /turf/unsimulated/floor/carpet/wizard/standard/edge/south,
 /area/wizard_station)
 "dkD" = (
@@ -45647,7 +45647,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
 "dkX" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/centcom)
@@ -46010,10 +46010,10 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/battle)
 "dmr" = (
-/turf/unsimulated/floor/orangeblack/corner,
+/turf/unsimulated/floor/caution/corner,
 /area/centcom)
 "dms" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 8
 	},
 /area/centcom)
@@ -46024,7 +46024,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "dmu" = (
-/turf/unsimulated/floor/orangeblack/side,
+/turf/unsimulated/floor/caution/side,
 /area/centcom)
 "dmE" = (
 /obj/stool/chair/office,
@@ -46032,7 +46032,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dmJ" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/centcom)
@@ -46071,7 +46071,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/centcom)
@@ -46392,7 +46392,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/centcom)
@@ -46437,7 +46437,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/centcom)
@@ -54798,7 +54798,7 @@
 /obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "euA" = (
 /obj/decal/tile_edge/line/green{
@@ -55831,7 +55831,7 @@
 /area/iomoon/base)
 "fks" = (
 /obj/table/auto,
-/obj/item/paper/businesscard/mabinogi,
+/obj/item/paper/image/businesscard/mabinogi,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
 "fkC" = (
@@ -55909,7 +55909,7 @@
 	icon_state = "neutinj";
 	name = "rusty industrial oven"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "fnw" = (
 /obj/fakeobject/pipe{
@@ -58271,7 +58271,7 @@
 /obj/machinery/conveyor/NS{
 	id = "ddan"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "hhE" = (
 /obj/fakeobject{
@@ -63765,7 +63765,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/lab)
 "lmr" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/meat_derelict/entry)
@@ -66408,7 +66408,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "nwt" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/centcom)
@@ -67317,7 +67317,7 @@
 /turf/space,
 /area/space)
 "nYx" = (
-/obj/item/paper/xg_tapes{
+/obj/item/paper/image/xg_tapes{
 	pixel_y = 3
 	},
 /turf/unsimulated/floor/carpet/grime,
@@ -68029,7 +68029,7 @@
 /area/watchful_eye_sensor)
 "oEX" = (
 /obj/table/auto,
-/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/image/businesscard/lawyers,
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "oFx" = (
@@ -68374,7 +68374,7 @@
 /turf/space,
 /area/wizard_station_space)
 "oUl" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/meat_derelict/entry)
@@ -68563,7 +68563,7 @@
 "oZS" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
-/obj/item/paper/postcard/mushroom,
+/obj/item/paper/image/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
 "pah" = (
@@ -69079,7 +69079,7 @@
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "psH" = (
 /obj/table/auto,
@@ -70410,7 +70410,7 @@
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
 "qsl" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 10
 	},
 /area/centcom)
@@ -71721,7 +71721,7 @@
 	},
 /area/meat_derelict/guts)
 "rtQ" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 4
 	},
 /area/centcom)
@@ -72758,7 +72758,7 @@
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "sdh" = (
 /obj/rack,
@@ -73665,7 +73665,7 @@
 /area/watchful_eye_sensor)
 "sOG" = (
 /obj/machinery/light,
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 10
 	},
 /area/centcom)
@@ -74604,7 +74604,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
 "tNm" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/meat_derelict/entry)
@@ -75791,7 +75791,7 @@
 /obj/machinery/conveyor/SN{
 	id = "ddan"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "uJK" = (
 /obj/map/light/lava,
@@ -76021,12 +76021,12 @@
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
 "uSr" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 4
 	},
 /area/meat_derelict/entry)
 "uSw" = (
-/turf/unsimulated/floor/orangeblack/side,
+/turf/unsimulated/floor/caution/side,
 /area/meat_derelict/entry)
 "uSE" = (
 /obj/decal/cleanable/blood{
@@ -76675,7 +76675,7 @@
 /area/sim/gunsim/lobby)
 "voQ" = (
 /obj/machinery/light,
-/turf/unsimulated/floor/orangeblack/side,
+/turf/unsimulated/floor/caution/side,
 /area/centcom)
 "voU" = (
 /obj/lattice,
@@ -76764,7 +76764,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 5
 	},
 /area/centcom)
@@ -77599,7 +77599,7 @@
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "vVW" = (
 /obj/fakeobject/pipe{
@@ -77957,7 +77957,7 @@
 	},
 /area/centcom/offices/adhara)
 "wkP" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 6
 	},
 /area/centcom)
@@ -78142,7 +78142,7 @@
 	},
 /area/iomoon/base)
 "wpC" = (
-/turf/unsimulated/floor/orangeblack/corner,
+/turf/unsimulated/floor/caution/corner,
 /area/meat_derelict/entry)
 "wpP" = (
 /obj/item/radio_tape/adventure/xg,
@@ -80228,7 +80228,7 @@
 	})
 "xJR" = (
 /obj/decal/cleanable/blood,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "xJT" = (
 /obj/machinery/light{
@@ -80268,7 +80268,7 @@
 /area/upper_arctic/pod1)
 "xLa" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/iomoon/base)
@@ -80790,7 +80790,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/item/paper/businesscard/clowntown,
+/obj/item/paper/image/businesscard/clowntown,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "ybt" = (

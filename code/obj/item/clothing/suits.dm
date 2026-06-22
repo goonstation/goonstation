@@ -1564,20 +1564,9 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
-
-	var/image/fabrItemImg = null
-	var/image/fabrWornImg = null
-	var/image/renfItemImg = null
-	var/image/renfWornImg = null
-
-	New()
-		..()
-		// Prep the item overlays
-		fabrItemImg = SafeGetOverlayImage("item-suit", src.icon, "spacemat")
-		renfItemImg = SafeGetOverlayImage("item-suit-highlight", src.icon, "spacemat-armor")
-		// Prep the worn overlays
-		fabrWornImg = SafeGetOverlayImage("worn-suit", src.wear_image_icon, "spacemat")
-		renfWornImg = SafeGetOverlayImage("worn-suit-highlight", src.wear_image_icon, "spacemat-armor")
+	var/datum/material/material_fabric
+	var/datum/material/material_renf
+	var/wear_mutantrace_type = null // Used to know when to update wear images for different mutant races
 
 	onMaterialChanged()
 		. = ..()
@@ -1590,7 +1579,40 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			setProperty("chemprot", prot)
 		return
 
+	update_tail_clothing(var/mob/living/carbon/human/H, var/tail_clothing_state)
+		var/obj/item/organ/tail/our_tail = H.organHolder.tail
+		H.human_tail_image = image(our_tail.clothing_image_icon, tail_clothing_state)
+		H.human_tail_image.apply_material_appearance(src.material_fabric)
+		H.tail_standing.overlays += H.human_tail_image
+		H.tail_standing_oversuit.overlays += H.human_tail_image
+		H.update_tail_overlays()
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		if(istype_exact(H.mutantrace, src.wear_mutantrace_type))
+			return
+		src.wear_mutantrace_type = H.mutantrace?.type
+		var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+		if("spacemat" in typeinfo?.clothing_icon_states["overcoats"])
+			src.wear_image_icon = typeinfo.clothing_icons["overcoats"]
+		else
+			src.wear_image_icon = initial(src.wear_image_icon)
+
+		src.wear_image.overlays = null
+		add_part_overlay(src.wear_image, image(src.wear_image_icon, "spacemat"), src.material_fabric)
+		add_part_overlay(src.wear_image, image(src.wear_image_icon, "spacemat-armor"), src.material_renf)
+
+	update_inhand(hand, hand_offset)
+		. = ..()
+		src.inhand_image.overlays = null
+		var/icon/inhand_file = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+		var/image/inhand_fabric = image(inhand_file, "spacemat-[hand]", pixel_y = hand_offset)
+		var/image/inhand_renf = image(inhand_file, "spacemat-armor-[hand]", pixel_y = hand_offset)
+		add_part_overlay(src.inhand_image, inhand_fabric, src.material_fabric)
+		add_part_overlay(src.inhand_image, inhand_renf, src.material_renf)
+
 	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
+		src.material_fabric = fabrMat
+		src.material_renf = renfMat
 		src.setMaterial(fabrMat, FALSE) // We want to purely rely on the overlay colours
 		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
 		var/prot_rad = round(renfMat.calc_radiation_prot() / 2, 5)
@@ -1600,15 +1622,16 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
 
-		fabrItemImg.apply_material_appearance(fabrMat)
-		renfItemImg.apply_material_appearance(renfMat)
-		UpdateOverlays(fabrItemImg, "item-suit")
-		UpdateOverlays(renfItemImg, "item-suit-highlight")
+		var/image/image_item_fabric = SafeGetOverlayImage("item-suit", src.icon, "spacemat")
+		var/image/image_item_renf = SafeGetOverlayImage("item-suit-highlight", src.icon, "spacemat-armor")
+		image_item_fabric.apply_material_appearance(src.material_fabric)
+		image_item_renf.apply_material_appearance(src.material_renf)
+		UpdateOverlays(image_item_fabric, "item-suit")
+		UpdateOverlays(image_item_renf, "item-suit-highlight")
 
-		fabrWornImg.apply_material_appearance(fabrMat)
-		renfWornImg.apply_material_appearance(renfMat)
-		src.wear_image.overlays += fabrWornImg
-		src.wear_image.overlays += renfWornImg
+	proc/add_part_overlay(var/image/main_image, var/image/part_image, var/datum/material/part_mat)
+		part_image.apply_material_appearance(part_mat)
+		main_image.overlays += part_image
 
 /obj/item/clothing/suit/space/custom/prototype
 	New()
