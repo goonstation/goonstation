@@ -187,7 +187,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot(src, W)
 			// Let's not rat out changelings through their butt name, as funny as it is
 			var/regex/R = regex("mutagenic")
-			if(R.Find(src.name))
+			if(findtext(src.name, "mutagenic")
 				B.name = "mutagenic buttbot"
 			else if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
