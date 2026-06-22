@@ -85,6 +85,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	.["supply_entries"] = src.fetch_supply_entry_data()
 	.["market_data"] = src.fetch_market_data()
 	.["trader_data"] = src.fetch_trader_data()
+	.["requisition_data"] = src.fetch_requisition_data()
 
 /obj/machinery/computer/supplycomp/proc/fetch_supply_entry_data()
 	. = list()
@@ -122,10 +123,33 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			"name" = trader.name,
 			"ref" = ref(trader),
 			"picture" = trader.picture,
+			"current_message" = trader.current_message,
 			"goods_sell" = trader.fetch_commodities_data(trader.goods_sell),
 			"goods_buy" = trader.fetch_commodities_data(trader.goods_buy),
 			"cart" = trader.fetch_commodities_data(trader.shopping_cart),
 		))
+
+/obj/machinery/computer/supplycomp/proc/fetch_requisition_data()
+	. = list()
+	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+		var/req_data = list()
+		req_data["name"] = RC.name
+		req_data["desc"]= RC.requis_desc
+		req_data["pinned"] = RC.pinned
+		req_data["req_code"] = RC.req_code
+		req_data["flavor_desc"] = RC.flavor_desc
+		req_data["payout"] = RC.payout
+		req_data["item_rewards"] = list()
+		if(!RC.hide_item_payouts)
+			for(var/datum/rc_itemreward/RI in RC.item_rewarders)
+				req_data["item_rewards"] += list(list("name" = RI.name, "count" = RI.count))
+		req_data["urgent"] = FALSE
+		req_data["cycles_left"] = 0
+		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
+			req_data["urgent"] = TRUE
+			var/datum/req_contract/aid/RCAID = RC
+			req_data["cycles_left"] = RCAID.cycles_remaining
+		. += list(req_data)
 
 /obj/machinery/computer/supplycomp/ui_data(mob/user)
 	. = list()
@@ -134,6 +158,8 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	.["order_history"] = src.fetch_order_history_data()
 	.["requests"] = src.fetch_supply_request_data()
 	.["signal_loss"] = global.signal_loss
+	.["rockbox_transaction_percent_fee"] = global.rockbox_globals.rockbox_client_fee_pct
+	.["rockbox_transaction_minimum_fee"] = global.rockbox_globals.rockbox_client_fee_min
 	if(global.shippingmarket.last_market_update != src.last_market_update) //The market has refreshed.
 		src.last_market_update = global.shippingmarket.last_market_update
 		src.update_static_data_for_all_viewers() //Requisitions, market prices, etc.

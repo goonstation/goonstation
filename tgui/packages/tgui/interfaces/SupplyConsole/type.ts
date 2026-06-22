@@ -13,12 +13,15 @@ export interface SupplyConsoleData {
   shipping_budget: number;
   market_reset_timer: number;
   signal_loss: number;
+  rockbox_transaction_percent_fee: number;
+  rockbox_transaction_minimum_fee: number;
   requests: SupplyRequestData[];
   order_history: OrderHistoryData[];
   supply_categories: string[];
   supply_entries: SupplyEntryData[];
   market_data: MarketEntryData[];
   trader_data: SupplyTraderData[];
+  requisition_data: RequisitionData[];
 }
 
 interface SupplyRequestData {
@@ -55,9 +58,26 @@ interface SupplyTraderData {
   name: string;
   ref: string;
   picture: string;
+  current_message: string;
   goods_sell: CommodityData[];
   goods_buy: CommodityData[];
   cart: CommodityData[];
+}
+
+interface RequisitionData {
+  name: string;
+  desc: string;
+  pinned: BooleanLike;
+  req_code: string;
+  flavor_desc: string;
+  payout: number;
+  item_rewards: RequisitionItemRewardData[];
+  urgent: BooleanLike;
+  cycles_left: number;
+}
+interface RequisitionItemRewardData {
+  name: string;
+  count: number;
 }
 
 export enum SupplyConsoleTabKeys {
@@ -67,5 +87,4 @@ export enum SupplyConsoleTabKeys {
   Market,
   Traders,
   Requisitions,
-  Rockbox,
 }

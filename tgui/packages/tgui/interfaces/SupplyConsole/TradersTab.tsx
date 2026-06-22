@@ -6,6 +6,7 @@
  */
 
 import {
+  BlockQuote,
   Button,
   Image,
   Section,
@@ -155,28 +156,29 @@ const SupplyTraderInfo = (props) => {
         <Image src={resource('images/traders/' + trader.picture)} />
       </Stack.Item>
       <Stack.Item grow>
-        <Stack vertical fill>
-          <Section title={trader.name} fill>
-            <Section>
-              <Stack.Item>
-                <b>Items in cart:</b> {trader.cart.length}
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  icon="cart-shopping"
-                  color="green"
-                  iconColor="white"
-                  textColor="white"
-                  onClick={() => {
-                    act('pickupcart');
-                  }}
-                >
-                  Confirm Cart
-                </Button>
-              </Stack.Item>
-            </Section>
-          </Section>
-        </Stack>
+        <Section title={trader.name} fill>
+          <Stack vertical fill>
+            <Stack.Item>
+              <b>Items in cart:</b> {trader.cart.length}
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="cart-shopping"
+                color="green"
+                iconColor="white"
+                textColor="white"
+                onClick={() => {
+                  act('pickupcart');
+                }}
+              >
+                Confirm Cart
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <BlockQuote>{trader.current_message}</BlockQuote>
+            </Stack.Item>
+          </Stack>
+        </Section>
       </Stack.Item>
     </Stack>
   );

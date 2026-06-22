@@ -5,7 +5,13 @@
  * @license MIT
  */
 
-import { Section, Stack, Tabs } from 'tgui-core/components';
+import {
+  BlockQuote,
+  NumberInput,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
 import { formatMoney } from '../../format';
@@ -14,7 +20,6 @@ import { SupplyConsoleHistoryTab } from './HistoryTab';
 import { SupplyConsoleMarketTab } from './MarketTab';
 import { SupplyConsoleRequestsTab } from './RequestsTab';
 import { SupplyConsoleRequisitionsTab } from './RequisitionsTab';
-import { SupplyConsoleRockboxControlsTab } from './RockboxControlsTab';
 import { SupplyConsoleSuppliesTab } from './SuppliesTab';
 import { SupplyConsoleTradersTab } from './TradersTab';
 import { SupplyConsoleData, SupplyConsoleTabKeys } from './type';
@@ -34,6 +39,11 @@ export const SupplyConsole = () => {
               <Stack.Item>
                 <Section title="Market Information">
                   <MarketInformation />
+                </Section>
+              </Stack.Item>
+              <Stack.Item>
+                <Section title="Rockbox Controls">
+                  <RockboxControls />
                 </Section>
               </Stack.Item>
               <Stack.Item grow>
@@ -63,10 +73,6 @@ export const SupplyConsole = () => {
                       tabID={SupplyConsoleTabKeys.Requisitions}
                       tabName={'Requisitions'}
                     />
-                    <SupplyConsoleTab
-                      tabID={SupplyConsoleTabKeys.Rockbox}
-                      tabName={'Rockbox Controls'}
-                    />
                   </Tabs>
                 </Section>
               </Stack.Item>
@@ -91,9 +97,6 @@ export const SupplyConsole = () => {
             {viewing_tab === SupplyConsoleTabKeys.Requisitions && (
               <SupplyConsoleRequisitionsTab />
             )}
-            {viewing_tab === SupplyConsoleTabKeys.Rockbox && (
-              <SupplyConsoleRockboxControlsTab />
-            )}
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -113,6 +116,46 @@ const MarketInformation = () => {
       </Stack.Item>
       <Stack.Item>
         Signal Interference: <b>{data.signal_loss}%</b>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const RockboxControls = () => {
+  const { data } = useBackend<SupplyConsoleData>();
+  return (
+    <Stack vertical fill>
+      <Stack.Item>
+        <BlockQuote>
+          Additional Rockbox fees are paid into the cargo budget.
+        </BlockQuote>
+      </Stack.Item>
+      <Stack.Item>
+        <Stack>
+          <Stack.Item>Percentage Fee:</Stack.Item>
+          <Stack.Item grow>
+            <NumberInput
+              fluid
+              value={data.rockbox_transaction_percent_fee}
+              minValue={0}
+              unit={'%'}
+            />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item>
+        <Stack>
+          <Stack.Item>Minimum Fee:</Stack.Item>
+          <Stack.Item grow>
+            <NumberInput
+              fluid
+              value={data.rockbox_transaction_minimum_fee}
+              minValue={0}
+              unit={'⪽'}
+              format={formatMoney}
+            />
+          </Stack.Item>
+        </Stack>
       </Stack.Item>
     </Stack>
   );
