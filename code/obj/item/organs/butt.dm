@@ -185,7 +185,11 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/arm))
 			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot(src, W)
-			if (src.donor || src.donor_name)
+			// Let's not rat out changelings through their butt name, as funny as it is
+			var/regex/R = regex("mutagenic")
+			if(R.Find(src.name))
+				B.name = "mutagenic buttbot"
+			else if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
 			B.set_loc(get_turf(src))
