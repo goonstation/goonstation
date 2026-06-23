@@ -1661,6 +1661,7 @@
 #include "code\modules\maptext\maptext_images\message.dm"
 #include "code\modules\maptext\maptext_images\sap_power.dm"
 #include "code\modules\maptext\maptext_images\wraith_whisper.dm"
+#include "code\modules\materials\crafting_recipe_sheets.dm"
 #include "code\modules\materials\Mat_FabParts.dm"
 #include "code\modules\materials\Mat_FabRecipes.dm"
 #include "code\modules\materials\Mat_Fabrication.dm"
