@@ -598,9 +598,7 @@
 		B.ActivatePoolEffect(E, 1, 0)
 		SPAWN (1 SECOND) // This DOES NOT WORK at round start unless delayed but somehow the trait part is logged??
 			if (E)
-				E.curable_by_mutadone = FALSE
-				E.name = "Reinforced " + E.name
-				E.addFlag(BIOEFFECT_CANNOT_SPLICE) //don't let them combine the reinforced gene with another one
+				E.applyChromosome(/datum/dna_chromosome/anti_mutadone)
 			logTheThing(LOG_COMBAT, owner, "gets the bioeffect [E] from the trait [name].")
 
 /datum/trait/stablegenes
