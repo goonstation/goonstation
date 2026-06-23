@@ -3256,7 +3256,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/scripture/greenhb{
+/obj/item/bible/greenhb{
 	pixel_x = 12
 	},
 /turf/unsimulated/floor/grime,
@@ -3385,8 +3385,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/printing_press,
-/obj/item/scripture/greenhb,
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
+/obj/item/bible/greenhb,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "oU" = (
@@ -3467,7 +3467,7 @@
 /obj/item/clothing/suit/cultist,
 /obj/item/clothing/mask/greencultmask,
 /obj/storage/crate,
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /obj/item/medical/ointment,
 /obj/item/medical/bruise_pack,
 /obj/machinery/light/small/sticky/greenish,
@@ -3504,7 +3504,7 @@
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "qZ" = (
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /obj/table/wood/auto,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
@@ -3789,7 +3789,7 @@
 /obj/item/clothing/suit/cultist,
 /obj/item/clothing/mask/greencultmask,
 /obj/storage/crate,
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /obj/machinery/light/small/sticky/greenish,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
@@ -3874,7 +3874,7 @@
 /obj/item/material_piece/plasmacoral,
 /obj/item/material_piece/plasmacoral,
 /obj/table,
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "yS" = (
@@ -4042,7 +4042,7 @@
 /turf/unsimulated/wall/trench,
 /area/cult_base)
 "BY" = (
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /obj/table/wood/auto,
 /obj/machinery/light/small/sticky/greenish{
 	dir = 8
@@ -4714,7 +4714,7 @@
 /obj/item/clothing/suit/cultist,
 /obj/item/clothing/mask/greencultmask,
 /obj/storage/crate,
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /obj/machinery/light/small/sticky/greenish,
 /obj/item/paper/cultbase_acolyte_notes,
 /turf/unsimulated/floor,
@@ -4830,7 +4830,7 @@
 /area/cult_base)
 "TL" = (
 /obj/table/wood/auto,
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "TR" = (
@@ -4932,7 +4932,7 @@
 	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /obj/item/paper/cultbase_skeptic,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
@@ -4944,7 +4944,7 @@
 /obj/item/clothing/suit/cultist,
 /obj/item/clothing/mask/greencultmask,
 /obj/storage/crate,
-/obj/item/scripture/greenhb,
+/obj/item/bible/greenhb,
 /obj/machinery/light/small/sticky/greenish,
 /obj/item/clothing/gloves/yellow{
 	pixel_x = -2;

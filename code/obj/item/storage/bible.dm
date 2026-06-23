@@ -41,9 +41,9 @@
 			if (1 to 8)
 				target.visible_message(SPAN_ALERT("<B>[user] heals [target] mending [his_or_her(target)] wounds!</B>"))
 			if (9 to 15)
-				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of Christ!</B>"))
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of the holy!</B>"))
 			if (16 to 24)
-				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the LORD!</B>"))
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the lord!</B>"))
 			if (25 to INFINITY)
 				target.visible_message(SPAN_ALERT("<B>[user] heals [target] in service of heaven!</B>"))
 
@@ -303,3 +303,101 @@
 				user.show_text("You hide [W] in \the [src].", "blue")
 				return
 		..()
+
+/obj/item/bible/eyehb
+	name = "guide to the skies"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "eyehb"
+	item_state = "eyehb"
+	desc = "A book covered in depictions of staring eyes and cosmic forces. You feel watched holding it."
+
+/obj/item/bible/eyedarkhb
+	name = "guide to the stars"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "eyedarkhb"
+	item_state = "eyedarkhb"
+	desc = "A dark book covered in depictions of staring eyes and cosmic forces. You feel watched holding it."
+
+/obj/item/bible/greenhb
+	name = "handbook to the Other world"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "greenhb"
+	item_state = "greenhb"
+	desc = "This old tome is full of curious rituals. It has mold between the pages."
+
+/obj/item/bible/clownhb
+	name = "the great prophecy of hilarity"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "clownhb"
+	item_state = "clownhb"
+	desc = "This is actually a novel taken from a library written over with crayon drawings of bananas and clown faces."
+
+/obj/item/bible/purplehb
+	name = "Tome of the Cosmic Gods"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "purplehb"
+	item_state = "purplehb"
+	desc = "A deep purple tome telling of the eldritch lore and its many gods."
+
+/obj/item/bible/burnedhb
+	name = "bible of conflagration"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "burnedhb"
+	item_state = "burnedhb"
+	desc = "A cooked scripture composed of passionate ravings of fire and brimstone."
+
+/obj/item/bible/bluehb
+	name = "last words of the outlander"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "bluehb"
+	item_state = "bluehb"
+	desc = "A text in a spacefaring language lost to the galaxy. It contains diagrams of its history that are difficult to parse."
+
+/obj/item/bible/skeletonhb
+	name = "bone tome"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "skeletonhb"
+	item_state = "skeletonhb"
+	desc = "A dusty leather text displaying images of skeletons. Its bookmark is actually a spine!"
+
+/obj/item/bible/xhb
+	name = "the word of the light"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "xhb"
+	item_state = "xhb"
+	desc = "A scripture touting the strength of light and the power it provides to all life"
+
+/obj/item/bible/bluewhitehb
+	name = "resplendent azure tome"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "bluewhitehb"
+	item_state = "bluewhitehb"
+	desc = "a resplendent blue and white book with gold lettering."
+
+/obj/item/bible/redwhitehb
+	name = "resplendent crimson tome"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "redwhitehb"
+	item_state = "redwhitehb"
+	desc = "a resplendent red and white book with gold lettering"
+
+/obj/item/bible/reddarkhb
+	name = "grand tome"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "reddarkhb"
+	item_state = "reddarkhb"
+	desc = "a grand red and black book with gold lettering"
+
+/obj/item/bible/cluwnehb
+	name = "cursed prophecy of the fatal laughter"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "cluwnehb"
+	item_state = "cluwnehb"
+	desc = "Every word inside makes you want to retch."
+
+/obj/item/bible/tidehb
+	name = "disarmanomicon"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "tidehb"
+	item_state = "tidehb"
+	desc = "A picture book teaching assistants right from wrong."
