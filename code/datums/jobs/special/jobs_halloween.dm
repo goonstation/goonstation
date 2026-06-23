@@ -296,22 +296,22 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			if(aggressive == "eyebeams")
 				var/datum/bioEffect/power/eyebeams/eb = be
 				eb.stun_mode = 1
-				eb.altered = 1
+				eb.addFlag(BIOEFFECT_CANNOT_SPLICE)
 			else
 				be.power = 1
-				be.altered = 1
+				be.addFlag(BIOEFFECT_CANNOT_SPLICE)
 			be = M.bioHolder.AddEffect(defensive, do_stability=0)
 		else
 			var/datum/bioEffect/power/shoot_limb/sl = M.bioHolder.AddEffect("shoot_limb", do_stability=0)
 			sl.safety = 1
-			sl.altered = 1
+			sl.addFlag(BIOEFFECT_CANNOT_SPLICE)
 			sl.cooldown = 300
 			sl.stun_mode = 1
 			var/datum/bioEffect/regenerator/r = M.bioHolder.AddEffect("regenerator", do_stability=0)
 			r.regrow_prob = 10
 		var/datum/bioEffect/power/be = M.bioHolder.AddEffect("adrenaline", do_stability=0)
 		be.safety = 1
-		be.altered = 1
+		be.addFlag(BIOEFFECT_CANNOT_SPLICE)
 
 	get_default_miranda()
 		return "Evildoer! You have been apprehended by a hero of space justice!"

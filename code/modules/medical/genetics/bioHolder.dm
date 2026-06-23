@@ -383,6 +383,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 				if(!newCopy) //uh oh
 					continue
 
+				newCopy.BIOEFFECT_FLAGS = BE.BIOEFFECT_FLAGS
+				// Most of the below variables are planned to be migrated to the above variable
 				var/oldpower = newCopy.power
 				newCopy.power = BE.power
 				newCopy.safety = BE.safety

@@ -43,6 +43,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 	var/tmp/timeLeft = -1//Time left for temporary effects.
 
+	/// Bioeffect bitflags. Partially implemented, intended to eventually include most/all boolean variables like is_innate and is_magic
+	/// You shouldn't be directly referencing this unless you know what you're doing - use addFlag/removeFlag or the various check procs instead
+	var/BIOEFFECT_FLAGS = 0
+	/// List of effect flags to be added in New()
+	var/starting_flags = null
+
 	var/cooldown = 0 //For effects that come with verbs
 	var/can_reclaim = 1 // Can this gene be turned into mats with the reclaimer?
 	var/can_scramble = 1 // Can this gene be scrambled with the emitter?
@@ -56,7 +62,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/is_magical = FALSE //! only for trait genes/similar, we really dont want to lose this
 	var/stability_loss = 0
 	var/tmp/activated_from_pool = 0
-	var/altered = 0
 	var/add_delay = 0
 	var/wildcard = 0
 	var/power = 1
@@ -85,6 +90,8 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			if (istype(global_instance, /datum/bioEffect/power))
 				global_instance_power = global_instance
 		dnaBlocks = new/datum/dnaBlocks(src)
+		for(var/effect_flag in src.starting_flags)
+			src.addFlag(effect_flag)
 		. = ..()
 
 	disposing()
@@ -162,6 +169,28 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		. = ..()
 		if(variable == "power")
 			src.onPowerChange(oldval, newval)
+
+/datum/bioEffect/proc/cannotSplice()
+	return src.BIOEFFECT_FLAGS & BIOEFFECT_CANNOT_SPLICE
+
+// A word of caution: Recklessly adding flags to a gene could let geneticists have effectively multiple splices simultaneously
+// If you want an energized and empowered and synchronized and etc. gene, be sure gene nerds can't abuse it! Unless that's the goal, anyways ;)
+// (using the is_innate or is_magic vars, for instance, will prevent a gene from showing up in the gene console)
+/// Adds target flag to bioEffect. See if applyChromosome() would work for your use case first.
+/datum/bioEffect/proc/addFlag(var/effect_flag)
+	src.BIOEFFECT_FLAGS |= effect_flag
+
+/// Removes target flag from bioEffect
+/datum/bioEffect/proc/removeFlag(var/effect_flag)
+	src.BIOEFFECT_FLAGS &= ~effect_flag
+
+/// Creates the specified chromosome and applies it to the bioEffect
+/// Useful when you just want a bioEffect with a given chromosome splice
+/datum/bioEffect/proc/applyChromosome(var/type_to_apply)
+	if(!ispath(type_to_apply, /datum/dna_chromosome))
+		CRASH("Tried to splice an invalid chromosome type \"[type_to_apply]\" onto [src]!")
+	var/datum/dna_chromosome/chromosome = new type_to_apply
+	return chromosome.apply(src)
 
 /datum/dnaBlocks
 	var/datum/bioEffect/owner = null
