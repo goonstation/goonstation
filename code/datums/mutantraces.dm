@@ -2000,6 +2000,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 			mob.sims = new /datum/simsHolder(mob)
 			mob.sims.addMotive(/datum/simsMotive/hunger/thirst) // allows dehydration for amphibians on classic
 			mob.sims.add_hud()
+		#endif
 		..()
 
 	disposing()
@@ -2009,6 +2010,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 			..()
 		#else
 			mob.sims.removeMotive("Thirst")
+		#endif
 		..()
 
 	emote(act, voluntary)

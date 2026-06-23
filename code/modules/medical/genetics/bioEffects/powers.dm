@@ -453,6 +453,18 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		while (!proj || proj.disposed)
 			proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target))
 
+		if (ishuman(holder.owner)) // remember to take off your headgear if you want to fire the laser
+			var/mob/living/carbon/human/H = owner
+			var/obj/item/I
+			if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSMOUTH)
+				I = H.wear_mask
+			else if (istype(H.head) && H.head.c_flags & COVERSMOUTH)
+				I = H.head
+			if (istype(I)) // or it might go
+				holder.owner.visible_message(SPAN_COMBAT("[holder.owner]'s tongue is blocked by the [I.name]!"),\
+				SPAN_COMBAT("<b>Your tongue sticks to the [I.name]!"))
+				return
+
 		proj.special_data["owner"] = holder.owner
 		proj.targets = list(target)
 
@@ -463,16 +475,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		return
 
 	proc/cast_mis(atom/target)
-		if (!src.linked_power.safety)
-			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires and freezes you!"))
-			if(src.owner.getStatusDuration("burning"))
-				src.owner.delStatus("burning")
-			src.owner.bodytemperature = 100
-			new /obj/icecube(get_turf(src.owner), src.owner)
-		else
-			boutput(src.owner, SPAN_ALERT("Your cryokinesis misfires!"))
-			if(src.owner.getStatusDuration("burning"))
-				src.owner.delStatus("burning")
+		boutput(src.owner, SPAN_ALERT("Your tongue misses the object and smacks you in the face!"))
 		return CAST_ATTEMPT_SUCCESS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
