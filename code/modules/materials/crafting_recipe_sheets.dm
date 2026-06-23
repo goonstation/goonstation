@@ -4,16 +4,14 @@
 	. = ..()
 	if(.)
 		return
-
-	if (usr.restrained() || usr.stat)
-		if(!isrobot(usr))
-			return
+	if((usr.restrained() || usr.stat) && !isrobot(usr))
+		return
 
 	//Magtractor holding metal check
 	var/atom/equipped = usr.equipped()
-	if (equipped != src)
-		if (istype(equipped, /obj/item/magtractor) && equipped:holding)
-			if (equipped:holding != src)
+	if(equipped != src)
+		if(istype(equipped, /obj/item/magtractor) && equipped:holding)
+			if(equipped:holding != src)
 				return
 		else
 			return
