@@ -1,16 +1,8 @@
 ////////////////////
 //Wraith curses
 ////////////////////
+ABSTRACT_TYPE(/datum/bioEffect/curse)
 /datum/bioEffect/curse
-	occur_in_genepools = 0
-	probability = 0
-	scanner_visibility = 0
-	can_research = 0
-	can_make_injector = 0
-	can_copy = 0
-	can_reclaim = 0
-	can_scramble = 0
-	curable_by_mutadone = 0
 	OnAdd()
 		. = ..()
 		src.holder.cursed = TRUE
