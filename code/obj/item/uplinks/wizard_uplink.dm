@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 
 	SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		..()
-		user.spell_soulguard = SOULGUARD_SPELL
+		user.spell_soulguard = SOULGUARD::SPELL
 
 //------------ EQUIPMENT SPELLS ------------//
 /datum/SWFuplinkspell/staffofcthulhu
