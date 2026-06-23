@@ -30,6 +30,8 @@ TYPEINFO(/obj/item/device/accessgun)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
 	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_sysadmin, access_money)
 	var/list/allowed_access_list
+	/// A list of accesses that can be set by this accessgun, but not overridden (e.g. can set armory access, but not configure any devices with armory access)
+	var/list/special_access_list = list(access_armory, access_maxsec)
 
 	New()
 		. = ..()
@@ -51,6 +53,7 @@ TYPEINFO(/obj/item/device/accessgun)
 		var/list/medical_access = list()
 		var/list/security_access = list()
 		var/list/command_access = list()
+		var/list/special_access = list()
 
 		for(var/A in access_name_lookup)
 			if (access_name_lookup[A] in civilian_access_list)
@@ -67,8 +70,11 @@ TYPEINFO(/obj/item/device/accessgun)
 				security_access.Add(access_data(A))
 			if (access_name_lookup[A] in command_access_list)
 				command_access.Add(access_data(A))
+			if (access_name_lookup[A] in special_access_list)
+				special_access.Add(access_data(A))
 
 		.["accesses_by_area"] = list(
+			list(name = "Special - Cannot be reprogrammed", color = TGUI_COLOUR_NAVY, accesses = special_access),
 			list(name = "Command", color = /datum/job/command::ui_colour, accesses = command_access),
 			list(name = "Security", color = /datum/job/security::ui_colour, accesses = security_access),
 			list(name = "Science", color = /datum/job/research::ui_colour, accesses = research_access),
@@ -98,7 +104,7 @@ TYPEINFO(/obj/item/device/accessgun)
 			if("access")
 				var/access_type = text2num_safe(params["access"])
 				var/access_allowed = text2num_safe(params["allowed"])
-				if(access_type in src.allowed_access_list)
+				if((access_type in src.allowed_access_list) || (access_type in src.special_access_list))
 					if(!access_allowed)
 						src.selected_accesses -= access_type
 					else
