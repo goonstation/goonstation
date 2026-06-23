@@ -74,8 +74,8 @@ TYPEINFO(/obj/item/device/accessgun)
 				special_access.Add(access_data(A))
 
 		.["accesses_by_area"] = list(
-			list(name = "Special - Cannot be reprogrammed", color = TGUI_COLOUR_NAVY, accesses = special_access),
 			list(name = "Command", color = /datum/job/command::ui_colour, accesses = command_access),
+			list(name = "Maximum Security - Cannot be reprogrammed", color = TGUI_COLOUR_CRIMSON, accesses = special_access),
 			list(name = "Security", color = /datum/job/security::ui_colour, accesses = security_access),
 			list(name = "Science", color = /datum/job/research::ui_colour, accesses = research_access),
 			list(name = "Medical", color = /datum/job/medical::ui_colour, accesses = medical_access),
