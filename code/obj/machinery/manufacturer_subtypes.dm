@@ -227,6 +227,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/mender_refill_cartridge,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
 		/datum/manufacture/empty_autoinjector/orange,

@@ -2605,6 +2605,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/mender_refill_cartridge
+	name = "Mender Refill Cartridge"
+	item_requirements = list("metal" = 1,
+							"conductive" = 1)
+	item_outputs = list(/obj/item/reagent_containers/mender_refill_cartridge)
+	create = 1
+	time = 3 SECONDS
+	category = "Resource"
+
 /datum/manufacture/penlight
 	name = "Penlight"
 	item_requirements = list("metal" = 1,
