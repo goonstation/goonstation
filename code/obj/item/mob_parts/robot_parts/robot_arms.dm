@@ -187,6 +187,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
 	icon_state = "l_arm-sturdy"
+	handlistPart = "armL-sturdy"
 	material_amt = ROBOT_LIMB_COST + ROBOT_STURDY_COST
 	max_health = 115
 	weight = 0.2
@@ -244,6 +245,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	icon_state = "r_arm-sturdy"
+	handlistPart = "armR-sturdy"
 	material_amt = ROBOT_LIMB_COST + ROBOT_STURDY_COST
 	max_health = 115
 	weight = 0.2
