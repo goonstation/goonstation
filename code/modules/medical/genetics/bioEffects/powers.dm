@@ -393,19 +393,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		P.special_data["target_turf"] = get_turf(P.targets[1])
 		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 8, range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end")
 
-	// proc/make_tongue(obj/projectile/P)
-	// 	var/mob/owner = P.special_data["owner"]
-	// 	var/obj/dummy/tongue = new(owner)
-	// 	tongue.mouse_opacity = 0
-	// 	tongue.pixel_x = -owner.pixel_x
-	// 	tongue.pixel_y = -owner.pixel_y
-	// 	tongue.UpdateOverlays(result.lineImage, "cord_image")
-	// 	tongue.transform = result.transform
-	// 	owner.vis_contents += tongue
-	// 	P.special_data["tongue"] = tongue
-
-
-
 	//Figure out which turf in our crossing list contains the target
 	post_setup(obj/projectile/P)
 		var/i = 0
