@@ -695,25 +695,28 @@
 
 	proc/apply_trinket_material(var/mob/user, var/atom/trinket)
 		var/atom/artisan_target = trinket
-		var/list/datum/material/potential_mats = list()
-		for(var/mat_id in material_cache)
-			var/datum/material/trinket_material = getMaterial(mat_id)
-			if(trinket_material.artisan_trait_allowed)
-				potential_mats += trinket_material
-
 		if(prob(10) && istype(trinket, /obj/item/pet_carrier)) // Small chance to give the material to the pet instead
 			var/obj/item/pet_carrier/carrier = trinket
 			if(length(carrier.carrier_occupants) > 0)
 				artisan_target = carrier.carrier_occupants[1]
 				artisan_target.mat_changedesc = TRUE // Make sure people can tell what the pet is made out of.
 
-		if(artisan_target.default_material)
-			potential_mats -= artisan_target.default_material
-		var/datum/material/artisan_material = pick(potential_mats)
+		var/datum/material/artisan_material = src.choose_trinket_material(artisan_target.default_material)
 		artisan_target.setMaterial(artisan_material)
 		if(artisan_material.hasProperty("radioactive") || artisan_material.hasProperty("n_radioactive"))
 			// Neutronium kills you very quickly.
 			user.setStatus("radiation_resist", 15 SECONDS)
+
+	proc/choose_trinket_material(var/datum/material/default_material)
+		RETURN_TYPE(/datum/material)
+		var/list/datum/material/potential_mats = list()
+		for(var/mat_id in material_cache)
+			var/datum/material/trinket_material = getMaterial(mat_id)
+			if(trinket_material.artisan_trait_allowed)
+				potential_mats += trinket_material
+		if(default_material)
+			potential_mats -= default_material
+		return pick(potential_mats)
 
 
 // Skill - White Border

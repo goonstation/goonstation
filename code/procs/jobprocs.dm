@@ -695,9 +695,16 @@ Equip items from body traits.
 
 	var/list/obj/item/trinkets_to_equip = list()
 
-	if(trinket && src.traitHolder?.hasTrait("artisan"))
+	if(src.traitHolder?.hasTrait("artisan"))
 		var/datum/trait/artisan/trait_artisan = src.traitHolder.getTrait("artisan")
-		trait_artisan?.apply_trinket_material(src, trinket)
+		if(trinket)
+			trait_artisan?.apply_trinket_material(src, trinket)
+		else
+			var/datum/material/mat = trait_artisan?.choose_trinket_material(null)
+			var/bar_type = getProcessedMaterialForm(mat)
+			var/obj/item/material_piece/bar = new bar_type
+			bar.setMaterial(mat)
+			trinkets_to_equip += mat
 
 	if (trinket)
 		src.trinket = get_weakref(trinket)
