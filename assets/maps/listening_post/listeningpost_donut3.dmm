@@ -26,7 +26,7 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "aB" = (
 /obj/machinery/vending/pizza,
@@ -99,7 +99,7 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "cZ" = (
 /turf/simulated/floor/stairs/wide,
@@ -193,7 +193,7 @@
 /turf/simulated/floor/sanitary,
 /area/listeningpost/break_room)
 "ig" = (
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "io" = (
 /turf/simulated/floor/stairs/wide/other,
@@ -229,7 +229,7 @@
 "kw" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "kR" = (
 /turf/simulated/floor/carpet/grime,
@@ -275,7 +275,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "nt" = (
 /obj/decal/floatingtiles{
@@ -394,7 +394,7 @@
 /obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "rQ" = (
 /obj/machinery/vending/standard,
@@ -538,7 +538,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "yO" = (
 /obj/table/wood/auto,
@@ -598,7 +598,7 @@
 /obj/machinery/computer/announcement/syndicate{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "BH" = (
 /obj/machinery/computer3/terminal/zeta{
@@ -715,7 +715,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "HH" = (
 /obj/table/wood/auto,

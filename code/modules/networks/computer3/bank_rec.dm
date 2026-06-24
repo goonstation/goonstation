@@ -119,17 +119,18 @@
 
 	var/static/list/team_to_job_datum = list(
 		"Stationwide" = list(),
-		"Genetics" = list(/datum/job/medical/geneticist),
-		"Robotics" = list(/datum/job/medical/roboticist),
-		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
-		"Mining" = list(/datum/job/engineering/miner),
-		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
-		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant, /datum/job/command/research_director),
-		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/random/souschef, /datum/job/daily/waiter),
-		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
 		"Security" = list(/datum/job/security, /datum/job/command/head_of_security),
 		"Medical" = list(/datum/job/medical/medical_doctor, /datum/job/medical/medical_assistant, /datum/job/command/medical_director),
-		"Civilian" = list(/datum/job/civilian/janitor, /datum/job/civilian/chaplain, /datum/job/civilian/staff_assistant, /datum/job/civilian/clown,\
+		"Genetics" = list(/datum/job/medical/geneticist),
+		"Robotics" = list(/datum/job/medical/roboticist),
+		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant, /datum/job/command/research_director),
+		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
+		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
+		"Mining" = list(/datum/job/engineering/miner),
+		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/random/souschef, /datum/job/daily/waiter),
+		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
+		"Janitorial" = list(/datum/job/civilian/janitor),
+		"Civilian" = list(/datum/job/civilian/chaplain, /datum/job/civilian/staff_assistant, /datum/job/civilian/clown,\
 		/datum/job/special), //Who really makes the world go round? At least one of these guys
 							//I can live with the sous chef getting paid in two categories
 							//If you have a special role and you're on the manifest everything is probably normal
@@ -410,14 +411,14 @@
 								balanceChange = -src.active_bank["current_money"]
 							src.log_wrapper("Transferred [abs(balanceChange)][CREDIT_SIGN] from [src.active_general["name"]]'s account to payroll budget.")
 							src.active_bank["current_money"] += balanceChange
-							global.wagesystem.budgets[BUDGET_CAT_STATION] -= balanceChange // balanceChange is negative here, this adds to the budget
+							global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= balanceChange // balanceChange is negative here, this adds to the budget
 						if (0 to INFINITY)
-							if (global.wagesystem.budgets[BUDGET_CAT_STATION] < balanceChange)
-								src.print_text("<b>Warning:</b> Station budget only has [global.wagesystem.budgets[BUDGET_CAT_STATION]][CREDIT_SIGN] available!")
-								balanceChange = global.wagesystem.budgets[BUDGET_CAT_STATION]
+							if (global.wagesystem.budgets[BUDGET_CAT_PAYROLL] < balanceChange)
+								src.print_text("<b>Warning:</b> Payroll budget only has [global.wagesystem.budgets[BUDGET_CAT_PAYROLL]][CREDIT_SIGN] available!")
+								balanceChange = global.wagesystem.budgets[BUDGET_CAT_PAYROLL]
 							src.log_wrapper("Transferred [abs(balanceChange)][CREDIT_SIGN] from payroll budget to [src.active_general["name"]]'s account.")
 							src.active_bank["current_money"] += balanceChange
-							global.wagesystem.budgets[BUDGET_CAT_STATION] -= balanceChange
+							global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= balanceChange
 					src.menu = MENU_IN_RECORD
 				if(FIELDNUM_NOTES)
 					if (!src.active_bank)
@@ -433,7 +434,7 @@
 					switch(ckey(inputText))
 						if ("y")
 							if (src.active_bank)
-								global.wagesystem.budgets[BUDGET_CAT_STATION] += src.active_bank["current_money"]
+								global.wagesystem.budgets[BUDGET_CAT_PAYROLL] += src.active_bank["current_money"]
 								src.log_wrapper("Transferred [src.active_bank["current_money"]][CREDIT_SIGN] from [src.active_bank["name"]] into payroll budget.")
 								src.log_wrapper("Deleted bank record [src.active_bank["id"]] for [src.active_general["name"]]")
 								qdel(src.active_bank)
@@ -610,13 +611,13 @@
 				return
 			switch(src.transfer_from)
 				if(MENU_TRANSFER_OPT_PAYROLL)
-					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_STATION])
-						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_STATION]
-					global.wagesystem.budgets[BUDGET_CAT_STATION] -= transfer_amount
+					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_PAYROLL])
+						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_PAYROLL]
+					global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= transfer_amount
 				if(MENU_TRANSFER_OPT_SHIPPING)
-					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_SHIPPING])
-						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_SHIPPING]
-					global.wagesystem.budgets[BUDGET_CAT_SHIPPING] -= transfer_amount
+					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY])
+						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]
+					global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] -= transfer_amount
 				if(MENU_TRANSFER_OPT_RESEARCH)
 					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL])
 						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL]
@@ -628,9 +629,9 @@
 
 			switch(src.transfer_to)
 				if(MENU_TRANSFER_OPT_PAYROLL)
-					global.wagesystem.budgets[BUDGET_CAT_STATION] += transfer_amount
+					global.wagesystem.budgets[BUDGET_CAT_PAYROLL] += transfer_amount
 				if(MENU_TRANSFER_OPT_SHIPPING)
-					global.wagesystem.budgets[BUDGET_CAT_SHIPPING] += transfer_amount
+					global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += transfer_amount
 				if(MENU_TRANSFER_OPT_RESEARCH)
 					global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] += transfer_amount
 				if(MENU_TRANSFER_OPT_UNION)
@@ -702,8 +703,8 @@
 			src.print_text("Issuing bonus of [src.bonus_amount][CREDIT_SIGN] to selected staff.")
 			var/bonus_total = length(src.bonus_crew) * src.bonus_amount
 			src.print_text("Total bonus cost will be [bonus_total][CREDIT_SIGN].")
-			if (bonus_total > global.wagesystem.budgets[BUDGET_CAT_STATION])
-				src.print_text("<b>Error:</b> Payroll budget is only [global.wagesystem.budgets[BUDGET_CAT_STATION]][CREDIT_SIGN]!")
+			if (bonus_total > global.wagesystem.budgets[BUDGET_CAT_PAYROLL])
+				src.print_text("<b>Error:</b> Payroll budget is only [global.wagesystem.budgets[BUDGET_CAT_PAYROLL]][CREDIT_SIGN]!")
 				src.print_text("Please enter value of bonus. Enter '0' to re-select team.")
 				src.bonus_amount = 0
 				return
@@ -743,7 +744,7 @@
 				'sound/misc/bingbong.ogg',
 				alert_origin=ALERT_DEPARTMENT
 			)
-			global.wagesystem.budgets[BUDGET_CAT_STATION] -= bonus_total
+			global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= bonus_total
 			global.wagesystem.last_issued_bonus_time = world.time
 			for(var/datum/db_record/R as anything in src.bonus_crew)
 				// we used to tax the clown but that just put money from the budget into the aether vOv
@@ -858,9 +859,9 @@
 /datum/computer/file/terminal_program/bank_records/proc/print_budget()
 	src.master.temp = null
 	src.print_text("<br><b>Station Budget</b>")
-	src.print_text("Payroll Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_STATION]),50)][CREDIT_SIGN]")
-	src.print_text("Shipping Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_SHIPPING]),50)][CREDIT_SIGN]")
+	src.print_text("Payroll Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_PAYROLL]),50)][CREDIT_SIGN]")
 	src.print_text("Medical Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL]),50)][CREDIT_SIGN]")
+	src.print_text("Supply Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]),50)][CREDIT_SIGN]")
 	src.print_text("Union Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_UNION]),50)][CREDIT_SIGN]")
 
 	var/payroll = 0

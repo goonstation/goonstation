@@ -265,6 +265,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY
 
+/datum/syndicate_buylist/generic/gorilla
+	name = "Gorilla"
+	desc = "A highly realistic inflatable gorilla. So realistic in fact that it can still beat the shit out of you. Requires a gas tank to inflate."
+	cost = 3
+	vr_allowed = FALSE
+	items = list(/obj/item/inflatable_mob/gorilla)
+
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
@@ -458,10 +465,3 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/device/disposals_hijacker)
 	cost = 4
 	vr_allowed = FALSE
-
-/datum/syndicate_buylist/traitor/gorilla
-	name = "Gorilla"
-	desc = "A highly realistic inflatable gorilla. So realistic in fact that it can still beat the shit out of you. Requires a gas tank to inflate."
-	cost = 3
-	vr_allowed = FALSE
-	items = list(/obj/item/inflatable_mob/gorilla)

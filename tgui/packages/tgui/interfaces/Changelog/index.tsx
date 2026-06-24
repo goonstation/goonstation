@@ -246,13 +246,19 @@ const ChangeEntry = (props: ChangeEntryData) => {
                   </Tooltip>
                 </Stack.Item>
               )}
+              <Stack.Item grow />
               {!!props.pr_num && (
-                <Stack.Item grow textAlign="right">
+                <Stack.Item>
                   <a
                     href={`https://github.com/goonstation/goonstation/pull/${props.pr_num}`}
                   >
                     {`#${props.pr_num}`}
                   </a>
+                </Stack.Item>
+              )}
+              {!!props.feedback && (
+                <Stack.Item>
+                  <a href={props.feedback}>Feedback</a>
                 </Stack.Item>
               )}
             </Stack>

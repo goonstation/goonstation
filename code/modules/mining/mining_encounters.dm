@@ -980,6 +980,7 @@ ABSTRACT_TYPE(/datum/mining_encounter/oneshot)
 			turfs -= AST
 			amount++
 			continue
+		E.set_up(AST.ore)
 		AST.set_event(E)
 
 /proc/Turfspawn_Asteroid_SeedArtifacts(list/turfs, num_artifacts)

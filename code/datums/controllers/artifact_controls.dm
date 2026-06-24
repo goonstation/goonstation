@@ -222,7 +222,6 @@ var/datum/artifact_controller/artifact_controls
 	var/fx_alpha_max = 255
 	var/nofx = 0 // If set to 1, does not apply an overlay but a flat icon_state change.
 	var/scramblechance = 10 //probability to have "fake" artifact with altered appearance
-	var/chapel_block = FALSE // Artifact does not work inside chapels
 	var/list/activation_sounds = list()
 	var/list/instrument_sounds = list()
 	var/list/lightswitch_sounds = list('sound/misc/lightswitch.ogg')
@@ -252,8 +251,24 @@ var/datum/artifact_controller/artifact_controls
 			if(artifact.blend_mode == BLEND_SUBTRACT)
 				artifact.plane = PLANE_FLOOR
 
+	proc/may_activate(var/obj/artifact)
+		return TRUE
+
+	proc/pre_destroyed(var/obj/artifact)
+		return
+
 	proc/generate_name()
 		return "unknown object"
+
+	proc/Artifact_chapel_block(var/datum/component/component, var/area/old_area, var/area/new_area)
+		var/obj/O = component.parent
+		var/datum/artifact/artifact = O.artifact
+		var/is_chapel = istype(new_area, /area/station/chapel)
+		if(is_chapel && artifact.activated)
+			playsound(O.loc, 'sound/effects/bamf.ogg', 50, 1, pitch = 1.25)
+			O.ArtifactDeactivated()
+		if(!is_chapel && !artifact.activated && artifact.automatic_activation)
+			O.ArtifactActivated()
 
 
 /datum/artifact_origin/ancient
@@ -400,7 +415,6 @@ var/datum/artifact_controller/artifact_controls
 		/datum/artifact_fault/messager/what_dead_people_said = 5,
 		/datum/artifact_fault/messager/what_people_said = 5,
 		/datum/artifact_fault/messager/emoji = 5)
-	chapel_block = TRUE
 	activation_sounds = list('sound/machines/ArtifactWiz1.ogg')
 	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Wizard_1.ogg',
 		'sound/musical_instruments/artifact/Artifact_Wizard_2.ogg',
@@ -426,8 +440,25 @@ var/datum/artifact_controller/artifact_controls
 	var/list/object = list("jewel","trophy","favor","boon","token","crown","treasure","sacrament","oath")
 	var/list/aspect = list("wonder","splendor","power","plenty","mystery","glory","majesty","eminence","grace")
 
-	post_setup(obj/artifact)
+	post_setup(var/obj/artifact)
 		. = ..()
+		RegisterSignal(artifact, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(Artifact_chapel_block))
+		src.post_setup_appearance(artifact)
+
+	pre_destroyed(var/obj/artifact)
+		. = ..()
+		UnregisterSignal(artifact, XSIG_MOVABLE_AREA_CHANGED)
+
+	may_activate(var/obj/artifact)
+		. = ..()
+		var/is_chapel = istype(get_area(artifact), /area/station/chapel)
+		if(is_chapel)
+			playsound(artifact.loc, 'sound/effects/bamf.ogg', 50, 1, pitch = 1.25)
+			var/turf/T = get_turf(artifact)
+			T.visible_message(SPAN_ALERT("<b>[artifact] attempts to activate but fails!</b>"))
+			return FALSE
+
+	proc/post_setup_appearance(obj/artifact)
 		var/datum/artifact/AD = artifact.artifact
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(300*rarityMod))
@@ -475,7 +506,6 @@ var/datum/artifact_controller/artifact_controls
 /datum/artifact_origin/eldritch
 	type_name = "Eldritch"
 	name = "eldritch"
-	chapel_block = TRUE
 	activation_sounds = list('sound/machines/ArtifactEld1.ogg','sound/machines/ArtifactEld2.ogg')
 	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Eldritch_1.ogg',
 		'sound/musical_instruments/artifact/Artifact_Eldritch_2.ogg',
@@ -516,6 +546,23 @@ var/datum/artifact_controller/artifact_controls
 	var/list/horror_name_start = list("trog","yogg","ta","y","has","shub","az","cth","cha","ul","xel","og","flu","wrk")
 	var/list/horror_name_mid = list("sog","ran","gon","ni","a","hul","ttur","ay","o","lo","ncac","sin","fel","di")
 	var/list/horror_name_end = list("dyte","oth","tula","olac","tur","bburath","thoth","hu","dha","aoth","tath","goth","ter")
+
+	post_setup(var/obj/artifact)
+		. = ..()
+		RegisterSignal(artifact, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(Artifact_chapel_block))
+
+	pre_destroyed(var/obj/artifact)
+		. = ..()
+		UnregisterSignal(artifact, XSIG_MOVABLE_AREA_CHANGED)
+
+	may_activate(var/obj/artifact)
+		. = ..()
+		var/is_chapel = istype(get_area(artifact), /area/station/chapel)
+		if(is_chapel)
+			playsound(artifact.loc, 'sound/effects/bamf.ogg', 50, 1, pitch = 1.25)
+			var/turf/T = get_turf(artifact)
+			T.visible_message(SPAN_ALERT("<b>[artifact] attempts to activate but fails!</b>"))
+			return FALSE
 
 	generate_name()
 		var/the_horror = src.horror_name()
