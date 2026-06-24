@@ -421,7 +421,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner))
 			return ..()
 		// we got to the end
-		if (P.curr_t >= P.special_data["end_index"])
+		if (P.curr_t >= P.special_data["end_index"] && target_object.loc == P.special_data["target_turf"])
 			target_object.visible_message(SPAN_NOTICE("The tongue sticks to [target_object] and reels it back!"))
 			target_object.throw_at(tongue_owner, 10, 1) // Yeet
     		// TODO: Sound Effect?
