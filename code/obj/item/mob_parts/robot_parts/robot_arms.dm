@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 			boutput(user, SPAN_ALERT("[H.name] already has one of those!"))
 			return
 
-		if(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
+		if(src.appearanceString == "heavy")
 			boutput(user, SPAN_ALERT("That arm is too big to fit on [H]'s body!"))
 			return
 
@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		return
 
 	can_arm_attach()
-		return ..() && !(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
+		return ..() && !(src.appearanceString == "heavy")
 
 	on_holder_examine()
 		if (!isrobot(src.holder)) // probably a human, probably  :p
@@ -175,6 +175,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
+	breaks_cuffs = FALSE
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
@@ -231,6 +232,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 
 /obj/item/parts/robot_parts/arm/right/standard
 	name = "standard cyborg right arm"
+	breaks_cuffs = FALSE
+
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
