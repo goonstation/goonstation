@@ -10,8 +10,8 @@ TYPEINFO(/mob/living)
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
-	/// Tracks status of soalguard respawn on mob. SOULGUARD_INACTIVE, SOULGUARD_SPELL when from wizard ability, SOULGUARD_RING when from wizard ring.
-	var/spell_soulguard = SOULGUARD_INACTIVE
+	/// Tracks status of soalguard respawn on mob. SOULGUARD::INACTIVE, SOULGUARD::SPELL when from wizard ability, SOULGUARD::RING when from wizard ring.
+	var/spell_soulguard = SOULGUARD::INACTIVE
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
