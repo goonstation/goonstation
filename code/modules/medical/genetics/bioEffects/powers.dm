@@ -377,7 +377,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	hit_ground_chance = 0
 	shot_sound = 'sound/misc/croak.ogg'
 
-	on_hit(atom/movable/hit, angle, var/obj/projectile/P)
+	on_hit(obj/item/hit, angle, var/obj/projectile/P)
 		if (!istype(hit))
 			return
 		var/turf/destination = get_turf(P.special_data["owner"])
@@ -416,7 +416,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		SPAWN(2 DECI SECONDS)
 			tongue_owner.RemoveComponentsOfType(/datum/component/cord)
 
-		var/obj/target_object = P.targets[1]
+		var/obj/item/target_object = P.targets[1]
 		// make sure everyone's still here
 		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner))
 			return ..()
@@ -426,12 +426,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			target_object.throw_at(tongue_owner, 10, 1) // Yeet
     		// TODO: Sound Effect?
 		..()
-
-	tick(var/obj/projectile/P)    //Trail the projectile
-		..()
-		if(get_turf(P) == P.orig_turf)
-			return //don't draw a trail if we haven't moved
-
 
 
 /datum/targetable/geneticsAbility/stickytongue
@@ -461,7 +455,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			if (istype(I)) // or it might go
 				holder.owner.visible_message(SPAN_COMBAT("[holder.owner]'s tongue is blocked by the [I.name]!"),\
 				SPAN_COMBAT("<b>Your tongue sticks to the [I.name]!"))
-				return
+				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
 
 		proj.special_data["owner"] = holder.owner
 		proj.targets = list(target)
@@ -469,8 +463,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		proj.launch()
 		holder.owner.setStatus("slowed", 2 SECONDS)
 
-		if (misfire) cast_mis(target)
-		return
+		if (misfire)
+			cast_mis(target)
 
 	proc/cast_mis(atom/target)
 		boutput(src.owner, SPAN_ALERT("Your tongue misses the object and smacks you in the face!"))
