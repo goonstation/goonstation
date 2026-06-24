@@ -391,7 +391,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return
 		var/mob/owner = P.special_data["owner"]
 		P.special_data["target_turf"] = get_turf(P.targets[1])
-		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 0, range=INFINITY)
+		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 8, range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end")
 
 	//Figure out which turf in our crossing list contains the target
 	post_setup(obj/projectile/P)
@@ -442,8 +442,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		var/obj/projectile/proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target))
-		while (!proj || proj.disposed)
-			proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target))
+
+		src.owner.set_dir(get_dir_accurate(owner, target))
 
 		if (ishuman(holder.owner)) // remember to take off your headgear if you want to fire the laser
 			var/mob/living/carbon/human/H = owner
