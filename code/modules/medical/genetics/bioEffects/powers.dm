@@ -393,6 +393,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		P.special_data["target_turf"] = get_turf(P.targets[1])
 		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 0, range=INFINITY)
 
+	//Figure out which turf in our crossing list contains the target
 	post_setup(obj/projectile/P)
 		var/i = 0
 		for (var/turf/T in P.crossing)
@@ -401,22 +402,26 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				P.special_data["end_index"] = i - 1
 				break
 
+	//Die when we reach that turf
 	tick(obj/projectile/P)
 		if (P.curr_t >= P.special_data["end_index"])
 			P.die()
 
-	on_end(var/obj/projectile/P)	//Clean up behind us
+	on_end(var/obj/projectile/P)
 		if (!("owner" in P.special_data)) // somehow the projectile data got removed?
 			return ..()
 
 		var/mob/tongue_owner = P.special_data["owner"]
+		//Leave it for a little bit so it can be seen
 		SPAWN(2 DECI SECONDS)
 			tongue_owner.RemoveComponentsOfType(/datum/component/cord)
 
 		var/obj/target_object = P.targets[1]
-		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner)) // make sure everyone's still here
+		// make sure everyone's still here
+		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner))
 			return ..()
-		if (P.curr_t >= P.special_data["end_index"]) // target's still located on the place the projectile ended, reel it in
+		// we got to the end
+		if (P.curr_t >= P.special_data["end_index"])
 			target_object.visible_message(SPAN_NOTICE("The tongue sticks to [target_object] and reels it back!"))
 			target_object.throw_at(tongue_owner, 10, 1) // Yeet
     		// TODO: Sound Effect?
