@@ -30123,8 +30123,8 @@
 /obj/cable,
 /obj/machinery/fluid_canister,
 /obj/machinery/power/apc{
-	areastring = "Chemistry";
-	name = "Chemistry APC";
+	areastring = "Visitation";
+	name = "Visitation APC";
 	pixel_y = -24
 	},
 /turf/simulated/floor/plating,
@@ -42390,6 +42390,12 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable,
+/obj/machinery/power/apc{
+	areastring = "Visitation";
+	name = "Visitation APC";
+	pixel_y = -24
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ikt" = (
@@ -52489,6 +52495,9 @@
 /obj/decal/cleanable/dirt,
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
