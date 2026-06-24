@@ -31,6 +31,7 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/material_flags = 0
 	/// In percent of a base value. How much this sells for.
 	VAR_PROTECTED/value = 100
+	var/artisan_trait_allowed = TRUE
 
 	//naming stuff
 	/// words that go before the name, used in combination
@@ -502,6 +503,7 @@ ABSTRACT_TYPE(/datum/material)
 	desc = "You should not be seeing this"
 	color = "#6f00ff"
 	cached = FALSE
+	artisan_trait_allowed = FALSE
 
 	///Create an interpolated material from two input materials, with bias. Bias of 0 is entirely mat1, bias of 1 is entirely mat2
 	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
@@ -1470,6 +1472,7 @@ ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
 	alpha = 100
 	value = 650
+	artisan_trait_allowed = FALSE
 
 	New()
 		..()
@@ -1975,6 +1978,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	name = "king brullbar hide"
 	desc = "The hide of a terrifying brullbar king!!!"
 	color = "#EFEEEE"
+	artisan_trait_allowed = FALSE
 
 	New()
 		..()
@@ -2332,6 +2336,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	desc = "It's just a bunch of glowsticks stuck together. How is this an ingot?"
 	color = "#00e618"
 	alpha = 200
+	artisan_trait_allowed = FALSE
 
 	New()
 		..()

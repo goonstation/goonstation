@@ -686,11 +686,18 @@ Equip items from body traits.
 		SPAWN(0) // Ensures wheelchair spawns with you even if you aren't latejoining at arrivals.
 			var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 			trinket = the_chair
+			var/datum/trait/artisan/trait_artisan = src.traitHolder?.getTrait("artisan")
+			if(trait_artisan)
+				trait_artisan.apply_trinket_material(src, trinket)
 			the_chair.buckle_in(src, src)
 	else
 		trinket = new T(src)
 
 	var/list/obj/item/trinkets_to_equip = list()
+
+	if(trinket && src.traitHolder?.hasTrait("artisan"))
+		var/datum/trait/artisan/trait_artisan = src.traitHolder.getTrait("artisan")
+		trait_artisan?.apply_trinket_material(src, trinket)
 
 	if (trinket)
 		src.trinket = get_weakref(trinket)
