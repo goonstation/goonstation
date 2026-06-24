@@ -371,56 +371,52 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	name = "tongue"
 	dissipation_rate = 1
 	dissipation_delay = 7
-	projectile_speed = 72
+	projectile_speed = 32
 	icon_state = ""
 	damage = 0
 	hit_ground_chance = 0
 	shot_sound = 'sound/misc/croak.ogg'
-	var/list/previous_line = list()
-	on_hit(atom/hit, angle, var/obj/projectile/P)
-		if (previous_line != null)	//Lets clean up the line
-			for (var/obj/O in previous_line)
-				qdel(O)
-		if (ismob(hit))	//Drag them to us
-			var/mob/M = hit
-			if(hit == P.special_data["owner"]) return 1
-			var/turf/destination = get_turf(P.special_data["owner"])
-			if (destination)
 
-				M.throw_at(destination, 10, 1)
-
-				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
-				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
-				M.force_laydown_standup()
-				M.changeStatus("unconscious", 5 SECONDS)
-				M.visible_message(SPAN_ALERT("[M] gets grabbed by a tentacle and dragged!"))
-
-		previous_line = drawLineObj(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
-		SPAWN(1 DECI SECOND)	//Make it last a bit for impact
-			for (var/obj/O in previous_line)
-				qdel(O)
-		qdel(P)
-
+	on_hit(atom/movable/hit, angle, var/obj/projectile/P)
+		if (!istype(hit))
+			return
+		var/turf/destination = get_turf(P.special_data["owner"])
+		if (destination)
+			hit.throw_at(destination, 10, 1)
 
 	on_launch(var/obj/projectile/P)
 		..()
-		if (!("owner" in P.special_data) || !("target" in P.special_data))
+		if (!("owner" in P.special_data))
 			P.die()
 			return
+		var/mob/owner = P.special_data["owner"]
+		P.special_data["target_turf"] = get_turf(P.targets[1])
+		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 0, range=INFINITY)
+
+	post_setup(obj/projectile/P)
+		var/i = 0
+		for (var/turf/T in P.crossing)
+			i++
+			if (T == get_turf(P.targets[1]))
+				P.special_data["end_index"] = i - 1
+				break
+
+	tick(obj/projectile/P)
+		if (P.curr_t >= P.special_data["end_index"])
+			P.die()
 
 	on_end(var/obj/projectile/P)	//Clean up behind us
-		SPAWN(1 DECI SECOND)
-			for (var/obj/O in previous_line)
-				qdel(O)
-
-		if (!("owner" in P.special_data) || !("target" in P.special_data)) // somehow the projectile data got removed?
+		if (!("owner" in P.special_data)) // somehow the projectile data got removed?
 			return ..()
+
+		var/mob/tongue_owner = P.special_data["owner"]
+		SPAWN(2 DECI SECONDS)
+			tongue_owner.RemoveComponentsOfType(/datum/component/cord)
 
 		var/obj/target_object = P.targets[1]
-		var/mob/tongue_owner = P.special_data["owner"]
 		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner)) // make sure everyone's still here
 			return ..()
-		if (target_object.loc == get_turf(P)) // target's still located on the place the projectile ended, reel it in
+		if (P.curr_t >= P.special_data["end_index"]) // target's still located on the place the projectile ended, reel it in
 			target_object.visible_message(SPAN_NOTICE("The tongue sticks to [target_object] and reels it back!"))
 			target_object.throw_at(tongue_owner, 10, 1) // Yeet
     		// TODO: Sound Effect?
@@ -430,10 +426,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		..()
 		if(get_turf(P) == P.orig_turf)
 			return //don't draw a trail if we haven't moved
-		if (previous_line != null)
-			for (var/obj/O in previous_line)
-				qdel(O)
-		previous_line = drawLineObj(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
+
 
 
 /datum/targetable/geneticsAbility/stickytongue

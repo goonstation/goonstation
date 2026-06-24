@@ -89,4 +89,5 @@
 	src.parent_atom.vis_contents -= src.cord
 	qdel(src.cord)
 	src.cord = null
-	UnregisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED)
+	if (!QDELETED(src.handset))
+		UnregisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED)
