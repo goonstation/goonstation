@@ -6106,6 +6106,7 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/visitation)
 "azZ" = (
