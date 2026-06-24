@@ -120,8 +120,9 @@
 
 	on_forensic_scan(datum/forensic_scan/scan)
 		. = ..()
-		var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
-		scan.add_data(gun_profile_data)
+		if(src.forensic_profile)
+			var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+			scan.add_data(gun_profile_data)
 
 ///CHECK_LOCK
 ///Call to run a weaponlock check vs the users implant
@@ -347,8 +348,6 @@
 			P.shooter = null
 			P.mob_shooter = user
 
-		var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
-		P.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 		if(isobj(P.implanted))
 			var/obj/O = P.implanted
 			O.forensic_holder = P.forensic_holder // Any evidence applied to the projectile will also be applied to the bullet
@@ -372,6 +371,9 @@
 		return
 
 /obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
+	if(P && src.forensic_profile)
+		var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+		P.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 	return
 
 /obj/item/gun/proc/Shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
@@ -434,8 +436,6 @@
 
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
-		var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
-		P.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 		if(isobj(P.implanted))
 			var/obj/O = P.implanted
 			O.forensic_holder = P.forensic_holder
