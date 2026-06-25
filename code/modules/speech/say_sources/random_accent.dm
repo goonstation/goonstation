@@ -4,6 +4,7 @@ TYPEINFO(/atom/movable/abstract_say_source/random_accent)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
 
 /atom/movable/abstract_say_source/random_accent
+	internal_name = "Random Accent"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	say_language = LANGUAGE_ENGLISH
 

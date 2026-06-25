@@ -3346,6 +3346,12 @@ var/global/noir = 0
 
 						src.antagonist_panel.ui_interact(src.owner.mob)
 
+					if ("abstract_say_sources_panel")
+						if (isnull(src.abstract_say_sources_panel))
+							src.abstract_say_sources_panel = new
+
+						src.abstract_say_sources_panel.ui_interact(src.owner.mob)
+
 					if("shuttle_panel")
 						if (current_state >= GAME_STATE_PLAYING)
 							var/dat = "<html><head><title>Shuttle Controls</title></head><body><h1><B>Shuttle Controls</B></h1>"
@@ -3772,6 +3778,7 @@ var/global/noir = 0
 				<A href='byond://?src=\ref[src];action=secretsadmin;type=check_antagonist'>Antagonists</A><BR>
 				<A href='byond://?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
 				<A href='byond://?src=\ref[src];action=secretsadmin;type=forced_assignment_panel'>Forced Assignment Panel</A><BR>
+				<A href='byond://?src=\ref[src];action=secretsadmin;type=abstract_say_sources_panel'>Abstract Say Sources</A><BR>
 				<A href='byond://?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='byond://?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='byond://?src=\ref[src];action=secretsadmin;type=regionallocator'>Region Allocator</A><BR>

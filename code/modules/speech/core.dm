@@ -40,15 +40,15 @@ TYPEINFO(/atom)
 	var/say_language = LANGUAGE_ENGLISH
 
 	// Speech Verb Variables:
-	/// The default say verb for standard spoken phrases. Also acts as a fallback verb if contextual verbs are `null`. Accepts both text and lists
+	/// The default say verb for standard spoken phrases. Also acts as a fallback verb if contextual verbs are `null`. Accepts both text and lists.
 	var/speech_verb_say = "says"
-	/// The default say verb for spoken phrases ending in a question mark. Accepts both text and lists
+	/// The default say verb for spoken phrases ending in a question mark. Accepts both text and lists.
 	var/speech_verb_ask = null
-	/// The default say verb for spoken phrases ending in an exclaimation mark. Accepts both text and lists
+	/// The default say verb for spoken phrases ending in an exclaimation mark. Accepts both text and lists.
 	var/speech_verb_exclaim = null
-	/// The default say verb for stammered phrases. Accepts both text and lists
+	/// The default say verb for stammered phrases. Accepts both text and lists.
 	var/speech_verb_stammer = null
-	/// The default say verb for gasped phrases. Accepts both text and lists
+	/// The default say verb for gasped phrases. Accepts both text and lists.
 	var/speech_verb_gasp = null
 
 	// Voice Variables:

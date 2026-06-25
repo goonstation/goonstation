@@ -9,7 +9,6 @@ import {
   Box,
   Button,
   Collapsible,
-  LabeledList,
   Section,
   Stack,
   Table,
@@ -17,12 +16,12 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { VariableList } from '../../components/goonstation/VariableList';
 import { Window } from '../../layouts';
 import { ModuleProps, ModuleSectionProps, SpeechModuleTreeProps } from './type';
-import { Variable } from './Variable';
 
 export const SpeechModuleTree = () => {
-  const { data } = useBackend<SpeechModuleTreeProps>();
+  const { act, data } = useBackend<SpeechModuleTreeProps>();
 
   return (
     <Window title={data.title} width={661} height={740}>
@@ -36,11 +35,11 @@ export const SpeechModuleTree = () => {
           </Table>
         </Section>
         <Section>
-          <LabeledList>
-            {data.variables?.map((variable, index) => (
-              <Variable key={index} {...variable} />
-            ))}
-          </LabeledList>
+          <VariableList
+            className="candystripe"
+            act={act}
+            variables={data.variables}
+          />
         </Section>
         {data.module_sections?.map((section, index) => (
           <ModuleSection key={index} {...section} />
@@ -77,6 +76,8 @@ const ModuleSection = (props: ModuleSectionProps) => {
 };
 
 const Module = (props: ModuleProps) => {
+  const { act } = useBackend<SpeechModuleTreeProps>();
+
   return (
     <Stack.Item width="17em">
       <Section
@@ -115,11 +116,7 @@ const Module = (props: ModuleProps) => {
         m="1px"
         className={props.auxiliary ? 'module--auxiliary' : 'module'}
       >
-        <LabeledList>
-          {props.module_variables?.map((variable, index) => (
-            <Variable key={index} {...variable} />
-          ))}
-        </LabeledList>
+        <VariableList act={act} variables={props.module_variables} />
       </Section>
     </Stack.Item>
   );

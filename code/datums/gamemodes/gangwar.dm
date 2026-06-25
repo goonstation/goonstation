@@ -539,6 +539,7 @@
 						continue
 
 					src.gang_name = temporary_name
+					src.announcer_say_source.update_name(src.gang_name)
 					src.used_names += temporary_name
 
 					for(var/datum/mind/member in src.members + list(src.leader))

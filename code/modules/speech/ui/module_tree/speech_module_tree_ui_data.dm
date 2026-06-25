@@ -177,14 +177,14 @@
 /// Adds the relevant module tree data to the passed module tree props lists.
 /datum/speech_module_tree/proc/get_tree_data(list/module_tree_props)
 	module_tree_props["title"] = "Speech Module Tree \ref[src]"
-	module_tree_props["info"] = "Speech module tree datums handle applying the effects of speech prefix, modifier, and output modules to say message datums sent by the parent atom. All say message datums will be processed here prior to being passed to the appropriate say channel by a speech output module."
+	module_tree_props["info"] = "Speech module tree datums handle applying the effects of speech prefix, modifier, and output modules to say message datums sent by the parent atom. All say message datums will be processed here prior to being passed to the appropriate say channel by a speech output module. Note: hover over the names of variables for a brief explanation of their purpose."
 	module_tree_props["atom_ref"] = ref(src)
 
 	// Speaker Parent variable.
 	var/list/parent_var = list()
 	parent_var["name"] = "Speaker Parent"
 	parent_var["tooltip"] = "The speaker parent is the owner of this speech module tree. Their speech is handled by this tree."
-	parent_var["edit_action"] = "edit_speaker_parent"
+	parent_var["edit_action"] = list("edit_speaker_parent")
 	parent_var["edit_tooltip"] = "Edit Speaker Parent"
 
 	if (src.speaker_parent)
@@ -198,7 +198,7 @@
 	var/list/origin_var = new()
 	origin_var["name"] = "Speaker Origin"
 	origin_var["tooltip"] = "The speaker origin is the atom that should act as the origin point for sending messages from this speech module tree."
-	origin_var["edit_action"] = "edit_speaker_origin"
+	origin_var["edit_action"] = list("edit_speaker_origin")
 	origin_var["edit_tooltip"] = "Edit Speaker Origin"
 
 	if (src.speaker_origin)
@@ -213,7 +213,7 @@
 	default_channel_var["tooltip"] = "The default channel is the say channel that the speaker parent will attempt to send any unprefixed message to."
 	default_channel_var["value_type"] = "reference"
 	default_channel_var["value"] = VAR_REFERENCE_DATA(src.speaker_parent.default_speech_output_channel, "View Variables", "view_variables", list("ref" = ref(global.SpeechManager.GetSayChannelInstance(src.speaker_parent.default_speech_output_channel))))
-	default_channel_var["edit_action"] = "edit_default_channel"
+	default_channel_var["edit_action"] = list("edit_default_channel")
 	default_channel_var["edit_tooltip"] = "Edit Default Channel"
 
 	var/list/say_language_var = list()
@@ -221,7 +221,7 @@
 	say_language_var["tooltip"] = "The say language is the default language for messages to be sent in."
 	say_language_var["value_type"] = "reference"
 	say_language_var["value"] = VAR_REFERENCE_DATA(src.speaker_parent.say_language, "View Variables", "view_variables", list("ref" = ref(global.SpeechManager.GetLanguageInstance(src.speaker_parent.say_language))))
-	say_language_var["edit_action"] = "edit_say_language"
+	say_language_var["edit_action"] = list("edit_say_language")
 	say_language_var["edit_tooltip"] = "Edit Say Language"
 
 	module_tree_props["variables"] = list(parent_var, origin_var, default_channel_var, say_language_var)
@@ -257,7 +257,7 @@
 	target_tree_props["tooltip"] = "The target tree is the speech module tree that this tree should add and remove its modules to and from."
 	target_tree_props["value_type"] = "reference"
 	target_tree_props["value"] = VAR_REFERENCE_DATA(src.target_speech_tree.get_name(), "Open Module Tree Editor", "view_module_tree", list("ref" = ref(src.target_speech_tree)))
-	target_tree_props["edit_action"] = "edit_target_tree"
+	target_tree_props["edit_action"] = list("edit_target_tree")
 	target_tree_props["edit_tooltip"] = "Edit Target Tree"
 
 	module_tree_props["variables"] = list(target_tree_props)

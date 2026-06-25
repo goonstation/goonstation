@@ -97,8 +97,6 @@
 /datum/speech_module/output/bundled/flock_say/system/get_styling(datum/say_message/message)
 	message.flags |= SAYFLAG_NO_MAPTEXT
 	message.flags &= ~SAYFLAG_HAS_QUOTATION_MARKS
-	message.speaker_to_display = @"[SYSTEM]"
-	message.say_verb = "alerts"
 	message.content = "[MAKE_CONTENT_MUTABLE("\"")][message.content][MAKE_CONTENT_MUTABLE("\"")]"
 	APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(immutable_gradientText), "#3cb5a3", "#124e43"))
 

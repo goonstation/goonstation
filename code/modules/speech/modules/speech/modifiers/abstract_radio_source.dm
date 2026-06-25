@@ -9,4 +9,4 @@
 	if (!istype(abstract_radio_source))
 		return
 
-	message.prefix = abstract_radio_source.radio_prefix
+	message.prefix ||= abstract_radio_source.radio_prefix
