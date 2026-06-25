@@ -128,7 +128,7 @@
 						HH.mind.add_antagonist(ROLE_WEREWOLF, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_MUTANT)
 						HH.full_heal()
 						HH.setStatus("knockdown", 15 SECONDS)
-						HH.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
+						HH.werewolf_transform(FALSE) // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 						M.mind.remove_antagonist(ROLE_WEREWOLF)
 						boutput(W, SPAN_ALERT("You passed your terribly affliction onto [HH]! You are no longer a werewolf!"))
 						logTheThing(LOG_COMBAT, M, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")

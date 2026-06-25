@@ -6077,7 +6077,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 9
 	},
 /area/centcom)
@@ -6155,7 +6155,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 5
 	},
 /area/centcom)
@@ -7256,7 +7256,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aKp" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 4
 	},
 /area/marsoutpost)
@@ -7278,7 +7278,7 @@
 /turf/unsimulated/floor/caution/north,
 /area/marsoutpost)
 "aKt" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/marsoutpost)
@@ -18832,7 +18832,7 @@
 	},
 /area/iomoon/base)
 "bxr" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/centcom)
@@ -20458,7 +20458,7 @@
 	},
 /area/iomoon)
 "bET" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 8
 	},
 /area/meat_derelict/entry)
@@ -22238,6 +22238,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen/sleepypen,
+/obj/item/stamp/syndicate,
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
 /area/syndicate_station/battlecruiser)
 "bLd" = (
@@ -22507,7 +22508,7 @@
 /turf/unsimulated/floor/grime,
 /area/crunch)
 "bLU" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/crunch)
@@ -22525,7 +22526,7 @@
 	layer = 6;
 	name = "broken door"
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/crunch)
@@ -22639,12 +22640,12 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bMA" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 9
 	},
 /area/crunch)
 "bMB" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/crunch)
@@ -22652,7 +22653,7 @@
 /obj/fakeobject/apc_broken{
 	pixel_y = 24
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/crunch)
@@ -22856,7 +22857,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bNd" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 4
 	},
 /area/crunch)
@@ -22864,12 +22865,12 @@
 /obj/machinery/light/worn{
 	dir = 1
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/crunch)
 "bNf" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/crunch)
@@ -23481,10 +23482,10 @@
 	},
 /area/crunch)
 "bPn" = (
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "bPo" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/crunch)
@@ -23882,7 +23883,7 @@
 /obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/crunch)
@@ -26429,7 +26430,7 @@
 /turf/simulated/wall/auto/old,
 /area/crunch)
 "bZY" = (
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "bZZ" = (
 /obj/tombstone{
@@ -26499,13 +26500,13 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "cam" = (
-/turf/unsimulated/floor/orangeblack/corner/white,
+/turf/unsimulated/floor/caution/corner/white,
 /area/crunch)
 "can" = (
-/turf/unsimulated/floor/orangeblack/side/white,
+/turf/unsimulated/floor/caution/white,
 /area/crunch)
 "cao" = (
-/turf/unsimulated/floor/orangeblack/corner/white{
+/turf/unsimulated/floor/caution/corner/white{
 	dir = 8
 	},
 /area/crunch)
@@ -26614,7 +26615,7 @@
 /turf/unsimulated/floor/white,
 /area/crunch)
 "caI" = (
-/turf/unsimulated/floor/orangeblack/side/white{
+/turf/unsimulated/floor/caution/white{
 	dir = 4
 	},
 /area/crunch)
@@ -26623,10 +26624,10 @@
 /obj/item/broken_rcd{
 	desc = "The prototype for a device used to rapidly build walls/floors. A plate on the side is labeled 'ANAXIMANDER II Prototype -- Property of Hemera Astral Research Corporation.'"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "caK" = (
-/turf/unsimulated/floor/orangeblack/side/white{
+/turf/unsimulated/floor/caution/white{
 	dir = 8
 	},
 /area/crunch)
@@ -26639,7 +26640,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "caM" = (
 /obj/fakeobject/lighttube_broken{
@@ -26734,17 +26735,17 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "cbd" = (
-/turf/unsimulated/floor/orangeblack/corner/white{
+/turf/unsimulated/floor/caution/corner/white{
 	dir = 4
 	},
 /area/crunch)
 "cbe" = (
-/turf/unsimulated/floor/orangeblack/side/white{
+/turf/unsimulated/floor/caution/white{
 	dir = 1
 	},
 /area/crunch)
 "cbf" = (
-/turf/unsimulated/floor/orangeblack/corner/white{
+/turf/unsimulated/floor/caution/corner/white{
 	dir = 1
 	},
 /area/crunch)
@@ -27625,7 +27626,7 @@
 /turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cfy" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/meat_derelict/entry)
@@ -27884,7 +27885,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/meat_derelict/entry)
@@ -28373,13 +28374,13 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 9
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cii" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cij" = (
 /obj/machinery/light/emergency{
@@ -29494,13 +29495,13 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "clJ" = (
-/turf/unsimulated/floor/orangeblack/corner,
+/turf/unsimulated/floor/caution/corner,
 /area/crunch)
 "clK" = (
-/turf/unsimulated/floor/orangeblack/side,
+/turf/unsimulated/floor/caution/side,
 /area/crunch)
 "clL" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 8
 	},
 /area/crunch)
@@ -29992,7 +29993,7 @@
 "cnr" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/fakeobject/airlock_broken/sealed/owlery,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cns" = (
 /obj/item/scrap,
@@ -32402,7 +32403,7 @@
 /area/owlery/staffhall)
 "cwR" = (
 /obj/machinery/light/emergency,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cwS" = (
 /obj/lattice{
@@ -32844,7 +32845,7 @@
 	dir = 4
 	},
 /obj/machinery/light/emergency,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "cyh" = (
 /obj/machinery/light{
@@ -34999,7 +35000,7 @@
 	},
 /area/owlery/gangzone)
 "cEE" = (
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cEF" = (
 /obj/table/reinforced/auto,
@@ -35371,7 +35372,7 @@
 /area/owlery/Owlopen)
 "cFT" = (
 /obj/stool/bench/auto,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cFU" = (
 /turf/unsimulated/floor/redblack/corner{
@@ -37937,7 +37938,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cNW" = (
 /obj/decal/cleanable/fungus,
@@ -38590,7 +38591,7 @@
 /area/owlery/Owlmait)
 "cPH" = (
 /obj/machinery/light/emergency,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cPI" = (
 /obj/decal/cleanable/blood/gibs{
@@ -38621,7 +38622,7 @@
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/Owlopen)
 "cPK" = (
 /obj/item/casing/small,
@@ -45222,7 +45223,7 @@
 /turf/unsimulated/floor/plating,
 /area/syndicate_station/battlecruiser)
 "djf" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 9
 	},
 /area/centcom)
@@ -45647,7 +45648,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
 "dkX" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/centcom)
@@ -46010,10 +46011,10 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/battle)
 "dmr" = (
-/turf/unsimulated/floor/orangeblack/corner,
+/turf/unsimulated/floor/caution/corner,
 /area/centcom)
 "dms" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 8
 	},
 /area/centcom)
@@ -46024,7 +46025,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "dmu" = (
-/turf/unsimulated/floor/orangeblack/side,
+/turf/unsimulated/floor/caution/side,
 /area/centcom)
 "dmE" = (
 /obj/stool/chair/office,
@@ -46032,7 +46033,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dmJ" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/centcom)
@@ -46071,7 +46072,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/centcom)
@@ -46392,7 +46393,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/centcom)
@@ -46437,7 +46438,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/centcom)
@@ -54798,7 +54799,7 @@
 /obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "euA" = (
 /obj/decal/tile_edge/line/green{
@@ -55909,7 +55910,7 @@
 	icon_state = "neutinj";
 	name = "rusty industrial oven"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "fnw" = (
 /obj/fakeobject/pipe{
@@ -58271,7 +58272,7 @@
 /obj/machinery/conveyor/NS{
 	id = "ddan"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "hhE" = (
 /obj/fakeobject{
@@ -63765,7 +63766,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/lab)
 "lmr" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/meat_derelict/entry)
@@ -66408,7 +66409,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "nwt" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/centcom)
@@ -68374,7 +68375,7 @@
 /turf/space,
 /area/wizard_station_space)
 "oUl" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/meat_derelict/entry)
@@ -69079,7 +69080,7 @@
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "psH" = (
 /obj/table/auto,
@@ -70410,7 +70411,7 @@
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
 "qsl" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 10
 	},
 /area/centcom)
@@ -71721,7 +71722,7 @@
 	},
 /area/meat_derelict/guts)
 "rtQ" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 4
 	},
 /area/centcom)
@@ -72758,7 +72759,7 @@
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "sdh" = (
 /obj/rack,
@@ -73665,7 +73666,7 @@
 /area/watchful_eye_sensor)
 "sOG" = (
 /obj/machinery/light,
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 10
 	},
 /area/centcom)
@@ -74604,7 +74605,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
 "tNm" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 1
 	},
 /area/meat_derelict/entry)
@@ -75791,7 +75792,7 @@
 /obj/machinery/conveyor/SN{
 	id = "ddan"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "uJK" = (
 /obj/map/light/lava,
@@ -76021,12 +76022,12 @@
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
 "uSr" = (
-/turf/unsimulated/floor/orangeblack/corner{
+/turf/unsimulated/floor/caution/corner{
 	dir = 4
 	},
 /area/meat_derelict/entry)
 "uSw" = (
-/turf/unsimulated/floor/orangeblack/side,
+/turf/unsimulated/floor/caution/side,
 /area/meat_derelict/entry)
 "uSE" = (
 /obj/decal/cleanable/blood{
@@ -76675,7 +76676,7 @@
 /area/sim/gunsim/lobby)
 "voQ" = (
 /obj/machinery/light,
-/turf/unsimulated/floor/orangeblack/side,
+/turf/unsimulated/floor/caution/side,
 /area/centcom)
 "voU" = (
 /obj/lattice,
@@ -76764,7 +76765,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 5
 	},
 /area/centcom)
@@ -77599,7 +77600,7 @@
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/crunch)
 "vVW" = (
 /obj/fakeobject/pipe{
@@ -77957,7 +77958,7 @@
 	},
 /area/centcom/offices/adhara)
 "wkP" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 6
 	},
 /area/centcom)
@@ -78142,7 +78143,7 @@
 	},
 /area/iomoon/base)
 "wpC" = (
-/turf/unsimulated/floor/orangeblack/corner,
+/turf/unsimulated/floor/caution/corner,
 /area/meat_derelict/entry)
 "wpP" = (
 /obj/item/radio_tape/adventure/xg,
@@ -80228,7 +80229,7 @@
 	})
 "xJR" = (
 /obj/decal/cleanable/blood,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/owlery/staffhall)
 "xJT" = (
 /obj/machinery/light{
@@ -80268,7 +80269,7 @@
 /area/upper_arctic/pod1)
 "xLa" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 1
 	},
 /area/iomoon/base)

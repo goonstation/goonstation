@@ -418,6 +418,10 @@
 	pixel_x = 11;
 	pixel_y = 5
 	},
+/obj/item/stamp/syndicate{
+	pixel_x = -5;
+	pixel_y = 7
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "UP" = (

@@ -107,8 +107,12 @@
 
 	var/mob/held_mob
 
-	New(loc, mob/iced as mob)
+	New(newLoc, mob/iced as mob)
+		ON_COOLDOWN(src, "NOTAKINGDAMAGE", 1 SECOND)
 		..()
+		if(QDELETED(src) || isnull(src.loc))
+			tgui_alert(iced, "You would have been put in \an [src] now but it was being deleted! Please call a coder or file a bug report!", "Call 1-800-Coder")
+			return
 		if(iced && !isAI(iced) && !isblob(iced) && !iswraith(iced))
 			if(istype(iced.loc, /obj/icecube)) //Already in a cube?
 				qdel(src)
@@ -120,6 +124,7 @@
 			if (add_underlay)
 				src.underlays += iced
 			boutput(iced, SPAN_ALERT("You are trapped within [src]!")) // since this is used in at least two places to trap people in things other than ice cubes
+			logTheThing(LOG_DEBUG, iced, "gets trapped in \an [src] at [log_loc(src)]")
 
 		if (istype(iced, /mob/living/critter/space_phoenix))
 			qdel(src)
@@ -143,6 +148,7 @@
 				M.visible_message(SPAN_ALERT("<b>[M]</b> breaks out of [src]!"),SPAN_ALERT("You break out of [src]!"))
 				M.last_cubed = world.time
 				UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
+				logTheThing(LOG_DEBUG, M, "escapes \an [src] at [log_loc(src)]")
 			AM.set_loc(src.loc)
 
 		if (steam_on_death)
@@ -165,6 +171,8 @@
 		return
 
 	proc/takeDamage(var/damage)
+		if(GET_COOLDOWN(src, "NOTAKINGDAMAGE"))
+			return
 		src.health -= damage
 		if(src.health <= 0)
 			qdel(src)
@@ -189,6 +197,8 @@
 		takeDamage(2)
 
 	bullet_act(var/obj/projectile/P)
+		if(istype(P.proj_data, /datum/projectile/bullet/cryo))
+			return
 		var/damage = 0
 		damage = round(((P.power/2)*P.proj_data.ks_ratio), 1.0)
 		if (damage < 1)
