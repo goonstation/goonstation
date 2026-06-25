@@ -400,7 +400,8 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			i++
 			if (T == get_turf(P.targets[1]))
 				P.special_data["end_index"] = i
-				break
+				return
+		P.special_data["end_index"] = INFINITY
 
 	//Die when we reach that turf
 	tick(obj/projectile/P)
@@ -423,7 +424,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/dist = GET_DIST(tongue_owner, target_object)
 		// we got to the end
 		if (P.curr_t >= P.special_data["end_index"] && get_turf(target_object) == P.special_data["target_turf"])
-			P.set_loc(P.special_data["target_turf"])
+			// P.set_loc(P.special_data["target_turf"])
 			if (isitem(target_object) && dist <= src.max_range)
 				target_object.visible_message(SPAN_NOTICE("The tongue sticks to [target_object] and reels it back!"))
 				playsound(target_object, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
