@@ -30124,8 +30124,8 @@
 /obj/cable,
 /obj/machinery/fluid_canister,
 /obj/machinery/power/apc{
-	areastring = "Visitation";
-	name = "Visitation APC";
+	areastring = "Chemistry";
+	name = "Chemistry APC";
 	pixel_y = -24
 	},
 /turf/simulated/floor/plating,
