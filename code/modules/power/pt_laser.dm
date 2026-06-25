@@ -421,6 +421,8 @@
 		var/melt_prob = 0 //this var only exists for debug really
 		if (isturf(A))
 			var/turf_mult = istype(A, /turf/simulated/wall/auto/asteroid) ? 0.1 : 1
+			if (istype(A, /turf/simulated/wall/auto/martian))
+				turf_mult = 0.2
 			if (abs(output) < 100 MEGA WATTS * turf_mult) //hard threshold for turfs, you need a beeg laser
 				melt_prob = 0
 			else

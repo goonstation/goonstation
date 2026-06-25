@@ -38,6 +38,7 @@
 	if(istype(TP))
 		TP.turret_list += src
 	START_TRACKING
+	src.stun.sound_los = TRUE
 
 	#ifdef LOW_SECURITY
 	START_TRACKING_CAT(TR_CAT_DELETE_ME)
@@ -89,6 +90,12 @@
 
 	if (src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
+
+	if(GET_COOLDOWN(src, "emp_timer"))
+		return
+	else
+		src.remove_filter("emp_outline")
+
 	var/area/area = get_area(loc)
 	if (istype(area))
 		if(!target_list)
@@ -130,7 +137,7 @@
 			continue
 		if (!(get_area(C) == A))
 			continue
-		if ((src.req_access || src.req_access_txt) && src.allowed(C))
+		if (src.req_access && src.allowed(C))
 			continue //optional access whitelist
 		. += C
 
@@ -244,10 +251,9 @@
 
 /obj/machinery/turret/emp_act()
 	..()
-	src.enabled = 0
-	src.lasers = 0
-	src.power_change()
-	return
+	var/length = rand(30, 45) SECONDS
+	EXTEND_COOLDOWN(src, "emp_timer", length)
+	src.add_filter("emp_outline", 1, outline_filter(1, "#00FFFF", OUTLINE_SHARP))
 
 /obj/machinery/turret/proc/die()
 	src.health = 0
@@ -383,7 +389,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 /obj/machinery/turretid/computer_core
 	name = "Computer Core Turret Control"
 	turretArea = /area/station/turret_protected/Zeta
-	req_access = list(access_heads)
+	req_access = list(access_sysadmin, access_ai_upload)
 
 /obj/machinery/turretid/armory
 	name = "Armory Turret Control"
@@ -474,6 +480,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 
 /obj/machinery/turretid/receive_silicon_hotkey(var/mob/user)
 	if(..())
+		return
+	if(src.emagged)
 		return
 
 	if(user.client.check_key(KEY_OPEN))

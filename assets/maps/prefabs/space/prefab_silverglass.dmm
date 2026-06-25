@@ -578,7 +578,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/silverglass)
 "su" = (
 /obj/cable,
@@ -664,11 +664,11 @@
 /area/noGenerate)
 "wy" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = -8;
 	pixel_y = 3
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 1
 	},
 /turf/simulated/floor/airless/grey,
@@ -1086,7 +1086,7 @@
 /area/prefab/silverglass)
 "NE" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/silverglass)
 "NI" = (
 /obj/cable{

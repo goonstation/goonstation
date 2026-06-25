@@ -1361,6 +1361,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A mushroom cap of Space Fungus. Probably tastes pretty bad."
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "mushroom"
+	default_material = "mycelium"
 	food_color = "#89533C"
 	bites_left = 1
 	heal_amt = 0
@@ -3202,3 +3203,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	New()
 		..()
 		name = "[random_pigblanket_name()]"
+
+/obj/item/reagent_containers/food/snacks/fruit_salad
+	name = "fruit salad"
+	desc = "Yummy, yummy fruit salad."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "fruit_salad"
+	bites_left = 3
+	food_effects = list("food_energized", "food_refreshed")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER

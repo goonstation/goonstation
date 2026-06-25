@@ -87,3 +87,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 31
 	prefabSizeY = 33
 	prefabPath = "assets/maps/allocated/salvager_local.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout
+	name = "Sinister Office"
+	prefabSizeX = 13
+	prefabSizeY = 13
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/sinister_office.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/trash
+	name = "Trash Pit"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/trash_pit.dmm"

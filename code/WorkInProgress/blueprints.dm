@@ -270,7 +270,26 @@
 				if(!is_valid_abcu_object(spawned_object))
 					qdel(spawned_object)
 
+	proc/check_build_area()
+		for(var/obj/O in src.markers)
+			qdel(O)
+		src.invalid_count = 0
+		for(var/datum/tileinfo/T in src.current_bp.roominfo)
+			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
+			var/obj/effects/abcuMarker/O = null
+
+			if(istype(pos, /turf/space))
+				O = new/obj/effects/abcuMarker(pos)
+			else if(pos.can_build && pos.z == Z_LEVEL_STATION)
+				O = new/obj/effects/abcuMarker(pos)
+			else
+				O = new/obj/effects/abcuMarker/red(pos)
+				src.invalid_count++
+			src.markers.Add(O)
+
 	proc/prepare_build(mob/user)
+		src.check_build_area()
+
 		if(src.invalid_count)
 			boutput(usr, SPAN_ALERT("The machine can not build on anything but empty space. Check for red markers."))
 			return
@@ -354,20 +373,7 @@
 	proc/activate(mob/user)
 		src.locked = TRUE
 		src.anchored = ANCHORED_ALWAYS
-		src.invalid_count = 0
-		for(var/datum/tileinfo/T in src.current_bp.roominfo)
-			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
-			var/obj/effects/abcuMarker/O = null
-
-			if(istype(pos, /turf/space))
-				O = new/obj/effects/abcuMarker(pos)
-			else if(pos.can_build && pos.z == Z_LEVEL_STATION)
-				O = new/obj/effects/abcuMarker(pos)
-			else
-				O = new/obj/effects/abcuMarker/red(pos)
-				src.invalid_count++
-
-			src.markers.Add(O)
+		src.check_build_area()
 		boutput(user, SPAN_NOTICE("Building this will require [src.current_bp.cost_metal] metal and [src.current_bp.cost_crystal] glass sheets."))
 		src.visible_message("[src] locks into place and begins humming softly.")
 
@@ -559,6 +565,7 @@
 // blacklist overrules whitelist
 #define BLACKLIST_OBJECTS list( \
 	/obj/disposalpipe/loafer, \
+	/obj/machinery/disposal/extradimensional, \
 	/obj/submachine/slot_machine/item, \
 	/obj/machinery/portable_atmospherics/canister, \
 	/obj/window/crystal, \
@@ -566,7 +573,18 @@
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
-#define BLACKLIST_TURFS list(/turf/simulated/floor/auto/elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
+#define BLACKLIST_TURFS list(\
+	/turf/simulated/floor/auto/elevator_shaft, \
+	/turf/simulated/shuttle, \
+	/turf/simulated/floor/shuttle, \
+	/turf/simulated/floor/arctic_elevator_shaft, \
+	/turf/simulated/wall/auto/shuttle, \
+	/turf/simulated/wall/void, \
+	/turf/simulated/wall/auto/feather/strong, \
+	/turf/simulated/wall/airbridge, \
+	/turf/simulated/wall/ancient, \
+	/turf/simulated/wall/auto/asteroid, \
+)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0

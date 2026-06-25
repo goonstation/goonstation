@@ -18,35 +18,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		if(prob(80))
 			src.limit = 0
 
-/datum/job/special/halloween/blue_clown
-	name = "Blue Clown"
-	wages = PAY_DUMBCLOWN
-	trait_list = list("training_clown")
-	access_string = "Clown"
-	change_name_on_spawn = TRUE
-	ui_colour = TGUI_COLOUR_NAVY
-	slot_back = list()
-	slot_mask = list(/obj/item/clothing/mask/clown_hat/blue)
-	slot_ears = list(/obj/item/device/radio/headset/clown/blue)
-	slot_jump = list(/obj/item/clothing/under/misc/clown/blue)
-	slot_card = /obj/item/card/id/clown
-	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/blue)
-	slot_belt = list(/obj/item/storage/fanny/funny/blue)
-	slot_poc1 = list(/obj/item/device/pda2/clown/blue)
-	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/plant/banana)
-	items_in_belt = list(/obj/item/cloth/towel/clown)
-	slot_lhan = list(/obj/item/instrument/bikehorn/blue)
-	wiki_link = "https://wiki.ss13.co/Clown"
-
-	faction = list(FACTION_CLOWN)
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		M.bioHolder.AddEffect("regenerator", magical=1)
-
 /datum/job/special/halloween/candy_salesman
 	name = "Candy Salesman"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Salesman"
 	slot_head = list(/obj/item/clothing/head/that/purple)
 	slot_ears = list(/obj/item/device/radio/headset)
@@ -59,7 +33,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/pumpkin_head
 	name = "Pumpkin Head"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/pumpkin)
@@ -78,7 +52,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/wanna_bee
 	name = "WannaBEE"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Botanist"
 	slot_head = list(/obj/item/clothing/head/headband/bee)
 	slot_suit = list(/obj/item/clothing/suit/bee)
@@ -98,7 +72,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/dracula
 	name = "Discount Dracula"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/that)
@@ -120,7 +94,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/werewolf
 	name = "Discount Werewolf"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/werewolf)
@@ -137,7 +111,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/mummy
 	name = "Discount Mummy"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_mask = list(/obj/item/clothing/mask/mummy)
@@ -154,7 +128,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/hotdog
 	name = "Hot Dog"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_jump = list(/obj/item/clothing/under/shorts)
@@ -163,12 +137,12 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_back = list(/obj/item/storage/backpack/satchel/randoseru)
-	slot_poc1 = list(/obj/item/shaker/ketchup)
-	slot_poc2 = list(/obj/item/shaker/mustard)
+	slot_poc1 = list(/obj/item/reagent_containers/applicator/condiment/bottle/ketchup)
+	slot_poc2 = list(/obj/item/reagent_containers/applicator/condiment/bottle/mustard)
 
 /datum/job/special/halloween/godzilla
 	name = "Discount Godzilla"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/biglizard)
@@ -188,7 +162,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/macho
 	name = "Discount Macho Man"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_head = list(/obj/item/clothing/head/helmet/macho)
@@ -208,7 +182,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/ghost
 	name = "Ghost"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	change_name_on_spawn = TRUE
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
 	slot_suit = list(/obj/item/clothing/suit/bedsheet)
@@ -222,9 +196,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/ghost_buster
 	name = "Ghost Buster"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	request_limit = 1
-	request_cost = PAY_EXECUTIVE * 4
+	request_cost = PAY::EXECUTIVE * 4
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
@@ -234,14 +208,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/magnifying_glass)
-	slot_poc2 = list(/obj/item/shaker/salt)
+	slot_poc2 = list(/obj/item/reagent_containers/applicator/condiment/shaker/salt)
 	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/gun/energy/ghost)
 	alt_names = list("Paranormal Activities Investigator", "Spooks Specialist")
 	change_name_on_spawn = TRUE
 
 /datum/job/special/halloween/angel
 	name = "Angel"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_chaplain")
 	access_string = "Chaplain"
 	change_name_on_spawn = TRUE
@@ -262,7 +236,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/vendor
 	name = "Costume Vendor"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	change_name_on_spawn = TRUE
 	slot_jump = list(/obj/item/clothing/under/gimmick/trashsinglet)
 	slot_foot = list(/obj/item/clothing/shoes/sandal)
@@ -276,7 +250,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/devil
 	name = "Devil"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Chaplain"
 	limit = 0
 	change_name_on_spawn = TRUE
@@ -297,7 +271,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/superhero
 	name = "Discount Vigilante Superhero"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_security")
 	access_string = "Staff Assistant"
 	limit = 0
@@ -344,7 +318,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/pickle
 	name = "Pickle"
-	wages = PAY_DUMBCLOWN
+	wages = PAY::DUMBCLOWN
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset)
@@ -376,7 +350,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/cowboy
 	name = "Space Cowboy"
 	ui_colour = TGUI_COLOUR_BLUE
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	starting_mutantrace = /datum/mutantrace/cow
 	badge = /obj/item/clothing/suit/security_badge
 	change_name_on_spawn = TRUE
@@ -395,7 +369,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/wizard
 	name = "Discount Wizard"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	change_name_on_spawn = TRUE
 	access_string = "Staff Assistant"
 	slot_jump = list(/obj/item/clothing/under/shorts/black)
@@ -412,7 +386,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 /datum/job/special/halloween/spy
 	name = "Super Spy"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_eyes = list(/obj/item/clothing/glasses/eyepatch)
@@ -428,7 +402,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
-	wages = PAY_DUMBCLOWN
+	wages = PAY::DUMBCLOWN
 	trusted_only = TRUE
 	can_roll_antag = FALSE
 	slot_ears = list()

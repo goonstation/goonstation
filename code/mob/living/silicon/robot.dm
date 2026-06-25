@@ -196,7 +196,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.part_head.ai_interface = new(src)
 
 		if (!src.dependent && !src.shell)
-			boutput(src, SPAN_NOTICE("Your icons have been generated!"))
+			// boutput(src, SPAN_NOTICE("Your icons have been generated!"))
 			src.syndicate = syndie
 			src.emagged = frame_emagged
 
@@ -665,7 +665,7 @@ TYPEINFO(/mob/living/silicon/robot)
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_FARTS)
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
@@ -1002,12 +1002,17 @@ TYPEINFO(/mob/living/silicon/robot)
 			boutput(user, SPAN_ALERT("You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!"))
 			return FALSE
 
+		src.delStatus("lockdown_robot")
+		src.delStatus("killswitch_robot")
+
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, SPAN_ALERT("You need to get the wires out of the way."))
 			else
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
+				src.req_access = list()
+				boutput(src, SPAN_ALERT("Your interface lock access limiter has been disabled!"))
 				src.visible_message(SPAN_ALERT("<b>[src]</b> buzzes oddly!"))
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
@@ -2936,12 +2941,6 @@ TYPEINFO(/mob/living/silicon/robot)
 			AddOverlays(src.i_panel, "panel", TRUE)
 		else
 			ClearSpecificOverlays("panel")
-
-		if (src.emagged)
-			src.i_details.icon_state = "emagged"
-			AddOverlays(src.i_details, "emagged", TRUE)
-		else
-			ClearSpecificOverlays("emagged")
 
 		if (length(src.upgrades))
 			if (!src.i_upgrades)

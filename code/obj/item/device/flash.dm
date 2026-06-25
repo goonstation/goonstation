@@ -357,7 +357,7 @@ TYPEINFO(/obj/item/device/flash)
 			var/obj/item/assembly/checked_assembly = src.master
 			if(checked_assembly.trigger == src) //in case a flash is used for something else than a trigger
 				checked_assembly.trigger_icon_prefix = "flash3"
-			if(checked_assembly.applier == src) //in case a flash is used for something else than a applier
+			if(checked_assembly.applier == src) //in case a flash is used for something else than an applier
 				checked_assembly.applier_icon_prefix = "flash3"
 			checked_assembly.UpdateIcon()
 			checked_assembly.UpdateName()
@@ -428,7 +428,7 @@ obj/item/device/flash/cyborg/handle_animations(var/mob/user, var/obj/item_in_use
 	spawn_contents = list(/obj/item/assembly/flash_cell = 5)
 
 TYPEINFO(/obj/item/device/flash/revolution)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/device/flash/revolution
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."

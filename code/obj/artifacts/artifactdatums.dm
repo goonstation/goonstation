@@ -48,10 +48,6 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/deact_sound = null
 	/// What message the artifact gives when deactivated
 	var/deact_text = null
-	/// How likely this artifact is to appear to be from an origin that it isn't from
-	var/scramblechance = 10
-	/// used to set straight icon_states on activation instead of fx overlays
-	var/nofx = 0
 	/// special_addendum for ArtifactLogs() proc
 	var/log_addendum = null
 
@@ -122,6 +118,11 @@ ABSTRACT_TYPE(/datum/artifact/)
 		src.artitype.post_setup(holder)
 		OTHER_START_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
 
+	proc/pre_destroyed(var/obj/O)
+		if(!O)
+			return 0
+		return src.artitype.pre_destroyed(O)
+
 	disposing()
 		if(src.artitype)
 			OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
@@ -140,7 +141,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/may_activate(var/obj/O)
 		if (!O)
 			return 0
-		return 1
+		return src.artitype.may_activate(O)
 
 	/// What the artifact does once when activated.
 	proc/effect_activate(var/obj/O)

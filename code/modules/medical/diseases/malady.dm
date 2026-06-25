@@ -475,7 +475,7 @@
 		if (2)
 			if (probmult(0.1))
 				boutput(affected_mob, SPAN_NOTICE("You feel better."))
-				affected_mob.resistances += src.type
+				affected_mob.add_ailment_resistance(src.type, src.type)
 				affected_mob.ailments -= src
 				return
 			if (probmult(8))
@@ -517,7 +517,8 @@
 		if (!H.organHolder.heart)
 			H.cure_disease(D)
 			return
-		else if (H.organHolder.heart && H.organHolder.heart.robotic && !H.organHolder.heart.broken && !D.robo_restart)
+
+		if (H.organHolder.heart.robotic && !H.organHolder.heart.broken && !D.robo_restart)
 			boutput(H, SPAN_ALERT("Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!"))
 
 			if (probmult(20) && H.organHolder.heart.emagged)
@@ -562,7 +563,12 @@
 			else if (prob(10))
 				H.take_brain_damage(1 * mult)
 
+		H.bleeding = 0
+		H.bleeding_internal = 0
 		H.changeStatus("knockdown", 6 * mult SECONDS)
 		H.losebreath+=20 * mult
 		H.take_oxygen_deprivation(20 * mult)
-		H.organHolder?.damage_organ(tox=1 * mult, organ="heart")
+		if (prob(50))
+			H.organHolder?.damage_organ(tox=1 * mult, organ="heart")
+		else // blood ain't gettin to those other organs
+			H.organHolder?.damage_organs(tox=1 * mult, organs=H.organHolder.organ_list)

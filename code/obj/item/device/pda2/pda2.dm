@@ -310,6 +310,15 @@
 		blue
 			icon_state = "pda-clown-blue"
 
+		purple
+			icon_state = "pda-clown-purple"
+
+		pink
+			icon_state = "pda-clown-pink"
+
+		green
+			icon_state = "pda-clown-green"
+
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
 			LAZYLISTREMOVE(M.attached_objs, src)
@@ -541,8 +550,6 @@
 	var/wincheck = winexists(user, "pda2_\ref[src]")
 	//boutput(world, wincheck)
 	if(wincheck != "MAIN")
-		if (src.host_program)
-			src.host_program.get_other_pdas()
 		winclone(user, "pda2", "pda2_\ref[src]")
 	winset(user, "pda2_\ref[src]", "title=\"[src.window_title]\"")
 
@@ -781,7 +788,12 @@
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		var/datum/bounty_claim/claim = U.bounty_is_claimable(O, user)
-		if (claim)
+		var/confirmed_redeem = TRUE
+		if(O == src) //Warn the user before claiming their own uplink
+			confirmed_redeem = FALSE
+			if(tgui_alert(user, "Are you sure you'd like to claim your own uplink? You won't be able to replace it!", "Redeem Uplink?", list("Ok", "Cancel")) == "Ok")
+				confirmed_redeem = TRUE
+		if (claim && confirmed_redeem)
 			actions.start(new/datum/action/bar/private/spy_steal(claim.delivery, U), user)
 			return
 	..()
@@ -857,7 +869,7 @@
 		if (!overlay_images)
 			src.overlay_images = list()
 			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle", pixel_x = src.screen_x, pixel_y = src.screen_y)
-			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
+			overlay_images["message"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
 
 		for (var/k in src.overlay_images)
 			src.overlay_images[k].color = bg
@@ -1054,6 +1066,9 @@
 		if (mode)
 			src.current_overlay = mode
 		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
+		var/image/symbol_overlay = image(src.icon, "symbol-[src.current_overlay]", pixel_x = src.screen_x, pixel_y = src.pixel_y)
+		symbol_overlay.color = src.link_color
+		src.UpdateOverlays(symbol_overlay, "screen_symbol_overlay")
 
 	/// Takes a ringtone datum and outputs the program that supposedly holds it
 	proc/ringtone2program(var/ringtone)
@@ -1166,7 +1181,7 @@
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
 
-		update_overlay("alert")
+		update_overlay("message")
 		return
 
 	proc/display_message(var/message)

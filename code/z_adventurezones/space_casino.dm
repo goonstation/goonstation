@@ -8,7 +8,7 @@
 // Item slot machine
 
 TYPEINFO(/obj/submachine/slot_machine/item)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/submachine/slot_machine/item
 	name = "Item Slot Machine"

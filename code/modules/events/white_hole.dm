@@ -813,7 +813,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/clothing/head/apprentice = 1,
 			/obj/item/toy/plush/small/kitten/wizard = 1,
 			/obj/item/paper/Wizardry101 = 10,
-			/obj/item/paper/businesscard/cosmicacres = 2,
+			/obj/item/paper/image/businesscard/cosmicacres = 2,
 			/datum/projectile/fireball = 5,
 			/datum/projectile/special/homing/magicmissile/weak = 20,
 			/datum/projectile/special/homing/magicmissile = 15,

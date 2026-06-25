@@ -282,7 +282,7 @@ datum
 		medical/salicylic_acid
 			name = "salicylic acid"
 			id = "salicylic_acid"
-			description = "This is a is a standard salicylate pain reliever and fever reducer. A precursor of acetylsalicylic acid."
+			description = "This is a standard salicylate pain reliever and fever reducer. A precursor of acetylsalicylic acid."
 			reagent_state = LIQUID
 			fluid_r = 181
 			fluid_g = 72
@@ -1100,13 +1100,16 @@ datum
 			fluid_b = 240
 			transparency = 50
 			value = 6
+			target_organs = list("pancreas")
+
 			var/list/flushed_reagents = list("sugar")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				flush(holder, 5 * mult, flushed_reagents)
-				//if(holder.has_reagent("cholesterol")) //probably doesnt actually happen but whatever
-					//holder.remove_reagent("cholesterol", 2)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.organHolder?.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
 				..()
 				return
 
@@ -1199,7 +1202,7 @@ datum
 		medical/promethazine // This stops you from vomiting
 			name = "promethazine"
 			id = "promethazine"
-			description = "Promethazine is a anti-emetic agent."
+			description = "Promethazine is an anti-emetic agent."
 			reagent_state = LIQUID
 			fluid_r = 180
 			fluid_g = 255

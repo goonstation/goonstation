@@ -47,7 +47,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 		//THIS FUCKING ABOMINATION stays here as a memory of someone's shame.
 		//researchTreeTiered = bubblesort(researchTreeTiered)
 		sortList(researchTreeTiered, /proc/cmp_text_asc)
-		return
+#ifdef I_HATE_WAITING_FOR_GENES
+		src.debug_SetResearchLevel()
+		src.debug_mode = TRUE
+		src.see_secret = TRUE
+		src.mutations_researched = 100
+		src.max_save_slots = 59
+#endif
 
 	proc/isResearched(var/type)
 		. = FALSE

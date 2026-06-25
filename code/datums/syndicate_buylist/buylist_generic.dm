@@ -155,8 +155,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 /datum/syndicate_buylist/generic/jammer
 	name = "Signal Jammer"
 	items = list(/obj/item/radiojammer)
-	cost = 3
-	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream."
+	cost = 2
+	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream. Infinite charge, no batteries needed!"
 
 /datum/syndicate_buylist/generic/psink
 	name = "Power Sink"
@@ -265,6 +265,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY
 
+/datum/syndicate_buylist/generic/gorilla
+	name = "Gorilla"
+	desc = "A highly realistic inflatable gorilla. So realistic in fact that it can still beat the shit out of you. Requires a gas tank to inflate."
+	cost = 3
+	vr_allowed = FALSE
+	items = list(/obj/item/inflatable_mob/gorilla)
+
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
@@ -312,7 +319,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/areacloak
 	name = "Cloaking Field Generator"
 	items = list(/obj/item/cloak_gen)
-	cost = 3
+	cost = 2
 	desc = "Remote-controlled device that produces an area of effect cloaking field while active. Don't lose the remote!"
 
 /datum/syndicate_buylist/traitor/floorcloset
@@ -375,8 +382,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
 	items = list(/obj/item/lightbreaker)
-	cost = 4
-	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
+	cost = 3
+	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all other nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
 
@@ -415,12 +422,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	run_on_spawn(var/obj/storage/crate/syndicate_surplus/crate, var/mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
 		crate.spawn_items(owner, uplink)
 
-// TODO: Rework to falsify all forensics
-// /datum/syndicate_buylist/traitor/fingerprinter
-// 	name = "Fingerprinter"
-// 	items = list(/obj/item/device/fingerprinter)
-// 	desc = "A tool which allows you to scan and plant fingerprints."
-// 	cost = 1
+/datum/syndicate_buylist/traitor/fingerprinter
+ 	name = "Fingerprinter"
+ 	items = list(/obj/item/device/fingerprinter)
+ 	desc = "A tool which allows you to scan and plant fingerprints."
+ 	cost = 1
 
 /datum/syndicate_buylist/traitor/blowgun
 	name = "Blowgun"
@@ -452,3 +458,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/handcuffs/tape_roll)
 	cost = 1
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
+
+/datum/syndicate_buylist/traitor/deployable_hideout
+	name = "Deployable Hideout"
+	desc = "A disposals hijacking device capable of installing a pocket dimension containing a hideout inside of any disposal or mail chute."
+	items = list(/obj/item/device/disposals_hijacker)
+	cost = 4
+	vr_allowed = FALSE

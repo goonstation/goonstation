@@ -13,6 +13,8 @@
 #define NO_GHOSTCRITTER (1<<4)
 /// allows for tables to be built under items they normally wouldn't be able to be built under, such as microwaves and personal computers
 #define NO_BLOCK_TABLE (1<<5)
+/// Whitelists ghostdrones.
+#define GHOSTDRONE_ALLOWED (1<<6)
 
 /// At which alpha do opague objects become see-through?
 #define MATERIAL_ALPHA_OPACITY 190

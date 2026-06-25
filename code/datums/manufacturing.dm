@@ -523,6 +523,13 @@
 	time = 8 SECONDS
 	category = "Tool"
 
+/datum/manufacture/accessgun
+	name = "Access Lite"
+	item_outputs = list(/obj/item/device/accessgun/lite)
+	create = 1
+	time = 7 SECONDS
+	category = "Tool"
+
 /datum/manufacture/weldingmask
 	name = "Welding Mask"
 	item_requirements = list("metal_dense" = 2,
@@ -722,7 +729,7 @@
 /datum/manufacture/glass
 	name = "Glass Panel"
 	item_requirements = list("crystal" = 1)
-	item_outputs = list(/obj/item/sheet)
+	item_outputs = list(/obj/item/sheet/glass)
 	create = 1
 	time = 2 SECONDS
 	category = "Resource"
@@ -760,7 +767,7 @@
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
-	item_requirements = list("metal_dense" = 1)
+	item_requirements = list("metal_or_wood_dense" = 1)
 	item_outputs = list(/obj/item/rods)
 	time = 3 SECONDS
 	category = "Resource"
@@ -1231,6 +1238,22 @@
 	item_outputs = list(/obj/item/furniture_parts/wheelchair)
 	create = 1
 	time = 30 SECONDS
+	category = "Resource"
+
+/datum/manufacture/roller_bed
+	name = "Roller Bed Parts"
+	item_requirements = list("metal" = 4)
+	item_outputs = list(/obj/item/furniture_parts/bed/roller)
+	create = 1
+	time = 20 SECONDS
+	category = "Resource"
+
+/datum/manufacture/iv_stand
+	name = "IV Stand Parts"
+	item_requirements = list("metal" = 3)
+	item_outputs = list(/obj/item/furniture_parts/IVstand)
+	create = 1
+	time = 15 SECONDS
 	category = "Resource"
 
 /datum/manufacture/hypospray
@@ -2182,6 +2205,16 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 90 SECONDS
 	category = "Component"
+
+/datum/manufacture/robup_pressure
+	name = "Pressure Visualizer Upgrade"
+	item_requirements = list("crystal" = 2,
+							 "conductive" = 4)
+	item_outputs = list(/obj/item/roboupgrade/pressure_visualizer)
+	create = 1
+	time = 90 SECONDS
+	category = "Component"
+
 /* shit done be broked
 /datum/manufacture/robup_thermal
 	name = "Optical Thermal Upgrade"

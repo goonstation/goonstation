@@ -1,5 +1,6 @@
 ADMIN_INTERACT_PROCS(/obj/submachine/ice_cream_dispenser, proc/add_flavor)
 TYPEINFO(/obj/submachine/ice_cream_dispenser)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 18
 
 /obj/submachine/ice_cream_dispenser
@@ -186,6 +187,7 @@ var/list/oven_recipes = list()
 
 
 TYPEINFO(/obj/submachine/chef_oven)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 18
 
 /obj/submachine/chef_oven
@@ -528,6 +530,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/katsu_curry(src)
 			src.recipes += new /datum/recipe/gyudon(src)
 			src.recipes += new /datum/recipe/pigblanket(src)
+			src.recipes += new /datum/recipe/fruit_salad(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/recipe/pizza_custom(src)
 			src.recipes += new /datum/recipe/cake_custom_item(src)
@@ -774,6 +777,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
 TYPEINFO(/obj/submachine/foodprocessor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 18
 
 /obj/submachine/foodprocessor

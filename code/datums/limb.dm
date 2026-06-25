@@ -1995,3 +1995,121 @@
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+
+/datum/limb/gorilla // gorilla arms. they are not removable from gorillas (for now)
+	can_beat_up_robots = TRUE //it's a gorilla
+
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
+		if (!holder)
+			return
+
+		if (!istype(user))
+			target.Attackhand(user, params, location, control)
+			return
+
+		if (isobj(target))
+			switch (user.smash_through(target, list("window", "table", "grille", "blob")))
+				if (TRUE)
+					user.lastattacked = get_weakref(target)
+					return
+				if (FALSE)
+					if (isitem(target))
+						if (prob(45))
+							user.show_message(SPAN_ALERT("You fumble [target] with your gorilla hands!"))
+							return
+
+
+		if (ismob(target))
+			user.lastattacked = get_weakref(target)
+			if (issilicon(target))
+				special_attack_silicon(target, user)
+				return
+
+
+		. = ..()
+
+	grab(mob/target, var/mob/living/user)
+		if (!holder)
+			return
+
+		if (!istype(user) || !ismob(target))
+			target.Attackhand(user)
+			return
+
+		if(check_target_immunity( target ))
+			return 0
+
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+
+		user.grab_other(target, 1) // Use standard grab proc.
+
+		// gorillas always grab aggressively like shamblers
+		var/obj/item/grab/GD = user.equipped()
+		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
+			target.changeStatus("stunned", 2 SECONDS)
+			GD.state = GRAB_STRONG
+			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
+			target.update_canmove()
+			GD.UpdateIcon()
+			user.visible_message(SPAN_ALERT("[user] grabs hold of [target] aggressively!"))
+
+		return
+
+	harm(mob/target, var/mob/living/user)
+		if (!holder)
+			return
+
+		if (!istype(user) || !ismob(target))
+			target.Attackhand(user)
+			return
+		if(check_target_immunity( target ))
+			return 0
+		if (target.melee_attack_test(user) != 1)
+			return
+
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+
+		var/send_flying = 0 // 1: a little bit | 2: across the room
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, can_punch = 0, can_kick = 0)
+
+		if (!msgs || !istype(msgs))
+			return
+
+		if (target.canmove && !target.anchored && !target.lying)
+			if (prob(40))
+				if (prob(60))
+					target.stuttering += 2
+					send_flying = 1
+				else
+					target.stuttering += 3
+					send_flying = 2
+			else
+				target.stuttering += 1
+		else
+			target.stuttering += 1
+
+		if (send_flying == 2)
+			msgs.base_attack_message = SPAN_COMBAT("<b>[user] delivers a savage blow, sending [target] flying!</b>")
+		else
+			msgs.base_attack_message = SPAN_COMBAT("<b>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] gorilla fist[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+
+		msgs.played_sound = pick(sounds_punch)
+		msgs.damage = rand(6, 18)
+		msgs.damage_type = DAMAGE_BLUNT
+
+		if (send_flying == 2)
+			msgs.after_effects += /proc/wrestler_backfist
+		else if (send_flying == 1)
+			msgs.after_effects += /proc/wrestler_knockdown
+
+		logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] with gorilla arms for [msgs.damage] damage at [log_loc(user)].")
+		user.attack_effects(target, user.zone_sel?.selecting)
+		msgs.flush(SUPPRESS_LOGS)
+
+		user.lastattacked = get_weakref(target)
+		return

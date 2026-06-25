@@ -51,7 +51,7 @@
 #define isnewplayer(x) (istype(x, /mob/new_player))
 
 /// Returns true if this mob immune to breathing in smoke?
-#define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_ATOM_PROPERTY(x, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(x, PROP_MOB_BREATHLESS) || isdead(x) || x?.losebreath > 0))
+#define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangelingORlingcritter(x) || HAS_ATOM_PROPERTY(x, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(x, PROP_MOB_BREATHLESS) || isdead(x) || x?.losebreath > 0))
 
 /// Returns true if this mob immune to breathing in miasma
 #define ismiasmaimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && x.wear_mask.c_flags & BLOCKMIASMA )))

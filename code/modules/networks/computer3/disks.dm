@@ -330,6 +330,7 @@
 #endif
 
 TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
 
 /obj/item/disk/data/floppy/read_only/authentication
@@ -348,16 +349,24 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 
 	New()
 		. = ..()
+		START_TRACKING
+		// I'm not including the captain here so you can see when they recollect it.
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, message_admins_too=FALSE)
 		SPAWN(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
 								"SEC"="[netpass_security]",
-								"MED"="[netpass_medical]")
+								"MED"="[netpass_medical]",
+								"LOGIN"="[netpass_login]")
 
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 			src.read_only = 1
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))

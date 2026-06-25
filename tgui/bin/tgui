@@ -97,6 +97,12 @@ task-test-ci() {
   yarn run tgui:test-ci
 }
 
+## Normalizes SVG line endings to LF
+task-normalize-svgs() {
+  cd "${base_dir}"
+  yarn run tgui:normalize-svgs
+}
+
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
@@ -288,10 +294,17 @@ if [[ ${1} == '--test-ci' ]]; then
   exit 0
 fi
 
+if [[ ${1} == '--normalize-svgs' ]]; then
+  task-install
+  task-normalize-svgs
+  exit 0
+fi
+
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
+  shift 1
   task-install
-  task-rspack --mode=production --analyze
+  task-rspack --mode=production --env RSDOCTOR=1 "${@}"
   exit 0
 fi
 
