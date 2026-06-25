@@ -12,8 +12,10 @@
 	var/base_offset_y = 0
 	///maximum allowable range (in pixels, thanks bounds_dist) that the handset can be from the base
 	var/range = 0
+	///Draw behind the parent atom
+	var/behind_parent = FALSE
 
-/datum/component/cord/Initialize(atom/movable/handset, cord_line = "cord", cord_cap = "cord_end", base_offset_x, base_offset_y, range = 0)
+/datum/component/cord/Initialize(atom/movable/handset, cord_line = "cord", cord_cap = "cord_end", base_offset_x, base_offset_y, range = 0, behind_parent = FALSE)
 	. = ..()
 	src.parent_atom = src.parent
 	src.handset = handset
@@ -22,6 +24,7 @@
 	src.base_offset_x = base_offset_x
 	src.base_offset_y = base_offset_y
 	src.range = range
+	src.behind_parent = behind_parent
 	RegisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(draw_cord), TRUE)
 
 /datum/component/cord/proc/draw_cord(datum/component/complexsignal/outermost_movable/component)
@@ -36,7 +39,7 @@
 	var/list/handset_offsets = src.get_handset_offset()
 
 	var/datum/lineResult/result = drawLineImg(src.parent, get_turf(src.handset), src.cord_line, src.cord_cap, src.parent_atom.pixel_x + src.base_offset_x, src.parent_atom.pixel_y + src.base_offset_y, handset_offsets[1], handset_offsets[2], LINEMODE_STRETCH_NO_CLIP, applyTransform = FALSE)
-	result.lineImage.layer = src.parent_atom.layer+0.01
+	result.lineImage.layer = src.parent_atom.layer+0.01 * (behind_parent ? -1 : 1)
 	if (src.cord)
 		var/animate_time = 0.2 SECONDS //just default to something sane if we don't know the glide size
 		if (istype(component?.get_outermost_movable(), /atom/movable))
