@@ -354,10 +354,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 /datum/bioEffect/power/stickytongue
 	name = "Sticky Tongue"
-	desc = "mlem"
+	desc = "Pull an object towards you with your tongue!"
 	id = "stickytongue"
 	icon_state = "sticky_tongue"
-	msgGain = "mlem"
+	msgGain = "You feel like catching flies."
 	msgLose = "you tongue fall out"
 	cooldown = 100
 	probability = 66
@@ -376,7 +376,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	damage = 0
 	hit_ground_chance = 0
 	smashes_glasses = FALSE
-	shot_sound = 'sound/misc/croak.ogg'
+	shot_sound = 'sound/impact_sounds/Slimy_Hit_3.ogg'
 
 	on_launch(var/obj/projectile/P)
 		..()
@@ -436,7 +436,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 /datum/targetable/geneticsAbility/stickytongue
 	name = "Sticky Tongue"
-	desc = "mlem"
+	desc = "Pull an object towards you with your tongue!"
 	icon_state = "sticky_tongue"
 	cooldown = 10 SECONDS
 	needs_hands = FALSE
@@ -451,7 +451,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		src.owner.set_dir(get_dir_accurate(owner, target))
 
-		if (ishuman(holder.owner)) // remember to take off your headgear if you want to fire the laser
+		if (ishuman(holder.owner))
 			var/mob/living/carbon/human/H = owner
 			var/obj/item/I
 			if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSMOUTH)
