@@ -2226,6 +2226,7 @@ TYPEINFO(/datum/mutantrace/frog/amphibian) // trait mutantrace
 	icon_state = "body_m"
 	jerk = FALSE
 	eye_state = "eyes_amphibian"
+	race_mutation = /datum/bioEffect/mutantrace/frog
 	mutant_folder = 'icons/mob/amphibian/frog.dmi'
 	mutant_organs = list(\
 		"left_eye"=/obj/item/organ/eye/amphibian,\

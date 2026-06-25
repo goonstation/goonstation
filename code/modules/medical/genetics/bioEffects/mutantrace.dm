@@ -249,7 +249,7 @@
 	msgLose = "Dog treats no longer look appealing."
 	icon_state  = "pug"
 
-/datum/bioEffect/mutantrace/frog/amphibian
+/datum/bioEffect/mutantrace/frog
 	name = "Anuran Genetics"
 	desc = "The subject's genetics are hybridized with an alien Abzunian amphibian.'"
 	id = "frog"
