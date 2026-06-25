@@ -375,6 +375,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	icon_state = ""
 	damage = 0
 	hit_ground_chance = 0
+	smashes_glasses = FALSE
 	shot_sound = 'sound/misc/croak.ogg'
 
 	on_launch(var/obj/projectile/P)
@@ -384,7 +385,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return
 		var/mob/owner = P.special_data["owner"]
 		P.special_data["target_turf"] = get_turf(P.targets[1])
-		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 8, range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end")
+		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 8, range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end", behind_parent = TRUE)
 
 	//Figure out which turf in our crossing list contains the target
 	post_setup(obj/projectile/P)
