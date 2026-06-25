@@ -2,7 +2,9 @@
 #define ACCESSGUN_MODE_ANY 1
 
 TYPEINFO(/obj/item/device/accessgun)
-	mats = 14
+	mats = list("crystal" = 5,
+				"conductive" = 4,
+				"metal" = 5)
 
 /obj/item/device/accessgun
 	name = "Access Pro"

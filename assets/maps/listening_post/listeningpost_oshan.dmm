@@ -389,6 +389,10 @@
 	pixel_y = 7
 	},
 /obj/table/glass/reinforced/auto,
+/obj/item/stamp/syndicate{
+	pixel_x = 5;
+	pixel_y = -6
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "DT" = (

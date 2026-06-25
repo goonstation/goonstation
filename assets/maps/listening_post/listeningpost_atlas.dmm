@@ -92,6 +92,10 @@
 "di" = (
 /obj/table/syndicate/auto,
 /obj/item/paper/pipebombs,
+/obj/item/stamp/syndicate{
+	pixel_x = -5;
+	pixel_y = 8
+	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "dl" = (

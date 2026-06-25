@@ -847,7 +847,8 @@
 	/obj/item/clipboard,
 	/obj/item/hand_labeler,
 	/obj/item/cargotele,
-	/obj/item/device/appraisal)
+	/obj/item/device/appraisal,
+	/obj/item/stamp/qm)
 
 /* ==================== */
 /* ----- Civilian ----- */
