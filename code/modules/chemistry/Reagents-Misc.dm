@@ -3324,6 +3324,7 @@ datum
 			hunger_value = 0.068
 			viscosity = 0.4
 			depletion_rate = 0.4
+			minimum_reaction_temperature = -INFINITY
 
 /*			var
 				blood_DNA = null
@@ -3392,30 +3393,32 @@ datum
 					var/datum/reagent/blood/blood = target.get_reagent("blood")
 					blood.congealed = TRUE
 
-		blood/bloodc
-			id = "bloodc"
-			value = 3
-			hygiene_value = -4
-			minimum_reaction_temperature = T0C + 50
-
 			reaction_temperature(exposed_temperature, exposed_volume)
+				if(exposed_temperature >= (T0C - 2)) //Freezing point of blood
+					return
+				if(!prob(50))
+					return
 				var/list/covered = holder.covered_turf()
 				if(length(covered) < 9 || prob(2)) // no spam pls
 					if (holder.my_atom)
 						for (var/mob/O in AIviewers(get_turf(holder.my_atom), null))
-							boutput(O, SPAN_ALERT("The blood tries to climb out of [holder.my_atom] before sizzling away!"))
-						// Real world changeling tests should only happen in containers at a slow pace
-						if (!ON_COOLDOWN(global, "bloodc_logging", 4 SECONDS))
-							var/datum/bioHolder/bioHolder = src.data
-							if(istype(bioHolder) && bioHolder.ownerName)
-								logTheThing(LOG_COMBAT, bioHolder.ownerName, "Changeling blood reaction in [holder.my_atom] at [log_loc(holder.my_atom)]")
+							boutput(O, SPAN_ALERT("The blood inside [holder.my_atom] freezes, crystallizing instantly!"))
 					else
 						for(var/turf/t in covered)
 							for (var/mob/O in AIviewers(t, null))
-								boutput(O, SPAN_ALERT("The blood reacts, attempting to escape the heat before sizzling away!"))
+								boutput(O, SPAN_ALERT("The blood freezes, crystallizing instantly!"))
 
-				holder.del_reagent(id)
+				holder.del_reagent(src.id)
 				holder.del_reagent("blood")
+				new /obj/item/blood_crystal(get_turf(holder.my_atom))
+
+		blood/bloodc
+			id = "bloodc"
+			value = 3
+			hygiene_value = -4
+
+			reaction_temperature(exposed_temperature, exposed_volume)
+				return //Changeling blood does not freeze like human blood
 
 		blood/hemolymph
 			name = "hemolymph"

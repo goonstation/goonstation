@@ -836,3 +836,10 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 
 	loaded
 		balance = 15000
+
+/obj/item/blood_crystal
+	name = "crystalline blood"
+	desc = "A chunk of blood that has been frozen into a solid crystal."
+	icon = 'icons/obj/items/materials/molitz.dmi'
+	icon_state = "ore1_$$molitz"
+	color = "#ff0000"
