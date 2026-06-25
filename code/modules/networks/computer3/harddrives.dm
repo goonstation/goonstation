@@ -117,6 +117,7 @@
 	New()
 		. = ..()
 		//First off, create the directory for logging stuff
+		src.root.add_file(new /datum/computer/file/terminal_program/background/thoughtguard(src))
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "logs"
 		src.root.add_file( newfolder )
@@ -137,6 +138,7 @@
 /obj/item/disk/data/fixed_disk/hd128/techcomputer3
 	New()
 		. = ..()
+		src.root.add_file( new /datum/computer/file/terminal_program/background/thoughtguard(src))
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "logs"
 		src.root.add_file( newfolder )

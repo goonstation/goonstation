@@ -126,11 +126,17 @@ Custom Books
 	icon_state = "geothermal"
 	file_path = "strings/books/ggcsftm.txt"
 
+/obj/item/paper/book/from_file/cybercriminals_and_you
+	name = "Cybercriminals and You"
+	desc = "A handbook detailing known malware, traits, APT groups and their techniques."
+	icon_state = "cybercriminals"
+	file_path = "strings/books/cybercriminals_and_you.txt"
+
 //needs a review and updated info
 /obj/item/paper/book/from_file/mechanicbook
 	name = "Mechanic Components And You"
 	icon_state = "mechcompguide"
-	desc = "A Book on how to use the wireless Components of the Mechanic's lab"
+	desc = "A book on how to use the wireless Components of the Mechanic's lab"
 	file_path = "strings/books/mechanicbook.txt"
 
 /obj/item/paper/book/from_file/text_to_music_com // based off the revised Player Piano book

@@ -551,6 +551,10 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			user:network_device = null
 		return
 
+/obj/item/clothing/glasses/vr/sysadmin
+	network = LANDMARK_VR_CYBER_ARENA
+
+
 //Goggles used to assume control of a linked scuttlebot
 /obj/item/clothing/glasses/scuttlebot_vr
 	name = "Scuttlebot remote controller"

@@ -1174,6 +1174,11 @@ TYPEINFO(/turf/simulated)
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "vrwall"
 
+/turf/unsimulated/wall/cyberspace
+	name = "Virtual Wall"
+	icon = 'icons/turf/cyberspace.dmi'
+	icon_state = "wall"
+
 /turf/unsimulated/attack_hand(var/mob/user)
 	if (src.density == 1)
 		return

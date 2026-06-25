@@ -197,6 +197,12 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/stockexchange
 	name = "circuit board (stock exchange)"
 	computertype = /obj/machinery/computer/stockexchange
+/obj/item/circuitboard/cyberintel
+	name = "circuit board (cyberintel)"
+	computertype = /obj/machinery/computer/cyberintel
+/obj/item/circuitboard/cybersecurity
+	name = "circuit board (cybersecurity)"
+	computertype = /obj/machinery/computer/cybersecurity
 /obj/item/circuitboard/transception
 	name = "circuit board (transception interlink)"
 	computertype = /obj/machinery/computer/transception

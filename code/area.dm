@@ -1809,6 +1809,10 @@ ABSTRACT_TYPE(/area/sim)
 	name = "Vspace area 2"
 	icon_state = "simA2"
 
+/area/sim/cyberarena // cyber arena
+	name = "Cyber arena"
+	icon_state = "green"
+
 /area/sim/bball
 	name = "B-Ball Court"
 	icon_state="vr"

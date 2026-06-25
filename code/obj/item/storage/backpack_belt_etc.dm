@@ -900,6 +900,16 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/sysadmin
+	spawn_contents = list(
+	/obj/item/crowbar/yellow,
+	/obj/item/wirecutters/yellow,
+	/obj/item/screwdriver/yellow,
+	/obj/item/wrench/yellow,
+	/obj/item/disk/data/floppy/read_only/thoughtguard,
+	/obj/item/disk/data/floppy/read_only/sandbkos,
+	/obj/item/device/multitool)
+
 /obj/item/storage/belt/utility/virtual
 	name = "virtual utility belt"
 	desc = "Are these tools DLC?"

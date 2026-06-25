@@ -16,6 +16,8 @@
 	var/datum/computer/file/user_data/account = null
 	var/setup_acc_filepath = "/logs/sysusr"//! Where do we look for login data?
 
+	var/hash = null
+
 	os
 		name = "blank system program"
 		extension = "TSYS"
@@ -32,6 +34,7 @@
 
 	New(obj/holding as obj)
 		..()
+		hash = generateHash(hashchars, 8)
 		if(holding)
 			src.holder = holding
 
@@ -132,6 +135,7 @@
 				return TRUE
 			src.authenticated = src.account.registered
 
+
 		///Look for the whimsical account_data file
 		find_access_file()
 			var/datum/computer/folder/accdir = src.holder.root
@@ -158,7 +162,7 @@
 			if(!(holder in src.master.contents))
 				if(master.active_program == src)
 					master.active_program = null
-				master.processing_programs.Remove(src)
+				//master.processing_programs.Remove(src) // if it can run in the background, it can stay there
 				return 1
 
 			if(!src.holder.root)
@@ -411,9 +415,8 @@
 
 			if(src.holder == thedisk)
 				src.print_text("<font color=red>Fatal Error. Returning to system...</font>")
-				src.master.unload_program(src)
+				//src.master.unload_program(src) // doesn't make sense, it can run in memory
 				return
-
 			return
 
 		//Find a folder with a given name

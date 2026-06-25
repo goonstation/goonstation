@@ -1020,6 +1020,13 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/cyberspace
+	name = "sand"
+	icon = 'icons/turf/cyberspace.dmi'
+	icon_state = "floor"
+
+/////////////////////////////////////////
+
 TYPEINFO(/turf/unsimulated/floor/grass)
 	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/unsimulated/floor/grass

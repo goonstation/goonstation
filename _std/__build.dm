@@ -32,7 +32,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
 
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
+#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
 
 //#define SKIP_FEA_SETUP // Skip setting up atmospheric system
 //#define SKIP_Z5_SETUP // Skip generation of mining level
@@ -143,7 +143,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
-//#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
+#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2      // Cogmap2, by Dr. Cogwerks
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi

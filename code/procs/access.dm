@@ -268,6 +268,9 @@
 			return list(access_engineering, access_maint_tunnels, access_engineering_control,
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power,
 						access_tech_storage, access_engineering_mechanic)
+		if("Sysadmin", "Technical Trainee")
+			return list(access_ai_upload, access_maint_tunnels,
+				access_tech_storage, access_engineering_storage, access_engineering_mechanic, access_dwaine_superuser, access_robotdepot)
 		if("Miner")
 			return list(access_maint_tunnels, access_mining, access_mining_outpost)
 		if("Quartermaster")

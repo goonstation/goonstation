@@ -479,7 +479,7 @@
 	comtype = /obj/item/plant/herb/cannabis/omega/spawnable
 	price = PAY_TRADESMAN
 
-datum/commodity/drugs/sell/poppies
+/datum/commodity/drugs/sell/poppies
 	comname = "Poppies"
 	comtype = /obj/item/plant/herb/poppy/spawnable
 	price = PAY_UNTRAINED
@@ -670,6 +670,19 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/gun/energy/egun
 	desc = "A standard-issue NT energy gun."
 	price = PAY_EMBEZZLED
+
+/datum/commodity/malware/grifeload
+	comname = "Grifeload malware disk"
+	comtype = /obj/item/disk/data/floppy/read_only/grifeload
+	desc = "A floppy disk issued with computer-destroying software."
+	price = PAY_EMBEZZLED
+
+/datum/commodity/malware/electrumxx
+	comname = "ElectrumX malware disk"
+	comtype = /obj/item/disk/data/floppy/read_only/electrumx
+	desc = "A floppy disk issued with medium-grade power sink software."
+	price = PAY_EMBEZZLED
+
 
 //// purchase stuff
 

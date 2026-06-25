@@ -63,7 +63,7 @@
 		// Teams
 		MGT_GENETICS, MGT_ROBOTICS, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI,
 		// Alerts
-		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING, MGA_SYNDICATE
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING, MGA_SYNDICATE, MGA_CYBERINTEL
 	)
 	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
@@ -263,7 +263,7 @@
 		name = "Research PDA"
 		icon_state = "pda-tox"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
-		mailgroups = list(MGD_RESEARCH,MGD_PARTY)
+		mailgroups = list(MGD_RESEARCH, MGD_PARTY)
 
 	// Engineering and Supply
 
@@ -271,7 +271,7 @@
 		name = "Atmos PDA"
 		icon_state = "pda-a"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/atmos
-		mailgroups = list(MGD_ENGINEER,MGD_PARTY)
+		mailgroups = list(MGD_ENGINEER, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
 
 	engine
@@ -279,22 +279,29 @@
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
 		setup_default_module = /obj/item/device/pda_module/tray //mechanics used to have these
-		mailgroups = list(MGD_ENGINEER,MGD_PARTY)
+		mailgroups = list(MGD_ENGINEER, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
 	mining
 		name = "Mining PDA"
 		icon_state = "pda-mining"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
-		mailgroups = list(MGD_SUPPLY,MGT_MINING, MGD_PARTY)
+		mailgroups = list(MGD_SUPPLY, MGT_MINING, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	quartermaster
 		name = "Quartermaster PDA"
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
-		mailgroups = list(MGD_SUPPLY,MGT_CARGO,MGD_PARTY)
+		mailgroups = list(MGD_SUPPLY, MGT_CARGO, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
+
+	sysadmin
+		name = "System Admin PDA"
+		icon_state = "pda-e"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
+		mailgroups = list(MGD_ENGINEER, MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CRISIS, MGA_CYBERINTEL)
 
 	// Civilian
 
@@ -361,7 +368,7 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
 		mailgroups = list(MGT_HYDROPONICS,MGD_CIVILIAN,MGD_PARTY)
 
-	computeroperator
+	systemadmin
 		name = "Diagnostic PDA"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
 

@@ -158,6 +158,7 @@ TYPEINFO(/obj/item/peripheral)
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
 		else
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "wireless", frequency)
+		START_TRACKING
 
 	receive_command(obj/source, command, datum/signal/signal)
 		if(..())
@@ -395,20 +396,46 @@ TYPEINFO(/obj/item/peripheral)
 			return
 
 		//They don't need to target us specifically to ping us.
-		//Otherwise, ff they aren't addressing us, ignore them
+		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
 				var/datum/signal/pingsignal = get_free_signal()
 				pingsignal.data["device"] = "PNET_ADAPTER"
 				pingsignal.data["netid"] = src.net_id
 				pingsignal.data["address_1"] = signal.data["sender"]
-				pingsignal.data["command"] = "ping_reply"
+				pingsignal.data["xy"] = "x[src.x] y[src.y]"
 				pingsignal.transmission_method = TRANSMISSION_WIRE
 				pingsignal.source = src
+				pingsignal.data["command"] = "ping_reply"
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.link.post_signal(src, pingsignal)
 
-			return //Just toss out the rest of the signal then I guess
+			// cybersecurity console pings, login, try to run AV, logout, reply appropriately
+			else if (signal.data["address_1"] == "av_ping") // cybersec console pings for antivirus (ThoughtGuard)
+				if(!istype(host.host_program, /datum/computer/file/terminal_program/os/main_os))
+					return // host program could be term_os but we only do main_os
+				var/datum/computer/file/terminal_program/os/main_os/hostprog = host.host_program // still have to retype for functions smh
+				if(!hostprog.authenticated)
+					hostprog.system_login("AVMAINT","Cybersecurity", null, 1)
+				var/datum/computer/file/terminal_program/to_run = hostprog.parse_file_directory("ThoughtGuard", hostprog.current_folder)
+				host.run_program(to_run)
+				host.active_program = host.host_program
+				var/datum/signal/pingsignal = get_free_signal()
+				pingsignal.data["device"] = "PNET_ADAPTER"
+				pingsignal.data["sender"] = src.net_id
+				pingsignal.data["address_1"] = signal.data["sender"]
+				pingsignal.transmission_method = TRANSMISSION_WIRE
+				pingsignal.source = src
+				if (isnull(src.findAv()))
+					pingsignal.data["command"] = "av_reply0" // no av :(
+				else
+					pingsignal.data["command"] = "av_reply1" // yes av :)
+				SPAWN(0.5 SECONDS)
+					src.link.post_signal(src, pingsignal)
+					hostprog.system_logout()
+
+
+			return
 
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.data = signal.data:Copy()
@@ -423,6 +450,8 @@ TYPEINFO(/obj/item/peripheral)
 		. = "LINK: [src.link ? "ACTIVE" : "!NONE!"]"
 		. += " | NETID: [src.net_id ? src.net_id : "NONE"]"
 
+/obj/item/peripheral/network/powernet_card/proc/findAv()
+	return locate(/datum/computer/file/terminal_program/background/thoughtguard) in src.host.processing_programs
 
 // why is the connection checked like this - do we really need to disconnect then reconnect?
 /obj/item/peripheral/network/powernet_card/proc/check_connection()

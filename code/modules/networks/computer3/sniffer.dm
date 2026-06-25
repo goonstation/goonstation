@@ -7,6 +7,7 @@
 	item_state = "electronics"
 	w_class = W_CLASS_BULKY
 	rand_pos = 0
+	contraband = 2
 	var/mode = 0
 	var/obj/machinery/power/data_terminal/link = null
 	var/filter_id = null

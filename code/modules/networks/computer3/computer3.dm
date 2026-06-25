@@ -783,6 +783,9 @@
 			qdel(signal)
 		return
 
+	findAv()
+		return locate(/datum/computer/file/terminal_program/background/thoughtguard) in src.processing_programs
+
 	restart()
 		if(src.restarting)
 			return

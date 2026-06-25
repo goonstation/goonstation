@@ -130,6 +130,7 @@
 
 // VR network
 #define LANDMARK_VR_DET_NET "det_net"
+#define LANDMARK_VR_CYBER_ARENA "cyber_arena"
 #define LANDMARK_VR_ARCADE "arcadevr"
 #define LANDMARK_VR_BOMBTEST "bombtest" // where the nerds spawn
 #define LANDMARK_VR_BOMB "bombtest-bomb" // Landmark where the ~vr bomb~ spawns. (just a landmark not a network id)

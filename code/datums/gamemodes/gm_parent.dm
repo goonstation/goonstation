@@ -258,6 +258,13 @@ ABSTRACT_TYPE(/datum/game_mode)
 	for(var/g_mode in possible_modes)
 		intercepttext += i_text.build(g_mode, pick((islist(badguy_list) && length(badguy_list)) ? badguy_list : ticker.minds))
 
+	if(!isnull(global.round_apt))
+		intercepttext += "<BR><BR>A documented anti-Nanotrasen APT group has been spotted operating within your sector. \
+		Their callsign is [global.round_apt]. Severe-to-devastating property damage must be expected, if no effort to remediate the threat is made. \
+		Consult the \"Cybercriminals and You\" handbook for further information, monitor live Cyber Intelligence reports \
+		and keep your antivirus software up-to-date. It is highly advised that NO entry point remains unaccounted for. \
+		Relay this information to your local System Administrators."
+
 	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 

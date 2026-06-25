@@ -16,6 +16,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 	//Radio inter-dish communications
 	var/frequency = FREQ_COMM_DISH
 	var/list/cargo_logs = list()
+	var/list/dishtargets = list() // for malware infection (in ping replies), used event-side by cyber_events.dm
 
 	deconstruct_flags = DECON_NONE
 
@@ -141,6 +142,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 				sorted = splittext(x," ")
 				return sorted
 
+
 	receive_signal(datum/signal/signal)
 		if(status & (NOPOWER|BROKEN) || !src.link)
 			return
@@ -153,13 +155,14 @@ TYPEINFO(/obj/machinery/communications_dish)
 		var/target = signal.data["sender"]
 
 		//They don't need to target us specifically to ping us.
-		//Otherwise, ff they aren't addressing us, ignore them
+		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && signal.data["sender"])
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", "PNET_COM_ARRAY", "netid", src.net_id)
-
 			return
+		else if(signal.data["command"] == "ping_reply" && signal.data["device"] == "PNET_ADAPTER") // commdish can ping only for malware infection (refer to cyber_events.dm)
+			dishtargets += signal.data["netid"] // global variable, used by cyber_events.dm
 
 		var/sigcommand = lowertext(signal.data["command"])
 		if(!sigcommand || !signal.data["sender"])

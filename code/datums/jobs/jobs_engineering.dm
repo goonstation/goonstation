@@ -118,3 +118,22 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	#endif
 	wiki_link = "https://wiki.ss13.co/Miner"
 	email_group = MGD_SUPPLY
+
+/datum/job/engineering/sysadmin
+	name = "System Admin"
+	limit = 2
+	wages = PAY_TRADESMAN
+	trait_list = list("training_engineer")
+	access_string = "Sysadmin"
+	slot_eyes = list(/obj/item/clothing/glasses/packetvision)
+	slot_back = list(/obj/item/storage/backpack/engineering)
+	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	slot_jump = list(/obj/item/clothing/under/misc/racingsuitbee)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_lhan = list(/obj/item/luggable_computer/techpersonal/cyber)
+	slot_rhan = list(/obj/item/clothing/glasses/vr/sysadmin)
+	slot_glov = list(/obj/item/clothing/gloves/fingerless)
+	slot_poc1 = list(/obj/item/device/pda2/sysadmin)
+	slot_poc2 = list(/obj/item/paper/book/from_file/cybercriminals_and_you)
+	slot_belt = list(/obj/item/storage/belt/utility/sysadmin)
+

@@ -39,6 +39,7 @@
 #define MGA_TRACKING "Tracking Alert"
 #define MGA_SYNDICATE "Syndicate Alert"
 #define MGA_PLUMBING "Plumbing Alert"
+#define MGA_CYBERINTEL "Cyberintel Alert"
 
 // Job "department" categories
 #define JOB_COMMAND "command"

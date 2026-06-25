@@ -24,6 +24,9 @@
 #define SETUP_ACC_DIRECTORY "logs"
 #define SETUP_ACC_FILENAME "sysusr"
 
+	var/list/persistence = list() // for malware that runs on boot
+	var/list/hidename = list("system", "RAM", "file", "os", "hd", "Th1nkD05", "hddvd", "Th0ughtGu4rd") // malware fake names
+
 	disposing()
 		peripherals = null
 		current_folder = null
@@ -208,7 +211,7 @@
 					else
 						src.print_error_text("<b>Error:</b> Unable to set title string.")
 
-				if("delete", "del","era","erase","rm") //Deletes file arg1
+				if("delete", "del", "remove", "rm") //Deletes file arg1
 					var/file_name = null
 					if(command_list.len)
 						file_name = ckey(jointext(command_list, " "))
@@ -221,9 +224,10 @@
 						src.print_error_text("<b>Error:</b> File not found.")
 						return
 
-					if(target == src)
-						src.print_error_text("<b>Error:</b> Access denied.")
-						return
+					if(target == src || istype(target, /datum/computer/file/terminal_program/background/thoughtguard))
+						if(!(access_dwaine_superuser in src.active_account.access)) // hell, delete the OS if you feel like it
+							src.print_error_text("<b>Error:</b> Access denied.")
+							return
 
 					if(src.master.delete_file(target))
 						src.print_text("File deleted.")
@@ -490,6 +494,21 @@
 
 					src.print_text("<tt>[anger_text]<br>[goon]</tt>")
 
+				if("hash", "h")
+					var/file_name = null
+					if(command_list.len)
+						file_name = ckey(jointext(command_list, " "))
+					else
+						src.print_text("<b>Syntax:</b> \"hash \[file name].\" File must be in current directory.")
+						return
+
+					var/datum/computer/file/terminal_program/malware/target = get_file_name(file_name, current_folder)
+					if(!target || !istype(target))
+						src.print_error_text("<b>Error:</b> File not found.")
+						return
+					if(isnull(target.hash))
+						return
+					src.print_text("File hash: [target.hash]")
 /*
 				if("echo") //Determine if entered commands are printed to screen
 					var/argument1 = null
@@ -525,22 +544,11 @@
 						return
 					else
 						src.print_to_log("<b>LOGOUT:</b> [src.authenticated]",0)
-						src.authenticated = null
-						src.active_account = null
-						src.master.temp = null
-						src.echo_input = 1
-
-						//Kill off any background programs that may be running.
-						for(var/datum/computer/file/terminal_program/T in src.master.processing_programs)
-							if(T == src)
-								continue
-
-							src.master.unload_program(T)
-
+						src.system_logout()
 						src.print_text("Logout complete. Have a secure day.<br><br>Authentication required.<br>Please insert card and \"Login.\"")
 
 
-				if("read","type") //Display contents of text file arg1
+				if("read","type","cat") //Display contents of text file arg1
 					var/file_name = null
 					if(command_list.len)
 						file_name = ckey(jointext(command_list, " "))
@@ -624,6 +632,10 @@
 		else
 			src.print_text("Ready.")
 
+		for(var/P in persistence)
+			SPAWN(5 SECONDS)
+				src.master.run_program(src.parse_file_directory(P, src.current_folder))
+
 		return
 
 	disk_ejected(var/obj/item/disk/data/thedisk)
@@ -640,18 +652,48 @@
 			return
 
 		return
-/*
+
 	receive_command(obj/source, command, datum/signal/signal)
 		if((..()))
 			return
-
-		if((command == "card_authed") && signal && (!src.authenticated) && src.setup_needs_authentication)
-
+		if(signal.data["command"] == "card_authed")
 			system_login(signal.data["registered"], signal.data["assignment"], signal.data["access"])
 			return
+		if (signal.data["command"] == global.vulncom) // worm malware vulnerability, refer to cyber_events.dm
+			var/datum/computer/file/terminal_program/background/thoughtguard/av = findAv()
+			var/datum/computer/file/terminal_program/malware/wormfile = signal.data_file.copy_file()
+			message_admins(wormfile)
+			if(!isnull(av))
+				if(wormfile.hash in av.hashes)
+					return
 
+			// so it isn't recursive (IMAGINE)
+			wormfile.worm = 0
+			wormfile.cworm = 0
+			wormfile.mworm = 0
+
+			var/filename = null
+			if(wormfile.mask)
+				filename = pick(hidename)
+
+			if(wormfile.perst)
+				persistence += wormfile.name
+
+			src.clipboard = wormfile
+			src.clipboard.copy_file_to_folder(src.current_folder, filename)
+
+			var/datum/computer/file/terminal_program/to_run = src.parse_file_directory(filename, src.current_folder)
+			if (!isnull(to_run))
+				src.master.run_program(to_run)
+				if(wormfile.ghost)
+					src.master.delete_file(to_run)
+			return
+
+		if (signal.data["command"] == "av_upd") // worm malware vulnerability, refer to cyber_events.dm
+			var/datum/computer/file/terminal_program/background/thoughtguard/av = findAv()
+			av.hashes += signal.data["hash"]
 		return
-*/
+
 
 	proc
 		//Log this text in the ~system log~ as well as printing it.
@@ -660,6 +702,10 @@
 				src.print_to_log(text, 0)
 
 			return src.print_text(text)
+
+		findAv()
+			return locate(/datum/computer/file/terminal_program/background/thoughtguard) in src.master.processing_programs
+
 
 		initialize_logs() //Man we sure love logging things.  Let's set up a log for our logging.
 			var/datum/computer/folder/logdir = parse_directory(SETUP_LOG_DIRECTORY, src.holder.root)
@@ -750,6 +796,17 @@
 			src.active_account.assignment = acc_job
 			src.current_folder = src.holder.root
 
+			//init antivirus
+			var/datum/computer/file/terminal_program/background/thoughtguard/av = src.parse_file_directory("ThoughtGuard", current_folder)
+
+			if(isnull(av) || !istype(av))
+				src.print_error_text("<b>Error:</b> Could not initiate ThoughtGuard antivirus.")
+			else
+				av.helptext = ""
+				src.master.run_program(av)
+				av.exit_stay_resident()
+				src.master.updateUsrDialog()
+
 			if(access_string && !all_access)
 				var/list/decoding = splittext(access_string, ";")
 				for(var/x in decoding)
@@ -762,6 +819,14 @@
 
 			src.print_text("Welcome, [acc_name]!<br><b>Current Folder: [current_folder.name]</b>")
 			return 0
+
+		system_logout() // for cybersec console pings
+			src.authenticated = null
+			src.active_account = null
+			src.master.temp = null
+			src.echo_input = 1
+			src.print_text("Authentication required.<br>Please insert card and \"Login.\"")
+
 
 		get_loaded_drives() //Return a list of the drives in the master computer3.
 			var/list/drives = list()

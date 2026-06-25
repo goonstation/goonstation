@@ -1,0 +1,47 @@
+<span style="color:null;font-family:'Arial';"><h1 id="cybercriminals_and_you"><center><u>Cybercriminals and You</u></center></h1><hr>
+<p>This book will help your machines and, by extension, you survive many assaults the invisible world has to offer.</p><hr>
+  <p><h2><b>Syndira</b></h2>
+  Most likely the most dangerous of them all, this Syndicate-sponsored
+  threat group has the goal of destroying every single ThinkDos-capable computer on your station.
+  They are fond of the Grifeload malware strain, which they equip with the capability to spread
+  instantly and everywhere, albeit with a delay.</p>
+<p><h2><b>3x80-Tide</b></h2>
+Also known as "GreyTide", this group aims for the station Artificial Intelligence. Any vulnerability
+in the AI may result in rogue laws, but it will take several, if not many, attempts to reach corruption.
+Despite that, 3x80-Tide remains a critical threat and it is up to the crew to recognize it.
+Their malware-of-choice is rather unremarkable, if you ignore its AI-seeking capabilities.
+<p><h2><b>PLASMASTEEL</b></h2>
+The power eaters. While their goal is simply money, their mining malware is incredibly inefficient,
+resulting in major power drain. Their go-to is ElectrumXX with the addition of continous-spreading
+capability, known as "clock-worm".
+<p><h2><b>The Cluwne Company</b></h2>
+While this group's malware does not cause direct harm, the mass-spread inconvenience might do it instead.
+They are infamous for the common CluwneBash malware strain, which locks the computer's screen with
+an image of a clown, necessitating a reboot. Now, that in itself wouldn't earn them the APT title.
+It is the persistence and mass-spread capability of their "proprietary" malware that causes concern.
+
+<hr>
+<h2>Malware strains</h2>
+The base code that causes harm, each in its own unique way.
+<br>
+<br>Grifeload -
+<br>CluwneBash -
+<br>Electrum -
+<br>ElectrumX -
+<br>ElectrumXX -
+<br>3x80-Tide -
+
+<hr>
+<h2>Malware traits</h2>
+The pieces of code that make basic malware behave in a more complex way.
+<br>
+<br>Masked -
+<br>Worm -
+<br>Clock worm -
+<br>Mass worm -
+<br>Ghost -
+<br>Persistent -
+<br>Sandbox-aware -
+
+<p><i>Penned by Edward C. Straylight</i></p>
+</span>

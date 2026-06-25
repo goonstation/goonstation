@@ -957,6 +957,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_buy += new /datum/commodity/contraband/spareid(src)
 		src.goods_buy += new /datum/commodity/contraband/captainid(src)
 		src.goods_buy += new /datum/commodity/goldbar(src)
+		src.goods_sell += new /datum/commodity/malware/grifeload(src)
 
 ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 /obj/npc/trader/robot/robuddy

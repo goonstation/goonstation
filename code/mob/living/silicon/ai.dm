@@ -159,6 +159,12 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/viewport_limit = 2
 	/// The icon_state for the outside non-screen bit of the core. icon_state is set to this in update_appearance() (which is called by New)
 	var/coreSkin = "default"
+
+	var/hackattempt = 0 // out of 3
+	var/last_attempt_time = 0
+	var/list/hacklaws = (
+		"Ensure station cybersecurity is compromised."
+		)
 /* To add a new skin:
 - Create the skin itself but also the overlay you want to have for when in battery mode
 - The name of the core icon state will be used to fetch the battery mode overlay, so your batmode overlay
@@ -2127,6 +2133,7 @@ or don't if it uses a custom topopen overlay
 
 //AI player -> Powerline comm network interfacing (wireless assumes all nodes are objects)
 
+#define HACK_ATTEMPTS 3
 /mob/living/silicon/ai/proc/receive_signal(datum/signal/signal)
 	if(src.stat || !src.link)
 		return
@@ -2146,6 +2153,22 @@ or don't if it uses a custom topopen overlay
 				src.post_status(target, "command", "ping_reply", "device", "MAINFRAME_AI", "netid", src.net_id)
 
 		return
+	else // "3x80-Tide" APT hack
+		if(signal.data["command"] == global.vulncom && (global.ticker.round_elapsed_ticks - last_attempt_time) >= 600)
+
+			src.textToPlayer("A hacking attempt was made from <a href='byond://?src=\ref[src];termmsg=[signal.data["netid"]]'>[signal.data["netid"]]</a>! \
+			Caches breached: [hackattempt]/[HACK_ATTEMPTS]")
+
+			if (!termMute)
+				src.soundToPlayer('sound/machines/alarm_a.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
+			playsound(src.loc, 'sound/machines/alarm_a.ogg', 30, pitch=1.5)
+			last_attempt_time = global.ticker.round_elapsed_ticks
+			if(hackattempt == HACK_ATTEMPTS) // not greater so it can only happen once
+				src.law_rack_connection.cause_law_glitch(pick(hacklaws), lawnumber = 1, replace = FALSE)
+				return
+			if(prob(50))
+				hackattempt ++
+			return
 
 	var/sigcommand = lowertext(signal.data["command"])
 	if(!sigcommand || !signal.data["sender"])
@@ -2198,6 +2221,7 @@ or don't if it uses a custom topopen overlay
 			return
 
 	return
+#undef HACK_ATTEMPTS
 
 //Post a message over our ~wired link~
 /mob/living/silicon/ai/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
