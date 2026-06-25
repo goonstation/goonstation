@@ -369,20 +369,13 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 /datum/projectile/special/tongue // do i really want this here
 	name = "tongue"
-	dissipation_rate = 1
-	dissipation_delay = 7
+	max_range = 4
+	dissipation_rate = 0
 	projectile_speed = 32
 	icon_state = ""
 	damage = 0
 	hit_ground_chance = 0
 	shot_sound = 'sound/misc/croak.ogg'
-
-	on_hit(obj/item/hit, angle, var/obj/projectile/P)
-		if (!istype(hit))
-			return
-		var/turf/destination = get_turf(P.special_data["owner"])
-		if (destination)
-			hit.throw_at(destination, 10, 1)
 
 	on_launch(var/obj/projectile/P)
 		..()
@@ -395,11 +388,18 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 	//Figure out which turf in our crossing list contains the target
 	post_setup(obj/projectile/P)
+		//the target is out of range, so retarget at the furthest crossing turf *in* our range
+		if (GET_DIST(P.targets[1], P.special_data["owner"]) > src.max_range)
+			if (length(P.crossing) >= src.max_range)
+				P.special_data["target_turf"] = P.crossing[src.max_range]
+			else
+				P.special_data["target_turf"] = P.crossing[length(P.crossing)]
+		//the target is in range, figure out where we need to stop to hit it
 		var/i = 0
 		for (var/turf/T in P.crossing)
 			i++
 			if (T == get_turf(P.targets[1]))
-				P.special_data["end_index"] = i - 1
+				P.special_data["end_index"] = i
 				break
 
 	//Die when we reach that turf
@@ -416,15 +416,19 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		SPAWN(2 DECI SECONDS)
 			tongue_owner.RemoveComponentsOfType(/datum/component/cord)
 
-		var/obj/item/target_object = P.targets[1]
+		var/atom/target_object = P.targets[1]
 		// make sure everyone's still here
 		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner))
 			return ..()
+		var/dist = GET_DIST(tongue_owner, target_object)
 		// we got to the end
-		if (P.curr_t >= P.special_data["end_index"] && target_object.loc == P.special_data["target_turf"])
-			target_object.visible_message(SPAN_NOTICE("The tongue sticks to [target_object] and reels it back!"))
-			target_object.throw_at(tongue_owner, 10, 1) // Yeet
-    		// TODO: Sound Effect?
+		if (P.curr_t >= P.special_data["end_index"] && get_turf(target_object) == P.special_data["target_turf"])
+			P.set_loc(P.special_data["target_turf"])
+			if (isitem(target_object) && dist <= src.max_range)
+				target_object.visible_message(SPAN_NOTICE("The tongue sticks to [target_object] and reels it back!"))
+				playsound(target_object, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
+				var/obj/item/item_target = target_object
+				item_target.throw_at(tongue_owner, 10, min(0.5, dist))
 		..()
 
 
