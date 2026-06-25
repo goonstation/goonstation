@@ -1744,7 +1744,24 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "chitin"
 	desc = "Chitin is an organic material found in the exoskeletons of insects."
 	icon_file = 'icons/obj/items/materials/chitin.dmi'
-	color = "#118800"
+	color = list(0.20, 0.00, 0.00, 0.00,\
+				0.00, 0.80, 0.20, 0.00,\
+				0.00, 0.20, 1.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.20, -0.10, -0.05, 0.00)
+	hsl_color = list(0.00, 0.00, -0.10, 0.00,\
+					0.00, 1.25, 0.20, 0.00,\
+					0.00, 0.00, 0.50, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.53, -0.25, 0.00, 0.00)
+	/*
+	hsl_color = list(0.00, 0.00, -0.20, 0.00,\
+					0.00, 1.25, 0.00, 0.00,\
+					0.00, 0.00, 0.70, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.53, -0.25, 0.00, 0.00)
+	*/
+	texture = "chitin"
 
 	New()
 		..()
