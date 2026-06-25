@@ -2257,7 +2257,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	name = "latex"
 	desc = "A type of synthetic rubber. Conducts electricity poorly."
 	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
-	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
