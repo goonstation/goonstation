@@ -4002,24 +4002,6 @@
 	icon_state = "therapy_zone"
 	effect_quality = STATUS_QUALITY_POSITIVE
 
-/datum/statusEffect/radiation_resist
-	id = "radiation_resist"
-	name = "Radiation Resistance"
-	desc = "You have some resistance against the effects of radiation."
-	icon_state = "rad_resist"
-	effect_quality = STATUS_QUALITY_POSITIVE
-
-	getTooltip()
-		. = "You have 50 Ohms of radiation resistance."
-
-	onAdd(var/obj/storage/source)
-		. = ..()
-		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_EXT, src, 50)
-
-	onRemove()
-		. = ..()
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_EXT, src)
-
 /datum/statusEffect/radiation_protection
 	id = "radiation_protection"
 	name = "Radiation Protection"

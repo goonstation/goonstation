@@ -703,20 +703,17 @@
 
 		var/datum/material/artisan_material = src.choose_trinket_material(artisan_target.default_material)
 		artisan_target.setMaterial(artisan_material)
-		if(artisan_material.hasProperty("radioactive") || artisan_material.hasProperty("n_radioactive"))
-			// Neutronium kills you very quickly.
-			user.setStatus("radiation_resist", 15 SECONDS)
 
 	proc/choose_trinket_material(var/datum/material/default_material)
 		RETURN_TYPE(/datum/material)
-		var/list/datum/material/potential_mats = list()
+		var/list/potential_mats = list()
 		for(var/mat_id in material_cache)
 			var/datum/material/trinket_material = getMaterial(mat_id)
-			if(trinket_material.artisan_trait_allowed)
-				potential_mats += trinket_material
+			if(trinket_material.artisan_trait_weight > 0)
+				potential_mats[mat_id] = trinket_material.artisan_trait_weight
 		if(default_material)
-			potential_mats -= default_material
-		return pick(potential_mats)
+			potential_mats[default_material] = 0
+		return getMaterial(weighted_pick(potential_mats))
 
 
 // Skill - White Border
