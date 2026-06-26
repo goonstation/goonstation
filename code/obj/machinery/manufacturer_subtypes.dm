@@ -681,9 +681,6 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 #else
 		/datum/manufacture/mechanics/gravity_tether_area,
 #endif
-#ifdef MAP_OVERRIDE_OSHAN
-		/datum/manufacture/cable/reinforced,
-#endif
 		/datum/manufacture/mechanics/laser_mirror,
 		/datum/manufacture/mechanics/laser_splitter,
 		/datum/manufacture/interdictor_kit,
@@ -699,6 +696,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	/datum/manufacture/dowsing_rod,
 	/datum/manufacture/capture_unit,
 	/datum/manufacture/powered_shovel,
+	/datum/manufacture/cable/reinforced,
 #endif
 	)
 
