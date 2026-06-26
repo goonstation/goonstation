@@ -285,6 +285,18 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/pike)
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_RARE
 
+TYPEINFO(/obj/item/reagent_containers/food/fish/long_pike)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/long_pike
+	name = "long pike"
+	desc = "Named after the long and pointy weapon of war, the pike features in the Finnish Kalevala, where it's jawbone is turned in to a magical kantele. This one is really long, for God knows why."
+	icon = 'icons/obj/foodNdrink/food_fish_96x32.dmi'
+	icon_state = "pike_long"
+	inhand_color = "#24d10d"
+	category = FISH_CATEGORY_FRESHWATER
+	rarity = ITEM_RARITY_LEGENDARY
+
+
 TYPEINFO(/obj/item/reagent_containers/food/fish/arapaima)
 	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/arapaima
