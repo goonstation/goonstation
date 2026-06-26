@@ -1,21 +1,6 @@
 /datum/abilityHolder/vampire/var/list/blood_tally
 /datum/abilityHolder/vampire/var/const/max_take_per_mob = 250
 
-/datum/abilityHolder/vampire/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
-	if (!src.blood_tally)
-		src.blood_tally = list()
-
-	if (!(target in src.blood_tally))
-		src.blood_tally[target] = 0
-
-	src.blood_tally[target] += blood_amt_taken
-
-/datum/abilityHolder/vampire/proc/can_take_blood_from(var/mob/living/carbon/human/target)
-	.= 1
-	if (src.blood_tally)
-		if (target in src.blood_tally)
-			.= src.blood_tally[target] < max_take_per_mob
-
 
 /datum/abilityHolder/vampire/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = TRUE)
 	var/datum/abilityHolder/vampire/holder = src
@@ -59,9 +44,6 @@
 		boutput(M, SPAN_ALERT("Drink monkey blood?! That's disgusting!"))
 		return FALSE
 
-	if (!holder.can_take_blood_from(target))
-		return FALSE
-
 	if (isnpc(target))
 		boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 		return FALSE
@@ -85,7 +67,6 @@
 		var/bitesize = 5 * mult
 		H.change_vampire_blood(bitesize, 1, victim = HH)
 		H.change_vampire_blood(bitesize, 0, victim = HH)
-		H.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
 		else
@@ -110,7 +91,6 @@
 
 				H.change_vampire_blood(bitesize, 0, victim = HH)
 				H.change_vampire_blood(bitesize, 1, victim = HH)
-				H.tally_bite(HH,bitesize)
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
@@ -121,7 +101,6 @@
 			var/bitesize = 10 * mult
 			H.change_vampire_blood(bitesize, 1, victim = HH)
 			H.change_vampire_blood(bitesize, 0, victim = HH)
-			H.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
 			else
@@ -144,7 +123,7 @@
 						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
+	if (HH.blood_volume <= 100 && (mult >= 1))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))
 		HH.death(FALSE)
 
@@ -289,7 +268,7 @@
 						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
+	if (HH.blood_volume <= 100 && (mult >= 1))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))
 		HH.death(FALSE)
 
@@ -424,8 +403,6 @@
 		if (state == ACTIONSTATE_RUNNING)
 			if (HH.blood_volume < 0)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
-			else if (!H.can_take_blood_from(H, HH))
-				boutput(M, SPAN_ALERT("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
 			else
 				boutput(M, SPAN_ALERT("Your feast was interrupted."))
 
