@@ -1073,21 +1073,6 @@
 	/obj/item/organ/eye/cyber/prodoc,
 	/obj/item/organ/eye/cyber/nightvision)
 
-/obj/random_item_spawner/canes
-	name = "random canes spawner"
-	min_amt2spawn = 4
-	max_amt2spawn = 4
-	items2spawn = list(/obj/item/cane/wooden,
-	/obj/item/cane/wooden/wooden2,
-	/obj/item/cane/wooden/wooden3,
-	/obj/item/cane/wooden/black,
-	/obj/item/cane/metal,
-	/obj/item/cane/metal/fourlegged,
-	/obj/item/cane/metal/tennisball,
-	/obj/item/cane/silly/clown,
-	/obj/item/cane/silly/mime,
-	/obj/item/cane/silly/princess) // Golden intentionally missing
-
 /obj/random_item_spawner/critter
 	name = "random critter spawner"
 	icon_state = "rand_critter"
