@@ -694,7 +694,12 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/interdictor_rod_lambda,
 		/datum/manufacture/interdictor_rod_sigma,
 		/datum/manufacture/interdictor_rod_epsilon,
-		/datum/manufacture/interdictor_rod_phi
+		/datum/manufacture/interdictor_rod_phi,
+#ifdef HOTSPOTS_ENABLED
+	/datum/manufacture/dowsing_rod,
+	/datum/manufacture/capture_unit,
+	/datum/manufacture/powered_shovel,
+#endif
 	)
 
 	New()
