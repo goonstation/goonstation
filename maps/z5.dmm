@@ -33,7 +33,7 @@
 "ax" = (
 /obj/machinery/vending/air_vendor/plasma,
 /obj/machinery/light_switch/north,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/mining/hangar)
@@ -1008,7 +1008,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent,
 /obj/item/shipcomponent/mainweapon/bad_mining,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/mining/hangar)
@@ -1309,7 +1309,7 @@
 /turf/simulated/floor/caution/west,
 /area/mining/miningoutpost)
 "qo" = (
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/mining/hangar)
@@ -1650,7 +1650,7 @@
 "sp" = (
 /obj/table/reinforced/auto,
 /obj/item/mining_tool/powered/pickaxe,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/mining/hangar)
@@ -1726,7 +1726,7 @@
 "sL" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/mining/hangar)
@@ -1814,7 +1814,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/atmospherics)
 "tv" = (
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/mining/hangar)
@@ -2031,7 +2031,7 @@
 /area/mining/magnet_control)
 "ve" = (
 /obj/storage/closet/welding_supply,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/mining/hangar)
@@ -2163,7 +2163,7 @@
 /area/evilreaver/storage/tools)
 "wm" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/mining/hangar)
@@ -2352,7 +2352,7 @@
 /obj/item/shipcomponent/secondary_system/orescoop,
 /obj/item/shipcomponent/communications/mining,
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/mining/hangar)
@@ -2521,7 +2521,7 @@
 /obj/item/shipcomponent/sensor/mining,
 /obj/item/shipcomponent/sensor/mining,
 /obj/machinery/firealarm/directional/north,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/mining/hangar)
@@ -2945,7 +2945,7 @@
 /area/mining/magnet_control)
 "Bi" = (
 /obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/mining/hangar)
@@ -3505,7 +3505,7 @@
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/secondary_system/cargo,
 /obj/item/shipcomponent/secondary_system/cargo,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/mining/hangar)
@@ -4203,7 +4203,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/clothing/shoes/magnetic,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/mining/hangar)
@@ -5603,7 +5603,7 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/riceandbeans,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/mining/hangar)
@@ -5668,7 +5668,7 @@
 "TW" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/mining/hangar)
@@ -6038,7 +6038,7 @@
 "Wv" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/mining/hangar)
@@ -6272,7 +6272,7 @@
 /area/mining/miningoutpost)
 "XU" = (
 /obj/storage/closet/welding_supply,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/mining/hangar)

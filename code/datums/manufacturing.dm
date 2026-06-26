@@ -523,6 +523,13 @@
 	time = 8 SECONDS
 	category = "Tool"
 
+/datum/manufacture/accessgun
+	name = "Access Lite"
+	item_outputs = list(/obj/item/device/accessgun/lite)
+	create = 1
+	time = 7 SECONDS
+	category = "Tool"
+
 /datum/manufacture/weldingmask
 	name = "Welding Mask"
 	item_requirements = list("metal_dense" = 2,

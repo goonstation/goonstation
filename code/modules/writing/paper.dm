@@ -93,44 +93,68 @@
 	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Fold", "Read", "Nothing"))
 	if (!menuchoice || menuchoice == "Nothing")
 		return
-	else if (menuchoice == "Read")
+	if (menuchoice == "Read")
 		src.examine(user)
+		return
+
+	var/list/options = list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet")
+	if (user.traitHolder.hasTrait("training_chaplain"))
+		options += "Charm"
+	var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", options)
+	if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
+		return
+
+	if (fold == "Paper hat")
+		user.show_text("You fold the paper into a hat! Neat.", "blue")
+		var/obj/item/clothing/head/paper_hat/H = new()
+		H.setMaterial(src.material)
+		user.put_in_hand_or_drop(H)
+	else if (fold == "Cigarette packet")
+		user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
+		var/obj/item/cigpacket/paperpack/H = new()
+		H.setMaterial(src.material)
+		user.put_in_hand_or_drop(H)
 	else
-		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet"))
-		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
+		var/obj/item/paper/folded/F = null
+		if (fold == "Paper plane")
+			user.show_text("You fold the paper into a plane! Neat.", "blue")
+			F = new /obj/item/paper/folded/plane(user)
+
+		else if (fold == "Paper crane")
+			user.show_text("You fold the paper into a crane! Neat.", "blue")
+			F = new /obj/item/paper/folded/crane(user)
+		else if (fold == "Paper ball")
+			user.show_text("You crumple the paper into a ball! Neat.", "blue")
+			F = new /obj/item/paper/folded/ball(user)
+		else if (fold == "Charm")
+			if (!length(src.info))
+				user.show_text("You must inscribe this paper with words of faith and protection first!", "red")
+				return
+			if (get_chaplain_faith(user) < FAITH_CHARM_CREATION)
+				user.show_text("You are not strong enough in your faith to form this devotion.", "red")
+				return
+			modify_chaplain_faith(user, -FAITH_CHARM_CREATION)
+			user.show_text("You carefully fold the paper into a charm. By your faith it has power.", "blue")
+			SPAWN(1 SECOND)
+				user.show_text("You feel your own connection to the divine weaken.", "red")
+			var/obj/item/clothing/suit/charm/charm = new(user)
+			user.u_equip(src)
+			src.set_loc(charm)
+			charm.paper = src
+			charm.setMaterial(src.material)
+			user.put_in_hand_or_drop(charm)
 			return
+		F.info = src.info
+		F.old_desc = src.desc
+		F.icon_old = src.icon
+		F.old_icon_state = src.icon_state
+		F.stamps = src.stamps
+		F.setMaterial(src.material)
 		user.u_equip(src)
-		if (fold == "Paper hat")
-			user.show_text("You fold the paper into a hat! Neat.", "blue")
-			var/obj/item/clothing/head/paper_hat/H = new()
-			H.setMaterial(src.material)
-			user.put_in_hand_or_drop(H)
-		else if (fold == "Cigarette packet")
-			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
-			var/obj/item/cigpacket/paperpack/H = new()
-			H.setMaterial(src.material)
-			user.put_in_hand_or_drop(H)
-		else
-			var/obj/item/paper/folded/F = null
-			if (fold == "Paper plane")
-				user.show_text("You fold the paper into a plane! Neat.", "blue")
-				F = new /obj/item/paper/folded/plane(user)
+		user.put_in_hand_or_drop(F)
 
-			else if (fold == "Paper crane")
-				user.show_text("You fold the paper into a crane! Neat.", "blue")
-				F = new /obj/item/paper/folded/crane(user)
-			else
-				user.show_text("You crumple the paper into a ball! Neat.", "blue")
-				F = new /obj/item/paper/folded/ball(user)
-			F.info = src.info
-			F.old_desc = src.desc
-			F.icon_old = src.icon
-			F.old_icon_state = src.icon_state
-			F.stamps = src.stamps
-			F.setMaterial(src.material)
-			user.put_in_hand_or_drop(F)
-
-		qdel(src)
+	user.u_equip(src)
+	qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	//Papers can be alt+click inspected from anywhere, let's give attack_ai the same freedom

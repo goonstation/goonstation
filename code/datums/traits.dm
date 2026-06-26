@@ -847,6 +847,12 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Sometimes you drink on the job, sometimes drinking is the job."
 	id = "training_drinker"
 
+	onAdd(mob/owner)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_ALCOHOL_RESIST, src, 100)
+
+	onRemove(mob/owner)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_ALCOHOL_RESIST, src)
+
 /datum/trait/job/clown
 	name = "Clown Training"
 	desc = "Subject is trained at being a clumsy buffoon."

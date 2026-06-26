@@ -1144,6 +1144,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Samson"
 		icon_state = "samson"
 		ckey = "zodiadecius"
+	idestroykibble
+		name = "\improper Ruud Keydens"
+		icon_state = "ruudkeydens"
+		ckey = "idestroykibble"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
