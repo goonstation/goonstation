@@ -7,7 +7,7 @@
 import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
-const GenericAntagContentWindow = () => {
+const SyndicateMonkeyContentWindow = () => {
   return (
     <div className="traitor-tips">
       <h1 className="center">You are a syndicate monkey agent!</h1>
