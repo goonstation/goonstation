@@ -578,7 +578,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A briefcase containing a variety of poker-style betting chips."
 	can_hold = list(/obj/item/dice/coin/poker_chip)
 	slots = 8
-	w_class = W_CLASS_BULKY
 	spawn_contents = list(
 		/obj/item/dice/coin/poker_chip/v5/stack, // 5 * 20 = 100
 		/obj/item/dice/coin/poker_chip/v10/stack, // 10 * 20 = 200 etc.
@@ -621,8 +620,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /obj/item/storage/secure/sbriefcase/high_stakes
 	name = "high-stakes poker chip case"
 	desc = "A briefcase set of high-value poker-style betting chips, with included digital locking system."
-	check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
-	can_hold = list(/obj/item/dice/coin/poker_chip)
 	spawn_contents = list(
 		/obj/item/dice/coin/poker_chip/v100/stack, // 2000
 		/obj/item/dice/coin/poker_chip/v100/stack, // 2000

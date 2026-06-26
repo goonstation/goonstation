@@ -35,7 +35,7 @@
 	proc/getBase64Imgs(path)
 
 		var/obj/fish = path
-		var/icon/icon = icon(initial(fish.icon), initial(fish.icon_state))
+		var/icon/icon = icon(initial(fish.icon), initial(fish.icon_state), frame=1)
 		var/fish_icon = icon2base64(icon)
 		var/fish_silhouette = icon2base64(icon * "#000000")
 		return list(fish_icon, fish_silhouette)

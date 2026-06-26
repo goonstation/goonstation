@@ -519,7 +519,7 @@
 #undef wear_sanity_check
 #undef inhand_sanity_check
 
-/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state, var/obj/item/tail_clothing)
+/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state, var/obj/item/clothing/tail_clothing)
 	src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
 	src.tail_standing.overlays.len = 0
 	src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
@@ -530,20 +530,7 @@
 	if(our_tail.clothing_image_icon && icon_state)
 		var/tail_overrides = get_icon_states(our_tail.clothing_image_icon)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
-			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
-			if(tail_clothing)
-				tail_clothing.copy_appearance_to_image(src.human_tail_image)
-				human_tail_image.filters += src.mutantrace?.apply_clothing_filters(tail_clothing)
-			src.tail_standing.overlays += human_tail_image
-			src.tail_standing_oversuit.overlays += human_tail_image
-			if(tail_clothing.worn_material_texture_image)
-				// If the original object has a material texture, apply it
-				var/icon/masked_tail_tex = GetTexturedIcon(human_tail_image.icon, tail_clothing.material.getTexture())
-				var/image/tail_tex_image = image(masked_tail_tex, icon_state)
-				tail_tex_image.layer = human_tail_image.layer + 0.1
-				src.tail_standing_oversuit.overlays += tail_tex_image
-			src.update_tail_overlays()
-			return
+			tail_clothing.update_tail_clothing(src, icon_state)
 
 	human_tail_image = our_tail.tail_image_1
 	src.tail_standing.overlays += human_tail_image

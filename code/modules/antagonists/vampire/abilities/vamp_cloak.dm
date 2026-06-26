@@ -30,7 +30,7 @@
 			src.name = "Turn on Illusory Shroud"
 			src.icon_state = "darkcloak_cd"
 		else
-			M.bioHolder.AddEffect("dark_examine_stopper")
+			M.bioHolder.AddEffect("dark_examine_stopper", magical=TRUE)
 			src.name = "Turn off Illusory Shroud"
 			src.icon_state = "darkcloak"
 		return
@@ -40,8 +40,9 @@
 	desc = "Allows the subject to blend in with dark enviornments, making identification all but impossible."
 	id = "dark_examine_stopper"
 	effectType = EFFECT_TYPE_POWER
-	isBad = 0
+	isBad = FALSE
 	probability = 0
+	occur_in_genepools = FALSE
 	msgGain = "The shadows will shroud you."
 	msgLose = "You allow your true form to be known."
 	var/is_active = FALSE

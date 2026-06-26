@@ -487,6 +487,10 @@
 /obj/item/paper_bin,
 /obj/item/paper/printout/emerg1,
 /obj/item/peripheral/network/radio/locked,
+/obj/item/stamp/syndicate{
+	pixel_y = 11;
+	pixel_x = 7
+	},
 /turf/simulated/floor/yellowblack,
 /area/listeningpost/tech_room)
 "yj" = (

@@ -869,7 +869,7 @@
 		if (!overlay_images)
 			src.overlay_images = list()
 			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle", pixel_x = src.screen_x, pixel_y = src.screen_y)
-			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
+			overlay_images["message"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
 
 		for (var/k in src.overlay_images)
 			src.overlay_images[k].color = bg
@@ -1066,6 +1066,9 @@
 		if (mode)
 			src.current_overlay = mode
 		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
+		var/image/symbol_overlay = image(src.icon, "symbol-[src.current_overlay]", pixel_x = src.screen_x, pixel_y = src.pixel_y)
+		symbol_overlay.color = src.link_color
+		src.UpdateOverlays(symbol_overlay, "screen_symbol_overlay")
 
 	/// Takes a ringtone datum and outputs the program that supposedly holds it
 	proc/ringtone2program(var/ringtone)
@@ -1178,7 +1181,7 @@
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
 
-		update_overlay("alert")
+		update_overlay("message")
 		return
 
 	proc/display_message(var/message)

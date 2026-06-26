@@ -237,6 +237,7 @@ or don't if it uses a custom topopen overlay
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
 
+ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 /mob/living/silicon/ai/proc/give_feet()
 	animate(src, pixel_y = 14, time = 5, easing = SINE_EASING)
 	has_feet = 1
@@ -382,7 +383,7 @@ or don't if it uses a custom topopen overlay
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.icon_tooltip = "Artificial Intelligence"
 		src.radio2.device_color = "#7F7FE2"
-		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
+		src.radio2.set_frequency(RADIO::FREQ::INTERCOM::AI)
 		src.radio2.toggle_microphone(FALSE)
 		src.radio2.toggle_speaker(FALSE)
 		src.radio3.name = "Secure Channels Monitor"
@@ -2572,6 +2573,7 @@ proc/get_mobs_trackable_by_AI()
 	if (src.mind)
 		src.mind.register_death()
 		src.mind.get_player()?.dnr = TRUE
+	respawn_controller.subscribeNewRespawnee(src.ckey)
 	var/mob/dead/observer/ghost = src.ghostize()
 	ghost.corpse = null //no coming back
 
