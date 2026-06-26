@@ -1,4 +1,9 @@
 
+(t)fri jun 26 26
+(u)Zeabus
+(p)26990
+(e)🔬|A-Science
+(+)Artifacts will no longer get immediately obliterated by meteors.
 (t)thu jun 25 26
 (u)ANNmagedon
 (p)26875

@@ -1,5 +1,5 @@
 /atom/movable/abstract_say_source/radio/gang_announcer
-	radio_chat_class = RADIOCL_SYNDICATE
+	radio_chat_class = RADIO::CSS::SYNDICATE
 	radio_icon = "civ"
 	radio_icon_tooltip = "Civilian"
 

@@ -2420,7 +2420,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			processed += organHolder.tail
 			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
-		if (prob(50) && !isskeleton(src)) // Skeletons don't have hair, so don't create and drop a wig for them on death
+		if (prob(50))
 			var/obj/item/clothing/head/wig/W = create_wig(keep_hair = TRUE)
 			if (W)
 				processed += W

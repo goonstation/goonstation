@@ -495,7 +495,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
-		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying || isAI(user))
+		if (!in_interact_range_tri(src, user, O) || !can_act(user) || user.sleeping || user.lying)
 			return
 
 		if (!src.is_acceptable_content(O))

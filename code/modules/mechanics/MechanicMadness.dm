@@ -3078,7 +3078,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 	desc = ""
 	icon_state = "comp_radioscanner"
 
-	var/frequency = R_FREQ_DEFAULT
+	var/frequency = RADIO::FREQ::DEFAULT
 
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Current Frequency: [frequency]")]"
@@ -3097,7 +3097,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 		src.hear_radio(message)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
+		var/inp = input(user, "New frequency ([RADIO::FREQ::MINIMUM] - [RADIO::FREQ::MAXIMUM]):", "Enter new frequency", frequency) as num
 		if(!in_interact_range(src, user) || user.stat)
 			return FALSE
 		if(!isnull(inp))

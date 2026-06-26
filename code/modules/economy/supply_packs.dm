@@ -1674,8 +1674,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					continue
 
 			var/amt = 1
-			if (isnum(frames[path]))
-				amt = abs(frames[path])
+			if (isnum(flatpack_frames[path]))
+				amt = abs(flatpack_frames[path])
 
 			var/atom/template = path
 			var/template_name = initial(template.name)
