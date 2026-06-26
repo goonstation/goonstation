@@ -2995,6 +2995,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/stamp/chap,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "bpE" = (
@@ -4433,6 +4434,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/auto,
 /obj/item/reagent_containers/applicator/stick/glue,
+/obj/item/stamp/clown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "bVS" = (
@@ -10724,6 +10726,7 @@
 /obj/item/paper_bin,
 /obj/item/pen/marker/blue,
 /obj/item/pen/marker/red,
+/obj/item/stamp/law,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -24379,7 +24382,7 @@
 /area/station/security/detectives_office)
 "kUh" = (
 /obj/table/reinforced/auto,
-/obj/item/stamp,
+/obj/item/stamp/law,
 /obj/machinery/firealarm/directional/east{
 	pixel_y = 1
 	},
@@ -40072,6 +40075,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/cargo,
+/obj/item/stamp/qm,
 /turf/simulated/floor/orange,
 /area/station/quartermaster/office)
 "siR" = (

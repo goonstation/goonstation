@@ -3820,6 +3820,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/paper_bin,
+/obj/item/stamp/chap,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "anc" = (
@@ -21023,9 +21024,9 @@
 /obj/item/clothing/gloves/latex/random{
 	pixel_y = -6
 	},
-/obj/item/stamp{
-	pixel_y = 6;
-	pixel_x = 3
+/obj/item/stamp/law{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/redblack{
 	dir = 6
@@ -28938,6 +28939,10 @@
 /obj/item/remote/porter/port_a_brig,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
+	},
+/obj/item/stamp/law{
+	pixel_x = 3;
+	pixel_y = 6
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
@@ -46234,12 +46239,12 @@
 "cUv" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
-/obj/item/stamp,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/item/stamp/qm,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -47533,6 +47538,7 @@
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/stamp/qm,
 /turf/simulated/floor/caution,
 /area/station/quartermaster/office)
 "cZm" = (

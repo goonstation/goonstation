@@ -7020,6 +7020,10 @@
 	pixel_y = -1;
 	pixel_x = -8
 	},
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/evidence)
 "dhu" = (
@@ -12932,6 +12936,7 @@
 	pixel_y = 6
 	},
 /obj/item/pen/fancy,
+/obj/item/stamp/chap,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "fPT" = (
@@ -21027,7 +21032,7 @@
 "jeT" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
-/obj/item/stamp,
+/obj/item/stamp/qm,
 /obj/item/pen/marker/blue,
 /obj/item/pen/marker/red,
 /obj/item/pen/marker,
@@ -36897,6 +36902,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},

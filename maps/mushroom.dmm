@@ -25850,6 +25850,10 @@
 	pixel_y = -24
 	},
 /obj/cable,
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/processing)
 "por" = (
@@ -28662,6 +28666,7 @@
 /area/station/turret_protected/ai_upload)
 "rbd" = (
 /obj/table/wood/auto,
+/obj/item/stamp/chap,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -35925,6 +35930,10 @@
 /obj/machinery/cashreg{
 	name = "bail payment device"
 	},
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "vAh" = (
@@ -36415,6 +36424,7 @@
 /obj/item/peripheral/videocard,
 /obj/item/storage/goodybag,
 /obj/item/aiModule/hologram_expansion/clown,
+/obj/item/stamp/clown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "vVm" = (
@@ -37940,6 +37950,10 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
+/obj/table/auto,
+/obj/item/clipboard/with_pen,
+/obj/item/stamp/qm,
+/obj/random_item_spawner/desk_stuff/one,
 /turf/simulated/floor/caution/side{
 	dir = 8
 	},

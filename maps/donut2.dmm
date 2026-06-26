@@ -2198,8 +2198,8 @@
 /obj/item/pen{
 	pixel_x = -7
 	},
-/obj/item/stamp,
 /obj/table/reinforced/auto,
+/obj/item/stamp/qm,
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
 "aqk" = (
@@ -19103,6 +19103,7 @@
 /obj/item/folder{
 	pixel_x = 6
 	},
+/obj/item/stamp/law,
 /turf/simulated/floor/redblack,
 /area/station/security/evidence)
 "eQM" = (
@@ -31049,6 +31050,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/item/stamp/law,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lNA" = (
@@ -44802,6 +44804,7 @@
 /obj/item/pen/fancy{
 	pixel_y = 8
 	},
+/obj/item/stamp/chap,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},

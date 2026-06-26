@@ -16900,6 +16900,10 @@
 /obj/item/clothing/gloves/latex{
 	pixel_y = -3
 	},
+/obj/item/stamp/law{
+	pixel_x = -6;
+	pixel_y = 7
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -46842,6 +46846,7 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
+/obj/item/stamp/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "oDl" = (
@@ -55442,6 +55447,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
+/obj/item/stamp/law,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -68746,6 +68752,7 @@
 /obj/table/round/auto,
 /obj/random_item_spawner/desk_stuff/few,
 /obj/item/storage/wall/office,
+/obj/item/stamp/qm,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/quartermaster/office)
 "vnN" = (
@@ -74802,6 +74809,7 @@
 	name = "table"
 	},
 /obj/item/paper_bin,
+/obj/item/stamp/chap,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},

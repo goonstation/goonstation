@@ -22,6 +22,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
   */
 TYPEINFO(/area)
 	var/valid_bounty_area = FALSE
+	var/allow_restricted_z_deconstruction = FALSE
 /area
 
 	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
@@ -3777,6 +3778,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 // end station areas //
 
+TYPEINFO(/area/salvager)
+	allow_restricted_z_deconstruction = TRUE
 // Salvager Spawn
 /area/salvager
 	name = "Salvager Vessel Magpie"
@@ -3851,6 +3854,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "medical bay"
 	icon_state = "purple"
 
+TYPEINFO(/area/syndicate_station/hideout)
+	allow_restricted_z_deconstruction = TRUE
 /area/syndicate_station/hideout
 	name = "Mysterious Hideout"
 	icon_state = "red"

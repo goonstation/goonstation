@@ -2543,6 +2543,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
+/obj/item/stamp/chap,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akg" = (
@@ -20195,7 +20196,6 @@
 "bMW" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
-/obj/item/stamp,
 /obj/item/pen/marker/blue,
 /obj/item/pen/marker/red,
 /obj/item/pen/marker,
@@ -20211,6 +20211,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/item/stamp/qm,
 /turf/simulated/floor/caution/side{
 	dir = 9
 	},
@@ -41497,6 +41498,7 @@
 	pixel_x = 3;
 	pixel_y = 5
 	},
+/obj/item/stamp/qm,
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
 "mxv" = (
@@ -48810,6 +48812,10 @@
 /obj/table/auto,
 /obj/item/paper_bin,
 /obj/item/pen/pencil,
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -55088,6 +55094,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1
 	},
+/obj/item/stamp/law,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "wle" = (

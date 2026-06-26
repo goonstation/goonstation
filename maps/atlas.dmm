@@ -14805,6 +14805,7 @@
 	pixel_y = 4
 	},
 /obj/mapping_helper/access/cargo,
+/obj/item/stamp/qm,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "lxx" = (
@@ -21906,6 +21907,7 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/item/paper_bin,
+/obj/item/stamp/law,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "wdb" = (

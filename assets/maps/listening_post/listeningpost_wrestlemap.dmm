@@ -293,6 +293,10 @@
 	pixel_x = -2;
 	pixel_y = 5
 	},
+/obj/item/stamp/syndicate{
+	pixel_y = 11;
+	pixel_x = 7
+	},
 /turf/simulated/floor/caution/north,
 /area/listeningpost/general)
 "pZ" = (

@@ -30976,6 +30976,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/item/stamp/chap,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -35278,7 +35279,7 @@
 /obj/item/hand_labeler,
 /obj/item/clipboard,
 /obj/item/paper_bin,
-/obj/item/stamp,
+/obj/item/stamp/qm,
 /obj/item/pen,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	autoclose = 0;
@@ -37404,6 +37405,7 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/hand_labeler,
 /obj/machinery/firealarm/directional/north,
+/obj/item/stamp/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "nyX" = (
@@ -45838,6 +45840,10 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "uOJ" = (
@@ -46950,9 +46956,9 @@
 	pixel_y = 5;
 	pixel_x = -4
 	},
-/obj/item/stamp{
-	pixel_y = -9;
-	pixel_x = 6
+/obj/item/stamp/law{
+	pixel_x = 7;
+	pixel_y = -1
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/redblack{

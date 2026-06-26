@@ -2040,6 +2040,10 @@
 	name = "furious scribbles";
 	pixel_x = 4
 	},
+/obj/item/stamp/law{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/security/evidence)
 "bCe" = (
@@ -4028,6 +4032,7 @@
 /obj/item/pen/fancy{
 	pixel_y = 8
 	},
+/obj/item/stamp/chap,
 /turf/simulated/floor/carpet/red,
 /area/station/chapel/office)
 "cXP" = (
@@ -5632,6 +5637,16 @@
 "dYa" = (
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"dYc" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/cargo,
+/obj/item/stamp/qm,
+/turf/simulated/floor/yellow,
+/area/station/quartermaster/office)
 "dYz" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -9043,6 +9058,7 @@
 	opacity = 0
 	},
 /obj/item/paper_bin,
+/obj/item/stamp/law,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "giw" = (
@@ -92820,7 +92836,7 @@ eIz
 aCF
 xLW
 jzT
-auY
+dYc
 mMe
 sbo
 oSL

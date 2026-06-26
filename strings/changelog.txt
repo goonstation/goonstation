@@ -1,4 +1,19 @@
 
+(t)fri jun 26 26
+(u)Zeabus
+(p)26990
+(e)🔬|A-Science
+(+)Artifacts will no longer get immediately obliterated by meteors.
+(t)thu jun 25 26
+(u)ANNmagedon
+(p)26875
+(e)🗺|A-Mapping
+(*)The great stampening has returned! many unused / hard to get stamps will show up in the world.
+(+)Chaplains may find their stamps in the Deus Ex Machina & their office.
+(+)Security staff may find their stamps in their clothing vendor & their department.
+(+)Quatermasters may find their stamps in their lockers & around cargo.
+(+)Syndicate agents may find their stamps in the listening post or at the Cairngorm.
+(+)Mimes may find their stamp on their person.
 (t)mon jun 22 26
 (u)LorrMaster
 (p)26821
