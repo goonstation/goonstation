@@ -592,3 +592,18 @@ all for the love of you.</tt>"}
 	icon_state = "sbook"
 	file_path = "strings/books/three_sentence_horror.txt"
 
+/obj/item/paper/book/charms
+	name = "on charms and talismans"
+	desc = "A well thumbed but not particularly holy looking tome."
+	icon_state = "brownbook"
+	info = {"
+	The spiritually minded have been making charms to ward against all the ills of the world for centuries, despite the best efforts of several major churches.<br>
+	The most common form of charm is a simple piece of paper, inscribed with words of power or faith and folded to contain them.<br>
+	These charms are often stained with sanctified drinks, dipped in holy water, or even blood. Please find below a compiled list of some well known charm beliefs.
+	<ul>
+		<li><b>Blood of a curse victim</b>: protection against further curses.</li>
+		<li><b>Essence of wolfsbane</b>: protection against lycanthropy.</li>
+		<li><b>Dye of the lavender flower</b>: to dispel the foul miasmas and protect against the lesser ills.</li>
+		<li><b>Favoured drink of the faith</b>: to lessen the negative effects of drink upon the person, and to improve their prowess in drunken combat.
+	</ul
+	"}

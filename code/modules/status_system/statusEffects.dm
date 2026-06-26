@@ -3153,6 +3153,10 @@
 			boutput(src.owner, SPAN_ALERT(src.desc))
 		if (istype(optional))
 			src.linked_curser = optional
+		if (isliving(src.owner))
+			var/mob/living/M = src.owner
+			if (M.bioHolder)
+				M.bioHolder.cursed = TRUE
 
 	onRemove()
 		if (QDELETED(src.owner))

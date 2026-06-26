@@ -1,3 +1,52 @@
+
+(t)thu jun 25 26
+(u)ANNmagedon
+(p)26875
+(e)🗺|A-Mapping
+(*)The great stampening has returned! many unused / hard to get stamps will show up in the world.
+(+)Chaplains may find their stamps in the Deus Ex Machina & their office.
+(+)Security staff may find their stamps in their clothing vendor & their department.
+(+)Quatermasters may find their stamps in their lockers & around cargo.
+(+)Syndicate agents may find their stamps in the listening post or at the Cairngorm.
+(+)Mimes may find their stamp on their person.
+(t)mon jun 22 26
+(u)LorrMaster
+(p)26821
+(e)🆕🎨🛠️📨|C-Feature, C-Sprites, A-Engineering, A-Logistics
+(*)Fossils now have a chance to be found in "weak rock" anomalies. Mining them requires scanning them directly with the geological scanner and using the required tool.
+(t)sun jun 21 26
+(u)LorrMaster
+(p)26866
+(e)🪲🧱|C-Bug, A-Materials
+(+)Radiation and neutron radiation can now both exist on the same object simultaneously.
+(u)SebaceousSasquatch
+(p)26917
+(e)|
+(+)Custom injectors now have the reagent's name specified on them too.
+(u)LorrMaster
+(p)26598
+(e)💅🧱|C-QoL, A-Materials
+(*)Portable reclaimer now outputs leftover material as sheets.
+(u)Gomp
+(p)26750
+(e)🎨|C-Sprites
+(+)The segway has a new look.
+(u)JORJ949
+(p)26919
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)The syndicate disposals hijacker can now be used in hand to choose your hideout's style!
+(+)Added the "Trash Pit" style to the syndicate disposals hideout options.
+(t)sat jun 20 26
+(u)LeahTheTech + sprites by Xenomni + ideas by Rayne
+(p)26881
+(e)🆕🎨🧛⏰📦⚗💪🐁|C-Feature, C-Sprites, A-Gamemodes, A-Status-Effects, A-Game-Objects, A-Chemistry, A-Traits, A-Critters
+(*)Added folded paper charms that can be made by a chaplain and strung with wire to be worn around the neck.
+(+)Charms can be stained with any reagent, with some reagents providing specific effects. The blood of a curse victim, for example, will provide limited use protection against curses when worn.
+(+)A short book on charm effects can be found in the chaplain's vending machine.
+(u)ANNmagedon
+(p)26859
+(e)🆕🛠️|C-Feature, A-Engineering
+(+)Added Access Lite to the Engineering Specialist Manufacturer.
 (t)wed jun 17 26
 (u)LeahTheTech
 (+)Welders and igniters now more consistently triggers thermite.

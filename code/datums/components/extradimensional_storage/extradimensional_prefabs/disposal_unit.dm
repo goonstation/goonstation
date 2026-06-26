@@ -38,8 +38,10 @@
 	var/prefab_path = /datum/mapPrefab/allocated/syndicate_hideout
 	var/datum/component/extradimensional_storage/dimension_component
 
-/obj/machinery/disposal/extradimensional/host/New()
-	. = ..()
+/obj/machinery/disposal/extradimensional/host/New(var/newLoc, var/hideout_prefab)
+	. = ..(newLoc)
+	if(hideout_prefab && ispath(hideout_prefab, /datum/mapPrefab/allocated))
+		src.prefab_path = hideout_prefab
 	src.dimension_component = src.AddComponent(/datum/component/extradimensional_storage/prefab, src.prefab_path)
 	dimension_component.exit = src
 
@@ -103,6 +105,20 @@
 	desc = "A highly experimental piece of syndicate tech capable of manifesting an entire pocket dimension inside of a disposals unit."
 	icon_state = "disposals_hijacker"
 	var/datum/weakref/dimension_host //The "/obj/machinery/disposal/extradimensional/host" this hijacker made
+	var/prefab_path = /datum/mapPrefab/allocated/syndicate_hideout
+
+	attack_self(mob/user)
+		. = ..()
+		var/prefab_options = list()
+		var/current_prefab
+		for(var/datum/mapPrefab/allocated/prefab as anything in concrete_typesof(/datum/mapPrefab/allocated/syndicate_hideout))
+			prefab_options += list(prefab.name = prefab)
+			if(prefab == src.prefab_path)
+				current_prefab = prefab.name
+		var/input_desc = "Choose hideout type.[src.dimension_host?.deref() ? " Will not apply to currently placed hideout." : null]"
+		var/chosen = tgui_input_list(user, input_desc, "Hideout Customization", prefab_options, current_prefab, theme="syndicate")
+		if(chosen)
+			src.prefab_path = prefab_options[chosen]
 
 	pickup(mob/user)
 		. = ..()
@@ -131,7 +147,7 @@
 		actions.start(new/datum/action/bar/icon/disposals_hijack(src,target_chute), user)
 
 	proc/replace_chute(var/obj/machinery/disposal/target_chute, var/mob/user)
-		var/obj/machinery/disposal/extradimensional/host/new_chute = new(src)
+		var/obj/machinery/disposal/extradimensional/host/new_chute = new(src, src.prefab_path)
 		new_chute.appearance = target_chute.appearance
 		new_chute.dir = target_chute.dir
 		new_chute.icon_style = target_chute.icon_style
