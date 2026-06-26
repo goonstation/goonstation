@@ -22,7 +22,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	var/atom/icon_from_thing
 	var/turf/target_loc
 	var/audio
-	var/plane_choice = FALSE
+	var/image_layers_over_blackness = FALSE
 	var/dir_input = "Random"
 	var/end_effect = LEAVE
 	var/spawnpath
