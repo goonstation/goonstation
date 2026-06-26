@@ -10,8 +10,8 @@ TYPEINFO(/mob/living)
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
-	/// Tracks status of soalguard respawn on mob. SOULGUARD_INACTIVE, SOULGUARD_SPELL when from wizard ability, SOULGUARD_RING when from wizard ring.
-	var/spell_soulguard = SOULGUARD_INACTIVE
+	/// Tracks status of soalguard respawn on mob. SOULGUARD::INACTIVE, SOULGUARD::SPELL when from wizard ability, SOULGUARD::RING when from wizard ring.
+	var/spell_soulguard = SOULGUARD::INACTIVE
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
@@ -403,22 +403,6 @@ TYPEINFO(/mob/living)
 		else if (!pixelable && !QDELETED(W))
 			W.AfterAttack(target, src, reach, params)
 
-/mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if (!src.restrained() && !is_incapacitated(src))
-		var/obj/item/W = src.equipped()
-		if (W) //nah dude, don't typecheck. just assume that mobs can only hold items, this proc gets called a fuckload
-			W.onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	return
-
-/* nothing currently uses needOnMouseMove, so im commenting this out.
-/mob/living/onMouseMove(object,location,control,params)
-	var/obj/item/W = src.equipped()
-	if(W.needOnMouseMove)
-		if (!src.stat && !src.restrained() && !src.getStatusDuration("knockdown") && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned"))
-			if (W && istype(W))
-				W.onMouseMove(object,location,control,params)
-	return
-*/
 /mob/living/onMouseDown(object,location,control,params)
 	if (!src.restrained() && !is_incapacitated(src))
 		var/obj/item/W = src.equipped()
@@ -507,6 +491,7 @@ TYPEINFO(/mob/living)
 					storage.close(user = src)
 				else
 					storage.open(user = src)
+				storage.add_fingerprint(src)
 		else
 			src.swap_hand()
 		return
@@ -1798,3 +1783,27 @@ TYPEINFO(/mob/living)
 
 /mob/living/HealBleeding(amt)
 	src.bleeding = max(src.bleeding - amt, 0)
+
+/mob/living/proc/muffled_by_grab()
+	for (var/obj/item/grab/G as anything in src.grabbed_by)
+		if ((G.state >= GRAB_CHOKE) && G.muffle_affecting)
+			return TRUE
+
+	return FALSE
+
+/mob/living/proc/handle_perma_cryo()
+	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+		antagonist.handle_perma_cryo()
+
+/mob/living/proc/handle_cryo()
+	for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+		antagonist.handle_cryo()
+	for_by_tcl(disky, /obj/item/disk/data/floppy/read_only/authentication)
+		//Not an accurate check, will apply to the captain cryoing someone, but saves iterating up the disk's tree on all cryos
+		if (get_turf(disky) == get_turf(src))
+			if(src in obj_loc_chain(disky))
+				logTheThing(LOG_DEBUG, src, "at [log_loc(src)] cryos with the authentication disk (found in their [disky.loc])")
+				disky.safe_delete()
+				var/obj/storage/crate/crate = new
+				new /obj/item/disk/data/floppy/read_only/authentication(crate)
+				shippingmarket.receive_crate(crate)

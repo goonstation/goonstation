@@ -181,6 +181,40 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 		item_state = "hoodieL-purple"
 		hcolor = "purple"
 
+/* ======== Raincoats ======== */
+/obj/item/clothing/suit/raincoat
+	name = "raincoat"
+	desc = "Perfect for frolicking in the rain. Wait, does space even have rain?"
+	icon = 'icons/obj/clothing/overcoats/hoods/raincoats.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_raincoats.dmi'
+	icon_state = "raincoat-yellow"
+	item_state = "raincoat-yellow"
+	body_parts_covered = TORSO|ARMS
+	var/rcolor = "yellow"
+	New()
+		..()
+		setProperty("chemprot", 10)
+		src.AddComponent(/datum/component/toggle_hood, hood_style="raincoat[src.rcolor ? "-[rcolor]" : null]")
+		src.icon_state = "raincoat[src.rcolor ? "-[rcolor]" : null]"
+		src.item_state = "raincoat[src.rcolor ? "-[rcolor]" : null]"
+
+	green
+		name = "green raincoat"
+		icon_state = "raincoat-green"
+		icon_state = "raincoat-green"
+		rcolor = "green"
+
+	blue
+		name = "blue raincoat"
+		icon_state = "raincoat-blue"
+		icon_state = "raincoat-blue"
+		rcolor = "blue"
+
+	purple
+		name = "purple raincoat"
+		icon_state = "raincoat-purple"
+		icon_state = "raincoat-purple"
+		rcolor = "purple"
 /* ======== Jackets ======== */
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)
@@ -1527,10 +1561,12 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 /obj/item/clothing/suit/space/custom // Used for nanofabs
 	icon_state = "spacemat"
-	inhand_image_icon = "s_suit"
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
+	var/datum/material/material_fabric
+	var/datum/material/material_renf
+	var/wear_mutantrace_type = null // Used to know when to update wear images for different mutant races
 
 	onMaterialChanged()
 		. = ..()
@@ -1543,14 +1579,59 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			setProperty("chemprot", prot)
 		return
 
+	update_tail_clothing(var/mob/living/carbon/human/H, var/tail_clothing_state)
+		var/obj/item/organ/tail/our_tail = H.organHolder.tail
+		H.human_tail_image = image(our_tail.clothing_image_icon, tail_clothing_state)
+		H.human_tail_image.apply_material_appearance(src.material_fabric)
+		H.tail_standing.overlays += H.human_tail_image
+		H.tail_standing_oversuit.overlays += H.human_tail_image
+		H.update_tail_overlays()
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		if(istype_exact(H.mutantrace, src.wear_mutantrace_type))
+			return
+		src.wear_mutantrace_type = H.mutantrace?.type
+		var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+		if("spacemat" in typeinfo?.clothing_icon_states["overcoats"])
+			src.wear_image_icon = typeinfo.clothing_icons["overcoats"]
+		else
+			src.wear_image_icon = initial(src.wear_image_icon)
+
+		src.wear_image.overlays = null
+		add_part_overlay(src.wear_image, image(src.wear_image_icon, "spacemat"), src.material_fabric)
+		add_part_overlay(src.wear_image, image(src.wear_image_icon, "spacemat-armor"), src.material_renf)
+
+	update_inhand(hand, hand_offset)
+		. = ..()
+		src.inhand_image.overlays = null
+		var/icon/inhand_file = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+		var/image/inhand_fabric = image(inhand_file, "spacemat-[hand]", pixel_y = hand_offset)
+		var/image/inhand_renf = image(inhand_file, "spacemat-armor-[hand]", pixel_y = hand_offset)
+		add_part_overlay(src.inhand_image, inhand_fabric, src.material_fabric)
+		add_part_overlay(src.inhand_image, inhand_renf, src.material_renf)
 
 	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
-		src.setMaterial(fabrMat)
+		src.material_fabric = fabrMat
+		src.material_renf = renfMat
+		src.setMaterial(fabrMat, FALSE) // We want to purely rely on the overlay colours
 		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
+		var/prot_rad = round(renfMat.calc_radiation_prot() / 2, 5)
+		setProperty("radprot", prot_rad)
 		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
 		setProperty("meleeprot", 3 + prot)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
+
+		var/image/image_item_fabric = SafeGetOverlayImage("item-suit", src.icon, "spacemat")
+		var/image/image_item_renf = SafeGetOverlayImage("item-suit-highlight", src.icon, "spacemat-armor")
+		image_item_fabric.apply_material_appearance(src.material_fabric)
+		image_item_renf.apply_material_appearance(src.material_renf)
+		UpdateOverlays(image_item_fabric, "item-suit")
+		UpdateOverlays(image_item_renf, "item-suit-highlight")
+
+	proc/add_part_overlay(var/image/main_image, var/image/part_image, var/datum/material/part_mat)
+		part_image.apply_material_appearance(part_mat)
+		main_image.overlays += part_image
 
 /obj/item/clothing/suit/space/custom/prototype
 	New()
@@ -1693,13 +1774,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 15,
 				"conductive_high" = 15,
 				"crystal_dense" = 5)
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
-	is_syndicate = TRUE
 	contraband = 3
 	icon_state = "indusred"
 	item_state = "indusred"
@@ -1719,6 +1800,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		..()
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
 				"conductive_high" = 10,
@@ -1831,6 +1913,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A traditional blue wizard's robe. It lacks all the stars and moons and stuff on it though."
 	icon_state = "wizard"
 	item_state = "wizard"
+	c_flags = SPACEWEAR
 	magical = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM

@@ -10,6 +10,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 /* =================================================== */
 
 TYPEINFO(/obj/item/reagent_containers/hypospray)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/reagent_containers/hypospray

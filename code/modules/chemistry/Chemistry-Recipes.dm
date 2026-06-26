@@ -118,7 +118,7 @@
 		name = "Lumen"
 		id = "lumen"
 		required_reagents = list("radium" = 1, "omega_mutagen" = 1, "hydrogen" = 1, "helium" = 1, "luminol" = 1)
-		mix_phrase = "The chemicals coalesce and begin to grow rather brightly!"
+		mix_phrase = "The chemicals coalesce and begin to glow rather brightly!"
 		mix_sound = 'sound/voice/heavenly.ogg'
 		result_amount = 3
 		result = "lumen"
@@ -2833,6 +2833,16 @@
 		result_amount = 3
 		mix_phrase = "The substance turns a striking cyan and becomes oily."
 
+	craftglue
+
+		name = "Craft Glue"
+		id = "craftglue"
+		result = "craftglue"
+		inhibitors = list("formaldehyde")
+		required_reagents = list("plasma" = 1, "phenol" = 0.25, "oxygen" = 1, "hydrogen" = 1)
+		result_amount = 3
+		mix_phrase = "The substance turns a bright purple and becomes midly tacky."
+
 	glue
 		name = "Space Glue"
 		id = "spaceglue"
@@ -3325,6 +3335,31 @@
 		physical_shock(var/force, var/datum/reagents/holder)
 			if(force > 3)
 				was_physically_shocked = TRUE
+
+	acetylsalicylic_acid
+		name = "Acetylsalicylic Acid"
+		id = "acetylsalicylic_acid"
+		eventual_result = list("acetylsalicylic_acid", "water")
+		required_reagents = list("salicylic_acid" = 0, "acetic_acid" = 0)
+		reaction_speed = 1
+		result_amount = 1
+		reaction_volume_dependant = FALSE
+		mix_phrase = "A pinkish-white precipitate forms."
+		instant = FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			holder.remove_reagent("salicylic_acid", created_volume)
+			holder.remove_reagent("acetic_acid", created_volume)
+			holder.add_reagent("water", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 1)
+			holder.add_reagent("acetylsalicylic_acid", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 2)
+
+		get_reaction_speed_multiplicator(var/datum/reagents/holder)
+			. = ..()
+			. *= (holder.has_reagent("acid", 1) ? 4 : 1)
+			. *= (10 / (holder.get_reagent_amount("water") + 10))
+			. *= (holder.total_temperature/T20C)
+			. = round(.-0.05, 0.01) //reduce the float rounding error a bit.
+
 
 	perfluorodecalin // COGWERKS CHEM REVISION PROJECT:marked for revision
 		name = "Perfluorodecalin"
@@ -3978,6 +4013,18 @@
 			var/turf/location = pick(holder.covered_turf())
 			location.fluid_react_single("miasma", created_volume, airborne = 1)
 
+	parazamine
+		name = "parazamine"
+		id = "parazamine"
+		result = "parazamine"
+		required_reagents = list("space_fungus" = 0.1, "cryoxadone" = 1, "atropine" = 1)
+		instant = 0
+		reaction_speed = 2
+		result_amount = 2
+		max_temperature = (T0C - 25)
+		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+		mix_phrase = "The particles of fungus begin to slowly dissolve in the cold solution."
+
 	lungrot
 		name = "lungrot"
 		id = "lungrot"
@@ -4097,7 +4144,6 @@
 		min_temperature = T0C + 100
 		result_amount = 1
 		mix_phrase = "The mixture bubbles and white crystals form."
-		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chem_reaction_priority = 2)
 			holder.add_reagent("water", created_volume, , holder.total_temperature, chem_reaction_priority = 3)

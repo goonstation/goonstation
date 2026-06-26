@@ -186,6 +186,16 @@
 		..()
 		reagents.add_reagent("salicylic_acid", 10)
 
+
+/obj/item/reagent_containers/pill/acetylsalicylic_acid
+	name = "analgesic pill"
+	desc = "An anticoagulant and painkiller used to treat moderate injuries."
+	icon_state = "pill4"
+
+	New()
+		..()
+		reagents.add_reagent("acetylsalicylic_acid", 10)
+
 /obj/item/reagent_containers/pill/menthol
 	name = "menthol pill"
 	desc = "This pill looks kinda cool. It's used to treat moderate burns and fevers."

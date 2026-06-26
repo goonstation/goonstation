@@ -484,7 +484,7 @@
 /obj/item/device/radio/headset/salvager
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew. The headset is covered in scratch marks and the screws look nearly stripped."
 	protected_radio = TRUE
-	secure_frequencies = list("z" = R_FREQ_SALVAGER)
+	secure_frequencies = list("z" = RADIO::FREQ::SALVAGER)
 
 /obj/item/device/powersink/salvager
 	desc = "A nulling power sink which drains energy from electrical systems.  Installed with high capacity cells to steal away power."
@@ -579,6 +579,7 @@
 	spawn_contents = list(/obj/item/old_grenade/smoke=3,/obj/item/chem_grenade/flashbang = 2)
 
 TYPEINFO(/obj/item/salvager_hand_tele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("MET-1" = 5, "POW-1"=5, "CON-2" = 5, "telecrystal" = 30)
 
 /obj/item/salvager_hand_tele
@@ -586,7 +587,8 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	desc = "A questionable portable teleportation device that is coupled to a specific location."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "hand_tele_s"
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throwforce = 5
 	health = 5
 	w_class = W_CLASS_SMALL
@@ -718,7 +720,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 /obj/item/device/radio_upgrade/salvager
 	name = "private radio channel upgrade"
 	desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
-	secure_frequencies = list("z" = R_FREQ_SALVAGER)
+	secure_frequencies = list("z" = RADIO::FREQ::SALVAGER)
 
 
 // Stubs for the public

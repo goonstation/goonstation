@@ -181,6 +181,9 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/plating/random
+#ifdef IN_MAP_EDITOR
+	icon_state = "plating_random"
+#endif
 	New()
 		..()
 		if (prob(20))
@@ -503,19 +506,13 @@
 /turf/simulated/floor/darkblue
 	icon_state = "fulldblue"
 
-/turf/simulated/floor/darkblue/checker
-	icon_state = "blue-dblue"
-
-/turf/simulated/floor/darkblue/checker/other
-	icon_state = "blue-dblue2"
-
 /turf/simulated/floor/darkblue/side
 	icon_state = "dblue"
 
 /turf/simulated/floor/darkblue/corner
 	icon_state = "dbluecorner"
 
-/turf/simulated/floor/darkblue/checker/white
+/turf/simulated/floor/darkblue/checker
 	icon_state = "dbluechecker"
 
 /turf/simulated/floor/darkblueblack
@@ -654,6 +651,12 @@
 /turf/simulated/floor/yellowblack/corner
 	icon_state = "yellowblackcorner"
 
+/turf/simulated/floor/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/simulated/floor/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/orange
@@ -665,20 +668,21 @@
 /turf/simulated/floor/orange/corner
 	icon_state = "orangecorner"
 
+/////////////////////////////////////////
 
-/turf/simulated/floor/orangeblack
+/turf/simulated/floor/caution
 	icon_state = "fullcaution"
 
-/turf/simulated/floor/orangeblack/side
+/turf/simulated/floor/caution/side
 	icon_state = "caution"
 
-/turf/simulated/floor/orangeblack/side/white
+/turf/simulated/floor/caution/white
 	icon_state = "cautionwhite"
 
-/turf/simulated/floor/orangeblack/corner
+/turf/simulated/floor/caution/corner
 	icon_state = "cautioncorner"
 
-/turf/simulated/floor/orangeblack/corner/white
+/turf/simulated/floor/caution/corner/white
 	icon_state = "cautionwhitecorner"
 
 /////////////////////////////////////////
@@ -877,6 +881,12 @@ DEFINE_FLOORS(twotone/white,
 
 DEFINE_FLOORS(twotone/black,
 	icon_state = "twotone_black")
+
+DEFINE_FLOORS(twotone/darkpurple,
+	icon_state = "twotone_dpurple")
+
+DEFINE_FLOORS(twotone/darkblue,
+	icon_state = "twotone_dblue")
 
 /////////////////////////////////////////
 
@@ -2387,7 +2397,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 /turf/simulated/floor/restore_tile(do_hide = TRUE)
 	..()
-	if (!do_hide)
+	if (!do_hide || (locate(/obj/table) in src))
 		return
 	for (var/obj/item/item in src.contents)
 		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems

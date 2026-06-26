@@ -120,6 +120,9 @@
 	Bumped(mob/M as mob|obj)
 		//spatial interdictor: when something would enter a wormhole, it doesn't
 		if (M.hasStatus("spatial_protection"))
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if(IX.notify_interdictor(M))
+					break
 			icon = 'icons/effects/effects.dmi'
 			icon_state = "sparks_attack"
 			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)

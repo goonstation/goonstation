@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	name = "camera monitor"
 	desc = "A portable video monitor, connected to a security camera network."
 	icon_state = "monitor"
-	item_state = "electronic"
+	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	abilities = list(/obj/ability_button/reset_view)
 	var/list/camera_networks = list(CAMERA_NETWORK_STATION)

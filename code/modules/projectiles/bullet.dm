@@ -565,6 +565,28 @@ toxic - poisons
 	impact_image_state = null // stun bullets shouldn't actually enter walls should they?
 	ricochets = FALSE
 
+/datum/projectile/bullet/revolver_38/stun_ricochet
+
+	name = "ricochet stun bullet"
+	damage = 0
+	stun = 10
+	dissipation_delay = 7 //two more ticks before falloff begins
+	damage_type = D_ENERGY
+	ie_type = "T"
+	hit_type = null
+	impact_image_state = null
+	ricochets = FALSE // seems counter intuitive but prevents interference with our other bounces, so im told
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, 4, PROJ_NO_HEADON_BOUNCE)
+			shot_volume = 100
+
+
+	get_power(obj/projectile/P, atom/A)
+		return 10 + P.reflectcount * 12
+
 //0.393
 /datum/projectile/bullet/foamdart
 	name = "foam dart"
@@ -637,8 +659,8 @@ toxic - poisons
 	ls_bee
 		reagent_payload = "lsd_bee"
 
-	ketamine
-		reagent_payload = "ketamine"
+	thio
+		reagent_payload = "sodium_thiopental"
 
 //0.41
 /datum/projectile/bullet/derringer
@@ -1116,6 +1138,12 @@ toxic - poisons
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
+
+/datum/projectile/bullet/abg/punchy
+	damage = 20
+	stun = 30
+	//it's heavy right, so um it's lower down?
+	hit_ground_chance = 100
 
 /datum/projectile/bullet/potatoslug		//Improvised slug
 	name = "potato"

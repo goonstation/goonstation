@@ -40,7 +40,7 @@
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 		/obj/item/sponge, // To clean up drawings
 		/obj/item/pen/omni, // Fancy
-		/obj/item/pen/crayon/random/robot,
+		/obj/item/pen/crayon/robot,
 		/obj/item/pen/crayon/rainbow,
 		/obj/item/hand_labeler,
 		/obj/item/coin_bot,
@@ -57,6 +57,9 @@
 		/obj/item/device/gps, // Let's them assist with telesci
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/places_pipes/research,
+		#ifdef MAP_OVERRIDE_NADIR
+			/obj/item/device/calibrator,
+		#endif
 		/obj/item/hand_labeler,
 		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/pen/omni,
@@ -199,7 +202,7 @@
 		/obj/item/rcd,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
+		/obj/item/room_planner/cyborg,
 		/obj/item/room_marker,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
@@ -210,7 +213,7 @@
 		/obj/item/weldingtool,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
+		/obj/item/room_planner/cyborg,
 		/obj/item/room_marker,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/rcd,

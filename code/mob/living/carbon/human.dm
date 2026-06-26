@@ -153,6 +153,8 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 	var/trample_cooldown = 4 SECONDS
 
+	var/my_item = null //is this worth it? who knows. for recall_item ability
+
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
 	"pale", "blush", "scratch", "stretch", /*"fart", */"smile")
@@ -762,7 +764,7 @@
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, SPAN_NOTICE("Your Soulguard enchantment activates and saves you..."))
 		//soulguard ring puts you in the same spot
-		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
+		if(src.spell_soulguard == SOULGUARD::RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
 			reappear_turf = pick_landmark(LANDMARK_WIZARD)
@@ -804,7 +806,7 @@
 		newbody.traitHolder.owner = newbody
 		if (src.spell_soulguard)
 			newbody.equip_sensory_items()
-			newbody.equip_body_traits(extended_tank=(src.spell_soulguard==SOULGUARD_SPELL))
+			newbody.equip_body_traits(extended_tank=(src.spell_soulguard==SOULGUARD::SPELL))
 
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
@@ -834,14 +836,14 @@
 		if (src.spell_soulguard)
 			newbody.RegisterSignal(newbody, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
 			newbody.RegisterSignal(newbody, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_slots)
-		src.spell_soulguard = SOULGUARD_INACTIVE // clear this as well
+		src.spell_soulguard = SOULGUARD::INACTIVE // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
 		SPAWN(0.7 SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
 		src.unkillable = 0
-		src.spell_soulguard = SOULGUARD_INACTIVE
+		src.spell_soulguard = SOULGUARD::INACTIVE
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
@@ -1783,6 +1785,8 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 		hud.add_other_object(src.r_store,hud.layouts[hud.layout_style]["storage2"])
 
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
+	if (!I.can_equip(src, slot))
+		return FALSE
 	switch (slot)
 		if (SLOT_L_STORE, SLOT_R_STORE)
 			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
@@ -2416,7 +2420,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			processed += organHolder.tail
 			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
-		if (prob(50) && !isskeleton(src)) // Skeletons don't have hair, so don't create and drop a wig for them on death
+		if (prob(50))
 			var/obj/item/clothing/head/wig/W = create_wig(keep_hair = TRUE)
 			if (W)
 				processed += W
@@ -3314,8 +3318,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		if(criminal == ARREST_STATE_ARREST || criminal == ARREST_STATE_DETAIN || criminal == ARREST_STATE_SUSPECT || criminal == ARREST_STATE_PAROLE || criminal == ARREST_STATE_INCARCERATED || criminal == ARREST_STATE_RELEASED || \
 				criminal == ARREST_STATE_CLOWN)
 			arrestState = criminal
-	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
-		arrestState = ARREST_STATE_ARREST
 	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
 		var/obj/item/implant/counterrev/implant = locate() in src.implant
 		if (implant?.online)

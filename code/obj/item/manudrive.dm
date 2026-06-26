@@ -14,7 +14,7 @@
 	name = "Restricted Manufacturer Recipes"
 	dont_copy = 1
 TYPEINFO(/obj/item/disk/data/floppy/manudrive)
-	mats = 0 // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
+	analyser_flags = ANALYSER_BLACKLIST // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
 
 /obj/item/disk/data/floppy/manudrive // This one should be the parent of manudrives that dont have a fabrication limit.
 	name = "Standard ManuDrive: Empty"
@@ -98,7 +98,7 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		name = "Civilian ManuDrive: Cleaning Grenade Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture cleaning grenades."
 		icon_state = "datadiskjan"
-		disk_color = "#afb9c4"
+		disk_color = "#b320c3"
 		temp_recipe_string = list(/datum/manufacture/cleaner_grenade)
 
 	lasers
@@ -129,3 +129,10 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 
 		threeuse
 			fablimit = 3
+
+	gene_booth
+		name = "Medical ManuDrive: Gene Booth"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture a luxury gene booth hand-deployable frame."
+		icon_state = "datadiskmed"
+		temp_recipe_string = list(/datum/manufacture/gene_booth_frame)
+		fablimit = 2

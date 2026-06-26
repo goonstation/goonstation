@@ -153,20 +153,11 @@ var/global/derelict_mode = 0
 						H.emote("scream")
 			creepify_station() // creep as heck
 			sleep(12.5 SECONDS)
-			var/datum/hud/cinematic/cinematic = new
-			for (var/client/C in clients)
-				if (istype(C.mob, /mob/living/carbon/human/tutorial))
-					continue
-				cinematic.add_client(C)
-			cinematic.play("sadbuddy")
+			var/datum/hud/cinematic/all_clients/sadbuddy/cinematic = new
+			cinematic.play()
 			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
 			logTheThing(LOG_DIARY, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
-
-			SPAWN(5 SECONDS)
-				for (var/client/C in clients)
-					cinematic.remove_client(C)
-
 
 			// sleep(15 SECONDS)
 			// Reboot_server()

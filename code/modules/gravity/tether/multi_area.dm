@@ -1,8 +1,10 @@
+TYPEINFO(/obj/machinery/gravity_tether/multi_area)
+	// people can scan these to get single-area tethers
+	manufactured_type = /obj/machinery/gravity_tether/current_area
+
 // Tethers for groups of areas that want gravity managed together
 ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 /obj/machinery/gravity_tether/multi_area
-	// people can scan these to get single-area tethers
-	mechanics_type_override = /obj/machinery/gravity_tether/current_area
 	passive_wattage_per_g_quantum = 0.01 WATTS // these are for set pieces, power is more "does have battery"
 	object_flags = NO_GHOSTCRITTER // not reprogrammable
 
@@ -104,7 +106,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 
 // donut2 research station
 /obj/machinery/gravity_tether/multi_area/research_station
-	name = "Reearch Station gravity tether"
+	name = "Research Station gravity tether"
 	req_access = list(access_research_director)
 	base_area_typepath = /area/station/science
 	base_area_exceptions = list(/area/station/science/testchamber/bombchamber)

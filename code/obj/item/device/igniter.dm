@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/igniter)
 	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBELT
 	tool_flags = TOOL_ASSEMBLY_APPLIER
-	item_state = "electronic"
+	item_state = "assembly"
 	m_amt = 100
 	throwforce = 5
 	w_class = W_CLASS_TINY
@@ -110,10 +110,14 @@ TYPEINFO(/obj/item/device/igniter)
 	return (world.time >= last_ignite + src.combat_click_delay/2)
 
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
-	if (!ismob(target) && target.reagents && can_ignite())
+	if (!ismob(target) && can_ignite())
 		FLICK("igniter_light", src)
 		boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
-		target.reagents.temperature_reagents(4000,400)
+		if (isturf(target))
+			var/turf/T = target
+			T.hotspot_expose(4000, 50)
+		else
+			target.reagents?.temperature_reagents(4000,400)
 		last_ignite = world.time
 
 /obj/item/device/igniter/proc/ignite()

@@ -523,6 +523,13 @@
 	time = 8 SECONDS
 	category = "Tool"
 
+/datum/manufacture/accessgun
+	name = "Access Lite"
+	item_outputs = list(/obj/item/device/accessgun/lite)
+	create = 1
+	time = 7 SECONDS
+	category = "Tool"
+
 /datum/manufacture/weldingmask
 	name = "Welding Mask"
 	item_requirements = list("metal_dense" = 2,
@@ -722,7 +729,7 @@
 /datum/manufacture/glass
 	name = "Glass Panel"
 	item_requirements = list("crystal" = 1)
-	item_outputs = list(/obj/item/sheet)
+	item_outputs = list(/obj/item/sheet/glass)
 	create = 1
 	time = 2 SECONDS
 	category = "Resource"
@@ -760,7 +767,7 @@
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
-	item_requirements = list("metal_dense" = 1)
+	item_requirements = list("metal_or_wood_dense" = 1)
 	item_outputs = list(/obj/item/rods)
 	time = 3 SECONDS
 	category = "Resource"
@@ -1233,6 +1240,22 @@
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/roller_bed
+	name = "Roller Bed Parts"
+	item_requirements = list("metal" = 4)
+	item_outputs = list(/obj/item/furniture_parts/bed/roller)
+	create = 1
+	time = 20 SECONDS
+	category = "Resource"
+
+/datum/manufacture/iv_stand
+	name = "IV Stand Parts"
+	item_requirements = list("metal" = 3)
+	item_outputs = list(/obj/item/furniture_parts/IVstand)
+	create = 1
+	time = 15 SECONDS
+	category = "Resource"
+
 /datum/manufacture/hypospray
 	name = "Hypospray"
 	item_requirements = list("metal" = 2,
@@ -1523,6 +1546,87 @@
 	create = 1
 	time = 3 SECONDS
 	category = "Resource"
+
+/datum/manufacture/empty_autoinjector
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/orange
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/orange)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/red
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/red)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/blue
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/blue)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/green
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/green)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/yellow
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/yellow)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/purple
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/purple)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/black
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/black)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/empty_autoinjector/white
+	name = "Empty Auto-Injector"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/white)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+/datum/manufacture/gene_booth_frame
+	name = "Genetics Booth Deployer"
+	item_outputs = list(/obj/item/electronics/frame/flatpack/genetics_booth)
+	item_requirements = list(
+		"metal" = 15,
+		"crystal" = 5,
+		"energy" = 10,
+	)
 
 #ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/
@@ -2101,6 +2205,16 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 90 SECONDS
 	category = "Component"
+
+/datum/manufacture/robup_pressure
+	name = "Pressure Visualizer Upgrade"
+	item_requirements = list("crystal" = 2,
+							 "conductive" = 4)
+	item_outputs = list(/obj/item/roboupgrade/pressure_visualizer)
+	create = 1
+	time = 90 SECONDS
+	category = "Component"
+
 /* shit done be broked
 /datum/manufacture/robup_thermal
 	name = "Optical Thermal Upgrade"
@@ -3748,6 +3862,17 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 							 "crystal" = 10,
 							 "insulated" = 10)
 	item_outputs = list(/obj/machinery/siphon/resonator/stabilizer)
+	create = 1
+	time = 30 SECONDS
+	category = "Machinery"
+
+/datum/manufacture/resonator_type_fq
+	name = "Type-FQ Resonator"
+	item_requirements = list("metal_dense" = 15,
+							 "conductive_high" = 20,
+							 "koshmarite" = 10,
+							 "electrum" = 5)
+	item_outputs = list(/obj/machinery/siphon/resonator/field_dilation)
 	create = 1
 	time = 30 SECONDS
 	category = "Machinery"

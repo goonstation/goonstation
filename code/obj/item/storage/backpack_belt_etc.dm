@@ -738,6 +738,22 @@
 	icon_state = "funny-blue"
 	item_state = "funny-blue"
 
+/obj/item/storage/fanny/funny/purple
+	icon_state = "funny-purple"
+	item_state = "funny-purple"
+
+/obj/item/storage/fanny/funny/yellow
+	icon_state = "funny-yellow"
+	item_state = "funny-yellow"
+
+/obj/item/storage/fanny/funny/pink
+	icon_state = "funny-pink"
+	item_state = "funny-pink"
+
+/obj/item/storage/fanny/funny/green
+	icon_state = "funny-green"
+	item_state = "funny-green"
+
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
 	desc = "Haha, get it? Get it? 'Funny'! This one seems a little smaller, and made of even cheaper material."
@@ -830,7 +846,7 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	can_hold = list(/obj/item/deconstructor)
+	can_hold = list(/obj/item/deconstructor, /obj/item/tool/omnitool/dualconstruction_device)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 /obj/item/storage/belt/utility/nt_engineer
@@ -840,6 +856,7 @@
 		/obj/item/rcd,
 		/obj/item/rcd_ammo,
 		/obj/item/deconstructor,
+		/obj/item/tool/omnitool/dualconstruction_device,
 		/obj/item/sheet,
 		/obj/item/tile
 	)
@@ -857,8 +874,9 @@
 	item_state = "cebelt"
 	rarity = 4
 	can_hold = list(/obj/item/rcd,
-	/obj/item/rcd_ammo,
-	/obj/item/deconstructor)
+		/obj/item/rcd_ammo,
+		/obj/item/deconstructor,
+		/obj/item/tool/omnitool/dualconstruction_device)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	inventory_counter_enabled = 1
 
@@ -908,6 +926,17 @@
 	/obj/item/wrench/vr,
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
+
+/obj/item/storage/belt/utility/it
+	name = "IT utility belt"
+	desc = "Tools for fixing computers and other electronics."
+	spawn_contents = list(/obj/item/weldingtool,
+	/obj/item/wirecutters,
+	/obj/item/screwdriver,
+	/obj/item/wrench,
+	/obj/item/crowbar,
+	/obj/item/device/multitool,
+	/obj/item/electronics/soldering)
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
@@ -1209,6 +1238,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /* -------------------- Wrestling Belt -------------------- */
 
 TYPEINFO(/obj/item/storage/belt/wrestling)
+	analyser_flags =  parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
 				"hauntium" = 20)
@@ -1218,7 +1248,6 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	contraband = 8
-	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
 	HELP_MESSAGE_OVERRIDE({"In addition to granting the wearer wrestler abilities, it also gives them the wrestler passives detailed "} + EXTERNAL_LINK("https://wiki.ss13.co/Wrestler#Passives", "here") + ".")
@@ -1234,6 +1263,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 			user.remove_wrestle_powers(src.fake)
 
 TYPEINFO(/obj/item/storage/belt/wrestling/fake)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //For whatever reason, inhereting tags from parent crashes game
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
 				"fabric" = 5
@@ -1242,11 +1272,11 @@ TYPEINFO(/obj/item/storage/belt/wrestling/fake)
 	name = "fake wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
 	contraband = 0
-	is_syndicate = 0
 	fake = 1
 
 // I dunno where else to put these vOv
 TYPEINFO(/obj/item/inner_tube)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER //Something tells me these have never been scanned
 	mats = 5 // I dunno???
 
 /obj/item/inner_tube

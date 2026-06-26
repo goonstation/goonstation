@@ -52,6 +52,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	for (var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player) || !player.mind) continue
+		if (length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments))
+			unassigned += player
+			continue
 		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND))
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
 		if (player.ready_play && !player.mind.assigned_role)
@@ -62,12 +65,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (!length(unassigned))
 		return 0
-
-	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
-	if (master_mode == "construction")
-		for (var/mob/new_player/player in unassigned)
-			player.mind.assigned_role = "Construction Worker"
-		return
 
 	#ifdef I_WANNA_BE_THE_JOB
 	for (var/mob/new_player/player in unassigned)
@@ -94,6 +91,16 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		// If it's hi-pri, add it to that list. Simple enough
 		if (JOB.high_priority_job)
 			high_priority_jobs.Add(JOB)
+
+	// Handle forced assignment first, even if someone set the mode to construction for some reason.
+	if (length(job_controls.forced_assignments))
+		unassigned = global.handle_forced_job_assignments(unassigned)
+
+	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
+	if (master_mode == "construction")
+		for (var/mob/new_player/player in unassigned)
+			player.mind.assigned_role = "Construction Worker"
+		return
 
 	// Wiggle the players too so that priority isn't determined by key alphabetization
 	shuffle_list(unassigned)
@@ -488,9 +495,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			if(!QDELETED(current_mob))
 				current_mob.update_icons_if_needed()
 
-		if (src.traitHolder?.hasTrait("jailbird"))
-			create_jailbird_wanted_poster(H)
-
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
@@ -786,6 +790,11 @@ Equip items from body traits.
 
 		if(src.mind)
 			src.mind.originalPDA = PDA
+
+		if(src.client?.preferences?.id_starts_in_pda)
+			PDA.insert_id_card(C, src)
+			src.u_equip(PDA)
+			src.equip_if_possible(PDA, SLOT_WEAR_ID)
 
 	boutput(src, SPAN_NOTICE("Your pin to your ID is: [C.pin]"))
 	if (src.mind)

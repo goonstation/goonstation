@@ -88,6 +88,7 @@
 																	MGA_SHIPPING = null,\
 																	MGA_CARGOREQUEST = null,\
 																	MGA_CRISIS = null,\
+																	MGA_PLUMBING = null,\
 																	MGA_RADIO = null)
 
 	/// mailgroup-specific ringtones, added on the fly!
@@ -119,7 +120,7 @@
 			MGT_GENETICS, MGT_ROBOTICS, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI
 		)
 		default_muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_PLUMBING) // keep in sync with the list of mail alert groups
 
 	cyborg // chosen robot module registers the PDA mail/alert groups
 		icon_state = "pda-h"
@@ -309,6 +310,15 @@
 		blue
 			icon_state = "pda-clown-blue"
 
+		purple
+			icon_state = "pda-clown-purple"
+
+		pink
+			icon_state = "pda-clown-pink"
+
+		green
+			icon_state = "pda-clown-green"
+
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
 			LAZYLISTREMOVE(M.attached_objs, src)
@@ -335,7 +345,7 @@
 		name = "Janitor PDA"
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list(MGT_JANITOR,MGD_CIVILIAN,MGD_PARTY)
+		mailgroups = list(MGT_JANITOR,MGD_CIVILIAN,MGD_PARTY, MGA_PLUMBING)
 
 	chaplain
 		name = "Blessed PDA"
@@ -427,8 +437,9 @@
 	src.linkbg_color = rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8)
 	src.update_colors(src.bg_color, src.linkbg_color)
 
-	src.hd = new /obj/item/disk/data/fixed_disk(src)
+	src.hd = new /obj/item/disk/data/fixed_disk/hd32(src)
 	src.hd.file_amount = src.setup_drive_size
+	src.hd.max_file_amount = src.setup_drive_size
 	src.hd.name = "Minidrive"
 	src.hd.title = "Minidrive"
 
@@ -539,8 +550,6 @@
 	var/wincheck = winexists(user, "pda2_\ref[src]")
 	//boutput(world, wincheck)
 	if(wincheck != "MAIN")
-		if (src.host_program)
-			src.host_program.get_other_pdas()
 		winclone(user, "pda2", "pda2_\ref[src]")
 	winset(user, "pda2_\ref[src]", "title=\"[src.window_title]\"")
 
@@ -779,7 +788,12 @@
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		var/datum/bounty_claim/claim = U.bounty_is_claimable(O, user)
-		if (claim)
+		var/confirmed_redeem = TRUE
+		if(O == src) //Warn the user before claiming their own uplink
+			confirmed_redeem = FALSE
+			if(tgui_alert(user, "Are you sure you'd like to claim your own uplink? You won't be able to replace it!", "Redeem Uplink?", list("Ok", "Cancel")) == "Ok")
+				confirmed_redeem = TRUE
+		if (claim && confirmed_redeem)
 			actions.start(new/datum/action/bar/private/spy_steal(claim.delivery, U), user)
 			return
 	..()
@@ -855,7 +869,7 @@
 		if (!overlay_images)
 			src.overlay_images = list()
 			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle", pixel_x = src.screen_x, pixel_y = src.screen_y)
-			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
+			overlay_images["message"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
 
 		for (var/k in src.overlay_images)
 			src.overlay_images[k].color = bg
@@ -1052,6 +1066,9 @@
 		if (mode)
 			src.current_overlay = mode
 		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
+		var/image/symbol_overlay = image(src.icon, "symbol-[src.current_overlay]", pixel_x = src.screen_x, pixel_y = src.pixel_y)
+		symbol_overlay.color = src.link_color
+		src.UpdateOverlays(symbol_overlay, "screen_symbol_overlay")
 
 	/// Takes a ringtone datum and outputs the program that supposedly holds it
 	proc/ringtone2program(var/ringtone)
@@ -1164,7 +1181,7 @@
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
 
-		update_overlay("alert")
+		update_overlay("message")
 		return
 
 	proc/display_message(var/message)

@@ -1034,6 +1034,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 				"metal_superdense" = 25,
 				"conductive_high" = 13,
 				"crystal_dense" = 15) //haha this is a bad idea
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //^ Agreed
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = ANCHORED_ALWAYS
@@ -1051,7 +1052,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
 	deconstruct_flags = DECON_NONE
-	is_syndicate = 1 //^ Agreed
 
 	New()
 		..()
@@ -3235,7 +3235,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/turf/beamTurf = get_step(src, src.dir)
 				if (!istype(beamTurf) || beamTurf.density)
 					return 0
-				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir)
+				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir, src)
 				src.beam.master = src
 				src.beam.try_propagate()
 			else

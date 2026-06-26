@@ -302,7 +302,8 @@ ABSTRACT_TYPE(/datum/grav_fault/major)
 	for (var/turf/T in orange(6, origin))
 		if (prob(60))
 			continue
-
+		if (T.material?.getProperty("density") >= 7)
+			continue
 		if (T && !istype(T, /turf/space) && (IN_EUCLIDEAN_RANGE(origin, T, 6)))
 			if (issimulatedturf(T))
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
@@ -317,17 +318,7 @@ ABSTRACT_TYPE(/datum/grav_fault/major)
 							F.break_tile()
 				else if (istype(T, /turf/simulated/wall))
 					var/turf/simulated/wall/W = T
-					if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
-						new /obj/structure/girder/reinforced(W)
-					else
-						new /obj/structure/girder(W)
-					var/obj/item/sheet/S = new /obj/item/sheet(W)
-					if (W.material)
-						S.setMaterial(W.material)
-					else
-						var/datum/material/M = getMaterial("steel")
-						S.setMaterial(M)
-					W.ReplaceWithFloor()
+					W.dismantle_wall()
 	return
 
 /// Everyone throws their items

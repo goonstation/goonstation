@@ -1,6 +1,7 @@
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
+	icon = 'icons/obj/storage/locker.dmi'
 	object_flags = NO_GHOSTCRITTER
 	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
@@ -275,6 +276,7 @@
 	name = "\improper Medical Director's locker"
 	req_access = list(access_medical_director)
 	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/ai,
+	/obj/item/disk/data/floppy/manudrive/gene_booth,
 	/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
@@ -292,7 +294,8 @@
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/medical_director,
 	/obj/item/circuitboard/card/medical,
-	/obj/item/circuitboard/announcement/medical)
+	/obj/item/circuitboard/announcement/medical,
+	/obj/item/reagent_containers/injector_filler)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -443,6 +446,7 @@
 	reinforced = TRUE
 	bolted = TRUE
 	spawn_contents = list(/obj/item/item_box/contraband)
+	radiation_protection = 20
 
 // Old Mushroom-era feature I fixed up (Convair880).
 /obj/storage/secure/closet/brig_automatic
@@ -620,8 +624,9 @@
 	icon_state = "medical_anesthetic"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/morphine = 2,
 	/obj/item/storage/box/syringes,
-	/obj/item/tank/anesthetic = 5,
-	/obj/item/clothing/mask/medical = 4)
+	/obj/item/tank/mini/anesthetic = 5,
+	/obj/item/tank/anesthetic = 2,
+	/obj/item/clothing/mask/medical/anesthetic = 2)
 
 /obj/storage/secure/closet/medical/uniforms
 	name = "medical uniform locker"
@@ -842,7 +847,8 @@
 	/obj/item/clipboard,
 	/obj/item/hand_labeler,
 	/obj/item/cargotele,
-	/obj/item/device/appraisal)
+	/obj/item/device/appraisal,
+	/obj/item/stamp/qm)
 
 /* ==================== */
 /* ----- Civilian ----- */
@@ -881,7 +887,7 @@
 	icon_state = "secure_green"
 	icon_closed = "secure_green"
 	icon_opened = "secure_green-open"
-	spawn_contents = list(/obj/item/paper/ranch_guide,\
+	spawn_contents = list(/obj/item/paper/image/ranch_guide,\
 	/obj/item/fishing_rod/basic,\
 	/obj/item/storage/box/clothing/rancher,\
 	/obj/item/device/camera_viewer/ranch,\
@@ -951,6 +957,7 @@
 	open_sound = 'sound/misc/fridge_open.ogg'
 	close_sound = 'sound/misc/fridge_close.ogg'
 	volume = 80
+	radiation_protection = 20
 
 /obj/storage/secure/closet/fridge/opened
 	New()

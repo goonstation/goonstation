@@ -35,6 +35,8 @@
 #define MENU_TRANSFER_OPT_PAYROLL 1
 #define MENU_TRANSFER_OPT_SHIPPING 2
 #define MENU_TRANSFER_OPT_RESEARCH 3
+#define MENU_TRANSFER_OPT_UNION 4
+
 // print menu
 #define MENU_PRINT_OPT_BACK 0
 #define MENU_PRINT_OPT_CONNECT 1
@@ -112,21 +114,23 @@
 		"Payroll",
 		"Shipping",
 		"Research",
+		"Union",
 	)
 
 	var/static/list/team_to_job_datum = list(
 		"Stationwide" = list(),
-		"Genetics" = list(/datum/job/medical/geneticist),
-		"Robotics" = list(/datum/job/medical/roboticist),
-		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
-		"Mining" = list(/datum/job/engineering/miner),
-		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
-		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant, /datum/job/command/research_director),
-		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/random/souschef, /datum/job/daily/waiter),
-		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
 		"Security" = list(/datum/job/security, /datum/job/command/head_of_security),
 		"Medical" = list(/datum/job/medical/medical_doctor, /datum/job/medical/medical_assistant, /datum/job/command/medical_director),
-		"Civilian" = list(/datum/job/civilian/janitor, /datum/job/civilian/chaplain, /datum/job/civilian/staff_assistant, /datum/job/civilian/clown,\
+		"Genetics" = list(/datum/job/medical/geneticist),
+		"Robotics" = list(/datum/job/medical/roboticist),
+		"Research" = list(/datum/job/research/scientist, /datum/job/research/research_assistant, /datum/job/command/research_director),
+		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
+		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
+		"Mining" = list(/datum/job/engineering/miner),
+		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/random/souschef, /datum/job/daily/waiter),
+		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
+		"Janitorial" = list(/datum/job/civilian/janitor),
+		"Civilian" = list(/datum/job/civilian/chaplain, /datum/job/civilian/staff_assistant, /datum/job/civilian/clown,\
 		/datum/job/special), //Who really makes the world go round? At least one of these guys
 							//I can live with the sous chef getting paid in two categories
 							//If you have a special role and you're on the manifest everything is probably normal
@@ -266,6 +270,7 @@
 					B["name"] = src.active_general["name"]
 					B["id"] = src.active_general["id"]
 					B["current_money"] = 0
+					B["unionized"] = "No"
 					B["wage"] = 0
 					B["pda_net_id"] = null
 					B["notes"] = "No notes."
@@ -359,7 +364,7 @@
 					return
 
 				if(FIELDNUM_AGE)
-					var/newAge = round( min( text2num_safe(command), 99) )
+					var/newAge = round( min( text2num_safe(command), 100) )
 					if (newAge < 1)
 						src.print_text("Invalid age value. Please re-enter.")
 						return
@@ -406,14 +411,14 @@
 								balanceChange = -src.active_bank["current_money"]
 							src.log_wrapper("Transferred [abs(balanceChange)][CREDIT_SIGN] from [src.active_general["name"]]'s account to payroll budget.")
 							src.active_bank["current_money"] += balanceChange
-							global.wagesystem.station_budget -= balanceChange // balanceChange is negative here, this adds to the budget
+							global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= balanceChange // balanceChange is negative here, this adds to the budget
 						if (0 to INFINITY)
-							if (global.wagesystem.station_budget < balanceChange)
-								src.print_text("<b>Warning:</b> Station budget only has [global.wagesystem.station_budget][CREDIT_SIGN] available!")
-								balanceChange = global.wagesystem.station_budget
+							if (global.wagesystem.budgets[BUDGET_CAT_PAYROLL] < balanceChange)
+								src.print_text("<b>Warning:</b> Payroll budget only has [global.wagesystem.budgets[BUDGET_CAT_PAYROLL]][CREDIT_SIGN] available!")
+								balanceChange = global.wagesystem.budgets[BUDGET_CAT_PAYROLL]
 							src.log_wrapper("Transferred [abs(balanceChange)][CREDIT_SIGN] from payroll budget to [src.active_general["name"]]'s account.")
 							src.active_bank["current_money"] += balanceChange
-							global.wagesystem.station_budget -= balanceChange
+							global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= balanceChange
 					src.menu = MENU_IN_RECORD
 				if(FIELDNUM_NOTES)
 					if (!src.active_bank)
@@ -429,7 +434,7 @@
 					switch(ckey(inputText))
 						if ("y")
 							if (src.active_bank)
-								global.wagesystem.station_budget += src.active_bank["current_money"]
+								global.wagesystem.budgets[BUDGET_CAT_PAYROLL] += src.active_bank["current_money"]
 								src.log_wrapper("Transferred [src.active_bank["current_money"]][CREDIT_SIGN] from [src.active_bank["name"]] into payroll budget.")
 								src.log_wrapper("Deleted bank record [src.active_bank["id"]] for [src.active_general["name"]]")
 								qdel(src.active_bank)
@@ -537,7 +542,7 @@
 
 		if(MENU_BUDGET_TRANSFER_FROM)
 			var/selection = round(text2num_safe(command))
-			if (selection < 0 || selection > 3)
+			if (selection < 0 || selection > 4)
 				return
 			switch(selection)
 				if(MENU_TRANSFER_OPT_BACK)
@@ -550,6 +555,8 @@
 					src.transfer_from = MENU_TRANSFER_OPT_SHIPPING
 				if(MENU_TRANSFER_OPT_RESEARCH)
 					src.transfer_from = MENU_TRANSFER_OPT_RESEARCH
+				if (MENU_TRANSFER_OPT_UNION)
+					src.transfer_from = MENU_TRANSFER_OPT_UNION
 
 			if (!src.transfer_from)
 				return
@@ -562,7 +569,7 @@
 
 		if(MENU_BUDGET_TRANSFER_TO)
 			var/selection = round(text2num_safe(command))
-			if (selection < 0 || selection > 3)
+			if (selection < 0 || selection > 4)
 				return
 			switch(selection)
 				if(MENU_TRANSFER_OPT_BACK)
@@ -577,6 +584,8 @@
 					src.transfer_to = MENU_TRANSFER_OPT_SHIPPING
 				if(MENU_TRANSFER_OPT_RESEARCH)
 					src.transfer_to = MENU_TRANSFER_OPT_RESEARCH
+				if (MENU_TRANSFER_OPT_UNION)
+					src.transfer_to = MENU_TRANSFER_OPT_UNION
 			if(src.transfer_from == src.transfer_to)
 				src.print_text("You can't transfer a budget into itself.")
 				return
@@ -602,25 +611,31 @@
 				return
 			switch(src.transfer_from)
 				if(MENU_TRANSFER_OPT_PAYROLL)
-					if (transfer_amount > global.wagesystem.station_budget)
-						transfer_amount = global.wagesystem.station_budget
-					global.wagesystem.station_budget -= transfer_amount
+					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_PAYROLL])
+						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_PAYROLL]
+					global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= transfer_amount
 				if(MENU_TRANSFER_OPT_SHIPPING)
-					if (transfer_amount > global.wagesystem.shipping_budget)
-						transfer_amount = global.wagesystem.shipping_budget
-					global.wagesystem.shipping_budget -= transfer_amount
+					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY])
+						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]
+					global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] -= transfer_amount
 				if(MENU_TRANSFER_OPT_RESEARCH)
-					if (transfer_amount > global.wagesystem.research_budget)
-						transfer_amount = global.wagesystem.research_budget
-					global.wagesystem.research_budget -= transfer_amount
+					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL])
+						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL]
+					global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] -= transfer_amount
+				if(MENU_TRANSFER_OPT_UNION)
+					if (transfer_amount > global.wagesystem.budgets[BUDGET_CAT_UNION])
+						transfer_amount = global.wagesystem.budgets[BUDGET_CAT_UNION]
+					global.wagesystem.budgets[BUDGET_CAT_UNION] -= transfer_amount
 
 			switch(src.transfer_to)
 				if(MENU_TRANSFER_OPT_PAYROLL)
-					global.wagesystem.station_budget += transfer_amount
+					global.wagesystem.budgets[BUDGET_CAT_PAYROLL] += transfer_amount
 				if(MENU_TRANSFER_OPT_SHIPPING)
-					global.wagesystem.shipping_budget += transfer_amount
+					global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += transfer_amount
 				if(MENU_TRANSFER_OPT_RESEARCH)
-					global.wagesystem.research_budget += transfer_amount
+					global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] += transfer_amount
+				if(MENU_TRANSFER_OPT_UNION)
+					global.wagesystem.budgets[BUDGET_CAT_UNION] += transfer_amount
 
 			src.transfer_from = null
 			src.transfer_to = null
@@ -632,7 +647,7 @@
 
 		if(MENU_STAFF_BONUS_TEAM)
 			if(!(world.time >= global.wagesystem.last_issued_bonus_time))
-				src.print_text("Nanotrasen Regulations forbid issuing multiple staff incentives within five minutes.")
+				src.print_text("Nanotrasen regulations forbid issuing multiple staff incentives within five minutes.")
 				src.menu = MENU_STATION_BUDGET
 				src.print_budget()
 				return
@@ -651,7 +666,8 @@
 				for(var/job_datum in src.team_to_job_datum[src.teams[choice]])
 					for(var/datum/job/job_type as anything in concrete_typesof(job_datum))
 						if (record["rank"] == job_type::name)
-							src.bonus_crew += record
+							var/datum/db_record/bank_rec = global.data_core.bank.find_record("id", record["id"])
+							src.bonus_crew += bank_rec
 							goto next_record // pop out of both for loops
 				next_record:
 
@@ -668,7 +684,7 @@
 
 		if(MENU_STAFF_BONUS_AMOUNT)
 			if(!(world.time >= global.wagesystem.last_issued_bonus_time))
-				src.print_text("Nanotrasen Regulations forbid issuing multiple staff incentives within five minutes.")
+				src.print_text("Nanotrasen regulations forbid issuing multiple staff incentives within five minutes.")
 				src.menu = MENU_STATION_BUDGET
 				src.print_budget()
 				return
@@ -687,8 +703,8 @@
 			src.print_text("Issuing bonus of [src.bonus_amount][CREDIT_SIGN] to selected staff.")
 			var/bonus_total = length(src.bonus_crew) * src.bonus_amount
 			src.print_text("Total bonus cost will be [bonus_total][CREDIT_SIGN].")
-			if (bonus_total > global.wagesystem.station_budget)
-				src.print_text("<b>Error:</b> Payroll budget is only [global.wagesystem.station_budget][CREDIT_SIGN]!")
+			if (bonus_total > global.wagesystem.budgets[BUDGET_CAT_PAYROLL])
+				src.print_text("<b>Error:</b> Payroll budget is only [global.wagesystem.budgets[BUDGET_CAT_PAYROLL]][CREDIT_SIGN]!")
 				src.print_text("Please enter value of bonus. Enter '0' to re-select team.")
 				src.bonus_amount = 0
 				return
@@ -699,7 +715,7 @@
 
 		if(MENU_STAFF_BONUS_REASON)
 			if(!(world.time >= global.wagesystem.last_issued_bonus_time))
-				src.print_text("Nanotrasen Regulations forbid issuing multiple staff incentives within five minutes.")
+				src.print_text("Nanotrasen regulations forbid issuing multiple staff incentives within five minutes.")
 				src.menu = MENU_STATION_BUDGET
 				src.print_budget()
 				return
@@ -728,7 +744,7 @@
 				'sound/misc/bingbong.ogg',
 				alert_origin=ALERT_DEPARTMENT
 			)
-			global.wagesystem.station_budget -= bonus_total
+			global.wagesystem.budgets[BUDGET_CAT_PAYROLL] -= bonus_total
 			global.wagesystem.last_issued_bonus_time = world.time
 			for(var/datum/db_record/R as anything in src.bonus_crew)
 				// we used to tax the clown but that just put money from the budget into the aether vOv
@@ -824,13 +840,18 @@
 			return
 
 /datum/computer/file/terminal_program/bank_records/proc/mainmenu_text()
-	var/dat = {"<center>B A N K B O S S 2</center><br>
-	Welcome to BankBoss 2<br>
-	<b>Commands:</b>
-	<br>([MENU_MAIN_OPT_INDEX]) View bank records.
-	<br>([MENU_MAIN_OPT_SEARCH]) Search for a record.
-	<br>([MENU_MAIN_OPT_BUDGET]) View station budget.
-	<br>([MENU_MAIN_OPT_PRINT]) Print options.
+	var/dat = ""
+	dat += @{"<center>,-,---.         .   ,-,---.            </center>"}
+	dat += @{"<center> '|___/ ,-. ,-. | ,  '|___/ ,-. ,-. ,-.</center>"}
+	dat += @{"<center> ,|   \ ,-| | | |<   ,|   \ | | `-. `-.</center>"}
+	dat += @{"<center>`-^---' `-^ ' ' ' ` `-^---' `-' `-' `-'</center>"}
+
+	dat += {"<br>Welcome to BankBoss 2.1<br>\
+	<b>Commands:</b>\
+	<br>([MENU_MAIN_OPT_INDEX]) View bank records.\
+	<br>([MENU_MAIN_OPT_SEARCH]) Search for a record.\
+	<br>([MENU_MAIN_OPT_BUDGET]) View station budget.\
+	<br>([MENU_MAIN_OPT_PRINT]) Print options.\
 	<br>([MENU_MAIN_OPT_QUIT]) Quit."}
 
 	return dat
@@ -838,9 +859,10 @@
 /datum/computer/file/terminal_program/bank_records/proc/print_budget()
 	src.master.temp = null
 	src.print_text("<br><b>Station Budget</b>")
-	src.print_text("Payroll Budget: [num2text(round(global.wagesystem.station_budget),50)][CREDIT_SIGN]")
-	src.print_text("Shipping Budget: [num2text(round(global.wagesystem.shipping_budget),50)][CREDIT_SIGN]")
-	src.print_text("Research Budget: [num2text(round(global.wagesystem.research_budget),50)][CREDIT_SIGN]")
+	src.print_text("Payroll Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_PAYROLL]),50)][CREDIT_SIGN]")
+	src.print_text("Medical Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL]),50)][CREDIT_SIGN]")
+	src.print_text("Supply Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]),50)][CREDIT_SIGN]")
+	src.print_text("Union Budget: [num2text(round(global.wagesystem.budgets[BUDGET_CAT_UNION]),50)][CREDIT_SIGN]")
 
 	var/payroll = 0
 	for(var/datum/db_record/R as anything in data_core.bank.records)
@@ -870,26 +892,27 @@
 		return 0
 	src.master.temp = null
 
-	var/view_string = {"
-	\[01]Name: [src.active_general["name"]] ID: [src.active_general["id"]]
-	<br>\[02]Full Name: [src.active_general["full_name"]]
-	<br>\[03]<b>Sex:</b> [src.active_general["sex"]]
-	<br>\[04]<b>Pronouns:</b> [src.active_general["pronouns"]]
-	<br>\[05]<b>Age:</b> [src.active_general["age"]]
-	<br>\[06]<b>Rank:</b> [src.active_general["rank"]]
-	<br>\[__]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]
-	<br>\[__]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]
-	<br>\[__]<b>DNA:</b> [src.active_general["dna"]]
-	<br>\[__]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
-	<br>\[__]Physical Status: [src.active_general["p_stat"]]
+	var/view_string = {"\
+	<br><center><b>Record Data</b></center><br>\
+	\[01]Name: [src.active_general["name"]] ID: [src.active_general["id"]]\
+	<br>\[02]Full Name: [src.active_general["full_name"]]\
+	<br>\[03]<b>Sex:</b> [src.active_general["sex"]]\
+	<br>\[04]<b>Pronouns:</b> [src.active_general["pronouns"]]\
+	<br>\[05]<b>Age:</b> [src.active_general["age"]]\
+	<br>\[06]<b>Rank:</b> [src.active_general["rank"]]\
+	<br>\[__]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]\
+	<br>\[__]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]\
+	<br>\[__]<b>DNA:</b> [src.active_general["dna"]]\
+	<br>\[__]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]\
+	<br>\[__]Physical Status: [src.active_general["p_stat"]]\
 	<br>\[__]Mental Status: [src.active_general["m_stat"]]"}
 
 	if(istype(src.active_bank) && data_core.bank.has_record(src.active_bank))
-		view_string += {"<br><center><b>Bank Data:</b></center>
-		<br>\[07]<b>Wage:</b> [src.active_bank["wage"]][CREDIT_SIGN]
-		<br>\[08]<b>Balance:</b> [src.active_bank["current_money"]][CREDIT_SIGN]
-		<br>\[09]<b>Notes:</b> [src.active_bank["notes"]]
-		"}
+		view_string += {"<br><br><center><b>Bank Data:</b></center><br>\
+		\[07]<b>Wage:</b> [src.active_bank["wage"]][CREDIT_SIGN]\
+		<br>\[08]<b>Balance:</b> [src.active_bank["current_money"]][CREDIT_SIGN]\
+		<br>\[__]<b>Unionized:</b> [src.active_bank["unionized"]]\
+		<br>\[09]<b>Notes:</b> [src.active_bank["notes"]]"}
 	else
 		view_string += "<br><br><b>Bank Record Lost!</b>"
 		view_string += "<br>\[[FIELDNUM_NEWREC]] Create New Bank Record.<br>"
@@ -899,7 +922,7 @@
 	<br>(R) Redraw (D) Delete (P) Print (0) Return to index.
 	"}
 
-	src.print_text("<b>Record Data:</b><br>[view_string]")
+	src.print_text(view_string)
 	return 1
 
 /datum/computer/file/terminal_program/bank_records/proc/print_index()
@@ -925,7 +948,7 @@
 	return 1
 
 /datum/computer/file/terminal_program/bank_records/proc/print_transfer_opts()
-	src.print_text("([MENU_TRANSFER_OPT_PAYROLL]) Payroll, ([MENU_TRANSFER_OPT_SHIPPING]) Shipping, ([MENU_TRANSFER_OPT_RESEARCH]) Research, ([MENU_TRANSFER_OPT_BACK]) Back")
+	src.print_text("([MENU_TRANSFER_OPT_PAYROLL]) Payroll, ([MENU_TRANSFER_OPT_SHIPPING]) Shipping, ([MENU_TRANSFER_OPT_RESEARCH]) Research, ([MENU_TRANSFER_OPT_UNION]) Union, ([MENU_TRANSFER_OPT_BACK]) Back")
 
 /datum/computer/file/terminal_program/bank_records/proc/print_teams()
 	var/dat = ""
@@ -1288,6 +1311,7 @@
 #undef MENU_TRANSFER_OPT_PAYROLL
 #undef MENU_TRANSFER_OPT_SHIPPING
 #undef MENU_TRANSFER_OPT_RESEARCH
+#undef MENU_TRANSFER_OPT_UNION
 
 #undef MENU_PRINT_OPT_BACK
 #undef MENU_PRINT_OPT_CONNECT

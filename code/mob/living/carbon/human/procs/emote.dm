@@ -60,7 +60,7 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 5 SECONDS))
-					if(src.bioHolder?.HasEffect("mute"))
+					if(src.bioHolder?.HasEffect("mute") || src.muffled_by_grab())
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
 						"opens [his_or_her(src)] mouth to produce a resounding lack of noise","flails desperately","")]..."
@@ -141,15 +141,15 @@
 
 
 						if (iscluwne(src))
-							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_FARTS)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
-							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_FARTS)
 						else if (src.getStatusDuration("food_deep_fart"))
-							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_FARTS)
 						else
-							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
@@ -181,7 +181,7 @@
 									var/mob/M = V.cursed_dude
 									if (!M || !M.lying)
 										continue
-									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 									switch(rand(1, 7))
 										if (1) M.visible_message(SPAN_EMOTE("<b>[M]</b> suddenly radiates an unwelcoming odor."))
 										if (2) M.visible_message(SPAN_EMOTE("<b>[M]</b> is visited by ethereal incontinence."))
@@ -891,14 +891,20 @@
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
+						var/sound_volume_mult = 1
+						var/sound_flags = 0
+						if (src.muffled_by_grab())
+							sound_volume_mult = 0.5
+							sound_flags = SOUND_DO_LOS
+
 						if (src.find_ailment_by_type(/datum/ailment/malady/flatline))
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender == MALE ? MALE : FEMALE]_gasp_[pick(1,3)].ogg"
-							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40 * sound_volume_mult, FALSE, 0, src.get_age_pitch(), flags = sound_flags)
 						else if (src.health <= 0)
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender == MALE ? MALE : FEMALE]_gasp_[pick(4,5)].ogg"
-							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40 * sound_volume_mult, FALSE, 0, src.get_age_pitch(), flags = sound_flags)
 						else
-							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
+							playsound(src, src.sound_gasp, 15 * sound_volume_mult, 0, 0, src.get_age_pitch(), flags = sound_flags)
 
 			if ("laugh","chuckle","giggle","chortle","guffaw","cackle")
 				if (!muzzled)
@@ -1617,12 +1623,17 @@
 							SEND_SIGNAL(src, COMSIG_MOB_FAKE_DEATH)
 							#endif
 
+						var/muffled = src.muffled_by_grab()
+
 						// Active if XMAS or manually toggled.
-						if (deathConfettiActive)
-							src.deathConfetti()
+						if (global.deathConfettiActive)
+							src.deathConfetti(muffled)
 
 						message = SPAN_REGULAR("<b>[src]</b> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
-						playsound(src, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
+						if (muffled)
+							playsound(src, "sound/voice/death_[pick(1,2)].ogg", 20, 0, 0, src.get_age_pitch(), flags = SOUND_DO_LOS)
+						else
+							playsound(src, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
 
 			if ("johnny")
@@ -2383,11 +2394,14 @@
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART | PIXEL_SCALE
+	var/image/blank = image(null, src)
+	blank.render_source = src.render_target
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
 	src.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
+	world << blank
 	world << torso
 	world << right_arm
 	world << left_arm
@@ -2403,6 +2417,7 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
+		qdel(blank)
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)

@@ -540,7 +540,7 @@
 	staminaCost = 10
 	moveDelay = 5
 	moveDelayDuration = 4
-	damageMult = 0.8
+	damageMult = 0.7
 	overrideCrit = 0 // no crits, prevent insane bleeds
 
 	image = "jab"
@@ -553,7 +553,7 @@
 
 	onAdd()
 		if(master)
-			overrideStaminaDamage = master.stamina_damage * 0.4
+			overrideStaminaDamage = master.stamina_damage * 0.1
 		return
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -1628,7 +1628,9 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
+		dash(target, params, user, reach)
 
+	proc/dash(atom/target, params, mob/user, reach)
 		if(params["left"] && (master && K) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
@@ -1711,7 +1713,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			afterUse(user)
 			//if (!hit)
 			playsound(master, 'sound/effects/sparks6.ogg', 70, FALSE)
-		return
 
 	proc/apply_dash_reagent(mob/user, var/turf/loc)
 		if(K.reagents?.total_volume > 1)
@@ -1736,6 +1737,16 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/mob/living/carbon/human/H = hit
 			H.do_disorient(src.stamina_damage, stunned = 10)
 
+/datum/item_special/katana_dash/thundering
+	staminaCost = 100
+
+	dash(atom/target, params, mob/user, reach)
+		var/turf/T1 = get_turf(user)
+
+		. = ..()
+		var/turf/T2 = get_turf(user)
+		if(BOUNDS_DIST(T1,T2))
+			lightning_bolt(T1, user, 1 SECOND)
 
 /datum/item_special/katana_dash/limb
 	cooldown = 0

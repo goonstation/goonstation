@@ -1546,7 +1546,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "blackbox"
-	desc = "A flight recorder is an electronic recording device placed in an spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
+	desc = "A flight recorder is an electronic recording device placed in a spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
 	item_state = "electropack"
 	force = 5
 

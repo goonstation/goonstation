@@ -17,10 +17,12 @@
 //
 
 TYPEINFO(/obj/item/storage/mechanics/housing_large)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("bohrum" = 100,
 				"conductive" = 50)
 
 TYPEINFO(/obj/item/storage/mechanics/housing_handheld)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("bohrum" = 80,
 				"conductive_high" = 40)
 
@@ -550,6 +552,7 @@ TYPEINFO(/obj/item/mechanics)
 				logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 				level = UNDERFLOOR
 				anchored = ANCHORED
+				src.unglue_attached_to()
 				set_owner(user)
 				secure()
 		var/turf/T = src.loc
@@ -1109,8 +1112,11 @@ TYPEINFO(/obj/item/mechanics)
 				LIGHT_UP_HOUSING
 				FLICK("comp_hscan1",src)
 				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
-				var/sendstr = (send_name ? user.real_name : H.get_fingerprint(ignore_gloves = TRUE))
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
+				if(src.send_name)
+					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, user.real_name)
+				else
+					var/datum/forensic_data/fingerprint/fingerprint = H.get_fingerprint(ignore_gloves = TRUE)
+					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, fingerprint.print.id)
 			else
 				boutput(user, SPAN_ALERT("The hand scanner can only be used by humanoids."))
 				return
@@ -3072,7 +3078,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 	desc = ""
 	icon_state = "comp_radioscanner"
 
-	var/frequency = R_FREQ_DEFAULT
+	var/frequency = RADIO::FREQ::DEFAULT
 
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Current Frequency: [frequency]")]"
@@ -3091,7 +3097,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 		src.hear_radio(message)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
+		var/inp = input(user, "New frequency ([RADIO::FREQ::MINIMUM] - [RADIO::FREQ::MAXIMUM]):", "Enter new frequency", frequency) as num
 		if(!in_interact_range(src, user) || user.stat)
 			return FALSE
 		if(!isnull(inp))
@@ -3123,7 +3129,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 			return
 
 		LIGHT_UP_HOUSING
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.content]")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.get_content_parsable()]")
 		animate_flash_color_fill(src, "#00FF00", 2, 2)
 
 	copy_identical_mechcomp(obj/item/mechanics/copied_mechcomp, mob/attacker)

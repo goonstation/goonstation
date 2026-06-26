@@ -11,13 +11,14 @@ var/list/admin_verbs = list(
 
 	list(
 		// LEVEL_MOD, moderator
-		/client/proc/admin_changes,
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
 		/client/proc/admin_invisible,
 		/client/proc/game_panel,
 		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
+		/client/proc/cmd_forced_assignment_panel,
+		/client/proc/cmd_notify_forced_assignment_holders,
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/cmd_whois,
 		/client/proc/cmd_whodead,
@@ -81,6 +82,7 @@ var/list/admin_verbs = list(
 	list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
+		/client/proc/set_titlecard,
 		/datum/admins/proc/pixelexplosion,
 		/datum/admins/proc/camtest,
 		/client/proc/alt_key,
@@ -114,9 +116,7 @@ var/list/admin_verbs = list(
 		/client/proc/fix_powernets,
 		/datum/admins/proc/delay_start,
 		/datum/admins/proc/delay_end,
-		/client/proc/cmd_admin_create_centcom_report,
-		/client/proc/cmd_admin_create_advanced_centcom_report,
-		/client/proc/cmd_admin_advanced_centcom_report_help,
+		/client/proc/cmd_admin_command_report_panel,
 		/client/proc/warn,
 		/client/proc/cmd_admin_playeropt,
 		/client/proc/popt_key,
@@ -365,6 +365,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as,
 		/client/proc/whitelist_add_temp,
 		/client/proc/whitelist_toggle,
+		/client/proc/mentor_whitelist_toggle,
 		/client/proc/list_adminteract_buttons,
 
 		/client/proc/general_report,
@@ -634,8 +635,7 @@ var/list/special_pa_observing_verbs = list(
 			src.holder.level = LEVEL_BABBY
 
 		if ("Inactive")
-			src.holder.dispose()
-			src.holder = null
+			src.clear_admin()
 			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the Goonstation Discord if you would like to become active again!</b></span>")
 			return
 
@@ -1027,7 +1027,7 @@ var/list/fun_images = list()
 
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	boutput(src, O.get_adminprints())
+	boutput(src, replacetext(replacetext(O.get_adminprints(), "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
 /client/proc/respawn_cinematic()
 	set name = "Respawn Cinematic"
@@ -1530,40 +1530,6 @@ var/list/fun_images = list()
 	logTheThing(LOG_DIARY, src, "spawned a custom grenade at [usr.loc]", "admin")
 	message_admins("[key_name(src)] spawned a custom grenade at [usr.loc].")
 
-/client/proc/admin_changes()
-	set category = "Commands"
-	set name = "Admin Changelog"
-	set desc = "Show or hide the admin changelog"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
-		src.Browse(null, "window=adminchanges")
-	else
-		var/changelogHtml
-		var/data
-		if (src.byond_version >= 516)
-			changelogHtml = grabResource("html/changelog.html")
-			data = admin_changelog.html
-		else
-			changelogHtml = grabResource("html/legacy_changelog.html")
-			data = legacy_admin_changelog.html
-		var/fontcssdata = {"
-				<style type="text/css">
-				@font-face {
-					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
-					text-rendering: optimizeLegibility;
-				}
-				</style>
-		"}
-		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
-		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516 && global.tgui_process)
-			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
-		else
-			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
-
 /client/proc/removeSelf()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Remove Self"
@@ -1832,25 +1798,30 @@ var/list/fun_images = list()
 /// Send an alert to all ghosts to observe a thing with a given message
 proc/alert_all_ghosts(atom/target, message)
 	for(var/client/C)
-		if (isdead(C.mob) && !istype(C.mob, /mob/dead/target_observer/slasher_ghost))
-			SPAWN(0)
-				C.mob.playsound_local(C.mob, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
-				if(tgui_alert(C.mob, message, "Ghost Notification", list("Observe", "No"), 30 SECONDS, FALSE) == "Observe")
-					var/mob/dead/M = C.mob
-					if(ismob(target) || isobj(target))
-						if (istype(M, /mob/dead/observer))
-							var/mob/dead/observer/O = M
-							O.insert_observer(target)
-						else if (istype(M, /mob/dead/target_observer))
-							var/mob/dead/target_observer/TO = M
-							TO.set_observe_target(target)
-					else if(isturf(target))
-						if (istype(M, /mob/dead/observer))
-							var/mob/dead/observer/O = M
-							O.set_loc(target)
-						else if (istype(M, /mob/dead/target_observer))
-							var/mob/dead/target_observer/TO = M
-							TO.ghostjump(target.x, target.y, target.z)
+		if(!isdead(C.mob))
+			continue
+		// Not all target observers are real dead ghosts. Hivemind, Mentor mouse, etc.
+		var/mob/dead/target_observer/target_observer = C.mob
+		if(istype(target_observer) && !target_observer.is_respawnable)
+			continue
+		SPAWN(0)
+			C.mob.playsound_local(C.mob, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+			if(tgui_alert(C.mob, message, "Ghost Notification", list("Observe", "No"), 30 SECONDS, FALSE) == "Observe")
+				var/mob/dead/M = C.mob
+				if(ismob(target) || isobj(target))
+					if (istype(M, /mob/dead/observer))
+						var/mob/dead/observer/O = M
+						O.insert_observer(target)
+					else if (istype(M, /mob/dead/target_observer))
+						var/mob/dead/target_observer/TO = M
+						TO.set_observe_target(target)
+				else if(isturf(target))
+					if (istype(M, /mob/dead/observer))
+						var/mob/dead/observer/O = M
+						O.set_loc(target)
+					else if (istype(M, /mob/dead/target_observer))
+						var/mob/dead/target_observer/TO = M
+						TO.ghostjump(target.x, target.y, target.z)
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts()
@@ -1939,6 +1910,21 @@ proc/alert_all_ghosts(atom/target, message)
 					winshow(C, "pregameBrowser", 1)
 					var/mob/new_player/new_player = C.mob
 					new_player.pregameBrowserLoaded = TRUE
+
+/client/proc/set_titlecard()
+	set name = "Set lobby titlecard"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	var/card_path = tgui_input_list(src, "Pick titlecard type", "Pick titlecard", concrete_typesof(/datum/titlecard))
+	if (!card_path)
+		return
+	var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
+	if(T)
+		T = locate(T.x + 3, T.y, T.z)
+		if (!(locate(/obj/titlecard) in T))
+			new /obj/titlecard(T)
+	global.lobby_titlecard = new card_path
+	global.lobby_titlecard.set_pregame_html()
 
 /client/proc/implant_all()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -2396,6 +2382,22 @@ proc/alert_all_ghosts(atom/target, message)
 		world.save_intra_round_value("whitelist_disabled", 0)
 
 	set_station_name(src.mob, manual=FALSE, name=station_name)
+
+/client/proc/mentor_whitelist_toggle()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle whitelisted mentors"
+	set desc = "Toggle if Mentors bypass the whitelist"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	DENY_TEMPMIN
+
+	var/current_status = config.mentors_bypass_whitelist ? "enabled" : "disabled"
+
+	if(tgui_alert(src, "Mentors bypassing the whitelist is currently [current_status]. Toggle for this round?", "Toggle whitelisted mentors?", list("Yes", "No")) != "Yes")
+		return
+	config.mentors_bypass_whitelist = !config.mentors_bypass_whitelist
+	message_admins("[src] has [config.mentors_bypass_whitelist ? "enabled" : "disabled"] mentors bypassing the whitelist for this round.")
+	logTheThing(LOG_ADMIN, src, "[config.mentors_bypass_whitelist ? "Enabled" : "Disabled"] mentors bypassing the whitelist for this round.")
 
 /client/proc/set_conspiracy_objective()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)

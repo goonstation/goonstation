@@ -16,7 +16,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	endurance = 40
 	cropsize = 3
 	force_seed_on_harvest = 1
-	vending = 2
+	vending = 1
 	genome = 31
 	assoc_reagents = list("space_fungus")
 	mutations = list(/datum/plantmutation/fungus/amanita,/datum/plantmutation/fungus/psilocybin,/datum/plantmutation/fungus/cloak)
@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			boutput(user, SPAN_ALERT("The lasher flails at you violently! You might need to weaken it first..."))
 			return 1
 		else
-			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
+			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher, TRUE) //You will always get Enzymatic. ALWAYS.
 			return 0
 
 

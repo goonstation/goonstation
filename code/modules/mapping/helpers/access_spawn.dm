@@ -75,11 +75,6 @@
 	req_access = list(access_robotics)
 	color = MEDICAL
 
-/obj/mapping_helper/access/pathology
-	name = "pathology access spawn"
-	req_access = list(access_medical)
-	color = MEDICAL
-
 /obj/mapping_helper/access/pharmacy
 	name = "pharmacy access spawn"
 	req_access = list(access_pharmacy)
@@ -254,6 +249,11 @@
 	req_access = list(access_head_of_personnel)
 	color = COMMAND
 
+/obj/mapping_helper/access/computer_core
+	name = "computer core access spawn"
+	req_access = list(access_sysadmin)
+	color = RESEARCH
+
 /obj/mapping_helper/access/research_director
 	name = "RD access spawn"
 	req_access = list(access_research_director)
@@ -298,10 +298,16 @@
 /obj/mapping_helper/access/admin_override //special admin override access spawner
 	name = "admin override access spawn"
 	color = SPECIAL
+	admin_access_override = ADMIN_ACCESS_OVERRIDE_BYPASS
 
 	setup()
 		for (var/obj/O in src.loc)
-			O.admin_access_override = TRUE
+			O.admin_access_override = src.admin_access_override
+
+/obj/mapping_helper/access/admin_override/admin_only //Deny access to any non-admins
+	name = "admin only access spawn"
+	color = MORGUE_BLACK
+	admin_access_override = ADMIN_ACCESS_OVERRIDE_ONLY
 
 /obj/mapping_helper/access/public
 	name = "public access spawn"
@@ -346,6 +352,11 @@
 	name = "lunar breakdoor access spawn"
 	req_access = list(access_lunar_breakdoor)
 	color = ENGINEERING
+
+/obj/mapping_helper/access/ainley_buddy
+	name = "ainley buddy access spawn"
+	req_access = list(access_ainley_buddy)
+	color = COMMAND
 
 #undef MEDICAL
 #undef SECURITY

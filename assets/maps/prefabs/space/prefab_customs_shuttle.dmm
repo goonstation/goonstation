@@ -196,6 +196,7 @@
 	})
 "jS" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "kq" = (
@@ -443,6 +444,7 @@
 /area/prefab/crashed_hop_shuttle)
 "zM" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "Al" = (

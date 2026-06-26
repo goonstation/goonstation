@@ -54,6 +54,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_WANNA_DO_CRIME ROLE_TRAITOR // Spawn as the matching antagonist role as defined in _std\defines\roles.dm
 //#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 //#define NO_PREGAME_HTML // Don't spawn the HTML pregame browser lobby screen
+//#define I_HATE_WAITING_FOR_GENES // Marks nearly all genes as researched, gives chromosomes/materials/autodecryptors, increases gene storage cap, and removes time/cost limitations on the gene console
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -111,6 +112,9 @@ o+`        `-` ``..-:yooos-..----------..`
 // Enable local authentication using a dummy version of the goonhub authentication process
 //#define TEST_AUTH
 
+//Don't automatically grant admin to all localhost connections
+//#define DONT_ADMIN_MEE
+
 // Makes the code crash / log when an abstract type is instantiated.
 // see _stadlib/_types.dm for details
 // #define ABSTRACT_VIOLATION_CRASH
@@ -161,6 +165,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
+//#define UNIT_TESTS_REGRESSION_ONLY // Only run /datum/unit_test/regression subtypes
 //#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions // Only run tests of these types - comma separated list of types
 
 #ifdef CI_RUNTIME_CHECKING

@@ -152,7 +152,7 @@
 	autoclose_delay = 75
 	},
 /obj/landmark/newbee/exit_movement,
-/turf/unsimulated/floor/darkblue/checker{
+/turf/unsimulated/floor/twotone/darkblue{
 	dir = 1
 	},
 /area/tutorial/newbee/room_14)
@@ -706,7 +706,7 @@
 "AI" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_headset,
-/turf/unsimulated/floor/darkblue/checker/other,
+/turf/unsimulated/floor/twotone/darkblue,
 /area/tutorial/newbee/room_14)
 "AK" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -1010,7 +1010,7 @@
 /area/tutorial/newbee/room_9)
 "Mr" = (
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/darkblue/checker/other,
+/turf/unsimulated/floor/twotone/darkblue,
 /area/tutorial/newbee/room_14)
 "MB" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -1062,7 +1062,7 @@
 /turf/unsimulated/floor/grey/blackgrime/other,
 /area/tutorial/newbee/room_13)
 "Oa" = (
-/turf/unsimulated/floor/darkblue/checker/other,
+/turf/unsimulated/floor/twotone/darkblue,
 /area/tutorial/newbee/room_14)
 "OP" = (
 /turf/unsimulated/floor/greenblack{
@@ -1319,7 +1319,7 @@
 /area/tutorial/newbee/room_8)
 "YZ" = (
 /obj/landmark/newbee/pull_target,
-/turf/unsimulated/floor/darkblue/checker/other,
+/turf/unsimulated/floor/twotone/darkblue,
 /area/tutorial/newbee/room_14)
 "ZG" = (
 /turf/unsimulated/floor/honeyblocks/border{

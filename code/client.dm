@@ -9,7 +9,7 @@
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
 	var/deadchat = 0
-	var/changes = 0
+	var/changes = FALSE
 	var/area = null
 	var/stealth = 0
 	var/stealth_hide_fakekey = 0
@@ -345,10 +345,11 @@
 
 			#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
-				changes()
-
-			if (isadmin(src) && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
-				admin_changes()
+				if (global.tgui_process)
+					src.changes()
+				else
+					SPAWN(3 SECONDS)
+						src.changes()
 			#endif
 		else
 			if (noir)
@@ -389,7 +390,6 @@
 
 	// Put stuff that sleeps here
 	SPAWN(0)
-		if (global.browse_item_initial_done) sendItemIcons(src)
 		ircbot.event("login", src.key)
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 		src.setJoinDate()
@@ -518,7 +518,10 @@
 
 
 /client/proc/init_admin()
-	if (IsLocalClient(src)) admins[src.ckey] = "Host"
+#ifndef DONT_ADMIN_MEE
+	if (IsLocalClient(src))
+		admins[src.ckey] = "Host"
+#endif
 	if (admins.Find(src.ckey) && !src.holder)
 		src.make_admin()
 		return 1
@@ -818,7 +821,7 @@ var/global/curr_day = null
 		sleep(0.1 SECONDS)
 
 /client/Topic(href, href_list)
-	if (!usr || isnull(usr.client))
+	if (!usr || isnull(usr.client) || usr.client != src)
 		return
 
 	// Tgui Topic middleware
@@ -1019,7 +1022,7 @@ var/global/curr_day = null
 	if (!forced_desussification)
 		return
 
-	if (!phrase_log.is_sussy(message.original_content))
+	if (!phrase_log.is_sussy(message.get_original_content_parsable()))
 		return
 
 	arcFlash(message.speaker, message.speaker, forced_desussification)
