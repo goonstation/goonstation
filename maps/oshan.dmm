@@ -42103,7 +42103,8 @@
 "rHq" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/alt{
-	dir = 4
+	dir = 4;
+	id = "sauna"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -43001,6 +43002,16 @@
 /obj/machinery/shower{
 	dir = 4;
 	pixel_x = 6
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "bathroom_cap";
+	name = "Bathroom Security Lock";
+	pixel_x = 7
+	},
+/obj/machinery/door_control/bolter/new_walls/south{
+	id = "sauna";
+	name = "Sauna Privacy Lock";
+	pixel_x = -7
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/captain)
@@ -49867,11 +49878,12 @@
 /area/station/quartermaster/office)
 "xYT" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	id = "quarters_cap";
+	id = "bathroom_cap";
 	name = "Captain's Quarters"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/captain,
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/captain)
 "xYW" = (
