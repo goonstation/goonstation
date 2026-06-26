@@ -123,7 +123,7 @@
 						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-	if (HH.blood_volume <= 100 && (mult >= 1))
+	if (HH.blood_volume <= 0 && (mult >= 1))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))
 		HH.death(FALSE)
 
@@ -268,7 +268,7 @@
 						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-	if (HH.blood_volume <= 100 && (mult >= 1))
+	if (HH.blood_volume <= 0 && (mult >= 1))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))
 		HH.death(FALSE)
 
