@@ -1,7 +1,3 @@
-/datum/abilityHolder/vampire/var/list/blood_tally
-/datum/abilityHolder/vampire/var/const/max_take_per_mob = 250
-
-
 /datum/abilityHolder/vampire/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = TRUE)
 	var/datum/abilityHolder/vampire/holder = src
 	var/mob/living/M = holder.owner
@@ -135,23 +131,6 @@
 	HH.was_harmed(M, special = "vamp")
 	bleed(HH, 1, 3, get_turf(src.owner))
 
-/datum/abilityHolder/vampiric_thrall/var/list/blood_tally
-/datum/abilityHolder/vampiric_thrall/var/const/max_take_per_mob = 250
-
-/datum/abilityHolder/vampiric_thrall/proc/can_take_blood_from(var/mob/living/carbon/human/target)
-	.= 1
-	if (src.blood_tally)
-		if (target in src.blood_tally)
-			.= src.blood_tally[target] < max_take_per_mob
-
-/datum/abilityHolder/vampiric_thrall/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
-	if (!src.blood_tally)
-		src.blood_tally = list()
-
-	if (!(target in src.blood_tally))
-		src.blood_tally[target] = 0
-
-	src.blood_tally[target] += blood_amt_taken
 
 /datum/abilityHolder/vampiric_thrall/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
 	var/datum/abilityHolder/vampiric_thrall/holder = src
@@ -195,17 +174,11 @@
 		boutput(M, SPAN_ALERT("Drink monkey blood?! That's disgusting!"))
 		return 0
 
-	if (!holder.can_take_blood_from(target))
-		return 0
-
-
 	return 1
 
 /datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
-	var/datum/abilityHolder/vampiric_thrall/H = src
-
 
 	if (HH.blood_volume <= 0 && isdead(HH))
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
@@ -218,7 +191,6 @@
 		var/bitesize = 5 * mult
 		M.change_vampire_blood(bitesize, 1, victim = HH)
 		M.change_vampire_blood(bitesize, 0, victim = HH)
-		H.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
 		else
@@ -242,7 +214,6 @@
 
 				M.change_vampire_blood(bitesize, 0, victim = HH)
 				M.change_vampire_blood(bitesize, 1, victim = HH)
-				H.tally_bite(HH,bitesize)
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
@@ -253,7 +224,6 @@
 			var/bitesize = 10 * mult
 			M.change_vampire_blood(bitesize, 1, victim = HH)
 			M.change_vampire_blood(bitesize, 0, victim = HH)
-			H.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
 			else
