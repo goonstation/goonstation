@@ -325,12 +325,12 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is still running, hold your horses!"))
 			return
-		if (istype(I, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(I, /obj/item/reagent_containers/food) && (findtext(I.name, "meat")||findtext(I.name,"bacon"))) || (istype(I, /obj/item/parts/human_parts)) || istype(I, /obj/item/clothing/head/butt) || istype(I, /obj/item/organ) || istype(I,/obj/item/raw_material/martian))
+		if (istypes(I, list(/obj/item/parts/human_parts, /obj/item/clothing/head/butt, /obj/item/organ, /obj/item/raw_material/martian)))
 			if (length(src.meats) >= src.max_meat)
 				boutput(user, SPAN_ALERT("There is already enough meat in there! You should not exceed the maximum safe meat level!"))
 				return
 
-			if (I.contents && length(I.contents) > 0 && !istype(I, /obj/item/reagent_containers/food/snacks/shell))
+			if (I.contents && length(I.contents) > 0)
 				for (var/obj/item/W in I.contents)
 					if (istype(W, /obj/item/skull) || istype(W, /obj/item/organ/brain) || istype(W, /obj/item/organ/eye))
 						continue
@@ -546,7 +546,8 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		qdel(grab)
 
 /obj/machinery/clonegrinder/mindhack_deluxe
-		grind_level = GRIND_BODIES
+	grind_level = GRIND_BODIES
+	upgraded = TRUE
 
 #undef GRIND_NOTHING
 #undef GRIND_BODIES
