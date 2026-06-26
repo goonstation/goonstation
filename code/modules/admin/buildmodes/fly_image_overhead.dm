@@ -24,7 +24,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 	var/audio
 	var/plane_choice = FALSE
 	var/dir_input = "Random"
-	var/end_effect = "Leave zlevel"
+	var/end_effect = LEAVE
 	var/spawnpath
 	var/spawnamount = 1
 	var/alphainput = 255
