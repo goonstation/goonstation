@@ -954,15 +954,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Gaudy walking cane"
 
-/datum/supply_packs/canes
-	name = "Walking canes Kit"
-	desc = "x4 Walking canes. To aid your aging and or maimed crew."
-	category = "Medical"
-	contains = list(/obj/random_item_spawner/canes)
-	cost = PAY::TRADESMAN*8
-	containertype = /obj/storage/crate
-	containername = "Walking canes Kit"
-
 /datum/supply_packs/prosphetics
 	name = "Prosthetic Augmentation Kit"
 	desc = "x6+ Cybernetic Augmentations. Replace your feeble flesh with these mechanical substitutes."
