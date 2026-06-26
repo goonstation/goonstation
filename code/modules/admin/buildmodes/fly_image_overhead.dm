@@ -197,7 +197,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 /obj/image_pilot
 	name = ""
 	desc = ""
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	flags = KEEP_TOGETHER
