@@ -7,36 +7,20 @@
 /datum/abstract_say_sources_panel/New()
 	. = ..()
 
-	src.radio_chat_class_lookup = alist(
-		"null" = null,
-		"\"[RADIOCL_STANDARD]\"" = RADIOCL_STANDARD,
-		"\"[RADIOCL_INTERCOM]\"" = RADIOCL_INTERCOM,
-		"\"[RADIOCL_NANOTRASEN]\"" = RADIOCL_NANOTRASEN,
-		"\"[RADIOCL_COMMAND]\"" = RADIOCL_COMMAND,
-		"\"[RADIOCL_SECURITY]\"" = RADIOCL_SECURITY,
-		"\"[RADIOCL_DETECTIVE]\"" = RADIOCL_DETECTIVE,
-		"\"[RADIOCL_ENGINEERING]\"" = RADIOCL_ENGINEERING,
-		"\"[RADIOCL_MEDICAL]\"" = RADIOCL_MEDICAL,
-		"\"[RADIOCL_RESEARCH]\"" = RADIOCL_RESEARCH,
-		"\"[RADIOCL_CIVILIAN]\"" = RADIOCL_CIVILIAN,
-		"\"[RADIOCL_SYNDICATE]\"" = RADIOCL_SYNDICATE,
-		"\"[RADIOCL_SALVAGER]\"" = RADIOCL_SALVAGER,
-		"\"[RADIOCL_INTERCOM_AI]\"" = RADIOCL_INTERCOM_AI,
-		"\"[RADIOCL_OTHER]\"" = RADIOCL_OTHER,
-	)
+	src.radio_chat_class_lookup = alist("null" = null)
+	src.radio_chat_class_choices = list("null")
+	for (var/chat_class as anything in RADIO.CSS._get_namespace_constants())
+		var/key = "\"[chat_class]\""
+		src.radio_chat_class_lookup[key] = chat_class
+		src.radio_chat_class_choices += key
 
 	src.radio_icon_lookup = alist("null" = null)
+	src.radio_icon_choices = list("null")
 	var/regex/filename_regex = regex(@"(?<=\/)\w*(?=\.)", "g")
 	for (var/filepath as anything in global.recursive_flist("browserassets/src/images/radio_icons/", FALSE))
 		filename_regex.Find(filepath)
-		src.radio_icon_lookup["\"[filename_regex.match]\""] = filename_regex.match
-
-	src.radio_chat_class_choices = list()
-	for (var/key as anything in src.radio_chat_class_lookup)
-		src.radio_chat_class_choices += key
-
-	src.radio_icon_choices = list()
-	for (var/key as anything in src.radio_icon_lookup)
+		var/key = "\"[filename_regex.match]\""
+		src.radio_icon_lookup[key] = filename_regex.match
 		src.radio_icon_choices += key
 
 /datum/abstract_say_sources_panel/ui_state(mob/user)
