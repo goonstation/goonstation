@@ -47,7 +47,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			src.alphainput = tgui_input_number(usr, "Enter an alpha level.", "Alpha", 255, 255, 0)
 			if (src.image)
 				logTheThing(LOG_ADMIN, usr, "uploaded an image [src.image] to use with Fly Object Overhead buildmode")
-			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list("Leave zlevel", "Explode", "Fade away", "Run away"))
+			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list(LEAVE, EXPLODE, FADE, RUN))
 			src.plane_choice = tgui_input_list(usr, "Layer above blackness?", "Blackness layer", list(TRUE, FALSE))
 
 		if (ctrl)
