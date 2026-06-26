@@ -470,17 +470,17 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		if (!tampered && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		if (src.reagents)
-			src.reagents.temperature_cap = 330
-			src.reagents.temperature_min = 270
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if(borg)
 			src.flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
 
 	on_reagent_change(add)
 		..()
-		if (src.reagents && (src.reagents.total_temperature > 330 || src.reagents.total_temperature < 270))
-			src.reagents.temperature_cap = 330
-			src.reagents.temperature_min = 270
+		if (src.reagents && (src.reagents.total_temperature > T20C || src.reagents.total_temperature < T0C))
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if (!tampered && add)
 			check_whitelist(src, src.whitelist)
@@ -712,9 +712,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 
 	on_reagent_change(add)
 		..()
-		if (src.reagents && (src.reagents.total_temperature > 330 || src.reagents.total_temperature < 270))
-			src.reagents.temperature_cap = 330
-			src.reagents.temperature_min = 270
+		if (src.reagents && (src.reagents.total_temperature > T20C || src.reagents.total_temperature < T0C))
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if (add)
 			check_whitelist(src, src.whitelist)
