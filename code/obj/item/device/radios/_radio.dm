@@ -249,6 +249,7 @@ TYPEINFO(/obj/item/device/radio)
 				usr.u_equip(R)
 				usr.put_in_hand_or_drop(T)
 				R.set_loc(T)
+				T.locked = 0
 				T.AttackSelf(usr)
 				return
 

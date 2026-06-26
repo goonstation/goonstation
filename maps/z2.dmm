@@ -13399,7 +13399,6 @@
 	},
 /area/marsoutpost)
 "beE" = (
-/obj/item/shipcomponent/secondary_system/tractor_beam,
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
 /obj/storage/crate/bloody,
@@ -33770,7 +33769,6 @@
 	name = "Pod N a Box"
 	},
 /obj/item/shipcomponent/mainweapon/foamer,
-/obj/item/shipcomponent/secondary_system/tractor_beam,
 /obj/item/shipcomponent/sensor/mining,
 /obj/item/electronics/relay,
 /obj/item/electronics/bulb,

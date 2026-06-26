@@ -686,6 +686,9 @@ Equip items from body traits.
 		SPAWN(0) // Ensures wheelchair spawns with you even if you aren't latejoining at arrivals.
 			var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 			trinket = the_chair
+			var/datum/trait/artisan/trait_artisan = src.traitHolder?.getTrait("artisan")
+			if(trait_artisan)
+				trait_artisan.apply_trinket_material(src, trinket)
 			the_chair.buckle_in(src, src)
 	else
 		trinket = new T(src)
@@ -712,6 +715,21 @@ Equip items from body traits.
 		allergic_pen.real_name = allergic_pen.name
 		allergic_pen.quality = rand(5,80)
 		trinkets_to_equip += allergic_pen
+
+	var/datum/trait/artisan/trait_artisan = src.traitHolder?.getTrait("artisan")
+	if(trait_artisan)
+		if(src.traitHolder.hasTrait("wheelchair"))
+			// Do nothing. Material will be applied to the wheelchair.
+		else if(trinket)
+			trait_artisan.apply_trinket_material(src, trinket)
+		else if(length(trinkets_to_equip) > 0)
+			trait_artisan.apply_trinket_material(src, pick(trinkets_to_equip))
+		else
+			var/datum/material/mat = trait_artisan.choose_trinket_material(null)
+			var/bar_type = getProcessedMaterialForm(mat)
+			var/obj/item/material_piece/bar = new bar_type
+			bar.setMaterial(mat)
+			trinkets_to_equip += bar
 
 	for (var/obj/item/I in trinkets_to_equip)
 		var/equipped = 0

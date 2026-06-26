@@ -393,6 +393,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
 
+	new_static_image()
+		return
+
+	update_static_image()
+		return
+
 /datum/targetable/critter/mentordisappear
 	name = "Vanish"
 	desc = "Leave your body and return to ghost form"
