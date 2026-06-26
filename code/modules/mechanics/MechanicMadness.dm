@@ -4714,7 +4714,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
-		step(S, direction, (32 / move_lag) * world.tick_lag)
+		if (step(S, direction, (32 / move_lag) * world.tick_lag))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[direction]")
+		else
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"0")
 		UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
 
 	/// set our glide size in case it was changed
