@@ -370,28 +370,7 @@
 			created_organ.donor = owner
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
 
-/datum/trait/stinky
-	name = "Stinky"
-	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
-	id = "stinky"
-	icon_state = "stinky"
-	category = list("body")
-	points = 1
 
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (!H.sims)
-				H.sims = new /datum/simsHolder(H)
-			H.sims.addMotive(/datum/simsMotive/hygiene)
-			H.sims.add_hud() // ensure hud has hygiene motive
-
-	onRemove(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (!H.sims)
-				H.sims = new /datum/simsHolder(H)
-			H.sims.removeMotive("Hygiene")
 
 // LANGUAGE - Yellow Border
 /datum/trait/swedish
@@ -1622,6 +1601,28 @@ TYPEINFO(/datum/trait/partyanimal)
 	onRemove(mob/owner)
 		owner.bioHolder.RemoveEffect("hair_growth")
 
+// Move Stinky Trait
+/datum/trait/stinky
+	name = "Stinky"
+	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
+	id = "stinky"
+	icon_state = "stinky"
+	points = 1
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.addMotive(/datum/simsMotive/hygiene)
+			H.sims.add_hud() // ensure hud has hygiene motive
+
+	onRemove(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.removeMotive("Hygiene")
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"
