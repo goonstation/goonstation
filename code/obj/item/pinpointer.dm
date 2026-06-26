@@ -1,6 +1,8 @@
 TYPEINFO(/obj/item/pinpointer)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
-	mats = 4
+	mats = list("metal"=1,
+				"conductive"=2,
+				"crystal"=1)
 
 /obj/item/pinpointer
 	name = "pinpointer"
