@@ -337,6 +337,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
 	available = list(/datum/manufacture/pick,
+		/datum/manufacture/powered_shovel,
 		/datum/manufacture/powerpick,
 		/datum/manufacture/blastchargeslite,
 		/datum/manufacture/blastcharges,
