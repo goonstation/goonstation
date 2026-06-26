@@ -48,7 +48,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			if (src.image)
 				logTheThing(LOG_ADMIN, usr, "uploaded an image [src.image] to use with Fly Object Overhead buildmode")
 			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list(LEAVE, EXPLODE, FADE, RUN))
-			src.plane_choice = tgui_input_list(usr, "Layer above blackness?", "Blackness layer", list(TRUE, FALSE))
+			src.plane_choice = (tgui_alert(usr, "Layer above blackness?", "Blackness layer", list("Yes", "No")) == "Yes")
 
 		if (ctrl)
 			src.audio = input(usr, "Upload a file:", "Uploader - Long files WILL lag people out, sound will play once at destination", null) as null|sound
