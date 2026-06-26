@@ -56,7 +56,7 @@
 	var/datum/abilityHolder/vampire/H = src
 
 
-	if (HH.blood_volume <= 0)
+	if (HH.blood_volume <= 0 && isdead(HH))
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
 		return 0
 
@@ -207,7 +207,7 @@
 	var/datum/abilityHolder/vampiric_thrall/H = src
 
 
-	if (HH.blood_volume <= 0)
+	if (HH.blood_volume <= 0 && isdead(HH))
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
 		return 0
 
