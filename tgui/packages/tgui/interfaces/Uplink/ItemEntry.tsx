@@ -103,7 +103,9 @@ export const ItemEntry = (props: ItemProps) => {
           {purchase_limit < Infinity && (
             <LabeledList.Item label="Purchase Limit">{`${purchased}/${purchase_limit}`}</LabeledList.Item>
           )}
-          <LabeledList.Item label="Description">{desc}</LabeledList.Item>
+          <LabeledList.Item label="Description">
+            <Box dangerouslySetInnerHTML={{ __html: desc }} />
+          </LabeledList.Item>
         </LabeledList>
       </Section>
     </Stack.Item>
