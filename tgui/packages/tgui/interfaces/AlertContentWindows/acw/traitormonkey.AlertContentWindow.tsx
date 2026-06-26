@@ -37,5 +37,5 @@ const SyndicateMonkeyContentWindow = () => {
 export const acw: AlertContentWindow = {
   title: 'Syndicate Monkey Tips',
   theme: 'syndicate',
-  component: GenericAntagContentWindow,
+  component: SyndicateMonkeyContentWindow,
 };
