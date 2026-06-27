@@ -4,6 +4,8 @@
  * @author ANNmagedon (https://github.com/Annmagedon)
  * @license MIT
  */
+import { Image } from 'tgui-core/components';
+
 import { GenericVisualMediaProps } from './types';
 import { UninteractableVideoPlayer } from './UninteractableVideo';
 
@@ -41,7 +43,7 @@ export const GenericVisualMedia: React.FC<
   return isVideo(src) ? (
     <UninteractableVideoPlayer src={src} {...rest} />
   ) : (
-    <img src={src} {...rest} />
+    <Image src={src} {...rest} />
   );
 };
 
