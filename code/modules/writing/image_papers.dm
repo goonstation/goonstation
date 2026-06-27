@@ -97,6 +97,7 @@
 /obj/item/paper/image/sstv
 	name = "Printed Image"
 	desc = "Fancy."
+	icon_state = "paper"
 	path = "images/sstv/1.png"
 	scale_dir = 1
 	sizex = 640
