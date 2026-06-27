@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dinosaur_pajamas)
 	green
 		name = "Green"
 		swatch_background_color = "#00871a"
-		item_path = /obj/item/clothing/suit/gimmick/dinosaur/green
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur
 	yellow
 		name = "Yellow"
 		swatch_background_color = "#fde042"
@@ -26,6 +26,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dinosaur_pajamas)
 		name = "Blue"
 		swatch_background_color = "#395cc6"
 		item_path = /obj/item/clothing/suit/gimmick/dinosaur/blue
+	orange
+		name = "Orange"
+		swatch_background_color = "#ebb02b"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/orange
 	pink
 		name = "Pink"
 		swatch_background_color = "#f8aaaa"
