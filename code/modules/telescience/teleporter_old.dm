@@ -211,6 +211,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.shoes?.magnetic)
+			H.show_text("You are anchored to the floor!")
 			return 1
 
 	if (ismob(destination.loc))
