@@ -22107,12 +22107,6 @@
 /area/station/security/secwing)
 "jEi" = (
 /obj/table/reinforced/auto,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -6
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 6
-	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = 2;
 	pixel_y = -3

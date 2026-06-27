@@ -17551,14 +17551,6 @@
 "fvd" = (
 /obj/machinery/light/incandescent/warm,
 /obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -10;
-	pixel_y = -5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 7;
-	pixel_y = -5
-	},
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = 6;
 	pixel_y = 7
@@ -67523,14 +67515,6 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -10;
-	pixel_y = -5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 7;
-	pixel_y = -5
-	},
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = 6;
 	pixel_y = 7

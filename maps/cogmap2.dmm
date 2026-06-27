@@ -64212,14 +64212,6 @@
 	pixel_x = -10
 	},
 /obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -6;
-	pixel_y = -5
-	},
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = -6;
 	pixel_y = 2
@@ -70575,14 +70567,6 @@
 /area/station/routing/depot)
 "tTw" = (
 /obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -6;
-	pixel_y = -5
-	},
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = -6;
 	pixel_y = 2
