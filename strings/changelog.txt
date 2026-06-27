@@ -1,5 +1,10 @@
 
 (t)fri jun 26 26
+(u)RubiCubie and ANNmaggedon
+(p)26909
+(e)🎨💊💪📨|C-Sprites, A-Medical, A-Traits, A-Logistics
+(*)Added new canes that help your lack of a leg or a lack of youth! Completely removing slowdown from a missing leg.
+(+)Canes can be acquired via trinket trait, traders, crafting, cargo or medbay.
 (u)leafedlizord
 (p)27008
 (e)🎨💪|C-Sprites, A-Traits

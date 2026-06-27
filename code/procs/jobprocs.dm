@@ -690,6 +690,9 @@ Equip items from body traits.
 			if(trait_artisan)
 				trait_artisan.apply_trinket_material(src, trinket)
 			the_chair.buckle_in(src, src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("cane"))
+		var/picked = pick(typesof(/obj/item/cane/wooden))
+		trinket = new picked(src)
 	else
 		trinket = new T(src)
 

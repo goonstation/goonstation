@@ -1204,6 +1204,20 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/cane
+	name = "Cane"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/cane/metal)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+	fourlegged
+		item_outputs = list(/obj/item/cane/metal/fourlegged)
+
+	tennisball
+		item_outputs = list(/obj/item/cane/metal/tennisball)
+
 /datum/manufacture/deafhs
 	name = "Auditory Headset"
 	item_requirements = list("conductive" = 3,
