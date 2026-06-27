@@ -1,18 +1,17 @@
-"a" = (/turf/cordon,/area/syndicate_station/hideout)
+"a" = (/turf/space,/area/space)
 "c" = (/obj/fakeobject/azarakrocks/rock6,/turf/simulated/floor/dojo/sand,/area/syndicate_station/hideout)
 "d" = (/obj/machinery/door/unpowered/wood,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "f" = (/obj/fakeobject/Azarakcandleswall,/turf/unsimulated/wall/auto/paper,/area/syndicate_station/hideout)
 "g" = (/obj/tree/sakura_tree/tree_2{pixel_x = -30; pixel_y = 3},/turf/simulated/floor/dirt,/area/syndicate_station/hideout)
 "h" = (/turf/unsimulated/wall/auto/paper,/area/syndicate_station/hideout)
-"i" = (/obj/table/wood/auto/desk,/obj/item/paper_bin{pixel_x = 6; pixel_y = 0},/obj/decoration/paperstack/small{pixel_x = -8; pixel_y = 2},/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "j" = (/obj/machinery/computer/camera_viewer,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
+"l" = (/obj/item/stamp/syndicate{pixel_x = 5; pixel_y = -19},/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "n" = (/obj/table/wood/auto/desk,/obj/machinery/weapon_stand/katana_stand,/obj/machinery/light/small/floor,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "o" = (/obj/fakeobject/broadcastcomputer,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "r" = (/turf/simulated/floor/dojo/stone,/area/syndicate_station/hideout)
 "t" = (/obj/machinery/disposal/extradimensional/exit,/turf/simulated/floor/circuit/red,/area/syndicate_station/hideout)
 "u" = (/obj/table/wood/auto/desk,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "v" = (/obj/fakeobject/azarakrocks/rock9,/turf/simulated/floor/dojo/sand,/area/syndicate_station/hideout)
-"w" = (/obj/storage/closet/dresser,/obj/item/clothing/mask/tengu,/obj/item/clothing/mask/kitsune,/obj/item/clothing/under/gimmick/hakama/random,/obj/item/clothing/under/gimmick/yukata/plain/random,/obj/item/clothing/shoes/sandal,/obj/item/clothing/suit/armor/sneaking_suit/costume,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "y" = (/obj/tree/sakura_tree{pixel_x = -30; pixel_y = 0},/turf/simulated/floor/dirt,/area/syndicate_station/hideout)
 "A" = (/turf/simulated/floor/dojo/sand,/area/syndicate_station/hideout)
 "B" = (/obj/fakeobject/swordrack,/turf/unsimulated/wall/auto/paper,/area/syndicate_station/hideout)
@@ -21,19 +20,20 @@
 "H" = (/obj/item/device/radio/intercom,/turf/unsimulated/wall/auto/paper,/area/syndicate_station/hideout)
 "I" = (/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "J" = (/obj/machinery/light/small/netural,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
+"L" = (/obj/table/wood/auto/desk,/obj/item/paper_bin{pixel_x = 6; pixel_y = 0},/obj/decoration/paperstack/small{pixel_x = -8; pixel_y = 2},/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "N" = (/obj/filing_cabinet,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
+"R" = (/obj/storage/closet/dresser,/obj/item/clothing/mask/tengu,/obj/item/clothing/mask/kitsune,/obj/item/clothing/under/gimmick/hakama/random,/obj/item/clothing/under/gimmick/yukata/plain/random,/obj/item/clothing/shoes/sandal,/obj/item/clothing/suit/armor/sneaking_suit/costume,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "S" = (/turf/unsimulated/floor/dojo/stone,/area/syndicate_station/hideout)
 "T" = (/turf/unsimulated/wall/auto/sengoku,/area/syndicate_station/hideout)
 "V" = (/obj/fakeobject/bigcabinets,/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 "Y" = (/obj/table/wood/auto/desk,/obj/item/reagent_containers/food/drinks/tea{pixel_x = -9; pixel_y = 6},/obj/item/reagent_containers/food/snacks/takeout{pixel_x = 5; pixel_y = 7},/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
-"Z" = (/obj/item/stamp/syndicate{pixel_x = 5; pixel_y = -19},/turf/simulated/floor/bamboo,/area/syndicate_station/hideout)
 
 (1,1,1) = {"
 aaaaaaaaaaaaa
 ahhBfBhhhEhha
-ahwunYIhojVha
-ahIIIIIhJZIHa
-ahJIIIJhNiIha
+ahRunYIhojVha
+ahIIIIIhJlIHa
+ahJIIIJhNLIha
 ahIIIIIhhhdha
 ahIIIIIIJIIha
 aTTThhdhhTTTa
