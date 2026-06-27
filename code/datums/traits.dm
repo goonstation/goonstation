@@ -664,6 +664,14 @@
 	category = list("trinkets")
 	points = 0
 
+/datum/trait/cane
+	name = "Cane"
+	desc = "After an awful accident, you were given a cane. You weren't injured, just an old guy in said accident. Free stick though!"
+	id = "cane"
+	icon_state = "cane"
+	category = list("trinkets")
+	points = 0
+
 /datum/trait/artisan
 	name = "Artisan"
 	desc = "Your trinket is made from a random material."
