@@ -2420,7 +2420,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			processed += organHolder.tail
 			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
-		if (prob(50) && !isskeleton(src)) // Skeletons don't have hair, so don't create and drop a wig for them on death
+		if (prob(50))
 			var/obj/item/clothing/head/wig/W = create_wig(keep_hair = TRUE)
 			if (W)
 				processed += W
@@ -3046,6 +3046,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	if (missing_legs == 2 && !(locate(/datum/movement_modifier/slither) in src.movement_modifiers))
 		. += 14 - ((2-missing_arms) * 2) // each missing leg adds 7 of movement delay. Each functional arm reduces this by 2.
+	else if (missing_legs == 1 && ((src.find_type_in_hand(/obj/item/cane, "left") && !src.limbs.l_leg) || (src.find_type_in_hand(/obj/item/cane, "right") && !src.limbs.r_leg)))
+		. += 0 // cane can only help when you miss one leg, cane can only help if held at the side where the leg is missing
 	else
 		. += 7*missing_legs
 

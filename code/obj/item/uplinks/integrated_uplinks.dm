@@ -69,7 +69,7 @@
 	generate_menu()
 		if (src.uses < 0)
 			src.uses = 0
-		if (src.vr_check(usr) != 1)
+		if (!src.vr_check(usr))
 			src.menu_message = "This uplink only works in virtual reality."
 			return
 
@@ -134,7 +134,7 @@
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
-		if (src.vr_check(usr) != 1)
+		if (!src.vr_check(usr))
 			usr.show_text("This uplink only works in virtual reality.", "red")
 			return
 
@@ -230,7 +230,7 @@
 
 /obj/item/uplink/integrated/radio
 	lock_code_autogenerate = 1
-	use_default_GUI = 1
+	uplink_ui_type = UPLINK_UI_TGUI
 	var/obj/item/device/radio/origradio = null
 
 	generate_code()
@@ -262,6 +262,19 @@
 				src.icon_state = R.icon_state
 				src.origradio = R
 		return
+
+	lock(mob/user)
+		. = ..()
+		if(!.) return //Failed to lock, don't continue.
+		if (!isnull(src.origradio) && istype(src.origradio, /obj/item/device/radio))
+			var/obj/item/device/radio/T = src.origradio
+			src.set_loc(T)
+			T.set_loc(user)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(T)
+			src.set_loc(T)
+			T.set_frequency(initial(T.frequency))
+			T.AttackSelf(user)
 
 	traitor
 		purchase_flags = UPLINK_TRAITOR

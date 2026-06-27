@@ -14295,13 +14295,6 @@
 /obj/item/device/radio/intercom/security{
 	dir = 8
 	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 10;
-	pixel_y = -2
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 6
-	},
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
 "fwD" = (
