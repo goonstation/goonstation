@@ -1,5 +1,3 @@
-import { BooleanLike } from 'tgui-core/react';
-
 export interface ResourceImageProps {
   title: string;
   path: string;
