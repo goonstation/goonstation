@@ -8250,7 +8250,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aNJ" = (
-/obj/item/paper/printout/researcher2,
+/obj/item/paper/image/sstv/researcher2,
 /obj/machinery/light/emergency{
 	dir = 8
 	},
@@ -8818,7 +8818,7 @@
 /obj/item/clothing/suit/sweater/green,
 /obj/item/clothing/suit/sweater/red,
 /obj/storage/crate,
-/obj/item/paper/printout/group2,
+/obj/item/paper/image/sstv/group2,
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aPq" = (
@@ -8878,7 +8878,7 @@
 /obj/machinery/optable,
 /obj/decal/cleanable/blood/splatter,
 /obj/item/storage/firstaid/toxin,
-/obj/item/paper/printout/slide1,
+/obj/item/paper/image/sstv/slide1,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod2)
 "aPz" = (
@@ -9080,8 +9080,8 @@
 	dir = 8
 	},
 /obj/item/storage/backpack/NT,
-/obj/item/paper/printout/slide3,
-/obj/item/paper/printout/slide2,
+/obj/item/paper/image/sstv/slide3,
+/obj/item/paper/image/sstv/slide2,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod2)
 "aQh" = (
@@ -9109,7 +9109,7 @@
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aQk" = (
@@ -9526,7 +9526,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/paper/printout/group1,
+/obj/item/paper/image/sstv/group1,
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/hall)
 "aRJ" = (
@@ -11570,7 +11570,7 @@
 /area/lower_arctic/lower)
 "aYw" = (
 /obj/decal/cleanable/blood,
-/obj/item/paper/printout/crewlog1,
+/obj/item/paper/image/sstv/crewlog1,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aYx" = (
@@ -11761,7 +11761,7 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
-/obj/item/paper/printout/group3,
+/obj/item/paper/image/sstv/group3,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "aZg" = (
@@ -12515,7 +12515,7 @@
 	dir = 8
 	},
 /obj/item/device/light/glowstick,
-/obj/item/paper/printout/researcher1,
+/obj/item/paper/image/sstv/researcher1,
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/mining)
 "bbM" = (
@@ -13737,7 +13737,7 @@
 	dir = 9
 	},
 /obj/decal/cleanable/blood,
-/obj/item/paper/printout/crewlog2,
+/obj/item/paper/image/sstv/crewlog2,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bfD" = (
@@ -68316,7 +68316,7 @@
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/device/multitool,
-/obj/item/paper/printout/group1,
+/obj/item/paper/image/sstv/group1,
 /obj/item/device/light/flashlight,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
