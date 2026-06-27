@@ -12,7 +12,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
-	chat_class = RADIOCL_INTERCOM
+	chat_class = RADIO::CSS::INTERCOM
 	var/number = 0
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
@@ -42,8 +42,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
 		var/image/screen_image = image(src.icon, "intercom-screen")
 		screen_image.color = src.device_color
-		if(src.device_color == RADIOC_INTERCOM || isnull(src.device_color)) // unboringify the colour if default
-			var/new_color = default_frequency_color(src.frequency)
+		if(src.device_color == RADIO::COL::INTERCOM || isnull(src.device_color)) // unboringify the colour if default
+			var/new_color = RADIO.default_frequency_colour(src.frequency)
 			if(new_color)
 				screen_image.color = new_color
 		screen_image.alpha = 180
@@ -134,7 +134,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/medical
 	name = "Medical Intercom"
-	frequency = R_FREQ_INTERCOM_MEDICAL
+	frequency = RADIO::FREQ::INTERCOM::MEDICAL
 	device_color = "#0093FF"
 	initial_speaker_enabled = TRUE
 
@@ -143,7 +143,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/security
 	name = "Security Intercom"
-	frequency = R_FREQ_INTERCOM_SECURITY
+	frequency = RADIO::FREQ::INTERCOM::SECURITY
 	device_color = "#FF2000"
 	initial_speaker_enabled = TRUE
 
@@ -152,7 +152,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/brig
 	name = "Brig Intercom"
-	frequency = R_FREQ_INTERCOM_BRIG
+	frequency = RADIO::FREQ::INTERCOM::BRIG
 	device_color = "#FF5000"
 	initial_speaker_enabled = TRUE
 
@@ -161,7 +161,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/science
 	name = "Research Intercom"
-	frequency = R_FREQ_INTERCOM_RESEARCH
+	frequency = RADIO::FREQ::INTERCOM::RESEARCH
 	device_color = "#C652CE"
 	initial_speaker_enabled = TRUE
 
@@ -170,7 +170,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/engineering
 	name = "Engineering Intercom"
-	frequency = R_FREQ_INTERCOM_ENGINEERING
+	frequency = RADIO::FREQ::INTERCOM::ENGINEERING
 	initial_microphone_enabled = FALSE
 	device_color = "#BBBB00"
 	initial_speaker_enabled = TRUE
@@ -180,7 +180,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/cargo
 	name = "Cargo Intercom"
-	frequency = R_FREQ_INTERCOM_CARGO
+	frequency = RADIO::FREQ::INTERCOM::CARGO
 	device_color = "#9A8B0D"
 	initial_speaker_enabled = TRUE
 
@@ -189,7 +189,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/mining
 	name = "Mining Intercom"
-	frequency = R_FREQ_INTERCOM_MINING
+	frequency = RADIO::FREQ::INTERCOM::MINING
 	device_color = "#6b4e0b"
 	initial_speaker_enabled = TRUE
 
@@ -199,7 +199,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/catering
 	name = "Catering Intercom"
-	frequency = R_FREQ_INTERCOM_CATERING
+	frequency = RADIO::FREQ::INTERCOM::CATERING
 	device_color = "#C16082"
 	initial_speaker_enabled = TRUE
 
@@ -208,7 +208,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/botany
 	name = "Botany Intercom"
-	frequency = R_FREQ_INTERCOM_BOTANY
+	frequency = RADIO::FREQ::INTERCOM::BOTANY
 	device_color = "#78ee48"
 	initial_speaker_enabled = TRUE
 
@@ -217,7 +217,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/AI
 	name = "AI Intercom"
-	frequency = R_FREQ_INTERCOM_AI
+	frequency = RADIO::FREQ::INTERCOM::AI
 	device_color = "#7F7FE2"
 	initial_speaker_enabled = TRUE
 
@@ -226,7 +226,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/bridge
 	name = "Bridge Intercom"
-	frequency = R_FREQ_INTERCOM_BRIDGE
+	frequency = RADIO::FREQ::INTERCOM::BRIDGE
 	device_color = "#339933"
 	initial_speaker_enabled = TRUE
 
@@ -235,7 +235,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/syndicate
 	name = "Syndicate Intercom"
-	frequency = R_FREQ_SYNDICATE
+	frequency = RADIO::FREQ::SYNDICATE
 	initial_microphone_enabled = TRUE
 	device_color = "#820A16"
 	hardened = TRUE
@@ -248,7 +248,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/detnet
 	name = "DetNet Intercom (General)"
 	locked_frequency = TRUE
-	device_color = RADIOC_STANDARD
+	device_color = RADIO::COL::STANDARD
 	layer = 3.2
 
 	initialize()
@@ -256,9 +256,9 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/detnet/security
 	name = "DetNet Intercom (Security)"
-	frequency = R_FREQ_SECURITY
-	secure_frequencies = list("g" = R_FREQ_SECURITY)
-	device_color = RADIOC_SECURITY
+	frequency = RADIO::FREQ::SECURITY
+	secure_frequencies = list("g" = RADIO::FREQ::SECURITY)
+	device_color = RADIO::COL::SECURITY
 	initial_speaker_enabled = TRUE
 	layer = 3.1
 
@@ -268,10 +268,10 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/detnet/detective
 	name = "DetNet Intercom (???)"
-	frequency = R_FREQ_DETECTIVE
-	secure_frequencies = list("t" = R_FREQ_DETECTIVE)
+	frequency = RADIO::FREQ::DETECTIVE
+	secure_frequencies = list("t" = RADIO::FREQ::DETECTIVE)
 	initial_speaker_enabled = TRUE
-	device_color = RADIOC_DETECTIVE
+	device_color = RADIO::COL::DETECTIVE
 	layer = 3
 
 	initialize()
@@ -283,7 +283,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/adventure/owlery
 	name = "Owlery Intercom"
-	frequency = R_FREQ_INTERCOM_OWLERY
+	frequency = RADIO::FREQ::INTERCOM::OWLERY
 	locked_frequency = TRUE
 	initial_microphone_enabled = FALSE
 	device_color = "#3344AA"
@@ -293,7 +293,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/adventure/syndcommand
 	name = "Suspicious Intercom"
-	frequency = R_FREQ_INTERCOM_SYNDCOMMAND
+	frequency = RADIO::FREQ::INTERCOM::SYNDCOMMAND
 	locked_frequency = TRUE
 	initial_microphone_enabled = TRUE
 	device_color = "#BB3333"
@@ -304,7 +304,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/adventure/wizards
 	name = "SWF Intercom"
-	frequency = R_FREQ_INTERCOM_WIZARD
+	frequency = RADIO::FREQ::INTERCOM::WIZARD
 	initial_microphone_enabled = TRUE
 	device_color = "#3333AA"
 

@@ -14,6 +14,8 @@
 	p_class = 1.5
 	var/obj/storage/cart/next_cart = null
 
+	HELP_MESSAGE_OVERRIDE("Connect this cart to a tug cart by <b>click-dragging</b> this object to the tug cart.")
+
 	recalcPClass()
 		var/maxPClass = 0
 		for (var/atom/movable/O in contents)
@@ -105,6 +107,7 @@
 		/obj/item/storage/box/evidence{pixel_x=6;pixel_y=6} = 5,
 		/obj/item/hand_labeler{pixel_x=-4; pixel_y=-6} = 1,
 		/obj/item/device/audio_log{pixel_x=-4; pixel_y=4} = 1,
+		/obj/item/camera{pixel_x=-4; pixel_y=4} = 1,
 		/obj/item/body_bag{pixel_x=8; pixel_y=-6} = 1,
 		/obj/item/body_bag{pixel_x=6; pixel_y=-4} = 1,
 		/obj/item/body_bag{pixel_x=4; pixel_y=-2} = 1,
@@ -114,23 +117,26 @@
 		/obj/item/spraybottle/detective{pixel_x=2; pixel_y=-4} = 1,
 		/obj/item/reagent_containers/applicator/brush/silver_nitrate{pixel_x=-1;pixel_y=1} = 1,
 		/obj/item/reagent_containers/applicator/brush/silver_nitrate{pixel_x=-3;pixel_y=3} = 1,
+		/obj/item/sec_tape = 1,
 	)
 
 /obj/storage/cart/forensic/security
 	spawn_contents = list(
 		/obj/item/storage/box/evidence{pixel_x=6;pixel_y=6} = 5,
 		/obj/item/hand_labeler{pixel_x=-4; pixel_y=-6} = 1,
+		/obj/item/camera{pixel_x=-4; pixel_y=4} = 1,
 		/obj/item/device/audio_log{pixel_x=-4; pixel_y=4} = 1,
 		/obj/item/body_bag{pixel_x=8; pixel_y=-6} = 1,
 		/obj/item/body_bag{pixel_x=6; pixel_y=-4} = 1,
 		/obj/item/body_bag{pixel_x=4; pixel_y=-2} = 1,
 		/obj/item/clothing/gloves/latex/random{pixel_x=-6; pixel_y=2} = 1,
 		/obj/item/clothing/mask/surgical{pixel_x=-6; pixel_y=8} = 1,
-
+		/obj/item/reagent_containers/applicator/brush/silver_nitrate{pixel_x=-1;pixel_y=1} = 1,
+		/obj/item/sec_tape{pixel_x=-6; pixel_y=8} = 1,
 	)
 
 /obj/storage/cart/forensic/bomb_disposal
-	name = "crisis cart"
+	name = "secure crisis cart"
 	desc = "A big rolling supply cart equipped for \"safely\" disposing of bombs."
 	spawn_contents = list(
 		/obj/item/clothing/suit/armor/EOD{pixel_x=4; pixel_y=-4} = 1,
@@ -167,3 +173,87 @@
 	crunches_contents = 1
 	crunches_deliciously = 1
 	SYNDICATE_STEALTH_DESCRIPTION("There appears to be a crushing mechanism installed inside.", null)
+
+ABSTRACT_TYPE(/obj/storage/secure/cart)
+/obj/storage/secure/cart
+	name = "secure supply cart"
+	desc = "A big rolling supply cart with an access-coded lock."
+	icon = 'icons/obj/storage/cart.dmi'
+	icon_state = "cart"
+	icon_closed = "cart"
+	icon_opened = "cartopen"
+	icon_welded = "welded-crate"
+	soundproofing = SOUNDPROOFING_INSIDE
+	throwforce = 50
+	p_class = 1.5
+	is_short = TRUE
+	flip_health = 5
+	can_flip_bust = TRUE
+	var/obj/storage/cart/next_cart = null
+
+	HELP_MESSAGE_OVERRIDE("Click-drag to connect to a tug cart.")
+
+ABSTRACT_TYPE(/obj/storage/secure/cart/engineering)
+/obj/storage/secure/cart/engineering
+	desc = "A big rolling supply cart for station mechanics. This one has an access-coded lock."
+	icon_state = "mechcart"
+	icon_closed = "mechcart"
+	icon_opened = "mechcartopen"
+	req_access = list(access_engineering)
+
+/obj/storage/secure/cart/engineering/empty
+
+/obj/storage/secure/cart/engineering/breach
+	name = "breach cart"
+	desc = "A big rolling supply cart equipped for handling hull breaches. This one has an access-coded lock."
+	spawn_contents = /obj/storage/cart/mechcart/breach::spawn_contents
+
+/obj/storage/secure/cart/engineering/breach/acid
+	spawn_contents = /obj/storage/cart/mechcart/breach/acid::spawn_contents
+
+/obj/storage/secure/cart/engineering/mechanics
+	req_access = list(access_engineering_mechanic)
+	spawn_contents = /obj/storage/cart/mechcart/tools::spawn_contents
+
+ABSTRACT_TYPE(/obj/storage/secure/cart/engineering)
+/obj/storage/secure/cart/medical
+	name = /obj/storage/cart/medcart::name
+	desc = "A big rolling supply cart for station medics. This one has an access-coded lock."
+	icon_sta
+	icon_state = "medcart"
+	icon_closed = "medcart"
+	icon_opened = "medcartopen"
+	req_access = list(access_medical)
+
+/obj/storage/secure/cart/medical/empty
+
+/obj/storage/secure/cart/medical/crash
+	name =  /obj/storage/cart/medcart/crash::name
+	desc =  /obj/storage/cart/medcart/crash::desc
+	spawn_contents = /obj/storage/cart/medcart/crash::spawn_contents
+	req_access = list(access_medical_lockers)
+
+ABSTRACT_TYPE(/obj/storage/secure/cart/security)
+/obj/storage/secure/cart/security
+	desc = "A big rolling supply cart for crime-scene forensics work. This one has an access-coded lock."
+
+	icon_state = "forensiccart"
+	icon_closed = "forensiccart"
+	icon_opened = "forensiccartopen"
+	req_access = list(access_security)
+
+/obj/storage/secure/cart/security/empty
+
+/obj/storage/secure/cart/security/forensics
+	name =  /obj/storage/cart/forensic/detective::name
+	desc = /obj/storage/cart/forensic/detective::desc
+	spawn_contents = /obj/storage/cart/forensic/detective::spawn_contents
+	req_access = list(access_forensics_lockers)
+
+/obj/storage/secure/cart/security/forensics/light
+	spawn_contents = /obj/storage/cart/forensic/security::spawn_contents
+
+/obj/storage/secure/cart/security/bomb
+	name = /obj/storage/cart/forensic/bomb_disposal::name
+	desc = /obj/storage/cart/forensic/bomb_disposal::desc
+	spawn_contents = /obj/storage/cart/forensic/bomb_disposal::spawn_contents
