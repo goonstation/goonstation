@@ -59888,7 +59888,6 @@
 /area/iomoon/base)
 "iEQ" = (
 /obj/machinery/light_switch/directional/east{
-	pixel_x = 24;
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/caution/west,
@@ -72167,7 +72166,6 @@
 /area/centcom/offices/studenterhue)
 "rKi" = (
 /obj/machinery/light_switch/directional/west{
-	pixel_x = -24;
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/stairs,
@@ -72201,7 +72199,6 @@
 /area/sim/racing_track)
 "rLb" = (
 /obj/machinery/light_switch/directional/east{
-	pixel_x = 24;
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/stairs,
@@ -80221,7 +80218,6 @@
 /area/owlery/staffhall)
 "xKm" = (
 /obj/machinery/light_switch/directional/east{
-	pixel_x = 24;
 	pixel_y = 8
 	},
 /turf/unsimulated/floor,

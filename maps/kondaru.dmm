@@ -2059,7 +2059,6 @@
 	icon_state = "2-5"
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_x = -24;
 	pixel_y = -7
 	},
 /turf/simulated/floor/plating,

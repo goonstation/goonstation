@@ -47222,8 +47222,7 @@
 	pixel_x = 4
 	},
 /obj/machinery/light_switch/directional/south{
-	pixel_x = -4;
-	pixel_y = -24
+	pixel_x = -4
 	},
 /turf/simulated/floor/black/side,
 /area/station/medical/robotics)

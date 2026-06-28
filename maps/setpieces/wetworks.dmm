@@ -4228,8 +4228,7 @@
 /obj/item/reagent_containers/mender_refill_cartridge/burn,
 /obj/item_dispenser/latex_gloves,
 /obj/machinery/light_switch/directional/north{
-	pixel_x = 13;
-	pixel_y = 24
+	pixel_x = 13
 	},
 /turf/unsimulated/floor/redwhite,
 /area/syndicate_station{

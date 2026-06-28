@@ -12090,8 +12090,7 @@
 	},
 /obj/machinery/vending/chapel,
 /obj/machinery/light_switch/directional/north{
-	pixel_x = -4;
-	pixel_y = 24
+	pixel_x = -4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -19780,7 +19779,6 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_x = -24;
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,

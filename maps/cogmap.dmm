@@ -29746,7 +29746,6 @@
 	pixel_x = 23
 	},
 /obj/machinery/light_switch/directional/east{
-	pixel_x = 24;
 	pixel_y = -6
 	},
 /turf/simulated/floor/specialroom/medbay,
@@ -45969,8 +45968,7 @@
 "kVK" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light_switch/directional/south{
-	pixel_x = -9;
-	pixel_y = -24
+	pixel_x = -9
 	},
 /turf/simulated/floor/stairs{
 	dir = 4

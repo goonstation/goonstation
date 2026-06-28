@@ -16765,7 +16765,6 @@
 	pixel_y = -5
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_x = -24;
 	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
