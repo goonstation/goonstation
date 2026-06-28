@@ -1994,21 +1994,17 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		..()
 		if(ishuman(src.mob))
 			M.bioHolder.AddEffect("accent_frog", do_stability = FALSE, scannable = FALSE, innate = TRUE)
-		#ifdef RP_MODE
-			..()
-		#else
+		if(mob.sims?.getValue("Thirst"))
+			return
+		else
 			mob.sims = new /datum/simsHolder(mob)
 			mob.sims.addMotive(/datum/simsMotive/hunger/thirst) // allows dehydration for amphibians on classic
 			mob.sims.add_hud()
-		#endif
-		..()
 
 	disposing()
 		if(ishuman(src.mob))
 			src.mob.bioHolder.RemoveEffect("accent_frog")
-		#ifdef RP_MODE
-			..()
-		#else
+		#ifndef RP_MODE
 			mob.sims.removeMotive("Thirst")
 		#endif
 		..()
