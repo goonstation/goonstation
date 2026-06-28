@@ -325,6 +325,7 @@
 	animated_changes = TRUE
 
 TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("dense_property_ultra" = 10,
 				"heat_dense" = 10)
 /obj/item/tool/omnitool/dualconstruction_device

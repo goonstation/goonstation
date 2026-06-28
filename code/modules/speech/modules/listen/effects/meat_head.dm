@@ -6,4 +6,4 @@
 	if (!istype(meat_head) || prob(80))
 		return
 
-	meat_head.update_meat_head_dialog(message.content)
+	meat_head.update_meat_head_dialog(message.get_content_parsable())

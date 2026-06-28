@@ -227,7 +227,7 @@
 
 /obj/item/storage/breach_pouch
 	name = "mining charge pouch"
-	desc = "A large pouch specially designed to hold all of your nanotrasen approved explosives."
+	desc = "A large pouch specially designed to hold all of your NaNoTraSen approved explosives."
 	icon_state = "ammopouch-mining"
 	w_class = W_CLASS_SMALL
 	slots = 5

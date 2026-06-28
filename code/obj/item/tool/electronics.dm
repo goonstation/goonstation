@@ -117,10 +117,11 @@
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////no
+TYPEINFO(/obj/item/electronics/frame)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/electronics/frame
 	name = "frame"
 	icon_state = "frame"
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	var/store_type = null
 	var/secured = 0
 	var/viewstat = 0
@@ -131,6 +132,7 @@
 
 	flatpack
 		icon_state = "dbox_alt"
+		desc = "Hand-held machinery deployer with a big button on the back."
 		HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
 		attack_self(mob/user)
@@ -329,6 +331,7 @@
 		AM.set_loc(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 0)
+		SEND_SIGNAL(AM, COMSIG_BUILD_FROM_FRAME, user, FALSE)
 		AM.forensic_holder = src.forensic_holder
 
 		// if we have a material, give it to the object if the object doesn't have one
@@ -338,6 +341,7 @@
 		AM = new store_type(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 1)
+		SEND_SIGNAL(AM, COMSIG_BUILD_FROM_FRAME, user, TRUE)
 		AM.forensic_holder = src.forensic_holder
 
 		if (src.material && !AM.material)
@@ -381,6 +385,8 @@
 		..()
 
 ////////////////////////////////////////////////////////////////no
+TYPEINFO(/obj/machinery/rkit)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/machinery/rkit
 	name = "ruckingenur kit"
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
@@ -388,7 +394,7 @@
 	icon_state = "rkit"
 	anchored = ANCHORED
 	density = 1
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
+
 	//var/datum/electronics/electronics_items/link = null
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
 	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED

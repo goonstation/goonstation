@@ -19,8 +19,8 @@
 		RELAY_MESSAGE_TO_SAY_CHANNEL(src.ghostly_whisper_channel, message.Copy())
 
 /datum/say_channel/dead/log_message(datum/say_message/message)
-	logTheThing(LOG_SAY, message.speaker, "[uppertext(src.channel_id)]: [message.prefix] [message.content] [log_loc(message.speaker)]")
-	phrase_log.log_phrase("deadsay", message.content)
+	logTheThing(LOG_SAY, message.speaker, "[uppertext(src.channel_id)]: [message.prefix] [message.get_original_content()] [log_loc(message.speaker)]")
+	phrase_log.log_phrase("deadsay", message.get_content())
 
 
 /datum/say_channel/delimited/local/ghostly_whisper

@@ -223,7 +223,7 @@
 	carbon_dioxide = 20
 	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
 
-	destroy_asteroid(var/dropOre=1, var/mob/user)
+	destroy_asteroid(var/dropOre=1, var/mob/user, var/mining_type)
 		if(src.ore || prob(5)) // provide less rock
 			default_ore = /datum/material/crystal/gemstone
 		. = ..()

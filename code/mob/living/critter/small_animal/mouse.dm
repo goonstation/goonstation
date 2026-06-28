@@ -222,7 +222,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 		HH.can_hold_items = 0
 
 	attackby(obj/item/reagent_containers/food/food, mob/user)
-		if (!istype(food))
+		if (!istype(food) && !istype(food, /obj/item/organ))
 			return ..()
 		if (ON_COOLDOWN(src, "consider_food", 5 SECONDS))
 			return
@@ -253,6 +253,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 					FLICK("remy-exclaim", src)
 					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 		return ..()
+
+	home_area()
+		return /area/station/crew_quarters/kitchen
 
 /* =============================================== */
 /* ----------- mentor & admin mice --------------- */
@@ -390,6 +393,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
 
+	new_static_image()
+		return
+
+	update_static_image()
+		return
+
 /datum/targetable/critter/mentordisappear
 	name = "Vanish"
 	desc = "Leave your body and return to ghost form"
@@ -454,8 +463,6 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 	New()
 		. = ..()
 		src.fur_color = "#be5a53"
-		// true when making the mob to not make the respawn timer reset...false here to allow for crime
-		ghost_spawned = FALSE
 		new /obj/item/implant/access/infinite/admin_mouse(src)
 		SPAWN(1 SECOND)
 			src.bioHolder?.AddEffect("radio_brain", power = 3, do_stability = FALSE, magical = TRUE)

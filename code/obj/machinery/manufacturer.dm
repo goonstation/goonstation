@@ -842,7 +842,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 					var/datum/signal/minerSignal = get_free_signal()
 					minerSignal.source = src
-					//any non-divisible amounts go to the shipping budget
+					//any non-divisible amounts go to the supply budget
 					var/leftovers = 0
 					if(length(accounts))
 						leftovers = subtotal % length(accounts)
@@ -856,8 +856,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
-						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")
-					wagesystem.budgets[BUDGET_CAT_SHIPPING] += (leftovers + sum_taxes)
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the supply budget.")
+					wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 					src.should_update_static = TRUE
 				else
@@ -1545,6 +1545,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		switch(wireIndex)
 			if(WIRE_EXTEND)
 				src.hacked = FALSE
+				src.UpdateOverlays(null, "indicator-hacked")
 			if(WIRE_SHOCK)
 				src.time_left_electrified = 0
 			if(WIRE_MALF)
@@ -1577,6 +1578,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.hacked = !src.hacked
 				if(src.hacked)
 					src.AddOverlays(image(src.icon, null, "indicator-hacked", layer = src.layer + 0.0001), "indicator-hacked")
+				else
+					src.UpdateOverlays(null, "indicator-hacked")
 			if (WIRE_SHOCK)
 				src.time_left_electrified = 30
 			if (WIRE_MALF)

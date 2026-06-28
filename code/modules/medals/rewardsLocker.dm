@@ -1210,6 +1210,21 @@
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a welding helmet in your hands."))
 			return
 
+/datum/achievementReward/fishing_rod
+	title = "(Skin) Gilded Fishing Rod"
+	desc = "One use, requires you to hold a fishing rod."
+	required_medal = "So Long, and Thanks for All the Fish"
+
+	rewardActivate(mob/activator)
+		var/obj/item/fishing_rod/rod = activator.find_type_in_hand(/obj/item/fishing_rod) || activator.find_type_in_hand(/obj/item/syndie_fishing_rod)
+		if (!rod)
+			boutput(activator, SPAN_ALERT("Unable to redeem... You must have a fishing rod in your hands!"))
+			return null
+		rod.gilded = TRUE
+		rod.UpdateIcon()
+		activator.update_inhands()
+		return TRUE
+
 // Reward management stuff
 
 /datum/achievementReward/contributor

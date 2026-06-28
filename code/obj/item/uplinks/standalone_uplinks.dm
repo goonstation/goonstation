@@ -9,7 +9,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
-	use_default_GUI = 1
+	uplink_ui_type = UPLINK_UI_TGUI
 	can_selfdestruct = 1
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)

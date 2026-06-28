@@ -24,6 +24,9 @@
 # Gannets
 /code/datums/gamemodes/nuclear.dm @Gannets
 
+# Jorj
+/assets/maps/allocated/syndicate_hideouts @JORJ949
+
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143
 /code/modules/events/gimmick/kudzu.dm @Kyle2143
