@@ -26,7 +26,7 @@
 	New()
 		..()
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attackby_pre))  // Storage for a single lure item
-		src.create_storage(/datum/storage, can_hold = list(/obj/item/reagent_containers/food), max_wclass = W_CLASS_NORMAL, slots = 1)
+		src.create_storage(/datum/storage, can_hold = list(/obj/item/reagent_containers/food, /obj/item/flag/), max_wclass = W_CLASS_NORMAL, slots = 1)
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)

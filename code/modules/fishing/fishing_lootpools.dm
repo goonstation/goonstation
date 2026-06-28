@@ -102,3 +102,14 @@
 /datum/fishing_lootpool/igneous_fish
 	minimum_rod_tier = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10)
+
+///Pride themed fishing loot!
+/datum/fishing_lootpool/pride_loot
+	minimum_rod_tier = 2
+	required_lure = /obj/item/flag/
+	fish_available = list(/obj/item/reagent_containers/food/fish/red_herring = 5,\
+	/obj/item/reagent_containers/food/fish/rainbow_trout = 15,\
+	/obj/item/clothing/suit/flag/lesb = 8,\
+	/obj/item/clothing/under/pride/lesb = 7,\
+	/obj/item/clothing/head/lesbian_hat = 15
+	)

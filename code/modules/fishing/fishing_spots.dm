@@ -121,6 +121,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/sardine = 20,
 	/obj/item/reagent_containers/food/fish/anchovy = 10)
 
+/datum/fishing_spot/sea/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/pride_loot(src)
+
 /datum/fishing_spot/swamp
 	fishing_atom_type = /turf/unsimulated/floor/auto/swamp
 	rod_tier_required = 1
@@ -458,6 +462,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/critter/small_animal/snake = 10,\
 	/mob/living/critter/small_animal/frog = 10)
 
+/datum/fishing_spot/river/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/pride_loot(src)
+
 /datum/fishing_spot/plantpot
 	fishing_atom_type = /obj/machinery/plantpot
 	rod_tier_required = 1
@@ -576,6 +584,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/drain/New()
 	..()
 	src.fishing_lootpools += new /datum/fishing_lootpool/real_goldfish(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/pride_loot(src)
 
 // Alien/mutant fishing spots
 /datum/fishing_spot/meatzone_acid
@@ -708,6 +717,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
 	/obj/item/reagent_containers/food/fish/glassfish = 10)
+
+/datum/fishing_spot/biodome_lake/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/pride_loot(src)
 
 //ainsley
 /datum/fishing_spot/nuclear_core_decal
