@@ -1,0 +1,32 @@
+# Manually handle the auto subtype.
+/obj/machinery/light_switch/auto : /temporary_auto_repath{@OLD}
+
+# Change of default variables.
+/obj/machinery/light_switch/@SUBTYPES{name = "light switch"}	: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; name = @SKIP}
+/obj/machinery/light_switch/@SUBTYPES{name = "N light switch"}	: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; name = @SKIP}
+/obj/machinery/light_switch/@SUBTYPES{name = "S light switch"}	: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; name = @SKIP}
+/obj/machinery/light_switch/@SUBTYPES{name = "E light switch"}	: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; name = @SKIP}
+/obj/machinery/light_switch/@SUBTYPES{name = "W light switch"}	: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; name = @SKIP}
+
+# Remove old directional subtypes.
+/obj/machinery/light_switch/@SUBTYPES/north			: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; dir = 2}
+/obj/machinery/light_switch/@SUBTYPES/south			: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; dir = 1}
+/obj/machinery/light_switch/@SUBTYPES/east			: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; dir = 8}
+/obj/machinery/light_switch/@SUBTYPES/west			: /obj/machinery/light_switch/@SUBTYPES_1{@OLD; dir = 4}
+/obj/machinery/light_switch/@SUBTYPES/directional	: /obj/machinery/light_switch/@SUBTYPES_1{@OLD}
+
+# Repath and flip directions, and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths twice.
+# NORTH
+/obj/machinery/light_switch/@SUBTYPES{dir = 1}			: /temporary_light_switch_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# SOUTH
+/obj/machinery/light_switch/@SUBTYPES{dir = @UNSET}		: /temporary_light_switch_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/machinery/light_switch/@SUBTYPES{dir = 0}			: /temporary_light_switch_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/machinery/light_switch/@SUBTYPES{dir = 2}			: /temporary_light_switch_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# EAST
+/obj/machinery/light_switch/@SUBTYPES{dir = 4}			: /temporary_light_switch_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP}
+# WEST
+/obj/machinery/light_switch/@SUBTYPES{dir = 8}			: /temporary_light_switch_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP}
+
+# Revert the temporary repaths.
+/temporary_light_switch_repath/@SUBTYPES	: /obj/machinery/light_switch/@SUBTYPES{@OLD}
+/temporary_auto_repath						: /obj/machinery/light_switch/auto{@OLD}
