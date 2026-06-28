@@ -11417,12 +11417,12 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aQV" = (
@@ -21318,7 +21318,6 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bFZ" = (
-/obj/machinery/light_switch/directional/north,
 /obj/table/reinforced/auto,
 /obj/item/device/matanalyzer{
 	pixel_x = -7;
@@ -21333,6 +21332,7 @@
 	pixel_y = 7
 	},
 /obj/random_item_spawner/tools,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bGa" = (
@@ -21935,10 +21935,10 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/monitoring)
 "bJo" = (
-/obj/machinery/light_switch/directional/north,
 /obj/machinery/light,
 /obj/table/wood/auto,
 /obj/machinery/recharger,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/monitoring)
 "bJp" = (
@@ -25367,10 +25367,10 @@
 	},
 /area/station/science/lobby)
 "bVs" = (
-/obj/machinery/light_switch/directional/north,
 /obj/stool/chair/office{
 	dir = 4
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "bVv" = (
@@ -34439,7 +34439,6 @@
 /area/station/engine/elect)
 "cSN" = (
 /obj/table/auto,
-/obj/machinery/light_switch/directional/north,
 /obj/item/device/camera_viewer/telesci{
 	pixel_x = -14;
 	pixel_y = 16
@@ -34469,6 +34468,7 @@
 	pixel_x = -7;
 	pixel_y = -2
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "cTz" = (
@@ -38768,11 +38768,11 @@
 /area/station/medical/staff)
 "fLs" = (
 /obj/cable,
-/obj/machinery/light_switch/directional/north,
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/item/paper/engine,
 /obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering/ce)
 "fLx" = (
