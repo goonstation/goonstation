@@ -2055,12 +2055,12 @@
 	pixel_y = 6
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/light_switch/directional/east{
-	pixel_y = -7;
-	otherarea = "station/crew_quarters/clown"
-	},
 /obj/cable{
 	icon_state = "2-5"
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_x = -24;
+	pixel_y = -7
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)

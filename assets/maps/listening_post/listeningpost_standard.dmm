@@ -623,7 +623,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicate_teleporter)
 "Eb" = (

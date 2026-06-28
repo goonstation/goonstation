@@ -38663,7 +38663,7 @@
 	},
 /area/station/quartermaster/refinery)
 "ctP" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -40501,8 +40501,8 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "czz" = (
-/obj/machinery/light_switch/directional/north,
 /obj/storage/crate/robotparts,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "czA" = (
@@ -51669,12 +51669,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "dPe" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 22
-	},
 /obj/machinery/computer/announcement/station/security/department{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -56088,9 +56086,7 @@
 /obj/storage/crate,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "hNS" = (
@@ -58852,12 +58848,10 @@
 /obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -24
-	},
 /obj/item/stamp/clown,
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/clothing/mask/clown_nose,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"

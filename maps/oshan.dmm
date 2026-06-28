@@ -34647,9 +34647,7 @@
 /turf/simulated/floor/green,
 /area/station/crew_quarters/quartersA)
 "lzI" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 6
 	},

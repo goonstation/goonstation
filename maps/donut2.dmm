@@ -3520,7 +3520,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
 "awZ" = (
@@ -15590,10 +15590,8 @@
 /turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "cNS" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 24
-	},
 /obj/disposalpipe/segment,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -20456,7 +20454,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
 "fJb" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "fJk" = (
@@ -23494,9 +23492,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "hBy" = (
@@ -30142,9 +30138,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/power/transmission/west)
 "ltg" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 24
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -30152,6 +30145,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/black,
 /area/station/storage/emergency)
 "ltq" = (
@@ -33763,9 +33757,6 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "njf" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -24
-	},
 /obj/machinery/firealarm/directional/west,
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet/pink,
@@ -47220,9 +47211,6 @@
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
 "uUv" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -4
-	},
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
 	},
@@ -47232,6 +47220,10 @@
 /obj/landmark/start/job/cyborg,
 /obj/blind_switch/area/south{
 	pixel_x = 4
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -4;
+	pixel_y = -24
 	},
 /turf/simulated/floor/black/side,
 /area/station/medical/robotics)
@@ -48366,7 +48358,7 @@
 /area/station/janitor/office)
 "vyD" = (
 /obj/machinery/loudspeaker,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "vyP" = (
