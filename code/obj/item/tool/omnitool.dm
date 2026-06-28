@@ -132,7 +132,7 @@
 		return FALSE
 
 	proc/pre_attackby(source, atom/target, mob/user)
-		src.mode?.on_attack_pre(src, target, user)
+		return src.mode?.on_attack_pre(src, target, user)
 
 	get_help_message(dist, mob/user)
 		if (istype(src, /obj/item/tool/omnitool/syndicate))
@@ -429,8 +429,8 @@ ABSTRACT_TYPE(/datum/omnimode)
 			holder?.closeContextActions()
 		on_attack_pre(var/obj/item/tool/omnitool/omni, atom/target, mob/user)
 			. = ..()
-			var/datum/component/deconstructing/decon_comp = src.GetComponent(/datum/component/deconstructing)
-			return decon_comp.pre_attackby_decon(target, user, src)
+			var/datum/component/deconstructing/decon_comp = omni.GetComponent(/datum/component/deconstructing)
+			return decon_comp.pre_attackby_decon(target, user, omni)
 		on_drop(var/obj/item/tool/omnitool/omni, var/mob/user)
 			user.closeContextActions()
 
