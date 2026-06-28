@@ -2017,13 +2017,13 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		var/message = null
 
 		switch (act)
-			if ("scream","howl","laugh")
+			if ("scream","howl")
 				if (src.mob.emote_check(voluntary, 3 SECONDS))
 					message = SPAN_ALERT("<B>[src.mob] makes an awful noise!</B>")
 					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return message
 
-			if("burp","fart","gasp")
+			if("burp","fart")
 				if (src.mob.emote_check(voluntary, 1 SECOND))
 					message = "<B>[src.mob]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_FARTS)
@@ -2041,6 +2041,8 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 				src.mob.take_oxygen_deprivation(15)
 			if (prob(10))
 				src.mob.visible_message(SPAN_ALERT(pick("[mob] struggles to breathe!", "[mob] gasps for air!")))
+			if (prob(20))
+				src.mob.emote(pick("choke","gasp"))
 
 	proc/dermal_absorbtion(var/absorbtion_rate) // it's actually spelled "absorption" but every other absorption proc is misspelled too
 		if(!src.mob)
@@ -2061,12 +2063,10 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 			return
 		absorb_reagents(T.active_liquid.group, absorbtion_rate)
 
-		if(chem_prot >= 55)
-			if(prob(30))
+		if(chem_prot <= 55)
+			if(prob(50))
 				absorb_reagents(T.active_liquid.group, absorbtion_rate)
 			return
-		if(T.active_liquid.my_depth_level < 2)
-			return // Fluid not deep enough to absorb through shoes/suit
 
 	proc/absorb_reagents(var/datum/fluid_group/fluids, var/absorbtion_rate)
 		var/datum/reagents/R = fluids.reagents
@@ -2087,7 +2087,6 @@ TYPEINFO(/datum/mutantrace/frog/abzunian)
 	icon_state = "body_m"
 	human_compatible = 1
 	jerk = FALSE
-	var/permanent = 0
 	mutant_folder = 'icons/mob/abzunian.dmi'
 	mutant_organs = list(\
 		"left_eye"=/obj/item/organ/eye/beady,\
