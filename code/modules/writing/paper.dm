@@ -537,70 +537,6 @@
 	return
 
 
-// cogwerks - creepy picture things
-
-/obj/item/paper/printout
-	name = "Printed Image"
-	desc = "Fancy."
-	var/print_icon = 'icons/effects/sstv.dmi'
-	var/print_icon_state = "sstv_1"
-	sizex = 640 + 0
-	sizey = 480 + 32
-	scrollbar = FALSE
-
-	New()
-		..()
-		src.info = "<img style='width: 100%; position: absolute; top: 0; left: 0' src='data:image/png;base64,[icon2base64(icon(print_icon,print_icon_state))]'>"
-		return
-
-	satellite
-		print_icon_state = "sstv_2"
-		desc = "Looks like a satellite view of a research base."
-
-	group1
-		print_icon_state = "sstv_3"
-		desc = "A group photo of a research team."
-
-	group2
-		print_icon_state = "sstv_4"
-		desc = "A group photo of a research team."
-
-	group3
-		print_icon_state = "sstv_6"
-		desc = "A group of scientists working in a lab."
-
-	researcher1
-		print_icon_state = "sstv_5"
-		desc = "A scientist handling what looks like an ice core."
-
-	researcher2
-		print_icon_state = "sstv_9"
-		desc = "The image is badly distorted, but it seems to be a researcher carrying a lab monkey."
-
-	slide1
-		print_icon_state = "sstv_7"
-		desc = "A microscopic slide. Seems to be some sort of biological cell structure."
-
-	slide2
-		print_icon_state = "sstv_8"
-		desc = "A dissection report of some kind of arachnid."
-
-	slide3
-		print_icon_state = "sstv_10"
-		desc = "A dissection report of... something. What the hell is that?"
-
-	emerg1
-		print_icon_state = "sstv_11"
-		desc = "A coded emergency broadcast."
-
-	crewlog1
-		print_icon_state = "sstv_12"
-		desc = "A blurry image of something approaching the photographer."
-
-	crewlog2
-		print_icon_state = "sstv_13"
-		desc = "Oh god."
-
 /obj/item/paper_bin
 	name = "paper bin"
 	icon = 'icons/obj/writing.dmi'
@@ -1121,3 +1057,7 @@
 		Levels of FAAE (commonly known as "plasma") in the lakewater have reached 500μg per liter according to an EPA source, prompting the agency to declare a substantial threat to public health.<br>
 		Nanotrasen is the only company in the Seneca area licensed to transport plasma, hundreds of kilograms of which are used in the fuelling of their inter-channel shuttle services every month.
 	"}
+
+/obj/item/paper/printout
+	name = "Printout"
+	desc = "Fancy!"

@@ -471,8 +471,6 @@ TYPEINFO(/obj/machinery/photocopier)
 	proc/create_paper_photo(var/list/paper_info)
 		var/obj/item/paper/printout/P = new/obj/item/paper/printout(src)
 		P.desc = paper_info["desc"]
-		P.print_icon = paper_info["print_icon"]
-		P.print_icon_state = paper_info["print_icon_state"]
 		return P
 
 	proc/create_paper_blueprint(var/list/bp_info)
@@ -692,8 +690,6 @@ TYPEINFO(/obj/machinery/photocopier)
 		else if (istype(P, /obj/item/paper/printout))
 			var/obj/item/paper/printout/Pout = P
 			scan_info["desc"] = Pout.desc
-			scan_info["print_icon"] = Pout.print_icon
-			scan_info["print_icon_state"] = Pout.print_icon_state
 			scan_info["print_type"] = "paper_photo"
 		else if (istype(P, /obj/item/paper/book))
 			scan_info["name"] = P.name

@@ -27,14 +27,6 @@
 "eH" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"ju" = (
-/obj/table/wood/auto{
-	dir = 5
-	},
-/obj/machinery/recharger,
-/obj/machinery/light_switch/directional/west,
-/turf/simulated/floor/black,
-/area/listeningpost/general)
 "jD" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
@@ -263,6 +255,22 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
+"FO" = (
+/obj/table/wood/auto{
+	dir = 5
+	},
+/obj/item/paper_bin,
+/obj/item/paper/image/sstv/emerg1,
+/obj/item/paper/pipebombs{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/stamp/syndicate{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
 "GE" = (
 /obj/computer3frame,
 /obj/cable{
@@ -286,11 +294,6 @@
 /obj/machinery/computer/power_monitor,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
-"Hg" = (
-/obj/machinery/light_switch/directional/north,
-/obj/machinery/computer/television,
-/turf/simulated/floor/black,
-/area/listeningpost/tech_room)
 "HA" = (
 /obj/machinery/door_control/antagscanner{
 	id = "Sleeper_Access";
@@ -352,6 +355,12 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
+"Od" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/listeningpost/syndicate_teleporter)
 "OK" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -385,12 +394,6 @@
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
-"Rt" = (
-/obj/machinery/light_switch/directional/east,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/listeningpost/syndicate_teleporter)
 "Ru" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -408,22 +411,6 @@
 	icon_state = "floor4"
 	},
 /area/listeningpost/syndicate_teleporter)
-"UJ" = (
-/obj/table/wood/auto{
-	dir = 5
-	},
-/obj/item/paper_bin,
-/obj/item/paper/printout/emerg1,
-/obj/item/paper/pipebombs{
-	pixel_x = 11;
-	pixel_y = 5
-	},
-/obj/item/stamp/syndicate{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/turf/simulated/floor/black,
-/area/listeningpost/general)
 "UP" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -447,6 +434,11 @@
 /obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
+"XO" = (
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/computer/television,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
 "Yc" = (
 /obj/machinery/communications_dish{
 	name = "Communications dish"
@@ -457,6 +449,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost/comm_dish)
+"Yu" = (
+/obj/table/wood/auto{
+	dir = 5
+	},
+/obj/machinery/recharger,
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
 "YA" = (
 /obj/machinery/door_control/antagscanner{
 	id = "Sleeper_Access";
@@ -896,7 +896,7 @@ Qd
 Ny
 uU
 dk
-ju
+Yu
 rL
 Bf
 Bf
@@ -994,7 +994,7 @@ rL
 zS
 sQ
 vi
-UJ
+FO
 xk
 Fz
 UP
@@ -1063,7 +1063,7 @@ Tz
 Tz
 xC
 xU
-Hg
+XO
 si
 JZ
 tr
@@ -1128,7 +1128,7 @@ Bf
 Bf
 xC
 Ki
-Rt
+Od
 xC
 xU
 Bk

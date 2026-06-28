@@ -124,6 +124,14 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
+"fP" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
 "gj" = (
 /obj/cable/black,
 /obj/machinery/power/smes{
@@ -193,14 +201,17 @@
 	dir = 4
 	},
 /area/listeningpost/solars)
-"jd" = (
-/obj/decal/tile_edge/line/red{
-	dir = 5;
-	icon_state = "line2"
+"jy" = (
+/obj/table/auto,
+/obj/item/paper_bin,
+/obj/item/paper/image/sstv/emerg1,
+/obj/item/peripheral/network/radio/locked,
+/obj/item/stamp/syndicate{
+	pixel_y = 11;
+	pixel_x = 7
 	},
-/obj/machinery/light_switch/directional/west,
-/turf/simulated/floor/black,
-/area/listeningpost/general)
+/turf/simulated/floor/yellowblack,
+/area/listeningpost/tech_room)
 "jQ" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_south,
@@ -400,19 +411,11 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/tech_room)
-"tU" = (
-/obj/machinery/sink/slim{
-	desc = "A water-filled unit intended for hand-washing purposes.";
-	dir = 8;
-	pixel_x = 2
-	},
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/machinery/light_switch/directional/east,
-/turf/simulated/floor/black,
-/area/listeningpost/break_room)
+"vo" = (
+/obj/storage/crate/furnacefuel,
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "vt" = (
 /obj/cable/black{
 	icon_state = "4-8"
@@ -482,26 +485,6 @@
 /obj/rack,
 /turf/simulated/floor,
 /area/listeningpost/vestibule)
-"yf" = (
-/obj/table/auto,
-/obj/item/paper_bin,
-/obj/item/paper/printout/emerg1,
-/obj/item/peripheral/network/radio/locked,
-/obj/item/stamp/syndicate{
-	pixel_y = 11;
-	pixel_x = 7
-	},
-/turf/simulated/floor/yellowblack,
-/area/listeningpost/tech_room)
-"yj" = (
-/obj/table/wood/round/auto,
-/obj/item/paper/pipebombs{
-	pixel_y = 5
-	},
-/obj/machinery/light_switch/directional/west,
-/obj/item/tank/pocket/extended/oxygen,
-/turf/simulated/floor/carpet/red/fancy/narrow/T_west,
-/area/listeningpost/barracks)
 "yp" = (
 /obj/cable/black{
 	icon_state = "1-2"
@@ -635,6 +618,14 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/listeningpost/power)
+"Dw" = (
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/black,
+/area/listeningpost/syndicate_teleporter)
 "Eb" = (
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/listeningpost/barracks)
@@ -653,11 +644,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_east,
 /area/listeningpost/barracks)
-"EC" = (
-/obj/storage/crate/furnacefuel,
-/obj/machinery/light_switch/directional/north,
-/turf/simulated/floor/plating,
-/area/listeningpost/power)
 "ES" = (
 /obj/cable/yellow,
 /obj/machinery/power/solar/small_backup4,
@@ -666,14 +652,6 @@
 	name = "solar paneling"
 	},
 /area/listeningpost/solars)
-"EW" = (
-/obj/decal/tile_edge/line/red{
-	dir = 9;
-	icon_state = "line1"
-	},
-/obj/machinery/light_switch/directional/east,
-/turf/simulated/floor/black,
-/area/listeningpost/syndicate_teleporter)
 "Fa" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
@@ -895,6 +873,15 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
+"OK" = (
+/obj/table/wood/round/auto,
+/obj/item/paper/pipebombs{
+	pixel_y = 5
+	},
+/obj/machinery/light_switch/directional/west,
+/obj/item/tank/pocket/extended/oxygen,
+/turf/simulated/floor/carpet/red/fancy/narrow/T_west,
+/area/listeningpost/barracks)
 "Pm" = (
 /obj/cable/black{
 	icon_state = "4-8"
@@ -959,6 +946,19 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/general)
+"Rx" = (
+/obj/machinery/sink/slim{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 8;
+	pixel_x = 2
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
 "RG" = (
 /obj/table/reinforced/auto,
 /obj/item/disk/data/cartridge/captain{
@@ -1436,7 +1436,7 @@ SN
 GF
 mZ
 Hn
-yj
+OK
 FQ
 km
 mZ
@@ -1603,7 +1603,7 @@ OJ
 Cf
 WY
 RH
-jd
+fP
 ru
 ru
 rY
@@ -1666,7 +1666,7 @@ fr
 wR
 wR
 Vg
-EC
+vo
 Ds
 Cf
 aL
@@ -1810,11 +1810,11 @@ zP
 eT
 yp
 zB
-yf
+jy
 zP
 ex
 Ly
-tU
+Rx
 FA
 Wb
 wR
@@ -1882,7 +1882,7 @@ zP
 bA
 VV
 Po
-EW
+Dw
 bA
 wR
 wR
