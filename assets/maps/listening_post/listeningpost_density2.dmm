@@ -32,7 +32,7 @@
 	dir = 5
 	},
 /obj/machinery/recharger,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "jD" = (
@@ -287,7 +287,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Hg" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
@@ -386,7 +386,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Rt" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
