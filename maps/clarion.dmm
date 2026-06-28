@@ -16744,10 +16744,7 @@
 	pixel_x = -24;
 	pixel_y = -5
 	},
-/obj/machinery/light_switch/directional/west{
-	pixel_x = -24;
-	pixel_y = 5
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
 "haV" = (
