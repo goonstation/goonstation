@@ -2059,11 +2059,6 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 			return
 		absorb_reagents(T.active_liquid.group, absorbtion_rate)
 
-		if(chem_prot <= 55)
-			if(prob(50))
-				absorb_reagents(T.active_liquid.group, absorbtion_rate)
-			return
-
 	proc/absorb_reagents(var/datum/fluid_group/fluids, var/absorbtion_rate)
 		var/datum/reagents/R = fluids.reagents
 		if(!R.total_volume)
