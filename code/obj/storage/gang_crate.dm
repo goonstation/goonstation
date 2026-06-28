@@ -1097,7 +1097,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium)
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/tool/omnitool/syndietool = spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.75,rot=90)
-			syndietool.change_mode(OMNI_MODE_PULSING, null, /obj/item/device/multitool)
+			syndietool.change_mode_id("pulsing", null)
 
 	cigar
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1226,7 +1226,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/short_tall)
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/tool/omnitool/syndietool = spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.75)
-			syndietool.change_mode(OMNI_MODE_PULSING, null, /obj/item/device/multitool)
+			syndietool.change_mode_id("pulsing", null)
 	autos
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)

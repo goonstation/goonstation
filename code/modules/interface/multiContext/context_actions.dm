@@ -452,7 +452,6 @@
 	desc = "You shouldn't be reading this, bug."
 	icon_state = "wrench"
 	var/omni_mode
-	var/omni_path
 	var/success_text
 	var/success_sound
 
@@ -462,9 +461,9 @@
 			playsound(target, success_sound, 50, TRUE)
 
 	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
-		if (!(omni_mode in omni.modes))
+		if (!omni.has_mode(src.omni_mode))
 			return FALSE
-		omni.change_mode(omni_mode, user, omni_path)
+		omni.change_mode_id(omni_mode, user)
 		user.show_text("You flip [omni] to [name] mode.", "blue")
 		sleep(OMNI_TOOL_WAIT_TIME)
 		return TRUE
@@ -496,8 +495,7 @@
 		name = "Wrench"
 		desc = "Wrenching required to deconstruct."
 		icon_state = "wrench"
-		omni_mode = OMNI_MODE_WRENCHING
-		omni_path = /obj/item/wrench
+		omni_mode = "wrenching"
 		success_text = "You wrench %target%'s bolts."
 		success_sound = 'sound/items/Ratchet.ogg'
 
@@ -513,8 +511,7 @@
 		name = "Cut"
 		desc = "Cutting required to deconstruct."
 		icon_state = "cut"
-		omni_mode = OMNI_MODE_SNIPPING
-		omni_path = /obj/item/wirecutters
+		omni_mode = "wirecut"
 		success_text = "You cut some vestigial wires from %target%."
 		success_sound = 'sound/items/Wirecutter.ogg'
 
@@ -529,8 +526,7 @@
 		name = "Weld"
 		desc = "Welding required to deconstruct."
 		icon_state = "weld"
-		omni_mode = OMNI_MODE_WELDING
-		omni_path = /obj/item/weldingtool
+		omni_mode = "welding"
 		success_text = "You weld %target% carefully."
 		success_sound = null // sound handled in try_weld
 
@@ -549,8 +545,7 @@
 		name = "Pry"
 		desc = "Prying required to deconstruct. Try a crowbar."
 		icon_state = "bar"
-		omni_mode = OMNI_MODE_PRYING
-		omni_path = /obj/item/crowbar
+		omni_mode = "prying"
 		success_text = "You pry on %target% without remorse."
 		success_sound = 'sound/items/Crowbar.ogg'
 
@@ -565,8 +560,7 @@
 		name = "Screw"
 		desc = "Screwing required to deconstruct."
 		icon_state = "screw"
-		omni_mode = OMNI_MODE_SCREWING
-		omni_path = /obj/item/screwdriver
+		omni_mode = "screwing"
 		success_text = "You unscrew some of the screws on %target%."
 		success_sound = 'sound/items/Screwdriver.ogg'
 
@@ -582,8 +576,7 @@
 		name = "Pulse"
 		desc = "Pulsing required to deconstruct. Try a multitool."
 		icon_state = "pulse"
-		omni_mode = OMNI_MODE_PULSING
-		omni_path = /obj/item/device/multitool
+		omni_mode = "pulsing"
 		success_text = "You pulse %target%. In a general sense."
 		success_sound = 'sound/items/penclick.ogg'
 
