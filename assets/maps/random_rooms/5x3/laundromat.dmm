@@ -52,9 +52,7 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/obj/machinery/light_switch/north{
-	pixel_x = 13
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/black,
 /area/dmm_suite/clear_area)
 "W" = (
