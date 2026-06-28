@@ -19,14 +19,14 @@
 #define SET_UP_DIRECTIONAL_OFFSETS(_NAME, _N, _E, _S, _W) \
 	STANDARD_OFFSETS(_NAME) { \
 		id = #_NAME; \
-		nx = _GETTER_1 _N; \
-		ny = _GETTER_2 _N; \
-		ex = _GETTER_1 _E; \
-		ey = _GETTER_2 _E; \
-		sx = _GETTER_1 _S; \
-		sy = _GETTER_2 _S; \
-		wx = _GETTER_1 _W; \
-		wy = _GETTER_2 _W; \
+		nx = _GETTER_1##_N; \
+		ny = _GETTER_2##_N; \
+		ex = _GETTER_1##_E; \
+		ey = _GETTER_2##_E; \
+		sx = _GETTER_1##_S; \
+		sy = _GETTER_2##_S; \
+		wx = _GETTER_1##_W; \
+		wy = _GETTER_2##_W; \
 	} \
 	DEFINE _NAME(x) x(_GETTER_1 _N, _GETTER_2 _N, _GETTER_1 _E, _GETTER_2 _E, _GETTER_1 _S, _GETTER_2 _S, _GETTER_1 _W, _GETTER_2 _W, #_NAME)
 
@@ -34,14 +34,14 @@
 #define SET_UP_DIRECTIONAL_OFFSETS_OTHER(_PATH, _NAME, _N, _E, _S, _W) \
 	_PATH(_NAME) { \
 		id = #_NAME; \
-		nx = _GETTER_1 _N; \
-		ny = _GETTER_2 _N; \
-		ex = _GETTER_1 _E; \
-		ey = _GETTER_2 _E; \
-		sx = _GETTER_1 _S; \
-		sy = _GETTER_2 _S; \
-		wx = _GETTER_1 _W; \
-		wy = _GETTER_2 _W; \
+		nx = _GETTER_1##_N; \
+		ny = _GETTER_2##_N; \
+		ex = _GETTER_1##_E; \
+		ey = _GETTER_2##_E; \
+		sx = _GETTER_1##_S; \
+		sy = _GETTER_2##_S; \
+		wx = _GETTER_1##_W; \
+		wy = _GETTER_2##_W; \
 	}
 
 /// Set up directional paths for an object, with offsets provided by an offsets tuple.
