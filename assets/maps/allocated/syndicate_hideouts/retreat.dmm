@@ -108,7 +108,7 @@
 /area/syndicate_station/hideout)
 "t" = (
 /obj/item/storage/wall,
-/turf/unsimulated/wall/auto/paper,
+/turf/unsimulated/wall/auto/supernorn/wood,
 /area/syndicate_station/hideout)
 "u" = (
 /obj/stool/chair/couch/red{
@@ -184,7 +184,7 @@
 /turf/simulated/floor/minitiles,
 /area/syndicate_station/hideout)
 "J" = (
-/turf/unsimulated/wall/auto/paper,
+/turf/unsimulated/wall/auto/supernorn/wood,
 /area/syndicate_station/hideout)
 "K" = (
 /obj/stool/bed,
@@ -220,7 +220,7 @@
 /area/syndicate_station/hideout)
 "N" = (
 /obj/drink_rack/mug,
-/turf/unsimulated/wall/auto/paper,
+/turf/unsimulated/wall/auto/supernorn/wood,
 /area/syndicate_station/hideout)
 "O" = (
 /obj/machinery/door/unpowered/wood{
@@ -295,7 +295,7 @@
 /area/syndicate_station/hideout)
 "Z" = (
 /obj/decal/poster/flag,
-/turf/unsimulated/wall/auto/paper,
+/turf/unsimulated/wall/auto/supernorn/wood,
 /area/syndicate_station/hideout)
 
 (1,1,1) = {"
