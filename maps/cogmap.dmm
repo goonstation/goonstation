@@ -22707,7 +22707,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "bMa" = (

@@ -51657,10 +51657,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "dPe" = (
-/obj/machinery/light_switch/directional/north,
 /obj/machinery/computer/announcement/station/security/department{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
