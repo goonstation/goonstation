@@ -6478,7 +6478,7 @@
 	},
 /area/abandonedmedicalship)
 "aJf" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/h7/control)
 "aJg" = (
@@ -8552,13 +8552,13 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/worn,
-/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor,
 /area/h7/storage)
 "aPT" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/h7/storage)
 "aPU" = (
@@ -10370,7 +10370,7 @@
 /obj/machinery/light/worn{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/purple/corner,
 /area/h7)
 "aVA" = (

@@ -9051,10 +9051,6 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aQc" = (
-/obj/machinery/light_switch/directional/north{
-	on = 0;
-	pixel_x = -24
-	},
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
@@ -9307,14 +9303,6 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/lower_arctic/mining)
-"aRc" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -24
-	},
-/turf/unsimulated/floor/stairs{
-	dir = 1
-	},
-/area/crater/biodome/north)
 "aRd" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1
@@ -9405,14 +9393,6 @@
 "aRn" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/stairs{
-	dir = 1
-	},
-/area/crater/biodome/north)
-"aRo" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 24
 	},
 /turf/unsimulated/floor/stairs{
 	dir = 1
@@ -10535,11 +10515,8 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/upper_arctic/hall)
 "aVf" = (
-/obj/machinery/light_switch/directional/north{
-	on = 0;
-	pixel_x = -24
-	},
 /obj/decal/cleanable/blood/tracks,
+/obj/machinery/light_switch/directional/west,
 /turf/unsimulated/floor,
 /area/upper_arctic/hall)
 "aVg" = (
@@ -10596,10 +10573,6 @@
 "aVn" = (
 /turf/unsimulated/floor/neutral/side,
 /area/crater/biodome/crew)
-"aVo" = (
-/obj/machinery/light_switch/directional/north,
-/turf/unsimulated/floor/neutral/side,
-/area/crater/biodome/crew)
 "aVp" = (
 /turf/unsimulated/floor/neutral/corner{
 	dir = 8
@@ -10637,10 +10610,6 @@
 /turf/unsimulated/floor/neutral/corner,
 /area/crater/biodome/maint)
 "aVx" = (
-/turf/unsimulated/floor/neutral/side,
-/area/crater/biodome/maint)
-"aVy" = (
-/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor/neutral/side,
 /area/crater/biodome/maint)
 "aVA" = (
@@ -11558,8 +11527,9 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aYx" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -24
+/obj/machinery/light_switch/directional/west{
+	pixel_x = -24;
+	pixel_y = 8
 	},
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
@@ -11593,8 +11563,9 @@
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
 "aYF" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 24
+/obj/machinery/light_switch/directional/east{
+	pixel_x = 24;
+	pixel_y = 8
 	},
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
@@ -12498,6 +12469,7 @@
 	},
 /obj/item/device/light/glowstick,
 /obj/item/paper/printout/researcher1,
+/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/mining)
 "bbM" = (
@@ -12622,9 +12594,6 @@
 /turf/unsimulated/floor/arctic/abyss,
 /area/upper_arctic/exterior/surface)
 "bci" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -24
-	},
 /obj/table/auto,
 /obj/item/cigpacket,
 /turf/unsimulated/floor/grime,
@@ -13136,8 +13105,9 @@
 	},
 /area/crater/biodome/entry)
 "bdH" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 24
+/obj/machinery/light_switch/directional/east{
+	pixel_x = 24;
+	pixel_y = 8
 	},
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/entry)
@@ -26907,7 +26877,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccq" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/south,
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccr" = (
@@ -28547,9 +28517,6 @@
 "ciW" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 24
 	},
 /obj/machinery/light{
 	dir = 4
@@ -57868,6 +57835,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
+"gOJ" = (
+/obj/stool,
+/obj/machinery/light_switch/directional/west,
+/turf/unsimulated/floor/specialroom/bar,
+/area/upper_arctic/pod2)
 "gOW" = (
 /obj/table/regal/auto,
 /obj/item/cigarbox/gold{
@@ -62055,6 +62027,11 @@
 	},
 /turf/space,
 /area/watchful_eye_sensor)
+"kaF" = (
+/obj/spacevine,
+/obj/machinery/light_switch/directional/south,
+/turf/unsimulated/floor/grass/leafy,
+/area/crater/biodome/north)
 "kaX" = (
 /obj/lattice,
 /turf/space,
@@ -67363,6 +67340,15 @@
 "obN" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"ocs" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/maint)
 "ocI" = (
 /obj/rack/iomoon,
 /obj/item/parts/robot_parts/chest/ancient,
@@ -75711,6 +75697,15 @@
 /obj/item/gun/russianrevolver/fake357,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"uFW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/unsimulated/floor/neutral/side{
+	dir = 1
+	},
+/area/crater/biodome/crew)
 "uGo" = (
 /obj/tree{
 	dir = 1
@@ -80218,6 +80213,13 @@
 /obj/item/tank/air,
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
+"xKm" = (
+/obj/machinery/light_switch/directional/east{
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor,
+/area/crunch)
 "xKr" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -80362,6 +80364,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"xPS" = (
+/obj/spacevine{
+	density = 1;
+	icon_state = "vine-med1"
+	},
+/obj/machinery/light_switch/directional/south,
+/turf/unsimulated/floor/grass/leafy,
+/area/crater/biodome/north)
 "xQn" = (
 /obj/shrub/snow/random{
 	pixel_x = -6;
@@ -85968,7 +85978,7 @@ aXn
 aLP
 mJF
 nDP
-aNF
+gOJ
 aOB
 aPs
 aQc
@@ -87348,7 +87358,7 @@ ceO
 bRF
 cte
 ciW
-bLn
+xKm
 ceO
 bIY
 bIY
@@ -113757,8 +113767,8 @@ rtc
 aRY
 aSW
 rtc
-aUy
-aVo
+uFW
+aVn
 rtc
 aWI
 aWI
@@ -114356,7 +114366,7 @@ aMd
 aMd
 aOR
 aOR
-aOR
+xPS
 rtc
 rtc
 rtc
@@ -114659,7 +114669,7 @@ iOn
 aOS
 aPF
 aQr
-aRc
+aRd
 hjS
 aSY
 aSY
@@ -119491,7 +119501,7 @@ aMd
 aPf
 aPS
 aPS
-aRo
+aRd
 ekh
 aTk
 aTk
@@ -119792,7 +119802,7 @@ aMd
 iOn
 aPg
 aPT
-aPT
+kaF
 fCo
 wkV
 wkV
@@ -120099,8 +120109,8 @@ fCo
 aSm
 aTl
 wkV
-aUM
-aVy
+ocs
+aVx
 wkV
 aWS
 aXC
