@@ -10,10 +10,10 @@ Upload an image and/or audio and have it fly to target turf then play an ending 
 Protip: tinker with this on a local first so you know what you're doing. Images are best around 100-200 pixels wide and long.<br>
 <br>
 RMB on buildmode button                = Set image and ending effect<br>
-Ctrl + RMB on buildmode button         = Set audio<br>
-Alt + Right mouse button               = Set optional obj/mob spawns<br>
-Shift + Right Mouse Button             = Set direction and speed<br>
-Shift + Left Mouse Button              = Spawn flying object<br>
+Ctrl  + RMB on buildmode button        = Set audio<br>
+Alt   + RMB off of buildmode button    = Set optional obj/mob spawns<br>
+Shift + RMB off of buildmode button    = Set direction and speed<br>
+Shift + RMB off of buildmode button    = Spawn flying object<br>
 ***********************************************************"}
 	// settings. behold my vars
 	icon_state = "flyoverhead"
